@@ -2,8 +2,8 @@ package seedu.room.storage;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.room.testutil.TypicalEvents.IFGTRAINING;
 import static seedu.room.testutil.TypicalEvents.DANCE;
+import static seedu.room.testutil.TypicalEvents.IFGTRAINING;
 import static seedu.room.testutil.TypicalEvents.getTypicalEventBook;
 
 import java.io.IOException;

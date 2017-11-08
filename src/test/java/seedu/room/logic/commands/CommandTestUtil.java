@@ -20,6 +20,9 @@ import java.util.List;
 import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.model.Model;
 import seedu.room.model.ResidentBook;
+import seedu.room.model.event.ReadOnlyEvent;
+import seedu.room.model.event.TitleContainsKeywordsPredicate;
+import seedu.room.model.event.exceptions.EventNotFoundException;
 import seedu.room.model.person.NameContainsKeywordsPredicate;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
@@ -66,7 +69,7 @@ public class CommandTestUtil {
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ROOM_DESC = " " + PREFIX_ROOM; // empty string not allowed for rooms
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
-    public static final String INVALID_TAG = "testing"; // 'testing' does not exist inside the address book
+    public static final String INVALID_TAG = "testing"; // 'testing' does not exist inside the room book
 
     public static final String VALID_TITLE_POLYMATH = "USPolymath";
     public static final String VALID_LOCATION_POLYMATH = "Chatterbox";
@@ -163,6 +166,30 @@ public class CommandTestUtil {
             model.deletePerson(firstPerson);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        }
+    }
+
+    //@@author sushinoya
+    /**
+     * Updates {@code model}'s filtered list to show only the first event in the {@code model}'s event book.
+     */
+    public static void showFirstEventOnly(Model model) {
+        ReadOnlyEvent event = model.getEventBook().getEventList().get(0);
+        final String[] splitTitle = event.getTitle().value.split("\\s+");
+        model.updateFilteredEventList(new TitleContainsKeywordsPredicate(Arrays.asList(splitTitle[0])));
+
+        assert model.getFilteredEventList().size() == 1;
+    }
+
+    /**
+     * Deletes the first person in {@code model}'s filtered list from {@code model}'s event book.
+     */
+    public static void deleteFirstEvent(Model model) {
+        ReadOnlyEvent firstEvent = model.getFilteredEventList().get(0);
+        try {
+            model.deleteEvent(firstEvent);
+        } catch (EventNotFoundException enfe) {
+            throw new AssertionError("Event in filtered list must exist in model.", enfe);
         }
     }
 }
