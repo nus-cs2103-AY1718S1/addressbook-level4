@@ -17,6 +17,7 @@ import seedu.address.logic.Logic;
 import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
 
+//@@author CT15
 /**
  * The Welcome Screen is opened when the application is run. Main Window will be
  * loaded when the welcome screen is closed.
@@ -37,7 +38,7 @@ public class WelcomeScreen extends UiPart<Region> {
     private MainWindow mainWindow;
 
     private ImageView logo;
-    private Button closeButton;
+    private Button continueButton;
 
     @FXML
     private VBox welcomeWindow;
@@ -79,15 +80,15 @@ public class WelcomeScreen extends UiPart<Region> {
         logo.setFitWidth(250);
         logoPlaceHolder.getChildren().add(logo);
 
-        closeButton = new Button("Close");
-        closeButton.setOnAction(new EventHandler<ActionEvent>() {
+        continueButton = new Button("Continue");
+        continueButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 welcomeWindow.getScene().getWindow().hide();
                 loadMainWindow();
             }
         });
-        buttonPlaceHolder.getChildren().add(closeButton);
+        buttonPlaceHolder.getChildren().add(continueButton);
     }
 
     /**
@@ -124,8 +125,10 @@ public class WelcomeScreen extends UiPart<Region> {
      * Stops the application.
      */
     public void stop() {
-        prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
-        mainWindow.hide();
-        mainWindow.releaseResources();
+        if (mainWindow != null) {
+            prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
+            mainWindow.hide();
+            mainWindow.releaseResources();
+        }
     }
 }

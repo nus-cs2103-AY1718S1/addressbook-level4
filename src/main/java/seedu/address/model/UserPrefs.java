@@ -46,6 +46,7 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
+    //@@author CT15
     public void enableWelcomeScreen() {
         isWelcomeScreenEnabled = true;
     }
@@ -58,6 +59,7 @@ public class UserPrefs {
         return isWelcomeScreenEnabled;
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -71,12 +73,13 @@ public class UserPrefs {
 
         return Objects.equals(guiSettings, o.guiSettings)
                 && Objects.equals(addressBookFilePath, o.addressBookFilePath)
-                && Objects.equals(addressBookName, o.addressBookName);
+                && Objects.equals(addressBookName, o.addressBookName)
+                && Objects.equals(isWelcomeScreenEnabled, o.isWelcomeScreenEnabled);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, addressBookFilePath, addressBookName);
+        return Objects.hash(guiSettings, addressBookFilePath, addressBookName, isWelcomeScreenEnabled);
     }
 
     @Override

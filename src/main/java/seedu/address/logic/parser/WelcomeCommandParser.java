@@ -7,6 +7,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.WelcomeCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author CT15
 /**
  * Parses input arguments and creates a new WelcomeCommand object
  */

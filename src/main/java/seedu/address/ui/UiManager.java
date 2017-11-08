@@ -56,6 +56,7 @@ public class UiManager extends ComponentManager implements Ui {
         //Set the application icon.
         primaryStage.getIcons().add(getImage(ICON_APPLICATION));
 
+        //@@author CT15
         try {
             welcomeScreen = new WelcomeScreen(primaryStage, config, prefs, logic, model);
             if (prefs.getWelcomeScreenEnabledInfo()) {
@@ -73,11 +74,6 @@ public class UiManager extends ComponentManager implements Ui {
     @Override
     public void stop() {
         welcomeScreen.stop();
-    }
-
-    private void loadWelcomeScreen(Stage primaryStage) {
-
-
     }
 
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {

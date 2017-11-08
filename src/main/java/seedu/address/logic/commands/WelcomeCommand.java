@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.enablingkeyword.EnablingKeyword;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author CT15
 /**
  * Enables or disables the welcome screen.
  */
