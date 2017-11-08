@@ -34,7 +34,7 @@ public class AutocompleteManager {
         AddCommand.COMMAND_WORD, AppointCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD,
         EditCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD, FindCommand.COMMAND_WORD, HelpCommand.COMMAND_WORD,
         GroupCommand.COMMAND_WORD, HistoryCommand.COMMAND_WORD, ListCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD,
-        SelectCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD, UngroupCommand.COMMAND_WORD, 
+        SelectCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD, UngroupCommand.COMMAND_WORD,
         RemoveTagCommand.COMMAND_WORD, FilterCommand.COMMAND_WORD, FilterAllCommand.COMMAND_WORD
     };
 
