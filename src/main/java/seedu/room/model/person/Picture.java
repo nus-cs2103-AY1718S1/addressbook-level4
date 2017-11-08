@@ -61,8 +61,15 @@ public class Picture {
      * Sets name of image which will be appended to contact_images directory
      */
     public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = BASE_URL + pictureUrl;
-        this.jarPictureUrl = BASE_JAR_URL + pictureUrl;
+        if (pictureUrl.contains("/")) {
+            String splitStrings[] = pictureUrl.split("/");
+            String pictureName = splitStrings[splitStrings.length - 1];
+            this.pictureUrl = BASE_URL + pictureName;
+            this.jarPictureUrl = BASE_JAR_URL + pictureName;
+        } else {
+            this.pictureUrl = BASE_URL + pictureUrl;
+            this.jarPictureUrl = BASE_JAR_URL + pictureUrl;
+        }
     }
 
     /**
