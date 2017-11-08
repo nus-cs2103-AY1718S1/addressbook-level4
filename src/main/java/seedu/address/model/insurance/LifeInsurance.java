@@ -111,6 +111,20 @@ public class LifeInsurance implements ReadOnlyInsurance {
         this.expiryDateString = new SimpleStringProperty(source.getExpiryDateString());
     }
 
+    /**
+     * Resets the value of the owner, insured, beneficiary of this insurance. Every new {@code InsurancePerson}
+     * object is constructed with the {@code name} field assigned and the {@code person} field unassigned.
+     */
+    public void resetAllInsurancePerson() {
+        String ownerName = this.roleToPersonNameMap.get(Roles.OWNER);
+        String insuredName = this.roleToPersonNameMap.get(Roles.INSURED);
+        String beneficiaryName = this.roleToPersonNameMap.get(Roles.BENEFICIARY);
+        this.owner = new SimpleObjectProperty<>(new InsurancePerson(ownerName));
+        this.insured = new SimpleObjectProperty<>(new InsurancePerson(insuredName));
+        this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(beneficiaryName));
+
+    }
+
     @Override
     public ObjectProperty<UUID> idProperty() {
         return id;

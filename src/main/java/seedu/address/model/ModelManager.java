@@ -26,6 +26,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyInsurance> filteredInsurances;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -38,6 +39,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredInsurances = new FilteredList<>(this.addressBook.getInsuranceList());
     }
 
     public ModelManager() {
@@ -77,7 +79,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
-
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
@@ -85,15 +86,27 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addInsurance(ReadOnlyInsurance insurance) {
         addressBook.addInsurance(insurance);
+        updateFilteredInsuranceList(PREDICATE_SHOW_ALL_INSURANCES);
         indicateAddressBookChanged();
     }
     //=========== Insurance List Accessors ==================================================================
-    //@@author RSJunior37
+    //@author OscarWang114
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
+     * {@code addressBook}
+     */
     @Override
-    public ObservableList<ReadOnlyInsurance> getInsuranceList() {
-        return addressBook.getInsuranceList();
+    public ObservableList<ReadOnlyInsurance> getFilteredInsuranceList() {
+        return FXCollections.unmodifiableObservableList(filteredInsurances);
     }
-    //@@author
+
+
+    @Override
+    public void updateFilteredInsuranceList(Predicate<ReadOnlyInsurance> predicate) {
+        requireNonNull(predicate);
+        filteredInsurances.setPredicate(predicate);
+    }
+    //
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -111,12 +124,6 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
-
-    @Override
-    public void updateInsuranceList(Predicate<ReadOnlyInsurance> predicate) {
-
-    }
-
 
     @Override
     public boolean equals(Object obj) {
