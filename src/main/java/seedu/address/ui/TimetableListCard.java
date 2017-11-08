@@ -16,6 +16,8 @@ import seedu.address.model.event.ReadOnlyEvent;
 public class TimetableListCard extends UiPart<Region> {
 
     private static final String FXML = "TimetableListCard.fxml";
+    private static final int BASE_WIDTH = 150;
+    private static final int WIDTH_CONST = 50;
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -47,6 +49,16 @@ public class TimetableListCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyEvent event) {
         title.textProperty().bind(Bindings.convert(event.titleProperty()));
         timing.textProperty().bind(Bindings.convert(event.timingProperty()));
+    }
+
+    /**
+     * Corrects width of TimetableListCard with respect to duration of event.
+     */
+    public TimetableListCard setWidth() {
+        double widthMultiplier = event.getTimeslot().getTiming().getDuration();
+        double newWidth = BASE_WIDTH + WIDTH_CONST * widthMultiplier;
+        cardPane.setPrefWidth(newWidth);
+        return this;
     }
 
     @Override

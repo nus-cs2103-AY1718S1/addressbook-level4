@@ -6,7 +6,6 @@ import org.fxmisc.easybind.EasyBind;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
@@ -36,32 +35,25 @@ public class TimetableListPanel extends UiPart<Region> {
     }
 
     private void setConnections(ObservableList<ReadOnlyEvent> eventList) {
-        ObservableList<TimetableListCard> mappedList = EasyBind.map(eventList, (event) -> new TimetableListCard(event));
+        ObservableList<TimetableListCard> mappedList = EasyBind.map(eventList, (event)
+            -> new TimetableListCard(event).setWidth());
         timetableListView.setItems(mappedList);
         timetableListView.setCellFactory(listView -> new TimetableListViewCell());
         timetableListView.setOrientation(Orientation.HORIZONTAL);
-        logger.info("UI ------ Got eventList with " + eventList.size() + " events.");
+        logger.info("UI ------ Got timetable with " + eventList.size() + " events.");
     }
 
     /**
-     * Upon receiving an AddressBookChangedEvent, update the event list accordingly.
+     * Upon receiving an AddressBookChangedEvent, update the timetable accordingly.
      */
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
         ObservableList<ReadOnlyEvent> eventList = abce.data.getTimetable(abce.data.getCurrentDate());
-        ObservableList<TimetableListCard> mappedList = EasyBind.map(eventList, (event) -> new TimetableListCard(event));
+        ObservableList<TimetableListCard> mappedList = EasyBind.map(eventList, (event)
+            -> new TimetableListCard(event).setWidth());
         timetableListView.setItems(mappedList);
     }
 
-    /**
-     * Scrolls to the {@code TimetableListCard} at the {@code index} and selects it.
-     */
-    private void scrollTo(int index) {
-        Platform.runLater(() -> {
-            timetableListView.scrollTo(index);
-            timetableListView.getSelectionModel().clearAndSelect(index);
-        });
-    }
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code TimetableListCard}.
      */
