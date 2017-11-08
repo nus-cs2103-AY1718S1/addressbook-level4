@@ -10,15 +10,11 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-//@@author qihao27
 import seedu.address.logic.commands.DeleteAltCommand;
-//@@author
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
-//@@author qihao27
 import seedu.address.logic.commands.ExportCommand;
-//@@author
 import seedu.address.logic.commands.FavouriteCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -27,9 +23,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
-//@@author qihao27
 import seedu.address.logic.commands.SortCommand;
-//@@author
 import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.TodoCommand;
 import seedu.address.logic.commands.UndoCommand;

@@ -14,7 +14,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class TodoItem implements Comparable<TodoItem> {
 
     public static final String MESSAGE_TODOITEM_CONSTRAINTS =
-            "The end time should be late than start time. Task cannot be empty.";
+            "The end time should be later than start time. Task cannot be empty.";
 
     public final LocalDateTime start;
     public final LocalDateTime end;

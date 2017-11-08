@@ -1497,6 +1497,7 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
 ``` java
     /** Updates the UI to show all todoItems for all persons */
     void updateTodoItemList();
+
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -1531,6 +1532,7 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
     public void updateTodoItemList() {
         raise(new ShowAllTodoItemsEvent());
     }
+
 ```
 ###### \java\seedu\address\model\person\DetailsContainsPredicate.java
 ``` java
@@ -1709,7 +1711,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class TodoItem implements Comparable<TodoItem> {
 
     public static final String MESSAGE_TODOITEM_CONSTRAINTS =
-            "The end time should be late than start time. Task cannot be empty.";
+            "The end time should be later than start time. Task cannot be empty.";
 
     public final LocalDateTime start;
     public final LocalDateTime end;

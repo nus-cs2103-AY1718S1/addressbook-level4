@@ -211,6 +211,7 @@ public class FavouriteCommandParser implements Parser<FavouriteCommand> {
             persons.add(person);
         }
     }
+
 ```
 ###### \java\seedu\address\model\Model.java
 ``` java
@@ -223,6 +224,7 @@ public class FavouriteCommandParser implements Parser<FavouriteCommand> {
      */
     void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
+
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -245,4 +247,5 @@ public class FavouriteCommandParser implements Parser<FavouriteCommand> {
     public void setFavourite(boolean favourite) {
         this.favourite = favourite;
     }
+
 ```

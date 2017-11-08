@@ -17,11 +17,10 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TodoItem;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.UniqueTodoList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.DuplicateTodoItemException;
-//@@author qihao27
 import seedu.address.model.person.exceptions.NoPersonFoundException;
-//@@author
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -34,6 +33,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueTodoList todos;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -45,6 +45,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        todos = new UniqueTodoList();
     }
 
     public AddressBook() {}
@@ -123,6 +124,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
 
     }
+
     //@@author aaronyhsoh
     /**
      * Replaces the given person {@code target} in the list with {@code favouritedReadOnlyPerson}.
@@ -159,7 +161,6 @@ public class AddressBook implements ReadOnlyAddressBook {
             persons.add(person);
         }
     }
-    //@@author
 
     //@@author Hailinx
     /**
@@ -275,7 +276,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, "
+            + tags.asObservableList().size() + " tags, "
+            + todos.asObservableList().size() + " todos";
         // TODO: refine later
     }
 
@@ -289,12 +292,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    //@@author qihao27
+    @Override
+    public ObservableList<TodoItem> getTodoList() {
+        return todos.asObservableList();
+    }
+    //@@author
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags)
+                && this.todos.equalsOrderInsensitive(((AddressBook) other).todos));
     }
 
     @Override

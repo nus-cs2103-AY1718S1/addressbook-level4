@@ -3,38 +3,44 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.ExportCommand.MESSAGE_FILE_EXPORTED;
-import static seedu.address.testutil.TypicalFilePath.FILE_PATH_C_CREATE_NEW_FOLDER;
-import static seedu.address.testutil.TypicalFilePath.FILE_PATH_DOCS;
-import static seedu.address.testutil.TypicalFilePath.FILE_PATH_LOCAL_C_DRIVE;
+import static seedu.address.testutil.TypicalFilePath.FILE_PATH_EXPORT_TEST;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.parser.ExportCommandParser;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 
 public class ExportCommandTest {
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_exportSuccess_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        CommandResult result = new ExportCommand(FILE_PATH_DOCS).execute();
-        assertEquals(MESSAGE_FILE_EXPORTED + FILE_PATH_DOCS, result.feedbackToUser);
+    public void execute_exportSuccess_throwsParseException() throws ParseException {
+        ExportCommand command = prepareCommand(FILE_PATH_EXPORT_TEST);
+        assertCommandSuccess(command, MESSAGE_FILE_EXPORTED + FILE_PATH_EXPORT_TEST);
     }
 
-    @Test
-    public void execute_exportLocalDriveSuccess_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        CommandResult result = new ExportCommand(FILE_PATH_LOCAL_C_DRIVE).execute();
-        assertEquals(MESSAGE_FILE_EXPORTED + FILE_PATH_LOCAL_C_DRIVE, result.feedbackToUser);
+    /**
+     * Parses {@code userInput} into a {@code LockCommand} in default mode.
+     */
+    private ExportCommand prepareCommand(String userInput) throws ParseException {
+        ExportCommand command = new ExportCommandParser().parse(userInput);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
     }
 
-    @Test
-    public void execute_exportCreateNewFolderSuccess_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        CommandResult result = new ExportCommand(FILE_PATH_C_CREATE_NEW_FOLDER).execute();
-        assertEquals(MESSAGE_FILE_EXPORTED + FILE_PATH_C_CREATE_NEW_FOLDER, result.feedbackToUser);
+    /**
+     * Asserts that {@code command} is successfully executed, and<br>
+     * - the command feedback is equal to {@code expectedMessage}<br>
+     */
+    private void assertCommandSuccess(ExportCommand command, String expectedMessage) {
+        CommandResult commandResult = command.execute();
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
     }
-
 }
