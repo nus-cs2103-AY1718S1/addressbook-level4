@@ -44,5 +44,3 @@ include::../UserGuide.adoc[tag=appointment]
 
 Allowing users to make appointments with any contact.
 With this new feature, the user will be able to view what time slots they have alotted for their contact/student.
-
-
