@@ -15,8 +15,8 @@
                 null, Optional.empty());
     }
 
-    private void assertExceptionThrownForIgnoreCaseAndCharacters(Class<? extends Throwable> exceptionClass, String sentence,
-                                                                 String word, Optional<String> errorMessage) {
+    private void assertExceptionThrownForIgnoreCaseAndCharacters(Class<? extends Throwable> exceptionClass,
+                                                        String sentence, String word, Optional<String> errorMessage) {
         thrown.expect(exceptionClass);
         errorMessage.ifPresent(message -> thrown.expectMessage(message));
         StringUtil.containsWordIgnoreCaseAndCharacters(sentence, word);
@@ -72,17 +72,17 @@
         assertFalse(StringUtil.containsWordIgnoreCaseAndCharacters("    ", "123"));
 
         // Matches a partial word only
-        assertFalse(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bbb ccc", "bb")); // Sentence word bigger than query word
-        assertFalse(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bbb ccc", "bbbb")); // Query word bigger than sentence word
+        assertFalse(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bbb ccc", "bb"));
+        assertFalse(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bbb ccc", "bbbb"));
 
         // Matches word in the sentence, different upper/lower case letters
         assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bBb ccc", "Aaa")); // First word (boundary case)
-        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa. bBb ccc", "Aaa")); // First word with non-word character (boundary case)
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa. bBb ccc", "Aaa")); // boundary case
         assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bBb ccc1", "CCc1")); // Last word (boundary case)
-        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bBb ccc_1", "CCc_1")); // Last word with non-word character (boundary case)
-        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("  AAA   bBb   ccc  ", "aaa")); // Sentence has extra spaces
-        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("Aaa", "aaa")); // Only one word in sentence (boundary case)
-        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters(",Aaa", "aaa")); // Only one word in sentence with non-word character (boundary case)
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bBb ccc_1", "CCc_1")); // boundary case
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("  AAA   bBb   ccc  ", "aaa"));
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("Aaa", "aaa")); // boundary case
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters(",Aaa", "aaa")); // boundary case
         assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bbb ccc", "  ccc  ")); // Leading/trailing spaces
 
         // Matches multiple words in sentence
@@ -316,6 +316,12 @@
         assertCorrectDateResult("20/10/2017 10:50", expectedSingleDateList);
     }
 
+    /**
+     * Assert true if {@code sentence} contains dates in {@code expected}
+     *
+     * @param sentence should not be null
+     * @param expected should not be null
+     */
     public void assertCorrectDateResult(String sentence, ArrayList<String> expected) {
         ArrayList<String> actual = StringUtil.extractDates(sentence);
         assertTrue(actual.equals(expected));
@@ -375,6 +381,12 @@
         assertCorrectTimeResult("20/10/2017 05:30", expectedSingleTimeList);
     }
 
+    /**
+     * Assert true if {@code sentence} contains times in {@code expected}
+     *
+     * @param sentence should not be null
+     * @param expected should not be null
+     */
     public void assertCorrectTimeResult(String sentence, ArrayList<String> expected) {
         ArrayList<String> actual = StringUtil.extractTimes(sentence);
         assertTrue(actual.equals(expected));
@@ -382,7 +394,7 @@
 ```
 ###### /java/seedu/address/logic/commands/AddMultipleCommandTest.java
 ``` java
-public class AddMultipleCommandTest {
+public class AddMultipleCommandTest extends GuiUnitTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -572,8 +584,15 @@ public class AddMultipleCommandTest {
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
-public class FindCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+public class FindCommandTest extends GuiUnitTest {
+    private Model model;
+    private Email emailManager = new EmailManager();
+    private Logic logic = new LogicManager(model, emailManager);
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    }
 
     @Test
     public void equals() {
@@ -609,9 +628,9 @@ public class FindCommandTest {
 
     @Test
     public void execute_zeroKeywords_noPersonFound() throws ParseException {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        FindCommand command = prepareCommand(" ");
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+        String command = FindCommand.COMMAND_WORD + " ";
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
+        assertCommandFailure(ParseException.class, command, expectedMessage, logic);
     }
 
     @Test
@@ -662,99 +681,31 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FindCommand prepareCommand(String userInput) throws ParseException {
-        ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(userInput, PREFIX_NAME, PREFIX_TAG, PREFIX_EMAIL,
-                PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_COMMENT, PREFIX_APPOINT);
-
-        String trimmedArgsName;
-        String trimmedArgsTag;
-        String trimmedArgsEmail;
-        String trimmedArgsPhone;
-        String trimmedArgsAddress;
-        String trimmedArgsComment;
-        String trimmedArgsAppoint;
-
-        String[] keywordNameList;
-        String[] keywordTagList;
-        String[] keywordEmailList;
-        String[] keywordPhoneList;
-        String[] keywordAddressList;
-        String[] keywordCommentList;
-        String[] keywordAppointList;
-
-        HashMap<String, List<String>> mapKeywords = new HashMap<>();
-
-        try {
-            if (argumentMultimap.getValue(PREFIX_NAME).isPresent()) {
-                trimmedArgsName = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_NAME)).get().trim();
-                if (trimmedArgsName.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordNameList = trimmedArgsName.split("\\s+");
-                mapKeywords.put(PREFIX_NAME.toString(), Arrays.asList(keywordNameList));
-            }
-
-            if (argumentMultimap.getValue(PREFIX_TAG).isPresent()) {
-                trimmedArgsTag = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_TAG)).get().trim();
-                if (trimmedArgsTag.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordTagList = trimmedArgsTag.split("\\s+");
-                mapKeywords.put(PREFIX_TAG.toString(), Arrays.asList(keywordTagList));
-            }
-
-            if (argumentMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-                trimmedArgsEmail = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_EMAIL)).get().trim();
-                if (trimmedArgsEmail.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordEmailList = trimmedArgsEmail.split("\\s+");
-                mapKeywords.put(PREFIX_EMAIL.toString(), Arrays.asList(keywordEmailList));
-            }
-
-            if (argumentMultimap.getValue(PREFIX_PHONE).isPresent()) {
-                trimmedArgsPhone = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_PHONE)).get().trim();
-                if (trimmedArgsPhone.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordPhoneList = trimmedArgsPhone.split("\\s+");
-                mapKeywords.put(PREFIX_PHONE.toString(), Arrays.asList(keywordPhoneList));
-            }
-
-            if (argumentMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-                trimmedArgsAddress = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_ADDRESS)).get().trim();
-                if (trimmedArgsAddress.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordAddressList = trimmedArgsAddress.split("\\s+");
-                mapKeywords.put(PREFIX_ADDRESS.toString(), Arrays.asList(keywordAddressList));
-            }
-
-            if (argumentMultimap.getValue(PREFIX_COMMENT).isPresent()) {
-                trimmedArgsComment = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_COMMENT)).get().trim();
-                if (trimmedArgsComment.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordCommentList = trimmedArgsComment.split("\\s+");
-                mapKeywords.put(PREFIX_COMMENT.toString(), Arrays.asList(keywordCommentList));
-            }
-
-            if (argumentMultimap.getValue(PREFIX_APPOINT).isPresent()) {
-                trimmedArgsAppoint = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_APPOINT)).get().trim();
-                if (trimmedArgsAppoint.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordAppointList = trimmedArgsAppoint.split("\\s+");
-                mapKeywords.put(PREFIX_APPOINT.toString(), Arrays.asList(keywordAppointList));
-            }
-
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        }
-
-        FindCommand command =
-                new FindCommand(new PersonContainsKeywordsPredicate(mapKeywords));
+        FindCommandParser parser = new FindCommandParser();
+        FindCommand command = parser.parse(userInput);
         command.setData(model, new CommandHistory(), new UndoRedoStack(), null);
         return command;
+    }
+
+    /**
+     * Executes the command, confirms that the exception is thrown and that the result message is correct.
+     * @param expectedException expected exception
+     * @param inputCommand input command
+     * @param expectedMessage expected message
+     * @param expectedLogic expected logic
+     */
+    private void assertCommandFailure(Class<?> expectedException, String inputCommand,
+                                       String expectedMessage, Logic expectedLogic) {
+
+        try {
+            CommandResult result = expectedLogic.execute(inputCommand);
+            assertEquals(expectedException, null);
+            assertEquals(expectedMessage, result.feedbackToUser);
+        } catch (CommandException | ParseException e) {
+            assertEquals(expectedException, e.getClass());
+            assertEquals(expectedMessage, e.getMessage());
+        }
+
     }
 ```
 ###### /java/seedu/address/logic/commands/MergeCommandTest.java
@@ -763,12 +714,13 @@ public class FindCommandTest {
 /**
  * Contains integration test (interaction with Model) for {@code MergeCommand}
  */
-public class MergeCommandTest {
-    private final String TEST_DATA_ERROR_FILE_PATH = "./src/test/data/XmlAddressBookStorageTest/DataConversionError.xml";
-    private final String TEST_NEW_FILE_PATH = "./src/test/data/XmlAddressBookStorageTest/TestNewFile.xml";
-
+public class MergeCommandTest extends GuiUnitTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    private final String testDataErrorFilePath =
+            "./src/test/data/XmlAddressBookStorageTest/DataConversionError.xml";
+    private final String testNewFilePath = "./src/test/data/XmlAddressBookStorageTest/TestNewFile.xml";
 
     private Model model = new ModelManager();
     private Email emailManager = new EmailManager();
@@ -802,7 +754,7 @@ public class MergeCommandTest {
         ModelStubAcceptingMergePath modelStub = new ModelStubAcceptingMergePath();
         Logic logicStub = new LogicManager(modelStub, emailManager);
 
-        String mergeCommand = MergeCommand.COMMAND_WORD + " " + TEST_NEW_FILE_PATH;
+        String mergeCommand = MergeCommand.COMMAND_WORD + " " + testNewFilePath;
         assertCommandSuccess(mergeCommand, MergeCommand.MESSAGE_SUCCESS, logicStub);
     }
 
@@ -814,7 +766,7 @@ public class MergeCommandTest {
 
     @Test
     public void merge_dataConversionError_failure() {
-        String mergeCommand = MergeCommand.COMMAND_WORD + " " + TEST_DATA_ERROR_FILE_PATH;
+        String mergeCommand = MergeCommand.COMMAND_WORD + " " + testDataErrorFilePath;
         assertCommandFailure(mergeCommand, CommandException.class, MergeCommand.MESSAGE_DATA_CONVERSION_ERROR, logic);
     }
 
@@ -833,10 +785,18 @@ public class MergeCommandTest {
      *
      * @see #assertCommandBehavior(Class, String, String, Logic)
      */
-    private void assertCommandFailure(String inputCommand, Class<?> expectedException, String expectedMessage, Logic expectedLogic) {
+    private void assertCommandFailure(String inputCommand, Class<?> expectedException, String expectedMessage,
+                                      Logic expectedLogic) {
         assertCommandBehavior(expectedException, inputCommand, expectedMessage, expectedLogic);
     }
 
+    /**
+     * Executes the command, confirms that the exception is thrown and that the result message is correct.
+     * @param expectedException expected exception
+     * @param inputCommand input command
+     * @param expectedMessage expected message
+     * @param expectedLogic expected logic
+     */
     private void assertCommandBehavior(Class<?> expectedException, String inputCommand,
                                        String expectedMessage, Logic expectedLogic) {
 
@@ -913,7 +873,7 @@ public class MergeCommandTest {
      * A Model stub that always accept the merge path given.
      */
     private class ModelStubAcceptingMergePath extends MergeCommandTest.ModelStub {
-        ObservableList<ReadOnlyPerson> mergeFilePersonList;
+        private ObservableList<ReadOnlyPerson> mergeFilePersonList;
 
         @Override
         public void mergeAddressBook(ObservableList<ReadOnlyPerson> newFilePersonList) {
@@ -941,7 +901,8 @@ public class FindCommandParserTest {
 
     @Test
     public void parse_noPrefix_throwsParseException() {
-        assertParseFailure(parser, "alex john 91234567", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "alex john 91234567",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 
     @Test
@@ -1008,11 +969,12 @@ public class FindCommandParserTest {
         FindCommand expectedFindCommand =
                 new FindCommand(new PersonContainsKeywordsPredicate(expectedFindCmdMap));
         // leading whitespaces is not part of user input, but to accommodate for tokenizer
-        assertParseSuccess(parser, " n/Alice Bob r/friends family e/@gmail.com @hotmail.com a/Felix Road 23 #12-12 " +
-                        "ap/01/01/2017 10:30 c/funny swim p/91234567 81234567", expectedFindCommand);
+        assertParseSuccess(parser, " n/Alice Bob r/friends family e/@gmail.com @hotmail.com a/Felix Road 23 #12-12 "
+                        + "ap/01/01/2017 10:30 c/funny swim p/91234567 81234567", expectedFindCommand);
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, "  n/ \n Alice \n \t Bob  \t  r/ \n friends \t family   \t e/ @gmail.com \n @hotmail.com " +
-                        "a/Felix Road \n 23 #12-12 ap/01/01/2017 \t  \n 10:30 c/funny \n swim p/91234567 81234567", expectedFindCommand);
+        assertParseSuccess(parser, "  n/ \n Alice \n \t Bob  \t  r/ \n friends \t family   "
+                + "\t e/ @gmail.com \n @hotmail.com a/Felix Road \n 23 #12-12 ap/01/01/2017 \t  "
+                + "\n 10:30 c/funny \n swim p/91234567 81234567", expectedFindCommand);
     }
 
 }
@@ -1040,7 +1002,7 @@ public class MergeCommandParserTest {
 ```
 ###### /java/seedu/address/model/person/PersonContainsKeywordsPredicateTest.java
 ``` java
-public class PersonContainsKeywordsPredicateTest {
+public class PersonContainsKeywordsPredicateTest extends GuiUnitTest {
 
     @Test
     public void equals() {
@@ -1049,14 +1011,17 @@ public class PersonContainsKeywordsPredicateTest {
         HashMap<String, List<String>> secondPredicateKeywordHashMap = new HashMap<>();
         secondPredicateKeywordHashMap.put("T", Arrays.asList("first", "second"));
 
-        PersonContainsKeywordsPredicate firstPredicate = new PersonContainsKeywordsPredicate(firstPredicateKeywordHashMap);
-        PersonContainsKeywordsPredicate secondPredicate = new PersonContainsKeywordsPredicate(secondPredicateKeywordHashMap);
+        PersonContainsKeywordsPredicate firstPredicate =
+                new PersonContainsKeywordsPredicate(firstPredicateKeywordHashMap);
+        PersonContainsKeywordsPredicate secondPredicate =
+                new PersonContainsKeywordsPredicate(secondPredicateKeywordHashMap);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        PersonContainsKeywordsPredicate firstPredicateCopy = new PersonContainsKeywordsPredicate(firstPredicateKeywordHashMap);
+        PersonContainsKeywordsPredicate firstPredicateCopy =
+                new PersonContainsKeywordsPredicate(firstPredicateKeywordHashMap);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -1151,36 +1116,39 @@ public class AddMultipleCommandSystemTest extends AddressBookSystemTest {
         Model model = getModel();
 
         /* Case: add from a file that contains duplicated persons --> rejected */
-        final String DUPLICATE_PERSONS_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/duplicatePersons.txt";
-        String command = AddMultipleCommand.COMMAND_WORD + " " + DUPLICATE_PERSONS_FILEPATH;
+        final String duplicatePersonsFilepath = "./src/test/data/AddMultipleCommandSystemTest/duplicatePersons.txt";
+        String command = AddMultipleCommand.COMMAND_WORD + " " + duplicatePersonsFilepath;
         String expectedResultMessage = AddMultipleCommand.MESSAGE_DUPLICATE_PERSON;
         assertCommandFailure(command, expectedResultMessage);
 
         /* Case: add from a file that contains missing field name */
-        final String MISSING_FIELD_NAME_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/missingPrefix_name.txt";
-        command = AddMultipleCommand.COMMAND_WORD + " " + MISSING_FIELD_NAME_FILEPATH;
+        final String missingFieldNameFilepath = "./src/test/data/AddMultipleCommandSystemTest/missingPrefix_name.txt";
+        command = AddMultipleCommand.COMMAND_WORD + " " + missingFieldNameFilepath;
         expectedResultMessage = String.format(MESSAGE_INVALID_PERSON_FORMAT, AddMultipleCommand.MESSAGE_PERSON_FORMAT);
         assertCommandFailure(command, expectedResultMessage);
 
         /* Case: add from a file that does not exist in the data folder --> rejected */
-        String NOT_EXISTS_FILE = "doesNotExist.txt";
-        command = AddMultipleCommand.COMMAND_WORD + "  " + NOT_EXISTS_FILE;
-        expectedResultMessage = String.format(AddMultipleCommand.MESSAGE_INVALID_FILE, NOT_EXISTS_FILE);
+        String notExistsFile = "doesNotExist.txt";
+        command = AddMultipleCommand.COMMAND_WORD + "  " + notExistsFile;
+        expectedResultMessage = String.format(AddMultipleCommand.MESSAGE_INVALID_FILE, notExistsFile);
         assertCommandFailure(command, expectedResultMessage);
 
-       /* Case add from a file containing valid persons --> added */
-        String VALID_PERSONS_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/validPersons_missingOptionalFields.txt";
+        /* Case add from a file containing valid persons --> added */
+        String validPersonsFilepath =
+                "./src/test/data/AddMultipleCommandSystemTest/validPersons_missingOptionalFields.txt";
         ArrayList<ReadOnlyPerson> personList = new ArrayList<>();
-        ReadOnlyPerson amy = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+        ReadOnlyPerson amy = new PersonBuilder().withName(VALID_NAME_AMY)
+                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withTags().build();
-        ReadOnlyPerson bob = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
+        ReadOnlyPerson bob = new PersonBuilder().withName(VALID_NAME_BOB)
+                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                 .withAddress(VALID_ADDRESS_BOB).withTags().build();
         personList.add(amy);
         personList.add(bob);
-        command = AddMultipleCommand.COMMAND_WORD + " " + VALID_PERSONS_FILEPATH;
+        command = AddMultipleCommand.COMMAND_WORD + " " + validPersonsFilepath;
         assertCommandSuccess(command, personList);
 
-         /* Case: undo adding persons to the list -> persons deleted */
+        /* Case: undo adding persons to the list -> persons deleted */
         command = UndoCommand.COMMAND_WORD;
         expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
@@ -1199,9 +1167,10 @@ public class AddMultipleCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Executes the {@code AddMultipleCommand} that adds {@code toAdd} to the model and verifies that the command box displays
-     * an empty string, the result display box displays the success message of executing {@code AddMultipleCommand} with the
-     * details of {@code toAdd}, and the model related components equal to the current model added with {@code toAdd}.
+     * Executes the {@code AddMultipleCommand} that adds {@code toAdd} to the model and verifies that the command box
+     * displays an empty string, the result display box displays the success message of executing
+     * {@code AddMultipleCommand} with the details of {@code toAdd}, and the model related components equal to the
+     * current model added with {@code toAdd}.
      * These verifications are done by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the command box has the default style class, the status bar's sync status changes,
@@ -1237,9 +1206,9 @@ public class MergeCommandSystemTest extends AddressBookSystemTest {
         Model expectedModel = getModel();
 
         /* Case: Merge a new file into the default address book data -> merged **/
-        final String TEST_NEW_FILE_PATH = "./src/test/data/XmlAddressBookStorageTest/TestNewFile.xml";
-        String command = MergeCommand.COMMAND_WORD + " " + TEST_NEW_FILE_PATH;
-        assertCommandSuccess(command, TEST_NEW_FILE_PATH);
+        final String testNewFilePath = "./src/test/data/XmlAddressBookStorageTest/TestNewFile.xml";
+        String command = MergeCommand.COMMAND_WORD + " " + testNewFilePath;
+        assertCommandSuccess(command, testNewFilePath);
 
         /* Case: Undo the previous merge -> address book data back to previous state **/
         command = UndoCommand.COMMAND_WORD;
@@ -1247,11 +1216,11 @@ public class MergeCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case: Merge the same file twice into the default address book -> merged **/
-        command = MergeCommand.COMMAND_WORD + " " + TEST_NEW_FILE_PATH;
-        assertCommandSuccess(command, TEST_NEW_FILE_PATH);
+        command = MergeCommand.COMMAND_WORD + " " + testNewFilePath;
+        assertCommandSuccess(command, testNewFilePath);
 
-        command = MergeCommand.COMMAND_WORD + " " + TEST_NEW_FILE_PATH;
-        assertCommandSuccess(command, TEST_NEW_FILE_PATH);
+        command = MergeCommand.COMMAND_WORD + " " + testNewFilePath;
+        assertCommandSuccess(command, testNewFilePath);
 
         /* Case: Merge the new file into an empty address book -> merged **/
         command = ClearCommand.COMMAND_WORD;
@@ -1259,8 +1228,8 @@ public class MergeCommandSystemTest extends AddressBookSystemTest {
         expectedModel.resetData(new AddressBook());
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
-        command = MergeCommand.COMMAND_WORD + " " + TEST_NEW_FILE_PATH;
-        assertCommandSuccess(command, TEST_NEW_FILE_PATH);
+        command = MergeCommand.COMMAND_WORD + " " + testNewFilePath;
+        assertCommandSuccess(command, testNewFilePath);
     }
 
     @Test
@@ -1275,7 +1244,8 @@ public class MergeCommandSystemTest extends AddressBookSystemTest {
     /**
      * Executes the {@code MergeCommand} that adds {@code toAdd} to the model and verifies that the command box displays
      * an empty string, the result display box displays the success message of executing {@code MergeCommand} with the
-     * details from {@code newFilePath}, and the model related components equal to the current model added with {@code newFilePath}.
+     * details from {@code newFilePath}, and the model related components equal to the current model added with
+     * {@code newFilePath}.
      * These verifications are done by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the command box has the default style class, the status bar's sync status changes,
