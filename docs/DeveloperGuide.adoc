@@ -415,40 +415,6 @@ Outcome: prefix `" "` will be mapped to `1 500` in `argMultimap`. Index and amou
 **Cons:** A new `Person` object have to be created in order to edit the `Debt` field. Since the `updatePerson()` method only accepts `ReadOnlyPerson` objects as parameters, more code has to be written to convert the `Person` object to be a `ReadOnlyPerson` object. +
 // end::borrowPaybackCommand[]
 
-// tag::filterTags[]
-=== Filter by tags mechanism
-
-The `filter` command allows the user to filter contacts by tags. Multiple tags can be entered. The command returns a list of contacts that match *at least one* of the tags that is specified by the user.
-
-A `PersonContainsTagPredicate` is created to check if a person contains the tags of interest. The code implementation below shows how the `PersonContainsTagPredicate` is implemented to sieve out the relevant contacts. The `anyMatch` method ensures that the filtered list contains persons who have at least one tag specified by the user.
-[source,java]
-----
-@Override
-public boolean test(ReadOnlyPerson person) {
-    Set<Tag> tagList = person.getTags();
-    for (Tag tag : tagList) {
-        if (tagKeywords.stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword))) {
-            return true;
-        }
-    }
-    return false;
-}
-----
-
-The list is filtered and updated through the `updateFilteredPersonList` method in the `Model` component. Since the person list is of a `FilteredList<>` type, filtering of the list can be handled by a Java `FilteredList` class method called `setPredicate`.
-
-==== Design Considerations
-
-**Aspect:** Implementation of `PersonContainsTagPredicate` predicate +
-**Alternative 1 (current choice):** Predicate returns true if at least one tag matches the list of tags specified by the user +
-**Pros:** User will have more contacts to work with. The additional information may help the user make better decisions. +
-**Cons:** The user may find some of the filtered contacts irrelevant. +
-**Alternative 2:** Predicate returns true only if the person contains the exact tags that are specified by the user +
-**Pros:** Shows the most relevant results if the user wants to search for an exact match. +
-**Cons:** If the user remembers one of the tags wrongly (but it is still a valid tag), there will be no contacts found.
-
-// end::filterTags[]
-
 // tag::backup[]
 === Backup storage mechanism
 
@@ -668,6 +634,40 @@ requires users to reset their contacts' `cluster` via deletion and addition or v
 **Pros:** Easy to implement. +
 **Cons:** Tedious for users. They also have to ensure that they do not make spelling mistakes.
 // end::cluster[]
+
+// tag::filterTags[]
+=== Filter by tags mechanism
+
+The `filter` command allows the user to filter contacts by tags. Multiple tags can be entered. The command returns a list of contacts that match *at least one* of the tags that is specified by the user.
+
+A `PersonContainsTagPredicate` is created to check if a person contains the tags of interest. The code implementation below shows how the `PersonContainsTagPredicate` is implemented to sieve out the relevant contacts. The `anyMatch` method ensures that the filtered list contains persons who have at least one tag specified by the user.
+[source,java]
+----
+@Override
+public boolean test(ReadOnlyPerson person) {
+    Set<Tag> tagList = person.getTags();
+    for (Tag tag : tagList) {
+        if (tagKeywords.stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword))) {
+            return true;
+        }
+    }
+    return false;
+}
+----
+
+The list is filtered and updated through the `updateFilteredPersonList` method in the `Model` component. Since the person list is of a `FilteredList<>` type, filtering of the list can be handled by a Java `FilteredList` class method called `setPredicate`.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `PersonContainsTagPredicate` predicate +
+**Alternative 1 (current choice):** Predicate returns true if at least one tag matches the list of tags specified by the user +
+**Pros:** User will have more contacts to work with. The additional information may help the user make better decisions. +
+**Cons:** The user may find some of the filtered contacts irrelevant. +
+**Alternative 2:** Predicate returns true only if the person contains the exact tags that are specified by the user +
+**Pros:** Shows the most relevant results if the user wants to search for an exact match. +
+**Cons:** If the user remembers one of the tags wrongly (but it is still a valid tag), there will be no contacts found.
+
+// end::filterTags[]
 
 === Logging
 
