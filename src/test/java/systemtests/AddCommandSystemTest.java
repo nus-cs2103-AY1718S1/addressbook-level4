@@ -353,6 +353,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
 
+        //@@author fustilio
         /* Case: add Hoon's parcel (completed) and Ida's parcel (pending) and check if tab is switched back and forth*/
         model = getModel();
         assertTrue(model.getTabIndex().equals(TAB_ALL_PARCELS));
@@ -362,6 +363,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertTrue(model.getTabIndex().equals(TAB_ALL_PARCELS));
         model.deleteParcel(HOON);
         model.deleteParcel(IDA);
+        //@@author
     }
 
     /**

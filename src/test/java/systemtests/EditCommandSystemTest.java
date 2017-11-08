@@ -167,6 +167,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         // browser's url is updated to reflect the new parcel's name
         assertCommandSuccess(command, index, AMY, index);
 
+        //@@author fustilio
         /* ----------------------------- Performing edit operation with tab switches -------------------------------- */
 
         /* Case: Edit status of first parcel to completed and check if tab is switched back and forth*/
@@ -180,6 +181,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         editedParcel = new ParcelBuilder(parcelToEdit).withStatus(VALID_STATUS_OVERDUE).build();
         model.editParcelCommand(parcelToEdit, editedParcel);
         assertTrue(model.getTabIndex().equals(TAB_ALL_PARCELS));
+        //@@author
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
 
