@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.model.ModelToggleEvent;
+import seedu.address.commons.events.ui.ToggleToParentModeEvent;
 
 //@@author Alim95
 /**
@@ -16,6 +17,7 @@ public class ParentModeCommand extends Command {
     @Override
     public CommandResult execute() {
         EventsCenter.getInstance().post(new ModelToggleEvent(ModelToggleEvent.Toggle.parentEnabled));
+        EventsCenter.getInstance().post(new ToggleToParentModeEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

@@ -32,11 +32,11 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Help">
+                  <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help" visible="false">
                      <items>
-                        <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-                        <MenuItem fx:id="helpOverlayItem" mnemonicParsing="false" onAction="#handleOverlay" text="Overlay" visible="false" />
-                        <MenuItem fx:id="helpOverlayExit" mnemonicParsing="false" onAction="#handleOverlayExit" text="OverlayExit" visible="false" />
+                        <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="User Guide" />
+                        <MenuItem fx:id="helpOverlayItem" mnemonicParsing="false" onAction="#handleOverlay" text="Help Overlay" />
+                        <MenuItem fx:id="helpOverlayExit" mnemonicParsing="false" onAction="#handleOverlayExit" text="Exit Help Overlay" />
                      </items>
                   </Menu>
                </menus>

@@ -25,6 +25,7 @@ public class ResultDisplay extends UiPart<Region> {
 
     private static final Logger logger = LogsCenter.getLogger(ResultDisplay.class);
     private static final String FXML = "ResultDisplay.fxml";
+    //@@author Alim95
     private static final String DELETE_ICON = "/images/DeleteBird.png";
     private static final String EDIT_ICON = "/images/EditBird.png";
     private static final String ERROR_ICON = "/images/ErrorBird.png";
@@ -33,6 +34,7 @@ public class ResultDisplay extends UiPart<Region> {
     private static final String SUCCESS_ICON = "/images/SuccessBird.png";
     private static final String TASK_ICON = "/images/TaskBird.png";
     private static final String UNDO_ICON = "/images/UndoBird.png";
+    //@@author
 
 
     private final StringProperty displayed = new SimpleStringProperty("");

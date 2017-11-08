@@ -6,7 +6,7 @@ package seedu.address.commons.core;
 public class Messages {
 
     public static final String MESSAGE_UNKNOWN_PARENT_COMMAND = "Chirp! Unknown command! "
-            + "Press F12 for a list of commands and ESC to close it.";
+            + "Press F2 for a list of commands and ESC to close it.";
     public static final String MESSAGE_UNKNOWN_CHILD_COMMAND = "Chirp! Unknown command!\n "
             + "Want to add a new friend or task? use \"add\"\n"
             + "Want to view list of friends or tasks? use \"list\" or \"listpin\"\n"
