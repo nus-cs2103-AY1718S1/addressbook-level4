@@ -364,31 +364,36 @@ _Figure 3.1.2g: `UndoRedoStack` activity diagram_
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
-// tag::borrowCommand[]
-=== Borrow command mechanism
+// tag::borrowPaybackCommand[]
+=== Borrow/payback command mechanism
 
-The borrow command allows users to increase the debt of a person should he/she borrow more money. The `BorrowCommand` class, which handles the updating of the `Debt` field in a `Person` object, extends `UndoableCommand` so that this command can be undone or redone if necessary.
+The `borrow` command allows users to increase the debt of a person should he/she borrow more money. On the other hand, when a debtor repays a specified amount, the `payback` command is used to deduct that amount from his/her current debt. The `BorrowCommand` and `PaybackCommand` classes, which handle the updating of the `Debt` field in a `Person` object, extends `UndoableCommand` so that these commands can be undone or redone if necessary.
 
-The user inputs required are the index (as listed in the person list panel on the left side of the application window) of the person who borrowed money and the amount that the person borrowed. The arguments (index and amount borrowed) are separated by a whitespace instead of special prefixes (e.g. prefix `p/` used for phone number). Hence, the `String#split` method is used to tokenize the input using a single whitespace as the delimiter. As seen in Figure 3.2.1, the tokenized inputs (index and amount borrowed) are then converted to their appropriate `Object` types and supplied as arguments to the `BorrowCommand` constructor.
+These two commands require one compulsory argument which is the amount that is borrowed/paid back. Indicating the index (as listed in the person list panel on the left side of the application window) of the person who borrowed or paid back money is optional. If no index is specified, the command will be executed for the person that is currently selected in the person list.
+The arguments (index and amount borrowed/paid back) are separated by a whitespace instead of special prefixes (e.g. prefix `p/` used for phone number). Hence, the `String#split` method is used to tokenize the input using a single whitespace as the delimiter. As seen in Figure 3.2.1, the tokenized inputs (index and amount borrowed) are then converted to their appropriate `Object` types and supplied as arguments to the `BorrowCommand` constructor. Input for the `payback` command is tokenized in the same manner.
 
-When `BorrowCommand` is executed in `LogicManager`, the `Debt` attribute in the target `Person` object is updated in the `AddressBook` class in the `Model` component. A new `Person` object is created with the debt amount updated to reflect the new total debt. The target `Person` object is then replaced with this new `Person` object.
+The `BorrowCommand` and `PaybackCommand` are executed in `LogicManager`.
+`BorrowCommand` updates the `debt` and `totalDebt` attributes in the target `Person` object in the `AddressBook` class (which is in the `Model` component). A new `Person` object is created with the updated `debt` and `totalDebt` amount. The target `Person` object is then replaced with this new `Person` object.
+`PaybackCommand` updates the target person's debt in the same manner as the `BorrowCommand`. However, only the `debt` attribute is updated.
 
 [NOTE]
 `DateBorrow` field in the new `Person` object needs to be updated to match the `DateBorrow` field in the target `Person` object. This is because the date when the `Person` object was created is set as the date for the `DateBorrow` field.
 
-The following sequence diagram, Figure 3.2.1, shows further details of the interaction between the `Logic` and `Model` component when the borrow command is executed:
+The following sequence diagram, Figure 3.2.1, shows further details of the interaction between the `Logic` and `Model` component when the `borrow` command is executed:
 
 image::BorrowCommandSequenceDiagram.png[width="800"]
 _Figure 3.2.1 : Sequence diagram of how the `Borrow` command works_
 
+The `payback` command works in the same way as the `borrow` command.
+
 ==== Design Considerations
 
-**Aspect:** Implementation of `BorrowCommandParser` +
+**Aspect:** Implementation of `BorrowCommandParser` and `PaybackCommandParser`+
 **Alternative 1 (current choice):** Tokenize arguments using `String#split` method +
 **Pros:** Easier to parse arguments using `String#split` method since there are no prefixes in the command input. It is also easier to validate the number of arguments entered by the user. This can be done through checking the length of the `String` array return by `String#split`. +
 **Cons:** User has to follow the format for entering the command strictly as an extra whitespace between the index and the amount borrowed would invoke a `ParseException`. +
 **Alternative 2:** Modify `ArgumentTokenizer#tokenize` method to tokenize arguments +
-**Pros:** Increased modularity +
+**Pros:** Better modularity +
 **Cons:** Requires modifications of `ArgumentTokenizer#tokenize` method since supplying whitespace as a prefix to the current `ArgumentTokenizer#tokenize` method incorrectly tokenizes arguments.
 
 For example:
@@ -408,7 +413,7 @@ Outcome: prefix `" "` will be mapped to `1 500` in `argMultimap`. Index and amou
 **Alternative 2:** Reusing the `updatePerson()` method in `AddressBook.java` +
 **Pros:** Do not have to code the method from scratch +
 **Cons:** A new `Person` object have to be created in order to edit the `Debt` field. Since the `updatePerson()` method only accepts `ReadOnlyPerson` objects as parameters, more code has to be written to convert the `Person` object to be a `ReadOnlyPerson` object. +
-// end::borrowCommand[]
+// end::borrowPaybackCommand[]
 
 // tag::backup[]
 === Backup storage mechanism
