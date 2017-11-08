@@ -40,7 +40,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
             String[] str = args.split(" ");
             // string length should be at least of length three comprising of command, index and scheduled date,time:
             // e.g. Schedule, 1, d/28October2019 3pm
-            if (str.length == 0 && str.length < 3) {
+            if (str.length == 0 || str.length < 3) {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
             // it is a valid Command
