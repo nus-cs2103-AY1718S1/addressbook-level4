@@ -194,4 +194,6 @@ public interface Model {
             throws PersonNotFoundException, IllegalValueException;
 
     void updateDebtFromInterest(ReadOnlyPerson person, int differenceInMonths);
+
+    boolean addProfilePicture(ReadOnlyPerson person);
 }

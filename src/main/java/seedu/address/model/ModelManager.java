@@ -4,11 +4,18 @@ import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toCollection;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.storage.PasswordSecurity.getSha512SecurePassword;
+import static seedu.address.ui.DebtorProfilePicture.DEFAULT_INTERNAL_PROFILEPIC_FOLDER_PATH;
+import static seedu.address.ui.DebtorProfilePicture.JPG_EXTENSION;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -19,6 +26,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.ProfilePicturesFolder;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.ChangeInternalListEvent;
 import seedu.address.commons.events.ui.DeselectionEvent;
@@ -402,6 +410,26 @@ public class ModelManager extends ComponentManager implements Model {
         } catch (IllegalValueException ive) {
             assert false : Debt.MESSAGE_DEBT_CONSTRAINTS;
         }
+    }
+
+    @Override
+    public boolean addProfilePicture(ReadOnlyPerson person) {
+        String imageName = person.getName().toString().replaceAll("\\s+", "");
+        File imageFile = new File(ProfilePicturesFolder.getPath() + imageName + JPG_EXTENSION);
+
+        BufferedImage bufferedImage = null;
+
+        if (imageFile.exists()) {
+            addressBook.addProfilePic(person);
+            try {
+                bufferedImage = ImageIO.read(imageFile);
+                ImageIO.write(bufferedImage, "jpg", new File(DEFAULT_INTERNAL_PROFILEPIC_FOLDER_PATH + imageName + JPG_EXTENSION));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        return false;
     }
 
     //=========== Filtered Person List Accessors =============================================================

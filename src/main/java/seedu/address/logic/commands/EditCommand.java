@@ -187,6 +187,7 @@ public class EditCommand extends UndoableCommand {
         personCreated.setIsBlacklisted(personToEdit.isBlacklisted());
         personCreated.setIsWhitelisted(personToEdit.isWhitelisted());
         personCreated.setHasOverdueDebt(personToEdit.hasOverdueDebt());
+        personCreated.setHasDisplayPicture(personToEdit.hasDisplayPicture());
         return personCreated;
     }
 

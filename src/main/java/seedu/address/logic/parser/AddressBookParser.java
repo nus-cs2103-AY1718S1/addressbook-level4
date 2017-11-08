@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddPictureCommand;
 import seedu.address.logic.commands.BanCommand;
 import seedu.address.logic.commands.BlacklistCommand;
 import seedu.address.logic.commands.BorrowCommand;
@@ -71,6 +72,10 @@ public class AddressBookParser {
         case AddCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new AddCommandParser().parse(arguments);
+
+        case AddPictureCommand.COMMAND_WORD:
+            logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            return new AddPictureCommandParser().parse(arguments);
 
         case BlacklistCommand.COMMAND_WORD_ALIAS:
         case BlacklistCommand.COMMAND_WORD:
