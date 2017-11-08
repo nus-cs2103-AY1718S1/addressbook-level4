@@ -129,7 +129,7 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
+// tag::remarks[]
 === Editing a person's remark: `remark`
 
 Edits the remark of the person identified by the index number used in the last person listing. +
@@ -141,7 +141,7 @@ Examples:
 Attaches `Snores loudly` as remark to first person on the list.
 * `remark 1 r/` +
 Removes the remark for the first person.
-
+//end::remarks[]
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
@@ -162,6 +162,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::findtag[]
 === Listing persons with specific tag: `findtag`
 
 Finds persons who have any of the given tags. +
@@ -180,6 +181,7 @@ Examples:
 * `findtag friends` +
 Returns all the person with the tag `friends`
 
+// end::findtag[]
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -263,12 +265,13 @@ Sorts the list based on name in ascending order.
 Sorts the people with `owesMoney` tag based on their emails in descending order.
 
 // end::sort[]
+// tag::theme[]
 
 === Change the theme of AddressBook: `theme`
 [NOTE]
 theme feature available since v1.4.
 
-Change the theme of the Rubrika to the theme specified.
+Change the theme of Rubrika to the theme specified.
 Format: theme KEYWORD
 
 ****
@@ -280,7 +283,10 @@ Examples:
 * `theme` `DarkTheme` +
 Change the theme of the Rubrika to DarkTheme.
 
+// end::theme[]
+
 // tag::importexport[]
+
 === Importing contacts: `import`
 
 [NOTE]
