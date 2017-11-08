@@ -20,9 +20,10 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.PopulateRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
-
 import seedu.address.commons.events.ui.ShowThemeRequestEvent;
+
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -161,7 +162,7 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        Calendar calendar = new Calendar(YearMonth.now());
+        calendar = new Calendar(YearMonth.now());
         calendarPanel.getChildren().add(calendar.getView());
     }
 
@@ -295,4 +296,13 @@ public class MainWindow extends UiPart<Region> {
         logic.setCurrentTheme(getCurrentTheme());
     }
     // @@author
+
+    //@@author chernghann
+    @Subscribe
+    private void handlePopulateEvent(PopulateRequestEvent request) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(request));
+        // calendar.populateNewCalendar(request.event);
+        calendar.populateUpdatedCalendar(request.eventList, YearMonth.now());
+    }
+    //@@author
 }
