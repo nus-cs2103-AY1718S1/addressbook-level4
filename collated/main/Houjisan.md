@@ -156,10 +156,12 @@ public class SortCommand extends Command {
         this.dataField = dataField;
         this.isFavIgnored = isFavIgnored;
         this.isReverseOrder = isReverseOrder;
+
     }
 
     @Override
     public CommandResult execute() throws CommandException {
+
         model.sortByDataFieldFirst(dataField, isFavIgnored, isReverseOrder);
         model.getFilteredPersonList();
 
@@ -240,6 +242,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -287,6 +290,7 @@ public class SortCommandParser implements Parser<SortCommand> {
         }
 
         String dataFieldToSortByFirst = matcher.group("dataField").toLowerCase();
+
         String options = matcher.group("options").trim();
 
         boolean isFavIgnored = FAV_NOT_IGNORED;
@@ -385,6 +389,7 @@ public class SortCommandParser implements Parser<SortCommand> {
     }
 
     @Override
+
     public void sortByDataFieldFirst(String dataField, boolean isFavIgnored, boolean isReverseOrder) {
         indicateChangedToPersonListView();
         Comparator<ReadOnlyPerson> comparatorOrder = new Comparator<ReadOnlyPerson>() {
@@ -556,12 +561,14 @@ public class ComparatorUtil {
                 .thenComparing(addressComparator);
     }
 
+
     // Returns a lexicographic-order comparator that compares by name first in reverse order,
     // followed by phone, email then address
     public static Comparator<ReadOnlyPerson> getAllComparatorsNameFirstReversed() {
         return nameComparator.reversed().thenComparing(phoneComparator).thenComparing(emailComparator)
                 .thenComparing(addressComparator);
     }
+
 
     // Returns a lexicographic-order comparator that compares by phone first,
     // followed by name, email then address

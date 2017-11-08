@@ -461,24 +461,46 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     public FindCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
+        if (trimmedArgs.isEmpty() || !((trimmedArgs.contains(PREFIX_NAME.getPrefix()))
+                || (trimmedArgs.contains(PREFIX_PHONE.getPrefix()))
+                || (trimmedArgs.contains(PREFIX_EMAIL.getPrefix()))
+                || (trimmedArgs.contains(PREFIX_ADDRESS.getPrefix()))
+                || (trimmedArgs.contains(PREFIX_TAG.getPrefix())))) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
         StringTokenizer st = new StringTokenizer(trimmedArgs, " ");
+        String newArgs = " ";
+        String current = "";
+        boolean exitAppend = false;
         while (st.hasMoreTokens()) {
             String token = st.nextToken();
-            if (!((token.contains(PREFIX_NAME.getPrefix())) || (token.contains(PREFIX_PHONE.getPrefix()))
-                || (token.contains(PREFIX_EMAIL.getPrefix())) || (token.contains(PREFIX_ADDRESS.getPrefix()))
-                    || (token.contains(PREFIX_TAG.getPrefix())))) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            if ((token.contains(PREFIX_NAME.getPrefix())) || (token.contains(PREFIX_PHONE.getPrefix()))
+                    || (token.contains(PREFIX_EMAIL.getPrefix())) || (token.contains(PREFIX_ADDRESS.getPrefix()))
+                    || (token.contains(PREFIX_TAG.getPrefix()))) {
+                current = token.substring(0, 2);
+                newArgs += token + " ";
+                if (token.length() != 2) {
+                    exitAppend = true;
+                } else {
+                    exitAppend = false;
+                }
+            } else {
+                if (!exitAppend) {
+                    int length = newArgs.length();
+                    newArgs = newArgs.substring(0, length - 3);
+                }
+                newArgs += current + token + " ";
             }
+
+
+
         }
+        String trimmedNewArgs = newArgs.trim();
 
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_TAG, PREFIX_EMAIL, PREFIX_NAME,
+                ArgumentTokenizer.tokenize(newArgs, PREFIX_TAG, PREFIX_EMAIL, PREFIX_NAME,
                         PREFIX_PHONE, PREFIX_ADDRESS);
 
         List<String> nameList = argMultimap.getAllValues(PREFIX_NAME);
@@ -506,7 +528,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         for (int i = 0; i < keywords.size(); i++) {
             List<String> list = keywords.get(i);
             String prefix = prefixList.get(i).getPrefix();
-            if (checkNoInput(list) && trimmedArgs.contains(prefix)) {
+            if (checkNoInput(list) && (trimmedNewArgs.contains(prefix))) {
                 missingInput += prefix + " ";
                 checkMissingInput = true;
             }
