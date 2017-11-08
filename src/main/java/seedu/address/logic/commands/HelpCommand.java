@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.commandidentifier.CommandIdentifier;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Country;
 
 /**
@@ -22,6 +23,26 @@ public class HelpCommand extends Command {
             + MESSAGE_GET_MORE_HELP;
 
     public static final String SHOWING_HELP_MESSAGE = "Opened help window.";
+    //@@author icehawker
+    public static final String COMMAND_QUICK_HELP_WORD = "command";
+    public static final String COMMAND_QUICK_HELP =
+            "Quick command keyword help: " + "    F1: Full Help window;     F2: Calendar; \n"
+                    + AddCommand.COMMAND_WORD + " / " + AddCommand.COMMAND_ALIAS + ";     "
+                    + ClearCommand.COMMAND_WORD + " / " + ClearCommand.COMMAND_ALIAS + ";     "
+                    + CopyCommand.COMMAND_WORD + " / " + CopyCommand.COMMAND_ALIAS + ";     "
+                    + DeleteCommand.COMMAND_WORD + " / " + DeleteCommand.COMMAND_ALIAS + ";     "
+                    + CalendarCommand.COMMAND_WORD + " / " + CalendarCommand.COMMAND_ALIAS + ";     "
+                    + EditCommand.COMMAND_WORD + " / " + EditCommand.COMMAND_ALIAS + ";     "
+                    + ExitCommand.COMMAND_WORD + " / " + ExitCommand.COMMAND_ALIAS + ";     "
+                    + FindCommand.COMMAND_WORD + " / " + FindCommand.COMMAND_ALIAS + "; \n"
+                    + HelpCommand.COMMAND_WORD + " / " + HelpCommand.COMMAND_ALIAS + ";     "
+                    + HistoryCommand.COMMAND_WORD + " / " + HistoryCommand.COMMAND_ALIAS + ";     "
+                    + ListCommand.COMMAND_WORD + " / " + ListCommand.COMMAND_ALIAS + ";     "
+                    + RedoCommand.COMMAND_WORD + " / " + RedoCommand.COMMAND_ALIAS + ";     "
+                    + ScheduleCommand.COMMAND_WORD + " / " + ScheduleCommand.COMMAND_ALIAS + ";     "
+                    + LocateCommand.COMMAND_WORD + " / " + LocateCommand.COMMAND_ALIAS + ";     "
+                    + UndoCommand.COMMAND_WORD + " / " + UndoCommand.COMMAND_ALIAS + ";     "
+                    + Country.COMMAND_WORD;
 
     //@@author CT15
     private final CommandIdentifier commandIdentifier;
@@ -30,11 +51,20 @@ public class HelpCommand extends Command {
         this.commandIdentifier = targetCommandIdentifier;
     }
 
+    //@@author icehawker
+    public HelpCommand(String startUpHelp) throws IllegalValueException {
+        this.commandIdentifier = new CommandIdentifier(startUpHelp);
+    }
+    //@@author CT15
     @Override
     public CommandResult execute() {
         String commandResult;
 
         switch(commandIdentifier.value) {
+
+        case HelpCommand.COMMAND_QUICK_HELP_WORD:
+            commandResult = COMMAND_QUICK_HELP;
+            break;
 
         case AddCommand.COMMAND_ALIAS:
             //Fallthrough
@@ -153,6 +183,8 @@ public class HelpCommand extends Command {
 
         return new CommandResult(commandResult);
     }
+
+    //@@author
 
     @Override
     public boolean equals(Object other) {
