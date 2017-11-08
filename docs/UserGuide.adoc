@@ -403,6 +403,24 @@ Examples:
 `email 2` +
 Emails the 2nd person in the address book.
 
+=== Adding avatar to a person : `(avr)avatar`
+
+Adds avatar to a person (identified by the index number used in the last listing). +
+Format: `(avr)avatar INDEX IMAGE_URL`
+
+****
+* The given URL must be pointed to a valid image in `png`, `jp(e)g` and `svg` format.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* like `1, 2, 3, ...`
+* The image will only be displayed correctly when you have Internet connection.
+****
+
+Examples:
+
+* `list` +
+`avatar 2 https://avatars0.githubusercontent.com/u/1342004` +
+Adds avatar to the 2nd person in the address book.
+
 === Listing entered commands : `(his)history`
 
 Lists all the commands that you have entered in reverse chronological order. +
