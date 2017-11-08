@@ -11,19 +11,19 @@ public class TaskDatesTest {
     @Test
     public void isValid() {
         // invalid dates
-        assertFalse(TaskDates.isDateValid("13-03-2019")); // invalid month in dashed format
-        assertFalse(TaskDates.isDateValid("13.03.2019")); // invalid month in dotted format
-        assertFalse(TaskDates.isDateValid("13/03/2019")); // invalid month in slashed format
-        assertFalse(TaskDates.isDateValid("13.3.19")); // invalid month in contracted form
-        assertFalse(TaskDates.isDateValid("02-30-19")); // invalid number of days in February
-        assertFalse(TaskDates.isDateValid("3-32-19")); // invalid number of days in month
+        assertFalse(DateTimeValidator.isDateValid("13-03-2019")); // invalid month in dashed format
+        assertFalse(DateTimeValidator.isDateValid("13.03.2019")); // invalid month in dotted format
+        assertFalse(DateTimeValidator.isDateValid("13/03/2019")); // invalid month in slashed format
+        assertFalse(DateTimeValidator.isDateValid("13.3.19")); // invalid month in contracted form
+        assertFalse(DateTimeValidator.isDateValid("02-30-19")); // invalid number of days in February
+        assertFalse(DateTimeValidator.isDateValid("3-32-19")); // invalid number of days in month
 
         // valid dates
-        assertTrue(TaskDates.isDateValid("")); // empty string
-        assertTrue(TaskDates.isDateValid(" ")); // string with only whitespace
-        assertTrue(TaskDates.isDateValid("12.03.2014")); // valid date in dotted format
-        assertTrue(TaskDates.isDateValid("12/3/14")); // valid date in slashed format
-        assertTrue(TaskDates.isDateValid("12-3-2014")); // valid date in dashed format
+        assertTrue(DateTimeValidator.isDateValid("")); // empty string
+        assertTrue(DateTimeValidator.isDateValid(" ")); // string with only whitespace
+        assertTrue(DateTimeValidator.isDateValid("12.03.2014")); // valid date in dotted format
+        assertTrue(DateTimeValidator.isDateValid("12/3/14")); // valid date in slashed format
+        assertTrue(DateTimeValidator.isDateValid("12-3-2014")); // valid date in dashed format
 
     }
 }

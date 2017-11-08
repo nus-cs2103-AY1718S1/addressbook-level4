@@ -10,21 +10,21 @@ import javafx.scene.control.Label;
 public class TaskCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
     private static final String DESCRIPTION_FIELD_ID = "#description";
-    private static final String STARTDATE_FIELD_ID = "#startDate";
     private static final String DEADLINE_FIELD_ID = "#deadline";
+    private static final String EVENT_TIME_FIELD_ID = "#time";
 
     private final Label idLabel;
     private final Label descriptionLabel;
-    private final Label startDateLabel;
     private final Label deadlineLabel;
+    private final Label eventTimeLabel;
 
     public TaskCardHandle(Node cardNode) {
         super(cardNode);
 
         this.idLabel = getChildNode(ID_FIELD_ID);
         this.descriptionLabel = getChildNode(DESCRIPTION_FIELD_ID);
-        this.startDateLabel = getChildNode(STARTDATE_FIELD_ID);
         this.deadlineLabel = getChildNode(DEADLINE_FIELD_ID);
+        this.eventTimeLabel = getChildNode(EVENT_TIME_FIELD_ID);
     }
 
 
@@ -36,8 +36,8 @@ public class TaskCardHandle extends NodeHandle<Node> {
         return descriptionLabel.getText();
     }
 
-    public String getStartDate() {
-        return startDateLabel.getText();
+    public String getEventTime() {
+        return eventTimeLabel.getText();
     }
 
     public String getDeadline() {

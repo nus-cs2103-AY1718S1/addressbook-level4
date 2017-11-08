@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -19,6 +20,8 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.task.DateTimeValidator;
+import seedu.address.model.task.Deadline;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.UniqueTaskList;
@@ -205,10 +208,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
-    /*public void removeTag(Tag t) throws TagNotFoundException {
-        tags.remove(t);
-    }*/
-
     //@@author tpq95
     /**
      * Remove {@code oldTag} from list of person stated by {@code indices} from
@@ -258,9 +257,13 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws DuplicateTaskException if an equivalent task already exists.
      */
-    public void addTask(ReadOnlyTask t) throws DuplicateTaskException {
+    public void addTask(ReadOnlyTask t) throws IllegalValueException {
         Task newTask = new Task(t);
-        syncMasterTagListWith(newTask);
+        if (t.getDeadline().isEmpty() && t.getEndTime().isPresent()) {
+            newTask.setDeadline(new Deadline(DateTimeValidator.formatDate(new Date())));
+        }
+        System.out.println(newTask);
+        syncMasterTagListWith(newTask);  xc
         tasks.add(newTask);
     }
 

@@ -30,8 +30,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.EventTime;
-import seedu.address.model.task.StartDate;
-import seedu.address.model.task.TaskDates;
+import seedu.address.model.task.DateTimeValidator;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -130,49 +129,43 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> date} into an {@code Optional<StartDate>} if {@code date} is present.
-     */
-    public static Optional<StartDate> parseStartDate(Optional<String> date) throws IllegalValueException {
-        requireNonNull(date);
-        if (date.isPresent() && !TaskDates.getDottedFormat(date.get()).isEmpty()) {
-            return Optional.of(new StartDate(TaskDates.formatDate(parseDottedDate(date.get())),
-                    parseRecurInterval(date.get())));
-        }
-        return (date.isPresent() && !date.get().isEmpty())
-                ? Optional.of(new StartDate(TaskDates.formatDate(parseDate(date.get())),
-                parseRecurInterval(date.get()))) : Optional.empty();
-    }
-
-    /**
      * Parses a {@code Optional<String> date} into an {@code Deadline} if {@code date} is present.
      */
-    public static Optional<Deadline> parseDeadline(Optional<String> date) throws IllegalValueException {
+    public static Optional<Deadline> parseDeadline(Optional<String> date)
+            throws IllegalValueException {
         requireNonNull(date);
-        if (date.isPresent() && !TaskDates.getDottedFormat(date.get()).isEmpty()) {
-            return Optional.of(new Deadline(TaskDates.formatDate(parseDottedDate(date.get())),
+        if (date.isPresent() && !DateTimeValidator.getDottedFormat(date.get()).isEmpty()) {
+            return Optional.of(new Deadline(DateTimeValidator.formatDate(parseDottedDate(date.get())),
                     parseRecurInterval(date.get())));
         }
-      /*  if ((date.isPresent() && !date.get().isEmpty())) {
+        if ((date.isPresent() && !date.get().isEmpty())) {
             Date parsedDate = parseDate(date.get());
-            EventTime parsedTimes = parseEventTimes(parsedDate);
-            // return
-            //         ? Optional.of(new Deadline(TaskDates.formatDate(parseDate(date.get())), parseRecurInterval(date.get())))
-            //         : Optional.empty();*/
-            return Optional.of(new Deadline("", SUFFIX_NO_RECUR_INTERVAL));
+            return Optional.of(new Deadline(DateTimeValidator.formatDate(parsedDate), SUFFIX_NO_RECUR_INTERVAL));
+        }
+            return Optional.empty();
     }
+
     /**
      * Parses a {@code Optional<String> time into a {@code EventTime} is the {@code time} is present.
      */
-  /*  public static EventTime parseEventTimes(String dateTime) throws IllegalValueException {
+    public static Optional<EventTime[]> parseEventTimes(Optional<String> dateTime) throws IllegalValueException {
         requireNonNull(dateTime);
-        List<DateGroup> dateGroup = new PrettyTimeParser().parseSyntax(dateTime.trim());
-        List<Date> dates = dateGroup.get(dateGroup.size() - 1).getDates();
-        System.out.println(da);
+        if (dateTime.isPresent()) {
+            List<DateGroup> dateGroup = new PrettyTimeParser().parseSyntax(dateTime.get().trim());
+            if (dateGroup.isEmpty()) {
+                throw new IllegalValueException(DateTimeValidator.MESSAGE_TIME_CONSTRAINTS);
+            }
+            List<Date> dates = dateGroup.get(dateGroup.size() - 1).getDates();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        sdf.format()
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            String endTime = sdf.format(dates.get(dates.size() - 1));
+            String startTime = dates.size() > 1 ? sdf.format(dates.get(dates.size() - 2)) : "";
 
-    }*/
+            return Optional.of(new EventTime[]{new EventTime(startTime), new EventTime(endTime)});
+        } else {
+            return Optional.empty();
+        }
+    }
 
     /**
      * Parses a {@code String naturalLanguageInput} using PrettyTime NLP, into a {@code Date}.
@@ -180,8 +173,8 @@ public class ParserUtil {
      */
     public static Date parseDate(String naturalLanguageInput) throws IllegalValueException {
         List<DateGroup> dateGroup = new PrettyTimeParser().parseSyntax(naturalLanguageInput.trim());
-        if (dateGroup.isEmpty() | !TaskDates.isDateValid(naturalLanguageInput)) {
-            throw new IllegalValueException(TaskDates.MESSAGE_DATE_CONSTRAINTS);
+        if (dateGroup.isEmpty() | !DateTimeValidator.isDateValid(naturalLanguageInput)) {
+            throw new IllegalValueException(DateTimeValidator.MESSAGE_DATE_CONSTRAINTS);
         }
         List<Date> dates = dateGroup.get(dateGroup.size() - 1).getDates();
         return dates.get(dates.size() - 1);
@@ -193,9 +186,9 @@ public class ParserUtil {
      */
     public static Date parseDottedDate(String inputDate) throws IllegalValueException {
         try {
-            return new SimpleDateFormat(TaskDates.getDottedFormat(inputDate)).parse(inputDate);
+            return new SimpleDateFormat(DateTimeValidator.getDottedFormat(inputDate)).parse(inputDate);
         } catch (ParseException p) {
-            throw new IllegalValueException(TaskDates.MESSAGE_DATE_CONSTRAINTS);
+            throw new IllegalValueException(DateTimeValidator.MESSAGE_DATE_CONSTRAINTS);
         }
     }
 

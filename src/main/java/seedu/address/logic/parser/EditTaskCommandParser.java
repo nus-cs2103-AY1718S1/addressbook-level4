@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_ON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_AT;
 import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
 
 import java.util.Collection;
@@ -22,8 +23,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
-import seedu.address.model.task.StartDate;
-import seedu.address.model.task.TaskDates;
 
 //@@author raisa2010
 /**
@@ -39,7 +38,8 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
     public EditTaskCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_STARTDATE, PREFIX_DEADLINE_BY, PREFIX_DEADLINE_ON, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_STARTDATE, PREFIX_DEADLINE_BY, PREFIX_DEADLINE_ON,
+                        PREFIX_TIME_AT, PREFIX_TAG);
 
         Index index;
 
@@ -52,18 +52,14 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
         EditTaskDescriptor editTaskDescriptor = new EditTaskCommand.EditTaskDescriptor();
         try {
             parseDescriptionForEdit(argMultimap.getPreamble()).ifPresent(editTaskDescriptor::setDescription);
-            parseStartDateForEdit(argMultimap.getAllValues(PREFIX_STARTDATE))
-                    .ifPresent(editTaskDescriptor::setStartDate);
             parseDeadlineForEdit(argMultimap.getAllValues(PREFIX_DEADLINE_BY, PREFIX_DEADLINE_ON))
                     .ifPresent(editTaskDescriptor::setDeadline);
+            ParserUtil.parseEventTimes(argMultimap.getValue(PREFIX_TIME_AT))
+                    .ifPresent(editTaskDescriptor::setEventTimes);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
 
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
-        }
-
-        if (!TaskDates.isStartDateBeforeDeadline(editTaskDescriptor.getStartDate(), editTaskDescriptor.getDeadline())) {
-            throw new ParseException(TaskDates.MESSAGE_DATE_CONSTRAINTS);
         }
 
         if (!editTaskDescriptor.isAnyFieldEdited()) {
@@ -90,24 +86,6 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
     }
 
     //@@author raisa2010
-    /**
-     * Parses {@code List<String> dates} into a {@code Optional<StartDate>} containing the last date in the list,
-     * if {@code dates} is non-empty.
-     * If {@code dates} contain only one element which is an empty string, it will be parsed into a
-     * {@code Optional<StartDate>} containing an empty date.
-     */
-    public Optional<StartDate> parseStartDateForEdit(List<String> dates) throws IllegalValueException {
-        assert dates != null;
-
-        if (dates.isEmpty()) {
-            return Optional.empty();
-        }
-
-        return dates.size() == 1 && dates.contains("")
-                ? Optional.of(new StartDate("", SUFFIX_NO_RECUR_INTERVAL))
-                : ParserUtil.parseStartDate(Optional.of(dates.get(dates.size() - 1)));
-    }
-
     /**
      * Parses {@code List<String> dates} into a {@code Optional<Deadline>} containing the last date in the list,
      * if {@code dates} is non-empty.

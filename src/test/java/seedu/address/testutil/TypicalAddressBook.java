@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -27,7 +28,7 @@ public class TypicalAddressBook {
         for (ReadOnlyTask task : TypicalTasks.getTypicalTasks()) {
             try {
                 ab.addTask(task);
-            } catch (DuplicateTaskException e) {
+            } catch (IllegalValueException e) {
                 assert false : "not possible";
             }
         }

@@ -20,8 +20,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
+import seedu.address.model.task.EventTime;
 import seedu.address.model.task.ReadOnlyTask;
-import seedu.address.model.task.StartDate;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
@@ -31,6 +31,9 @@ import seedu.address.model.task.exceptions.TaskNotFoundException;
  */
 public class EditTaskCommand extends UndoableCommand {
 
+    public static final int INDEX_START_TIME = 0;
+    public static final int INDEX_END_TIME = 1;
+
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the task identified "
@@ -38,7 +41,6 @@ public class EditTaskCommand extends UndoableCommand {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + "DESCRIPTION] "
-            + "[" + PREFIX_STARTDATE + " START DATE] "
             + "[" + PREFIX_DEADLINE_BY + "/" + PREFIX_DEADLINE_ON + " DEADLINE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -95,11 +97,13 @@ public class EditTaskCommand extends UndoableCommand {
         assert taskToEdit != null;
 
         Description updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
-        StartDate updatedStartDate = editTaskDescriptor.getStartDate().orElse(taskToEdit.getStartDate());
         Deadline updatedDeadline = editTaskDescriptor.getDeadline().orElse(taskToEdit.getDeadline());
+        EventTime updatedStartTime = editTaskDescriptor.getStartTime().orElse(taskToEdit.getStartTime());
+        EventTime updatedEndTime = editTaskDescriptor.getEndTime().orElse(taskToEdit.getEndTime());
         Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(taskToEdit.getTags());
 
-        return new Task(updatedDescription, updatedStartDate, updatedDeadline, updatedTags);
+        return new Task(updatedDescription, updatedDeadline, updatedStartTime, updatedEndTime,
+                updatedTags);
     }
 
     @Override
@@ -126,16 +130,18 @@ public class EditTaskCommand extends UndoableCommand {
      */
     public static class EditTaskDescriptor {
         private Description description;
-        private StartDate startDate;
         private Deadline deadline;
+        private EventTime startTime;
+        private EventTime endTime;
         private Set<Tag> tags;
 
         public EditTaskDescriptor() {}
 
         public EditTaskDescriptor(EditTaskCommand.EditTaskDescriptor toCopy) {
             this.description = toCopy.description;
-            this.startDate = toCopy.startDate;
             this.deadline = toCopy.deadline;
+            this.startTime = toCopy.startTime;
+            this.endTime = toCopy.endTime;
             this.tags = toCopy.tags;
         }
 
@@ -143,7 +149,8 @@ public class EditTaskCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.description, this.startDate, this.deadline, this.tags);
+            return CollectionUtil.isAnyNonNull(this.description, this.deadline, this.startTime,
+                    this.endTime, this.tags);
         }
 
         public void setDescription(Description description) {
@@ -154,12 +161,25 @@ public class EditTaskCommand extends UndoableCommand {
             return Optional.ofNullable(description);
         }
 
-        public void setStartDate(StartDate startDate) {
-            this.startDate = startDate;
+        public void setEventTimes(EventTime[] eventTimes) {
+            this.startTime = eventTimes[INDEX_START_TIME];
+            this.endTime = eventTimes[INDEX_END_TIME];
         }
 
-        public Optional<StartDate> getStartDate() {
-            return Optional.ofNullable(startDate);
+        public void setStartTime(EventTime startTime) {
+            this.startTime = startTime;
+        }
+
+        public Optional<EventTime> getStartTime() {
+            return Optional.ofNullable(startTime);
+        }
+
+        public void setEndTime(EventTime endTime) {
+            this.endTime = endTime;
+        }
+
+        public Optional<EventTime> getEndTime() {
+            return Optional.ofNullable(endTime);
         }
 
         public void setDeadline(Deadline deadline) {
@@ -194,8 +214,9 @@ public class EditTaskCommand extends UndoableCommand {
             EditTaskCommand.EditTaskDescriptor e = (EditTaskCommand.EditTaskDescriptor) other;
 
             return getDescription().equals(e.getDescription())
-                    && getStartDate().equals(e.getStartDate())
                     && getDeadline().equals(e.getDeadline())
+                    && getStartTime().equals(e.getStartTime())
+                    && getEndTime().equals(e.getEndTime())
                     && getTags().equals(e.getTags());
         }
     }

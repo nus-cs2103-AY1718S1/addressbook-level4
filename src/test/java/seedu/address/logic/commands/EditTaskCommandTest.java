@@ -4,8 +4,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.TIME_DESC_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_INTERNSHIP;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENDTIME_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTTIME_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_URGENT;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -61,10 +64,11 @@ public class EditTaskCommandTest {
 
         TaskBuilder taskInList = new TaskBuilder(lastTask);
         Task editedTask = taskInList.withDescription(VALID_DESCRIPTION_INTERNSHIP)
-                .withStartDate(VALID_STARTDATE_INTERNSHIP).withTags(VALID_TAG_URGENT).build();
+                .withStartTime(VALID_STARTTIME_INTERNSHIP).withEndTime(VALID_ENDTIME_INTERNSHIP)
+                .withTags(VALID_TAG_URGENT).build();
 
         EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP)
-                .withStartDate(VALID_STARTDATE_INTERNSHIP).withTags(VALID_TAG_URGENT).build();
+                .withEventTimes(TIME_DESC_INTERNSHIP).withTags(VALID_TAG_URGENT).build();
         EditTaskCommand editTaskCommand = prepareCommand(indexLastTask, descriptor);
 
         String expectedMessage = String.format(EditTaskCommand.MESSAGE_EDIT_TASK_SUCCESS, editedTask);
@@ -92,9 +96,9 @@ public class EditTaskCommandTest {
         showFirstTaskOnly(model);
 
         ReadOnlyTask taskInFilteredList = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
-        Task editedTask = new TaskBuilder(taskInFilteredList).withDescription(VALID_DESCRIPTION_INTERNSHIP).build();
+        Task editedTask = new TaskBuilder(taskInFilteredList).withDescription(VALID_DESCRIPTION_GRAD_SCHOOL).build();
         EditTaskCommand editTaskCommand = prepareCommand(INDEX_FIRST_PERSON,
-                new EditTaskDescriptorBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP).build());
+                new EditTaskDescriptorBuilder().withDescription(VALID_DESCRIPTION_GRAD_SCHOOL).build());
 
         String expectedMessage = String.format(EditTaskCommand.MESSAGE_EDIT_TASK_SUCCESS, editedTask);
 

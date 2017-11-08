@@ -56,7 +56,7 @@ public class AddressBookBuilder {
     public AddressBookBuilder withTask(ReadOnlyTask task) {
         try {
             addressBook.addTask(task);
-        } catch (DuplicateTaskException dte) {
+        } catch (IllegalValueException dte) {
             throw new IllegalArgumentException("task is expected to be unique");
         }
         return this;

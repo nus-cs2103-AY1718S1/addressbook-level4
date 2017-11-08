@@ -11,7 +11,7 @@ import seedu.address.logic.parser.Suffix;
  * Represents the deadline of a task in the task manager.
  * Guarantees: immutable.
  */
-public class Deadline extends TaskDates {
+public class Deadline {
 
     public final String date;
     public final Suffix recurInterval;
@@ -21,6 +21,11 @@ public class Deadline extends TaskDates {
      */
     public Deadline() {
         this.date = "";
+        this.recurInterval = SUFFIX_NO_RECUR_INTERVAL;
+    }
+
+    public Deadline(String date) {
+        this.date = date.trim();
         this.recurInterval = SUFFIX_NO_RECUR_INTERVAL;
     }
 

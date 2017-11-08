@@ -54,12 +54,12 @@
                   </FlowPane>
                   <HBox prefHeight="30.0" prefWidth="200.0">
                      <children>
-                        <Label prefHeight="30.0" prefWidth="100.0" styleClass="cell_big_label" text="  Start Date:">
+                        <Label prefHeight="30.0" prefWidth="100.0" styleClass="cell_big_label" text="  Time:">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="startDate" prefHeight="30.0" prefWidth="200.0" styleClass="cell_small_label" text="\\$startDate" />
+                        <Label fx:id="time" prefHeight="30.0" prefWidth="200.0" styleClass="cell_small_label" text="\\$startTime - \\$endTime" />
                      </children>
                   </HBox>
                   <HBox prefHeight="30.0" prefWidth="200.0">

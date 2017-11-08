@@ -101,7 +101,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<ReadOnlyPerson> asObservableList() {
-        sortPersons(internalList);
+//        sortPersons(internalList);
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 

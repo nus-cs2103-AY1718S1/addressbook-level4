@@ -4,9 +4,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.TIME_DESC_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.UNQUOTED_DESCRIPTION_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_GRAD_SCHOOL;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_NOT_URGENT;
 
 import org.junit.Test;
@@ -41,9 +41,9 @@ public class EditTaskDescriptorTest {
                 new EditTaskDescriptorBuilder(DESC_INTERNSHIP).withDescription(UNQUOTED_DESCRIPTION_PAPER).build();
         assertFalse(DESC_INTERNSHIP.equals(editedInternship));
 
-        // different start date -> returns false
+        // different event times -> returns false
         editedInternship = new EditTaskDescriptorBuilder(DESC_INTERNSHIP)
-                .withStartDate(VALID_STARTDATE_GRAD_SCHOOL).build();
+                .withEventTimes(TIME_DESC_GRAD_SCHOOL).build();
         assertFalse(DESC_INTERNSHIP.equals(editedInternship));
 
         // different deadline -> returns false

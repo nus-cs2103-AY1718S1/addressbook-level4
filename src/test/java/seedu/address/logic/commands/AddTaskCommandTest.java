@@ -35,7 +35,7 @@ import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.TaskBuilder;
 
 //@@author raisa2010
-public class AddTaskCommandTest {
+public class  AddTaskCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -70,7 +70,7 @@ public class AddTaskCommandTest {
 
     @Test
     public void equals() {
-        Task assignment = new TaskBuilder().withDescription("Complete assignment").build();
+        Task assignment = new TaskBuilder().withDescription("Complete assignment").withStartTime("12:00").build();
         Task project = new TaskBuilder().withDescription("Project due").build();
         AddTaskCommand addAssignmentCommand = new AddTaskCommand(assignment);
         AddTaskCommand addProjectCommand = new AddTaskCommand(project);

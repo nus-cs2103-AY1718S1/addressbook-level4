@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_AT;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,15 +69,17 @@ public class CommandTestUtil {
     public static final String INVALID_BIRTHDAY_DESC = " " + PREFIX_BIRTHDAY + "11121995";
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
-    public static final String VALID_DESCRIPTION_INTERNSHIP = " " + "Apply for Google internship" + " ";
-    public static final String VALID_DESCRIPTION_GRAD_SCHOOL = " " + "Graduate school applications" + " ";
+    public static final String VALID_DESCRIPTION_INTERNSHIP = " " + "First day of internship" + " ";
+    public static final String VALID_DESCRIPTION_GRAD_SCHOOL = " " + "Grad school orientation" + " ";
     public static final String UNQUOTED_DESCRIPTION_PAPER = "Finish paper on team behaviour";
-    public static final String VALID_STARTDATE_INTERNSHIP = "Mon, Oct 23, '17";
-    public static final String VALID_STARTDATE_GRAD_SCHOOL = "Tue, Oct 24, '17";
     public static final String VALID_DEADLINE_INTERNSHIP = "Wed, Oct 25, '17";
     public static final String VALID_DEADLINE_GRAD_SCHOOL = "Thu, Oct 26, '17";
-    public static final String VALID_STARTDATE_PAPER = "Fri, Oct 20, '17";
     public static final String VALID_DEADLINE_PAPER = "Wed, Oct 25, '17";
+    public static final String VALID_STARTTIME_INTERNSHIP = "09:00";
+    public static final String VALID_STARTTIME_GRAD_SCHOOL = "10:00";
+    public static final String VALID_ENDTIME_INTERNSHIP = "17:00";
+    public static final String VALID_ENDTIME_GRAD_SCHOOL = "12:00";
+    public static final String VALID_ENDTIME_PAPER = "23:59";
     public static final String VALID_TAG_URGENT = "urgent";
     public static final String VALID_TAG_NOT_URGENT = "notUrgent";
     public static final String VALID_TAG_GROUP = "projectGroup";
@@ -86,18 +89,22 @@ public class CommandTestUtil {
     public static final String INVALID_DASHED_DATE = "13-02-2015";
     public static final String INVALID_STARTDATE_INTERNSHIP = "Thu, Oct 26, '17";
 
-    public static final String DESCRIPTION_QUOTED_PAPER = " " + "\"" + UNQUOTED_DESCRIPTION_PAPER + "\"";
-    public static final String STARTDATE_DESC_INTERNSHIP = " " + PREFIX_STARTDATE + " " + VALID_STARTDATE_INTERNSHIP;
-    public static final String STARTDATE_DESC_GRAD_SCHOOL = " " + PREFIX_STARTDATE + " " + VALID_STARTDATE_GRAD_SCHOOL;
-    public static final String STARTDATE_DESC_PAPER = " " + PREFIX_STARTDATE + " " + VALID_STARTDATE_PAPER;
+    public static final String DESCRIPTION_QUOTED_PAPER = " " + "\"" + UNQUOTED_DESCRIPTION_PAPER + "\"";;
     public static final String DEADLINE_DESC_INTERNSHIP = " " + PREFIX_DEADLINE_ON + " " + VALID_DEADLINE_INTERNSHIP;
     public static final String DEADLINE_DESC_GRAD_SCHOOL = " " + PREFIX_DEADLINE_BY + " " + VALID_DEADLINE_GRAD_SCHOOL;
     public static final String DEADLINE_DESC_PAPER = " " + PREFIX_DEADLINE_ON + " " + VALID_DEADLINE_PAPER;
+    public static final String TIME_DESC_INTERNSHIP = " " + PREFIX_TIME_AT + " " + VALID_STARTTIME_INTERNSHIP + " to "
+            + VALID_ENDTIME_INTERNSHIP;
+    public static final String TIME_DESC_GRAD_SCHOOL = " " + PREFIX_TIME_AT + " " + VALID_STARTTIME_GRAD_SCHOOL + " to "
+            + VALID_ENDTIME_GRAD_SCHOOL;
+    public static final String MIXED_TIME_DESC_INTERNSHIP = " " + PREFIX_TIME_AT + " " + VALID_STARTTIME_INTERNSHIP +
+            " to " + VALID_ENDTIME_GRAD_SCHOOL;
+    public static final String MIXED_TIME_DESC_GRAD_SCHOOL = " " + PREFIX_TIME_AT + " " + VALID_STARTTIME_GRAD_SCHOOL +
+            " to " + VALID_ENDTIME_INTERNSHIP;
+    public static final String TIME_DESC_PAPER = " " + PREFIX_TIME_AT + " " + VALID_ENDTIME_PAPER;
     public static final String TAG_DESC_URGENT = " " + PREFIX_TAG + VALID_TAG_URGENT;
     public static final String TAG_DESC_GROUP = " " + PREFIX_TAG + VALID_TAG_GROUP;
     public static final String TAG_DESC_NOT_URGENT = " " + PREFIX_TAG + VALID_TAG_NOT_URGENT;
-
-    public static final String INVALID_STARTDATE_DESC = " " + PREFIX_STARTDATE + " " + INVALID_DOTTED_DATE;
     public static final String INVALID_DEADLINE_DESC = " " + PREFIX_DEADLINE_ON + " " + INVALID_DASHED_DATE;
     public static final String INVALID_STARTDATE_INTERNSHIP_DESC = " " + PREFIX_STARTDATE + " "
             + INVALID_STARTDATE_INTERNSHIP;
@@ -116,10 +123,11 @@ public class CommandTestUtil {
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withBirthday(VALID_BIRTHDAY_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
         DESC_INTERNSHIP = new EditTaskDescriptorBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP)
-                .withStartDate(VALID_STARTDATE_INTERNSHIP).withDeadline(VALID_DEADLINE_INTERNSHIP)
+                .withDeadline(VALID_DEADLINE_INTERNSHIP)
+                .withEventTimes(VALID_STARTTIME_INTERNSHIP + " " + VALID_ENDTIME_INTERNSHIP)
                 .withTags(VALID_TAG_URGENT).build();
         DESC_PAPER = new EditTaskDescriptorBuilder().withDescription(UNQUOTED_DESCRIPTION_PAPER)
-                .withStartDate(VALID_STARTDATE_PAPER).withDeadline(VALID_DEADLINE_PAPER)
+                .withDeadline(VALID_DEADLINE_PAPER).withEventTimes(VALID_ENDTIME_PAPER)
                 .withTags(VALID_TAG_URGENT, VALID_TAG_GROUP).build();
     }
 

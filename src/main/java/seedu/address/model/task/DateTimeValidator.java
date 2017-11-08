@@ -11,7 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 /**
  * Represents a date for a task in the task manager.
  */
-public abstract class TaskDates {
+public abstract class DateTimeValidator {
 
     public static final String DISPLAY_DATE_FORMAT = "EEE, MMM d, ''yy";
     public static final String[] DOTTED_DATE_FORMATS = new String[]{"MM.dd.yyyy", "MM.d.yyyy", "M.d.yyyy",
@@ -26,6 +26,7 @@ public abstract class TaskDates {
     public static final int MAX_DAYS_IN_FEB = 29;
 
     public static final String MESSAGE_DATE_CONSTRAINTS = "Date is invalid";
+    public static final String MESSAGE_TIME_CONSTRAINTS = "Time is invalid";
 
     /**
      * Formats the last date of a given {@code Date} object into a String.
@@ -33,42 +34,6 @@ public abstract class TaskDates {
     public static String formatDate(Date date) throws IllegalValueException {
         SimpleDateFormat sdf = new SimpleDateFormat(DISPLAY_DATE_FORMAT);
         return sdf.format(date);
-    }
-
-    /**
-     * Returns true if the {@code StartDate} is before the {@code Deadline}} or if one of the parameters is empty.
-     * Otherwise, an exception is thrown.
-     */
-    public static boolean isStartDateBeforeDeadline(StartDate startDate, Deadline deadline) {
-        if (!startDate.isEmpty() && !deadline.isEmpty()) {
-            try {
-                Date parsedStartDate = new SimpleDateFormat(DISPLAY_DATE_FORMAT).parse(startDate.toString());
-                Date parsedDeadline = new SimpleDateFormat(DISPLAY_DATE_FORMAT).parse(deadline.toString());
-                return parsedDeadline.after(parsedStartDate);
-            } catch (ParseException p) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Carries out the same function as {@Link isStartDateBeforeDeadline(StartDate, Deadline)} except the parameters
-     * are wrapped in an Optional.
-     * Returns true if the {@code StartDate} is before the {@code Deadline}} or if one of the parameters is empty.
-     * Otherwise, an exception is thrown.
-     */
-    public static boolean isStartDateBeforeDeadline(Optional<StartDate> startDate, Optional<Deadline> deadline) {
-        if (startDate.isPresent() && !startDate.get().isEmpty() && deadline.isPresent() && !deadline.get().isEmpty()) {
-            try {
-                Date parsedStartDate = new SimpleDateFormat(DISPLAY_DATE_FORMAT).parse(startDate.get().toString());
-                Date parsedDeadline = new SimpleDateFormat(DISPLAY_DATE_FORMAT).parse(deadline.get().toString());
-                return parsedDeadline.after(parsedStartDate);
-            } catch (ParseException p) {
-                return false;
-            }
-        }
-        return true;
     }
 
     /**

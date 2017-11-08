@@ -148,11 +148,6 @@ public class FindTaskCommandSystemTest extends AddressBookSystemTest {
         command = FindTaskCommand.COMMAND_WORD + " Handsome";
         assertCommandSuccess(command, expectedModel);
         assertSelectedTaskCardUnchanged();
-
-        /* Case: find start date of task in address book -> 0 tasks found */
-        command = FindTaskCommand.COMMAND_WORD + " " + ASSIGNMENT.getStartDate().date;
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedTaskCardUnchanged();
         //@@author
 
         //@@author tpq95

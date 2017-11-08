@@ -26,8 +26,9 @@ public class TaskCardTest extends GuiUnitTest {
         // changes made to task reflects on card
         guiRobot.interact(() -> {
             task.setDescription(ASSIGNMENT.getDescription());
-            task.setStartDate(ASSIGNMENT.getStartDate());
             task.setDeadline(ASSIGNMENT.getDeadline());
+            task.setStartTime(ASSIGNMENT.getStartTime());
+            task.setEndTime(ASSIGNMENT.getEndTime());
         });
         assertCardDisplay(taskCard, task, 1);
     }
