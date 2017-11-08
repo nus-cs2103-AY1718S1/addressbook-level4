@@ -72,6 +72,7 @@ Example:
 * `filter trip`
 
 === Person Image: `image`
+// tag::image[]
 Set and show an image for a person in the addressbook. Uses the index of a person to select them and a URL to the image path. Since v1.3. +
 
 Format: `image INDEX FILEPATH`
@@ -79,11 +80,12 @@ Format: `image INDEX FILEPATH`
 Example:
 
 * `image 1 /home/user/someexamplepic.jpg`
-
+// end::image[]
 === Expiry Date: `expire`
 Set the expiry date of a person. The entry will be automatically removed from addressbook once it expires. Coming v1.5
 
 === Exporting Database: `export`
+// tag::export[]
 Export a working version of the database and the images associated with it to the application directory or a specified directory. Since v1.5rc.+
 
 Format: `export [FILEPATH]`
@@ -93,6 +95,7 @@ Example:
 * `export`
 * `export /home/user/someexamplepic`
 
+// end::export[]
 === Condensed Help
 Open a condensed help screen by default in place of the Google brwoser integration. Since v1.4
 
