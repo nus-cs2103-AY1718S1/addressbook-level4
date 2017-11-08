@@ -9,7 +9,6 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.persons.TagCommand;
-import seedu.address.logic.commands.tasks.TagTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
@@ -17,9 +16,6 @@ import seedu.address.model.tag.Tag;
  * Parses input arguments and creates a new TagCommand object
  */
 public class TagCommandParser implements Parser<TagCommand> {
-
-    public static final String SEPARATOR_REGEX = ",";
-
     /**
      * Parses the given {@code String} of arguments in the context of the TagCommand
      * and returns a TagCommand object for execution.
@@ -33,21 +29,11 @@ public class TagCommandParser implements Parser<TagCommand> {
         Set<Tag> tagList;
 
         try {
-            String[] splitIndices = splitIndices(argMultimap);
-            parsedIndices = ParserUtil.parseIndices(splitIndices);
+            parsedIndices = ParserUtil.parseIndices(argMultimap.getPreamble().split(","));
             tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
         }
         return new TagCommand(parsedIndices, tagList);
-    }
-
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
-     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Tag>} containing zero tags.
-     */
-    private String[] splitIndices(ArgumentMultimap argMultimap) {
-        return argMultimap.getPreamble().split(SEPARATOR_REGEX);
     }
 }

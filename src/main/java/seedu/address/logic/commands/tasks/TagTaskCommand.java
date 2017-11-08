@@ -11,6 +11,7 @@ import java.util.Set;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.CommandUtil;
 import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.task.ReadOnlyTask;
@@ -55,7 +56,7 @@ public class TagTaskCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
 
-        Index[] validIndices = filterValidIndices(lastShownList, indices);
+        Index[] validIndices = CommandUtil.filterValidIndices(lastShownList.size(), indices);
 
         if (validIndices.length == 0) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -74,13 +75,6 @@ public class TagTaskCommand extends UndoableCommand {
         }
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         return new CommandResult(MESSAGE_TAG_TASKS_SUCCESS);
-    }
-
-    public Index[] filterValidIndices(List<ReadOnlyTask> lastShownList, Index[] indices)
-            throws CommandException {
-        return Arrays.stream(indices)
-                .filter(currentIndex -> currentIndex.getZeroBased() < lastShownList.size())
-                .toArray(Index[]::new);
     }
 
     @Override

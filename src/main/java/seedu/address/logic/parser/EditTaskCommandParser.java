@@ -56,7 +56,7 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
                     .ifPresent(editTaskDescriptor::setStartDate);
             parseDeadlineForEdit(argMultimap.getAllValues(PREFIX_DEADLINE_BY, PREFIX_DEADLINE_ON))
                     .ifPresent(editTaskDescriptor::setDeadline);
-            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
+            ParserUtil.parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
 
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
@@ -73,23 +73,6 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
         return new EditTaskCommand(index, editTaskDescriptor);
     }
 
-    //@@author
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
-     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Tag>} containing zero tags.
-     */
-    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws IllegalValueException {
-        assert tags != null;
-
-        if (tags.isEmpty()) {
-            return Optional.empty();
-        }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return Optional.of(ParserUtil.parseTags(tagSet));
-    }
-
-    //@@author raisa2010
     /**
      * Parses {@code List<String> dates} into a {@code Optional<StartDate>} containing the last date in the list,
      * if {@code dates} is non-empty.
