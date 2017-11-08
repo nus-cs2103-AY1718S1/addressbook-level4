@@ -3,6 +3,8 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.appointment.Appointment.MESSAGE_DATETIME_CONSTRAINT;
+import static seedu.address.model.appointment.Appointment.isAfterToday;
 
 import java.util.List;
 import java.util.Set;
@@ -70,6 +72,10 @@ public class AppointCommand extends UndoableCommand {
 
         if (uniqueAppointmentList.hasClash(appointment)) {
             throw new CommandException(MESSAGE_APPOINTMENT_CLASH);
+        }
+
+        if (!isAfterToday(appointment.getStart())) {
+            throw new CommandException(MESSAGE_DATETIME_CONSTRAINT);
         }
 
         try {

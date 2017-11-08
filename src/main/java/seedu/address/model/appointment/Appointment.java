@@ -50,9 +50,6 @@ public class Appointment {
                 }
                 LocalDateTime startDateTime = getDateTime(date + " " + time);
                 LocalDateTime endDateTime = getEndDateTime(startDateTime, duration);
-                if (!isAfterToday(startDateTime) || !isAfterToday(endDateTime)) {
-                    throw new IllegalValueException(MESSAGE_DATETIME_CONSTRAINT);
-                }
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN);
                 this.value = startDateTime.format(formatter) + " to " + endDateTime.format(formatter);
                 this.start = startDateTime;
