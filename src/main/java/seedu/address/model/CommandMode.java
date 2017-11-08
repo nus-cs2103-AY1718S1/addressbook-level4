@@ -48,6 +48,9 @@ public class CommandMode {
         return mode;
     }
 
+    /**Test if the input is valid
+     * Only ab addressbook tm taskmanager are valid mode
+     */
     public static boolean isValidMode(String test) {
         String [] mode = test.split(" ");
         if (mode.length > 1 || test.length() < 2) {

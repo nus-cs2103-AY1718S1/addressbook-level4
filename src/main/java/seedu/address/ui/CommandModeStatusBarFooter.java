@@ -24,13 +24,11 @@ public class CommandModeStatusBarFooter extends UiPart<Region> {
 
     private static Clock clock = Clock.systemDefaultZone();
 
-    private Model model;
     @FXML
     private Label commandMode;
 
     public CommandModeStatusBarFooter(Model model) {
         super(FXML);
-        this.model = model;
         commandMode.textProperty().bind(model.getCommandMode().getCommandModeProperty());
         registerAsAnEventHandler(this);
     }

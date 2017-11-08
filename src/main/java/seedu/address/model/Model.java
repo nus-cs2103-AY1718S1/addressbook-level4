@@ -2,7 +2,6 @@ package seedu.address.model;
 
 import java.util.function.Predicate;
 
-import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.ReadOnlyPerson;
