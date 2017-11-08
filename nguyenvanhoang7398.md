@@ -172,6 +172,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 import java.util.StringJoiner;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -192,7 +193,6 @@ public class AddMultipleByTsvCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = &quot;%d new person (people) added&quot;;
     public static final String MESSAGE_DUPLICATE_PERSON = &quot;%d new person (people) duplicated&quot;;
     public static final String MESSAGE_NUMBER_OF_ENTRIES_FAILED = &quot;%d entry (entries) failed: &quot;;
-    public static final String MESSAGE_FILE_NOT_FOUND = &quot;The system cannot find the file specified&quot;;
 
     private final ArrayList&lt;Person&gt; toAdd;
     private final ArrayList&lt;Integer&gt; failedEntries;
@@ -212,7 +212,7 @@ public class AddMultipleByTsvCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
 <span class="fc" id="L47">        requireNonNull(model);</span>
 <span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if (!isFileFound) {</span>
-<span class="nc" id="L49">            return new CommandResult(MESSAGE_FILE_NOT_FOUND);</span>
+<span class="nc" id="L49">            return new CommandResult(Messages.MESSAGE_FILE_NOT_FOUND);</span>
         }
 <span class="fc" id="L51">        int numAdded = 0;</span>
 <span class="fc" id="L52">        int numDuplicated = 0;</span>
@@ -317,7 +317,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 <span class="fc" id="L17">public class AddMultipleByTsvCommandParser implements Parser&lt;AddMultipleByTsvCommand&gt; {</span>
 
     /**
-     * Parse arguments given by AddressBookParser
+     * Parse arguments given by AddressBookParser to add multiple contacts
      * @param args
      * @return
      * @throws ParseException
@@ -354,7 +354,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 ``` html
         case AddMultipleByTsvCommand.COMMAND_WORD:
         case AddMultipleByTsvCommand.COMMAND_ALIAS:
-<span class="fc" id="L64">            return new AddMultipleByTsvCommandParser().parse(arguments);</span>
+<span class="fc" id="L65">            return new AddMultipleByTsvCommandParser().parse(arguments);</span>
+
+        case ChangeProfilePictureCommand.COMMAND_WORD:
+        case ChangeProfilePictureCommand.COMMAND_ALIAS:
+<span class="fc" id="L69">            return new ChangeProfilePictureCommandParser().parse(arguments);</span>
 ```
 ###### \build\reports\jacoco\coverage\html\seedu.address.logic.parser\FindTagCommandParser.java.html
 ``` html
@@ -519,6 +523,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
+import seedu.address.commons.core.ImageStorageHandler;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
@@ -533,12 +538,13 @@ public class ProfilePanel extends UiPart&lt;Region&gt; {
     private static final String DEFAULT_IMAGE_STORAGE_PREFIX = &quot;data/&quot;;
     private static final String DEFAULT_IMAGE_STORAGE_SUFFIX = &quot;.png&quot;;
     private static final String DEFAULT_PROFILE_PICTURE_PATH = &quot;/images/default_profile_picture.png&quot;;
-<span class="fc" id="L42">    private static String[] colors = { &quot;red&quot;, &quot;yellow&quot;, &quot;blue&quot;, &quot;orange&quot;, &quot;indigo&quot;, &quot;green&quot;, &quot;violet&quot;, &quot;black&quot; };</span>
-<span class="fc" id="L43">    private static HashMap&lt;String, String&gt; tagColors = new HashMap&lt;String, String&gt;();</span>
-<span class="fc" id="L44">    private static Random random = new Random();</span>
+    private static final String DEFAULT_PROFILE_BACKGROUND_PATH = &quot;/images/profile_background.jpg&quot;;
+<span class="fc" id="L44">    private static String[] colors = { &quot;red&quot;, &quot;yellow&quot;, &quot;blue&quot;, &quot;orange&quot;, &quot;indigo&quot;, &quot;green&quot;, &quot;violet&quot;, &quot;black&quot; };</span>
+<span class="fc" id="L45">    private static HashMap&lt;String, String&gt; tagColors = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L46">    private static Random random = new Random();</span>
 
-<span class="fc" id="L46">    private final Logger logger = LogsCenter.getLogger(this.getClass());</span>
-<span class="fc" id="L47">    private final FileChooser fileChooser = new FileChooser();</span>
+<span class="fc" id="L48">    private final Logger logger = LogsCenter.getLogger(this.getClass());</span>
+<span class="fc" id="L49">    private final FileChooser fileChooser = new FileChooser();</span>
     private ReadOnlyPerson person;
     private Stage primaryStage;
 
@@ -568,142 +574,132 @@ public class ProfilePanel extends UiPart&lt;Region&gt; {
     private Button changePictureButton;
 
     public ProfilePanel(Stage primaryStage) {
-<span class="fc" id="L77">        super(FXML);</span>
-<span class="fc" id="L78">        this.person = new Person();</span>
-<span class="fc" id="L79">        this.primaryStage = primaryStage;</span>
-<span class="fc" id="L80">        initChangePictureButton();</span>
-<span class="fc" id="L81">        initStyle();</span>
-<span class="fc" id="L82">        refreshState();</span>
-<span class="fc" id="L83">        registerAsAnEventHandler(this);</span>
-<span class="fc" id="L84">    }</span>
+<span class="fc" id="L79">        super(FXML);</span>
+<span class="fc" id="L80">        this.person = new Person();</span>
+<span class="fc" id="L81">        this.primaryStage = primaryStage;</span>
+<span class="fc" id="L82">        initChangePictureButton();</span>
+<span class="fc" id="L83">        initStyle();</span>
+<span class="fc" id="L84">        refreshState();</span>
+<span class="fc" id="L85">        registerAsAnEventHandler(this);</span>
+<span class="fc" id="L86">    }</span>
 
     private void refreshState() {
-<span class="fc" id="L87">        bindListeners();</span>
-<span class="fc" id="L88">        initPicture();</span>
-<span class="fc" id="L89">        initTags();</span>
-<span class="fc" id="L90">    }</span>
+<span class="fc" id="L89">        bindListeners();</span>
+<span class="fc" id="L90">        initPicture();</span>
+<span class="fc" id="L91">        initTags();</span>
+<span class="fc" id="L92">    }</span>
 
     /**
      * Initialize change picture button
      */
     private void initChangePictureButton() {
-<span class="fc" id="L96">        changePictureButton.setOnAction(</span>
-<span class="fc" id="L97">                new EventHandler&lt;ActionEvent&gt;() {</span>
+<span class="fc" id="L98">        changePictureButton.setOnAction(</span>
+<span class="fc" id="L99">                new EventHandler&lt;ActionEvent&gt;() {</span>
                     @Override
                     public void handle(ActionEvent event) {
-<span class="nc" id="L100">                        setExtFilters(fileChooser);</span>
-<span class="nc" id="L101">                        File file = fileChooser.showOpenDialog(primaryStage);</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">                        if (file != null) {</span>
-<span class="nc" id="L103">                            saveImageToStorage(file);</span>
-<span class="nc" id="L104">                            refreshState();</span>
+<span class="nc" id="L102">                        setExtFilters(fileChooser);</span>
+<span class="nc" id="L103">                        File file = fileChooser.showOpenDialog(primaryStage);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">                        if (file != null) {</span>
+                            try {
+<span class="nc" id="L106">                                ImageStorageHandler.saveImageToStorage(file, person);</span>
+<span class="nc" id="L107">                            } catch (Exception e) {</span>
+<span class="nc" id="L108">                                e.printStackTrace();</span>
+<span class="nc" id="L109">                            }</span>
+<span class="nc" id="L110">                            refreshState();</span>
                         }
-<span class="nc" id="L106">                    }</span>
+<span class="nc" id="L112">                    }</span>
                 }
         );
-<span class="fc" id="L109">    }</span>
+<span class="fc" id="L115">    }</span>
 
     private void setExtFilters(FileChooser chooser) {
-<span class="nc" id="L112">        chooser.getExtensionFilters().addAll(</span>
+<span class="nc" id="L118">        chooser.getExtensionFilters().addAll(</span>
                 new FileChooser.ExtensionFilter(&quot;All Images&quot;, &quot;*.*&quot;),
                 new FileChooser.ExtensionFilter(&quot;PNG&quot;, &quot;*.png&quot;)
         );
-<span class="nc" id="L116">    }</span>
-
-    /**
-     * Save a given image file to storage
-     * @param file
-     */
-    private void saveImageToStorage(File file) {
-<span class="nc" id="L123">        Image image = new Image(file.toURI().toString());</span>
-<span class="nc" id="L124">        String phoneNum = person.getPhone().value;</span>
-
-        try {
-<span class="nc" id="L127">            ImageIO.write(SwingFXUtils.fromFXImage(image, null), &quot;png&quot;,</span>
-                    new File(DEFAULT_IMAGE_STORAGE_PREFIX + phoneNum + DEFAULT_IMAGE_STORAGE_SUFFIX));
-<span class="nc" id="L129">        } catch (IOException ioe) {</span>
-<span class="nc" id="L130">            ioe.printStackTrace();</span>
-<span class="nc" id="L131">        }</span>
-<span class="nc" id="L132">    }</span>
+<span class="nc" id="L122">    }</span>
 
     /**
      * Initialize profile picture
      */
     private void initPicture() {
         BufferedImage bufferedImage;
-<span class="fc" id="L139">        String phoneNum = person.getPhone().value;</span>
+<span class="fc" id="L129">        String phoneNum = person.getPhone().value;</span>
 
         try {
-<span class="nc" id="L142">            bufferedImage = ImageIO.read(new File(DEFAULT_IMAGE_STORAGE_PREFIX + phoneNum</span>
+<span class="fc" id="L132">            bufferedImage = ImageIO.read(new File(DEFAULT_IMAGE_STORAGE_PREFIX + phoneNum</span>
                     + DEFAULT_IMAGE_STORAGE_SUFFIX));
-<span class="nc" id="L144">            Image image = SwingFXUtils.toFXImage(bufferedImage, null);</span>
-<span class="nc" id="L145">            profilePicture.setImage(image);</span>
-<span class="fc" id="L146">        } catch (IOException ioe1) {</span>
-<span class="fc" id="L147">            Image image = new Image(MainApp.class.getResourceAsStream(DEFAULT_PROFILE_PICTURE_PATH));</span>
-<span class="fc" id="L148">            profilePicture.setImage(image);</span>
-<span class="nc" id="L149">        }</span>
-<span class="fc" id="L150">    }</span>
+<span class="fc" id="L134">            Image image = SwingFXUtils.toFXImage(bufferedImage, null);</span>
+<span class="fc" id="L135">            profilePicture.setImage(image);</span>
+<span class="fc" id="L136">        } catch (IOException ioe1) {</span>
+<span class="fc" id="L137">            Image image = new Image(MainApp.class.getResourceAsStream(DEFAULT_PROFILE_PICTURE_PATH));</span>
+<span class="fc" id="L138">            profilePicture.setImage(image);</span>
+<span class="fc" id="L139">        }</span>
+<span class="fc" id="L140">    }</span>
 
     /**
      * Initialize panel's style such as color
      */
     private void initStyle() {
-<span class="fc" id="L156">        profilePane.setStyle(&quot;-fx-background-color: #FFFFFF;&quot;);</span>
-<span class="fc" id="L157">    }</span>
+<span class="fc" id="L146">        profilePane.setStyle(String.format(&quot;-fx-background-image: url(%s); &quot;</span>
+                        + &quot;-fx-background-position: center center; -fx-background-size: cover;&quot;,
+                DEFAULT_PROFILE_BACKGROUND_PATH));
+<span class="fc" id="L149">    }</span>
 
     /**
      * Change current displayed profile
      * @param person
      */
     public void changeProfile(ReadOnlyPerson person) {
-<span class="fc" id="L164">        this.person = person;</span>
-<span class="fc" id="L165">        refreshState();</span>
-<span class="fc" id="L166">    }</span>
+<span class="fc" id="L156">        this.person = person;</span>
+<span class="fc" id="L157">        refreshState();</span>
+<span class="fc" id="L158">    }</span>
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
      */
     private void bindListeners() {
-<span class="fc" id="L173">        name.textProperty().bind(Bindings.convert(person.nameProperty()));</span>
-<span class="fc" id="L174">        occupation.textProperty().bind(Bindings.convert(person.occupationProperty()));</span>
-<span class="fc" id="L175">        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));</span>
-<span class="fc" id="L176">        address.textProperty().bind(Bindings.convert(person.addressProperty()));</span>
-<span class="fc" id="L177">        email.textProperty().bind(Bindings.convert(person.emailProperty()));</span>
-<span class="fc" id="L178">        remark.textProperty().bind(Bindings.convert(person.remarkProperty()));</span>
-<span class="fc" id="L179">        website.textProperty().bind(Bindings.convert(person.websiteProperty()));</span>
-<span class="fc" id="L180">        person.tagProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="fc" id="L165">        name.textProperty().bind(Bindings.convert(person.nameProperty()));</span>
+<span class="fc" id="L166">        occupation.textProperty().bind(Bindings.convert(person.occupationProperty()));</span>
+<span class="fc" id="L167">        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));</span>
+<span class="fc" id="L168">        address.textProperty().bind(Bindings.convert(person.addressProperty()));</span>
+<span class="fc" id="L169">        email.textProperty().bind(Bindings.convert(person.emailProperty()));</span>
+<span class="fc" id="L170">        remark.textProperty().bind(Bindings.convert(person.remarkProperty()));</span>
+<span class="fc" id="L171">        website.textProperty().bind(Bindings.convert(person.websiteProperty()));</span>
+<span class="fc" id="L172">        person.tagProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
             tags.getChildren().clear();
             //person.getTags().forEach(tag -&gt; tags.getChildren().add(new Label(tag.tagName)));
             initTags();
         });
-<span class="fc" id="L185">    }</span>
+<span class="fc" id="L177">    }</span>
 
     /**
      *javadoc comment
      */
     private void initTags() {
         //person.getTags().forEach(tag -&gt; tags.getChildren().add(new Label(tag.tagName)));
-<span class="fc" id="L192">        tags.getChildren().clear();</span>
-<span class="fc" id="L193">        person.getTags().forEach(tag -&gt; {</span>
+<span class="fc" id="L184">        tags.getChildren().clear();</span>
+<span class="fc" id="L185">        person.getTags().forEach(tag -&gt; {</span>
             Label tagLabel = new Label(tag.tagName);
             tagLabel.setStyle(&quot;-fx-background-color: &quot; + getColorForTag(tag.tagName));
             tags.getChildren().add(tagLabel);
         });
-<span class="fc" id="L198">    }</span>
+<span class="fc" id="L190">    }</span>
 
     //The method below retrieves the color for the specific tag
     private static String getColorForTag(String tagValue) {
-<span class="fc bfc" id="L202" title="All 2 branches covered.">        if (!tagColors.containsKey(tagValue)) {</span>
-<span class="fc" id="L203">            tagColors.put(tagValue, colors[random.nextInt(colors.length)]);</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">        if (!tagColors.containsKey(tagValue)) {</span>
+<span class="fc" id="L195">            tagColors.put(tagValue, colors[random.nextInt(colors.length)]);</span>
         }
-<span class="fc" id="L205">        return tagColors.get(tagValue);</span>
+<span class="fc" id="L197">        return tagColors.get(tagValue);</span>
     }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-<span class="fc" id="L210">        logger.info(LogsCenter.getEventHandlingLogMessage(event));</span>
-<span class="fc" id="L211">        changeProfile(event.getNewSelection().person);</span>
-<span class="fc" id="L212">    }</span>
+<span class="fc" id="L202">        logger.info(LogsCenter.getEventHandlingLogMessage(event));</span>
+<span class="fc" id="L203">        changeProfile(event.getNewSelection().person);</span>
+<span class="fc" id="L204">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
 ```
@@ -727,6 +723,7 @@ public class ProfilePanel extends UiPart&lt;Region&gt; {
 ```
 ###### \build\resources\main\view\ProfilePanel.fxml
 ``` fxml
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -738,6 +735,7 @@ public class ProfilePanel extends UiPart&lt;Region&gt; {
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <HBox id="profilePane" fx:id="profilePane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane HBox.hgrow="ALWAYS">
@@ -769,13 +767,147 @@ public class ProfilePanel extends UiPart&lt;Region&gt; {
             <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
             <Label fx:id="website" styleClass="cell_small_label" text="\$website" />
             <Label fx:id="remark" styleClass="cell_small_label" text="\$remark" />
-         <Button fx:id="changePictureButton" mnemonicParsing="false" prefWidth="119.0" text="Change" />
+         <Button fx:id="changePictureButton" mnemonicParsing="false" prefWidth="200.0" text="Change photo">
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
+            <font>
+               <Font size="24.0" />
+            </font></Button>
         </VBox>
       <rowConstraints>
          <RowConstraints />
       </rowConstraints>
     </GridPane>
 </HBox>
+```
+###### \out\production\resources\view\MainWindow.fxml
+``` fxml
+    <StackPane fx:id="profilePlaceholder" minWidth="320" >
+      <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+      </padding>
+    </StackPane>
+
+    <StackPane fx:id="browserPlaceholder" minWidth="750" prefWidth="750" >
+      <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+      </padding>
+    </StackPane>
+  </SplitPane>
+
+  <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+</VBox>
+```
+###### \out\production\resources\view\ProfilePanel.fxml
+``` fxml
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox id="profilePane" fx:id="profilePane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <GridPane HBox.hgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+        </columnConstraints>
+        <VBox alignment="CENTER" minHeight="105" GridPane.columnIndex="0">
+            <padding>
+                <Insets bottom="5" left="15" right="5" top="5" />
+            </padding>
+         <ImageView fx:id="profilePicture" fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+            <VBox.margin>
+               <Insets bottom="15" top="15" />
+            </VBox.margin>
+         </ImageView>
+            <HBox alignment="CENTER" spacing="5">
+                <Label fx:id="id" styleClass="cell_big_label">
+                    <minWidth>
+                        <!-- Ensures that the label text is never truncated -->
+                        <Region fx:constant="USE_PREF_SIZE" />
+                    </minWidth>
+                </Label>
+                <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
+            </HBox>
+            <FlowPane fx:id="tags" alignment="CENTER" />
+            <Label fx:id="occupation" styleClass="cell_small_label" text="\$occupation" />
+            <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
+            <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
+            <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
+            <Label fx:id="website" styleClass="cell_small_label" text="\$website" />
+            <Label fx:id="remark" styleClass="cell_small_label" text="\$remark" />
+         <Button fx:id="changePictureButton" mnemonicParsing="false" prefWidth="200.0" text="Change photo">
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
+            <font>
+               <Font size="24.0" />
+            </font></Button>
+        </VBox>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
+    </GridPane>
+</HBox>
+```
+###### \src\main\java\seedu\address\commons\core\ImageStorageHandler.java
+``` java
+package seedu.address.commons.core;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.ReadOnlyPerson;
+
+/**
+ * Class for handling save/delete image in the storage
+ */
+public class ImageStorageHandler {
+    private static final String DEFAULT_IMAGE_STORAGE_PREFIX = "data/";
+    private static final String DEFAULT_IMAGE_STORAGE_SUFFIX = ".png";
+    private static final String PROFILE_PICTURE_PATH_FORMAT = DEFAULT_IMAGE_STORAGE_PREFIX
+            + "%s" + DEFAULT_IMAGE_STORAGE_SUFFIX;
+
+    private static String getProfilePicturePath(ReadOnlyPerson person) {
+        return String.format(PROFILE_PICTURE_PATH_FORMAT, person.getPhone().value);
+    }
+
+    /**
+     * Save a given image file to storage
+     * @param file
+     */
+    public static void saveImageToStorage(File file, ReadOnlyPerson person) throws CommandException {
+
+        try {
+            BufferedImage image = ImageIO.read(file);
+            ImageIO.write(image, "png", new File(getProfilePicturePath(person)));
+        } catch (IOException | IllegalArgumentException e) {
+            throw new CommandException(Messages.MESSAGE_FILE_NOT_FOUND);
+        }
+    }
+
+    /**
+     * Delete a person's profile picture in storage
+     * @param personToDelete
+     */
+    public static void deleteProfilePicture(ReadOnlyPerson personToDelete) {
+        String profilePictureToDeletePath = getProfilePicturePath(personToDelete);
+        File profilePictureToDelete = new File(profilePictureToDeletePath);
+        Boolean isSuccessfullyDeleted = profilePictureToDelete.delete();
+    }
+}
 ```
 ###### \src\main\java\seedu\address\logic\commands\AddMultipleByTsvCommand.java
 ``` java
@@ -786,6 +918,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 import java.util.StringJoiner;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -806,7 +939,6 @@ public class AddMultipleByTsvCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "%d new person (people) added";
     public static final String MESSAGE_DUPLICATE_PERSON = "%d new person (people) duplicated";
     public static final String MESSAGE_NUMBER_OF_ENTRIES_FAILED = "%d entry (entries) failed: ";
-    public static final String MESSAGE_FILE_NOT_FOUND = "The system cannot find the file specified";
 
     private final ArrayList<Person> toAdd;
     private final ArrayList<Integer> failedEntries;
@@ -826,7 +958,7 @@ public class AddMultipleByTsvCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         if (!isFileFound) {
-            return new CommandResult(MESSAGE_FILE_NOT_FOUND);
+            return new CommandResult(Messages.MESSAGE_FILE_NOT_FOUND);
         }
         int numAdded = 0;
         int numDuplicated = 0;
@@ -866,6 +998,65 @@ public class AddMultipleByTsvCommand extends UndoableCommand {
                 && toAdd.equals(((AddMultipleByTsvCommand) other).toAdd));
     }
 
+}
+```
+###### \src\main\java\seedu\address\logic\commands\ChangeProfilePictureCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import java.io.File;
+import java.util.List;
+
+import seedu.address.commons.core.ImageStorageHandler;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.ReadOnlyPerson;
+
+/**
+ * Change profile picture of a contact
+ */
+public class ChangeProfilePictureCommand extends Command {
+
+    public static final String COMMAND_WORD = "changePicture";
+    public static final String COMMAND_ALIAS = "chgPic";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Change profile picture of the person identified by the index number used in the last person listing.\n"
+            + "Parameters: INDEX (must be a positive integer) PICTURE_PATH (must be in PNG or JPG format)\n"
+            + "Example: " + COMMAND_WORD + " 1 D:/JamesProfilePicture.png";
+
+    public static final String MESSAGE_CHANGE_PROFILE_PICTURE_SUCCESS = "Successfully change profile picture "
+            + "of person: %1$s";
+
+    private final Index targetIndex;
+    private final String picturePath;
+
+    public ChangeProfilePictureCommand(Index targetIndex, String picturePath) {
+        this.targetIndex = targetIndex;
+        this.picturePath = picturePath;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToChangeProfilePicture = lastShownList.get(targetIndex.getZeroBased());
+        ImageStorageHandler.saveImageToStorage(new File(picturePath), personToChangeProfilePicture);
+
+        return new CommandResult(String.format(MESSAGE_CHANGE_PROFILE_PICTURE_SUCCESS, targetIndex.getOneBased()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ChangeProfilePictureCommand // instanceof handles nulls
+                && this.targetIndex.equals(((ChangeProfilePictureCommand) other).targetIndex)); // state check
+    }
 }
 ```
 ###### \src\main\java\seedu\address\logic\commands\FindTagCommand.java
@@ -1080,7 +1271,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class AddMultipleByTsvCommandParser implements Parser<AddMultipleByTsvCommand> {
 
     /**
-     * Parse arguments given by AddressBookParser
+     * Parse arguments given by AddressBookParser to add multiple contacts
      * @param args
      * @return
      * @throws ParseException
@@ -1117,6 +1308,10 @@ public class AddMultipleByTsvCommandParser implements Parser<AddMultipleByTsvCom
         case AddMultipleByTsvCommand.COMMAND_WORD:
         case AddMultipleByTsvCommand.COMMAND_ALIAS:
             return new AddMultipleByTsvCommandParser().parse(arguments);
+
+        case ChangeProfilePictureCommand.COMMAND_WORD:
+        case ChangeProfilePictureCommand.COMMAND_ALIAS:
+            return new ChangeProfilePictureCommandParser().parse(arguments);
 ```
 ###### \src\main\java\seedu\address\logic\parser\FindTagCommandParser.java
 ``` java
@@ -1291,6 +1486,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
+import seedu.address.commons.core.ImageStorageHandler;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
@@ -1305,6 +1501,7 @@ public class ProfilePanel extends UiPart<Region> {
     private static final String DEFAULT_IMAGE_STORAGE_PREFIX = "data/";
     private static final String DEFAULT_IMAGE_STORAGE_SUFFIX = ".png";
     private static final String DEFAULT_PROFILE_PICTURE_PATH = "/images/default_profile_picture.png";
+    private static final String DEFAULT_PROFILE_BACKGROUND_PATH = "/images/profile_background.jpg";
     private static String[] colors = { "red", "yellow", "blue", "orange", "indigo", "green", "violet", "black" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
@@ -1366,7 +1563,11 @@ public class ProfilePanel extends UiPart<Region> {
                         setExtFilters(fileChooser);
                         File file = fileChooser.showOpenDialog(primaryStage);
                         if (file != null) {
-                            saveImageToStorage(file);
+                            try {
+                                ImageStorageHandler.saveImageToStorage(file, person);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             refreshState();
                         }
                     }
@@ -1379,22 +1580,6 @@ public class ProfilePanel extends UiPart<Region> {
                 new FileChooser.ExtensionFilter("All Images", "*.*"),
                 new FileChooser.ExtensionFilter("PNG", "*.png")
         );
-    }
-
-    /**
-     * Save a given image file to storage
-     * @param file
-     */
-    private void saveImageToStorage(File file) {
-        Image image = new Image(file.toURI().toString());
-        String phoneNum = person.getPhone().value;
-
-        try {
-            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png",
-                    new File(DEFAULT_IMAGE_STORAGE_PREFIX + phoneNum + DEFAULT_IMAGE_STORAGE_SUFFIX));
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
     }
 
     /**
@@ -1419,7 +1604,9 @@ public class ProfilePanel extends UiPart<Region> {
      * Initialize panel's style such as color
      */
     private void initStyle() {
-        profilePane.setStyle("-fx-background-color: #FFFFFF;");
+        profilePane.setStyle(String.format("-fx-background-image: url(%s); "
+                        + "-fx-background-position: center center; -fx-background-size: cover;",
+                DEFAULT_PROFILE_BACKGROUND_PATH));
     }
 
     /**
@@ -1498,6 +1685,7 @@ public class ProfilePanel extends UiPart<Region> {
 ```
 ###### \src\main\resources\view\ProfilePanel.fxml
 ``` fxml
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -1509,6 +1697,7 @@ public class ProfilePanel extends UiPart<Region> {
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <HBox id="profilePane" fx:id="profilePane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane HBox.hgrow="ALWAYS">
@@ -1540,7 +1729,13 @@ public class ProfilePanel extends UiPart<Region> {
             <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
             <Label fx:id="website" styleClass="cell_small_label" text="\$website" />
             <Label fx:id="remark" styleClass="cell_small_label" text="\$remark" />
-         <Button fx:id="changePictureButton" mnemonicParsing="false" prefWidth="119.0" text="Change" />
+         <Button fx:id="changePictureButton" mnemonicParsing="false" prefWidth="200.0" text="Change photo">
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
+            <font>
+               <Font size="24.0" />
+            </font></Button>
         </VBox>
       <rowConstraints>
          <RowConstraints />
@@ -1659,43 +1854,165 @@ public class AddMultipleByTsvCommandTest {
             return null;
         }
 
-        @Override
-        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-            fail("This method should not be called.");
+```
+###### \src\test\java\seedu\address\logic\commands\ChangeProfilePictureCommandTest.java
+``` java
+package seedu.address.logic.commands;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalProfilePicture.FIRST_PERFECT_PROFILE_PICTURE_PATH;
+import static seedu.address.testutil.TypicalProfilePicture.SECOND_PERFECT_PROFILE_PICTURE_PATH;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.RecentlyDeletedQueue;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+
+/**
+ * Contains integration tests (interaction with the Model) for {@code ChangeProfilePictureCommand}.
+ */
+public class ChangeProfilePictureCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void execute_validIndexUnfilteredList_success() throws Exception {
+        Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
+
+        assertExecutionSuccess(INDEX_FIRST_PERSON, FIRST_PERFECT_PROFILE_PICTURE_PATH);
+        assertExecutionSuccess(INDEX_THIRD_PERSON, SECOND_PERFECT_PROFILE_PICTURE_PATH);
+        assertExecutionSuccess(lastPersonIndex, FIRST_PERFECT_PROFILE_PICTURE_PATH);
+    }
+
+    @Test
+    public void execute_invalidIndexUnfilteredList_failure() {
+        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+
+        assertExecutionFailure(outOfBoundsIndex, FIRST_PERFECT_PROFILE_PICTURE_PATH,
+                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_validIndexFilteredList_success() {
+        showFirstPersonOnly(model);
+        assertExecutionSuccess(INDEX_FIRST_PERSON, FIRST_PERFECT_PROFILE_PICTURE_PATH);
+    }
+
+    @Test
+    public void execute_invalidIndexFilteredList_failure() {
+        showFirstPersonOnly(model);
+
+        Index outOfBoundsIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        assertExecutionFailure(outOfBoundsIndex, FIRST_PERFECT_PROFILE_PICTURE_PATH,
+                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_invalidIndexFilteredList_throwsCommandException() {
+        showFirstPersonOnly(model);
+
+        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        assertExecutionFailure(outOfBoundIndex, FIRST_PERFECT_PROFILE_PICTURE_PATH,
+                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+        ChangeProfilePictureCommand changeProfilePictureFirstCommand =
+                new ChangeProfilePictureCommand(INDEX_FIRST_PERSON, FIRST_PERFECT_PROFILE_PICTURE_PATH);
+        ChangeProfilePictureCommand changeProfilePictureSecondCommand =
+                new ChangeProfilePictureCommand(INDEX_SECOND_PERSON, SECOND_PERFECT_PROFILE_PICTURE_PATH);
+
+        // same object -> returns true
+        assertTrue(changeProfilePictureFirstCommand.equals(changeProfilePictureFirstCommand));
+
+        // same values -> returns true
+        ChangeProfilePictureCommand changeProfilePictureFirstCommandCopy =
+                new ChangeProfilePictureCommand(INDEX_FIRST_PERSON, FIRST_PERFECT_PROFILE_PICTURE_PATH);
+        assertTrue(changeProfilePictureFirstCommand.equals(changeProfilePictureFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(changeProfilePictureFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(changeProfilePictureFirstCommand.equals(null));
+
+        // different picture -> returns false
+        assertFalse(changeProfilePictureFirstCommand.equals(changeProfilePictureSecondCommand));
+    }
+
+    /**
+     * Executes a {@code ChangeProfilePictureCommand} with the given {@code index, picturePath}
+     * is raised with the correct index and picture path
+     */
+    private void assertExecutionSuccess(Index index, String picturePath) {
+        ChangeProfilePictureCommand changeProfilePictureCommand = prepareCommand(index, picturePath);
+
+        try {
+            CommandResult commandResult = changeProfilePictureCommand.execute();
+            assertEquals(String.format(ChangeProfilePictureCommand.MESSAGE_CHANGE_PROFILE_PICTURE_SUCCESS,
+                    index.getOneBased()), commandResult.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     * Executes a {@code ChangeProfilePictureCommand} with the given {@code index, picturePath},
+     * and checks that a {@code CommandException}
+     * is thrown with the {@code expectedMessage}.
      */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
-        }
+    private void assertExecutionFailure(Index index, String picturePath, String expectedMessage) {
+        ChangeProfilePictureCommand changeProfilePictureCommand = prepareCommand(index, picturePath);
 
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        try {
+            changeProfilePictureCommand.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException ce) {
+            assertEquals(expectedMessage, ce.getMessage());
         }
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * Returns a {@code ChangeProfilePictureCommand} with the parameter {@code index, picturePath}.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
-
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            personsAdded.add(new Person(person));
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
+    private ChangeProfilePictureCommand prepareCommand(Index index, String picturePath) {
+        ChangeProfilePictureCommand changeProfilePictureCommand = new ChangeProfilePictureCommand(index, picturePath);
+        changeProfilePictureCommand.setData(model, new CommandHistory(),
+                new UndoRedoStack(), new RecentlyDeletedQueue());
+        return changeProfilePictureCommand;
     }
+
+    /**
+     * Updates {@code model}'s filtered list to show no one.
+     */
+    private void showNoPerson(Model model) {
+        model.updateFilteredPersonList(p -> false);
+
+        assert model.getFilteredPersonList().isEmpty();
+    }
+
 }
 ```
 ###### \src\test\java\seedu\address\logic\commands\FindTagCommandTest.java
@@ -1852,6 +2169,27 @@ public class TsvFileBuilder {
     }
 }
 ```
+###### \src\test\java\seedu\address\testutil\TypicalProfilePicture.java
+``` java
+package seedu.address.testutil;
+
+/**
+ * A utility class containing a list of Profile Picture paths as string to be used in tests.
+ */
+public class TypicalProfilePicture {
+    public static final String FIRST_PERFECT_PROFILE_PICTURE_PATH =
+            "src/test/resources/images/firstPerfectProfilePicture.jpg";
+    public static final String SECOND_PERFECT_PROFILE_PICTURE_PATH =
+            "src/test/resources/images/secondPerfectProfilePicture.jpg";
+    public static final String THIRD_PERFECT_PROFILE_PICTURE_PATH =
+            "src/test/resources/images/thirdPerfectProfilePicture.jpg";
+    public static final String FORTH_PERFECT_PROFILE_PICTURE_PATH =
+            "src/test/resources/images/forthPerfectProfilePicture.jpg";
+    public static final String FIFTH_PERFECT_PROFILE_PICTURE_PATH =
+            "src/test/resources/images/fifthPerfectProfilePicture.jpg";
+    public static final String FILE_NOT_FOUND_PATH = "D:/pleaseDontNameYourPictureLikeThis.jpg";
+}
+```
 ###### \src\test\java\seedu\address\testutil\TypicalTsvFiles.java
 ``` java
 package seedu.address.testutil;
@@ -1880,6 +2218,7 @@ import java.util.StringJoiner;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.AddMultipleByTsvCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -1911,7 +2250,7 @@ public class AddMultipleByTsvCommandSystemTest extends AddressBookSystemTest {
         ArrayList<Integer> failedEntries = tsvFile.getFailedEntries();
 
         if (!isFileFound) {
-            throw new IllegalArgumentException(AddMultipleByTsvCommand.MESSAGE_FILE_NOT_FOUND);
+            throw new IllegalArgumentException(Messages.MESSAGE_FILE_NOT_FOUND);
         }
         int numAdded = 0;
         int numDuplicated = 0;
@@ -1966,6 +2305,152 @@ public class AddMultipleByTsvCommandSystemTest extends AddressBookSystemTest {
 ###### \src\test\java\systemtests\AddressBookSystemTest.java
 ``` java
         String selectedCardWebsite = getPersonListPanel().getHandleToSelectedCard().getWebsite();
+```
+###### \src\test\java\systemtests\ChangeProfilePictureCommandSystemTest.java
+``` java
+package systemtests;
+
+import static seedu.address.commons.core.Messages.MESSAGE_FILE_NOT_FOUND;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.ChangeProfilePictureCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.Model;
+import seedu.address.testutil.TypicalProfilePicture;
+
+public class ChangeProfilePictureCommandSystemTest extends AddressBookSystemTest {
+    @Test
+    public void select() {
+        /* Case: change profile picture of the first card in the person list,
+         * command with leading spaces and trailing spaces
+         * -> selected
+         */
+        String command = "   " + ChangeProfilePictureCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
+                + "   " + TypicalProfilePicture.FIRST_PERFECT_PROFILE_PICTURE_PATH + "   ";
+        assertCommandSuccess(command, INDEX_FIRST_PERSON);
+
+        /* Case: change profile picture of the last card in the person list -> selected */
+        Index personCount = Index.fromOneBased(getTypicalPersons().size());
+        command = ChangeProfilePictureCommand.COMMAND_WORD + " " + personCount.getOneBased()
+                + " " + TypicalProfilePicture.SECOND_PERFECT_PROFILE_PICTURE_PATH;
+        assertCommandSuccess(command, personCount);
+
+        /* Case: undo previous selection -> rejected */
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: redo selecting last card in the list -> rejected */
+        command = RedoCommand.COMMAND_WORD;
+        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: change profile picture of the middle card in the person list -> selected */
+        Index middleIndex = Index.fromOneBased(personCount.getOneBased() / 2);
+        command = ChangeProfilePictureCommand.COMMAND_WORD + " " + middleIndex.getOneBased()
+                + " " + TypicalProfilePicture.THIRD_PERFECT_PROFILE_PICTURE_PATH;
+        assertCommandSuccess(command, middleIndex);
+
+        /* Case: invalid index (size + 1) -> rejected */
+        int invalidIndex = getModel().getFilteredPersonList().size() + 1;
+        assertCommandFailure(ChangeProfilePictureCommand.COMMAND_WORD + " " + invalidIndex
+                + " " + TypicalProfilePicture.FIRST_PERFECT_PROFILE_PICTURE_PATH,
+                MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
+        /* Case: change profile picture of the current selected card -> selected */
+        assertCommandSuccess(command, middleIndex);
+
+        /* Case: filtered person list, change profile picture of index within bounds of
+         * address book but out of bounds of person list
+         * -> rejected
+         */
+        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        invalidIndex = getModel().getAddressBook().getPersonList().size();
+        assertCommandFailure(ChangeProfilePictureCommand.COMMAND_WORD + " " + invalidIndex
+                + " " + TypicalProfilePicture.FIRST_PERFECT_PROFILE_PICTURE_PATH,
+                MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
+        /* Case: filtered person list, change profile picture of index within bounds of address book
+         * and person list -> selected */
+        Index validIndex = Index.fromOneBased(1);
+        assert validIndex.getZeroBased() < getModel().getFilteredPersonList().size();
+        command = ChangeProfilePictureCommand.COMMAND_WORD + " " + validIndex.getOneBased()
+                + " " + TypicalProfilePicture.FIFTH_PERFECT_PROFILE_PICTURE_PATH;
+        assertCommandSuccess(command, validIndex);
+
+        /* Case: invalid index (0) -> rejected */
+        assertCommandFailure(ChangeProfilePictureCommand.COMMAND_WORD + " " + 0
+                + " " + TypicalProfilePicture.FIRST_PERFECT_PROFILE_PICTURE_PATH,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeProfilePictureCommand.MESSAGE_USAGE));
+
+        /* Case: invalid index (-1) -> rejected */
+        assertCommandFailure(ChangeProfilePictureCommand.COMMAND_WORD + " " + -1
+                + " " + TypicalProfilePicture.FIRST_PERFECT_PROFILE_PICTURE_PATH,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeProfilePictureCommand.MESSAGE_USAGE));
+
+        /* Case: invalid arguments (alphabets) -> rejected */
+        assertCommandFailure(ChangeProfilePictureCommand.COMMAND_WORD + " " + "abc"
+                + " " + TypicalProfilePicture.FIRST_PERFECT_PROFILE_PICTURE_PATH,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeProfilePictureCommand.MESSAGE_USAGE));
+
+        /* Case: file not found -> rejected */
+        assertCommandFailure(ChangeProfilePictureCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
+                        + " " + TypicalProfilePicture.FILE_NOT_FOUND_PATH,
+                MESSAGE_FILE_NOT_FOUND);
+
+        /* Case: mixed case command word -> rejected */
+        assertCommandFailure("ChAngEpIC 1 D:/picture.png", MESSAGE_UNKNOWN_COMMAND);
+
+        /* Case: select from empty address book -> rejected */
+        executeCommand(ClearCommand.COMMAND_WORD);
+        assert getModel().getAddressBook().getPersonList().size() == 0;
+        assertCommandFailure(ChangeProfilePictureCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
+                        + " " + TypicalProfilePicture.FIRST_PERFECT_PROFILE_PICTURE_PATH,
+                MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    /**
+     * Executes {@code command} and verifies that the command box displays an empty string, the result display
+     * box displays the success message of executing select command with the {@code expectedSelectedCardIndex}
+     * of the selected person, and the model related components equal to the current model.
+     */
+    private void assertCommandSuccess(String command, Index expectedSelectedCardIndex) {
+        Model expectedModel = getModel();
+        String expectedResultMessage = String.format(
+                ChangeProfilePictureCommand.MESSAGE_CHANGE_PROFILE_PICTURE_SUCCESS,
+                expectedSelectedCardIndex.getOneBased());
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchanged();
+    }
+
+    /**
+     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
+     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+}
 ```
 ###### \src\test\java\systemtests\FindTagCommandSystemTest.java
 ``` java

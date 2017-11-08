@@ -32,6 +32,7 @@ public class FindCommandPredicate implements Predicate<ReadOnlyPerson> {
             .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getEmail().toString(), keyword));
 
         boolean occupation = keywords.stream()
+
             .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getOccupation().toString(), keyword));
 
         boolean website = keywords.stream()
@@ -41,6 +42,7 @@ public class FindCommandPredicate implements Predicate<ReadOnlyPerson> {
             .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getRemark().toString(), keyword));
 
         if (name || number || address || email || occupation || website || remark) {
+
             return true;
         } else {
             return false;
