@@ -25,6 +25,8 @@ The Myth's Book is a software application that is coded in `Java` programming la
 ---
 === Enhancement Added: Sort Command, Sort Names Alphabetically
 
+Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/46[#46]
+
 ==== External behavior
 
 ---
@@ -52,6 +54,7 @@ include::../DeveloperGuide.adoc[tag=sort]
 ---
 
 === Enhancement Added: Access Command, Accessing a website of a contact
+Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/77[#77]
 
 ==== External behavior
 
@@ -80,6 +83,7 @@ include::../DeveloperGuide.adoc[tag=access]
 ---
 
 === Enhancement Added: Location Command, Locate an address of a user
+Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/79[#79]
 
 ==== External behavior
 
@@ -108,7 +112,8 @@ include::../DeveloperGuide.adoc[tag=locate]
 ---
 
 
-=== Enhancement Proposed: Add Command, Optional fields
+=== Enhancement: Add Command, Optional fields
+Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/99[#99], https://github.com/CS2103AUG2017-T15-B3/main/pull/96[#96]
 
 ==== External behavior
 
@@ -127,28 +132,38 @@ include::../UserGuide.adoc[tag=add]
 
 ---
 
-=== Enhancement: Allow inputted names to become capitalized fully
+
+=== Enhancement: Website field for Person Class
+Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/57[#57]
 
 ==== External behavior
 
 ---
-#Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=add]
+---
 
-#End of Extract#
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+---
+
+=== Enhancement: Allow inputted names to become capitalized fully
+
+Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/123/commits/cf57e5e78374ec3ee69125e8342ed27c9efa06da[#123]
+
+==== External behavior
+
+---
 
 ---
 === Enhancement: Alias for basic commands
 
+Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/34[#34]
+
 ==== External behavior
 
 ---
-#Start of Extract [from: User Guide]#
-
-include::../UserGuide.adoc[tag=add]
-
-#End of Extract#
 
 ---
 
@@ -176,6 +191,8 @@ include::../UserGuide.adoc[tag=add]
 * Change structure of software's user guide and updated preface of most sections in user guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/123[#123])
 * Added prefix table for Add Command in user guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/123[#123])
 * Updated software's user guide to be more user friendly and user focused. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/134[#134])
+* Updated software's developer guide to showcase more user stories. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/35[#35], https://github.com/CS2103AUG2017-T15-B3/main/pull/53[#53])
+* Wrote additional tests to test hashcode of person's attributes to increase test coverage (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/96[#96])
 
 ==== Contribution to Acceptance Testing: HitMeUp (CS2103AUG2017-W14-B3)
 
@@ -192,4 +209,3 @@ include::../UserGuide.adoc[tag=add]
 
 4. Provided suggestion/bug fix for birthday inputted to account for leap year so that all contacts can have their birthday properly accounted for.
 (Issue #105 - https://github.com/CS2103AUG2017-W14-B3/main/issues/105[Bug for Birthday])
-
