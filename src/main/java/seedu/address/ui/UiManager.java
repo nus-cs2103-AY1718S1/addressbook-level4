@@ -17,6 +17,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.HelpCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
@@ -72,6 +73,8 @@ public class UiManager extends ComponentManager implements Ui {
                 ReminderWindow reminderWindow = new ReminderWindow(schedulesToRemindList);
                 reminderWindow.show();
             }
+            HelpCommand startUpHelp = new HelpCommand("command");
+            startUpHelp.execute();
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
