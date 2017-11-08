@@ -264,8 +264,8 @@ Example: `appoint 1 ap/12/12/2020 15:12 60` +
 
 // end::appoint[]
 
+// tag::removetag[]
 === Removing tag : `removetag`
-
 Since v1.5
 
 Used to remove a tag with TAG name +
@@ -276,6 +276,7 @@ Examples:
 
 * `removetag t/friend` +
 Removes the tag `friend` from the address book.
+// end::removetag[]
 
 // tag::groupungroup[]
 === Grouping persons : `group`
