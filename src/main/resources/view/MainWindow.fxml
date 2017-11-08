@@ -36,6 +36,7 @@
   </StackPane>
 
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.3, 0.5" prefWidth="908.0" VBox.vgrow="ALWAYS">
+      <!--@@author itsdickson-->
       <StackPane fx:id="personAndEventListPlaceholder" maxWidth="270.0" minWidth="270.0" prefWidth="270.0">
          <children>
             <VBox fx:id="personList" minWidth="270" prefWidth="340">
@@ -59,6 +60,7 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </StackPane>
+      <!--@@author-->
       <SplitPane dividerPositions="0.5" minWidth="150.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="250.0">
         <items>
           <StackPane fx:id="detailsPanelPlaceholder" prefHeight="75.0" prefWidth="150.0">

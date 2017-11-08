@@ -46,10 +46,12 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
+    //@@author itsdickson
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return model.getFilteredPersonList();
     }
+    //@@author
 
     @Override
     public ObservableList<ReadOnlyEvent> getFilteredEventList() {
@@ -61,10 +63,12 @@ public class LogicManager extends ComponentManager implements Logic {
         return new ListElementPointer(history.getHistory());
     }
 
+    //@@author itsdickson
     @Override
     public void setCurrentTheme(String theme) {
         model.setCurrentTheme(theme);
     }
+    //@@author
 
     @Override
     public void updateSelectedPerson(ReadOnlyPerson person) {

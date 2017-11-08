@@ -36,16 +36,16 @@ public interface Model {
     void addEvent(ReadOnlyEvent event) throws DuplicateEventException;
     //@@author
 
+    //@@author itsdickson
     /** Deletes the given event */
     void deleteEvent(ReadOnlyEvent event) throws EventNotFoundException;
 
-    // @@author itsdickson
     /** Favourites the given person */
     void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Unfavourites the given person */
     void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
-    // @@author
+    //@@author
 
     void updateSelectedPerson(ReadOnlyPerson person);
 
@@ -73,7 +73,7 @@ public interface Model {
     ObservableList<ReadOnlyEvent> getFilteredEventList();
     //@@author
 
-    // @@author itsdickson
+    //@@author itsdickson
     /** Returns the themes list */
     ArrayList<String> getThemesList();
 
@@ -82,7 +82,7 @@ public interface Model {
 
     /** Returns the current theme */
     String getCurrentTheme();
-    // @@author
+    //@@author
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.

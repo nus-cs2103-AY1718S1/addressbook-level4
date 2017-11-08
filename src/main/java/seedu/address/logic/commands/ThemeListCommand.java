@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-// @@author itsdickson
+//@@author itsdickson
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowThemeRequestEvent;
@@ -22,4 +22,4 @@ public class ThemeListCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
-// @@author
+//@@author

@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+//@@author itsdickson
+
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -56,3 +58,4 @@ public class DeleteEventCommand extends UndoableCommand {
                 && this.targetIndex.equals(((DeleteEventCommand) other).targetIndex)); // state check
     }
 }
+//@@author

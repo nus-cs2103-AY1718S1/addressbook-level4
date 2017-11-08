@@ -35,6 +35,7 @@ public class ResultDisplay extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author itsdickson
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -66,5 +67,6 @@ public class ResultDisplay extends UiPart<Region> {
 
         styleClass.add(ERROR_STYLE_CLASS);
     }
+    //@@author
 
 }

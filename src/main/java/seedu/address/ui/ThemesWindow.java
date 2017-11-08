@@ -1,6 +1,6 @@
 package seedu.address.ui;
 
-// @@author itsdickson
+//@@author itsdickson
 
 import java.util.logging.Logger;
 
@@ -64,4 +64,4 @@ public class ThemesWindow extends UiPart<Region> {
         dialogStage.showAndWait();
     }
 }
-// @@author
+//@@author

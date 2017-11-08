@@ -1,6 +1,6 @@
 package seedu.address.model.person;
 
-// @@author itsdickson
+//@@author itsdickson
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -31,4 +31,4 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
                 && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
     }
 }
-// @@author
+//@@author

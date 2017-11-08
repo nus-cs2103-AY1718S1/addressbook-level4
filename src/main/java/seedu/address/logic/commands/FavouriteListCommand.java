@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-// @@author itsdickson
+//@@author itsdickson
 
 import seedu.address.model.person.NameContainsFavouritePredicate;
 
@@ -22,4 +22,4 @@ public class FavouriteListCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
-// @@author
+//@@author

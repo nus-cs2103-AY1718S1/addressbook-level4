@@ -1,6 +1,6 @@
 package seedu.address.logic.parser;
 
-// @@author itsdickson
+//@@author itsdickson
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
@@ -30,4 +30,4 @@ public class SwitchThemeCommandParser implements Parser<SwitchThemeCommand> {
     }
 
 }
-// @@author
+//@@author

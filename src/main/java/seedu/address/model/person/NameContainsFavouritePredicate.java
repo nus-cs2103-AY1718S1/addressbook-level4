@@ -1,6 +1,6 @@
 package seedu.address.model.person;
 
-// @@author itsdickson
+//@@author itsdickson
 
 import java.util.function.Predicate;
 
@@ -23,4 +23,4 @@ public class NameContainsFavouritePredicate implements Predicate<ReadOnlyPerson>
                 || (other instanceof NameContainsFavouritePredicate); // instanceof handles nulls
     }
 }
-// @@author
+//@@author

@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-// @@author itsdickson
+//@@author itsdickson
 
 import java.util.List;
 
@@ -63,4 +63,4 @@ public class FavouriteCommand extends UndoableCommand {
                 && this.targetIndex.equals(((FavouriteCommand) other).targetIndex)); // state check
     }
 }
-// @@author
+//@@author

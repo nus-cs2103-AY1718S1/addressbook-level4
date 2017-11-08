@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-// @@author itsdickson
+//@@author itsdickson
 
 import java.util.ArrayList;
 
@@ -62,4 +62,4 @@ public class SwitchThemeCommand extends Command {
                 && this.targetIndex.equals(((SwitchThemeCommand) other).targetIndex)); // state check
     }
 }
-// @@author
+//@@author

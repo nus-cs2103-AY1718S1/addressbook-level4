@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+//@@author itsdickson
+
 import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
@@ -86,3 +88,4 @@ public class EventListPanel extends UiPart<Region> {
     }
 
 }
+//@@author

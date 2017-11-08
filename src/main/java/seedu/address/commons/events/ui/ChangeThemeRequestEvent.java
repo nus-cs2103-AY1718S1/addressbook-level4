@@ -1,6 +1,6 @@
 package seedu.address.commons.events.ui;
 
-// @@author itsdickson
+//@@author itsdickson
 
 import seedu.address.commons.events.BaseEvent;
 
@@ -21,4 +21,4 @@ public class ChangeThemeRequestEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 }
-// @@author
+//@@author

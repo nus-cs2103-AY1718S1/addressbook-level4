@@ -1,5 +1,7 @@
 package seedu.address.commons.events.ui;
 
+//@@author itsdickson
+
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.ui.EventCard;
 
@@ -23,3 +25,4 @@ public class EventPanelSelectionChangedEvent extends BaseEvent {
         return newSelection;
     }
 }
+//@@author

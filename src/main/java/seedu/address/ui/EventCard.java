@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+//@@author itsdickson
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -70,3 +72,4 @@ public class EventCard extends UiPart<Region> {
                 && event.equals(card.event);
     }
 }
+//@@author
