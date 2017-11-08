@@ -56,7 +56,8 @@ public class Datetime {
                 endtimeString = String.valueOf(endtime);
             }
 
-            this.value = components[0] + " " + components[1] + " to " + endtimeString;
+//            this.value = components[0] + " " + components[1] + " to " + endtimeString;
+            this.value = datetime;
 
         } catch (DateTimeException e) {
             throw new IllegalValueException(DATE_CONSTRAINTS_VIOLATION);

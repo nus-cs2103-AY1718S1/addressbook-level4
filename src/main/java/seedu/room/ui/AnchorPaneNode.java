@@ -20,6 +20,8 @@ public class AnchorPaneNode extends AnchorPane {
     // Date associated with this pane
     private LocalDate date;
     private final Background focusBackground = new Background( new BackgroundFill(
+            Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY ) );
+    private final Background todayBackground = new Background( new BackgroundFill(
             Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY ) );
     private final Background unfocusBackground = new Background( new BackgroundFill(
             Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY ) );
@@ -35,7 +37,11 @@ public class AnchorPaneNode extends AnchorPane {
 
         this.setOnMouseClicked( ( e ) ->
         {
-            this.focusGrid();
+            if (this.getBackground() == focusBackground) {
+                this.revertBackground();
+            } else {
+                this.focusGrid();
+            }
         } );
 
 
@@ -50,15 +56,29 @@ public class AnchorPaneNode extends AnchorPane {
         this.date = date;
     }
 
+
     //this method focuses the Grid when the mouse clicks on it
     public void focusGrid() {
-        this.requestFocus();
-        this.backgroundProperty().bind( Bindings
-                .when( this.focusedProperty() )
-                .then( focusBackground )
-                .otherwise(unfocusBackground)
-        );
+        if(this.getBackground() != todayBackground) {
+            this.requestFocus();
+            this.backgroundProperty().bind( Bindings
+                    .when( this.focusedProperty() )
+                    .then( focusBackground )
+                    .otherwise(unfocusBackground)
+            );
+        }
 
+    }
+
+    //this method puts the background to it's original state
+    public void revertBackground() {
+        this.backgroundProperty().unbind();
+        this.backgroundProperty().setValue(unfocusBackground);
+    }
+
+    //make the anchorpane that represents today light up
+    public void lightUpToday() {
+        this.backgroundProperty().setValue(todayBackground);
     }
 
 

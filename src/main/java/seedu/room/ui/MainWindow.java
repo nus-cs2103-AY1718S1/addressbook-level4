@@ -48,7 +48,6 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
     private CalendarBoxPanel calandarBoxPanel;
     private PersonListPanel personListPanel;
     private EventListPanel eventListPanel;

@@ -87,12 +87,20 @@ public class CalendarBox {
             if (ap.getChildren().size() != 0) {
                 ap.getChildren().remove(0);
             }
+
+            //make today's date light up
+            if(calendarDate.equals(LocalDate.now())) {
+                ap.lightUpToday();
+            }
+
             Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
             ap.setDate(calendarDate);
             ap.setTopAnchor(txt, 5.0);
             ap.setLeftAnchor(txt, 5.0);
             ap.getChildren().add(txt);
             calendarDate = calendarDate.plusDays(1);
+
+
         }
         // Change the title of the calendar
         calendarTitle.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
@@ -113,6 +121,8 @@ public class CalendarBox {
         currentYearMonth = currentYearMonth.plusMonths(1);
         populateCalendar(currentYearMonth);
     }
+
+
 
     public VBox getView() {
         return view;
