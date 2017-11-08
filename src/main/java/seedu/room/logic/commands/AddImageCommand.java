@@ -4,9 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static seedu.room.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
+
+import javafx.scene.Parent;
+import javafx.scene.image.Image;
 import seedu.room.commons.core.Messages;
 import seedu.room.commons.core.index.Index;
 import seedu.room.logic.commands.exceptions.CommandException;
@@ -65,6 +70,7 @@ public class AddImageCommand extends UndoableCommand {
 
         ReadOnlyPerson person = lastShownList.get(index.getZeroBased());
         Person editedPerson = editPersonImage(person);
+        createPersonImage(editedPerson);
 
         try {
             model.updatePerson(person, editedPerson);
@@ -87,7 +93,26 @@ public class AddImageCommand extends UndoableCommand {
         Set<Tag> tags = person.getTags();
 
         Person editedPerson =  new Person(name, phone, email, room, timestamp, tags);
+        if (checkJarResourcePath(person)) editedPerson.getPicture().setJarResourcePath();
         editedPerson.getPicture().setPictureUrl(name.toString() + phone.toString() + ".jpg");
         return editedPerson;
+    }
+
+    public boolean checkJarResourcePath(ReadOnlyPerson person) {
+        File picture = new File(person.getPicture().getPictureUrl());
+        return (picture.exists()) ? false : true;
+    }
+
+    public void createPersonImage(ReadOnlyPerson person) {
+        File picFile = new File(newImageURL);
+        try {
+            if (person.getPicture().checkJarResourcePath()) {
+                ImageIO.write(ImageIO.read(picFile), "jpg", new File(person.getPicture().getJarPictureUrl()));
+            } else {
+                ImageIO.write(ImageIO.read(picFile), "jpg", new File(person.getPicture().getPictureUrl()));
+            }
+        } catch (Exception e) {
+            System.out.println("Cannot create Person Image");
+        }
     }
 }

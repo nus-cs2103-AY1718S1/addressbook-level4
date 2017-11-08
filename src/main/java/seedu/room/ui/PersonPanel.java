@@ -172,10 +172,10 @@ public class PersonPanel extends UiPart<Region> {
                     picture.setImage(newPicture);
                 }
             } catch (Exception e) {
-                System.out.println(e + "Invalid File");
+                System.out.println(e + "Cannot set Image of person");
             }
         } else {
-            System.out.println("Invalid File");
+            System.out.println("Please select an Image File");
         }
     }
 
