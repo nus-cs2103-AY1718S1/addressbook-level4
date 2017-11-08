@@ -1,7 +1,7 @@
 package seedu.address.ui;
 
-import java.io.IOException;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
