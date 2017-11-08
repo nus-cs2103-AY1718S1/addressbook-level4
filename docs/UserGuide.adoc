@@ -103,7 +103,7 @@ A person can have any number of tags (including 0)
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all persons : `list`
 
@@ -202,6 +202,8 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+// tag::rmtag[]
+
 === Deleting a tag : `removetag`
 
 Removes a tag from every person in the list in the address book. +
@@ -232,6 +234,9 @@ Deletes the tag `friends` from everyone in the address book.
 `removetag 1 enemy` +
 Deletes tag `enemy` from the first person in the list shown in the address book.
 
+// end::rmtag[]
+
+// tag::sort[]
 === Sorting the list: `sort`
 
 [NOTE]
@@ -239,12 +244,14 @@ Sort feature available since v1.3
 
 Sorts the list of person in the addressbook. +
 You may choose to sort based on a parameter and display in +
-ascending or descending order. +
+ascending or descending order.
+
+[NOTE]
+Sort command is NOT undoable nor redoable, since the order is not preserved, and will revert to original order on execution of many other commands.
 
 Format: `sort FIELD ORDER` +
 
 ****
-* The sort function does not save the order.
 * FIELD must be name, email or phone.
 * ORDER must be asc (ascending) or dsc (descending)
 ****
@@ -258,7 +265,10 @@ Sorts the list based on name in ascending order.
 * `findtag owesMoney` +
 `sort email dsc` +
 Sorts the people with `owesMoney` tag based on their emails in descending order.
+
+// end::sort[]
 // tag::theme[]
+
 === Change the theme of AddressBook: `theme`
 [NOTE]
 theme feature available since v1.4.
@@ -270,11 +280,21 @@ Format: theme KEYWORD
 * The command is case sensitive. e.g `darktheme` is different from `DarkTheme`.
 * The respective `.css` file must be added into resources before the function can work.
 ****
+
+****
+* Currently available themes are:
+* DarkTheme
+* RedTheme
+****
 Examples:
 
 * `theme` `DarkTheme` +
 Change the theme of the Rubrika to DarkTheme.
-//end::theme[]
+
+// end::theme[]
+
+// tag::importexport[]
+
 === Importing contacts: `import`
 
 [NOTE]
@@ -324,13 +344,7 @@ Examples:
 Exports the whole list of persons in addressbook into sample.vcf in root folder.
 * `export sample.xml` +
 Exports the whole list of persons in addressbook into sample.xml in root folder.
-
-=== Change UI Theme : `theme`
-
-[NOTE]
-Change theme feature available since v1.4.
-
-You can now set the theme of the UI to suit your preference, with `theme` command.
+// end::importexport[]
 
 === Selecting a person : `select`
 

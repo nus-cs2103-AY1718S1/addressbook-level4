@@ -1,4 +1,4 @@
-package seedu.address.logic.autocomplete.parser;
+package seedu.address.autocomplete.parser;
 
 import static org.junit.Assert.fail;
 
@@ -100,6 +100,11 @@ public class ModelStub implements Model {
 
     @Override
     public void removeTag(Index index, Tag tag) {
+        fail("This method should not be called");
+    }
+
+    @Override
+    public void removeTagFromPerson(Tag tag, ReadOnlyPerson person) {
         fail("This method should not be called");
     }
 

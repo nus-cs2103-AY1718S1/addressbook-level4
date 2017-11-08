@@ -17,11 +17,16 @@ public class ExportCommand extends Command {
     public static final String COMMAND_WORD = "export";
     public static final String COMMAND_USAGE = COMMAND_WORD;
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports contacts into a .vcf file.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports contacts into a vCard or XML file. "
+            + "Parameters: FileName.xml Or FileName.vcf\n"
+            + "Example: export sample.xml OR export sample.vcf";
     public static final String MESSAGE_WRONG_FILE_TYPE = "Export only exports .vcf and .xml file.";
     public static final String MESSAGE_FILE_NOT_FOUND = "File was not found in specified directory.";
+    public static final String MESSAGE_EMPTY_BOOK = "No contacts found in Rubrika to export.";
 
     public static final String MESSAGE_SUCCESS = "Successfully exported contacts.";
+    public static final String XML_EXTENSION = ".xml";
+    public static final String VCF_EXTENSION = ".vcf";
     public final String filePath;
 
     public ExportCommand(String path) {
@@ -32,21 +37,28 @@ public class ExportCommand extends Command {
     public CommandResult execute() throws CommandException {
         File export = new File(filePath);
         ReadOnlyAddressBook addressBook = model.getAddressBook();
-        if (export.getName().endsWith(".xml")) {
-            XmlSerializableAddressBook xmlAddressBook = new XmlSerializableAddressBook(addressBook);
-            try {
+
+        if (addressBook.getPersonList().isEmpty()) {
+            throw new CommandException(MESSAGE_EMPTY_BOOK);
+        }
+        try {
+            if (export.getName().endsWith(XML_EXTENSION)) {
+                XmlSerializableAddressBook xmlAddressBook = new XmlSerializableAddressBook(addressBook);
                 export.createNewFile();
                 XmlFileStorage.saveDataToFile(export, xmlAddressBook);
-            } catch (IOException ioe) {
-                throw new CommandException(MESSAGE_FILE_NOT_FOUND);
-            }
-        } else if (export.getName().endsWith(".vcf")) {
-            try {
+            } else if (export.getName().endsWith(VCF_EXTENSION)) {
                 VcfExport.saveDataToFile(export, addressBook.getPersonList());
-            } catch (IOException ioe) {
-                throw new CommandException(MESSAGE_FILE_NOT_FOUND);
             }
+        } catch (IOException ioe) {
+            assert false : "The file should have been created and writable";
         }
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ExportCommand // instanceof handles nulls
+                && this.filePath.equals(((ExportCommand) other).filePath)); // state check
     }
 }

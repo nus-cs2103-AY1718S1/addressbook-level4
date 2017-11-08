@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -14,16 +15,20 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import seedu.address.autocomplete.AutoCompleteLogic;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ImportFileChooseEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.FileWrapper;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -40,6 +45,7 @@ public class MainWindow extends UiPart<Region> {
 
     private Stage primaryStage;
     private Logic logic;
+    private AutoCompleteLogic autoCompleteLogic;
 
     // Independent Ui parts residing in this Ui container
     private MapPanel mapPanel;
@@ -72,12 +78,17 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private VBox vbox;
 
-    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
+    public MainWindow(Stage primaryStage,
+                      Config config,
+                      UserPrefs prefs,
+                      Logic logic,
+                      AutoCompleteLogic autoCompleteLogic) {
         super(FXML);
 
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+        this.autoCompleteLogic = autoCompleteLogic;
         this.config = config;
         this.prefs = prefs;
 
@@ -150,7 +161,7 @@ public class MainWindow extends UiPart<Region> {
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
+        CommandBox commandBox = new CommandBox(autoCompleteLogic, logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
@@ -208,6 +219,24 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.show();
     }
 
+    //@@author freesoup
+    /**
+     * Opens the FileChooser
+     */
+    @FXML
+    private void handleImport(FileWrapper file) {
+        FileChooser chooser = new FileChooser();
+        chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All", "*.*"),
+                new FileChooser.ExtensionFilter("vCard (.vcf)", "*.vcf"),
+                new FileChooser.ExtensionFilter("XML (.xml)", "*.xml")
+        );
+        chooser.setTitle("Select import file.");
+        File selectedFile = chooser.showOpenDialog(primaryStage);
+        file.setFile(selectedFile);
+    }
+    //@@author
+
     /**
      * Closes the application.
      */
@@ -229,20 +258,26 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author freesoup
+    /**
+     * Opens a file explorer to select a file to import.
+     */
+    @Subscribe
+    private void handleImportFileChooseEvent(ImportFileChooseEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleImport(event.getFile());
+    }
     //@@author kosyoz
     /**
      * Change the theme of teh application.
      */
     @Subscribe
     public void handleChangeThemeEvent(ChangeThemeEvent event) {
-        if (event.getTheme().equals("DarkTheme"))
-        {
+        if (event.getTheme().equals("DarkTheme")) {
             vbox.getStylesheets().remove("/view/RedTheme.css");
             vbox.getStylesheets().add("/view/" + event.getTheme() + ".css");
-        }
-
-        else
-        {
+        } else {
             vbox.getStylesheets().remove("/view/DarkTheme.css");
             vbox.getStylesheets().add("/view/" + event.getTheme() + ".css");
         }

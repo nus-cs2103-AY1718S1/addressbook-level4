@@ -185,6 +185,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void removeTagFromPerson(Tag tag, ReadOnlyPerson person) {
+            fail("This method should not be called");
+        }
+
+        @Override
         public void sortFilteredPersonList(Comparator<ReadOnlyPerson> comparator) {
             fail("This method should not be called");
         }
