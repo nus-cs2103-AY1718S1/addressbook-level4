@@ -1,0 +1,22 @@
+= How to Collate Your Codes
+
+:stylesDir: stylesheets
+:experimental:
+:repoURL: https://github.com/CS2103AUG2017-T09-B3/main
+
+We use the tool https://github.com/se-edu/collate[Collate] developed by https://se-edu.github.io/[SE-EDU] team to collate
+each contributor's code from multiple files.
+
+== For Windows User
+
+* Open your command line or PowerShell (or whatever your favorite terminal emulator)
+* Make sure you are in this folder, otherwise change your directory by `cd collated\` etc.
+* Run the `.bat` script file by the command `collate.bat`
+* All collated codes will be generated automatically
+
+== For Linux or Mac User
+
+* Open your terminal
+* Make sure you are in this folder, otherwise change your directory by `cd collated\` etc.
+* Run the `.sh` script file by the command `sh collate.sh`
+* All collated codes will be generated automatically

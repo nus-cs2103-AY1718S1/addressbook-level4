@@ -1,0 +1,57 @@
+= Low Weng Fei - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: BoNUS
+BoNUS is a desktop personal organizer application targeted at National University of Singapore (NUS) students, with
+Contacts, Events and Calendar being the main focus of this application. While users interact with it mainly through a
+Command Line Interface (CLI), BoNUS also provides a simple Graphical User Interface (GUI) for a better User Experience (UX).
+
+This project is the result of a semester-long Software Engineering module, https://nus-cs2103.github.io/website/[CS2103T],
+in NUS. The backend of BoNUS is written primarily in Java, while JavaFX is used for the frontend design. Being built
+based on https://github.com/se-edu/addressbook-level4[Address Book (Level 4)], an initiative from the
+https://se-edu.github.io/[SE-EDU team], the current codebase has expanded to around 10 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T09-B3/main/blob/master/collated/main/low5545.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B3/main/blob/master/collated/test/low5545.md[Test code]]
+
+=== Enhancement Added: Import/Export
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=importXml]
+
+include::../UserGuide.adoc[tag=exportXml]
+
+---
+
+==== Justification
+
+The support for import and export capabilities is essential to increase the user adoption of BoNUS, as these features
+allow users to incorporate BoNUS more seamlessly in their daily routines. Simply by providing the desired file location,
+users are able to import data into BoNUS, and export all data stored in the application to somewhere safe.
+
+As for the latest BoNUS v1.5 official release, users are constrained to import data from, or export data to a
+BoNUS-recognized XML file. Nevertheless, more file formats will be supported in future releases to truly unleash the
+full potential of the application.
+
+==== Realization
+
+---
+
+include::../DeveloperGuide.adoc[tag=importExportXml]
+
+---
+
+=== Other contributions
+
+* Added an informative feedback message to notify users what command they have undone or redone
+(Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/61[#61])
+* Introduced the support of command aliases, or shorthand-equivalent commands
+(Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/38[#38])
+* Assisted Project AcquaiNote in bug reporting and feature suggestions
+(Issues https://github.com/CS2103AUG2017-T10-B1/main/issues/74[#74], https://github.com/CS2103AUG2017-T10-B1/main/issues/75[#75],
+https://github.com/CS2103AUG2017-T10-B1/main/issues/76[#76], Pull requests https://github.com/CS2103AUG2017-T10-B1/main/pull/77[#77],
+https://github.com/CS2103AUG2017-T10-B1/main/pull/79[#79])

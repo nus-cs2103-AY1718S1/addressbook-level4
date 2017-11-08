@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
-    <URL value="@DarkTheme.css" />
-    <URL value="@Extensions.css" />
   </stylesheets>
 
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
@@ -24,33 +22,57 @@
     </Menu>
   </MenuBar>
 
-  <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
+  <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
     <padding>
-      <Insets top="5" right="10" bottom="5" left="10" />
+      <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
   </StackPane>
 
-  <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-      minHeight="100" prefHeight="100" maxHeight="100">
+  <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
     <padding>
-      <Insets top="5" right="10" bottom="5" left="10" />
+      <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
   </StackPane>
 
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+  <!-- @@author yunpengn -->
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" minWidth="600.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
+      <VBox fx:id="sideButtonBar" alignment="CENTER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0">
+         <padding>
+            <Insets bottom="10.0" top="10.0" />
+         </padding>
+         <children>
+            <ImageView fx:id="switchToContactsButton" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#handleSwitchToContacts" pickOnBounds="true" styleClass="sidebar-button">
+               <VBox.margin>
+                  <Insets bottom="50.0" top="50.0" />
+               </VBox.margin>
+               <image>
+                  <Image url="@../images/contacts.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="switchToEventsButton" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="20.0" onMouseClicked="#handleSwitchToEvents" pickOnBounds="true" styleClass="sidebar-button">
+               <image>
+                  <Image url="@../images/events.png" />
+               </image>
+               <VBox.margin>
+                  <Insets bottom="50.0" top="50.0" />
+               </VBox.margin>
+            </ImageView>
+         </children>
+      </VBox>
+    <VBox fx:id="dataList" minWidth="340" prefWidth="340.0" SplitPane.resizableWithParent="false">
       <padding>
-        <Insets top="10" right="10" bottom="10" left="10" />
+        <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
-      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+      <StackPane fx:id="dataListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
 
-    <StackPane fx:id="browserPlaceholder" prefWidth="340" >
+    <StackPane fx:id="dataDetailsPanelPlaceholder">
       <padding>
-        <Insets top="10" right="10" bottom="10" left="10" />
+        <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
     </StackPane>
   </SplitPane>
+  <!-- @@author -->
 
-  <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+  <StackPane fx:id="statusBarPlaceholder" VBox.vgrow="NEVER" />
 </VBox>

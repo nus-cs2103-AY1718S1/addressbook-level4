@@ -61,6 +61,7 @@ allprojects {
 
     dependencies {
         compile group: 'org.fxmisc.easybind', name: 'easybind', version: '1.0.3'
+        compile group: 'com.joestelmach', name: 'natty', version: '0.13'
         compile "org.controlsfx:controlsfx:$controlsFxVersion"
         compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
         compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion"
@@ -87,7 +88,7 @@ allprojects {
     }
 
     shadowJar {
-        archiveName = "addressbook.jar"
+        archiveName = "BoNUS.jar"
 
         destinationDir = file("${buildDir}/jar/")
     }
