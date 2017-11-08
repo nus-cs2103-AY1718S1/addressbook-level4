@@ -743,7 +743,7 @@ public static Optional<Name> parseName(Optional<String> name, String command) th
 
 // tag::parentmode[]
 === Parent Mode
-When Bluebird is launched, it will be set to ChildMode by default and the number of commands
+When Bluebird is launched, Parent Mode will be off by default and the number of commands
 available will be limited. The `ParentModeCommand` will enable all commands for the parent to use.
 
 4.9.1. Design Considerations
