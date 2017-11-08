@@ -728,7 +728,7 @@ public static Optional<Name> parseName(Optional<String> name, String command) th
 
 **Aspect**: Implementing an option to accept and create the empty fields +
 ** Alternative 1 (current choice):** By using a command parameter in the ParserUtil class +
-**Pros:** This will allow felxibility in implementing, or calling the necessary constructors in the respective person
+**Pros:** This will allow flexibility in implementing, or calling the necessary constructors in the respective person
   field classes +
 **Cons:** There will be a need for overloading of constructors in the classes for the person fields +
 **Alternative 2**: By having a new class to initialise empty fields for person added, similar to the EditPersonDescriptor
@@ -758,6 +758,8 @@ Pros: This allows child to edit the contacts or tasks if they were to add wrongl
 Cons: There is a possibility that the child may edit important contacts or tasks.
 // end::parentmode[]
 
+
+// tag::documentation[]
 == Documentation
 
 We use asciidoc for writing documentation.
