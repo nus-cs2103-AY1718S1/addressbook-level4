@@ -85,13 +85,19 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author: Haozhe321
     /**
      * Sets the {@code Temporary} of the {@code Person} that we are building.
      */
-    public PersonBuilder withTemporary(long day) {
-        this.person.setTimestamp(new Timestamp(day));
+    public PersonBuilder withTemporary(long day)  {
+        try {
+            this.person.setTimestamp(new Timestamp(day));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("Timestamp is expected to be unique");
+        }
         return this;
     }
+    //@@author
 
     /**
      * Sets the {@code Phone} of the {@code Person} that we are building.

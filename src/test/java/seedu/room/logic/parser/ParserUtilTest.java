@@ -22,6 +22,7 @@ import seedu.room.model.person.Email;
 import seedu.room.model.person.Name;
 import seedu.room.model.person.Phone;
 import seedu.room.model.person.Room;
+import seedu.room.model.person.Timestamp;
 import seedu.room.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -30,6 +31,8 @@ public class ParserUtilTest {
     private static final String INVALID_ROOM = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_TIMESTAMP_WITH_DECIMAL = "1.5";
+    private static final String INVALID_TIMESTAMP = "-5";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -37,9 +40,50 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_TIMESTAMP = "1";
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
+
+    //@@author: Haozhe321
+    @Test
+    public void parseTimestamp_invalidInput_throwsNumberFormatException1() throws Exception {
+        thrown.expect(NumberFormatException.class);
+        ParserUtil.parseTimestamp(Optional.of(INVALID_TIMESTAMP_WITH_DECIMAL));
+    }
+
+    @Test
+    public void parseTimestamp_invalidInput_throwsNumberFormatException2() throws Exception {
+        thrown.expect(NumberFormatException.class);
+        ParserUtil.parseTimestamp(Optional.of("-1.5"));
+    }
+
+    @Test
+    public void parseTimestamp_invalidInput_throwsNumberFormatException3() throws Exception {
+        thrown.expect(NumberFormatException.class);
+        ParserUtil.parseTimestamp(Optional.of("2/3"));
+    }
+
+    @Test
+    public void parseTimestamp_invalidInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTimestamp(Optional.of(INVALID_TIMESTAMP));
+    }
+
+    @Test
+    public void parseTimestamp_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseTimestamp(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseTimestamp_validValue_returnsTimestamp() throws Exception {
+        Timestamp expectedTimestamp = new Timestamp(1);
+        Optional<Timestamp> actualTimestamp = ParserUtil.parseTimestamp(Optional.of(VALID_TIMESTAMP));
+
+        assertEquals(expectedTimestamp.toString(), actualTimestamp.get().toString());
+    }
+
+    //@@author
 
     @Test
     public void parseIndex_invalidInput_throwsIllegalValueException() throws Exception {
@@ -187,4 +231,5 @@ public class ParserUtilTest {
 
         assertEquals(expectedTagSet, actualTagSet);
     }
+
 }
