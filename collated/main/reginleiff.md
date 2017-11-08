@@ -1548,16 +1548,16 @@ public class XmlAdaptedEvent {
     private EventPanel schedulePanel;
     private ScheduleListPanel scheduleListPanel;
 ```
-###### \java\seedu\address\ui\ScheduleListCard.java
+###### \java\seedu\address\ui\TimetableListCard.java
 ``` java
 
 /**
  * An UI component that displays information of a {@code Event} on the schedule.
  *
  */
-public class ScheduleListCard extends UiPart<Region> {
+public class TimetableListCard extends UiPart<Region> {
 
-    private static final String FXML = "ScheduleListCard.fxml";
+    private static final String FXML = "TimetableListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -1576,7 +1576,7 @@ public class ScheduleListCard extends UiPart<Region> {
     @FXML
     private Label timing;
 
-    public ScheduleListCard(ReadOnlyEvent event) {
+    public TimetableListCard(ReadOnlyEvent event) {
         super(FXML);
         this.event = event;
         bindListeners(event);
@@ -1599,12 +1599,12 @@ public class ScheduleListCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof ScheduleListCard)) {
+        if (!(other instanceof TimetableListCard)) {
             return false;
         }
 
         // state check
-        ScheduleListCard card = (ScheduleListCard) other;
+        TimetableListCard card = (TimetableListCard) other;
         return event.equals(card.event);
     }
 }
@@ -1620,7 +1620,7 @@ public class ScheduleListPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(ScheduleListPanel.class);
 
     @FXML
-    private ListView<ScheduleListCard> scheduleListView;
+    private ListView<TimetableListCard> scheduleListView;
 
     public ScheduleListPanel(ObservableList<ReadOnlyEvent> eventList) {
         super(FXML);
@@ -1629,7 +1629,7 @@ public class ScheduleListPanel extends UiPart<Region> {
     }
 
     private void setConnections(ObservableList<ReadOnlyEvent> eventList) {
-        ObservableList<ScheduleListCard> mappedList = EasyBind.map(eventList, (event) -> new ScheduleListCard(event));
+        ObservableList<TimetableListCard> mappedList = EasyBind.map(eventList, (event) -> new TimetableListCard(event));
         scheduleListView.setItems(mappedList);
         scheduleListView.setCellFactory(listView -> new ScheduleListViewCell());
         scheduleListView.setOrientation(Orientation.HORIZONTAL);
@@ -1642,12 +1642,12 @@ public class ScheduleListPanel extends UiPart<Region> {
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
         ObservableList<ReadOnlyEvent> eventList = abce.data.getSchedule(abce.data.getCurrentDate());
-        ObservableList<ScheduleListCard> mappedList = EasyBind.map(eventList, (event) -> new ScheduleListCard(event));
+        ObservableList<TimetableListCard> mappedList = EasyBind.map(eventList, (event) -> new TimetableListCard(event));
         scheduleListView.setItems(mappedList);
     }
 
     /**
-     * Scrolls to the {@code ScheduleListCard} at the {@code index} and selects it.
+     * Scrolls to the {@code TimetableListCard} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
@@ -1656,12 +1656,12 @@ public class ScheduleListPanel extends UiPart<Region> {
         });
     }
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code ScheduleListCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code TimetableListCard}.
      */
-    class ScheduleListViewCell extends ListCell<ScheduleListCard> {
+    class ScheduleListViewCell extends ListCell<TimetableListCard> {
 
         @Override
-        protected void updateItem(ScheduleListCard event, boolean empty) {
+        protected void updateItem(TimetableListCard event, boolean empty) {
             super.updateItem(event, empty);
 
             if (empty || event == null) {
@@ -1698,7 +1698,7 @@ public class ScheduleListPanel extends UiPart<Region> {
          </padding>
     </SplitPane>
 ```
-###### \resources\view\ScheduleListCard.fxml
+###### \resources\view\TimetableListCard.fxml
 ``` fxml
 <HBox fx:id="cardPane" minHeight="60.0" mouseTransparent="true" prefHeight="60.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <padding>

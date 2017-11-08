@@ -86,7 +86,7 @@ public class EventPanel extends UiPart<Region> {
     private void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         for (ReadOnlyEvent dataEvent : event.data.getEventList()) {
-            if (storedEvent.getTitle().equals(dataEvent.getTitle())) {
+            if (storedEvent != null && storedEvent.getTitle().equals(dataEvent.getTitle())) {
                 showEventDetails(storedEventIndex, dataEvent);
                 storedEvent = dataEvent;
                 break;
