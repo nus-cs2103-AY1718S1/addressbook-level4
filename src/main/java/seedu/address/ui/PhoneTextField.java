@@ -37,6 +37,9 @@ public class PhoneTextField extends UiPart<Region> {
     public void setPhoneTextField(String text) {
         phoneTextField.setText(text);
     }
+    public TextField getObject() {
+        return phoneTextField;
+    }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
