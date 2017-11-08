@@ -546,15 +546,55 @@ The current implementation of this feature is based on https://github.com/nus-cs
 
 A feature that allows the user to export the addressbook and images saved to a compressed file.
 
-`The command is a WIP.`
+The command works as following:
+
+. Parse the args provided by the user to check the filepath (if provided) for correctness and availability
+
+. Create a zipfile at the filepath specified by the user or at the application directory if it isn't is provided
+
+. Read each file at the source (the folder where the addressbook is) and add them to the zip file
+
+Checking the input of the filepath is done using the following code which either sets a default name and directory or takes the name and path given by the user and attaches the format at the end.
+----
+    if (destPath.equals("")) {
+        destZipFile = "AddressbookData.zip";
+    } else {
+        destZipFile = destPath + ".zip";
+    }
+----
+
+Adding each file into the target zip is done by the following code using ZipEntry which is found in java.util.zip
+----
+    byte[] buf = new byte[1024];
+    int len;
+    FileInputStream in = new FileInputStream(source);
+    zip.putNextEntry(new ZipEntry(path + "/" + folder.getName()));
+    while ((len = in.read(buf)) > 0) {
+          zip.write(buf, 0, len);
+    }
+
+----
 
 ==== Design Considerations
 
-**Aspect:** Export file type. +
+**Aspect:** Export path +
+**Alternative 1 (current choice):** Allow both a default location and a path specified by the user +
+**Pros:** Gives the advanced user more freedom when using the feature +
+**Cons:** Longer code that requires more testing and much easier to break +
+**Alternative 2:** Allow the user to specify the location +
+**Pros:** Less chance of mistakenly overwriting a previous addressbook version +
+**Cons:** Harder for newer users to pick up on as it requires them to be be familiar with the way their OS handles directories
 
-**Aspect:** Export path. +
-
-`WIP`
+**Aspect:** Export format +
+**Alternative 1 (current choice):** Compressed into a zip file +
+**Pros:** Less chance of tampering with by users +
+**Cons:** More complex code and the difficulty introduced can hinder certain operations +
+**Alternative 2:** Copy the data directory to a specified path +
+**Pros:** Will produce plain files that can  be edited using outside programs without the need of uncompressing +
+**Cons:** OS can include hidden files into the directory without the user's knowledge that may hinder future import feature +
+**Alternative 3:** Use a proprietary file type +
+**Pros:** Will be the hardest for the average and intermediate users to tamper with and best for the future import feature +
+**Cons:** Much more complex to implement
 
 == Testing
 
