@@ -1,4 +1,4 @@
-package seedu.address.model.commandidentifier;
+package seedu.address.commons.core.commandidentifier;
 
 import static java.util.Objects.requireNonNull;
 
@@ -22,6 +22,7 @@ import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.WelcomeCommand;
 
 //@@author CT15
 /**
@@ -45,7 +46,8 @@ public class CommandIdentifier {
             + RedoCommand.COMMAND_WORD + ", "
             + ScheduleCommand.COMMAND_WORD + ", "
             + LocateCommand.COMMAND_WORD + ", "
-            + UndoCommand.COMMAND_WORD;
+            + UndoCommand.COMMAND_WORD
+            + WelcomeCommand.COMMAND_WORD;
 
     public static final List<String> COMMAND_VALIDATION_LIST = ImmutableList.of(
             AddCommand.COMMAND_WORD, AddCommand.COMMAND_ALIAS,
@@ -62,14 +64,15 @@ public class CommandIdentifier {
             RedoCommand.COMMAND_WORD, RedoCommand.COMMAND_ALIAS,
             ScheduleCommand.COMMAND_WORD, ScheduleCommand.COMMAND_ALIAS,
             LocateCommand.COMMAND_WORD, LocateCommand.COMMAND_ALIAS,
-            UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_ALIAS);
+            UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_ALIAS,
+            WelcomeCommand.COMMAND_WORD, WelcomeCommand.COMMAND_ALIAS);
 
     public final String value;
 
     /**
      * Validates given command word.
      *
-     * @throws IllegalValueException if the given tag name string is invalid.
+     * @throws IllegalValueException if the given commandIdentifier string is invalid.
      */
     public CommandIdentifier(String commandIdentifier) throws IllegalValueException {
         requireNonNull(commandIdentifier);

@@ -38,6 +38,7 @@ public class UiManager extends ComponentManager implements Ui {
     private Config config;
     private UserPrefs prefs;
     private WelcomeScreen welcomeScreen;
+    private MainWindow mainWindow;
 
     public UiManager(Logic logic, Model model, Config config, UserPrefs prefs) {
         super();
@@ -56,7 +57,13 @@ public class UiManager extends ComponentManager implements Ui {
         primaryStage.getIcons().add(getImage(ICON_APPLICATION));
 
         try {
-            loadWelcomeScreen(primaryStage);
+            welcomeScreen = new WelcomeScreen(primaryStage, config, prefs, logic, model);
+            if (prefs.getWelcomeScreenEnabledInfo()) {
+                welcomeScreen.show(); //This should be called before creating other UI parts
+                welcomeScreen.fillInnerParts();
+            } else {
+                welcomeScreen.loadMainWindow();
+            }
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
@@ -69,9 +76,8 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     private void loadWelcomeScreen(Stage primaryStage) {
-        welcomeScreen = new WelcomeScreen(primaryStage, config, prefs, logic, model);
-        welcomeScreen.show(); //This should be called before creating other UI parts
-        welcomeScreen.fillInnerParts();
+
+
     }
 
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {

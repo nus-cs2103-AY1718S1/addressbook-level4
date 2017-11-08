@@ -5,14 +5,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -95,9 +93,8 @@ public class WelcomeScreen extends UiPart<Region> {
     /**
      * Opens main window.
      */
-    private void loadMainWindow() {
-        Stage newStage = new Stage();
-        mainWindow = new MainWindow(newStage, config, prefs, logic, model);
+    public void loadMainWindow() {
+        mainWindow = new MainWindow(primaryStage, config, prefs, logic, model);
         mainWindow.show(); //This should be called before creating other UI parts
         mainWindow.fillInnerParts();
     }
@@ -123,6 +120,9 @@ public class WelcomeScreen extends UiPart<Region> {
         return mainWindow;
     }
 
+    /**
+     * Stops the application.
+     */
     public void stop() {
         prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
         mainWindow.hide();

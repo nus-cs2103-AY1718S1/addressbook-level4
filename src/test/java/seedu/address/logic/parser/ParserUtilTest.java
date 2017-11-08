@@ -16,8 +16,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.commandidentifier.CommandIdentifier;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.commandidentifier.CommandIdentifier;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;

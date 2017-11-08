@@ -12,6 +12,7 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "ConTag";
+    private boolean isWelcomeScreenEnabled = false;
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -45,6 +46,18 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
+    public void enableWelcomeScreen() {
+        isWelcomeScreenEnabled = true;
+    }
+
+    public void disableWelcomeScreen() {
+        isWelcomeScreenEnabled = false;
+    }
+
+    public boolean getWelcomeScreenEnabledInfo() {
+        return isWelcomeScreenEnabled;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -72,6 +85,7 @@ public class UserPrefs {
         sb.append("Gui Settings : " + guiSettings.toString());
         sb.append("\nLocal data file location : " + addressBookFilePath);
         sb.append("\nAddressBook name : " + addressBookName);
+        sb.append("\nWelcomeScreen is enabled : " + isWelcomeScreenEnabled);
         return sb.toString();
     }
 

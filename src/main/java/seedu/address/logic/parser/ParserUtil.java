@@ -7,10 +7,11 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.commons.core.commandidentifier.CommandIdentifier;
+import seedu.address.commons.core.enablingkeyword.EnablingKeyword;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.commandidentifier.CommandIdentifier;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Country;
 import seedu.address.model.person.Name;
@@ -124,11 +125,22 @@ public class ParserUtil {
      * Parses {@code commandWord} into an {@code CommandWord} and returns it.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     * @throws IllegalValueException if the specified commandWord is invalid.
      */
     public static CommandIdentifier parseCommandIdentifier(String commandWord) throws IllegalValueException {
         requireNonNull(commandWord);
         return new CommandIdentifier(commandWord.trim());
+    }
+
+    /**
+     * Parses {@code enablingKeyword} into an {@code EnablingKeyword} and returns it.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the specified enablingKeyword is invalid (neither "enable" nor "disable").
+     */
+    public static EnablingKeyword parseEnablingKeyword(String enablingKeyword) throws IllegalValueException {
+        requireNonNull(enablingKeyword);
+        return new EnablingKeyword(enablingKeyword.trim());
     }
 
     //@@author
