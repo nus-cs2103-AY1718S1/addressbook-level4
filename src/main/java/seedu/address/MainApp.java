@@ -58,6 +58,8 @@ public class MainApp extends Application {
     protected UserPrefs userPrefs;
     protected BotSettings botSettings;
 
+    private boolean botStarted = false;
+
 
     @Override
     public void init() throws Exception {
@@ -88,11 +90,14 @@ public class MainApp extends Application {
 
         TelegramBotsApi botsApi = new TelegramBotsApi();
 
-        try {
-            botsApi.registerBot(new ArkBot(logic, model,
-                    botSettings.getBotToken(), botSettings.getBotUsername()));
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
+        if (!botStarted) {
+            try {
+                botsApi.registerBot(new ArkBot(logic, model,
+                        botSettings.getBotToken(), botSettings.getBotUsername()));
+                this.botStarted = true;
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
         }
     }
 
