@@ -62,7 +62,7 @@ public class Picture {
      */
     public void setPictureUrl(String pictureUrl) {
         if (pictureUrl.contains("/")) {
-            String splitStrings[] = pictureUrl.split("/");
+            String[] splitStrings = pictureUrl.split("/");
             String pictureName = splitStrings[splitStrings.length - 1];
             this.pictureUrl = BASE_URL + pictureName;
             this.jarPictureUrl = BASE_JAR_URL + pictureName;

@@ -8,6 +8,11 @@ import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.commands.AddImageCommand;
 import seedu.room.logic.parser.exceptions.ParseException;
 
+/**
+ * Parses the given {@code String} of arguments in the context of the AddImageCommand
+ * and returns an AddImageCommand object for execution.
+ * @throws ParseException if the user input does not conform the expected format
+ */
 public class AddImageCommandParser implements Parser<AddImageCommand> {
     @Override
     public AddImageCommand parse(String args) throws ParseException {

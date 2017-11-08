@@ -151,6 +151,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateFilteredPersonListPicture(Predicate<ReadOnlyPerson> predicate, Person editedPerson) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void removeTag(Tag tag) {
             fail("This method should not be called.");
         }

@@ -23,6 +23,9 @@ import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
 import seedu.room.model.tag.Tag;
 
+/**
+ * Allows the addition of an image to a resident currently in the resident book
+ */
 public class AddImageCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "addImage";
     public static final String COMMAND_ALIAS = "ai";
@@ -39,18 +42,18 @@ public class AddImageCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the resident book.";
 
     private final Index index;
-    private final String newImageURL;
+    private final String newImageUrl;
 
     /**
      *
      * @param index of the person in the list whose image is to be updated
-     * @param newImageURL url to the new replacing image
+     * @param newImageUrl url to the new replacing image
      */
-    public AddImageCommand(Index index, String newImageURL) {
+    public AddImageCommand(Index index, String newImageUrl) {
         requireNonNull(index);
 
         this.index = index;
-        this.newImageURL = newImageURL;
+        this.newImageUrl = newImageUrl;
     }
 
     @Override
@@ -61,7 +64,7 @@ public class AddImageCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        if (!(new File(newImageURL).exists())) {
+        if (!(new File(newImageUrl).exists())) {
             throw new CommandException(Messages.MESSAGE_INVALID_IMAGE_URL);
         }
 
@@ -81,6 +84,10 @@ public class AddImageCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_ADD_IMAGE_SUCCESS, editedPerson.getName()));
     }
 
+    /**
+     * @param person Person to edit
+     * @return Person with updated Picture url
+     */
     public Person editPersonImage(ReadOnlyPerson person) {
         Name name = person.getName();
         Phone phone = person.getPhone();
@@ -90,18 +97,28 @@ public class AddImageCommand extends UndoableCommand {
         Set<Tag> tags = person.getTags();
 
         Person editedPerson =  new Person(name, phone, email, room, timestamp, tags);
-        if (checkJarResourcePath(person)) editedPerson.getPicture().setJarResourcePath();
+        if (checkJarResourcePath(person)) {
+            editedPerson.getPicture().setJarResourcePath();
+        }
+
         editedPerson.getPicture().setPictureUrl(name.toString() + phone.toString() + ".jpg");
         return editedPerson;
     }
 
+    /**
+     * @param person whose image is to be checked
+     * @return true if in production mode (jar file)
+     */
     public boolean checkJarResourcePath(ReadOnlyPerson person) {
         File picture = new File(person.getPicture().getPictureUrl());
         return (picture.exists()) ? false : true;
     }
 
+    /**
+     * @param person whose attributes would be used to generate image file
+     */
     public void createPersonImage(ReadOnlyPerson person) {
-        File picFile = new File(newImageURL);
+        File picFile = new File(newImageUrl);
         try {
             if (person.getPicture().checkJarResourcePath()) {
                 ImageIO.write(ImageIO.read(picFile), "jpg", new File(person.getPicture().getJarPictureUrl()));

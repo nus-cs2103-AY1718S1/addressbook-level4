@@ -26,7 +26,6 @@ import javafx.stage.FileChooser;
 import seedu.room.commons.core.LogsCenter;
 import seedu.room.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.room.logic.Logic;
-import seedu.room.model.person.Name;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 
@@ -89,7 +88,6 @@ public class PersonPanel extends UiPart<Region> {
 
     /**
      * loads the selected person's information to be displayed.
-     * @param person
      */
     private void loadPersonInformation(ReadOnlyPerson person) {
         this.person = updatePersonFromLogic(person);
@@ -101,11 +99,15 @@ public class PersonPanel extends UiPart<Region> {
         initImage();
     }
 
+    /**
+     * @param person whose image is to be updated within the filtered persons list
+     * @return the updated person
+     */
     private ReadOnlyPerson updatePersonFromLogic(ReadOnlyPerson person) {
         List<ReadOnlyPerson> personList = logic.getFilteredPersonList();
         for (ReadOnlyPerson p : personList) {
-            if (p.getName().toString().equals(person.getName().toString()) &&
-                    p.getPhone().toString().equals(person.getPhone().toString())){
+            if (p.getName().toString().equals(person.getName().toString())
+                    && p.getPhone().toString().equals(person.getPhone().toString())) {
                 return p;
             }
         }

@@ -20,6 +20,9 @@ import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
 import seedu.room.model.tag.Tag;
 
+/**
+ * Allows deletion of an image for a specified person
+ */
 public class DeleteImageCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "deleteImage";
     public static final String COMMAND_ALIAS = "di";
@@ -36,7 +39,7 @@ public class DeleteImageCommand extends UndoableCommand {
     private final Index index;
 
     /**
-     * @param index of the person in the list whose image is to be updated
+     * @param index of the person in the list whose image is to be deleted
      */
     public DeleteImageCommand(Index index) {
         requireNonNull(index);
@@ -66,6 +69,10 @@ public class DeleteImageCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_ADD_IMAGE_SUCCESS, editedPerson.getName()));
     }
 
+    /**
+     * @param person whose image is to be reset
+     * @return Person object with picture url reset
+     */
     public Person resetPersonImage(ReadOnlyPerson person) {
         Name name = person.getName();
         Phone phone = person.getPhone();
