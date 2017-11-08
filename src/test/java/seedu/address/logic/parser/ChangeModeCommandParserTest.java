@@ -6,9 +6,9 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.Test;
 
-//@@author tby1994
 import seedu.address.logic.commands.ChangeModeCommand;
 
+//@@author tby1994
 public class ChangeModeCommandParserTest {
 
     private ChangeModeCommandParser parser = new ChangeModeCommandParser();
