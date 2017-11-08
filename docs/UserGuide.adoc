@@ -99,6 +99,7 @@ Adding `TAGS` are optional.
 
 *Suggestion for use:* If you want to view all contacts in the contact list.
 
+// tag::tags[]
 ==== Listing all tags : `tags`
 
 *Description:* Shows a list of all tags in the contact list.
@@ -106,6 +107,8 @@ Adding `TAGS` are optional.
 *Format:* `tags`
 
 *Suggestion for use:* If you want to view all existing tags in _**The Classroom**_.
+
+// end::tags[]
 
 ==== Editing a person : `edit`
 
@@ -130,6 +133,7 @@ Adding `TAGS` are optional.
 
 *Suggestion for use:* If you need to update the contact details of any of your contacts.
 
+// tag::favourite[]
 ==== Favouriting a person : `favourite`
 
 *Description:* Favourites or unfavourites an existing person in the contact list.
@@ -152,6 +156,8 @@ Favourites/Unfavourites the 6th person in the contact list.
 Favourites/Unfavourites the 1st person from the results of the `find` command.
 
 *Suggestion for use:* You want to easily access a particular contact.
+
+// end::favourite[]
 
 ==== Finding persons : `find`
 
@@ -218,6 +224,7 @@ Deletes the 1st person from the results of the `find` command.
 
 *Suggestion for use:* If you do not want to keep a contact in the contact list.
 
+// tag::sort[]
 ==== Sorting the contact list : `sort`
 
 *Description:* Sorts the contact list according to the specified _data field_.
@@ -246,6 +253,8 @@ Sorts the contact list according to their names in reverse order.
 Sorts the contact list according to their phone numbers in reverse order without prioritising favourited contacts first.
 
 *Suggestion for use:* If you want to view the number of contacts having names starting with the same letter.
+
+// end::sort[]
 
 ==== Selecting a person : `select`
 
