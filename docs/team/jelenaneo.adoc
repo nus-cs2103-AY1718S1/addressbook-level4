@@ -76,7 +76,7 @@ include::../DeveloperGuide.adoc[tag=borrowPaybackCommand]
 
 ---
 
-=== Enhancement Added: Filter command
+=== Enhancement Added: Filter (by tags) command
 ==== External behavior
 
 ---
@@ -99,6 +99,7 @@ For example, tags can be used to indicate a particular behavior of a debtor. A d
 ---
 #Start of Extract [from: Developer Guide]#
 
+include::../DeveloperGuide.adoc[tag=filterTags]
 
 #End of Extract#
 
