@@ -63,7 +63,8 @@ public class ResultDisplay extends UiPart<Region> {
     @Subscribe
     private void handleNewListResultAvailable(ListSizeEvent event) {
         Label listSizeLabel = new Label(event.toString());
-        listSizeLabel.setStyle("-fx-background-color: #00bf00; -fx-background-radius: 80 80 80 80");
+        listSizeLabel.setStyle("-fx-background-color: #00bf00;"
+                + " -fx-background-radius: 80 80 80 80");
         listSizeDisplay.getChildren().setAll(listSizeLabel);
     }
 
@@ -86,7 +87,7 @@ public class ResultDisplay extends UiPart<Region> {
     private void displayResultIcon(ValidResultDisplayEvent event) {
         switch (event.message.trim()) {
         case "delete":
-            listSizeDisplay.setVisible(false);
+            listSizeDisplay.setVisible(true);
             imageDisplay.setImage(new Image(DELETE_ICON));
             break;
         case "edit":

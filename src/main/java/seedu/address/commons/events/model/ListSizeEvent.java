@@ -16,8 +16,10 @@ public class ListSizeEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return (" " + sizeOfList + " "); }
+        return (" " + sizeOfList + " ");
+    }
 
     public int getToggle() {
-        return this.sizeOfList; }
+        return this.sizeOfList;
+    }
 }
