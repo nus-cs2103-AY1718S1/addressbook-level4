@@ -152,16 +152,25 @@ public class ParserUtil {
             return Optional.of(new Deadline(TaskDates.formatDate(parseDottedDate(date.get())),
                     parseRecurInterval(date.get())));
         }
-        return (date.isPresent() && !date.get().isEmpty())
-                ? Optional.of(new Deadline(TaskDates.formatDate(parseDate(date.get())), parseRecurInterval(date.get())))
-                : Optional.empty();
+      /*  if ((date.isPresent() && !date.get().isEmpty())) {
+            Date parsedDate = parseDate(date.get());
+            EventTime parsedTimes = parseEventTimes(parsedDate);
+            // return
+            //         ? Optional.of(new Deadline(TaskDates.formatDate(parseDate(date.get())), parseRecurInterval(date.get())))
+            //         : Optional.empty();*/
+            return Optional.of(new Deadline("", SUFFIX_NO_RECUR_INTERVAL));
     }
-
     /**
      * Parses a {@code Optional<String> time into a {@code EventTime} is the {@code time} is present.
      */
-   /* public static Optional<EventTime> parseEventTimes(Optional<String> time) throws IllegalValueException {
-        requireNonNull(time);
+  /*  public static EventTime parseEventTimes(String dateTime) throws IllegalValueException {
+        requireNonNull(dateTime);
+        List<DateGroup> dateGroup = new PrettyTimeParser().parseSyntax(dateTime.trim());
+        List<Date> dates = dateGroup.get(dateGroup.size() - 1).getDates();
+        System.out.println(da);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        sdf.format()
 
     }*/
 
