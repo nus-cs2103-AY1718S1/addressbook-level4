@@ -82,7 +82,7 @@ public class UniquePersonList implements Iterable<Person> {
         if (!personFoundAndDeleted) {
             throw new PersonNotFoundException();
         }
-        return personFoundAndDeleted;
+        return true;
     }
 
     public void setPersons(UniquePersonList replacement) {
