@@ -14,7 +14,8 @@ import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author freesoup
 public class ImportCommandParserTest {
-    public static final String TEST_FILE_DIRECTORY = "src\\test\\data\\ImportCommandParserTest\\";
+    public static final String TEST_FILE_DIRECTORY = "src/test/data/ImportCommandParserTest/";
+
 
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
