@@ -367,8 +367,9 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
-=== Add Event mechanism
 // tag::addevent[]
+=== Add Event mechanism
+
 Add event mechanism adds an event which stores in the The Myth's Book,
 which will then be used in a Calendar in future implementation. A reminder feature will also be tagged on to the event.
 
@@ -938,9 +939,19 @@ Figure 5.8.2 What the user sees
 **Alternative 2:** Use a pop up which is triggered when the app is opened +
 **Pros:** Involuntary and less effort from the users' part +
 **Cons:** If pop up only shows a list of names, users might get confused as to who the person is if there are multiple persons with the same name. +
-
-
 //end::brithday[]
+
+//tag::calendar[]
+=== Calendar mechanism
+
+The Calendar mechanism is facilitated by the `AnchorPaneNode` class.
+
+==== Design Considerations
+
+To be included.
+
+//end::calendar[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

@@ -394,6 +394,7 @@ image::AccessCommandFinalResult.PNG[width="790"]
 
 Figure 6.1.1 `Access 6` Result for Access Command
 
+// tag::addevent[]
 === Adding an event : `addevent`
 
 This command helps you to add an event to The Myth's Book +
@@ -410,10 +411,17 @@ Adds an event `Halloween Horror Night` in The Myth's Book.
 
 If input is correct, you will be able to see the event being added successfully into The Myth's Book and receive the following displayed result in the Results Display Panel.
 
-image::sampleeventresult.PNG[width="200"]
+image::sampleeventresult.PNG[width="700"]
 
 A `Invalid Command Format` will appear if you have keyed in invalid fields for the event.
 
+[NOTE]
+====
+Do note that for single value dates, do not include a '0' in front on the date.
+Eg. 09/12/2017 will not be accepted as a valid date.
+====
+
+// end::addevent[]
 
 === Favouriting a person : `favourite`
 
@@ -503,18 +511,27 @@ link:#the-myths-book---user-guide[Back To Top]
 
 This `Details Panel` is a graphical user interface that shows you all the `hidden` details of a person that is not shown in the person list.
 
+// tag::calendar[]
 === Calendar
 
 The Calendar is a graphical user interface that displays a calendar for the user. +
 You will be able to navigate through different months to view the events on different days and dates of different months.
 
 image::calendar.PNG[width="700"]
+Figure 7.2.1
 
-Furthermore, you can add events after clicking on the specific date. A pop up window as shown below will appear prompting you to fill up the details of the event.
+Furthermore, you can add events after clicking on the specific date. A pop up window (Figure 7.2.2) will appear prompting you to fill up the details of the event.
 
 image::popupwindow.PNG[width="300"]
+Figure 7.2.2
 
-link:#the-myths-book---user-guide[Back To Top]
+After adding an event, the Calendar will be populated with a colour over the chosen date of the Event. The day that has an event will be shown as seen in Figure 7.2.3 below.
+The calendar will also be populated after adding an event through the link:#62-adding-an-event--addevent[Add Event Command].
+
+image::populatecalendar.PNG[width="700"]
+Figure 7.2.3
+
+// end::calendar[]
 
 === Bright Theme
 
