@@ -20,9 +20,9 @@ public class RecentlyDeletedCommandTest {
     private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
     private static final String DEFAULT_THEME = new String();
+    private static final RecentlyDeletedQueue queue = new RecentlyDeletedQueue();
 
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private static final RecentlyDeletedQueue queue = new RecentlyDeletedQueue();
     private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
     private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
     private RecentlyDeletedCommand recentlyDeletedCommand;
