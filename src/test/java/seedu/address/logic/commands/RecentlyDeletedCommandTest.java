@@ -55,8 +55,8 @@ public class RecentlyDeletedCommandTest {
         //recentlyDeletedCommand.setData(model, EMPTY_COMMAND_HISTORY,
         //EMPTY_STACK, queue, DEFAULT_THEME);
         LinkedList<String> deletedAsText = new LinkedList<>();
-        deletedAsText.add(personOneStr);
         deletedAsText.add(personTwoStr);
+        deletedAsText.add(personOneStr);
 
 
         // multiple persons in RecentlyDeleted Queue
