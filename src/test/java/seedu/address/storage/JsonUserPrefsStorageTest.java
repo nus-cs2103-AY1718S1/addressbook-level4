@@ -90,6 +90,7 @@ public class JsonUserPrefsStorageTest {
         userPrefs.setGuiSettings(1000, 500, 300, 100);
         userPrefs.setAddressBookFilePath("addressbook.xml");
         userPrefs.setAddressBookName("TypicalAddressBookName");
+        userPrefs.setAddressBookTheme("/css/DarkTheme.css");
         return userPrefs;
     }
 
