@@ -209,6 +209,7 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.show();
     }
 
+    //@@author vmlimshimin
     /**
      * Selects the theme given by user input
      */
@@ -219,6 +220,7 @@ public class MainWindow extends UiPart<Region> {
         getRoot().getStylesheets().add("/view/" + theme);
     }
 
+    //@@author
     /**
      * Closes the application.
      */
@@ -241,6 +243,7 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author vmlimshimin
     @Subscribe
     private void handleSelectThemeEvent(ThemeRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
