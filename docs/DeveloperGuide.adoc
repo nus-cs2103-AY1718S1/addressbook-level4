@@ -618,7 +618,7 @@ _Figure 4.3.6 : Full UI outcome of locate implementation_
 === FindCommand by any search field [Since v1.2 and v1.4]
 
 
-The find function `FindCommand` which reside in `Logic` will support the search of contact by any keywords. The keywords must be a full word match.The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone`,`Tags` , `Activity` and `Country`. Such parameters inherit from `Person` which resides inside `Model`.
+The find function `FindCommand` which reside in `Logic` will support the search of contact by any keywords.The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone`,`Tags` , `Activity` and `Country`. Such parameters inherit from `Person` which resides inside `Model`.Also,the keywords must be a full word match in order for successful execution of find command. _Figures 4.4.1 indicates the parsing of keywords and prefix  `FindCommandParser` once user keys in an input.
 
 [source,java]
 ----
@@ -627,34 +627,8 @@ public class FindCommandParser implements Parser<FindCommand> {
         final String prefix = matcher.group("prefix");
         final String arguments = matcher.group("arguments");
 
-        String[] keywords = arguments.trim().split("\\s+");
-
-           switch (prefix) {
-             case ("a/"):
-                 predicate = new AddressContainsKeywordsPredicate(Arrays.asList(keywords));
-                 break;
-             case ("act/"):
-                 predicate = new ScheduleContainsKeywordsPredicate(Arrays.asList(keywords));
-                 break;
-             case ("c/"):
-                 predicate = new CountryContainsKeywordsPredicate(Arrays.asList(keywords));
-                 break;
-             case ("e/"):
-                 predicate = new EmailContainsKeywordsPredicate(Arrays.asList(keywords));
-                 break;
-             case ("n/"):
-                 predicate = new NameContainsKeywordsPredicate(Arrays.asList(keywords));
-                 break;
-             case ("t/"):
-                 predicate = new TagContainsKeywordsPredicate(Arrays.asList(keywords));
-                 break;
-             case ("p/"):
-                 if (!validPhoneNumbers(keywords)) {
-                     throw new ParseException(PhoneContainsKeywordsPredicate.MESSAGE_PHONE_VALIDATION);
-                 }
-                 String[] keywordsPhone = arguments.replaceAll("\\s", "").split("(?<=\\G.{4})");
-                 predicate = new PhoneContainsKeywordsPredicate(Arrays.asList(keywordsPhone));
-                 break;
+           //switch case to identify the the prefix for allocation of searched keywords into its predicate
+                
 }
 
 ----
@@ -671,9 +645,16 @@ Any other prefix as input will be considered as invalid input.In absence of vali
 ----
 _Figure 4.4.2: Code section 2 in FindCommandParser.java_
 
-A successful match of the prefix will ensure that the keywords are  allocated to  method `containsKeyWordPredicate` under `Model` . The methods takes in the user input and returns a `containsKeyWordPredicate`. Addressbook will search for the keywords in the revelvant parameters.
+A successful match of the prefix will ensure that the keywords are  allocated to  method `containsKeyWordPredicate` under `Model`. Addressbook will then search for the keywords based on the revelvant parameters in `PredicateUtil'.
+[source,java]
+----
+public class PredicateUtil {
+//Search for contact based on fields from containsKeyWord Predicate
+}
 
-Upon any successful match, the particulars of the contact will be displayed. _Figures 4.4.3a to 4.4.3e_ below indicate the various outcomes of search function by  using `FindCommand` .
+----
+
+Upon any successful match, the particulars of the contact will be displayed in `CommandBox`. _Figures 4.4.3a to 4.4.3e_ below indicate the various outcomes of search function by  using `FindCommand` .
 
 
 image::FindCommand_Name.PNG[width="400"]
