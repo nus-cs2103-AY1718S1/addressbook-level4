@@ -2,8 +2,6 @@ package seedu.address.logic;
 
 import java.util.logging.Logger;
 
-import org.graphstream.ui.view.Viewer;
-
 import javafx.collections.ObservableList;
 
 import seedu.address.commons.core.ComponentManager;
@@ -30,9 +28,10 @@ public class LogicManager extends ComponentManager implements Logic {
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
 
+    //@@author wenmogu
     private final GraphWrapper graphWrapper;
-    private final Viewer graphViewer;
 
+    //@@author
     private final Storage storage;
 
 
@@ -44,11 +43,6 @@ public class LogicManager extends ComponentManager implements Logic {
         this.undoRedoStack = new UndoRedoStack();
         this.graphWrapper = new GraphWrapper();
         graphWrapper.buildGraph(model);
-        if (System.getProperty("testfx.headless") == null) {
-            graphViewer = graphWrapper.display();
-        } else {
-            graphViewer = null;
-        }
     }
 
     @Override
@@ -64,6 +58,11 @@ public class LogicManager extends ComponentManager implements Logic {
         } finally {
             history.add(commandText);
         }
+    }
+
+    @Override
+    public GraphWrapper getGraphWrapper() {
+        return this.graphWrapper;
     }
 
     @Override

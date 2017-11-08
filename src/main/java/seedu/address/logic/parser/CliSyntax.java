@@ -15,6 +15,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_REMARK = new Prefix("r/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
 
+    public static final Prefix PREFIX_CONFIDENCE_ESTIMATE = new Prefix("ce/");
+
     /* Prefix mappings */
     public static final HashMap<String, Prefix> PREFIX_MAPPING;
     static {
@@ -24,6 +26,7 @@ public class CliSyntax {
         PREFIX_MAPPING.put("e/", PREFIX_EMAIL);
         PREFIX_MAPPING.put("p/", PREFIX_PHONE);
         PREFIX_MAPPING.put("t/", PREFIX_TAG);
+        PREFIX_MAPPING.put("ce/", PREFIX_CONFIDENCE_ESTIMATE);
     }
 
 }

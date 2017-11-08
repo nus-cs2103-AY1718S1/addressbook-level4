@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
 
+//@@author wenmogu
 /**
  * A list of relationships that enforces no nulls and uniqueness between its elements.
  *

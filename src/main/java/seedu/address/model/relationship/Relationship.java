@@ -1,11 +1,14 @@
 package seedu.address.model.relationship;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
 
+import seedu.address.model.person.Name;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author wenmogu
 /**
  * This class defines the relationship between two ReadOnlyPersons
  */
@@ -15,11 +18,23 @@ public class Relationship {
     private ReadOnlyPerson toPerson;
     private RelationshipDirection direction;
 
+    private Name name;
+    private ConfidenceEstimate confidenceEstimate;
+
     public Relationship(ReadOnlyPerson fromPerson, ReadOnlyPerson toPerson, RelationshipDirection direction) {
         requireAllNonNull(fromPerson, toPerson, direction);
         this.fromPerson = fromPerson;
         this.toPerson = toPerson;
         this.direction = direction;
+        this.name = Name.UNSPECIFIED;
+        this.confidenceEstimate = ConfidenceEstimate.UNSPECIFIED;
+    }
+
+    public Relationship(ReadOnlyPerson fromPerson, ReadOnlyPerson toPerson, RelationshipDirection direction,
+                        Name name, ConfidenceEstimate confidenceEstimate) {
+        this(fromPerson, toPerson, direction);
+        this.setConfidenceEstimate(confidenceEstimate);
+        this.setName(name);
     }
 
     public ReadOnlyPerson getFromPerson() {
@@ -32,6 +47,14 @@ public class Relationship {
 
     public RelationshipDirection getDirection() {
         return direction;
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    public ConfidenceEstimate getConfidenceEstimate() {
+        return confidenceEstimate;
     }
 
     public boolean isUndirected() {
@@ -58,6 +81,28 @@ public class Relationship {
         }
 
         return oppoRelationships;
+    }
+
+    public void setName(Name name) {
+        requireNonNull(name);
+        this.name = name;
+    }
+
+    public void setConfidenceEstimate(ConfidenceEstimate confidenceEstimate) {
+        requireNonNull(confidenceEstimate);
+        this.confidenceEstimate = confidenceEstimate;
+    }
+
+    /**
+     * A toString method for Relationship
+     */
+    public String toString() {
+        String nameAndConfidenceEstimate = this.name.toString() + " " + this.confidenceEstimate.toString();
+        if (isUndirected()) {
+            return fromPerson.toString() + " <-> " + toPerson.toString() + " " + nameAndConfidenceEstimate;
+        } else {
+            return fromPerson.toString() + " -> " + toPerson.toString() + " " + nameAndConfidenceEstimate;
+        }
     }
 
 

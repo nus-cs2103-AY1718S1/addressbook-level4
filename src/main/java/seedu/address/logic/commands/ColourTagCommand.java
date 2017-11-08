@@ -7,12 +7,13 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ModelManager;
 import seedu.address.model.tag.Tag;
 
+//@@author Xenonym
 /**
  * Changes the colour of a tag to a given colour.
  */
 public class ColourTagCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "colourtag";
+    public static final String COMMAND_WORD = "colourTag";
     public static final String COMMAND_ALIAS = "ct";
 
     public static final String COMMAND_PARAMETERS = "TAG (must be alphanumeric) COLOUR";

@@ -35,10 +35,12 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         return filePath;
     }
 
+    //@@author Xenonym
     @Override
     public String getBackupAddressBookFilePath() {
         return getAddressBookFilePath() + BACKUP_SUFFIX;
     }
+    //@@author
 
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
@@ -66,10 +68,12 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         return Optional.of(addressBookOptional);
     }
 
+    //@@author Xenonym
     @Override
     public Optional<ReadOnlyAddressBook> readBackupAddressBook() throws DataConversionException, IOException {
         return readAddressBook(getBackupAddressBookFilePath());
     }
+    //@@author
 
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
@@ -89,8 +93,10 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
     }
 
+    //@@author Xenonym
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, getBackupAddressBookFilePath());
     }
+    //@@author
 }

@@ -1,5 +1,6 @@
 package seedu.address.model.relationship;
 
+//@@author wenmogu
 /**
  * This class defines the direction of relationships for Relationship class
  */

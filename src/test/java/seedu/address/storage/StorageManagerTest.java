@@ -68,6 +68,7 @@ public class StorageManagerTest {
         assertEquals(original, new AddressBook(retrieved));
     }
 
+    //@@author Xenonym
     @Test
     public void backupAddressBookReadSave() throws Exception {
         /*
@@ -80,6 +81,7 @@ public class StorageManagerTest {
         ReadOnlyAddressBook retrieved = storageManager.readBackupAddressBook().get();
         assertEquals(original, new AddressBook(retrieved));
     }
+    //@@author
 
     @Test
     public void getAddressBookFilePath() {

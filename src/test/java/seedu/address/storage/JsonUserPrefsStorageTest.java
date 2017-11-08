@@ -91,6 +91,7 @@ public class JsonUserPrefsStorageTest {
         return userPrefs;
     }
 
+    //@@author Xenonym
     private static Map<Tag, String> getSampleTagColours() {
         HashMap<Tag, String> sampleTagColours = new HashMap<>();
         try {
@@ -104,6 +105,7 @@ public class JsonUserPrefsStorageTest {
 
         return sampleTagColours;
     }
+    //@@author
 
     @Test
     public void savePrefs_nullPrefs_throwsNullPointerException() {

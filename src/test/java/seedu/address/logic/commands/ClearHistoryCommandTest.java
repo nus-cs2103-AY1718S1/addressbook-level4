@@ -13,6 +13,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.ModelManager;
 import seedu.address.testutil.StorageStub;
 
+//@@author Xenonym
 public class ClearHistoryCommandTest {
     private ClearHistoryCommand clearHistoryCommand;
     private CommandHistory history;
