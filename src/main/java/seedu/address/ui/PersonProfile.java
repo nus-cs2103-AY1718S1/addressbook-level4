@@ -30,9 +30,9 @@ public class PersonProfile extends UiPart<Region> {
     @FXML
     private TextArea phone;
     @FXML
-    private TextArea address;
-    @FXML
     private TextArea email;
+    @FXML
+    private TextArea address;
     @FXML
     private FlowPane tags;
 
