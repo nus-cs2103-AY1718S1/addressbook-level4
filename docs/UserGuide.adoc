@@ -227,35 +227,36 @@ Deletes the 2nd and 3rd person in the address book
 Deletes the 1st person in the results of the `find` command
 // end::delete[]
 
+// tag::tadd[]
 === Adding a tag to a person(s) : `t-add` _[Since v1.1]_
 
-Adds tag to specified person(s) from the address book.
+You can add a tag to specified person(s) in the address book current listing.
 
 Format: `t-add INDEX TAG`
 
 ****
-* Adds tag to the person(s) at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing, multiple indices are allowed.
+* The index refers to the index number shown in the most recent listing, you can key in multiple indices as well.
 * The index *must be a positive integer* 1, 2, 3, ...
-* The [TAG] *must not have its first word as number*.
+* The TAG *must not have its first word as number*.
 ****
 
 Examples:
 
 * `list` +
 `t-add 2 3 friends` +
-Adds the tag friends to the 2nd and 3rd person in the address book
+This command adds the tag friends to the 2nd and 3rd person in the address book
+// end::tadd[]
 
+// tag::taddfav[]
 === Setting a person(s) as "favourite" : `t-add` _[Since v1.3]_
 
-Adds favourite tag to specified person(s) from the address book.
+You can mark specified person(s) from the address book as favourite.
 
 Format: `t-add INDEX... favourite`
 
 ****
-* Sets person(s) at the specified `INDEX` as favourite.
-* The `favourite` can be used interchangeably with `fav`, and words containing `fav`.
-* The `favourite` tag is shown as a coral shaped circle in front of the tag list.
+* All person(s) tagged as `favourite` by you will be shown as a coral shaped circle in front of the tag list.
+* You can also use `fav`, and words containing `fav` interchangeably with `favourite`.
 * The index refers to the index number shown in the most recent listing, multiple indices are allowed.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -264,43 +265,45 @@ Examples:
 
 * `list` +
 `t-add 2 3 favourite` +
-Sets 2nd and 3rd person in the address book as favourite
+This command sets 2nd and 3rd person in the address book as favourite
 * `list` +
 `t-add 2 3 fav` +
-Sets 2nd and 3rd person in the address book as favourite
+This command sets 2nd and 3rd person in the address book as favourite
+// end::taddfav[]
 
-=== Removing a tag to a person(s) : `t-remove` _[Since v1.2]_
+// tag::tremove[]
+=== Removing a tag from person(s) : `t-remove` _[Since v1.2]_
 
-Removes a tag from specified person(s) from the address book.
+You can remove a tag from specified person(s) from the address book.
 
 Format: `t-remove INDEX... TAG`
 
 ****
-* Removes a tag from the person(s) at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing, multiple indices are allowed.
 * The index *must be a positive integer* 1, 2, 3, ...
-* If no index is inputted, the provided [TAG] from all person(s) in the current list with the [TAG] will be removed.
-* The [TAG] *must not have its first word as number*.
+* If you wish to remove a tag from all person(s) in the list, simply leave out the INDEX part.
+* The [TAG] *must not have its first word as a number*.
 ****
 
 Examples:
 
 * `list` +
 `t-remove 2 3 friends` +
-Removes the tag `friends` from the 2nd and 3rd person in the address book
+This command removes the tag `friends` from the 2nd and 3rd person in the address book
 * `t-remove friends` +
-Removes the tag `friends` from all person(s) with the tag `friends` in the address book
+This command removes the tag `friends` from all person(s) with the tag `friends` in the current listing
+// tag::tremove[]
 
+// tag::tremovefav[]
 === Removing a person(s) from favourite : `t-remove` _[Since v1.2]_
 
-Removes `favourite` tag from specified person(s) from the address book.
+You can remove specified person(s) in the address book from your `favourite` list.
 
 Format: `t-remove INDEX... favourite`
 
 ****
-*Removes person(s) at the specified `INDEX` from `favourite`.
-* The `favourite` can be used interchangeably with `fav`, and words containing `fav`.
-* If no index is inputted, the tag `fav` from all person(s) in the current list with `fav` will be removed.
+* You can also use `fav`, and words containing `fav` interchangeably with `favourite`.
+* If you wish to clear your favourite list, simply leave out the INDEX part.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
@@ -308,21 +311,30 @@ Examples:
 
 * `list` +
 `t-remove 2 3 fav` +
-Removes the tag favourite from the 2nd and 3rd person in the address book
+This command removes the tag `favourite` from the 2nd and 3rd person in the address book
 
 * `t-remove fav` +
-Removes the tag `fav` from all person(s) with the the tag `fav` in the address book
+This command removes the tag `fav` from all person(s) with the the tag `fav` in the address book
+// end::tremovefav[]
 
+// tag::tfind[]
 === Find the person(s) with given tags: `t-find` _[Since v1.3]_
 
-Finds all persons with the given tag.
+You can find all persons with the given tag.
 
 Format: `t-find TAG`
 
 ****
-* Find the person(s) with given tags.
-* The results show the people who fulfills at least one of the tags given.
+* The results show a list of person(s) who has their `tagName` matching exactly; also those with `tagName` containing in `TAG` or the other way round.
 ****
+
+Examples:
+
+* `t-find friend`
+This command lists all the people with tag `friend`
+* `t-find frien`
+This command could also list all the people with tag `friend` if any
+// end::tfind[]
 
 Examples:
 

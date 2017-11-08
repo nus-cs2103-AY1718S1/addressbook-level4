@@ -839,7 +839,6 @@ public interface RecycleBinStorage {
  */
 public class XmlRecycleBinStorage implements RecycleBinStorage {
 
-<<<<<<< HEAD
     private static final Logger logger = LogsCenter.getLogger(XmlRecycleBinStorage.class);
 
     private String filePath;
@@ -897,6 +896,249 @@ public class XmlRecycleBinStorage implements RecycleBinStorage {
     }
 
 }
-=======
->>>>>>> 874d091256290c6782810d04c299fde676c524a4
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public synchronized void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException,
+            DuplicatePersonException {
+
+        for (ReadOnlyPerson s : targets) {
+            if (recycleBin.getPersonList().contains(s)) {
+                addressBook.removePerson(s);
+            } else {
+                addressBook.removePerson(s);
+                recycleBin.addPerson(s);
+            }
+        }
+        indicateRecycleBinChanged();
+        indicateAddressBookChanged();
+    }
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public synchronized void deleteBinPerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException {
+        for (ReadOnlyPerson s: targets) {
+            recycleBin.removePerson(s);
+        }
+        indicateRecycleBinChanged();
+    }
+
+    @Override
+    public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        addressBook.addPerson(person);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public synchronized void restorePerson(ReadOnlyPerson person) throws DuplicatePersonException,
+            PersonNotFoundException {
+        addressBook.addPerson(person);
+        recycleBin.removePerson(person);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredBinList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+        indicateAddressBookChanged();
+    }
+
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public synchronized void restorePerson(ArrayList<ReadOnlyPerson> targets) throws DuplicatePersonException,
+            PersonNotFoundException {
+        boolean flag = true;
+        for (ReadOnlyPerson s : targets) {
+            if (addressBook.getPersonList().contains(s)) {
+                recycleBin.removePerson(s);
+            } else {
+                recycleBin.removePerson(s);
+                addressBook.addPerson(s);
+                flag = false;
+            }
+        }
+        if (!flag) {
+            indicateAddressBookChanged();
+        }
+        indicateRecycleBinChanged();
+    }
+
+    @Override
+    public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
+            throws DuplicatePersonException, PersonNotFoundException {
+        requireAllNonNull(target, editedPerson);
+
+        addressBook.updatePerson(target, editedPerson);
+        indicateAddressBookChanged();
+    }
+
+```
+###### \java\seedu\address\model\util\SampleRecycleUtil.java
+``` java
+/**
+ * Contains utility methods for populating {@code AddressBook} with sample data.
+ */
+public class SampleRecycleUtil {
+    public static Person[] getSamplePersons() {
+        try {
+            return new Person[] {
+                new Person(new Name("Alex Yeohre"), new Phone("87438807"), new Email("alexyeoh@example.com"),
+                    new Address("Blk 30 Geylang Street 29, #06-40"), getTagSet("friends"),
+                    new HashSet<>(), new DateAdded("01/01/2016 11:11:53")),
+                new Person(new Name("Bernice Yure"), new Phone("99272758"), new Email("berniceyu@example.com"),
+                    new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
+                    getTagSet("colleagues", "friends"), new HashSet<>(),
+                    new DateAdded("07/02/2016 12:00:01")),
+                new Person(new Name("Charlotte Oliveirore"), new Phone("93210283"), new Email("charlotte@example.com"),
+                    new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), getTagSet("neighbours"),
+                    new HashSet<>(), new DateAdded("01/05/2016 12:00:01")),
+                new Person(new Name("David Lire"), new Phone("91031282"), new Email("lidavid@example.com"),
+                    new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), getTagSet("family"),
+                    new HashSet<>(), new DateAdded("15/09/2017 12:00:01")),
+                new Person(new Name("Irfan Ibrahimre"), new Phone("92492021"), new Email("irfan@example.com"),
+                    new Address("Blk 47 Tampines Street 20, #17-35"), getTagSet("classmates"),
+                    new HashSet<>(), new DateAdded("15/09/2017 12:01:01")),
+                new Person(new Name("Roy Balakrishnanre"), new Phone("92624417"), new Email("royb@example.com"),
+                    new Address("Blk 45 Aljunied Street 85, #11-31"), getTagSet("colleagues"),
+                    new HashSet<>(), new DateAdded("20/09/2017 12:00:01"))
+            };
+        } catch (IllegalValueException e) {
+            throw new AssertionError("sample data cannot be invalid", e);
+        }
+    }
+
+    public static ReadOnlyAddressBook getSampleRecycleBin() {
+        try {
+            AddressBook sampleAb = new AddressBook();
+            for (Person samplePerson : getSamplePersons()) {
+                sampleAb.addPerson(samplePerson);
+            }
+            return sampleAb;
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("sample data cannot contain duplicate persons", e);
+        }
+    }
+
+    /**
+     * Returns a tag set containing the list of strings given.
+     */
+    public static Set<Tag> getTagSet(String... strings) throws IllegalValueException {
+        HashSet<Tag> tags = new HashSet<>();
+        for (String s : strings) {
+            tags.add(new Tag(s));
+        }
+
+        return tags;
+    }
+
+
+}
+```
+###### \java\seedu\address\storage\RecycleBinStorage.java
+``` java
+/**
+ * Represents a storage for {@link seedu.address.model.AddressBook}.
+ */
+public interface RecycleBinStorage {
+
+    /**
+     * Returns the file path of the data file.
+     */
+    String getRecycleBinFilePath();
+
+    /**
+     * Returns AddressBook data as a {@link ReadOnlyAddressBook}.
+     *   Returns {@code Optional.empty()} if storage file is not found.
+     * @throws DataConversionException if the data in storage is not in the expected format.
+     * @throws IOException if there was any problem when reading from the storage.
+     */
+    Optional<ReadOnlyAddressBook> readRecycleBin() throws DataConversionException, IOException;
+
+    /**
+     * @see #getRecycleBinFilePath() ()
+     */
+    Optional<ReadOnlyAddressBook> readRecycleBin(String filePath) throws DataConversionException, IOException;
+
+    /**
+     * Saves the given {@link ReadOnlyAddressBook} to the storage.
+     * @param addressBook cannot be null.
+     * @throws IOException if there was any problem writing to the file.
+     */
+    void saveRecycleBin(ReadOnlyAddressBook addressBook) throws IOException;
+
+    /**
+     * @see #saveRecycleBin(ReadOnlyAddressBook) (ReadOnlyAddressBook)
+     */
+    void saveRecycleBin(ReadOnlyAddressBook addressBook, String filePath) throws IOException;
+
+}
+```
+###### \java\seedu\address\storage\XmlRecycleBinStorage.java
+``` java
+/**
+ * A class to access AddressBook data stored as an xml file on the hard disk.
+ */
+public class XmlRecycleBinStorage implements RecycleBinStorage {
+
+    private static final Logger logger = LogsCenter.getLogger(XmlRecycleBinStorage.class);
+
+    private String filePath;
+
+    public XmlRecycleBinStorage(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public String getRecycleBinFilePath() {
+        return filePath;
+    }
+
+    @Override
+    public Optional<ReadOnlyAddressBook> readRecycleBin() throws DataConversionException, IOException {
+        return readRecycleBin(filePath);
+    }
+
+    /**
+     * Similar to {@link #readRecycleBin()}
+     * @param filePath location of the data. Cannot be null
+     * @throws DataConversionException if the file is not in the correct format.
+     */
+    public Optional<ReadOnlyAddressBook> readRecycleBin(String filePath) throws DataConversionException,
+            FileNotFoundException {
+        requireNonNull(filePath);
+
+        File addressBookFile = new File(filePath);
+
+        if (!addressBookFile.exists()) {
+            logger.info("Recyclebin file "  + addressBookFile + " not found");
+            return Optional.empty();
+        }
+
+        ReadOnlyAddressBook addressBookOptional = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
+
+        return Optional.of(addressBookOptional);
+    }
+
+    @Override
+    public void saveRecycleBin(ReadOnlyAddressBook addressBook) throws IOException {
+        saveRecycleBin(addressBook, filePath);
+    }
+
+    /**
+     * Similar to {@link #saveRecycleBin(ReadOnlyAddressBook)}
+     * @param filePath location of the data. Cannot be null
+     */
+    public void saveRecycleBin(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
+        requireNonNull(addressBook);
+        requireNonNull(filePath);
+
+        File file = new File(filePath);
+        FileUtil.createIfMissing(file);
+        XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
+    }
+
+}
 ```

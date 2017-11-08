@@ -123,17 +123,39 @@ public class SortCommandTest {
         }
 
         @Override
+        public void restorePerson(ReadOnlyPerson person) throws DuplicatePersonException, PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+        @Override
+        public void restorePerson(ArrayList<ReadOnlyPerson> person) throws DuplicatePersonException,
+                PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+
+        @Override
         public void sortPerson(Comparator<ReadOnlyPerson> sortType, boolean isDescending) throws EmptyListException {
             fail("This method should not be called.");
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
+        public void resetData(ReadOnlyAddressBook newData, ReadOnlyAddressBook newRecyclebin) {
             fail("This method should not be called.");
         }
 
         @Override
+        public void resetRecyclebin(ReadOnlyAddressBook newData) {
+            fail("This method should not be called.");
+        }
+
+
+        @Override
         public ReadOnlyAddressBook getAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        public ReadOnlyAddressBook getRecycleBin() {
             fail("This method should not be called.");
             return null;
         }
@@ -145,6 +167,10 @@ public class SortCommandTest {
 
         @Override
         public void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        public void deleteBinPerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
 
@@ -160,6 +186,12 @@ public class SortCommandTest {
             return null;
         }
 
+        public ObservableList<ReadOnlyPerson> getRecycleBinPersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+
         @Override
         public ObservableList<Event> getEventList() {
             fail("This method should not be called.");
@@ -170,6 +202,11 @@ public class SortCommandTest {
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
+
+        public void updateFilteredBinList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
 
         @Override
         public void updateListOfPerson(ArrayList<ReadOnlyPerson> targets, ArrayList<ReadOnlyPerson> editedPersons)
@@ -226,6 +263,11 @@ public class SortCommandTest {
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+
+        @Override
+        public ReadOnlyAddressBook getRecycleBin() {
             return new AddressBook();
         }
     }
