@@ -5,7 +5,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAY
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CONFIDENCE_ESTIMATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
-
 import java.util.Arrays;
 import java.util.List;
 
