@@ -18,3 +18,7 @@
 .list-cell:filled:odd {
     -fx-background-color: #19a1e5;
 }
+
+.list-cell:filled:selected {
+    -fx-background-color: #808080;
+}

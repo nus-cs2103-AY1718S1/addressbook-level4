@@ -17,6 +17,8 @@ public class Address {
             + "BLOCK, STREET, [UNIT,] POSTAL CODE";
 
     public static final String ADDRESS_FORMAT_DELIMITER = ",";
+    public static final int ADDRESS_TOKENS_WITHOUT_UNIT = 3;
+    public static final int ADDRESS_TOKENS_WITH_UNIT = 4;
 
     public final String value;
     //@@author 17navasaw
@@ -50,16 +52,17 @@ public class Address {
         String[] tokens = trimmedAddress.split(",");
         int numTokens = tokens.length;
 
-        assert ((numTokens == 3) || (numTokens == 4)) : "The address should be split into 3 or 4 tokens.";
+        assert ((numTokens == ADDRESS_TOKENS_WITHOUT_UNIT)
+                || (numTokens == ADDRESS_TOKENS_WITH_UNIT)) : "The address should be split into 3 or 4 tokens.";
 
         block = new Block(tokens[0]);
         street = new Street(tokens[1]);
 
-        if (numTokens == 3) {
+        if (numTokens == ADDRESS_TOKENS_WITHOUT_UNIT) {
 
             postalCode = new PostalCode(tokens[2]);
 
-        } else if (numTokens == 4) {
+        } else if (numTokens == ADDRESS_TOKENS_WITH_UNIT) {
 
             unit = new Unit (tokens[2]);
             postalCode = new PostalCode(tokens[3]);
@@ -72,7 +75,8 @@ public class Address {
     public static boolean hasValidAddressFormat(String test) {
         StringTokenizer tokenizer = new StringTokenizer(test, ADDRESS_FORMAT_DELIMITER);
 
-        return ((tokenizer.countTokens() == 3) || (tokenizer.countTokens() == 4));
+        return ((tokenizer.countTokens() == ADDRESS_TOKENS_WITHOUT_UNIT)
+                || (tokenizer.countTokens() == ADDRESS_TOKENS_WITH_UNIT));
     }
 
     //@@author

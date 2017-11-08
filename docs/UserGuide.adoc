@@ -276,7 +276,7 @@ Locates the 2nd person's address in the address book.
 * `find n/Betsy` +
 `locate 1` +
 Locates the 1st person's address in the results of the `find` command.
-// tag::locate[]
+// end::locate[]
 
 ==== Scheduling an activity: `schedule` [Since v1.3]
 

@@ -26,7 +26,6 @@ public class AgendaPanel extends UiPart<Region> {
     public AgendaPanel(ObservableList<Schedule> scheduleList) {
         super(FXML);
         setConnections(scheduleList);
-        registerAsAnEventHandler(this);
     }
 
     /**
