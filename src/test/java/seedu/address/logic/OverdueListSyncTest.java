@@ -27,7 +27,8 @@ import seedu.address.testutil.PersonBuilder;
 public class OverdueListSyncTest {
 
     private Model model;
-    private static String expectedMessage = ListObserver.OVERDUELIST_NAME_DISPLAY_FORMAT + OverdueListCommand.MESSAGE_SUCCESS;
+    private final String expectedMessage = ListObserver.OVERDUELIST_NAME_DISPLAY_FORMAT
+            + OverdueListCommand.MESSAGE_SUCCESS;
 
     @Before
     public void setUp() {
@@ -106,6 +107,9 @@ public class OverdueListSyncTest {
         return editCommand;
     }
 
+    /**
+     * @return a String that represents a user's input for deadline.
+     */
     private String prepareFutureDeadlineInput() {
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
