@@ -170,15 +170,66 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Adding notes to persons : `note`
+// tag::undoredo[]
+=== Undoing previous command : `undo`
 
-`Coming in v2.0` +
-Adds a note to a person. Notes are strings of any length that represent information about the person that cannot be adequately described with tags +
-Format: `note [PERSON] [STRING]`
+Restores the address book to the state before the previous _undoable_ command was executed. +
+Format: `undo`
+
+[NOTE]
+====
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+====
 
 Examples:
-* `note John Doe Remember to call him once every day otherwise he will question your commitment.`
 
+* `delete 1` +
+`list` +
+`undo` (reverses the `delete 1` command) +
+
+* `select 1` +
+`list` +
+`undo` +
+The `undo` command fails as there are no undoable commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+
+=== Redoing the previously undone command : `redo`
+
+Reverses the most recent `undo` command. +
+Format: `redo`
+
+Examples:
+
+* `delete 1` +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+
+* `delete 1` +
+`redo` +
+The `redo` command fails as there are no `undo` commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+`redo` (reapplies the `clear` command) +
+// end::undoredo[]
+
+=== Clearing all entries : `clear`
+
+Clears all entries from the address book. +
+Format: `clear`
+
+=== Exiting the program : `exit`
+
+Synonyms/Aliases for the command: `quit` +
+Exits the program. +
+Format: `exit` / `quit`
 
 === Attaching photos to persons :
 
@@ -249,42 +300,24 @@ deletes the relationship between the two indexes of the last shown list if it ex
 * `set 1 2 cr/` +
 clears the all the relationships of the two indexes.
 
-=== View all persons with a specific tag : `tag`
-
-`Coming in v2.0` +
-Displays a list of all persons with a specific tag. +
-Format: `tag [TAG]`
-
-Examples:
-* `tag friend`
-
-=== View all persons from a specific company : `company`
-
-`Coming in v2.0` +
-Displays a list of all persons from a specific company. +
-Format: `company [COMPANY]`
-
-Examples:
-* `company ABC Foods`
-
 === Adding an event: `eventadd`
 
 `Since v1.1` +
 Synonyms/Aliases for the command: `addevent`, `ea`, `ae` +
 Adds an event to Sales Navigator +
-Format: `eventadd n/TITLE time/TIMING d/DESCRIPTION`
+Format: `eventadd n/TITLE t/TIMING d/DESCRIPTION`
 
 Examples:
 
-* `eventadd n/Alice's Birthday time/1300-1830 d/Bestie's 21st, bring drinks!`
-* `eventadd n/CS2103 Final Exam time/1730-1930 d/Doomsday`
+* `eventadd n/Alice's Birthday t/08/11/2017 1300-1830 d/Bestie's 21st, bring drinks!`
+* `eventadd n/CS2103 Final Exam t/04/12/2017 1700-1900 d/Doomsday`
 
 === Editing an event : `eventedit`
 
 `Since v1.2` +
 Synonyms/Aliases for the command: `editevent`, `ee` +
 Edits an existing event in Sales Navigator. +
-Format: `eventedit INDEX [n/TITLE] [time/TIMING] [d/DESCRIPTION]`
+Format: `eventedit INDEX [n/TITLE] [t/TIMING] [d/DESCRIPTION]`
 
 ****
 * Edits the event at the specified `INDEX`. The index refers to the index number shown in the last event listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -294,8 +327,8 @@ Format: `eventedit INDEX [n/TITLE] [time/TIMING] [d/DESCRIPTION]`
 
 Example:
 
-* `edit 1 time/1400-1830 d/Bring drinks and buy cake!` +
-Edits the timing and description of the 1st event to be `1400-1830` and `Bring drinks and buy cake!` respectively.
+* `edit 1 t/08/11/2017 1400-1830 d/Bring drinks and buy cake!` +
+Edits the timing and description of the 1st event to be `08/11/2017 1400-1830` and `Bring drinks and buy cake!` respectively.
 
 === Deleting an event : `eventdel`
 
@@ -312,10 +345,10 @@ Format: `delete INDEX`
 
 Examples:
 
-* `delete 2` +
+* `de 2` +
 Deletes the 2nd event in Sales Navigator.
 * `find Bob's Birthday` +
-`delete 1` +
+`de 1` +
 Deletes the 1st event in the results of the `find` command.
 
 === Locating events by name: `eventfind`
@@ -337,45 +370,15 @@ return `Submission for CS2103 Week 9`, `CS2106 Midterm`
 
 Examples:
 
-* `find Bob's` +
+* `ef Bob's` +
 Returns `Bob's Birthday` and `Party at Bob's`
-* `find Birthday` +
+* `ef Birthday` +
 Returns any event having titles that contain `Birthday`
 
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
-
-=== Tagging contacts in events: `addeventtag`
-
-`Coming in v1.5` +
-Synonyms/Aliases for the command: `addeventtag` /`aet` +
-
-Tags a contact that is involved in a specific event. +
-Format: `addeventtag [INDEX_OF_EVENT] [INDEX_OF_CONTACT]`
-
-****
-* Adds contact at `INDEX_OF_CONTACT` to the particpants of event at `INDEX_OF_EVENT`. The indexes refers to the index
-numbers shown in the last contact listing and event listing. The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Example:
-
-* `aet 1 1` +
-Tags the first contact in the contact listing to the first event in te event listing.
-
-=== Removing tags of contacts in events: `removeeventtag`
-
-`Coming in v1.5` +
-Synonyms/Aliases for the command: `removeeventtag` /`ret` +
-
-Remove a contact that is involved in a specific event. +
-Format:
-
-****
-* Work in Progress.
-****
 
 === Displaying user's schedule: `checkschedule`
 
@@ -410,7 +413,7 @@ minutes) +
 
 === Displaying user's timetable: `timetable`
 
-`Coming in v1.5` +
+`Since v1.5` +
 Synonyms/Aliases for this command: `timetable`/ `tt`/`today` +
 Displays the user's timetable, showing a list of events that are scheduled today. Timetable is enabled upon first use
 of the application and can be closed/reopened upon the command. Timetable will be empty if there are no events
@@ -419,12 +422,72 @@ scheduled today. +
 With the timetable UI, the user can:
 
 * View all events that are schedules as of the local machine's current date
+** Length of event cards reflect the duration of the event
 ** Changes to events via CLI commands and Schedule drag-and-drop will reflect immediately
 * Open and close the timetable via clicking the button
 
+=== Adding notes to persons : `note`
+
+`Coming in v2.0` +
+Adds a note to a person. Notes are strings of any length that represent information about the person that cannot be adequately described with tags +
+Format: `note [PERSON] [STRING]`
+
+Examples:
+* `note John Doe Remember to call him once every day otherwise he will question your commitment.`
+
+
+=== View all persons with a specific tag : `tag`
+
+`Coming in v2.0` +
+Displays a list of all persons with a specific tag. +
+Format: `tag [TAG]`
+
+Examples:
+* `tag friend`
+
+=== View all persons from a specific company : `company`
+
+`Coming in v2.0` +
+Displays a list of all persons from a specific company. +
+Format: `company [COMPANY]`
+
+Examples:
+* `company ABC Foods`
+
+=== Tagging contacts in events: `addeventtag`
+
+`Coming in v2.0` +
+Synonyms/Aliases for the command: `addeventtag` /`aet` +
+
+Tags a contact that is involved in a specific event. +
+Format: `addeventtag [INDEX_OF_EVENT] [INDEX_OF_CONTACT]`
+
+****
+* Adds contact at `INDEX_OF_CONTACT` to the particpants of event at `INDEX_OF_EVENT`. The indexes refers to the index
+numbers shown in the last contact listing and event listing. The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Example:
+
+* `aet 1 1` +
+Tags the first contact in the contact listing to the first event in te event listing.
+
+=== Removing tags of contacts in events: `removeeventtag`
+
+`Coming in v2.0` +
+Synonyms/Aliases for the command: `removeeventtag` /`ret` +
+
+Remove a contact that is involved in a specific event. +
+Format:
+
+****
+* Work in Progress.
+****
+
+
 === Setting default settings for timetable: `ett`/ `dtt`
 
-`Coming in v1.5` +
+`Coming in v2.0` +
 Synonyms/Aliases for this command: `enabletimetable`/ `disabletimetable`/ `ett`/ `dtt` +
 
 Timetable will be opened upon the start of the application by default depending on the setting last set here. +
@@ -462,67 +525,6 @@ Examples:
 * `sort priority`
 
 * `sort status`
-
-// tag::undoredo[]
-=== Undoing previous command : `undo`
-
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
-
-[NOTE]
-====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
-====
-
-Examples:
-
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-
-=== Redoing the previously undone command : `redo`
-
-Reverses the most recent `undo` command. +
-Format: `redo`
-
-Examples:
-
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
-
-=== Clearing all entries : `clear`
-
-Clears all entries from the address book. +
-Format: `clear`
-
-=== Exiting the program : `exit`
-
-Synonyms/Aliases for the command: `quit` +
-Exits the program. +
-Format: `exit` / `quit`
 
 === App opens at startup of user's OS command: `startup`
 
@@ -623,8 +625,6 @@ e.g. `find James Jake`
 * *Find Event* : `eventfind KEYWORD [MORE_KEYWORDS]` +
 e.g. `find Bob's`
 * *Show/Hide Timetable* : `timetable` +
-* *Enable Timetable by default* : `ett` +
-* *Disable Timetable by default* : `dtt` +
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
