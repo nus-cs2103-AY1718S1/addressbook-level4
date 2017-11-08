@@ -9,7 +9,6 @@ import seedu.address.commons.events.ui.TogglePanelEvent;
 public class EventsCommand extends Command {
 
     public static final String COMMAND_WORD = "events";
-    public static final String COMMAND_ALIAS = "e";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows a list of events.\n"
             + "Example: " + COMMAND_WORD;
