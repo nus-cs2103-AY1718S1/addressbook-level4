@@ -572,6 +572,7 @@ some of his contacts may have tags that serve the same purpose but spelt differe
 
 ---
 // end::filterbytags[]
+// tag::sort[]
 
 === Sorting mechanism (Since v1.2)
 
@@ -664,6 +665,7 @@ The sorting process is case insensitive.
 **Pros:** Less time and space consuming as sorting is achieved in a single array. +
 **Cons:** There is no way to obtain the origin list of contacts for other functions. If a mistake is made, the original list of contacts will be compromised. Need to update all classes that inherits from Address Book class as well which may be confusing.
 
+// end::sort[]
 // tag::facebook[]
 === Facebook mechanism
 
