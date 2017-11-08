@@ -24,6 +24,7 @@ import org.junit.ClassRule;
 
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.ExtendedPersonDisplayHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
@@ -84,6 +85,13 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getPersonListPanel();
     }
 
+    //@@author jacoblipech
+    public ExtendedPersonDisplayHandle getExtendedPersonDisplay() {
+
+        return mainWindowHandle.getExtendedPersonDisplay();
+    }
+
+    //@@author
     public MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();
     }

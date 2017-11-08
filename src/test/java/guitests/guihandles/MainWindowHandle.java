@@ -13,7 +13,7 @@ public class MainWindowHandle extends StageHandle {
     private final StatusBarFooterHandle statusBarFooter;
     private final MainMenuHandle mainMenu;
     private final BrowserPanelHandle browserPanel;
-    private final ExtendedPersonDisplayHandle extendedPersonCard;
+    private final ExtendedPersonDisplayHandle extendedPersonDisplay;
 
     public MainWindowHandle(Stage stage) {
         super(stage);
@@ -24,7 +24,7 @@ public class MainWindowHandle extends StageHandle {
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
         mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
         browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
-        extendedPersonCard = new ExtendedPersonDisplayHandle(getChildNode(ExtendedPersonDisplayHandle
+        extendedPersonDisplay = new ExtendedPersonDisplayHandle(getChildNode(ExtendedPersonDisplayHandle
                 .EXTENDED_PERSON_VIEW_ID));
     }
 
@@ -53,7 +53,7 @@ public class MainWindowHandle extends StageHandle {
     }
 
     //need add into Addressbook GUI Test & Addressbook System Test
-    public ExtendedPersonDisplayHandle getExtendedPersonCard() {
-        return extendedPersonCard;
+    public ExtendedPersonDisplayHandle getExtendedPersonDisplay() {
+        return extendedPersonDisplay;
     }
 }
