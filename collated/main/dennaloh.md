@@ -1,5 +1,5 @@
 # dennaloh
-###### \java\seedu\address\logic\commands\EmailCommand.java
+###### \java\seedu\address\logic\commands\person\EmailCommand.java
 ``` java
 /**
  * Emails a contact from the address book.
@@ -43,12 +43,18 @@ public class EmailCommand extends Command {
                 URI mailto = new URI("mailto:" + email);
                 desktop.mail(mailto);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, personToEmail));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof EmailCommand // instanceof handles nulls
+                && this.targetIndex.equals(((EmailCommand) other).targetIndex)); // state check
     }
 }
 ```
@@ -98,7 +104,7 @@ public class FindTagCommand extends Command {
         case EmailCommand.COMMAND_ALIAS:
             return new EmailCommandParser().parse(arguments);
 ```
-###### \java\seedu\address\logic\parser\FindTagCommandParser.java
+###### \java\seedu\address\logic\parser\person\FindTagCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FindTagCommand object
