@@ -162,7 +162,7 @@ public class PersonInformationPanel extends UiPart<Region> {
     }
     //@@author
     */
-  
+
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
