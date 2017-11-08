@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import java.util.logging.Logger;
+
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,10 +15,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.schedule.Schedule;
 
 //@@author CT15
 /**
@@ -28,6 +34,8 @@ public class WelcomeScreen extends UiPart<Region> {
     private static final String FXML = "WelcomeScreen.fxml";
     private static final int FIXED_HEIGHT = 450;
     private static final int FIXED_WIDTH = 450;
+
+    private static final Logger logger = LogsCenter.getLogger(UiManager.class);
 
     private Stage primaryStage;
     private Config config;
@@ -86,6 +94,7 @@ public class WelcomeScreen extends UiPart<Region> {
             public void handle(ActionEvent event) {
                 welcomeWindow.getScene().getWindow().hide();
                 loadMainWindow();
+                openReminderWindowIfRequired();
             }
         });
         buttonPlaceHolder.getChildren().add(continueButton);
@@ -102,10 +111,6 @@ public class WelcomeScreen extends UiPart<Region> {
 
     void show() {
         primaryStage.show();
-    }
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
     }
 
     /**
@@ -129,6 +134,22 @@ public class WelcomeScreen extends UiPart<Region> {
             prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
             mainWindow.hide();
             mainWindow.releaseResources();
+        }
+    }
+
+    //@@author 17navasaw
+    /**
+     * Shows reminder pop-up if there exists upcoming activities the next day.
+     */
+    private void openReminderWindowIfRequired() {
+        ReadOnlyAddressBook addressBook = model.getAddressBook();
+        ObservableList<Schedule> schedulesToRemindList = addressBook.getScheduleToRemindList();
+        for (Schedule schedule : schedulesToRemindList) {
+            logger.info("Schedules for reminder: " + schedule);
+        }
+        if (!schedulesToRemindList.isEmpty()) {
+            ReminderWindow reminderWindow = new ReminderWindow(schedulesToRemindList);
+            reminderWindow.show();
         }
     }
 }

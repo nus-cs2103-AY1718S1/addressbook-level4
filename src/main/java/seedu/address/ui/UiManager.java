@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -18,9 +17,7 @@ import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.schedule.Schedule;
 
 /**
  * The manager of the UI component.
@@ -68,18 +65,6 @@ public class UiManager extends ComponentManager implements Ui {
             } else {
                 welcomeScreen.loadMainWindow();
             }
-
-            // show reminder pop-up if there exists upcoming activities the next day
-            ReadOnlyAddressBook addressBook = model.getAddressBook();
-            ObservableList<Schedule> schedulesToRemindList = addressBook.getScheduleToRemindList();
-            for (Schedule schedule : schedulesToRemindList) {
-                logger.info("Schedules for reminder: " + schedule);
-            }
-            if (!schedulesToRemindList.isEmpty()) {
-                ReminderWindow reminderWindow = new ReminderWindow(schedulesToRemindList);
-                reminderWindow.show();
-            }
-
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
