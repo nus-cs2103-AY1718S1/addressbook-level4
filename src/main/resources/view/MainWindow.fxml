@@ -101,9 +101,9 @@
                               <StackPane fx:id="personListPanelPlaceholder" minWidth="300.0" VBox.vgrow="ALWAYS" />
                            </children>
                         </VBox>
-                        <StackPane fx:id="browserPlaceholder" maxWidth="-Infinity" minWidth="517.0" prefHeight="98.0" prefWidth="517.0" StackPane.alignment="CENTER_RIGHT">
+                        <StackPane fx:id="browserPlaceholder" maxWidth="-Infinity" minWidth="0.0" prefHeight="98.0" prefWidth="0.0" StackPane.alignment="CENTER_RIGHT">
                            <StackPane.margin>
-                              <Insets bottom="20.0" right="100.0" top="50.0" />
+                              <Insets bottom="20.0" right="350.0" top="50.0" />
                            </StackPane.margin>
                         </StackPane>
                      </children>
@@ -127,7 +127,7 @@
          </children>
       </VBox>
       <!-- @@author Alim95 -->
-      <ScrollPane fx:id="helpOverlayParent" fitToHeight="true" fitToWidth="true" opacity="0.9" pannable="true" visible="false" StackPane.alignment="TOP_CENTER">
+      <ScrollPane fx:id="helpOverlay" fitToHeight="true" fitToWidth="true" opacity="0.9" pannable="true" visible="false" StackPane.alignment="TOP_CENTER">
          <content>
             <GridPane alignment="TOP_CENTER" blendMode="SRC_ATOP" gridLinesVisible="true" minWidth="1144.0" style="-fx-background-color: white;">
               <columnConstraints>

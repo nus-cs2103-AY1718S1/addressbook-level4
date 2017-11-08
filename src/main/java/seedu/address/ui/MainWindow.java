@@ -90,7 +90,7 @@ public class MainWindow extends UiPart<Region> {
     private Label allLabel;
 
     @FXML
-    private ScrollPane helpOverlayParent;
+    private ScrollPane helpOverlay;
 
     @FXML
     private Menu helpMenu;
@@ -289,7 +289,7 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleOverlay() {
-        helpOverlayParent.setVisible(true);
+        helpOverlay.setVisible(true);
     }
 
     /**
@@ -297,7 +297,7 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleOverlayExit() {
-        helpOverlayParent.setVisible(false);
+        helpOverlay.setVisible(false);
     }
 
     /**
