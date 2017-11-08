@@ -2,13 +2,13 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-//@@author icehawker
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//@@author icehawker
 /**
  * Corresponding alias list of each country code and its corresponding .countryName().
  * Guarantees: immutable; is valid as declared in {@link #isValidCode(String)}
