@@ -21,12 +21,12 @@ import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 
 public class MapsPanelTest extends GuiUnitTest {
 
+    private static final String MAPS_END_OF_URL_PREFIX = "&dg=dbrw&newdg=1";
+
     private PersonPanelSelectionChangedEvent selectionChangedEventStub;
 
     private MapsPanel mapsPanel;
     private MapsPanelHandle mapsPanelHandle;
-
-    private static final String MAPS_END_OF_URL_PREFIX = "&dg=dbrw&newdg=1";
 
     @Before
     public void setUp() {
