@@ -95,10 +95,13 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+// tag::listReminder[]
 === Listing all reminders : `listReminder`
 
 Shows a list of all persons in the address book. +
 Format: `listReminder`
+
+// end::listReminder[]
 
 === Editing a person : `edit`
 
@@ -140,6 +143,7 @@ Edits the priority and message of the 1st reminder to be `Low` and `venue at NUS
 * `edit 2 z/Progress Report t/` +
 Edits the task name of the 2nd reminder to be `Progress Report` and clears all existing tags.
 
+// tag::birthday[]
 === Modifying birthday to person: `birthday`
 
 Adds / Edits / Removes a birthday parameter to an existing person in the address book. +
@@ -157,6 +161,8 @@ Examples:
 Adds / changes birthday of the 1st person to be `20/07/1995`
 * `birthday 3 b/` +
 Removes the birthday of the 3rd person.
+
+// end::birthday[]
 
 === Locating persons by name: `find`
 
@@ -178,6 +184,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::find[]
 === Locating persons by emails: `findEmail`
 
 Finds persons whose emails is same as the keyword. +
@@ -254,6 +261,8 @@ Returns reminder with the priority `High`
 * `findPriority Medium Low` +
 Returns reminders with priority `Medium` , `Low`
 
+// end::find[]
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -311,6 +320,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::sort[]
 === Sorting all entries by name: `sort`
 
 Sorts all entries in the address book by alphabetical order. +
@@ -342,6 +352,8 @@ Format: `sortBirthday`
 
 Sorts all entires in the reminder list by their priority, from High to Medium to Low. +
 Format: `sortPriority`
+
+// end::sort[]
 
 === Retrieving all persons having an existing tag : `retrieve`
 
