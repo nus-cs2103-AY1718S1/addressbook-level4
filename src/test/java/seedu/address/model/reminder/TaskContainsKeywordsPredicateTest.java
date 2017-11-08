@@ -69,9 +69,9 @@ public class TaskContainsKeywordsPredicateTest {
         assertFalse(predicate.test(new ReminderBuilder().withTask("Birthday Tomorrow").build()));
 
         // Keywords match priority, date and message, but does not match task name
-        predicate = new TaskContainsKeywordsPredicate(Arrays.asList("Low", "02/02/2017", "1600",
+        predicate = new TaskContainsKeywordsPredicate(Arrays.asList("Low", "02/02/2017", "16:00",
                 "Buy", "present"));
         assertFalse(predicate.test(new ReminderBuilder().withTask("Birthday").withPriority("Low")
-                .withDate("02/02/2017 1600").withMessage("Buy present with others.").build()));
+                .withDate("02/02/2017 16:00").withMessage("Buy present with others.").build()));
     }
 }
