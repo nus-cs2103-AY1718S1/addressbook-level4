@@ -3,6 +3,7 @@ package seedu.room.ui;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -134,10 +135,7 @@ public class PersonPanel extends UiPart<Region> {
                 Image personPicture = new Image(fileStream);
                 picture.setImage(personPicture);
             } else {
-                InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
-                Image personPicture = new Image(in);
-                picture.setImage(personPicture);
-                person.getPicture().setJarResourcePath();
+                initJarImage();
             }
             picture.setFitHeight(person.getPicture().PIC_HEIGHT);
             picture.setFitWidth(person.getPicture().PIC_WIDTH);
@@ -147,6 +145,24 @@ public class PersonPanel extends UiPart<Region> {
             });
         } catch (Exception e) {
             System.out.println("Image not found");
+        }
+    }
+
+    /**
+     * Handle loading of image from both within and outside of jar file
+     */
+    public void initJarImage() throws FileNotFoundException {
+        try {
+            InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
+            Image personPicture = new Image(in);
+            picture.setImage(personPicture);
+            person.getPicture().setJarResourcePath();
+        } catch (Exception e) {
+            File picFile = new File(person.getPicture().getJarPictureUrl());
+            FileInputStream fileStream = new FileInputStream(picFile);
+            Image personPicture = new Image(fileStream);
+            picture.setImage(personPicture);
+            person.getPicture().setJarResourcePath();
         }
     }
 

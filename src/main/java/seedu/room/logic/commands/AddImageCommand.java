@@ -4,14 +4,11 @@ import static java.util.Objects.requireNonNull;
 import static seedu.room.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.List;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
 
-import javafx.scene.Parent;
-import javafx.scene.image.Image;
 import seedu.room.commons.core.Messages;
 import seedu.room.commons.core.index.Index;
 import seedu.room.logic.commands.exceptions.CommandException;

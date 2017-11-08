@@ -165,6 +165,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
         filteredPersons.get(index).getPicture().setPictureUrl(p.getPicture().getPictureUrl());
+        indicateResidentBookChanged();
     }
 
     @Override
