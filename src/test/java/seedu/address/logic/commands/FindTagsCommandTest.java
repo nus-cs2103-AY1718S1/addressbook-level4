@@ -12,6 +12,7 @@ import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
@@ -36,7 +37,7 @@ public class FindTagsCommandTest {
     public void execute_singleKeyword_singlePersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         FindTagsCommand command = prepareCommand("owesMoney");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
+        assertCommandSuccess(command, expectedMessage, Collections.singletonList(BENSON));
     }
 
     @Test

@@ -57,7 +57,7 @@ public class TagsContainsKeywordsPredicateTest {
     @Test
     public void test_tagDoesNotContainKeywords_returnsFalse() {
         // Non-matching keyword
-        TagsContainsKeywordsPredicate predicate = new TagsContainsKeywordsPredicate(Arrays.asList("tag10"));
+        TagsContainsKeywordsPredicate predicate = new TagsContainsKeywordsPredicate(Collections.singletonList("tag10"));
         assertFalse(predicate.test(new PersonBuilder().withName("personName").withTags("tag1").build()));
 
         // Only one matching keyword
