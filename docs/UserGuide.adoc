@@ -127,6 +127,7 @@ Returns any person having names starting with `Betsy`, `Tim`, or `John`
 * `f Nam` +
 Returns `Nam`
 
+// tag::filter[]
 === Locating persons by any parameter: `filter` (alias `fi`)
 
 Finds persons who has parameters that matches the given keyword. +
@@ -168,6 +169,8 @@ Returns `Bernice Yu` and `Roy Balakrishnan`
 Returns `Bernice Yu`
 * `fa colleagues friends` +
 Returns `Bernice Yu`
+
+// end::filter[]
 
 === Deleting a person : `delete` (alias `del`)
 
@@ -442,6 +445,13 @@ Commands and parameters will be suggested as you type, where applicable.
 
 After you type first few characters, user can press TAB to autocomplete to the if there is a unique command starting +
 with those characters.
+
+// tag::facebook[]
+=== Social Media link
+
+Selecting a contact brings you directly to a list of Facebook profiles that match his/her name.
+
+// end::facebook[]
 
 == Course mode
 
