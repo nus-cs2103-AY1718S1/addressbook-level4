@@ -40,10 +40,6 @@ public interface Model {
     /** Delete tag of given person */
     void deleteTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
             DuplicatePersonException, TagNotFoundException;
-
-    /** Add tag of given person */
-    void attachTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
-            DuplicatePersonException, UniqueTagList.DuplicateTagException;
     //@@author
 
     /**

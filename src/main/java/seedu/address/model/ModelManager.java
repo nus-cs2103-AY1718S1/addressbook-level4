@@ -99,14 +99,6 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
-
-    @Override
-    public synchronized void attachTag(ReadOnlyPerson person, Tag newTag) throws PersonNotFoundException,
-            DuplicatePersonException, UniqueTagList.DuplicateTagException {
-        addressBook.attachTag(person, newTag);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
-    }
     //@@author
 
     @Override
