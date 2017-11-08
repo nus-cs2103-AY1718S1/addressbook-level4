@@ -65,7 +65,7 @@ public class EditButton extends UiPart<Region> {
                 tagTextField.getTagTextArea());
         if (checkInputResult.equals(NAME_ERROR)) {
             nameTextField.getObject().setStyle("-fx-text-inner-color: red;");
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter name without numerical values!",
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid name!",
                     ButtonType.OK);
             alert.showAndWait();
             throw new IllegalValueException("Input contains illegal characters!");
@@ -114,13 +114,13 @@ public class EditButton extends UiPart<Region> {
      * Handles checking of content passed into the form
      */
     public static String checkInput(String name, String phone, String email, String address, String tag) {
-        if (name.matches(".*\\d+.*")) {
+        if (name.matches(".*\\d+.*") || name.isEmpty()) {
             return NAME_ERROR;
         }
-        if (!phone.matches("[0-9]+") || phone.length() != 8) {
+        if (!phone.matches("[0-9]+")) {
             return PHONE_ERROR;
         }
-        if (!email.contains("@") || !email.contains(".com")) {
+        if (!email.contains("@") || !email.contains(".")) {
             return EMAIL_ERROR;
         }
         //check tag doesnt end with a special character

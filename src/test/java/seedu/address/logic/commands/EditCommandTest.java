@@ -60,8 +60,8 @@ public class EditCommandTest {
         assertTrue(EditButton.checkInput("Ben Lim", "90267500",
                 "benny1234@hotmail", "7772, Tampines Street 21, #03-551", "friends,colleagues"
                         + ",best friend,").equals(EditButton.EMAIL_ERROR));
-        //invalid input, numerical name
-        assertTrue(EditButton.checkInput("90234", "90267500",
+        //invalid input, empty name
+        assertTrue(EditButton.checkInput("", "90267500",
                 "benny1234@hotmail.com", "7772, Tampines Street 21, #03-551", "friends,colleagues"
                         + ",best friend,").equals(EditButton.NAME_ERROR));
         //valid input, however comparison to wrong case.
