@@ -25,6 +25,7 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
     private static final String filePath = "photos/";
+    private static final String defaultFilePath = "photos/default.jpeg";
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -71,35 +72,37 @@ public class PersonCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
-
-        Path path = Paths.get(filePath + person.getEmail().toString() + ".png");
-        if (Files.exists(path)) {
-            File filePic = new File(filePath + person.getEmail().toString() + ".png");
-            Image image = new Image(filePic.toURI().toString(), 150, 150, false, false);
-            photo.setImage(image);
-        } else {
-            File fileDefault = new File(filePath + "default.jpeg");
-
-            Image image = new Image(fileDefault.toURI().toString(), 150, 150, false, false);
-            photo.setImage(image);
-        }
+        setImage();
 
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         });
     }
+
     /**
      * Handles photo change
      */
     @Subscribe
     private void handlePhotoChange(PhotoChangeEvent event) {
+        setImage();
+    }
+
+    /**
+     * Handles logic and set images
+     */
+    private void setImage() {
 
         File file = new File(filePath + person.getEmail().toString() + ".png");
         Path path = Paths.get(filePath + person.getEmail().toString() + ".png");
 
         if (Files.exists(path)) {
             Image image = new Image(file.toURI().toString(), 150, 150, false, false);
+            photo.setImage(image);
+
+        } else {
+            File fileDefault = new File(defaultFilePath);
+            Image image = new Image(fileDefault.toURI().toString(), 150, 150, false, false);
             photo.setImage(image);
         }
 
@@ -124,6 +127,7 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
+
     //@@author
     @Override
     public boolean equals(Object other) {
