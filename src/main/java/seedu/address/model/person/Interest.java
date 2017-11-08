@@ -1,11 +1,10 @@
 package seedu.address.model.person;
 
-//@@author lawwman
-
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author lawwman
 /**
  * Represents a Person's interest on his / her debt in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidInterest(String)}

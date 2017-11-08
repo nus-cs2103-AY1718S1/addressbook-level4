@@ -9,22 +9,28 @@ public class InfoPanelHandle extends NodeHandle<Node> {
 
     private static final String NAME_FIELD_ID = "#name";
     private static final String ADDRESS_FIELD_ID = "#address";
-    private static final String PHONE_FIELD_ID = "#phone";
+    private static final String HANDPHONE_FIELD_ID = "#handphone";
+    private static final String HOME_PHONE_FIELD_ID = "#homePhone";
+    private static final String OFFICE_PHONE_FIELD_ID = "#officePhone";
     private static final String EMAIL_FIELD_ID = "#email";
     private static final String POSTAL_CODE_FIELD_ID = "#postalCode";
     private static final String CLUSTER_FIELD_ID = "#cluster";
     private static final String DEBT_FIELD_ID = "#debt";
+    private static final String TOTAL_DEBT_FIELD_ID = "#totalDebt";
     private static final String INTEREST_FIELD_ID = "#interest";
     private static final String DATE_BORROW_FIELD_ID = "#dateBorrow";
     private static final String DEADLINE_FIELD_ID = "#deadline";
     private static final String DATE_REPAID_FIELD_ID = "#dateRepaid";
     private static final String TAGS_FIELD_ID = "#tags";
     private static final String ADDRESS_FIELD_FIELD_ID = "#addressField";
-    private static final String PHONE_FIELD_FIELD_ID = "#phoneField";
+    private static final String HANDPHONE_FIELD_FIELD_ID = "#handphoneField";
+    private static final String HOME_PHONE_FIELD_FIELD_ID = "#homePhoneField";
+    private static final String OFFICE_PHONE_FIELD_FIELD_ID = "#officePhoneField";
     private static final String EMAIL_FIELD_FIELD_ID = "#emailField";
     private static final String POSTAL_CODE_FIELD_FIELD_ID = "#postalCodeField";
     private static final String CLUSTER_FIELD_FIELD_ID = "#clusterField";
     private static final String DEBT_FIELD_FIELD_ID = "#debtField";
+    private static final String TOTAL_DEBT_FIELD_FIELD_ID = "#totalDebtField";
     private static final String INTEREST_FIELD_FIELD_ID = "#interestField";
     private static final String DATE_BORROW_FIELD_FIELD_ID = "#dateBorrowField";
     private static final String DEADLINE_FIELD_FIELD_ID = "#deadlineField";
@@ -32,22 +38,28 @@ public class InfoPanelHandle extends NodeHandle<Node> {
 
     private final Label nameLabel;
     private final Label addressLabel;
-    private final Label phoneLabel;
+    private final Label handphoneLabel;
+    private final Label homePhoneLabel;
+    private final Label officePhoneLabel;
     private final Label emailLabel;
     private final Label postalCodeLabel;
     private final Label clusterLabel;
     private final Label debtLabel;
+    private final Label totalDebtLabel;
     private final Label interestLabel;
     private final Label dateBorrowLabel;
     private final Label deadlineLabel;
     private final Label dateRepaidLabel;
     private final List<Label> tagLabels;
     private final Text addressText;
-    private final Text phoneText;
+    private final Text handphoneText;
+    private final Text homePhoneText;
+    private final Text officePhoneText;
     private final Text emailText;
     private final Text postalCodeText;
     private final Text clusterText;
     private final Text debtText;
+    private final Text totalDebtText;
     private final Text interestText;
     private final Text dateBorrowText;
     private final Text deadlineText;
@@ -55,11 +67,14 @@ public class InfoPanelHandle extends NodeHandle<Node> {
 
     private String lastRememberedName;
     private String lastRememberedAddress;
-    private String lastRememberedPhone;
+    private String lastRememberedHandphone;
+    private String lastRememberedHomePhone;
+    private String lastRememberedOfficePhone;
     private String lastRememberedEmail;
     private String lastRememberedPostalCode;
     private String lastRememberedCluster;
     private String lastRememberedDebt;
+    private String lastRememberedtotalDebt;
     private String lastRememberedInterest;
     private String lastRememberedDateBorrow;
     private String lastRememberedDeadline;
@@ -73,11 +88,14 @@ public class InfoPanelHandle extends NodeHandle<Node> {
 
         this.nameLabel = getChildNode(NAME_FIELD_ID);
         this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
-        this.phoneLabel = getChildNode(PHONE_FIELD_ID);
+        this.handphoneLabel = getChildNode(HANDPHONE_FIELD_ID);
+        this.homePhoneLabel = getChildNode(HOME_PHONE_FIELD_ID);
+        this.officePhoneLabel = getChildNode(OFFICE_PHONE_FIELD_ID);
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
         this.postalCodeLabel = getChildNode(POSTAL_CODE_FIELD_ID);
         this.clusterLabel = getChildNode(CLUSTER_FIELD_ID);
         this.debtLabel = getChildNode(DEBT_FIELD_ID);
+        this.totalDebtLabel = getChildNode(TOTAL_DEBT_FIELD_ID);
         this.interestLabel = getChildNode(INTEREST_FIELD_ID);
         this.dateBorrowLabel = getChildNode(DATE_BORROW_FIELD_ID);
         this.deadlineLabel = getChildNode(DEADLINE_FIELD_ID);
@@ -91,11 +109,14 @@ public class InfoPanelHandle extends NodeHandle<Node> {
                 .collect(Collectors.toList());
 
         this.addressText = getChildNode(ADDRESS_FIELD_FIELD_ID);
-        this.phoneText = getChildNode(PHONE_FIELD_FIELD_ID);
+        this.handphoneText = getChildNode(HANDPHONE_FIELD_FIELD_ID);
+        this.homePhoneText = getChildNode(HOME_PHONE_FIELD_FIELD_ID);
+        this.officePhoneText = getChildNode(OFFICE_PHONE_FIELD_FIELD_ID);
         this.emailText = getChildNode(EMAIL_FIELD_FIELD_ID);
         this.postalCodeText = getChildNode(POSTAL_CODE_FIELD_FIELD_ID);
         this.clusterText = getChildNode(CLUSTER_FIELD_FIELD_ID);
         this.debtText = getChildNode(DEBT_FIELD_FIELD_ID);
+        this.totalDebtText = getChildNode(TOTAL_DEBT_FIELD_FIELD_ID);
         this.interestText = getChildNode(INTEREST_FIELD_FIELD_ID);
         this.dateBorrowText = getChildNode(DATE_BORROW_FIELD_FIELD_ID);
         this.deadlineText = getChildNode(DEADLINE_FIELD_FIELD_ID);
@@ -115,8 +136,16 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         return addressLabel.getText();
     }
 
-    public String getPhone() {
-        return phoneLabel.getText();
+    public String getHandphone() {
+        return handphoneLabel.getText();
+    }
+
+    public String getHomePhone() {
+        return homePhoneLabel.getText();
+    }
+
+    public String getOfficePhone() {
+        return officePhoneLabel.getText();
     }
 
     public String getEmail() {
@@ -124,6 +153,10 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     }
 
     public String getDebt() {
+        return debtLabel.getText();
+    }
+
+    public String getTotalDebt() {
         return debtLabel.getText();
     }
 
@@ -155,8 +188,16 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         return addressText.getText();
     }
 
-    public String getPhoneField() {
-        return phoneText.getText();
+    public String getHandphoneField() {
+        return handphoneText.getText();
+    }
+
+    public String getHomePhoneField() {
+        return homePhoneText.getText();
+    }
+
+    public String getOfficePhoneField() {
+        return officePhoneText.getText();
     }
 
     public String getEmailField() {
@@ -172,6 +213,10 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     }
 
     public String getDebtField() {
+        return debtText.getText();
+    }
+
+    public String getTotalDebtField() {
         return debtText.getText();
     }
 
@@ -211,7 +256,9 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         lastRememberedInterest = getInterest();
         lastRememberedEmail = getEmail();
         lastRememberedName = getName();
-        lastRememberedPhone = getPhone();
+        lastRememberedHandphone = getHandphone();
+        lastRememberedHomePhone = getHomePhone();
+        lastRememberedOfficePhone = getOfficePhone();
         lastRememberedPostalCode = getPostalCode();
         lastRememberedCluster = getCluster();
         lastRememberedTags = getTags();
@@ -227,7 +274,9 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     public boolean isSelectedPersonChanged() {
         return !getName().equals(lastRememberedName)
                 || !getAddress().equals(lastRememberedAddress)
-                || !getPhone().equals(lastRememberedPhone)
+                || !getHandphone().equals(lastRememberedHandphone)
+                || !getHomePhone().equals(lastRememberedHomePhone)
+                || !getOfficePhone().equals(lastRememberedOfficePhone)
                 || !getDebt().equals(lastRememberedDebt)
                 || !getInterest().equals(lastRememberedInterest)
                 || !getEmail().equals(lastRememberedEmail)
@@ -256,7 +305,7 @@ public class NearbyPersonListPanelHandle extends NodeHandle<ListView<PersonCard>
     }
 
     /**
-     * Returns a handle to the selected {@code NearbyPersonCardHandle}.
+     * Returns a handle to the selected {@code PersonCardHandle}.
      * A maximum of 1 item can be selected at any time.
      * @throws AssertionError if no card is selected, or more than 1 card is selected.
      */
@@ -369,6 +418,115 @@ public class NearbyPersonListPanelHandle extends NodeHandle<ListView<PersonCard>
     }
 }
 ```
+###### \java\guitests\NearbySelectionIntegrationTest.java
+``` java
+public class NearbySelectionIntegrationTest extends AddressBookGuiTest {
+
+    @Test
+    public void handleNearbyPersonNotInCurrentListEvent() {
+        NearbyPersonNotInCurrentListEvent nearbyPersonNotInCurrentListEventStub =
+                new NearbyPersonNotInCurrentListEvent(new PersonCard(CARL, 2));
+        PersonListPanelHandle originalPersonListPanelHandle = mainWindowHandle.getPersonListPanel();
+        InfoPanelHandle originalInfoPanelHandle = mainWindowHandle.getInfoPanel();
+        postNow(nearbyPersonNotInCurrentListEventStub);
+        mainWindowHandle.updateChangeInList();
+        PersonCardHandle expectedCard = mainWindowHandle.getPersonListPanel()
+                .getPersonCardHandle(INDEX_THIRD_PERSON.getZeroBased());
+        PersonCardHandle selectedCard = mainWindowHandle.getPersonListPanel().getHandleToSelectedCard();
+        assertCardEquals(expectedCard, selectedCard);
+        assertNotSame(originalPersonListPanelHandle, mainWindowHandle.getPersonListPanel());
+        assertNotSame(originalInfoPanelHandle, mainWindowHandle.getInfoPanel());
+    }
+
+    @Test
+    public void handleNearbyPersonPanelSelectionChangeEvent() {
+        JumpToListRequestEvent jumpToListRequestEventStub = new JumpToListRequestEvent(INDEX_SECOND_PERSON);
+        NearbyPersonPanelSelectionChangedEvent nearbyPersonPanelSelectionChangedEventStub =
+                new NearbyPersonPanelSelectionChangedEvent(new PersonCard(CARL, 2));
+        postNow(jumpToListRequestEventStub); // Benson is selected
+        postNow(nearbyPersonPanelSelectionChangedEventStub); // Carl should be selected
+        mainWindowHandle.updateChangeInList();
+        // TODO: Assert personListPanel selects the correct person.
+        assertInfoDisplaysPerson(nearbyPersonPanelSelectionChangedEventStub.getNewSelection().person,
+                mainWindowHandle.getInfoPanel());
+    }
+
+}
+```
+###### \java\seedu\address\logic\commands\BorrowCommandTest.java
+``` java
+    @Test
+    public void execute_successfulBorrowing_withoutIndex() {
+        model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        ReadOnlyPerson personWhoBorrowed = model.getSelectedPerson();
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(BorrowCommand.MESSAGE_BORROW_SUCCESS,
+                personWhoBorrowed.getName().toString(), VALID_DEBT_FIGURE);
+        try {
+            Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+            expectedModel.addDebtToPerson(personWhoBorrowed, new Debt(VALID_DEBT_FIGURE));
+
+            BorrowCommand borrowCommand = prepareCommand(null, new Debt(VALID_DEBT_FIGURE));
+            assertCommandSuccess(borrowCommand, model, expectedMessage, expectedModel);
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
+        } catch (PersonNotFoundException pnfe) {
+            pnfe.printStackTrace();
+        }
+    }
+
+```
+###### \java\seedu\address\logic\commands\DeleteCommandTest.java
+``` java
+    @Test
+    public void execute_noIndexPersonSelected_success() throws Exception {
+        model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        ReadOnlyPerson personToDelete = model.getSelectedPerson();
+        DeleteCommand deleteCommand = prepareCommand();
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete.getName());
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deletePerson(personToDelete);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_noIndexNoSelection_failure() throws Exception {
+        DeleteCommand deleteCommand = prepareCommand();
+
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_NO_PERSON_SELECTED);
+    }
+
+```
+###### \java\seedu\address\logic\commands\EditCommandTest.java
+``` java
+    @Test
+    public void execute_noIndexPersonSelected_success() throws Exception {
+        Person editedPerson = new PersonBuilder().build();
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
+        model.updateSelectedPerson(model.getFilteredPersonList().get(0));
+        EditCommand editCommand = prepareCommand(descriptor);
+
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson.getName());
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_noIndexNoSelection_failure() {
+        ReadOnlyPerson personInList = model.getAddressBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        EditCommand editCommand = prepareCommand(new EditPersonDescriptorBuilder(personInList).build());
+
+        assertCommandFailure(editCommand, model, Messages.MESSAGE_NO_PERSON_SELECTED);
+    }
+
+```
 ###### \java\seedu\address\logic\commands\NearbyCommandTest.java
 ``` java
 /**
@@ -443,7 +601,8 @@ public class NearbyCommandTest {
 
         try {
             CommandResult commandResult = nearbyCommand.execute();
-            assertEquals(String.format(NearbyCommand.MESSAGE_NEARBY_PERSON_SUCCESS, index.getOneBased()),
+            assertEquals(String.format(ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                            + NearbyCommand.MESSAGE_NEARBY_PERSON_SUCCESS, index.getOneBased()),
                     commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
@@ -480,6 +639,29 @@ public class NearbyCommandTest {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\PaybackCommandTest.java
+``` java
+    @Test
+    public void execute_noIndex_successfulPayback() {
+        model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        ReadOnlyPerson personWhoPayback = model.getSelectedPerson();
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(PaybackCommand.MESSAGE_PAYBACK_SUCCESS,
+                personWhoPayback.getName().toString(), VALID_DEBT_FIGURE);
+        try {
+            Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+            expectedModel.deductDebtFromPerson(personWhoPayback, new Debt(VALID_DEBT_FIGURE));
+
+            PaybackCommand paybackCommand = prepareCommand(null, new Debt(VALID_DEBT_FIGURE));
+            assertCommandSuccess(paybackCommand, model, expectedMessage, expectedModel);
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
+        } catch (PersonNotFoundException pnfe) {
+            pnfe.printStackTrace();
+        }
+    }
+
+```
 ###### \java\seedu\address\logic\commands\SortCommandTest.java
 ``` java
 /**
@@ -508,27 +690,32 @@ public class SortCommandTest {
 
         expectedModel.sortBy(ORDERING_NAME);
         sortCommand = prepareCommand(ORDERING_DEFAULT);
-        expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_NAME);
+        expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_NAME);
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
 
         expectedModel.sortBy(ORDERING_NAME);
         sortCommand = prepareCommand(ORDERING_NAME);
-        expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_NAME);
+        expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_NAME);
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
 
         expectedModel.sortBy(ORDERING_DEBT);
         sortCommand = prepareCommand(ORDERING_DEBT);
-        expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_DEBT);
+        expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_DEBT);
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
 
         expectedModel.sortBy(ORDERING_CLUSTER);
         sortCommand = prepareCommand(ORDERING_CLUSTER);
-        expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_CLUSTER);
+        expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_CLUSTER);
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
 
         expectedModel.sortBy(ORDERING_DEADLINE);
         sortCommand = prepareCommand(ORDERING_DEADLINE);
-        expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_DEADLINE);
+        expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_DEADLINE);
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
     }
 
@@ -909,7 +1096,9 @@ public class InfoPanelTest extends GuiUnitTest {
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getAddress());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getAddressField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDebt());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getTotalDebt());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDebtField());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getTotalDebtField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getInterest());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getInterestField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getPostalCode());
@@ -919,8 +1108,12 @@ public class InfoPanelTest extends GuiUnitTest {
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getName());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getEmail());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getEmailField());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getPhone());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getPhoneField());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getHandphone());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getHandphoneField());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getHomePhone());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getHomePhoneField());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getOfficePhone());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getOfficePhoneField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDateBorrow());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDateBorrowField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDeadline());
@@ -942,10 +1135,10 @@ public class InfoPanelTest extends GuiUnitTest {
         assertFalse(infoPanelHandle.isSelectedPersonChanged());
 
         // associated info of next person
-        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(BOB, 1));
+        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(BENSON, 1));
         postNow(selectionChangedEventStub);
         assertTrue(infoPanelHandle.isSelectedPersonChanged());
-        assertInfoDisplay(infoPanel, BOB);
+        assertInfoDisplay(infoPanel, BENSON);
     }
 
     @Test
@@ -962,10 +1155,10 @@ public class InfoPanelTest extends GuiUnitTest {
 
         assertTrue(infoPanel.equals(expectedInfoPanel));
 
-        infoPanel.loadPersonInfo(AMY);
+        infoPanel.loadPersonInfo(ALICE);
         assertFalse(infoPanel.equals(expectedInfoPanel));
 
-        expectedInfoPanel.loadPersonInfo(AMY);
+        expectedInfoPanel.loadPersonInfo(ALICE);
         assertTrue(infoPanel.equals(expectedInfoPanel));
     }
 
@@ -990,7 +1183,6 @@ public class NearbyPersonListPanelTest extends GuiUnitTest {
 
     private static final JumpToNearbyListRequestEvent JUMP_TO_SECOND_EVENT =
             new JumpToNearbyListRequestEvent(INDEX_SECOND_PERSON);
-
     private NearbyPersonListPanelHandle nearbyPersonListPanelHandle;
 
     @Before
@@ -1022,7 +1214,7 @@ public class NearbyPersonListPanelTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleJumpToNearbyListRequestEvent() {
+    public void handleJumpNearbyToListRequestEvent() {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 
@@ -1040,7 +1232,9 @@ public class NearbyPersonListPanelTest extends GuiUnitTest {
      */
     public static void assertInfoDisplaysPerson(ReadOnlyPerson expectedPerson, InfoPanelHandle actualInfo) {
         assertEquals(expectedPerson.getName().fullName, actualInfo.getName());
-        assertEquals(expectedPerson.getPhone().value, actualInfo.getPhone());
+        assertEquals(expectedPerson.getHandphone().value, actualInfo.getHandphone());
+        assertEquals(expectedPerson.getHomePhone().value, actualInfo.getHomePhone());
+        assertEquals(expectedPerson.getOfficePhone().value, actualInfo.getOfficePhone());
         assertEquals(expectedPerson.getEmail().value, actualInfo.getEmail());
         assertEquals(expectedPerson.getAddress().value, actualInfo.getAddress());
         assertEquals(expectedPerson.getPostalCode().value, actualInfo.getPostalCode());

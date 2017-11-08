@@ -40,6 +40,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.util.DateUtil;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -134,6 +135,16 @@ public class EditCommand extends UndoableCommand {
             editedPerson.setIsWhitelisted(true);
             editedPerson.setDateRepaid(new DateRepaid(formatDate(new Date())));
         }
+        if (!editedPerson.getDeadline().value.equals(Deadline.NO_DEADLINE_SET)) {
+            Date editedPersonDeadline = DateUtil.convertStringToDate(editedPerson.getDeadline().valueToDisplay);
+            Date currentDate = new Date();
+            if (personToEdit.hasOverdueDebt() && currentDate.before(editedPersonDeadline)) {
+                editedPerson.setHasOverdueDebt(false);
+            }
+            if (!personToEdit.hasOverdueDebt() && editedPersonDeadline.before(currentDate)) {
+                editedPerson.setHasOverdueDebt(true);
+            }
+        }
         return editedPerson;
     }
 
@@ -153,6 +164,7 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         PostalCode updatedPostalCode = editPersonDescriptor.getPostalCode().orElse(personToEdit.getPostalCode());
         Debt updatedDebt = editPersonDescriptor.getDebt().orElse(personToEdit.getDebt());
+        Debt updatedTotalDebt = editPersonDescriptor.getTotalDebt().orElse(personToEdit.getTotalDebt());
         Interest updatedInterest = editPersonDescriptor.getInterest().orElse(personToEdit.getInterest());
         Deadline updatedDeadline = editPersonDescriptor.getDeadline().orElse(personToEdit.getDeadline());
         try {
@@ -165,12 +177,16 @@ public class EditCommand extends UndoableCommand {
         Person personCreated = new Person(updatedName, updatedHandphone, updatedHomePhone, updatedOfficePhone,
                 updatedEmail, updatedAddress, updatedPostalCode, updatedDebt, updatedInterest, updatedDeadline,
                 updatedTags);
-        personCreated.setTotalDebt(personToEdit.getTotalDebt());
-
+        try {
+            personCreated.setTotalDebt(updatedTotalDebt);
+        } catch (IllegalValueException ive) {
+            throw new CommandException(ive.getMessage());
+        }
         personCreated.setDateBorrow(personToEdit.getDateBorrow());
         personCreated.setDateRepaid(personToEdit.getDateRepaid());
         personCreated.setIsBlacklisted(personToEdit.isBlacklisted());
         personCreated.setIsWhitelisted(personToEdit.isWhitelisted());
+        personCreated.setHasOverdueDebt(personToEdit.hasOverdueDebt());
         return personCreated;
     }
 
@@ -196,6 +212,7 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private PostalCode postalCode;
         private Debt debt;
+        private Debt totalDebt;
         private Interest interest;
         private Deadline deadline;
         private Set<Tag> tags;
@@ -211,6 +228,8 @@ public class EditCommand extends UndoableCommand {
             this.address = toCopy.address;
             this.postalCode = toCopy.postalCode;
             this.debt = toCopy.debt;
+            this.totalDebt = toCopy.totalDebt;
+            this.totalDebt = toCopy.totalDebt;
             this.interest = toCopy.interest;
             this.deadline = toCopy.deadline;
             this.tags = toCopy.tags;
@@ -286,6 +305,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Debt> getDebt() {
             return Optional.ofNullable(debt);
+        }
+
+        public void setTotalDebt(Debt totalDebt) {
+            this.totalDebt = totalDebt;
+        }
+
+        public Optional<Debt> getTotalDebt() {
+            return Optional.ofNullable(totalDebt);
         }
 
         public void setInterest(Interest interest) {

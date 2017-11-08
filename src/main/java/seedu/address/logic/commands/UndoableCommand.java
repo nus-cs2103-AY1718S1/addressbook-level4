@@ -71,6 +71,9 @@ public abstract class UndoableCommand extends Command {
     @Override
     public final CommandResult execute() throws CommandException {
         saveAddressBookSnapshot();
+        if (index != null) {
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+        }
         return executeUndoableCommand();
     }
 }

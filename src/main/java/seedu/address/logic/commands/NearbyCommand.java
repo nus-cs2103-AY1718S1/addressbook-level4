@@ -5,7 +5,7 @@ import java.util.List;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToNearbyListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -20,13 +20,18 @@ public class NearbyCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the person identified by the index number used in the currently selected person's "
-            + "nearby listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "nearby listing. If no index is provided, the next person in the nearby list is selected.\n"
+            + "Parameters: INDEX (optional, must be a positive integer if present)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_NEARBY_PERSON_SUCCESS = "Selected person in same area: %1$s";
+    public static final String MESSAGE_NO_NEARBY_PERSON = "There is only one person in this area";
 
     private final Index targetIndex;
+
+    public NearbyCommand() {
+        this.targetIndex = null;
+    }
 
     public NearbyCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
@@ -41,19 +46,27 @@ public class NearbyCommand extends Command {
             throw new CommandException(Messages.MESSAGE_NO_PERSON_SELECTED);
         }
 
-        if (targetIndex.getZeroBased() >= nearbyList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        if (nearbyList.size() == 1) {
+            throw new CommandException(MESSAGE_NO_NEARBY_PERSON);
         }
 
-        model.updateSelectedPerson(nearbyList.get(targetIndex.getZeroBased()));
+        Index nearbyIndex;
 
-        Index index = listObserver.getIndexofSelectedPersonInCurrentList();
+        if (targetIndex != null) {
+            if (targetIndex.getZeroBased() >= nearbyList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+            nearbyIndex = targetIndex;
+        } else {
+            nearbyIndex = Index.fromZeroBased((nearbyList.indexOf(model.getSelectedPerson()) + 1) % nearbyList.size());
+        }
 
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+        model.updateSelectedPerson(nearbyList.get(nearbyIndex.getZeroBased()));
+        EventsCenter.getInstance().post(new JumpToNearbyListRequestEvent(nearbyIndex));
 
         String currentList = listObserver.getCurrentListName();
 
-        return new CommandResult(currentList + String.format(MESSAGE_NEARBY_PERSON_SUCCESS, targetIndex.getOneBased()));
+        return new CommandResult(currentList + String.format(MESSAGE_NEARBY_PERSON_SUCCESS, nearbyIndex.getOneBased()));
 
     }
 
@@ -61,6 +74,7 @@ public class NearbyCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof NearbyCommand // instanceof handles nulls
-                && this.targetIndex.equals(((NearbyCommand) other).targetIndex)); // state check
+                && ((this.targetIndex == null && ((NearbyCommand) other).targetIndex == null) // both targetIndex null
+                || this.targetIndex.equals(((NearbyCommand) other).targetIndex))); // state check
     }
 }

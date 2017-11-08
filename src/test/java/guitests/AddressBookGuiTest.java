@@ -59,6 +59,7 @@ public abstract class AddressBookGuiTest {
         // Login is required to test main GUIs in the address book
         mainWindowHandle.simulateLogin();
         mainWindowHandle.focus();
+        mainWindowHandle.updateChangeInList();
     }
 
     /**

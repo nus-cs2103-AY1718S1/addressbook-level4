@@ -98,6 +98,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(newPerson);
     }
 
+    //@@author jaivigneshvenugopal
     /**
      * Adds a person to the blacklist in the address book.
      * @return ReadOnly newBlacklistedPerson
@@ -138,7 +139,30 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         return persons.getReadOnlyPerson(index);
     }
+    //@@author
 
+    //@@author lawwman
+    /**
+     * Adds a person to the overdue debt list in the address book.
+     * @return ReadOnly newOverduePerson
+     */
+    public ReadOnlyPerson addOverdueDebtPerson(ReadOnlyPerson p) {
+        int index;
+        index = persons.getIndexOf(p);
+
+        Person newOverduePerson = new Person(p);
+        newOverduePerson.setHasOverdueDebt(true);
+        try {
+            updatePerson(p, newOverduePerson);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("The target person cannot be a duplicate");
+        } catch (PersonNotFoundException e) {
+            throw new AssertionError("This is not possible as prior checks have been done");
+        }
+        return persons.getReadOnlyPerson(index);
+    }
+
+    //@@author
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
@@ -199,6 +223,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.remove(key);
     }
 
+    //@@author jaivigneshvenugopal
     /**
      * Updates {@code key} to exclude {@code key} from the blacklist in this {@code AddressBook}.
      * @return ReadOnly newUnBlacklistedPerson
@@ -247,9 +272,33 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         return persons.getReadOnlyPerson(index);
     }
+    //@@author
+
+    //@@author lawwman
+    /**
+     * Updates {@code key} to exclude {@code key} from the overdue list in this {@code AddressBook}.
+     * @return ReadOnly newOverdueDebtPerson
+     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public ReadOnlyPerson removeOverdueDebtPerson(ReadOnlyPerson key) throws PersonNotFoundException {
+        int index;
+        index = persons.getIndexOf(key);
+
+        Person newOverdueDebtPerson = new Person(key);
+        newOverdueDebtPerson.setHasOverdueDebt(false);
+        persons.remove(key);
+        try {
+            persons.add(index, newOverdueDebtPerson);
+        } catch (DuplicatePersonException e) {
+            assert false : "This is not possible as prior checks have"
+                    + " been done to ensure AddressBook does not have duplicate persons";
+        }
+        return persons.getReadOnlyPerson(index);
+    }
 
     //// tag-level operations
 
+    //@@author
     /**
      * Adds a {@code Tag} to the tag list.
      * @param t the tag to be added.
@@ -290,9 +339,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         Person editedPerson = new Person(target);
 
         try {
-            Debt newDebt = new Debt(target.getDebt().toNumber() + amount.toNumber());
-            editedPerson.setDebt(newDebt);
-            editedPerson.setTotalDebt(newDebt);
+            Debt newCurrDebt = new Debt(target.getDebt().toNumber() + amount.toNumber());
+            Debt newTotalDebt = new Debt(target.getTotalDebt().toNumber() + amount.toNumber());
+            editedPerson.setDebt(newCurrDebt);
+            editedPerson.setTotalDebt(newTotalDebt);
             persons.setPerson(target, editedPerson);
         } catch (DuplicatePersonException dpe) {
             assert false : "There should be no duplicate when updating the debt of a person";
@@ -401,6 +451,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asObservableList();
     }
 
+    //@@author jaivigneshvenugopal
     @Override
     public ObservableList<ReadOnlyPerson> getBlacklistedPersonList() {
         return persons.asObservableBlacklist();
@@ -409,6 +460,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ReadOnlyPerson> getWhitelistedPersonList() {
         return persons.asObservableWhitelist();
+    }
+    //@@author
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getOverduePersonList() {
+        return persons.asObservableOverdueList();
     }
 
     @Override

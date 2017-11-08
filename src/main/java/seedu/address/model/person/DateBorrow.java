@@ -6,7 +6,6 @@ import static seedu.address.model.util.DateUtil.formatDate;
 import java.util.Date;
 
 //@@author lawwman
-
 /**
  * Represents the date of when the Person was instantiated in the address book, i.e. the date
  * the Person borrows money.

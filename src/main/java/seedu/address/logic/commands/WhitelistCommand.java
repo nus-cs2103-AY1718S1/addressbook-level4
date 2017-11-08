@@ -1,7 +1,9 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_WHITELISTED_PERSONS;
 
+//@@author jaivigneshvenugopal
 /**
  * Lists all persons who have cleared their debts.
  */
@@ -16,6 +18,8 @@ public class WhitelistCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        requireNonNull(model);
+        model.deselectPerson();
         model.changeListTo(COMMAND_WORD);
         model.updateFilteredWhitelistedPersonList(PREDICATE_SHOW_ALL_WHITELISTED_PERSONS);
         String currentList = listObserver.getCurrentListName();

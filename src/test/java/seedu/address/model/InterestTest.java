@@ -17,6 +17,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.util.DateUtil;
 import seedu.address.testutil.PersonBuilder;
 
+//@@author lawwman
 public class InterestTest {
     // dates that interest should affect debt
     private final String sampleDateInput1 = "01-11-2017";
@@ -48,7 +49,9 @@ public class InterestTest {
         }
         // model should have handled login event and updated personToTest's debt
         int personToTestIdx = model.getFilteredPersonList().size() - 1;
-        assertEquals("10936.85", model.getFilteredPersonList().get(personToTestIdx).getDebt().toString());
+        String actualDebt = model.getFilteredPersonList().get(personToTestIdx).getDebt().toString();
+        String expectedDebt = generateExpectedDebt(personToTest);
+        assertEquals(expectedDebt, actualDebt);
     }
 
     @Test
@@ -133,5 +136,16 @@ public class InterestTest {
     private Date generateDateFromString(String dateString) {
         String date = DateUtil.formatDate(dateString);
         return DateUtil.convertStringToDate(date);
+    }
+
+    /**
+     * Generate expected debt for person under test.
+     */
+    private String generateExpectedDebt(Person person) {
+        Person personUnderTest = person;
+        int numberOfMonths = personUnderTest.checkLastAccruedDate(new Date());
+        double accruedAmount = Double.parseDouble(personUnderTest.calcAccruedAmount(numberOfMonths));
+        double expectedDebt = accruedAmount + personUnderTest.getDebt().toNumber();
+        return Double.toString(expectedDebt);
     }
 }

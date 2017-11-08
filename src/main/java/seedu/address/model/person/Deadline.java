@@ -18,11 +18,14 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 public class Deadline {
 
+    public static final String DASH_CHARACTER = "-";
     public static final String NO_DEADLINE_SET = "No deadline set.";
     public static final String MESSAGE_DEADLINE_CONSTRAINTS =
             "Deadline can only contain input of the format XX-XX-XXXX, taking X as an integer.";
-    public final String value;
-    public final String valueToDisplay;
+
+    public final String value; // format of DD-MM-YYYY.
+    public final String valueToDisplay; // format of DAY, DD MM, 'Year' YYYY.
+    private String[] valueParsed;
 
     /**
      * Validates given Deadline. If no deadline was entered by user, value will read "empty" by
@@ -40,6 +43,7 @@ public class Deadline {
                 throw new IllegalValueException(MESSAGE_DEADLINE_CONSTRAINTS);
             }
             this.value = trimmedDeadline;
+            this.valueParsed = trimmedDeadline.split(DASH_CHARACTER);
             this.valueToDisplay = formatDate(trimmedDeadline);
         }
     }
@@ -65,6 +69,18 @@ public class Deadline {
     @Override
     public String toString() {
         return valueToDisplay;
+    }
+
+    public String getDay() {
+        return valueParsed[0];
+    }
+
+    public String getMonth() {
+        return valueParsed[1];
+    }
+
+    public String getYear() {
+        return valueParsed[2];
     }
 
     @Override

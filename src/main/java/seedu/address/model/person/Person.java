@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.util.DateUtil;
@@ -39,6 +40,7 @@ public class Person implements ReadOnlyPerson {
 
     private boolean isBlacklisted = false;
     private boolean isWhitelisted = false;
+    private boolean hasOverdueDebt = false;
     private Date lastAccruedDate; // the last time debt was updated by interest
 
     /**
@@ -81,6 +83,7 @@ public class Person implements ReadOnlyPerson {
         this.isBlacklisted = source.isBlacklisted();
         this.isWhitelisted = source.isWhitelisted();
         this.lastAccruedDate = source.getLastAccruedDate();
+        this.hasOverdueDebt = source.hasOverdueDebt();
     }
 
     /**
@@ -318,10 +321,14 @@ public class Person implements ReadOnlyPerson {
     //@@author jelneo
     /**
      * Sets total debt of a person to the given Debt.
-     * @param debt must not be null.
+     * @param totalDebt must not be null and cannot be less than current debt
      */
-    public void setTotalDebt(Debt debt) {
-        this.totalDebt.set(requireNonNull(debt));
+    public void setTotalDebt(Debt totalDebt) throws IllegalValueException {
+        requireNonNull(totalDebt);
+        if (totalDebt.toNumber() < debt.get().toNumber()) {
+            throw new IllegalValueException("Total debt cannot be less than current debt");
+        }
+        this.totalDebt.set(totalDebt);
     }
 
     @Override
@@ -335,6 +342,7 @@ public class Person implements ReadOnlyPerson {
     }
     //@@author
 
+    //@@author jaivigneshvenugopal
     /**
      * Returns boolean status of a person's blacklist-status.
      */
@@ -367,6 +375,26 @@ public class Person implements ReadOnlyPerson {
         this.isWhitelisted = isWhitelisted;
     }
 
+    //@@author lawwman
+    /**
+     * Returns boolean status of a person's debt status.
+     */
+    @Override
+    public boolean hasOverdueDebt() {
+        return hasOverdueDebt;
+    }
+
+    /**
+     * Sets boolean status of a person's debt status using the value of {@param hasOverdueDebt}.
+     */
+    @Override
+    public void setHasOverdueDebt(boolean hasOverdueDebt) {
+        this.hasOverdueDebt = hasOverdueDebt;
+    }
+
+    //@@author
+
+    //@@author jaivigneshvenugopal
     /**
      * Sets date repaid of a person in the given {@code dateRepaid}.
      * @param dateRepaid must not be null.
@@ -384,6 +412,7 @@ public class Person implements ReadOnlyPerson {
     public DateRepaid getDateRepaid() {
         return dateRepaid.get();
     }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -413,6 +442,7 @@ public class Person implements ReadOnlyPerson {
         return other.getCluster().equals(this.getCluster());
     }
 
+    //@@author lawwman
     /**
      * Calculates increase in debt based on interest rate and amount of months
      */
@@ -439,6 +469,7 @@ public class Person implements ReadOnlyPerson {
         }
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

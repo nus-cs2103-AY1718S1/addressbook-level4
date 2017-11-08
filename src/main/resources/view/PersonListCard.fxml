@@ -9,6 +9,9 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
@@ -20,7 +23,7 @@
         <Insets bottom="5" left="15" right="5" top="5" />
       </padding>
       <HBox alignment="CENTER_LEFT" spacing="5">
-        <Label fx:id="id" styleClass="cell_big_label">
+        <Label fx:id="id" styleClass="cell_big_label" textFill="#6c969d">
           <minWidth>
             <!-- Ensures that the label text is never truncated -->
             <Region fx:constant="USE_PREF_SIZE" />
@@ -29,15 +32,29 @@
         <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
       </HBox>
       <FlowPane fx:id="tags" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="postalCode" styleClass="cell_small_label" text="\$postalCode" />
-      <Label fx:id="debt" styleClass="cell_small_label" text="\$debt" />
-      <Label fx:id="totalDebt" styleClass="cell_small_label" text="\$totalDebt" />
-      <Label fx:id="interest" styleClass="cell_small_label" text="\$interest" />
-      <Label fx:id="dateBorrow" styleClass="cell_small_label" text="\$dateBorrow" />
-      <Label fx:id="deadline" styleClass="cell_small_label" text="\$deadline" />
-      <Label fx:id="dateRepaid" styleClass="cell_small_label" text="\$dateRepaid" />
+         <TextFlow fx:id="debtFields">
+            <children>
+               <Text fill="#A7B3AC" strokeType="INSIDE" strokeWidth="0.0" styleClass="cell_small_label" text="Debt: $">
+                  <font>
+                     <Font size="11.0" />
+                  </font></Text>
+            <Label fx:id="debt" styleClass="cell_small_label" text="\$debt" />
+               <Text fill="#A7B3AC" strokeType="INSIDE" strokeWidth="0.0" styleClass="cell_small_label" text=" / $">
+                  <font>
+                     <Font size="11.0" />
+                  </font></Text>
+            <Label fx:id="totalDebt" styleClass="cell_small_label" text="\$totalDebt" />
+            </children>
+         </TextFlow>
+         <TextFlow>
+            <children>
+               <Text fill="#A7B3AC" strokeType="INSIDE" strokeWidth="0.0" styleClass="cell_small_label" text="Deadline: ">
+                  <font>
+                     <Font size="11.0" />
+                  </font></Text>
+            <Label fx:id="deadline" styleClass="cell_small_label" text="\$deadline" />
+            </children>
+         </TextFlow>
     </VBox>
       <rowConstraints>
          <RowConstraints />

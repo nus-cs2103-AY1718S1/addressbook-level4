@@ -338,7 +338,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * Verifications 1 to 3 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
+     * @see AddressBookSystemTest#assertSelectedCardChanged()
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
             Index expectedSelectedCardIndex) {
@@ -347,7 +347,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         if (expectedSelectedCardIndex != null) {
-            assertSelectedCardChanged(expectedSelectedCardIndex);
+            assertSelectedCardChanged();
         } else {
             assertSelectedCardUnchanged();
         }

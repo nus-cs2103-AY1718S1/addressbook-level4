@@ -43,7 +43,7 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
-    public static final String VALID_POSTAL_CODE_AMY = "201312";
+    public static final String VALID_POSTAL_CODE_AMY = "101312";
     public static final String VALID_POSTAL_CODE_BOB = "102123";
     public static final String VALID_DEBT_AMY = "100002";
     public static final String VALID_DEBT_BOB = "100001";
@@ -176,6 +176,17 @@ public class CommandTestUtil {
         model.updateFilteredWhitelistedPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assert model.getFilteredWhitelistedPersonList().size() == 1;
+    }
+
+    /**
+     * Updates {@code model}'s filtered overdue list to show only the first person in the {@code model}'s address book.
+     */
+    public static void showFirstOverdueDebtPersonOnly(Model model) {
+        ReadOnlyPerson person = model.getAddressBook().getOverduePersonList().get(0);
+        final String[] splitName = person.getName().fullName.split(ONE_OR_MORE_SPACES_REGEX);
+        model.updateFilteredOverduePersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+
+        assert model.getFilteredOverduePersonList().size() == 1;
     }
 
     /**

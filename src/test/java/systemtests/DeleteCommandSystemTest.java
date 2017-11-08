@@ -102,6 +102,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         Index outOfBoundsIndex = Index.fromOneBased(
                 getModel().getAddressBook().getPersonList().size() + 1);
         command = DeleteCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
+        selectPerson(Index.fromOneBased(getModel().getAddressBook().getPersonList().size()));
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
@@ -163,7 +164,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      * Performs the same verification as {@code assertCommandSuccess(String, Model, String)} except that the browser url
      * and selected card are expected to update accordingly depending on the card at {@code expectedSelectedCardIndex}.
      * @see DeleteCommandSystemTest#assertCommandSuccess(String, Model, String)
-     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
+     * @see AddressBookSystemTest#assertSelectedCardChanged()
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
             Index expectedSelectedCardIndex) {
@@ -171,7 +172,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
 
         if (expectedSelectedCardIndex != null) {
-            assertSelectedCardChanged(expectedSelectedCardIndex);
+            assertSelectedCardChanged();
         } else {
             assertSelectedCardUnchanged();
         }

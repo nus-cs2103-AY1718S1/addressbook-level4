@@ -17,6 +17,7 @@ public class ClearCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
+        model.deselectPerson();
         model.resetData(new AddressBook());
         return new CommandResult(MESSAGE_SUCCESS);
     }

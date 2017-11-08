@@ -19,6 +19,7 @@ public class SelectCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsSelectCommand() {
+        assertParseSuccess(parser, "", new SelectCommand());
         assertParseSuccess(parser, "1", new SelectCommand(INDEX_FIRST_PERSON));
     }
 

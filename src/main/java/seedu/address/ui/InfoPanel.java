@@ -16,6 +16,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeInternalListEvent;
+import seedu.address.commons.events.ui.DeselectionEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -48,6 +50,7 @@ public class InfoPanel extends UiPart<Region> {
 
     private NearbyPersonListPanel nearbyPersonListPanel;
     private DebtRepaymentProgressBar debtRepaymentProgressBar;
+    private DebtorProfilePicture debtorProfilePicture;
 
     @FXML
     private Pane pane;
@@ -114,6 +117,8 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private StackPane progressBarPlaceholder;
     @FXML
+    private StackPane profilePicPlaceholder;
+    @FXML
     private Text debtRepaymentField;
 
     public InfoPanel(Logic logic) {
@@ -153,6 +158,7 @@ public class InfoPanel extends UiPart<Region> {
      */
     public void resetNearbyPersonListPanel(ReadOnlyPerson person) {
         nearbyPersonListPanel = new NearbyPersonListPanel(logic.getAllPersons(), person);
+        nearbyPersonListPanelPlaceholder.getChildren().clear();
         nearbyPersonListPanelPlaceholder.getChildren().add(nearbyPersonListPanel.getRoot());
     }
 
@@ -163,10 +169,21 @@ public class InfoPanel extends UiPart<Region> {
      */
     private void resetDebtRepaymentProgressBar(ReadOnlyPerson person) {
         debtRepaymentProgressBar = new DebtRepaymentProgressBar(person);
+        progressBarPlaceholder.getChildren().clear();
         progressBarPlaceholder.getChildren().add(debtRepaymentProgressBar.getRoot());
     }
-    //@@author
 
+    //@@author jaivigneshvenugopal
+    /**
+     * Resets the debtors profile picture to the latest one existing in folder
+     * @param person the person whose person card is selected in the address book
+     */
+    private void resetDebtorProfilePicture(ReadOnlyPerson person) {
+        debtorProfilePicture = new DebtorProfilePicture(person);
+        profilePicPlaceholder.getChildren().add(debtorProfilePicture.getImageView());
+    }
+
+    //@@author khooroko
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
@@ -278,5 +295,17 @@ public class InfoPanel extends UiPart<Region> {
         logic.updateSelectedPerson(event.getNewSelection().person);
         resetNearbyPersonListPanel(event.getNewSelection().person);
         resetDebtRepaymentProgressBar(event.getNewSelection().person);
+        resetDebtorProfilePicture(event.getNewSelection().person);
     }
+
+    @Subscribe
+    private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
+        unregisterAsAnEventHandler(this);
+    }
+
+    @Subscribe
+    private void handleDeselectionEvent(DeselectionEvent event) {
+        unregisterAsAnEventHandler(this);
+    }
+
 }

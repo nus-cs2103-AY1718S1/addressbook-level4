@@ -17,9 +17,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.ChangeInternalListEvent;
+import seedu.address.commons.events.ui.DeselectionEvent;
 import seedu.address.commons.events.ui.LoginAppRequestEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.exceptions.UserNotFoundException;
@@ -33,6 +35,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
+import seedu.address.model.util.DateUtil;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -48,6 +51,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private FilteredList<ReadOnlyPerson> filteredWhitelistedPersons;
     private FilteredList<ReadOnlyPerson> filteredBlacklistedPersons;
+    private FilteredList<ReadOnlyPerson> filteredOverduePersons;
     private ObservableList<ReadOnlyPerson> nearbyPersons;
     private ReadOnlyPerson selectedPerson;
 
@@ -68,7 +72,17 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredWhitelistedPersons = new FilteredList<>(this.addressBook.getWhitelistedPersonList());
         filteredBlacklistedPersons = new FilteredList<>(this.addressBook.getBlacklistedPersonList());
+        filteredOverduePersons = new FilteredList<>(this.addressBook.getOverduePersonList());
+        for (ReadOnlyPerson person : allPersons) {
 
+            if (!person.getDeadline().value.equals("No deadline set.")) {
+                Date deadline = DateUtil.convertStringToDate(person.getDeadline().valueToDisplay);
+                if (deadline.before(new Date())) {
+                    logger.info(person.getName().toString() + " has overduedebt");
+                    this.addressBook.addOverdueDebtPerson(person);
+                }
+            }
+        }
         this.userPrefs = userPrefs;
 
         this.currentList = "list";
@@ -90,6 +104,7 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
+    //@@author jaivigneshvenugopal
     /**
      * @return String value of the current displayed list
      */
@@ -103,10 +118,9 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public void setCurrentListName(String currentList) {
-
-
         this.currentList = currentList;
     }
+    //@@author
 
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
@@ -116,9 +130,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
+        syncOverdueList();
+        syncBlacklist();
+        syncWhitelist();
         indicateAddressBookChanged();
     }
 
+    //@@author jaivigneshvenugopal
     /**
      * Removes a specific person from blacklist in the AddressBook.
      * @param target to be removed from blacklist.
@@ -146,7 +164,24 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
         return whitelistedPerson;
     }
+    //@@author
 
+    //@@author lawwman
+    /**
+     * Deletes a specific person from overdue debt list in the AddressBook.
+     * @param target to be removed from overdue list.
+     * @return removedOverdueDebtPerson
+     * @throws PersonNotFoundException if no person is found.
+     */
+    @Override
+    public synchronized ReadOnlyPerson removeOverdueDebtPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        ReadOnlyPerson overdueDebtPerson = addressBook.removeOverdueDebtPerson(target);
+        updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS);
+        indicateAddressBookChanged();
+        return overdueDebtPerson;
+    }
+
+    //@@author
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
@@ -154,6 +189,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author jaivigneshvenugopal
     /**
      * Adds a specific person to blacklist in the AddressBook.
      * @param person to be updated.
@@ -201,13 +237,31 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
         return whitelistedPerson;
     }
+    //@@author
 
+    //@@author lawwman
+    /**
+     * Adds a specific person to overdue list in the AddressBook.
+     * @param person to be updated.
+     * @return overdueDebtPerson
+     * @throws DuplicatePersonException if this operation causes a contact to be a duplicate of another.
+     */
+    @Override
+    public synchronized ReadOnlyPerson addOverdueDebtPerson(ReadOnlyPerson person) {
+        ReadOnlyPerson overdueDebtPerson = addressBook.addOverdueDebtPerson(person);
+        updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS);
+        indicateAddressBookChanged();
+        return overdueDebtPerson;
+    }
+
+    //@@author
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
+        syncOverdueList();
         indicateAddressBookChanged();
     }
 
@@ -232,6 +286,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeTag(tag);
     }
 
+    //@@author jaivigneshvenugopal
     /**
      * Reads the masterlist and updates the blacklist accordingly.
      */
@@ -244,6 +299,15 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void syncWhitelist() {
         filteredWhitelistedPersons = new FilteredList<>(this.addressBook.getWhitelistedPersonList());
+    }
+    //@@author
+
+    //@@author lawwman
+    /**
+     * Reads the masterlist and updates the overdue list accordingly.
+     */
+    public void syncOverdueList() {
+        filteredOverduePersons = new FilteredList<>(this.addressBook.getOverduePersonList());
     }
 
     //@@author jelneo
@@ -319,12 +383,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
         return repayingPerson;
     }
-    //@@author
 
+    //@@author jaivigneshvenugopal
     @Override
     public void changeListTo(String listName) {
         raise(new ChangeInternalListEvent(listName));
     }
+    //@@author
 
     @Override
     public void updateDebtFromInterest(ReadOnlyPerson person, int differenceInMonths) {
@@ -351,6 +416,7 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    //@@author jaivigneshvenugopal
     /**
      * Returns an unmodifiable view of the blacklist of {@code ReadOnlyPerson} backed by the internal list of
      * {@code addressBook}
@@ -374,7 +440,22 @@ public class ModelManager extends ComponentManager implements Model {
         filteredWhitelistedPersons.setPredicate(currentPredicate);
         return FXCollections.unmodifiableObservableList(filteredWhitelistedPersons);
     }
+    //@@author
 
+    //@@author lawwman
+    /**
+     * Returns an unmodifiable view of the overdue list of {@code ReadOnlyPerson} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> getFilteredOverduePersonList() {
+        setCurrentListName("overduelist");
+        syncOverdueList();
+        filteredOverduePersons.setPredicate(currentPredicate);
+        return FXCollections.unmodifiableObservableList(filteredOverduePersons);
+    }
+
+    //@@author
     @Override
     public int updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
@@ -383,8 +464,8 @@ public class ModelManager extends ComponentManager implements Model {
         return filteredPersons.size();
     }
 
+    //@@author jaivigneshvenugopal
     /**
-     * Obtains the latest list of blacklisted persons from masterlist and adds to {@code filteredBlacklistedPersons}
      * Filters {@code filteredBlacklistedPersons} according to given {@param predicate}
      * @return size of current displayed filtered list.
      */
@@ -397,7 +478,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Obtains the latest list of whitelisted persons from masterlist and adds to {@code filteredWhitelistedPersons}
      * Filters {@code filteredWhitelistedPersons} according to given {@param predicate}
      * @return size of current displayed filtered list.
      */
@@ -408,7 +488,22 @@ public class ModelManager extends ComponentManager implements Model {
         filteredWhitelistedPersons.setPredicate(predicate);
         return filteredWhitelistedPersons.size();
     }
+    //@@author
 
+    //@@author lawwman
+    /**
+     * Filters {@code filteredOverduePersons} according to given {@param predicate}
+     * @return size of current displayed filtered list.
+     */
+    @Override
+    public int updateFilteredOverduePersonList(Predicate<ReadOnlyPerson> predicate) {
+        requireNonNull(predicate);
+        currentPredicate = predicate;
+        filteredOverduePersons.setPredicate(predicate);
+        return filteredOverduePersons.size();
+    }
+
+    //@@author khooroko
     /**
      * Obtains and updates the list of persons that share the same cluster as {@param selectedPerson}.
      */
@@ -417,6 +512,16 @@ public class ModelManager extends ComponentManager implements Model {
         this.selectedPerson = selectedPerson;
         nearbyPersons = allPersons.stream().filter(person -> person.isSameCluster(selectedPerson))
                 .collect(toCollection(FXCollections::observableArrayList));
+    }
+
+    /**
+     * Deselects the currently selected person.
+     */
+    @Override
+    public void deselectPerson() {
+        this.selectedPerson = null;
+        nearbyPersons = null;
+        EventsCenter.getInstance().post(new DeselectionEvent());
     }
 
     /**
@@ -452,6 +557,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -469,12 +575,13 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons)
                 && filteredBlacklistedPersons.equals(other.filteredBlacklistedPersons)
-                && filteredWhitelistedPersons.equals(other.filteredWhitelistedPersons);
+                && filteredWhitelistedPersons.equals(other.filteredWhitelistedPersons)
+                && filteredOverduePersons.equals(other.filteredOverduePersons);
     }
-
 
     //==================== Event Handling Code ===============================================================
 
+    //@@author lawwman
     @Subscribe
     public void handleLoginUpdateDebt(LoginAppRequestEvent event) {
         // login is successful
@@ -487,5 +594,4 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
     }
-
 }

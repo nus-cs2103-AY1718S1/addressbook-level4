@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+//@@author jaivigneshvenugopal
 /**
  * Represents the date of when the Person was sent to the whitelist in the address book, i.e. the date
  * the Person repaid his debt completely.

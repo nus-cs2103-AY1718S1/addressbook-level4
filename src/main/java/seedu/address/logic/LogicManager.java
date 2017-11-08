@@ -48,6 +48,7 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
+    //@@author khooroko
     /**
      * Updates the selected person.
      * @param person the person that has been selected.
@@ -57,16 +58,26 @@ public class LogicManager extends ComponentManager implements Logic {
         model.updateSelectedPerson(person);
     }
 
+    /**
+     * Resets the filteredPersonList to be a list of all persons.
+     */
+    @Override
+    public void resetFilteredPersonList() {
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+    }
+
     @Override
     public ObservableList<ReadOnlyPerson> getAllPersons() {
         return model.getAllPersons();
     }
 
+    //@@author
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return model.getFilteredPersonList();
     }
 
+    //@@author jaivigneshvenugopal
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList() {
         return model.getFilteredBlacklistedPersonList();
@@ -75,6 +86,12 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredWhitelistedPersonList() {
         return model.getFilteredWhitelistedPersonList();
+    }
+    //@@author
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getFilteredOverduePersonList() {
+        return model.getFilteredOverduePersonList();
     }
 
     @Override

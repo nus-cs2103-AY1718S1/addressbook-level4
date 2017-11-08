@@ -371,3 +371,22 @@
 .progress-bar {
     -fx-accent: #3CB371;
 }
+
+#repaymentInfoText {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: #d83a3a;
+}
+
+#completedText {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: #31b936;
+}
+
+#noDeadlineText {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: #b9b9b9;
+}
+

@@ -11,6 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.ListObserver;
@@ -96,7 +97,7 @@ public class BorrowCommandTest {
             BorrowCommand borrowThirdCommand = new BorrowCommand(new Debt("20000"));
 
             // same object -> returns true
-            assertTrue(borrowThirdCommand.equals(borrowThirdCommand));
+            assertTrue(borrowFirstCommand.equals(borrowFirstCommand));
             assertTrue(borrowThirdCommand.equals(borrowThirdCommand));
 
             // same values -> returns true

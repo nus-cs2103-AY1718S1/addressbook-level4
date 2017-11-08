@@ -154,6 +154,7 @@ public class UiManager extends ComponentManager implements Ui {
         }
     }
 
+    //@@author jaivigneshvenugopal
     /**
      * Handles change internal list event.
      * Displays the list that user requested(e.g masterlist, blacklist etc)
@@ -163,4 +164,5 @@ public class UiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.fillInnerPartsWithIndicatedList(event.getListName());
     }
+    //@@author
 }

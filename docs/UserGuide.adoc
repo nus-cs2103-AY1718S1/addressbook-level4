@@ -219,22 +219,26 @@ Decreases the debt of the 2nd person by $1000.10.
 * `list` +
 `select 3` +
 `payback 234` +
-Increases the debt of the 3rd person by $234.
+Decreases the debt of the 3rd person by $234.
 // end::payback[]
 
 === Resetting the debt of a person: `repaid`
 
 Resets the debt of a person to zero and sets the date repaid field of that person. +
-Format: `repaid INDEX`
+Format: `repaid [INDEX]`
 
 ****
 * Resets the debt of the person at the specified `INDEX` to zero. The index refers to the index number shown in the last person listing. The index must be a positive integer 1, 2, 3, …​
+* If no index is specified, the debt of the currently selected person is resetted instead.
 ****
 
 Examples:
 
 * `repaid 1` +
-Resets the debt of the 1st person to zero and sets the date of repayment in his record.
+Resets the debt of the 1st person to zero and sets the date of repayment in his/her record.
+* `select 2` +
+`repaid` +
+Resets the debt of the 2nd person to zero and sets the date of repayment in his/her record.
 
 === Deleting a person : `delete`
 
@@ -262,12 +266,13 @@ Deletes the 4th person in the address book.
 === Banning a debtor : `ban`
 
 Adds the specified debtor from current records to blacklist. +
-Format: 'ban INDEX'
+Format: 'ban [INDEX]'
 
 ****
 * Bans the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+* If no index is specified, the currently selected person is banned instead.
 ****
 
 Examples:
@@ -278,16 +283,20 @@ Adds the 2nd person in the address book to blacklist.
 * `find Betsy` +
 `ban 1` +
 Adds the 1st person in the results of the `find` command to blacklist.
+* `select 3` +
+`ban`
+Adds the 3rd person in the address book to blacklist.
 
 === Unbanning a blacklisted person : `unban`
 
 Removes the specified person from blacklist. +
-Format: 'unban INDEX'
+Format: 'unban [INDEX]'
 
 ****
 * Unbans the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+* If no index is specified, the currently selected person is unbanned instead.
 ****
 
 Examples:
@@ -298,16 +307,21 @@ Removes the 2nd person from blacklist.
 * `find Betsy` +
 `unban 1` +
 Removes the 1st person in the results of the `find` command from blacklist.
+* `select 3` +
+`unban`
+Removes the 3rd person in the address book from blacklist.
 
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Format: `select [INDEX]`
 
 ****
 * Selects the person and loads the full information of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
+* If no index is specified, the next person in the last person listing is selected instead.
+* If no index is specified, and no one was selected, the first person in the last person listing is selected instead.
 ****
 
 Examples:
@@ -318,17 +332,21 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+`select` +
+Selects the first person in the last person listing.
 
 // tag::nearby[]
 === Selecting a nearby person: `nearby`
 
 Selects the person identified by the index number used in the listing of nearby contacts of currently selected person, +
-Format: `nearby INDEX`
+Format: `nearby [INDEX]`
 
 ****
+* A person must be selected before this command is called.
 * Selects the person and loads the full information of the person at the specified `INDEX`.
 * The index refers to the index number shown in the nearby contacts listing.
 * The index *must be a positice integer* `1, 2, 3, ...`
+* If no index is specified, the next person in the nearby contacts listing is selected instead.
 ****
 
 Examples:
@@ -338,6 +356,8 @@ Examples:
 Selects the 2nd person in the address book.
 * `nearby 1` +
 Selects the 1st person in the nearby contacts listing of the previously selected person.
+* `nearby` +
+Selects the next person in the nearby contacts listing of the previously selected person.
 // end::nearby[]
 
 === Listing entered commands : `history`
@@ -438,6 +458,18 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::setpath[]
+=== Setting the path to local profile pictures folder : `setpath`
+
+Sets the folder location to access debtors profile pictures. +
+Format: `setpath`
+
+Examples:
+
+* `setpath C:/Users/acer/Desktop/SE/profilepic/` +
+* `setpath out/production/resources/images/` +
+// end::setpath[]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -517,13 +549,13 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd pc/1234
 e.g. `borrow 1 500.50`
 * *Pay back* : `payback [INDEX] AMOUNT` +
 e.g. `payback 1 500.50`
-* *Repaid* : `repaid INDEX` +
+* *Repaid* : `repaid [INDEX]` +
 e.g. `payback 1`
 * *Delete* : `delete [INDEX]` +
 e.g. `delete 3`
-* *Ban* : `ban INDEX` +
+* *Ban* : `ban [INDEX]` +
 e.g. `ban 3`
-* *Unban* : `unban INDEX` +
+* *Unban* : `unban [INDEX]` +
 e.g. `unban 3`
 * *Edit* : `edit [INDEX] [n/NAME] [hp/HANDPHONE_NUMBER] [home/HOME_PHONE_NUMBER] [op/OFFICE_PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pc/POSTAL_CODE] [d/DEBT] [dl/DEADLINE] [int/INTEREST] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
@@ -533,12 +565,15 @@ e.g. `find James Jake`
 * *Blacklist* : `blacklist`
 * *Whitelist* : `whitelist`
 * *Help* : `help`
-* *Select* : `select INDEX` +
+* *Select* : `select [INDEX]` +
 e.g.`select 2`
 * *History* : `history`
-* *Nearby* : `nearby`
+* *Nearby* : `nearby [INDEX]` +
+e.g. `nearby 2`
 * *Sort* : `sort [ORDERING]` +
 e.g. `sort debt`
+* *Setpath* : `setpath`
+e.g. `setpath C:/Users/acer/Desktop/SE/profilepic/`
 * *Filter* : `filter TAG1 TAG2 ...` +
 e.g `filter friendly cooperative`
 * *Undo* : `undo`
@@ -579,17 +614,15 @@ e.g `filter friendly cooperative`
 
 * Filter contacts by tags (since v1.4)
 * Replace `Phone` field with `Handphone`, `Home phone` and `Office phone` (since v1.4)
+* Profile pictures of clients shown next to their details. (since v1.4)
+* List of people who have overdue debts. (since v1.4)
+* A progress bar to indicate how much of the person's debt has been paid off. (since v1.4)
 
 == Features to be included by `V2.0`
 
-//[V1.4]
-* List of people who have overdue debts.
-* A progress bar to indicate how much of the person's debt has been paid off.
-* A feature to export a person's contact in another format.
-* Profile pictures of clients shown next to their details.
-* Different appearance themes.
-//[end of V1.4]
 //[V1.5]
+* Different appearance themes.
+* A feature to export a person's contact in another format.
 * `Help` command that displays screenshots of positive examples.
 * Able to view the last login time.
 * Able to impose different periods of ban on a specified person in the blacklist

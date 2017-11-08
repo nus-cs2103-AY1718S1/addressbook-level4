@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.BanCommand;
 
+//@@author jaivigneshvenugopal
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
  * outside of the BanCommand code. For example, inputs "1" and "1 abc" take the
@@ -21,6 +22,7 @@ public class BanCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsBanCommand() {
+        assertParseSuccess(parser, "", new BanCommand());
         assertParseSuccess(parser, "1", new BanCommand(INDEX_FIRST_PERSON));
     }
 

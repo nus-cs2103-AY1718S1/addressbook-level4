@@ -66,6 +66,14 @@ public class MainWindowHandle extends StageHandle {
     }
     //@@author
 
+    /**
+     * Retrieves new infopanel and personlistpanel when list changes.
+     */
+    public void updateChangeInList() {
+        personListPanel = new PersonListPanelHandle(getChildNode(PersonListPanelHandle.PERSON_LIST_VIEW_ID));
+        infoPanel = new InfoPanelHandle(getChildNode(InfoPanelHandle.INFO_PANEL_ID));
+    }
+
     public PersonListPanelHandle getPersonListPanel() {
         return personListPanel;
     }

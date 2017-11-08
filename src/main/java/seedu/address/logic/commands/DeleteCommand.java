@@ -2,7 +2,9 @@ package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -38,13 +40,28 @@ public class DeleteCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         ReadOnlyPerson personToDelete = selectPerson(targetIndex);
 
+        Index deleteIndex;
+
+        if (targetIndex == null) {
+            deleteIndex = Index.fromOneBased((listObserver.getCurrentFilteredList()
+                    .indexOf(model.getSelectedPerson()) + 1));
+        } else {
+            deleteIndex = targetIndex;
+        }
+
         try {
             model.deletePerson(personToDelete);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
-
         listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+
+        if (listObserver.getCurrentFilteredList().size() == 0) {
+            model.deselectPerson();
+        } else if (targetIndex == null && listObserver.getCurrentFilteredList().size() < deleteIndex.getOneBased()) {
+            EventsCenter.getInstance().post(
+                    new JumpToListRequestEvent(Index.fromOneBased(deleteIndex.getOneBased() - 1)));
+        }
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete.getName()));
     }

@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.UnbanCommand;
 
-
+//@@author jaivigneshvenugopal
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
  * outside of the UnbanCommand code. For example, inputs "1" and "1 abc" take the
@@ -22,6 +22,7 @@ public class UnbanCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsUnBanCommand() {
+        assertParseSuccess(parser, "", new UnbanCommand());
         assertParseSuccess(parser, "1", new UnbanCommand(INDEX_FIRST_PERSON));
     }
 

@@ -42,9 +42,8 @@ public class TypicalPersons {
     public static final ReadOnlyPerson ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withHandphone("85355255").withHomePhone("60101010").withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET)
-            .withPostalCode("600123").withDebt("123456789").withTotalDebt("123456789").withInterest(Interest.NO_INTEREST_SET)
-            .withDeadline(Deadline.NO_DEADLINE_SET)
-            .withTags("friendly").build();
+            .withPostalCode("600123").withDebt("123456789").withTotalDebt("123456789")
+            .withInterest(Interest.NO_INTEREST_SET).withDeadline(Deadline.NO_DEADLINE_SET).withTags("friendly").build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25").withEmail("johnd@example.com").withHandphone("98765432")
             .withPostalCode("123311").withDebt("12345").withTotalDebt("12345").withInterest(Interest.NO_INTEREST_SET)
@@ -63,25 +62,26 @@ public class TypicalPersons {
             .withHomePhone("65055005").withAddress("michegan ave").withInterest(Interest.NO_INTEREST_SET)
             .withOfficePhone("60050505").withTags("violent").withDeadline(Deadline.NO_DEADLINE_SET).build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withHomePhone("66066606")
-            .withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET).withPostalCode("616111").withHandphone("94824227")
+            .withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET).withPostalCode("676111").withHandphone("94824227")
             .withDebt("12").withTotalDebt("12").withDeadline(Deadline.NO_DEADLINE_SET).withEmail("lydia@example.com")
             .withInterest(Interest.NO_INTEREST_SET).withAddress("little tokyo")
             .withTags("tricky", "friendly").build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withHandphone("94821442")
-            .withPostalCode("040004").withEmail("anna@example.com").withDebt("45").withTotalDebt("45").withHomePhone("67273787")
-            .withInterest(Interest.NO_INTEREST_SET).withDeadline(Deadline.NO_DEADLINE_SET)
+            .withPostalCode("040004").withEmail("anna@example.com").withDebt("45").withTotalDebt("45")
+            .withHomePhone("67273787").withInterest(Interest.NO_INTEREST_SET).withDeadline(Deadline.NO_DEADLINE_SET)
             .withAddress("4th street").withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET).build();
 
+    //@@author jaivigneshvenugopal
     // Blacklisted persons.
     public static final ReadOnlyPerson JELENA = new PersonBuilder().withName("Jelena Neo")
             .withAddress("123, Jurong West Ave 6, #08-111").withDebt("1234567").withTotalDebt("1234567")
             .withEmail("alice@example.com").withDeadline(Deadline.NO_DEADLINE_SET).withHandphone("85355255")
-            .withInterest(Interest.NO_INTEREST_SET).withHomePhone("61234123").withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET)
-            .withTags("friends").withPostalCode("623123").build();
+            .withInterest(Interest.NO_INTEREST_SET).withHomePhone("61234123")
+            .withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET).withTags("friends").withPostalCode("683123").build();
     public static final ReadOnlyPerson WEIPING = new PersonBuilder().withName("Khoo Wei Ping")
-            .withAddress("311, Clementi Ave 2, #02-25").withPostalCode("111111").withDebt("1234567").withTotalDebt("1234567")
-            .withEmail("johnd@example.com").withInterest(Interest.NO_INTEREST_SET).withHomePhone("65600222")
-            .withHandphone("98765432").withTags("friends")
+            .withAddress("311, Clementi Ave 2, #02-25").withPostalCode("111111").withDebt("1234567")
+            .withTotalDebt("1234567").withEmail("johnd@example.com").withInterest(Interest.NO_INTEREST_SET)
+            .withHomePhone("65600222").withHandphone("98765432").withTags("friends")
             .withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET).build();
     public static final ReadOnlyPerson JAIVIGNESH = new PersonBuilder().withName("Jaivignesh Venugopal")
             .withDeadline(Deadline.NO_DEADLINE_SET).withHandphone("95352563").withEmail("heinz@example.com")
@@ -107,6 +107,14 @@ public class TypicalPersons {
             .withDeadline(Deadline.NO_DEADLINE_SET).withHandphone("94823442").withInterest(Interest.NO_INTEREST_SET)
             .withEmail("anna@example.com").withAddress("4th street").withHomePhone("63333303")
             .withPostalCode("111111").withDebt("0").withTotalDebt("123456").withOfficePhone("60000030").build();
+    //@@author
+
+    // Overduelist persons.
+    public static final ReadOnlyPerson KENNARD = new PersonBuilder().withName("Kennard")
+            .withDeadline("11-11-2015").withHandphone("94823442").withInterest(Interest.NO_INTEREST_SET)
+            .withEmail("anna@example.com").withAddress("5th street").withHomePhone("63333303")
+            .withPostalCode("111112").withDebt("4").withOfficePhone("60000030")
+            .withDateBorrow("Tue, 11 Nov, Year 2014").build();
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withHandphone("84842424")
@@ -119,6 +127,7 @@ public class TypicalPersons {
             .withDebt("7890").withTotalDebt("7890").withHomePhone("62220222").withInterest(Interest.NO_INTEREST_SET)
             .withDeadline(Deadline.NO_DEADLINE_SET).withAddress("chicago ave")
             .withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET).build();
+    //@@author
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY)
@@ -130,7 +139,8 @@ public class TypicalPersons {
             .withHandphone(VALID_HANDPHONE_BOB).withHomePhone(VALID_HOME_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .withDebt(VALID_DEBT_BOB).withTotalDebt(VALID_DEBT_BOB).withDeadline(VALID_DEADLINE_BOB)
-            .withPostalCode(VALID_POSTAL_CODE_BOB).withInterest(VALID_INTEREST_BOB).withOfficePhone(VALID_OFFICE_PHONE_BOB).build();
+            .withPostalCode(VALID_POSTAL_CODE_BOB).withInterest(VALID_INTEREST_BOB)
+            .withOfficePhone(VALID_OFFICE_PHONE_BOB).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
@@ -156,20 +166,30 @@ public class TypicalPersons {
         for (ReadOnlyPerson person : getTypicalWhitelistedPersons()) {
             ab.addWhitelistedPerson(person);
         }
+
+        for (ReadOnlyPerson person : getTypicalOverdueListPersons()) {
+            ab.addOverdueDebtPerson(person);
+        }
         return ab;
     }
 
     public static List<ReadOnlyPerson> getTypicalPersons() {
         return new ArrayList<>(Arrays
                 .asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE,
-                        JELENA, WEIPING, JAIVIGNESH, LAWRENCE, ARCHANA, SIRISHA, RUSHAN));
+                        JELENA, WEIPING, JAIVIGNESH, LAWRENCE, ARCHANA, SIRISHA, RUSHAN, KENNARD));
     }
 
+    //@@author jaivigneshvenugopal
     public static List<ReadOnlyPerson> getTypicalBlacklistedPersons() {
         return new ArrayList<>(Arrays.asList(JELENA, WEIPING, JAIVIGNESH, LAWRENCE));
     }
 
     public static List<ReadOnlyPerson> getTypicalWhitelistedPersons() {
         return new ArrayList<>(Arrays.asList(ARCHANA, SIRISHA, RUSHAN));
+    }
+    //@@author
+
+    public static List<ReadOnlyPerson> getTypicalOverdueListPersons() {
+        return new ArrayList<>(Arrays.asList(KENNARD));
     }
 }
