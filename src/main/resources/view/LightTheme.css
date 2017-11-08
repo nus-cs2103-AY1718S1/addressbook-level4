@@ -1,3 +1,9 @@
+@font-face {
+    src: url("fonts/segoe-ui.ttf"),
+         url("fonts/segou-ui-light.ttf"),
+         url("fonts/segou-ui-semibold.otf");
+}
+
 .root {
     -fx-background-color: #f7f5f4;
     -fx-accent: derive(#f7f5f4, -10%);
