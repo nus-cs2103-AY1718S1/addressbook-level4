@@ -259,6 +259,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::comment[]
 === Commenting about a person : `comment`
 
 Adds a comment about a specific user. +
@@ -275,7 +276,9 @@ Example:
 * `list` +
 `comment 2 c/Likes to play computer games.` +
 Selects the 2nd person in the address book and adds the above comment.
+// end::comment[]
 
+// tag::appointment[]
 === Making Appointment for a person : `appoint`
 
 Adds an appointment time slot for a specific user. +
@@ -292,6 +295,7 @@ Example:
 * `list` +
 `appoint 2 ap/20/10/2017 14:45` +
 Selects the 2nd person in the address book and assigns the above appointment slot.
+// end::appointment[]
 
 === Login using Gmail or Yahoo Account: `email_login`
 

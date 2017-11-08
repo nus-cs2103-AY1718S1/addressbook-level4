@@ -1305,8 +1305,8 @@ public class MergeCommandSystemTest extends AddressBookSystemTest {
             } catch (DuplicatePersonException dpe) {
                 continue; // simulates merge command to ignore duplicated person
             }
-        }
-
+        }		
+		
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }
 ```

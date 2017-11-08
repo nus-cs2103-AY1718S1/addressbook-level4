@@ -27,3 +27,12 @@ Role: Developer, Repo Maintainer +
 Responsibilities: Storage
 
 '''
+
+== Risa Shindo
+image::risashindo.jpg[width="150", align="left"]
+{empty}[https://github.com/risashindo7[github]][<<risashindo7#, portfolio>>]
+
+Role: Developer
+Responsibilities: Logic
+
+'''
