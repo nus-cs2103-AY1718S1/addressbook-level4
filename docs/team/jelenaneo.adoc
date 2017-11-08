@@ -70,7 +70,7 @@ The `borrow` and `payback` command eliminates this hassle by doing the math for 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=borrowCommand]
+include::../DeveloperGuide.adoc[tag=borrowPaybackCommand]
 
 #End of Extract#
 
