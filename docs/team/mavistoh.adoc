@@ -3,7 +3,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: Cricles
+== Project: Circles
 Circles is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T17-B3/main/blob/master/collated/main/mavistoh.md[Functional code]] [https://github.com/CS2103AUG2017-T17-B3/main/blob/master/collated/test/mavistoh.md[Test code]]
@@ -89,56 +89,11 @@ add into Circles.
 ==== Implementation
 
 ---
+#Start of Extract [from: Developer Guide]#
 
-The UI has to be edited to include a placeholder for the field in `PersonInfoPanel.fxml`:
+include::../DeveloperGuide.adoc[tag=birthday]
 
-[source,java]
-----
-<Label fx:id="birthday" styleClass="label-bright" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
-----
-To implement `birthday` field, the parameter is added into the Person class as shown below in the model diagram. This is
- implemented as `Birthday.c` +
-
-image::ModelClassDiagramupdated.png[width="800"]
-_Figure 3 : Structure of the Model Component_ +
-
-[source,java]
-----
-public Birthday(String birthday) throws IllegalValueException {
-        if (birthday == null) {
-            this.value = BIRTHDAY_EMPTY;
-        } else {
-            String trimmedBirthday = birthday.trim();
-            if (!isValidBirthday(trimmedBirthday)) {
-                throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
-            }
-            this.value = trimmedBirthday;
-        }
-    }
-
-----
-
-As shown in the model diagram, `ReadOnlyPerson` will have to be modified to support the `birthday` field:
-[source,java]
-----
-ObjectProperty<Birthday> birthdayProperty();
-    Birthday getBirthday();
-----
-
-In the storage aspect, new field will need to be added in the `XMLAdaptedPerson` class so that
-the data will be saved even when Circles is closed:
-[source,java]
-----
-public XmlAdaptedPerson(ReadOnlyPerson source) {
-            name = source.getName().fullName;
-            phone = source.getPhone().value;
-            birthday = source.getBirthday().value;
-            email = source.getEmail().value;
-            ...
-            }
-----
-
+#End of Extract#
 ---
 
 === Enhancement Proposed
