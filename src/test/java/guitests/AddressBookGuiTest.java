@@ -50,9 +50,7 @@ public abstract class AddressBookGuiTest {
 
     @Before
     public void setup() throws Exception {
-        FxToolkit.setupStage((stage) -> {
-            this.stage = stage;
-        });
+        FxToolkit.setupStage((stage) -> this.stage = stage);
         FxToolkit.setupApplication(() -> new TestApp(this::getInitialData, getDataFileLocation()));
         FxToolkit.showStage();
 
