@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//author CT15
 /**
  * Represents a Schedule's activity description in the address book.
  * Guarantees: immutable; is always valid

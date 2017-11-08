@@ -1,3 +1,4 @@
+
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
@@ -10,6 +11,7 @@ import java.util.function.Predicate;
 
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author jin-ting
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
@@ -28,11 +30,7 @@ public class FindCommand extends Command {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + "  " + PREFIX_EMAIL + "google\n"
-            + "Example: " + COMMAND_WORD + "  " + PREFIX_NAME + "alan\n"
-            + "Example: " + COMMAND_WORD + "  " + PREFIX_PHONE + "98989898" + " (by 4 digits or 8 digits search)\n"
-            + "Example: " + COMMAND_WORD + "  " + PREFIX_ADDRESS + "Geylang\n"
-            + "Example: " + COMMAND_WORD + "  " + PREFIX_TAG + "friends\n";
+            + MESSAGE_GET_MORE_HELP;
 
     private final Predicate<ReadOnlyPerson> predicate;
 
@@ -40,7 +38,7 @@ public class FindCommand extends Command {
         this.predicate = predicate;
 
     }
-
+    //@@author
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);

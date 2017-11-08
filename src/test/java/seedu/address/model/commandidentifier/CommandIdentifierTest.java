@@ -10,6 +10,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 
+//@@author CT15
 public class CommandIdentifierTest {
 
     @Test

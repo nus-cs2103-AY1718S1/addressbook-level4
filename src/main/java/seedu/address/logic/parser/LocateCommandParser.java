@@ -7,6 +7,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author 17navasaw
 /**
  * Parses input arguments and creates a new LocateCommand object
  */
@@ -17,6 +18,7 @@ public class LocateCommandParser implements Parser<LocateCommand> {
      * and returns an LocateCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
+    //@@author
     public LocateCommand parse(String args) throws ParseException {
         try {
             Index index = ParserUtil.parseIndex(args);

@@ -13,6 +13,7 @@ import seedu.address.model.commandidentifier.CommandIdentifier;
 import seedu.address.testutil.CommandIdentifierUtils;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
+//@@author CT15
 public class HelpCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();

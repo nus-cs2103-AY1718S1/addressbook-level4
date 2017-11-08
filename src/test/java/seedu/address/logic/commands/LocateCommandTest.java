@@ -130,6 +130,7 @@ public class LocateCommandTest {
         }
     }
 
+    //@@author 17navasaw
     /**
      * Returns a {@code LocateCommand} with parameters {@code index}.
      */

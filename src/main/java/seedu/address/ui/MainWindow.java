@@ -21,6 +21,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -29,7 +30,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/contag_logo.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -38,10 +39,12 @@ public class MainWindow extends UiPart<Region> {
 
     private Stage primaryStage;
     private Logic logic;
+    private Model model;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private AgendaPanel agendaPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -58,7 +61,13 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem calendarItem;
 
     @FXML
+    private MenuItem emailItem;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane agendaPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -66,12 +75,13 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane statusbarPlaceholder;
 
-    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
+    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic, Model model) {
         super(FXML);
 
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+        this.model = model;
         this.config = config;
         this.prefs = prefs;
 
@@ -134,14 +144,12 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-
-
-
-
-
-
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        agendaPanel = new AgendaPanel(model.getAddressBook().getScheduleList());
+        agendaPanelPlaceholder.getChildren().add(agendaPanel.getRoot());
+        agendaPanelPlaceholder.setPrefWidth(285);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -206,14 +214,12 @@ public class MainWindow extends UiPart<Region> {
 
 
     /**
-     * Opens the Calendar window.
+     * Opens the Calendar window via accelerator.
      */
     @FXML
     public void handleCalendar() {
-        //browserPanel.loadCalendar();
-        browserPanel.loadPage("https://www.timeanddate.com/calendar/");
+        browserPanel.loadCalendar();
     }
-
 
     void show() {
         primaryStage.show();

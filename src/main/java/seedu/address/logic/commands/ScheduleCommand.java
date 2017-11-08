@@ -13,12 +13,16 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.Activity;
 import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.ScheduleDate;
 
+//@@author CT15
 /**
  * Schedules an Activity with a person.
  */
@@ -35,60 +39,106 @@ public class ScheduleCommand extends UndoableCommand {
             + PREFIX_ACTIVITY + "ACTIVITY\n"
             + MESSAGE_GET_MORE_HELP;
 
-    public static final String MESSAGE_ADD_SCHEDULE_SUCCESS = "Scheduled an activity with %1$s";
-    public static final String MESSAGE_DUPLICATE_SCHEDULE = "Schedule already exists";
+    public static final String MESSAGE_SCHEDULE_SUCCESS = "Scheduled an activity with %1$d person(s)";
 
-    private final Index index;
-    private final Schedule schedule;
+    private Set<Index> indices;
+    private ScheduleDate date;
+    private Activity activity;
 
     /**
      * Creates a ScheduleCommand to add the specified {@code Schedule}
      */
-    public ScheduleCommand(Index index, Schedule schedule) {
-        requireNonNull(index);
-        requireNonNull(schedule);
-        this.index = index;
-        this.schedule = schedule;
+    public ScheduleCommand(Set<Index> indices, ScheduleDate date, Activity activity) {
+        requireNonNull(indices);
+        requireNonNull(date);
+        requireNonNull(activity);
+        this.indices = indices;
+        this.date = date;
+        this.activity = activity;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
+        Set<Name> schedulePersonNames = fillSchedulePersonNamesSet(model, indices);
 
-        ReadOnlyPerson schedulePerson = lastShownList.get(index.getZeroBased());
-        Set<Schedule> schedules = new HashSet<>(schedulePerson.getSchedules());
-
-        if (schedules.contains(schedule)) {
-            throw new CommandException(MESSAGE_DUPLICATE_SCHEDULE);
-        }
-
-        schedules.add(schedule);
-
-        Person scheduleAddedPerson = new Person(schedulePerson.getName(), schedulePerson.getPhone(),
-                schedulePerson.getCountry(), schedulePerson.getEmails(), schedulePerson.getAddress(), schedules,
-                schedulePerson.getTags());
-
-        try {
-            model.updatePerson(schedulePerson, scheduleAddedPerson);
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
-        }
+        updateModelWithUpdatedSchedules(model, indices, schedulePersonNames, date, activity);
         model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(String.format(MESSAGE_ADD_SCHEDULE_SUCCESS, schedulePerson.getName()));
+        return new CommandResult(String.format(MESSAGE_SCHEDULE_SUCCESS, indices.size()));
     }
 
+    //@@author 17navasaw
+    /**
+     * Updates address book model with new schedule set for each person.
+     * @param model Model of address book.
+     * @param indices Set of indices indicating the people from last shown list.
+     * @param schedulePersonNames Set of names associated with the schedule.
+     * @param date Date of activity.
+     * @param activity Activity to be scheduled.
+     * @throws CommandException
+     */
+    private void updateModelWithUpdatedSchedules(Model model, Set<Index> indices, Set<Name> schedulePersonNames,
+                                                 ScheduleDate date, Activity activity) throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        for (Index index: indices) {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+
+            ReadOnlyPerson schedulePerson = lastShownList.get(index.getZeroBased());
+            Schedule schedule = new Schedule(date, activity, schedulePersonNames);
+
+            Set<Schedule> schedules = new HashSet<>(schedulePerson.getSchedules());
+
+            if (!schedulePerson.getSchedules().contains(schedule)) {
+                schedules.add(schedule);
+            }
+
+            Person scheduleAddedPerson = new Person(schedulePerson.getName(), schedulePerson.getPhone(),
+                    schedulePerson.getCountry(), schedulePerson.getEmails(), schedulePerson.getAddress(), schedules,
+                    schedulePerson.getTags());
+            try {
+                model.updatePerson(schedulePerson, scheduleAddedPerson);
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing");
+            }
+        }
+    }
+
+    /**
+     * Returns a set of person names involved in the scheduling of the activity.
+     * @param model Model of address book.
+     * @param indices Set of indices indicating the people from last shown list.
+     * @return {@code schedulePersonNames} which contains the set of person names involved in the scheduling.
+     * @throws CommandException
+     */
+    private Set<Name> fillSchedulePersonNamesSet(Model model, Set<Index> indices) throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        Set<Name> schedulePersonNames = new HashSet<>();
+
+        for (Index index: indices) {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+
+            ReadOnlyPerson schedulePerson = lastShownList.get(index.getZeroBased());
+            schedulePersonNames.add(schedulePerson.getName());
+        }
+
+        return schedulePersonNames;
+    }
+
+    //@@ CT15
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ScheduleCommand // instanceof handles nulls
-                && schedule.equals(((ScheduleCommand) other).schedule));
+                && date.equals(((ScheduleCommand) other).date)
+                && activity.equals(((ScheduleCommand) other).activity));
     }
 }
 

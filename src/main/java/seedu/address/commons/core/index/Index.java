@@ -52,6 +52,7 @@ public class Index implements Comparable {
                 && this.zeroBasedIndex == ((Index) other).zeroBasedIndex); // state check
     }
 
+    //@@author 17navasaw
     @Override
     public int compareTo(Object o) {
         Index compareIndex = (Index) o;

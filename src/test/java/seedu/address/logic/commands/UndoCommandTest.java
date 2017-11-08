@@ -26,6 +26,7 @@ public class UndoCommandTest {
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
 
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    //@@author 17navasaw
     private DeleteCommand deleteCommandOne;
     private DeleteCommand deleteCommandTwo;
 
@@ -41,6 +42,7 @@ public class UndoCommandTest {
         deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
     }
 
+    //@@author
     @Test
     public void execute() throws Exception {
         UndoRedoStack undoRedoStack = prepareStack(

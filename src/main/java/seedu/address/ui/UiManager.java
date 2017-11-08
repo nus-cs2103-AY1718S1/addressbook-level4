@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -16,7 +17,10 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
+import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.schedule.Schedule;
 
 /**
  * The manager of the UI component.
@@ -33,13 +37,15 @@ public class UiManager extends ComponentManager implements Ui {
     private static final String ICON_APPLICATION = "/images/address_book_32.png";
 
     private Logic logic;
+    private Model model;
     private Config config;
     private UserPrefs prefs;
     private MainWindow mainWindow;
 
-    public UiManager(Logic logic, Config config, UserPrefs prefs) {
+    public UiManager(Logic logic, Model model, Config config, UserPrefs prefs) {
         super();
         this.logic = logic;
+        this.model = model;
         this.config = config;
         this.prefs = prefs;
     }
@@ -53,9 +59,19 @@ public class UiManager extends ComponentManager implements Ui {
         primaryStage.getIcons().add(getImage(ICON_APPLICATION));
 
         try {
-            mainWindow = new MainWindow(primaryStage, config, prefs, logic);
+            mainWindow = new MainWindow(primaryStage, config, prefs, logic, model);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
+            // show reminder pop-up if there exists upcoming activities the next day
+            ReadOnlyAddressBook addressBook = model.getAddressBook();
+            ObservableList<Schedule> schedulesToRemindList = addressBook.getScheduleToRemindList();
+            for (Schedule schedule : schedulesToRemindList) {
+                logger.info("Schedules for reminder: " + schedule);
+            }
+            if (!schedulesToRemindList.isEmpty()) {
+                ReminderWindow reminderWindow = new ReminderWindow(schedulesToRemindList);
+                reminderWindow.show();
+            }
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));

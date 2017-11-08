@@ -79,6 +79,7 @@ public class DeleteCommandTest {
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+    //@@author 17navasaw
     @Test
     public void equals() {
         ArrayList<Index> indices = new ArrayList<>();
@@ -117,6 +118,7 @@ public class DeleteCommandTest {
         return deleteCommand;
     }
 
+    //@@author
     /**
      * Updates {@code model}'s filtered list to show no one.
      */

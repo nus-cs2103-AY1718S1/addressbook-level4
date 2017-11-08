@@ -6,6 +6,7 @@ import static seedu.address.commons.util.DateUtil.MESSAGE_DATE_CONSTRAINTS;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.DateUtil;
 
+//@@author CT15
 /**
  * Represents a Schedule's date in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidScheduleDate(String)}

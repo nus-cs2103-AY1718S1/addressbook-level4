@@ -18,9 +18,9 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.commandidentifier.CommandIdentifier;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.address.Address;
 import seedu.address.model.person.email.Email;
 import seedu.address.model.schedule.Activity;
 import seedu.address.model.schedule.ScheduleDate;
@@ -48,7 +48,6 @@ public class ParserUtilTest {
     private static final String VALID_COMMAND_IDENTIFIER_2 = "delete";
     private static final String VALID_COMMAND_IDENTIFIER_3 = "d";
     private static final String VALID_SCHEDULE_DATE_1 = "01-01-1997";
-    private static final String VALID_SCHEDULE_DATE_2 = "01-01";
     private static final String VALID_ACTIVITY = "Team meeting";
 
     @Rule
@@ -151,6 +150,7 @@ public class ParserUtilTest {
         assertEquals(expectedAddress, actualAddress.get());
     }
 
+    //@@author 17navasaw
     @Test
     public void parseEmail_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
@@ -176,6 +176,7 @@ public class ParserUtilTest {
         assertEquals(expectedEmailSet, actualEmailSet);
     }
 
+    //@@author CT15
     @Test
     public void parseScheduleDate_invalidValue_throwIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
@@ -191,12 +192,9 @@ public class ParserUtilTest {
     @Test
     public void parseScheduleDate_validValue_returnsScheduleDate() throws Exception {
         ScheduleDate expectedScheduleDate1 = new ScheduleDate(VALID_SCHEDULE_DATE_1);
-        ScheduleDate expectedScheduleDate2 = new ScheduleDate(VALID_SCHEDULE_DATE_2);
         Optional<ScheduleDate> actualScheduleDate1 = ParserUtil.parseScheduleDate(Optional.of(VALID_SCHEDULE_DATE_1));
-        Optional<ScheduleDate> actualScheduleDate2 = ParserUtil.parseScheduleDate(Optional.of(VALID_SCHEDULE_DATE_2));
 
         assertEquals(expectedScheduleDate1, actualScheduleDate1.get());
-        assertEquals(expectedScheduleDate2, actualScheduleDate2.get());
     }
 
     @Test
@@ -254,6 +252,7 @@ public class ParserUtilTest {
         assertEquals(expectedCommandIdentifier, actualCommandIdentifier);
     }
 
+    //author
     @Test
     public void parseTags_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);

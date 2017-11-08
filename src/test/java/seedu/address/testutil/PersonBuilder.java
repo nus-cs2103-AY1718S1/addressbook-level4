@@ -5,12 +5,12 @@ import static java.util.Arrays.asList;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.Country;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.address.Address;
 import seedu.address.model.person.email.Email;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
@@ -27,7 +27,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, Singapore 408769";
     public static final String DEFAULT_SCHEDULE_DATE = "15-01-1997";
-    public static final String DEFAULT_ACTIVITY = "Play basketball";
+    public static final String DEFAULT_ACTIVITY = "Party";
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
@@ -40,7 +40,7 @@ public class PersonBuilder {
             Set<Email> defaultEmail = SampleDataUtil.getEmailSet(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Schedule> defaultSchedule = SampleDataUtil.getScheduleSet(asList(DEFAULT_SCHEDULE_DATE),
-                    asList(DEFAULT_ACTIVITY));
+                    asList(DEFAULT_ACTIVITY), asList(DEFAULT_NAME));
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
 
             this.person = new Person(defaultName, defaultPhone, defaultCountry, defaultEmail, defaultAddress,
@@ -105,8 +105,9 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author icehawker
     /**
-     * Sets the {@code Phone} of the {@code Person} that we are building.
+     * Sets the {@code Country} of the {@code Person} that we are building.
      */
     public PersonBuilder withCountry(String country) {
         this.person.setCountry(new Country(country));
@@ -114,10 +115,11 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author 17navasaw
     /**
      * Parses the {@code emails} into a {@code Set<Email>} and sets it to the {@code Person} that we are building.
      */
-    public PersonBuilder withEmail(String ... emails) {
+    public PersonBuilder withEmail(String... emails) {
         try {
             this.person.setEmails(SampleDataUtil.getEmailSet(emails));
         } catch (IllegalValueException ive) {
@@ -126,6 +128,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author
     public Person build() {
         return this.person;
     }

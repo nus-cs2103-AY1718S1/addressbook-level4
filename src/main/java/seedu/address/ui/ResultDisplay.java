@@ -14,6 +14,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
+//@@author yamgent-reused
 /**
  * A ui for the status bar that is displayed at the header of the application.
  */
