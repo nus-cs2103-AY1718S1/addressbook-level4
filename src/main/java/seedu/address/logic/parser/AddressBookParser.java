@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.DisableParentModeCommand;
 import seedu.address.logic.commands.EnablePersonCommand;
 import seedu.address.logic.commands.EnableTaskCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -246,6 +247,9 @@ public class AddressBookParser {
         case ParentModeCommand.COMMAND_WORD:
             return new ParentModeCommand();
 
+        case DisableParentModeCommand.COMMAND_WORD:
+            return new DisableParentModeCommand();
+
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
 
@@ -427,6 +431,7 @@ public class AddressBookParser {
         commandMap.put("redo", null);
         commandMap.put("undo", null);
         commandMap.put("parent", null);
+        commandMap.put("disable.p", null);
     }
 
     public boolean isCommandRegistered(String header) {
@@ -470,6 +475,16 @@ public class AddressBookParser {
      */
     public boolean enableParentToggle() {
         isParentEnabled = true;
+        return true;
+    }
+
+    /**
+     * Disables the parent command to be used by main parser
+     *
+     * @return true for confirmation of disableParentToggle
+     */
+    public boolean disableParentToggle() {
+        isParentEnabled = false;
         return true;
     }
 

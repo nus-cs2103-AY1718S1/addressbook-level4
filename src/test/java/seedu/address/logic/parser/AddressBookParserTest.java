@@ -13,14 +13,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DisableParentModeCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ParentModeCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.alias.AliasCommand;
@@ -55,11 +58,29 @@ public class AddressBookParserTest {
 
     private final AddressBookParser parser = new AddressBookParser();
 
+    @Before
+    public void setUp() {
+        parser.enableParentToggle();
+    }
+
     @Test
     public void parseCommandAdd() throws Exception {
         Person person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddCommand(person), command);
+    }
+
+    @Test
+    public void parseCommandParentMode() throws Exception {
+        assertTrue(parser.parseCommand(ParentModeCommand.COMMAND_WORD) instanceof ParentModeCommand);
+        assertTrue(parser.parseCommand(ParentModeCommand.COMMAND_WORD + " 3") instanceof ParentModeCommand);
+    }
+
+    @Test
+    public void parseCommandDisableParentMode() throws Exception {
+        assertTrue(parser.parseCommand(DisableParentModeCommand.COMMAND_WORD) instanceof DisableParentModeCommand);
+        assertTrue(parser.parseCommand(DisableParentModeCommand.COMMAND_WORD + " 8")
+                instanceof DisableParentModeCommand);
     }
 
     @Test
