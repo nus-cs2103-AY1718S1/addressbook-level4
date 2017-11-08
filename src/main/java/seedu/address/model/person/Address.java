@@ -10,6 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Address {
 
+    public static final String NON_COMPULSORY_ADDRESS = "-";
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
             "Person addresses can take any values, and it should not be blank";
 
@@ -18,6 +19,7 @@ public class Address {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
+    public static final String ADDRESS_VALIDATION_EMPTY = "-";
 
     public final String value;
 
@@ -47,7 +49,7 @@ public class Address {
      * Returns true if a given string is a valid person email.
      */
     public static boolean isValidAddress(String test) {
-        return test.matches(ADDRESS_VALIDATION_REGEX);
+        return test.matches(ADDRESS_VALIDATION_REGEX) || test.equals(ADDRESS_VALIDATION_EMPTY);
     }
 
     @Override

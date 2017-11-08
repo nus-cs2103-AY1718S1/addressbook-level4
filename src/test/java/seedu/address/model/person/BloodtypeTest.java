@@ -19,7 +19,6 @@ public class BloodtypeTest {
         assertFalse(Bloodtype.isValidBloodType("$%")); // not one of twelve valid inputs
         assertFalse(Bloodtype.isValidBloodType("ABCDE")); // more than three characters
         assertFalse(Bloodtype.isValidBloodType("+")); // "+" or "-" alone
-        assertFalse(Bloodtype.isValidBloodType("-")); // "+" or "-" alone
         assertFalse(Bloodtype.isValidBloodType("B++"));
         assertFalse(Bloodtype.isValidBloodType("+B"));
         assertFalse(Bloodtype.isValidBloodType("+F"));
@@ -43,7 +42,6 @@ public class BloodtypeTest {
         assertTrue(Bloodtype.isValidBloodType(NON_COMPULSORY_BLOODTYPE));
 
         //Potential weird cases which could be improved on in the future
-        assertTrue(Bloodtype.isValidBloodType(NON_COMPULSORY_BLOODTYPE + "+"));
         assertTrue(Bloodtype.isValidBloodType("O+"));
         assertTrue(Bloodtype.isValidBloodType("AB+"));
         assertTrue(Bloodtype.isValidBloodType("ab+"));
