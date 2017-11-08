@@ -97,3 +97,6 @@ so that they can look back at their memorable moments with certain persons if yo
 === Other contributions
 
 * Fixed a few bugs so that Travis can run properly (Pull requests https://github.com/CS2103AUG2017-W13-B1/main/pull/13[#13], https://github.com/CS2103AUG2017-W13-B1/main/pull/23[#23], https://github.com/CS2103AUG2017-W13-B1/main/pull/90[#90])
+
+=== Collated Code
+https://github.com/CS2103AUG2017-W13-B1/main/blob/master/collated/main/taojiashu.md[Click to see]
