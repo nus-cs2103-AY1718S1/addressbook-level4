@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.AddressBook;
 import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.UniqueParcelList;
 
 //@@author kennard123661
 /**
- * Imports the parcels and tags of parcelsToAdd to the current AddressBook
+ * Imports the parcels and tags stored in {@code parcels} into the current instance of Ark.
  */
 public class ImportCommand extends UndoableCommand {
 
@@ -19,46 +21,55 @@ public class ImportCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds the data of a storage file stored in "
             + "data/import/ directory into Ark.\n"
             + "Parameters: FILE (Must be a valid addressbook file stored in xml format) i.e.\n"
-            + "Example: " + COMMAND_WORD + " ark_storage.xml";
+            + "Example: " + COMMAND_WORD + " ark_storage";
 
-    public static final String MESSAGE_SUCCESS = "Summary: %1$d parcels added and %2$d duplicate parcels not added.\n"
-            + "Parcels added: %3$s\nDuplicate Parcels: %4$s";
+    public static final String MESSAGE_SUCCESS_SUMMARY = "Summary: %1$d parcels added and %2$d duplicate "
+            + "parcels not added.\n";
+    public static final String MESSAGE_SUCCESS_BODY = "Parcels added: %3$s\nDuplicate Parcels: %4$s";
+    public static final String MESSAGE_SUCCESS = MESSAGE_SUCCESS_SUMMARY + MESSAGE_SUCCESS_BODY;
     public static final String MESSAGE_DUPLICATE_PARCELS = "All parcels in the imported save file will create "
             + "duplicate parcels";
 
-    private final List<ReadOnlyParcel> parcelsToAdd;
+    private final List<ReadOnlyParcel> parcels;
 
     /**
-     * Creates an ImportCommand to add the parcels in parcelList {@code ReadOnlyParcel}
+     * Creates an ImportCommand to add all {@code ReadOnlyParcel}s in {@param parcelList}.
      */
     public ImportCommand(List<ReadOnlyParcel> parcelList) {
-        parcelsToAdd = parcelList;
+        parcels = parcelList;
     }
 
+    /**
+     * Adds all unique parcels in {@code parcels} to the {@link UniqueParcelList} of the {@link AddressBook}. Ignores
+     * parcels that will create duplicates in the {@link UniqueParcelList}
+     *
+     * @return {@link CommandResult} created by {@link ImportCommand#executeUndoableCommand()}
+     * @throws CommandException if {@code parcels} contain only duplicate parcels.
+     */
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
 
-        List<ReadOnlyParcel> addedParcels = new ArrayList<>(); // list of added parcels
+        List<ReadOnlyParcel> uniqueParcels = new ArrayList<>(); // list of unique parcels added to Ark.
         List<ReadOnlyParcel> duplicateParcels = new ArrayList<>(); // list of duplicate parcels that are not added
         List<ReadOnlyParcel> storedParcels = model.getAddressBook().getParcelList(); // parcels already stored in Ark
 
         // check if all parcels are duplicates
-        if (storedParcels.containsAll(parcelsToAdd)) {
+        if (storedParcels.containsAll(parcels)) {
             throw new CommandException(MESSAGE_DUPLICATE_PARCELS);
         }
 
-        model.addAllParcels(parcelsToAdd, addedParcels, duplicateParcels);
+        model.addAllParcels(parcels, uniqueParcels, duplicateParcels);
 
-        String addedParcelsString = getImportFormattedParcelListString(addedParcels);
+        String addedParcelsString = getImportFormattedParcelListString(uniqueParcels);
         String duplicatedParcelsString = getImportFormattedParcelListString(duplicateParcels);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, addedParcels.size(), duplicateParcels.size(),
+        return new CommandResult(String.format(MESSAGE_SUCCESS, uniqueParcels.size(), duplicateParcels.size(),
                 addedParcelsString, duplicatedParcelsString));
     }
 
     /**
-     * @return formatted list of parcels added/not added for ImportCommand execution feedback
+     * @return formatted list of parcels added/not added for ImportCommand execution result.
      */
     public static String getImportFormattedParcelListString(List<ReadOnlyParcel> parcels) {
         if (parcels.size() == 0) {
@@ -78,11 +89,11 @@ public class ImportCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ImportCommand // instanceof handles nulls
-                && hasSameParcels(parcelsToAdd, ((ImportCommand) other).parcelsToAdd));
+                && hasSameParcels(parcels, ((ImportCommand) other).parcels));
     }
 
     /**
-     * check if the elements of parcels and otherParcels have the same elements, disregarding order.
+     * check if the {@param parcels} and {@param otherParcels} have the same elements, disregarding order.
      */
     public boolean hasSameParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> otherParcels) {
         // check # of parcels are equal
