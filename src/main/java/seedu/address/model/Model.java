@@ -91,14 +91,14 @@ public interface Model {
             EventTimeClashException;
 
     /**
-     * Returns an unmodifiable view of the filtered event list
+     * Returns an unmodifiable view of the filtered event list.
      */
     ObservableList<ReadOnlyEvent> getFilteredEventList();
 
     /**
-     * Returns an unmodifiable view of the schedule
+     * Returns an unmodifiable view of the timetable.
      */
-    ObservableList<ReadOnlyEvent> getSchedule();
+    ObservableList<ReadOnlyEvent> getTimetable();
 
     /**
      * @throws NullPointerException if {@code predicate} is null.

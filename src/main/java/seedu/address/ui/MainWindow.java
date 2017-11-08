@@ -66,8 +66,8 @@ public class MainWindow extends UiPart<Region> {
     private PersonListPanel personListPanel;
     private EventListPanel eventListPanel;
     //@@author reginleiff
-    private EventPanel schedulePanel;
-    private ScheduleListPanel scheduleListPanel;
+    private EventPanel timetablePanel;
+    private TimetableListPanel timetableListPanel;
     //@@author
     private CalendarView calendarView;
     private Config config;
@@ -90,10 +90,10 @@ public class MainWindow extends UiPart<Region> {
     private StackPane eventListPanelPlaceholder;
 
     @FXML
-    private StackPane scheduleListPanelPlaceholder;
+    private StackPane timetableListPanelPlaceholder;
 
     @FXML
-    private SplitPane schedule;
+    private SplitPane timetable;
     //@@author
 
     @FXML
@@ -187,18 +187,17 @@ public class MainWindow extends UiPart<Region> {
         personPanel = new PersonPanel(logic);
         //@@author
 
-        schedulePanel = new EventPanel(logic);
+        timetablePanel = new EventPanel(logic);
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-        schedule.managedProperty().bind(schedule.visibleProperty());
-
+        // timetable.managedProperty().bind(timetable.visibleProperty());
 
         eventListPanel = new EventListPanel(logic.getFilteredEventList());
         eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
-        scheduleListPanel = new ScheduleListPanel(logic.getSchedule());
-        scheduleListPanelPlaceholder.getChildren().add(scheduleListPanel.getRoot());
+        timetableListPanel = new TimetableListPanel(logic.getTimetable());
+        timetableListPanelPlaceholder.getChildren().add(timetableListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -425,8 +424,8 @@ public class MainWindow extends UiPart<Region> {
     //@@author reginleiff
     @Subscribe
     public void handleToggleTimetableEvent(ToggleTimetableEvent event) {
-        boolean scheduleIsVisible = schedule.visibleProperty().getValue();
-        if (scheduleIsVisible) {
+        boolean timetableIsVisible = timetable.visibleProperty().getValue();
+        if (timetableIsVisible) {
             hideTimetable();
         } else {
             showTimeTable();
@@ -438,14 +437,14 @@ public class MainWindow extends UiPart<Region> {
      * Hides the timetable view.
      */
     void hideTimetable() {
-        schedule.setVisible(false);
+        timetable.setVisible(false);
     }
 
     /**
      * Shows the timetable view.
      */
     void showTimeTable() {
-        schedule.setVisible(true);
+        timetable.setVisible(true);
     }
     //@@author
 }

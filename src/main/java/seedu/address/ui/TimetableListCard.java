@@ -13,9 +13,9 @@ import seedu.address.model.event.ReadOnlyEvent;
  * An UI component that displays information of a {@code Event} on the schedule.
  *
  */
-public class ScheduleListCard extends UiPart<Region> {
+public class TimetableListCard extends UiPart<Region> {
 
-    private static final String FXML = "ScheduleListCard.fxml";
+    private static final String FXML = "TimetableListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -34,7 +34,7 @@ public class ScheduleListCard extends UiPart<Region> {
     @FXML
     private Label timing;
 
-    public ScheduleListCard(ReadOnlyEvent event) {
+    public TimetableListCard(ReadOnlyEvent event) {
         super(FXML);
         this.event = event;
         bindListeners(event);
@@ -57,12 +57,12 @@ public class ScheduleListCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof ScheduleListCard)) {
+        if (!(other instanceof TimetableListCard)) {
             return false;
         }
 
         // state check
-        ScheduleListCard card = (ScheduleListCard) other;
+        TimetableListCard card = (TimetableListCard) other;
         return event.equals(card.event);
     }
 }

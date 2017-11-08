@@ -350,7 +350,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<ReadOnlyEvent> getSchedule(Date currentDate) {
+    public ObservableList<ReadOnlyEvent> getTimetable(Date currentDate) {
         return events.getObservableSubList(currentDate);
     }
     //@@author

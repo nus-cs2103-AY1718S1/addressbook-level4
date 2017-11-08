@@ -19,27 +19,27 @@ import seedu.address.model.event.ReadOnlyEvent;
 
 //@@author reginleiff
 /**
- * Panel containing the list of events in the schedule.
+ * Panel containing the list of events in the timetable.
  *
  */
-public class ScheduleListPanel extends UiPart<Region> {
-    private static final String FXML = "ScheduleListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(ScheduleListPanel.class);
+public class TimetableListPanel extends UiPart<Region> {
+    private static final String FXML = "TimetableListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(TimetableListPanel.class);
 
     @FXML
-    private ListView<ScheduleListCard> scheduleListView;
+    private ListView<TimetableListCard> timetableListView;
 
-    public ScheduleListPanel(ObservableList<ReadOnlyEvent> eventList) {
+    public TimetableListPanel(ObservableList<ReadOnlyEvent> eventList) {
         super(FXML);
         setConnections(eventList);
         registerAsAnEventHandler(this);
     }
 
     private void setConnections(ObservableList<ReadOnlyEvent> eventList) {
-        ObservableList<ScheduleListCard> mappedList = EasyBind.map(eventList, (event) -> new ScheduleListCard(event));
-        scheduleListView.setItems(mappedList);
-        scheduleListView.setCellFactory(listView -> new ScheduleListViewCell());
-        scheduleListView.setOrientation(Orientation.HORIZONTAL);
+        ObservableList<TimetableListCard> mappedList = EasyBind.map(eventList, (event) -> new TimetableListCard(event));
+        timetableListView.setItems(mappedList);
+        timetableListView.setCellFactory(listView -> new TimetableListViewCell());
+        timetableListView.setOrientation(Orientation.HORIZONTAL);
         logger.info("UI ------ Got eventList with " + eventList.size() + " events.");
     }
 
@@ -48,27 +48,27 @@ public class ScheduleListPanel extends UiPart<Region> {
      */
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
-        ObservableList<ReadOnlyEvent> eventList = abce.data.getSchedule(abce.data.getCurrentDate());
-        ObservableList<ScheduleListCard> mappedList = EasyBind.map(eventList, (event) -> new ScheduleListCard(event));
-        scheduleListView.setItems(mappedList);
+        ObservableList<ReadOnlyEvent> eventList = abce.data.getTimetable(abce.data.getCurrentDate());
+        ObservableList<TimetableListCard> mappedList = EasyBind.map(eventList, (event) -> new TimetableListCard(event));
+        timetableListView.setItems(mappedList);
     }
 
     /**
-     * Scrolls to the {@code ScheduleListCard} at the {@code index} and selects it.
+     * Scrolls to the {@code TimetableListCard} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
-            scheduleListView.scrollTo(index);
-            scheduleListView.getSelectionModel().clearAndSelect(index);
+            timetableListView.scrollTo(index);
+            timetableListView.getSelectionModel().clearAndSelect(index);
         });
     }
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code ScheduleListCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code TimetableListCard}.
      */
-    class ScheduleListViewCell extends ListCell<ScheduleListCard> {
+    class TimetableListViewCell extends ListCell<TimetableListCard> {
 
         @Override
-        protected void updateItem(ScheduleListCard event, boolean empty) {
+        protected void updateItem(TimetableListCard event, boolean empty) {
             super.updateItem(event, empty);
 
             if (empty || event == null) {
