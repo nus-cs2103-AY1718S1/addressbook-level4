@@ -472,6 +472,7 @@ In the `DeleteMultipleCommand` class, the commandResult method is used which com
 
 // end::deleteMultipleCommand[]
 
+// tag::recentlydeleted[]
 === Recently Deleted List
 
 Recently deleted command is used to allow the user to have a list of the past 30 recently deleted contacts and their details.
@@ -530,6 +531,14 @@ Sort command can only be executed only if the person list is not empty.
 
 It uses the sort method from the collection class to sort the array list of persons in the address book.
 // end::sort[]
+
+// tag::theme[]
+=== Changing of theme
+
+The `ThemeCommand` is used so as to allow the user to change the colour theme of TheYellowPage with the use of a single command. This provides the user with options to choose their preferred theme of TheYellowPage.
+There are 2 themes to alternate from: `DarkTheme.css` and `LightTheme.css`. By keying in the command word `theme`, the command word will be detected by the `AddressBookParser` class and then the `ThemeCommand` class would be executed.
+By keying the command word `theme`, the theme of TheYellowPage will switch from `DarkTheme.css` to `LightTheme.css` and vice versa.
+// end::theme[]
 
 === Logging
 
