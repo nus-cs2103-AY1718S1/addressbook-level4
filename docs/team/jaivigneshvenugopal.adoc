@@ -99,8 +99,3 @@ A debt collector might need to conduct house visits to collect debts from people
 
 == Project: WiredIn
 [https://github.com/archthegit/wiredInV0/[WiredIn]] is a web application that collates raw csv files from various banks and displays the information variedly in a visually pleasing manner. This application was developed with [https://github.com/archthegit/[Archana Pradeep]] for [http://nusskylab-dev.comp.nus.edu.sg/[CP2106 Independent Software Development Project (Orbital)]].
-
-
-
-
-
