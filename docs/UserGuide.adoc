@@ -17,53 +17,53 @@ By: `Team W13-B1`      Since: `AUG 2017`      Licence: `MIT`
 == Introduction
 
 UniCity is a desktop application that is mainly based on the usage of the Command Line Interface (CLI).
-It aims to provide a user-friendly contact management experience for students struggling to manage their
+It aims to provide a user-friendly contact management experience for students to better manage their
 ever increasing network.
 
-This user guide provides a reference for the user if he/she requires extra guidance and provides the following: +
+This user guide comes with a reference for the user if he/she requires extra guidance and provides the following: +
 
 * Detailed explanation of the features in UniCity and how to execute them. +
 * Features that are to be implemented in the future to provide a road map of where UniCity is headed. +
-* Summary of the commands to serve as a cheat sheet in the future. +
+* Summary of the commands to serve as a cheat sheet. +
 * Dedicated section for Frequently Asked Questions (FAQ). +
 
 [NOTE]
-Familiarity with the CLI may be necessary to maximise the utility of UniCity.
+Familiarity with the CLI may be necessary to maximise the usefulness of UniCity.
 
 == Overview of UniCity
 
-UniCity has the following features categorised according to the extent of their utility: +
+UniCity has the following features categorised according to their uses: +
 
 * Viewing contacts in different views using listing, filtering, finding and sorting contacts. +
 * Modifying contacts by adding, deleting and editing contacts.  +
 * Using web services such as FaceBook and Google. +
-* Managing of command sequence and history through undoing and redoing previous commands and viewing a list of
+* Managing command sequence and history through undoing and redoing previous commands and viewing a list of
  executed commands. +
 
 == Quick Start
 
+This is a brief introduction on how to get started with UniCity.
+
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
-Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `UniCity.jar` link: https://github.com/CS2103AUG2017-W13-B1/main/releases[here].
+.  Copy the file to the folder you want to use as the home folder for UniCity.
+.  Double-click the file to start the app. The graphic user interface (GUI) should appear in a few seconds.
 +
 image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+.  Try out these example commands:
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+Refer to the link:#features[Features] section below for details of each command.
 
 == Features
 
@@ -76,13 +76,13 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing Contacts
+=== Viewing contacts
 
 This section lists commands that view a part of UniCity's contact list.
 
 ==== Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+Lists all persons in the address book. +
 Format: `list`
 
 // tag::filterbytags[]
@@ -92,7 +92,7 @@ Filters persons whose tags contain any of the given keywords. +
 Format: `filter KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case sensitive. e.g `professor` will match `professor`
+* The search is case sensitive. e.g `Professor` will not match `professor`
 * The order of the keywords does not matter. e.g. `professor tutor` keywords will match `[tutor]` and '[professor]' tags
 * Only the tags are searched.
 * Only full words will be matched e.g. `friend` will not match `friends`
@@ -105,7 +105,7 @@ Examples:
 Returns any contacts having at least a `[professor]` tag
 Hides contacts that do not contain a `[professor]` tag. Example: Contacts with `[neighbour]`'[senior]' tags will not be shown.
 * `filter professor tutor` +
-Returns any contacts having at least a `[professor]` or `[tutor]` tags, or both.
+Returns any contacts having at least a `[professor]` or `[tutor]` tag, or both.
 Hides contacts that do not contain `[professor]` and `[tutor]`. Example: Contacts with `[coursemate]`'[friend]' tags will not be shown.
 // end::filterbytags[]
 
@@ -123,7 +123,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return
  `Hans Gruber`, `Bo Yang`
-* When no persons are found, the command will return a decently accurate suggestion of
+* When no persons are found, the command will return an accurate suggestion of
   who you might have been referring to, with the results of that suggestion shown as well.
 ****
 
@@ -150,13 +150,13 @@ Format: `showFavourite` or `sf`
 
 ==== Sorting a person : `sort`
 
-Sort the list of contacts in addressbook by name. +
+Sorts the list of contacts in UniCity by name. +
 Format: `sort`
 
 ****
-* Sort the list of contacts according to alphabetical order.
-* The names sorted will be case-insensitive.
-* If there is no contacts in the list, nothing will be sorted.
+* Sorts the list of contacts according to alphabetical order.
+* The names sorted are case-insensitive.
+* If there is no contact in the list, nothing will be sorted.
 ****
 
 Examples:
@@ -165,7 +165,7 @@ Examples:
 Sort the contacts in Address Book by ascending order.
 // end::sort[]
 
-=== Modifying Contacts
+=== Modifying contacts
 
 This section lists commands that modify UniCity's contact list.
 
@@ -196,8 +196,8 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the person will be overwritten.
+* You can remove all the person's tags by typing `t/` without specifying any tag after it.
 ****
 
 Examples:
@@ -210,12 +210,12 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 // tag::favourite[]
 ==== Editing a person : `favourite`
 
-Change the `favourite` status of an existing person in the address book. +
+Edits the `favourite` status of an existing person in the address book. +
 Format: `favourite INDEX`
 
 ****
-* Modify the `favourite` field of the person with the input index.
-* If the person is a favourite person, change the `favourite` status "False".
+* Modifies the `favourite` field of the person with the input index.
+* If the person is a favourite person, sets the `favourite` status to false.
 * If the person is not a favourite person, mark it as favourite.
 * The index number refers to the order in the latest list.
 * The index number must be a positive integer and cannot exceed the length of the latest list.
@@ -326,7 +326,7 @@ Deletes the 1st person in the results of the `find` command.
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Using Web Services
+=== Using web services
 
 This section lists commands that require the Internet to provide services. Ensure Internet connection is established before entering these commands.
 
@@ -382,9 +382,11 @@ Examples:
 
 * `locate 1`
 Find the address of the 1st person in the latest listing on Google Maps.
+
+image::locate-command-ui.png[width="790"]
 // end::locate[]
 
-=== Managing Command Sequence and History
+=== Managing command sequence and history
 
 This section lists commands that toggle with the past and present commands entered in UniCity.
 
@@ -407,7 +409,7 @@ Format: `undo` OR `undomult NUMBER_OF_COMMANDS_TO_UNDO`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (e.g. `add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -464,7 +466,7 @@ Format: `help`
 // tag::reply[]
 ==== Adding or editing contacts with duplicate fields
 
-Checks and informs user of their actions to save or edit contacts that contain existing fields in UniCity.
+Checks and informs the user of their actions to save or edit contacts that contain existing fields in UniCity.
 Prompts user to reply `yes` or `no` to proceed with his actions.
 
 Format: `yes` / `no`
@@ -532,7 +534,7 @@ There is no need to save manually.
 
 === Event reminders for the user
 
-=== Choosing personalized wallpaper for the background of UniCity
+=== Personalized wallpaper for the background of UniCity
 
 === Auto-completion of commands through analysing commands history
 
