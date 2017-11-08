@@ -4,8 +4,6 @@ import java.util.logging.Logger;
 
 import org.controlsfx.control.textfield.TextFields;
 
-import com.sun.javafx.scene.control.skin.TextFieldSkin;
-
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
