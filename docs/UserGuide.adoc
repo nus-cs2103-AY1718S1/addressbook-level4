@@ -1,4 +1,4 @@
-= Gentleman's Guide (V1.5) - User Guide
+= Gentleman's Guide (V1.5rc) - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -415,6 +415,7 @@ Format: `sortPriority`
 
 // end::sort[]
 
+// tag::retrievetaguntagretag[]
 === Retrieving all persons having an existing tag : `retrieve`
 
 Lists all contacts having a certain existing tag in the Gentleman's Guide. +
@@ -504,6 +505,7 @@ Examples:
 
 * `retag enemies friends` +
 Renames the existing "enemies" tag in the Gentleman's Guide to "friends".
+// end::retrievetaguntagretag[]
 
 === Listing entered commands : `history`
 
