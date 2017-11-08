@@ -116,7 +116,8 @@ public class EditCommand extends UndoableCommand {
 
         if (!editedPerson.getName().toString().equalsIgnoreCase(personToEditName)) {
             while (!lastShownMeetingList.isEmpty()) {
-                EditMeetingCommand.EditMeetingDescriptor editedMeetingDescriptor = new EditMeetingCommand.EditMeetingDescriptor();
+                EditMeetingCommand.EditMeetingDescriptor editedMeetingDescriptor =
+                        new EditMeetingCommand.EditMeetingDescriptor();
 
                 try {
                     Index firstIndex = ParserUtil.parseIndex("1");
@@ -140,7 +141,8 @@ public class EditCommand extends UndoableCommand {
             }
         } else {
             for (ReadOnlyMeeting meeting : lastShownMeetingList) {
-                EditMeetingCommand.EditMeetingDescriptor editedMeetingDescriptor = new EditMeetingCommand.EditMeetingDescriptor();
+                EditMeetingCommand.EditMeetingDescriptor editedMeetingDescriptor =
+                        new EditMeetingCommand.EditMeetingDescriptor();
 
                 Meeting editedMeeting = createEditedMeeting(meeting, editedMeetingDescriptor,
                         editedPersonName, editedPhoneNum);
@@ -187,8 +189,8 @@ public class EditCommand extends UndoableCommand {
      * edited with {@code editMeetingDescriptor}.
      */
     private static Meeting createEditedMeeting(ReadOnlyMeeting meetingToEdit,
-                                               EditMeetingCommand.EditMeetingDescriptor editMeetingDescriptor, PersonToMeet person,
-                                               PhoneNum phone) {
+                                               EditMeetingCommand.EditMeetingDescriptor editMeetingDescriptor,
+                                               PersonToMeet person, PhoneNum phone) {
         assert meetingToEdit != null;
 
         NameMeeting updatedName = editMeetingDescriptor.getName().orElse(meetingToEdit.getName());
