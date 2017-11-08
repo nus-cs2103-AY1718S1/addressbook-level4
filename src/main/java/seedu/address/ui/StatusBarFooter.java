@@ -106,6 +106,7 @@ public class StatusBarFooter extends UiPart<Region> {
     }
 }
 
+//@@author deep4k
 /**
  * Current clock and date display in statusfootbar
  */

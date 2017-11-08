@@ -77,6 +77,7 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     //@@author deep4k
+
     /**
      * Registers all commands with parsers into addressBookParser
      */
@@ -152,6 +153,16 @@ public class LogicManager extends ComponentManager implements Logic {
                     addressBookParser.enableTaskToggle(),
                     "Successfully toggled to Task Commands in main parser",
                     "Failed to toggle to Task Commands in main parser");
+        } else if (event.getToggle().equals(ModelToggleEvent.Toggle.parentEnabled)) {
+            logModelToggelForParser(
+                    addressBookParser.enableParentToggle(),
+                    "Successfully toggled to Parent Commands in main parser",
+                    "Failed to toggle to Parent Commands in main parser");
+        } else if (event.getToggle().equals(ModelToggleEvent.Toggle.parentDisabled)) {
+            logModelToggelForParser(
+                    addressBookParser.disableParentToggle(),
+                    "Successfully toggled to Child Commands in main parser",
+                    "Failed to toggle to Child Commands in main parser");
         }
     }
 

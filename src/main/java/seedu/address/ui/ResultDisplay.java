@@ -8,12 +8,17 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
+
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.ListSizeEvent;
 import seedu.address.commons.events.ui.InvalidResultDisplayEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ValidResultDisplayEvent;
@@ -25,6 +30,7 @@ public class ResultDisplay extends UiPart<Region> {
 
     private static final Logger logger = LogsCenter.getLogger(ResultDisplay.class);
     private static final String FXML = "ResultDisplay.fxml";
+    //@@author Alim95
     private static final String DELETE_ICON = "/images/DeleteBird.png";
     private static final String EDIT_ICON = "/images/EditBird.png";
     private static final String ERROR_ICON = "/images/ErrorBird.png";
@@ -33,6 +39,7 @@ public class ResultDisplay extends UiPart<Region> {
     private static final String SUCCESS_ICON = "/images/SuccessBird.png";
     private static final String TASK_ICON = "/images/TaskBird.png";
     private static final String UNDO_ICON = "/images/UndoBird.png";
+    //@@author
 
 
     private final StringProperty displayed = new SimpleStringProperty("");
@@ -46,10 +53,21 @@ public class ResultDisplay extends UiPart<Region> {
     @FXML
     private ImageView imageDisplay;
 
+    @FXML
+    private FlowPane listSizeDisplay;
+
     public ResultDisplay() {
         super(FXML);
         resultDisplay.textProperty().bind(displayed);
         registerAsAnEventHandler(this);
+    }
+
+    @Subscribe
+    private void handleNewListResultAvailable(ListSizeEvent event) {
+        Label listSizeLabel = new Label(event.toString());
+        listSizeLabel.setStyle("-fx-background-color: #00bf00;"
+                + " -fx-background-radius: 80 80 80 80");
+        listSizeDisplay.getChildren().setAll(listSizeLabel);
     }
 
     @Subscribe
@@ -71,24 +89,31 @@ public class ResultDisplay extends UiPart<Region> {
     private void displayResultIcon(ValidResultDisplayEvent event) {
         switch (event.message.trim()) {
         case "delete":
+            listSizeDisplay.setVisible(true);
             imageDisplay.setImage(new Image(DELETE_ICON));
             break;
         case "edit":
+            listSizeDisplay.setVisible(false);
             imageDisplay.setImage(new Image(EDIT_ICON));
             break;
         case "find":
+            listSizeDisplay.setVisible(true);
             imageDisplay.setImage(new Image(FIND_ICON));
             break;
         case "hide":
+            listSizeDisplay.setVisible(true);
             imageDisplay.setImage(new Image(HIDE_ICON));
             break;
         case "task":
+            listSizeDisplay.setVisible(false);
             imageDisplay.setImage(new Image(TASK_ICON));
             break;
         case "undo":
+            listSizeDisplay.setVisible(false);
             imageDisplay.setImage(new Image(UNDO_ICON));
             break;
         default:
+            listSizeDisplay.setVisible(true);
             imageDisplay.setImage(new Image(SUCCESS_ICON));
         }
     }
@@ -96,14 +121,15 @@ public class ResultDisplay extends UiPart<Region> {
     @Subscribe
     private void handleInvalidResultDisplayEvent(InvalidResultDisplayEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        listSizeDisplay.setVisible(false);
         imageDisplay.setImage(new Image(ERROR_ICON));
     }
 
     public void highlight() {
-        this.resultDisplay.setStyle("-fx-border-color: lightgreen; -fx-border-width: 2");
+        this.placeHolder.setStyle("-fx-border-color: lightgreen; -fx-border-width: 2");
     }
 
     public void unhighlight() {
-        this.resultDisplay.setStyle("");
+        this.placeHolder.setStyle("");
     }
 }
