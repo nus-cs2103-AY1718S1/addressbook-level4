@@ -6,7 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author kennard123661
 /**
- * Represents a Address' postal code in the address book.
+ * Represents a possible {@link Address} postal code in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidPostalCode(String)}
  */
 public class PostalCode {
@@ -51,7 +51,7 @@ public class PostalCode {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof PostalCode // instanceof handles nulls
+                || (other instanceof PostalCode // instanceof handles null
                 && this.value.equals(((PostalCode) other).value)); // state check
     }
 

@@ -43,6 +43,7 @@ public class SampleDataTest extends AddressBookGuiTest {
         }
     }
 
+    //@@author kennard123661
     @Test
     public void addressBook_dataFileDoesNotExist_loadSampleData() {
         List<Parcel> expectedList = Arrays.asList(SampleDataUtil.getSampleParcels()).stream()

@@ -5,8 +5,10 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
-
+import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.Status;
+import seedu.address.model.parcel.UniqueParcelList;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -22,8 +24,14 @@ public interface Model {
      */
     Predicate<ReadOnlyParcel> PREDICATE_SHOW_ALL_PARCELS = unused -> true;
 
-    //@@author kennard123661
-    void setActiveList(boolean isDelivered);
+    /**
+     * Sets the active list in the model.
+     *
+     * @param isCompleted if true, the active list will be set to the list of {@link Parcel}s with {@link Status} that
+     *                    is COMPLETED. Otherwise, it will be set the list of parcels with {@link Status} that is not
+     *                    COMPLETED.
+     */
+    void setActiveList(boolean isCompleted);
     //@@author
 
     /**
@@ -55,12 +63,15 @@ public interface Model {
 
     //@@author kennard123661
     /**
-     * Adds all Parcel objects in parcels to the AddressBook
-     * @param parcels list of parcels to add
-     * @param parcelsAdded parcels that are added without causing duplicates
-     * @param duplicateParcels parcels that are not added because doing so will cause duplicates
+     * Adds all unique {@link Parcel}s stored in {@code parcels} to the {@link AddressBook}
+     *
+     * @param parcels the list of parcels to add into the {@link AddressBook}.
+     * @param uniqueParcels the list of unique parcels stored in {@param parcels} that will not create duplicate parcels
+     *                      if added into the {@link UniqueParcelList} in the {@link AddressBook}
+     * @param duplicateParcels the list of parcels stored in {@param parcels} that will create duplicate parcels in the
+     *                         if added into the {@link UniqueParcelList} in the {@link AddressBook}
      */
-    void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> parcelsAdded, List<ReadOnlyParcel>
+    void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> uniqueParcels, List<ReadOnlyParcel>
             duplicateParcels);
     //@@author
 
@@ -81,16 +92,21 @@ public interface Model {
 
     //@@author kennard123661
     /**
-     * Returns an unmodifiable view of the filtered parcel list
+     * Returns an unmodifiable view of the filtered list of {@link Parcel} from that have {@link Status}
+     * that is COMPLETED.
      */
-    ObservableList<ReadOnlyParcel> getFilteredDeliveredParcelList();
-
-    ObservableList<ReadOnlyParcel> getActiveList();
+    ObservableList<ReadOnlyParcel> getCompletedParcelList();
 
     /**
-     * Returns an unmodifiable view of the filtered parcel list
+     * Returns an unmodifiable view of the filtered list of {@link Parcel} from that have {@link Status}
+     * that is not COMPLETED.
      */
-    ObservableList<ReadOnlyParcel> getFilteredUndeliveredParcelList();
+    ObservableList<ReadOnlyParcel> getUncompletedParcelList();
+
+    /**
+     * Returns an unmodifiable view of the current active list.
+     */
+    ObservableList<ReadOnlyParcel> getActiveList();
     //@@author
 
     /**
@@ -107,39 +123,57 @@ public interface Model {
     void maintainSorted();
 
     /**
-     * Method to check if there is a parcel selected.
-     */
-    boolean hasSelected();
-
-    /**
-     * Method to toggle whether or not a parcel has been selected
-     */
-    void select();
-
-    /**
-     * Method to toggle whether or not a parcel has been selected
-     */
-    void unselect();
-
-    /**
-     * Method to set the prevIndex attribute to the specified target.
-     */
-    void setPrevIndex(Index target);
-
-    /**
-     * Method to retrieve Index of last selected Parcel Card.
-     */
-    Index getPrevIndex();
-
-    /**
      * Method to force the model to select a card without using the select command.
      */
     void forceSelect(Index target);
 
+
     /**
-     * Method to reselect a parcel card if there is a card selected.
+     * Method to force the model to select a card without using the select command.
      */
-    void reselect(ReadOnlyParcel parcel);
+    void forceSelectParcel(ReadOnlyParcel target);
+
+    /**
+     * Method to set tabIndex attribute in Model.
+     */
+    void setTabIndex(Index index);
+
+    /**
+     * Method to get tabIndex attribute in Model.
+     */
+    Index getTabIndex();
+
+    /**
+     * Method to encapsulate all the sub methods to be executed when AddCommand is executed.
+     * @param parcel the parcel to add
+     * @throws DuplicateParcelException if parcel is already inside the list of parcels, reject the input
+     */
+    void addParcelCommand(ReadOnlyParcel parcel) throws DuplicateParcelException;
+
+    /**
+     * Method to encapsulate all the sub methods to be executed when EditCommand is executed.
+     * @param parcelToEdit the parcel to edit
+     * @param editedParcel the edited parcel to replace the parcel to edit.
+     * @throws DuplicateParcelException if editedParcel already exists unless the parcelToEdit is the same entity.
+     * @throws ParcelNotFoundException if parcelToEdit cannot be found in the list
+     */
+    void editParcelCommand(ReadOnlyParcel parcelToEdit, ReadOnlyParcel editedParcel)
+            throws DuplicateParcelException, ParcelNotFoundException;
+
+    /**
+     * Method to retrieve flag that represents whether the current tab selected is all parcels.
+     */
+    boolean getActiveIsAllBool();
+
+    /**
+     * Method to forcefully raise the event to switch tabs to all parcels.
+     */
+    void uiJumpToTabAll();
+
+    /**
+     * Method to forcefully rasie the event to switch tabs to completed parcels.
+     */
+    void uiJumpToTabCompleted();
     //@@author
 }
 

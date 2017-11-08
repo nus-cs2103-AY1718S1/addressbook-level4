@@ -23,15 +23,17 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> parcelsAdded,
+    public void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> uniqueParcels,
                               List<ReadOnlyParcel> duplicateParcels) {
         fail("This method should not be called.");
     }
 
+    //@@author kennard123661
     @Override
-    public void setActiveList(boolean isDelivered) {
+    public void setActiveList(boolean isCompleted) {
         fail("This method should not be called.");
     }
+    //@@author
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
@@ -68,7 +70,7 @@ public class ModelStub implements Model {
 
     //@@author kennard123661
     @Override
-    public ObservableList<ReadOnlyParcel> getFilteredDeliveredParcelList() {
+    public ObservableList<ReadOnlyParcel> getCompletedParcelList() {
         fail("This method should not be called.");
         return null;
     }
@@ -80,7 +82,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public ObservableList<ReadOnlyParcel> getFilteredUndeliveredParcelList() {
+    public ObservableList<ReadOnlyParcel> getUncompletedParcelList() {
         fail("This method should not be called.");
         return null;
     }
@@ -97,39 +99,51 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public boolean hasSelected() {
-        fail("This method should not be called.");
-        return false;
-    }
-
-    @Override
-    public void select() {
-        fail("This method should not be called.");
-    }
-
-    @Override
-    public void unselect() {
-        fail("This method should not be called.");
-    }
-
-    @Override
-    public void setPrevIndex(Index target) {
-        fail("This method should not be called.");
-    }
-
-    @Override
-    public Index getPrevIndex() {
-        fail("This method should not be called.");
-        return null;
-    }
-
-    @Override
     public void forceSelect(Index target) {
         fail("This method should not be called.");
     }
 
     @Override
-    public void reselect(ReadOnlyParcel parcel) {
+    public void forceSelectParcel(ReadOnlyParcel target) {
         fail("This method should not be called.");
     }
+
+    @Override
+    public void setTabIndex(Index index) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public Index getTabIndex() {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
+    public void addParcelCommand(ReadOnlyParcel parcel) throws DuplicateParcelException {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void editParcelCommand(ReadOnlyParcel parcelToEdit, ReadOnlyParcel editedParcel)
+            throws DuplicateParcelException, ParcelNotFoundException {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public boolean getActiveIsAllBool() {
+        fail("This method should not be called.");
+        return false;
+    }
+
+    @Override
+    public void uiJumpToTabAll() {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void uiJumpToTabCompleted() {
+        fail("This method should not be called.");
+    }
+
 }

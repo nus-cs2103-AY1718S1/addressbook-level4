@@ -78,11 +78,11 @@ public class LogicManagerTest {
         Logic testLogic = new LogicManager(testModel);
 
         // test for completed parcels
-        ObservableList<ReadOnlyParcel> completedParcels = testLogic.getDeliveredParcelList();
+        ObservableList<ReadOnlyParcel> completedParcels = testLogic.getCompletedParcelList();
         assertTrue(completedParcels.stream().allMatch(parcel -> parcel.getStatus().equals(Status.COMPLETED)));
 
         // Test for uncompleted parcels
-        ObservableList<ReadOnlyParcel> uncompletedParcels = testLogic.getUndeliveredParcelList();
+        ObservableList<ReadOnlyParcel> uncompletedParcels = testLogic.getUncompletedParcelList();
         assertFalse(uncompletedParcels.stream().anyMatch(parcel -> parcel.getStatus().equals(Status.COMPLETED)));
     }
     //@@author

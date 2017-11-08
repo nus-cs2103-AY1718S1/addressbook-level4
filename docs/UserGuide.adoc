@@ -46,41 +46,64 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Ark application.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ark_Main_Window.png[width="790"]
-_Figure 3.1.1 : This is the main window of Ark_
+image::Ui.png[width="790"]
+_Figure 3.1.1 : Ark's Startup Window_
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+.  Here are some commands that you can try:
 
 * *`list`* : lists all parcels and expands the parcel list section in the main window.
 * **`clear`**` : clears the list of parcels.
 * **`delete`**`3` : deletes the 3rd parcel shown in the current list.
 * *`exit`* : exits the app.
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  You can refer to the link:#features[Features] section below for details of each command.
 
 == Layout
-What you see in the picture below is an example of what the main window
-of the Ark application looks like separated into it's sections. +
+These are the main components of the Ark user interface that will help you to interact with Ark. +
 
-image::Ark_Main_Window_Sections.png[width="790"]
-_Figure 4.1.1 : This is the main window of Ark with each section color coded_
+image::Ark_Main_Window_Sections.png[width="890"]
+_Figure 4 : This is the main window of Ark with each section color coded_
 
-The main window is separated into 8 sections from the top to bottom:
+1. *Menu Bar* - Click on the options here to access the main or help menu.
+2. *Command Box* - You can type commands here.
+3. *Results Box* - This box gives displays information when you have entered a command.
+4. *Browser Panel* - This area displays the destination address of a parcel when you kbd:[double-click] (or `select`)
+the particular parcel in the *Parcel List Panel* (Refer to No. 6 below).
+5. *Tab Panel* - Click on the `All Parcels` tab to display the list of undelivered parcels. To view the list of
+delivered parcels, click on the `Completed Parcels` tab.
+6. *Parcel List Panel* - The list of parcels in your inventory is showed here.
+7. *Status Bar Footer* - You can view a summary of the parcels in your inventory here.
 
-. Red - Menu Bar
-. Green - Command Box
-. Pink - Results Box
-. Yellow - Browser Panel
-. Purple - Divider (divides the Browser Panel from the Parcel List)
-. Orange - Parcel List Panel
-. Blue - Parcel Card
-. Cyan - Status Bar Footer
+=== More About Browser Panel
 
-The Browser and Parcel List Panel sections sizes can be changed either by commands
-or by dragging the Divider part up or down to either increase or decrease either
-section's sizes.
+image::Browser_Display_After_Selection.png[width="890"]
+_Figure 4.1.1 : Selecting a parcel_
+
+Selecting a parcel activates the Browser Panel. In the diagram above, when the 4th parcel belonging to Cornelia
+Meier is selected, the Browser Panel is activated and displays the destination address of the parcel. Tn this case,
+Cornelia wants his parcel to be delivered to 10th Street Singapore 123114. +
+
+=== More About Parcel List Panel
+
+image::ParcelCard.png[width="890"]
+_Figure 4.2.1 : Labelled Parcel Card_
+
+1. *Parcel Index* - This is the index number of the parcel in the displayed list.
+2. *Name* - This is the name of the recipient of the parcel.
+3. *Phone* - This is the phone number of the recipient of the parcel.
+4. *Address* - This is the address to deliver the parcel to. The address must end with the postal code of the address.
+ You can read more about postal codes in Ark in the #postal-code[Postal Code section] below.
+5. *Email* - This is the email address of the recipient of the parcel.
+6. *Tracking Number* - This is the tracking number of the parcel. You can read more about it Ark's parcel tracking
+numbers in the #tracking-number[Tracking Numbers section] below.
+7. *Delivery Date* - This is the delivery date of the parcel. The parcel should be delivered on dates prior to or on
+this date.
+8. *Status* - This is the status of the parcel in the delivery workflow. Read more about parcel delivery status
+ in the link:#status[Status section] below.
+9. *Tags* - These are the tags of the parcel. They are used to provide more information about a parcel's contents.
+Read more about parcel tags in the link:#tag[Tags section] below.
 
 == Features
 
@@ -92,7 +115,7 @@ section's sizes.
 * Items in square brackets are optional e.g `#/TRACKING_NUMBER [t/TAG]` can be used as `#/RR000000000SG t/fragile` or as
  `#/RR000000000SG`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}`
- (i.e. 0 times), `t/fragile`, `t/keepDry t/frozen` etc.
+ (i.e. 0 times), `t/fragile`, `t/flammable t/frozen` etc.
 * Parameters can be in any order e.g. if the command specifies `#/TRACKING_NUMBER p/PHONE_NUMBER`,
  `p/PHONE_NUMBER #/TRACKING_NUMBER` is also acceptable.
 ====
@@ -104,7 +127,7 @@ Format: `help`
 === Adding a parcel: `add`
 
 Adds a parcel to Ark +
-Format: `add #/TRACKING_ID n/NAME [p/PHONE_NUMBER] [e/EMAIL] a/ADDRESS d/DELIVERYDATE [s/STATUS] [t/TAG]...`
+Format: `add #/TRACKING_NUMBER n/NAME [p/PHONE_NUMBER] [e/EMAIL] a/ADDRESS d/DELIVERYDATE [s/STATUS] [t/TAG]...`
 
 [TIP]
 A parcel can have any number of tags (including 0)
@@ -115,33 +138,37 @@ Examples:
 
 * `add #/RR000000000SG n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/01-01-2001
  s/DELIVERING`
-* `add #/RR000000000SG n/Betsy Crowe t/friend d/02-02-2002 e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567
+* `add #/RR000000000SG n/Betsy Crowe t/frozen d/02-02-2002 e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567
  t/fragile`
 
 [NOTE]
+Parcel address must be appended with their postal code in the form `s` or `S` followed by 6 digits. i.e. `S123661`
+Failure to do so will result in an invalid address message from Ark.
 Parcel Tracking numbers presently support only tracking numbers for registered articles managed by SingPost. These
 numbers include two `R`s followed by nine digits and ending with `SG`. +
-Support for other delivery companies will come in future patches.
+Support for other delivery companies will come in future patches. +
 
 [NOTE]
-If not included in the add command, the default value of both the phone and email field is `NIL`.
+If not included in the add command, the default value of both the phone and email field is `NIL` while the default
+value for the status field is `PENDING`.
 
 //tag::import[]
 
+[#import]
 === Import multiple parcels stored in an xml storage file: `import`
 
-Imports the parcels in an Ark storage `.xml` file stored in `/data/import/` folder to Ark +
+Imports the parcels in an Ark `.xml` storage file stored in `/data/import/` folder of Ark's home directory to Ark +
 Format: `import FILE_NAME`
 
 Examples:
 
-* `import addressBook.xml`
-* `import addressBook123661.xml`
+* `import ark` - This will import parcels stored in `data/import/ark.xml` into the current instance of Ark
+* `import ark_save` - This will import parcels stored in `data/import/ark_save.xml` into the current instance of Ark.
 
-[WARNING]
+[NOTE]
 ====
-File names should be alphanumeric i.e. `addressBook12.xml`, `12.xml`
-Non alphanumeric file names will not be accepted. i.e. `$addressbook#!@,xml`
+File names should only contain alphanumeric or underscore characters i.e. `ark1`, `ark_save1`
+Non alphanumeric file names will not be accepted. i.e. `$addressbook#!@,`
 ====
 
 //end::import[]
@@ -269,6 +296,41 @@ Selects the 2nd parcel in the Ark. Expands browser section.
 `select 1` +
 Selects the 1st parcel in the results of the `find` command.
 
+//tag::tabs[]
+=== Selecting a tab : `tab`
+
+Selects the tab identified by the index number and switches the tab shown in the Parcel List Panel.
+The selected tab will then display its respective parcel list according to its tab title.
+
+The "All Parcels" tab shows all the parcels in Ark with the status of `PENDING`, `DELIVERING`, `OVERDUE` only.
+The "Completed Parcels" tab shows all the parcels with the status `COMPLETED` only.
+
+Format: `tab INDEX`
+
+[TIP]
+You can also select a tab by clicking on the specified tab you wish to switch to in the Parcel List Panel.
+
+[NOTE]
+====
+Pressing the kbd:[&larr;] and kbd:[&rarr;] arrows when selecting a tab
+will switch to the tab in that respective direction
+====
+
+****
+* Selects the tab of the specified `INDEX` and switchs the current tab shown to the new selected tab.
+* The index must be within the number of tabs shown.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`tab 2` +
+Selects the second tab "Completed Parcels" in the Parcel List Panel and displays its respective parcel list.
+* `tab 1` +
+Selects the first tab "All Parcels" in the Parcel List Panel and displays it respective parcel list .
+//end::tabs[]
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -341,42 +403,61 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
-//tag::trackingNumber[]
-
-=== Tracking Number Recognition
-
-Parcels have tracking numbers for delivery vendors to keep track of the parcels that they send out on a daily basis.
-This feature is important because a single person can have many parcels belonging to him. Tracking numbers are used
-to differentiate between the different parcels that are going to be delivered to the same person. Tracking numbers also
-serve as a better way of narrowing down and pinpointing parcels of interest since these numbers are more unique
-
-[NOTE]
-Presently, the `Tracking Number` Field only has support for Registered Article tracking numbers belonging to SingPost.
-You can read more about their Registered Article tracking number
- link:http://www.singpost.com/send-receive/sending-within-singapore/registered-article-local[here].
-
-//end::trackingNumber[]
-
 //tag::postalCode[]
 
-=== Postal Code Recognition
+[#postal-code]
+=== Postal Code
 
 Ark can store the postal address of locations in Singapore. It only accepts values of `s` or `S` followed by 6 digits.
-The postal code of a parcel is used to query Google Maps when the `select` command is executed.
+The postal code of a parcel is used to query Google Maps when the `select` command is executed or when a parcel in the
+Parcel List Panel is clicked.
+
+*Postal codes must be appended to the end of the address text.* i.e. Suppose you are adding a new parcel into Ark and
+entered `add ...(Some info)... a/NUS School of Computing, COM1, 13 Computing Drive, S117417 ...(More info required
+in the add command)...`. In this case, `S11417` is the postal code of the above address and is appended to its
+respective address, separated by a space.
+
+[WARNING]
+If you did not append the postal code of the address at the end of your address, Ark will not recognize your address
+input as a valid input and would give you an invalid input message.
 
 [NOTE]
 Presently, the `PostalCode` field still does a very relaxed validation and does not completely ensure that the postal
 code exists even though it might meet the criteria above. The team is working on producing a database of postal codes
- in Singapore by quering the Google Maps Distance Matrix API. In the meantime, it is assumed that users will enter
- the correct postal code.
+ in Singapore. In the meantime, we encourage users to take additional precautions when entering the postal codes
+ into Ark and ensure that the postal code inputs are valid.
 
 //end::postalCode[]
 
+//tag::trackingNumber[]
+
+[#tracking-number]
+=== Tracking Number
+
+Parcels have tracking numbers for delivery vendors to keep track of the parcels that they send out on a daily basis.
+This feature is important because a single person can have many parcels belonging to him. Tracking numbers are used
+to differentiate between the different parcels that will be be delivered to the same person. Tracking numbers also
+serve as a better way of narrowing down and pinpointing parcels of interest since these numbers are likely to be more
+unique than names.
+
+Ark only supports tracking numbers for registered articles managed by SingPost at this instance. These
+numbers include two `R`s followed by nine digits and ending with `SG`. i.e. `RR123456789SG` +
+You can read more about SingPost Registered Article tracking number
+ link:http://www.singpost.com/send-receive/sending-within-singapore/registered-article-local[here]. +
+
+[NOTE]
+The team is working on adding support for more types of tracking numbers such as those of
+ link::https://www.ups.com/tracking/tracking.html[UPS] and link::https://www.fedex.com/sg/[FedEx] in the future.
+
+//end::trackingNumber[]
+
 //tag::status[]
 
+[#status]
 === Status field
 
-`Status` is used to indicate the current stage of delivery that a parcel is at. It has 4 possible states:
+`Status` is used to indicate the current delivery status of a parcel. A parcel can have 4 possible delivery status and
+listed below is a description of these `Status` values.
 
 * `PENDING` - This means that the parcel has not been delivered and has not passed the date it is supposed to be
 delivered by. +
@@ -384,16 +465,34 @@ delivered by. +
 * `COMPLETED` - This indicates that the parcel has been successfully delivered to its destination.
 * `OVERDUE` - This state indicates that the parcel has not been delivered and has passed its due date.
 
-These states have different colours codes to allow you to differentiate the `Status` values more easily.
-
 //end::status[]
 
+//tag::tags[]
+
+[#tags]
+=== Tags field
+
+`Tag`s are used to indicate how the parcel should be handled. Tags can contain one or more of the following `Tag`s:
+
+* `FROZEN` - This means the parcel should be refrigerated as its contents are temperature sensitive.
+* `FLAMMABLE` - This means that the parcels' contents are highly flammable and should be kept away from heat.
+* `HEAVY` - This indicates that the parcel is heavy and may require additional manpower to deliver.
+* `FRAGILE` - This state indicates that the parcels' contents can be broken easily and
+requires additional care when handling.
+
+[NOTE]
+If your use of Ark requires more tags to be made available, please contact our team and we will see to your request.
+
+//end::tags[]
+
+//tag::browser[]
 === Google Maps Browser
 
 Ark has an in-built Google Maps browser section in the main window and can be used to show you the locations
 of the delivery addresses of each parcel. This feature will be automatically used whenever you type `select`
 into the command box, and will display a Google Maps search of the postal code of the parcel's address in the
 browser section of the main window.
+//end::browser[]
 
 //tag::autocomplete[]
 === Autocomplete
@@ -409,12 +508,54 @@ There is more than one possibility for the autocompletion, Ark will display the 
 below.
 
 image::TabAutocompleteMultipleExample.PNG[width="400"]
-_Figure 5.19.1 : If there are multiple autocomplete options, the options will be displayed in the result window_
+_Figure 5.21.1 : If there are multiple autocomplete options, the options will be displayed in the result window_
 
 Examples:
 
 * `a` + kbd:[Tab] (auto-completes with `add` in the command line input)
 //end::autocomplete[]
+
+//tag::tooltip[]
+
+[#tool-tip]
+=== Parcel Tooltip
+
+Ark comes with a tooltip feature that allows you to view parcel details that are too long. Suppose you have entered
+a parcel with really long details into Ark. As seen below, John's parcel has a delivery address that is too long,
+and a part of it has been replaced by ellipsis i.e. `...`.
+
+image::ParcelWithLongInput.PNG[width="1000"]
+_Figure 5.22.1 : Parcel with a long address_
+
+To view the full delivery address, we simply mouseover his address and the full details of his
+address will appear as a tooltip. This can be seen in the diagram below.
+
+image::mouse-over-address.png[width="1000"]
+_Figure 5.22.2 : Tooltip to show more of John's address_
+
+//end::tooltip[]
+
+//tag::gui-tab[]
+
+=== GUI tab mechanism
+
+To help you organise between the parcels you have delivered and the parcels you have delivered, Ark provides you two
+lists, one containing the parcels you have yet to deliver, and the other, the parcels that you have already delivered.
+
+When you launch the application, Ark will show the list of undelivered parcels in your inventory. To view
+the list of delivered parcels, you can click on the `Completed Parcel` tab located on the Tab Panel of Ark.
+
+image::completed-parcel-list.PNG[width="1000"]
+_Figure 5.23.1 : Clicking on `Completed Parcel` tab_
+
+As seen above, the list has changed to the list of parcels that have been delivered. To revert back to the list of
+parcels that have not been delivered, simply click on the `All Parcels` tab.
+
+[NOTE]
+Parcels that have a `COMPLETED` status will be added to the list of delivered parcels directly while Parcels
+that do not have a `COMPLETED` status will  be added to the list of undelivered parcels.
+
+//end::gui-tab[]
 
 === Saving the data
 
@@ -423,13 +564,29 @@ There is no need to save manually.
 
 //tag::backup[]
 
+[#back-up]
 === Backing up the data
 
 Ark data are backed up in the hard disk automatically at the start of every session of the program. +
 There is no need to back up the data manually. +
 The backup file is appended with `-backup.xml` and is stored in the same folder as the main storage file. +
-The data from the backup file has to be loaded manually by copying the contents of the backup file into your main
- storage file. i.e. `./data/` folder
+
+To load the backup file into Ark, you can perform the following actions:
+
+ 1. Firstly, open the `/data/` folder in the home directory of Ark.
+ 2. Then, copy the backup file, and paste the copied file into your `/data/import` directory. i.e. `ark-backup.xml`
+ 3. Open the Ark Application. If Ark fails to start as a result of corrupted data in your Ark save file, simply delete
+ the corrupted save file and restart the Ark application.
+ 4. Finally, import the backup save file into Ark by using the `import` command by typing `import (back-up file name)` .
+ i.e. `import ark-backup.xml` +
+
+Alternatively, you can delete your original save file and rename your backup file to the name of your original save
+ file. However, this approach will result in data being loss if your original save file was not corrupted and contains
+ valuable data.
+
+[NOTE]
+If Ark is unable to read your save file for reasons such as the save file being of an invalid format or if your save
+file was missing (*gasp*), Ark would not create a backup file for you on start up. +
 
 //end::backup[]
 
@@ -438,7 +595,7 @@ The data from the backup file has to be loaded manually by copying the contents 
 
 Ark can store the scheduled delivery date of parcels. It only accepts valid dates,
 including valid leap years and days. +
-Additionally, the dates should be in the following formal: DD-MM-YYYY +
+The dates should be in one of the following formats: DD-MM-YYYY
 The list of Parcels is kept in sorted order according to the delivery dates, with the earliest dates in front.
 
 //end::deliveryDate[]
@@ -461,14 +618,29 @@ of the list so that the user does not have to manually do so.
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the
  data of your previous Address Book folder.
 
+*Q*: My save file is corrupted. How can I restore it? +
+*A*: The save file cannot be restored. You can instead load up a backup of your save file. Please refer to the
+link:#back-up[Backing up the data section].
+
+*Q*: Some parcel details are too long and they became cut off with ellipsis i.e. `...` . What do I if I want to see the
+full information in these details? +
+*A*: Please refer to the link:#tooltip[Parcel Tooltip section] .
+
+*Q*: I want to add parcels from a save file on another computer to my own instance of Ark without having to overwrite
+my own copy of Ark. How can I do this? +
+*A*: Copy the save file on the other computer into your computer. Store this save file in the `/data/import` directory
+ of your Ark application. Then launch the Ark application and import your the copied save file into Ark.
+ Please refer to the link:#import[Import Command section] if you are unfamiliar with using the import command.
+
+
 == Command Summary
 
-* *Add* `add #/TRACKING_NUMBER n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DELIVERY_DATE [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 d/12-12-2012 t/friend t/colleague`
+* *Add* `add #/TRACKING_NUMBER n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DELIVERY_DATE s/[STATUS] [t/TAG]...` +
+e.g. `add #/RR906906906SG n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, S123465 d/12-12-2012 s/pending t/frozen t/flammable`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [#/TRACKING_NUMBER] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DELIVERY_DATE] [t/TAG]...` +
+* *Edit* : `edit INDEX [#/TRACKING_NUMBER] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DELIVERY_DATE] s/[STATUS] [t/TAG]...` +
 e.g. `edit 2 #/RR000000000SG n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
@@ -479,6 +651,8 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Import*: `import` FILE_NAME +
+e.g.`import ark_save`
 
 == Patch Notes
 
@@ -508,6 +682,21 @@ In version v1.3, users will be able to: +
 * Add one of four possible Status to parcels. i.e. `PENDING`, `DELIVERING`, `COMPLETED` and `OVERDUE`.
 * Import parcels stored in an Ark storage file in xml format into Ark.
 * Have Ark maintain a sorted list of parcels according to when they need to be delivered.
+
+{{More to be added}}
+
+=== Features added in v1.4
+In version v1.4, users will be able to: +
+
+* Click on tabs to select between two lists, one of which contains undelivered and the other, delivered parcels
+* Add parcel-related tags to inform delivery personnel on additional precautions to take while delivering a parcel.
+
+{{More to be added}}
+
+=== Features added in v1.5rc
+In version v1.3, users will be able to: +
+
+* View a tooltip of parcel details when they mouseover the detail. i.e. `address`
 
 {{More to be added}}
 

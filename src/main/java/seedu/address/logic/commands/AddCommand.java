@@ -39,9 +39,9 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 S123123 "
             + PREFIX_DELIVERY_DATE + "25-12-2000 "
-            + PREFIX_STATUS + "PENDING"
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_STATUS + "PENDING "
+            + PREFIX_TAG + "FROZEN "
+            + PREFIX_TAG + "heavy";
 
     public static final String MESSAGE_SUCCESS = "New parcel added: %1$s";
     public static final String MESSAGE_DUPLICATE_PARCEL = "This parcel already exists in the address book";
@@ -59,12 +59,7 @@ public class AddCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            model.addParcel(toAdd);
-            model.maintainSorted();
-            if (model.hasSelected()) {
-                model.reselect(toAdd);
-            }
-
+            model.addParcelCommand(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateParcelException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PARCEL);

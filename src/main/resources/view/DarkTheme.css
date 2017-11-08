@@ -28,7 +28,7 @@
     -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Semibold";
 }
-
+/* @@author vicisapotato */
 .tab-pane .tab-header-area .tab-header-background {
     -fx-opacity: 0;
 }
@@ -63,6 +63,7 @@
     -fx-alignment: CENTER;
     -fx-text-fill: #aab981;
 }
+/* @@author */
 
 .table-view {
     -fx-base: #1d1d1d;
@@ -131,6 +132,10 @@
     -fx-background-color: #515658;
 }
 
+.list-cell:filled:hover {
+    -fx-background-color: #356a7d;
+}
+
 .list-cell:filled:selected {
     -fx-background-color: #424d5f;
 }
@@ -147,7 +152,7 @@
 .cell_big_label {
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 16px;
-    -fx-text-fill: #010504;
+    -fx-text-fill: #cdcdcd;
 }
 
 .cell_small_label {

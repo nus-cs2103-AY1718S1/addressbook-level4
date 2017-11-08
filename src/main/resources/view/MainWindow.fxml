@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefWidth="690.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
     <URL value="@DarkTheme.css" />
     <URL value="@Extensions.css" />
@@ -35,6 +35,7 @@
       <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
   </StackPane>
+  <!-- @@author vicisapotato -->
   <SplitPane fx:id="splitPanePlaceholder" dividerPositions="0.5" orientation="VERTICAL">
     <items>
 
@@ -43,9 +44,10 @@
           <Insets bottom="10" left="10" right="10" top="10" />
         </padding>
       </StackPane>
-     <StackPane fx:id="parcelListPanelPlaceholder" prefHeight="134.0" prefWidth="688.0" />
+     <StackPane fx:id="parcelListPanelPlaceholder" />
     </items>
   </SplitPane>
+  <!-- @@author -->
 
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
 </VBox>

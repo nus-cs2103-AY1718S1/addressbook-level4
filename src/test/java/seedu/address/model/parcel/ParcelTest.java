@@ -20,6 +20,7 @@ import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.ParcelBuilder;
 
+//@@author kennard123661
 public class ParcelTest {
 
     @Test
