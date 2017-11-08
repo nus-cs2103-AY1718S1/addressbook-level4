@@ -16,6 +16,9 @@ public class NamePhoneTagContainsKeywordsPredicate implements Predicate<ReadOnly
         this.keywords = keywords;
     }
 
+    /*
+    Tests name, primaryPhone, secondary phones in UniquePhoneList and tags sequentially.
+     */
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream()

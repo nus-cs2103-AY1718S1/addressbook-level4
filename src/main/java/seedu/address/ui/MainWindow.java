@@ -157,6 +157,10 @@ public class MainWindow extends UiPart<Region> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
         commandBox.getCommandTextField().requestFocus();
 
+        /*
+        ChangeListener for caret focus.
+        Switches focus to searchBox upon switching out of commandBox.
+         */
         commandBox.getCommandTextField().focusedProperty().addListener(
                 new ChangeListener<Boolean>() {
                     @Override
