@@ -156,9 +156,10 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [h/HOME_NUMBER] [e/EMAIL] [se/SCHOOL_EMAI
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+By typing this command, you will be able to edit the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+By typing this command, you will be able to edit the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 === Locating persons by name: `find`
 
@@ -178,10 +179,11 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 Examples:
 
 * `find John` +
-Returns `john` and `John Doe`
+If there was john` and `John Doe` in the person list,
+by typing this command, you will be able to find both `john` and `John Doe`.
 
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+By typing this command, you will be able to find any person having names `Betsy`, `Tim`, or `John`
 
 === Finding a person's tag : `findtag`
 
@@ -199,10 +201,10 @@ Format: `findtag TAGS [MORE_TAGS]`
 Examples:
 
 * `findtag friends` +
-Returns any person having tag `friends`.
-* `findtag owesMoney neighbours friends` +
-Returns any person having tags `owesMoney`, `neighbours`, or `friends`.
+By typing this command, you will be able to find any person having tag `friends`.
 
+* `findtag owesMoney neighbours friends` +
+By typing this command, you will be able to find any person having tags `owesMoney`, `neighbours`, or `friends`.
 
 === Selecting a person : `select`
 
@@ -220,11 +222,14 @@ Examples:
 
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+1. By typing `find Betsy`, you will be able to find any person having the name `Betsy`. +
+2. Subsequently, by typing `select 1`, you are selecting the 1st person in the results of the `find Betsy` command which will
+displays the information details of the 1st person in the graphical user interface.
 
 * `list` +
 `select 3` +
-Selects the 3rd person in The Myth's Book. +
+1. By typing `list`, you will be able to view the current listing of all contacts with updated details. +
+2. Subsequently, by typing `select 3`, you are selecting the 3rd person in the most recent listing of The Myth's Book. +
 You should see the displayed result of `select 3` as seen in Figure 5.8.1 below.
 
 image::SelectCommandFinalResult.PNG[width="790"]
@@ -245,10 +250,11 @@ Examples:
 
 * `list` +
 `delete 2` +
-This will delete the 2nd person in The Myth's Book.
+By typing `delete 2`, you will be able to delete the 2nd person in the most recent listing in The Myth's Book.
+
 * `find Betsy` +
 `delete 1` +
-This will delete the 1st person in the results of the `find` command.
+By typing `find Betsy`, you will be able to delete the 1st person in the results of the `find` command.
 
 === Listing entered commands : `history`
 
@@ -335,7 +341,8 @@ Examples:
 
 * `themeslist` +
 `switch 2` +
-Switches to the 2nd theme in the themes list.
+1. By typing `themeslist`, you will be able to see the available themes that The Myth's Book has to offer. +
+2. By typing `switch 2`, you will be able to switch to the 2nd theme listed in the themes list.
 
 You should be able to see the result of using `switch INDEX`
 as seen in the figure below.
@@ -379,14 +386,15 @@ Examples:
 
 * `find Betsy` +
 `access 1` +
-Selects the 1st person in the results of the `find` command and attains the website of the 1st person.
-The website details is then loaded into the browser.
+1. By typing `find Betsy`, you will be able to see a generated list of persons having names `Betsy`.
+2. Subsequently, typing `access 1`, it will help you attain the website details of the 1st person in the generated list which is then loaded into the browser.
 
-* 1.`list` +
-2.`select 6` +
-3.`access 6` +
-Lists down all the contacts and selects the 6th person in The Myth's Book. +
-By typing `access 6`, it allows you to access the website of the 6th person which is loaded into the browser.
+* `list` +
+`select 6` +
+`access 6` +
+1. By typing `list`, it lists down all the contacts. +
+2. Subsequently, by typing `select 6`, it will select and show you information details of the 6th person in the most recent listing. +
+3. Finally, by typing `access 6`, it allows you to access the website details of the 6th person which is loaded into the browser.
 
 You should see the displayed result of `access 6` as seen in Figure 6.1.1 below.
 
@@ -403,11 +411,12 @@ Format: `add n/NAME d/DATE a/ADDRESS`
 Examples:
 
 * `addevent n/ZoukOut d/23/12/2017 a/Sentosa, Siloso Beach` +
-Adds an event `ZoukOut` in The Myth's Book.
-* `addevent n/Orbital d/1/5/2018 a/NUS School Of Computing` +
-Adds an event `Orbital` in The Myth's Book.
+
+By typing this command, you will be able to add an event `ZoukOut` in The Myth's Book.
+
 * `addevent n/Halloween Horror Night d/31/10/2017 a/Universal Studios Singapore` +
-Adds an event `Halloween Horror Night` in The Myth's Book.
+
+By typing this command, you will be able to add an event `Halloween Horror Night` in The Myth's Book.
 
 If input is correct, you will be able to see the event being added successfully into The Myth's Book and receive the following displayed result in the Results Display Panel.
 
@@ -438,10 +447,11 @@ Examples:
 
 * `list` +
 `favourite 2` +
-Favourites the 2nd person in The Myth's Book.
+By typing this command, you will be able to favourite the 2nd person in the most recent person listing of The Myth's Book.
+
 * `find Betsy` +
 `favourite 1` +
-Favourites the 1st person in the results of the `find` command.
+By typing this command, you will be able to favourite the 1st person in the results of the `find` command.
 
 === Listing all favourited persons : `favouritelist`
 
@@ -463,13 +473,15 @@ Examples:
 
 * `list` +
 `unfavourite 2` +
-Unfavourites the 2nd person in The Myth's Book.
+By typing `unfavourite 2`, you will be able to unfavourite the 2nd person in the most recent person listing of The Myth's Book.
+
 * `favouritelist` +
 `unfavourite 1` +
-Unfavourites the 1st person in the results of the `favouritelist` command.
+By typing `unfavourite 1`, you will be able to unfavourite the 1st person in the results of the `favouritelist` command.
+
 * `find Betsy` +
 `unfavourite 1` +
-Unfavourites the 1st person in the results of the `find` command.
+By typing `unfavourite 1`, you will be able to unfavourite the 1st person in the results of the `find` command.
 
 === Accessing a person's location : `locate`
 
@@ -488,16 +500,17 @@ Examples:
 
 * `find Betsy` +
 `locate 1` +
-Selects the 1st person in the results of the `find` command and attains the address of the 1st person.
-The address details is then used in a Google Maps Search.
+1. By typing `find Betsy`, you will be able to see a generated list of persons having names `Betsy`.
+2. Subsequently, typing `locate 1`, it will help you attain the address details of the 1st person in
+the generated list which is then loaded into the browser with a Google Maps Search.
 
-* 1.`list` +
-2.`locate 6` +
-Lists down all the contacts and `locate 6` selects the 6th person in The Myth's Book. +
-The address details of the 6th person is then used in a Google Maps Search.
-
-By typing `locate 6`,
-You should see the displayed result of the person's address in a Google Maps Search as seen in Figure 6.6.1 below.
+* `list` +
+`select 6` +
+`locate 6` +
+1. By typing `list`, it lists down all the contacts. +
+2. Subsequently, by typing `select 6`, it will select and show you information details of the 6th person in the most recent listing. +
+3. Finally, by typing `locate 6`, it allows you to access the address details of the 6th person which is loaded into the browser. +
+4. You should see the displayed result of the person's address in a Google Maps Search as seen in Figure 6.6.1 below.
 
 image::LocationCommandFinalResult.PNG[width="790"]
 
