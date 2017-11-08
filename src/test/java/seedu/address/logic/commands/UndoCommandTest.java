@@ -61,6 +61,7 @@ public class UndoCommandTest {
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
     }
 
+    //@@author aaronyhsoh
     @Test
     public void executeValidIndex() throws Exception {
         UndoRedoStack undoRedoStack = prepareStack(

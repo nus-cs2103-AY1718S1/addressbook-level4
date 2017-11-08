@@ -17,14 +17,18 @@ public class UndoCommand extends Command {
     public static final String COMMAND_WORD = "undo";
     public static final String COMMAND_ALIAS = "u";
 
+
+    //@@author aaronyhsoh
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Reverses the most recent N commands, where (N = to the INDEX entered)\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Example: " + COMMAND_WORD + " 3";
+    //@@author
 
     public static final String MESSAGE_SUCCESS = "Undo success!";
     public static final String MESSAGE_FAILURE = "No more commands to undo!";
 
+    //@@author aaronyhsoh
     private final Index index;
 
     public UndoCommand() {
@@ -46,8 +50,7 @@ public class UndoCommand extends Command {
         if (index == null) {
             undoRedoStack.popUndo().undo();
             return new CommandResult(MESSAGE_SUCCESS);
-        }
-        else {
+        } else {
             int commandsToUndo = index.getOneBased();
             while (commandsToUndo != 0 && undoRedoStack.canUndo()) {
                 undoRedoStack.popUndo().undo();
@@ -57,11 +60,14 @@ public class UndoCommand extends Command {
         }
     }
 
+    //@@author
     @Override
     public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack) {
         this.model = model;
         this.undoRedoStack = undoRedoStack;
     }
+
+    //@@author aaronyhsoh
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
