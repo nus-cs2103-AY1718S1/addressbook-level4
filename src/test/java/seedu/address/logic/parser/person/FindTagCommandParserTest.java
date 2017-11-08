@@ -9,10 +9,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import edu.emory.mathcs.backport.java.util.Arrays;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.person.FindTagCommand;
-import seedu.address.logic.parser.FindTagCommandParser;
 import seedu.address.model.property.TagContainsKeywordsPredicate;
 
 //@@author yunpengn

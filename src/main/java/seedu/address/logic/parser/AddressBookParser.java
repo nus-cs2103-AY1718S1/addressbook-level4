@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.EmailCommand;
+import seedu.address.logic.commands.person.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -37,7 +37,9 @@ import seedu.address.logic.parser.person.AddAvatarCommandParser;
 import seedu.address.logic.parser.person.AddCommandParser;
 import seedu.address.logic.parser.person.DeleteCommandParser;
 import seedu.address.logic.parser.person.EditCommandParser;
+import seedu.address.logic.parser.person.EmailCommandParser;
 import seedu.address.logic.parser.person.FindCommandParser;
+import seedu.address.logic.parser.person.FindTagCommandParser;
 import seedu.address.logic.parser.person.SelectCommandParser;
 
 /**
