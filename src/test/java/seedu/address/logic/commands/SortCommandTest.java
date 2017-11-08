@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -31,6 +33,30 @@ public class SortCommandTest {
         expectedModel.sortFilteredPersonList(ReadOnlyPerson.PHONESORTDSC);
         SortCommand expectedCommand = prepareCommand(ReadOnlyPerson.PHONESORTDSC, model);
         assertCommandSuccess(expectedCommand, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void equals() {
+        Comparator namesort = ReadOnlyPerson.NAMESORTASC;
+        Comparator phonesort = ReadOnlyPerson.PHONESORTASC;
+
+        SortCommand sortFirstCommand = new SortCommand(namesort);
+        SortCommand sortSecondCommand = new SortCommand(phonesort);
+
+        // same object -> returns true
+        assertTrue(sortFirstCommand.equals(sortFirstCommand));
+
+        // null -> returns false
+        assertFalse(sortFirstCommand.equals(null));
+
+        // different types -> returns false
+        assertFalse(sortFirstCommand.equals(new ClearCommand()));
+
+        // different types -> return false
+        assertFalse(sortFirstCommand.equals(true));
+
+        // different comparator -> returns false
+        assertFalse(sortFirstCommand.equals(sortSecondCommand));
     }
 
     /**
