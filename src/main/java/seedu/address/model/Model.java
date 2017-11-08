@@ -68,7 +68,6 @@ public interface Model {
     /** Adds the given task */
     void addTask(ReadOnlyTask task) throws DuplicateTaskException;
     //@@author eryao95
-    /** Deletes the given task. */
     void deleteTask(ReadOnlyTask target) throws TaskNotFoundException;
     //@@author
     /**
