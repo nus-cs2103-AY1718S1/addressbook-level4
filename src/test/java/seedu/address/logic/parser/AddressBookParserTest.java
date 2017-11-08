@@ -24,7 +24,6 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindByAddressCommand;
 import seedu.address.logic.commands.FindByEmailCommand;
 import seedu.address.logic.commands.FindByNameCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;

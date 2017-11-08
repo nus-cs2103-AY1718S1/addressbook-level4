@@ -19,8 +19,8 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindByEmailCommand}.
@@ -52,7 +52,7 @@ public class FindCommandTest {
         assertTrue(findFirstCommandTrue.equals(findFirstCommandTrue));
 
         // same values -> returns true
-        FindCommand findSecondCommandCopy = new FindCommand(true,second);
+        FindCommand findSecondCommandCopy = new FindCommand(true, second);
         assertTrue(findSecondCommandTrue.equals(findSecondCommandCopy));
 
         // different types -> returns false
@@ -90,7 +90,7 @@ public class FindCommandTest {
         personDescriptor.setName(userInput[1]);
         personDescriptor.setEmail(userInput[2]);
         boolean type = (userInput[0].equals("AND")) ? true : userInput[0].equals("OR") ? false : null;
-        FindCommand command = new FindCommand(type,personDescriptor);
+        FindCommand command = new FindCommand(type, personDescriptor);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
