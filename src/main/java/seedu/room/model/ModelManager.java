@@ -139,7 +139,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
-
         residentBook.updatePerson(target, editedPerson);
         indicateResidentBookChanged();
     }
@@ -159,6 +158,13 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateFilteredPersonListPicture(Predicate<ReadOnlyPerson> predicate, int index, Person p) {
+        requireNonNull(predicate);
+        filteredPersons.setPredicate(predicate);
+        filteredPersons.get(index).getPicture().setPictureUrl(p.getPicture().getPictureUrl());
     }
 
     @Override

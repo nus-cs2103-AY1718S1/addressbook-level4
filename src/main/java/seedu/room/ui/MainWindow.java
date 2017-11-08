@@ -157,7 +157,7 @@ public class MainWindow extends UiPart<Region> {
         eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());  //TO BE IMPLEMENTED
 
         //@@author shitian007
-        PersonPanel personPanel = new PersonPanel();
+        PersonPanel personPanel = new PersonPanel(logic);
         personPanelPlaceholder.getChildren().add(personPanel.getRoot());
         //@@author
 

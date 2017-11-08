@@ -4,8 +4,8 @@ package seedu.room.ui;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -24,6 +24,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import seedu.room.commons.core.LogsCenter;
 import seedu.room.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.room.logic.Logic;
+import seedu.room.model.person.Name;
 import seedu.room.model.person.ReadOnlyPerson;
 
 /**
@@ -37,6 +39,7 @@ public class PersonPanel extends UiPart<Region> {
     private static Random random = new Random();
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private final Logic logic;
 
     private ReadOnlyPerson person;
 
@@ -57,8 +60,9 @@ public class PersonPanel extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    public PersonPanel() {
+    public PersonPanel(Logic logic) {
         super(FXML);
+        this.logic = logic;
         loadDefaultScreen();
         registerAsAnEventHandler(this);
     }
@@ -86,13 +90,24 @@ public class PersonPanel extends UiPart<Region> {
      * @param person
      */
     private void loadPersonInformation(ReadOnlyPerson person) {
-        this.person = person;
+        this.person = updatePersonFromLogic(person);
         name.textProperty().setValue(person.getName().toString());
         phone.textProperty().setValue(person.getPhone().toString());
         address.textProperty().setValue(person.getRoom().toString());
         email.textProperty().setValue(person.getEmail().toString());
         initTags();
         initImage();
+    }
+
+    private ReadOnlyPerson updatePersonFromLogic(ReadOnlyPerson person) {
+        List<ReadOnlyPerson> personList = logic.getFilteredPersonList();
+        for (ReadOnlyPerson p : personList) {
+            if (p.getName().toString().equals(person.getName().toString()) &&
+                    p.getPhone().toString().equals(person.getPhone().toString())){
+                return p;
+            }
+        }
+        return null;
     }
 
     /**
