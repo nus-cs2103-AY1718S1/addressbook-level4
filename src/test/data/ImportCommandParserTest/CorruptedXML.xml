@@ -1,0 +1,10 @@
+<!-- @@author freesoup -->
+<addressbook>
+    <persons>
+        <name>99999</name>
+        <phone>123141</phone>
+        <email>alice@example.com</email>
+        <address>123, Jurong West Ave 6, #08-111</address>
+        <remark></remark>
+        <tagged>friends</tagged>
+</addressbook>

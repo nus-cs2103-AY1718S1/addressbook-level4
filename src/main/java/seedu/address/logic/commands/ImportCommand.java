@@ -22,8 +22,11 @@ public class ImportCommand extends UndoableCommand {
     public static final String MESSAGE_WRONG_FORMAT = "File chosen is not of .vcf or .xml type";
     public static final String MESSAGE_FILE_CORRUPT = "File is corrupted. Please check.";
     public static final String MESSAGE_FILE_NOT_FOUND = "File was not found in specified directory.";
+    public static final String MESSAGE_IMPORT_CANCELLED = "Import cancelled";
+    public static final String XML_EXTENSION = ".xml";
+    public static final String VCF_EXTENSION = ".vcf";
 
-    private final List<ReadOnlyPerson> toImport;
+    public final List<ReadOnlyPerson> toImport;
 
     public ImportCommand (List<ReadOnlyPerson> importList) {
         toImport = importList;
@@ -40,5 +43,12 @@ public class ImportCommand extends UndoableCommand {
             }
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS, duplicate));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ImportCommand // instanceof handles nulls
+                && this.toImport.equals(((ImportCommand) other).toImport)); // state check
     }
 }

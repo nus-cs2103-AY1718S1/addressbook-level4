@@ -21,13 +21,24 @@ public class SortCommandParserTest {
         // empty args
         assertParseFailure(parser, "     ", String.format(
                 MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+    }
 
+    @Test
+    public void parse_invalidArgs_throwParseException() {
         //only FIELD
         assertParseFailure(parser, "name", String.format(
                 MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
 
         //Only ORDER
         assertParseFailure(parser, "asc", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+
+        //Only Order correct
+        assertParseFailure(parser, "name qwe", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+
+        //Only field correct
+        assertParseFailure(parser, "cool dsc", String.format(
                 MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
     }
 

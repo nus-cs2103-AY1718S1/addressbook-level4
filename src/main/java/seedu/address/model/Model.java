@@ -69,6 +69,9 @@ public interface Model {
     /** Removes a tag from the specified Index on the list.*/
     void removeTag(Index index, Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
+    /** Removes a tag from a specified person.*/
+    void removeTagFromPerson(Tag tag, ReadOnlyPerson person) throws DuplicatePersonException, PersonNotFoundException;
+
     /** Sorts the filtered list.*/
     void sortFilteredPersonList(Comparator<ReadOnlyPerson> comparator);
     /**

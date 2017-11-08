@@ -1,4 +1,27 @@
 # freesoup
+###### \java\seedu\address\commons\events\ui\ImportFileChooseEvent.java
+``` java
+/**
+ * Indicates a request to open a FileChooser Window to import a file.
+ */
+public class ImportFileChooseEvent extends BaseEvent {
+
+    private final FileWrapper file;
+
+    public ImportFileChooseEvent (FileWrapper file) {
+        this.file = file;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public FileWrapper getFile() {
+        return this.file;
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\ExportCommand.java
 ``` java
 /**
@@ -8,11 +31,16 @@ public class ExportCommand extends Command {
     public static final String COMMAND_WORD = "export";
     public static final String COMMAND_USAGE = COMMAND_WORD;
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports contacts into a .vcf file.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports contacts into a vCard or XML file. "
+            + "Parameters: FileName.xml Or FileName.vcf\n"
+            + "Example: export sample.xml OR export sample.vcf";
     public static final String MESSAGE_WRONG_FILE_TYPE = "Export only exports .vcf and .xml file.";
     public static final String MESSAGE_FILE_NOT_FOUND = "File was not found in specified directory.";
+    public static final String MESSAGE_EMPTY_BOOK = "No contacts found in Rubrika to export.";
 
     public static final String MESSAGE_SUCCESS = "Successfully exported contacts.";
+    public static final String XML_EXTENSION = ".xml";
+    public static final String VCF_EXTENSION = ".vcf";
     public final String filePath;
 
     public ExportCommand(String path) {
@@ -23,22 +51,29 @@ public class ExportCommand extends Command {
     public CommandResult execute() throws CommandException {
         File export = new File(filePath);
         ReadOnlyAddressBook addressBook = model.getAddressBook();
-        if (export.getName().endsWith(".xml")) {
-            XmlSerializableAddressBook xmlAddressBook = new XmlSerializableAddressBook(addressBook);
-            try {
+
+        if (addressBook.getPersonList().isEmpty()) {
+            throw new CommandException(MESSAGE_EMPTY_BOOK);
+        }
+        try {
+            if (export.getName().endsWith(XML_EXTENSION)) {
+                XmlSerializableAddressBook xmlAddressBook = new XmlSerializableAddressBook(addressBook);
                 export.createNewFile();
                 XmlFileStorage.saveDataToFile(export, xmlAddressBook);
-            } catch (IOException ioe) {
-                throw new CommandException(MESSAGE_FILE_NOT_FOUND);
-            }
-        } else if (export.getName().endsWith(".vcf")) {
-            try {
+            } else if (export.getName().endsWith(VCF_EXTENSION)) {
                 VcfExport.saveDataToFile(export, addressBook.getPersonList());
-            } catch (IOException ioe) {
-                throw new CommandException(MESSAGE_FILE_NOT_FOUND);
             }
+        } catch (IOException ioe) {
+            assert false : "The file should have been created and writable";
         }
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ExportCommand // instanceof handles nulls
+                && this.filePath.equals(((ExportCommand) other).filePath)); // state check
     }
 }
 ```
@@ -59,8 +94,11 @@ public class ImportCommand extends UndoableCommand {
     public static final String MESSAGE_WRONG_FORMAT = "File chosen is not of .vcf or .xml type";
     public static final String MESSAGE_FILE_CORRUPT = "File is corrupted. Please check.";
     public static final String MESSAGE_FILE_NOT_FOUND = "File was not found in specified directory.";
+    public static final String MESSAGE_IMPORT_CANCELLED = "Import cancelled";
+    public static final String XML_EXTENSION = ".xml";
+    public static final String VCF_EXTENSION = ".vcf";
 
-    private final List<ReadOnlyPerson> toImport;
+    public final List<ReadOnlyPerson> toImport;
 
     public ImportCommand (List<ReadOnlyPerson> importList) {
         toImport = importList;
@@ -77,6 +115,13 @@ public class ImportCommand extends UndoableCommand {
             }
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS, duplicate));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ImportCommand // instanceof handles nulls
+                && this.toImport.equals(((ImportCommand) other).toImport)); // state check
     }
 }
 ```
@@ -186,6 +231,9 @@ public class ExportCommandParser implements Parser<ExportCommand> {
     @Override
     public ExportCommand parse(String userInput) throws ParseException {
         String path = userInput.trim();
+        if (path.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
+        }
         if (!path.endsWith(".xml") && !path.endsWith(".vcf")) {
             throw new ParseException(ExportCommand.MESSAGE_WRONG_FILE_TYPE);
         }
@@ -205,21 +253,16 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     public ImportCommand parse(String userInput) throws ParseException {
         File file;
         if (userInput.trim().isEmpty()) {
-            FileChooser chooser = new FileChooser();
-            chooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("All", "*.*"),
-                    new FileChooser.ExtensionFilter("vCard (.vcf)", "*.vcf"),
-                    new FileChooser.ExtensionFilter("XML (.xml)", "*.xml")
-            );
-            chooser.setTitle("Select import file.");
-            file = chooser.showOpenDialog(new Stage());
+            FileWrapper fw = new FileWrapper();
+            EventsCenter.getInstance().post(new ImportFileChooseEvent(fw));
+            file = fw.getFile();
             if (file == null) {
-                throw new ParseException("Import cancelled");
+                throw new ParseException(ImportCommand.MESSAGE_IMPORT_CANCELLED);
             }
         } else {
             file = new File(userInput.trim());
         }
-        if (file.getName().endsWith(".xml")) {
+        if (file.getName().endsWith(ImportCommand.XML_EXTENSION)) {
             try {
                 ReadOnlyAddressBook importingBook = XmlFileStorage.loadDataFromSaveFile(file);
                 List<ReadOnlyPerson> importList = importingBook.getPersonList();
@@ -231,7 +274,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
                 throw new ParseException(ImportCommand.MESSAGE_FILE_NOT_FOUND);
             }
 
-        } else if (file.getName().endsWith(".vcf")) {
+        } else if (file.getName().endsWith(ImportCommand.VCF_EXTENSION)) {
             try {
                 List<ReadOnlyPerson> importList = VcfImport.getPersonList(file);
                 return new ImportCommand(importList);
@@ -245,7 +288,6 @@ public class ImportCommandParser implements Parser<ImportCommand> {
             throw new ParseException(ImportCommand.MESSAGE_WRONG_FORMAT);
         }
     }
-
 }
 ```
 ###### \java\seedu\address\logic\parser\RemoveTagCommandParser.java
@@ -316,6 +358,7 @@ public class SortCommandParser implements Parser<SortCommand> {
      */
 
     public SortCommand parse(String args) throws ParseException {
+        requireNonNull(args);
         String trimmedArgs = args.trim();
 
         switch (trimmedArgs) {
@@ -347,13 +390,7 @@ public class SortCommandParser implements Parser<SortCommand> {
 
         for (int i = 0; i < list.size(); i++) {
             ReadOnlyPerson person = list.get(i);
-            Person newPerson = new Person(person);
-            Set<Tag> tagList = newPerson.getTags();
-            tagList = new HashSet<Tag>(tagList);
-            tagList.remove(tag);
-
-            newPerson.setTags(tagList);
-            addressBook.updatePerson(person, newPerson);
+            removeTagFromPerson(tag, person);
         }
         indicateAddressBookChanged();
     }
@@ -362,6 +399,12 @@ public class SortCommandParser implements Parser<SortCommand> {
     public void removeTag(Index index, Tag tag) throws PersonNotFoundException, DuplicatePersonException {
         List<ReadOnlyPerson> list = getFilteredPersonList();
         ReadOnlyPerson person = list.get(index.getZeroBased());
+        removeTagFromPerson(tag, person);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void removeTagFromPerson(Tag tag, ReadOnlyPerson person) throws DuplicatePersonException, PersonNotFoundException {
         Person newPerson = new Person(person);
         Set<Tag> tagList = newPerson.getTags();
         tagList = new HashSet<>(tagList);
@@ -369,7 +412,6 @@ public class SortCommandParser implements Parser<SortCommand> {
 
         newPerson.setTags(tagList);
         addressBook.updatePerson(person, newPerson);
-        indicateAddressBookChanged();
     }
 ```
 ###### \java\seedu\address\model\ModelManager.java
@@ -379,18 +421,60 @@ public class SortCommandParser implements Parser<SortCommand> {
         sortedPersons.setComparator(comparator);
     }
 ```
+###### \java\seedu\address\model\person\ReadOnlyPerson.java
+``` java
+    Comparator<ReadOnlyPerson> NAMESORTASC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
+        -> o1.getName().compareTo(o2.getName());
+    Comparator<ReadOnlyPerson> PHONESORTASC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
+        -> o1.getPhone().compareTo(o2.getPhone());
+    Comparator<ReadOnlyPerson> EMAILSORTASC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
+        -> o1.getEmail().compareTo(o2.getEmail());
+    Comparator<ReadOnlyPerson> NAMESORTDSC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
+        -> o2.getName().compareTo(o1.getName());
+    Comparator<ReadOnlyPerson> PHONESORTDSC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
+        -> o2.getPhone().compareTo(o1.getPhone());
+    Comparator<ReadOnlyPerson> EMAILSORTDSC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
+        -> o2.getEmail().compareTo(o1.getEmail());
+```
+###### \java\seedu\address\storage\FileWrapper.java
+``` java
+/**
+ * A File Wrapper class to allow modification of File Object after it has been created.
+ */
+public class FileWrapper {
+    private File file;
+
+    public FileWrapper() {
+        this.file = null;
+    }
+
+    public FileWrapper(File file) {
+        this.file = file;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+}
+```
 ###### \java\seedu\address\storage\VcfExport.java
 ``` java
 /**
  * Parses a list of {@code ReadOnlyPerson} into a .vcf file.
  */
 public class VcfExport {
+    private static final Logger logger = LogsCenter.getLogger(VcfExport.class);
 
     /**
      * Parses a .vcf file into a list of {@code ReadOnlyPerson}.
      * Throws a IOException if file is not found.
      */
     public static void saveDataToFile(File file, List<ReadOnlyPerson> list) throws IOException {
+        logger.fine("Attempting to write to data file: " + file.getPath());
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 
         for (int i = 0; i < list.size(); i++) {
@@ -421,8 +505,10 @@ public class VcfExport {
  * Parses a .vcf file into a list of {@code ReadOnlyPerson}.
  */
 public class VcfImport {
+    private static final Logger logger = LogsCenter.getLogger(VcfImport.class);
 
     public static List<ReadOnlyPerson> getPersonList(File file) throws IOException, IllegalValueException {
+        logger.fine("Attempting to read data from file: " + file.getPath());
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(new FileInputStream(file)));
         String newLine = br.readLine();
@@ -479,4 +565,33 @@ public class VcfImport {
         return importList;
     }
 }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    /**
+     * Opens the FileChooser
+     */
+    @FXML
+    private void handleImport(FileWrapper file) {
+        FileChooser chooser = new FileChooser();
+        chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All", "*.*"),
+                new FileChooser.ExtensionFilter("vCard (.vcf)", "*.vcf"),
+                new FileChooser.ExtensionFilter("XML (.xml)", "*.xml")
+        );
+        chooser.setTitle("Select import file.");
+        File selectedFile = chooser.showOpenDialog(primaryStage);
+        file.setFile(selectedFile);
+    }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    /**
+     * Opens a file explorer to select a file to import.
+     */
+    @Subscribe
+    private void handleImportFileChooseEvent(ImportFileChooseEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleImport(event.getFile());
+    }
 ```

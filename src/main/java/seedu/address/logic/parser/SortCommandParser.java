@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.logic.commands.SortCommand;
@@ -28,6 +29,7 @@ public class SortCommandParser implements Parser<SortCommand> {
      */
 
     public SortCommand parse(String args) throws ParseException {
+        requireNonNull(args);
         String trimmedArgs = args.trim();
 
         switch (trimmedArgs) {
