@@ -307,6 +307,17 @@ public class AddCommandTest {
             fail("This method should not be called");
         }
 
+        @Override
+        public boolean addProfilePicture(ReadOnlyPerson person) {
+            fail("This method should not be called");
+            return false;
+        }
+
+        @Override
+        public void removeProfilePicture(ReadOnlyPerson person) {
+            fail("This method should not be called");
+        }
+
     }
 
     /**
