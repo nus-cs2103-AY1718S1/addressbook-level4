@@ -75,7 +75,7 @@ public class SortCommandParser implements Parser<SortCommand> {
         case DATA_FIELD_PHONE:
         case DATA_FIELD_EMAIL:
         case DATA_FIELD_ADDRESS:
-                return new SortCommand(dataFieldToSortByFirst, isFavIgnored);
+                return new SortCommand(dataFieldToSortByFirst, isFavIgnored, isReverseOrder);
         default:
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }

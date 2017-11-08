@@ -32,12 +32,12 @@ public class SortCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        model.sortByDataFieldFirst(dataField, isFavIgnored);
+        model.sortByDataFieldFirst(dataField, isFavIgnored, isReverseOrder);
         model.getFilteredPersonList();
 
         return new CommandResult(String.format(MESSAGE_SORT_LIST_SUCCESS, dataField)
-                + (isFavIgnored ? " ignoring favourites" : "")
-                + (isReverseOrder ? " in reverse order" : ""));
+                + (isReverseOrder ? " in reverse order" : "")
+                + (isFavIgnored ? " ignoring favourites" : ""));
     }
 
     @Override

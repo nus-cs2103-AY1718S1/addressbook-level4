@@ -146,7 +146,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void sortByDataFieldFirst(String dataField, boolean isFavIgnored) {
+    public void sortByDataFieldFirst(String dataField, boolean isFavIgnored, boolean isReverseOrder) {
         indicateChangedToPersonListView();
         Comparator<ReadOnlyPerson> comparatorOrder = new Comparator<ReadOnlyPerson>() {
             @Override
@@ -156,16 +156,20 @@ public class ModelManager extends ComponentManager implements Model {
         };
         switch (dataField) {
         case DATA_FIELD_NAME:
-            comparatorOrder = ComparatorUtil.getAllComparatorsNameFirst();
+            comparatorOrder = isReverseOrder ? ComparatorUtil.getAllComparatorsNameFirstReversed()
+                    : ComparatorUtil.getAllComparatorsNameFirst();
             break;
         case DATA_FIELD_PHONE:
-            comparatorOrder = ComparatorUtil.getAllComparatorsPhoneFirst();
+            comparatorOrder = isReverseOrder ? ComparatorUtil.getAllComparatorsPhoneFirstReversed()
+                    : ComparatorUtil.getAllComparatorsPhoneFirst();
             break;
         case DATA_FIELD_EMAIL:
-            comparatorOrder = ComparatorUtil.getAllComparatorsEmailFirst();
+            comparatorOrder = isReverseOrder ? ComparatorUtil.getAllComparatorsEmailFirstReversed()
+                    : ComparatorUtil.getAllComparatorsEmailFirst();
             break;
         case DATA_FIELD_ADDRESS:
-            comparatorOrder = ComparatorUtil.getAllComparatorsAddressFirst();
+            comparatorOrder = isReverseOrder ? ComparatorUtil.getAllComparatorsAddressFirstReversed()
+                    : ComparatorUtil.getAllComparatorsAddressFirst();
             break;
         default:
             break;
