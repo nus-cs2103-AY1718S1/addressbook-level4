@@ -26,25 +26,25 @@ import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 public class TypicalReminders {
 
     public static final ReadOnlyReminder BIRTHDAY = new ReminderBuilder().withTask("James birthday")
-            .withPriority("Low").withDate("02/02/2017 1600").withMessage("Buy present with others.")
+            .withPriority("Low").withDate("02/02/2017 16:00").withMessage("Buy present with others.")
             .withTags("Watch", "friends", "retrieveTester").build();
     public static final ReadOnlyReminder DATING = new ReminderBuilder().withTask("Dating with Joanne")
-            .withPriority("Low").withDate("01/01/2017 1500").withMessage("Meet at Clementi")
+            .withPriority("Low").withDate("01/01/2017 15:00").withMessage("Meet at Clementi")
             .withTags("Present", "retrieveTester").build();
     public static final ReadOnlyReminder GATHERING = new ReminderBuilder().withTask("Gathering with friends")
-            .withMessage("Gather at John's house").withDate("05/05/2017 1200").withPriority("Medium").build();
+            .withMessage("Gather at John's house").withDate("05/05/2017 12:00").withPriority("Medium").build();
     public static final ReadOnlyReminder LUNCH = new ReminderBuilder().withTask("Lunch with Joseph")
-            .withMessage("Venue at JE").withDate("06/06/2017 1200").withPriority("Medium").build();
+            .withMessage("Venue at JE").withDate("06/06/2017 12:00").withPriority("Medium").build();
     public static final ReadOnlyReminder MEETING = new ReminderBuilder().withTask("Group Meeting")
-            .withMessage("Have all reports ready").withDate("04/04/2017 0900").withPriority("High").build();
+            .withMessage("Have all reports ready").withDate("04/04/2017 09:00").withPriority("High").build();
     public static final ReadOnlyReminder PARTY = new ReminderBuilder().withTask("Group Party")
-            .withMessage("DressCode is black and white").withDate("03/03/2017 2000").withPriority("High").build();
+            .withMessage("DressCode is black and white").withDate("03/03/2017 20:00").withPriority("High").build();
 
     // Manually added
     public static final ReadOnlyReminder DINNER = new ReminderBuilder().withTask("Dinner at home")
-            .withMessage("Steamboat").withDate("07/07/2017 1800").withPriority("Medium").build();
+            .withMessage("Steamboat").withDate("07/07/2017 18:00").withPriority("Medium").build();
     public static final ReadOnlyReminder COLLECTION = new ReminderBuilder().withTask("Items Collection")
-            .withMessage("Collect items at post office").withDate("08/08/2017 1800").withPriority("Low").build();
+            .withMessage("Collect items at post office").withDate("08/08/2017 18:00").withPriority("Low").build();
 
     // Manually added - Reminder's details found in {@code CommandTestUtil}
     public static final ReadOnlyReminder PROJECT = new ReminderBuilder().withTask(VALID_TASK_PROJECT)

@@ -25,6 +25,8 @@ import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.TaskContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.EditReminderDescriptorBuilder;
 
@@ -185,6 +187,17 @@ public class CommandTestUtil {
         model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assert model.getFilteredPersonList().size() == 1;
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the first reminder in the {@code model}'s address book.
+     */
+    public static void showFirstReminderOnly(Model model) {
+        ReadOnlyReminder reminder = model.getAddressBook().getReminderList().get(0);
+        final String[] splitTask = reminder.getTask().taskName.split("\\s+");
+        model.updateFilteredReminderList(new TaskContainsKeywordsPredicate(Arrays.asList(splitTask[0])));
+
+        assert model.getFilteredReminderList().size() == 1;
     }
 
     /**
