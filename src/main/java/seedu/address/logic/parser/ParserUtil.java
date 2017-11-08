@@ -8,12 +8,15 @@ import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_YEARLY;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
 import org.ocpsoft.prettytime.nlp.parse.DateGroup;
@@ -57,6 +60,17 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    public static Index[] parseIndices(String... oneBasedIndices) throws IllegalValueException {
+        Index[] parsedIndices = Arrays.stream(oneBasedIndices)
+                .filter(index -> StringUtil.isNonZeroUnsignedInteger(index))
+                .map(validIndex -> Index.fromOneBased(Integer.parseInt(validIndex)))
+                .toArray(Index[]::new);
+        if (parsedIndices.length == 0) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+        }
+        return parsedIndices;
     }
 
     /**

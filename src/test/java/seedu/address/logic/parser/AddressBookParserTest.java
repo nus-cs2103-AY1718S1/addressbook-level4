@@ -23,7 +23,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.TagCommand;
+import seedu.address.logic.commands.persons.TagCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.persons.AddCommand;
 import seedu.address.logic.commands.persons.DeleteCommand;

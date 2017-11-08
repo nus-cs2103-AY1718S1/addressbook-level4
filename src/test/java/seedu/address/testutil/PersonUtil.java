@@ -9,7 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.persons.AddCommand;
-import seedu.address.logic.commands.TagCommand;
+import seedu.address.logic.commands.persons.TagCommand;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**

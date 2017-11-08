@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.Arrays;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -16,16 +17,16 @@ import seedu.address.model.tag.Tag;
 /**
  * Parses input arguments and creates a new TagCommand object
  */
-public class TagCommandParser implements Parser<TagCommand> {
+public class TagTaskCommandParser implements Parser<TagTaskCommand> {
 
     public static final String SEPARATOR_REGEX = ",";
 
     /**
-     * Parses the given {@code String} of arguments in the context of the TagCommand
-     * and returns a TagCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the TagTaskCommand
+     * and returns a TagTaskCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public TagCommand parse(String args) throws ParseException {
+    public TagTaskCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TAG);
 
@@ -34,12 +35,12 @@ public class TagCommandParser implements Parser<TagCommand> {
 
         try {
             String[] splitIndices = splitIndices(argMultimap);
-            parsedIndices = ParserUtil.parseIndices(splitIndices);
+            parsedIndices =  ParserUtil.parseIndices(splitIndices);
             tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
         }
-        return new TagCommand(parsedIndices, tagList);
+        return new TagTaskCommand(parsedIndices, tagList);
     }
 
     /**

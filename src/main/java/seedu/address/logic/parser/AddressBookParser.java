@@ -14,7 +14,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.TagCommand;
+import seedu.address.logic.commands.persons.TagCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.persons.AddCommand;
 import seedu.address.logic.commands.persons.DeleteCommand;
@@ -30,6 +30,7 @@ import seedu.address.logic.commands.tasks.FindTaskCommand;
 import seedu.address.logic.commands.tasks.ListTasksCommand;
 import seedu.address.logic.commands.tasks.SelectTaskCommand;
 
+import seedu.address.logic.commands.tasks.TagTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author tby1994
@@ -90,6 +91,9 @@ public class AddressBookParser {
             case DetagCommand.COMMAND_WORD:
                 return new DetagCommandParser().parse(arguments);
 
+            case TagCommand.COMMAND_WORD:
+                return new TagCommandParser().parse(arguments);
+
             default:
             }
         } else if (StringUtil.containsWordIgnoreCase(MODE_TASK_MANAGER, commandMode)) {
@@ -113,6 +117,9 @@ public class AddressBookParser {
             case ListTasksCommand.COMMAND_WORD:
                 return new ListTasksCommand();
 
+            case TagTaskCommand.COMMAND_WORD:
+                return new TagTaskCommandParser().parse(arguments);
+
             default:
             }
         }
@@ -123,9 +130,6 @@ public class AddressBookParser {
 
         case EditTaskCommand.COMMAND_WORD:
             return new EditTaskCommandParser().parse(arguments);
-
-        case TagCommand.COMMAND_WORD:
-            return new TagCommandParser().parse(arguments);
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();

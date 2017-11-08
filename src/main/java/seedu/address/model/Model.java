@@ -86,6 +86,9 @@ public interface Model {
     void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask)
             throws DuplicateTaskException, TaskNotFoundException;
 
+    void updateTaskTags(ReadOnlyTask task, Set<Tag> newTags)
+        throws DuplicateTaskException, TaskNotFoundException;
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyTask> getFilteredTaskList();
 

@@ -1,15 +1,17 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.persons;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -17,13 +19,13 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Tags multiple people in the address book with a single tag.
+ * Tags multiple people in the address book.
  */
 public class TagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "tag";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Tags multiple people using the same tag "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Tags multiple people using the same tag(s) "
             + "by the index number used in the last person listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDICES (must be positive integers and may be one or more) "
@@ -53,39 +55,31 @@ public class TagCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        for (Index currentIndex : indices) {
-            if (currentIndex.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
+        Index[] validIndices = filterValidIndices(lastShownList, indices);
 
+        if (validIndices.length == 0) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        for (Index currentIndex : validIndices) {
             ReadOnlyPerson personToEdit = lastShownList.get(currentIndex.getZeroBased());
-            Set<Tag> oldTags = personToEdit.getTags();
-            Set<Tag> allTags = getTagList(oldTags, newTags);
 
             try {
-                model.updatePersonTags(personToEdit, allTags);
+                model.updatePersonTags(personToEdit, newTags);
             } catch (DuplicatePersonException dpe) {
                 throw new CommandException(MESSAGE_DUPLICATE_PERSON);
             } catch (PersonNotFoundException pnfe) {
                 throw new AssertionError("The target person cannot be missing");
             }
-            allTags.removeAll(oldTags);
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(MESSAGE_TAG_PERSONS_SUCCESS);
     }
 
-    /**
-     * Combines the given old and new tags of a particular person
-     * @param oldTags old tags that were used to tag a person
-     * @return a set of combined tags with old and new tags
-     */
-    public Set<Tag> getTagList(Set<Tag> oldTags, Set<Tag> tagsToAdd) {
-        Set<Tag> allTags = new HashSet<>();
-        allTags.addAll(oldTags);
-        allTags.addAll(tagsToAdd);
-
-        return allTags;
+    public Index[] filterValidIndices(List<ReadOnlyPerson> lastShownList, Index[] indices) {
+       return Arrays.stream(indices)
+                .filter(currentIndex -> currentIndex.getZeroBased() < lastShownList.size())
+                .toArray(Index[]::new);
     }
 
     @Override

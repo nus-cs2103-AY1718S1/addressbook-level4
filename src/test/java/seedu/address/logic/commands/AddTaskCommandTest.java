@@ -180,6 +180,12 @@ public class AddTaskCommandTest {
         }
 
         @Override
+        public void updateTaskTags(ReadOnlyTask target, Set<Tag> allTags)
+                throws DuplicateTaskException, TaskNotFoundException {
+            fail("This method should not be called");
+        }
+
+        @Override
         public ObservableList<ReadOnlyTask> getFilteredTaskList() {
             fail("This method should not be called");
             return null;

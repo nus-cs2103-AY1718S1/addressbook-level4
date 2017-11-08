@@ -21,6 +21,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.persons.TagCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -93,7 +94,7 @@ public class TagCommandTest {
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        indices = new Index[]{outOfBoundIndex, INDEX_FIRST_PERSON};
+        indices = new Index[]{outOfBoundIndex};
         tags = SampleDataUtil.getTagSet(VALID_TAG_FRIEND);
         TagCommand tagCommand = prepareCommand(indices, tags);
 

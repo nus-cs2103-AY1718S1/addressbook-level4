@@ -93,6 +93,15 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void updatePersonTags(ReadOnlyPerson person, Set<Tag> newTags)
+            throws PersonNotFoundException, DuplicatePersonException {
+        requireAllNonNull(newTags);
+
+        addressBook.updatePersonTags(person, newTags);
+        indicateAddressBookChanged();
+    }
+
     //@@author tpq95
     @Override
     public synchronized void deleteTag(ReadOnlyPerson person, Tag oldTag) throws PersonNotFoundException,
@@ -135,19 +144,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updatePersonTags(ReadOnlyPerson person, Set<Tag> newTags)
-            throws PersonNotFoundException, DuplicatePersonException {
-        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
-            if (person.equals(addressBook.getPersonList().get(i))) {
+    public void updateTaskTags(ReadOnlyTask task, Set<Tag> newTags)
+            throws TaskNotFoundException, DuplicateTaskException {
+        requireAllNonNull(newTags);
 
-                ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
-                Person newPerson = new Person(oldPerson);
-                newPerson.setTags(newTags);
-
-                addressBook.updatePerson(oldPerson, newPerson);
-                indicateAddressBookChanged();
-            }
-        }
+        addressBook.updateTaskTags(task, newTags);
+        indicateAddressBookChanged();
     }
 
     //@@author

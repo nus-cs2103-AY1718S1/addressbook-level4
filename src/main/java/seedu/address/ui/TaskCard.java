@@ -68,6 +68,10 @@ public class TaskCard extends UiPart<Region> {
         description.textProperty().bind(Bindings.convert(task.descriptionProperty()));
         startDate.textProperty().bind(Bindings.convert(task.startDateProperty()));
         deadline.textProperty().bind(Bindings.convert(task.deadlineProperty()));
+        task.tagProperty().addListener((observable, oldValue, newValue) -> {
+            tags.getChildren().clear();
+            initTags(task);
+        });
         setColour();
     }
     //@@author
