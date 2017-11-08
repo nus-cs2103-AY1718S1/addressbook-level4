@@ -1,12 +1,110 @@
 # Zzmobie
-###### \java\seedu\address\commons\events\ui\AccessCountDisplayToggleEvent.java
+###### /java/seedu/address/ui/PersonListPanel.java
 ``` java
-/** Toggles access count display as necessary*/
-public class AccessCountDisplayToggleEvent extends BaseEvent {
+    @Subscribe
+    private void handleAccessCountDisplayToggleEvent(AccessCountDisplayToggleEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event) + event.isDisplayed());
+        if (event.isDisplayed()) {
+            personListView.setItems(mappedListWithAccessCount);
+        } else {
+            personListView.setItems(mappedListWithoutAccessCount);
+        }
+        personListView.refresh();
+    }
 
-    private final boolean isDisplayed;
+```
+###### /java/seedu/address/model/person/AccessCount.java
+``` java
+/**
+ * Represents the number of accesses to a person's data.
+ */
+public class AccessCount {
 
-    public AccessCountDisplayToggleEvent(boolean isDisplayed) {
+    public static final String MESSAGE_ADDRESS_CONSTRAINTS =
+            "Number of access cannot be less than 0.";
+
+    private int value;
+
+    public AccessCount(int accessCount) {
+        this.value = accessCount;
+    }
+
+    @Override
+    public String toString() {
+        return Integer.toString(value);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AccessCount // instanceof handles nulls
+                && this.value == ((AccessCount) other).value); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return value;
+    }
+
+    public int numAccess() {
+        return value;
+    }
+
+}
+```
+###### /java/seedu/address/model/person/TagContainsKeywordsPredicate.java
+``` java
+/**
+ * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
+ */
+public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    private final List<String> keywords;
+
+    public TagContainsKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        Set<Tag> tags = person.getTags();
+        for (Tag t : tags) {
+            if (keywords.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(t.toTagName(), keyword))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof TagContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/ToggleAccessDisplayCommand.java
+``` java
+/**
+ * Toggles the display of the access count.
+ */
+public class ToggleAccessDisplayCommand extends Command {
+    public static final String COMMAND_WORD = "accessdisplay";
+    public static final String COMMAND_ALIAS = "ad";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Toggles the display of the access count. "
+            + "Parameters: TYPE (either \"on\" or \"off\")\n"
+            + "Example: " + COMMAND_WORD + " on";
+    public static final String MESSAGE_SUCCESS = "Display toggled ";
+
+    public static final String TYPE_ON = "on";
+    public static final String TYPE_OFF = "off";
+
+    private boolean isDisplayed;
+
+    public ToggleAccessDisplayCommand (boolean isDisplayed) {
         this.isDisplayed = isDisplayed;
     }
 
@@ -15,12 +113,13 @@ public class AccessCountDisplayToggleEvent extends BaseEvent {
     }
 
     @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
+    public CommandResult execute() throws CommandException {
+        EventsCenter.getInstance().post(new AccessCountDisplayToggleEvent(isDisplayed));
+        return new CommandResult(MESSAGE_SUCCESS + (isDisplayed ? TYPE_ON : TYPE_OFF) + ". ");
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FindTagCommand.java
+###### /java/seedu/address/logic/commands/FindTagCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book who has any tag containing any of the argument keywords.
@@ -55,41 +154,7 @@ public class FindTagCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ToggleAccessDisplayCommand.java
-``` java
-/**
- * Toggles the display of the access count.
- */
-public class ToggleAccessDisplayCommand extends Command {
-    public static final String COMMAND_WORD = "accessdisplay";
-    public static final String COMMAND_ALIAS = "ad";
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Toggles the display of the access count. "
-            + "Parameters: TYPE (either \"on\" or \"off\")\n"
-            + "Example: " + COMMAND_WORD + " on";
-    public static final String MESSAGE_SUCCESS = "Display toggled ";
-
-    public static final String TYPE_ON = "on";
-    public static final String TYPE_OFF = "off";
-
-    private boolean isDisplayed;
-
-    public ToggleAccessDisplayCommand (boolean isDisplayed) {
-        this.isDisplayed = isDisplayed;
-    }
-
-    public boolean isDisplayed() {
-        return isDisplayed;
-    }
-
-    @Override
-    public CommandResult execute() throws CommandException {
-        EventsCenter.getInstance().post(new AccessCountDisplayToggleEvent(isDisplayed));
-        return new CommandResult(MESSAGE_SUCCESS + (isDisplayed ? TYPE_ON : TYPE_OFF) + ". ");
-    }
-}
-```
-###### \java\seedu\address\logic\parser\FindTagCommandParser.java
+###### /java/seedu/address/logic/parser/FindTagCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FindTagCommand object
@@ -115,7 +180,7 @@ public class FindTagCommandParser implements Parser<FindTagCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\ToggleAccessDisplayCommandParser.java
+###### /java/seedu/address/logic/parser/ToggleAccessDisplayCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ToggleAccessDisplayCommand object
@@ -140,89 +205,24 @@ public class ToggleAccessDisplayCommandParser implements Parser<ToggleAccessDisp
 
 }
 ```
-###### \java\seedu\address\model\person\AccessCount.java
+###### /java/seedu/address/commons/events/ui/AccessCountDisplayToggleEvent.java
 ``` java
-/**
- * Represents the number of accesses to a person's data.
- */
-public class AccessCount {
+/** Toggles access count display as necessary*/
+public class AccessCountDisplayToggleEvent extends BaseEvent {
 
-    public static final String MESSAGE_ADDRESS_CONSTRAINTS =
-            "Number of access cannot be less than 0.";
+    private final boolean isDisplayed;
 
-    private int value;
+    public AccessCountDisplayToggleEvent(boolean isDisplayed) {
+        this.isDisplayed = isDisplayed;
+    }
 
-    public AccessCount(int accessCount) {
-        this.value = accessCount;
+    public boolean isDisplayed() {
+        return isDisplayed;
     }
 
     @Override
     public String toString() {
-        return "Accesses: " + Integer.toString(value);
+        return this.getClass().getSimpleName();
     }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AccessCount // instanceof handles nulls
-                && this.value == ((AccessCount) other).value); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return value;
-    }
-
-    public int numAccess() {
-        return value;
-    }
-
 }
-```
-###### \java\seedu\address\model\person\TagContainsKeywordsPredicate.java
-``` java
-/**
- * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
- */
-public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
-    private final List<String> keywords;
-
-    public TagContainsKeywordsPredicate(List<String> keywords) {
-        this.keywords = keywords;
-    }
-
-    @Override
-    public boolean test(ReadOnlyPerson person) {
-        Set<Tag> tags = person.getTags();
-        for (Tag t : tags) {
-            if (keywords.stream()
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(t.toTagName(), keyword))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof TagContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
-    }
-
-}
-```
-###### \java\seedu\address\ui\PersonListPanel.java
-``` java
-    @Subscribe
-    private void handleAccessCountDisplayToggleEvent(AccessCountDisplayToggleEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event) + event.isDisplayed());
-        if (event.isDisplayed()) {
-            personListView.setItems(mappedListWithAccessCount);
-        } else {
-            personListView.setItems(mappedListWithoutAccessCount);
-        }
-        personListView.refresh();
-    }
-
 ```
