@@ -108,6 +108,14 @@ https://github.com/CS2103AUG2017-T09-B3/main/pull/124[#124])
 * Write unit tests for various classes
 * Update various sections in `AboutUs`, `ContactUs`, `UserGuide` and `DeveloperGuide`, etc.
 
+=== Reuse offer
+
+- Issue https://github.com/nus-cs2103-AY1718S1/forum/issues/180[#180]
+
+=== Helping others
+
+- Issue https://github.com/nus-cs2103-AY1718S1/forum/issues/197[#197]
+
 == Project: Lions Befrienders Management System
 
 I worked at http://www.comp.nus.edu.sg/~vwo/[CVWO (Computing for Voluntary Welfare Organisations)] as a web developer during the

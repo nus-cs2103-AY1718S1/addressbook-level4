@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.SwitchTheme.MESSAGE_SUCCESS;
+import static seedu.address.logic.commands.SwitchThemeCommand.MESSAGE_SUCCESS;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,7 +18,7 @@ public class SwitchThemeTest {
 
     @Test
     public void execute_switch_success() {
-        CommandResult result = new SwitchTheme().executeUndoableCommand();
+        CommandResult result = new SwitchThemeCommand().executeUndoableCommand();
         assertEquals(MESSAGE_SUCCESS, result.feedbackToUser);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof SwitchThemeEvent);
         assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
