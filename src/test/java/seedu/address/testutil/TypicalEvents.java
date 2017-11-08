@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
+import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 
@@ -23,14 +24,16 @@ public class TypicalEvents {
             .withAddress("Sentosa, Siloso Beach").build();
     public static final ReadOnlyEvent HALLOWEEN = new EventBuilder().withName("Halloween Horror Night")
             .withDate("31/10/2017").withAddress("Universal Studios Singapore").build();
-    public static final ReadOnlyEvent FINALS = new EventBuilder().withName("Finals").withDate("04/12/2017")
+    public static final ReadOnlyEvent FINALS = new EventBuilder().withName("Finals").withDate("4/12/2017")
             .withAddress("MPSH 2A").build();
     public static final ReadOnlyEvent CONCERT = new EventBuilder().withName("Ed Sheeren Concert")
             .withDate("01/01/2018").withAddress("National Stadium").build();
-    public static final ReadOnlyEvent STARBUCKS = new EventBuilder().withName("Starbucks").withDate("04/10/2017")
+    public static final ReadOnlyEvent STARBUCKS = new EventBuilder().withName("Starbucks").withDate("4/10/2017")
             .withAddress("MD7, NUS").build();
-    public static final ReadOnlyEvent NATIONALDAY = new EventBuilder().withName("National Day").withDate("08/09/2017")
+    public static final ReadOnlyEvent NATIONALDAY = new EventBuilder().withName("National Day").withDate("8/09/2017")
             .withAddress("Padang").build();
+    public static final ReadOnlyEvent CHRISTMAS = new EventBuilder().withName("Christmas").withDate("25/12/2017")
+            .withAddress("Iceland").build();
 
     // Manually added - Event's details found in {@code CommandTestUtil}
     public static final ReadOnlyEvent EVENT_A = new EventBuilder().withName(VALID_EVENT_A_NAME)
