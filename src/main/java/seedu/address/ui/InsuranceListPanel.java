@@ -12,6 +12,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.InsuranceClickedEvent;
 import seedu.address.commons.events.ui.InsurancePanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.SwitchToProfilePanelRequestEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
@@ -77,13 +78,18 @@ public class InsuranceListPanel extends UiPart<Region> {
         insuranceListView.getSelectionModel().clearSelection();
     }
 
-    /*@Subscribe
-    private void handleInsurancePanelSelectionChangedEvent(InsurancePanelSelectionChangedEvent event) {
-        InsuranceProfile selected = insuranceListView.getItems().filtered(insuranceProfile -> {
-            return insuranceProfile.getInsurance().equals(event.getInsurance());
-        }).get(0);
-        insuranceListView.getSelectionModel().select(selected);
-    }*/
+    @Subscribe
+    private void handleInsuranceClickedEvent(InsuranceClickedEvent event) {
+        ObservableList<InsuranceProfile> insurances = insuranceListView.getItems();
+        for (int i = 0; i < insurances.size(); i++) {
+            if (insurances.get(i).getInsurance().getInsuranceName().equals(event.getInsurance().getInsuranceName())) {
+                insuranceListView.getSelectionModel().select(i);
+                break;
+            }
+        }
+    }
+    // weird phenomenon that a filteredList does not contain elements in the original list and cannot be used
+    // in the select command
     //@@author
 
     /**

@@ -1,35 +1,49 @@
 package seedu.address.ui;
 
+import static seedu.address.commons.util.FileUtil.isFileExists;
+
+import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
+import javafx.stage.FileChooser;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.InsurancePanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonNameClickedEvent;
 import seedu.address.commons.events.ui.SwitchToInsurancePanelRequestEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 
+//@@author Juxarius
 
 /**
- * The Profile Panel of the App.
+ * Profile panel for insurance when the respective insurance is selected
  */
-public class InsuranceProfile extends UiPart<Region> {
-
-    //@@author OscarWang114
-    private static final String FXML = "InsuranceProfile.fxml";
+public class InsuranceProfilePanel extends UiPart<Region> {
+    private static final String FXML = "InsuranceProfilePanel.fxml";
+    private static final String PDFFOLDERPATH = "data/";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private File insuranceFile;
     private ReadOnlyInsurance insurance;
 
     @FXML
-    private Label index;
+    private ScrollPane insuranceScrollPane;
+    @FXML
+    private AnchorPane insuranceProfilePanel;
+    @FXML
+    private Label insuranceName;
     @FXML
     private Label owner;
     @FXML
@@ -39,24 +53,28 @@ public class InsuranceProfile extends UiPart<Region> {
     @FXML
     private Label premium;
     @FXML
-    private Label insuranceName;
+    private Label signingDate;
+    @FXML
+    private Label expiryDate;
+    @FXML
+    private Label contractPath;
 
-    public InsuranceProfile() {
+    public InsuranceProfilePanel() {
         super(FXML);
+        insuranceScrollPane.setFitToWidth(true);
+        insuranceProfilePanel.prefWidthProperty().bind(insuranceScrollPane.widthProperty());
+        insuranceProfilePanel.prefHeightProperty().bind(insuranceScrollPane.heightProperty());
         enableNameToProfileLink(insurance);
         registerAsAnEventHandler(this);
-
     }
-    //@@author
 
     //@@author RSJunior37
 
-    public InsuranceProfile(ReadOnlyInsurance insurance, int displayIndex) {
+    public InsuranceProfilePanel(ReadOnlyInsurance insurance) {
         super(FXML);
         this.insurance = insurance;
-        index.setText(displayIndex + ".");
 
-        // initializeContractFile(insurance);
+        initializeContractFile(insurance);
 
         enableNameToProfileLink(insurance);
 
@@ -85,7 +103,7 @@ public class InsuranceProfile extends UiPart<Region> {
      * Then add click event on contract field to open up the file
      * @param insurance
      */
-    /*
+
     private void initializeContractFile(ReadOnlyInsurance insurance) {
         insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractPath());
         if (isFileExists(insuranceFile)) {
@@ -112,12 +130,12 @@ public class InsuranceProfile extends UiPart<Region> {
             });
 
         }
-    }*/
+    }
 
     /**
      *  Enable the link to open contract pdf file and adjusting the text hover highlight
      */
-    /*private void activateLinkToInsuranceFile() {
+    private void activateLinkToInsuranceFile() {
         contractPath.getStyleClass().add("particular-link");
         contractPath.setOnMouseClicked(event -> {
             try {
@@ -126,7 +144,7 @@ public class InsuranceProfile extends UiPart<Region> {
                 logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
             }
         });
-    }*/
+    }
     //@@author
 
     /**
@@ -139,36 +157,34 @@ public class InsuranceProfile extends UiPart<Region> {
         owner.textProperty().bind(Bindings.convert(insurance.getOwner().nameProperty()));
         insured.textProperty().bind(Bindings.convert(insurance.getInsured().nameProperty()));
         beneficiary.textProperty().bind(Bindings.convert(insurance.getBeneficiary().nameProperty()));
+        contractPath.textProperty().bind(Bindings.convert(insurance.contractPathProperty()));
         premium.textProperty().bind(Bindings.convert(insurance.premiumStringProperty()));
+        signingDate.textProperty().bind(Bindings.convert(insurance.signingDateStringProperty()));
+        expiryDate.textProperty().bind(Bindings.convert(insurance.expiryDateStringProperty()));
     }
 
     //@@author Juxarius
     private void setPremiumLevel(Double premium) {
+        insuranceName.getStyleClass().clear();
+        insuranceName.getStyleClass().add("insurance-profile-header");
         if (premium > 500.0) {
             insuranceName.getStyleClass().add("gold-insurance-header");
-            index.getStyleClass().add("gold-insurance-header");
         } else if (premium > 100.0) {
             insuranceName.getStyleClass().add("silver-insurance-header");
-            index.getStyleClass().add("silver-insurance-header");
         } else {
             insuranceName.getStyleClass().add("normal-insurance-header");
-            index.getStyleClass().add("normal-insurance-header");
         }
     }
-    //@@author
 
-
-    //@@author RSJunior37
     @Subscribe
-    private void handleInsurancePanelSelectionChangedEvent(InsurancePanelSelectionChangedEvent event) {
+    private void handleSwitchToInsurancePanelRequestEvent(InsurancePanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        insurance = event.getInsurance();
-
-        //initializeContractFile(insurance);
-        enableNameToProfileLink(insurance);
-        bindListeners(insurance);
-        index.setText(null);
+        enableNameToProfileLink(event.getInsurance());
+        initializeContractFile(event.getInsurance());
+        bindListeners(event.getInsurance());
+        setPremiumLevel(event.getInsurance().getPremium());
         raise(new SwitchToInsurancePanelRequestEvent());
     }
     //@@author
+
 }
