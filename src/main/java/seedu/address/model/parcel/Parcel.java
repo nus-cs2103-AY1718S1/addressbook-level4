@@ -187,6 +187,7 @@ public class Parcel implements ReadOnlyParcel {
         return getAsText();
     }
 
+    //@@author fustilio
     /**
      * We choose to order parcels first by delivery date, next by tracking number if the delivery dates
      * are the same, and lastly by name if the tracking numbers are the same as well.
@@ -194,16 +195,17 @@ public class Parcel implements ReadOnlyParcel {
     @Override
     public int compareTo(Object o) {
         Parcel other = (Parcel) o;
-        if (other == this) {
+        if (other == this) { // short circuit if same object
             return 0;
-        } else if (this.getDeliveryDate().compareTo(other.getDeliveryDate()) == 0) {
-            if (this.getName().compareTo(other.getName()) == 0) {
-                return this.getTrackingNumber().compareTo(other.getTrackingNumber());
+        } else if (this.getDeliveryDate().compareTo(other.getDeliveryDate()) == 0) { // delivery dates are equal
+            if (this.getName().compareTo(other.getName()) == 0) { // names are equal
+                return this.getTrackingNumber().compareTo(other.getTrackingNumber()); // compare tracking numbers
             } else {
-                return this.getName().compareTo(other.getName());
+                return this.getName().compareTo(other.getName()); // compare names
             }
         } else {
-            return this.getDeliveryDate().compareTo(other.getDeliveryDate());
+            return this.getDeliveryDate().compareTo(other.getDeliveryDate()); // compare delivery dates
         }
     }
+    //@@author
 }

@@ -17,6 +17,7 @@ public abstract class UndoableCommand extends Command {
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
+    //@@author fustilio
     /**
      * Stores the current state of {@code model#addressBook}.
      */
@@ -58,6 +59,7 @@ public abstract class UndoableCommand extends Command {
 
         model.updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
     }
+    //@@author
 
     @Override
     public final CommandResult execute() throws CommandException {

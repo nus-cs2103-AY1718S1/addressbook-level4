@@ -1,3 +1,4 @@
+//@@author fustilio
 package seedu.address.model;
 
 import com.google.common.eventbus.Subscribe;
@@ -38,3 +39,4 @@ public class ModelListener {
         model.setTabIndex(Index.fromZeroBased(event.targetIndex));
     }
 }
+//@@author

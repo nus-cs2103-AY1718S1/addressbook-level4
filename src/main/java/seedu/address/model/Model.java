@@ -117,19 +117,46 @@ public interface Model {
      */
     void forceSelectParcel(ReadOnlyParcel target);
 
+    /**
+     * Method to set tabIndex attribute in Model.
+     */
     void setTabIndex(Index index);
 
+    /**
+     * Method to get tabIndex attribute in Model.
+     */
     Index getTabIndex();
 
+    /**
+     * Method to encapsulate all the sub methods to be executed when AddCommand is executed.
+     * @param parcel the parcel to add
+     * @throws DuplicateParcelException if parcel is already inside the list of parcels, reject the input
+     */
     void addParcelCommand(ReadOnlyParcel parcel) throws DuplicateParcelException;
 
-    void editParcelCommand(ReadOnlyParcel parcelToEdit, ReadOnlyParcel editedParce)
+    /**
+     * Method to encapsulate all the sub methods to be executed when EditCommand is executed.
+     * @param parcelToEdit the parcel to edit
+     * @param editedParcel the edited parcel to replace the parcel to edit.
+     * @throws DuplicateParcelException if editedParcel already exists unless the parcelToEdit is the same entity.
+     * @throws ParcelNotFoundException if parcelToEdit cannot be found in the list
+     */
+    void editParcelCommand(ReadOnlyParcel parcelToEdit, ReadOnlyParcel editedParcel)
             throws DuplicateParcelException, ParcelNotFoundException;
 
+    /**
+     * Method to retrieve flag that represents whether the current tab selected is all parcels.
+     */
     boolean getActiveIsAllBool();
 
+    /**
+     * Method to forcefully raise the event to switch tabs to all parcels.
+     */
     void uiJumpToTabAll();
 
+    /**
+     * Method to forcefully rasie the event to switch tabs to completed parcels.
+     */
     void uiJumpToTabCompleted();
     //@@author
 }
