@@ -3,19 +3,21 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: cherBook
+cherBook - is a desktop address book application used for teachers and educators.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/limcel/main/blob/master/collated/main/limcel.md[Functional code]] [https://github.com/limcel/main/blob/master/collated/test/limcel.md[Test code]]
 
-=== Enhancement Added: Undo/Redo
+=== Enhancement Added: Sort Command [v1.2]
+
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=sort]
 
 #End of Extract#
 
@@ -23,27 +25,130 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sortreason]
+
+#End of Extract#
+
+---
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=sortimplementation]
+
+#End of Extract#
+
+---
+=== Enhancement Added: Extended Person Card Panel [v1.3]
+
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=studentdetailspanel]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+==== Justification
 
-{Explain similar to the Undo/Redo feature above.}
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=studentdetailspanel]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Schedule Command [v1.4]
+
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=schedule]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=schedulereason]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=scheduleimplementation]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: View Schedule Command [v1.5]
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=viewschedule]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=viewschedulereason]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=viewscheduleimplementation]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Use `Postal Code` to display Google map of student's address
+
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Update READMEs for the different versions, created Ui mockups and cherBook icon
+** https://github.com/CS2103AUG2017-T16-B2/main/pull/29[add new PostalCode field in v1.1]
+** https://github.com/CS2103AUG2017-T16-B2/main/pull/114[TabCommand in v1.5]
+
 
 == Project: PowerPointLabs
 
