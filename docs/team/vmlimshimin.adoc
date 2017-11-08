@@ -8,9 +8,9 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Recently Deleted
+=== 1st Enhancement Added: Recently Deleted
 
-==== External behavior
+==== External behavior for 1st Enhancement
 
 ---
 #Start of Extract [from: User Guide]#
@@ -21,11 +21,11 @@ include::../UserGuide.adoc[tag=recentlydeleted]
 
 ---
 
-==== Justification
+==== Justification for 1st Enhancement
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+When a huge amount of contacts are deleted at one shot, via the `DeleteMultipleCommand`, `RecentlyDeletedCommand` allows the user to sift through the list of previously deleted contacts and extract the ones that the user wants to add back into TheYellowPage. This is so that the user does not need to undo the `DeleteMultipleCommand` (which will retrieve all the deleted contacts) to retrieve just one or a few contacts that were accidentally deleted.
 
-==== Implementation
+==== Implementation for 1st Enhancement
 
 ---
 #Start of Extract [from: Developer Guide]#
@@ -36,9 +36,9 @@ include::../DeveloperGuide.adoc[tag=recentlydeleted]
 
 ---
 
-=== Enhancement Added: Theme
+=== 2nd Enhancement Added: Theme
 
-==== External behavior
+==== External behavior for 2nd Enhancement
 
 ---
 #Start of Extract [from: User Guide]#
@@ -49,11 +49,11 @@ include::../UserGuide.adoc[tag=theme]
 
 ---
 
-==== Justification
+==== Justification for 2nd Enhancement
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+This allows the user to choose the theme of TheYellowPage that they prefer, not limited to only the default theme.
 
-==== Implementation
+==== Implementation for 2nd Enhancement
 
 ---
 #Start of Extract [from: Developer Guide]#
@@ -70,5 +70,5 @@ include::../DeveloperGuide.adoc[tag=theme]
 
 === Other contributions
 
-* Wrote additional tests to increase coverage from 86% to 87% (Pull requests https://github.com[#36], https://github.com[#38])
+* Wrote additional tests to increase coverage from 86% to 87% (Pull requests https://github.com/CS2103AUG2017-T10-B4/main/pull/120[#120])
 
