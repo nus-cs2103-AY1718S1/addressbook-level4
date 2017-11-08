@@ -33,6 +33,9 @@ include::../UserGuide.adoc[tag=calendar]
 
 ==== Justification
 
+As an address book targeted at University students in Singapore age between 18-24.
+On average, an university students have to juggle between many commitments in school and out of school. Many of these young adults are actively involved in many events internally and externally.
+Thus, the add event feature allos the users to be able to store and keep track of what events that are coming up and be able to plan and organise their schedule.
 
 ==== Implementation
 
@@ -41,13 +44,42 @@ include::../UserGuide.adoc[tag=calendar]
 
 include::../DeveloperGuide.adoc[tag=addevent]
 
+#End of Extract#
+
+---
+
+=== Enhancement Added: Calendar
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=calendar]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+A Calendar User Interface will enhance the user's experience in using and organising their upcoming events. With a simple click on the calendar,
+the user will be able to get to add the events and be shown to them on the calendar with it being populating with a different shade of colour.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=calendar]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed:
+=== Enhancement Proposed: Sending of Text Messages
+
+
 
 
 === Other contributions
