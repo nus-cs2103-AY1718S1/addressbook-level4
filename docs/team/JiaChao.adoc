@@ -171,9 +171,9 @@ This panel is needed to display the statistics of the students currently in the 
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-
+* Set up Travis and Coveralls and updated Badges for the Team Repository ( Pull Requests https://github.com/CS2103AUG2017-T16-B2/main/pull/7[#7] )
+* Populated cherBook with a significant amount ( 40 student contacts) of realistic data ( Pull Requests https://github.com/CS2103AUG2017-T16-B2/main/pull/73[#73] )
+* Cleaned up unnecessary nesting in the ExtendedPersonCard UI element ( Commit https://github.com/CS2103AUG2017-T16-B2/main/pull/98/commits/1a6bc459dc455d4e776e48586856734bb7574eba[1a6bc45] in Pull Request https://github.com/CS2103AUG2017-T16-B2/main/pull/98[#98])
 
 === Helping out other groups
 
