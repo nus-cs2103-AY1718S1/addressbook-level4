@@ -22,6 +22,25 @@ public class HelpCommand extends Command {
             + MESSAGE_GET_MORE_HELP;
 
     public static final String SHOWING_HELP_MESSAGE = "Opened help window.";
+    public static final String COMMAND_QUICK_HELP_WORD = "command";
+    public static final String COMMAND_QUICK_HELP =
+            "Quick command keyword help: \n"
+                    + AddCommand.COMMAND_WORD + " / " + AddCommand.COMMAND_ALIAS + ";     "
+                    + ClearCommand.COMMAND_WORD + " / " + ClearCommand.COMMAND_ALIAS + ";     "
+                    + CopyCommand.COMMAND_WORD + " / " + CopyCommand.COMMAND_ALIAS + ";     "
+                    + DeleteCommand.COMMAND_WORD + " / " + DeleteCommand.COMMAND_ALIAS + ";     "
+                    + CalendarCommand.COMMAND_WORD + " / " + CalendarCommand.COMMAND_ALIAS + ";     "
+                    + EditCommand.COMMAND_WORD + " / " + EditCommand.COMMAND_ALIAS + ";     "
+                    + ExitCommand.COMMAND_WORD + " / " + ExitCommand.COMMAND_ALIAS + ";     "
+                    + FindCommand.COMMAND_WORD + " / " + FindCommand.COMMAND_ALIAS + "; \n"
+                    + HelpCommand.COMMAND_WORD + " / " + HelpCommand.COMMAND_ALIAS + ";     "
+                    + HistoryCommand.COMMAND_WORD + " / " + HistoryCommand.COMMAND_ALIAS + ";     "
+                    + ListCommand.COMMAND_WORD + " / " + ListCommand.COMMAND_ALIAS + ";     "
+                    + RedoCommand.COMMAND_WORD + " / " + RedoCommand.COMMAND_ALIAS + ";     "
+                    + ScheduleCommand.COMMAND_WORD + " / " + ScheduleCommand.COMMAND_ALIAS + ";     "
+                    + LocateCommand.COMMAND_WORD + " / " + LocateCommand.COMMAND_ALIAS + ";     "
+                    + UndoCommand.COMMAND_WORD + " / " + UndoCommand.COMMAND_ALIAS + ";     "
+                    + Country.COMMAND_WORD;
 
     //@@author CT15
     private final CommandIdentifier commandIdentifier;
@@ -35,6 +54,10 @@ public class HelpCommand extends Command {
         String commandResult;
 
         switch(commandIdentifier.value) {
+
+        case COMMAND_QUICK_HELP_WORD:
+            commandResult = COMMAND_QUICK_HELP;
+            break;
 
         case AddCommand.COMMAND_ALIAS:
             //Fallthrough

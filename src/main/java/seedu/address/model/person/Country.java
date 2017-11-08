@@ -2,15 +2,15 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-//@@author icehawker
 import java.util.HashMap;
 import java.util.Map;
 
+//@@author icehawker
 /**
  * Corresponding alias list of each country code and its corresponding .countryName().
  * Guarantees: immutable; is valid as declared in {@link #isValidCode(String)}
  */
-//@@author icehawker
+
 public class Country {
 
     public static final String COMMAND_WORD = "codes";

@@ -32,6 +32,7 @@ import seedu.address.model.person.Country;
 public class CommandIdentifier {
     public static final String MESSAGE_COMMAND_WORD_CONSTRAINTS = "The command argument should be one of the "
             + "following (or their aliases):\n"
+            + HelpCommand.COMMAND_QUICK_HELP_WORD + ", "
             + AddCommand.COMMAND_WORD + ", "
             + CalendarCommand.COMMAND_WORD + ", "
             + ClearCommand.COMMAND_WORD + ", "
@@ -50,6 +51,7 @@ public class CommandIdentifier {
             + UndoCommand.COMMAND_WORD;
 
     public static final List<String> COMMAND_VALIDATION_LIST = ImmutableList.of(
+            HelpCommand.COMMAND_QUICK_HELP_WORD,
             AddCommand.COMMAND_WORD, AddCommand.COMMAND_ALIAS,
             CalendarCommand.COMMAND_WORD, CalendarCommand.COMMAND_ALIAS,
             ClearCommand.COMMAND_WORD, ClearCommand.COMMAND_ALIAS, Country.COMMAND_WORD,
