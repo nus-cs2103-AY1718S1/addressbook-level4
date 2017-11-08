@@ -39,9 +39,9 @@ public class TypicalPersons {
     public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave").withBirthday("29/02/1995").build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
-            .withEmail("lydia@example.com").withAddress("little tokyo").withBirthday("24/12/1994").build();
+            .withEmail("lydia@example.com").withAddress("little tokyo").withBirthday("24/12/1994").withTags("family", "friends").build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
-            .withEmail("anna@example.com").withAddress("4th street").withBirthday("31/12/1999").build();
+            .withEmail("anna@example.com").withAddress("4th street").withBirthday("31/12/1999").withTags("family", "friends").build();
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
