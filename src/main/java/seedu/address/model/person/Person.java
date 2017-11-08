@@ -156,20 +156,6 @@ public class Person implements ReadOnlyPerson {
         return tags.get().contains(tag);
     }
 
-    public void setRelationship(Relationship relation) {
-        this.relation.set(requireNonNull(relation));
-    }
-
-    @Override
-    public ObjectProperty<Relationship> relationshipProperty() {
-        return relation;
-    }
-
-    @Override
-    public Relationship getRelationship() {
-        return relation.get();
-    }
-
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
     }
@@ -182,6 +168,20 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Remark getRemark() {
         return remark.get();
+    }
+
+    public void setRelationship(Relationship relation) {
+        this.relation.set(requireNonNull(relation));
+    }
+
+    @Override
+    public ObjectProperty<Relationship> relationshipProperty() {
+        return relation;
+    }
+
+    @Override
+    public Relationship getRelationship() {
+        return relation.get();
     }
 
     //@@author Eric

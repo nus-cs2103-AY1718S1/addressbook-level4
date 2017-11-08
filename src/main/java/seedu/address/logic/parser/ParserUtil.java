@@ -15,6 +15,7 @@ import seedu.address.model.person.Bloodtype;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Relationship;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
@@ -102,6 +103,15 @@ public class ParserUtil {
         return bloodType.isPresent() ? Optional.of(new Bloodtype(bloodType.get())) : Optional.empty();
     }
     //@@author
+
+    /**
+     * Parses a {@code Optional<String> relation} into an {@code Optional<Relationship>} if {@code relation} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Relationship> parseRelationship(Optional<String> relation) throws IllegalValueException {
+        requireNonNull(relation);
+        return relation.isPresent() ? Optional.of(new Relationship(relation.get())) : Optional.empty();
+    }
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.

@@ -8,9 +8,6 @@ import static java.util.Objects.requireNonNull;
   */
 public class Relationship {
 
-    public static final String MESSAGE_RELATIONSHIP_CONSTRAINTS =
-            "Person relationship can take any values, can even be blank";
-
     public final String value;
 
     public Relationship(String value) {

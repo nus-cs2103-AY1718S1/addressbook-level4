@@ -78,7 +78,7 @@ public class RelationshipCommand extends UndoableCommand {
      * Outputs success message based on whether a relationship is added or removed
      */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
-        if (!relation.value.isEmpty()) {
+        if (personToEdit.getRelationship().toString().isEmpty()) {
             return String.format(MESSAGE_ADD_RELATIONSHIP_SUCCESS, personToEdit);
         } else {
             return String.format(MESSAGE_DELETE_RELATIONSHIP_SUCCESS, personToEdit);
@@ -92,19 +92,9 @@ public class RelationshipCommand extends UndoableCommand {
      */
     @Override
     public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof RemarkCommand)) {
-            return false;
-        }
-
-        // state check
-        RelationshipCommand e = (RelationshipCommand) other;
-        return index.equals(e.index)
-                && relation.equals(e.relation);
+        return other == this // short circuit if same object
+                || (other instanceof RelationshipCommand // instanceof handles nulls
+                && this.index.equals(((RelationshipCommand) other).index))
+                && this.relation.equals(((RelationshipCommand) other).relation); // state check
     }
 }
