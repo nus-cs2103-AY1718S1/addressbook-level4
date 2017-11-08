@@ -155,7 +155,6 @@ e.g `n/John Doe t/friend` or as `n/John Doe`.
 works too.
 * If parameters with the same prefix are typed multiple times, only the last one will be taken. For example,
 `n/John Doe n/Martin Henz`, then only `Martin Henz` will be taken into actual consideration.
->>>>>>> master
 ====
 
 ====
@@ -312,7 +311,7 @@ Finds persons/events whose corresponding field(s) contain any of the given keywo
 Format: `(f)find KEYWORD [MORE_KEYWORDS] [p/KEYWORD [MORE_KEYWORDS]]...`
 
 ****
-* The search is not case insensitive. e.g `hans` will match `Hans`
+* The search is case insensitive. e.g `hans` will match `Hans`
 * The search can be based on one or multiple properties. The short name of the property `n/` can be omitted if the searching
 criteria is for the `name` property.
 * Apply `OR` search for keywords of the same property, i.e. persons/events matching at least one keyword will be returned.
