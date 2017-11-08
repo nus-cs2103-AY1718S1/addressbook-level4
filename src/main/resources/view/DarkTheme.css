@@ -1,7 +1,9 @@
+/* @@author itsdickson */
 .background {
     -fx-background-color: #1d1d1d;
     background-color: #1d1d1d; /* Used in the default.html file */
 }
+/* @@author */
 
 .label {
     -fx-font-size: 11pt;
@@ -39,6 +41,7 @@
     -fx-max-height: 0;
 }
 
+/* @@author itsdickson */
 .table-view {
     -fx-base: #1d1d1d;
     -fx-control-inner-background: #1d1d1d;
@@ -122,6 +125,7 @@
 .list-cell .label {
     -fx-text-fill: white;
 }
+/* @@author */
 
 .cell_big_label {
     -fx-font-family: "Segoe UI Semibold";
@@ -153,6 +157,7 @@
     -fx-text-fill: gray;
 }
 
+/* @@author itsdickson */
 .anchor-pane {
     -fx-background-color: #1d1d1d;
 }
@@ -401,6 +406,7 @@
 #resultDisplayPlaceholder {
     -fx-background-color: #1d1d1d;
 }
+/* @@author */
 
 #tags {
     -fx-hgap: 7;

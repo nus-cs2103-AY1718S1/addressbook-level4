@@ -24,6 +24,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -130,6 +131,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -187,6 +193,30 @@ public class AddCommandTest {
         public ArrayList<String> getThemesList() {
             fail("This method should not be called.");
             return null;
+        }
+
+        //@@author archthegit
+
+        @Override
+        public void unselectPerson() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public boolean ifSelectedPerson() {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public ReadOnlyPerson getSelectedPerson() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateSelectedPerson(ReadOnlyPerson person) {
+            fail("This method should not be called.");
         }
     }
 

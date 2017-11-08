@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+// @@author itsdickson
+
 import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
@@ -62,3 +64,4 @@ public class ThemesWindow extends UiPart<Region> {
         dialogStage.showAndWait();
     }
 }
+// @@author

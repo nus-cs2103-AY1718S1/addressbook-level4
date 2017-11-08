@@ -15,13 +15,14 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.AddEventRequestEvent;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.NameContainsFavouritePredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.ui.AddEventRequestEvent;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -34,6 +35,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyEvent> filteredEvents;
+    private  ReadOnlyPerson person;
+    private int flag;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -70,6 +73,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //@@author DarrenCzen
     @Override
     public synchronized void sort() {
         addressBook.sort();
@@ -77,6 +81,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
@@ -99,13 +104,23 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author chernghann
     @Override
     public synchronized void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
         addressBook.addEvent(event);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         indicateAddressBookChanged();
     }
+    //@@author
 
+    @Override
+    public synchronized void deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
+        addressBook.deleteEvent(event);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        indicateAddressBookChanged();
+    }
+
+    // @@author itsdickson
     @Override
     public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.favouritePerson(target);
@@ -118,7 +133,6 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(new NameContainsFavouritePredicate());
         indicateAddressBookChanged();
     }
-
 
     @Override
     public ArrayList<String> getThemesList() {
@@ -134,6 +148,33 @@ public class ModelManager extends ComponentManager implements Model {
     public String getCurrentTheme() {
         return currentTheme;
     }
+
+    //@@author archthegit
+    @Override
+    public void updateSelectedPerson(ReadOnlyPerson person) {
+        this.person = person;
+        flag = 1;
+    }
+
+    @Override
+    public void unselectPerson() {
+        this.person = null;
+    }
+
+    @Override
+    public boolean ifSelectedPerson() {
+        if (flag == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public ReadOnlyPerson getSelectedPerson() {
+        return person;
+    }
+
+    // @@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -152,6 +193,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author chernghann
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyEvent} backed by the internal list of
      * {@code addressBook}
@@ -166,6 +208,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {
@@ -186,6 +229,7 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredEvents.equals(other.filteredEvents);
     }
 
+    //@@author chernghann
     @Subscribe
     private void handleAddEvent(AddEventRequestEvent event) throws DuplicateEventException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -193,4 +237,5 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         indicateAddressBookChanged();
     }
+    //@@author
 }

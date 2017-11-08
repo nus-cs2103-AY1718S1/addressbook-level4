@@ -20,6 +20,7 @@ public class Address {
 
     public final String value;
 
+    //@@author DarrenCzen
     /**
      * Validates given address.
      *
@@ -44,6 +45,7 @@ public class Address {
                 || test.matches(ADDRESS_TEMPORARY);
     }
 
+    //@@author
     @Override
     public String toString() {
         return value;

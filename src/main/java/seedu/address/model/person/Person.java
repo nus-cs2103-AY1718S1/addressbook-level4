@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+
 import java.util.Objects;
 import java.util.Set;
 
@@ -90,6 +91,7 @@ public class Person implements ReadOnlyPerson {
         return phone.get();
     }
 
+    //@@author chernghann
     public void setHomeNumber(HomeNumber homeNumber) {
         this.homeNumber.set(requireNonNull(homeNumber));
     }
@@ -103,6 +105,7 @@ public class Person implements ReadOnlyPerson {
     public HomeNumber getHomeNumber() {
         return homeNumber.get();
     }
+    //@@author
 
     public void setEmail(Email email) {
         this.email.set(requireNonNull(email));
@@ -118,6 +121,7 @@ public class Person implements ReadOnlyPerson {
         return email.get();
     }
 
+    //@@author chernghann
     public void setSchEmail(SchEmail schEmail) {
         this.schEmail.set(requireNonNull(schEmail));
     }
@@ -131,9 +135,12 @@ public class Person implements ReadOnlyPerson {
     public SchEmail getSchEmail() {
         return schEmail.get();
     }
+
+    //@@author DarrenCzen
     public void setWebsite(Website website) {
         this.website.set(requireNonNull(website));
     }
+    //@@author
 
     @Override
     public ObjectProperty<Website> websiteProperty() {
@@ -145,6 +152,7 @@ public class Person implements ReadOnlyPerson {
         return website.get();
     }
 
+    //@@author
     public void setAddress(Address address) {
         this.address.set(requireNonNull(address));
     }
@@ -158,6 +166,8 @@ public class Person implements ReadOnlyPerson {
     public Address getAddress() {
         return address.get();
     }
+
+    //@@author archthegit
 
     public void setBirthday(Birthday birthday) {
         this.birthday.set(requireNonNull(birthday));
@@ -173,6 +183,7 @@ public class Person implements ReadOnlyPerson {
         return birthday.get();
     }
 
+    // @@author itsdickson
     public void setFavourite(Boolean favourite) {
         this.favourite.set(requireNonNull(favourite));
     }
@@ -186,7 +197,7 @@ public class Person implements ReadOnlyPerson {
     public Boolean getFavourite() {
         return favourite.get();
     }
-
+    // @@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
