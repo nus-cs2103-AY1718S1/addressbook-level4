@@ -8,9 +8,8 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.ReadOnlyPerson;
 
-
 /**
- * Shows contact's details on the right side of PersonListPanel
+ * Shows contact's details beside person list panel
  */
 public class PersonDetails extends UiPart<Region> {
 
