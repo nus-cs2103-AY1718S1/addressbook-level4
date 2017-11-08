@@ -194,6 +194,11 @@ public class AddEventCommandTest {
         }
 
         @Override
+        public void releaseEncryptedContact(String substring) throws DataConversionException, DuplicatePersonException, IOException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void orderList(String parameter) throws UnrecognisedParameterException {
             fail("This method should not be called.");
         }

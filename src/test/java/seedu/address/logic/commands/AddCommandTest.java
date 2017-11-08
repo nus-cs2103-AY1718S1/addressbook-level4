@@ -179,6 +179,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void releaseEncryptedContact(String substring) throws DataConversionException, DuplicatePersonException, IOException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void exportAddressBook() throws FileNotFoundException, ParserConfigurationException,
                 IOException, SAXException, TransformerException {
             fail("This method should not be called.");
