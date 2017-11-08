@@ -2,7 +2,8 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.StringUtil.replaceBackslashes;
-import static seedu.address.model.person.Address.ADDRESS_VALIDATION_REGEX;
+import static seedu.address.model.person.Address.ADDRESS_BLOCK_NUMBER_MATCHING_REGEX;
+import static seedu.address.model.person.Address.ADDRESS_BLOCK_WORD_MATCHING_REGEX;
 import static seedu.address.model.person.Email.EMAIL_VALIDATION_REGEX;
 import static seedu.address.model.person.Phone.PHONE_VALIDATION_REGEX;
 import static seedu.address.storage.util.RolodexStorageUtil.FILEPATH_REGEX_NON_STRICT;
@@ -311,5 +312,33 @@ public class ParserUtil {
         } catch (IllegalArgumentException | IllegalValueException e) {
             return false;
         }
+    }
+
+    /**
+     * Returns the address found in a {@code String}, until the end of the String.
+     * @param value to be parsed.
+     * @return {@code String} value of the address.
+     * @throws IllegalArgumentException if no file path was found.
+     */
+    public static String parseAddressTillEnd(String value) throws IllegalArgumentException {
+        Matcher m = Pattern.compile(ADDRESS_BLOCK_WORD_MATCHING_REGEX).matcher(value);
+        if (m.find()) {
+            return value.substring(value.indexOf(m.group())).trim();
+        }
+        m = Pattern.compile(ADDRESS_BLOCK_NUMBER_MATCHING_REGEX).matcher(value);
+        if (m.find()) {
+            return value.substring(value.indexOf(m.group())).trim();
+        }
+        throw new IllegalArgumentException();
+    }
+
+    /**
+     * Returns a {@code String} after the address has been removed.
+     * @param value to be parsed.
+     * @return a {@code String} without the address.
+     */
+    public static String parseRemoveAddressTillEnd(String value) {
+        String address = parseAddressTillEnd(value);
+        return value.substring(0, value.indexOf(address)).trim();
     }
 }
