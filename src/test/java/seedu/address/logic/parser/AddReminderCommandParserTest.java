@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.DATE_DESC_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.DATE_DESC_PROJECT;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PRIORITY_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TASK_DESC;
@@ -30,6 +31,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddReminderCommand;
+import seedu.address.model.reminder.Date;
 import seedu.address.model.reminder.Priority;
 import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.Task;
@@ -121,12 +123,10 @@ public class AddReminderCommandParserTest {
                 + INVALID_PRIORITY_DESC + DATE_DESC_ASSIGNMENT + MESSAGE_DESC_ASSIGNMENT + TAG_DESC_OFFICE
                 + TAG_DESC_SOFTCOPY, Priority.MESSAGE_PRIORITY_CONSTRAINTS);
 
-        /*
         // invalid date
         assertParseFailure(parser, AddReminderCommand.COMMAND_WORD + TASK_DESC_ASSIGNMENT
                 + PRIORITY_DESC_ASSIGNMENT + INVALID_DATE_DESC + MESSAGE_DESC_ASSIGNMENT + TAG_DESC_OFFICE
                 + TAG_DESC_SOFTCOPY, Date.MESSAGE_DATE_CONSTRAINTS);
-        */
 
         // invalid tag
         assertParseFailure(parser, AddReminderCommand.COMMAND_WORD + TASK_DESC_ASSIGNMENT
