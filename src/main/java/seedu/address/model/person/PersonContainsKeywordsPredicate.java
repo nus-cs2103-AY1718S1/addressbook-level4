@@ -1,9 +1,10 @@
 package seedu.address.model.person;
 
-import java.util.function.Predicate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.FindPersonDescriptor;
@@ -13,7 +14,7 @@ import seedu.address.model.tag.Tag;
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
  */
 public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
-    FindPersonDescriptor personDescriptor;
+    private final FindPersonDescriptor personDescriptor;
     private final boolean isInclusive;
 
     private final boolean nameExist;
@@ -60,14 +61,18 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
         }
 
         if (isInclusive) { //an AND search must all return true (no false)
-            match = testHelperIn(person, tagNameSet);
-            //check for any false values
-            for (int i = 0; i < 6; i++) {
-                if (!match[i]) {
-                    res = true;
+            if (!nameExist && !phoneExist && !emailExist && !addressExist && !mrtExist && !tagExist) {
+                return false;
+            } else {
+                match = testHelperIn(person, tagNameSet);
+                //check for any false values
+                for (int i = 0; i < 6; i++) {
+                    if (!match[i]) {
+                        res = true;
+                    }
                 }
+                return !res;
             }
-            return !res;
         } else { //an or search must have a True
             match = testHelperEx(person, tagNameSet);
             //check for any true values
@@ -80,6 +85,12 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
         }
     }
 
+    /**
+     * helper function to return boolean array for 'OR' searches
+     * @param person
+     * @param tagNameSet
+     * @return boolean[]
+     */
     private boolean[] testHelperEx(ReadOnlyPerson person, Set<String> tagNameSet) {
         //index: 0-name, 1-phone, 2-email, 3-mrt, 4-address, 5-tags
         boolean[] match = {false, false, false, false, false, false};
@@ -99,6 +110,12 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
         return match;
     }
 
+    /**
+     * helper function to return boolean array for 'AND' searches
+     * @param person
+     * @param tagNameSet
+     * @return boolean[]
+     */
     private boolean[] testHelperIn(ReadOnlyPerson person, Set<String> tagNameSet) {
         //index: 0-name, 1-phone, 2-email, 3-mrt, 4-address, 5-tags
         boolean[] match = {true, true, true, true, true, true};

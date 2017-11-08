@@ -69,10 +69,6 @@ public class PersonContainsKeywordsPredicateTest {
         predicate = new PersonContainsKeywordsPredicate(false, second);
         assertTrue(predicate.test(
                 new PersonBuilder().withName("Cindy").withPhone("12345678").withMrt("Bedok").build()));
-
-        // Empty AND search
-        predicate = new PersonContainsKeywordsPredicate(true, first);
-        assertTrue(predicate.test(new PersonBuilder().withPhone("94571111").build()));
     }
 
     @Test
@@ -83,6 +79,10 @@ public class PersonContainsKeywordsPredicateTest {
 
         // Empty OR search
         PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate(false, first);
+        assertFalse(predicate.test(new PersonBuilder().withPhone("94571111").build()));
+
+        // Empty AND search
+        predicate = new PersonContainsKeywordsPredicate(true, first);
         assertFalse(predicate.test(new PersonBuilder().withPhone("94571111").build()));
 
         // Non-matching OR search

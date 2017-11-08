@@ -1,12 +1,12 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.person.PersonContainsKeywordsPredicate;
-
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MRT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
+import seedu.address.model.person.PersonContainsKeywordsPredicate;
 
 /**
  * Finds and lists all persons in address book whose fields contains any of the argument keywords.
@@ -19,7 +19,7 @@ public class FindCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose fields contain any of "
             + "the specified keywords (tags are case sensitive) and displays them as a list with index numbers.\n"
             + "Type refers to the kind of search: 'AND', 'OR'. \n"
-            + "Parameters: TYPE PREFIX/KEYWORD [PREFIX/MORE_KEYWORDS]...\n"
+            + "Parameters: TYPE [PREFIX/KEYWORD] [PREFIX/MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " AND "
             + PREFIX_PHONE + "91234567 "
             + "[" + PREFIX_EMAIL + "johndoe@example.com" + "]"

@@ -134,10 +134,34 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Searching for persons: `find`
+
+Finds persons whose fields contain any of the given keywords. +
+Format: `find TYPE [PREFIX/KEYWORD] [PREFIX/MORE_KEYWORDS]`
+
+****
+* Two types of searches can be conducted: 'AND' and 'OR' searches
+* The order of the keywords does not matter.
+* Relevant fields as denoted by the prefix are searched
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. treated as having passed a field)
+** e.g. 'find AND n/Hans Han e/hans@me han@example' will return both Hans and Han
+** e.g. 'find AND n/Hans e/hans@me han@example' will only return Hans
+** however, 'find OR n/Hans e/han@example' will return both Hans and Han
+****
+
+Examples:
+
+* `findByName John` +
+Returns `john` and `John Doe`
+* `findByName Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+
+
+=== Locating persons by name: `findByName`
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `findByName KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -149,9 +173,9 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 
-* `find John` +
+* `findByName John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `findByName Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Locating persons by address: `findByAddress`
