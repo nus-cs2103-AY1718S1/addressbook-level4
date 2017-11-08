@@ -230,6 +230,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::load[]
 === Loading pre-existing address book : `load`
 
 Loads pre-existing address book to current address book. The pre-existing +
@@ -241,6 +242,17 @@ Format: `load FILENAME`
 Example:
 
 * `load addressbook2.xml`
+// end::load[]
+
+// tag::informBirthday[]
+=== Informing about the birthdays
+
+`Coming in v2.0` +
+When the application is started, it opens a pop-up window to show the +
+persons that are having a birthday on that day. Also, when adding a new +
+contact or loading new contacts from a pre-existing address book, +
+the user would be informed if some of the new contacts were having a birthday.
+// end::informBirthday[]
 
 === Setting password for the address book: `password`
 
