@@ -7,7 +7,7 @@ import seedu.address.commons.events.ui.SwitchThemeEvent;
 /**
  * Switch Theme command to toggle between both themes (light and dark)
  */
-public class SwitchTheme extends UndoableCommand {
+public class SwitchThemeCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "theme";
     public static final String COMMAND_ALIAS = "t";

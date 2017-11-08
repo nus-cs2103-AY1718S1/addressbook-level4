@@ -155,7 +155,6 @@ e.g `n/John Doe t/friend` or as `n/John Doe`.
 works too.
 * If parameters with the same prefix are typed multiple times, only the last one will be taken. For example,
 `n/John Doe n/Martin Henz`, then only `Martin Henz` will be taken into actual consideration.
->>>>>>> master
 ====
 
 ====
@@ -235,8 +234,6 @@ or if the expression is not simple or clear enough.
 ====
 //end::autoReminders[]
 
-=== Listing all persons/events : `(l)list`
-
 // tag::sortByName[]
 === Listing all persons : `(l)list`
 
@@ -249,13 +246,10 @@ This will list out all of your contacts in alphabetical order.
 Example:
 
 * `list`
-<<<<<<< HEAD
 
 [TIP]
-Contacts will be sorted by their names (increment).them
-=======
+Contacts will be sorted by their names (increment).
 // end::sortByName[]
->>>>>>> master
 
 === Listing all events : `(lE)listE`
 
@@ -318,7 +312,7 @@ Finds persons/events whose corresponding field(s) contain any of the given keywo
 Format: `(f)find KEYWORD [MORE_KEYWORDS] [p/KEYWORD [MORE_KEYWORDS]]...`
 
 ****
-* The search is not case insensitive. e.g `hans` will match `Hans`
+* The search is case insensitive. e.g `hans` will match `Hans`
 * The search can be based on one or multiple properties. The short name of the property `n/` can be omitted if the searching
 criteria is for the `name` property.
 * Apply `OR` search for keywords of the same property, i.e. persons/events matching at least one keyword will be returned.
@@ -467,15 +461,15 @@ When **boNUS** is opened again, theme will be initialized to the theme that was 
 ====
 
 
-As shown in Figure 5.14.1 and Figure 5.14.2, Figures depict the Bright Theme and Dark Theme respectively.
+As shown in Figure 5.15.1 and Figure 5.15.2, Figures depict the Bright Theme and Dark Theme respectively.
 
-image::BrightTheme.png[width="300" height="200"]
-_Figure 5.14.1 : Bright Theme_
+image::BrightTheme.png[width="400"]
+_Figure 5.15.1 : Bright Theme_
 
 
 
-image::DarkTheme.png[width="300" height ="200"]
-_Figure 5.14.2 : Dark Theme_
+image::DarkTheme.png[width="400"]
+_Figure 5.15.2 : Dark Theme_
 
 
 === Listing entered commands : `(his)history`
