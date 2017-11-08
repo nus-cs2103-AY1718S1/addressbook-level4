@@ -1,7 +1,9 @@
-= Dickson Chan - Project Portfolio
+= Chan Kin Hung Dickson - Project Portfolio
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
+
+== Purpose
 
 == Project: The Myth's Book
 The Myth's Book is an address book dedicated for university students to store useful information such
@@ -46,6 +48,8 @@ include::../DeveloperGuide.adoc[tag=favouriteunfavourite]
 
 === Enhancement Added: Switch Theme
 
+(Pull Requests https://github.com/CS2103AUG2017-T15-B3/main/pull/50[#50], https://github.com/CS2103AUG2017-T15-B3/main/pull/63[#63], https://github.com/CS2103AUG2017-T15-B3/main/pull/78[#78])
+
 ==== External behavior
 
 ---
@@ -74,6 +78,8 @@ include::../DeveloperGuide.adoc[tag=switch]
 
 === Enhancement Added: Themes List
 
+(Pull Requests https://github.com/CS2103AUG2017-T15-B3/main/pull/50[#50], https://github.com/CS2103AUG2017-T15-B3/main/pull/63[#63])
+
 ==== External behavior
 
 ---
@@ -95,6 +101,36 @@ include::../UserGuide.adoc[tag=themeslist]
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=themeslist]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Events List
+
+(Pull Request https://github.com/CS2103AUG2017-T15-B3/main/pull/135[#135])
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=events]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=events]
 
 #End of Extract#
 
