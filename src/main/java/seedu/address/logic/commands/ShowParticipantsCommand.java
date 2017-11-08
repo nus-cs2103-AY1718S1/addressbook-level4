@@ -22,7 +22,7 @@ public class ShowParticipantsCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SHOW_PARTICIPANTS_SUCCESS = "Show Participants Successfully!";
+    public static final String MESSAGE_SHOW_PARTICIPANTS_SUCCESS = "Show all the participants of %1$s";
 
     private final Index targetIndex;
     private ReadOnlyEvent eventToShow;
@@ -48,7 +48,7 @@ public class ShowParticipantsCommand extends Command {
 
         model.updateFilteredPersonList(predicate);
 
-        return new CommandResult(String.format(MESSAGE_SHOW_PARTICIPANTS_SUCCESS));
+        return new CommandResult(String.format(MESSAGE_SHOW_PARTICIPANTS_SUCCESS, eventToShow.getEventName()));
     }
 
     @Override
