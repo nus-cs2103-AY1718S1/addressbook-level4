@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.StringUtil.replaceBackslashes;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.model.person.Address.ADDRESS_BLOCK_NUMBER_MATCHING_REGEX;
 import static seedu.address.model.person.Address.ADDRESS_BLOCK_WORD_MATCHING_REGEX;
 import static seedu.address.model.person.Email.EMAIL_VALIDATION_REGEX;
@@ -321,7 +322,11 @@ public class ParserUtil {
      * @throws IllegalArgumentException if no file path was found.
      */
     public static String parseAddressTillEnd(String value) throws IllegalArgumentException {
-        Matcher m = Pattern.compile(ADDRESS_BLOCK_WORD_MATCHING_REGEX).matcher(value);
+        Matcher m = Pattern.compile(PREFIX_ADDRESS.toString()).matcher(value);
+        if (m.find()) {
+            return value.substring(value.indexOf(m.group()) + PREFIX_ADDRESS.toString().length()).trim();
+        }
+        m = Pattern.compile(ADDRESS_BLOCK_WORD_MATCHING_REGEX).matcher(value);
         if (m.find()) {
             return value.substring(value.indexOf(m.group())).trim();
         }
