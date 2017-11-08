@@ -68,7 +68,10 @@ include::../DeveloperGuide.adoc[tag=searching]
 
 === Other contributions
 
-* Written all use cases (https://github.com/CS2103AUG2017-T12-B1/main/pull/4[PR])
-* Found bugs in F09-B3 project.
-Add command not working, error message not showing https://github.com/CS2103AUG2017-W09-B1/main/issues/113[the add command (PR)]
+* Written all use cases (https://github.com/CS2103AUG2017-T12-B1/main/pull/5[PR])
+* Found bugs in F09-B3 project. +
+Add command not working, error message not showing. https://github.com/CS2103AUG2017-F09-B3/main/issues/99[Issues]
+* Suggests improvements to F09-B3 project. +
+More meaningful error message. https://github.com/CS2103AUG2017-F09-B3/main/issues/102[Issues]
+
 
