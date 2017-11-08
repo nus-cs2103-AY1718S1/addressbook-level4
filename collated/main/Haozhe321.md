@@ -1,75 +1,4 @@
 # Haozhe321
-###### /java/seedu/room/ui/CalendarBoxPanel.java
-``` java
-
-/**
- * Panel containing the calendar
- */
-public class CalendarBoxPanel extends UiPart<Region> {
-    private static final String FXML = "CalendarBox.fxml";
-
-    @FXML
-    private Pane calendarPane;
-
-    public CalendarBoxPanel() {
-        super(FXML);
-        calendarPane.getChildren().add(new CalendarBox(YearMonth.now()).getView());
-    }
-
-    public void freeResources() {
-        calendarPane = null;
-    }
-}
-```
-###### /java/seedu/room/ui/PersonCard.java
-``` java
-    //following method gets the color related to a specified tag
-    private static String getColorForTag(String tag) {
-        if (!tagColor.containsKey(tag)) { //if the hashmap does not have this tag
-            String chosenColor = colors.get(random.nextInt(colors.size()));
-            tagColor.put(tag, chosenColor); //put the tag and color in
-            /*after this color is chosen, remove from the available list of colors to avoid
-            repeating */
-        }
-        return tagColor.get(tag);
-    }
-
-    /**
-     * initialise the tag with the colors and the tag name
-     */
-    private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
-            tags.getChildren().add(tagLabel);
-
-        });
-    }
-```
-###### /java/seedu/room/logic/parser/DeleteByTagCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new DeleteCommand object
- */
-public class DeleteByTagCommandParser implements Parser<DeleteByTagCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the DeleteCommand
-     * and returns an DeleteCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public DeleteByTagCommand parse(String args) throws ParseException {
-        try {
-            return new DeleteByTagCommand(args);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteByTagCommand.MESSAGE_USAGE));
-        }
-    }
-
-}
-
-```
 ###### /java/seedu/room/logic/commands/AddCommand.java
 ``` java
     @Override
@@ -133,6 +62,82 @@ public class DeleteByTagCommand extends UndoableCommand {
 
 
 ```
+###### /java/seedu/room/logic/parser/DeleteByTagCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new DeleteCommand object
+ */
+public class DeleteByTagCommandParser implements Parser<DeleteByTagCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeleteCommand
+     * and returns an DeleteCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public DeleteByTagCommand parse(String args) throws ParseException {
+        try {
+            return new DeleteByTagCommand(args);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteByTagCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
+
+```
+###### /java/seedu/room/model/Model.java
+``` java
+    /**
+     * Delete all persons with the given tag
+     */
+    void deleteByTag(Tag tag) throws IllegalValueException, CommandException;
+```
+###### /java/seedu/room/model/ModelManager.java
+``` java
+    /**
+     * delete temporary persons on start up of the app
+     */
+    public synchronized void deleteTemporary(ResidentBook residentBook) throws PersonNotFoundException {
+        UniquePersonList personsList = residentBook.getUniquePersonList();
+        Iterator<Person> itr = personsList.iterator(); //iterator to iterate through the persons list
+        while (itr.hasNext()) {
+            Person person = itr.next();
+            LocalDateTime personExpiry = person.getTimestamp().getExpiryTime();
+            LocalDateTime current = LocalDateTime.now();
+            if (personExpiry != null) { //if this is a temporary contact
+                if (current.compareTo(personExpiry) == 1) { //if current time is past the time of expiry
+                    itr.remove();
+                }
+            }
+        }
+    }
+```
+###### /java/seedu/room/model/ModelManager.java
+``` java
+    @Override
+    public synchronized void deleteByTag(Tag tag) throws IllegalValueException, CommandException {
+        residentBook.removeByTag(tag);
+        indicateResidentBookChanged();
+    }
+```
+###### /java/seedu/room/model/person/Person.java
+``` java
+    @Override
+    public ObjectProperty<Timestamp> timestampProperty() {
+        return timestamp;
+    }
+
+    @Override
+    public Timestamp getTimestamp() {
+        return timestamp.get();
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp.set(requireNonNull(timestamp));
+    }
+
+```
 ###### /java/seedu/room/model/person/Timestamp.java
 ``` java
 /**
@@ -194,61 +199,56 @@ public class Timestamp {
 
 }
 ```
-###### /java/seedu/room/model/person/Person.java
-``` java
-    @Override
-    public ObjectProperty<Timestamp> timestampProperty() {
-        return timestamp;
-    }
-
-    @Override
-    public Timestamp getTimestamp() {
-        return timestamp.get();
-    }
-
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp.set(requireNonNull(timestamp));
-    }
-
-```
 ###### /java/seedu/room/model/ResidentBook.java
 ``` java
     public void removeByTag(Tag tag) throws IllegalValueException, CommandException {
         persons.removeByTag(tag);
     }
 ```
-###### /java/seedu/room/model/ModelManager.java
+###### /java/seedu/room/ui/CalendarBoxPanel.java
 ``` java
-    /**
-     * delete temporary persons on start up of the app
-     */
-    public synchronized void deleteTemporary(ResidentBook residentBook) throws PersonNotFoundException {
-        UniquePersonList personsList = residentBook.getUniquePersonList();
-        Iterator<Person> itr = personsList.iterator(); //iterator to iterate through the persons list
-        while (itr.hasNext()) {
-            Person person = itr.next();
-            LocalDateTime personExpiry = person.getTimestamp().getExpiryTime();
-            LocalDateTime current = LocalDateTime.now();
-            if (personExpiry != null) { //if this is a temporary contact
-                if (current.compareTo(personExpiry) == 1) { //if current time is past the time of expiry
-                    itr.remove();
-                }
-            }
+
+/**
+ * Panel containing the calendar
+ */
+public class CalendarBoxPanel extends UiPart<Region> {
+    private static final String FXML = "CalendarBox.fxml";
+
+    @FXML
+    private Pane calendarPane;
+
+    public CalendarBoxPanel() {
+        super(FXML);
+        calendarPane.getChildren().add(new CalendarBox(YearMonth.now()).getView());
+    }
+
+    public void freeResources() {
+        calendarPane = null;
+    }
+}
+```
+###### /java/seedu/room/ui/PersonCard.java
+``` java
+    //following method gets the color related to a specified tag
+    private static String getColorForTag(String tag) {
+        if (!tagColor.containsKey(tag)) { //if the hashmap does not have this tag
+            String chosenColor = colors.get(random.nextInt(colors.size()));
+            tagColor.put(tag, chosenColor); //put the tag and color in
+            /*after this color is chosen, remove from the available list of colors to avoid
+            repeating */
         }
+        return tagColor.get(tag);
     }
-```
-###### /java/seedu/room/model/ModelManager.java
-``` java
-    @Override
-    public synchronized void deleteByTag(Tag tag) throws IllegalValueException, CommandException {
-        residentBook.removeByTag(tag);
-        indicateResidentBookChanged();
-    }
-```
-###### /java/seedu/room/model/Model.java
-``` java
+
     /**
-     * Delete all persons with the given tag
+     * initialise the tag with the colors and the tag name
      */
-    void deleteByTag(Tag tag) throws IllegalValueException, CommandException;
+    private void initTags(ReadOnlyPerson person) {
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            tags.getChildren().add(tagLabel);
+
+        });
+    }
 ```

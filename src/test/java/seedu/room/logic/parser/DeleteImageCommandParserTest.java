@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import seedu.room.logic.commands.DeleteImageCommand;
 
+//@@author shitian007
 public class DeleteImageCommandParserTest {
 
     private DeleteImageCommandParser parser = new DeleteImageCommandParser();

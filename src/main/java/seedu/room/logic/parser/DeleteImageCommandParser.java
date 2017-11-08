@@ -7,6 +7,7 @@ import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.commands.DeleteImageCommand;
 import seedu.room.logic.parser.exceptions.ParseException;
 
+//@@author shitian007
 /**
  * Parses the given {@code String} of arguments in the context of the DeleteImageCommand
  * and returns an DeleteImageCommand object for execution.

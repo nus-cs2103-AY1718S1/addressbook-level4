@@ -160,6 +160,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author shitian007
     @Override
     public void updateFilteredPersonListPicture(Predicate<ReadOnlyPerson> predicate, Person person) {
         requireNonNull(predicate);
@@ -172,6 +173,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
         indicateResidentBookChanged();
     }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {

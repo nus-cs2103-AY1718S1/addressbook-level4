@@ -7,6 +7,7 @@ import seedu.room.commons.core.index.Index;
 import seedu.room.logic.commands.AddImageCommand;
 import seedu.room.logic.parser.exceptions.ParseException;
 
+//@@author shitian007
 /**
  * Parses the given {@code String} of arguments in the context of the AddImageCommand
  * and returns an AddImageCommand object for execution.

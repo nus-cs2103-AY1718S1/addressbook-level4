@@ -1,4 +1,3 @@
-//@@author shitian007
 package seedu.room.ui;
 
 import java.io.File;
@@ -29,6 +28,7 @@ import seedu.room.logic.Logic;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 
+//@@author shitian007
 /**
  * The person information panel of the app.
  */

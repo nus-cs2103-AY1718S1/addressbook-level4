@@ -10,6 +10,7 @@ import org.junit.Test;
 import seedu.room.logic.commands.AddImageCommand;
 import seedu.room.model.person.Picture;
 
+//@@author shitian007
 public class AddImageCommandParserTest {
 
     private AddImageCommandParser parser = new AddImageCommandParser();

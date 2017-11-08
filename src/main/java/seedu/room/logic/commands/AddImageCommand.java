@@ -23,6 +23,7 @@ import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
 import seedu.room.model.tag.Tag;
 
+//@@author shitian007
 /**
  * Allows the addition of an image to a resident currently in the resident book
  */

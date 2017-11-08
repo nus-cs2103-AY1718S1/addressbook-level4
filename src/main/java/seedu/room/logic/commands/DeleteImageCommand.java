@@ -20,6 +20,7 @@ import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
 import seedu.room.model.tag.Tag;
 
+//@@author shitian007
 /**
  * Allows deletion of an image for a specified person
  */

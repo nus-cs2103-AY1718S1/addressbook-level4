@@ -1,6 +1,6 @@
-//@@author shitian007
 package seedu.room.model.person;
 
+//@@author shitian007
 /**
  * Represents the url of the picture of the person in the resident book.
  */
