@@ -363,10 +363,8 @@ As of version 1.5, each person now has a class AppointmentList under himself.
 image::personclassdiagram.png[width="300"]
     Figure 17: Person class diagram with appointments
 
-The AppointmentList class holds an internal list that holds Appointments.
+The AppointmentList class holds an internal list that holds the Appointment class. +
 Appointments are made up of 3 internal variables.
-
-*Appointment* +
 
 ** Description: Holds a string about the appointment. Used for identifying the appointment.
 ** Start Date: Holds the starting time of the appointment. Used for sorting appointments and UI.
@@ -420,7 +418,7 @@ In the UI component, the tag is set by using the css attribute of the tag label.
 
 
 image::SDforTagColor.png[width="800"]
-    Figure 18: Sequence diagram for `add appointment` Model Component
+    Figure 18: Sequence diagram for `random tag color` Model Component
 
 The sequence diagram is given if the command requests the model to set all the tags to a random color. As seen from
 above diagram, each tag is updated to a certain color and does not need to know which tag belongs to which person.
