@@ -4,7 +4,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 
 //@@author derickjw
 /**
- * Changes a user's password
+ * Creates a account with username "admin" and password "admin"
  */
 public class CreateDefaultAccountCommand extends Command {
     public static final String COMMAND_WORD = "createDefaultAcc";
