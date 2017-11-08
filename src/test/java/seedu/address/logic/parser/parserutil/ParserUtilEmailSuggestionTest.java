@@ -3,7 +3,7 @@ package seedu.address.logic.parser.parserutil;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.parser.ParserUtil.isParseableEmail;
+import static seedu.address.logic.parser.ParserUtil.isParsableEmail;
 import static seedu.address.logic.parser.ParserUtil.parseEmail;
 import static seedu.address.logic.parser.ParserUtil.parseFirstEmail;
 import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstEmail;
@@ -23,27 +23,27 @@ public class ParserUtilEmailSuggestionTest {
     public final ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void tryParseFirstEmailAssertFalse() {
-        assertFalse(isParseableEmail("aloha")); // characters only
-        assertFalse(isParseableEmail("+(&%*$^&*")); // symbols only
-        assertFalse(isParseableEmail("123")); // numbers
-        assertFalse(isParseableEmail("prefix/abc+@gm.com")); // invalid characters before @
-        assertFalse(isParseableEmail("add me e/abc+@gmab.com")); // invalid characters
-        assertFalse(isParseableEmail("@email")); // missing local part
-        assertFalse(isParseableEmail("peterjackexample.com")); // missing '@' symbol
-        assertFalse(isParseableEmail("peterjack@")); // missing domain name
+    public void isParsableFirstEmailAssertFalse() {
+        assertFalse(isParsableEmail("aloha")); // characters only
+        assertFalse(isParsableEmail("+(&%*$^&*")); // symbols only
+        assertFalse(isParsableEmail("123")); // numbers
+        assertFalse(isParsableEmail("prefix/abc+@gm.com")); // invalid characters before @
+        assertFalse(isParsableEmail("add me e/abc+@gmab.com")); // invalid characters
+        assertFalse(isParsableEmail("@email")); // missing local part
+        assertFalse(isParsableEmail("peterjackexample.com")); // missing '@' symbol
+        assertFalse(isParsableEmail("peterjack@")); // missing domain name
     }
 
     @Test
-    public void tryParseFirstEmailAssertTrue() {
-        assertTrue(isParseableEmail("e/PeterJack_1190@example.com/postfix"));
-        assertTrue(isParseableEmail("addemail/a@b/postfix")); // minimal
-        assertTrue(isParseableEmail("test@localhost/postfix")); // alphabets only
-        assertTrue(isParseableEmail("123@145/postfix")); // numeric local part and domain name
-        assertTrue(isParseableEmail("e/a1@example1.com")); // mixture of alphanumeric and dot characters
-        assertTrue(isParseableEmail("_user_@_e_x_a_m_p_l_e_.com_")); // underscores
-        assertTrue(isParseableEmail("add peter_jack@very_very_very_long_example.com something")); // long domain name
-        assertTrue(isParseableEmail("email if.you.dream.it_you.can.do.it@example.com")); // long local part
+    public void isParsableFirstEmailAssertTrue() {
+        assertTrue(isParsableEmail("e/PeterJack_1190@example.com/postfix"));
+        assertTrue(isParsableEmail("addemail/a@b/postfix")); // minimal
+        assertTrue(isParsableEmail("test@localhost/postfix")); // alphabets only
+        assertTrue(isParsableEmail("123@145/postfix")); // numeric local part and domain name
+        assertTrue(isParsableEmail("e/a1@example1.com")); // mixture of alphanumeric and dot characters
+        assertTrue(isParsableEmail("_user_@_e_x_a_m_p_l_e_.com_")); // underscores
+        assertTrue(isParsableEmail("add peter_jack@very_very_very_long_example.com something")); // long domain name
+        assertTrue(isParsableEmail("email if.you.dream.it_you.can.do.it@example.com")); // long local part
     }
 
     @Test

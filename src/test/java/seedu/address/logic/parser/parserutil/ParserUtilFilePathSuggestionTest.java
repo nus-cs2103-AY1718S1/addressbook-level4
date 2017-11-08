@@ -3,7 +3,7 @@ package seedu.address.logic.parser.parserutil;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.parser.ParserUtil.isParseableFilePath;
+import static seedu.address.logic.parser.ParserUtil.isParsableFilePath;
 import static seedu.address.logic.parser.ParserUtil.parseFirstFilePath;
 import static seedu.address.storage.util.RolodexStorageUtil.isValidRolodexStorageExtension;
 import static seedu.address.storage.util.RolodexStorageUtil.isValidRolodexStorageFilepath;
@@ -18,28 +18,28 @@ public class ParserUtilFilePathSuggestionTest {
     public final ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void tryParseFirstFilePathAssertFalse() {
-        assertFalse(isParseableFilePath("one two three")); // characters
-        assertFalse(isParseableFilePath("~!@# $%^&*()_+")); // symbols
-        assertFalse(isParseableFilePath("2147483649")); // numbers
-        assertFalse(isParseableFilePath("////")); // empty directory
-        assertFalse(isParseableFilePath("C:/")); // empty directory, with absolute prefix
-        assertFalse(isParseableFilePath("C:////")); // empty directory, with absolute prefix
-        assertFalse(isParseableFilePath("var////")); // empty directory, with relative prefix
-        assertFalse(isParseableFilePath("var\\\\\\\\")); // empty directory, backslashes
+    public void isParsableFirstFilePathAssertFalse() {
+        assertFalse(isParsableFilePath("one two three")); // characters
+        assertFalse(isParsableFilePath("~!@# $%^&*()_+")); // symbols
+        assertFalse(isParsableFilePath("2147483649")); // numbers
+        assertFalse(isParsableFilePath("////")); // empty directory
+        assertFalse(isParsableFilePath("C:/")); // empty directory, with absolute prefix
+        assertFalse(isParsableFilePath("C:////")); // empty directory, with absolute prefix
+        assertFalse(isParsableFilePath("var////")); // empty directory, with relative prefix
+        assertFalse(isParsableFilePath("var\\\\\\\\")); // empty directory, backslashes
     }
 
     @Test
-    public void tryParseFirstFilePathAssertTrue() {
-        assertTrue(isParseableFilePath("data/default.rldx"));
-        assertTrue(isParseableFilePath("Prefix data/default"));
-        assertTrue(isParseableFilePath("C:/Users/Downloads/my.rldx postfix"));
-        assertTrue(isParseableFilePath("Some prefix C:/abc.rldx"));
-        assertTrue(isParseableFilePath("pref  214/748/36/49 postfix"));
-        assertTrue(isParseableFilePath("data////r"));
-        assertTrue(isParseableFilePath("C:////g postfix"));
-        assertTrue(isParseableFilePath("prefix var////f"));
-        assertTrue(isParseableFilePath("prefix var\\a\\b\\c\\"));
+    public void isParsableFirstFilePathAssertTrue() {
+        assertTrue(isParsableFilePath("data/default.rldx"));
+        assertTrue(isParsableFilePath("Prefix data/default"));
+        assertTrue(isParsableFilePath("C:/Users/Downloads/my.rldx postfix"));
+        assertTrue(isParsableFilePath("Some prefix C:/abc.rldx"));
+        assertTrue(isParsableFilePath("pref  214/748/36/49 postfix"));
+        assertTrue(isParsableFilePath("data////r"));
+        assertTrue(isParsableFilePath("C:////g postfix"));
+        assertTrue(isParsableFilePath("prefix var////f"));
+        assertTrue(isParsableFilePath("prefix var\\a\\b\\c\\"));
     }
 
     @Test

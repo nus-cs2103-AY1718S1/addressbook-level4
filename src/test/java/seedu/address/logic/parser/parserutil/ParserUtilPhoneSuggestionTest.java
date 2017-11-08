@@ -3,7 +3,7 @@ package seedu.address.logic.parser.parserutil;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.parser.ParserUtil.isParseablePhone;
+import static seedu.address.logic.parser.ParserUtil.isParsablePhone;
 import static seedu.address.logic.parser.ParserUtil.parseFirstPhone;
 import static seedu.address.logic.parser.ParserUtil.parsePhone;
 import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstPhone;
@@ -23,28 +23,28 @@ public class ParserUtilPhoneSuggestionTest {
     public final ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void tryParseFirstPhoneAssertFalse() {
-        assertFalse(isParseablePhone("aloha")); // characters only
-        assertFalse(isParseablePhone("+(&%*$^&*")); // symbols only
-        assertFalse(isParseablePhone("123")); // short numbers
-        assertFalse(isParseablePhone("+123")); // short numbers, with +
-        assertFalse(isParseablePhone("add me p/+onetwo"));
-        assertFalse(isParseablePhone("fasdfe+624"));
-        assertFalse(isParseablePhone("015431asd")); // exactly 6 numbers
-        assertFalse(isParseablePhone("+015431words")); // exactly 6 numbers, with +
-        assertFalse(isParseablePhone("asda 0154361")); // starts with 0
-        assertFalse(isParseablePhone("3rfsdf +0154361")); // starts with 0, with +
+    public void isParsableFirstPhoneAssertFalse() {
+        assertFalse(isParsablePhone("aloha")); // characters only
+        assertFalse(isParsablePhone("+(&%*$^&*")); // symbols only
+        assertFalse(isParsablePhone("123")); // short numbers
+        assertFalse(isParsablePhone("+123")); // short numbers, with +
+        assertFalse(isParsablePhone("add me p/+onetwo"));
+        assertFalse(isParsablePhone("fasdfe+624"));
+        assertFalse(isParsablePhone("015431asd")); // exactly 6 numbers
+        assertFalse(isParsablePhone("+015431words")); // exactly 6 numbers, with +
+        assertFalse(isParsablePhone("asda 0154361")); // starts with 0
+        assertFalse(isParsablePhone("3rfsdf +0154361")); // starts with 0, with +
     }
 
     @Test
-    public void tryParseFirstPhoneAssertTrue() {
-        assertTrue(isParseablePhone("prefix9154361postfix")); // exactly 7 numbers
-        assertTrue(isParseablePhone("prefix 93121534"));
-        assertTrue(isParseablePhone("prefix 124293842033123postfix")); // long phone numbers
-        assertTrue(isParseablePhone("prefix +9154361asd")); // exactly 7 numbers, with +
-        assertTrue(isParseablePhone("prefix+93121534postfix")); // with +
-        assertTrue(isParseablePhone(" prefix+124293842033123asd")); // long phone numbers, with +
-        assertTrue(isParseablePhone(" 123+124293842033123asd")); // short numbers then long phone numbers, with +
+    public void isParsableFirstPhoneAssertTrue() {
+        assertTrue(isParsablePhone("prefix9154361postfix")); // exactly 7 numbers
+        assertTrue(isParsablePhone("prefix 93121534"));
+        assertTrue(isParsablePhone("p/124293842033123postfix")); // long phone numbers
+        assertTrue(isParsablePhone("prefix +9154361asd")); // exactly 7 numbers, with +
+        assertTrue(isParsablePhone("prefix+93121534postfix")); // with +
+        assertTrue(isParsablePhone(" prefix+124293842033123asd")); // long phone numbers, with +
+        assertTrue(isParsablePhone(" 123+124293842033123asd")); // short numbers then long phone numbers, with +
     }
 
     @Test

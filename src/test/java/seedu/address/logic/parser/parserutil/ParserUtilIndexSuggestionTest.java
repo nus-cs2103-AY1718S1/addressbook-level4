@@ -3,7 +3,7 @@ package seedu.address.logic.parser.parserutil;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.parser.ParserUtil.isParseableInt;
+import static seedu.address.logic.parser.ParserUtil.isParsableInt;
 import static seedu.address.logic.parser.ParserUtil.parseFirstInt;
 import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstInt;
 
@@ -17,20 +17,20 @@ public class ParserUtilIndexSuggestionTest {
     public final ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void tryParseFirstIntAssertFalse() {
-        assertFalse(isParseableInt("one two three")); // characters
-        assertFalse(isParseableInt("~!@# $%^&*()_+")); // symbols
-        assertFalse(isParseableInt("0")); // zero
-        assertFalse(isParseableInt("00")); // zero
-        assertFalse(isParseableInt("2147483649")); // large numbers
+    public void isParsableFirstIntAssertFalse() {
+        assertFalse(isParsableInt("one two three")); // characters
+        assertFalse(isParsableInt("~!@# $%^&*()_+")); // symbols
+        assertFalse(isParsableInt("0")); // zero
+        assertFalse(isParsableInt("00")); // zero
+        assertFalse(isParsableInt("2147483649")); // large numbers
     }
 
     @Test
-    public void tryParseFirstIntAssertTrue() {
-        assertTrue(isParseableInt("abc 1")); // word then number
-        assertTrue(isParseableInt("del1")); // word then number, without spacing
-        assertTrue(isParseableInt("add n/ 8 to Rolodex")); // characters then number, then characters
-        assertTrue(isParseableInt("-1, acba")); // negative numbers
+    public void isParsableFirstIntAssertTrue() {
+        assertTrue(isParsableInt("abc 1")); // word then number
+        assertTrue(isParsableInt("del1")); // word then number, without spacing
+        assertTrue(isParsableInt("add n/ 8 to Rolodex")); // characters then number, then characters
+        assertTrue(isParsableInt("-1, acba")); // negative numbers
     }
 
     @Test

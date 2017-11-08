@@ -23,7 +23,7 @@ public class ParserUtilAddressSuggestionTest {
     public final ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void tryParseAddressTillEndAssertFalse() {
+    public void isParsableAddressTillEndAssertFalse() {
         assertFalse(isParseableAddressTillEnd("one two three")); // No block or characters
         assertFalse(isParseableAddressTillEnd("~!@# $%^&*()_+ ")); // symbols
         assertFalse(isParseableAddressTillEnd("0")); // zero
@@ -34,7 +34,7 @@ public class ParserUtilAddressSuggestionTest {
     }
 
     @Test
-    public void tryParseAddressTillEndAssertTrue() {
+    public void isParsableAddressTillEndAssertTrue() {
         // add command
         assertTrue(isParseableAddressTillEnd(
                 "add Adam Brown classmates 11111111 adam@gmail.com 972, Pansy Street, #08-12, 093173"));

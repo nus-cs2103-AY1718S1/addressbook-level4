@@ -3,8 +3,8 @@ package seedu.address.logic.commands;
 import static seedu.address.commons.core.Messages.MESSAGE_PROMPT_COMMAND;
 import static seedu.address.commons.util.StringUtil.levenshteinDistance;
 import static seedu.address.logic.parser.CliSyntax.POSSIBLE_COMMAND_WORDS;
-import static seedu.address.logic.parser.ParserUtil.isParseableFilePath;
-import static seedu.address.logic.parser.ParserUtil.isParseableInt;
+import static seedu.address.logic.parser.ParserUtil.isParsableFilePath;
+import static seedu.address.logic.parser.ParserUtil.isParsableInt;
 import static seedu.address.logic.parser.ParserUtil.parseFirstFilePath;
 import static seedu.address.logic.parser.ParserUtil.parseFirstInt;
 
@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.logic.parser.AddCommandParser;
+import seedu.address.logic.parser.EmailCommandParser;
 import seedu.address.logic.parser.FindCommandParser;
 import seedu.address.logic.parser.RemarkCommandParser;
 
@@ -67,13 +69,16 @@ public class Suggestion {
     public String getFormattedArgs(String closestCommand) {
         // Custom parser for AddCommand.
         if (AddCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            // TODO: v1.5 try to match arguments with ALL person models, otherwise return null
-            return null;
+            return AddCommandParser.parseArguments(arguments);
 
         // Custom parser for EditCommand.
         } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
             // TODO: v1.5 try to match arguments with SOME person models, otherwise return null
             return null;
+
+        // Custom parser for EmailCommand.
+        } else if (EmailCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
+            return EmailCommandParser.parseArguments(commandWord, arguments);
 
         // Custom parser for RemarkCommand.
         } else if (RemarkCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
@@ -86,16 +91,16 @@ public class Suggestion {
         // Commands with directory-type arguments.
         } else if (OpenCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
                 || NewCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            if (isParseableFilePath(arguments)) {
+            if (isParsableFilePath(arguments)) {
                 return " " + parseFirstFilePath(arguments);
             }
 
         // Commands with simple index-type arguments.
         } else if (SelectCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
                 || DeleteCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            if (isParseableInt(arguments)) {
+            if (isParsableInt(arguments)) {
                 return " " + Integer.toString(parseFirstInt(arguments));
-            } else if (isParseableInt(commandWord)) {
+            } else if (isParsableInt(commandWord)) {
                 return " " + Integer.toString(parseFirstInt(commandWord));
             }
 
