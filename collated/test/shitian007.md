@@ -396,3 +396,43 @@ public class HighlightCommandParserTest {
     }
 }
 ```
+###### /java/seedu/room/model/ModelManagerTest.java
+``` java
+    @Test
+    public void updatePersonPictureTest() throws IllegalValueException, PersonNotFoundException {
+        ResidentBook residentBook = new ResidentBookBuilder().withPerson(TEMPORARY_JOE).build();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(residentBook, userPrefs);
+
+        //modelManager has nobody in it -> returns false
+        assertFalse(modelManager.equals(null));
+
+        Person editedPerson = (Person) modelManager.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        editedPerson.getPicture().setPictureUrl("TestUrl");
+
+        modelManager.updateFilteredPersonListPicture(PREDICATE_SHOW_ALL_PERSONS, editedPerson);
+        assertTrue(modelManager.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()).equals(editedPerson));
+
+    }
+```
+###### /java/seedu/room/model/person/PictureTest.java
+``` java
+public class PictureTest {
+
+    @Test
+    public void isValidUrl() {
+        // Invalid picture urls
+        assertFalse(Picture.isValidImageUrl("")); // empty string
+        assertFalse(Picture.isValidImageUrl(" ")); // spaces only
+        assertFalse(Picture.isValidImageUrl("folder//folder/image.jpg")); // Double slash invalid file url
+
+        // Valid picture numbers
+        assertTrue(Picture.isValidImageUrl("folder1/folder2/image.jpg"));
+        assertTrue(Picture.isValidImageUrl("folder1/folder2/image.png"));
+
+        // Default picture url
+        Picture defaultPicture = new Picture();
+        assertTrue(defaultPicture.getPictureUrl().equals(Picture.PLACEHOLDER_IMAGE));
+    }
+}
+```

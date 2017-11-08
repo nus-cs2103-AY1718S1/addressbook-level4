@@ -551,6 +551,8 @@ public class Picture {
     public static final int PIC_WIDTH = 100;
     public static final int PIC_HEIGHT = 100;
 
+    public static final String IMAGE_URL_VALIDATION_REGEX = "[^ ]+";
+
     public static final String BASE_URL = System.getProperty("user.dir")
             + "/data/contact_images/";
 
@@ -620,6 +622,13 @@ public class Picture {
     public void resetPictureUrl() {
         this.pictureUrl = PLACEHOLDER_IMAGE;
         this.jarPictureUrl = PLACEHOLDER_JAR_URL;
+    }
+
+    /**
+     * Checks validity of picture url
+     */
+    public static boolean isValidImageUrl(String imageUrl) {
+        return imageUrl.matches(IMAGE_URL_VALIDATION_REGEX) && !imageUrl.contains("//");
     }
 
 }
