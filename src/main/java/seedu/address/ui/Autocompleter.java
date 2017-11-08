@@ -156,7 +156,6 @@ public class Autocompleter {
         if (AutocompleteCommand.hasPrefixParameter(commandWord)) {
 
             if (lastCharIsStartOfPrefix(commandBoxText)) {
-                System.out.println(lastCharIsStartOfPrefix(commandBoxText));
                 state = AutocompleteState.COMMAND_COMPLETE_PREFIX;
                 return;
             }
