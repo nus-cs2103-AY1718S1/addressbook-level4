@@ -18,6 +18,7 @@ import seedu.address.model.property.Name;
 import seedu.address.model.property.Phone;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
+import seedu.address.model.reminder.Reminder;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -52,16 +53,60 @@ public class SampleDataUtil {
     }
 
     //@@author yunpengn
-    public static Event[] getSampleEvents() {
+
+    public static ArrayList<Event> getSampleEvents() {
         try {
-            return new Event[]{
-                new Event(new Name("Volleyball Practice"), new DateTime("25122017 08:30"),
-                        new Address("OCBC ARENA Hall 3, #01-111"), new ArrayList<>()),
-                new Event(new Name("CS2103T Lecture"), new DateTime("20102017 14:00"),
-                        new Address("iCube Auditorium, NUS"), new ArrayList<>()),
-                new Event(new Name("Project Meeting"), new DateTime("20102017 14:00"),
-                        new Address("iCube Auditorium, NUS"), new ArrayList<>())
-            };
+            ArrayList<Event> events = new ArrayList<>();
+            String reminderMsg = "You have an event!";
+
+            Event event1 = new Event(new Name("Volleyball Practice"), new DateTime("19102017 08:30"),
+                        new Address("OCBC ARENA Hall 3, #01-111"), new ArrayList<>());
+            event1.addReminder(new Reminder(event1, reminderMsg));
+            Event event2 = new Event(new Name("CS2103T Lecture"), new DateTime("20102017 14:00"),
+                        new Address("iCube Auditorium, NUS"), new ArrayList<>());
+            event2.addReminder(new Reminder(event2, reminderMsg));
+            Event event3 = new Event(new Name("Project Meeting"), new DateTime("20102017 14:00"),
+                        new Address("iCube Auditorium, NUS"), new ArrayList<>());
+            event3.addReminder(new Reminder(event3, reminderMsg));
+            Event event4 = new Event(new Name("Family Lunch"), new DateTime("20112017 13:00"),
+                        new Address("Sakae Sushi, Causeway Point"), new ArrayList<>());
+            event4.addReminder(new Reminder(event4, reminderMsg));
+            Event event5 = new Event(new Name("Movie date"), new DateTime("22112017 22:00"),
+                        new Address("Golden Village Yishun"), new ArrayList<>());
+            event5.addReminder(new Reminder(event5, reminderMsg));
+            Event event6 = new Event(new Name("Consultation for EE2020"), new DateTime("23112017 16:00"),
+                        new Address("E3-06-14, Faculty of Engineering, NUS "), new ArrayList<>());
+            event6.addReminder(new Reminder(event6, reminderMsg));
+            Event event7 = new Event(new Name("Project Meeting for CS2101"), new DateTime("31112017 09:00"),
+                        new Address("SR09, School of Computing"), new ArrayList<>());
+            event7.addReminder(new Reminder(event7, reminderMsg));
+            Event event8 = new Event(new Name("Dental Appointment"), new DateTime("02122017 14:00"),
+                        new Address("National Dental Centre"), new ArrayList<>());
+            event8.addReminder(new Reminder(event8, reminderMsg));
+            Event event9 = new Event(new Name("Volleyball Practice"), new DateTime("08122017 18:00"),
+                        new Address("OCBC ARENA Hall 3, #01-111"), new ArrayList<>());
+            event9.addReminder(new Reminder(event9, reminderMsg));
+            Event event10 = new Event(new Name("Lunch with OG mates"), new DateTime("09122017 14:00"),
+                        new Address("The Deck, FASS, NUS"), new ArrayList<>());
+            event10.addReminder(new Reminder(event10, reminderMsg));
+            Event event11 = new Event(new Name("Family Dinner"), new DateTime("11122017 19:00"),
+                        new Address("Home Sweet Home"), new ArrayList<>());
+            event11.addReminder(new Reminder(event11, reminderMsg));
+
+            events.add(event1);
+            events.add(event2);
+            events.add(event3);
+            events.add(event4);
+            events.add(event5);
+            events.add(event6);
+            events.add(event7);
+            events.add(event8);
+            events.add(event9);
+            events.add(event10);
+            events.add(event11);
+            return events;
+
+
         } catch (IllegalValueException | PropertyNotFoundException e) {
             throw new AssertionError("sample data cannot be invalid", e);
         }
