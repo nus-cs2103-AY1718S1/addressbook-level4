@@ -8,14 +8,14 @@ LISA: Levels Integrated Secretarial Agent is a desktop address book application 
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T13-B1/main/pull/47/commits[Functional code]] [https://github.com/CS2103AUG2017-T13-B1/main/pull/47/commits/baf693dc2457e0dca1ca7812d9c47cdfea402e6b[Test code]]
 
-=== Enhancement Added: Improved Tag management, allowing Tags to be added on and deleted without being overwritten
+=== Enhancement Added: Date Parser
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=add]
+Generalised to all forms of dates used in LISA to use this parser.
 
 #End of Extract#
 
@@ -23,21 +23,92 @@ include::../UserGuide.adoc[tag=add]
 
 ==== Justification
 
-Tags are an important feature for an addressbook because of how it gives the user the freedom to connect attributes to certain contacts. Overwriting previously saved tags mean a lot of work and unintented mistake as the main use case of an edit function for tags is to add on rather than to replace.
+The `LocalDate` class was used to store date data but it contained a strict parser on the format
+of the input. It does not allow users to follow different input styles. The date parser was then
+created for this purpose to allow more intuitive adding of dates and correction. Other date parser
+APIs were considered but may require dependencies that the User may not have.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=add]
+include::../DeveloperGuide.adoc[tag=dateParser]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed:
+=== Enhancement Added: Autofill Feature
 
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+As above in the edit feature.
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This idea stems from the consideration of convenience in editing typos in a contact.
+This is especially so when the user wishes to update a small typo in very long field but
+does not wish to re-type out everything in the current field.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=autofill]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Improved Tag management, allowing Tags to be added on and deleted without being overwritten
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=edit]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Tags are an important feature for LISA because of how it gives the user the freedom to connect
+attributes to certain contacts. Overwriting previously saved tags mean a lot of work and unintented
+mistake as the main use case of an edit function for tags is to add on rather than to replace.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=tagManagement]
+
+#End of Extract#
+
+---
+
+
+
+=== Enhancements Proposed:
+Improved Tag Management +
+Autofill Feature +
+Insurance Class +
+Insurance Management Features +
+Date Parser +
+Overall Architecture of Program Flow for UI +
 
 === Other contributions
-
+Helped properly implement sort contacts by name feature +
+Helped review fellow teammates PR and correct unconventional variable naming +

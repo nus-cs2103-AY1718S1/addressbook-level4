@@ -98,10 +98,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicateInsuranceException e) {
             assert false : "AddressBooks should not have duplicate insurances";
         }
-        syncMasterLifeInsuranceMapWith(persons);
+        syncMasterLifeInsuranceMap();
 
         try {
-            syncMasterPersonListWith(lifeInsuranceMap);
+            syncMasterPersonList();
         } catch (InsuranceNotFoundException e) {
             assert false : "AddressBooks should not contain id that doesn't match to an insurance";
         }
@@ -124,6 +124,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         // in the person list.
         persons.add(newPerson);
         persons.sortPersons();
+        syncWithUpdate();
     }
 
     /**
@@ -146,6 +147,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, editedPerson);
+        syncWithUpdate();
     }
 
     //@@author OscarWang114
@@ -160,7 +162,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicateInsuranceException e) {
             assert false : "AddressBooks should not have duplicate insurances";
         }
-        syncMasterLifeInsuranceMapWith(persons);
+        syncWithUpdate();
     }
     //@@author
 
@@ -201,18 +203,33 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
         if (persons.remove(key)) {
+            syncWithUpdate();
             return true;
         } else {
             throw new PersonNotFoundException();
         }
     }
 
+    //@@author Juxarius
+    /**
+     * Function to update the overall links between insurances and persons after a change in LISA
+     */
+    private void syncWithUpdate() {
+        syncMasterLifeInsuranceMap();
+        try {
+            syncMasterPersonList();
+        } catch (InsuranceNotFoundException infe) {
+            assert false : "AddressBooks should not have duplicate insurances";
+        }
+    }
+    //@@author
+
     //@@author OscarWang114
     /**
      * Ensures that every insurance in the master map:
      *  - links to its owner, insured, and beneficiary {@code Person} if they exist in master person list respectively
      */
-    public void syncMasterLifeInsuranceMapWith(UniquePersonList persons) {
+    public void syncMasterLifeInsuranceMap() {
         lifeInsuranceMap.forEach((id, insurance) -> {
             String owner = insurance.getOwner().getName();
             String insured = insurance.getInsured().getName();
@@ -239,7 +256,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Ensures that every person in the master list:
      *  - contains the correct life insurance corresponding to its id from the master map
      */
-    public void syncMasterPersonListWith(UniqueLifeInsuranceMap lifeInsuranceMap) throws InsuranceNotFoundException {
+    public void syncMasterPersonList() throws InsuranceNotFoundException {
         persons.forEach((ThrowingConsumer<Person>) person -> {
             List<UUID> idList = person.getLifeInsuranceIds();
             if (!idList.isEmpty()) {
