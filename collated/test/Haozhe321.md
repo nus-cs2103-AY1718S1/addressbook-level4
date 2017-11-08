@@ -1,21 +1,10 @@
 # Haozhe321
-###### /java/seedu/room/logic/parser/DeleteByTagCommandParserTest.java
+###### /java/seedu/room/logic/commands/AddCommandTest.java
 ``` java
-public class DeleteByTagCommandParserTest {
-    private DeleteByTagCommandParser parser = new DeleteByTagCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsDeleteByTagCommand() throws IllegalValueException {
-        assertParseSuccess(parser, "friends", new DeleteByTagCommand("friends"));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "friends forever", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                DeleteByTagCommand.MESSAGE_USAGE));
-    }
-
-}
+        @Override
+        public void deleteByTag(Tag tag) throws IllegalValueException, CommandException {
+            fail("this method should not be called.");
+        }
 ```
 ###### /java/seedu/room/logic/commands/DeleteByTagCommandTest.java
 ``` java
@@ -72,30 +61,22 @@ public class DeleteByTagCommandTest {
     }
 }
 ```
-###### /java/seedu/room/logic/commands/AddCommandTest.java
+###### /java/seedu/room/logic/parser/DeleteByTagCommandParserTest.java
 ``` java
-        @Override
-        public void deleteByTag(Tag tag) throws IllegalValueException, CommandException {
-            fail("this method should not be called.");
-        }
-```
-###### /java/seedu/room/model/person/TimestampTest.java
-``` java
-public class TimestampTest {
+public class DeleteByTagCommandParserTest {
+    private DeleteByTagCommandParser parser = new DeleteByTagCommandParser();
 
     @Test
-    public void isValidTimestamp() {
-        // invalid Timestamp
-        assertFalse(Timestamp.isValidTimestamp(-1));
-        assertFalse(Timestamp.isValidTimestamp(-2));
-        assertFalse(Timestamp.isValidTimestamp(-10000));
-
-        //valid Timestamp
-        assertTrue(Timestamp.isValidTimestamp(1));
-        assertTrue(Timestamp.isValidTimestamp(1000));
-        assertTrue(Timestamp.isValidTimestamp(5));
-
+    public void parse_validArgs_returnsDeleteByTagCommand() throws IllegalValueException {
+        assertParseSuccess(parser, "friends", new DeleteByTagCommand("friends"));
     }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "friends forever", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                DeleteByTagCommand.MESSAGE_USAGE));
+    }
+
 }
 ```
 ###### /java/seedu/room/model/ModelManagerTest.java
@@ -115,4 +96,23 @@ public class TimestampTest {
         assertFalse(modelManager.getResidentBook().getPersonList().size() == 0);
 
     }
+```
+###### /java/seedu/room/model/person/TimestampTest.java
+``` java
+public class TimestampTest {
+
+    @Test
+    public void isValidTimestamp() {
+        // invalid Timestamp
+        assertFalse(Timestamp.isValidTimestamp(-1));
+        assertFalse(Timestamp.isValidTimestamp(-2));
+        assertFalse(Timestamp.isValidTimestamp(-10000));
+
+        //valid Timestamp
+        assertTrue(Timestamp.isValidTimestamp(1));
+        assertTrue(Timestamp.isValidTimestamp(1000));
+        assertTrue(Timestamp.isValidTimestamp(5));
+
+    }
+}
 ```

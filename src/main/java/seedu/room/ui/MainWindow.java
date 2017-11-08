@@ -48,7 +48,6 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
     private CalendarBoxPanel calandarBoxPanel;
     private PersonListPanel personListPanel;
     private EventListPanel eventListPanel;
@@ -147,8 +146,10 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
 
+        //@@author Haozhe321
         calandarBoxPanel = new CalendarBoxPanel();
         calendarPlaceholder.getChildren().add(calandarBoxPanel.getRoot());
+        //@@author
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -157,7 +158,7 @@ public class MainWindow extends UiPart<Region> {
         eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());  //TO BE IMPLEMENTED
 
         //@@author shitian007
-        PersonPanel personPanel = new PersonPanel();
+        PersonPanel personPanel = new PersonPanel(logic);
         personPanelPlaceholder.getChildren().add(personPanel.getRoot());
         //@@author
 

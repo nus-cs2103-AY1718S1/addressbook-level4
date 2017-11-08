@@ -8,12 +8,14 @@ import java.util.regex.Pattern;
 
 import seedu.room.logic.commands.AddCommand;
 import seedu.room.logic.commands.AddEventCommand;
+import seedu.room.logic.commands.AddImageCommand;
 import seedu.room.logic.commands.BackupCommand;
 import seedu.room.logic.commands.ClearCommand;
 import seedu.room.logic.commands.Command;
 import seedu.room.logic.commands.DeleteByTagCommand;
 import seedu.room.logic.commands.DeleteCommand;
 import seedu.room.logic.commands.DeleteEventCommand;
+import seedu.room.logic.commands.DeleteImageCommand;
 import seedu.room.logic.commands.EditCommand;
 import seedu.room.logic.commands.ExitCommand;
 import seedu.room.logic.commands.FindCommand;
@@ -65,6 +67,10 @@ public class ResidentBookParser {
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
 
+        case AddImageCommand.COMMAND_WORD:
+        case AddImageCommand.COMMAND_ALIAS:
+            return new AddImageCommandParser().parse(arguments);
+
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
@@ -84,6 +90,10 @@ public class ResidentBookParser {
         case DeleteByTagCommand.COMMAND_WORD:
         case DeleteByTagCommand.COMMAND_ALIAS:
             return new DeleteByTagCommandParser().parse(arguments);
+
+        case DeleteImageCommand.COMMAND_WORD:
+        case DeleteImageCommand.COMMAND_ALIAS:
+            return new DeleteImageCommandParser().parse(arguments);
 
         case SortCommand.COMMAND_WORD:
         case SortCommand.COMMAND_ALIAS:

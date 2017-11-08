@@ -3,6 +3,7 @@ package seedu.room.model;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.room.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.room.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.room.testutil.TypicalPersons.ALICE;
 import static seedu.room.testutil.TypicalPersons.BENSON;
 import static seedu.room.testutil.TypicalPersons.TEMPORARY_JOE;
@@ -15,6 +16,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.model.person.NameContainsKeywordsPredicate;
+import seedu.room.model.person.Person;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
 import seedu.room.testutil.ResidentBookBuilder;
 
@@ -43,6 +45,25 @@ public class ModelManagerTest {
         modelManager.deleteTemporary(residentBook);
         //added temporary has argument of 0, so it stays permanently -> returns false
         assertFalse(modelManager.getResidentBook().getPersonList().size() == 0);
+
+    }
+    //@@author
+
+    //@@author shitian007
+    @Test
+    public void updatePersonPictureTest() throws IllegalValueException, PersonNotFoundException {
+        ResidentBook residentBook = new ResidentBookBuilder().withPerson(TEMPORARY_JOE).build();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(residentBook, userPrefs);
+
+        //modelManager has nobody in it -> returns false
+        assertFalse(modelManager.equals(null));
+
+        Person editedPerson = (Person) modelManager.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        editedPerson.getPicture().setPictureUrl("TestUrl");
+
+        modelManager.updateFilteredPersonListPicture(PREDICATE_SHOW_ALL_PERSONS, editedPerson);
+        assertTrue(modelManager.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()).equals(editedPerson));
 
     }
     //@@author
