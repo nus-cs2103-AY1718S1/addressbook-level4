@@ -15,6 +15,9 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+
+import java.util.LinkedList;
 
 public class RecentlyDeletedCommandTest {
     private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
@@ -42,16 +45,24 @@ public class RecentlyDeletedCommandTest {
         // no persons in RecentlyDeletedQueue
         assertCommandResult(recentlyDeletedCommand, RecentlyDeletedCommand.MESSAGE_NO_RECENTLY_DELETED);
 
+        ReadOnlyPerson personOne = model.getAddressBook().getPersonList().get(0);
+        String personOneStr = personOne.toString();
         deleteCommandOne.execute();
+        ReadOnlyPerson personTwo = model.getAddressBook().getPersonList().get(0);
+        String personTwoStr = personTwo.toString();
         deleteCommandTwo.execute();
         //recentlyDeletedCommand.setData(model, EMPTY_COMMAND_HISTORY,
         //EMPTY_STACK, queue, DEFAULT_THEME);
+        LinkedList<String> deletedAsText = new LinkedList<>();
+        deletedAsText.add(personOneStr);
+        deletedAsText.add(personTwoStr);
+
 
         // multiple persons in RecentlyDeleted Queue
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         deleteFirstPerson(expectedModel);
         deleteFirstPerson(expectedModel);
-        assertCommandSuccess(recentlyDeletedCommand, model, RecentlyDeletedCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(recentlyDeletedCommand, model, String.format(RecentlyDeletedCommand.MESSAGE_SUCCESS, String.join("\n", deletedAsText)), expectedModel);
 
     }
 
