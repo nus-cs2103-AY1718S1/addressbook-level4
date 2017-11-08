@@ -221,7 +221,7 @@ public class AddressBookParserTest {
     public void parseCommand_sort() throws Exception {
         SortCommand command = (SortCommand) parser.parseCommand(
                 SortCommand.COMMAND_WORD + " name");
-        assertEquals(new SortCommand("name", false), command);
+        assertEquals(new SortCommand("name", false, false), command);
     }
 
     @Test
