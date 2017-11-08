@@ -26,7 +26,7 @@ public class ExportCommandTest {
         assertCommandSuccess(command, MESSAGE_FILE_EXPORTED + FILE_PATH_EXPORT_TEST);
     }
 
-   /**
+    /**
      * Parses {@code userInput} into a {@code LockCommand} in default mode.
      */
     private ExportCommand prepareCommand(String userInput) throws ParseException {
