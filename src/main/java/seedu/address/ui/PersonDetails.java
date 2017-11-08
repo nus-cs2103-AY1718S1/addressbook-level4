@@ -1,18 +1,22 @@
 package seedu.address.ui;
 
+import java.util.logging.Logger;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.ReadOnlyPerson;
 
-import java.util.logging.Logger;
 
+/**
+ * Shows contact's details on the right side of PersonListPanel
+ */
 public class PersonDetails extends UiPart<Region> {
 
     private static final String FXML = "PersonDetails.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonDetails.class);
     public final ReadOnlyPerson person;
+    private final Logger logger = LogsCenter.getLogger(PersonDetails.class);
 
     @FXML
     private Label name;

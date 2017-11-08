@@ -221,14 +221,14 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
-    private void showPersonDetails(ReadOnlyPerson person){
+    private void showPersonDetails(ReadOnlyPerson person) {
         personDetails = new PersonDetails(person);
         browserPlaceholder.getChildren().clear();
         browserPlaceholder.getChildren().add(personDetails.getRoot());
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event){
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showPersonDetails(event.getNewSelection().person);
     }
