@@ -94,7 +94,7 @@ public class ImportCommand extends UndoableCommand {
     }
 
     /**
-     * check if the {@param parcels} and {@param otherParcels} have the same elements, disregarding order.
+     * check if {@code parcels} and {@code otherParcels} have the same elements, disregarding order.
      */
     public boolean hasSameParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> otherParcels) {
         // check # of parcels are equal

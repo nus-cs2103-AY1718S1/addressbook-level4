@@ -35,8 +35,8 @@ public class TabPaneTest extends AddressBookGuiTest {
 
 
     /**
-     * checks that the {@param tabPane}'s active list is equivalent to our expected list contained when
-     * the tab with {@param tabIndex} is asserted.
+     * checks that the {@code tabPane}'s active list is equivalent to our expected list contained when
+     * the tab with {@code tabIndex} is asserted.
      */
     private void assertActiveListSelected(TabPaneHandle tabPane, int tabIndex) {
         ParcelListPanelHandle actualList = tabPane.getActiveParcelList();

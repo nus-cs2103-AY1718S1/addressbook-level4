@@ -70,7 +70,7 @@ public interface Model {
 
     //@@author kennard123661
     /**
-     * Adds all unique {@link Parcel}s stored in {@param parcels} to the {@link AddressBook}
+     * Adds all unique {@link Parcel}s stored in {@code parcels} to the {@link AddressBook}
      *
      * @param parcels the list of parcels to add into the {@link AddressBook}.
      * @param uniqueParcels the list of unique parcels stored in {@param parcels} that will not create duplicate parcels

@@ -56,8 +56,8 @@ public class ImportCommandIntegrationTest {
     }
 
     /**
-     * Generates a new {@code Import} which upon execution, adds all Parcel(s) in {@code parcels} into the
-     * {@code model}.
+     * Generates a new {@code ImportCommand} which upon execution, adds all {@link ReadOnlyParcel}(s) in {@code parcels}
+     *  into the {@link Model}.
      */
     private ImportCommand prepareCommand(List<ReadOnlyParcel> parcels, Model model) {
         ImportCommand command = new ImportCommand(parcels);
