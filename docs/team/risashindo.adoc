@@ -1,0 +1,48 @@
+= Risa Shindo - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/risashindo7/main/blob/master/collated/main/risashindo7.md[Functional code]] [https://github.com/risashindo7/main/blob/master/collated/test/risashindo7.md[Test code]]
+
+=== Enhancement Added: Making comment notes for a contact's profile
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=comment]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Adding a commenting feature for any existing contact will allow users (e.g. tutors) to leave any remarks
+about the contact (e.g. students). Anything miscellaneous that does not fit within the exisiting categories/tags can be referenced under the comment section.
+With this new feature, the user's experience and convenience will be further improved. 
+
+=== Enhancement Added: Making an appointment with a contact
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=appointment]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allowing users to make appointments with any contact.
+With this new feature, the user will be able to view what time slots they have alotted for their contact/student.
+
+
