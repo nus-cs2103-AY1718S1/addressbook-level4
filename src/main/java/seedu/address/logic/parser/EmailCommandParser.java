@@ -44,6 +44,4 @@ public class EmailCommandParser implements Parser<EmailCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
         }
     }
-
 }
-
