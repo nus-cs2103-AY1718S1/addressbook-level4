@@ -1,0 +1,124 @@
+= Archana Pradeep - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/main/archthegit.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/test/archthegit.md[Test code]]
+[https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/unused/archthegit.md[Unused code]]
+
+=== Enhancement Added: Modified find Command (V1.0)
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Modifying the find command was necessary as my teammates and I found it unfriendly that we could'nt search for a part
+of somebody's name. Since we fit into the same category as our target users we thought the users would feel the same.
+
+I designed it so that the search only works if the substring is 2 characters or longer.As searching for one character might
+not filter out anybody in The Myth's Book at all.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+=== Enhancement Added: Birthday Field (V1.1)
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+It was the first part of a two part modification. For university students, storing of birthdays would be a valuable addition. This
+would also help me implement reminders for birthdays in the later versions of the application.
+
+---
+
+=== Enhancement Added: Details Panel (V1.2)
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=details]
+
+#End of Extract#
+
+---
+
+==== Justification
+The team decided to reduce the amount of information shown on the person card as it seemed too cluttered
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+=== Enhancement Added: Birthdays Command (V1.3)
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=reminder]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Made a birthday reminder so that university students can check if their friend's have birthdays today. This is
+a rather useful feature for students as they usually celebrate birthdays.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=birthday]
+
+#End of Extract#
+
+---
+=== Enhancement Proposed: Add command `remark`
+
+{Explain similar to the Undo/Redo feature above.}
+
+=== Other contributions
+
+* Fixed bugs in the details panel ( Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/130)
+
