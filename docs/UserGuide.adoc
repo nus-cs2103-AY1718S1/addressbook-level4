@@ -281,8 +281,9 @@ Format: theme KEYWORD
 * The respective `.css` file must be added into resources before the function can work.
 ****
 
+Currently available themes are:
+
 ****
-* Currently available themes are:
 * DarkTheme
 * RedTheme
 ****
