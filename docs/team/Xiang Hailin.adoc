@@ -1,0 +1,160 @@
+= Xiang Hailin - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AcquaiNote
+The AcquaNote is a free command line program to manage your personal contact list easily and safely. Additionally, AcquaNote also helps you to manage your schedule.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T10-B1/main/blob/master/collated/main/Hailinx.md[Functional code]] [https://github.com/CS2103AUG2017-T10-B1/main/blob/master/collated/test/Hailinx.md[Test code]]
+
+=== Enhancement Added: Find
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users need more flexible "find" command. They may need to search other fields besides NAME. Also, a fuzzy search is helpful when they cannot remember their contact clearly.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Lock/Unlock
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=lockunlock]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users need a way to secure their contacts. Others can easily look through one's contacts list if it is not protected. Privacy protection is very important in a software.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=lock]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Select
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=select]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This command makes the browser more powerful. Users can easily use this command to search the name, phone, email, and address of their contacts.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=select]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Todo
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tdo]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The "todo" command provides users a more flexible way to attach their todo event with people in their contacts.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=tdo]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Switch
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=switch]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The "switch" command helps user to switch between browser and todo list.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=switch]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `Calendar`
+
+This command will display a calendar with all todo items according to their date and time. It is more intuitive to see all the todo items on a calendar. Also, calendar with time picker options will makes easier to add todo item.
+
+=== Other contributions
+
+* Set up project repository and tools
+* Reconstructed the UI layout (Pull requests https://github.com/CS2103AUG2017-T10-B1/main/pull/12[#12])
+* Wrote additional tests to increase coverage (Pull requests https://github.com/CS2103AUG2017-T10-B1/main/pull/13[#13], https://github.com/CS2103AUG2017-T10-B1/main/pull/48[#48], https://github.com/CS2103AUG2017-T10-B1/main/pull/70[#70], https://github.com/CS2103AUG2017-T10-B1/main/pull/79[#79])
+* Posted suggestions and bugs for team W09-B3 (Issues https://github.com/CS2103AUG2017-W09-B3/main/issues/92[#92], https://github.com/CS2103AUG2017-W09-B3/main/issues/94[#94], https://github.com/CS2103AUG2017-W09-B3/main/issues/95[#95], https://github.com/CS2103AUG2017-W09-B3/main/issues/96[#96])

@@ -94,6 +94,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::find[]
 === Locating persons : `find`
 
 ==== Default
@@ -150,6 +151,7 @@ Examples:
 Returns `john` and `John Doe`
 * `find -d p/999 e/nus` +
 Returns any person whose phone number contains number `999` and email address contains `nus`
+// end::find[]
 
 === Deleting a person : `delete`
 
@@ -192,6 +194,7 @@ Deletes the first person named Alex in the address book contact list.
 `del Betsy` +
 Deletes the 1st person in the results of the `find` command.
 
+// tag::select[]
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -222,6 +225,7 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select -a 1` +
 Selects the address of 1st person in the results of the `find` command.
+// end::select[]
 
 === Listing entered commands : `history`
 
@@ -319,6 +323,7 @@ Examples:
 Sorts the address book alphabetically by name.
 // end::sort[]
 
+// tag::lockunlock[]
 === Locking the address book : `lock`
 
 Locks the address book by a password. +
@@ -341,6 +346,7 @@ Format: `unlock PASSWORD`
 * Encrypted data file will be decrypted after locking.
 * Person contact list will reload.
 ****
+// end::lockunlock[]
 
 === Favouriting a person : `favourite`
 
@@ -386,6 +392,7 @@ Examples:
 * `export C:\exported\AcquaiNote.xml` +
 Exports the address book into exported folder in C drive in xml file format.
 
+// tag::tdo[]
 === To-do list: `todo`
 
 Attach a To-do list to a specified person to manage schedule with that person. +
@@ -426,12 +433,14 @@ Format: `todo INDEX -l`
 
 List all todo items from all person +
 Format: `todo`
+// end::tdo[]
 
+// tag::switch[]
 === Switch between Browser and Todo list: `switch`
 
 Switch between Todo list and browser. +
 Format: `switch NUMBER`  (1 for Todo list, 2 for browser)
-
+// end::switch[]
 
 == Coming in v2.0
 
