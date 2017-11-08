@@ -52,6 +52,14 @@ public class Timing implements Comparable<Timing> {
     }
 
     /**
+     * Construct a Timing with a localtime.
+     */
+    public Timing(LocalTime localTime) {
+        this.start = localTime.getHour() * 100 + localTime.getMinute();
+        this.end = this.start;
+    }
+
+    /**
      * Returns the approximate duration of a given timeslot in terms of hours (one decimal place).
      */
     public static double getDurationInHours(int startTime, int endTime) {
@@ -60,20 +68,15 @@ public class Timing implements Comparable<Timing> {
         return oneDecimalPlace(duration);
     }
 
-    /**
-     * Construct a Timing with a localtime.
-     */
-    public Timing(LocalTime localTime) {
-        this.start = localTime.getHour() * 100 + localTime.getMinute();
-        this.end = this.start;
-    }
 
+    /**
      * Returns the value in one decimal place.
+     * @return a double value.
      */
     public static double oneDecimalPlace(double value) {
         return Math.round(value * 10) / 10.0;
     }
-  
+
     /**
      * Returns true if a given string is a valid event's Timing.
      */

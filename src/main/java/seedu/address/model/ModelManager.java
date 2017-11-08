@@ -35,6 +35,7 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author reginleiff
     private final FilteredList<ReadOnlyEvent> filteredEvents;
     private FilteredList<ReadOnlyEvent> scheduledEvents;
+    private FilteredList<ReadOnlyEvent> timetableEvents;
 
     //@@author
 
