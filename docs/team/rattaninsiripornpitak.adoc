@@ -58,7 +58,7 @@ include::../UserGuide.adoc[tag=pdfSaveLoad]
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=searchbox]
+include::../DeveloperGuide.adoc[tag=pdfSaveLoad]
 
 #End of Extract#
 

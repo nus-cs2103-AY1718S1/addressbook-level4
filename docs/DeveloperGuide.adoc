@@ -740,8 +740,7 @@ Print Command iterates through each contact in the addressbook and prints out hi
 For each person, print command then iterates through ALL insurance policies he is involved in (whether as an
 owner/beneficiary/insured) and prints out the policy details.
 
-// tag::saveloadpdf
-
+// tag::pdfSaveLoad[]
 === Save/Load (contract) pdf file
 
 Allows for pdf file of the contract to be added to the project, and accessed by clicking on the link on insurance profile page.
@@ -754,32 +753,35 @@ In the case that the file exist in the project folder, the entry for contract fi
 
 [source,java]
 ----
- private void initializeContractFile(ReadOnlyInsurance insurance) {
-        insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractPath());
-        if (isFileExists(insuranceFile)) {
-            activateLinkToInsuranceFile();
-        } else {
-            contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    FileChooser.ExtensionFilter extFilter =
-                            new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
-                    FileChooser chooser = new FileChooser();
-                    chooser.getExtensionFilters().add(extFilter);
-                    File openedFile = chooser.showOpenDialog(null);
-                    activateLinkToInsuranceFile();
+  private void initializeContractFile(ReadOnlyInsurance insurance) {
+         insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractPath());
+         if (isFileExists(insuranceFile)) {
+             activateLinkToInsuranceFile();
+         } else {
+             contractPath.getStyleClass().clear();
+             contractPath.getStyleClass().add("missing-file");
+             contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                 @Override
+                 public void handle(MouseEvent event) {
+                     FileChooser.ExtensionFilter extFilter =
+                             new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+                     FileChooser chooser = new FileChooser();
+                     chooser.getExtensionFilters().add(extFilter);
+                     File openedFile = chooser.showOpenDialog(null);
+                     activateLinkToInsuranceFile();
 
-                    if (isFileExists(openedFile)) {
-                        try {
-                            Files.copy(openedFile.toPath(), insuranceFile.toPath());
-                        } catch (IOException ex) {
-                            logger.info("Unable to open at path: " + openedFile.getAbsolutePath());
-                        }
-                    }
-                }
-            });
+                     if (isFileExists(openedFile)) {
+                         try {
+                             Files.copy(openedFile.toPath(), insuranceFile.toPath());
+                         } catch (IOException ex) {
+                             logger.info("Unable to open at path: " + openedFile.getAbsolutePath());
+                         }
+                     }
+                 }
+             });
 
-        }
+         }
+     }
 ----
 
 As seen, the `File insuranceFile` attempts to find the file in the folder containing all save files.
@@ -791,18 +793,54 @@ Upon successful retrieval of the file, or adding of the file if it does not exis
 
 [source,java]
 ----
- private void activateLinkToInsuranceFile() {
-        contractPath.getStyleClass().add("particular-link");
-        contractPath.setOnMouseClicked(event -> {
-            try {
-                Desktop.getDesktop().open(insuranceFile);
-            } catch (IOException ee) {
-                logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
-            }
-        });
+private void activateLinkToInsuranceFile() {
+         contractPath.getStyleClass().clear();
+         contractPath.getStyleClass().add("valid-file");
+         contractPath.setOnMouseClicked(event -> {
+             try {
+                 Desktop.getDesktop().open(insuranceFile);
+             } catch (IOException ee) {
+                 logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
+             }
+         });
+     }
+----
+// end::pdfSaveLoad[]
+
+// tag::switchBetweenProfileAndInsurance
+=== Switching middle panel between Profile and Insurance page
+
+Implemented by raising events when one of the following events is detected
+
+1) `Person` card selected from left panel
+
+2) `Insurance` card selected from right panel
+
+3) `Person` name selected from `InsuranceProfilePanel` when bound to middle panel
+
+4) `Insurance` selected from `ProfilePanel` when bound to middle panel
+
+Each of these events call their own respective event handler and raise `SwitchToProfilePanelRequestEvent` or `SwitchToInsurancePanelRequestEvent` as required.
+These 2 events are picked up by `MainWindow` which rebind the middle panel placeholder to respective node.
+[source, java]
+----
+ @Subscribe
+    private void handleSwitchToProfilePanelRequestEvent(SwitchToProfilePanelRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        middlePanelPlaceholder.getChildren().clear();
+        middlePanelPlaceholder.getChildren().add(profilePanel.getRoot());
+    }
+
+    @Subscribe
+    private void handleSwitchToInsurancePanelRequestEvent(SwitchToInsurancePanelRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        middlePanelPlaceholder.getChildren().clear();
+        middlePanelPlaceholder.getChildren().add(insuranceProfilePanel.getRoot());
     }
 ----
-// end::saveloadpdf[]
+
 
 // tag::undoredo[]
 === Undo/Redo mechanism

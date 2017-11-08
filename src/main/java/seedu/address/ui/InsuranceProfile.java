@@ -55,9 +55,6 @@ public class InsuranceProfile extends UiPart<Region> {
         super(FXML);
         this.insurance = insurance;
         index.setText(displayIndex + ".");
-
-        // initializeContractFile(insurance);
-
         enableNameToProfileLink(insurance);
 
         bindListeners(insurance);
@@ -78,56 +75,6 @@ public class InsuranceProfile extends UiPart<Region> {
         insured.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getInsured())));
         beneficiary.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getBeneficiary())));
     }
-
-
-    /**
-     * Checks if pdf file exist in project, if not add click event on contract field to add file with filechooser
-     * Then add click event on contract field to open up the file
-     * @param insurance
-     */
-    /*
-    private void initializeContractFile(ReadOnlyInsurance insurance) {
-        insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractPath());
-        if (isFileExists(insuranceFile)) {
-            activateLinkToInsuranceFile();
-        } else {
-            contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    FileChooser.ExtensionFilter extFilter =
-                            new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
-                    FileChooser chooser = new FileChooser();
-                    chooser.getExtensionFilters().add(extFilter);
-                    File openedFile = chooser.showOpenDialog(null);
-                    activateLinkToInsuranceFile();
-
-                    if (isFileExists(openedFile)) {
-                        try {
-                            Files.copy(openedFile.toPath(), insuranceFile.toPath());
-                        } catch (IOException ex) {
-                            logger.info("Unable to open at path: " + openedFile.getAbsolutePath());
-                        }
-                    }
-                }
-            });
-
-        }
-    }*/
-
-    /**
-     *  Enable the link to open contract pdf file and adjusting the text hover highlight
-     */
-    /*private void activateLinkToInsuranceFile() {
-        contractPath.getStyleClass().add("particular-link");
-        contractPath.setOnMouseClicked(event -> {
-            try {
-                Desktop.getDesktop().open(insuranceFile);
-            } catch (IOException ee) {
-                logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
-            }
-        });
-    }*/
-    //@@author
 
     /**
      * Binds the individual UI elements to observe their respective {@code ReadOnlyInsurance} properties
@@ -163,8 +110,6 @@ public class InsuranceProfile extends UiPart<Region> {
     private void handleInsurancePanelSelectionChangedEvent(InsurancePanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         insurance = event.getInsurance();
-
-        //initializeContractFile(insurance);
         enableNameToProfileLink(insurance);
         bindListeners(insurance);
         index.setText(null);
