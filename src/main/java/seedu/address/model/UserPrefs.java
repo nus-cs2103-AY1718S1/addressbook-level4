@@ -11,7 +11,6 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookImagesPath = "data/default.png";
     private String addressBookName = "MyAddressBook";
 
     public UserPrefs() {
@@ -46,16 +45,6 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
-    //@@author aali195
-    public String getAddressBookImagesPath() {
-        return addressBookImagesPath;
-    }
-
-    public void setAddressBookImagesPath(String addressBookImagesPath) {
-        this.addressBookImagesPath = addressBookImagesPath;
-    }
-    //@@author
-
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -69,13 +58,12 @@ public class UserPrefs {
 
         return Objects.equals(guiSettings, o.guiSettings)
                 && Objects.equals(addressBookFilePath, o.addressBookFilePath)
-                && Objects.equals(addressBookImagesPath, o.addressBookImagesPath)
                 && Objects.equals(addressBookName, o.addressBookName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, addressBookFilePath, addressBookImagesPath, addressBookName);
+        return Objects.hash(guiSettings, addressBookFilePath, addressBookName);
     }
 
     @Override
