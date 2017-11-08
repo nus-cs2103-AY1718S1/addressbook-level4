@@ -8,7 +8,7 @@ import java.util.Set;
 
 /**
  * Parses the command entered by the user
- * and check it with the synonyms provided
+ * and checks it with the synonyms provided
  * so that the user does not have to remember specific commands
  */
 public class CheckCommandsParser {
