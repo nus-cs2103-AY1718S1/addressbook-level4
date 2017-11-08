@@ -9,7 +9,6 @@ import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.logging.Logger;
 
-import com.sun.javafx.scene.control.behavior.DatePickerBehavior;
 import com.sun.javafx.scene.control.skin.DatePickerContent;
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
 
@@ -17,7 +16,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tooltip;
@@ -25,7 +23,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.NextMonthEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.ChangeModeCommand;
@@ -257,15 +254,6 @@ public class CalendarPanel extends UiPart<Region> {
             }
         };
         return dayCellFactory;
-    }
-
-    private void handleNextMonthEvent(NextMonthEvent event) {
-        datePicker.editorProperty().addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.fine("Selection of date is changed to : '" + newValue + "'");
-                        raise(new NextMonthEvent());
-                    }
-                });
     }
 
     // TODO: 26/10/17 implement event in the calendar, such that binding of dates is possible
