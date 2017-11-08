@@ -28,7 +28,6 @@ public class CommandBoxParser {
     protected static final int ARGUMENT_INDEX = 1;
 
     private static final  String EMPTY_STRING = "";
-    private static final  String SPACE = " ";
 
     /**
      * Used for initial separation of command word and args.
