@@ -430,6 +430,7 @@ _Figure 4.3.1.1b : Interactions in the Birthday Command._
 
 // end::birthdayDesignConsideration[]
 
+// tag::tagretrieve[]
 === Tag & Retrieve mechanism
 
 The `TagCommand`and `RetrieveCommand` reside in the `commands` of `Logic`.
@@ -481,6 +482,7 @@ _Figure 4.4.1.1 : Sequence Diagram for the Retrieve Command._
 **Alternative 2:**  Create a list attribute for `Tag` to store all persons currently having that tag. +
 **Pros:** Faster to get the persons as the filtered person list is already created. +
 **Cons:** Requires to save the lists of all existing tags to storage file. +
+// end::tagretrieve[]
 
 === Reminder list
 
