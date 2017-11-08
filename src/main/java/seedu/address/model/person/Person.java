@@ -131,6 +131,17 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         return uniquePhoneList.get();
     }
 
+    //@@author willxujun
+    /**
+     * Returns an immutable phone set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public Set<Phone> getPhones() {
+        return Collections.unmodifiableSet(uniquePhoneList.get().toSet());
+    }
+    //@@author
+
     public ObjectProperty<UniquePhoneList> phoneListProperty() {
         return uniquePhoneList;
     }
