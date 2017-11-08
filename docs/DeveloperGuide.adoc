@@ -406,7 +406,7 @@ An added functionality is that if the user presses tab again, the command will a
 
 One class, command collection, is used to hold the set of commands and a map from each command word to the command usage. This is used by the trie to both construct the command trie and autocomplete from a command word to a command word and its usage. This static class simply contains a set of each command's command word that is statically initialized and used by the commandTrie class.
 
-
+//tag::expire[]
 === Expiry date
 
 Expiry date indicates the date that information about a person is no longer useful. It is one of the fields of a person alongside name, email, etc.
@@ -443,6 +443,8 @@ public String toString() {
 **Alternative 2:** Store value as String +
 **Pros:** Easy to implement. Easy to print. +
 **Cons:** Validation of date as String is complicated. Need to implement all ExpiryDate methods from scratch.
+//end::expire[]
+
 
 === Groups
 
