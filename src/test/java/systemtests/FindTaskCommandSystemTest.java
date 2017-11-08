@@ -6,10 +6,12 @@ import static seedu.address.testutil.TypicalTasks.BUY_TICKETS;
 import static seedu.address.testutil.TypicalTasks.GYM;
 import static seedu.address.testutil.TypicalTasks.KEYWORD_MATCHING_FINISH;
 import static seedu.address.testutil.TypicalTasks.PERSONAL_PROJECT;
+import static seedu.address.testutil.TypicalTasks.QUIZ;
 
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.ChangeModeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -18,9 +20,15 @@ import seedu.address.logic.commands.tasks.FindTaskCommand;
 import seedu.address.model.Model;
 
 public class FindTaskCommandSystemTest extends AddressBookSystemTest {
-
+    //@@author tby1994
     @Test
     public void find() {
+
+        /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
+
+        /*change the current command mode to task manager*/
+        executeCommand(ChangeModeCommand.COMMAND_WORD + " tm");
+
         /* Case: find multiple tasks in address book, command with leading spaces and trailing spaces
          * -> 2 tasks found
          */
@@ -39,8 +47,9 @@ public class FindTaskCommandSystemTest extends AddressBookSystemTest {
         assertSelectedTaskCardUnchanged();
 
         /* Case: mixed case command word -> 2 tasks found */
-        command = "FiNdTaSk Finish";
+        command = "FiNd Finish";
         assertCommandSuccess(command, expectedModel);
+        assertSelectedTaskCardUnchanged();
 
         /* Case: find task where task list is not displaying the task we are finding -> 1 task found */
         command = FindTaskCommand.COMMAND_WORD + " Gym";
@@ -48,6 +57,34 @@ public class FindTaskCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedTaskCardUnchanged();
 
+        //@@author tpq95
+        /* Case: find task with deadline in address book, 1 keyword -> 1 task found */
+        command = FindTaskCommand.COMMAND_WORD + " 01-11-2017";
+        ModelHelper.setFilteredTaskList(expectedModel, QUIZ);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedTaskCardUnchanged();
+
+        // TODO: 26/10/17 Find out why 26-10-2017 01-11-2017 gives 3 tasks listed
+        /* Case: find multiple tasks in address book, 2 keywords -> 2 tasks found */
+        command = FindTaskCommand.COMMAND_WORD + " 20-11-2017 01-11-2017";
+        ModelHelper.setFilteredTaskList(expectedModel, BUY_TICKETS, QUIZ);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedTaskCardUnchanged();
+
+        /* Case: find multiple tasks in address book, 2 keywords with 1 repeat -> 2 tasks found */
+        command = FindTaskCommand.COMMAND_WORD + " 20-11-2017 01-11-2017 20-11-2017";
+        ModelHelper.setFilteredTaskList(expectedModel, BUY_TICKETS, QUIZ);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedTaskCardUnchanged();
+
+        /* Case: find multiple tasks in address book, 2 keywords of different type -> 2 tasks found */
+        command = FindTaskCommand.COMMAND_WORD + " 01-11-2017 gym";
+        ModelHelper.setFilteredTaskList(expectedModel, QUIZ, GYM);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedTaskCardUnchanged();
+        //@@author
+
+        //@@author tby1994
         /* Case: find multiple tasks in address book, 2 keywords -> 2 tasks found */
         command = FindTaskCommand.COMMAND_WORD + " enhancement art";
         ModelHelper.setFilteredTaskList(expectedModel, ASSIGNMENT, PERSONAL_PROJECT);
@@ -116,12 +153,28 @@ public class FindTaskCommandSystemTest extends AddressBookSystemTest {
         command = FindTaskCommand.COMMAND_WORD + " " + ASSIGNMENT.getStartDate().date;
         assertCommandSuccess(command, expectedModel);
         assertSelectedTaskCardUnchanged();
+        //@@author
 
-        /* Case: find deadline of task in address book -> 0 tasks found */
-        command = FindTaskCommand.COMMAND_WORD + " " + ASSIGNMENT.getDeadline().date;
+        //@@author tpq95
+        /* Case: find deadline of task in address book, keyword is substring of deadline -> 0 tasks found */
+        command = FindTaskCommand.COMMAND_WORD + " 20-10";
+        ModelHelper.setFilteredTaskList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedTaskCardUnchanged();
 
+        /* Case: find task in address book, keyword is in wrong format -> 0 tasks found */
+        command = FindTaskCommand.COMMAND_WORD + " 20102017";
+        ModelHelper.setFilteredTaskList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedTaskCardUnchanged();
+
+        /* Case: find task not in address book -> 0 tasks found */
+        command = FindTaskCommand.COMMAND_WORD + " 01-13-1111";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedTaskCardUnchanged();
+        //@@author
+
+        //@@author tby1994
         /* Case: find while a task is selected -> selected card deselected */
         showAllTasks();
         selectTask(Index.fromOneBased(1));

@@ -9,13 +9,13 @@ import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
-
+//@@author eryao95
 /**
  * Deletes a task identified using it's last displayed index from the address book.
  */
 public class DeleteTaskCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "deletetask";
+    public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the task identified by the index number used in the task listing.\n"

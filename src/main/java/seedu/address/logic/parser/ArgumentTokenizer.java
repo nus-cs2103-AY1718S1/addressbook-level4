@@ -3,9 +3,6 @@ package seedu.address.logic.parser;
 import java.util.ArrayList;
 import java.util.List;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.parser.exceptions.ParseException;
-
 /**
  * Tokenizes arguments string of the form: {@code preamble <prefix>value <prefix>value ...}<br>
  *     e.g. {@code some preamble text t/ 11.00 t/12.00 k/ m/ July}  where prefixes are {@code t/ k/ m/}.<br>
@@ -15,7 +12,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  *    in the above example.<br>
  */
 public class ArgumentTokenizer {
-    
+
     private static final String QUOTE_REGEX = "\"";
 
     /**
@@ -30,7 +27,15 @@ public class ArgumentTokenizer {
         List<PrefixPosition> positions = findAllPrefixPositions(argsString, prefixes);
         return extractArguments(argsString, positions);
     }
-    
+
+    //@@author raisa2010
+    /**
+     * Returns the part of the {@code argsString} that is unquoted to prevent tokenization of prefixes intended to be
+     * in the description. If the argsString contains no quotes then the entire string is returned.
+     * @param argsString Arguments string of the form: {@code "preamble" <prefix>value <prefix>value ...} or
+     *                   Arguments string of the form: {@code preamble <prefix>value <prefix>value ...}
+     * @return           The part of the {@code argsString} that is unquoted.
+     */
     private static String extractUnquotedArgsString(String argsString) {
         if (argsString.indexOf(QUOTE_REGEX) == argsString.lastIndexOf(QUOTE_REGEX)) {
             return argsString;
@@ -39,6 +44,7 @@ public class ArgumentTokenizer {
         return (unquotedArgsString.length == 2) ? "" : unquotedArgsString[2];
     }
 
+    //@@author
     /**
      * Finds all zero-based prefix positions in the given arguments string.
      *

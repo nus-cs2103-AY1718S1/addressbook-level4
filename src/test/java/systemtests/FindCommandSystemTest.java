@@ -130,10 +130,16 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        /* Case: find birthday of person in address book -> 1 persons found */
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getBirthday().value;
+        ModelHelper.setFilteredPersonsList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
         /* Case: find tags of person in address book -> 1 persons found */
         List<Tag> tags = new ArrayList<>(DANIEL.getTags());
         command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
-        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        ModelHelper.setFilteredPersonsList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 

@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -128,6 +129,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author tpq95
         @Override
         public void deleteTag(ReadOnlyPerson person, Tag oldTag)
             throws PersonNotFoundException, DuplicatePersonException {
@@ -139,6 +141,7 @@ public class AddCommandTest {
                 throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
+        //@@author
 
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
@@ -177,6 +180,18 @@ public class AddCommandTest {
         public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
             fail("This method should not be called");
         }
+        //@@author tby1994
+        @Override
+        public void changeCommandMode(String mode) throws IllegalValueException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public String getCommandMode() {
+            fail("This method should not be called ");
+            return null;
+        }
+        //@@author
     }
 
     /**

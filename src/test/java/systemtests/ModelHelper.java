@@ -31,7 +31,7 @@ public class ModelHelper {
     public static void setFilteredPersonsList(Model model, ReadOnlyPerson... personsToDisplay) {
         setFilteredPersonsList(model, Arrays.asList(personsToDisplay));
     }
-
+    //@@author tby1994
     /**
      * Updates {@code model}'s filtered list to display only {@code tasksToDisplay}.
      */
@@ -63,6 +63,7 @@ public class ModelHelper {
     public static void setFilteredTaskList(Model model, ReadOnlyTask... toDisplay) {
         setFilteredTaskList(model, Arrays.asList(toDisplay));
     }
+    //@@author
 
     /**
      * Returns a predicate that evaluates to true if this {@code ReadOnlyPerson} equals to {@code other}.
@@ -70,11 +71,12 @@ public class ModelHelper {
     private static Predicate<ReadOnlyPerson> getPredicatePersonMatching(ReadOnlyPerson other) {
         return person -> person.equals(other);
     }
-
+    //@@author tby1994
     /**
      * Returns a predicate that evaluates to true if this {@code ReadOnlyTask} equals to {@code other}.
      */
     private static Predicate<ReadOnlyTask> getPredicateTaskMatching(ReadOnlyTask other) {
         return task -> task.equals(other);
     }
+    //@@author
 }

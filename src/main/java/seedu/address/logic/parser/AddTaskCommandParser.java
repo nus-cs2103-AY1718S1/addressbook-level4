@@ -5,7 +5,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_ON;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_TO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -21,9 +20,9 @@ import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.StartDate;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.TaskDates;
-
+///@@author raisa2010
 /**
- * Parses input arguments and creates a new AddCommand object
+ * Parses input arguments and creates a new AddTaskCommand object
  */
 public class AddTaskCommandParser implements Parser<AddTaskCommand> {
 
@@ -34,29 +33,26 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
      */
     public AddTaskCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_STARTDATE, PREFIX_DEADLINE_TO, PREFIX_DEADLINE_ON,
-                        PREFIX_DEADLINE_BY, PREFIX_TAG);
 
-        if (!isDescriptionPresent(argMultimap)) {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_STARTDATE, PREFIX_DEADLINE_ON, PREFIX_DEADLINE_BY, PREFIX_TAG);
+
+        if (!isDescriptionPresent(argMultimap) | !isSinglePrefixPresent(argMultimap)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
         }
 
         try {
-            Description description = ParserUtil.parseDescription(argMultimap.getPreamble());
+            Description description = ParserUtil.parseDescription(argMultimap.getPreamble()).get();
             StartDate startDate = ParserUtil.parseStartDate(argMultimap.getValue(PREFIX_STARTDATE))
                     .orElse(new StartDate());
-            Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE_TO, PREFIX_DEADLINE_BY,
-                    PREFIX_DEADLINE_ON)).orElse(new Deadline());
-            
+            Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE_BY, PREFIX_DEADLINE_ON))
+                    .orElse(new Deadline());
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             if (!TaskDates.isStartDateBeforeDeadline(startDate, deadline)) {
-                throw new IllegalValueException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        AddTaskCommand.MESSAGE_USAGE));
+                throw new IllegalValueException(TaskDates.MESSAGE_DATE_CONSTRAINTS);
             }
-            
+
             ReadOnlyTask task = new Task(description, startDate, deadline, tagList);
 
             return new AddTaskCommand(task);
@@ -66,10 +62,19 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
     }
 
     /**
-     * Returns true if the start date prefix does not contain empty {@code Optional} values in the given
+     * Returns true if the preamble (string before first valid prefix) is not empty in the given
      * {@code ArgumentMultimap}.
      */
     private static boolean isDescriptionPresent(ArgumentMultimap argumentMultimap) {
         return !argumentMultimap.getPreamble().isEmpty();
+    }
+
+    /**
+     * Returns true if a single deadline prefix has been used in an unquoted string in the given
+     * {@code ArgumentMultimap}
+     */
+    private static boolean isSinglePrefixPresent(ArgumentMultimap argumentMultimap) {
+        return !(argumentMultimap.getValue(PREFIX_DEADLINE_BY).isPresent()
+                && argumentMultimap.getValue(PREFIX_DEADLINE_ON).isPresent());
     }
 }

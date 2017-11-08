@@ -16,6 +16,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author tpq95
 /**
  * Remove same tags from a list of people
  */

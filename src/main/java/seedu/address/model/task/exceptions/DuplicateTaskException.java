@@ -1,9 +1,9 @@
 package seedu.address.model.task.exceptions;
 
 import seedu.address.commons.exceptions.DuplicateDataException;
-
+//@@author raisa2010
 /**
- * Signals that the operation will result in duplicate Person objects.
+ * Signals that the operation will result in duplicate Task objects.
  */
 public class DuplicateTaskException extends DuplicateDataException {
     public DuplicateTaskException() {

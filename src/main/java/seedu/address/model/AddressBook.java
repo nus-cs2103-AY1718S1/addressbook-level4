@@ -34,7 +34,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueTaskList tasks;
+    private final CommandMode commandMode;
 
+    //@@author tby1994
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
@@ -46,8 +48,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         tasks = new UniqueTaskList();
+        commandMode = new CommandMode();
     }
-
+    //@@author
     public AddressBook() {}
 
     /**
@@ -155,6 +158,36 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Ensures that every tag in this task:
+     *  - exists in the master list {@link #tags}
+     *  - points to a Tag object in the master list
+     */
+    private void syncMasterTagListWith(Task task) {
+        final UniqueTagList taskTags = new UniqueTagList(task.getTags());
+        tags.mergeFrom(taskTags);
+
+        // Create map with values = tag object references in the master list
+        // used for checking task tag references
+        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
+        tags.forEach(tag -> masterTagObjects.put(tag, tag));
+
+        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
+        final Set<Tag> correctTagReferences = new HashSet<>();
+        taskTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        task.setTags(correctTagReferences);
+    }
+
+    /**
+     * Ensures that every tag in these tasks:
+     *  - exists in the master list {@link #tags}
+     *  - points to a Tag object in the master list
+     *  @see #syncMasterTagListWith(Person)
+     */
+    private void syncMasterTagListWith(UniqueTaskList tasks) {
+        tasks.forEach(this::syncMasterTagListWith);
+    }
+
+    /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
@@ -176,6 +209,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.remove(t);
     }*/
 
+    //@@author tpq95
     /**
      * Remove {@code oldTag} from list of person stated by {@code indices} from
      * {@code AddressBook}
@@ -214,9 +248,11 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         updatePerson(oldPerson, newPerson);
     }
+    //@@author
 
     ////task-level operations
 
+    //@@author raisa2010
     /**
      * Adds a task to the address book.
      *
@@ -236,7 +272,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *      another existing task in the list.
      * @throws TaskNotFoundException if {@code target} could not be found in the list.
      *
-     * @see #syncMasterTagListWith(Person)
+     * @see #syncMasterTagListWith(Task)
      */
     public void updateTask(ReadOnlyTask target, ReadOnlyTask editedReadOnlyTask)
             throws DuplicateTaskException, TaskNotFoundException {
@@ -247,36 +283,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tasks.setTask(target, editedTask);
     }
 
-    /**
-     * Ensures that every tag in this task:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
-     */
-    private void syncMasterTagListWith(Task task) {
-        final UniqueTagList taskTags = new UniqueTagList(task.getTags());
-        tags.mergeFrom(taskTags);
-
-        // Create map with values = tag object references in the master list
-        // used for checking task tag references
-        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
-        tags.forEach(tag -> masterTagObjects.put(tag, tag));
-
-        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
-        final Set<Tag> correctTagReferences = new HashSet<>();
-        taskTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        task.setTags(correctTagReferences);
-    }
-
-    /**
-     * Ensures that every tag in these tasks:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
-     *  @see #syncMasterTagListWith(Person)
-     */
-    private void syncMasterTagListWith(UniqueTaskList tasks) {
-        tasks.forEach(this::syncMasterTagListWith);
-    }
-
+    //@@author
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws TaskNotFoundException if the {@code key} is not in this {@code AddressBook}.
@@ -288,7 +295,15 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new TaskNotFoundException();
         }
     }
+    //@@author tby1994
+    public void changeCommandMode(String mode) throws IllegalValueException {
+        commandMode.setCommandMode(mode);
+    }
 
+    public String getCommandMode() {
+        return commandMode.toString();
+    }
+    //@@author
     //// util methods
 
     @Override

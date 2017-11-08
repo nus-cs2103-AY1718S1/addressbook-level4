@@ -1,5 +1,8 @@
 package seedu.address.logic.commands.tasks;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.commons.core.EventsCenter;
@@ -9,14 +12,16 @@ import seedu.address.commons.events.ui.JumpToTaskListRequestEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.task.ReadOnlyTask;
 
+//@@author tby1994
 /**
  * Selects a task identified using it's last displayed index from the address book.
  */
 public class SelectTaskCommand extends Command {
 
-    public static final String COMMAND_WORD = "selecttask";
+    public static final String COMMAND_WORD = "select";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
         + ": Selects the task identified by the index number used in the last task listing.\n"
@@ -31,6 +36,7 @@ public class SelectTaskCommand extends Command {
         this.targetIndex = targetIndex;
     }
 
+
     @Override
     public CommandResult execute() throws CommandException {
 
@@ -40,9 +46,27 @@ public class SelectTaskCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
+        String tag = model.getFilteredTaskList().get(targetIndex.getZeroBased()).getTags().toString()
+                .replaceAll("[\\[\\](),{}]", "");
+        conductSearch(tag);
+
         EventsCenter.getInstance().post(new JumpToTaskListRequestEvent(targetIndex));
         return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, targetIndex.getOneBased()));
 
+    }
+
+    /**
+     * find the tag of task in person list
+     * @param tag
+     */
+    private void conductSearch(String tag) {
+        if (!tag.isEmpty()) {
+            String[] tagArray = tag.split("\\s+");
+            model.updateFilteredPersonList(new PersonContainsKeywordsPredicate(Arrays.asList(tagArray)));
+            if (model.getFilteredPersonList().size() < 1) {
+                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            }
+        }
     }
 
     @Override
@@ -52,3 +76,4 @@ public class SelectTaskCommand extends Command {
             && this.targetIndex.equals(((SelectTaskCommand) other).targetIndex)); // state check
     }
 }
+

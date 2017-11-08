@@ -56,6 +56,7 @@ public class PersonCard extends UiPart<Region> {
         bindListeners(person);
     }
 
+    //@@author tpq95
     private static String getColourForTag(String tagValue) {
         if (!tagColours.containsKey(tagValue)) {
             tagColours.put(tagValue, colours[random.nextInt(colours.length)]);
@@ -63,7 +64,7 @@ public class PersonCard extends UiPart<Region> {
 
         return tagColours.get(tagValue);
     }
-
+    //@@author
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
@@ -81,6 +82,7 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    //@@author tpq95
     /**
      * Set the colour of label for the same tag
      * @param person
@@ -92,6 +94,7 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

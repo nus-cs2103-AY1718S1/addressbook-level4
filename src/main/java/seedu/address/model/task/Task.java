@@ -9,10 +9,10 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
+//@@author raisa2010
 /**
  * Represents a Task in the application.
  * Guarantees: details are present and not null, field values are validated.
@@ -25,7 +25,7 @@ public class Task implements ReadOnlyTask {
     private ObjectProperty<UniqueTagList> taskTags;
 
     /**
-     * Every field must be present and not null.
+     * Description must be present and not null.
      */
     public Task(Description description, StartDate startDate, Deadline deadline,
                 Set<Tag> taskTags) {
@@ -105,7 +105,7 @@ public class Task implements ReadOnlyTask {
     public void setTags(Set<Tag> replacement) {
         taskTags.set(new UniqueTagList(replacement));
     }
-    
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

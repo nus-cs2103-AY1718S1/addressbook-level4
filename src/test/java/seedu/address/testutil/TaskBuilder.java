@@ -1,8 +1,8 @@
 package seedu.address.testutil;
 
-import java.util.Set;
-
 import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
+
+import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.Suffix;
@@ -14,6 +14,7 @@ import seedu.address.model.task.StartDate;
 import seedu.address.model.task.Task;
 import seedu.address.model.util.SampleDataUtil;
 
+//@@author raisa2010
 /**
  * A utility class to help with building Task objects.
  */
@@ -62,11 +63,7 @@ public class TaskBuilder {
      * Sets the {@code StartDate} of the {@code Task} that is being built.
      */
     public TaskBuilder withStartDate(String startDate) {
-        try {
-            this.task.setStartDate(new StartDate(startDate, DEFAULT_RECUR_INTERVAL));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("dates should be unique and in the correct format");
-        }
+        this.task.setStartDate(new StartDate(startDate, DEFAULT_RECUR_INTERVAL));
         return this;
     }
 
@@ -74,11 +71,7 @@ public class TaskBuilder {
      * Sets the {@code Deadline} of the {@code Task} that is being built.
      */
     public TaskBuilder withDeadline(String deadline) {
-        try {
-            this.task.setDeadline(new Deadline(deadline, DEFAULT_RECUR_INTERVAL));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("dates should be unique and in the correct format");
-        }
+        this.task.setDeadline(new Deadline(deadline, DEFAULT_RECUR_INTERVAL));
         return this;
     }
 

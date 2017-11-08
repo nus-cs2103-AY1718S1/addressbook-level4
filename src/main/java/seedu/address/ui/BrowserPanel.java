@@ -40,12 +40,12 @@ public class BrowserPanel extends UiPart<Region> {
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
-
+    //@@author tby1994
     private void loadPersonPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getAddress().getStreetName().replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
     }
-
+    //@@author
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }

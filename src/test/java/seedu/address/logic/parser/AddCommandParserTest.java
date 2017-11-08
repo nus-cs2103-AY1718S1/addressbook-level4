@@ -47,6 +47,7 @@ import seedu.address.testutil.PersonBuilder;
 public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();
 
+    //@@author eryao95
     @Test
     public void parse_allFieldsPresent_success() {
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)

@@ -14,9 +14,11 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -32,6 +34,7 @@ import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.TaskBuilder;
 
+//@@author raisa2010
 public class AddTaskCommandTest {
 
     @Rule
@@ -179,6 +182,17 @@ public class AddTaskCommandTest {
         public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
             fail("This method should not be called");
         }
+
+        @Override
+        public void changeCommandMode(String mode) throws IllegalValueException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public String getCommandMode() {
+            fail("This method should not be called ");
+            return null;
+        }
     }
 
     /**
@@ -195,6 +209,7 @@ public class AddTaskCommandTest {
             return new AddressBook();
         }
     }
+    //@@author
 
     /**
      * A Model stub that always accepts the task being added.
