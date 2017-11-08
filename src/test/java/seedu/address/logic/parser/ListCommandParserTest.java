@@ -58,15 +58,20 @@ public class ListCommandParserTest {
 
         // List command with multiple arguments
         expectedListCommand =  new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(multipleTagSet)));
-        assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_FRIEND + TAG_DESC_CRIMINAL, expectedListCommand);
+        assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_FRIEND + TAG_DESC_CRIMINAL,
+                expectedListCommand);
 
-        multipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_3), new Tag(VALID_TAG_4)));
+        multipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_3),
+                new Tag(VALID_TAG_4)));
         expectedListCommand =  new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(multipleTagSet)));
-        assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_FRIEND + TAG_DESC_TEAMMATE + TAG_DESC_FAMILY, expectedListCommand);
+        assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_FRIEND + TAG_DESC_TEAMMATE
+                + TAG_DESC_FAMILY, expectedListCommand);
 
-        multipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2), new Tag(VALID_TAG_3), new Tag(VALID_TAG_4)));
+        multipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2),
+                new Tag(VALID_TAG_3), new Tag(VALID_TAG_4)));
         expectedListCommand =  new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(multipleTagSet)));
-        assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_FAMILY + TAG_DESC_CRIMINAL + TAG_DESC_FRIEND + TAG_DESC_TEAMMATE, expectedListCommand);
+        assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_FAMILY + TAG_DESC_CRIMINAL
+                + TAG_DESC_FRIEND + TAG_DESC_TEAMMATE, expectedListCommand);
 
     }
 
@@ -84,6 +89,7 @@ public class ListCommandParserTest {
 
     @Test
     public void parse_noArgs_throwsParseException() {
-        assertParseFailure(parser, ListCommand.COMMAND_WORD + TAG_DESC_NOARGUMENT, String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, ListCommand.COMMAND_WORD + TAG_DESC_NOARGUMENT,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
     }
 }

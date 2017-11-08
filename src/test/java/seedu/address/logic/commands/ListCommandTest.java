@@ -36,8 +36,9 @@ public class ListCommandTest {
     private static final String VALID_TAG_1 = "friends";
     private static final String VALID_TAG_2 = "owesMoney";
     private static final String VALID_TAG_3 = "family";
-    private static final String TAG_DESC_FRIENDS = "[" + VALID_TAG_1 + "] ";
+
     private static final String TAG_DESC_FAMILY = "[" + VALID_TAG_3 + "] ";
+    private static final String TAG_DESC_FRIENDS = "[" + VALID_TAG_1 + "] ";
     private static final String TAG_DESC_OWESMONEY = "[" + VALID_TAG_2 + "] ";
 
     @Before
@@ -70,15 +71,15 @@ public class ListCommandTest {
         // test command with single valid tag argument
         ListCommand firstListCommand = new ListCommand(firstPredicate);
         firstListCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        assertCommandSuccess(firstListCommand, model, ListCommand.MESSAGE_SUCCESS_FILTEREDLIST +
-                TAG_DESC_FRIENDS, expectedModel);
+        assertCommandSuccess(firstListCommand, model, ListCommand.MESSAGE_SUCCESS_FILTEREDLIST
+                + TAG_DESC_FRIENDS, expectedModel);
 
         firstPredicate = createNewPersonPredicateForSingleTag(new Tag(VALID_TAG_2));
         ListCommand secondListCommand = new ListCommand(firstPredicate);
         secondListCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         expectedModel.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList("Benson")));
-        assertCommandSuccess(secondListCommand, model, ListCommand.MESSAGE_SUCCESS_FILTEREDLIST +
-                TAG_DESC_OWESMONEY, expectedModel);
+        assertCommandSuccess(secondListCommand, model, ListCommand.MESSAGE_SUCCESS_FILTEREDLIST
+                + TAG_DESC_OWESMONEY, expectedModel);
 
         // test command with multiple valid tag arguments
         ListCommand thirdListCommand = new ListCommand(secondPredicate);
@@ -86,8 +87,8 @@ public class ListCommandTest {
         thirdListCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         expectedModel.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList("Benson", "Fiona",
                 "George")));
-        assertCommandSuccess(thirdListCommand, model, ListCommand.MESSAGE_SUCCESS_FILTEREDLIST +
-                TAG_DESC_OWESMONEY + TAG_DESC_FAMILY, expectedModel);
+        assertCommandSuccess(thirdListCommand, model, ListCommand.MESSAGE_SUCCESS_FILTEREDLIST
+                + TAG_DESC_OWESMONEY + TAG_DESC_FAMILY, expectedModel);
     }
 
     @Test
