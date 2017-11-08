@@ -11,7 +11,7 @@ the contact's number and automatically port it to your smartphone. It is written
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/main/blaqkrow.md] [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/test/blaqkrow.md] {give links to collated code files}
 
-=== Enhancement Added: Email
+=== Enhancement Added: Email/Google Maps
 
 ==== External behavior
 
