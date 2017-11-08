@@ -21,6 +21,8 @@ import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.TaskContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.EditReminderDescriptorBuilder;
 
@@ -79,6 +81,7 @@ public class CommandTestUtil {
     public static final String VALID_TAG_OFFICE = "office";
     public static final String VALID_TAG_SOFTCOPY = "softcopy";
 
+
     /*
     public static final String NAME_DESC_PROJECT = " " + PREFIX_TASK + VALID_TASK_PROJECT;
     public static final String NAME_DESC_ASSIGNMENT = " " + PREFIX_TASK + VALID_TASK_ASSIGNMENT;
@@ -90,7 +93,6 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_ASSIGNMENT = " " + PREFIX_MESSAGE + VALID_MESSAGE_ASSIGNMENT;
     public static final String TAG_DESC_OFFICE = " " + PREFIX_TAG + VALID_TAG_OFFICE;
     public static final String TAG_DESC_SOFTCOPY = " " + PREFIX_TAG + VALID_TAG_SOFTCOPY;
-
     public static final String INVALID_TASK_DESC = " " + PREFIX_TASK + "Submission&"; // '&' not allowed in tasks
     public static final String INVALID_PRIORITY_DESC = " " + PREFIX_PRIORITY + "low1"; // '1' not allowed in phones
     public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "0!"; // '!' not allowed in dates
@@ -184,6 +186,17 @@ public class CommandTestUtil {
         model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assert model.getFilteredPersonList().size() == 1;
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the first reminder in the {@code model}'s address book.
+     */
+    public static void showFirstReminderOnly(Model model) {
+        ReadOnlyReminder reminder = model.getAddressBook().getReminderList().get(0);
+        final String[] splitTask = reminder.getTask().taskName.split("\\s+");
+        model.updateFilteredReminderList(new TaskContainsKeywordsPredicate(Arrays.asList(splitTask[0])));
+
+        assert model.getFilteredReminderList().size() == 1;
     }
 
     /**

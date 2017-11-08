@@ -1,4 +1,4 @@
-= Gentleman's Guide (V1.3) - User Guide
+= Gentleman's Guide (V1.5) - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -26,7 +26,7 @@ At the Heart of our Design is the idea that every man wants to be a Gentleman. E
 
 == Quick Start
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  To use the Gentleman guide, ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
@@ -37,17 +37,18 @@ This app will not work with earlier versions of Java 8.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Gentleman's Guide.jpeg[width="790"]
+_Figure 2.1 : Interactions in the Login Command._
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
+.  To use the Gentleman's Guide, type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+.  Here are some example commands you can try:
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  You can refer to the link:#features[Features] section below for details of each command.
 
 == Features
 
@@ -62,12 +63,28 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Viewing help : `help`
 
+*Facing any difficulties? As a Gentleman, you do not ask others for help, instead you solve it yourself by opening the help menu.*
+
 Format: `help`
+
+This will open the help windows as shown below, solving any problems you may have.
++
+image::helpwindow.jpeg[width="790"]
+_Figure 3.1.1 : Help Window._
+
 
 === Adding a person: `add`
 
-Adds a person to the address book +
+*You have just met someone new, a lady of the finest caliber, and you would like to talk to her again.
+As a Gentleman, you asks for her contact and stores it in the Gentleman's Guide.*
+
+Adds a person to the Gentleman's Guide +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+
+The Lady will be instantly added to the Gentleman's Guide, for the you to call another day.
++
+image::addperson.jpeg[width="790"]
+_Figure 3.2.1 : John Doe added to Gentleman's Guide._
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -79,11 +96,17 @@ Examples:
 
 === Adding a reminder: `addReminder`
 
-Adds a reminder to the address book +
+*As a Gentleman, you are a busy man. As a Gentleman, you cannot be late.
+Thus, as a Gentleman, you add a reminder to the Gentleman's Guide.*
+
+Adds a reminder to the Gentleman's Guide +
 Format `addReminder z/TASK p/PRIORITY d/DATE and TIME m/MESSAGE [t/TAG]...`
++
+image::addreminder.jpeg[width="790"]
+_Figure 3.3.1 : Reminder added to Gentleman's Guide._
 
 [TIP]
-A person can have any number of tags (including 0)
+A reminder can have any number of tags (including 0)
 
 Examples:
 
@@ -92,17 +115,28 @@ Examples:
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+*You is planning a party. As a Gentleman, you would like to invite all your contacts.
+Thus you list all persons in the Gentleman's Guide.*
+
+Shows a list of all persons in the Gentleman's Guide. +
 Format: `list`
 
+// tag::listReminder[]
 === Listing all reminders : `listReminder`
 
-Shows a list of all persons in the address book. +
+*As a Gentleman, you are a busy man. Thus, you need to see your entire schedule to know what you have planned.
+Thus you lists all reminders in his Gentleman's Guide.*
+
+Shows a list of all reminders in the Gentleman's Guide. +
 Format: `listReminder`
+
+// end::listReminder[]
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
+*You realised that you have entered the Lady's contact incorrectly. As a Gentleman, you immediately beg for the Lady's forgiveness and correct her contact.*
+
+Edits an existing person in the Gentleman's Guide. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
@@ -122,7 +156,9 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 
 === Editing a reminder: `editReminder`
 
-Edits an existing reminder in the address book. +
+*The Lady has changed the time of your date. As a Gentleman, you update your reminder as, as a Gentleman, if you are not 5 minutes early, you are late.*
+
+Edits an existing reminder in the Gentleman's Guide. +
 Format: `editReminder INDEX [z/TASK] [p/PRIORITY] [d/DATE and TIME] [m/MESSAGE] [t/TAG]...`
 
 ****
@@ -140,9 +176,13 @@ Edits the priority and message of the 1st reminder to be `Low` and `venue at NUS
 * `edit 2 z/Progress Report t/` +
 Edits the task name of the 2nd reminder to be `Progress Report` and clears all existing tags.
 
+// tag::birthday[]
 === Modifying birthday to person: `birthday`
 
-Adds / Edits / Removes a birthday parameter to an existing person in the address book. +
+*As a Gentleman, you respect those around you. As a Gentleman, you remember the day of their conception.
+Thus you add their birthdays into the Gentleman's Guide.*
+
+Adds / Edits / Removes a birthday to an existing person in the Gentleman's Guide. +
 Format: `birthday INDEX [b/dd/mm/yyyy]`
 
 ****
@@ -151,6 +191,8 @@ Format: `birthday INDEX [b/dd/mm/yyyy]`
 * For removing : input nothing after " `b/` "
 ****
 
+Now you can be the best boss in the world, without all the effort!
+
 Examples:
 
 * `birthday 1 b/20/07/1995` +
@@ -158,8 +200,13 @@ Adds / changes birthday of the 1st person to be `20/07/1995`
 * `birthday 3 b/` +
 Removes the birthday of the 3rd person.
 
+// end::birthday[]
+
 === Locating persons by name: `find`
 
+**You had an amazing date. As a Gentleman, you send The Lady home. As a Gentleman, you never ask for directions.
+Thus, you find The Lady's contact on the Gentleman's Guide to get her address.
+**
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
@@ -178,7 +225,11 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::find[]
 === Locating persons by emails: `findEmail`
+
+*You received an email from an unknown source. As a Gentleman, you do not ask who it is.
+Thus, you look for the email in the Gentleman's Guide.*
 
 Finds persons whose emails is same as the keyword. +
 Format: `findEmail KEYWORD [MORE_KEYWORDS]`
@@ -196,7 +247,10 @@ Returns person with the email `alex@example.com`
 * `findEmail alex@example.com jamie@example.com` +
 Returns person with emails `alex@example.com` , `jamie@example.com`
 
-=== Locating persons by emails: `findPhone`
+=== Locating persons by phone number: `findPhone`
+
+*You received a phone call from an unknown number. As a Gentleman, you have to know who you are addressing.
+Thus, you search for the number on the Gentleman's Guide before answering.*
 
 Finds persons whose phone is same as the keyword. +
 Format: `findPhone KEYWORD [MORE_KEYWORDS]`
@@ -216,7 +270,10 @@ Returns person with numbers `87655678` , `98435670`
 
 === Locating reminders by task names: `findReminder`
 
-Finds reminderss whose task names contain any of the given keywords. +
+*As a Gentleman, you want to know when your next date with The Lady is.
+Thus, you search for "date" on the Gentleman's Guide.*
+
+Finds reminders whose task names contain any of the given keywords. +
 Format: `findReminder KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -237,6 +294,9 @@ Returns any reminder having task names `Meeting`, `Proposal Submission`
 
 === Locating reminders by priority: `findPriority`
 
+*As a Gentleman, you need to prioritise your time. You need to accomplish things of the highest priority first.
+Thus you search for priority high in the Gentleman's Guide to get your next tailor's appointment.*
+
 Finds reminders whose priority is same as the keyword. +
 Format: `findPriority KEYWORD [MORE_KEYWORDS]`
 
@@ -254,9 +314,14 @@ Returns reminder with the priority `High`
 * `findPriority Medium Low` +
 Returns reminders with priority `Medium` , `Low`
 
+// end::find[]
+
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
+*As a Gentleman, you may need to delete uncultured people from your contact list.
+Thus you can Delete contact in the Gentleman's Guide.*
+
+Deletes the specified person from the Gentleman's Guide. +
 Format: `delete INDEX`
 
 ****
@@ -269,14 +334,16 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in the Gentleman's Guide.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
 === Deleting a reminder : `deleteReminder`
 
-Deletes the specified reminder from the address book. +
+*After the date with The Lady, you delete the reminder as a Gentleman is a tidy fellow.*
+
+Deletes the specified reminder from the Gentleman's Guide. +
 Format: `deleteReminder INDEX`
 
 ****
@@ -289,9 +356,11 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd reminder in the address book.
+Deletes the 2nd reminder in the Gentleman's Guide.
 
 === Selecting a person : `select`
+
+*While sending The Lady home, you select her contact to open Google Maps to direct you to her house.*
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
@@ -306,14 +375,15 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in the Gentleman's Guide.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::sort[]
 === Sorting all entries by name: `sort`
 
-Sorts all entries in the address book by alphabetical order. +
+Sorts all entries in the Gentleman's Guide by alphabetical order. +
 Format: `sort`
 
 Below is an illustration of an unsorted and sort list of contacts.
@@ -343,9 +413,11 @@ Format: `sortBirthday`
 Sorts all entires in the reminder list by their priority, from High to Medium to Low. +
 Format: `sortPriority`
 
+// end::sort[]
+
 === Retrieving all persons having an existing tag : `retrieve`
 
-Lists all contacts having a certain existing tag in the address book. +
+Lists all contacts having a certain existing tag in the Gentleman's Guide. +
 Format: `retrieve TAG`
 
 ****
@@ -356,9 +428,12 @@ Format: `retrieve TAG`
 Examples:
 
 * `retrieve friends` +
-Retrieves all persons with the "friends" tag in the address book.
+Retrieves all persons with the "friends" tag in the Gentleman's Guide.
 
 === Tagging multiple persons : `tag`
+
+*As a Gentleman, you want to keep track of what relevant information such as where you met your contacts.
+Thus you tag your contacts*
 
 Tags the persons identified by the index numbers used in the last person listing. +
 Format: `tag INDEX,[MORE_INDEXES],... TAG`
@@ -377,6 +452,9 @@ Examples:
 Assigns the "friends" tag to the 1st, 2nd and 3rd persons in the results of the `list` command.
 
 === Untagging multiple persons : `untag`
+
+*As a Gentleman, you want to be up to date of relevant information about your contacts.
+Thus you can untag your contacts*
 
 Removes the specified tags from the persons identified by the index numbers used in the last person listing. +
 Format: `tag INDEX,[MORE_INDEXES],... TAG/[MORE_TAGS]/...`
@@ -410,6 +488,9 @@ Removes all tags from all persons in the results of the `list` command.
 
 === Renaming an existing tag : `retag`
 
+*As a Gentleman, you want to be up to date of relevant information about your contacts.
+Thus you can retag your contacts*
+
 Renames a certain existing tag to a new tag name. +
 Format: `retag OLD_TAG NEW_TAG`
 
@@ -422,9 +503,12 @@ Format: `retag OLD_TAG NEW_TAG`
 Examples:
 
 * `retag enemies friends` +
-Renames the existing "enemies" tag in the address book to "friends".
+Renames the existing "enemies" tag in the Gentleman's Guide to "friends".
 
 === Listing entered commands : `history`
+
+*As a Gentleman, you want to be able to see what you have done previously.
+Thus you use history on the Gentleman's Guide.*
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -437,12 +521,15 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+*You have accidentally deleted The Lady contact. You panic, but you remember that the Gentleman's Guide is always here for you.
+Thus you undo the previous command in the Gentleman's Guide.*
+
+Restores the Gentleman's Guide to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the Gentleman's Guide's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -462,6 +549,9 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `delete 1` command) +
 
 === Redoing the previously undone command : `redo`
+
+*You realised that you did not actually delete The Lady's contact, but instead undid another command.
+Thus you use redo the previous command in the Gentleman's Guide.*
 
 Reverses the most recent `undo` command. +
 Format: `redo`
@@ -486,24 +576,44 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+*You are getting married. As a Gentleman, you realised that you are starting a new chapter in your life.
+Thus you clear your entire Gentleman's Guide.*
+
+Clears all entries from the Gentleman's Guide. +
 Format: `clear`
 
-=== Exiting the program : `exit`
 
-Exits the program. +
-Format: `exit`
+=== Creating a private database : `Create`
+
+*You have gotten married. As a Gentleman, you know that there are things The Lady should not trouble herself with.
+Thus, you create a private database on the Gentleman's Guide.*
+
+Create a Private Database +
+Format: `create u/USERNAME p/PASSWORD`
+
+e.g. `create u/JamesBond p/ShakenNotStirred`
 
 === Logging in to private database : `login`
 
 Login into a Private Database +
-Format: `login u/private p/password`
-e.g. `login u/private p/password`
+Format: `login u/USERNAME p/PASSWORD`
+
+e.g. `login u/JamesBond p/ShakenNotStirred`
 
 === Logging out of private database : `logout`
 
+*The Lady has entered the room. As a Gentleman, you do not want to trouble her with your private matters.
+Thus, you logout of the private database on the Gentleman's Guide*
+
 Logout of a Private Database +
 Format: `logout`
+
+=== Exiting the program : `exit`
+
+*As a Gentleman, you do not forsake the Gentleman's Guide. Therefore this command is not needed*
+
+Exits the program. +
+Format: `exit`
 
 === Saving the data
 
@@ -563,5 +673,6 @@ e.g.`retag enemies friends`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Creating a private database* : `create u/private p/password`
 * *Log in to private database* : `login u/private p/password`
 * *Log out of private database* : `logout`
