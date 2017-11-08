@@ -208,7 +208,7 @@ public interface Model {
 
     void transferDataWithDefault();
 
-    void deleteEncryptedContacts(String substring);
+    void deleteEncryptedContacts(String substring) throws IOException, DataConversionException, PersonNotFoundException;
 
     UserPrefs getUserPrefs();
 
@@ -218,4 +218,6 @@ public interface Model {
             DataConversionException;
 
     ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException;
+
+    void releaseEncryptedContact(String substring) throws DataConversionException, DuplicatePersonException, IOException;
 }

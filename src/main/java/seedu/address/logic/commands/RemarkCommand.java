@@ -13,6 +13,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.user.exceptions.DuplicateUserException;
 
 //@@author kaiyu92
 
@@ -69,10 +70,13 @@ public class RemarkCommand extends UndoableCommand {
 
         try {
             model.updatePerson(personToEdit, editedPerson);
+            new SaveCommand().execute();
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
+        } catch (DuplicateUserException e) {
+            throw new AssertionError("Duplicate User Exception");
         }
         model.updateFilteredListToShowAll();
 

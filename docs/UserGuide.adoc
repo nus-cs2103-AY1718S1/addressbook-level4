@@ -321,12 +321,11 @@ Create a user account from the specified username and password. +
 Format: `lock u/USER_NAME p/PASSWORD`
 
 ****
-* The user's credentials will be hashed by SHA-256 algorithm.
 * The `USER_NAME` is case sensitive.
 * If the `USER_NAME` has been registered before, an error message saying `User Exists` will be displayed.
 * Different users can use the same password
-* `USERID` is case sensitive and cannot be the same as an exsiting user. If the user already exists, an error mesage will
-be thrown.
+* `USER_NAME` is case sensitive and cannot be the same as an exsiting user. If the user already exists, an error mesage
+will be thrown.
 * Even if the `PASSWORDs` are different, if a `USERID` to be registered is the same as an exsiting one, this user will not
 be accepted
 * The user credentials will be hashed and stored on disk to preserve confidentiality.
@@ -336,6 +335,26 @@ Examples:
 
 * `lock u/KELOYSIUS p/SPECIAL1PASS`
 
+=== Remove User : `remove` - Since V1.5
+
+Remove an existing user from the account repository. +
+Format: `remove u/USER_NAME p/PASSWORD r/<Y or N>`
+
+****
+* The `USER_NAME` and `PASSWORD` must match with one of the accounts saved.
+* The `USER_NAME` and `PASSWORD` are case-sensitive.
+* `r/<Y or N>` indicates if the user wants to delete the contacts associated with the user to be removed. Y means the
+contacts will be cleared and N means the contacts will be released to the public.
+* If the user is still logged in before removing an account, regardless of whether the account to be removed is his
+own account or someone else's, the user MUST log out first using the `logout` command.
+****
+
+Examples:
+
+* `remove u/LEQUANGQUAN p/PASSWORD r/N`
+This command will remove the account `LEQUANGQUAN` and release his contacts to the public.
+* `remove u/LEQUANGQUAN p/PASSWORD r/Y`
+This command will remove the account `LEQUANGQUAN` and delete his contacts.
 === Login : `login` - Since V1.5
 
 Logs in to the TunedIn Application. Once you log in with the correct account credentials, your encrypted contacts
@@ -344,7 +363,7 @@ Format: `login u/USER_NAME p/PASSWORD`
 
 Examples:
 
-* `login u/KELOYSIUS pw/SPECIALPASS`
+* `login u/KELOYSIUS p/SPECIALPASS`
 
 === Logout : `logout` - Since V1.5
 
@@ -357,6 +376,17 @@ Format: `logout`
 Displays the current user name. The default user name is `PUBLIC` +
 Format: `currentuser`
 
+=== Save Contacts To Current User: `save` - Since V1.5
+
+Save the contacts to the current user. +
+Format: `save`
+
+****
+* Use this `SAVE` command when performing a mutating command, i.e. a command that changes the data in the storage files
+* e.g. add, delete, edit, remark, group ...
+* Till this point, most of the mutating commands, including the `REMOVE USER`
+command that releases the contacts to the `PUBLIC`, user are incorporated with this `SAVE` command.
+****
 // tag::order[]
 === Order persons in Address Book by a parameter: `order` - Since V1.0
 

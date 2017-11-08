@@ -563,7 +563,16 @@ Themes will persist even after closing the app, allowing the user to use the app
 
 === Lock Mechanism
 
-The lock mechanism will enable a user to lock the current list of contacts using a user account comprising a user
+The addressbook.xml file will be encrypted to protect the confidentiality of the data. Contacts are encrypted in
+separate files named by the user's `USERNAME` and encrypted by the user's `PASSWORD`. If the contacts are open to the
+public, it will be in the `PUBLIC.encrypted` file, which is encrypted with the password `PUBLIC`. Every time TunedIn
+runs, it will decrypt the `PUBLIC.encrypted` file with the `PUBLIC` password and write the data into the
+addressbook.xml file for the rest of the program to load up. Once a mutating operation is done to the addressbook.xml
+file, the `save` command must be executed afterwards for the changes to be saved to the encrypted files. Till date,
+most of the mutating commands are incorporated with the `save` command, but users are advised to save manually in
+case of bugs or unincorporated commands.
+
+The `lock` command will enable a user to lock the current list of contacts using a user account comprising a user
 name and a password. The user credentials will then be persisted into the account.xml file as SHA-256 hash digests .
 In particular, User name will be hashed and stored directly into the account.xml file. Each user will be given a
 randomised salt value, which will be hex-coded and stored in the account.xml file. The password will first be

@@ -5,15 +5,22 @@ package seedu.address.logic.currentuser;
  */
 public class CurrentUserDetails {
     private static String userId = "PUBLIC";
-    private static String userIdHex = "";
+    private static String userIdHex = "PUBLIC";
     private static String saltText = "";
-    private static String passwordText = "";
+    private static String passwordText = "PUBLIC";
 
     public static void setCurrentUser(String userId, String userIdHex, String saltText, String passwordText) {
         CurrentUserDetails.userId = userId;
         CurrentUserDetails.userIdHex = userIdHex;
         CurrentUserDetails.saltText = saltText;
         CurrentUserDetails.passwordText = passwordText;
+    }
+
+    public static void setPublicUser() {
+        userId = "PUBLIC";
+        userIdHex = "PUBLIC";
+        saltText = "";
+        passwordText = "PUBLIC";
     }
 
     public static String getUserId() {

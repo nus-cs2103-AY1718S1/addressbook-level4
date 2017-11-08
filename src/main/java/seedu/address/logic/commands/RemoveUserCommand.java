@@ -3,7 +3,8 @@ package seedu.address.logic.commands;
 import seedu.address.logic.commands.digestutil.HashDigest;
 import seedu.address.logic.commands.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.encryption.FileEncryptor;
+import seedu.address.logic.currentuser.CurrentUserDetails;
+import seedu.address.commons.util.encryption.FileEncryptor;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.model.user.exceptions.UserNotFoundException;
 
@@ -24,6 +25,9 @@ public class RemoveUserCommand extends Command {
     private static final String MESSAGE_USER_NOT_FOUND = "The user credentials provided do not match our "
             + "database.";
     private static final String MESSAGE_ENCRYPTION_ERROR = "Decryption Failed";
+    private static final String MESSAGE_USER_LOGGED_IN = "You are still logged in as \"%1$s\"! Logged out first " +
+            "before removing "
+            + "the user";
     private String userName;
     private String password;
     private boolean cascade;
@@ -40,6 +44,9 @@ public class RemoveUserCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException, DuplicateUserException {
+        if (!(new CurrentUserDetails().getUserId().equals("PUBLIC"))){
+            throw new CommandException(String.format(MESSAGE_USER_LOGGED_IN, new CurrentUserDetails().getUserId()));
+        }
         try {
             byte[] userNameHash = new HashDigest().getHashDigest(userName);
             String userNameHex = new HexCode().getHexFormat(new String(userNameHash));
@@ -54,13 +61,14 @@ public class RemoveUserCommand extends Command {
                 model.deleteEncryptedContacts(userNameHex.substring(0, 10));
             } else {
                 FileEncryptor.decryptFile(userNameHex.substring(0, 10), saltText + password);
-                model.deleteEncryptedContacts(userNameHex.substring(0, 10));
+                model.releaseEncryptedContact(userNameHex.substring(0, 10));
             }
         } catch (UserNotFoundException unfe) {
             throw new CommandException(MESSAGE_USER_NOT_FOUND);
         } catch (Exception e) {
             throw new CommandException(MESSAGE_ENCRYPTION_ERROR);
         }
+        new SaveCommand().execute();
         return new CommandResult(String.format(MESSAGE_REMOVE_USER_SUCCESS, userName));
     }
 }

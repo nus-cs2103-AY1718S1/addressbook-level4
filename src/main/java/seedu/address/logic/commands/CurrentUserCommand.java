@@ -11,7 +11,7 @@ public class CurrentUserCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "currentuser";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the user name of the currently logged in user.";
-    public static final String MESSAGE_SUCCESS = "Current User is: %1$s";
+    public static final String MESSAGE_SUCCESS = "Current User is: \"%1$s\"";
 
     public static String getCommandWord() {
         return COMMAND_WORD;

@@ -7,6 +7,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.user.exceptions.DuplicateUserException;
 
 /**
  * Deletes a person identified using it's last displayed index from the address book.
@@ -45,8 +46,11 @@ public class DeleteCommand extends UndoableCommand {
 
         try {
             model.deletePerson(personToDelete);
+            new SaveCommand().execute();
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
+        } catch (DuplicateUserException e) {
+            assert false : "Save Failed";
         }
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
