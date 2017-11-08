@@ -365,7 +365,7 @@
 }
 
 #resultDisplay .content {
-    -fx-background-color: transparent, #383838, transparent, #383838;
+    -fx-background-image: url("file:/D:/Git%20projects/addressbook4/docs/images/backgroundUp.jpg");
     -fx-background-radius: 0;
 }
 

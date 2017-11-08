@@ -145,13 +145,18 @@ public class MainWindow extends UiPart<Region> {
 
         PersonInformationPanel personInformationPanel = new PersonInformationPanel();
         personInformationPanelPlaceholder.getChildren().add(personInformationPanel.getRoot());
-        setBackground(personInformationPanelPlaceholder);
+        setBackground(personInformationPanelPlaceholder,
+                "../addressbook4/docs/images/backgroundRight.jpg", 920, 600);
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        setBackground(personListPanelPlaceholder,
+                "../addressbook4/docs/images/backgroundLeft.jpg", 330, 600);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+        setBackground(resultDisplayPlaceholder,
+                "../addressbook4/docs/images/backgroundUp.jpg", 1250, 105);
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
@@ -176,11 +181,11 @@ public class MainWindow extends UiPart<Region> {
     /**
      *  Sets a background image for a stack pane
      */
-    private void setBackground(StackPane pane) {
-        File file = new File("../addressbook4/docs/images/background.jpg");
+    private void setBackground(StackPane pane, String pathname, int width, int height) {
+        File file = new File(pathname);
         try {
             BackgroundImage backgroundImage = new BackgroundImage(
-                    new Image(file.toURI().toURL().toString(), 920, 600, false, true),
+                    new Image(file.toURI().toURL().toString(), width, height, false, true),
                     BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                     BackgroundSize.DEFAULT);
             pane.setBackground(new Background(backgroundImage));
