@@ -25,9 +25,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TodoItem;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.DuplicateTodoItemException;
-//@@author qihao27
 import seedu.address.model.person.exceptions.NoPersonFoundException;
-//@@author
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
@@ -128,13 +126,12 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
-        //@@author Aaron Soh Yu Han
+        //@@author aaronyhsoh
         @Override
         public void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
         }
-        //@@author
 
         //@@author Hailinx
         @Override
@@ -171,7 +168,6 @@ public class AddCommandTest {
         public void updateTodoItemList() {
             fail("This method should not be called.");
         }
-        //@@author
 
         //@@author qihao27
         @Override

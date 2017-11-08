@@ -76,7 +76,15 @@ public class TypicalPersons {
             .withPhone("34567890").withTags("friends")
             .withTodoItem(getTodoItemOne(), getTodoItemTwo())
             .build();
-    //@@author
+
+    //@@author qihao27
+    // Persons with favourite star
+    public static final ReadOnlyPerson JOHN = new PersonBuilder().withName("John")
+        .withAddress("PGPR B4").withEmail("john@example.com")
+        .withPhone("45678901").withTags("friends")
+        .withTodoItem(getTodoItemOne())
+        .withFavourite()
+        .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 

@@ -135,7 +135,6 @@ public class Person implements ReadOnlyPerson {
     public void setFavourite(boolean favourite) {
         this.favourite = favourite;
     }
-    //@@author
 
     //@@author Hailinx
     @Override

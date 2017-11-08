@@ -1,4 +1,56 @@
 # qihao27
+###### \java\guitests\guihandles\FavouriteStarHandle.java
+``` java
+package guitests.guihandles;
+
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+
+/**
+ * Provides a handle to a todolist count in the person card.
+ */
+public class FavouriteStarHandle extends NodeHandle<Node> {
+    private static final String FAVOURITE_FIELD_ID = "#favourite";
+
+    private final Label favouriteLabel;
+
+    public FavouriteStarHandle(Node favouriteNode) {
+        super(favouriteNode);
+
+        this.favouriteLabel = getChildNode(FAVOURITE_FIELD_ID);
+    }
+
+    public String getFavouriteStar() {
+        return favouriteLabel.getText();
+    }
+}
+```
+###### \java\guitests\guihandles\TodoCountHandle.java
+``` java
+package guitests.guihandles;
+
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+
+/**
+ * Provides a handle to a todolist count in the person card.
+ */
+public class TodoCountHandle extends NodeHandle<Node> {
+    private static final String TODO_FIELD_ID = "#totalTodo";
+
+    private final Label todoLabel;
+
+    public TodoCountHandle(Node todoNode) {
+        super(todoNode);
+
+        this.todoLabel = getChildNode(TODO_FIELD_ID);
+    }
+
+    public String getTodoCount() {
+        return todoLabel.getText();
+    }
+}
+```
 ###### \java\seedu\address\commons\util\StringUtilTest.java
 ``` java
     //---------------- Tests for isAlnumOnly --------------------------------------
@@ -74,9 +126,9 @@
         assertTrue(StringUtil.isFilePath("C:\\shakalaka.xml"));
     }
 ```
-###### \java\seedu\address\logic\commands\AddCommandTest.java
+###### \java\seedu\address\commons\util\XmlUtilTest.java
 ``` java
-import seedu.address.model.person.exceptions.NoPersonFoundException;
+        assertEquals(0, dataFromFile.getTodoList().size());
 ```
 ###### \java\seedu\address\logic\commands\AddCommandTest.java
 ``` java
@@ -180,40 +232,46 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.ExportCommand.MESSAGE_FILE_EXPORTED;
-import static seedu.address.testutil.TypicalFilePath.FILE_PATH_C_CREATE_NEW_FOLDER;
-import static seedu.address.testutil.TypicalFilePath.FILE_PATH_DOCS;
-import static seedu.address.testutil.TypicalFilePath.FILE_PATH_LOCAL_C_DRIVE;
+import static seedu.address.testutil.TypicalFilePath.FILE_PATH_EXPORT_TEST;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.parser.ExportCommandParser;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 
 public class ExportCommandTest {
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_exportSuccess_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        CommandResult result = new ExportCommand(FILE_PATH_DOCS).execute();
-        assertEquals(MESSAGE_FILE_EXPORTED + FILE_PATH_DOCS, result.feedbackToUser);
+    public void execute_exportSuccess_throwsParseException() throws ParseException {
+        ExportCommand command = prepareCommand(FILE_PATH_EXPORT_TEST);
+        assertCommandSuccess(command, MESSAGE_FILE_EXPORTED + FILE_PATH_EXPORT_TEST);
     }
 
-    @Test
-    public void execute_exportLocalDriveSuccess_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        CommandResult result = new ExportCommand(FILE_PATH_LOCAL_C_DRIVE).execute();
-        assertEquals(MESSAGE_FILE_EXPORTED + FILE_PATH_LOCAL_C_DRIVE, result.feedbackToUser);
+   /**
+     * Parses {@code userInput} into a {@code LockCommand} in default mode.
+     */
+    private ExportCommand prepareCommand(String userInput) throws ParseException {
+        ExportCommand command = new ExportCommandParser().parse(userInput);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
     }
 
-    @Test
-    public void execute_exportCreateNewFolderSuccess_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        CommandResult result = new ExportCommand(FILE_PATH_C_CREATE_NEW_FOLDER).execute();
-        assertEquals(MESSAGE_FILE_EXPORTED + FILE_PATH_C_CREATE_NEW_FOLDER, result.feedbackToUser);
+    /**
+     * Asserts that {@code command} is successfully executed, and<br>
+     * - the command feedback is equal to {@code expectedMessage}<br>
+     */
+    private void assertCommandSuccess(ExportCommand command, String expectedMessage) {
+        CommandResult commandResult = command.execute();
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
     }
-
 }
 ```
 ###### \java\seedu\address\logic\commands\SortCommandTest.java
@@ -301,33 +359,13 @@ public class SortCommandTest {
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
-import static seedu.address.testutil.TypicalFilePath.FILE_PATH_DOCS;
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-import static seedu.address.testutil.TypicalNames.NAME_FIRST_PERSON;
-import static seedu.address.testutil.TypicalOptions.OPTION_NAME;
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-import seedu.address.logic.commands.DeleteAltCommand;
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-import seedu.address.logic.commands.ExportCommand;
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-import seedu.address.logic.commands.SortCommand;
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
     @Test
     public void parseCommand_delete_alt() throws Exception {
         DeleteAltCommand command = (DeleteAltCommand) parser.parseCommand(
                 DeleteAltCommand.COMMAND_WORD + " " + NAME_FIRST_PERSON);
         assertEquals(new DeleteAltCommand(NAME_FIRST_PERSON), command);
     }
+
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
@@ -351,6 +389,7 @@ import seedu.address.logic.commands.SortCommand;
             ExportCommand.COMMAND_ALIAS + " " + FILE_PATH_DOCS);
         assertEquals(new ExportCommand(FILE_PATH_DOCS), command);
     }
+
 ```
 ###### \java\seedu\address\logic\parser\DeleteAltCommandParserTest.java
 ``` java
@@ -387,21 +426,6 @@ public class DeleteAltCommandParserTest {
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteAltCommand.MESSAGE_USAGE));
     }
 }
-```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
-``` java
-import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_FILE_PATH;
-```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
-``` java
-import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_OPTION;
-import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_STRING;
-import static seedu.address.testutil.TypicalFilePath.FILE_PATH_DOCS;
-```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
-``` java
-import static seedu.address.testutil.TypicalNames.NAME_FIRST_PERSON;
-import static seedu.address.testutil.TypicalOptions.OPTION_NAME;
 ```
 ###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
@@ -497,6 +521,63 @@ public class SortCommandParserTest {
     }
 }
 ```
+###### \java\seedu\address\model\AddressBookTest.java
+``` java
+        assertEquals(Collections.emptyList(), addressBook.getTodoList());
+```
+###### \java\seedu\address\model\AddressBookTest.java
+``` java
+        List<TodoItem> newTodo = new ArrayList<>(ALICE.getTodoItems());
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newTodo);
+```
+###### \java\seedu\address\model\AddressBookTest.java
+``` java
+    @Test
+    public void getTodoList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getTodoList().remove(0);
+    }
+```
+###### \java\seedu\address\model\AddressBookTest.java
+``` java
+        private final ObservableList<TodoItem> todo = FXCollections.observableArrayList();
+
+        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags,
+                        Collection<? extends TodoItem> todoItems) {
+            this.persons.setAll(persons);
+            this.tags.setAll(tags);
+            this.todo.setAll(todoItems);
+        }
+```
+###### \java\seedu\address\model\AddressBookTest.java
+``` java
+        @Override
+        public ObservableList<TodoItem> getTodoList() {
+            return todo;
+        }
+```
+###### \java\seedu\address\model\UniqueTodoListTest.java
+``` java
+package seedu.address.model;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.model.person.UniqueTodoList;
+
+public class UniqueTodoListTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
+        UniqueTodoList uniqueTodoList = new UniqueTodoList();
+        thrown.expect(UnsupportedOperationException.class);
+        uniqueTodoList.asObservableList().remove(0);
+    }
+}
+```
 ###### \java\seedu\address\storage\StorageManagerTest.java
 ``` java
         AddressBook backup = getTypicalAddressBook();
@@ -507,6 +588,15 @@ public class SortCommandParserTest {
         ReadOnlyAddressBook retrivedBackup = storageManager.readAddressBook().get();
         assertEquals(backup, new AddressBook(retrivedBackup));
 ```
+###### \java\seedu\address\storage\XmlAddressBookStorageTest.java
+``` java
+    @Test
+    public void getTodoList_modifyList_throwsUnsupportedOperationException() {
+        XmlSerializableAddressBook addressBook = new XmlSerializableAddressBook();
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getTodoList().remove(0);
+    }
+```
 ###### \java\seedu\address\testutil\TypicalFilePath.java
 ``` java
 package seedu.address.testutil;
@@ -515,9 +605,10 @@ package seedu.address.testutil;
  * A utility class containing a list of {@code String} objects to be used in tests.
  */
 public class TypicalFilePath {
+    public static final String FILE_PATH_EXPORT_TEST = "data/exported/test.xml";
     public static final String FILE_PATH_DOCS = "docs/AcquaiNote.xml";
-    public static final String FILE_PATH_LOCAL_C_DRIVE = "C:\\AcquaiNote.xml";
-    public static final String FILE_PATH_C_CREATE_NEW_FOLDER = "C:\\shalkalaka\\AcquaiNote.xml";
+    public static final String FILE_PATH_LOCAL_D_DRIVE = "D:\\AcquaiNote.xml";
+    public static final String FILE_PATH_CREATE_NEW_FOLDER = "C:\\shalkalaka\\AcquaiNote.xml";
 }
 ```
 ###### \java\seedu\address\testutil\TypicalNames.java
@@ -548,9 +639,78 @@ public class TypicalOptions {
     public static final String OPTION_TAG = "-t";
 }
 ```
-###### \java\seedu\address\ui\ResultDisplayTest.java
+###### \java\seedu\address\testutil\TypicalPersons.java
 ``` java
-import seedu.address.commons.events.ui.NewResultCheckEvent;
+    // Persons with favourite star
+    public static final ReadOnlyPerson JOHN = new PersonBuilder().withName("John")
+        .withAddress("PGPR B4").withEmail("john@example.com")
+        .withPhone("45678901").withTags("friends")
+        .withTodoItem(getTodoItemOne())
+        .withFavourite()
+        .build();
+
+    public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+
+    private TypicalPersons() {} // prevents instantiation
+
+    /**
+     * Returns an {@code AddressBook} with all the typical persons.
+     */
+    public static AddressBook getTypicalAddressBook() {
+        AddressBook ab = new AddressBook();
+        for (ReadOnlyPerson person : getTypicalPersons()) {
+            try {
+                ab.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "not possible";
+            }
+        }
+        return ab;
+    }
+
+    public static List<ReadOnlyPerson> getTypicalPersons() {
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE, BILL, CAT, DARWIN));
+    }
+
+```
+###### \java\seedu\address\ui\PersonCardTest.java
+``` java
+        // is not favurited
+        assertEquals(false, personWithNoTags.getFavourite());
+
+        // is favourited
+        Person personIsFavourited = new PersonBuilder().build();
+        personIsFavourited.setFavourite(JOHN.getFavourite());
+        assertEquals(true, personIsFavourited.getFavourite());
+
+        personCard = new PersonCard(personIsFavourited, 3);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personIsFavourited, 3);
+
+        // no todolists
+        assertEquals(0, personWithNoTags.getTodoItems().size());
+
+        // with todolists
+        Person personWithTodo = new PersonBuilder().build();
+        personWithTodo.setTodoItems(BILL.getTodoItems());
+        assertEquals(1, personWithTodo.getTodoItems().size());
+
+        personCard = new PersonCard(personWithTodo, 4);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithTodo, 4);
+```
+###### \java\seedu\address\ui\PersonCardTest.java
+``` java
+        TodoCountHandle todoCountHandle = new TodoCountHandle(personCard.getRoot());
+        FavouriteStarHandle favouriteStarHandle = new FavouriteStarHandle(personCard.getRoot());
+```
+###### \java\seedu\address\ui\PersonCardTest.java
+``` java
+        // verify todolist count is displayed correctly
+        assertCardDisplaysTodoCount(expectedPerson, todoCountHandle);
+
+        // verify favourite star is displayed correctly
+        assertCardDisplaysFavouriteStar(expectedPerson, favouriteStarHandle);
 ```
 ###### \java\seedu\address\ui\ResultDisplayTest.java
 ``` java
@@ -566,11 +726,36 @@ import seedu.address.commons.events.ui.NewResultCheckEvent;
 ```
 ###### \java\seedu\address\ui\StatusBarFooterTest.java
 ``` java
-    private static final int TOTAL_PERSONS_STUB = 0;
+    private static final String STUB_ZERO_TOTAL_PERSON = "0";
+    private static final String STUB_ONE_TOTAL_PERSON = "1";
+    private static final String TOTAL_PERSONS_SUFFIX = " person(s) total";
 ```
 ###### \java\seedu\address\ui\StatusBarFooterTest.java
 ``` java
-        StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION, TOTAL_PERSONS_STUB);
+        StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION, STUB_ZERO_TOTAL_PERSON);
+```
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
+``` java
+    /**
+     * Asserts that {@code actualCard} displays the todolists count of {@code expectedPerson}.
+     */
+    public static void assertCardDisplaysTodoCount(ReadOnlyPerson expectedPerson, TodoCountHandle actualCard) {
+        if (expectedPerson.getTodoItems().size() > 0) {
+            assertEquals(Integer.toString(expectedPerson.getTodoItems().size()), actualCard.getTodoCount());
+        } else {
+            assertEquals("", actualCard.getTodoCount());
+        }
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the favourite star of {@code expectedPerson}.
+     */
+    public static void assertCardDisplaysFavouriteStar(ReadOnlyPerson expectedPerson, FavouriteStarHandle actualCard) {
+        if (expectedPerson.getFavourite()) {
+            assertEquals("", actualCard.getFavouriteStar());
+        }
+    }
+
 ```
 ###### \java\seedu\address\ui\testutil\UiPartRule.java
 ``` java

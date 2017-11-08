@@ -8,9 +8,7 @@ import org.junit.Test;
 
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
-//@@author qihao27
 import seedu.address.commons.events.ui.NewResultCheckEvent;
-//@@author
 
 public class ResultDisplayTest extends GuiUnitTest {
 

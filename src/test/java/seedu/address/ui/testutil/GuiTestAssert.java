@@ -5,10 +5,12 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.FavouriteStarHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.TodoCardHandle;
+import guitests.guihandles.TodoCountHandle;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TodoItem;
 
@@ -40,6 +42,28 @@ public class GuiTestAssert {
                 actualCard.getTags());
     }
 
+    //@@author qihao27
+    /**
+     * Asserts that {@code actualCard} displays the todolists count of {@code expectedPerson}.
+     */
+    public static void assertCardDisplaysTodoCount(ReadOnlyPerson expectedPerson, TodoCountHandle actualCard) {
+        if (expectedPerson.getTodoItems().size() > 0) {
+            assertEquals(Integer.toString(expectedPerson.getTodoItems().size()), actualCard.getTodoCount());
+        } else {
+            assertEquals("", actualCard.getTodoCount());
+        }
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the favourite star of {@code expectedPerson}.
+     */
+    public static void assertCardDisplaysFavouriteStar(ReadOnlyPerson expectedPerson, FavouriteStarHandle actualCard) {
+        if (expectedPerson.getFavourite()) {
+            assertEquals("", actualCard.getFavouriteStar());
+        }
+    }
+
+    //@@author Hailinx
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedTodoItem}.
      */
@@ -47,6 +71,7 @@ public class GuiTestAssert {
         assertEquals(expectedTodoItem.getTimeString(), actualCard.getTime());
         assertEquals(expectedTodoItem.task, actualCard.getTask());
     }
+    //@@author
 
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
