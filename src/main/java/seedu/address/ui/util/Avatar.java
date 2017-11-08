@@ -12,6 +12,8 @@ public class Avatar {
     private static Random random = new Random();
     private static String[] colors = ColorsUtil.getColors();
 
+    private static final int COLOR_VALUE_MAX = 255;
+    private static final int COLOR_VALUE_MIN = 0;
     private static final int COLOR_OFFSET_BOUND = 50;
 
     private Avatar() {}
@@ -36,9 +38,9 @@ public class Avatar {
         int r = defaultColor.getRed();
         int g = defaultColor.getGreen();
         int b = defaultColor.getBlue();
-        int newR = Math.max(0, Math.min(255, (r + generateOffset())));
-        int newG = Math.max(0, Math.min(255, (g + generateOffset())));
-        int newB = Math.max(0, Math.min(255, (b + generateOffset())));
+        int newR = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (r + generateOffset())));
+        int newG = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (g + generateOffset())));
+        int newB = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (b + generateOffset())));
 
         return String.format("#%02x%02x%02x", newR, newG, newB);
     }
