@@ -30,7 +30,7 @@ public class InterestTest {
     @Test
     public void respondToLoginEvent() {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        Person personToTest = new PersonBuilder().withName("AA").withDebt("10000").withInterest("1").build();
+        Person personToTest = new PersonBuilder().withName("AA").withDebt("10000").withTotalDebt("10000").withInterest("1").build();
         Date lastAccruedDate = generateDateFromString(sampleDateInput2);
         personToTest.setLastAccruedDate(lastAccruedDate);
         try {
@@ -48,10 +48,16 @@ public class InterestTest {
             assert false : "User not found.";
         }
         // model should have handled login event and updated personToTest's debt
-        int personToTestIdx = model.getFilteredPersonList().size() - 1;
+        int personToTestIdx = model.getFilteredPersonList().size() - 1; // personToTest added to end of addressbook
+
         String actualDebt = model.getFilteredPersonList().get(personToTestIdx).getDebt().toString();
-        String expectedDebt = generateExpectedDebt(personToTest);
+        double additionalDebt = generateAdditionalDebt(personToTest);
+        String expectedDebt =  Double.toString(additionalDebt + personToTest.getDebt().toNumber());
         assertEquals(expectedDebt, actualDebt);
+
+        String actualTotalDebt = model.getFilteredPersonList().get(personToTestIdx).getTotalDebt().toString();
+        String expectedTotalDebt = Double.toString(additionalDebt + personToTest.getTotalDebt().toNumber());
+        assertEquals(expectedTotalDebt, actualTotalDebt);
     }
 
     @Test
@@ -139,13 +145,12 @@ public class InterestTest {
     }
 
     /**
-     * Generate expected debt for person under test.
+     * Generate additional debt for person under test.
      */
-    private String generateExpectedDebt(Person person) {
+    private double generateAdditionalDebt(Person person) {
         Person personUnderTest = person;
         int numberOfMonths = personUnderTest.checkLastAccruedDate(new Date());
         double accruedAmount = Double.parseDouble(personUnderTest.calcAccruedAmount(numberOfMonths));
-        double expectedDebt = accruedAmount + personUnderTest.getDebt().toNumber();
-        return Double.toString(expectedDebt);
+        return accruedAmount;
     }
 }
