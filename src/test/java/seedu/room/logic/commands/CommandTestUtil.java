@@ -87,6 +87,12 @@ public class CommandTestUtil {
     public static final String DATETIME_DESC_POLYMATH = " " + PREFIX_DATETIME + VALID_DATETIME_POLYMATH;
     public static final String DATETIME_DESC_ORIENTATION = " " + PREFIX_DATETIME + VALID_DATETIME_ORIENTATION;
 
+    public static final String INVALID_TITLE_DESC = " " + PREFIX_TITLE + "James&"; // '&' not allowed in titles
+    public static final String INVALID_DESCRIPTION_DESC = " " + PREFIX_DESCRIPTION; // empty string not allowed
+    public static final String INVALID_LOCATION_DESC = " " + PREFIX_LOCATION; // empty string not allowed
+    public static final String INVALID_DATETIME_DESC = " " + PREFIX_DATETIME + "50/23/2017 1200 to 5000";
+    // date and endtime do not exist
+
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
