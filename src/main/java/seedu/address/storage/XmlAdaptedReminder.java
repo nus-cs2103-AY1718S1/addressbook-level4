@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.model.reminder.ReadOnlyReminder;
 
-
+//@@author junyango
 /**
  * JAXB-friendly version of the Reminder.
  */
