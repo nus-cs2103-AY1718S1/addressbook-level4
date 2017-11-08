@@ -18,4 +18,30 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new HelpCommand object
  */
 public class EmailCommandParser implements Parser<EmailCommand> {
+  
+    /**
+     * Parses the given {@code String} of input arguments
+     * and returns a new EmailCommand object
+     * /@throws ParseException if the user input does not conform the expected format
+     */
+
+    public EmailCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        String trimmedArgs = args.trim();
+        String[] indicesInString = trimmedArgs.split("\\s+");
+
+
+        try {
+            Set<Index> indices = new HashSet<>();
+            for (String indexString : indicesInString) {
+                Index index = ParserUtil.parseIndex(indexString);
+                indices.add(index);
+            }
+
+            return new EmailCommand(indices);
+
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
+        }
+    }
 }
