@@ -10,6 +10,7 @@ import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ReminderPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowProfileRequestEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.reminder.ReadOnlyReminder;
 
@@ -120,13 +121,11 @@ public class BrowserPanel extends UiPart<Region> {
         browserPanel.getChildren().add(personProfile.getRoot());
     }
 
-    /*
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handleShowProfileRequestEvent(ShowProfileRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonProfile(event.getNewSelection().person);
+        loadPersonProfile(event.person);
     }
-    */
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
