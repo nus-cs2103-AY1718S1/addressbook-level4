@@ -633,9 +633,9 @@ requires users to reset their contacts' `cluster` via deletion and addition or v
 // tag::interest[]
 === Interest Calculator Mechanism
 
-As a debt collector, it can be troublesome to manage so many debts. The task is made more tedious when the debt collector has to +
-consider all the debtor's loan's interest rates as well. Codii is able to automatically calculate a `Person` 's new debt based on his / her's +
-interest rate. Whenever the user logs into Codii, the `Model` component, which handles the event `LoginAppRequestEvent` and checks every +
+As a debt collector, it can be troublesome to manage so many debts. The task is made more tedious when the debt collector has to
+consider all the debtor's loan's interest rates as well. Codii is able to automatically calculate a `Person` 's new debt based on his / her's
+interest rate. Whenever the user logs into Codii, the `Model` component, which handles the event `LoginAppRequestEvent` and checks every
 `Person` in the `AddressBook`.
 
 [source, java]
