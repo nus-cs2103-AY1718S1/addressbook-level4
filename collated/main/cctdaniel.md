@@ -1,5 +1,5 @@
 # cctdaniel
-###### /java/seedu/address/commons/events/ui/ChangeFontSizeEvent.java
+###### \java\seedu\address\commons\events\ui\ChangeFontSizeEvent.java
 ``` java
 /**
  * Indicates a request to change the font size of the application
@@ -19,7 +19,7 @@ public class ChangeFontSizeEvent extends BaseEvent {
 
 }
 ```
-###### /java/seedu/address/commons/events/ui/SwitchThemeRequestEvent.java
+###### \java\seedu\address\commons\events\ui\SwitchThemeRequestEvent.java
 ``` java
 /**
  * An event requesting to switch current theme.
@@ -39,7 +39,7 @@ public class SwitchThemeRequestEvent extends BaseEvent {
 
 }
 ```
-###### /java/seedu/address/logic/commands/CustomiseCommand.java
+###### \java\seedu\address\logic\commands\CustomiseCommand.java
 ``` java
 /**
  * Customise the look of the Address Book application.
@@ -107,7 +107,7 @@ public class CustomiseCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/commands/ThemeCommand.java
+###### \java\seedu\address\logic\commands\ThemeCommand.java
 ``` java
 /**
  * Switch between light and dark theme
@@ -178,7 +178,7 @@ public class ThemeCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
+###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case CustomiseCommand.COMMAND_WORD:
             return new CustomiseCommandParser().parse(arguments);
@@ -186,7 +186,7 @@ public class ThemeCommand extends Command {
         case ThemeCommand.COMMAND_WORD:
             return new ThemeCommandParser().parse(arguments);
 ```
-###### /java/seedu/address/logic/parser/CustomiseCommandParser.java
+###### \java\seedu\address\logic\parser\CustomiseCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new CustomiseCommand object
@@ -225,7 +225,7 @@ public class CustomiseCommandParser implements Parser<CustomiseCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> fontSize} into an {@code Optional<FontSize>} if {@code fontSize} is present.
@@ -236,7 +236,7 @@ public class CustomiseCommandParser implements Parser<CustomiseCommand> {
         return fontSize.isPresent() ? Optional.of(new FontSize(fontSize.get())) : Optional.empty();
     }
 ```
-###### /java/seedu/address/logic/parser/ThemeCommandParser.java
+###### \java\seedu\address\logic\parser\ThemeCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ThemeCommand object
@@ -266,7 +266,7 @@ public class ThemeCommandParser implements Parser<ThemeCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/font/FontSize.java
+###### \java\seedu\address\model\font\FontSize.java
 ``` java
 /**
  * Represents the font size of the AddressBook.
@@ -325,7 +325,7 @@ public class FontSize {
 
 }
 ```
-###### /java/seedu/address/model/FontSizeUnit.java
+###### \java\seedu\address\model\FontSizeUnit.java
 ``` java
 /**
  * A Enumeration class that consists of all possible FontSize
@@ -347,7 +347,7 @@ public enum FontSizeUnit {
     }
 }
 ```
-###### /java/seedu/address/model/ThemeUnit.java
+###### \java\seedu\address\model\ThemeUnit.java
 ``` java
 /**
  * A Enumeration class that consists of all possible Theme
@@ -369,7 +369,7 @@ public enum ThemeUnit {
     }
 }
 ```
-###### /java/seedu/address/ui/CombinePanel.java
+###### \java\seedu\address\ui\CombinePanel.java
 ``` java
     /**
      * Sets the remark style to user preferred font size.
@@ -452,14 +452,14 @@ public enum ThemeUnit {
         }
     }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
         setFontSize(event.message);
     }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     /**
      * Sets the command box style to user preferred font size.
@@ -501,7 +501,7 @@ public enum ThemeUnit {
         }
     }
 ```
-###### /java/seedu/address/ui/LessonListCard.java
+###### \java\seedu\address\ui\LessonListCard.java
 ``` java
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
@@ -573,7 +573,7 @@ public enum ThemeUnit {
     }
 }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     @Subscribe
     private void handleSwitchThemeRequestEvent(SwitchThemeRequestEvent event) {
@@ -600,7 +600,7 @@ public enum ThemeUnit {
 
 }
 ```
-###### /java/seedu/address/ui/ResultDisplay.java
+###### \java\seedu\address\ui\ResultDisplay.java
 ``` java
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
@@ -636,7 +636,384 @@ public enum ThemeUnit {
 
 }
 ```
-###### /resources/view/LightExtensions.css
+###### \resources\view\DarkExtensions.css
+``` css
+.error {
+    -fx-text-fill: #d06651 !important; /* The error class should always override the default text-fill style */
+}
+
+.list-cell:empty {
+    /* Empty cells will not have alternating colours */
+    -fx-background: #383838;
+}
+
+.tag-selector {
+    -fx-border-width: 1;
+    -fx-border-color: white;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+.tooltip-text {
+    -fx-text-fill: white;
+}
+```
+###### \resources\view\DarkTheme.css
+``` css
+.background {
+    -fx-background-color: yellow;
+    background-color: yellow; /* Used in the default.html file */
+}
+
+.label {
+    -fx-font-size: 11pt;
+    -fx-font-family: monospace;
+    -fx-text-fill: white;
+    -fx-opacity: 0.9;
+}
+
+.label-bright {
+    -fx-font-size: 11pt;
+    -fx-font-family: monospace;
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.label-header {
+    -fx-font-size: 32pt;
+    -fx-font-family: monospace;
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.text-field {
+    -fx-font-size: 12pt;
+    -fx-font-family: monospace;
+}
+
+.tab-pane {
+    -fx-padding: 0 0 0 1;
+}
+
+.tab-pane .tab-header-area {
+    -fx-padding: 0 0 0 0;
+    -fx-min-height: 0;
+    -fx-max-height: 0;
+}
+
+.table-view {
+    -fx-base: #1d1d1d;
+    -fx-control-inner-background: #1d1d1d;
+    -fx-background-color: #1d1d1d;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 35;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-border-color:
+        transparent
+        transparent
+        derive(-fx-base, 80%)
+        transparent;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 20pt;
+    -fx-font-family: monospace;
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color;
+}
+
+.split-pane:horizontal .split-pane-divider {
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-border-color: transparent transparent transparent #4d4d4d;
+}
+
+.split-pane {
+    -fx-border-radius: 1;
+    -fx-border-width: 1;
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap : 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: #3c3e3f;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #515658;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #424d5f;
+}
+
+.list-cell:filled:selected #cardPane {
+    -fx-border-color: #3e7b91;
+    -fx-border-width: 1;
+}
+
+.list-cell .label {
+    -fx-text-fill: white;
+}
+
+.cell_big_label {
+    -fx-font-family: monospace;
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+}
+
+.cell_small_label {
+    -fx-font-family: monospace;
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+}
+
+.anchor-pane {
+    -fx-background-color: derive(#1d1d1d, 60%);
+}
+
+.pane-with-border {
+     -fx-background-color: derive(#1d1d1d, 20%);
+     -fx-border-color: derive(#1d1d1d, 20%);
+     -fx-border-width: 10px;
+}
+
+.pane-without-border {
+    -fx-background-color: derive(#1d1d1d, 50%);
+}
+
+.status-bar {
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-text-fill: white;
+}
+
+.result-display {
+    -fx-background-color: yellow;
+    -fx-font-family: monospace;
+    -fx-font-size: 13pt;
+    -fx-font-weight: bolder;
+    -fx-text-fill: white;
+}
+
+.result-display .label {
+    -fx-text-fill: white !important;
+}
+
+.status-bar .label {
+    -fx-font-family: monospace;
+    -fx-text-fill: white;
+}
+
+.status-bar-with-border {
+    -fx-background-color: derive(#1d1d1d, 30%);
+    -fx-border-color: derive(#1d1d1d, 25%);
+    -fx-border-width: 1px;
+}
+
+.status-bar-with-border .label {
+    -fx-text-fill: white;
+}
+
+.grid-pane {
+    -fx-background-color: derive(#1d1d1d, 30%);
+    -fx-border-color: derive(#1d1d1d, 30%);
+    -fx-border-width: 1px;
+}
+
+.grid-pane .anchor-pane {
+    -fx-background-color: derive(#1d1d1d, 30%);
+}
+
+.context-menu {
+    -fx-background-color: derive(#1d1d1d, 50%);
+}
+
+.context-menu .label {
+    -fx-text-fill: white;
+}
+
+.menu-bar {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+.menu-bar .label {
+    -fx-font-size: 14pt;
+    -fx-font-family: monospace;
+    -fx-text-fill: white;
+    -fx-opacity: 0.9;
+}
+
+.menu .left-container {
+    -fx-background-color: black;
+}
+
+.keyword-label-default {
+    -fx-font-family: monospace;
+    -fx-font-size: 25;
+    -fx-text-fill: white;
+}
+
+.keyword-label-xsmall {
+        -fx-font-family: monospace;
+        -fx-font-size: 12;
+        -fx-text-fill: white;
+}
+
+.keyword-label-small {
+        -fx-font-family: monospace;
+        -fx-font-size: 17;
+        -fx-text-fill: white;
+}
+
+.keyword-label-large {
+        -fx-font-family: monospace;
+        -fx-font-size: 32;
+        -fx-text-fill: white;
+}
+
+.keyword-label-xlarge {
+        -fx-font-family: monospace;
+        -fx-font-size: 40;
+        -fx-text-fill: white;
+}
+
+/*
+ * Metro style Push Button
+ * Author: Pedro Duque Vieira
+ * http://pixelduke.wordpress.com/2012/10/23/jmetro-windows-8-controls-on-java/
+ */
+.button {
+    -fx-padding: 5 22 5 22;
+    -fx-border-color: #e2e2e2;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-background-color: #1d1d1d;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.button:hover {
+    -fx-background-color: #3a3a3a;
+}
+
+.button:pressed, .button:default:hover:pressed {
+  -fx-background-color: white;
+  -fx-text-fill: #1d1d1d;
+}
+
+.button:focused {
+    -fx-border-color: white, white;
+    -fx-border-width: 1, 1;
+    -fx-border-style: solid, segments(1, 1);
+    -fx-border-radius: 0, 0;
+    -fx-border-insets: 1 1 1 1, 0;
+}
+
+.button:disabled, .button:default:disabled {
+    -fx-opacity: 0.4;
+    -fx-background-color: #1d1d1d;
+    -fx-text-fill: white;
+}
+
+.button:default {
+    -fx-background-color: -fx-focus-color;
+    -fx-text-fill: #ffffff;
+}
+
+.button:default:hover {
+    -fx-background-color: derive(-fx-focus-color, 30%);
+}
+
+.dialog-pane {
+    -fx-background-color: #1d1d1d;
+}
+
+.dialog-pane > *.button-bar > *.container {
+    -fx-background-color: #1d1d1d;
+}
+
+.dialog-pane > *.label.content {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.dialog-pane:header *.header-panel {
+    -fx-background-color: derive(#1d1d1d, 25%);
+}
+
+.dialog-pane:header *.header-panel *.label {
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+    -fx-fill: white;
+    -fx-text-fill: white;
+}
+
+.scroll-bar {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: derive(#1d1d1d, 50%);
+    -fx-background-insets: 3;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 1 8 1 8;
+}
+
+.scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
+    -fx-padding: 8 1 8 1;
+}
+
+#cardPane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+#commandTypeLabel {
+    -fx-font-size: 11px;
+    -fx-text-fill: #F70D1A;
+}
+
+```
+###### \resources\view\LightExtensions.css
 ``` css
 .error {
     -fx-text-fill: #d06651 !important; /* The error class should always override the default text-fill style */
@@ -659,7 +1036,7 @@ public enum ThemeUnit {
 }
 
 ```
-###### /resources/view/LightTheme.css
+###### \resources\view\LightTheme.css
 ``` css
 .background {
     -fx-background-color: derive(#d4cbb3, 50%);
