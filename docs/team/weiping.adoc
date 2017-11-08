@@ -59,11 +59,23 @@ include::../UserGuide.adoc[tag=sort]
 
 Debt collectors would want to sort their contacts in various ways for easier viewing.
 
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
 === Enhancement Added: Cluster field
 
 ==== External behaviour
 
-`Clusters` are generated based on postal districts.
+`Clusters` are generated based on based on [https://www.ura.gov.sg/realEstateIIWeb/resources/misc/list_of_postal_districts.htm[postal districts]].
 
 ==== Justification
 
@@ -97,12 +109,41 @@ include::../UserGuide.adoc[tag=nearby]
 
 Debt collectors may want to see details of nearby contacts to plan a more effective visiting schedule
 
+=== Enhancement Added: Making index optional for commands
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=borrow]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Calling commands directly on the currently selected person makes much more intuitive sense than always supplying an
+`INDEX` each time. This also increases the flexibility and convenience of Codii.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=optionalIndex]
+
+#End of Extract#
+
+---
+
 === Other contributions
 
 ==== Various UI enhancements
-* Resizing the result display panel
-* Replacing the browser with full information panel
-* Creating the nearby persons panel inside the full information panel
+* Adding a display for current list and selected index (Pull request https://github.com/CS2103AUG2017-T17-B1/main/pull/249[#249])
+* Replacing the browser with full information panel (Pull request https://github.com/CS2103AUG2017-T17-B1/main/pull/48[#48])
+* Creating the nearby persons panel inside the full information panel (Pull request https://github.com/CS2103AUG2017-T17-B1/main/pull/128[#128])
 
 ==== Miscellaneous
 * Assist teammates with debugging tests
