@@ -181,6 +181,7 @@ public class Person implements ReadOnlyPerson {
         return birthday.get();
     }
 
+    // @@author itsdickson
     public void setFavourite(Boolean favourite) {
         this.favourite.set(requireNonNull(favourite));
     }
@@ -194,7 +195,7 @@ public class Person implements ReadOnlyPerson {
     public Boolean getFavourite() {
         return favourite.get();
     }
-
+    // @@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

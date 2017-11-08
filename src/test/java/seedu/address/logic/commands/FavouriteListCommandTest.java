@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+// @@author itsdickson
+
 import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.favouriteFirstPerson;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -48,3 +50,4 @@ public class FavouriteListCommandTest {
         assertEquals(result.feedbackToUser, FavouriteListCommand.MESSAGE_SUCCESS);
     }
 }
+// @@author
