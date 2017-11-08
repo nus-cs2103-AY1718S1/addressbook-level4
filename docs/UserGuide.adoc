@@ -170,6 +170,7 @@ Alias example:
 
 * `f Ben`
 
+// tag::findregex[]
 ==== Locating persons by name: `findregex` (Since v1.2)
 
 Finds persons whose names match the regex given. Note that only the name is searched.  +
@@ -187,6 +188,8 @@ Returns `Jon` and `John`, as well as `John Doe` and `Jane John`.
 Alias example:
 
 * `fr Do?`
+
+// end::findregex[]
 
 ==== Locating persons by tags: `findtag` (Since v1.2)
 
@@ -391,6 +394,7 @@ Alias: `bd`
 
 This command takes no arguments.
 
+// tag::size[]
 ==== Increasing/decreasing font size : `size` (Since v1.3)
 
 Increases the font size by the number given, in pts. +
@@ -413,6 +417,8 @@ Decreases the font size by 3 pts.
 
 * `size` +
 Resets the font size back to the default.
+
+// end::size[]
 
 ==== Toggling the display of the access counts : `accessdisplay` (Since v1.4)
 Toggles the display option for the access count numbers. +

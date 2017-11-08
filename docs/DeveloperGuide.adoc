@@ -480,6 +480,7 @@ by the browser engine. It is tricker to test and more likely to break.
 ** **Cons:** A breakdown by year might not allow the user to answer a more important question easily: how has the number
 of people added changed in a more manageable timeframe (such as a month)?
 
+// tag::findregex[]
 === Searching by Regex
 Searching contacts using regex is implemented with the `FindRegexCommand` class. It is very similar to the normal find command, which is `FindCommand`; the main difference is that, instead of a predicate which is an instance of `NameContainsKeywordPredicate`, the newly created predicate `NameMatchesRegexPredicate` is used.
 
@@ -490,6 +491,8 @@ We felt that this makes more sense; for example, if someone wants to find the co
 Also, in the `FindRegexCommandParser` which parses the command passed in, we originally decided to not trim the string passed. However, this meant that the space separating the command keyword and the arguments are also included in the regex. This is probably not the user wanted; for example, the command `findregex John` will not match `John` since the regex formed is `␣John` (here ␣ is a space).
 
 We also originally thought of only trimming the first space. We eventually decided to trim every whitespace though, since we believe that any extra whitespace would be unintentional. For example, it does not make much sense for users to search with a regex that starts with two spaces, say `␣␣John`, as it is very rare for contacts to have two consecutive spaces in their name. Those cases are very likely to be a typo instead.
+
+// end::findregex[]
 
 === Searching by Tag (Since v1.2)
 
@@ -605,7 +608,34 @@ EventsCenter.getInstance().post(new ChangeBrowserPanelUrlEvent(url));
 
 This command leverages on the `CommandResult` message to display the list of valid command words.
 
-// end::quickhelp[]
+// tag::size[]
+=== Changing Font Size
+The size of the font size change is stored in the model. When there is a change in the font size, the model posts the
+`FontSizeChangeRequestEvent` event, which is listened by some UI components. These UI components will update its font
+sizes accordingly. It will also set the `fontSizeChange` static variable in these UI classes, so that new instances
+of the UI component can have its font size updated accordingly.
+
+The upper bound and the lower bound of the font size changes is set in the model. Hence, when the font size change
+gets out of bounds, it can be caught in the model level and a `FontSizeOutOfBoundsException` is thrown.
+
+==== Design considerations
+*Aspect:* Commands to change font size
+
+* **Alternative 1 (current choice):** Font size change is stored in the model as well as UI
+** **Pros:** Cleaner implementation, no extra coupling between UI and Logic is introduced
+** **Cons:** This implementation will only allow one model to exist at one time, since if more models exist, there
+might be conflicting font size changes
+
+* **Alternative 2:** Font size change is stored in the UI
+** **Pros:** Model is not involved, less coupling
+** **Cons:** Tighter coupling between logic and UI, since now logic needs to listen for events from UI (if font change
+is out of bounds)
+
+* **Alternative 3:** Font size change is stored in the model
+** **Pros:** Font size change is not duplicated across components
+** **Cons:** UI needs to query model every time UI instantiates a new object
+
+// end::size[]
 
 === Logging
 

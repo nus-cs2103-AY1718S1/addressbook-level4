@@ -1,0 +1,98 @@
+= Herbert Ilhan Tanujaya - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Personal Information Management Program (PIMP)
+Personal Information Manager Program (PIMP) is a command line interface (CLI) address book that allows you to store your contacts. You can use PIMP to add friends, add specific tags to them, add their social media accounts (such as Facebook, Twitter, Instagram), or add remarks. You can search through the list of your contacts by typing specific names. For more advanced user, you can use regex to find your friends. Most of the functionality works by typing in single line commands.
++
++PIMP v1.5 is available on any platform running Java 8.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W10-B1/main/blob/master/collated/main/donjar.md[Functional code]] [https://github.com/CS2103AUG2017-W10-B1/main/blob/master/collated/main/donjar.md[Test code]]
+
+=== Enhancement Added: Findregex
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findregex]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This `findregex` command is an advanced feature useful for users who want to search in a more powerful manner.
+You can use this command to find people matching "Johnny" or "Johny", for example.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findregex]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add command `size`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=size]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This command is useful for users to set the font size according to their preference. Some users might appreciate a
+bigger font size and we believe that usability is important.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=size]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Undo/redo with arguments
+
+==== External behavior
+
+---
+Originally, undo/redo is a command that takes no arguments. With this enhancement, the user can
+now type `undo 2`, for example, to undo 2 commands. Same thing as redo - `redo 3`, for example, redoes
+3 commands.
+
+---
+
+==== Justification
+
+This command is useful for users who want to undo many commands at once. For example, if you added many people
+at once and you realized that you are adding from the wrong group of people, you can use this feature to undo many
+commands at once.
+
+==== Implementation
+
+---
+This feature is implemented with a `for` loop, executing the command many times.
+
+---
+=== Other contributions
+
+- Updated the UI, such as the layout and the color scheme. Also refactored the CSS colors into variables.
+(Pull requests #111, #140)
+- Made releases and set up Travis, Appveyor, and Coveralls.
