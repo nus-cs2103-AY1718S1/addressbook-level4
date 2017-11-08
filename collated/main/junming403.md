@@ -2385,6 +2385,23 @@ public class XmlAdaptedRemark {
 
 }
 ```
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+``` java
+    @Override
+    public ObservableList<Remark> getRemarkList() {
+        final ObservableList<Remark> remarks = this.remarks.stream().map(p -> {
+            try {
+                return p.toModelType();
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(remarks);
+    }
+
+}
+```
 ###### \java\seedu\address\ui\CombinePanel.java
 ``` java
     @Subscribe
