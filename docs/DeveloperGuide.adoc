@@ -906,7 +906,7 @@ The following sequence diagram shows how the FindTags operation works:
 image::FindTagsSequenceDiagramForLogic.png[width="800"]
 _Figure 3.5.1 : Sequence Diagram of `FindTags` Operation_
 
-==== Design Considerations.
+==== Design Considerations
 
 **Aspect:** Have a separate predicate class to support `findtags` +
 **Alternative 1 (current choice):** Have a `TagsContainsKeywordsPredicate` to facilitate search. +
@@ -919,6 +919,78 @@ _Figure 3.5.1 : Sequence Diagram of `FindTags` Operation_
 
 // tag::statisticspanel[]
 === Statistics Panel mechanism
+
+The `Statistics Panel` is implemented using the `Statistics` class.
+It supports the calculating of statistics for the current list of students in the `PersonListPanel`.
+
+When the user enters any `Command` that modifies the Addressbook,
+a `FilteredPersonListChangedEvent` containing the current `filteredPersonsList` from the `model` is created and posted to the `EventsCenter`.
+
+The `FilteredPersonListChangedEvent` is implemented this way:
+
+```
+public class FilteredPersonListChangedEvent extends BaseEvent {
+
+    private final ObservableList<ReadOnlyPerson> currentFilteredList;
+
+    public FilteredPersonListChangedEvent(ObservableList<ReadOnlyPerson> currentFilteredList) {
+        this.currentFilteredList = currentFilteredList;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public ObservableList<ReadOnlyPerson> getCurrentFilteredPersonList() {
+        return currentFilteredList;
+    }
+}
+```
+
+Meanwhile in the `StatisticsPanel` class, the `handleFilteredPersonListChangedEvent` event handler which is subscribed to `EventsCenter` handles the `FilteredPersonListChangedEvent` event.
+
+The `handleFilteredPersonListChangedEvent` event handler is implemented this way:
+
+```
+    @FXML
+    @Subscribe
+    private void handleFilteredPersonListChangedEvent(FilteredPersonListChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        statistics.initScore(event.getCurrentFilteredPersonList()); // Update currentList data
+        loadListStatistics();
+    }
+```
+
+In the `handleFilteredPersonListChangedEvent` event handler, the `Statistics` instance in `StatisticsPanel` has its values updated by the `initScore()` method.
+This results in the statistical values returned from the `Statistics` class' methods tp be updated to those of the current `filteredPersonList` to change when called.
+
+The `loadListStatistics()` of the `StatisticsPanel` class is then called. This updates and shows the statistic values of the current `filteredPersonList` on the `StatisticsPanel` in the User Interface.
+
+The `loadListStatistics()` is implemented this way:
+
+```
+/**
+     * Updates list Statistics in the Statistics panel
+     */
+    protected void loadListStatistics() {
+        mean.setText(statistics.getMeanString());
+        median.setText(statistics.getMedianString());
+        mode.setText(statistics.getModeString());
+        variance.setText(statistics.getVarianceString());
+        standardDeviation.setText(statistics.getStdDevString());
+        quartile1.setText(statistics.getQuartile1String());
+        quartile3.setText(statistics.getQuartile3String());
+        interquartileRange.setText(statistics.getInterquartileRangeString());
+    }
+```
+
+The Labels in the User Interface are set to their corresponding values calculated from the `Statistics` instance's getter methods.
+
+
+
+
+==== Design Considerations
 
 // end::statisticspanel[]
 
