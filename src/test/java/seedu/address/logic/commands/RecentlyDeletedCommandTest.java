@@ -25,7 +25,7 @@ public class RecentlyDeletedCommandTest {
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
     private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
-    private RecentlyDeletedCommand recentlyDeletedCommand;
+    private final RecentlyDeletedCommand recentlyDeletedCommand = new RecentlyDeletedCommand();
 
     @Before
     public void setUp() {
@@ -33,7 +33,8 @@ public class RecentlyDeletedCommandTest {
                 EMPTY_STACK, queue, DEFAULT_THEME);
         deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY,
                 EMPTY_STACK, queue, DEFAULT_THEME);
-        recentlyDeletedCommand = new RecentlyDeletedCommand();
+        recentlyDeletedCommand.setData(model, EMPTY_COMMAND_HISTORY,
+                EMPTY_STACK, queue, DEFAULT_THEME);
     }
 
     @Test
