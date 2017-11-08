@@ -11,7 +11,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
-//@@author Haozhe321-reused
+//@@author Haozhe321
 /**
  * Create an anchor pane that can store additional data.
  */
