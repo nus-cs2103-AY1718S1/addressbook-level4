@@ -496,7 +496,6 @@ Examples for a invalid photo file name:
 * `EddyTan`
 //end::photo[]
 
-=======
 // tag::load[]
 === Load command
 
