@@ -369,6 +369,7 @@ Certain properties of the application can be controlled (e.g App name, logging l
 Enhanced feature to allow unique coloured tags to persist after the program exits without having to save color data on external files.
 
 Full Code:
+[source,java]
 ----
 private static String getColorForTag(String tagValue) {
 
@@ -396,12 +397,14 @@ private static String getColorForTag(String tagValue) {
 Java's `hashcode()` method from *String* library will be used to obtain a unique 32-bit integer hash value of the tag String. We first obtain the hashcode and ensure it is a positive value.
 (Note: Identical strings will result in the same hashcode value)
 
+[source,java]
 ----
 int asciiSum = (tagValue.hashCode() > 1) ? tagValue.hashCode() : tagValue.hashCode() * -1;
 ----
 
 We then do a separate division of each color and modulus it by *256* to ensure that it will stay within the RGB limit of 0 - 255.
 
+[source,java]
 ----
 int colorRed = asciiSum % 256;
 int colorGreen = (asciiSum / 2) % 256;
@@ -412,6 +415,7 @@ To ensure that colors stays within visible range, we do a check if sum of RGB is
 We can use an incremental multiplier to regenerate another unique hashcode from the original hashcode. However, to prevent the numbers form getting exponentially large and exceeding the 32-bit sized integer, we shall first divide it by the previous multiplier.
 It is save to assume that chances of collision with other hashcodes is extremely low since we are using extremely large numbers.
 
+[source,java]
 ----
 while ((colorRed + colorGreen + colorBlue) > 700) {
                 asciiSum = (asciiSum / multiplier) * ++multiplier;
