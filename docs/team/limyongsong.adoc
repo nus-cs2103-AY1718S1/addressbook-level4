@@ -11,7 +11,7 @@ The Classroom is built up from the [https://github.com/se-edu/addressbook-level4
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/main/limyongsong.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/test/limyongsong.md[Test code]]
 
-=== Enhancement Added: Remark CheckList 
+=== Enhancement Added: Remark CheckList
 Allow user to add and remove specific remarks pertaining to any persons in the contact
 
 ==== External behaviour
