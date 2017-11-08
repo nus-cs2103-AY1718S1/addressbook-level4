@@ -300,6 +300,7 @@ deletes the relationship between the two indexes of the last shown list if it ex
 * `set 1 2 cr/` +
 clears the all the relationships of the two indexes.
 
+// tag::eventcrud[]
 === Adding an event: `eventadd`
 
 `Since v1.1` +
@@ -374,11 +375,7 @@ Examples:
 Returns `Bob's Birthday` and `Party at Bob's`
 * `ef Birthday` +
 Returns any event having titles that contain `Birthday`
-
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
+// end::eventcrud[]
 
 === Displaying user's schedule: `checkschedule`
 
@@ -411,6 +408,7 @@ is already occupied by an event, cannot drop at this time slot) +
 minutes) +
 ****
 
+// tag::timetable[]
 === Displaying user's timetable: `timetable`
 
 `Since v1.5` +
@@ -425,6 +423,7 @@ With the timetable UI, the user can:
 ** Length of event cards reflect the duration of the event
 ** Changes to events via CLI commands and Schedule drag-and-drop will reflect immediately
 * Open and close the timetable via clicking the button
+// end::timetable[]
 
 === Adding notes to persons : `note`
 
@@ -454,6 +453,7 @@ Format: `company [COMPANY]`
 Examples:
 * `company ABC Foods`
 
+// tag::eventtag[]
 === Tagging contacts in events: `addeventtag`
 
 `Coming in v2.0` +
@@ -483,8 +483,10 @@ Format:
 ****
 * Work in Progress.
 ****
+// end::eventtag[]
 
 
+// tag::timetablesettings[]
 === Setting default settings for timetable: `ett`/ `dtt`
 
 `Coming in v2.0` +
@@ -497,7 +499,7 @@ If the setting is last set to enabled/disabled:
 * Timetable will be/not be displayed upon restart of the application by default.
 * Attempt to change the default setting to disabled will remind the user that it is already the default setting.
 
-
+// end::timetablesettings[]
 
 === Listing entered commands : `history`
 
@@ -505,6 +507,10 @@ Synonyms/Aliases for the command: `h`, `past` +
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history` / `h` / `past
 
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
 
 === Sorting all entries : `sort`
 
