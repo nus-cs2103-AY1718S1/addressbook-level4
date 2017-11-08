@@ -177,6 +177,17 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
+     * Asserts that the info panel remains unchanged
+     * while the selected card in the person list panel is changed.
+     * @see DetailsPanelHandle#isSelectedPersonChanged()
+     * @see PersonListPanelHandle#isSelectedPersonCardChanged()
+     */
+    protected void assertPersonListSelectedCardUnchanged() {
+        assertFalse(getDetailsPanel().isSelectedPersonChanged());
+        assertTrue(getPersonListPanel().isSelectedPersonCardChanged());
+    }
+
+    /**
      * Asserts that the info panel and the selected card in the person list panel remain unchanged.
      * @see DetailsPanelHandle#isSelectedPersonChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
