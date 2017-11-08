@@ -79,7 +79,7 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: add a duplicate parcel -> rejected */
         command = ImportCommand.COMMAND_WORD + " " + STORAGE_FILE;
-        assertCommandFailure(command, ImportCommand.MESSAGE_DUPLICATE_PARCELS);
+        assertCommandFailure(command, ImportCommand.MESSAGE_FAILURE_DUPLICATE_PARCELS);
 
         /* Case: import an addressbook xml file containing duplicate parcels except with different tags -> rejected */
         // AddressBook#addAllParcels(List<ReadOnlyParcel>)
@@ -87,7 +87,7 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
                 .withParcel(new ParcelBuilder(BOB).withTags(Tag.FRAGILE.toString()).build()).build();
         storage.saveAddressBook(addressBook);
         command = ImportCommand.COMMAND_WORD + " " + STORAGE_FILE;
-        assertCommandFailure(command, ImportCommand.MESSAGE_DUPLICATE_PARCELS);
+        assertCommandFailure(command, ImportCommand.MESSAGE_FAILURE_DUPLICATE_PARCELS);
 
         /* Case: imports parcels with all fields same as other parcels in the address book except name -> imported */
         addressBook = new AddressBookBuilder().withParcel(new ParcelBuilder(AMY).withName("Kyle").build())

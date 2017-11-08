@@ -27,7 +27,8 @@ public class ImportCommand extends UndoableCommand {
             + "parcels not added.\n";
     public static final String MESSAGE_SUCCESS_BODY = "Parcels added: %3$s\nDuplicate Parcels: %4$s";
     public static final String MESSAGE_SUCCESS = MESSAGE_SUCCESS_SUMMARY + MESSAGE_SUCCESS_BODY;
-    public static final String MESSAGE_DUPLICATE_PARCELS = "All parcels in the imported save file will create "
+
+    public static final String MESSAGE_FAILURE_DUPLICATE_PARCELS = "All parcels in the imported save file will create "
             + "duplicate parcels";
 
     private final List<ReadOnlyParcel> parcels;
@@ -56,7 +57,7 @@ public class ImportCommand extends UndoableCommand {
 
         // check if all parcels are duplicates
         if (storedParcels.containsAll(parcels)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PARCELS);
+            throw new CommandException(MESSAGE_FAILURE_DUPLICATE_PARCELS);
         }
 
         model.addAllParcels(parcels, uniqueParcels, duplicateParcels);
