@@ -44,7 +44,8 @@ public class ChooseCommandTest {
             throw new IllegalArgumentException("Assert Execution Failed: ", ce);
         }
 
-        JumpToBrowserListRequestEvent event = (JumpToBrowserListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        JumpToBrowserListRequestEvent event =
+                (JumpToBrowserListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
         assertEquals(args, event.browserItem);
     }
 
