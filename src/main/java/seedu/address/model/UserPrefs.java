@@ -68,10 +68,9 @@ public class UserPrefs {
 
     @Override
     public String toString() {
-        String sb = ("Gui Settings : " + guiSettings.toString())
+        return ("Gui Settings : " + guiSettings.toString())
                 + "\nLocal data file location : " + addressBookFilePath
                 + "\nAddressBook name : " + addressBookName;
-        return sb;
     }
 
 }
