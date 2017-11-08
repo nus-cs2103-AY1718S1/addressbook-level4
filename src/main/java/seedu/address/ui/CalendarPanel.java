@@ -6,11 +6,10 @@ import java.time.LocalDate;
 import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Logger;
 
+import com.sun.javafx.scene.control.behavior.DatePickerBehavior;
 import com.sun.javafx.scene.control.skin.DatePickerContent;
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
 
@@ -18,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tooltip;
@@ -25,6 +25,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.NextMonthEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.ChangeModeCommand;
@@ -48,10 +49,13 @@ public class CalendarPanel extends UiPart<Region> {
     private final Logic logic;
     private final Model model;
 
-    private DatePicker datePicker;
+    //private DatePicker datePicker;
 
     @FXML
     private StackPane calendarPane;
+
+    @FXML
+    private DatePicker datePicker;
 
     public CalendarPanel(Logic logic, Model model) {
         super(FXML);
@@ -93,44 +97,63 @@ public class CalendarPanel extends UiPart<Region> {
     private void findDateForSelection() {
         // Make datePicker editable (i.e. i think can select and update value)
         datePicker.setEditable(true);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         // TODO: 26/10/17 Able to not execute findCommand when cell is not colour
         datePicker.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                LocalDate date = datePicker.getValue();
-                String dateString = date.format(formatter);
-                String birthdayString = dateString.substring(0, 5);
-                logger.info("Date selected: " + dateString);
-                try {
-                    String command = FindTaskCommand.COMMAND_WORD;
-                    List<String> mode = new ArrayList<>();
-                    List<String> dateMode = new ArrayList<>();
-                    int order = 0;
+                String currentMode = model.getCommandMode();
+                String date = convertDateFromPicker();
 
-                    // load value to be selected base on current mode
-                    mode.add("ab");
-                    mode.add("tm");
-                    dateMode.add(birthdayString);
-                    dateMode.add(dateString);
-
-                    if (model.getCommandMode().equals(mode.get(1))) {
-                        order = 1;
-                    }
-                    int changedOrder = ((order - 1) == 0) ? 0 : 1;
-
-                    logic.execute(command + " " + dateMode.get(order));
-                    logic.execute(ChangeModeCommand.COMMAND_WORD + " " + mode.get(changedOrder));
-                    logic.execute(command + " " + dateMode.get(changedOrder));
-                    logic.execute(ChangeModeCommand.COMMAND_WORD + " " + mode.get(order));
-                } catch (CommandException e) {
-                    e.printStackTrace();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                findPersonsWithBirthday(date);
+                findTasksWithDeadline(date);
+                changeToOriginalMode(currentMode);
             }
         });
+    }
+
+    private void changeToOriginalMode(String currentMode) {
+        try {
+            logic.execute(ChangeModeCommand.COMMAND_WORD + " " + currentMode);
+        } catch (CommandException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String convertDateFromPicker() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return datePicker.getValue().format(formatter);
+    }
+
+    private void findTasksWithDeadline(String dateString) {
+        try {
+            // Change to TaskManager mode
+            logic.execute(ChangeModeCommand.COMMAND_WORD + " tm");
+            // Execute FindCommand for dateString
+            logic.execute(FindTaskCommand.COMMAND_WORD + " " + dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (CommandException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void findPersonsWithBirthday(String dateString) {
+        String birthdayString = dateString.substring(0, 5);
+        logger.info("Date selected: " + dateString);
+        try {
+            // Change to AddressBook mode
+            logic.execute(ChangeModeCommand.COMMAND_WORD + " ab");
+            // Execute FindCommand for dateString
+            logic.execute(FindTaskCommand.COMMAND_WORD + " " + birthdayString);
+        } catch (CommandException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -236,23 +259,13 @@ public class CalendarPanel extends UiPart<Region> {
         return dayCellFactory;
     }
 
-    /**
-     * Select the date on calendar
-     * @param date
-     */
-    /*private void selectDate(DatePickerContent content, String date) {
-        ObservableList<Node> dateCellList = content.getChildren();
-        LocalDate localDate = LocalDate.parse(date, formatter);
-
-        logger.info("day of month: " + localDate.getDayOfMonth());
-        for (Node cell: dateCellList) {
-            logger.info("cell id: " + cell.getId());
-            if (cell.getId().equals(localDate.getDayOfMonth())) {
-                datePicker.setValue(localDate);
-                logger.info("date picked: " + localDate);
-                break;
-            }
-        }
+    private void handleNextMonthEvent(NextMonthEvent event) {
+        datePicker.editorProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection of date is changed to : '" + newValue + "'");
+                        raise(new NextMonthEvent());
+                    }
+                });
     }
 
     // TODO: 26/10/17 implement event in the calendar, such that binding of dates is possible
