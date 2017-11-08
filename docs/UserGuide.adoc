@@ -185,7 +185,7 @@ Examples:
 * `list` +
 `delete 1 2` +
 Deletes the 1st and 2nd person in the address book.
-* `find Betsy` +
+* `find n/Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
@@ -198,7 +198,7 @@ Format: `clear`
 
 === Key features
 
-==== Finding persons by any field : `find` [Since v1.2 and v1.5]
+==== Finding persons by any field : `find` [Since v1.2 and v1.4]
 
 => Alias: `f` <=
 
@@ -273,7 +273,7 @@ Examples:
 * `list` +
 `locate 2` +
 Locates the 2nd person's address in the address book.
-* `find Betsy` +
+* `find n/Betsy` +
 `locate 1` +
 Locates the 1st person's address in the results of the `find` command.
 // end::locate[]
@@ -294,7 +294,7 @@ Examples:
 * `list` +
 `schedule 1 3 d/15-01-2018 act/Play basketball` +
 Associates the specified schedule with the 1st and 3rd persons in the address book.
-* `find Betsy` +
+* `find n/Betsy` +
 `schedule 1 d/25-12-2017 act/Christmas dinner` +
 Associates the specified schedule with the 1st person in the results of the `find` command.
 
@@ -333,19 +333,28 @@ Opens up calendar browser in the address book. +
 * `cl` (using alias) +
 Opens up calendar browser in the address book.
 
-==== Opening calendar : `calendar` [Since v1.4]
+==== Emailing persons : `email` [Since v1.5]
 
-=> Alias: `em` <=
+=> Alias: `m` <=
 
-Open a email browser that for sending of email. +
-Format: `email`
+Open a email platform for sending of email. +
+Format: `email INDEX [UNIQUE INDEX]...`
+
+****
+* Emails the people at the specified index or indices.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* If there is more than one index, the indices indicated must be different from each other.
+****
 
 Examples:
 
-Opens up email browser in the address book. +
-* `email` (using command word) +
-* `em` (using alias) +
-Opens up email browser in the address book.
+* `list` +
+`email 1 2` +
+Emails the 1st and 2nd person in the address book.
+* `find n/Betsy` +
+`email 1` +
+Emails the 1st person in the results of the `find` command.
 
 === Other navigation commands
 
@@ -454,7 +463,7 @@ To *transfer data* to another Computer, install the app in the other computer an
 
 |link:#editing-a-person-code-edit-code[Edit] | `e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`edit 2 n/James Lee e/jameslee@example.com`
 
-|link:#opening-email-code-email-code-since-v1-4[Email] |`em` |`email` |
+|link:#emailing-a-person-code-email-code-since-v1-5[Email] |`em` |`delete INDEX [UNIQUE INDEX]...`| `email 2`
 
 |link:#exiting-the-program-code-exit-code[Exit] |  | `exit` |
 

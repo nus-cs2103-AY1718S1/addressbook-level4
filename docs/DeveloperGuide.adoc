@@ -615,41 +615,63 @@ _Figure 4.3.6 : Full UI outcome of locate implementation_
 // end::locate[]
 
 //tag::FindCommand[]
-=== FindCommand by any search field [Since v1.2]
+=== FindCommand by any search field [Since v1.2 and v1.4]
 
 
-The find function `FindCommand` which reside in `Logic` will support the search of contact by any keywords. The keywords must be a full word match.The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone` and `Tags`. Such parameters inherit from `Person` which resides inside `Model`.
-
-
-`Find Command` will only execute when the prefix of the parameters is given. Any other prefix as input will be considered as invalid input. Checks will be conducted via `FindCommandParser` which inherits from `FindCommand`, as shown in _Figure 4.4.1_.
+The find function `FindCommand` which reside in `Logic` will support the search of contact by any keywords. The keywords must be a full word match.The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone`,`Tags` , `Activity` and `Country`. Such parameters inherit from `Person` which resides inside `Model`.
 
 [source,java]
 ----
 public class FindCommandParser implements Parser<FindCommand> {
     public FindCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
-    //...Check for allocation of Predicate...
-    }
+        final String prefix = matcher.group("prefix");
+        final String arguments = matcher.group("arguments");
+
+        String[] keywords = arguments.trim().split("\\s+");
+
+           switch (prefix) {
+             case ("a/"):
+                 predicate = new AddressContainsKeywordsPredicate(Arrays.asList(keywords));
+                 break;
+             case ("act/"):
+                 predicate = new ScheduleContainsKeywordsPredicate(Arrays.asList(keywords));
+                 break;
+             case ("c/"):
+                 predicate = new CountryContainsKeywordsPredicate(Arrays.asList(keywords));
+                 break;
+             case ("e/"):
+                 predicate = new EmailContainsKeywordsPredicate(Arrays.asList(keywords));
+                 break;
+             case ("n/"):
+                 predicate = new NameContainsKeywordsPredicate(Arrays.asList(keywords));
+                 break;
+             case ("t/"):
+                 predicate = new TagContainsKeywordsPredicate(Arrays.asList(keywords));
+                 break;
+             case ("p/"):
+                 if (!validPhoneNumbers(keywords)) {
+                     throw new ParseException(PhoneContainsKeywordsPredicate.MESSAGE_PHONE_VALIDATION);
+                 }
+                 String[] keywordsPhone = arguments.replaceAll("\\s", "").split("(?<=\\G.{4})");
+                 predicate = new PhoneContainsKeywordsPredicate(Arrays.asList(keywordsPhone));
+                 break;
 }
 
 ----
 _Figure 4.4.1: Code section in FindCommandParser.java_
 
 [NOTE]
-A valid find command can only search for keywords based on specific prefix  [n/NAME] or [p/PHONE] or [e/EMAIL] or [a/ADDRESS] or [t/TAG]
+A valid find command can only search for keywords based on specific prefix  [n/NAME] or [p/PHONE] or [e/EMAIL] or [a/ADDRESS] or [t/TAG] or [c/COUNTRY] or [act/ACTIVITY].
 
-Also,the input will first have to be tokenised in order to extract the prefix for for the search procedure. In absence of valid prefix ,an exception will be thrown, as shown in _Figure 4.4.2_.
+Any other prefix as input will be considered as invalid input.In absence of valid prefix ,an exception will be thrown, as shown in _Figure 4.4.2_.
 [source,java]
 ----
-        if (!areSomePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TAG)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
+         default:
+                    throw new ParseException(MESSAGE_UNKNOWN_FINDCOMMAND);
 ----
 _Figure 4.4.2: Code section 2 in FindCommandParser.java_
 
-A successful tokenism of the prefix will ensure that the keywords are  allocated to  method `containsKeyWordPredicate` under `Model` . The methods takes in the user input and returns a `containsKeyWordPredicate`. Addressbook will search for the keywords in the revelvant parameters.
+A successful match of the prefix will ensure that the keywords are  allocated to  method `containsKeyWordPredicate` under `Model` . The methods takes in the user input and returns a `containsKeyWordPredicate`. Addressbook will search for the keywords in the revelvant parameters.
 
 Upon any successful match, the particulars of the contact will be displayed. _Figures 4.4.3a to 4.4.3e_ below indicate the various outcomes of search function by  using `FindCommand` .
 
@@ -678,7 +700,7 @@ _Figure 4.4.3e : Find by tag [t/TAG]_
 **Cons:** User have to be know the various `prefixes` in order to be able to search for the contract via the attribute of the contact. +
 **Alternative 2:** Searching for contact without having the need to input prefix +
 **Pros:** Easier for users to find a contact without the hassle to have full knowledge of the various `prefixes`. Might be more intuitive for user. +
-**Cons:** Have to look through all the attribute of contact thus slowing down FindCommand. +
+**Cons:** Have to look through all the attribute of contact thus slowing down the execution of FindCommand. +
 
 ---
 
