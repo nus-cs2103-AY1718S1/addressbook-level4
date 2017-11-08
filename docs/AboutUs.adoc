@@ -29,7 +29,8 @@ image::jaryltan.jpg[width="150", align="left"]
 image:githubicon.png[Github Icon, 40, 40, link="https://github.com/Juxarius"] image:portfolio.png[Portfolio Icon, 40, 40, link="team/jaryltan.adoc"]
 
 Role: Developer +
-Responsibilities:
+Responsibilities: Helping with coordinating features to be completed, assigning issues,
+PR review and bug searching/debugging.
 
 === RATTANIN SIRIPORNPITAK
 image::rsjunior37.jpg[width="150", align="left"]
