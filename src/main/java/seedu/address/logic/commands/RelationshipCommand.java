@@ -74,6 +74,9 @@ public class RelationshipCommand extends UndoableCommand {
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
+    /**
+     * Outputs success message based on whether a relationship is added or removed
+     */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
         if (!relation.value.isEmpty()) {
             return String.format(MESSAGE_ADD_RELATIONSHIP_SUCCESS, personToEdit);
@@ -82,6 +85,11 @@ public class RelationshipCommand extends UndoableCommand {
         }
     }
 
+    /**
+     * Checks if
+     * (a) Object is the same object
+     * (b) Object is an instance of the object and that index and relation are the same
+     */
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

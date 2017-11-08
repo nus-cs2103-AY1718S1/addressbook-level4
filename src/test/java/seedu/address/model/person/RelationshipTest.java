@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -21,11 +22,11 @@ public class RelationshipTest {
         // different types -> returns false
         assertFalse(relation.equals(1));
 
-        // null -> returns false
-        assertFalse(relation.equals(null));
-
         // different person -> returns false
         Relationship differentRelationship = new Relationship("Mary Jane");
         assertFalse(relation.equals(differentRelationship));
+
+        // null
+        assertNotNull(relation);
     }
 }

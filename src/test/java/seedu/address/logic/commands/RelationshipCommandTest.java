@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_RELATIONSHIP_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_RELATIONSHIP_BOB;
@@ -120,9 +121,6 @@ public class RelationshipCommandTest {
         // same object -> returns true
         assertTrue(standardCommand.equals(standardCommand));
 
-        // null -> returns false
-        assertFalse(standardCommand.equals(null));
-
         // different types -> returns false
         assertFalse(standardCommand.equals(new ClearCommand()));
 
@@ -133,6 +131,9 @@ public class RelationshipCommandTest {
         // different descriptor -> returns false
         assertFalse(standardCommand.equals(new RelationshipCommand(INDEX_FIRST_PERSON,
                 new Relationship(VALID_RELATIONSHIP_BOB))));
+
+        // null
+        assertNotNull(standardCommand);
     }
 
     /**

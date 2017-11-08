@@ -10,6 +10,9 @@ import seedu.address.logic.commands.RelationshipCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Relationship;
 
+/**
+ * Parses input arguments and creates a new RelationshipCommand object
+ */
 public class RelationshipCommandParser implements Parser<RelationshipCommand> {
     /**
       * Parses the given {@code String} of arguments in the context of the RelationshipCommand
