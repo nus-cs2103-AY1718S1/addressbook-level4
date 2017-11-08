@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
@@ -59,16 +60,19 @@ public class CalendarBox {
         }
         // Create calendarTitle and buttons to change current month
         calendarTitle = new Text();
-        Button previousMonth = new Button("<<");
+        Button previousMonth = new Button(" << ");
         previousMonth.setOnAction(e -> previousMonth());
-        Button nextMonth = new Button(">>");
+        Button nextMonth = new Button(" >> ");
         nextMonth.setOnAction(e -> nextMonth());
         HBox titleBar = new HBox(previousMonth, calendarTitle, nextMonth);
+        HBox.setMargin(previousMonth, new Insets(0, 5, 0, 0));
+        HBox.setMargin(nextMonth, new Insets(0, 5, 0, 5));
         titleBar.setAlignment(Pos.BASELINE_CENTER);
         // Populate calendar with the appropriate day numbers
         populateCalendar(yearMonth);
         // Create the calendar view
         view = new VBox(titleBar, dayLabels, calendar);
+        VBox.setMargin(titleBar, new Insets(0, 0, 10, 0));
     }
 
     /**
@@ -89,7 +93,7 @@ public class CalendarBox {
             }
 
             //make today's date light up
-            if(calendarDate.equals(LocalDate.now())) {
+            if (calendarDate.equals(LocalDate.now())) {
                 ap.lightUpToday();
             }
 

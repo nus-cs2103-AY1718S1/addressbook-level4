@@ -19,12 +19,12 @@ public class AnchorPaneNode extends AnchorPane {
 
     // Date associated with this pane
     private LocalDate date;
-    private final Background focusBackground = new Background( new BackgroundFill(
-            Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY ) );
-    private final Background todayBackground = new Background( new BackgroundFill(
-            Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY ) );
-    private final Background unfocusBackground = new Background( new BackgroundFill(
-            Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY ) );
+    private final Background focusBackground = new Background(new BackgroundFill(
+            Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY));
+    private final Background todayBackground = new Background(new BackgroundFill(
+            Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY));
+    private final Background unfocusBackground = new Background(new BackgroundFill(
+            Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY));
 
     /**
      * Create a anchor pane node. Date is not assigned in the constructor.
@@ -35,14 +35,13 @@ public class AnchorPaneNode extends AnchorPane {
         // Add action handler for mouse clicked
 
 
-        this.setOnMouseClicked( ( e ) ->
-        {
+        this.setOnMouseClicked((e) -> {
             if (this.getBackground() == focusBackground) {
                 this.revertBackground();
             } else {
                 this.focusGrid();
             }
-        } );
+        });
 
 
 
@@ -57,26 +56,33 @@ public class AnchorPaneNode extends AnchorPane {
     }
 
 
-    //this method focuses the Grid when the mouse clicks on it
+    /**
+     *Focus on the Grid when the mouse clicks on it
+     */
+
     public void focusGrid() {
-        if(this.getBackground() != todayBackground) {
+        if (this.getBackground() != todayBackground) {
             this.requestFocus();
-            this.backgroundProperty().bind( Bindings
-                    .when( this.focusedProperty() )
-                    .then( focusBackground )
+            this.backgroundProperty().bind(Bindings
+                    .when(this.focusedProperty())
+                    .then(focusBackground)
                     .otherwise(unfocusBackground)
             );
         }
 
     }
 
-    //this method puts the background to it's original state
+    /**
+     * Put the background to it's original state
+     */
     public void revertBackground() {
         this.backgroundProperty().unbind();
         this.backgroundProperty().setValue(unfocusBackground);
     }
 
-    //make the anchorpane that represents today light up
+    /**
+     *Make the Anchorpane that represents today's date light up
+     */
     public void lightUpToday() {
         this.backgroundProperty().setValue(todayBackground);
     }

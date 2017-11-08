@@ -146,8 +146,10 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
 
+        //@@author Haozhe321
         calandarBoxPanel = new CalendarBoxPanel();
         calendarPlaceholder.getChildren().add(calandarBoxPanel.getRoot());
+        //@@author
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
