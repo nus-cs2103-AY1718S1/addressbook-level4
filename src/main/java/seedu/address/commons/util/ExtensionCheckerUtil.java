@@ -23,5 +23,4 @@ public class ExtensionCheckerUtil {
         String ext = fileName.substring(fileName.lastIndexOf(".") + 1);
         return ext;
     }
-    
 }
