@@ -4,9 +4,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: Mobilize
-Mobilize is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+Mobilize is a organizing and planning desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B3/main/blob/master/collated/main/tby1994.md[Functional code]] [https://github.com/CS2103AUG2017-T11-B3/main/blob/master/collated/test/tby1994.md[Test code]]
 
 
 === Enhancement Added: switch
@@ -136,7 +136,7 @@ This feature can remind the user about the task deadline.
 ---
 === Other contributions
 
-* Updated the GUI for command mode(Pull requests https://github.com/CS2103AUG2017-T11-B3/main/pull/114)
-* Updated the GUI for task tags(Pull requests https://github.com/CS2103AUG2017-T11-B3/main/pull/100)
-* Updated the GUI for task manager(https://github.com/CS2103AUG2017-T11-B3/main/pull/60)
-* Added some GUI test files for the team to conduct sysyem tests(https://github.com/CS2103AUG2017-T11-B3/main/pull/60)
+* Updated the GUI for command mode(Pull requests https://github.com/CS2103AUG2017-T11-B3/main/pull/114[#114])
+* Updated the GUI for task tags(Pull requests https://github.com/CS2103AUG2017-T11-B3/main/pull/100[#100])
+* Updated the GUI for task manager(https://github.com/CS2103AUG2017-T11-B3/main/pull/60[60])
+* Added some GUI test files for the team to conduct sysyem tests(https://github.com/CS2103AUG2017-T11-B3/main/pull/60[#60])
