@@ -9,7 +9,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 contacts, scheduling for upcoming events, timetable planning as well as a calendar to better organise their campus life.
 
 This project is the result of a semester-long software engineering https://nus-cs2103.github.io/website/[module] at
-http://www.nus.edu.sg/[NUS]. It is built my teammates and me, as listed link:../AboutUs.adoc[here]. Most of the backend codes
+http://www.nus.edu.sg/[NUS]. It is built my teammates and me, as listed link:../AboutUs.html[here]. Most of the backend codes
 are written in Java, while https://docs.oracle.com/javase/8/javafx/get-started-tutorial/jfx-overview.htm#JFXST784[JavaFX]
 is adapted as the frontend framework.
 
@@ -23,27 +23,90 @@ is adapted as the frontend framework.
 ==== External behavior
 
 ---
+
 include::../UserGuide.adoc[tag=genericProperty]
+
 ---
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Our application **BoNUS** will not be able to stand out from all the similar https://nus-cs2103.github.io/website/admin/projectList.html[products]
+if we simply provide users with a few additional fields to store the information of their contacts. Instead, to suit the
+various needs from users, we have to provide the flexibility to allow users to define customize properties on their own.
+
+Users can use the `config --add-property` command to define as many new properties as they want, after which they could
+set these properties when they use the `add` command to add a new contact.
+
+In the current design and implementation, the `PropertyManager` class is used to store and manage the meta-data of all
+properties. Default properties like `Name`, `Phone`, `Email` and `Address` are pre-loaded into `PropertyManager`, while
+user-defined properties will be added into `PropertyManager` by `config --add-property` command.
 
 ==== Implementation
 
 ---
+
 include::../DeveloperGuide.adoc[tag=genericProperty]
+
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed: Import From BoNUS-specified Script file
 
-{Explain similar to the Undo/Redo feature above.}
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=importScript]
+
+---
+
+==== Justification
+
+This feature is meant for advanced users. To build an **epic** application, we need to essentially build an _ecosystem_ for
+this software. According to the _Unix_ philosophy, providing a shell scripting and command language is the minimum requirement
+for a complete system.
+
+With the support for scripting file, advance users (or system administers if **BoNUS** is used as an enterprise application)
+can generate a scripting file and import it into **BoNUS**. Data management and frequent operations can be done easily in
+one step. Otherwise, they have to type one command each time in the GUI interface, which becomes a very tedious work.
+
+The scripting file should consist of one or multiple valid **BoNUS** commands and each line can have **at most one** command.
+
+=== Enhancement Proposed: Export Data to Microsoft Excel^TM^ Worksheet
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=exportExcel]
+
+---
+
+==== Justification
+
+We already support `ExportCommand` so that users can save data to a separate location as a backup. However, `.xml` files
+are not considered to be user-friendly (except for programmers and geeks).
+
+Thus, it becomes essential for us to natively support exporting data to a format with better visuals. As stated before,
+data stored in **BoNUS** can be considered as _tables_. Naturally, it comes to my mind that Microsoft Excel^TM^ would
+be a perfect format to present data to users.
+
+Users can type `--excel` as the additional option to specify Microsoft Excel^TM^ as the output format when they use `ExportCommand`.
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Repository setup, CI setup and Slack automatic notification using WebHook (Pull requests https://github.com/CS2103AUG2017-T09-B3/main/pull/1[#1],
+https://github.com/CS2103AUG2017-T09-B3/main/pull/6[#6], https://github.com/CS2103AUG2017-T09-B3/main/pull/7[#7])
+* Design and refine multiple parts of UI (Pull requests https://github.com/CS2103AUG2017-T09-B3/main/pull/41[#41],
+https://github.com/CS2103AUG2017-T09-B3/main/pull/43[#43], https://github.com/CS2103AUG2017-T09-B3/main/pull/44[#44],
+https://github.com/CS2103AUG2017-T09-B3/main/pull/82[#82], https://github.com/CS2103AUG2017-T09-B3/main/pull/106[#106])
+* Support setting customize colors for tags (Pull requests https://github.com/CS2103AUG2017-T09-B3/main/pull/83[#83],
+https://github.com/CS2103AUG2017-T09-B3/main/pull/101[#101], https://github.com/CS2103AUG2017-T09-B3/main/pull/147[#147])
+* Support importing NUSMods timetable as events (Pull requests https://github.com/CS2103AUG2017-T09-B3/main/pull/123[#123],
+https://github.com/CS2103AUG2017-T09-B3/main/pull/124[#124])
+* Support natural language parsing (Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/148[#148])
+* Support adding avatar to contacts (Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/162[#162])
+* Write unit tests for various classes
+* Update various sections in `AboutUs`, `ContactUs`, `UserGuide` and `DeveloperGuide`, etc.
 
 == Project: Lions Befrienders Management System
 

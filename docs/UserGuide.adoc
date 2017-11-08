@@ -537,6 +537,7 @@ For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
 For `macOS` and `Linux` users, use `/` instead.
 ====
 
+// tag::importScript[]
 ==== From `.bo` format
 
 _(Coming in v2.0)_
@@ -568,6 +569,7 @@ Examples:
 For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
 For `macOS` and `Linux` users, use `/` instead.
 ====
+// end::importScript[]
 
 ==== From NUSMods URL
 
@@ -621,6 +623,7 @@ For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
 For `macOS` and `Linux` users, use `/` instead.
 ====
 
+// tag::exportExcel[]
 ==== To Microsoft Excel^TM^ Worksheet
 
 _(Coming in v2.0)_
@@ -646,6 +649,7 @@ Examples:
 For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
 For `macOS` and `Linux` users, use `/` instead.
 ====
+// end::exportExcel[]
 
 === Advance setting : `(cfg)config`
 
