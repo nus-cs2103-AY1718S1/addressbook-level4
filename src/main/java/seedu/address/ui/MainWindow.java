@@ -324,7 +324,7 @@ public class MainWindow extends UiPart<Region> {
         browserPanel.setDefaultPage(event.theme);
         logic.setCurrentTheme(getCurrentTheme());
     }
-  
+
     @Subscribe
     private void handleToggleEvent(TogglePanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
