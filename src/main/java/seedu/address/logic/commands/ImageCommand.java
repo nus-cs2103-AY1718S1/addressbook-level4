@@ -30,7 +30,7 @@ public class ImageCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_IMAGE + "[FILEPATH]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_IMAGE + "C:\\Users\\Admin\\Desktop\\pic.jpg.";
+            + "C:\\Users\\Admin\\Desktop\\pic.jpg.";
 
     public static final String MESSAGE_IMAGE_PATH_FAIL =
             "This specified path cannot be read.";

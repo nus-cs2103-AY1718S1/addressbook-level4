@@ -93,7 +93,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import seedu.address.logic.commands.ImageCommand;
-import seedu.address.logic.parser.exceptions.ImageException;
+import seedu.address.commons.exceptions.ImageException;
 
 /**
  * Handles the IO for editing persons images

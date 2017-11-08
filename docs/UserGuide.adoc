@@ -80,21 +80,31 @@ Example:
 
 === Person Image: `image`
 Set and show an image for a person in the addressbook. Uses the index of a person to select them and a URL to the image path. Since v1.3. +
-e.g. `image 1 /home/user/someexample.jpg`
+
+Format: `image INDEX FILEPATH`
+
+Example:
+
+* `image 1 /home/user/someexamplepic.jpg`
 
 === Expiry Date: `expire`
 Set the expiry date of a person. The entry will be automatically removed from addressbook once it expires. Coming v1.5
 
-=== Exporting Database
-Export a working version of the database and the images associated to it to a directory specified.
-`Currently WIP but allows exporting to the addressbook home directry` +
-e.g. `export /home/user/`
+=== Exporting Database: `export`
+Export a working version of the database and the images associated with it to the application directory or a specified directory. Since v1.5rc.+
+
+Format: `export [FILEPATH]`
+
+Example:
+
+* `export`
+* `export /home/user/someexamplepic`
 
 === Condensed Help
 Open a condensed help screen by default in place of the Google brwoser integration. Since v1.4
 
 === Importing Database
-Import a working version of the database and the images associated to it from a directory specified. Coming v2.0.
+Import a working version of the database and the images associated with it from a specified directory. Coming v2.0.
 
 === Facebook Integration
 Coming v2.0.
@@ -335,3 +345,5 @@ e.g.`select 2`
 * *Redo* : `redo`
 * *Image* : `image INDEX URL` +
 e.g. `image 1 /home/user/someimage.jpg`
+* *Export* : `export [FILEPATH]` +
+e.g. `export /home/user/someexamplepic`

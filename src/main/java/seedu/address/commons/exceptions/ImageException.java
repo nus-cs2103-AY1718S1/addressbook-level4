@@ -1,7 +1,5 @@
 //@@author aali195
-package seedu.address.logic.parser.exceptions;
-
-import seedu.address.commons.exceptions.IllegalValueException;
+package seedu.address.commons.exceptions;
 
 /**
  * Represents an image error encountered by a parser.
