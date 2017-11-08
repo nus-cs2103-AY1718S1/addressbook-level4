@@ -6,15 +6,15 @@ import seedu.address.logic.commands.exceptions.CommandException;
 /**
  * Enables or disables the welcome screen.
  */
-public class WelcomeCommand extends UndoableCommand {
+public class WelcomeCommand extends Command {
 
     public static final String COMMAND_WORD = "welcome";
 
     public static final String COMMAND_ALIAS = "w";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + "(alias: " + COMMAND_ALIAS + ")"
-            + ": Enables / disables the welcome screen upon running ConTag. "
-            + "Paramters: "
+            + ": Enables / disables the welcome screen upon running ConTag.\n"
+            + "Parameters: "
             + "[ENABLING_KEYWORD] (enable / disable)";
 
     public static final String WELCOME_SCREEN_MESSAGE = "Welcome window is now %1$s.";
@@ -26,7 +26,7 @@ public class WelcomeCommand extends UndoableCommand {
     }
 
     @Override
-    protected CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         String keyword = enablingKeyword.toString();
 
         if (keyword.equals("enable")) {

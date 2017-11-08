@@ -46,7 +46,7 @@ public class CommandIdentifier {
             + RedoCommand.COMMAND_WORD + ", "
             + ScheduleCommand.COMMAND_WORD + ", "
             + LocateCommand.COMMAND_WORD + ", "
-            + UndoCommand.COMMAND_WORD
+            + UndoCommand.COMMAND_WORD + ", "
             + WelcomeCommand.COMMAND_WORD;
 
     public static final List<String> COMMAND_VALIDATION_LIST = ImmutableList.of(
