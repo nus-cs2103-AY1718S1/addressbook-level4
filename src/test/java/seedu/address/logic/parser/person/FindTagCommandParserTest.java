@@ -15,7 +15,7 @@ import seedu.address.model.property.TagContainsKeywordsPredicate;
 
 //@@author yunpengn
 public class FindTagCommandParserTest {
-    private FindTagCommandParser parser = new FindTagCommandParser();
+    private final FindTagCommandParser parser = new FindTagCommandParser();
 
     @Test
     public void parse_tagNamePresent_checkCorrectness() {

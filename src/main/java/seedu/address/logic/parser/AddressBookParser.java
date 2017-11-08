@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.person.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -25,6 +24,7 @@ import seedu.address.logic.commands.person.AddAvatarCommand;
 import seedu.address.logic.commands.person.AddCommand;
 import seedu.address.logic.commands.person.DeleteCommand;
 import seedu.address.logic.commands.person.EditCommand;
+import seedu.address.logic.commands.person.EmailCommand;
 import seedu.address.logic.commands.person.FindCommand;
 import seedu.address.logic.commands.person.FindTagCommand;
 import seedu.address.logic.commands.person.ListCommand;

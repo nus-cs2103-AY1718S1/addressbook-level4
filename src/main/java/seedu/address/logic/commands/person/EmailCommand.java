@@ -56,11 +56,17 @@ public class EmailCommand extends Command {
                 URI mailto = new URI("mailto:" + email);
                 desktop.mail(mailto);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, personToEmail));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof EmailCommand // instanceof handles nulls
+                && this.targetIndex.equals(((EmailCommand) other).targetIndex)); // state check
     }
 }

@@ -14,7 +14,7 @@ import seedu.address.logic.commands.person.AddAvatarCommand;
 import seedu.address.model.person.Avatar;
 
 public class AddAvatarCommandParserTest {
-    private AddAvatarCommandParser parser = new AddAvatarCommandParser();
+    private final AddAvatarCommandParser parser = new AddAvatarCommandParser();
     private String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAvatarCommand.MESSAGE_USAGE);
 
     @Test
