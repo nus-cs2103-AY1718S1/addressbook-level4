@@ -211,26 +211,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Filtered Person List Accessors =============================================================
 
-    //@@author dennaloh
-    /**
-     * Iterates through person list and checks for duplicates
-     *
-     */
-    public boolean haveDuplicate (String name, ObservableList<ReadOnlyPerson> list) {
-        int count = 0;
-        Iterator<ReadOnlyPerson> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            ReadOnlyPerson person = iterator.next();
-            if (containsWordIgnoreCase(person.getName().getValue(), name)) {
-                count++;
-            }
-        }
-        if (count > 1) {
-            return true;
-        }
-        return false;
-    }
-
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
      * {@code addressBook}
