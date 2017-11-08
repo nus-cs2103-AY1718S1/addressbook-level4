@@ -26,9 +26,9 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     private List<XmlAdaptedPerson> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
-//@@author KhorSL
+    //@@author KhorSL
     private final Logger logger = LogsCenter.getLogger(this.getClass());
-//@@author
+    //@@author
     /**
      * Creates an empty XmlSerializableAddressBook.
      * This empty constructor is required for marshalling.
@@ -46,7 +46,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
     }
-//@@author KhorSL
+    //@@author KhorSL
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
         final List<ReadOnlyPerson> persons = new ArrayList<>();
@@ -59,7 +59,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         }
         return FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(persons));
     }
-//@@author
+    //@@author
     @Override
     public ObservableList<Tag> getTagList() {
         final ObservableList<Tag> tags = this.tags.stream().map(t -> {
