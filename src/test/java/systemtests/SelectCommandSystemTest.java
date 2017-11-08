@@ -74,7 +74,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
         /* Case: invalid arguments (invalid panel choice) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + validIndex.getZeroBased() +" abc",
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + validIndex.getZeroBased() + " abc",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
         /* Case: extra arguments -> cleared */
