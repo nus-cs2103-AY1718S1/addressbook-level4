@@ -4,6 +4,24 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.common.collect.ImmutableSet;
+
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.NewCommand;
+import seedu.address.logic.commands.OpenCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
+
 /**
  * Contains Command Line Interface (CLI) syntax definitions common to multiple commands
  */
@@ -85,4 +103,23 @@ public class CliSyntax {
                     SORT_ARGUMENT_EMAIL_ASCENDING,
                     SORT_ARGUMENT_ADDRESS_ASCENDING,
                     SORT_ARGUMENT_REMARK_ASCENDING));
+
+    /* Command abbreviations set */
+    public static final Set<String> POSSIBLE_COMMAND_WORDS = ImmutableSet.<String>builder()
+        .addAll(AddCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(ClearCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(DeleteCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(EditCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(ExitCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(FindCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(HelpCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(HistoryCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(ListCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(NewCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(OpenCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(RedoCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(RemarkCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(SelectCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(UndoCommand.COMMAND_WORD_ABBREVIATIONS)
+        .build();
 }

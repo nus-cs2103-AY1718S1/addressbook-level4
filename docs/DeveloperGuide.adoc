@@ -764,26 +764,39 @@ public void handleKeyPress() {
 }
 ----
 The `mainNode` refers to the node containing the all UI components in the application,
-and `addEventFilter` captures key events received by that node.
+and `addEventFilter` captures key events received by that node. The application will continue to listen
+to key presses done by the user once this method is called.
 
-NOTE: Another common method used for capturing key events is `keyOnPressed`.
+NOTE: Another common method used for capturing key events is `onKeyPressed`.
 In this case, `addEventFilter` is used instead as key events captured by the former will be consumed by the `TextField` used in the application.
 `addEventFilter` captures the key events before they are consumed by the `TextField`.
 
-When the user presses a key combination which matches one that is assigned to the `KeyCombination` attribute in the `KeyListenerUtil` class, the corresponding action will be executed.
+When the user presses a key combination which matches one that is assigned, a corresponding action will be executed.
 An example of such an execution is given as shown:
 
 [source, java]
 ----
 private void executeKeyEvents(KeyEvent keyEvent) {
-	if (FOCUS_PERSON_LIST.match(keyEvent)) {
+	if (KEY_COMBINATION_FOCUS_PERSON_LIST.match(keyEvent)) {
 		// action to focus on person list
 	}
 	// … more cases
 }
 ----
-Where the key combination `FOCUS_PERSON_LIST` matches the `keyEvent` captured by the event filter.
+Where the application focuses on the person list when the user presses a key combination that is assigned to `KEY_COMBINATION_FOCUS_PERSON_LIST`.
 
+The mapping of `KEY_COMBINATION_FOCUS_PERSON_LIST` to a key combination can be found in the `KeyListenerUtil` class.
+
+[source, java]
+----
+public class KeyListenerUtil {
+
+    public static final KeyCombination KEY_COMBINATION_FOCUS_PERSON_LIST = KeyCombination.valueOf("Esc");
+    // … more mappings
+}
+----
+In this case, `KEY_COMBINATION_FOCUS_PERSON_LIST` is mapped to the kbd:[esc] key. As such, a user
+pressing the kbd:[esc] key will result in the application focusing on the person list.
 
 ==== Design Considerations
 
@@ -804,6 +817,57 @@ Where the key combination `FOCUS_PERSON_LIST` matches the `keyEvent` captured by
 **Cons:**  An extra step for user to execute the command, i.e. pressing `Enter`.
 
 // end::shortcut[]
+
+=== Person Detail Panel
+
+// tag::detailPanelBehavior[]
+
+The person detail panel displays the complete information of a person that is selected.
+
+image::detailPanel.png[width="600"]
+
+// end::detailPanelBehavior[]
+
+// tag::detailPanelImp[]
+
+The behavior of the panel is mostly event-driven, where the information displayed on the panel
+changes depending on various user actions, such as a person selection, editing of a person, addition of a person, etc.
+
+For example, the sequence diagram below shows the sequence of events to update the panel display when the user edits a person
+(the logic aspect of updating the person detail is omitted for brevity).
+
+image::DetailPanelSequenceDiagram.png[width="800"]
+
+The information displayed on the panel is extracted from the `ReadOnlyPerson` that is returned by the `EventsCenter`.
+The details of the implementation can be seen from the following code snippet.
+[source, java]
+----
+/**
+* Shows the details of the person on the panel
+*/
+private void showPersonDetails(ReadOnlyPerson person) {
+    setAvatar(person);
+    setTextFields(person);
+    setTags(person);
+}
+----
+
+The behavior of the panel is summarized in the table below.
+
+[width=60%, cols="2,3"]
+|===
+| User Action | Panel Behavior
+
+| Select a person | Display selected person
+| Edit a person | Display newly edited person
+| Add a person | Display newly added person
+| Clear the list | Display empty panel
+| Call undo | Display empty panel
+| Call redo | Behavior as per command that is redone
+| Other commands | No change in display
+|===
+
+// end::detailPanelImp[]
 
 // tag::helpWindowHighlight[]
 === Help Window Highlighting
@@ -945,6 +1009,13 @@ private void clearHighlights(WebEngine engine) {
 .highlight{background-color:yellow}
 ----
 // end::helpWindowHighlight[]
+
+// tag::suggestion[]
+== Suggestions Mechanism
+// The suggestion mechanism is implemented at Rolodex's parser level under the logic component.
+// TODO: v1.5
+This feature is a work in progress for v1.5.
+// end::suggestion[]
 
 === Logging
 

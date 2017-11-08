@@ -37,6 +37,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.exceptions.SuggestibleParseException;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -206,7 +207,15 @@ public class CommandBox extends UiPart<Region> {
             // handle command failure
             setStyleToIndicateCommandFailure();
             setErrorKeyboardIcon();
-            logger.info("Invalid command: " + commandTextField.getText());
+            logger.info("Invalid command, un-suggestible: " + commandTextField.getText());
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        } catch (SuggestibleParseException e) {
+            initHistory();
+            // handle command failure
+            commandTextField.setText("");
+            setStyleToIndicateCommandFailure();
+            setErrorKeyboardIcon();
+            logger.info("Invalid command, suggestible: " + commandTextField.getText());
             raise(new NewResultAvailableEvent(e.getMessage()));
         }
     }

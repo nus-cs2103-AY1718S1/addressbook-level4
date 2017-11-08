@@ -2,6 +2,7 @@ package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_PROMPT_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
@@ -67,26 +68,26 @@ public class SelectCommandSystemTest extends RolodexSystemTest {
         assertCommandSuccess(command, validIndex);
 
         /* Case: invalid index (0) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + 0,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        command = SelectCommand.COMMAND_WORD + " " + 0;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
-        /* Case: invalid index (-1) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " " + -1,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        /* Case: invalid index (-1) -> rejected, suggestible. */
+        command = SelectCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " -1";
+        assertCommandFailure(command, "", String.format(MESSAGE_PROMPT_COMMAND, command.replace("-1", "1")));
 
         /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " abc",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        command = SelectCommand.COMMAND_WORD + " abc";
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
-        /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " 1 abc",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        /* Case: invalid arguments (extra argument) -> rejected, suggestible. */
+        command = SelectCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " 1 abc";
+        assertCommandFailure(command, "", String.format(MESSAGE_PROMPT_COMMAND, command.replace(" abc", "")));
 
         /* Case: select from empty rolodex -> rejected */
         executeCommand(ClearCommand.COMMAND_WORD);
         assert getModel().getRolodex().getPersonList().size() == 0;
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(),
-                MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        command = SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased();
+        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     /**
@@ -130,10 +131,24 @@ public class SelectCommandSystemTest extends RolodexSystemTest {
      * @see RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
+        assertCommandFailure(command, command, expectedResultMessage);
+    }
+
+    /**
+     * Executes {@code command} and verifies that the command box displays {@code expectedCommandBox},
+     * the result display box displays {@code expectedResultMessage} and the model related components
+     * equal to the current model.
+     * These verifications are done by
+     * {@code RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
+     * error style.
+     * @see RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedCommandBox, String expectedResultMessage) {
         Model expectedModel = getModel();
 
         executeCommand(command);
-        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertApplicationDisplaysExpected(expectedCommandBox, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();

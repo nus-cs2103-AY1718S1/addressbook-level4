@@ -281,6 +281,10 @@ public class MessagesTest {
     private ListCommand listCommandAddressDefault;
     private ListCommand listCommandAddressDescending;
     private ListCommand listCommandAddressAscending;
+    private ListCommand listCommandRemarkDefault;
+    private ListCommand listCommandRemarkDescending;
+    private ListCommand listCommandRemarkAscending;
+
 
     @Before
     public void setUp() {
@@ -317,6 +321,13 @@ public class MessagesTest {
         listCommandAddressDescending.setData(model, new CommandHistory(), new UndoRedoStack());
         listCommandAddressAscending = new ListCommand(Arrays.asList(SORT_ARGUMENT_ADDRESS_ASCENDING));
         listCommandAddressAscending.setData(model, new CommandHistory(), new UndoRedoStack());
+
+        listCommandRemarkDefault = new ListCommand(Arrays.asList(SORT_ARGUMENT_REMARK_DEFAULT));
+        listCommandRemarkDefault.setData(model, new CommandHistory(), new UndoRedoStack());
+        listCommandRemarkDescending = new ListCommand(Arrays.asList(SORT_ARGUMENT_REMARK_DESCENDING));
+        listCommandRemarkDescending.setData(model, new CommandHistory(), new UndoRedoStack());
+        listCommandRemarkAscending = new ListCommand(Arrays.asList(SORT_ARGUMENT_REMARK_ASCENDING));
+        listCommandRemarkAscending.setData(model, new CommandHistory(), new UndoRedoStack());
     }
 ```
 ###### \java\seedu\address\logic\commands\ListCommandTest.java
@@ -403,14 +414,17 @@ public class CliSyntaxTest {
         assert isValidSortArgument(new SortArgument(PREFIX_PHONE.toString()));
         assert isValidSortArgument(new SortArgument(PREFIX_EMAIL.toString()));
         assert isValidSortArgument(new SortArgument(PREFIX_ADDRESS.toString()));
+        assert isValidSortArgument(new SortArgument(PREFIX_REMARK.toString()));
         assert isValidSortArgument(new SortArgument(PREFIX_NAME.concat(POSTFIX_ASCENDING)));
         assert isValidSortArgument(new SortArgument(PREFIX_PHONE.concat(POSTFIX_ASCENDING)));
         assert isValidSortArgument(new SortArgument(PREFIX_EMAIL.concat(POSTFIX_ASCENDING)));
         assert isValidSortArgument(new SortArgument(PREFIX_ADDRESS.concat(POSTFIX_ASCENDING)));
+        assert isValidSortArgument(new SortArgument(PREFIX_REMARK.concat(POSTFIX_ASCENDING)));
         assert isValidSortArgument(new SortArgument(PREFIX_NAME.concat(POSTFIX_DESCENDING)));
         assert isValidSortArgument(new SortArgument(PREFIX_PHONE.concat(POSTFIX_DESCENDING)));
         assert isValidSortArgument(new SortArgument(PREFIX_EMAIL.concat(POSTFIX_DESCENDING)));
         assert isValidSortArgument(new SortArgument(PREFIX_ADDRESS.concat(POSTFIX_DESCENDING)));
+        assert isValidSortArgument(new SortArgument(PREFIX_REMARK.concat(POSTFIX_DESCENDING)));
 
         assertFalse(isValidSortArgument(new SortArgument("\n")));
         assertFalse(isValidSortArgument(new SortArgument("abcd")));
@@ -442,6 +456,7 @@ public class CliSyntaxTest {
             RedoCommand.COMMAND_WORD_ABBREVIATIONS,
             SelectCommand.COMMAND_WORD_ABBREVIATIONS,
             UndoCommand.COMMAND_WORD_ABBREVIATIONS,
+            Suggestion.COMMAND_WORD_ABBREVIATIONS,
             StarWarsCommand.COMMAND_WORD_ABBREVIATIONS
     ));
 ```
@@ -475,9 +490,7 @@ public class CliSyntaxTest {
         assertParseFailure(parser, " " + SORT_ARGUMENT_NAME_DESCENDING,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
-```
-###### \java\seedu\address\logic\parser\FindCommandParserTest.java
-``` java
+
     @Test
     public void parseValidArgsReturnsFindCommand() {
         // no leading and trailing whitespaces
@@ -489,6 +502,24 @@ public class CliSyntaxTest {
 
         // multiple whitespaces between keywords
         assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
+    }
+
+    @Test
+    public void parseArgumentsNullStringThrowsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        FindCommandParser.parseArguments(null);
+    }
+
+    @Test
+    public void parseArgumentsEmptyStringReturnsNull() {
+        assertEquals(null, FindCommandParser.parseArguments(""));
+        assertEquals(null, FindCommandParser.parseArguments("         "));
+    }
+
+    @Test
+    public void parseArgumentsValidArgsReturnsSpaceAppendedArgs() {
+        assertEquals(" some args", FindCommandParser.parseArguments("some args"));
+        assertEquals(" some args", FindCommandParser.parseArguments("    some args"));
     }
 ```
 ###### \java\seedu\address\logic\parser\NewCommandParserTest.java
@@ -594,6 +625,401 @@ public class OpenCommandParserTest {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\ParserUtilTest.java
+``` java
+    // ========================================= IntelliParser tests =========================================
+
+    @Test
+    public void tryParseFirstIntAssertFalse() {
+        assertFalse(tryParseInt("one two three")); // characters
+        assertFalse(tryParseInt("~!@# $%^&*()_+")); // symbols
+        assertFalse(tryParseInt("0")); // zero
+        assertFalse(tryParseInt("00")); // zero
+        assertFalse(tryParseInt("2147483649")); // large numbers
+    }
+
+    @Test
+    public void tryParseFirstIntAssertTrue() {
+        assertTrue(tryParseInt("abc 1")); // word then number
+        assertTrue(tryParseInt("del1")); // word then number, without spacing
+        assertTrue(tryParseInt("add n/ 8 to Rolodex")); // characters then number, then characters
+        assertTrue(tryParseInt("-1, acba")); // negative numbers
+    }
+
+    @Test
+    public void parseFirstIntReturnsNonZeroPositiveInteger() throws Exception {
+        assertEquals(parseFirstInt("abc 1"), 1); ; // word then number
+        assertEquals(parseFirstInt("del1"), 1); // word then number, without spacing
+        assertEquals(parseFirstInt("add n/ 8 to Rolodex"), 8); // characters then number, then characters
+        assertEquals(parseFirstInt("-1, acba"), 1); // negative numbers
+        assertEquals(parseFirstInt("-7"), 7); // negative numbers
+    }
+
+    @Test
+    public void parseFirstIntCharactersOnlyThrowsNumberFormatException() {
+        thrown.expect(NumberFormatException.class);
+        parseFirstInt("one two three");
+    }
+
+    @Test
+    public void parseFirstIntSymbolsOnlyThrowsNumberFormatException() {
+        thrown.expect(NumberFormatException.class);
+        parseFirstInt("~!@# $%^&*()_+");
+    }
+
+    @Test
+    public void parseFirstIntZeroThrowsNumberFormatException() {
+        thrown.expect(NumberFormatException.class);
+        parseFirstInt("0");
+    }
+
+    @Test
+    public void parseFirstIntLargeNumbersThrowsNumberFormatException() {
+        thrown.expect(NumberFormatException.class);
+        parseFirstInt("2147483649");
+    }
+
+    @Test
+    public void parseRemoveFirstIntRemovesFirstInt() {
+        assertEquals("delete second2", parseRemoveFirstInt("delete1second2"));
+        assertEquals("de", parseRemoveFirstInt("de2"));
+        assertEquals("2 3 4 5 6 7", parseRemoveFirstInt("1 2 3 4 5 6 7"));
+        assertEquals("", parseRemoveFirstInt("1234567"));
+        assertEquals("nothing here", parseRemoveFirstInt("nothing here"));
+    }
+
+    @Test
+    public void tryParseFirstFilePathAssertFalse() {
+        assertFalse(tryParseFilePath("one two three")); // characters
+        assertFalse(tryParseFilePath("~!@# $%^&*()_+")); // symbols
+        assertFalse(tryParseFilePath("2147483649")); // numbers
+        assertFalse(tryParseFilePath("////")); // empty directory
+        assertFalse(tryParseFilePath("C:/")); // empty directory, with absolute prefix
+        assertFalse(tryParseFilePath("C:////")); // empty directory, with absolute prefix
+        assertFalse(tryParseFilePath("var////")); // empty directory, with relative prefix
+        assertFalse(tryParseFilePath("var\\\\\\\\")); // empty directory, backslashes
+    }
+
+    @Test
+    public void tryParseFirstFilePathAssertTrue() {
+        assertTrue(tryParseFilePath("data/default.rldx"));
+        assertTrue(tryParseFilePath("Prefix data/default"));
+        assertTrue(tryParseFilePath("C:/Users/Downloads/my.rldx postfix"));
+        assertTrue(tryParseFilePath("Some prefix C:/abc.rldx"));
+        assertTrue(tryParseFilePath("pref  214/748/36/49 postfix"));
+        assertTrue(tryParseFilePath("data////r"));
+        assertTrue(tryParseFilePath("C:////g postfix"));
+        assertTrue(tryParseFilePath("prefix var////f"));
+        assertTrue(tryParseFilePath("prefix var\\a\\b\\c\\"));
+    }
+
+    @Test
+    public void parseFirstFilePathReturnsFilePathWithExtension() throws IllegalArgumentException {
+        String[] input = {
+            " data/default.rldx",
+            "Prefix data/default",
+            "C:/Users/Downloads/my.rldx rolodex",
+            "Some prefix C:/abc.rldx",
+            "pref  214/748/36/49 postfix",
+            "data////r",
+            "C:////g",
+            "C:////g/",
+            "var////f",
+            "var\\a\\b\\c\\"
+        };
+        String[] expected = {
+            "data/default.rldx",
+            "Prefix data/default.rldx",
+            "C:/Users/Downloads/my rolodex.rldx",
+            "Some prefix C:/abc.rldx",
+            "pref  214/748/36/49 postfix.rldx",
+            "data////r.rldx",
+            "C:////g.rldx",
+            "C:////g.rldx",
+            "var////f.rldx",
+            "var/a/b/c.rldx"
+        };
+        for (int i = 0; i < input.length; i++) {
+            assertEquals(expected[i], parseFirstFilePath(input[i]));
+            String possibleFilepath = parseFirstFilePath(input[i]);
+            assertTrue(isValidRolodexStorageFilepath(possibleFilepath));
+            assertTrue(isValidRolodexStorageExtension(possibleFilepath));
+        }
+    }
+
+    @Test
+    public void parseFirstFilePathCharactersOnlyThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstFilePath("one two three");
+    }
+
+    @Test
+    public void parseFirstFilePathSymbolsOnlyThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstFilePath("~!@# $%^&*()_+");
+    }
+
+    @Test
+    public void parseFirstFilePathNumbersOnlyThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstFilePath("2147483649");
+    }
+
+    @Test
+    public void parseFirstFilePathEmptyDirectoryThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstFilePath("////");
+    }
+
+    @Test
+    public void parseFirstFilePathEmptyDirectoryWithAbsolutePrefixThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstFilePath("C:/");
+    }
+
+    @Test
+    public void parseFirstFilePathEmptyDirectoryWithAbsolutePrefixLongThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstFilePath("C:////");
+    }
+
+    @Test
+    public void parseFirstFilePathEmptyDirectoryWithRelativePrefixThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstFilePath("var////");
+    }
+
+    @Test
+    public void parseFirstFilePathEmptyDirectoryWithRelativePrefixBackslashesThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstFilePath("var\\\\\\\\");
+    }
+
+    @Test
+    public void tryParseFirstPhoneAssertFalse() {
+        assertFalse(tryParsePhone("aloha")); // characters only
+        assertFalse(tryParsePhone("+(&%*$^&*")); // symbols only
+        assertFalse(tryParsePhone("123")); // short numbers
+        assertFalse(tryParsePhone("+123")); // short numbers, with +
+        assertFalse(tryParsePhone("add me p/+onetwo"));
+        assertFalse(tryParsePhone("fasdfe+624"));
+        assertFalse(tryParsePhone("015431asd")); // exactly 6 numbers
+        assertFalse(tryParsePhone("+015431words")); // exactly 6 numbers, with +
+        assertFalse(tryParsePhone("asda 0154361")); // starts with 0
+        assertFalse(tryParsePhone("3rfsdf +0154361")); // starts with 0, with +
+    }
+
+    @Test
+    public void tryParseFirstPhoneAssertTrue() {
+        assertTrue(tryParsePhone("prefix9154361postfix")); // exactly 7 numbers
+        assertTrue(tryParsePhone("prefix 93121534"));
+        assertTrue(tryParsePhone("prefix 124293842033123postfix")); // long phone numbers
+        assertTrue(tryParsePhone("prefix +9154361asd")); // exactly 7 numbers, with +
+        assertTrue(tryParsePhone("prefix+93121534postfix")); // with +
+        assertTrue(tryParsePhone(" prefix+124293842033123asd")); // long phone numbers, with +
+        assertTrue(tryParsePhone(" 123+124293842033123asd")); // short numbers then long phone numbers, with +
+    }
+
+    @Test
+    public void parseFirstPhoneReturnsPhone() throws IllegalValueException {
+        String[] input = {
+            "prefix9154361postfix",
+            "123+124293842033123asd",
+            "prefix9154361postfix",
+            "prefix 93121534",
+            "prefix 124293842033123postfix",
+            "prefix +9154361asd",
+            "prefix+93121534postfix",
+            " prefix+124293842033123asd",
+            "firstPhone: +123456789 secondPhone: +987654321"
+        };
+        String[] expected = {
+            "9154361",
+            "+124293842033123",
+            "9154361",
+            "93121534",
+            "124293842033123",
+            "+9154361",
+            "+93121534",
+            "+124293842033123",
+            "+123456789"
+        };
+        for (int i = 0; i < input.length; i++) {
+            assertEquals(expected[i], parseFirstPhone(input[i]));
+            Optional possiblePhone = parsePhone(Optional.of(parseFirstPhone(input[i])));
+            assertTrue(possiblePhone.isPresent() && possiblePhone.get() instanceof Phone);
+        }
+    }
+
+    @Test
+    public void parseFirstPhoneCharactersOnlyThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstPhone("aloha");
+    }
+
+    @Test
+    public void parseFirstPhoneSymbolsOnlyThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstPhone("+(&%*$^&*");
+    }
+
+    @Test
+    public void parseFirstPhoneShortNumbersThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstPhone("123");
+    }
+
+    @Test
+    public void parseFirstPhoneShortNumbersWithPlusThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstPhone("+123");
+    }
+
+    @Test
+    public void parseFirstPhoneSixNumbersThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstPhone("015431asd");
+    }
+
+    @Test
+    public void parseFirstPhoneSixNumbersWithPlusThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstPhone("+015431words");
+    }
+
+    @Test
+    public void parseFirstPhoneStartsWithZeroThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstPhone("asda 0154361");
+    }
+
+    @Test
+    public void parseFirstPhoneStartsWithZeroWithPlusThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstPhone("3rfsdf +0154361");
+    }
+
+    @Test
+    public void parseRemoveFirstPhoneRemovesFirstPhone() {
+        assertEquals("delete second+20154361", parseRemoveFirstPhone("delete +90154361second+20154361"));
+        assertEquals("de", parseRemoveFirstPhone("de10154361"));
+        assertEquals("35015431 3 35015431 5 7", parseRemoveFirstPhone("35015431 35015431 3 35015431 5 7"));
+        assertEquals("", parseRemoveFirstPhone("1234567"));
+        assertEquals("", parseRemoveFirstPhone("+1234567"));
+        assertEquals("nothing here", parseRemoveFirstPhone("nothing here"));
+    }
+
+    @Test
+    public void tryParseFirstEmailAssertFalse() {
+        assertFalse(tryParseEmail("aloha")); // characters only
+        assertFalse(tryParseEmail("+(&%*$^&*")); // symbols only
+        assertFalse(tryParseEmail("123")); // numbers
+        assertFalse(tryParseEmail("prefix/abc+@gm.com")); // invalid characters before @
+        assertFalse(tryParseEmail("add me e/abc+@gmab.com")); // invalid characters
+        assertFalse(tryParseEmail("@email")); // missing local part
+        assertFalse(tryParseEmail("peterjackexample.com")); // missing '@' symbol
+        assertFalse(tryParseEmail("peterjack@")); // missing domain name
+    }
+
+    @Test
+    public void tryParseFirstEmailAssertTrue() {
+        assertTrue(tryParseEmail("e/PeterJack_1190@example.com/postfix"));
+        assertTrue(tryParseEmail("addemail/a@b/postfix")); // minimal
+        assertTrue(tryParseEmail("test@localhost/postfix")); // alphabets only
+        assertTrue(tryParseEmail("123@145/postfix")); // numeric local part and domain name
+        assertTrue(tryParseEmail("e/a1@example1.com")); // mixture of alphanumeric and dot characters
+        assertTrue(tryParseEmail("_user_@_e_x_a_m_p_l_e_.com_")); // underscores
+        assertTrue(tryParseEmail("add peter_jack@very_very_very_long_example.com something")); // long domain name
+        assertTrue(tryParseEmail("email if.you.dream.it_you.can.do.it@example.com")); // long local part
+    }
+
+    @Test
+    public void parseFirstEmailReturnsEmail() throws IllegalValueException {
+        String[] input = {
+            "e/PeterJack_1190@example.com/postfix",
+            "addemail/a@b/postfix",
+            "test@localhost/postfix",
+            "123@145/postfix",
+            "e/a1@example1.com",
+            "_user_@_e_x_a_m_p_l_e_.com_",
+            "add peter_jack@very_very_very_long_example.com something",
+            "email if.you.dream.it_you.can.do.it@example.com"
+        };
+        String[] expected = {
+            "PeterJack_1190@example.com",
+            "a@b",
+            "test@localhost",
+            "123@145",
+            "a1@example1.com",
+            "_user_@_e_x_a_m_p_l_e_.com_",
+            "peter_jack@very_very_very_long_example.com",
+            "if.you.dream.it_you.can.do.it@example.com"
+        };
+        for (int i = 0; i < input.length; i++) {
+            assertEquals(expected[i], parseFirstEmail(input[i]));
+            Optional possibleEmail = parseEmail(Optional.of(parseFirstEmail(input[i])));
+            assertTrue(possibleEmail.isPresent() && possibleEmail.get() instanceof Email);
+        }
+    }
+
+    @Test
+    public void parseFirstEmailCharactersOnlyThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstEmail("aloha");
+    }
+
+    @Test
+    public void parseFirstEmailSymbolsOnlyThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstEmail("+(&%*$^&*");
+    }
+
+    @Test
+    public void parseFirstEmailNumbersThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstEmail("123");
+    }
+
+    @Test
+    public void parseFirstEmailInvalidCharactersBeforeAtThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstEmail("prefix/abc+@gm.com");
+    }
+
+    @Test
+    public void parseFirstEmailInvalidCharactersThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstEmail("add me e/abc+@gmab.com");
+    }
+
+    @Test
+    public void parseFirstEmailMissingLocalThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstEmail("@email");
+    }
+
+    @Test
+    public void parseFirstEmailMissingAtThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstEmail("peterjackexample.com");
+    }
+
+    @Test
+    public void parseFirstEmailMissingDomainThrowsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        parseFirstEmail("peterjack@");
+    }
+
+    @Test
+    public void parseRemoveFirstEmailRemovesFirstEmail() {
+        assertEquals("delete second def@ghi", parseRemoveFirstEmail("delete abc@def.com second def@ghi"));
+        assertEquals("de", parseRemoveFirstEmail("de abcdef@g"));
+        assertEquals("", parseRemoveFirstEmail("ab@de"));
+        assertEquals("Not_an_email+@abn.de", parseRemoveFirstEmail("Not_an_email+@abn.de"));
+        assertEquals("", parseRemoveFirstEmail("a@abn.de"));
+        assertEquals("nothing here", parseRemoveFirstEmail("nothing here"));
+    }
+```
 ###### \java\seedu\address\logic\parser\PostfixTest.java
 ``` java
 public class PostfixTest {
@@ -626,6 +1052,26 @@ public class PostfixTest {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\RemarkCommandParserTest.java
+``` java
+    @Test
+    public void parseArgumentsNoIndexFailueThrowsParseException() throws Exception {
+        assertTrue(null == RemarkCommandParser.parseArguments("rmk", "no index here!"));
+        assertTrue(null == RemarkCommandParser.parseArguments("remark", "none here either!"));
+    }
+
+    @Test
+    public void parseArgumentsIndexInArgumentsReturnsArguments() throws Exception {
+        assertEquals(" 1 r/someStringV4lue", RemarkCommandParser.parseArguments("rmk", "1someStringV4lue"));
+        assertEquals(" 8 r/someStringV4lue", RemarkCommandParser.parseArguments("rmk", "8someStringV4lue"));
+    }
+
+    @Test
+    public void parseArgumentsIndexInCommandWordReturnsArguments() throws Exception {
+        assertEquals(" 1 r/", RemarkCommandParser.parseArguments("rmk1", ""));
+        assertEquals(" 7 r/", RemarkCommandParser.parseArguments("rmk7", ""));
+    }
+```
 ###### \java\seedu\address\logic\parser\RolodexParserTest.java
 ``` java
     @Test
@@ -639,6 +1085,14 @@ public class PostfixTest {
 ```
 ###### \java\seedu\address\logic\parser\RolodexParserTest.java
 ``` java
+    @Test
+    public void parseCommandRemark() throws Exception {
+        final Remark remark = new Remark("Some remark.");
+        RemarkCommand command = (RemarkCommand) parser.parseCommand(RemarkCommand.COMMAND_WORD + " "
+            + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + remark.value);
+        assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remark), command);
+    }
+
     @Test
     public void parseCommandExit() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
@@ -800,6 +1254,7 @@ public class PersonCompareTest {
                             person.phoneProperty(),
                             person.emailProperty(),
                             person.addressProperty(),
+                            person.remarkProperty(),
                             person.tagProperty()));
         }
     }
@@ -824,6 +1279,30 @@ public class PersonCompareTest {
         return personPairList;
     }
 }
+```
+###### \java\seedu\address\model\person\PhoneTest.java
+``` java
+    @Test
+    public void isValidPhone() {
+        // invalid phone numbers
+        assertFalse(Phone.isValidPhone("")); // empty string
+        assertFalse(Phone.isValidPhone(" ")); // spaces only
+        assertFalse(Phone.isValidPhone("91")); // less than 7 numbers
+        assertFalse(Phone.isValidPhone("phone")); // non-numeric
+        assertFalse(Phone.isValidPhone("9011p041")); // alphabets within digits
+        assertFalse(Phone.isValidPhone("9312 1534")); // spaces within digits
+        assertFalse(Phone.isValidPhone("0154361")); // starts with 0
+        assertFalse(Phone.isValidPhone("+91")); // less than 7 numbers, with +
+        assertFalse(Phone.isValidPhone("+0154361")); // starts with 0, with +
+
+        // valid phone numbers
+        assertTrue(Phone.isValidPhone("9154361")); // exactly 7 numbers
+        assertTrue(Phone.isValidPhone("93121534"));
+        assertTrue(Phone.isValidPhone("124293842033123")); // long phone numbers
+        assertTrue(Phone.isValidPhone("+9154361")); // exactly 7 numbers, with +
+        assertTrue(Phone.isValidPhone("+93121534")); // with +
+        assertTrue(Phone.isValidPhone("+124293842033123")); // long phone numbers, with +
+    }
 ```
 ###### \java\seedu\address\model\UserPrefsTest.java
 ``` java
@@ -1095,6 +1574,44 @@ public class StarWarsTest {
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
     }
 ```
+###### \java\systemtests\DeleteCommandSystemTest.java
+``` java
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays {@code command}.<br>
+     * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
+     * 3. Asserts that the model related components equal to the current model.<br>
+     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
+     * 5. Asserts that the command box has the error style.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        assertCommandFailure(command, command, expectedResultMessage);
+    }
+
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays {@code expectedCommandBox}.<br>
+     * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
+     * 3. Asserts that the model related components equal to the current model.<br>
+     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
+     * 5. Asserts that the command box has the error style.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedCommandBox, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected(expectedCommandBox, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+```
 ###### \java\systemtests\FindCommandSystemTest.java
 ``` java
     @Test
@@ -1200,6 +1717,11 @@ public class StarWarsTest {
 
         /* Case: find email of person in rolodex -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find remark of person in rolodex -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " " + GEORGE.getRemark().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -1333,6 +1855,7 @@ public class NewCommandSystemTest extends RolodexSystemTest {
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedStorage);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarDirectoryChanged(filePath);
+        assertUndoRedoStackCleared();
     }
 
     /**
@@ -1460,6 +1983,7 @@ public class OpenCommandSystemTest extends RolodexSystemTest {
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedStorage);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarDirectoryChanged(filePath);
+        assertUndoRedoStackCleared();
     }
 
     /**
@@ -1521,5 +2045,40 @@ public class OpenCommandSystemTest extends RolodexSystemTest {
      */
     protected UserPrefs getUserPrefs() {
         return testApp.getUserPrefs();
+    }
+```
+###### \java\systemtests\SelectCommandSystemTest.java
+``` java
+    /**
+     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
+     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
+     * These verifications are done by
+     * {@code RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
+     * error style.
+     * @see RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        assertCommandFailure(command, command, expectedResultMessage);
+    }
+
+    /**
+     * Executes {@code command} and verifies that the command box displays {@code expectedCommandBox},
+     * the result display box displays {@code expectedResultMessage} and the model related components
+     * equal to the current model.
+     * These verifications are done by
+     * {@code RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
+     * error style.
+     * @see RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedCommandBox, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected(expectedCommandBox, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
     }
 ```
