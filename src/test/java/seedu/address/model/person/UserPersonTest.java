@@ -17,12 +17,12 @@ import seedu.address.model.UserPrefs;
 //@@author bladerail
 public class UserPersonTest {
 
-    private Model model;
+
     private UserPerson userPerson;
 
     @Test
     public void modifyUserPerson_returnsCorrectUserPerson() {
-        model = new ModelManager(new AddressBook(), new UserPrefs(), new UserPerson());
+        Model model = new ModelManager(new AddressBook(), new UserPrefs(), new UserPerson());
         userPerson = model.getUserPerson();
         model.updateUserPerson(JAMES);
 
