@@ -404,7 +404,8 @@ public class SortCommandParser implements Parser<SortCommand> {
     }
 
     @Override
-    public void removeTagFromPerson(Tag tag, ReadOnlyPerson person) throws DuplicatePersonException, PersonNotFoundException {
+    public void removeTagFromPerson(Tag tag, ReadOnlyPerson person) throws DuplicatePersonException,
+            PersonNotFoundException {
         Person newPerson = new Person(person);
         Set<Tag> tagList = newPerson.getTags();
         tagList = new HashSet<>(tagList);

@@ -154,6 +154,30 @@ public class SortCommandTest {
         assertCommandSuccess(expectedCommand, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
+    @Test
+    public void equals() {
+        Comparator namesort = ReadOnlyPerson.NAMESORTASC;
+        Comparator phonesort = ReadOnlyPerson.PHONESORTASC;
+
+        SortCommand sortFirstCommand = new SortCommand(namesort);
+        SortCommand sortSecondCommand = new SortCommand(phonesort);
+
+        // same object -> returns true
+        assertTrue(sortFirstCommand.equals(sortFirstCommand));
+
+        // null -> returns false
+        assertFalse(sortFirstCommand.equals(null));
+
+        // different types -> returns false
+        assertFalse(sortFirstCommand.equals(new ClearCommand()));
+
+        // different types -> return false
+        assertFalse(sortFirstCommand.equals(true));
+
+        // different comparator -> returns false
+        assertFalse(sortFirstCommand.equals(sortSecondCommand));
+    }
+
     /**
      * Generates a new {@code ExportCommand} which upon execution, exports the contacts in {@code model}.
      */

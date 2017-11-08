@@ -211,6 +211,31 @@ public class RemarkCommandTest {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\FindTagCommandParserTest.java
+``` java
+public class FindTagCommandParserTest {
+
+    private FindTagCommandParser parser = new FindTagCommandParser();
+
+    @Test
+    public void parse_emptyArg_throwsParseException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                FindTagCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validArgs_returnsFindTagCommand() {
+        FindTagCommand expectedFindTagCommand = new FindTagCommand(
+                new TagsContainKeywordsPredicate(Arrays.asList("colleagues", "friends")));
+        assertParseSuccess(parser, "colleagues friends", expectedFindTagCommand);
+
+        // multiple whitespaces between keywords
+        assertParseSuccess(parser, " \n colleagues \n \t friends  \t", expectedFindTagCommand);
+    }
+
+
+}
+```
 ###### \java\seedu\address\logic\parser\RemarkCommandParserTest.java
 ``` java
 public class RemarkCommandParserTest {
