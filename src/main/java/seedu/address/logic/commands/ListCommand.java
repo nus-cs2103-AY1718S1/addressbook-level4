@@ -5,8 +5,6 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
 
-import java.util.ArrayList;
-
 /**
  * Lists all persons in the address book to the user.
  */
@@ -14,7 +12,8 @@ public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
 
-    public static final String MESSAGE_SUCCESS = "Listed all persons";
+    public static final String MESSAGE_SUCCESS_FULLLIST  = "Listed all persons";
+    public static final String MESSAGE_SUCCESS_FILTEREDLIST  = "Listed all persons with tag: ";
 
     public static final String MESSAGE_NOENTRIESFOUND = "No person with given tags found.";
 
@@ -40,11 +39,11 @@ public class ListCommand extends Command {
             model.updateFilteredPersonList(predicate);
         } else {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            return new CommandResult(MESSAGE_SUCCESS);
+            return new CommandResult(MESSAGE_SUCCESS_FULLLIST );
         }
 
         if (areEntriesWithTagsFound()) {
-            return new CommandResult(MESSAGE_SUCCESS);
+            return new CommandResult(MESSAGE_SUCCESS_FILTEREDLIST + this.predicate.returnListOfTagsAsString());
         } else {
             return new CommandResult(MESSAGE_NOENTRIESFOUND);
         }
