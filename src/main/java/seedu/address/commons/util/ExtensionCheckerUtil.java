@@ -8,7 +8,7 @@ public class ExtensionCheckerUtil {
     /**
      * @param ext cannot be null
      * @param requiredExt cannot be null
-     * @return true if the ext is matches with any of the extensions in the requiredExt String array 
+     * @return true if the ext is matches with any of the extensions in the requiredExt String array.
      */
     public static boolean isOfType(String ext, String[] requiredExt) {
         for(String i : requiredExt) {
@@ -23,4 +23,5 @@ public class ExtensionCheckerUtil {
         String ext = fileName.substring(fileName.lastIndexOf(".") + 1);
         return ext;
     }
+    
 }
