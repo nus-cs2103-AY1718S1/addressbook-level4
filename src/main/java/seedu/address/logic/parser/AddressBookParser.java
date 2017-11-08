@@ -262,6 +262,9 @@ public class AddressBookParser {
             return new EnablePersonCommand();
 
         case MarkTaskCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
             if (!isPersonEnabled && isTaskEnabled) {
                 return new MarkTaskCommandParser().parse(checkedArguments);
             } else {
@@ -269,6 +272,9 @@ public class AddressBookParser {
             }
 
         case UnmarkTaskCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
             if (!isPersonEnabled && isTaskEnabled) {
                 return new UnmarkTaskCommandParser().parse(checkedArguments);
             } else {
