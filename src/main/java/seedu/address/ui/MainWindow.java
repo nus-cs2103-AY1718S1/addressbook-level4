@@ -306,7 +306,7 @@ public class MainWindow extends UiPart<Region> {
         detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
 
     }
-  
+
     //@@author chernghann
     @Subscribe
     private void handlePopulateEvent(PopulateRequestEvent request) {
@@ -314,6 +314,5 @@ public class MainWindow extends UiPart<Region> {
         // calendar.populateNewCalendar(request.event);
         calendar.populateUpdatedCalendar(request.eventList, YearMonth.now());
     }
-    //@@author
 
 }
