@@ -102,6 +102,7 @@ public class ParserUtil {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
+    //@@author Pujitha97
     /**
      * Parses a {@code Optional<String> dob} into an {@code Optional<Date of Birth>} if {@code dob} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -118,6 +119,7 @@ public class ParserUtil {
         requireNonNull(gender);
         return gender.isPresent() ? Optional.of(new Gender(gender.get())) : Optional.empty();
     }
+    //@@author
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */

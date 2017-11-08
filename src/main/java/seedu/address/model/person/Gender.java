@@ -1,5 +1,6 @@
-package seedu.address.model.person;
 //@@author Pujitha97
+package seedu.address.model.person;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GENDER;
 
@@ -25,15 +26,18 @@ public class Gender {
      * The first character of the gender must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String GENDER_VALIDATION_REGEX = "(?i)\\b(female|f|male|m|other|o)\\b";
+    private static final String GENDER_VALIDATION_REGEX = "(?i)\\b(female|f|male|m|other|o|"
+            + "notspecified|not_specified|not specified)\\b";
 
     public final GenderType value;
+    private boolean IsGenderSet;
 
     /**
      * Initialise a Gender object with value of empty String. This can ONLY be used in the default field of
      * {@code AddPersonOptionalFieldDescriptor}
      */
     public Gender() {
+        this.IsGenderSet = false;
         this.value = GenderType.NOT_SPECIFIED;
     }
 
@@ -66,6 +70,7 @@ public class Gender {
         default:
             this.value = GenderType.NOT_SPECIFIED;
         }
+        this.IsGenderSet = true;
     }
 
     /**
@@ -77,7 +82,7 @@ public class Gender {
 
     @Override
     public String toString() {
-        return value.toString();
+        return IsGenderSet ? value.toString() : "";
     }
 
     @Override
