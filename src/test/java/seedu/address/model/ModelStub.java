@@ -30,11 +30,6 @@ public class ModelStub implements Model {
 
     //@@author kennard123661
     @Override
-    public void updateSubLists() {
-        fail("This method should not be called");
-    }
-
-    @Override
     public void setActiveList(boolean isCompleted) {
         fail("This method should not be called.");
     }
