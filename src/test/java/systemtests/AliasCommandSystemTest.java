@@ -5,6 +5,7 @@ import static seedu.address.logic.commands.CommandTestUtil.ALIAS_KEYWORD_DESC_MO
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_REPRESENTATION_DESC_MONDAY;
 import static seedu.address.testutil.TypicalAliasTokens.MON;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.commands.RedoCommand;
@@ -16,6 +17,11 @@ import seedu.address.model.alias.exceptions.DuplicateTokenKeywordException;
 
 //@@author deep4k
 public class AliasCommandSystemTest extends AddressBookSystemTest {
+
+    @Before
+    public void setParentMode() {
+        executeParentCommand();
+    }
 
     @Test
     public void alias() throws Exception {

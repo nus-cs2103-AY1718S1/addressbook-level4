@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_PARENT_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.testutil.AliasTokenBuilder.DEFAULT_KEYWORD;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -59,7 +59,8 @@ public class AddressBookParserTest {
     private final AddressBookParser parser = new AddressBookParser();
 
     @Before
-    public void setUp() {
+
+    public void setParentMode() {
         parser.enableParentToggle();
     }
 
@@ -68,12 +69,6 @@ public class AddressBookParserTest {
         Person person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddCommand(person), command);
-    }
-
-    @Test
-    public void parseCommandParentMode() throws Exception {
-        assertTrue(parser.parseCommand(ParentModeCommand.COMMAND_WORD) instanceof ParentModeCommand);
-        assertTrue(parser.parseCommand(ParentModeCommand.COMMAND_WORD + " 3") instanceof ParentModeCommand);
     }
 
     @Test
@@ -101,6 +96,12 @@ public class AddressBookParserTest {
         PinCommand command = (PinCommand) parser.parseCommand(
                 PinCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new PinCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommandParentMode() throws Exception {
+        assertTrue(parser.parseCommand(ParentModeCommand.COMMAND_WORD) instanceof ParentModeCommand);
+        assertTrue(parser.parseCommand(ParentModeCommand.COMMAND_WORD + " 3") instanceof ParentModeCommand);
     }
 
     @Test
@@ -170,7 +171,7 @@ public class AddressBookParserTest {
             parser.parseCommand("histories");
             fail("The expected ParseException was not thrown.");
         } catch (ParseException pe) {
-            assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
+            assertEquals(MESSAGE_UNKNOWN_PARENT_COMMAND, pe.getMessage());
         }
     }
 
@@ -223,7 +224,7 @@ public class AddressBookParserTest {
     @Test
     public void parseCommandUnknownCommandThrowsParseException() throws Exception {
         thrown.expect(ParseException.class);
-        thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
+        thrown.expectMessage(MESSAGE_UNKNOWN_PARENT_COMMAND);
         parser.parseCommand("unknownCommand");
     }
 }

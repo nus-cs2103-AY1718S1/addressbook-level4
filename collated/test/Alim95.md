@@ -17,9 +17,7 @@ public class HelpOverlayTest extends AddressBookGuiTest {
 
         getSortMenu().click();
         getMainMenu().openHelpOverlayUsingAccelerator();
-        assertHelpOverlayOpen();
-        getCommandBox().click();
-        getMainMenu().closeHelpOverlayUsingAccelerator();
+        assertHelpOverlayNotOpen();
 
         getSearchField().click();
         getMainMenu().openHelpOverlayUsingAccelerator();
@@ -565,21 +563,6 @@ public class UnpinCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\ui\ResultDisplayTest.java
-``` java
-    @Test
-    public void resultDisplayHighlight() {
-        resultDisplay.highlight();
-        assertEquals(resultDisplayHandle.getStyle(), "-fx-border-color: lightgreen; -fx-border-width: 2");
-    }
-
-    @Test
-    public void resultDisplayUnhighlight() {
-        resultDisplay.unhighlight();
-        assertEquals(resultDisplayHandle.getStyle(), "");
-    }
-}
-```
 ###### \java\seedu\address\ui\SortFindPanelTest.java
 ``` java
     @Test
@@ -610,6 +593,11 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, PinCommand.MESSAGE_USAGE);
     private static final String MESSAGE_INVALID_UNPIN_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, UnpinCommand.MESSAGE_USAGE);
+
+    @Before
+    public void setParentMode() {
+        executeParentCommand();
+    }
 
     @Test
     public void pinUnpin() {
@@ -714,8 +702,8 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
         assertUnpinCommandFailure(UnpinCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_UNPIN_COMMAND_FORMAT);
 
         /* Case: mixed case command word -> rejected */
-        assertPinCommandFailure("PiN 1", MESSAGE_UNKNOWN_COMMAND);
-        assertPinCommandFailure("uNPiN 1", MESSAGE_UNKNOWN_COMMAND);
+        assertPinCommandFailure("PiN 1", MESSAGE_UNKNOWN_PARENT_COMMAND);
+        assertPinCommandFailure("uNPiN 1", MESSAGE_UNKNOWN_PARENT_COMMAND);
     }
 
     /**

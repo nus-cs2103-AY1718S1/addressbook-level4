@@ -51,7 +51,8 @@ public class ModelToggleEvent extends BaseEvent {
      */
     public enum Toggle {
         personEnabled,
-        taskEnabled
+        taskEnabled,
+        parentEnabled
     }
 
     private final Toggle toggle;
@@ -854,6 +855,7 @@ public class UnmarkTaskCommand extends UndoableCommand {
 ```
 ###### \java\seedu\address\logic\LogicManager.java
 ``` java
+
     /**
      * Registers all commands with parsers into addressBookParser
      */
@@ -929,6 +931,11 @@ public class UnmarkTaskCommand extends UndoableCommand {
                     addressBookParser.enableTaskToggle(),
                     "Successfully toggled to Task Commands in main parser",
                     "Failed to toggle to Task Commands in main parser");
+        } else if (event.getToggle().equals(ModelToggleEvent.Toggle.parentEnabled)) {
+            logModelToggelForParser(
+                    addressBookParser.enableParentToggle(),
+                    "Successfully toggled to Parent Commands in main parser",
+                    "Failed to toggle to Parent Commands in main parser");
         }
     }
 
@@ -1015,12 +1022,14 @@ public class AddressBookParser {
     private final ObservableList<ReadOnlyAliasToken> aliasList = FXCollections.observableArrayList();
     private boolean isPersonEnabled;
     private boolean isTaskEnabled;
+    private boolean isParentEnabled;
 
     public AddressBookParser() {
         this.commandMap = new HashMap<String, Parser<? extends Command>>();
         this.aliasMap = new HashMap<String, ReadOnlyAliasToken>();
         this.isPersonEnabled = true;
         this.isTaskEnabled = false;
+        this.isParentEnabled = false;
     }
 
     /**
@@ -1053,6 +1062,9 @@ public class AddressBookParser {
             }
 
         case EditCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new EditCommandParser().parse(checkedArguments);
             } else {
@@ -1067,6 +1079,9 @@ public class AddressBookParser {
             }
 
         case DeleteCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new DeleteCommandParser().parse(checkedArguments);
             } else {
@@ -1074,9 +1089,16 @@ public class AddressBookParser {
             }
 
         case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            } else {
+                return new ClearCommand();
+            }
 
         case PinCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new PinCommandParser().parse(arguments);
             } else {
@@ -1091,6 +1113,9 @@ public class AddressBookParser {
             }
 
         case UnpinCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new UnpinCommandParser().parse(arguments);
             } else {
@@ -1098,6 +1123,9 @@ public class AddressBookParser {
             }
 
         case HideCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new HideCommandParser().parse(checkedArguments);
             } else {
@@ -1151,13 +1179,22 @@ public class AddressBookParser {
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();
 
+        case ParentModeCommand.COMMAND_WORD:
+            return new ParentModeCommand();
+
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
 
         case AliasCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
             return new AliasCommandParser().parse(checkedArguments);
 
         case UnaliasCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
             return new UnaliasCommandParser().parse(checkedArguments);
 
         case EnableTaskCommand.COMMAND_WORD:
@@ -1167,6 +1204,9 @@ public class AddressBookParser {
             return new EnablePersonCommand();
 
         case MarkTaskCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
             if (!isPersonEnabled && isTaskEnabled) {
                 return new MarkTaskCommandParser().parse(checkedArguments);
             } else {
@@ -1174,6 +1214,9 @@ public class AddressBookParser {
             }
 
         case UnmarkTaskCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
             if (!isPersonEnabled && isTaskEnabled) {
                 return new UnmarkTaskCommandParser().parse(checkedArguments);
             } else {
@@ -1181,6 +1224,9 @@ public class AddressBookParser {
             }
 
         case RenameTaskCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
             if (!isPersonEnabled && isTaskEnabled) {
                 return new RenameTaskCommandParser().parse(checkedArguments);
             } else {
@@ -1188,6 +1234,9 @@ public class AddressBookParser {
             }
 
         case RescheduleTaskCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
             if (!isPersonEnabled && isTaskEnabled) {
                 return new RescheduleTaskCommandParser().parse(checkedArguments);
             } else {
@@ -1195,7 +1244,10 @@ public class AddressBookParser {
             }
 
         default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
+            throw new ParseException(MESSAGE_UNKNOWN_PARENT_COMMAND);
         }
     }
 
@@ -1319,6 +1371,7 @@ public class AddressBookParser {
         commandMap.put("listpin", null);
         commandMap.put("redo", null);
         commandMap.put("undo", null);
+        commandMap.put("parent", null);
     }
 
     public boolean isCommandRegistered(String header) {
@@ -1355,6 +1408,15 @@ public class AddressBookParser {
         return true;
     }
 
+    /**
+     * Enables the parent command to be used by main parser
+     *
+     * @return true for confirmation of enableParentToggle
+     */
+    public boolean enableParentToggle() {
+        isParentEnabled = true;
+        return true;
+    }
 
 }
 ```
@@ -1719,6 +1781,7 @@ public class DeleteTaskCommandParser implements Parser<DeleteTaskCommand> {
 ```
 ###### \java\seedu\address\logic\parser\task\FindTaskCommandParser.java
 ``` java
+
 /**
  * Parses input arguments and creates a new FindTaskCommand object
  */
@@ -1747,7 +1810,6 @@ public class FindTaskCommandParser implements Parser<FindTaskCommand> {
         return FindTaskCommand.COMMAND_WORD;
     }
 }
-
 ```
 ###### \java\seedu\address\logic\parser\task\MarkTaskCommandParser.java
 ``` java

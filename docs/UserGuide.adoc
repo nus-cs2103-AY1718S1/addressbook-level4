@@ -82,10 +82,9 @@ image::introUiUG.png[width="790"]
 . The different sections of the UI are as follows:
 .. Command Box - This is where you type your commands
 .. Result Display - The outcome of your commands will display here
+.. Person & Task list - Your list of contacts and tasks will be shown here
 .. Sort menu - You can use this menu to sort the list
 .. Search Box - You can search for your contacts and tasks here
-.. Person and task list - Your list of contacts and tasks will be shown here
-.. Browser Panel - This is where the browser will appear
 
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -153,7 +152,8 @@ Format: `list`
 // tag::sort[]
 === Sorts the list : `sort`
 
-Sorts the contact person list in Bluebird based on the keyword input by the user. +
+Want to sort your contact list based on name, phone, email or address?
+Use the `sort` command! +
 Format: `sort` `KEYWORD`
 
 Examples:
@@ -196,9 +196,9 @@ Adds a phone number `90189056` and tag `friend` to previously empty fields for p
 // end::edit[]
 
 // tag::find[]
-=== Locate persons by the person's details: `find`
+=== Search for contact: `find`
 
-Finds persons whose details contain any of the given keywords input by the user. +
+Trying to find one of your contacts? You can do so easily with the `find` command! +
 Format: `find` `KEYWORD` `[MORE_KEYWORDS]` `...`
 
 Examples:
@@ -216,7 +216,7 @@ Returns any person whose phone starts with `98291`
 * The search is case insensitive. e.g `hans` will match `Hans`.
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * The person's name, phone, email, address and tags will be searched.
-* Partial starting words for name, phone, email and tags will be matched e.g. `Ha` will match `Hans` `an` will NOT
+* Partial starting words for name, phone, email and tags will be matched e.g. `Ha` will match `Hans`, `an` will NOT
   match `Hans`
 * Address will be searched if the address contains any of the keywords. `eyla` will match `Geylang`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`,
@@ -267,6 +267,17 @@ Shows the updated list of hidden contacts.
 ****
 // end::unhide[]
 
+// tag::parentmode[]
+=== Set Bluebird to parent mode : `parent`
+
+Sets Bluebird to parent mode which will enable all commands for you. +
+Format: `parent`
+
+****
+* Want to set a different keyword for parent mode? Check out the alias command below!
+****
+//end::parentmode[]
+
 // tag::alias[]
 === Creates an alias for command or shortcut : `alias`
 
@@ -310,7 +321,7 @@ Removes the alias shortcut 'ph'. Next instances of ph will no longer translate t
 // tag::pinunpin[]
 === Pin a person : `pin`
 
-Pins a person to a pin panel for easy access. +
+Have an important contact that you need for easy access? Use the `pin` command! +
 Format: `pin` `INDEX`
 
 Examples:
@@ -329,7 +340,7 @@ Pins the person at index 1.
 
 === Unpin a person: `unpin`
 
-Unpins a person from the list +
+Pinned the wrong contact or you want to unpin that contact? Use the `unpin` command! +
 Format: `unpin` `INDEX`
 
 Examples

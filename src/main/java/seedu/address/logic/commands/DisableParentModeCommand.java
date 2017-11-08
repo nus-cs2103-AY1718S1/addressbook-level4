@@ -9,7 +9,7 @@ import seedu.address.commons.events.model.ModelToggleEvent;
  */
 public class DisableParentModeCommand extends Command {
 
-    public static final String COMMAND_WORD = "disable.p";
+    public static final String COMMAND_WORD = "child";
 
     public static final String MESSAGE_SUCCESS = "Only child commands are enabled!";
 
