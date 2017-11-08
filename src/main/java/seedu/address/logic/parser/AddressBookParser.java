@@ -6,7 +6,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddScheduleCommand;
 import seedu.address.logic.commands.ChangePasswordCommand;
@@ -31,7 +30,6 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
-
 
 import seedu.address.logic.parser.exceptions.ParseException;
 
