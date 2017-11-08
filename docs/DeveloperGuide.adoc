@@ -443,11 +443,11 @@ At the moment command skeletons are hardcoded and every command can only have on
 
 The parser will proceed to extract only the relevant information from `Model` and match them against the input.
 
-===== **`AutoCompleteTagParser`**
+==== `AutoCompleteTagParser`
 
 `AutoCompleteTagParser` is designed for `findtag` and `removetag` commands, and can parse tags from `Model` without the need for a tag to be present.
 
-===== **`AutoCompleteWordInNameParser`**
+==== `AutoCompleteWordInNameParser`
 
 `AutoCompleteWordInNameParser` is designed for `find` command, and in addition to retrieving every person's name from `Model`, the parser also split every name into keywords and flatten the resultant list.
 
