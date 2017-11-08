@@ -2,7 +2,10 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 //@@author icehawker
@@ -10,14 +13,12 @@ import java.util.Map;
  * Corresponding alias list of each country code and its corresponding .countryName().
  * Guarantees: immutable; is valid as declared in {@link #isValidCode(String)}
  */
-
 public class Country {
 
     public static final String COMMAND_WORD = "codes";
     public static final String DEFAULT_COUNTRY_CODE = "";
     public static final String DEFAULT_COUNTRY = "Country Unavailable";
-    public static final String MESSAGE_COUNTRY_ERROR = "Country not detected";
-    private static String codeList;
+    private static List<String> codeList;
     public final String value;
     public final Map <String, String> countryMap;
 
@@ -27,7 +28,7 @@ public class Country {
     public Country(String countryCode) {
         requireNonNull(countryCode);
         this.countryMap = createMap();
-        this.value = getCountryName(countryCode); // value is a country name
+        this.value = getName(countryCode); // value is a country name
     }
 
     /**
@@ -280,16 +281,28 @@ public class Country {
         countries.put("967", "Yemen");
         countries.put("260", "Zambia");
         countries.put("263", "Zimbabwe");
-        codeList = countries.keySet().toString();
+        codeList = new ArrayList<String>(countries.keySet());
+        Collections.sort(codeList);
         return countries;
     }
 
     public static String getCodeList() {
-        return codeList;
+        int count = 0;
+        String output = "Valid codes:";
+        for (String code:codeList) {
+            if (count < 29) {
+                output += code + ", ";
+            } else {
+                output += code + ", \n";
+            }
+            count += 1; // record iterations until next newline
+            count = count % 30; // repeat to 30
+        }
+        return output;
     }
 
-    public String getCountryName(String code) {
-        return countryMap.getOrDefault(code, MESSAGE_COUNTRY_ERROR);
+    public String getName(String code) {
+        return countryMap.getOrDefault(code, DEFAULT_COUNTRY);
     }
 
     @Override
