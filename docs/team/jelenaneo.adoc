@@ -41,6 +41,8 @@ It also makes sense for the user to be able to log out of the app without closin
 ---
 #Start of Extract [from: Developer Guide]#
 
+include::../DeveloperGuide.adoc[tag=loginLogout]
+
 #End of Extract#
 
 ---
@@ -51,9 +53,8 @@ It also makes sense for the user to be able to log out of the app without closin
 ---
 #Start of Extract [from: User Guide]#
 
-Borrow Command: include::../UserGuide.adoc[tag=borrow]
-
-Payback Command: include::../UserGuide.adoc[tag=payback]
+include::../UserGuide.adoc[tag=borrow]
+include::../UserGuide.adoc[tag=payback]
 
 #End of Extract#
 
