@@ -47,7 +47,9 @@ public class StatusBarFooter extends UiPart<Region> {
     @FXML
     private StatusBar syncStatus;
     @FXML
-    private Label displayClock;
+    private Label displayDate;
+    @FXML
+    private Label displayTime;
     @FXML
     private StatusBar saveLocationStatus;
 
@@ -60,7 +62,7 @@ public class StatusBarFooter extends UiPart<Region> {
         setSaveLocation("./" + saveLocation);
         registerAsAnEventHandler(this);
 
-        startClock(footerClock);
+        startFooterClock(footerClock);
     }
 
     /**
@@ -97,17 +99,30 @@ public class StatusBarFooter extends UiPart<Region> {
     /**
      * Starts running the clock display.
      */
-    private void startClock(ClockDisplay footerClock) {
+    private void startFooterClock(ClockDisplay footerClock) {
         final Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                footerClock.getClock().setCurrentTime();
-                footerClock.setClock(requireNonNull(footerClock.getClock()));
-                Platform.runLater(() -> displayClock.setText(footerClock.toString()));
+                setFooterClockTime(footerClock);
+                setFooterClockDate(footerClock);
             }
         };
         timer.scheduleAtFixedRate(task, 0, 1000);
+    }
+
+    private void setFooterClockTime(ClockDisplay footerClock) {
+        requireNonNull(footerClock.getTime());
+
+        footerClock.getTime().setCurrentTime();
+        Platform.runLater(() -> displayTime.setText(footerClock.getTimeAsText()));
+    }
+
+    private void setFooterClockDate(ClockDisplay footerClock) {
+        requireNonNull(footerClock.getDate());
+
+        footerClock.getDate().setCurrentDate();
+        Platform.runLater(() -> displayDate.setText(footerClock.getDateAsText()));
     }
     //@@author
 

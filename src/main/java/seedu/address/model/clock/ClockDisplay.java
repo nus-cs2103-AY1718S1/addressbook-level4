@@ -2,6 +2,8 @@
 
 package seedu.address.model.clock;
 
+import java.util.Objects;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
@@ -10,39 +12,57 @@ import javafx.beans.property.SimpleObjectProperty;
  */
 public class ClockDisplay {
 
-    private ObjectProperty<RunningClock> clock;
+    private ObjectProperty<RunningTime> time;
+    private ObjectProperty<RunningDate> date;
 
     public ClockDisplay() {
-        this.clock = new SimpleObjectProperty<>(new RunningClock());
+        this.time = new SimpleObjectProperty<>(new RunningTime());
+        this.date = new SimpleObjectProperty<>(new RunningDate());
     }
 
-    public void setClock(RunningClock clock) {
-        this.clock.set(clock);
+    public void setTime(RunningTime time) {
+        this.time.set(time);
     }
 
-    public ObjectProperty<RunningClock> clockProperty() {
-        return clock;
+    public ObjectProperty<RunningTime> timeProperty() {
+        return time;
     }
 
-    public RunningClock getClock() {
-        return clock.get();
+    public RunningTime getTime() {
+        return time.get();
     }
 
-    @Override
-    public String toString() {
-        return clock.get().toString();
+    public void setDate(RunningDate date) {
+        this.date.set(date);
+    }
+
+    public ObjectProperty<RunningDate> dateProperty() {
+        return date;
+    }
+
+    public RunningDate getDate() {
+        return date.get();
+    }
+
+    public String getTimeAsText() {
+        return time.get().toString();
+    }
+
+    public String getDateAsText() {
+        return date.get().toString();
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ClockDisplay // instanceof handles nulls
-                && this.clock.equals(((ClockDisplay) other).clock)); // state check
+                && this.time.equals(((ClockDisplay) other).time) // state checks onwards
+                && this.date.equals(((ClockDisplay) other).date));
     }
 
     @Override
     public int hashCode() {
-        return clock.hashCode();
+        return Objects.hash(time, date);
     }
 
 }

@@ -1,4 +1,4 @@
-﻿= Gentleman's Guide (V1.5) - Developer Guide
+﻿= Gentleman's Guide (V1.5rc) - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -384,7 +384,7 @@ Similiarly, the user can choose to implement the `logoutcommand` which would cal
 **Pros:** Easier to implement. Achieves the basic functions of security +
 **Cons:** Doesnt look as good.
 
-
+// tag::birthday[]
 === Birthday
 
 ==== BirthdayCommand
@@ -407,6 +407,8 @@ The following sequence diagram shows how the birthday operation works:
 image::birthday_sd.png[width="800"]
 _Figure 4.3.1.1b : Interactions in the Birthday Command._
 
+// end::birthday[]
+
 ==== sortAgeCommand
 
 `sortAgeCommand` : Sorts the contact list in terms of their age, from the oldest to youngest. +
@@ -415,6 +417,7 @@ _Figure 4.3.1.1b : Interactions in the Birthday Command._
 
 `sortBirthdayCommand`: Sorts the contact list in from 1st January to 31st December, irregardless of their age. +
 
+// tag::birthdayDesignConsideration[]
 ==== Design Considerations
 
 **Aspect:** Adding Birthday parameter +
@@ -424,6 +427,8 @@ _Figure 4.3.1.1b : Interactions in the Birthday Command._
 **Alternative 2:**  Add birthday parameter during the creation of person object. +
 **Pros:** Faster for users to add in all the parameters. +
 **Cons:** More parameters to add while creating person class and harder to implement. +
+
+// end::birthdayDesignConsideration[]
 
 === Tag & Retrieve mechanism
 

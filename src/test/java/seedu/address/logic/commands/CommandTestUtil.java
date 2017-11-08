@@ -93,9 +93,9 @@ public class CommandTestUtil {
     public static final String DATE_DESC_ASSIGNMENT = " " + PREFIX_DATE + VALID_DATE_ASSIGNMENT;
     public static final String MESSAGE_DESC_PROJECT = " " + PREFIX_MESSAGE + VALID_MESSAGE_PROJECT;
     public static final String MESSAGE_DESC_ASSIGNMENT = " " + PREFIX_MESSAGE + VALID_MESSAGE_ASSIGNMENT;
+
     public static final String TAG_DESC_OFFICE = " " + PREFIX_TAG + VALID_TAG_OFFICE;
     public static final String TAG_DESC_SOFTCOPY = " " + PREFIX_TAG + VALID_TAG_SOFTCOPY;
-
     public static final String INVALID_TASK_DESC = " " + PREFIX_TASK + "Submission&"; // '&' not allowed in tasks
     public static final String INVALID_PRIORITY_DESC = " " + PREFIX_PRIORITY + "low1"; // '1' not allowed in priorities
     public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "0!"; // '!' not allowed in dates

@@ -3,15 +3,76 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: Gentleman's Guide
+Gentleman's Guide is a desktop address book application modified from the Address Book - Level 4 to store person contacts and reminders. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/main/inGall.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/test/inGall.md[Test code]]
 
-=== Enhancement Added
+*Purpose of portfolio*: This portfolio is written to reflect the contributions made by the author to the Gentleman's Guide.
+It shows how all the features implemented by the author work.
 
-=== Enhancement Proposed
+=== Enhancement Added : Birthday Feature, Find commands, Sort commands, listReminder command
+==== External Behaviour
+
+---
+#Start of extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag = birthday]
+
+include::../UserGuide.adoc[tag = find]
+
+include::../UserGuide.adoc[tag = sort]
+
+include::../UserGuide.adoc[tag = listReminder]
+
+#End of extract [from: User Guide]#
+
+---
+
+==== Justification
+For the `birthday` command, tt allows users to store and keep track of their contacts' birthday so that they can
+be reminded of upcoming birthdays. This enhances relations between individuals.
+
+For the different find commands, it allows users to traverse through the lists and find contacts and reminders easily. +
+
+For  `findPhone` and `findEmail` command, it is very handy when the user receives a call or email from an unknown person.
+The user can use the number or email to search through the contact list using these commands to see if it belongs to any
+one of his or her contact. +
+
+Similarly, the user can use `findReminder` and `findPriority` command to search for reminders that he wants at any moment.
+
+For the different sort commands, it offers more ways for users to look at the list. +
+
+For example, `sort` command allows users to view the list in alphabetical order so that users can search for their
+contacts easily. +
+
+The `sortBirthday` command enables users to view the list in the order of birthday,
+allowing them to view upcoming birthday in a glance without searching through the entire list. +
+
+The `sortAge` command allows users to view contacts by the order of their age, offering them a
+new perspective of their contact list. +
+
+On the other hand, `sortPriority` allows users to rearrange the list and view reminders
+that have a high priority at the top.
+
+For the `listReminder` command, it allows users to see all the reminders at a time after they are done searching for specific reminders. +
+For example, a user may search for a specific reminder. It will bring them to the screen with only the reminder. To
+bring them back to the list of all reminders, the `listReminder` command is needed.
+
+==== Implementation
+
+---
+#Start of extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag = birthday]
+
+include::../DeveloperGuide.adoc[tag = birthdayDesignConsideration]
+
+#End of extract [from: Developer Guide]#
+
+---
 
 === Other Contributions
 
-== Project
+* Added different colours to tag (Pull requests  https://github.com/CS2103AUG2017-T09-B1/main/pull/25/commits[#25])
+
