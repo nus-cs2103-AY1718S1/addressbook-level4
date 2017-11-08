@@ -45,10 +45,10 @@ public class CommandTestUtil {
     public static final String VALID_APPOINTMENT_AMY = "Lunch, tomorrow 5pm";
     public static final String VALID_APPOINTMENT_BOB = "Dinner, tomorrow 5pm to 7pm";
 
-    public static final String NON_COMPULSORY_PHONE_AMY = "000";
-    public static final String NON_COMPULSORY_EMAIL_AMY = "null@null.com";
-    public static final String NON_COMPULSORY_ADDRESS_AMY = "???";
-    public static final String NON_COMPULSORY_BLOODTYPE = "xxx";
+    public static final String NON_COMPULSORY_PHONE_AMY = "-";
+    public static final String NON_COMPULSORY_EMAIL_AMY = "-";
+    public static final String NON_COMPULSORY_ADDRESS_AMY = "-";
+    public static final String NON_COMPULSORY_BLOODTYPE = "-";
     public static final String NON_COMPULSORY_REMARK = "";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;

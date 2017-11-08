@@ -9,7 +9,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.model.person.Address.NON_COMPULSORY_ADDRESS;
 import static seedu.address.model.person.Bloodtype.NON_COMPULSORY_BLOODTYPE;
+import static seedu.address.model.person.Email.NON_COMPULSORY_EMAIL;
+import static seedu.address.model.person.Phone.NON_COMPULSORY_PHONE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,11 +59,14 @@ public class AddCommandParser implements Parser<AddCommand> {
 
             //@@author Jeremy
             Phone phone = (!arePrefixesPresent(argMultimap, PREFIX_PHONE))
-                    ? new Phone("000") : ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
+                    ? new Phone(NON_COMPULSORY_PHONE)
+                    : ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
             Email email = (!arePrefixesPresent(argMultimap, PREFIX_EMAIL))
-                    ? new Email("null@null.com") : ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
+                    ? new Email(NON_COMPULSORY_EMAIL)
+                    : ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = (!arePrefixesPresent(argMultimap, PREFIX_ADDRESS))
-                    ? new Address("???") : ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+                    ? new Address(NON_COMPULSORY_ADDRESS)
+                    : ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Bloodtype bloodType = (!arePrefixesPresent(argMultimap, PREFIX_BLOODTYPE))
                     ? new Bloodtype(NON_COMPULSORY_BLOODTYPE)
                     : ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE)).get();
@@ -82,7 +88,6 @@ public class AddCommandParser implements Parser<AddCommand> {
             throw new ParseException(ive.getMessage(), ive);
         }
     }
-
 
 
     /**
