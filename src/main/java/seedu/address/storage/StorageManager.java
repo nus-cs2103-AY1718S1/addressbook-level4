@@ -45,6 +45,10 @@ public class StorageManager extends ComponentManager implements Storage {
     public void saveUserPrefs(UserPrefs userPrefs) throws IOException {
         userPrefsStorage.saveUserPrefs(userPrefs);
     }
+    @Override
+    public String getAddressBookTheme() {
+        return userPrefsStorage.getAddressBookTheme();
+    }
 
 
     // ================ AddressBook methods ==============================

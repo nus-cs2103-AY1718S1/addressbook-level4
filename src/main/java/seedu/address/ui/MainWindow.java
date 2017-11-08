@@ -20,6 +20,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchThemeEvent;
 import seedu.address.commons.events.ui.SwitchToContactsListEvent;
 import seedu.address.commons.events.ui.SwitchToEventsListEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -35,6 +36,10 @@ import seedu.address.ui.person.PersonListPanel;
  * a menu bar and space where other JavaFX elements can be placed.
  */
 public class MainWindow extends UiPart<Region> {
+    private static final String darkTheme = "/css/DarkTheme.css";
+    private static final String brightTheme = "/css/BrightTheme.css";
+    private static final String darkExtension = "/css/Extensions.css";
+    private static final String brightExtension = "/css/ExtensionsBright.css";
     private static final String ICON = "/images/address_book_32.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
@@ -84,6 +89,7 @@ public class MainWindow extends UiPart<Region> {
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
+        initializeThemes();
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -126,7 +132,6 @@ public class MainWindow extends UiPart<Region> {
             }
         });
     }
-
     /**
      * Fills up all the placeholders of this window.
      */
@@ -264,6 +269,46 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author junyango
+
+    /**
+     * Initializes theme upon start up according to preferences.json file (last saved)
+     */
+    private void initializeThemes() {
+        getRoot().getStylesheets().clear();
+        if (prefs.getAddressBookTheme().equals(darkTheme)) {
+            getRoot().getStylesheets().add(darkTheme);
+            getRoot().getStylesheets().add(darkExtension);
+            prefs.setAddressBookTheme(darkTheme);
+        } else {
+            getRoot().getStylesheets().add(brightTheme);
+            getRoot().getStylesheets().add(brightExtension);
+            prefs.setAddressBookTheme(brightTheme);
+        }
+    }
+
+    /**
+     * Handles the event for theme changing
+     * @param event
+     */
+    @Subscribe
+    private void handleThemeChanged(SwitchThemeEvent event) {
+        if (prefs.getAddressBookTheme() == darkTheme) {
+            getRoot().getStylesheets().clear();
+            getRoot().getStylesheets().add(brightTheme);
+            getRoot().getStylesheets().add(brightExtension);
+            prefs.setAddressBookTheme(brightTheme);
+        } else {
+            getRoot().getStylesheets().clear();
+            getRoot().getStylesheets().add(darkTheme);
+            getRoot().getStylesheets().add(darkExtension);
+            prefs.setAddressBookTheme(darkTheme);
+        }
+
+    }
+
+    //@@author
 
     /**
      * Closes the application.

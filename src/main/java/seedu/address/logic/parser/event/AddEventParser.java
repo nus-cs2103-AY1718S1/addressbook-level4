@@ -25,7 +25,7 @@ import seedu.address.model.reminder.Reminder;
 
 //@@author junyango
 /**
- * Parses input arguments and creates a new AddCommand object
+ * Parses input arguments and creates a new AddEventCommand object
  */
 public class AddEventParser implements Parser<AddEventCommand> {
 

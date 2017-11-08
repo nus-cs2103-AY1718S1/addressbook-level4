@@ -1,0 +1,48 @@
+/* @@//author junyango */
+
+.error {
+    /* The error class should always override the default text-fill style */
+    -fx-text-fill: #d06651 !important;
+}
+
+.list-cell:empty {
+    /* Empty cells will not have alternating colours */
+    -fx-background: #f0f0f0;
+}
+
+.tag-selector {
+    -fx-border-width: 1;
+    -fx-border-color: black;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+.tooltip-text {
+    -fx-text-fill: black;
+}
+
+.sidebar-button {
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 3,2,1;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+}
+
+.details-name-huge-label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 40px;
+    -fx-text-fill: #000000;
+}
+
+.details-property-key {
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 25px;
+    -fx-text-fill: black;
+    -fx-text-alignment: left;
+}
+
+.details-property-value {
+    -fx-font-size: 25px;
+    -fx-text-fill: black;
+    -fx-text-alignment: left;
+}

@@ -20,6 +20,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SwitchTheme;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.event.DeleteEventCommand;
 import seedu.address.logic.commands.event.ListEventCommand;
@@ -49,8 +50,7 @@ public class AddressBookParserTest {
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddCommand(person), command);
     }
-    //@@author junyango
-    //@@author
+
     @Test
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
@@ -99,7 +99,13 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
     }
-
+    //@@author junyango
+    @Test
+    public void parseCommand_theme() throws Exception {
+        assertTrue(parser.parseCommand(SwitchTheme.COMMAND_WORD) instanceof SwitchTheme);
+        assertTrue(parser.parseCommand(SwitchTheme.COMMAND_WORD + " 3") instanceof SwitchTheme);
+    }
+    //@@author
     @Test
     public void parseCommand_history() throws Exception {
         assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD) instanceof HistoryCommand);
