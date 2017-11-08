@@ -313,7 +313,7 @@ Format: `(lm)listmeeting`
 Meetings are always sorted according to the closest date
 
 
-
+// tag::editmeeting[]
 === Editing a meeting : `editmeeting`
 
 Edits an existing meeting in the address book. +
@@ -335,6 +335,7 @@ Examples:
 
 * `editmeeting 1 n/John l/Clementi` +
 Edits the name and location of the 1st meeting to be `John` and `Clementi` respectively.
+// end::editmeeting[]
 
 === Locating meetings by name: `findmeeting`
 
@@ -358,6 +359,7 @@ Returns any meeting having names `Study` or `Shopping`
 * `findmeeting Shopping Study John` +
 Returns any meeting having `John` as the person to meet and any meetings having names `Study` and `Shopping`
 
+// tag::findexactmeeting[]
 === Locating meetings with a particular person: `findexactmeeting`
 Finds meetings with people whose names match exactly with the phrase entered.
 Format: `(fem)findexactmeeting PHRASE`
@@ -372,6 +374,7 @@ Example:
 
 * `findexactmeeting John Tan` +
 returns only the meetings with people named `John Tan`
+// end::findexactmeeting[]
 
 === Listing entered commands : `history`
 

@@ -491,6 +491,58 @@ The `KEYWORD` of meeting provides the name, date and location of the meeting whi
 
 If none of the meetings contains the `KEYWORD`, the results would show "No meetings found".
 
+// tag::editmeeting[]
+=== Edit Meeting
+
+The edit meeting command is an undoable command which allows the user to edit the `MeetingName`, `DateTime` or `Place` of
+a created `Meeting` object.
+
+Implementation:
+
+When the `editmeeting` command is called with the appropriate parameters given, an instance of the `Meeting` object is created
+with the corresponding parameters. For example,
+
+[source,java]
+----
+editmeeting 2 n/Lunch l/Jurong East Mall
+----
+
+Creates an object with the following parameters
+[source,java]
+----
+MeetingName:Lunch
+DateTime: null
+Place: Jurong East Mall
+----
+
+This instance of the object `Meeting` is then compared to the preexisting `Meetings` in the addressbook corresponding
+to the index that was given in the command line which for the example above is `Index` 2. The respective parameters
+will then be replaced accordingly with the ones that were instantiated. As shown also, parameters that were not declared
+(in the case of the example, it was DateTime), are defaulted to be null and will not be changed in the actual `Meeting`
+object.
+
+When given invalid inputs, the `editmeeting` command shares some of the  exceptions
+which are also thrown by the `addmeeting` command. They are:
+
+* `DuplicateMeetingException`: Compares the edited Meeting object with the other Meeting objects in the address book
+and this exception is thrown when there is a duplicate object with the same parameters.
+* `MeetingNotFoundException` : Exception is thrown when the index provided to the `editmeeting` command
+is referring to the invalid index of a `Meeting` object in the addressbook
+* `MeetingBeforeCurrDateException` : Exception is thrown when the date of the edited
+Meeting is earlier than that of the current system time, this exception is thrown.
+* `MeetingClashException` : Exception is thrown when the DateTime of the editedmeeting is
+the same as one of the preexisting Meetings in the addressbook.
+
+==== Design Considerations
+
+**Aspect:** how `EditMeetingCommand` executes +
+**Alternative 1 :** Comparing the different parameters individually without the creation
+ of a new instance of a `Meeting` +
+**Pros:** More direct and faster way of editing the different parameters of the `Meeting` object +
+
+---
+// end::editmeeting[]
+
 
 === Edit Meeting
 
