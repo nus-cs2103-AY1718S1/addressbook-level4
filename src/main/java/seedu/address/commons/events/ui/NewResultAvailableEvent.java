@@ -8,13 +8,14 @@ import seedu.address.commons.events.BaseEvent;
 public class NewResultAvailableEvent extends BaseEvent {
 
     public final String message;
+    //@@author derickjw
     public final boolean isInvalid;
 
     public NewResultAvailableEvent(String message, boolean isInvalid) {
         this.message = message;
         this.isInvalid = isInvalid;
     }
-
+    //@@author
     @Override
     public String toString() {
         return this.getClass().getSimpleName();

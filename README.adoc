@@ -1,4 +1,4 @@
-= H.M.U v1.3
+= H.M.U v1.4
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
@@ -7,16 +7,8 @@ https://ci.appveyor.com/project/DericKJW/main[image:https://ci.appveyor.com/api/
 https://coveralls.io/github/CS2103AUG2017-F10-B2/main?branch=master[image:https://coveralls.io/repos/github/CS2103AUG2017-F10-B2/main/badge.svg?branch=master[Coverage Status]]
 https://www.codacy.com/app/CS2103-F10-B2/main?utm_source=github.com&utm_medium=referral&utm_content=CS2103AUG2017-F10-B2/main&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/31b23986578c44bf83cc9fd3c839c143[Codacy Badge]]
 
-ifdef::env-github[]
-image::docs/images/ui.png[width="600"]
-endif::[]
-
 ifndef::env-github[]
-image::docs/images/ui.png[width="600"]
-endif::[]
-
-ifndef::env-github[]
-image::docs/images/LoginScreen.png[width="600"]
+image::docs/images/Ui.png[width="600"]
 endif::[]
 
 * This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
@@ -35,6 +27,12 @@ endif::[]
 ** Scheduling
 ** More User-Friendly Login
 
+* What's different from H.M.U v1.3 (As of 3rd November 2017)
+** Search Contact's Location on Google Maps
+** Create Default Login Account
+** Remove Login Account
+** Visualize Schedule
+** Arrange Schedule
 
 == Site Map
 

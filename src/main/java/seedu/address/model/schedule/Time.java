@@ -2,6 +2,7 @@ package seedu.address.model.schedule;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author YuchenHe98
 /**
  * The object representing the time of the start of a 30-minute-span when a person is busy.
  */
@@ -40,5 +41,29 @@ public class Time {
         return other == this // short circuit if same object
                 || (other instanceof Time) // instanceof handles nulls
                 && (this.time.equals(((Time) other).time)); // state check
+    }
+
+    public static String getTimeToString(Integer time) {
+        String toShow;
+        if (time < 1000) {
+            toShow = "0" + time;
+        } else {
+            toShow = "" + time;
+        }
+        return toShow;
+    }
+
+    /**
+     * Next time integer. This method is only to be used in visualizing and arraging where exceptions are already
+     * thrown so there is no need to check the format.
+     */
+    public static Integer increaseTimeInteger(Integer timeInteger) {
+        if (timeInteger % 100 == 30) {
+            int newTime = timeInteger + 70;
+            return newTime;
+        } else {
+            int newTime = timeInteger + 30;
+            return newTime;
+        }
     }
 }

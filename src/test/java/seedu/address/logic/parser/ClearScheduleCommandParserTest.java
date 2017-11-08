@@ -13,6 +13,7 @@ import seedu.address.logic.commands.ClearScheduleCommand;
 import seedu.address.model.schedule.Day;
 import seedu.address.model.schedule.Time;
 
+//@@author YuchenHe98
 public class ClearScheduleCommandParserTest {
     private ClearScheduleCommandParser parser = new ClearScheduleCommandParser();
 

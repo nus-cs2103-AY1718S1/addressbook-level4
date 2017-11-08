@@ -14,6 +14,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.schedule.Day;
 import seedu.address.model.schedule.Time;
 
+//@@author YuchenHe98
 /**
  *
  * Parses input arguments and creates a new AddScheduleCommand object

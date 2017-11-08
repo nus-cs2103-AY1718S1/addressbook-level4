@@ -104,6 +104,7 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author YuchenHe98
     /**
      * Parses a {@code Optional<String> Day} into an {@code Optional<Day>} if {@code day} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -113,6 +114,7 @@ public class ParserUtil {
         return day.isPresent() ? Optional.of(new Day(day.get())) : Optional.empty();
     }
 
+    //@@author YuchenHe98
     /**
      * Parses a {@code Optional<String> Time} into an {@code Optional<Time>} if {@code time} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
