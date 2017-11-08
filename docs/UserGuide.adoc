@@ -346,13 +346,6 @@ Exports the whole list of persons in addressbook into sample.vcf in root folder.
 Exports the whole list of persons in addressbook into sample.xml in root folder.
 // end::importexport[]
 
-=== Change UI Theme : `theme`
-
-[NOTE]
-Change theme feature available since v1.4.
-
-You can now set the theme of the UI to suit your preference, with `theme` command.
-
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
