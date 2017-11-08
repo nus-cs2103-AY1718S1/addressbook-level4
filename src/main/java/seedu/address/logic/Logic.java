@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.exceptions.SuggestibleParseException;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -17,7 +18,7 @@ public interface Logic {
      * @throws CommandException If an error occurs during command execution.
      * @throws ParseException If an error occurs during parsing.
      */
-    CommandResult execute(String commandText) throws CommandException, ParseException;
+    CommandResult execute(String commandText) throws CommandException, ParseException, SuggestibleParseException;
 
     /** Gets the undo redo stack of the logic instance */
     UndoRedoStack getUndoRedoStack();

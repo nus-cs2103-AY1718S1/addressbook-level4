@@ -19,13 +19,11 @@ endif::[]
 
 // tag::applicationDescription[]
 Rolodex is a desktop contact management application for users who prefer working without a mouse to manage their contacts more efficiently.
-If you are a businessmen with a list of clients to remember, a teacher who wants to organize their student information, or anyone with a need for contact
+If you are a businessman with a list of clients to remember, a teacher who wants to organize their student information, or anyone with a need for contact
 management, Rolodex provides you with a way to organize your important contacts in a fast and productive manner.
 
 The user interacts with the application using a CLI (Command Line Interface), and it has a GUI created with JavaFX.
-It is written in Java, and has about 6 kLoC. +
-
-Rolodex is an extension of AddressBook - Level 4, which is a desktop address book application used for teaching Software Engineering principles.
+It is written in Java, and has about 10 kLoC. +
 // end::applicationDescription[]
 
 

@@ -123,6 +123,30 @@ include::../DeveloperGuide.adoc[leveloffset=2,tag=helpWindowHighlight]
 
 ---
 
+=== Enhancement Added: Suggesting Commands for Typos
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[leveloffset=2,tag=suggestion]
+include::../UserGuide.adoc[leveloffset=2,tag=suggestion]
+
+---
+
+==== Justification
+
+Users may find it too much of a hassle to remember many of the syntaxes required by Rolodex such as `n/`, `r/`, etc.
+Suggesting commands for such occasions would give the user a shallow learning curve and improve user experience significantly.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[leveloffset=2,tag=suggestion]
+
+---
+
 === Enhancement Proposed: Markdown/HTML parser
 
 To replace the content field of the note/remark command with 'rich-text', to be displayed on the browser panel.

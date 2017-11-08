@@ -73,13 +73,13 @@ public class AddCommandSystemTest extends RolodexSystemTest {
         /* Case: undo adding Amy to the list -> Amy deleted */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, model, expectedResultMessage);
+        assertCommandSuccess(command, model, expectedResultMessage, null);
 
         /* Case: redo adding Amy to the list -> Amy added again */
         command = RedoCommand.COMMAND_WORD;
         model.addPerson(toAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, model, expectedResultMessage);
+        assertCommandSuccess(command, model, expectedResultMessage, toAdd);
 
         /* Case: add a duplicate person -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
@@ -219,7 +219,7 @@ public class AddCommandSystemTest extends RolodexSystemTest {
         }
         String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
 
-        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage, toAdd);
     }
 
     /**
@@ -228,12 +228,17 @@ public class AddCommandSystemTest extends RolodexSystemTest {
      * {@code expectedModel}.
      * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
      */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
+                                      ReadOnlyPerson person) {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
+        if (person == null) {
+            assertSelectedCardDeselected();
+        } else {
+            assertSelectedCardChanged(expectedModel.getIndex(person));
+        }
     }
 
     /**
