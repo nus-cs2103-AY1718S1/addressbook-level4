@@ -97,7 +97,7 @@ public class BrowserPanel extends UiPart<Region> {
         } else {
             try {
                 File tmp = new File("images/" + person.getProfPic().getPath());
-                if (tmp.exists()){
+                if (tmp.exists()) {
                     img = new Image(new File("images/" + person.getProfPic().getPath()).toURI().toURL().toString());
                 } else { // Failsafe to set contact's image to default if set image is missing
                     img = new Image("images/maleIcon.png");
