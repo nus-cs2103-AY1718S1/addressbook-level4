@@ -13,6 +13,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CopyCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -24,6 +25,7 @@ import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
 
 //@@author CT15
+
 /**
  * Represents the argument that help command takes in.
  * Guarantees: parameter is present and not null, parameter is validated.
@@ -37,6 +39,7 @@ public class CommandIdentifier {
             + CopyCommand.COMMAND_WORD + ", "
             + DeleteCommand.COMMAND_WORD + ", "
             + EditCommand.COMMAND_WORD + ", "
+            + EmailCommand.COMMAND_WORD + ", "
             + ExitCommand.COMMAND_WORD + ", "
             + FindCommand.COMMAND_WORD + ", "
             + HelpCommand.COMMAND_WORD + ", "
@@ -54,6 +57,7 @@ public class CommandIdentifier {
             CopyCommand.COMMAND_WORD, CopyCommand.COMMAND_ALIAS,
             DeleteCommand.COMMAND_WORD, DeleteCommand.COMMAND_ALIAS,
             EditCommand.COMMAND_WORD, EditCommand.COMMAND_ALIAS,
+            EmailCommand.COMMAND_WORD, EmailCommand.COMMAND_ALIAS,
             ExitCommand.COMMAND_WORD, ExitCommand.COMMAND_ALIAS,
             FindCommand.COMMAND_WORD, FindCommand.COMMAND_ALIAS,
             HelpCommand.COMMAND_WORD, HelpCommand.COMMAND_ALIAS,

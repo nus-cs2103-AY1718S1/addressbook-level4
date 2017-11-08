@@ -74,7 +74,7 @@ public class AddressBookParser {
              //Fallthrough
 
         case EmailCommand.COMMAND_ALIAS:
-            return new EmailCommand();
+            return new EmailCommandParser().parse(arguments);
 
         case LocateCommand.COMMAND_WORD:
             //Fallthrough
