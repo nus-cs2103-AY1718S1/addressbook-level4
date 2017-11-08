@@ -41,7 +41,6 @@ public class PersonContainsKeywordsPredicateTest {
 
     @Test
     public void test_personContainsTags_returnsTrue() throws Exception{
-        Set<Tag> emptyTagSet = new HashSet<Tag>(Arrays.asList());
         Set<Tag> singleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1)));
         Set<Tag> multipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
@@ -60,11 +59,16 @@ public class PersonContainsKeywordsPredicateTest {
 
     @Test
     public void test_personDoesNotContainTags_returnsFalse() throws Exception{
+        Set<Tag> emptyTagSet = new HashSet<Tag>(Arrays.asList());
         Set<Tag> singleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1)));
         Set<Tag> multipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
-        // Non-matching keyword
+        //No match because no tags in person
         PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate(new ArrayList<>(singleTagSet));
+        assertFalse(predicate.test(new PersonBuilder().withTags().build()));
+
+        // Non-matching keyword
+        predicate = new PersonContainsKeywordsPredicate(new ArrayList<>(singleTagSet));
         assertFalse(predicate.test(new PersonBuilder().withTags("criminal").build()));
         assertFalse(predicate.test(new PersonBuilder().withTags("criminal", "classmate").build()));
 
