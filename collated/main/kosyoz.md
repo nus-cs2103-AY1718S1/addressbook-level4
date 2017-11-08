@@ -304,14 +304,10 @@ public class Remark {
      */
     @Subscribe
     public void handleChangeThemeEvent(ChangeThemeEvent event) {
-        if (event.getTheme().equals("DarkTheme"))
-        {
+        if (event.getTheme().equals("DarkTheme")) {
             vbox.getStylesheets().remove("/view/RedTheme.css");
             vbox.getStylesheets().add("/view/" + event.getTheme() + ".css");
-        }
-
-        else
-        {
+        } else {
             vbox.getStylesheets().remove("/view/DarkTheme.css");
             vbox.getStylesheets().add("/view/" + event.getTheme() + ".css");
         }

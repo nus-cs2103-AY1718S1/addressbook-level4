@@ -1,6 +1,10 @@
-package seedu.address.logic.autocomplete;
+package seedu.address.autocomplete;
 
 //@@author john19950730
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 /** Utility class that contains commonly used methods in AutoComplete feature */
 public class AutoCompleteUtils {
 
@@ -49,10 +53,53 @@ public class AutoCompleteUtils {
     }
 
     /**
-     *
+     * Returns the command word in the stub.
+     * @param stub incomplete user input
+     * @return command word of the stub
      */
     public static String getCommandWordInStub(String stub) {
         return stub.split(" ")[0];
+    }
+
+    /**
+     * Returns the section of stub that is not to be modified by autocomplete.
+     * @param stub incomplete user input
+     * @return Section of the stub that will not be modified
+     */
+    public static String getStaticSection(String stub) {
+        String[] splitStub = stub.split(" ");
+        String staticSection = "";
+        for (int index = 0; index < splitStub.length - 1; ++index) {
+            staticSection = staticSection + splitStub[index] + " ";
+        }
+        return staticSection;
+    }
+
+    /**
+     * Returns the section of stub that is to be completed by autocomplete
+     * @param stub incomplete user input
+     * @return Section of the stub that will be modified
+     */
+    public static String getAutoCompleteSection(String stub) {
+        String[] splitStub = stub.split(" ");
+        return splitStub[splitStub.length - 1];
+    }
+
+    /**
+     * Generates list of matches based on list of all possible options,
+     * static section (not to be considered in matching)
+     * and autocomplete section (to be matched with all possible matches)
+     * @param allPossibleMatches list of all possible autocomplete options to match against
+     * @param staticSection section of the stub to be left untouched
+     * @param autoCompleteSection section of the stub to match for autocomplete
+     * @return list of possible matches
+     */
+    public static List<String> generateListOfMatches(List<String> allPossibleMatches,
+                                                     String staticSection, String autoCompleteSection) {
+        return allPossibleMatches.stream()
+                .filter(possibleMatch -> AutoCompleteUtils.startWithSameLetters(autoCompleteSection, possibleMatch))
+                .map(filteredMatch -> staticSection + filteredMatch)
+                .collect(Collectors.toList());
     }
 
 }
