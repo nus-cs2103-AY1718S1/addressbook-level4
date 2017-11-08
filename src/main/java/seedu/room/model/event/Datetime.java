@@ -66,7 +66,7 @@ public class Datetime {
             //Store as a LocalDateTime object
             this.datetime = this.toLocalDateTime(components[0] + " " + starttimeString);
 
-            this.value = datetime;
+            this.value = starttimeString + " to " + endtimeString;
 
         } catch (DateTimeException e) {
             throw new IllegalValueException(DATE_CONSTRAINTS_VIOLATION);
