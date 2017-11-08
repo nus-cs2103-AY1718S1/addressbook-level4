@@ -103,10 +103,12 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::findcommand[]
+
 === Finding a person: `find`
 
 Finds persons whose attributes match the prefix and keywords input. +
-Format: `find [PREFIX][KEYWORD]`
+Format: `find PREFIX/KEYWORD`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -133,6 +135,10 @@ Returns any person having the remarks `Likes coffee`
 * `find b/10-10-1995` +
 Returns any person with birthday on `10-10-1995`
 
+// end::findcommand[]
+
+//tag::deletecommand[]
+
 === Deleting a person : `delete`
 
 Deletes the specified person from PEERSONAL. +
@@ -156,7 +162,9 @@ Deletes the 1st, 3rd and 4th person in PEERSONAL.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+//end::deletecommand[]
 
+// tag::addphoto[]
 === Adding photo : `addphoto` (Since v1.3)
 
 Adds a photo for the specified person in PEERSONAL. +
@@ -168,6 +176,13 @@ Examples:
 Adds a photo `cutedog.png` to the first person of PEERSONAL.
 * `addphoto 1` or `addphoto 1 f/` +
 Removes the current photo from the first person of PEERSONAL.
+
+[NOTE]
+====
+Only images in `.jpg` and `.png` are supported.
+====
+
+// end::addphoto[]
 
 === Selecting a person : `select`
 
@@ -199,7 +214,6 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-// tag::undoredo[]
 === Undoing previous command : `undo`
 
 Restores PEERSONAL to the state before the previous _undoable_ command was executed. +
@@ -207,7 +221,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify PEERSONAL's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `addphoto`, `birthday`, `remark`, `sort` and `clear`).
 ====
 
 Examples:
@@ -261,6 +275,8 @@ Edits the remark for the first person to `Likes to drink coffee.` +
 * `remark 1 r/` +
 Removes the remark for the first person.
 
+// tag::birthday[]
+
 === Adding birthday : `birthday` (Since v1.2)
 
 Edits the birthday for a person specified in the `INDEX`.
@@ -274,15 +290,23 @@ Edits the birthday for the first person to `20-12-2012`. +
 * `birthday 1 b/` or `birthday 1` +
 Removes the birthday for the first person.
 
+// end::birthday[]
+
+// tag::upbirthday[]
 === Upcoming birthdays : `upcomingbirthday` (Since v1.4)
 
 Updates the list to show the upcoming birthdays. +
 Format: `upcomingbirthday`
 
+// end::upbirthday[]
+
+// tag::sortcommand[]
+
 === Sorting all entries : `sort` (Since v1.2)
 
 Sorts all entries in PEERSONAL based on the given prefix in ascending order. +
 Sorts based on `NAME` by default. +
+Contacts without any entries for that prefix will be listed below the contacts that do have them. +
 Format: `sort [PREFIX]` +
 
 Examples:
@@ -300,6 +324,8 @@ Sorts the list based on `ADDRESS`. +
 * `sort o/` +
 Sorts the list based on `AGE`.
 
+// end::sortcommand[]
+
 === Clearing all entries : `clear`
 
 Clears all entries from PEERSONAL. +
@@ -315,20 +341,27 @@ Format: `exit`
 Lists contacts added in the past 24 hours. +
 Format: `listrecent`
 
-=== Importing data from Address Books : `import` (Coming in v2.0)
+// tag::import[]
+=== Import data from Address Books : `import` (Coming in v2.0)
 
-Imports data from external Address Books and merges into PEERSONAL. +
+Imports data from external Address Books and merges into the current Address Book. +
 Format: `import [FILEPATH]`
+// end::import[]
 
+// tag::emailall[]
 === Sending mass emails : `emailall` (Coming in v2.0)
 
 Sending mass emails to contacts with the same tag. +
-Format: `emailall t/[TAG]`
+Format: `emailall t/TAG`
+// end::emailall[]
+
+// tag::calendar[]
 
 === Viewing birthdays in a calendar : `calendar` (Coming in v2.0)
 
 Displays birthdays of contacts according to months in a calendar view. +
 Format: `calendar`
+// end::calendar[]
 
 === Saving the data
 

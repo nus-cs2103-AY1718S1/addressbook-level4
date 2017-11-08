@@ -10,7 +10,6 @@ import seedu.address.logic.commands.AddPhotoCommand;
 
 public class AddPhotoCommandParserTest {
     private AddPhotoCommandParser parser = new AddPhotoCommandParser();
-
     /*@Test
     public void parse_indexSpecified_failure() throws Exception {
         // Has no filepath, picture is default picture

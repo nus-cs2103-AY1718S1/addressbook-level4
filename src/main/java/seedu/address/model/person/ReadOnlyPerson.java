@@ -78,4 +78,5 @@ public interface ReadOnlyPerson {
         return builder.toString();
     }
 
+    int compareAge(ReadOnlyPerson o1);
 }

@@ -1,6 +1,8 @@
 //@@author wishingmaid
 package seedu.address.model.person;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.File;
 
 /**
@@ -15,6 +17,7 @@ public class Photo {
     private String url;
     public Photo(String filepath) throws IllegalArgumentException {
         //this is to setup the default photo for contacts after it is added.
+        requireNonNull(filepath);
         if (filepath.equals(DEFAULT_FILEPATH)) {
             this.filepath = DEFAULT_PHOTOURL;
             this.url = DEFAULT_FILEPATH;
