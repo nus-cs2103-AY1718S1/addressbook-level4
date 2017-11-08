@@ -81,7 +81,7 @@ import seedu.address.model.person.exceptions.NoPersonFoundException;
 ###### \java\seedu\address\logic\commands\AddCommandTest.java
 ``` java
         @Override
-        public void sortPerson(String option) throws NoPersonFoundException {
+        public void sortPerson (String option) throws NoPersonFoundException {
             fail("This method should not be called.");
         }
 ```

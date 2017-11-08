@@ -567,18 +567,28 @@ import seedu.address.model.person.exceptions.NoPersonFoundException;
         switch (option) {
         case PREFIX_SORT_BY_NAME: Collections.sort(internalList, (a, b) ->
                 a.getName().toString().compareToIgnoreCase(b.getName().toString()));
+                Collections.sort(internalList, (a, b) ->
+                    String.valueOf(b.getFavourite()).compareToIgnoreCase(String.valueOf(a.getFavourite())));
         break;
         case PREFIX_SORT_BY_PHONE: Collections.sort(internalList, (a, b) ->
                 a.getPhone().toString().compareToIgnoreCase(b.getPhone().toString()));
+                Collections.sort(internalList, (a, b) ->
+                    String.valueOf(b.getFavourite()).compareToIgnoreCase(String.valueOf(a.getFavourite())));
         break;
         case PREFIX_SORT_BY_EMAIL: Collections.sort(internalList, (a, b) ->
                 a.getEmail().toString().compareToIgnoreCase(b.getEmail().toString()));
+                Collections.sort(internalList, (a, b) ->
+                    String.valueOf(b.getFavourite()).compareToIgnoreCase(String.valueOf(a.getFavourite())));
         break;
         case PREFIX_SORT_BY_ADDRESS: Collections.sort(internalList, (a, b) ->
                 a.getAddress().toString().compareToIgnoreCase(b.getAddress().toString()));
+                Collections.sort(internalList, (a, b) ->
+                    String.valueOf(b.getFavourite()).compareToIgnoreCase(String.valueOf(a.getFavourite())));
         break;
         case PREFIX_SORT_BY_TAG: Collections.sort(internalList, (a, b) ->
                 a.getTags().toString().compareToIgnoreCase(b.getTags().toString()));
+                Collections.sort(internalList, (a, b) ->
+                    String.valueOf(b.getFavourite()).compareToIgnoreCase(String.valueOf(a.getFavourite())));
         break;
         default: break;
         }
@@ -624,7 +634,7 @@ import seedu.address.commons.events.ui.NewResultCheckEvent;
 ```
 ###### \java\seedu\address\ui\PersonCard.java
 ``` java
-    private static final String tagColor = "#5AC0FB";
+    private static final String tagColor = "#dc143c";
 ```
 ###### \java\seedu\address\ui\PersonCard.java
 ``` java
@@ -701,10 +711,6 @@ import seedu.address.commons.events.ui.NewResultCheckEvent;
 ###### \java\seedu\address\ui\UiManager.java
 ``` java
         alert.getDialogPane().getStylesheets().add("view/LightTheme.css");
-```
-###### \resources\view\default.html
-``` html
-    <link rel="stylesheet" href="LightTheme.css">
 ```
 ###### \resources\view\Extensions.css
 ``` css
