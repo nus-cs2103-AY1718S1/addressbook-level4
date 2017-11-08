@@ -634,6 +634,7 @@ public class ListReminderCommand extends Command {
 
     public static final String COMMAND_WORD = "listReminder";
     public static final String COMMAND_ALIAS = "lr";
+
     public static final String MESSAGE_SUCCESS = "Listed all reminders";
 
 
@@ -662,6 +663,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class SortAgeCommand extends Command {
     public static final String COMMAND_WORD = "sortAge";
     public static final String COMMAND_ALIAS = "sa";
+
     public static final String MESSAGE_SUCCESS = "All contacts are sorted by age. (Oldest To Youngest)";
     public static final String MESSAGE_EMPTY_LIST = "Contact list is empty.";
 
@@ -701,6 +703,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class SortBirthdayCommand extends Command {
     public static final String COMMAND_WORD = "sortBirthday";
     public static final String COMMAND_ALIAS = "sb";
+
     public static final String MESSAGE_SUCCESS = "All contacts are sorted by birthday.";
     public static final String MESSAGE_EMPTY_LIST = "Contact list is empty.";
 
@@ -740,6 +743,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
     public static final String COMMAND_ALIAS = "s";
+
     public static final String MESSAGE_SUCCESS = "All contacts are sorted.";
     public static final String MESSAGE_EMPTY_LIST = "Contact list is empty.";
 
@@ -779,6 +783,7 @@ import seedu.address.model.reminder.ReadOnlyReminder;
 public class SortPriorityCommand extends Command {
     public static final String COMMAND_WORD = "sortPriority";
     public static final String COMMAND_ALIAS = "sp";
+
     public static final String MESSAGE_SUCCESS = "All contacts are sorted by priority. (High -> Medium -> Low)";
     public static final String MESSAGE_EMPTY_LIST = "Contact list is empty.";
 

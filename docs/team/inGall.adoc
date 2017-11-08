@@ -3,15 +3,194 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: Gentleman's Guide
+Gentleman's Guide is a desktop address book application modified from the Address Book - Level 4 to store person contacts and reminders. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/main/inGall.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/test/inGall.md[Test code]]
 
-=== Enhancement Added
+*Purpose of portfolio*: This portfolio is written to reflect the contributions made by the author to the Gentleman's Guide.
+It shows how all the features implemented by the author work.
 
-=== Enhancement Proposed
+=== Enhancement Added : Birthday Feature
+==== External Behaviour
+===== Modifying birthday to person: `birthday`
+
+Adds / Edits / Removes a birthday parameter to an existing person in the address book. +
+Format: `birthday INDEX [b/dd/mm/yyyy]`
+
+****
+* Add / Edits / Removes birthday parameter to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* For adding / editing : Format must be of " `dd/mm/yyyy` " including the " `/` "
+* For removing : input nothing after " `b/` "
+****
+
+Examples:
+
+* `birthday 1 b/20/07/1995` +
+Adds / changes birthday of the 1st person to be `20/07/1995`
+* `birthday 3 b/` +
+Removes the birthday of the 3rd person.
+
+==== Justification
+It allows users to store and keep track of their contacts' birthday so that they can be reminded of upcoming birthdays.
+This enhances relations between individuals.
+
+==== Implementation
+=====  Modifying birthday to person: `birthday`
+
+`BirthdayCommand` : It allows the adding, editing and removing of birthday parameter to/from a person. +
+
+
+The `BirthdayCommand` lies in the `commands` of `Logic`. and does not deal with `UndoableCommands`, thus the actions cannot be reversed.  The following diagram shows the inheritance diagram for commands:
+
+image::logic_birthday.png[width="700"]
+_Figure 4.3.1.1a : Structure of Commands in the Logic Component.
+
+The user will not be able to enter the birthday parameter when adding contacts. +
+Suppose that the user has a list of persons. The birthday parameters will be empty if the user has not modified the persons yet.
+The user then adds the birthday through the BirthdayCommand : " `birthday 2 b/20/07/1994` "  where he adds the birthday parameter of the 2nd person in the list. +
+
+After adding the birthday parameters of contacts, the user can choose to sort the contact list according to either their ages or birthdays or leave it as it is. +
+The following sequence diagram shows how the birthday operation works:
+
+image::birthday_sd.png[width="800"]
+_Figure 4.3.1.1b : Interactions in the Birthday Command._
+
+===== Design Considerations
+
+**Aspect:** Adding Birthday parameter +
+**Alternative 1 (current choice):** Add birthday parameter separately after person object is created. +
+**Pros:** Lesser parameters to add while creating person class and easier to implement. +
+**Cons:** Slower for users to add in all the parameters +
+**Alternative 2:**  Add birthday parameter during the creation of person object. +
+**Pros:** Faster for users to add in all the parameters. +
+**Cons:** More parameters to add while creating person class and harder to implement. +
+
+=== Enhancement Added : Different types of Find command
+==== External Behaviour
+===== Locating persons by emails: `findEmail`
+
+Finds persons whose emails is same as the keyword. +
+Format: `findEmail KEYWORD [MORE_KEYWORDS]`
+
+****
+* Only the email is searched.
+* Only full words will be matched e.g. `johnny` will not match `johnny@example.con`
+* Multiple emails can be searched at one time.
+****
+
+Examples:
+
+* `findEmail alex@example.com` +
+Returns person with the email `alex@example.com`
+* `findEmail alex@example.com jamie@example.com` +
+Returns person with emails `alex@example.com` , `jamie@example.com`
+
+==== Locating persons by emails: `findPhone`
+
+Finds persons whose phone is same as the keyword. +
+Format: `findPhone KEYWORD [MORE_KEYWORDS]`
+
+****
+* Only the numbers is searched.
+* Only full words will be matched e.g. `9567` will not match `95678432`
+* Multiple phone numbers can be searched at one time.
+****
+
+Examples:
+
+* `findPhone 86564385` +
+Returns person with the phone number `96564385`
+* `findPhone 87655678 98435670` +
+Returns person with numbers `87655678` , `98435670`
+
+==== Locating reminders by task names: `findReminder`
+
+Finds reminderss whose task names contain any of the given keywords. +
+Format: `findReminder KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `proposals` will match `Proposals`
+* The order of the keywords does not matter. e.g. `Proposal Submission` will match `Submission Proposal`
+* Only the task name is searched.
+* Only full words will be matched e.g. `proposal` will not match `proposals`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Proposal Submission` will return `Proposal Draft`, `Project Submission`
+****
+
+Examples:
+
+* `findReminder Proposal` +
+Returns `Proposal` and `Proposal Submission`
+* `findReminder Meeting Project Work` +
+Returns any reminder having task names `Meeting`, `Proposal Submission`
+
+
+==== Locating reminders by priority: `findPriority`
+
+Finds reminders whose priority is same as the keyword. +
+Format: `findPriority KEYWORD [MORE_KEYWORDS]`
+
+****
+* Only Low / Medium / High is searched.
+* The search is case sensitive. e.g `low` will not match `Low`
+* Only full words will be matched e.g. `Hig` will not match `High`
+* Multiple priorities can be searched at one time.
+****
+
+Examples:
+
+* `findPriority High` +
+Returns reminder with the priority `High`
+* `findPriority Medium Low` +
+Returns reminders with priority `Medium` , `Low`
+
+==== Justification
+It allows users to traverse through the lists and find contacts and reminders easily. +
+For  `findPhone` and `findEmail` command, it is very handy when the user receives a call or email from an unknown person.
+The user can use the number or email to search through the contact list using these commands to see if it belongs to any
+one of his or her contact. +
+
+Similarly, the user can use `findReminder` and `findPriority` command to search for reminders that he wants at any moment.
+
+=== Enhancement Added : Different types of sort command
+==== External Behaviour
+===== Sorting all entries by age : `sortAge`
+
+Sorts all entries in the person list by their age, from the oldest to youngest. +
+Format: `sortAge`
+
+===== Sorting all entries by birthday: `sortBirthday`
+
+Sorts all entries in the person list by their birthday, from 1st Jan to 31st Dec. +
+Format: `sortBirthday`
+
+===== Sorting all entries by priority: `sortPriority`
+
+Sorts all entries in the reminder list by their priority, from High to Medium to Low. +
+Format: `sortPriority`
+
+==== Justification
+It offers more ways for users to look at the list. +
+For example, `sortBirthday` enables users to view the list in the order of birthday,
+allowing them to view upcoming birthday in a glance without searching through the entire list. +
+The `sortAge` command allows users to view contacts by the order of their age, offering them a
+new perspective of their contact list. +
+On the other hand, `sortPriority` allows users to rearrange the list and view reminders
+that have a high priority at the top.
+
+=== Enhancement Added : Different types of sort command
+==== External Behaviour
+==== Listing all reminders : `listReminder`
+
+Shows a list of all persons in the address book. +
+Format: `listReminder`
+
+==== Justification
+It allows users to see all the reminders at a time after they are done searching for specific reminders. +
+For example, a user may search for a specific reminder. It will bring them to the screen with only the reminder. To
+bring them back to the list of all reminders, a `listReminder` command is needed.
 
 === Other Contributions
 
-== Project
+* Added different colours to tag (Pull requests  https://github.com/CS2103AUG2017-T09-B1/main/pull/25/commits[#25])
+

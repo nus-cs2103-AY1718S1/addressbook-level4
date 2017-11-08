@@ -9,6 +9,7 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
@@ -213,6 +214,17 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        logger.info("Loading custom fonts.");
+        Font timeFont = Font.loadFont(MainApp.class.getClassLoader().getResourceAsStream(
+                "fonts/NovaSquare.ttf"), 10);
+        Font dateFont = Font.loadFont(MainApp.class.getClassLoader().getResourceAsStream(
+                "fonts/digital-7 (italic).ttf"), 10);
+        Font profileNameFont = Font.loadFont(MainApp.class.getClassLoader().getResourceAsStream(
+                "fonts/HaloHandletter.otf"), 10);
+        if (dateFont == null || timeFont == null || profileNameFont == null) {
+            logger.warning("Failed to load custom fonts.");
+        }
+
         logger.info("Starting AddressBook " + MainApp.VERSION);
         ui.start(primaryStage);
     }

@@ -32,6 +32,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RetagCommand;
 import seedu.address.logic.commands.RetrieveCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SelectReminderCommand;
 import seedu.address.logic.commands.SortAgeCommand;
 import seedu.address.logic.commands.SortBirthdayCommand;
 import seedu.address.logic.commands.SortCommand;
@@ -40,6 +41,7 @@ import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UntagCommand;
 
+import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -92,7 +94,16 @@ public class AddressBookParser {
             return new LogoutCommand();
 
         case SelectCommand.COMMAND_WORD:
+        case SelectCommand.COMMAND_ALIAS:
             return new SelectCommandParser().parse(arguments);
+
+        case SelectReminderCommand.COMMAND_WORD:
+        case SelectReminderCommand.COMMAND_ALIAS:
+            return new SelectReminderCommandParser().parse(arguments);
+
+        case ViewCommand.COMMAND_WORD:
+        case ViewCommand.COMMAND_ALIAS:
+            return new ViewCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_ALIAS:
