@@ -1,4 +1,4 @@
-package seedu.address.logic.autocomplete;
+package seedu.address.autocomplete;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -13,27 +13,28 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import seedu.address.autocomplete.parser.AutoCompleteByPrefixModelParser;
+import seedu.address.autocomplete.parser.AutoCompleteCommandParser;
+import seedu.address.autocomplete.parser.AutoCompleteParser;
+import seedu.address.autocomplete.parser.AutoCompleteSetStringParser;
+import seedu.address.autocomplete.parser.AutoCompleteTagParser;
+import seedu.address.autocomplete.parser.AutoCompleteWordInNameParser;
+import seedu.address.autocomplete.parser.IdentityParser;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.autocomplete.parser.AutoCompleteByPrefixModelParser;
-import seedu.address.logic.autocomplete.parser.AutoCompleteCommandParser;
-import seedu.address.logic.autocomplete.parser.AutoCompleteParser;
-import seedu.address.logic.autocomplete.parser.AutoCompleteTagParser;
-import seedu.address.logic.autocomplete.parser.AutoCompleteWordInNameParser;
-import seedu.address.logic.autocomplete.parser.IdentityParser;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindTagCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 
 //@@author john19950730
-/**
- * Manages autocomplete logic, as well as optimizations such as memoization.
- */
-public class AutoCompleteManager {
+/** Manages how possibilities are generated and optimizations of how possibilities are stored for later use. */
+public class AutoCompletePossibilitiesManager {
 
     private final Logger logger = LogsCenter.getLogger(AutoCompleteManager.class);
 
@@ -51,10 +52,16 @@ public class AutoCompleteManager {
     private final AutoCompleteWordInNameParser wordInNameParser;
     private final AutoCompleteTagParser tagParser;
     private final AutoCompleteByPrefixModelParser modelParser;
+    private final AutoCompleteSetStringParser sortFieldParser =
+            new AutoCompleteSetStringParser(Arrays.asList(new String[] {"name", "phone", "email"}));
+    private final AutoCompleteSetStringParser sortOrderParser =
+            new AutoCompleteSetStringParser(Arrays.asList(new String[] {"asc", "dsc"}));
+    private final AutoCompleteSetStringParser themeParser =
+            new AutoCompleteSetStringParser(Arrays.asList(new String[] {"DarkTheme", "RedTheme"}));
     private final LinkedList<AutoCompletePossibilities> cache = new LinkedList<AutoCompletePossibilities>();
     private final int maxSize;
 
-    public AutoCompleteManager(Model model, int size) {
+    public AutoCompletePossibilitiesManager(Model model, int size) {
         this.model = model;
         modelParser = new AutoCompleteByPrefixModelParser(model);
         wordInNameParser = new AutoCompleteWordInNameParser(model);
@@ -72,9 +79,12 @@ public class AutoCompleteManager {
     public AutoCompletePossibilities search(String stub) {
         for (AutoCompletePossibilities entryInCache : cache) {
             if (stub.equals(entryInCache.getStub())) {
+                logger.info("Found memoized autocomplete options.");
                 return entryInCache;
             }
         }
+
+        logger.info("No memoized autocomplete options found, parsing new list of autocomplete matches.");
         return insert(new AutoCompletePossibilities(stub, chooseParser(stub)));
     }
 
@@ -103,12 +113,14 @@ public class AutoCompleteManager {
     private AutoCompleteParser chooseParser(String stub) {
         // empty input should parse back empty input as well
         if ("".equals(stub)) {
+            logger.info("Parsing back user input as-is");
             return identity;
         }
 
         int numberOfWordsInStub = stub.split(" ").length;
 
         if (numberOfWordsInStub == 1) {
+            logger.info("Parsing [Commands]");
             return commandParser;
         } else {
 
@@ -117,14 +129,31 @@ public class AutoCompleteManager {
             case AddCommand.COMMAND_WORD:
             case EditCommand.COMMAND_WORD:
             case RemarkCommand.COMMAND_WORD:
+                logger.info("Parsing [Model attributes by Prefix]");
                 return chooseParserFromPrefix(stub);
+            case ChangeThemeCommand.COMMAND_WORD:
+                logger.info("Parsing [Themes]");
+                return themeParser;
             case FindCommand.COMMAND_WORD:
+                logger.info("Parsing [Words in Name in Model]");
                 return wordInNameParser;
             case FindTagCommand.COMMAND_WORD:
-                return tagParser;
             case RemoveTagCommand.COMMAND_WORD:
+                logger.info("Parsing [Tags in Model]");
                 return tagParser;
+            case SortCommand.COMMAND_WORD:
+                if (numberOfWordsInStub == 2) {
+                    logger.info("Parsing [Sort Fields]");
+                    return sortFieldParser;
+                } else if (numberOfWordsInStub == 3) {
+                    logger.info("Parsing [Sort Orders]");
+                    return sortOrderParser;
+                } else {
+                    logger.info("Parsing back user input as-is");
+                    return identity;
+                }
             default:
+                logger.info("Parsing back user input as-is");
                 return identity;
             }
 
@@ -133,9 +162,9 @@ public class AutoCompleteManager {
     }
 
     /**
-     *
-     * @param stub
-     * @return
+     * Sets up and returns the parser based on the prefix closest to the end of input stub
+     * @param stub incomplete user input
+     * @return model parser that has been set to parse based on prefix found in stub
      */
     private AutoCompleteParser chooseParserFromPrefix(String stub) {
         List<Integer> prefixPositions = allPrefixes.stream()
@@ -145,6 +174,7 @@ public class AutoCompleteManager {
 
         // no prefixes are found, do not autocomplete
         if (maxPrefixPosition == -1) {
+            logger.info("No prefix found, parsing back user input as-is");
             return identity;
         }
         Prefix closestPrefix = allPrefixes.get(prefixPositions.indexOf(maxPrefixPosition));
@@ -155,6 +185,7 @@ public class AutoCompleteManager {
             closestPrefix = PREFIX_TAG;
         }
 
+        logger.info("Parsing by Prefix: " + closestPrefix.toString());
         modelParser.setPrefix(closestPrefix);
         return modelParser;
     }
