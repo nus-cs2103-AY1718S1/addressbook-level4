@@ -1,4 +1,4 @@
-//@@author limyongsong
+//@@author Houjisan
 package seedu.address.model.person;
 
 import static org.junit.Assert.assertFalse;
