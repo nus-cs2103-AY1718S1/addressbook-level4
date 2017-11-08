@@ -348,7 +348,8 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // tag::sortcommand[]
 === Sort mechanism
 
-The sort mechanism is facilitated by an `Event`. When a sort command is executed, the sort command will conduct a sort on the current `list` in the address book based on the full name in alphabetical order.
+The sort mechanism is facilitated the `AddressBookParser` where the sort command will be called. +
+When a sort command is executed, the sort command will conduct a sort on the current `list` in the address book based on the full name in alphabetical order.
 
 The following sequence diagram shows how the sort operation works:
 
@@ -356,7 +357,7 @@ image::SortCommandSequenceDiagram.png[width="800"]
 
 The following activity diagram summarize what happens inside the `Sort Command` when a user executes the command:
 
-image::SortCommandActivityDiagram.png[width="800"]
+image::SortCommandActivityDiagram.png[width="400"]
 
 ==== Design Considerations
 
@@ -471,6 +472,27 @@ The current validation allows the user to enter as many digits as he/she wants w
 numbers must be restricted to certain number of digits based on the country. Such validation will be performed in the future +
 version of the tool. The validation for number of digits will be quite extensive since different countries have different +
 number of digits in their phone numbers, which is the reason it is noe done yet.
+
+// tag::photo[]
+=== Photo attribute
+Person class consists of five different attributes: `Name`, `Address`, `Phone`, `Email` and `Birthday`. Photo class has a very similar implementation compared to the other attribute classes. New instance of Photo is initialized by giving the constructor the parameter photo in String format. The parameter is optional and if a file is not in the correct location, a default photo will be loaded on the address book.
+
+*Validation*
+
+The valid form for a birthday string is `template.jpg`, where both file name and file type must be valid. This validation is performed to prohibit the user from inputting something completely peculiar, for example a file name which only consists of numbers and a file type which is not an image.
+
+Examples for a valid photo file name:
+
+* `abc.jpg`
+* `JPG.png`
+* `EddyTan.jpg`
+
+Examples for a invalid photo file name:
+
+* `.jpg`
+* `123.txt`
+* `EddyTan`
+//end::photo[]
 =======
 
 Load command's implementation is similar to other commands: LoadCommand class inherits UndoableCommand and load command's parser implements Parser interface. The following sequence diagram shows the execution of command "load testbook.xml"
