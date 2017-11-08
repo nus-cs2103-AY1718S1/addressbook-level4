@@ -418,9 +418,9 @@ Outcome: prefix `" "` will be mapped to `1 500` in `argMultimap`. Index and amou
 // tag::filterTags[]
 === Filter by tags mechanism
 
-The `filter` command allows the user to filter contacts by tags. Multiple tags can be entered. The command returns a list of contacts that match at least one of the tags that is specified by the user.
+The `filter` command allows the user to filter contacts by tags. Multiple tags can be entered. The command returns a list of contacts that match *at least one* of the tags that is specified by the user.
 
-A `PersonContainsTagPredicate` is created to check if a person contains the tags of interest.
+A `PersonContainsTagPredicate` is created to check if a person contains the tags of interest. The code implementation below shows how the `PersonContainsTagPredicate` is implemented to sieve out the relevant contacts. The `anyMatch` method ensures that the filtered list contains persons who have at least one tag specified by the user.
 [source,java]
 ----
 @Override
