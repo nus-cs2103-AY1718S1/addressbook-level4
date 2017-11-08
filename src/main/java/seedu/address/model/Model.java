@@ -195,7 +195,16 @@ public interface Model {
 
     void updateDebtFromInterest(ReadOnlyPerson person, int differenceInMonths);
 
+    //@@author jaivigneshvenugopal
+    /**
+     * Adds the picture of the person into app database and sets the person's display picture boolean status to true
+     * @return true if person's picture is successfully added
+     */
     boolean addProfilePicture(ReadOnlyPerson person);
 
+    /**
+     * Sets the person's display picture boolean status to false
+     */
     void removeProfilePicture(ReadOnlyPerson person);
+    //@@author
 }

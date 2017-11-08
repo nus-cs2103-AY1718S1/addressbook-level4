@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.DeletePictureCommand;
 
+//@@author jaivigneshvenugopal
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
  * outside of the DeletePictureCommand code. For example, inputs "1" and "1 abc" take the
@@ -27,7 +28,8 @@ public class DeletePictureCommandParserTest {
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePictureCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                DeletePictureCommand.MESSAGE_USAGE));
     }
 
 }

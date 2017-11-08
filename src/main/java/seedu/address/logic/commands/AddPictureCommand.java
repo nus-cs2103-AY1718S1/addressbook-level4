@@ -6,7 +6,11 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
-public class AddPictureCommand extends UndoableCommand{
+//@@author jaivigneshvenugopal
+/**
+ * Adds a display picture of a person.
+ */
+public class AddPictureCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addpic";
     public static final String MESSAGE_USAGE = COMMAND_WORD

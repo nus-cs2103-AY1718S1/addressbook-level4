@@ -412,18 +412,25 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //@@author jaivigneshvenugopal
+    /**
+     * Adds the picture of the person into app database and sets the person's display picture boolean status to true
+     * @return true if person's picture is successfully added
+     */
     @Override
     public boolean addProfilePicture(ReadOnlyPerson person) {
         String imageName = person.getName().toString().replaceAll("\\s+", "");
         File imageFile = new File(ProfilePicturesFolder.getPath() + imageName + JPG_EXTENSION);
 
-        BufferedImage bufferedImage = null;
+        BufferedImage bufferedImage;
 
         if (imageFile.exists()) {
             addressBook.addProfilePic(person);
             try {
                 bufferedImage = ImageIO.read(imageFile);
-                ImageIO.write(bufferedImage, "jpg", new File(DEFAULT_INTERNAL_PROFILEPIC_FOLDER_PATH + imageName + JPG_EXTENSION));
+                ImageIO.write(bufferedImage, "jpg",
+                        new File(DEFAULT_INTERNAL_PROFILEPIC_FOLDER_PATH
+                                + imageName + JPG_EXTENSION));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -433,11 +440,15 @@ public class ModelManager extends ComponentManager implements Model {
         return false;
     }
 
+    /**
+     * Sets the person's display picture boolean status to false
+     */
     @Override
     public void removeProfilePicture(ReadOnlyPerson person) {
         addressBook.removeProfilePic(person);
         indicateAddressBookChanged();
     }
+    //@@author
 
 
     //=========== Filtered Person List Accessors =============================================================

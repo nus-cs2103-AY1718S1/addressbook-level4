@@ -438,6 +438,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.getReadOnlyPerson(index);
     }
 
+    //@@author jaivigneshvenugopal
+    /**
+     * Adds the picture of the person into app database and sets the person's display picture boolean status to true
+     * @return updated person
+     */
     public ReadOnlyPerson addProfilePic(ReadOnlyPerson person) {
         int index;
         index = persons.getIndexOf(person);
@@ -455,6 +460,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.getReadOnlyPerson(index);
     }
 
+    /**
+     * Sets the person's display picture boolean status to false
+     * @return updated person
+     */
     public ReadOnlyPerson removeProfilePic(ReadOnlyPerson person) {
         int index;
         index = persons.getIndexOf(person);
@@ -471,6 +480,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         return persons.getReadOnlyPerson(index);
     }
+    //@@author
 
     //// util methods
 
