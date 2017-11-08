@@ -4,9 +4,9 @@ import static guitests.guihandles.WebViewUtil.waitUntilMapLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.ui.MapsPanel.DEFAULT_PAGE;
-import static seedu.address.ui.MapsPanel.MAPS_DIR_URL_PREFIX;
 import static seedu.address.ui.MapsPanel.MAPS_DEFAULT_ORIGIN;
 import static seedu.address.ui.MapsPanel.MAPS_DEST_PREFIX;
+import static seedu.address.ui.MapsPanel.MAPS_DIR_URL_PREFIX;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
@@ -23,7 +23,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
-import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
@@ -197,8 +196,8 @@ public abstract class AddressBookSystemTest {
         String selectCardAddress = getPersonListPanel().getHandleToSelectedCard().getAddress();
         URL expectedUrl;
         try {
-            expectedUrl = new URL(MAPS_DIR_URL_PREFIX + MAPS_DEFAULT_ORIGIN + MAPS_DEST_PREFIX +
-                    selectCardAddress.replaceAll(" ", "+"));
+            expectedUrl = new URL(MAPS_DIR_URL_PREFIX + MAPS_DEFAULT_ORIGIN + MAPS_DEST_PREFIX
+                    + selectCardAddress.replaceAll(" ", "+"));
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }

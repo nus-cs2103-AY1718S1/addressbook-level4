@@ -5,9 +5,9 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.ui.MapsPanel.DEFAULT_PAGE;
-import static seedu.address.ui.MapsPanel.MAPS_DIR_URL_PREFIX;
 import static seedu.address.ui.MapsPanel.MAPS_DEFAULT_ORIGIN;
 import static seedu.address.ui.MapsPanel.MAPS_DEST_PREFIX;
+import static seedu.address.ui.MapsPanel.MAPS_DIR_URL_PREFIX;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
 import java.net.URL;
