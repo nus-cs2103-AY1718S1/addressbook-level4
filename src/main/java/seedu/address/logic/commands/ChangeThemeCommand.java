@@ -8,7 +8,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 /**
  * Changes colour theme of application.
  */
-public class ChangeThemeCommand extends UndoableCommand {
+public class ChangeThemeCommand extends Command {
 
     public static final String COMMAND_WORD = "theme";
     public static final String COMMAND_ALIAS = "th";
@@ -29,7 +29,7 @@ public class ChangeThemeCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         EventsCenter.getInstance().post(new ThemeChangeEvent(theme));
         return new CommandResult(String.format(MESSAGE_CHANGE_THEME_SUCCESS));
     }

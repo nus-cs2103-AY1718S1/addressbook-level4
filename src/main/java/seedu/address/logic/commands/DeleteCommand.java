@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import java.io.File;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -44,7 +43,6 @@ public class DeleteCommand extends UndoableCommand {
 
         try {
             model.deletePerson(personToDelete);
-            deletePhoto(personToDelete);
             LoggingCommand loggingCommand = new LoggingCommand();
             loggingCommand.keepLog(personToDelete.toString(), "Delete");
         } catch (PersonNotFoundException pnfe) {
@@ -59,14 +57,4 @@ public class DeleteCommand extends UndoableCommand {
                 || (other instanceof DeleteCommand // instanceof handles nulls
                 && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
     }
-
-    //@@author JasmineSee
-    /**
-     * Deletes photo of the person identified using it's last displayed index from the address book.
-     */
-    public void deletePhoto(ReadOnlyPerson target) {
-        File photoPath = new File("photos/" + target.getEmail().toString() + ".png");
-        photoPath.delete();
-    }
-    //@@author
 }
