@@ -143,6 +143,16 @@ public class BirthdaysCommand extends Command {
             model.unselectPerson();
         }
 ```
+###### /java/seedu/address/logic/LogicManager.java
+``` java
+
+    @Override
+    public void updateSelectedPerson(ReadOnlyPerson person) {
+        model.updateSelectedPerson(person);
+    }
+
+}
+```
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
@@ -495,6 +505,12 @@ public class DetailsPanel extends UiPart<Region> {
         detailsPanelPlaceholder.getChildren().clear();
         detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
 
+    }
+```
+###### /java/seedu/address/ui/UiPart.java
+``` java
+    protected void unregisterAsAnEventHandler(Object handler) {
+        EventsCenter.getInstance().unregisterHandler(handler);
     }
 ```
 ###### /resources/view/DetailsPanel.fxml
