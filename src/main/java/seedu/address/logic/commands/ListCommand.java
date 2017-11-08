@@ -5,6 +5,8 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
 
+import java.util.ArrayList;
+
 /**
  * Lists all persons in the address book to the user.
  */
@@ -57,5 +59,25 @@ public class ListCommand extends Command {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this){
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof ListCommand)){
+            return false;
+        }
+
+        // other has null predicate
+        if ((((ListCommand) other).predicate == null) && (this.predicate == null)){
+            return true;
+        }
+
+        return this.predicate.equals(((ListCommand) other).predicate);
     }
 }
