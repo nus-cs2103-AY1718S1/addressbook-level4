@@ -525,6 +525,7 @@ The following sequence diagram (Figure 4.4.2.3) shows how reminders are automati
 image::SDaddEventLogicReminder.png[width="700"]
 _Figure 4.4.2.3 : Sequence Diagram for Adding an event (reminders are automatically added)_
 
+// tag::importExportXml[]
 === Import & Export mechanism
 
 In order to open up more possibilities to **BoNUS**, we have introduced the `import` and `export` commands. We are using
@@ -611,6 +612,7 @@ the user, while being able to inform users on the mistakes that they have made.
 **Alternative 2:** In `CommandParser` +
 **Pros:** Validation will not be done after every execution of an `UndoableCommand` unnecessarily. +
 **Cons:** File path validation may also be required for other purposes.
+// end::importExportXml[]
 
 === Contacts/Event listing order by name/date time mechanism
 
