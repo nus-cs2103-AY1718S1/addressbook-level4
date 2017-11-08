@@ -44,8 +44,8 @@ public class MapsPanel extends UiPart<Region> {
 
 
     private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(MAPS_DIR_URL_PREFIX + MAPS_DEFAULT_ORIGIN + MAPS_DEST_PREFIX +
-                person.getAddress().value.replaceAll(" ", "+"));
+        loadPage(MAPS_DIR_URL_PREFIX + MAPS_DEFAULT_ORIGIN + MAPS_DEST_PREFIX
+                + person.getAddress().value.replaceAll(" ", "+"));
     }
 
     public void loadPage(String url) {
