@@ -746,7 +746,7 @@ public static Optional<Name> parseName(Optional<String> name, String command) th
 When Bluebird is launched, Parent Mode will be off by default and the number of commands
 available will be limited. The `ParentModeCommand` will enable all commands for the parent to use.
 
-4.9.1. Design Considerations
+==== Design Considerations
 
 Aspect: Which commands will be unavailable for the child to use +
 Alternative 1 (current choice): All commands that modifies Bluebird's contact list or task list will be unavailable +
