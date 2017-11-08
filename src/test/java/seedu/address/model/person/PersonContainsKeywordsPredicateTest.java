@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Test;
+
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
@@ -18,18 +19,21 @@ public class PersonContainsKeywordsPredicateTest {
     private static final String VALID_TAG_2 = "criminal";
 
     @Test
-    public void equals() throws Exception{
+    public void equals() throws Exception {
         Set<Tag> singleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1)));
         Set<Tag> multipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
-        PersonContainsKeywordsPredicate firstPredicate = new PersonContainsKeywordsPredicate(new ArrayList<>(singleTagSet));
-        PersonContainsKeywordsPredicate secondPredicate = new PersonContainsKeywordsPredicate(new ArrayList<>(multipleTagSet));
+        PersonContainsKeywordsPredicate firstPredicate = new PersonContainsKeywordsPredicate(new
+                ArrayList<>(singleTagSet));
+        PersonContainsKeywordsPredicate secondPredicate = new PersonContainsKeywordsPredicate(new
+                ArrayList<>(multipleTagSet));
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        PersonContainsKeywordsPredicate firstPredicateCopy = new PersonContainsKeywordsPredicate(new ArrayList<>(singleTagSet));
+        PersonContainsKeywordsPredicate firstPredicateCopy = new PersonContainsKeywordsPredicate(new
+                ArrayList<>(singleTagSet));
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -43,7 +47,7 @@ public class PersonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_personContainsTags_returnsTrue() throws Exception{
+    public void test_personContainsTags_returnsTrue() throws Exception {
         Set<Tag> singleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1)));
         Set<Tag> multipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
@@ -61,7 +65,7 @@ public class PersonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_personDoesNotContainTags_returnsFalse() throws Exception{
+    public void test_personDoesNotContainTags_returnsFalse() throws Exception {
         Set<Tag> emptyTagSet = new HashSet<Tag>(Arrays.asList());
         Set<Tag> singleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1)));
         Set<Tag> multipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));

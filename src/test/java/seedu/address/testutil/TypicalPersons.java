@@ -46,10 +46,12 @@ public class TypicalPersons {
             .withEmail("werner@example.com").withAddress("michegan ave").withBirthday("28/02/1995")
             .withPhoto("ElMeyer.jpg").build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
-            .withEmail("lydia@example.com").withAddress("little tokyo").withBirthday("24/12/1994").withTags("family", "friends")
+            .withEmail("lydia@example.com").withAddress("little tokyo").withBirthday("24/12/1994").withTags("family",
+                    "friends")
             .withPhoto("KunzFiona.jpg").build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
-            .withEmail("anna@example.com").withAddress("4th street").withBirthday("31/12/1999").withTags("family", "friends")
+            .withEmail("anna@example.com").withAddress("4th street").withBirthday("31/12/1999").withTags("family",
+                    "friends")
             .withPhoto("GBest.jpg").build();
 
     // Manually added
