@@ -19,7 +19,6 @@ import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.model.event.Date;
 import seedu.address.model.event.EventName;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
 
 public class AddEventParserTest {
     private AddEventCommandParser parser = new AddEventCommandParser();

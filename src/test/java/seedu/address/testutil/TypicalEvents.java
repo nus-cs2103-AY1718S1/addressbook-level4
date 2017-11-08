@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
-import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 
