@@ -166,7 +166,7 @@ public class Autocompleter {
                 return;
             }
 
-            possibleAutocompleteResults = getMissingPrefixes(arguments);
+            possibleAutocompleteResults = parser.getMissingPrefixes(arguments);
             state = AutocompleteState.COMMAND_NEXT_PREFIX;
         }
 
@@ -269,20 +269,6 @@ public class Autocompleter {
                 .anyMatch(s -> lastTwoCharacters.equals(s.toString()));
     }
 
-    /**
-     * Returns the ArrayList of prefixes that are missing from the {@code String}
-     */
-    private ArrayList<String> getMissingPrefixes(String arguments) {
-        Prefix[] prefixes = AutocompleteCommand.ALL_PREFIXES;
-        ArrayList<String> missingPrefixes = new ArrayList<>();
-        ArgumentMultimap argMap = ArgumentTokenizer.tokenize(arguments, prefixes);
-        for (Prefix p : prefixes) {
-            if (!argMap.getValue(p).isPresent()) {
-                missingPrefixes.add(p.toString());
-            }
-        }
-        return missingPrefixes;
-    }
 
     /**
      * Get a list of possible commands to autocomplete
