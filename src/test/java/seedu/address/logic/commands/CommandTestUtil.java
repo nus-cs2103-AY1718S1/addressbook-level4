@@ -82,6 +82,7 @@ public class CommandTestUtil {
     public static final String VALID_TAG_SOFTCOPY = "softcopy";
 
 
+    /*
     public static final String NAME_DESC_PROJECT = " " + PREFIX_TASK + VALID_TASK_PROJECT;
     public static final String NAME_DESC_ASSIGNMENT = " " + PREFIX_TASK + VALID_TASK_ASSIGNMENT;
     public static final String PHONE_DESC_PROJECT = " " + PREFIX_PRIORITY + VALID_PRIORITY_PROJECT;
@@ -92,12 +93,11 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_ASSIGNMENT = " " + PREFIX_MESSAGE + VALID_MESSAGE_ASSIGNMENT;
     public static final String TAG_DESC_OFFICE = " " + PREFIX_TAG + VALID_TAG_OFFICE;
     public static final String TAG_DESC_SOFTCOPY = " " + PREFIX_TAG + VALID_TAG_SOFTCOPY;
-
     public static final String INVALID_TASK_DESC = " " + PREFIX_TASK + "Submission&"; // '&' not allowed in tasks
     public static final String INVALID_PRIORITY_DESC = " " + PREFIX_PRIORITY + "low1"; // '1' not allowed in phones
     public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "0!"; // '!' not allowed in dates
     public static final String INVALID_MESSAGE_DESC = " " + PREFIX_MESSAGE; // empty string not allowed for addresses
-
+    */
 
     public static final EditReminderCommand.EditReminderDescriptor DESC_PROJECT;
     public static final EditReminderCommand.EditReminderDescriptor DESC_ASSIGNMENT;
