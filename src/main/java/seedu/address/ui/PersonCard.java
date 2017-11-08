@@ -140,17 +140,17 @@ public class PersonCard extends UiPart<Region> {
         if (selectedPic != null) {
             try {
                 person.getPicture().setPictureUrl(person.getName().toString() + person.getPhone().toString() + ".jpg");
-				if (person.getPicture().checkJarResourcePath()) {
-					ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getJarPictureUrl()));
-					FileInputStream fileStream = new FileInputStream(person.getPicture().getJarPictureUrl());
-					Image newPicture = new Image(fileStream);
-					picture.setImage(newPicture);
-					} else {
-					ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
-					FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
-					Image newPicture = new Image(fileStream);
-					picture.setImage(newPicture);
-					}
+                if (person.getPicture().checkJarResourcePath()) {
+                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getJarPictureUrl()));
+                    FileInputStream fileStream = new FileInputStream(person.getPicture().getJarPictureUrl());
+                    Image newPicture = new Image(fileStream);
+                    picture.setImage(newPicture);
+                } else {
+                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
+                    FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
+                    Image newPicture = new Image(fileStream);
+                    picture.setImage(newPicture);
+                }
             } catch (Exception e) {
                 System.out.println(e + "Invalid File");
             }
@@ -181,17 +181,17 @@ public class PersonCard extends UiPart<Region> {
      */
     private void initImage() {
         try {
-			try {
-				InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
-				person.getPicture().setJarResourcePath();
-				Image personPicture = new Image(in);
-				picture.setImage(personPicture);
-				} catch (Exception e) {
-				File picFile = new File(person.getPicture().getPictureUrl());
-				FileInputStream fileStream = new FileInputStream(picFile);
-				Image personPicture = new Image(fileStream);
-				picture.setImage(personPicture);
-				}
+            try {
+                InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
+                person.getPicture().setJarResourcePath();
+                Image personPicture = new Image(in);
+                picture.setImage(personPicture);
+            } catch (Exception e) {
+                File picFile = new File(person.getPicture().getPictureUrl());
+                FileInputStream fileStream = new FileInputStream(picFile);
+                Image personPicture = new Image(fileStream);
+                picture.setImage(personPicture);
+            }
             picture.setFitHeight(person.getPicture().PIC_HEIGHT);
             picture.setFitWidth(person.getPicture().PIC_WIDTH);
 

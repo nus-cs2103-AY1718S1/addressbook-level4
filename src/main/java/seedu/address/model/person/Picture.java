@@ -7,24 +7,22 @@ public class Picture {
     public static final int PIC_WIDTH = 100;
     public static final int PIC_HEIGHT = 100;
 
-	public static final String BASE_URL = System.getProperty("user.dir")
-		+ "/data/contact_images/";
+    public static final String BASE_URL = System.getProperty("user.dir") + "/data/contact_images/";
 
-	public static final String PLACEHOLDER_IMAGE = System.getProperty("user.dir")
-		+ "/src/main/resources/test1.png";
+    public static final String PLACEHOLDER_IMAGE = System.getProperty("user.dir") + "/src/main/resources/test1.png";
 
-	public static final String BASE_JAR_URL = System.getProperty("user.dir");
+    public static final String BASE_JAR_URL = System.getProperty("user.dir");
 
-	public static final String PLACEHOLDER_JAR_URL = "/images/test1.png";
+    public static final String PLACEHOLDER_JAR_URL = "/images/test1.png";
 
     private String pictureUrl;
-	private String jarPictureUrl;
-	private boolean jarResourcePath;
+    private String jarPictureUrl;
+    private boolean jarResourcePath;
 
     public Picture() {
         this.pictureUrl = PLACEHOLDER_IMAGE;
-		this.jarPictureUrl = PLACEHOLDER_JAR_URL;
-		this.jarResourcePath = false;
+        this.jarPictureUrl = PLACEHOLDER_JAR_URL;
+        this.jarResourcePath = false;
 
     }
 
@@ -33,31 +31,18 @@ public class Picture {
     }
 
     public String getJarPictureUrl() {
-    	return jarPictureUrl;
-	}
+        return jarPictureUrl;
+    }
     public void setJarResourcePath() {
-    	this.jarResourcePath = true;
-	}
-
-	public boolean checkJarResourcePath() {
-    	return this.jarResourcePath;
-	}
-
-    public void resetPicutreUrl() {
-    	this.pictureUrl = PLACEHOLDER_IMAGE;
-		this.jarPictureUrl = PLACEHOLDER_JAR_URL;
-	}
+        this.jarResourcePath = true;
+    }
+    public boolean checkJarResourcePath() {
+        return this.jarResourcePath;
+    }
 
     public void setPictureUrl(String pictureUrl) {
-		if (pictureUrl.contains("/")) {
-			String splitStrings[] = pictureUrl.split("/");
-			String pictureName = splitStrings[splitStrings.length - 1];
-			this.pictureUrl = BASE_URL + pictureName;
-			this.jarPictureUrl = BASE_JAR_URL + pictureName;
-			} else {
-			this.pictureUrl = BASE_URL + pictureUrl;
-			this.jarPictureUrl = BASE_JAR_URL + pictureUrl;
-			}
+        this.pictureUrl = BASE_URL + pictureUrl;
+        this.jarPictureUrl = BASE_JAR_URL + pictureUrl;
     }
 }
 //@@author
