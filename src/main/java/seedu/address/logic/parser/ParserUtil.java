@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.StringUtil.replaceBackslashes;
+import static seedu.address.model.person.Address.ADDRESS_VALIDATION_REGEX;
 import static seedu.address.model.person.Email.EMAIL_VALIDATION_REGEX;
 import static seedu.address.model.person.Phone.PHONE_VALIDATION_REGEX;
 import static seedu.address.storage.util.RolodexStorageUtil.FILEPATH_REGEX_NON_STRICT;
@@ -178,8 +179,8 @@ public class ParserUtil {
      */
     public static boolean tryParseFilePath(String value) {
         try {
-            parseFirstFilePath(value);
-            return true;
+            String tryFilepath = parseFirstFilePath(value);
+            return isValidRolodexStorageFilepath(tryFilepath);
         } catch (IllegalArgumentException e) {
             return false;
         }
@@ -209,9 +210,9 @@ public class ParserUtil {
      */
     public static boolean tryParsePhone(String value) {
         try {
-            parseFirstPhone(value);
-            return true;
-        } catch (IllegalArgumentException e) {
+            Optional possible = parsePhone(Optional.of(parseFirstPhone(value)));
+            return possible.isPresent() && possible.get() instanceof Phone;
+        } catch (IllegalArgumentException | IllegalValueException e) {
             return false;
         }
     }
@@ -257,9 +258,9 @@ public class ParserUtil {
      */
     public static boolean tryParseEmail(String value) {
         try {
-            parseFirstEmail(value);
-            return true;
-        } catch (IllegalArgumentException e) {
+            Optional possible = parseEmail(Optional.of(parseFirstEmail(value)));
+            return possible.isPresent() && possible.get() instanceof Email;
+        } catch (IllegalArgumentException | IllegalValueException e) {
             return false;
         }
     }
@@ -294,5 +295,21 @@ public class ParserUtil {
         return value.substring(0, value.indexOf(firstEmail)).trim()
                 .concat(" ")
                 .concat(value.substring(value.indexOf(firstEmail) + firstEmail.length()).trim()).trim();
+    }
+
+    /**
+     * Attempts to parse a {@code String} to an address.
+     * Looks for a regex given a value and parses the address, until the end of the string.
+     *
+     * @return {@code true} if successfully parsed,
+     * {@code false} otherwise.
+     */
+    public static boolean tryParseAddressTillEnd(String value) {
+        try {
+            Optional possible = parseAddress(Optional.of(parseAddressTillEnd(value)));
+            return possible.isPresent() && possible.get() instanceof Address;
+        } catch (IllegalArgumentException | IllegalValueException e) {
+            return false;
+        }
     }
 }
