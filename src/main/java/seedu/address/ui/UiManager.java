@@ -65,10 +65,7 @@ public class UiManager extends ComponentManager implements Ui {
 
     @Override
     public void stop() {
-        MainWindow mainWindow = welcomeScreen.getMainWindow();
-        prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
-        mainWindow.hide();
-        mainWindow.releaseResources();
+        welcomeScreen.stop();
     }
 
     private void loadWelcomeScreen(Stage primaryStage) {

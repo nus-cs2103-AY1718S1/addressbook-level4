@@ -5,9 +5,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -36,14 +38,17 @@ public class WelcomeScreen extends UiPart<Region> {
 
     private MainWindow mainWindow;
 
+    private ImageView logo;
+    private Button closeButton;
+
     @FXML
     private VBox welcomeWindow;
 
     @FXML
-    private ImageView logo;
+    private StackPane logoPlaceHolder;
 
     @FXML
-    private Button closeButton;
+    private StackPane buttonPlaceHolder;
 
     public WelcomeScreen(Stage primaryStage, Config config, UserPrefs prefs, Logic logic, Model model) {
         super(FXML);
@@ -55,7 +60,6 @@ public class WelcomeScreen extends UiPart<Region> {
         this.logic = logic;
         this.model = model;
 
-        primaryStage.initStyle(StageStyle.UNDECORATED);
         setWindowFixedSize();
         setIcon(ICON);
         Scene scene = new Scene(getRoot());
@@ -73,7 +77,9 @@ public class WelcomeScreen extends UiPart<Region> {
      */
     void fillInnerParts() {
         logo = new ImageView(new Image(LOGO));
-        welcomeWindow.getChildren().add(logo);
+        logo.setFitHeight(250);
+        logo.setFitWidth(250);
+        logoPlaceHolder.getChildren().add(logo);
 
         closeButton = new Button("Close");
         closeButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -83,7 +89,7 @@ public class WelcomeScreen extends UiPart<Region> {
                 loadMainWindow();
             }
         });
-        welcomeWindow.getChildren().add(closeButton);
+        buttonPlaceHolder.getChildren().add(closeButton);
     }
 
     /**
@@ -115,5 +121,11 @@ public class WelcomeScreen extends UiPart<Region> {
 
     public MainWindow getMainWindow() {
         return mainWindow;
+    }
+
+    public void stop() {
+        prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
+        mainWindow.hide();
+        mainWindow.releaseResources();
     }
 }
