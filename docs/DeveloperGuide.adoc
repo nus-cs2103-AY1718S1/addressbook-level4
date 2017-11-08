@@ -301,6 +301,7 @@ The current detag mechanism does not support multiple tag removal, i.e. remove 2
 **Cons:** Cannot not remove tags of multiple contacts, and it is mandatory to retype the tags that do not need to be removed +
 // end::detag[]
 
+// tag::findtag[]
 === FindTag mechanism
 
 The FindTag mechanism is facilitated by the `FindCommand` class which inherits from `Command` class. It allows the user to find persons using tags. Users can search using multiple tags too.
@@ -337,6 +338,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
                 || StringUtil.containsWordIgnoreCase(person.getBirthday().value, keyword));
     }
 ----
+// end::findtag[]
 
 === Tag mechanism
 
@@ -422,6 +424,7 @@ there are only two types of task dates. +
 **Cons** Description might contain slashes. t/ (to) would clash with t/ prefix for tags so to/ would have to be used.
 Limits possibilities of adding new prefixes and making the format more flexible in the future. +
 
+// tag::deletetask[]
 === DeleteTask mechanism
 
 The Delete Task mechanism is facilitated by the `DeleteTaskCommand` class which inherits from the `UndoableCommand` class. It allows for the removal of a task at a specified index.
@@ -452,6 +455,7 @@ public class DeleteTaskCommand extends UndoableCommand {
     }
 }
 ----
+// end::deletetask[]
 
 === FindTask mechanism
 
