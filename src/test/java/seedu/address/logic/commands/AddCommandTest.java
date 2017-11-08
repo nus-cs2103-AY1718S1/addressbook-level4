@@ -179,7 +179,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public void releaseEncryptedContact(String substring) throws DataConversionException, DuplicatePersonException, IOException {
+        public void releaseEncryptedContact(String substring) throws DataConversionException, DuplicatePersonException,
+                IOException {
             fail("This method should not be called.");
         }
 

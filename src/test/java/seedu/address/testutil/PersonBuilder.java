@@ -135,7 +135,7 @@ public class PersonBuilder {
     public PersonBuilder withGroup(String group) {
         try {
             this.person.setGroup(new Group(group));
-        } catch (IllegalValueException ive ) {
+        } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("group name cannot exceed 30 characters");
         }
 
