@@ -8,7 +8,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author jaivigneshvenugopal
 /**
- * Adds a display picture of a person.
+ * Adds a display picture to a person.
  */
 public class AddPictureCommand extends UndoableCommand {
 
