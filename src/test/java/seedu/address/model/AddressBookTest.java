@@ -123,7 +123,7 @@ public class AddressBookTest {
         }
 
         @Override
-        public ObservableList<ReadOnlyEvent> getSchedule(Date date) {
+        public ObservableList<ReadOnlyEvent> getTimetable(Date date) {
             return null;
         }
 

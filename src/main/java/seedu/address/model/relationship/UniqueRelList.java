@@ -1,3 +1,4 @@
+//@@author huiyiiih
 package seedu.address.model.relationship;
 
 import static java.util.Objects.requireNonNull;
@@ -13,7 +14,7 @@ import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
 
 /**
- * A list of tags that enforces no nulls and uniqueness between its elements.
+ * A list of relationships that enforces no nulls and uniqueness between its elements.
  * <p>
  * Supports minimal set of list operations for the app's features.
  *
@@ -24,13 +25,13 @@ public class UniqueRelList implements Iterable<Relationship> {
     private final ObservableList<Relationship> internalList = FXCollections.observableArrayList();
 
     /**
-     * Constructs empty TagList.
+     * Constructs empty RelList.
      */
     public UniqueRelList() {
     }
 
     /**
-     * Creates a UniqueTagList using given tags.
+     * Creates a UniqueRelList using given rels.
      * Enforces no nulls.
      */
     public UniqueRelList(Set<Relationship> rel) {
@@ -41,7 +42,7 @@ public class UniqueRelList implements Iterable<Relationship> {
     }
 
     /**
-     * Returns all tags in this list as a Set.
+     * Returns all relationships in this list as a Set.
      * This set is mutable and change-insulated against the internal list.
      */
     public Set<Relationship> toSet() {
@@ -50,7 +51,7 @@ public class UniqueRelList implements Iterable<Relationship> {
     }
 
     /**
-     * Replaces the Tags in this list with those in the argument tag list.
+     * Replaces the Relationships in this list with those in the argument relationship list.
      */
     public void setRel(Set<Relationship> rel) {
         requireAllNonNull(rel);
@@ -59,7 +60,7 @@ public class UniqueRelList implements Iterable<Relationship> {
     }
 
     /**
-     * Ensures every tag in the argument list exists in this object.
+     * Ensures every rel in the argument list exists in this object.
      */
     public void mergeFrom(UniqueRelList from) {
         final Set<Relationship> alreadyInside = this.toSet();
@@ -71,7 +72,7 @@ public class UniqueRelList implements Iterable<Relationship> {
     }
 
     /**
-     * Returns true if the list contains an equivalent Tag as the given argument.
+     * Returns true if the list contains an equivalent Relationship as the given argument.
      */
     public boolean contains(Relationship toCheck) {
         requireNonNull(toCheck);
@@ -81,7 +82,7 @@ public class UniqueRelList implements Iterable<Relationship> {
     /**
      * Adds a Relationship to the list.
      *
-     * @throws DuplicateRelException if the Relationship to add is a duplicate of an existing Tag in the list.
+     * @throws DuplicateRelException if the Relationship to add is a duplicate of an existing Relationship in the list.
      */
     public void add(Relationship toAdd) throws DuplicateRelException {
         requireNonNull(toAdd);
@@ -94,9 +95,9 @@ public class UniqueRelList implements Iterable<Relationship> {
     }
 
     /**
-     * Removes a Tag from the list if it is present.
+     * Removes a Relationship from the list if it is present.
      *
-     * @param toRemove Tag to be removed
+     * @param toRemove Relationship to be removed
      */
     public void remove(Relationship toRemove) {
         requireNonNull(toRemove);
@@ -153,3 +154,4 @@ public class UniqueRelList implements Iterable<Relationship> {
     }
 
 }
+//@@author

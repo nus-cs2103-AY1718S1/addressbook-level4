@@ -23,6 +23,7 @@ public class Timing implements Comparable<Timing> {
     private String timing;
     private int start;
     private int end;
+    private double duration;
 
     /**
      * Validates given Timing.
@@ -43,9 +44,20 @@ public class Timing implements Comparable<Timing> {
         if (!isValidTiming(trimmedTiming) || !isValidTimingInterval(startTiming, endTiming)) {
             throw new IllegalValueException(MESSAGE_TIMING_CONSTRAINTS);
         }
+
         this.timing = trimmedTiming;
         this.start = startTiming;
         this.end = endTiming;
+        this.duration = getDurationInHours(startTiming, endTiming);
+    }
+
+    /**
+     * Returns the approximate duration of a given timeslot in terms of hours (one decimal place).
+     */
+    public static double getDurationInHours(int startTime, int endTime) {
+        double differenceInTiming = endTime - startTime;
+        double duration = Math.floor(differenceInTiming / 100) + ((differenceInTiming % 100) / 60);
+        return oneDecimalPlace(duration);
     }
 
     /**
@@ -56,6 +68,12 @@ public class Timing implements Comparable<Timing> {
         this.end = this.start;
     }
 
+     * Returns the value in one decimal place.
+     */
+    public static double oneDecimalPlace(double value) {
+        return Math.round(value * 10) / 10.0;
+    }
+  
     /**
      * Returns true if a given string is a valid event's Timing.
      */
@@ -89,6 +107,10 @@ public class Timing implements Comparable<Timing> {
 
     public int getEnd() {
         return end;
+    }
+
+    public double getDuration() {
+        return duration;
     }
 
     @Override

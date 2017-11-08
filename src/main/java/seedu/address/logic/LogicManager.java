@@ -58,8 +58,8 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public ObservableList<ReadOnlyEvent> getSchedule() {
-        return model.getSchedule();
+    public ObservableList<ReadOnlyEvent> getTimetable() {
+        return model.getTimetable();
     }
     //@@author
 

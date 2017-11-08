@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
@@ -32,6 +33,8 @@ import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowPhotoSelectionEvent;
+import seedu.address.commons.events.ui.ToggleTimetableEvent;
+
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -63,8 +66,8 @@ public class MainWindow extends UiPart<Region> {
     private PersonListPanel personListPanel;
     private EventListPanel eventListPanel;
     //@@author reginleiff
-    private EventPanel schedulePanel;
-    private ScheduleListPanel scheduleListPanel;
+    private EventPanel timetablePanel;
+    private TimetableListPanel timetableListPanel;
     //@@author
     private CalendarView calendarView;
     private Config config;
@@ -82,11 +85,16 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane personListPanelPlaceholder;
 
+    //@@author reginleiff
     @FXML
     private StackPane eventListPanelPlaceholder;
 
     @FXML
-    private StackPane scheduleListPanelPlaceholder;
+    private StackPane timetableListPanelPlaceholder;
+
+    @FXML
+    private SplitPane timetable;
+    //@@author
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -179,16 +187,17 @@ public class MainWindow extends UiPart<Region> {
         personPanel = new PersonPanel(logic);
         //@@author
 
-        schedulePanel = new EventPanel(logic);
+        timetablePanel = new EventPanel(logic);
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        timetable.managedProperty().bind(timetable.visibleProperty());
 
         eventListPanel = new EventListPanel(logic.getFilteredEventList());
         eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
-        scheduleListPanel = new ScheduleListPanel(logic.getSchedule());
-        scheduleListPanelPlaceholder.getChildren().add(scheduleListPanel.getRoot());
+        timetableListPanel = new TimetableListPanel(logic.getTimetable());
+        timetableListPanelPlaceholder.getChildren().add(timetableListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -410,4 +419,32 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleEventPanelSelected();
     }
+    //@@author
+
+    //@@author reginleiff
+    @Subscribe
+    public void handleToggleTimetableEvent(ToggleTimetableEvent event) {
+        boolean timetableIsVisible = timetable.visibleProperty().getValue();
+        if (timetableIsVisible) {
+            hideTimetable();
+        } else {
+            showTimeTable();
+        }
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    }
+
+    /**
+     * Hides the timetable view.
+     */
+    void hideTimetable() {
+        timetable.setVisible(false);
+    }
+
+    /**
+     * Shows the timetable view.
+     */
+    void showTimeTable() {
+        timetable.setVisible(true);
+    }
+    //@@author
 }

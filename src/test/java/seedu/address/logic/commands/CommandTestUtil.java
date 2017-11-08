@@ -25,6 +25,7 @@ import java.util.List;
 
 import seedu.address.logic.commands.event.EditEventCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.relationship.SetRelCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -33,6 +34,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.EditEventDescriptorBuilder;
+import seedu.address.testutil.EditPersonBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -50,6 +52,11 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
+
+    //@@author huiyiiih
+    public static final String VALID_NAME_JOE = "Joe Smith";
+    public static final String VALID_NAME_JANE = "Jane Smith";
+    //@@author
     //@@author sebtsh
     public static final String VALID_COMPANY_AMY = "Microsoft";
     public static final String VALID_COMPANY_BOB = "Google";
@@ -96,8 +103,13 @@ public class CommandTestUtil {
     public static final String PHOTO_DESC_BOB = " " + PREFIX_PHOTO + VALID_PHOTO_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    //@@author huiyiiih
     public static final String REL_DESC_SIBLINGS = " " + PREFIX_ADD_RELATIONSHIP + VALID_REL_SIBLINGS;
     public static final String REL_DESC_COLLEAGUE = " " + PREFIX_ADD_RELATIONSHIP + VALID_REL_COLLEAGUE;
+    public static final String REL_DESC_JOE_SIBLINGS = " " + PREFIX_ADD_RELATIONSHIP + "Joe Smith" + " ["
+        + VALID_REL_COLLEAGUE + "]";
+    public static final String REL_DESC_JANE_SIBLINGS = " " + PREFIX_ADD_RELATIONSHIP + "Jane Smith" + " ["
+        + VALID_REL_COLLEAGUE + "]";
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -118,6 +130,8 @@ public class CommandTestUtil {
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final SetRelCommand.EditPerson DESC_JOE;
+    public static final SetRelCommand.EditPerson DESC_JANE;
 
     //====== Events =========================================================================================
 
@@ -176,6 +190,20 @@ public class CommandTestUtil {
         DESC_SOCCER = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_SOCCER)
                 .withTimeslot(VALID_TIMESLOT_SOCCER)
                 .withDescription(VALID_DESCRIPTION_SOCCER).withPeriod(VALID_PERIOD_SOCCER).build();
+        //@@author huiyiiih
+        DESC_JOE = new EditPersonBuilder().withName(VALID_NAME_JOE)
+            .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+            .withCompany(VALID_COMPANY_AMY).withPosition(VALID_POSITION_AMY)
+            .withStatus(VALID_STATUS_AMY).withPriority(VALID_PRIORITY_AMY)
+            .withNote(VALID_NOTE_AMY).withPhoto(VALID_PHOTO_AMY).withTags
+            (VALID_TAG_FRIEND).withToAddRel(VALID_REL_SIBLINGS).build();
+        DESC_JANE = new EditPersonBuilder().withName(VALID_NAME_JANE)
+            .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+            .withCompany(VALID_COMPANY_AMY).withPosition(VALID_POSITION_AMY)
+            .withStatus(VALID_STATUS_AMY).withPriority(VALID_PRIORITY_AMY)
+            .withNote(VALID_NOTE_AMY).withPhoto(VALID_PHOTO_AMY).withTags
+            (VALID_TAG_FRIEND).withToAddRel(VALID_REL_COLLEAGUE).build();
+        //@@author
     }
 
     /**

@@ -29,6 +29,6 @@ public class CliSyntax {
     /* Prefix definitions for Relationship*/
     public static final Prefix PREFIX_ADD_RELATIONSHIP = new Prefix("ar/");
     public static final Prefix PREFIX_DELETE_RELATIONSHIP = new Prefix("dr/");
-    public static final Prefix PREFIX_EMPTY_RELATIONSHIP = new Prefix("cr/");
+    public static final Prefix PREFIX_CLEAR_RELATIONSHIP = new Prefix("cr/");
     //@author
 }
