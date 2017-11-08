@@ -254,6 +254,7 @@ contact or loading new contacts from a pre-existing address book, +
 the user would be informed if some of the new contacts were having a birthday.
 // end::informBirthday[]
 
+// tag::lockaddressbook[]
 === Setting password for the address book: `password`
 
 `Coming in v2.0` +
@@ -267,6 +268,7 @@ Example :
 * `password` +
 `mypassword` (sets the password to mypassword) +
 `mypassword` (you are also asked to confirm the password)
+//end::lockaddressbook[]
 
 === Clearing all entries : `clear`
 
