@@ -70,13 +70,7 @@ public class MainApp extends Application {
         logger.info("=============================[ Initializing AddressBook ]===========================");
         super.init();
 
-        try {
-            FileEncryptor.decryptFile("PUBLIC", "PUBLIC");
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        decryptPublicFile();
 
         config = initConfig(getApplicationParameter("config"));
 
@@ -97,6 +91,16 @@ public class MainApp extends Application {
         ui = new UiManager(logic, config, userPrefs);
 
         initEventsCenter();
+    }
+
+    private void decryptPublicFile() {
+        try {
+            FileEncryptor.decryptFile("PUBLIC", "PUBLIC");
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private String getApplicationParameter(String parameterName) {

@@ -151,7 +151,7 @@ public class AliasSettings implements Serializable {
         usedAliases.add("settheme");
         this.setThemeCommand = new Alias(SetThemeCommand.getCommandWord(), "settheme");
         usedAliases.add("save");
-        this.setThemeCommand = new Alias(SetThemeCommand.getCommandWord(), "save");
+        this.saveCommand = new Alias(SaveCommand.getCommandWord(), "save");
         usedAliases.add("switch");
         this.switchCommand = new Alias(SwitchCommand.getCommandWord(), "switch");
         usedAliases.add("selectevent");
