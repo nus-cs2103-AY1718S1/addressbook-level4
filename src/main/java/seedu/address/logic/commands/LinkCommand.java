@@ -32,7 +32,7 @@ public class LinkCommand extends UndoableCommand {
             + PREFIX_PERSON + "2";
 
 
-    public static final String MESSAGE_LINK_SUCCESS = "linked Task %d done";
+    public static final String MESSAGE_LINK_SUCCESS = "linked Task: %s with The following person(s): ";
     public static final String MESSAGE_PERSON_LINKED = "person %d already linked.";
 
     private final Index index;
@@ -62,10 +62,13 @@ public class LinkCommand extends UndoableCommand {
 
         ArrayList<Integer> peopleIds = targetTask.getPeopleIds();
 
+        String personNameList = "";
+
         for (Index index : personIndices) {
+            personNameList += lastShownPersonList.get(index.getZeroBased()).getName() + " ";
             personId = chooseItem(lastShownPersonList, index).getId();
             if (peopleIds.contains(personId)) {
-                throw new CommandException(String.format(MESSAGE_PERSON_LINKED, index.getZeroBased()));
+                throw new CommandException(String.format(MESSAGE_PERSON_LINKED, index.getOneBased()));
             }
 
             peopleIds.add(personId);
@@ -81,7 +84,8 @@ public class LinkCommand extends UndoableCommand {
         } catch (TaskNotFoundException e) {
             throw new AssertionError("can never reach this");
         }
-        return new CommandResult(MESSAGE_LINK_SUCCESS);
+        return new CommandResult(String.format(MESSAGE_LINK_SUCCESS, taskLinked.getName())
+                                    + personNameList);
     }
 
     /**
