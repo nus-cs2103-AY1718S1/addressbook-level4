@@ -23,7 +23,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> parcelsAdded,
+    public void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> uniqueParcels,
                               List<ReadOnlyParcel> duplicateParcels) {
         fail("This method should not be called.");
     }

@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.Status;
 import seedu.address.model.parcel.UniqueParcelList;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
@@ -31,10 +32,11 @@ public interface Model {
     void updateSubLists();
 
     /**
-     * Sets the active list in the model to reference the completed parcels list if {@param isCompleted} is true.
-     * Otherwise, it references the uncompleted parcel list.
+     * Sets the active list in the model.
      *
-     * @param isCompleted true if the current selected tab is the "Completed Parcels" tab
+     * @param isCompleted if true, the active list will be set to the list of {@link Parcel}s with {@link Status} that
+     *                    is COMPLETED. Otherwise, it will be set the list of parcels with {@link Status} that is not
+     *                    COMPLETED.
      */
     void setActiveList(boolean isCompleted);
     //@@author
@@ -68,15 +70,15 @@ public interface Model {
 
     //@@author kennard123661
     /**
-     * Adds all unique {@link Parcel} objects stored in parcels to the {@link AddressBook}
+     * Adds all unique {@link Parcel}s stored in {@param parcels} to the {@link AddressBook}
      *
      * @param parcels the list of parcels to add into the {@link AddressBook}.
-     * @param parcelsAdded the list of unqiue parcels stored in {@param parcels} that will not create duplicate parcels
-     *                     if added into the {@link UniqueParcelList} in the {@link AddressBook}
+     * @param uniqueParcels the list of unique parcels stored in {@param parcels} that will not create duplicate parcels
+     *                      if added into the {@link UniqueParcelList} in the {@link AddressBook}
      * @param duplicateParcels the list of parcels stored in {@param parcels} that will create duplicate parcels in the
      *                         if added into the {@link UniqueParcelList} in the {@link AddressBook}
      */
-    void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> parcelsAdded, List<ReadOnlyParcel>
+    void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> uniqueParcels, List<ReadOnlyParcel>
             duplicateParcels);
     //@@author
 
@@ -97,19 +99,21 @@ public interface Model {
 
     //@@author kennard123661
     /**
-     * Returns an unmodifiable view of the filtered list of completed parcels
+     * Returns an unmodifiable view of the filtered list of {@link Parcel} from that have {@link Status}
+     * that is COMPLETED.
      */
     ObservableList<ReadOnlyParcel> getCompletedParcelList();
+
+    /**
+     * Returns an unmodifiable view of the filtered list of {@link Parcel} from that have {@link Status}
+     * that is not COMPLETED.
+     */
+    ObservableList<ReadOnlyParcel> getUncompletedParcelList();
 
     /**
      * Returns an unmodifiable view of the current active list.
      */
     ObservableList<ReadOnlyParcel> getActiveList();
-
-    /**
-     * Returns an unmodifiable view of the filtered list of uncompleted parcels
-     */
-    ObservableList<ReadOnlyParcel> getUncompletedParcelList();
     //@@author
 
     /**
