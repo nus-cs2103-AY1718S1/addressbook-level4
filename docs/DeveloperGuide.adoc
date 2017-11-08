@@ -497,7 +497,7 @@ As seen above, execution of `RemoveTagCommand` is governed by the `removeTag` me
 
 // end::removetag[]
 
-// tag:: remark[]
+// tag::remarkchecklist[]
 === Remark CheckList Implementation
 
 The remark checklist serves as command to allow users to keep notes on individual persons. +
@@ -508,9 +508,12 @@ Since it is saved under the Person class, we are able to utilise the ReadOnlyPer
 image::UpdatedRemarkSequenceDiagram.png[width ="900"]
 
 As users accomplish tasks that were associated with specific persons, we want to allow them to remove remarks at any point in time. +
-To help with this feature, we planned to use an ArrayList to store the remarks under each person, as it would help with indexing the remarks for easy removal and additions. +
-As ArrayLists naturally update the index of the its list, we do not need additional functions to handle indexing. +
-On top of this, we decided that remarks should be updated with any changes, either to selection or file storage. +
+To allow for easy user manipulation of the remarks of different persons, we provided an `addremark` and `removeremark` command to compliment the remark checklist +
+From the `addremark` command, users can add remarks to a target person without clearing the existing remarks pertaining to that person. +
+From the `removeremark` command, users can select specific remarks to remove based on the remark index and target person index. +
+Implementation of both commands also can allow for mutiple addition and removal of remarks, although only one person can be affected at one time. +
+
+On top of this, we decided that remark checklist UI should be updated with any changes, either to selection or file storage. +
 Thus, we subscribed the remark panel UI to any person selection changes or person storage changes to allow for a constantly updated UI. +
 
 Since remarks tend to be lengthy, we decided that a large amount of space on the app should be dedicated to them. +
@@ -522,11 +525,50 @@ image::UI.png[width="800"]
 Remarks can not be added when adding a person. It can only be done to a person already existing in the address book.
 
 [NOTE]
-If a person is without a remark, he/she still contains an ArrayList or empty remarks. +
+If a person is without a remark, he/she still contains an ArrayList of empty remarks. +
 ArrayList should never contain null objects.
 
+==== Design Considerations
+**Aspect:** Data structure used to store remarks +
+**Alternative 1 (current choice):** Arraylist of remarks +
+**Pros:** Arraylists naturally update the index of its list, so we do not need additional functions to handle indexing. +
+**Cons:** Time complexity of arraylist remove is O(N) on average, so it might take some time if there are many remarks on a person. +
+**Alternative 2:** Hashtable of remarks, with index as key +
+**Pros:** Time complexity of O(1) on average, so addition and removal of remarks will always be fast.  +
+**Cons:** Additional functions need to be implemented to help handle indexing of the remarks, and the functions also need to be O(1) in order for hashtable use to be a better choice. +
 
-// end::remark[]
+==== Design Considerations
+**Aspect:** UI display of remarks +
+**Alternative 1 (current choice):** Create a large stackpane to display the remarks on a separate pane +
+**Pros:** More organised way of displaying remarks as they tend to be long and by doing so, remarks can be view more easily +
+**Cons:** Unable to view the remarks of each person from the person card list at one glance, and can only be viewed when selecting a person +
+**Alternative 2:** Keep remarks as a displayable field under person card, similar to tags +
+**Pros:** Remarks can always be viewed from every scene and no additional edits to the UI and code needs to be done +
+**Cons:** Extremely messy and hard to read when a person has multiple remarks +
+
+// end::remarkchecklist[]
+
+//tag::link[]
+=== Link mechanism
+
+The link command allows users to add twitter links to a person, so as to make use of the messaging feature on twitter.
+By having a link field under each person, we are able to load a twitter link when the person is selected.
+
+image::person.png[width="400"]
+
+[NOTE]
+Only twitter link are allowed to be added.
+
+==== Design Considerations
+**Aspect:** Messaging platform +
+**Alternative 1 (current choice):** Browserpanel to open a twitter page+
+**Pros:** Browser panel is already implemented and tested to open urls well without crashing the program in offline mode, so not much additional code is required +
+**Cons:** Messaging feature depends on the twitter server, so it will be down when twitter is down +
+**Alternative 2:** Creating a messaging platform in the application itself +
+**Pros:** Do not need to create a twitter account to use messaging features +
+**Cons:** Need to setup and maintain a server (still need a server) and write additional code that will require extensive testings to make sure that it does not disrupt the program's core functions. +
+
+// end::link[]
 
 === Logging
 
