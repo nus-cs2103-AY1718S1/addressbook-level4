@@ -94,7 +94,11 @@ public class ReminderBuilder {
      * Sets the {@code Date} of the {@code Reminder} that we are building.
      */
     public ReminderBuilder withDate(String date) {
-        this.reminder.setDate(new Date(date));
+        try {
+            this.reminder.setDate(new Date(date));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("date is expected to be unique.");
+        }
         return this;
     }
 
