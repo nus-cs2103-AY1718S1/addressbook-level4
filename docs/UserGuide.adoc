@@ -302,14 +302,17 @@ The pdf file for contract can now be added by clicking on the entry which will b
 
 image::contractPdf.png[width="380"]
 
+// tag::print[]
 === Printing the Address book : `print`
 `since v1.4`
 
 Saves the entire address book into a printable .txt file. +
 Format: `print FILENAME`
+//end::print[]
 
 After executing the command, the user can find the saved file in the docs/books folder as FILENAME.txt
 
+// tag::why[]
 === Easter egg : `why`
 `since v1.2`
 
@@ -318,6 +321,7 @@ Format: `why INDEX`
 
 After executing, the user will be presented with a feedback which looks something like this:
 "Because John Joe lives in 123 Clementi Ave 2"
+// end::why[]
 
 === Exiting the program : `exit`
 

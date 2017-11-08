@@ -13,9 +13,11 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -25,8 +27,10 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
 
+    private AddressBookParser addressBookParser = new AddressBookParser();
+
     @Test
-    public void delete() {
+    public void delete() throws Exception {
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 
         /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
@@ -41,15 +45,20 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         Index lastPersonIndex = getLastIndex(modelBeforeDeletingLast);
         assertCommandSuccess(lastPersonIndex);
 
+        //@@author arnollim
         /* Case: undo deleting the last person in the list -> last person restored */
+        String lastCommand = DeleteCommand.COMMAND_WORD + " " + lastPersonIndex.getOneBased();
+        Command previousCommand = addressBookParser.parseCommand(lastCommand);
+        String previousCommandString = previousCommand.toString();
         command = UndoCommand.COMMAND_WORD;
-        expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
+        //@@author
 
         /* Case: redo deleting the last person in the list -> last person deleted again */
         command = RedoCommand.COMMAND_WORD;
         removePerson(modelBeforeDeletingLast, lastPersonIndex);
-        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
+        expectedResultMessage = RedoCommand.parseCommand(previousCommandString);
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
 
         /* Case: delete the middle person in the list -> deleted */
