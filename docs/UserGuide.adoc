@@ -23,6 +23,7 @@ The terms used in this guide are as follows: +
 
 * Blacklist - List of people who are banned +
 * Whitelist - List of people who have cleared their debts +
+* Overdue list - List of people who have overdue debt +
 * Index - The ordering of a contact in the list +
 * Cluster - The general location of a person based on [https://www.ura.gov.sg/realEstateIIWeb/resources/misc/list_of_postal_districts.htm[postal districts]]
 
@@ -126,6 +127,13 @@ Format: `blacklist`
 
 Shows a list of all whitelisted persons in the address book. +
 Format: `whitelist`
+
+// tag::overduelist[]
+=== Listing all persons with overdue debt: `overduelist`
+
+shows a list of all persons with overdue debt in the address book. +
+Format: `overduelist`
+// end::overduelist[]
 
 === Editing a person : `edit`
 
@@ -569,6 +577,7 @@ e.g. `find James Jake`
 * *List* : `list`
 * *Blacklist* : `blacklist`
 * *Whitelist* : `whitelist`
+* *Overduelist* : `overduelist`
 * *Help* : `help`
 * *Select* : `select [INDEX]` +
 e.g.`select 2`
