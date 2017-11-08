@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.ExtendedPersonDisplayHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
@@ -34,6 +35,20 @@ public class GuiTestAssert {
                 actualCard.getTags());
     }
 
+    //@@author jacoblipech
+    /**
+     * Asserts that {@code extendedCard} displays the details of {@code expectedPerson}.
+     */
+    public static void assertExtendedCardDisplaysPerson(ReadOnlyPerson expectedPerson, ExtendedPersonDisplayHandle
+            extendedCard) {
+        assertEquals(expectedPerson.getName().fullName, extendedCard.getName());
+        assertEquals(expectedPerson.getPhone().value, extendedCard.getPhone());
+        assertEquals(expectedPerson.getEmail().value, extendedCard.getEmail());
+        assertEquals(expectedPerson.getAddress().value, extendedCard.getAddress());
+        assertEquals(expectedPerson.getBirthday().toString(), extendedCard.getBirthday());
+    }
+
+    //@@author
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
      * in the correct order.
