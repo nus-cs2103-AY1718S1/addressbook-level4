@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -52,6 +53,9 @@ public interface Model {
 
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    /** Adds or updates the avatar of the selected person. */
+    void setPersonAvatar(ReadOnlyPerson target, Avatar avatar);
 
     //=========== Model support for tag component =============================================================
 

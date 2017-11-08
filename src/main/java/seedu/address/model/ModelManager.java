@@ -21,6 +21,7 @@ import seedu.address.commons.events.model.TagColorChangedEvent;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -130,11 +131,22 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.sortPersonList();
         indicateAddressBookChanged();
     }
+
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
     }
+
+    //@@author yunpengn
+    @Override
+    public void setPersonAvatar(ReadOnlyPerson target, Avatar avatar) {
+        requireAllNonNull(target, avatar);
+        target.setAvatar(avatar);
+        indicateAddressBookChanged();
+    }
+    //@@author
+
 
     //=========== Model support for tag component =============================================================
 
@@ -207,8 +219,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author
 
-
-
     //=========== Filtered Person List Accessors =============================================================
 
     //@@author dennaloh
@@ -269,17 +279,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }
-
-
     //@@author
-
-
-
-
-
-    //@@author
-
-
 
     @Override
     public boolean equals(Object obj) {

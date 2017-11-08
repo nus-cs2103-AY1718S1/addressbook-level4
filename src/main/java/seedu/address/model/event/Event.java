@@ -16,7 +16,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.property.Address;
 import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
-
 import seedu.address.model.property.Property;
 import seedu.address.model.property.UniquePropertyMap;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;

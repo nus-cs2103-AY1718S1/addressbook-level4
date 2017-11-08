@@ -1,4 +1,4 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.person;
 
 import java.awt.Desktop;
 import java.io.IOException;
@@ -8,14 +8,14 @@ import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author dennaloh
-
 /**
- * Emails a contact from the address book
- *
+ * Emails a contact from the address book.
  */
 public class EmailCommand extends Command {
 
@@ -56,11 +56,17 @@ public class EmailCommand extends Command {
                 URI mailto = new URI("mailto:" + email);
                 desktop.mail(mailto);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, personToEmail));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof EmailCommand // instanceof handles nulls
+                && this.targetIndex.equals(((EmailCommand) other).targetIndex)); // state check
     }
 }

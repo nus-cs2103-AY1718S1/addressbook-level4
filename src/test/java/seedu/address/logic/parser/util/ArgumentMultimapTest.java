@@ -1,4 +1,4 @@
-package seedu.address.logic.parser;
+package seedu.address.logic.parser.util;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
@@ -10,9 +10,6 @@ import static seedu.address.logic.parser.util.CliSyntax.PREFIX_PHONE;
 import java.util.HashMap;
 
 import org.junit.Test;
-
-import seedu.address.logic.parser.util.ArgumentMultimap;
-import seedu.address.logic.parser.util.Prefix;
 
 //@@author yunpengn
 public class ArgumentMultimapTest {

@@ -297,63 +297,6 @@ public class ModuleInfoTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ArgumentMultimapTest.java
-``` java
-public class ArgumentMultimapTest {
-    private static final String NOT_EXISTS = "not exists";
-
-    @Test
-    public void put_singleEntry_checkCorrectness() {
-        ArgumentMultimap map = new ArgumentMultimap();
-        map.put(PREFIX_NAME, VALID_NAME_AMY);
-        assertEquals(VALID_NAME_AMY, map.getValue(PREFIX_NAME).orElse(NOT_EXISTS));
-    }
-
-    @Test
-    public void put_singleEmptyEntry_checkCorrectness() {
-        ArgumentMultimap map = new ArgumentMultimap();
-        assertEquals(NOT_EXISTS, map.getValue(PREFIX_NAME).orElse(NOT_EXISTS));
-    }
-
-    @Test
-    public void put_sameNameMultipleTimes_checkCorrectness() {
-        ArgumentMultimap map = new ArgumentMultimap();
-        map.put(PREFIX_NAME, VALID_NAME_AMY);
-        map.put(PREFIX_NAME, VALID_NAME_BOB);
-        assertEquals(2, map.getAllValues(PREFIX_NAME).size());
-    }
-
-    @Test
-    public void put_multipleEntries_checkCorrectness() {
-        ArgumentMultimap map = new ArgumentMultimap();
-        map.put(PREFIX_NAME, VALID_NAME_AMY);
-        map.put(PREFIX_PHONE, VALID_PHONE_BOB);
-        assertEquals(VALID_NAME_AMY, map.getValue(PREFIX_NAME).orElse(NOT_EXISTS));
-        assertEquals(VALID_PHONE_BOB, map.getValue(PREFIX_PHONE).orElse(NOT_EXISTS));
-    }
-
-    @Test
-    public void getAllValues_multipleEntries_checkCorrectness() {
-        ArgumentMultimap map = new ArgumentMultimap();
-        map.put(PREFIX_NAME, VALID_NAME_AMY);
-        map.put(PREFIX_NAME, VALID_NAME_BOB);
-        map.put(PREFIX_PHONE, VALID_PHONE_BOB);
-
-        HashMap<Prefix, String> values = map.getAllValues();
-        assertEquals(2, values.size());
-        assertEquals(VALID_NAME_BOB, values.get(PREFIX_NAME));
-        assertEquals(VALID_PHONE_BOB, values.get(PREFIX_PHONE));
-    }
-
-    @Test
-    public void getPreamble_checkCorrectness() {
-        String preamble = "Some things here";
-        ArgumentMultimap map = new ArgumentMultimap();
-        map.put(new Prefix(""), preamble);
-        assertEquals(preamble, map.getPreamble());
-    }
-}
-```
 ###### \java\seedu\address\logic\parser\ConfigCommandParserTest.java
 ``` java
 public class ConfigCommandParserTest {
@@ -430,6 +373,103 @@ public class ImportCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportNusmodsCommand.MESSAGE_USAGE));
 
         assertParseFailure(parser, NUSMODS_INVALID_IMPORT, String.format(INVALID_URL, ""));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\person\EmailCommandParserTest.java
+``` java
+public class EmailCommandParserTest {
+    private final EmailCommandParser parser = new EmailCommandParser();
+
+    @Test
+    public void parse_validIndex_checkCorrectness() {
+        Command expected = new EmailCommand(Index.fromOneBased(1));
+        assertParseSuccess(parser, " 1 ", expected);
+    }
+
+    @Test
+    public void parse_invalidIndex_expectException() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertParseFailure(parser, " -1 ", expectedMessage);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\person\FindTagCommandParserTest.java
+``` java
+public class FindTagCommandParserTest {
+    private final FindTagCommandParser parser = new FindTagCommandParser();
+
+    @Test
+    public void parse_tagNamePresent_checkCorrectness() {
+        List<String> names = new ArrayList<>();
+        names.add("friends");
+        names.add("classmates");
+        Command expected = new FindTagCommand(new TagContainsKeywordsPredicate(names));
+        assertParseSuccess(parser, "friends classmates", expected);
+    }
+
+    @Test
+    public void parse_tagNameEmpty_expectException() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindTagCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, " ", expectedMessage);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\util\ArgumentMultimapTest.java
+``` java
+public class ArgumentMultimapTest {
+    private static final String NOT_EXISTS = "not exists";
+
+    @Test
+    public void put_singleEntry_checkCorrectness() {
+        ArgumentMultimap map = new ArgumentMultimap();
+        map.put(PREFIX_NAME, VALID_NAME_AMY);
+        assertEquals(VALID_NAME_AMY, map.getValue(PREFIX_NAME).orElse(NOT_EXISTS));
+    }
+
+    @Test
+    public void put_singleEmptyEntry_checkCorrectness() {
+        ArgumentMultimap map = new ArgumentMultimap();
+        assertEquals(NOT_EXISTS, map.getValue(PREFIX_NAME).orElse(NOT_EXISTS));
+    }
+
+    @Test
+    public void put_sameNameMultipleTimes_checkCorrectness() {
+        ArgumentMultimap map = new ArgumentMultimap();
+        map.put(PREFIX_NAME, VALID_NAME_AMY);
+        map.put(PREFIX_NAME, VALID_NAME_BOB);
+        assertEquals(2, map.getAllValues(PREFIX_NAME).size());
+    }
+
+    @Test
+    public void put_multipleEntries_checkCorrectness() {
+        ArgumentMultimap map = new ArgumentMultimap();
+        map.put(PREFIX_NAME, VALID_NAME_AMY);
+        map.put(PREFIX_PHONE, VALID_PHONE_BOB);
+        assertEquals(VALID_NAME_AMY, map.getValue(PREFIX_NAME).orElse(NOT_EXISTS));
+        assertEquals(VALID_PHONE_BOB, map.getValue(PREFIX_PHONE).orElse(NOT_EXISTS));
+    }
+
+    @Test
+    public void getAllValues_multipleEntries_checkCorrectness() {
+        ArgumentMultimap map = new ArgumentMultimap();
+        map.put(PREFIX_NAME, VALID_NAME_AMY);
+        map.put(PREFIX_NAME, VALID_NAME_BOB);
+        map.put(PREFIX_PHONE, VALID_PHONE_BOB);
+
+        HashMap<Prefix, String> values = map.getAllValues();
+        assertEquals(2, values.size());
+        assertEquals(VALID_NAME_BOB, values.get(PREFIX_NAME));
+        assertEquals(VALID_PHONE_BOB, values.get(PREFIX_PHONE));
+    }
+
+    @Test
+    public void getPreamble_checkCorrectness() {
+        String preamble = "Some things here";
+        ArgumentMultimap map = new ArgumentMultimap();
+        map.put(new Prefix(""), preamble);
+        assertEquals(preamble, map.getPreamble());
     }
 }
 ```
