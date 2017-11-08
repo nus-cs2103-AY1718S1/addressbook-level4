@@ -1,5 +1,5 @@
 # eeching
-###### /java/seedu/address/logic/commands/PhoneCommandTest.java
+###### \java\seedu\address\logic\commands\PhoneCommandTest.java
 ``` java
 public class PhoneCommandTest {
 
