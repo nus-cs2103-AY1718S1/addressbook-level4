@@ -406,6 +406,8 @@ An `AutoCompleteParser` will be chosen for the 'stub' based on the characteristi
 
 Different implementations of `AutoCompleteParser` to parse different options shall be explained below.
 
+==== `AutoCompleteCommandParser`
+
 `AutoCompleteCommandParser` takes in an incomplete user command, match it with a list of command words currently supported in the application, and parses back the corresponding command skeleton for the user to fill in. The command skeleton is specified in each `Command` class in the `COMMAND_USAGE` constant.
 
 Some commands that take in just a single argument (usually a numerical index), can simply autocomplete to the command word itself with a space behind:
@@ -432,6 +434,32 @@ public class AddCommand extends UndoableCommand {
 ----
 
 At the moment command skeletons are hardcoded and every command can only have one command skeleton, based on implementation in AutoCompleteCommandParser.java.
+
+==== `AutoCompleteByPrefixModelParser`
+
+`AutoCompleteByPrefixModelParser` (and its subclasses `AutoCompleteTagParser` and `AutoCompleteWordInNameParser`) draw existing data from the `Model` component, to match against incomplete user input.
+
+`AutoCompleteByPrefixModelParser` requires there to be a prefix in order to be able to produce a list of possible options, and the prefix is usually the prefix closest to the caret.
+
+The parser will proceed to extract only the relevant information from `Model` and match them against the input.
+
+===== **`AutoCompleteTagParser`**
+
+`AutoCompleteTagParser` is designed for `findtag` and `removetag` commands, and can parse tags from `Model` without the need for a tag to be present.
+
+===== **`AutoCompleteWordInNameParser`**
+
+`AutoCompleteWordInNameParser` is designed for `find` command, and in addition to retrieving every person's name from `Model`, the parser also split every name into keywords and flatten the resultant list.
+
+This flattened list is then matched with the incomplete user input stub, such that only keywords are matched when a user attempts to use `find` command, instead of the whole name.
+
+==== `AutoCompleteSetStringParser`
+
+`AutoCompleteSetStringParser` is designed for `sort` and `theme` command, where the parser will only match user input stub against a fixed list of String, supplied at constructor.
+
+==== `IdentityParser`
+
+`IdentityParser` does not actually match anything, and is used to catch any invalid user input autocompletion attempts. The user input is returned as it is by this parser.
 
 ==== Design Considerations
 
