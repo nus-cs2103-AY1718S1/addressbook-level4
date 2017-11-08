@@ -95,7 +95,7 @@ public interface Model {
     void changeCommandMode(String mode) throws IllegalValueException;
 
     /**Returns the current command mode*/
-    String getCommandMode();
+    CommandMode getCommandMode();
 
     /**Returns the String Property of current command mode*/
     StringProperty getCommandModeProperty();
