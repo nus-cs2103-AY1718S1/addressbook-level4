@@ -27,6 +27,7 @@ import seedu.room.commons.core.LogsCenter;
 import seedu.room.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.room.logic.Logic;
 import seedu.room.model.person.Name;
+import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 
 /**
@@ -176,6 +177,7 @@ public class PersonPanel extends UiPart<Region> {
         if (selectedPic != null) {
             try {
                 person.getPicture().setPictureUrl(person.getName().toString() + person.getPhone().toString() + ".jpg");
+                logic.updatePersonListPicture((Person) person);
                 if (person.getPicture().checkJarResourcePath()) {
                     ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getJarPictureUrl()));
                     FileInputStream fileStream = new FileInputStream(person.getPicture().getJarPictureUrl());
