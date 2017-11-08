@@ -913,6 +913,36 @@ Use case ends.
 +
 Use case ends.
 
+=== Use case: Undo/Redo multiple commands
+
+*MSS*
+
+1.  User keys in 4 undoable commands.
+2.  Addressbook updates and displays updated data.
+3.  User requests to undo 4 commands.
+4.  Addressbook reverse the 4 most recent commands.
+5.  User requests to redo 4 commands.
+6.  Addressbook reverses the 4 most recent undo commands.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. No undoable commands in stack.
++
+[none]
+** 1a1. AddressBook displays message “No more commands to undo!”.
++
+[none]
+* 5a. No undo commands in stack.
++
+[none]
+** 5a1. AddressBook displays message “No more commands to redo!”.
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
