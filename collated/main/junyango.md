@@ -23,6 +23,19 @@ public class EventPanelSelectionChangedEvent extends BaseEvent {
     }
 }
 ```
+###### \java\seedu\address\commons\events\ui\SwitchThemeEvent.java
+``` java
+
+/**
+ * Handles switch Theme Event
+ */
+public class SwitchThemeEvent extends BaseEvent {
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
 ###### \java\seedu\address\commons\events\ui\SwitchToEventsListEvent.java
 ``` java
 /**
@@ -346,6 +359,29 @@ public class ListEventCommand extends Command {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\SwitchTheme.java
+``` java
+
+/**
+ * Switch Theme command to toggle between both themes (light and dark)
+ */
+public class SwitchTheme extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "theme";
+    public static final String COMMAND_ALIAS = "t";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Toggles between bright and dark theme.\n"
+            + "Example: " + COMMAND_WORD;
+
+    public static final String MESSAGE_SUCCESS = "Theme switched!";
+
+    @Override
+    public CommandResult executeUndoableCommand() {
+        raise(new SwitchThemeEvent());
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case AddEventCommand.COMMAND_WORD:
@@ -359,6 +395,10 @@ public class ListEventCommand extends Command {
         case DeleteEventCommand.COMMAND_WORD:
         case DeleteEventCommand.COMMAND_ALIAS:
             return new DeleteEventParser().parse(arguments);
+
+        case SwitchTheme.COMMAND_WORD:
+        case SwitchTheme.COMMAND_ALIAS:
+            return new SwitchTheme();
 
         case ListEventCommand.COMMAND_WORD:
         case ListEventCommand.COMMAND_ALIAS:
@@ -848,6 +888,67 @@ public class EventNameContainsKeywordsPredicate implements Predicate<ReadOnlyEve
 
 }
 ```
+###### \java\seedu\address\storage\JsonUserPrefsStorage.java
+``` java
+
+
+/**
+ * A class to access UserPrefs stored in the hard disk as a json file
+ */
+public class JsonUserPrefsStorage implements UserPrefsStorage {
+
+    private String filePath;
+    private String addressBookTheme;
+
+    public JsonUserPrefsStorage(String filePath, String theme) {
+        this.filePath = filePath;
+        this.addressBookTheme = theme;
+    }
+
+    public JsonUserPrefsStorage(String filePath) {
+        this.filePath = filePath;
+    }
+
+    @Override
+    public String getAddressBookTheme() {
+        return addressBookTheme;
+    }
+
+    @Override
+    public String getUserPrefsFilePath() {
+        return filePath;
+    }
+
+    @Override
+    public Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException {
+        return readUserPrefs(filePath);
+    }
+
+    /**
+     * Similar to {@link #readUserPrefs()}
+     * @param prefsFilePath location of the data. Cannot be null.
+     * @throws DataConversionException if the file format is not as expected.
+     */
+    public Optional<UserPrefs> readUserPrefs(String prefsFilePath) throws DataConversionException {
+        return JsonUtil.readJsonFile(prefsFilePath, UserPrefs.class);
+    }
+
+    @Override
+    public void saveUserPrefs(UserPrefs userPrefs) throws IOException {
+        JsonUtil.saveJsonFile(userPrefs, filePath);
+    }
+
+}
+```
+###### \java\seedu\address\storage\UserPrefsStorage.java
+``` java
+
+    /**
+     * Returns address book theme
+     */
+    String getAddressBookTheme();
+
+```
 ###### \java\seedu\address\storage\XmlAdaptedEvent.java
 ``` java
 
@@ -911,6 +1012,36 @@ public class XmlAdaptedEvent {
             event.addReminder(new Reminder(event, reminder.getReminderMessage()));
         }
         return event;
+    }
+}
+```
+###### \java\seedu\address\storage\XmlAdaptedReminder.java
+``` java
+/**
+ * JAXB-friendly version of the Reminder.
+ */
+public class XmlAdaptedReminder {
+    @XmlElement(required = true)
+    private String message;
+
+    /**
+     * Constructs an XmlAdaptedReminder.
+     * This is the no-arg constructor that is required by JAXB.
+     */
+    public XmlAdaptedReminder() {
+    }
+
+
+    /**
+     * Converts a given Reminder into this class for JAXB use.
+     *
+     * @param source future changes to this will not affect the created XmlAdaptedReminder
+     */
+    public XmlAdaptedReminder(ReadOnlyReminder source) {
+        message = source.getMessage();
+    }
+    public String getReminderMessage() {
+        return this.message;
     }
 }
 ```
@@ -1103,6 +1234,46 @@ public class EventListPanel extends UiPart<Region> {
     }
 
 }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+
+    /**
+     * Initializes theme upon start up according to preferences.json file (last saved)
+     */
+    private void initializeThemes() {
+        getRoot().getStylesheets().clear();
+        if (prefs.getAddressBookTheme().equals(darkTheme)) {
+            getRoot().getStylesheets().add(darkTheme);
+            getRoot().getStylesheets().add(darkExtension);
+            prefs.setAddressBookTheme(darkTheme);
+        } else {
+            getRoot().getStylesheets().add(brightTheme);
+            getRoot().getStylesheets().add(brightExtension);
+            prefs.setAddressBookTheme(brightTheme);
+        }
+    }
+
+    /**
+     * Handles the event for theme changing
+     * @param event
+     */
+    @Subscribe
+    private void handleThemeChanged(SwitchThemeEvent event) {
+        if (prefs.getAddressBookTheme() == darkTheme) {
+            getRoot().getStylesheets().clear();
+            getRoot().getStylesheets().add(brightTheme);
+            getRoot().getStylesheets().add(brightExtension);
+            prefs.setAddressBookTheme(brightTheme);
+        } else {
+            getRoot().getStylesheets().clear();
+            getRoot().getStylesheets().add(darkTheme);
+            getRoot().getStylesheets().add(darkExtension);
+            prefs.setAddressBookTheme(darkTheme);
+        }
+
+    }
+
 ```
 ###### \resources\view\event\EventListCard.fxml
 ``` fxml
