@@ -384,7 +384,7 @@ The following sequence diagram, Figure 3.2.1, shows further details of the inter
 image::BorrowCommandSequenceDiagram.png[width="800"]
 _Figure 3.2.1 : Sequence diagram of how the `Borrow` command works_
 
-The `payback` command works in the same way as the `borrow` command.
+The `payback` command works in a similar way to the `borrow` command.
 
 ==== Design Considerations
 
