@@ -254,7 +254,7 @@ When a tag is no longer in used, you can use the detag command to remove the tag
 
 Format: `detag INDEX... [t/TAG]`
 
-For examples:
+Examples:
 
 * `list` +
 `detag 2 t/friends` +
