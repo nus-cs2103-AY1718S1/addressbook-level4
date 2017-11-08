@@ -40,7 +40,7 @@ include::../UserGuide.adoc[tag=favouriteunfavourite]
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=favouriteunfavourite]
+//include::../DeveloperGuide.adoc[tag=favouriteunfavourite]
 
 #End of Extract#
 
@@ -100,7 +100,7 @@ include::../UserGuide.adoc[tag=themeslist]
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=themeslist]
+//include::../DeveloperGuide.adoc[tag=themeslist]
 
 #End of Extract#
 
@@ -130,7 +130,7 @@ include::../UserGuide.adoc[tag=events]
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=events]
+//include::../DeveloperGuide.adoc[tag=events]
 
 #End of Extract#
 
