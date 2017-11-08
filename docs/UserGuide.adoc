@@ -129,6 +129,26 @@ Examples:
 * `a n/Jane Doe p/97979791 e/janed@example.com a/Jane street, block 456, #01-01 f/6C g/98`
 * `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/97272231 pp/97979997 f/12A2 g/66 t/criminal`
 
+=== Optional fields: `add` `Since v1.3`
+
+You can find a list of optional input fields for the add command in the table below.
+
+[NOTE]
+====
+When you do not enter any of the optional fields, a message will be generated to inform you that the particular field is not recorded.
+The messages are shown in the table below.
+====
+
+[width="100%",cols="10%,<10%,<80%",options="header",]
+|=======================================================================
+|Optional Field |Prefix | Example of user's input in cherBook's command box without the optional field
+| Student Phone Number | p/ +| add n/John pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 t/Smart +
+| Address | a/ + | add n/John p/97602611 pp/97272700 e/John@gmail.com f/6C g/91 c/600321 t/Smart +
+| Postal Code | c/  | add n/John p/97602611 pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 t/Smart +
+| Email | e/ + | add n/John p/97602611 pp/97272700 a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 t/Smart +
+| Tag | t/ + | add n/John p/97602611 pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 +
+|=======================================================================
+
 === Listing all persons : `list` `Since v1.0`
 
 Shows a list of all persons in cherBook. +
