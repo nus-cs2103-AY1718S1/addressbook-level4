@@ -30,7 +30,8 @@ public class InterestTest {
     @Test
     public void respondToLoginEvent() {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        Person personToTest = new PersonBuilder().withName("AA").withDebt("10000").withTotalDebt("10000").withInterest("1").build();
+        Person personToTest = new PersonBuilder().withName("AA")
+                .withDebt("10000").withTotalDebt("10000").withInterest("1").build();
         Date lastAccruedDate = generateDateFromString(sampleDateInput2);
         personToTest.setLastAccruedDate(lastAccruedDate);
         try {
