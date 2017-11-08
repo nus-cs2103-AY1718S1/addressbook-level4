@@ -56,7 +56,7 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
     //@@author huiyiiih
     /**
-     * Sorts person according to user input option
+     * Sorts person list according to user input option
      */
     void sortPerson(String type) throws InvalidSortTypeException;
     //@author
