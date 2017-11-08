@@ -66,7 +66,7 @@ public class SampleDataUtil {
                         new Address("Blk 2, Mango Street 85, #11-31"), new Appointment(""),
                         new ProfilePicture("pic1.jpeg"),
                         getGroupSet("CS2108"), getTagSet()),
-                new Person(new Name("Paw Cybula"), new Phone("23512352"), new Email("ala@example.com"),
+                new Person(new Name("Patrick Tywin"), new Phone("23512352"), new Email("ala@example.com"),
                         new Address("Mickiewicz Street 29, #06-40"), new Appointment("01/01/3000 00:00 60"),
                         new ProfilePicture(DEFAULT_PICTURE),
                         getGroupSet("University", "Family"), getTagSet("askForHackathon")),
