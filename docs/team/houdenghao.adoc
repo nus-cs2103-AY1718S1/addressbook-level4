@@ -8,7 +8,7 @@ Planno is a desktop application which combines address book and task manager.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/main/HouDenghao.md[Functional code]] [https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/test/HouDenghao.md[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Sort FindE ListE ShowP
+=== Enhancement Added: Sort
 
 ==== External behavior
 
@@ -16,9 +16,6 @@ Planno is a desktop application which combines address book and task manager.
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=sort]
-include::../UserGuide.adoc[tag=listE]
-include::../UserGuide.adoc[tag=findE]
-include::../UserGuide.adoc[tag=showP]
 
 #End of Extract#
 
@@ -34,9 +31,88 @@ include::../UserGuide.adoc[tag=showP]
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: List Event
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=listE]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=listE]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Show Participants
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=showP]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=showP]
 
+#End of Extract#
+
+---
+
+=== Enhancement Added: FindE
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findE]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
 
 #End of Extract#
 

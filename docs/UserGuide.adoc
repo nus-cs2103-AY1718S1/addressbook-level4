@@ -147,7 +147,7 @@ image::UG_list.png[width="790"]
 _Figure 3.3: list command result_
 // end::listE[]
 
-// tag:sort[]
+// tag::sort[]
 === Sorting all persons and events: `sort`
 
 You can use it to view a list of sorted persons in the address book according to the alphabetical order of their names,
@@ -158,8 +158,7 @@ You will see the following after typing sort command:
 
 image::UG_sort.png[width="790"]
 _Figure 3.4: sort command result_
-
-// end:sort[]
+// end::sort[]
 
 === Editing
 ==== Editing a person : `edit`
