@@ -571,6 +571,8 @@ Case (1) is to restore the default list of all contacts after users have used th
 
 The rest of the execution then, follows closely to the case where the command is executed through `CommandBox`
 
+
+
 // tag::print[]
 === Addition of Print Command
 The print command enables the user to save his/her addressbook into a printable .txt file
