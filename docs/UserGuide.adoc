@@ -231,20 +231,19 @@ Format: `birthday INDEX [b/BIRTHDAY]`
 
 ****
 * Adds the birthday to the person specified by the `INDEX`.
-* The birthday command is case-sensitive.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 * The birthday *must be in positive intgers* 1, 2, 3, ...
-* The birthday *must be 4 or 6 or 8 integers long* in the format DDMM or DDMMYY or DDMMYYYY  ...
+* The birthday *must be 6 or 8 integers long* in the format DD/MM/YY or DD/MM/YYYY  ...
 ****
 
 Examples:
 
 * `list` +
-`birthday 1 b/211095` +
+`birthday 1 b/21/10/95` +
 Adds the birthday "21 Oct 95" to the 1st person in the address book.
-* `birthday 3 b/2110` +
-Adds the birthday "21 Oct" to the 3rd person in the address book.
+* `birthday 3 b/21/10/1995` +
+Adds the birthday "21 Oct 1995" to the 3rd person in the address book.
 
 image::birthday-command-ui.png[width="790"]
 // end::birthday[]
@@ -569,7 +568,7 @@ e.g.`select 2`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Birthday* : `birthday INDEX [b/BIRTHDAY]` +
-e.g. `birthday 2 b/240596`
+e.g. `birthday 2 b/24/05/96`
 * *AddTag* : `addtag INDEX [MORE_INDEXES] [t/TAG]` +
 e.g. `addtag 1 4 t/friends`
 * *RemoveTag* : `removetag INDEX [MORE_INDEXES] [t/TAG]` +
