@@ -475,10 +475,9 @@ In the `DeleteMultipleCommand` class, the commandResult method is used which com
 === Recently Deleted List
 
 Recently deleted command is used to allow the user to have a list of the past 30 recently deleted contacts and their details.
-By keying in the command word `recentlyDel`, the command word will be detected in the `AddressBookParser` class where the arguments (indexes in this case) will be passed over to the `RecentlyDeletedCommand` class.
+By keying in the command word `recentlyDel`, the command word will be detected in the `AddressBookParser` class and then the `RecentlyDeletedCommand` class would be executed.
 We will now create a `LinkedList<Person> RecentlyDeletedQueue = new LinkedList<>();` to store the recently deleted contacts for up to the past 30 contacts.
 In the `RecentlyDeletedCommand` class, the `commandResult` method is used which will show the deleted contacts.
-
 
 // tag::changePicture[]
 === Change Profile Picture

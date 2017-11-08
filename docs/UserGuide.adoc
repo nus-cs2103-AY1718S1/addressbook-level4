@@ -369,18 +369,30 @@ Format: sort
 Change the profile picture of the first contact shown in the most recent listing to the picture specified at D:/myPicture.png
 // end::changePicture[]
 
-=== Delete Tag : (Coming in v1.5)
+=== Delete tag : (Coming in v1.5)
 
 Delete specific tag from all contacts. +
 
-=== Clear Tag : (Coming in v1.5)
+=== Clear tag : (Coming in v1.5)
 
 Clear all tags from specific contact. +
 
-=== Recently Deleted : `recentlyDel` (Since v1.2)
+=== Recently deleted : `recentlyDel` (Since v1.2)
 
 Shows recently deleted list of contacts for past 30 contacts. +
 Format: `recentlyDel`
+
+=== Changing theme : `theme` (Since v1.5)
+
+Changes the colour theme of TheYellowPage from `DarkTheme.css` to `LightTheme.css` and vice versa. +
+
+image::DarkTheme.png[width="790"]
+_Figure 4.19.1 : Screenshot of TheYellowPage in DarkTheme.css_ +
+
+image::LightTheme.png[width="790"]
+_Figure 4.19.2 : Screenshot of TheYellowPage in LightTheme.css_ +
+
+Format: `theme`
 
 === Moving contacts : `move` (Coming in v2.0)
 

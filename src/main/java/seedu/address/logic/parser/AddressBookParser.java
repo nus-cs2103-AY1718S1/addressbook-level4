@@ -26,6 +26,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
 
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -131,11 +132,15 @@ public class AddressBookParser {
         case FindNumberCommand.COMMAND_WORD:
         case FindNumberCommand.COMMAND_ALIAS:
             return new FindNumberCommandParser().parse(arguments);
-        //@@author
+        //@@author vmlimshimin
         case RecentlyDeletedCommand.COMMAND_WORD:
         case RecentlyDeletedCommand.COMMAND_ALIAS:
             return new RecentlyDeletedCommand();
 
+        case ThemeCommand.COMMAND_WORD:
+        case ThemeCommand.COMMAND_ALIAS:
+            return new ThemeCommand();
+        //@@author
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
