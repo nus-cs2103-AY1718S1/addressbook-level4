@@ -1,899 +1,5 @@
 # yunpengn
-###### /resources/view/person/PersonDetailsPanel.fxml
-``` fxml
-
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-
-<VBox prefHeight="600.0" prefWidth="580.0" stylesheets="@../../css/Extensions.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <HBox prefHeight="200.0">
-         <children>
-            <ImageView fx:id="avatar" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/default_person_photo.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="name" styleClass="details-name-huge-label" text="\\\$name" wrapText="true">
-               <font>
-                  <Font size="45.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="30.0" top="50.0" />
-               </HBox.margin>
-            </Label>
-         </children>
-      </HBox>
-      <HBox>
-         <children>
-            <ListView fx:id="propertyListKeys" />
-            <ListView fx:id="propertyListValues" prefWidth="500.0" />
-         </children>
-         <VBox.margin>
-            <Insets top="30.0" />
-         </VBox.margin>
-      </HBox>
-   </children>
-</VBox>
-```
-###### /resources/view/MainWindow.fxml
-``` fxml
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" minWidth="600.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
-      <VBox fx:id="sideButtonBar" alignment="CENTER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0">
-         <padding>
-            <Insets bottom="10.0" top="10.0" />
-         </padding>
-         <children>
-            <ImageView fx:id="switchToContactsButton" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#handleSwitchToContacts" pickOnBounds="true" styleClass="sidebar-button">
-               <VBox.margin>
-                  <Insets bottom="50.0" top="50.0" />
-               </VBox.margin>
-               <image>
-                  <Image url="@../images/contacts.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="switchToEventsButton" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="20.0" onMouseClicked="#handleSwitchToEvents" pickOnBounds="true" styleClass="sidebar-button">
-               <image>
-                  <Image url="@../images/events.png" />
-               </image>
-               <VBox.margin>
-                  <Insets bottom="50.0" top="50.0" />
-               </VBox.margin>
-            </ImageView>
-         </children>
-      </VBox>
-    <VBox fx:id="dataList" minWidth="340" prefWidth="340.0" SplitPane.resizableWithParent="false">
-      <padding>
-        <Insets bottom="10" left="10" right="10" top="10" />
-      </padding>
-      <StackPane fx:id="dataListPanelPlaceholder" VBox.vgrow="ALWAYS" />
-    </VBox>
-
-    <StackPane fx:id="dataDetailsPanelPlaceholder">
-      <padding>
-        <Insets bottom="10" left="10" right="10" top="10" />
-      </padding>
-    </StackPane>
-  </SplitPane>
-```
-###### /java/seedu/address/model/person/Avatar.java
-``` java
-/**
- * Represents the {@link Avatar} image of each {@link Person}. This is a one-to-one relationship, meaning that each
- * {@link Person} should have at most one {@link Avatar}.<br>
- *
- * Notice {@link Avatar} is not a {@link Property}. This is because it is indeed different from other fields of
- * {@link Person}. It is not shown as a row in the {@link PersonDetailsPanel}. Meanwhile, the input validation is
- * done by separate methods rather than a single regular expression (the complexity is not at the same level).
- */
-public class Avatar {
-    private static final String INVALID_URL_MESSAGE = "The provided URL is invalid.";
-    private static final String IMG_URL_PATTERN =
-            "^(https?://)?(?:[a-z0-9\\-]+\\.)+[a-z]{2,6}(?:/[^/#?]+)+\\.(?:jpe?g|gif|png)$";
-
-    private String url;
-
-    public Avatar(String url) throws IllegalValueException {
-        if (!isValidImageUrl(url)) {
-            throw new IllegalValueException(INVALID_URL_MESSAGE);
-        }
-        this.url = url;
-    }
-
-    /**
-     * An all-in-one checking for the path of the provided image.
-     */
-    private boolean isValidAvatarPath(String path) {
-        return !FileUtil.hasConsecutiveExtensionSeparators(path)
-                && !FileUtil.hasConsecutiveNameSeparators(path)
-                && !FileUtil.hasInvalidNames(path)
-                && !FileUtil.hasInvalidNameSeparators(path);
-    }
-
-    /**
-     * Checks whether a given string is a valid URL and it points to an image.
-     */
-    private boolean isValidImageUrl(String url) {
-        return url.matches(IMG_URL_PATTERN);
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Avatar // instanceof handles nulls
-                && this.url.equals(((Avatar) other).url));
-    }
-
-    @Override
-    public int hashCode() {
-        return url.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return "Avatar from " + url;
-    }
-}
-```
-###### /java/seedu/address/model/person/Person.java
-``` java
-    @Override
-    public ObjectProperty<Avatar> avatarProperty() {
-        return avatar;
-    }
-
-    @Override
-    public Avatar getAvatar() {
-        return avatar.get();
-    }
-
-    public void setAvatar(Avatar avatar) {
-        requireNonNull(avatar);
-        this.avatar.set(avatar);
-    }
-
-    @Override
-    public ObjectProperty<UniquePropertyMap> properties() {
-        return properties;
-    }
-
-    /**
-     * Returns an immutable property set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    @Override
-    public Set<Property> getProperties() {
-        return Collections.unmodifiableSet(properties.get().toSet());
-    }
-
-    @Override
-    public List<Property> getSortedProperties() {
-        return Collections.unmodifiableList(properties().get().toSortedList());
-    }
-
-
-    /**
-     * Replaces this person's properties with the properties in the argument tag set.
-     */
-    public void setProperties(Set<Property> replacement) throws DuplicatePropertyException {
-        properties.set(new UniquePropertyMap(replacement));
-    }
-
-    private String getProperty(String shortName) throws PropertyNotFoundException {
-        return properties.get().getPropertyValue(shortName);
-    }
-
-    /**
-     * Updates the value of the property if there already exists a property with the same shortName, otherwise
-     * adds a new property.
-     */
-    public void setProperty(Property toSet) {
-        properties.get().addOrUpdate(toSet);
-    }
-```
-###### /java/seedu/address/model/util/SampleDataUtil.java
-``` java
-    public static Event[] getSampleEvents() {
-        try {
-            return new Event[]{
-                new Event(new Name("Volleyball Practice"), new DateTime("25122017 08:30"),
-                        new Address("OCBC ARENA Hall 3, #01-111"), new ArrayList<>()),
-                new Event(new Name("CS2103T Lecture"), new DateTime("20102017 14:00"),
-                        new Address("iCube Auditorium, NUS"), new ArrayList<>()),
-                new Event(new Name("Project Meeting"), new DateTime("20102017 14:00"),
-                        new Address("iCube Auditorium, NUS"), new ArrayList<>())
-            };
-        } catch (IllegalValueException | PropertyNotFoundException e) {
-            throw new AssertionError("sample data cannot be invalid", e);
-        }
-    }
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    //=========== Model support for property component =============================================================
-
-    /**
-     * Adds a new customize property to {@code PropertyManager}.
-     *
-     * @throws DuplicatePropertyException if there already exists a property with the same {@code shortName}.
-     * @throws PatternSyntaxException     if the given regular expression contains invalid syntax.
-     */
-    @Override
-    public void addProperty(String shortName, String fullName, String message, String regex)
-            throws DuplicatePropertyException, PatternSyntaxException {
-        PropertyManager.addNewProperty(shortName, fullName, message, regex);
-        indicateAddressBookChanged();
-    }
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    /**
-     * Changes the displayed color of an existing tag (through {@link TagColorManager}).
-     */
-    public void setTagColor(Tag tag, String color) {
-        TagColorManager.setColor(tag, color);
-        indicateAddressBookChanged();
-        raise(new TagColorChangedEvent(tag, color));
-    }
-```
-###### /java/seedu/address/model/Model.java
-``` java
-    /** Adds a new customize property */
-    void addProperty(String shortName, String fullName, String message, String regex)
-            throws DuplicatePropertyException, PatternSyntaxException;
-```
-###### /java/seedu/address/model/Model.java
-``` java
-    /** Changes the color of an existing tag (through TagColorManager) */
-    void setTagColor(Tag tag, String color);
-
-```
-###### /java/seedu/address/model/property/UniquePropertyMap.java
-``` java
-/**
- * A HashMap of properties that enforces no nulls and uniqueness between its elements.
- *
- * Supports minimal set of map (list) operations for the app's features.
- *
- * Notice: Uniqueness is directly supported by internal HashMap, which makes it different from
- * {@link seedu.address.model.person.UniquePersonList} and {@link seedu.address.model.tag.UniqueTagList}.
- *
- * @see Property#equals(Object)
- */
-public class UniquePropertyMap implements Iterable<Property> {
-    private static final String PROPERTY_NOT_FOUND = "This person does not have such property.";
-    private final ObservableMap<String, Property> internalMap = FXCollections.observableHashMap();
-
-    /**
-     * Constructs empty PropertyList.
-     */
-    public UniquePropertyMap() {}
-
-    /**
-     * Creates a UniquePropertyMap using given properties.
-     * Enforces no nulls.
-     */
-    public UniquePropertyMap(Set<Property> properties) throws DuplicatePropertyException {
-        requireAllNonNull(properties);
-
-        for (Property property: properties) {
-            add(property);
-        }
-    }
-
-    /**
-     * Returns all properties (collection of values in all entries) in this map as a Set. This set is mutable
-     * but change-insulated against the internal map.
-     */
-    public Set<Property> toSet() {
-        return new HashSet<>(internalMap.values());
-    }
-
-    /**
-     * Returns all properties (collection of values in all entries) in this map as a sorted list based on the full
-     * name of each property. This list is mutable but change-insulated against the internal map.
-     */
-    public List<Property> toSortedList() {
-        List<Property> list = new ArrayList<>(internalMap.values());
-        list.sort(Comparator.comparing(Property::getFullName));
-        return list;
-    }
-
-    /**
-     * Replaces all the properties in this map with those in the argument property map.
-     */
-    public void setProperties(Set<Property> properties) throws DuplicatePropertyException {
-        requireAllNonNull(properties);
-        internalMap.clear();
-
-        for (Property property: properties) {
-            add(property);
-        }
-    }
-
-    /**
-     * Merges all properties from the argument list into this list. If a property with the same shortName already
-     * exists in the list, it will not be merged in.
-     */
-    public void mergeFrom(UniquePropertyMap from) {
-        for (Property property: from) {
-            if (!containsProperty(property)) {
-                internalMap.put(property.getShortName(), property);
-            }
-        }
-    }
-
-    /**
-     * Returns true if there exists a property with the given shortName in the list.
-     */
-    public boolean containsProperty(String shortName) {
-        requireNonNull(shortName);
-        return internalMap.containsKey(shortName);
-    }
-
-    /**
-     * Returns true if the list containsProperty an equivalent Property (with the same shortName)
-     * as the given argument.
-     */
-    public boolean containsProperty(Property toCheck) {
-        requireNonNull(toCheck);
-        return containsProperty(toCheck.getShortName());
-    }
-
-    public String getPropertyValue(String shortName) throws PropertyNotFoundException {
-        if (!containsProperty(shortName)) {
-            throw new PropertyNotFoundException();
-        }
-        return internalMap.get(shortName).getValue();
-    }
-
-    /**
-     * Adds a property to the map.
-     *
-     * @throws DuplicatePropertyException if the given property already exists in this list (or there exists a
-     * property that is equal to the one in the argument). Since we are using {@link java.util.HashMap}, another
-     * method must be used when we want to update the value of an existing property.
-     */
-    public void add(Property toAdd) throws DuplicatePropertyException {
-        requireNonNull(toAdd);
-        String shortName = toAdd.getShortName();
-
-        if (containsProperty(shortName)) {
-            throw new DuplicatePropertyException(String.format(PROPERTY_EXISTS, shortName));
-        }
-        internalMap.put(shortName, toAdd);
-    }
-
-    /**
-     * Updates the value of an existing property in the map.
-     *
-     * @throws PropertyNotFoundException if there is no property with the same shortName in this map previously.
-     */
-    public void update(Property toUpdate) throws PropertyNotFoundException {
-        requireNonNull(toUpdate);
-        String shortName = toUpdate.getShortName();
-
-        if (!containsProperty(shortName)) {
-            throw new PropertyNotFoundException();
-        }
-        internalMap.put(shortName, toUpdate);
-    }
-
-    /**
-     * Updates the value of the property if there already exists a property with the same shortName, otherwise
-     * adds a new property.
-     */
-    public void addOrUpdate(Property toSet) {
-        requireNonNull(toSet);
-        String shortName = toSet.getShortName();
-
-        internalMap.put(shortName, toSet);
-    }
-
-    @Override
-    public Iterator<Property> iterator() {
-        return toSet().iterator();
-    }
-
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
-     */
-    public ObservableMap<String, Property> asObservableList() {
-        return FXCollections.unmodifiableObservableMap(internalMap);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof UniquePropertyMap // instanceof handles nulls
-                && this.internalMap.equals(((UniquePropertyMap) other).internalMap));
-    }
-
-    /**
-     * Utilizes {@link #equals(Object)} because {@link java.util.HashMap} does not enforce
-     * ordering anyway.
-     */
-    public boolean equalsOrderInsensitive(UniquePropertyMap other) {
-        return equals(other);
-    }
-
-    /**
-     * Returns the size of this map.
-     */
-    public int size() {
-        return internalMap.size();
-    }
-
-    @Override
-    public int hashCode() {
-        return internalMap.hashCode();
-    }
-}
-```
-###### /java/seedu/address/model/property/Phone.java
-``` java
-/**
- * Represents a Person's phone number in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
- */
-public class Phone extends Property {
-    private static final String PROPERTY_SHORT_NAME = "p";
-
-    public Phone(String value) throws IllegalValueException, PropertyNotFoundException {
-        super(PROPERTY_SHORT_NAME, value);
-    }
-
-    /**
-     * Returns true if a given string is a valid phone number.
-     */
-    public static boolean isValidPhone(String test) {
-        return test.matches(PropertyManager.getPropertyValidationRegex(PROPERTY_SHORT_NAME));
-    }
-}
-```
-###### /java/seedu/address/model/property/Email.java
-``` java
-/**
- * Represents a Person's email in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
- */
-public class Email extends Property {
-    private static final String PROPERTY_SHORT_NAME = "e";
-
-    public Email(String value) throws IllegalValueException, PropertyNotFoundException {
-        super(PROPERTY_SHORT_NAME, value);
-    }
-
-    /**
-     * Returns true if a given string is a valid email address.
-     */
-    public static boolean isValidEmail(String test) {
-        return test.matches(PropertyManager.getPropertyValidationRegex(PROPERTY_SHORT_NAME));
-    }
-}
-```
-###### /java/seedu/address/model/property/PropertyManager.java
-``` java
-/**
- * Manages the different properties (both pre-loaded ones and customize ones) of all persons stored in the
- * application.
- *
- * Pre-loaded properties include {@code Address}, {@code Email}, {@code Name}, {@code Phone}. These pre-loaded
- * properties are subjected to changes in later versions.
- *
- * Customize properties include all properties except the pre-loaded ones, which are added by the following command:
- * <pre>{@code config --add-property <property_name> ...}</pre>
- *
- * TODO: Should we extend {@link seedu.address.commons.core.ComponentManager} as superclass?
- */
-public class PropertyManager {
-    // Default constraint setting for all properties.
-    public static final String DEFAULT_MESSAGE = "%1$s can take any values, but it should not be blank.";
-    public static final String DEFAULT_REGEX = "[^\\s].*";
-
-    private static final String DEFAULT_PREFIX = "%1$s/";
-
-    // Mapping from property short name to its prefixes (for all available properties).
-    private static final HashMap<String, Prefix> propertyPrefixes = new HashMap<>();
-
-    // Mapping from property short name to its full name.
-    private static final HashMap<String, String> propertyFullNames = new HashMap<>();
-
-    // Mapping from property name to the corresponding constraint message and validation regular expression.
-    private static final HashMap<String, String> propertyConstraintMessages = new HashMap<>();
-    private static final HashMap<String, String> propertyValidationRegex = new HashMap<>();
-
-    // Records whether has been initialized before.
-    private static boolean initialized = false;
-
-    /**
-     * Util for initialization of default pre-loaded properties. This method should not be called if there is
-     * existing data loaded from local storage file.
-     */
-    public static void initializePropertyManager() {
-        if (!initialized) {
-            try {
-                // Adds name as a pre-loaded property.
-                addNewProperty("n", "Name",
-                        "Person names should only contain alphanumeric characters and spaces, "
-                                + "and it should not be blank",
-                        "[\\p{Alnum}][\\p{Alnum} ]*");
-
-                // Adds email as a pre-loaded property.
-                addNewProperty("e", "Email",
-                        "Person emails should be 2 alphanumeric/period strings separated by '@'",
-                        "[\\w\\.]+@[\\w\\.]+");
-
-                // Adds phone number as a pre-loaded property.
-                addNewProperty("p", "Phone",
-                        "Phone numbers can only contain numbers, and should be at least 3 digits long",
-                        "\\d{3,}");
-
-                // Adds address as a pre-loaded property.
-                addNewProperty("a", "Address",
-                        String.format(DEFAULT_MESSAGE, "Address"), DEFAULT_REGEX);
-
-                // Adds date/time as a pre-loaded property.
-                addNewProperty("dt", "DateTime", "Event date & time should be "
-                                + "simple and clear enough for the application to understand", DEFAULT_REGEX);
-            } catch (DuplicatePropertyException dpe) {
-                throw new AssertionError("Pre-loaded properties cannot be invalid", dpe);
-            }
-
-            initialized = true;
-        }
-    }
-
-    /**
-     * Adds a new available property with all the required information for setting up a property.
-     *
-     * TODO: Should we allow duplicates in full names of different properties?
-     *
-     * @param shortName is the short-form name of this property, usually consists of one or two letters, like a
-     *                  (stands for address). It is usually the initial of the property name.
-     * @param fullName is the full-form name of this property, should be a legal English word.
-     * @param message is the constraint message of this property. It will be displayed when the value of this
-     *                property does not pass the validation check.
-     * @param regex is the regular expression used to perform input validation.
-     *
-     * @throws DuplicatePropertyException is thrown when a property with the same{@code shortName} already exists.
-     * @throws PatternSyntaxException is thrown if the given regex is {@code regex} is invalid.
-     */
-    public static void addNewProperty(String shortName, String fullName, String message, String regex)
-            throws DuplicatePropertyException, PatternSyntaxException {
-        // Checks whether there exists a property with the same name.
-        if (propertyPrefixes.containsKey(shortName)) {
-            throw new DuplicatePropertyException(String.format(PROPERTY_EXISTS, shortName));
-        }
-        // Checks whether the regular expression is valid.
-        Pattern.compile(regex);
-
-        propertyPrefixes.put(shortName, new Prefix(String.format(DEFAULT_PREFIX, shortName)));
-        propertyFullNames.put(shortName, fullName);
-        propertyConstraintMessages.put(shortName, message);
-        propertyValidationRegex.put(shortName, regex);
-    }
-
-    /**
-     * Clears all properties stored in the {@link PropertyManager}.
-     */
-    public static void clearAllProperties() {
-        propertyPrefixes.clear();
-        propertyFullNames.clear();
-        propertyConstraintMessages.clear();
-        propertyValidationRegex.clear();
-    }
-
-    public static boolean containsShortName(String shortName) {
-        return propertyPrefixes.containsKey(shortName);
-    }
-
-    public static String getPropertyFullName(String shortName) {
-        return propertyFullNames.get(shortName);
-    }
-
-    public static String getPropertyConstraintMessage(String shortName) {
-        return propertyConstraintMessages.get(shortName);
-    }
-
-    public static String getPropertyValidationRegex(String shortName) {
-        return propertyValidationRegex.get(shortName);
-    }
-
-    public static HashSet<String> getAllShortNames() {
-        return new HashSet<>(propertyPrefixes.keySet());
-    }
-
-    public static HashSet<Prefix> getAllPrefixes() {
-        return new HashSet<>(propertyPrefixes.values());
-    }
-}
-```
-###### /java/seedu/address/model/property/DateTime.java
-``` java
-    /**
-     * Returns true if a given string is a valid phone number.
-     */
-    public static boolean isValidTime(String test) {
-        try {
-            prepareDateTimeValue(test);
-            return true;
-        } catch (IllegalValueException | PropertyNotFoundException e) {
-            return false;
-        }
-    }
-
-    /**
-     * Prepares the value by checking whether the input can be interpreted by the natural language parser.
-     */
-    public static String prepareDateTimeValue(String value) throws IllegalValueException, PropertyNotFoundException {
-        // Returns the original value directly if it is already in standard format.
-        if (isInStandardFormat(value)) {
-            return value;
-        }
-
-        Optional<Date> dateObject = NaturalLanguageUtil.parseSingleDateTime(value);
-        if (dateObject.isPresent()) {
-            return formatDateTime(dateObject.get());
-        } else {
-            throw new IllegalValueException(PropertyManager.getPropertyConstraintMessage(PROPERTY_SHORT_NAME));
-        }
-    }
-
-    /**
-     * Checks whether a string representation of datetime is in standard format.
-     */
-    public static boolean isInStandardFormat(String value) {
-        return value.matches(STANDARD_FORMAT);
-    }
-
-    public static Date parseDateTime(String value) throws ParseException {
-        return dateFormatter.parse(value);
-    }
-
-    public static String formatDateTime(Date date) {
-        return dateFormatter.format(date);
-    }
-}
-```
-###### /java/seedu/address/model/property/exceptions/PropertyNotFoundException.java
-``` java
-/**
- * Signals that the required property has not been defined yet.
- */
-public class PropertyNotFoundException extends Exception {
-    public PropertyNotFoundException() {
-        super("Property not found.");
-    }
-
-    public PropertyNotFoundException(String shortName) {
-        super(String.format(PROPERTY_NOT_FOUND, shortName));
-    }
-}
-```
-###### /java/seedu/address/model/property/exceptions/DuplicatePropertyException.java
-``` java
-/**
- * Signals that the property with the same short name already exists.
- */
-public class DuplicatePropertyException extends Exception {
-    public DuplicatePropertyException(String message) {
-        super(message);
-    }
-}
-```
-###### /java/seedu/address/model/property/Property.java
-``` java
-/**
- * A generic class that represents a property of a person. All properties of a person (including name, email, phone
- * and address) should inherit from this class.
- */
-public class Property {
-    /**
-     * Why do we only store three fields as instance variables in this class?<br>
-     *
-     * {@link #shortName} is used as the identifier for the property, {@link #fullName} is used stored because we may
-     * need to access it frequently (it will be a bad design decision if we have to perform HashMap access operation
-     * whenever we need to get the full name of a property), and {@link #value} must be stored here apparently.
-     */
-    private final String shortName;
-    private final String fullName;
-    private String value;
-
-    /**
-     * Creates a property via its name in short form and its input value.
-     *
-     * @param shortName is the short name (identifier) of this property.
-     */
-    public Property(String shortName, String value) throws IllegalValueException, PropertyNotFoundException {
-        if (!PropertyManager.containsShortName(shortName)) {
-            throw new PropertyNotFoundException(shortName);
-        }
-
-        this.shortName = shortName;
-
-        requireNonNull(value);
-        if (!isValid(value)) {
-            throw new IllegalValueException(PropertyManager.getPropertyConstraintMessage(shortName));
-        }
-        this.value = value;
-        this.fullName = PropertyManager.getPropertyFullName(shortName);
-    }
-
-    /**
-     * Returns if a given string is a valid value for this property.
-     *
-     * Notice: Do NOT call this method for {@link DateTime} property. Use {@code DateTime.isValidTime()} instead.
-     */
-    public boolean isValid(String test) {
-        return test.matches(PropertyManager.getPropertyValidationRegex(shortName));
-    }
-
-    public String getShortName() {
-        return shortName;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    @Override
-    public String toString() {
-        return value;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            // short circuit if same object.
-            return true;
-        } else if (other instanceof Property) {
-            // instanceof handles nulls and type checking.
-            Property otherProperty = (Property) (other);
-            // key-value pair check
-            return this.shortName.equals(otherProperty.getShortName())
-                    && this.value.equals(otherProperty.getValue());
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public int hashCode() {
-        return value.hashCode();
-    }
-}
-```
-###### /java/seedu/address/model/property/Address.java
-``` java
-/**
- * Represents a Person's address in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
- */
-public class Address extends Property {
-    private static final String PROPERTY_SHORT_NAME = "a";
-
-    public Address(String value) throws IllegalValueException, PropertyNotFoundException {
-        super(PROPERTY_SHORT_NAME, value);
-    }
-
-    /**
-     * Returns true if a given string is a valid address.
-     */
-    public static boolean isValidAddress(String test) {
-        return test.matches(PropertyManager.getPropertyValidationRegex(PROPERTY_SHORT_NAME));
-    }
-}
-```
-###### /java/seedu/address/model/property/Name.java
-``` java
-/**
- * Represents a Person's name in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
- */
-public class Name extends Property {
-    private static final String PROPERTY_SHORT_NAME = "n";
-
-    public Name(String value) throws IllegalValueException, PropertyNotFoundException {
-        super(PROPERTY_SHORT_NAME, value);
-    }
-
-    /**
-     * Returns true if a given string is a valid person name.
-     */
-    public static boolean isValidName(String test) {
-        return test.matches(PropertyManager.getPropertyValidationRegex(PROPERTY_SHORT_NAME));
-    }
-}
-```
-###### /java/seedu/address/model/tag/TagColorManager.java
-``` java
-/**
- * Manages the displayed color of all tags.
- *
- * TODO: Should we extract color out to be a {@code Color} class?
- */
-public class TagColorManager {
-    /**
-     * Stores the colors for all existing tags here so that the same tag always has the same color. Notice this
-     * {@code HashMap} has to be declared as a class variable. See the {@code equal} method in {@link Tag} class.
-     */
-    private static HashMap<Tag, String> internalMap = new HashMap<>();
-
-    // Random number generator (non-secure purpose)
-    private static final Random randomGenerator = new Random();
-
-    private static final String TAG_NOT_FOUND = "The provided tag does not exist.";
-
-    /**
-     * The upper (exclusive) bound should be equal to {@code Math.pow(16, 6)}. The lower (inclusive) bound should be
-     * equal to {@code Math.pow(16, 5)}. Thus, the interval is {@code Math.pow(16, 6) - Math.pow(16, 5)}.
-     */
-    private static final int RGB_INTERVAL = 15728640;
-    private static final int RGB_LOWER_BOUND = 1048576;
-
-    public static String getColor(Tag tag) throws TagNotFoundException {
-        if (!internalMap.containsKey(tag)) {
-            throw new TagNotFoundException(TAG_NOT_FOUND);
-        }
-
-        return internalMap.get(tag);
-    }
-
-    public static boolean contains(Tag tag) {
-        return internalMap.containsKey(tag);
-    }
-
-    /**
-     * Changes the color of a specific {@link Tag}.
-     *
-     * @param tag is the tag whose displayed color will be changed.
-     * @param color is the RGB value of its new color.
-     */
-    public static void setColor(Tag tag, String color) {
-        internalMap.put(tag, color);
-    }
-
-    /**
-     * Randomly assign a color to the given {@code tag}. Notice the selection of random color is not cryptographically
-     * secured.
-     */
-    public static void setColor(Tag tag) {
-        int randomColorCode = randomGenerator.nextInt(RGB_INTERVAL) + RGB_LOWER_BOUND;
-        setColor(tag, "#" + Integer.toHexString(randomColorCode));
-    }
-}
-```
-###### /java/seedu/address/commons/util/JsonUtil.java
-``` java
-    /**
-     * Read JSON data from a given URL and convert the data to an instance of the given class.
-     *
-     * @param url is the URL to the remote JSON data.
-     */
-    public static <T> T fromJsonUrl(URL url, Class<T> instanceClass) throws IOException {
-        return objectMapper.readValue(url, instanceClass);
-    }
-```
-###### /java/seedu/address/commons/events/model/TagColorChangedEvent.java
+###### \java\seedu\address\commons\events\model\TagColorChangedEvent.java
 ``` java
 /**
  * Indicates the color of some tag(s) has been changed.
@@ -913,655 +19,18 @@ public class TagColorChangedEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/ui/person/PersonCard.java
+###### \java\seedu\address\commons\util\JsonUtil.java
 ``` java
     /**
-     * Initializes all the tags of a person displayed in different random colors.
-     */
-    private void initTags() {
-        person.getTags().forEach(tag -> {
-            String tagName = tag.tagName;
-            Label newTagLabel = new Label(tagName);
-            try {
-                newTagLabel.setStyle(String.format(TAG_COLOR_CSS, TagColorManager.getColor(tag)));
-            } catch (TagNotFoundException e) {
-                System.err.println("An existing must have a color.");
-            }
-            tags.getChildren().add(newTagLabel);
-        });
-    }
-
-    @Subscribe
-    public void handleTagColorChange(TagColorChangedEvent event) {
-        // TODO: improve efficiency here. Update rather than re-create all labels.
-        tags.getChildren().clear();
-        initTags();
-    }
-```
-###### /java/seedu/address/ui/person/PersonCard.java
-``` java
-
-    @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
-            return false;
-        }
-
-        // state check
-        PersonCard card = (PersonCard) other;
-        return id.getText().equals(card.id.getText())
-                && person.equals(card.person);
-    }
-}
-```
-###### /java/seedu/address/ui/MainWindow.java
-``` java
-    /**
-     * Take note of the following two methods, which overload each other. The one without parameter is used as the
-     * callback when the user clicks on the sidebar button; the other one is used as the subscriber when the user
-     * enters some command(s) that raise(s) the corresponding event(s).
-     */
-    @FXML
-    private void handleSwitchToContacts() {
-        dataDetailsPanelPlaceholder.getChildren().clear();
-        dataListPanelPlaceholder.getChildren().clear();
-        dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-    }
-
-    @Subscribe
-    public void handleSwitchToContacts(SwitchToContactsListEvent event) {
-        dataDetailsPanelPlaceholder.getChildren().clear();
-        dataListPanelPlaceholder.getChildren().clear();
-        dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-    }
-
-    @FXML
-    private void handleSwitchToEvents() {
-        dataDetailsPanelPlaceholder.getChildren().clear();
-        dataListPanelPlaceholder.getChildren().clear();
-        dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
-    }
-
-    @Subscribe
-    public void handleSwitchToEvents(SwitchToEventsListEvent event) {
-        dataDetailsPanelPlaceholder.getChildren().clear();
-        dataListPanelPlaceholder.getChildren().clear();
-        dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
-    }
-
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        ReadOnlyPerson person = event.getNewSelection().person;
-
-        dataDetailsPanelPlaceholder.getChildren().clear();
-        dataDetailsPanelPlaceholder.getChildren().add(new PersonDetailsPanel(person).getRoot());
-    }
-```
-###### /java/seedu/address/ui/PropertyLabel.java
-``` java
-/**
- * A customize JavaFX {@link Label} class used to display the key-value pairs of all properties.
- */
-public class PropertyLabel extends Label {
-    public PropertyLabel(String text, String style) {
-        super(text);
-        this.getStyleClass().add(style);
-    }
-}
-```
-###### /java/seedu/address/storage/XmlSerializableAddressBook.java
-``` java
-    /**
-     * Initialize the {@link PropertyManager} by clearing all existing properties and load information about new
-     * properties from the storage file.
-     */
-    public void initializePropertyManager() {
-        PropertyManager.clearAllProperties();
-        properties.initializeProperties();
-    }
-```
-###### /java/seedu/address/storage/XmlAdaptedPropertyManager.java
-``` java
-/**
- * JAXB-friendly adapted version of the {@link PropertyManager}.
- */
-public class XmlAdaptedPropertyManager {
-    @XmlElement
-    private List<XmlAdaptedPropertyInfo> property;
-
-    public XmlAdaptedPropertyManager() {
-        property = new ArrayList<>();
-        for (String shortName: PropertyManager.getAllShortNames()) {
-            XmlAdaptedPropertyInfo info = new XmlAdaptedPropertyInfo(shortName,
-                    PropertyManager.getPropertyFullName(shortName),
-                    PropertyManager.getPropertyConstraintMessage(shortName),
-                    PropertyManager.getPropertyValidationRegex(shortName));
-            property.add(info);
-        }
-    }
-
-    /**
-     * Initialize all properties by adding them to {@link PropertyManager}.
-     */
-    public void initializeProperties() {
-        try {
-            for (XmlAdaptedPropertyInfo info: property) {
-                info.toModelType();
-            }
-        } catch (DuplicatePropertyException dpe) {
-            // TODO: better error handling
-            dpe.printStackTrace();
-        }
-    }
-}
-```
-###### /java/seedu/address/storage/XmlAdaptedProperty.java
-``` java
-/**
- * JAXB-friendly adapted version of the {@link Property}, stored within each person.
- */
-public class XmlAdaptedProperty {
-    @XmlAttribute
-    private String shortName;
-    @XmlValue
-    private String value;
-
-    /**
-     * Constructs an XmlAdaptedProperty.
-     * This is the no-arg constructor that is required by JAXB.
-     */
-    public XmlAdaptedProperty() {}
-
-    /**
-     * Converts a given Property into this class for JAXB use.
+     * Read JSON data from a given URL and convert the data to an instance of the given class.
      *
-     * @param source future changes to this will not affect the created
+     * @param url is the URL to the remote JSON data.
      */
-    public XmlAdaptedProperty(Property source) {
-        this.shortName = source.getShortName();
-        this.value = source.getValue();
-    }
-
-    /**
-     * Converts this jaxb-friendly adapted property object into the model's Property object.
-     *
-     * @return a Property object used in model.
-     * @throws IllegalValueException if there were any data constraints violated in the adapted property.
-     * @throws PropertyNotFoundException the same as above.
-     */
-    public Property toModelType() throws IllegalValueException, PropertyNotFoundException {
-        return new Property(shortName, value);
-    }
-}
-```
-###### /java/seedu/address/storage/XmlAdaptedPerson.java
-``` java
-    /**
-     * Converts a given Person into this class for JAXB use.
-     *
-     * @param source future changes to this will not affect the created XmlAdaptedPerson
-     */
-    public XmlAdaptedPerson(ReadOnlyPerson source) {
-        name = source.getName().getValue();
-        phone = source.getPhone().getValue();
-        email = source.getEmail().getValue();
-        address = source.getAddress().getValue();
-
-        properties = new ArrayList<>();
-        for (Property property: source.getProperties()) {
-            properties.add(new XmlAdaptedProperty(property));
-        }
-        tagged = new ArrayList<>();
-        for (Tag tag : source.getTags()) {
-            tagged.add(new XmlAdaptedTag(tag));
-        }
-    }
-
-    /**
-     * Converts this jaxb-friendly adapted person object into the model's Person object.
-     *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
-     */
-    public Person toModelType() throws IllegalValueException, PropertyNotFoundException, DuplicatePropertyException {
-        final List<Property> personProperties = new ArrayList<>();
-        for (XmlAdaptedProperty property: properties) {
-            personProperties.add(property.toModelType());
-        }
-        final List<Tag> personTags = new ArrayList<>();
-        for (XmlAdaptedTag tag : tagged) {
-            personTags.add(tag.toModelType());
-        }
-
-        final Set<Property> properties = new HashSet<>(personProperties);
-        final Set<Tag> tags = new HashSet<>(personTags);
-
-        return new Person(properties, tags);
-    }
-}
-```
-###### /java/seedu/address/storage/XmlAdaptedPropertyInfo.java
-``` java
-/**
- * JAXB-friendly adapted version of the {@link Property}, stores the general information of each property.
- */
-public class XmlAdaptedPropertyInfo {
-    @XmlElement
-    private String shortName;
-    @XmlElement
-    private String fullName;
-    @XmlElement
-    private String message;
-    @XmlElement
-    private String regex;
-
-    /**
-     * Constructs an XmlAdaptedTag.
-     * This is the no-arg constructor that is required by JAXB.
-     */
-    public XmlAdaptedPropertyInfo() {}
-
-    public XmlAdaptedPropertyInfo(String shortName, String fullName, String message, String regex) {
-        this.shortName = shortName;
-        this.fullName = fullName;
-        this.message = message;
-        this.regex = regex;
-    }
-
-    public void toModelType() throws DuplicatePropertyException {
-        PropertyManager.addNewProperty(shortName, fullName, message, regex);
-    }
-}
-```
-###### /java/seedu/address/logic/parser/person/AddAvatarCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new {@link AddAvatarCommand} object.
- */
-public class AddAvatarCommandParser implements Parser<AddAvatarCommand> {
-    /* Regular expressions for validation. ArgumentMultiMap not applicable here. */
-    private static final Pattern COMMAND_FORMAT = Pattern.compile("(?<index>\\S+)(?<url>.+)");
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the {@link AddAvatarCommand}
-     * and returns an {@link AddAvatarCommand} object for execution.
-     *
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    @Override
-    public AddAvatarCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-
-        // Defensive programming here to use trim again.
-        final Matcher matcher = COMMAND_FORMAT.matcher(args.trim());
-        if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAvatarCommand.MESSAGE_USAGE));
-        }
-
-        try {
-            Index index = ParserUtil.parseIndex(matcher.group("index").trim());
-            Avatar avatar = new Avatar(matcher.group("url").trim());
-            return new AddAvatarCommand(index, avatar);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAvatarCommand.MESSAGE_USAGE));
-        }
-    }
-}
-```
-###### /java/seedu/address/logic/parser/person/AddCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new AddCommand object
- */
-public class AddCommandParser implements Parser<AddCommand> {
-    /**
-     * Parses the given {@code String} of arguments in the context of the AddCommand
-     * and returns an AddCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public AddCommand parse(String args) throws ParseException {
-        Set<Prefix> prefixes = PropertyManager.getAllPrefixes();
-        prefixes.add(PREFIX_TAG);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, prefixes);
-
-        // TODO: Keep this checking for now. These pre-loaded properties are compulsory.
-        if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-        }
-
-        try {
-            Set<Property> propertyList = ParserUtil.parseProperties(argMultimap.getAllValues());
-            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            return new AddCommand(new Person(propertyList, tagList));
-        } catch (IllegalValueException | PropertyNotFoundException | DuplicatePropertyException e) {
-            throw new ParseException(e.getMessage(), e);
-        }
-    }
-}
-```
-###### /java/seedu/address/logic/parser/ConfigCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new ConfigCommand object
- */
-public class ConfigCommandParser implements Parser<ConfigCommand> {
-    // Some messages ready to use.
-    public static final String CONFIG_TYPE_NOT_FOUND = "The configuration you want to change is not "
-            + "available or the command entered is incomplete.";
-    public static final String COLOR_CODE_WRONG = "The color must be one of the pre-defined color names or "
-            + "a valid hexadecimal RGB value";
-    private static final String MESSAGE_REGEX_TOGETHER = "Constraint message and regular expression must be "
-            + "both present or absent";
-
-    /* Regular expressions for validation. ArgumentMultiMap not applicable here. */
-    private static final Pattern CONFIG_COMMAND_FORMAT = Pattern.compile("--(?<configType>\\S+)(?<configValue>.+)");
-    private static final Pattern TAG_COLOR_FORMAT = Pattern.compile("(?<tagName>\\p{Alnum}+)\\s+(?<tagNewColor>.+)");
-    // A valid RGB value should be 3-bit or 6-bit hexadecimal number.
-    private static final Pattern RGB_FORMAT = Pattern.compile("#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})");
-    // Only contains alphabets (a-z or A-Z)
-    private static final Pattern ONLY_ALPHABET = Pattern.compile("[a-zA-Z]+");
-
-    @Override
-    public ConfigCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-
-        // Defensive programming here to use trim again.
-        final Matcher matcher = CONFIG_COMMAND_FORMAT.matcher(args.trim());
-        if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ConfigCommand.MESSAGE_USAGE));
-        }
-
-        final String configType = matcher.group("configType").trim();
-        if (!checkConfigType(configType)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CONFIG_TYPE_NOT_FOUND));
-        }
-
-        final ConfigType enumConfigType = toEnumType(configType);
-        final String configValue = matcher.group("configValue").trim();
-
-        return checkConfigValue(enumConfigType, configValue);
-    }
-
-    private boolean checkConfigType(String type) {
-        return ConfigCommand.TO_ENUM_CONFIG_TYPE.containsKey(type);
-    }
-
-    private ConfigType toEnumType(String type) {
-        return ConfigCommand.TO_ENUM_CONFIG_TYPE.get(type);
-    }
-
-    /**
-     * Validates the input for different {@link ConfigType} and creates an {@link ConfigCommand} accordingly.
-     */
-    private ConfigCommand checkConfigValue(ConfigType enumConfigType, String value) throws ParseException {
-        switch (enumConfigType) {
-        case ADD_PROPERTY:
-            return checkAddProperty(value);
-        case TAG_COLOR:
-            return checkTagColor(value);
-        default:
-            System.err.println("Unknown ConfigType. Should never come to here.");
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CONFIG_TYPE_NOT_FOUND));
-        }
-    }
-
-    /**
-     * Creates an {@link ChangeTagColorCommand}.
-     */
-    private ChangeTagColorCommand checkTagColor(String value) throws ParseException {
-        Matcher matcher = TAG_COLOR_FORMAT.matcher(value.trim());
-        if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ChangeTagColorCommand.MESSAGE_USAGE));
-        }
-
-        // Get the tag name and the customize new color for that tag.
-        final String tagName = matcher.group("tagName").trim();
-        String tagColor = matcher.group("tagNewColor").trim();
-
-        // Checks whether the given color is valid.
-        if (!isValidColorCode(tagColor)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, COLOR_CODE_WRONG));
-        }
-
-        return new ChangeTagColorCommand(value, tagName, tagColor);
-    }
-
-    /**
-     * Creates an {@link AddPropertyCommand}.
-     */
-    private AddPropertyCommand checkAddProperty(String value) throws ParseException {
-        /*
-        * Hack here: ArgumentTokenizer requires a whitespace before each prefix to count for an occurrence. Thus, we
-        * have to explicitly add a whitespace before the string so as to successfully extract the first prefix.
-        */
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(" " + value,
-                PREFIX_SHORT_NAME, PREFIX_FULL_NAME, PREFIX_MESSAGE, PREFIX_REGEX);
-
-        // shortName and fullName must be supplied by the user.
-        if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_SHORT_NAME, PREFIX_FULL_NAME)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    AddPropertyCommand.MESSAGE_USAGE));
-        }
-        String shortName = argMultimap.getValue(PREFIX_SHORT_NAME).get();
-        String fullName = capitalize(argMultimap.getValue(PREFIX_FULL_NAME).get());
-
-        // message and regex must be supplied together or both be absent.
-        if (!(ParserUtil.arePrefixesPresent(argMultimap, PREFIX_MESSAGE, PREFIX_REGEX)
-                || ParserUtil.arePrefixesAbsent(argMultimap, PREFIX_MESSAGE, PREFIX_REGEX))) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_REGEX_TOGETHER));
-        }
-        String message = argMultimap.getValue(PREFIX_MESSAGE).orElse(String.format(DEFAULT_MESSAGE, fullName));
-        String regex = argMultimap.getValue(PREFIX_REGEX).orElse(DEFAULT_REGEX);
-
-        return new AddPropertyCommand(value, shortName, fullName, message, regex);
-    }
-
-    /**
-     * Checks whether the given string is a valid RGB value or a fully-alphabetical string (we do not check whether it
-     * is one of the 140 pre-defined CSS color names).
-     *
-     * TODO: Search for any API to check whether it is one of 140 pre-defined names.
-     *
-     * @see <a href=https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor>
-     *     JavaFX CSS Reference Guide</a>
-     */
-    private boolean isValidColorCode(String color) {
-        // Either all letters or a valid RGB value.
-        return ONLY_ALPHABET.matcher(color).matches() || RGB_FORMAT.matcher(color).matches();
-
-    }
-
-    /**
-     * Converts the first letter in {@code str} to upper-case (only if it starts with an alphabet).
-     */
-    private String capitalize(String original) {
-        if (original == null || original.length() == 0) {
-            return original;
-        }
-
-        return original.substring(0, 1).toUpperCase() + original.substring(1);
-    }
-}
-```
-###### /java/seedu/address/logic/parser/util/CliSyntax.java
-``` java
-    /* Prefix definitions for adding a new customize property. */
-    public static final Prefix PREFIX_SHORT_NAME = new Prefix("s/");
-    public static final Prefix PREFIX_FULL_NAME = new Prefix("f/");
-    public static final Prefix PREFIX_MESSAGE = new Prefix("m/");
-    public static final Prefix PREFIX_REGEX = new Prefix("r/");
-```
-###### /java/seedu/address/logic/parser/util/ParserUtil.java
-``` java
-    /**
-     * Parses all properties in the given {@code HashMap}.
-     *
-     * @return a set containing all properties parsed.
-     */
-    public static Set<Property> parseProperties(HashMap<Prefix, String> values)
-            throws IllegalValueException, PropertyNotFoundException {
-        requireNonNull(values);
-        Set<Property> properties = new HashSet<>();
-
-        for (Map.Entry<Prefix, String> entry: values.entrySet()) {
-            properties.add(new Property(entry.getKey().getPrefixValue(), entry.getValue()));
-        }
-
-        return properties;
+    public static <T> T fromJsonUrl(URL url, Class<T> instanceClass) throws IOException {
+        return objectMapper.readValue(url, instanceClass);
     }
 ```
-###### /java/seedu/address/logic/parser/util/ArgumentMultimap.java
-``` java
-    /**
-     * Returns the mapping of {@code Prefix} and their corresponding last values for all {@code prefix}es (only if
-     * there is a value present). <b>Notice</b>: the return {@code HashMap} does not include preamble and tags.
-     */
-    public HashMap<Prefix, String> getAllValues() {
-        HashMap<Prefix, String> values = new HashMap<>();
-
-        // Need to manually remove preamble from here. We are creating a new copy of all prefixes, so the actual
-        // instance variable will not be affected.
-        Set<Prefix> prefixes = new HashSet<>(internalMap.keySet());
-        prefixes.remove(new Prefix(""));
-        prefixes.remove(PREFIX_TAG);
-
-        for (Prefix prefix: prefixes) {
-            getValue(prefix).ifPresent(s -> values.put(prefix, s));
-        }
-
-        return values;
-    }
-```
-###### /java/seedu/address/logic/parser/util/NaturalLanguageUtil.java
-``` java
-/**
- * Utilizes the Natty library to parse datetime representation in human natural language.
- */
-public class NaturalLanguageUtil {
-    private static Parser nattyParser = new Parser();
-
-    /**
-     * Parses a given string representation in human natural language of datetime.
-     */
-    public static Optional<Date> parseSingleDateTime(String value)
-            throws IllegalValueException, PropertyNotFoundException {
-        List<DateGroup> groups = nattyParser.parse(value);
-
-        if (groups.isEmpty() || groups.get(0).getDates().isEmpty()) {
-            return Optional.empty();
-        } else {
-            return Optional.of(groups.get(0).getDates().get(0));
-        }
-    }
-}
-```
-###### /java/seedu/address/logic/parser/ImportCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new sub-command of {@link ImportCommand} object.
- */
-public class ImportCommandParser implements Parser<ImportCommand> {
-    // Some messages ready to use.
-    public static final String IMPORT_TYPE_NOT_FOUND = "The format of the data you want to import is "
-            + "currently not supported";
-
-    /* Regular expressions for validation. */
-    private static final Pattern IMPORT_COMMAND_FORMAT = Pattern.compile("--(?<importType>\\S+)\\s+(?<path>.+)");
-    private static final Pattern IMPORT_NUSMODS_FORMAT =
-            Pattern.compile("https?://(www.)?nusmods.com/timetable/\\S*");
-    private static final String ARG_BEGIN_WITH = "--";
-    private static final String IMPORT_DEFAULT_TYPE = "--xml ";
-
-    @Override
-    public ImportCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        args = args.trim();
-
-        // Be default, import from .xml file if not specified by the user.
-        if (!args.startsWith(ARG_BEGIN_WITH)) {
-            args = IMPORT_DEFAULT_TYPE + args;
-        }
-
-        // Matches the import file type and import file path.
-        final Matcher matcher = IMPORT_COMMAND_FORMAT.matcher(args);
-        if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
-        }
-
-        final String importType = matcher.group("importType").trim();
-        if (!checkImportType(importType)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, IMPORT_TYPE_NOT_FOUND));
-        }
-
-        final ImportType enumImportType = toEnumType(importType);
-        final String path = matcher.group("path").trim();
-
-        return checkImportPath(enumImportType, path);
-    }
-
-    private boolean checkImportType(String type) {
-        return ImportCommand.TO_ENUM_IMPORT_TYPE.containsKey(type);
-    }
-
-    private ImportType toEnumType(String type) {
-        return ImportCommand.TO_ENUM_IMPORT_TYPE.get(type);
-    }
-
-    /**
-     * Validates the input for different {@link ImportType} and creates an {@link ImportCommand} accordingly.
-     */
-    private ImportCommand checkImportPath(ImportType enumImportType, String path) throws ParseException {
-        switch (enumImportType) {
-        case XML:
-            return checkXmlImport(path);
-        case SCRIPT:
-            return checkScriptImport(path);
-        case NUSMODS:
-            return checkNusmodsImport(path);
-        default:
-            System.err.println("Unknown ImportType. Should never come to here.");
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, IMPORT_TYPE_NOT_FOUND));
-        }
-    }
-
-```
-###### /java/seedu/address/logic/parser/ImportCommandParser.java
-``` java
-    private ImportCommand checkScriptImport(String path) {
-        return null;
-    }
-
-    /**
-     * Creates an {@link ImportNusmodsCommand}.
-     */
-    private ImportCommand checkNusmodsImport(String path) throws ParseException {
-        /*
-         * We only do a simple matching check here. More detailed checking will be done when
-         * the {@link ImportNusmodsCommand} is constructed or executed. The matching here
-         * only serves as a defensive programming purpose.
-         */
-        if (!IMPORT_NUSMODS_FORMAT.matcher(path).matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ImportNusmodsCommand.MESSAGE_USAGE));
-        }
-
-        try {
-            return new ImportNusmodsCommand(new URL(path));
-        } catch (MalformedURLException e) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ImportNusmodsCommand.MESSAGE_USAGE));
-        }
-    }
-}
-```
-###### /java/seedu/address/logic/commands/configs/AddPropertyCommand.java
+###### \java\seedu\address\logic\commands\configs\AddPropertyCommand.java
 ``` java
 /**
  * Adds a new property to the application.
@@ -1601,7 +70,44 @@ public class AddPropertyCommand extends ConfigCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/configs/ConfigCommand.java
+###### \java\seedu\address\logic\commands\configs\ChangeTagColorCommand.java
+``` java
+/**
+ * Changes the color of an existing tag.
+ */
+public class ChangeTagColorCommand extends ConfigCommand {
+    public static final String MESSAGE_SUCCESS = "The color of tag %1$s has been changed to %2$s.";
+    public static final String MESSAGE_USAGE =  "Example: " + COMMAND_WORD + " --set-tag-color "
+            + "friends blue";
+    private static final String MESSAGE_NO_SUCH_TAG = "There is no such tag.";
+
+    private Tag tag;
+    private String newColor;
+
+    public ChangeTagColorCommand(String configValue, String tagName, String tagColor) throws ParseException {
+        super(TAG_COLOR, configValue);
+
+        try {
+            /* Two tags are equal as long as their tagNames are the same. */
+            tag = new Tag(tagName);
+        } catch (IllegalValueException e) {
+            throw new ParseException(MESSAGE_TAG_CONSTRAINTS);
+        }
+        this.newColor = tagColor;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        if (!model.hasTag(tag)) {
+            throw new CommandException(MESSAGE_NO_SUCH_TAG);
+        }
+
+        model.setTagColor(tag, newColor);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, tag, newColor));
+    }
+}
+```
+###### \java\seedu\address\logic\commands\configs\ConfigCommand.java
 ``` java
 /**
  * Customizes the configuration of the application.
@@ -1650,145 +156,7 @@ public abstract class ConfigCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/configs/ChangeTagColorCommand.java
-``` java
-/**
- * Changes the color of an existing tag.
- */
-public class ChangeTagColorCommand extends ConfigCommand {
-    public static final String MESSAGE_SUCCESS = "The color of tag %1$s has been changed to %2$s.";
-    public static final String MESSAGE_USAGE =  "Example: " + COMMAND_WORD + " --set-tag-color "
-            + "friends blue";
-    private static final String MESSAGE_NO_SUCH_TAG = "There is no such tag.";
-
-    private Tag tag;
-    private String newColor;
-
-    public ChangeTagColorCommand(String configValue, String tagName, String tagColor) throws ParseException {
-        super(TAG_COLOR, configValue);
-
-        try {
-            /* Two tags are equal as long as their tagNames are the same. */
-            tag = new Tag(tagName);
-        } catch (IllegalValueException e) {
-            throw new ParseException(MESSAGE_TAG_CONSTRAINTS);
-        }
-        this.newColor = tagColor;
-    }
-
-    @Override
-    public CommandResult execute() throws CommandException {
-        if (!model.hasTag(tag)) {
-            throw new CommandException(MESSAGE_NO_SUCH_TAG);
-        }
-
-        model.setTagColor(tag, newColor);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, tag, newColor));
-    }
-}
-```
-###### /java/seedu/address/logic/commands/person/AddAvatarCommand.java
-``` java
-/**
- * Adds an {@link Avatar} to the selected person.
- */
-public class AddAvatarCommand extends UndoableCommand {
-    public static final String COMMAND_WORD = "avatar";
-    public static final String COMMAND_ALIAS = "avr";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Adds avatar to the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer) IMAGE_URL\n"
-            + "Example: " + COMMAND_WORD + " 1 https://avatars0.githubusercontent.com/u/1342004";
-
-    public static final String MESSAGE_ADD_AVATAR_SUCCESS = "Added avatar to person: %1$s";
-
-    private final Index targetIndex;
-    private final Avatar avatar;
-
-    public AddAvatarCommand(Index targetIndex, Avatar avatar) {
-        this.targetIndex = targetIndex;
-        this.avatar = avatar;
-    }
-
-    @Override
-    protected CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
-        person.setAvatar(avatar);
-
-        return new CommandResult(String.format(MESSAGE_ADD_AVATAR_SUCCESS, person));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof DeleteCommand // instanceof handles nulls
-                && this.targetIndex.equals(((AddAvatarCommand) other).targetIndex)
-                && this.avatar.equals(((AddAvatarCommand) other).avatar)); // state check
-    }
-}
-```
-###### /java/seedu/address/logic/commands/imports/ModuleInfo.java
-``` java
-/**
- * A Java class representation of module information from NUSMods JSON API.
- *
- * @see <a href="https://github.com/nusmodifications/nusmods-api#get-acadyearsemestermodulesmodulecodejson">
- *     NUSMods API official documentation</a>
- */
-public class ModuleInfo {
-    private String moduleCode;
-    private String moduleTitle;
-    private int moduleCredit;
-    private Date examDate;
-
-    public String getModuleCode() {
-        return moduleCode;
-    }
-
-    public Date getExamDate() {
-        return examDate;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        } else if (!(other instanceof ModuleInfo)) {
-            // This handles null as well.
-            return false;
-        } else {
-            ModuleInfo o = (ModuleInfo) other;
-            return Objects.equals(moduleCode, o.moduleCode);
-        }
-    }
-
-    /**
-     * Each {@link #moduleCode} should link to <b>one and only one</b> {@link ModuleInfo} object.
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(moduleCode);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Module Code: " + moduleCode);
-        sb.append("\nModule Title: " + moduleTitle);
-        sb.append("\nModule Credit: " + moduleCredit);
-        sb.append("\nExamination Date: " + examDate);
-        return sb.toString();
-    }
-}
-```
-###### /java/seedu/address/logic/commands/imports/ImportCommand.java
+###### \java\seedu\address\logic\commands\imports\ImportCommand.java
 ``` java
 /**
  * Imports data from various format to the application.
@@ -1812,7 +180,7 @@ public abstract class ImportCommand extends UndoableCommand {
             + "script file (should end with .bo).";
 
 ```
-###### /java/seedu/address/logic/commands/imports/ImportCommand.java
+###### \java\seedu\address\logic\commands\imports\ImportCommand.java
 ``` java
     /**
      * Different types of sub-commands within {@link ImportCommand}.
@@ -1847,7 +215,7 @@ public abstract class ImportCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/imports/ImportNusmodsCommand.java
+###### \java\seedu\address\logic\commands\imports\ImportNusmodsCommand.java
 ``` java
 /**
  * Imports data from the URL of a NUSMods timetable.
@@ -2030,4 +398,1673 @@ public class ImportNusmodsCommand extends ImportCommand {
         return String.format(TO_STRING_FORMAT, yearStart, yearEnd, semester);
     }
 }
+```
+###### \java\seedu\address\logic\commands\imports\ModuleInfo.java
+``` java
+/**
+ * A Java class representation of module information from NUSMods JSON API.
+ *
+ * @see <a href="https://github.com/nusmodifications/nusmods-api#get-acadyearsemestermodulesmodulecodejson">
+ *     NUSMods API official documentation</a>
+ */
+public class ModuleInfo {
+    private String moduleCode;
+    private String moduleTitle;
+    private int moduleCredit;
+    private Date examDate;
+
+    public String getModuleCode() {
+        return moduleCode;
+    }
+
+    public Date getExamDate() {
+        return examDate;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        } else if (!(other instanceof ModuleInfo)) {
+            // This handles null as well.
+            return false;
+        } else {
+            ModuleInfo o = (ModuleInfo) other;
+            return Objects.equals(moduleCode, o.moduleCode);
+        }
+    }
+
+    /**
+     * Each {@link #moduleCode} should link to <b>one and only one</b> {@link ModuleInfo} object.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(moduleCode);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Module Code: " + moduleCode);
+        sb.append("\nModule Title: " + moduleTitle);
+        sb.append("\nModule Credit: " + moduleCredit);
+        sb.append("\nExamination Date: " + examDate);
+        return sb.toString();
+    }
+}
+```
+###### \java\seedu\address\logic\commands\person\AddAvatarCommand.java
+``` java
+/**
+ * Adds an {@link Avatar} to the selected person.
+ */
+public class AddAvatarCommand extends UndoableCommand {
+    public static final String COMMAND_WORD = "avatar";
+    public static final String COMMAND_ALIAS = "avr";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Adds avatar to the person identified by the index number used in the last person listing.\n"
+            + "Parameters: INDEX (must be a positive integer) IMAGE_URL\n"
+            + "Example: " + COMMAND_WORD + " 1 https://avatars0.githubusercontent.com/u/1342004";
+
+    public static final String MESSAGE_ADD_AVATAR_SUCCESS = "Added avatar to person: %1$s";
+
+    private final Index targetIndex;
+    private final Avatar avatar;
+
+    public AddAvatarCommand(Index targetIndex, Avatar avatar) {
+        this.targetIndex = targetIndex;
+        this.avatar = avatar;
+    }
+
+    @Override
+    protected CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
+        model.setPersonAvatar(person, avatar);
+
+        return new CommandResult(String.format(MESSAGE_ADD_AVATAR_SUCCESS, person));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddAvatarCommand // instanceof handles nulls
+                && this.targetIndex.equals(((AddAvatarCommand) other).targetIndex)
+                && this.avatar.equals(((AddAvatarCommand) other).avatar)); // state check
+    }
+}
+```
+###### \java\seedu\address\logic\parser\ConfigCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ConfigCommand object
+ */
+public class ConfigCommandParser implements Parser<ConfigCommand> {
+    // Some messages ready to use.
+    public static final String CONFIG_TYPE_NOT_FOUND = "The configuration you want to change is not "
+            + "available or the command entered is incomplete.";
+    public static final String COLOR_CODE_WRONG = "The color must be one of the pre-defined color names or "
+            + "a valid hexadecimal RGB value";
+    private static final String MESSAGE_REGEX_TOGETHER = "Constraint message and regular expression must be "
+            + "both present or absent";
+
+    /* Regular expressions for validation. ArgumentMultiMap not applicable here. */
+    private static final Pattern CONFIG_COMMAND_FORMAT = Pattern.compile("--(?<configType>\\S+)(?<configValue>.+)");
+    private static final Pattern TAG_COLOR_FORMAT = Pattern.compile("(?<tagName>\\p{Alnum}+)\\s+(?<tagNewColor>.+)");
+    // A valid RGB value should be 3-bit or 6-bit hexadecimal number.
+    private static final Pattern RGB_FORMAT = Pattern.compile("#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})");
+    // Only contains alphabets (a-z or A-Z)
+    private static final Pattern ONLY_ALPHABET = Pattern.compile("[a-zA-Z]+");
+
+    @Override
+    public ConfigCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+
+        // Defensive programming here to use trim again.
+        final Matcher matcher = CONFIG_COMMAND_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ConfigCommand.MESSAGE_USAGE));
+        }
+
+        final String configType = matcher.group("configType").trim();
+        if (!checkConfigType(configType)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CONFIG_TYPE_NOT_FOUND));
+        }
+
+        final ConfigType enumConfigType = toEnumType(configType);
+        final String configValue = matcher.group("configValue").trim();
+
+        return checkConfigValue(enumConfigType, configValue);
+    }
+
+    private boolean checkConfigType(String type) {
+        return ConfigCommand.TO_ENUM_CONFIG_TYPE.containsKey(type);
+    }
+
+    private ConfigType toEnumType(String type) {
+        return ConfigCommand.TO_ENUM_CONFIG_TYPE.get(type);
+    }
+
+    /**
+     * Validates the input for different {@link ConfigType} and creates an {@link ConfigCommand} accordingly.
+     */
+    private ConfigCommand checkConfigValue(ConfigType enumConfigType, String value) throws ParseException {
+        switch (enumConfigType) {
+        case ADD_PROPERTY:
+            return checkAddProperty(value);
+        case TAG_COLOR:
+            return checkTagColor(value);
+        default:
+            System.err.println("Unknown ConfigType. Should never come to here.");
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CONFIG_TYPE_NOT_FOUND));
+        }
+    }
+
+    /**
+     * Creates an {@link ChangeTagColorCommand}.
+     */
+    private ChangeTagColorCommand checkTagColor(String value) throws ParseException {
+        Matcher matcher = TAG_COLOR_FORMAT.matcher(value.trim());
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ChangeTagColorCommand.MESSAGE_USAGE));
+        }
+
+        // Get the tag name and the customize new color for that tag.
+        final String tagName = matcher.group("tagName").trim();
+        String tagColor = matcher.group("tagNewColor").trim();
+
+        // Checks whether the given color is valid.
+        if (!isValidColorCode(tagColor)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, COLOR_CODE_WRONG));
+        }
+
+        return new ChangeTagColorCommand(value, tagName, tagColor);
+    }
+
+    /**
+     * Creates an {@link AddPropertyCommand}.
+     */
+    private AddPropertyCommand checkAddProperty(String value) throws ParseException {
+        /*
+        * Hack here: ArgumentTokenizer requires a whitespace before each prefix to count for an occurrence. Thus, we
+        * have to explicitly add a whitespace before the string so as to successfully extract the first prefix.
+        */
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(" " + value,
+                PREFIX_SHORT_NAME, PREFIX_FULL_NAME, PREFIX_MESSAGE, PREFIX_REGEX);
+
+        // shortName and fullName must be supplied by the user.
+        if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_SHORT_NAME, PREFIX_FULL_NAME)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AddPropertyCommand.MESSAGE_USAGE));
+        }
+        String shortName = argMultimap.getValue(PREFIX_SHORT_NAME).get();
+        String fullName = capitalize(argMultimap.getValue(PREFIX_FULL_NAME).get());
+
+        // message and regex must be supplied together or both be absent.
+        if (!(ParserUtil.arePrefixesPresent(argMultimap, PREFIX_MESSAGE, PREFIX_REGEX)
+                || ParserUtil.arePrefixesAbsent(argMultimap, PREFIX_MESSAGE, PREFIX_REGEX))) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_REGEX_TOGETHER));
+        }
+        String message = argMultimap.getValue(PREFIX_MESSAGE).orElse(String.format(DEFAULT_MESSAGE, fullName));
+        String regex = argMultimap.getValue(PREFIX_REGEX).orElse(DEFAULT_REGEX);
+
+        return new AddPropertyCommand(value, shortName, fullName, message, regex);
+    }
+
+    /**
+     * Checks whether the given string is a valid RGB value or a fully-alphabetical string (we do not check whether it
+     * is one of the 140 pre-defined CSS color names).
+     *
+     * TODO: Search for any API to check whether it is one of 140 pre-defined names.
+     *
+     * @see <a href=https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor>
+     *     JavaFX CSS Reference Guide</a>
+     */
+    private boolean isValidColorCode(String color) {
+        // Either all letters or a valid RGB value.
+        return ONLY_ALPHABET.matcher(color).matches() || RGB_FORMAT.matcher(color).matches();
+
+    }
+
+    /**
+     * Converts the first letter in {@code str} to upper-case (only if it starts with an alphabet).
+     */
+    private String capitalize(String original) {
+        if (original == null || original.length() == 0) {
+            return original;
+        }
+
+        return original.substring(0, 1).toUpperCase() + original.substring(1);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\ImportCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new sub-command of {@link ImportCommand} object.
+ */
+public class ImportCommandParser implements Parser<ImportCommand> {
+    // Some messages ready to use.
+    public static final String IMPORT_TYPE_NOT_FOUND = "The format of the data you want to import is "
+            + "currently not supported";
+
+    /* Regular expressions for validation. */
+    private static final Pattern IMPORT_COMMAND_FORMAT = Pattern.compile("--(?<importType>\\S+)\\s+(?<path>.+)");
+    private static final Pattern IMPORT_NUSMODS_FORMAT =
+            Pattern.compile("https?://(www.)?nusmods.com/timetable/\\S*");
+    private static final String ARG_BEGIN_WITH = "--";
+    private static final String IMPORT_DEFAULT_TYPE = "--xml ";
+
+    @Override
+    public ImportCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        args = args.trim();
+
+        // Be default, import from .xml file if not specified by the user.
+        if (!args.startsWith(ARG_BEGIN_WITH)) {
+            args = IMPORT_DEFAULT_TYPE + args;
+        }
+
+        // Matches the import file type and import file path.
+        final Matcher matcher = IMPORT_COMMAND_FORMAT.matcher(args);
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+        }
+
+        final String importType = matcher.group("importType").trim();
+        if (!checkImportType(importType)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, IMPORT_TYPE_NOT_FOUND));
+        }
+
+        final ImportType enumImportType = toEnumType(importType);
+        final String path = matcher.group("path").trim();
+
+        return checkImportPath(enumImportType, path);
+    }
+
+    private boolean checkImportType(String type) {
+        return ImportCommand.TO_ENUM_IMPORT_TYPE.containsKey(type);
+    }
+
+    private ImportType toEnumType(String type) {
+        return ImportCommand.TO_ENUM_IMPORT_TYPE.get(type);
+    }
+
+    /**
+     * Validates the input for different {@link ImportType} and creates an {@link ImportCommand} accordingly.
+     */
+    private ImportCommand checkImportPath(ImportType enumImportType, String path) throws ParseException {
+        switch (enumImportType) {
+        case XML:
+            return checkXmlImport(path);
+        case SCRIPT:
+            return checkScriptImport(path);
+        case NUSMODS:
+            return checkNusmodsImport(path);
+        default:
+            System.err.println("Unknown ImportType. Should never come to here.");
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, IMPORT_TYPE_NOT_FOUND));
+        }
+    }
+
+```
+###### \java\seedu\address\logic\parser\ImportCommandParser.java
+``` java
+    private ImportCommand checkScriptImport(String path) {
+        return null;
+    }
+
+    /**
+     * Creates an {@link ImportNusmodsCommand}.
+     */
+    private ImportCommand checkNusmodsImport(String path) throws ParseException {
+        /*
+         * We only do a simple matching check here. More detailed checking will be done when
+         * the {@link ImportNusmodsCommand} is constructed or executed. The matching here
+         * only serves as a defensive programming purpose.
+         */
+        if (!IMPORT_NUSMODS_FORMAT.matcher(path).matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ImportNusmodsCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            return new ImportNusmodsCommand(new URL(path));
+        } catch (MalformedURLException e) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ImportNusmodsCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\parser\person\AddAvatarCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new {@link AddAvatarCommand} object.
+ */
+public class AddAvatarCommandParser implements Parser<AddAvatarCommand> {
+    /* Regular expressions for validation. ArgumentMultiMap not applicable here. */
+    private static final Pattern COMMAND_FORMAT = Pattern.compile("(?<index>\\S+)(?<url>.+)");
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the {@link AddAvatarCommand}
+     * and returns an {@link AddAvatarCommand} object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    @Override
+    public AddAvatarCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+
+        // Defensive programming here to use trim again.
+        final Matcher matcher = COMMAND_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAvatarCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            Index index = ParserUtil.parseIndex(matcher.group("index").trim());
+            Avatar avatar = new Avatar(matcher.group("url").trim());
+            return new AddAvatarCommand(index, avatar);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAvatarCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\parser\person\AddCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new AddCommand object
+ */
+public class AddCommandParser implements Parser<AddCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the AddCommand
+     * and returns an AddCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public AddCommand parse(String args) throws ParseException {
+        Set<Prefix> prefixes = PropertyManager.getAllPrefixes();
+        prefixes.add(PREFIX_TAG);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, prefixes);
+
+        // TODO: Keep this checking for now. These pre-loaded properties are compulsory.
+        if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            Set<Property> propertyList = ParserUtil.parseProperties(argMultimap.getAllValues());
+            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            return new AddCommand(new Person(propertyList, tagList));
+        } catch (IllegalValueException | PropertyNotFoundException | DuplicatePropertyException e) {
+            throw new ParseException(e.getMessage(), e);
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\parser\util\ArgumentMultimap.java
+``` java
+    /**
+     * Returns the mapping of {@code Prefix} and their corresponding last values for all {@code prefix}es (only if
+     * there is a value present). <b>Notice</b>: the return {@code HashMap} does not include preamble and tags.
+     */
+    public HashMap<Prefix, String> getAllValues() {
+        HashMap<Prefix, String> values = new HashMap<>();
+
+        // Need to manually remove preamble from here. We are creating a new copy of all prefixes, so the actual
+        // instance variable will not be affected.
+        Set<Prefix> prefixes = new HashSet<>(internalMap.keySet());
+        prefixes.remove(new Prefix(""));
+        prefixes.remove(PREFIX_TAG);
+
+        for (Prefix prefix: prefixes) {
+            getValue(prefix).ifPresent(s -> values.put(prefix, s));
+        }
+
+        return values;
+    }
+```
+###### \java\seedu\address\logic\parser\util\CliSyntax.java
+``` java
+    /* Prefix definitions for adding a new customize property. */
+    public static final Prefix PREFIX_SHORT_NAME = new Prefix("s/");
+    public static final Prefix PREFIX_FULL_NAME = new Prefix("f/");
+    public static final Prefix PREFIX_MESSAGE = new Prefix("m/");
+    public static final Prefix PREFIX_REGEX = new Prefix("r/");
+```
+###### \java\seedu\address\logic\parser\util\NaturalLanguageUtil.java
+``` java
+/**
+ * Utilizes the Natty library to parse datetime representation in human natural language.
+ */
+public class NaturalLanguageUtil {
+    private static Parser nattyParser = new Parser();
+
+    /**
+     * Parses a given string representation in human natural language of datetime.
+     */
+    public static Optional<Date> parseSingleDateTime(String value)
+            throws IllegalValueException, PropertyNotFoundException {
+        List<DateGroup> groups = nattyParser.parse(value);
+
+        if (groups.isEmpty() || groups.get(0).getDates().isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(groups.get(0).getDates().get(0));
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\parser\util\ParserUtil.java
+``` java
+    /**
+     * Parses all properties in the given {@code HashMap}.
+     *
+     * @return a set containing all properties parsed.
+     */
+    public static Set<Property> parseProperties(HashMap<Prefix, String> values)
+            throws IllegalValueException, PropertyNotFoundException {
+        requireNonNull(values);
+        Set<Property> properties = new HashSet<>();
+
+        for (Map.Entry<Prefix, String> entry: values.entrySet()) {
+            properties.add(new Property(entry.getKey().getPrefixValue(), entry.getValue()));
+        }
+
+        return properties;
+    }
+```
+###### \java\seedu\address\model\Model.java
+``` java
+    /** Adds a new customize property */
+    void addProperty(String shortName, String fullName, String message, String regex)
+            throws DuplicatePropertyException, PatternSyntaxException;
+```
+###### \java\seedu\address\model\Model.java
+``` java
+    /** Changes the color of an existing tag (through TagColorManager) */
+    void setTagColor(Tag tag, String color);
+
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    //=========== Model support for property component =============================================================
+
+    /**
+     * Adds a new customize property to {@code PropertyManager}.
+     *
+     * @throws DuplicatePropertyException if there already exists a property with the same {@code shortName}.
+     * @throws PatternSyntaxException     if the given regular expression contains invalid syntax.
+     */
+    @Override
+    public void addProperty(String shortName, String fullName, String message, String regex)
+            throws DuplicatePropertyException, PatternSyntaxException {
+        PropertyManager.addNewProperty(shortName, fullName, message, regex);
+        indicateAddressBookChanged();
+    }
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public void setPersonAvatar(ReadOnlyPerson target, Avatar avatar) {
+        requireAllNonNull(target, avatar);
+        target.setAvatar(avatar);
+        indicateAddressBookChanged();
+    }
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    /**
+     * Changes the displayed color of an existing tag (through {@link TagColorManager}).
+     */
+    public void setTagColor(Tag tag, String color) {
+        TagColorManager.setColor(tag, color);
+        indicateAddressBookChanged();
+        raise(new TagColorChangedEvent(tag, color));
+    }
+```
+###### \java\seedu\address\model\person\Avatar.java
+``` java
+/**
+ * Represents the {@link Avatar} image of each {@link Person}. This is a one-to-one relationship, meaning that each
+ * {@link Person} should have at most one {@link Avatar}.<br>
+ *
+ * Notice {@link Avatar} is not a {@link Property}. This is because it is indeed different from other fields of
+ * {@link Person}. It is not shown as a row in the {@link PersonDetailsPanel}. Meanwhile, the input validation is
+ * done by separate methods rather than a single regular expression (the complexity is not at the same level).
+ */
+public class Avatar {
+    private static final String INVALID_URL_MESSAGE = "The provided URL is invalid.";
+    private static final String IMG_URL_PATTERN = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}"
+            + "\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)";
+
+    private String url;
+
+    public Avatar(String url) throws IllegalValueException {
+        if (!isValidImageUrl(url)) {
+            throw new IllegalValueException(INVALID_URL_MESSAGE);
+        }
+        this.url = url;
+    }
+
+    /**
+     * An all-in-one checking for the path of the provided image.
+     */
+    private boolean isValidAvatarPath(String path) {
+        return !FileUtil.hasConsecutiveExtensionSeparators(path)
+                && !FileUtil.hasConsecutiveNameSeparators(path)
+                && !FileUtil.hasInvalidNames(path)
+                && !FileUtil.hasInvalidNameSeparators(path);
+    }
+
+    /**
+     * Checks whether a given string is a valid URL and it points to an image.
+     */
+    private boolean isValidImageUrl(String url) {
+        return url.matches(IMG_URL_PATTERN);
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Avatar // instanceof handles nulls
+                && this.url.equals(((Avatar) other).url));
+    }
+
+    @Override
+    public int hashCode() {
+        return url.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Avatar from " + url;
+    }
+}
+```
+###### \java\seedu\address\model\person\Person.java
+``` java
+    @Override
+    public ObjectProperty<Avatar> avatarProperty() {
+        return avatar;
+    }
+
+    @Override
+    public Avatar getAvatar() {
+        return avatar.get();
+    }
+
+    public void setAvatar(Avatar avatar) {
+        requireNonNull(avatar);
+        this.avatar.set(avatar);
+    }
+
+    @Override
+    public ObjectProperty<UniquePropertyMap> properties() {
+        return properties;
+    }
+
+    /**
+     * Returns an immutable property set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public Set<Property> getProperties() {
+        return Collections.unmodifiableSet(properties.get().toSet());
+    }
+
+    @Override
+    public List<Property> getSortedProperties() {
+        return Collections.unmodifiableList(properties().get().toSortedList());
+    }
+
+
+    /**
+     * Replaces this person's properties with the properties in the argument tag set.
+     */
+    public void setProperties(Set<Property> replacement) throws DuplicatePropertyException {
+        properties.set(new UniquePropertyMap(replacement));
+    }
+
+    private String getProperty(String shortName) throws PropertyNotFoundException {
+        return properties.get().getPropertyValue(shortName);
+    }
+
+    /**
+     * Updates the value of the property if there already exists a property with the same shortName, otherwise
+     * adds a new property.
+     */
+    public void setProperty(Property toSet) {
+        properties.get().addOrUpdate(toSet);
+    }
+```
+###### \java\seedu\address\model\property\Address.java
+``` java
+/**
+ * Represents a Person's address in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
+ */
+public class Address extends Property {
+    private static final String PROPERTY_SHORT_NAME = "a";
+
+    public Address(String value) throws IllegalValueException, PropertyNotFoundException {
+        super(PROPERTY_SHORT_NAME, value);
+    }
+
+    /**
+     * Returns true if a given string is a valid address.
+     */
+    public static boolean isValidAddress(String test) {
+        return test.matches(PropertyManager.getPropertyValidationRegex(PROPERTY_SHORT_NAME));
+    }
+}
+```
+###### \java\seedu\address\model\property\DateTime.java
+``` java
+    /**
+     * Returns true if a given string is a valid phone number.
+     */
+    public static boolean isValidTime(String test) {
+        try {
+            prepareDateTimeValue(test);
+            return true;
+        } catch (IllegalValueException | PropertyNotFoundException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Prepares the value by checking whether the input can be interpreted by the natural language parser.
+     */
+    public static String prepareDateTimeValue(String value) throws IllegalValueException, PropertyNotFoundException {
+        // Returns the original value directly if it is already in standard format.
+        if (isInStandardFormat(value)) {
+            return value;
+        }
+
+        Optional<Date> dateObject = NaturalLanguageUtil.parseSingleDateTime(value);
+        if (dateObject.isPresent()) {
+            return formatDateTime(dateObject.get());
+        } else {
+            throw new IllegalValueException(PropertyManager.getPropertyConstraintMessage(PROPERTY_SHORT_NAME));
+        }
+    }
+
+    /**
+     * Checks whether a string representation of datetime is in standard format.
+     */
+    public static boolean isInStandardFormat(String value) {
+        return value.matches(STANDARD_FORMAT);
+    }
+
+    public static Date parseDateTime(String value) throws ParseException {
+        return dateFormatter.parse(value);
+    }
+
+    public static String formatDateTime(Date date) {
+        return dateFormatter.format(date);
+    }
+}
+```
+###### \java\seedu\address\model\property\Email.java
+``` java
+/**
+ * Represents a Person's email in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
+ */
+public class Email extends Property {
+    private static final String PROPERTY_SHORT_NAME = "e";
+
+    public Email(String value) throws IllegalValueException, PropertyNotFoundException {
+        super(PROPERTY_SHORT_NAME, value);
+    }
+
+    /**
+     * Returns true if a given string is a valid email address.
+     */
+    public static boolean isValidEmail(String test) {
+        return test.matches(PropertyManager.getPropertyValidationRegex(PROPERTY_SHORT_NAME));
+    }
+}
+```
+###### \java\seedu\address\model\property\exceptions\DuplicatePropertyException.java
+``` java
+/**
+ * Signals that the property with the same short name already exists.
+ */
+public class DuplicatePropertyException extends Exception {
+    public DuplicatePropertyException(String message) {
+        super(message);
+    }
+}
+```
+###### \java\seedu\address\model\property\exceptions\PropertyNotFoundException.java
+``` java
+/**
+ * Signals that the required property has not been defined yet.
+ */
+public class PropertyNotFoundException extends Exception {
+    public PropertyNotFoundException() {
+        super("Property not found.");
+    }
+
+    public PropertyNotFoundException(String shortName) {
+        super(String.format(PROPERTY_NOT_FOUND, shortName));
+    }
+}
+```
+###### \java\seedu\address\model\property\Name.java
+``` java
+/**
+ * Represents a Person's name in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
+ */
+public class Name extends Property {
+    private static final String PROPERTY_SHORT_NAME = "n";
+
+    public Name(String value) throws IllegalValueException, PropertyNotFoundException {
+        super(PROPERTY_SHORT_NAME, value);
+    }
+
+    /**
+     * Returns true if a given string is a valid person name.
+     */
+    public static boolean isValidName(String test) {
+        return test.matches(PropertyManager.getPropertyValidationRegex(PROPERTY_SHORT_NAME));
+    }
+}
+```
+###### \java\seedu\address\model\property\Phone.java
+``` java
+/**
+ * Represents a Person's phone number in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
+ */
+public class Phone extends Property {
+    private static final String PROPERTY_SHORT_NAME = "p";
+
+    public Phone(String value) throws IllegalValueException, PropertyNotFoundException {
+        super(PROPERTY_SHORT_NAME, value);
+    }
+
+    /**
+     * Returns true if a given string is a valid phone number.
+     */
+    public static boolean isValidPhone(String test) {
+        return test.matches(PropertyManager.getPropertyValidationRegex(PROPERTY_SHORT_NAME));
+    }
+}
+```
+###### \java\seedu\address\model\property\Property.java
+``` java
+/**
+ * A generic class that represents a property of a person. All properties of a person (including name, email, phone
+ * and address) should inherit from this class.
+ */
+public class Property {
+    /**
+     * Why do we only store three fields as instance variables in this class?<br>
+     *
+     * {@link #shortName} is used as the identifier for the property, {@link #fullName} is used stored because we may
+     * need to access it frequently (it will be a bad design decision if we have to perform HashMap access operation
+     * whenever we need to get the full name of a property), and {@link #value} must be stored here apparently.
+     */
+    private final String shortName;
+    private final String fullName;
+    private String value;
+
+    /**
+     * Creates a property via its name in short form and its input value.
+     *
+     * @param shortName is the short name (identifier) of this property.
+     */
+    public Property(String shortName, String value) throws IllegalValueException, PropertyNotFoundException {
+        if (!PropertyManager.containsShortName(shortName)) {
+            throw new PropertyNotFoundException(shortName);
+        }
+
+        this.shortName = shortName;
+
+        requireNonNull(value);
+        if (!isValid(value)) {
+            throw new IllegalValueException(PropertyManager.getPropertyConstraintMessage(shortName));
+        }
+        this.value = value;
+        this.fullName = PropertyManager.getPropertyFullName(shortName);
+    }
+
+    /**
+     * Returns if a given string is a valid value for this property.
+     *
+     * Notice: Do NOT call this method for {@link DateTime} property. Use {@code DateTime.isValidTime()} instead.
+     */
+    public boolean isValid(String test) {
+        return test.matches(PropertyManager.getPropertyValidationRegex(shortName));
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            // short circuit if same object.
+            return true;
+        } else if (other instanceof Property) {
+            // instanceof handles nulls and type checking.
+            Property otherProperty = (Property) (other);
+            // key-value pair check
+            return this.shortName.equals(otherProperty.getShortName())
+                    && this.value.equals(otherProperty.getValue());
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+}
+```
+###### \java\seedu\address\model\property\PropertyManager.java
+``` java
+/**
+ * Manages the different properties (both pre-loaded ones and customize ones) of all persons stored in the
+ * application.
+ *
+ * Pre-loaded properties include {@code Address}, {@code Email}, {@code Name}, {@code Phone}. These pre-loaded
+ * properties are subjected to changes in later versions.
+ *
+ * Customize properties include all properties except the pre-loaded ones, which are added by the following command:
+ * <pre>{@code config --add-property <property_name> ...}</pre>
+ *
+ * TODO: Should we extend {@link seedu.address.commons.core.ComponentManager} as superclass?
+ */
+public class PropertyManager {
+    // Default constraint setting for all properties.
+    public static final String DEFAULT_MESSAGE = "%1$s can take any values, but it should not be blank.";
+    public static final String DEFAULT_REGEX = "[^\\s].*";
+
+    private static final String DEFAULT_PREFIX = "%1$s/";
+
+    // Mapping from property short name to its prefixes (for all available properties).
+    private static final HashMap<String, Prefix> propertyPrefixes = new HashMap<>();
+
+    // Mapping from property short name to its full name.
+    private static final HashMap<String, String> propertyFullNames = new HashMap<>();
+
+    // Mapping from property name to the corresponding constraint message and validation regular expression.
+    private static final HashMap<String, String> propertyConstraintMessages = new HashMap<>();
+    private static final HashMap<String, String> propertyValidationRegex = new HashMap<>();
+
+    // Records whether has been initialized before.
+    private static boolean initialized = false;
+
+    /**
+     * Util for initialization of default pre-loaded properties. This method should not be called if there is
+     * existing data loaded from local storage file.
+     */
+    public static void initializePropertyManager() {
+        if (!initialized) {
+            try {
+                // Adds name as a pre-loaded property.
+                addNewProperty("n", "Name",
+                        "Person names should only contain alphanumeric characters and spaces, "
+                                + "and it should not be blank",
+                        "[\\p{Alnum}][\\p{Alnum} ]*");
+
+                // Adds email as a pre-loaded property.
+                addNewProperty("e", "Email",
+                        "Person emails should be 2 alphanumeric/period strings separated by '@'",
+                        "[\\w\\.]+@[\\w\\.]+");
+
+                // Adds phone number as a pre-loaded property.
+                addNewProperty("p", "Phone",
+                        "Phone numbers can only contain numbers, and should be at least 3 digits long",
+                        "\\d{3,}");
+
+                // Adds address as a pre-loaded property.
+                addNewProperty("a", "Address",
+                        String.format(DEFAULT_MESSAGE, "Address"), DEFAULT_REGEX);
+
+                // Adds date/time as a pre-loaded property.
+                addNewProperty("dt", "DateTime", "Event date & time should be "
+                                + "simple and clear enough for the application to understand", DEFAULT_REGEX);
+            } catch (DuplicatePropertyException dpe) {
+                throw new AssertionError("Pre-loaded properties cannot be invalid", dpe);
+            }
+
+            initialized = true;
+        }
+    }
+
+    /**
+     * Adds a new available property with all the required information for setting up a property.
+     *
+     * TODO: Should we allow duplicates in full names of different properties?
+     *
+     * @param shortName is the short-form name of this property, usually consists of one or two letters, like a
+     *                  (stands for address). It is usually the initial of the property name.
+     * @param fullName is the full-form name of this property, should be a legal English word.
+     * @param message is the constraint message of this property. It will be displayed when the value of this
+     *                property does not pass the validation check.
+     * @param regex is the regular expression used to perform input validation.
+     *
+     * @throws DuplicatePropertyException is thrown when a property with the same{@code shortName} already exists.
+     * @throws PatternSyntaxException is thrown if the given regex is {@code regex} is invalid.
+     */
+    public static void addNewProperty(String shortName, String fullName, String message, String regex)
+            throws DuplicatePropertyException, PatternSyntaxException {
+        // Checks whether there exists a property with the same name.
+        if (propertyPrefixes.containsKey(shortName)) {
+            throw new DuplicatePropertyException(String.format(PROPERTY_EXISTS, shortName));
+        }
+        // Checks whether the regular expression is valid.
+        Pattern.compile(regex);
+
+        propertyPrefixes.put(shortName, new Prefix(String.format(DEFAULT_PREFIX, shortName)));
+        propertyFullNames.put(shortName, fullName);
+        propertyConstraintMessages.put(shortName, message);
+        propertyValidationRegex.put(shortName, regex);
+    }
+
+    /**
+     * Clears all properties stored in the {@link PropertyManager}.
+     */
+    public static void clearAllProperties() {
+        propertyPrefixes.clear();
+        propertyFullNames.clear();
+        propertyConstraintMessages.clear();
+        propertyValidationRegex.clear();
+    }
+
+    public static boolean containsShortName(String shortName) {
+        return propertyPrefixes.containsKey(shortName);
+    }
+
+    public static String getPropertyFullName(String shortName) {
+        return propertyFullNames.get(shortName);
+    }
+
+    public static String getPropertyConstraintMessage(String shortName) {
+        return propertyConstraintMessages.get(shortName);
+    }
+
+    public static String getPropertyValidationRegex(String shortName) {
+        return propertyValidationRegex.get(shortName);
+    }
+
+    public static HashSet<String> getAllShortNames() {
+        return new HashSet<>(propertyPrefixes.keySet());
+    }
+
+    public static HashSet<Prefix> getAllPrefixes() {
+        return new HashSet<>(propertyPrefixes.values());
+    }
+}
+```
+###### \java\seedu\address\model\property\UniquePropertyMap.java
+``` java
+/**
+ * A HashMap of properties that enforces no nulls and uniqueness between its elements.
+ *
+ * Supports minimal set of map (list) operations for the app's features.
+ *
+ * Notice: Uniqueness is directly supported by internal HashMap, which makes it different from
+ * {@link seedu.address.model.person.UniquePersonList} and {@link seedu.address.model.tag.UniqueTagList}.
+ *
+ * @see Property#equals(Object)
+ */
+public class UniquePropertyMap implements Iterable<Property> {
+    private static final String PROPERTY_NOT_FOUND = "This person does not have such property.";
+    private final ObservableMap<String, Property> internalMap = FXCollections.observableHashMap();
+
+    /**
+     * Constructs empty PropertyList.
+     */
+    public UniquePropertyMap() {}
+
+    /**
+     * Creates a UniquePropertyMap using given properties.
+     * Enforces no nulls.
+     */
+    public UniquePropertyMap(Set<Property> properties) throws DuplicatePropertyException {
+        requireAllNonNull(properties);
+
+        for (Property property: properties) {
+            add(property);
+        }
+    }
+
+    /**
+     * Returns all properties (collection of values in all entries) in this map as a Set. This set is mutable
+     * but change-insulated against the internal map.
+     */
+    public Set<Property> toSet() {
+        return new HashSet<>(internalMap.values());
+    }
+
+    /**
+     * Returns all properties (collection of values in all entries) in this map as a sorted list based on the full
+     * name of each property. This list is mutable but change-insulated against the internal map.
+     */
+    public List<Property> toSortedList() {
+        List<Property> list = new ArrayList<>(internalMap.values());
+        list.sort(Comparator.comparing(Property::getFullName));
+        return list;
+    }
+
+    /**
+     * Replaces all the properties in this map with those in the argument property map.
+     */
+    public void setProperties(Set<Property> properties) throws DuplicatePropertyException {
+        requireAllNonNull(properties);
+        internalMap.clear();
+
+        for (Property property: properties) {
+            add(property);
+        }
+    }
+
+    /**
+     * Merges all properties from the argument list into this list. If a property with the same shortName already
+     * exists in the list, it will not be merged in.
+     */
+    public void mergeFrom(UniquePropertyMap from) {
+        for (Property property: from) {
+            if (!containsProperty(property)) {
+                internalMap.put(property.getShortName(), property);
+            }
+        }
+    }
+
+    /**
+     * Returns true if there exists a property with the given shortName in the list.
+     */
+    public boolean containsProperty(String shortName) {
+        requireNonNull(shortName);
+        return internalMap.containsKey(shortName);
+    }
+
+    /**
+     * Returns true if the list containsProperty an equivalent Property (with the same shortName)
+     * as the given argument.
+     */
+    public boolean containsProperty(Property toCheck) {
+        requireNonNull(toCheck);
+        return containsProperty(toCheck.getShortName());
+    }
+
+    public String getPropertyValue(String shortName) throws PropertyNotFoundException {
+        if (!containsProperty(shortName)) {
+            throw new PropertyNotFoundException();
+        }
+        return internalMap.get(shortName).getValue();
+    }
+
+    /**
+     * Adds a property to the map.
+     *
+     * @throws DuplicatePropertyException if the given property already exists in this list (or there exists a
+     * property that is equal to the one in the argument). Since we are using {@link java.util.HashMap}, another
+     * method must be used when we want to update the value of an existing property.
+     */
+    public void add(Property toAdd) throws DuplicatePropertyException {
+        requireNonNull(toAdd);
+        String shortName = toAdd.getShortName();
+
+        if (containsProperty(shortName)) {
+            throw new DuplicatePropertyException(String.format(PROPERTY_EXISTS, shortName));
+        }
+        internalMap.put(shortName, toAdd);
+    }
+
+    /**
+     * Updates the value of an existing property in the map.
+     *
+     * @throws PropertyNotFoundException if there is no property with the same shortName in this map previously.
+     */
+    public void update(Property toUpdate) throws PropertyNotFoundException {
+        requireNonNull(toUpdate);
+        String shortName = toUpdate.getShortName();
+
+        if (!containsProperty(shortName)) {
+            throw new PropertyNotFoundException();
+        }
+        internalMap.put(shortName, toUpdate);
+    }
+
+    /**
+     * Updates the value of the property if there already exists a property with the same shortName, otherwise
+     * adds a new property.
+     */
+    public void addOrUpdate(Property toSet) {
+        requireNonNull(toSet);
+        String shortName = toSet.getShortName();
+
+        internalMap.put(shortName, toSet);
+    }
+
+    @Override
+    public Iterator<Property> iterator() {
+        return toSet().iterator();
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableMap<String, Property> asObservableList() {
+        return FXCollections.unmodifiableObservableMap(internalMap);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UniquePropertyMap // instanceof handles nulls
+                && this.internalMap.equals(((UniquePropertyMap) other).internalMap));
+    }
+
+    /**
+     * Utilizes {@link #equals(Object)} because {@link java.util.HashMap} does not enforce
+     * ordering anyway.
+     */
+    public boolean equalsOrderInsensitive(UniquePropertyMap other) {
+        return equals(other);
+    }
+
+    /**
+     * Returns the size of this map.
+     */
+    public int size() {
+        return internalMap.size();
+    }
+
+    @Override
+    public int hashCode() {
+        return internalMap.hashCode();
+    }
+}
+```
+###### \java\seedu\address\model\tag\TagColorManager.java
+``` java
+/**
+ * Manages the displayed color of all tags.
+ *
+ * TODO: Should we extract color out to be a {@code Color} class?
+ */
+public class TagColorManager {
+    /**
+     * Stores the colors for all existing tags here so that the same tag always has the same color. Notice this
+     * {@code HashMap} has to be declared as a class variable. See the {@code equal} method in {@link Tag} class.
+     */
+    private static HashMap<Tag, String> internalMap = new HashMap<>();
+
+    // Random number generator (non-secure purpose)
+    private static final Random randomGenerator = new Random();
+
+    private static final String TAG_NOT_FOUND = "The provided tag does not exist.";
+
+    /**
+     * The upper (exclusive) bound should be equal to {@code Math.pow(16, 6)}. The lower (inclusive) bound should be
+     * equal to {@code Math.pow(16, 5)}. Thus, the interval is {@code Math.pow(16, 6) - Math.pow(16, 5)}.
+     */
+    private static final int RGB_INTERVAL = 15728640;
+    private static final int RGB_LOWER_BOUND = 1048576;
+
+    public static String getColor(Tag tag) throws TagNotFoundException {
+        if (!internalMap.containsKey(tag)) {
+            throw new TagNotFoundException(TAG_NOT_FOUND);
+        }
+
+        return internalMap.get(tag);
+    }
+
+    public static boolean contains(Tag tag) {
+        return internalMap.containsKey(tag);
+    }
+
+    /**
+     * Changes the color of a specific {@link Tag}.
+     *
+     * @param tag is the tag whose displayed color will be changed.
+     * @param color is the RGB value of its new color.
+     */
+    public static void setColor(Tag tag, String color) {
+        internalMap.put(tag, color);
+    }
+
+    /**
+     * Randomly assign a color to the given {@code tag}. Notice the selection of random color is not cryptographically
+     * secured.
+     */
+    public static void setColor(Tag tag) {
+        int randomColorCode = randomGenerator.nextInt(RGB_INTERVAL) + RGB_LOWER_BOUND;
+        setColor(tag, "#" + Integer.toHexString(randomColorCode));
+    }
+}
+```
+###### \java\seedu\address\model\util\SampleDataUtil.java
+``` java
+    public static Event[] getSampleEvents() {
+        try {
+            return new Event[]{
+                new Event(new Name("Volleyball Practice"), new DateTime("25122017 08:30"),
+                        new Address("OCBC ARENA Hall 3, #01-111"), new ArrayList<>()),
+                new Event(new Name("CS2103T Lecture"), new DateTime("20102017 14:00"),
+                        new Address("iCube Auditorium, NUS"), new ArrayList<>()),
+                new Event(new Name("Project Meeting"), new DateTime("20102017 14:00"),
+                        new Address("iCube Auditorium, NUS"), new ArrayList<>())
+            };
+        } catch (IllegalValueException | PropertyNotFoundException e) {
+            throw new AssertionError("sample data cannot be invalid", e);
+        }
+    }
+```
+###### \java\seedu\address\storage\XmlAdaptedPerson.java
+``` java
+/**
+ * JAXB-friendly version of the Person.
+ */
+public class XmlAdaptedPerson {
+    @XmlElement
+    private String avatar;
+
+    @XmlElement
+    private List<XmlAdaptedProperty> properties = new ArrayList<>();
+
+    @XmlElement
+    private List<XmlAdaptedTag> tagged = new ArrayList<>();
+
+    /**
+     * Constructs an XmlAdaptedPerson.
+     * This is the no-arg constructor that is required by JAXB.
+     */
+    public XmlAdaptedPerson() {}
+
+```
+###### \java\seedu\address\storage\XmlAdaptedPerson.java
+``` java
+    /**
+     * Converts a given Person into this class for JAXB use.
+     *
+     * @param source future changes to this will not affect the created XmlAdaptedPerson
+     */
+    public XmlAdaptedPerson(ReadOnlyPerson source) {
+        if (source.getAvatar() != null) {
+            avatar = source.getAvatar().getUrl();
+        }
+
+        properties = new ArrayList<>();
+        for (Property property: source.getProperties()) {
+            properties.add(new XmlAdaptedProperty(property));
+        }
+
+        tagged = new ArrayList<>();
+        for (Tag tag : source.getTags()) {
+            tagged.add(new XmlAdaptedTag(tag));
+        }
+    }
+
+    /**
+     * Converts this jaxb-friendly adapted person object into the model's Person object.
+     *
+     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     */
+    public Person toModelType() throws IllegalValueException, PropertyNotFoundException, DuplicatePropertyException {
+        final List<Property> personProperties = new ArrayList<>();
+        for (XmlAdaptedProperty property: properties) {
+            personProperties.add(property.toModelType());
+        }
+
+        final List<Tag> personTags = new ArrayList<>();
+        for (XmlAdaptedTag tag : tagged) {
+            personTags.add(tag.toModelType());
+        }
+
+        final Set<Property> properties = new HashSet<>(personProperties);
+        final Set<Tag> tags = new HashSet<>(personTags);
+        final Person person = new Person(properties, tags);
+
+        if (avatar != null) {
+            person.setAvatar(new Avatar(avatar));
+        }
+
+        return person;
+    }
+}
+```
+###### \java\seedu\address\storage\XmlAdaptedProperty.java
+``` java
+/**
+ * JAXB-friendly adapted version of the {@link Property}, stored within each person.
+ */
+public class XmlAdaptedProperty {
+    @XmlAttribute
+    private String shortName;
+    @XmlValue
+    private String value;
+
+    /**
+     * Constructs an XmlAdaptedProperty.
+     * This is the no-arg constructor that is required by JAXB.
+     */
+    public XmlAdaptedProperty() {}
+
+    /**
+     * Converts a given Property into this class for JAXB use.
+     *
+     * @param source future changes to this will not affect the created
+     */
+    public XmlAdaptedProperty(Property source) {
+        this.shortName = source.getShortName();
+        this.value = source.getValue();
+    }
+
+    /**
+     * Converts this jaxb-friendly adapted property object into the model's Property object.
+     *
+     * @return a Property object used in model.
+     * @throws IllegalValueException if there were any data constraints violated in the adapted property.
+     * @throws PropertyNotFoundException the same as above.
+     */
+    public Property toModelType() throws IllegalValueException, PropertyNotFoundException {
+        return new Property(shortName, value);
+    }
+}
+```
+###### \java\seedu\address\storage\XmlAdaptedPropertyInfo.java
+``` java
+/**
+ * JAXB-friendly adapted version of the {@link Property}, stores the general information of each property.
+ */
+public class XmlAdaptedPropertyInfo {
+    @XmlElement
+    private String shortName;
+    @XmlElement
+    private String fullName;
+    @XmlElement
+    private String message;
+    @XmlElement
+    private String regex;
+
+    /**
+     * Constructs an XmlAdaptedTag.
+     * This is the no-arg constructor that is required by JAXB.
+     */
+    public XmlAdaptedPropertyInfo() {}
+
+    public XmlAdaptedPropertyInfo(String shortName, String fullName, String message, String regex) {
+        this.shortName = shortName;
+        this.fullName = fullName;
+        this.message = message;
+        this.regex = regex;
+    }
+
+    public void toModelType() throws DuplicatePropertyException {
+        PropertyManager.addNewProperty(shortName, fullName, message, regex);
+    }
+}
+```
+###### \java\seedu\address\storage\XmlAdaptedPropertyManager.java
+``` java
+/**
+ * JAXB-friendly adapted version of the {@link PropertyManager}.
+ */
+public class XmlAdaptedPropertyManager {
+    @XmlElement
+    private List<XmlAdaptedPropertyInfo> property;
+
+    public XmlAdaptedPropertyManager() {
+        property = new ArrayList<>();
+        for (String shortName: PropertyManager.getAllShortNames()) {
+            XmlAdaptedPropertyInfo info = new XmlAdaptedPropertyInfo(shortName,
+                    PropertyManager.getPropertyFullName(shortName),
+                    PropertyManager.getPropertyConstraintMessage(shortName),
+                    PropertyManager.getPropertyValidationRegex(shortName));
+            property.add(info);
+        }
+    }
+
+    /**
+     * Initialize all properties by adding them to {@link PropertyManager}.
+     */
+    public void initializeProperties() {
+        try {
+            for (XmlAdaptedPropertyInfo info: property) {
+                info.toModelType();
+            }
+        } catch (DuplicatePropertyException dpe) {
+            // TODO: better error handling
+            dpe.printStackTrace();
+        }
+    }
+}
+```
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+``` java
+    /**
+     * Initialize the {@link PropertyManager} by clearing all existing properties and load information about new
+     * properties from the storage file.
+     */
+    public void initializePropertyManager() {
+        PropertyManager.clearAllProperties();
+        properties.initializeProperties();
+    }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    /**
+     * Take note of the following two methods, which overload each other. The one without parameter is used as the
+     * callback when the user clicks on the sidebar button; the other one is used as the subscriber when the user
+     * enters some command(s) that raise(s) the corresponding event(s).
+     */
+    @FXML
+    private void handleSwitchToContacts() {
+        dataDetailsPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+    }
+
+    @Subscribe
+    public void handleSwitchToContacts(SwitchToContactsListEvent event) {
+        dataDetailsPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+    }
+
+    @FXML
+    private void handleSwitchToEvents() {
+        dataDetailsPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+    }
+
+    @Subscribe
+    public void handleSwitchToEvents(SwitchToEventsListEvent event) {
+        dataDetailsPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ReadOnlyPerson person = event.getNewSelection().person;
+
+        dataDetailsPanelPlaceholder.getChildren().clear();
+        dataDetailsPanelPlaceholder.getChildren().add(new PersonDetailsPanel(person).getRoot());
+    }
+```
+###### \java\seedu\address\ui\person\PersonCard.java
+``` java
+    /**
+     * Initializes all the tags of a person displayed in different random colors.
+     */
+    private void initTags() {
+        person.getTags().forEach(tag -> {
+            String tagName = tag.tagName;
+            Label newTagLabel = new Label(tagName);
+            try {
+                newTagLabel.setStyle(String.format(TAG_COLOR_CSS, TagColorManager.getColor(tag)));
+            } catch (TagNotFoundException e) {
+                System.err.println("An existing must have a color.");
+            }
+            tags.getChildren().add(newTagLabel);
+        });
+    }
+
+    @Subscribe
+    public void handleTagColorChange(TagColorChangedEvent event) {
+        // TODO: improve efficiency here. Update rather than re-create all labels.
+        tags.getChildren().clear();
+        initTags();
+    }
+```
+###### \java\seedu\address\ui\person\PersonCard.java
+``` java
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof PersonCard)) {
+            return false;
+        }
+
+        // state check
+        PersonCard card = (PersonCard) other;
+        return id.getText().equals(card.id.getText())
+                && person.equals(card.person);
+    }
+}
+```
+###### \java\seedu\address\ui\PropertyLabel.java
+``` java
+/**
+ * A customize JavaFX {@link Label} class used to display the key-value pairs of all properties.
+ */
+public class PropertyLabel extends Label {
+    public PropertyLabel(String text, String style) {
+        super(text);
+        this.getStyleClass().add(style);
+    }
+}
+```
+###### \resources\view\MainWindow.fxml
+``` fxml
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" minWidth="600.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
+      <VBox fx:id="sideButtonBar" alignment="CENTER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0">
+         <padding>
+            <Insets bottom="10.0" top="10.0" />
+         </padding>
+         <children>
+            <ImageView fx:id="switchToContactsButton" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#handleSwitchToContacts" pickOnBounds="true" styleClass="sidebar-button">
+               <VBox.margin>
+                  <Insets bottom="50.0" top="50.0" />
+               </VBox.margin>
+               <image>
+                  <Image url="@../images/contacts.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="switchToEventsButton" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="20.0" onMouseClicked="#handleSwitchToEvents" pickOnBounds="true" styleClass="sidebar-button">
+               <image>
+                  <Image url="@../images/events.png" />
+               </image>
+               <VBox.margin>
+                  <Insets bottom="50.0" top="50.0" />
+               </VBox.margin>
+            </ImageView>
+         </children>
+      </VBox>
+    <VBox fx:id="dataList" minWidth="340" prefWidth="340.0" SplitPane.resizableWithParent="false">
+      <padding>
+        <Insets bottom="10" left="10" right="10" top="10" />
+      </padding>
+      <StackPane fx:id="dataListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+    </VBox>
+
+    <StackPane fx:id="dataDetailsPanelPlaceholder">
+      <padding>
+        <Insets bottom="10" left="10" right="10" top="10" />
+      </padding>
+    </StackPane>
+  </SplitPane>
+```
+###### \resources\view\person\PersonDetailsPanel.fxml
+``` fxml
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="600.0" prefWidth="580.0" stylesheets="@../../css/Extensions.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox prefHeight="200.0">
+         <children>
+            <ImageView fx:id="avatar" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/default_person_photo.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="name" styleClass="details-name-huge-label" text="\\\$name" wrapText="true">
+               <font>
+                  <Font size="45.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="30.0" top="50.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <HBox>
+         <children>
+            <ListView fx:id="propertyListKeys" />
+            <ListView fx:id="propertyListValues" prefWidth="500.0" />
+         </children>
+         <VBox.margin>
+            <Insets top="30.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>
 ```
