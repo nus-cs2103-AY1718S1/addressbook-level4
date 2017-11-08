@@ -52,9 +52,10 @@ public class AddFavouriteCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(targetIndex.getZeroBased());
-        Person editedPerson = createFavePerson(personToEdit);
+        Person editedPerson;
 
         try {
+            editedPerson = createFavePerson(personToEdit);
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_ALREADY_FAVOURITE);
@@ -68,7 +69,10 @@ public class AddFavouriteCommand extends UndoableCommand {
     /**
      * Creates and returns a {@code Person} with the the Favourite attribute set to true.
      */
-    private static Person createFavePerson(ReadOnlyPerson personToEdit) {
+    private static Person createFavePerson(ReadOnlyPerson personToEdit) throws DuplicatePersonException {
+        if (personToEdit.getFavourite().getStatus()) {
+            throw new DuplicatePersonException();
+        }
         Name updatedName = personToEdit.getName();
         Phone updatedPhone = personToEdit.getPhone();
         Email updatedEmail = personToEdit.getEmail();
@@ -79,5 +83,12 @@ public class AddFavouriteCommand extends UndoableCommand {
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavourite,
                 updatedProfPic, updatedTags);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddFavouriteCommand // instanceof handles nulls
+                && this.targetIndex.equals(((AddFavouriteCommand) other).targetIndex)); // state check
     }
 }

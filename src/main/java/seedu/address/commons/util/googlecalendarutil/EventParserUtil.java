@@ -28,7 +28,7 @@ public class EventParserUtil {
     private static final String KEY = "AIzaSyB34cw8YT02y2qA8ElCddMLxNvS3o1_siI";
 
     /** Get events ordered by start time */
-    private static final String QUERY = "%40group.calendar.google.com/events?singleEvents=true&orderBy=startTime&key=";
+    private static final String QUERY = "/events?singleEvents=true&orderBy=startTime&key=";
 
 
 
