@@ -27,7 +27,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class BirthdayCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "birthday";
-
+    public static final String COMMAND_ALIAS = "b";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the birthday of the person identified "
             + "by the index number used in the last person listing. "
             + "Existing birthday will be overwritten by the input.\n"
@@ -127,7 +127,8 @@ import seedu.address.model.person.ReadOnlyPerson;
  * Lists the birthdays in chronological order from the current date.
  */
 public class UpcomingBirthdayCommand extends Command {
-    public static final String COMMAND_WORD = "UpcomingBirthday";
+    public static final String COMMAND_WORD = "upcomingbirthday";
+    public static final String COMMAND_ALIAS = "ub";
 
     public static final String MESSAGE_SUCCESS = "Upcoming birthdays are shown.";
     private static final String MESSAGE_EMPTY_LIST = "Contact list is empty.";
@@ -152,11 +153,13 @@ public class UpcomingBirthdayCommand extends Command {
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
+        case BirthdayCommand.COMMAND_ALIAS:
         case BirthdayCommand.COMMAND_WORD:
             return new BirthdayCommandParser().parse(arguments);
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
+        case UpcomingBirthdayCommand.COMMAND_ALIAS:
         case UpcomingBirthdayCommand.COMMAND_WORD:
             return new UpcomingBirthdayCommand();
 ```
@@ -358,7 +361,18 @@ public class Birthday {
      */
     public static boolean isValidBirthday(String birthday) {
         if (birthday.matches(BIRTHDAY_VALIDATION_REGEX) || birthday.matches("")) {
+            if (birthday.matches("")) {
+                return true;
+            }
+            if (Integer.parseInt(birthday.substring(6, 10)) > 2016) {
+                return false;
+            }
+            if ((Integer.parseInt(birthday.substring(6, 10)) == 2016)
+                && (Integer.parseInt(birthday.substring(3, 5)) > 10)) {
+                return false;
+            }
             return true;
+
         }
         return false;
     }

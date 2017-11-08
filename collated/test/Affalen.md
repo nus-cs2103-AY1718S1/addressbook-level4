@@ -152,10 +152,46 @@ public class RemarkCommandTest {
 ###### \java\seedu\address\logic\parser\FindCommandParserTest.java
 ``` java
                 new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice")));
-        assertParseSuccess(parser, "n/Alice", expectedFindCommand);
+        assertParseSuccess(parser, "n/Alice", expectedFindNameCommand);
+
+        FindCommand expectedFindNumberCommand =
+                new FindCommand(new NumberContainsKeywordsPredicate(Arrays.asList("98765432")));
+        assertParseSuccess(parser, "p/98765432", expectedFindNumberCommand);
+
+        FindCommand expectedFindAddressCommand =
+                new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList("Clementi")));
+        assertParseSuccess(parser, "a/Clementi", expectedFindAddressCommand);
+
+        FindCommand expectedFindBirthdayCommand =
+                new FindCommand(new BirthdayContainsKeywordsPredicate(Arrays.asList("10-10-1995")));
+        assertParseSuccess(parser, "b/10-10-1995", expectedFindBirthdayCommand);
+
+        FindCommand expectedFindEmailCommand =
+                new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList("john@example.com")));
+        assertParseSuccess(parser, "e/john@example.com", expectedFindEmailCommand);
+
+        FindCommand expectedFindRemarkCommand =
+                new FindCommand(new RemarkContainsKeywordsPredicate(Arrays.asList("Swimmer")));
+        assertParseSuccess(parser, "r/Swimmer", expectedFindRemarkCommand);
+
+        FindCommand expectedFindTagCommand =
+                new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList("friends")));
+        assertParseSuccess(parser, "t/friends", expectedFindTagCommand);
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n n/Alice \n \t  \t", expectedFindCommand);
+        assertParseSuccess(parser, " \n n/Alice \n \t  \t", expectedFindNameCommand);
+
+        assertParseSuccess(parser, " \n p/98765432 \n \t  \t", expectedFindNumberCommand);
+
+        assertParseSuccess(parser, " \n a/Clementi \n \t  \t", expectedFindAddressCommand);
+
+        assertParseSuccess(parser, " \n b/10-10-1995 \n \t  \t", expectedFindBirthdayCommand);
+
+        assertParseSuccess(parser, " \n e/john@example.com \n \t  \t", expectedFindEmailCommand);
+
+        assertParseSuccess(parser, " \n r/Swimmer \n \t  \t", expectedFindRemarkCommand);
+
+        assertParseSuccess(parser, " \n t/friends \n \t  \t", expectedFindTagCommand);
     }
 
 }

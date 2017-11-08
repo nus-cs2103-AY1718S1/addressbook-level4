@@ -25,6 +25,7 @@ import seedu.address.storage.PhotoStorage;
  * */
 public class AddPhotoCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "addphoto";
+    public static final String COMMAND_ALIAS = "ap";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": adds a photo to the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer) " + PREFIX_FILEPATH + " (must be valid filepath)\n"
@@ -143,9 +144,28 @@ public class AddPhotoCommandParser implements Parser<AddPhotoCommand> {
 ``` java
         imageFolder = new InitImageFolder(userPrefs.getDisplayPicturesPath());
 ```
+###### \java\seedu\address\model\person\Person.java
+``` java
+    @Override
+    public ObjectProperty<Photo> photoProperty() {
+        return photo;
+    }
+    public Photo getPhoto() {
+        return photo.get();
+    }
+    public void setPhoto(Photo photo) {
+        this.photo.set(requireNonNull(photo));
+    }
+```
+###### \java\seedu\address\model\person\Person.java
+``` java
+
+```
 ###### \java\seedu\address\model\person\Photo.java
 ``` java
 package seedu.address.model.person;
+
+import static java.util.Objects.requireNonNull;
 
 import java.io.File;
 
@@ -161,6 +181,7 @@ public class Photo {
     private String url;
     public Photo(String filepath) throws IllegalArgumentException {
         //this is to setup the default photo for contacts after it is added.
+        requireNonNull(filepath);
         if (filepath.equals(DEFAULT_FILEPATH)) {
             this.filepath = DEFAULT_PHOTOURL;
             this.url = DEFAULT_FILEPATH;
@@ -236,6 +257,9 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 
 /**
  * This class creates a image storage folder in the same directory as the addressbook jar file upon running
@@ -243,10 +267,12 @@ import java.io.IOException;
  */
 public class InitImageFolder {
 
+    private static final Logger logger = LogsCenter.getLogger(InitImageFolder.class);
     public InitImageFolder(String destinationPath) throws IOException {
         requireNonNull(destinationPath);
         File file = new File(destinationPath);
         if (!file.exists()) {
+            logger.info("Created " + destinationPath + "folder");
             file.mkdir();
         }
     }
@@ -269,7 +295,7 @@ import javax.imageio.ImageIO;
  */
 public class PhotoStorage {
     public static final String WRITE_FAILURE_MESSAGE = "Unable to write to local resource folder: displaypictures. "
-            + "Make sure that the image type is supported. Supported types: JPEG, PNG, GIF.";
+            + "Make sure that the image type is supported. Supported types: JPEG, PNG.";
     private File fileReader = null;
     private String filePath = "";
     private File fileWriter = null;
@@ -310,6 +336,32 @@ public class PhotoStorage {
 ``` java
         final Photo photo = new Photo(this.filepath);
 ```
+###### \java\seedu\address\ui\ExtendedPersonDetails.java
+``` java
+    private static final String FXML = "ExtendDetailsPerson.fxml";
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private final String defaultPicture = "/images/PEERSONAL_icon.png";
+```
+###### \java\seedu\address\ui\ExtendedPersonDetails.java
+``` java
+    /**
+     * This class loads the persons details in the UI for the extended person's panel.
+     * */
+    public ExtendedPersonDetails() {
+        super(FXML);
+        registerAsAnEventHandler(this);
+        Image image = new Image(getClass().getResource(defaultPicture).toExternalForm());
+        setCircle(image);
+    }
+```
+###### \java\seedu\address\ui\ExtendedPersonDetails.java
+``` java
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonDetails(event.getNewSelection().person);
+    }
+```
 ###### \java\seedu\address\ui\PersonCard.java
 ``` java
     private static final String FXML = "PersonListCard.fxml";
@@ -321,6 +373,8 @@ public class PhotoStorage {
 ``` java
     @FXML
     private ImageView imageView;
+    @FXML
+    private Circle circle;
 ```
 ###### \java\seedu\address\ui\PersonCard.java
 ``` java
@@ -353,10 +407,82 @@ public class PhotoStorage {
         String url = person.getPhoto().getFilePath(); //gets the filepath directly from the resources folder.
         if (url.equals("")) {
             Image image = new Image(getClass().getResource("/images/noPhoto.png").toExternalForm());
-            imageView.setImage(image);
+            setCircle(image);
         } else {
             Image image = new Image("file:" + person.getPhoto().getFilePath());
-            imageView.setImage(image);
+            setCircle(image);
         }
     }
+    private void setCircle(Image image) {
+        ImagePattern pattern = new ImagePattern(image);
+        circle.setFill(pattern);
+        circle.setEffect(new DropShadow(10, Color.STEELBLUE));
+    }
+```
+###### \resources\view\ExtendDetailsPerson.fxml
+``` fxml
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-image: images/Night.jpg;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Circle fx:id="circle" fill="#bfcbd7" radius="46.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="60.0" translateY="20.0" />
+      <Line endX="100.0" startX="-100.0" stroke="#176fb2" strokeWidth="2.0" translateY="32.0" />
+      <Label fx:id="name" translateX="25.0" translateY="35.0" wrapText="true">
+         <graphic>
+            <ImageView fx:id="nameIcon" fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic></Label>
+      <Label fx:id="phone" translateX="20.0" translateY="35.0">
+         <graphic>
+            <ImageView fx:id="phoneIcon" fitHeight="16.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/Mobile-Phone-icon.png" />
+               </image>
+            </ImageView>
+         </graphic></Label>
+      <Label fx:id="address" prefWidth="240.0" translateX="20.0" translateY="35.0" wrapText="true">
+         <graphic>
+            <ImageView fx:id="addressIcon" fitHeight="17.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/address.png" />
+               </image>
+            </ImageView>
+         </graphic></Label>
+      <Label fx:id="email" prefWidth="240.0" translateX="20.0" translateY="35.0" wrapText="true">
+         <graphic>
+            <ImageView fx:id="emailIcon" fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/email-icon.png" />
+               </image>
+            </ImageView>
+         </graphic></Label>
+      <Label fx:id="remark" prefWidth="240.0" translateX="20.0" translateY="35.0" wrapText="true">
+         <graphic>
+            <ImageView fx:id="remarkIcon" fitHeight="15.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/RemarkIcon.png" />
+               </image>
+            </ImageView>
+         </graphic></Label>
+      <Label fx:id="birthday" prefWidth="240.0" translateX="20.0" translateY="35.0" wrapText="true">
+         <graphic>
+            <ImageView fx:id="birthdayIcon" fitHeight="16.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/BirthdayIcon.png" />
+               </image>
+            </ImageView>
+         </graphic></Label>
+      <Label fx:id="age" prefWidth="240.0" translateX="20.0" translateY="40.0">
+         <graphic>
+            <ImageView fx:id="ageIcon" fitHeight="17.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/AgeIcon.png" />
+               </image>
+            </ImageView>
+         </graphic></Label>
+      <ImageView fx:id="background" fitHeight="408.0" fitWidth="231.0" opacity="0.16" pickOnBounds="true" preserveRatio="true" rotate="18.4" scaleX="3.0" scaleY="5.0" translateY="-200.0">
+         <image>
+            <Image url="@../images/night.jpg" />
+         </image>
+      </ImageView>
+   </children>
+</VBox>
 ```

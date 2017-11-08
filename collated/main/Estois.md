@@ -59,6 +59,7 @@ import seedu.address.model.person.exceptions.EmptyBookException;
 public class SortCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "sort";
+    public static final String COMMAND_ALIAS = "s";
     public static final String MESSAGE_SORT_SUCCESS = "Peersonals sorted by %1$s.";
     public static final String MESSAGE_EMPTY_BOOK = "Peersonals is currently empty. Unable to sort.";
     public static final String SORT_MULTIPLE_INPUT = "Only one parameter can be entered.";
@@ -67,7 +68,6 @@ public class SortCommand extends UndoableCommand {
     private static final String PREFIX_PHONE = "p/";
     private static final String PREFIX_EMAIL = "e/";
     private static final String PREFIX_ADDRESS = "a/";
-    private static final String PREFIX_TAG = "t/";
     private static final String PREFIX_AGE = "o/";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -76,7 +76,7 @@ public class SortCommand extends UndoableCommand {
             + "Prefix\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "\n"
-            + "Accepted Parameters: (n/ p/ e/ a/ t/ o/)";
+            + "Accepted Parameters: (n/ p/ e/ a/ o/)";
 
     private final String parameter;
     private String sortParam;
@@ -119,13 +119,9 @@ public class SortCommand extends UndoableCommand {
             this.sortParam = "address";
             return (o1, o2) -> o1.getAddress().toString().compareToIgnoreCase(o2.getAddress().toString());
 
-        case PREFIX_TAG:
-            this.sortParam = "tag";
-            return (o1, o2) -> o1.getTags().toString().compareToIgnoreCase(o2.getTags().toString());
-
         case PREFIX_AGE:
             this.sortParam = "age";
-            return (o1, o2) -> o1.getAge().toString().compareToIgnoreCase(o2.getAge().toString());
+            return (o1, o2) -> o1.compareAge(o2);
 
         default:
             return (o1, o2) -> o1.getName().toString().compareToIgnoreCase(o2.getName().toString());
@@ -135,6 +131,7 @@ public class SortCommand extends UndoableCommand {
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
+        case SortCommand.COMMAND_ALIAS:
         case SortCommand.COMMAND_WORD:
             return new SortCommandParser().parse(arguments);
 ```
@@ -244,4 +241,44 @@ public class SortCommandParser implements Parser<SortCommand> {
     }
 
 }
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    public void sortPerson(Comparator<ReadOnlyPerson> sortBy) throws EmptyBookException {
+        persons.sort(sortBy);
+    }
+```
+###### \java\seedu\address\model\person\Person.java
+``` java
+    public int compareAge(ReadOnlyPerson o1) {
+        if (this.getAge().toString().equals("") && o1.getAge().toString().equals("")) {
+            return 0;
+        }
+
+        if (this.getAge().toString().equals("")) {
+            return 1;
+        }
+
+        if (o1.getAge().toString().equals("")) {
+            return -1;
+        }
+
+        return this.getAge().toString().compareToIgnoreCase(o1.getAge().toString());
+    }
+```
+###### \java\seedu\address\model\person\UniquePersonList.java
+``` java
+    /**
+     * Sorts persons in address book by field and in order specified.
+     * @param sortComparator
+     * @throws EmptyBookException
+     */
+    public void sort(Comparator<ReadOnlyPerson> sortComparator) throws EmptyBookException {
+        requireNonNull(sortComparator);
+        if (internalList.size() < 1) {
+            throw new EmptyBookException();
+        }
+
+        Collections.sort(internalList, sortComparator);
+    }
 ```

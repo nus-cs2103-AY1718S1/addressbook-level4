@@ -40,6 +40,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class RemarkCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "remark";
+    public static final String COMMAND_ALIAS = "rm";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the remark of the person identified "
             + "by the index number used in the last person listing. "
             + "Existing remark will be overwritten by the input.\n"
@@ -110,6 +111,7 @@ public class RemarkCommand extends UndoableCommand {
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
+        case RemarkCommand.COMMAND_ALIAS:
         case RemarkCommand.COMMAND_WORD:
             return new RemarkCommandParser().parse(arguments);
 ```
