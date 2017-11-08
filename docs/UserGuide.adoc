@@ -202,6 +202,8 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+// tag::rmtag[]
+
 === Deleting a tag : `removetag`
 
 Removes a tag from every person in the list in the address book. +
@@ -232,6 +234,9 @@ Deletes the tag `friends` from everyone in the address book.
 `removetag 1 enemy` +
 Deletes tag `enemy` from the first person in the list shown in the address book.
 
+// end::rmtag[]
+
+// tag::sort[]
 === Sorting the list: `sort`
 
 [NOTE]
@@ -258,7 +263,10 @@ Sorts the list based on name in ascending order.
 * `findtag owesMoney` +
 `sort email dsc` +
 Sorts the people with `owesMoney` tag based on their emails in descending order.
+
+// end::sort[]
 // tag::theme[]
+
 === Change the theme of AddressBook: `theme`
 [NOTE]
 theme feature available since v1.4.
@@ -274,7 +282,11 @@ Examples:
 
 * `theme` `DarkTheme` +
 Change the theme of the Rubrika to DarkTheme.
-//end::theme[]
+
+// end::theme[]
+
+// tag::importexport[]
+
 === Importing contacts: `import`
 
 [NOTE]
@@ -324,6 +336,7 @@ Examples:
 Exports the whole list of persons in addressbook into sample.vcf in root folder.
 * `export sample.xml` +
 Exports the whole list of persons in addressbook into sample.xml in root folder.
+// end::importexport[]
 
 === Change UI Theme : `theme`
 

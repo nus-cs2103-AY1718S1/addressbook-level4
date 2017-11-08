@@ -485,6 +485,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::rmtag[]
 === RemoveTag Function
 
 The remove tag function is done by calling a `removetag` function which resides in the `ModelManager` class. Currently it supports removing the tag from every individual of the addressbook as well as removing a specific tag from a specified person shown on the list.
@@ -543,7 +544,9 @@ If more than one tag is given or if `INDEX` out of the range of the shown list i
 **Alternative 2:** Remove all tags for the list shown to the user. +
 **Pros:** Completely removes the specified tag from the whole addressbook +
 **Cons:** User may want to remove only from list shown instead of the whole list.
+// end::rmtag[]
 
+// tag::sort[]
 === Sort Function
 
 The sort function is done by performing the `sortFilteredPersonList` function which resides in the `ModelManager` class. Sort currently supports sorting by name, email and phone in ascending or descending order. +
@@ -572,7 +575,9 @@ If arguments given do not comply with the correct format, ParseException will be
 **Pros:** User may have already have a preferred way of listing users and may only want to sort once for convenience. +
 **Cons:** More difficult to implement. +
 **Cons:** Other methods within ModelManager must be modified since SortedList is the list being displayed, not FilteredList. +
+// end::sort[]
 
+// tag::importexport[]
 === Import function
 
 The import function supports importing of vCard files (.vcf).
@@ -619,6 +624,7 @@ The contents are then read in this manner;
         ReadOnlyPerson toAdd = new Person(name, phone, email, address, remark, tagList);
         model.addPerson(toAdd);
 ----
+// end::importexport[]
 
 // tag::findtag[]
 === FindTag Function

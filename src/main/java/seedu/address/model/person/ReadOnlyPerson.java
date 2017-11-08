@@ -13,6 +13,7 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public interface ReadOnlyPerson {
 
+    //@@author freesoup
     Comparator<ReadOnlyPerson> NAMESORTASC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
         -> o1.getName().compareTo(o2.getName());
     Comparator<ReadOnlyPerson> PHONESORTASC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
@@ -25,6 +26,7 @@ public interface ReadOnlyPerson {
         -> o2.getPhone().compareTo(o1.getPhone());
     Comparator<ReadOnlyPerson> EMAILSORTDSC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
         -> o2.getEmail().compareTo(o1.getEmail());
+    //@@author
 
     ObjectProperty<Name> nameProperty();
     Name getName();
