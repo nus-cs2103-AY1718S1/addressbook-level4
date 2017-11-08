@@ -669,6 +669,39 @@ The list is filtered and updated through the `updateFilteredPersonList` method i
 
 // end::filterTags[]
 
+// tag::loginLogout[]
+=== Login/logout mechanism
+
+After a user enters a valid `login` command, verification of the login information will take place in the `Model` component. The username and password are verified against the information stored in `preferences.json`.
+
+The password is stored as a SHA-512 hash to conceal the actual password. The salt that is used to generate the hashed password is also stored. Since the stored hash cannot be converted back to the original password, the password that is entered by the user needs to be hashed and verified against the stored hash. Thus, the same salt needs to be used to generate a hash to match with the stored hash. If a different salt is used, then the generated hash will be different from the stored hash even if the password provided is correct.
+
+After verifying that the username and password matches the information stored in `preferences.json`, an event is raised to notify the `UI` component of the user authentication results. If the user has successfully logged in, the `UI` component will display the person list, info panel and allow other commands to be executed from the command box.
+
+When a user enters the `logout` command, the `LogoutCommand` class in the `Logic` component will raise an even to notify the `UI` component to go back to the welcome page.
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of password masking +
+**Alternative 1(current choice):** Use the unicode character 'BLACK CIRCLE' (●) for password masking +
+**Pros:** Allows other characters to be detected as password input +
+**Cons:** None +
+**Alternative 2:** Use the asterisk character (*) for password masking +
+**Pros:** User may use the asterisk character when entering the password. The asterisk character will be ignored and will not show in the text field when it is entered. This is because the method that handles password masking ignores the character used to mask the password. Refer to the code below for more details: +
+[source,java]
+----
+// starts masking password after the second whitespace and prevent the reading of the BLACK_CIRCLE after
+// replacing a character in the command box text field with a BLACK_CIRCLE
+if (numOfSpaces >= 2 && currentInput.charAt(currentInput.length() - 1) != ' '
+        && currentInput.charAt(currentInput.length() - 1) != BLACK_CIRCLE) {
+    maskPasswordInput(currentInput);
+
+}
+----
+**Cons:** Although '*' is an invalid password character, the user may still use it while entering the password. If the user types '*', the cursor will remain at its original position. User will be under the impression that the command box is not registering what was typed.
+// end::loginLogout[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
