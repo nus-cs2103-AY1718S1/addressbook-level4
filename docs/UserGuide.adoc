@@ -229,6 +229,7 @@ Deletes the 1st person from the results of the `find` command.
 * `DATAFIELD` is *case-insensitive*.
 * *Note that favourited contacts will be shown at the top*.
 * If you want to sort without prioritising favourites, type `-ignorefav` after `DATAFIELD`.
+* If you want to sort in reverse order, type `-reverse` after `DATAFIELD`.
 ****
 
 *Examples:*
@@ -239,6 +240,10 @@ Sorts the contact list according to their phone numbers.
 Sorts the contact list according to their addresses.
 * `sort` `email` `-ignorefav`
 Sorts the contact list according to their emails without prioritising favourited contacts first.
+* `sort` `name` `-reverse`
+Sorts the contact list according to their names in reverse order.
+* `sort` `phone` `-ignorefav` `-reverse`
+Sorts the contact list according to their phone numbers in reverse order without prioritising favourited contacts first.
 
 *Suggestion for use:* If you want to view the number of contacts having names starting with the same letter.
 

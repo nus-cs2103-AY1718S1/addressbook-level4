@@ -16,7 +16,9 @@ public class SortCommand extends Command {
             + "Parameters: DATAFIELD (Possible fields: Name, Phone, Email, Address)\n"
             + "Example: " + COMMAND_WORD + " address\n"
             + "If you want to ignore favourites, type -ignorefav after the DATAFIELD\n"
-            + "Example: " + COMMAND_WORD + " address -ignorefav";
+            + "Example: " + COMMAND_WORD + " address -ignorefav\n"
+            + "If you want to sort in reverse order, type -reverse after the DATAFIELD\n"
+            + "Example: " + COMMAND_WORD + " address -reverse";
 
     public static final String MESSAGE_SORT_LIST_SUCCESS = "Sorted list according to %1$s";
 
