@@ -1,8 +1,10 @@
 package seedu.address.ui;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.logging.Logger;
+import javax.xml.bind.JAXBException;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -139,7 +141,7 @@ public class MainWindow extends UiPart<Region> {
     /**
      * Fills up all the placeholders of this window.
      */
-    void fillInnerParts() {
+    void fillInnerParts() throws JAXBException, IOException {
         //browserPanel = new BrowserPanel();
         //browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
@@ -158,7 +160,8 @@ public class MainWindow extends UiPart<Region> {
         setBackground(resultDisplayPlaceholder,
                 "../addressbook4/docs/images/backgroundUp.jpg", 1250, 105);
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        //StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -235,6 +238,15 @@ public class MainWindow extends UiPart<Region> {
     public void handleHelp() {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
+    }
+
+    /**
+     +     * Opens the weather forecast window.
+     +     */
+    @FXML
+    public void handleWeather() throws JAXBException, IOException {
+        WeatherWindow weatherWindow = new WeatherWindow();
+        weatherWindow.show();
     }
 
     void show() {
