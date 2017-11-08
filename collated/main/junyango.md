@@ -407,7 +407,7 @@ public class SwitchTheme extends UndoableCommand {
 ###### \java\seedu\address\logic\parser\event\AddEventParser.java
 ``` java
 /**
- * Parses input arguments and creates a new AddCommand object
+ * Parses input arguments and creates a new AddEventCommand object
  */
 public class AddEventParser implements Parser<AddEventCommand> {
 

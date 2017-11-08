@@ -403,6 +403,24 @@ Examples:
 `email 2` +
 Emails the 2nd person in the address book.
 
+=== Adding avatar to a person : `(avr)avatar`
+
+Adds avatar to a person (identified by the index number used in the last listing). +
+Format: `(avr)avatar INDEX IMAGE_URL`
+
+****
+* The given URL must be pointed to a valid image in `png`, `jp(e)g` and `svg` format.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* like `1, 2, 3, ...`
+* The image will only be displayed correctly when you have Internet connection.
+****
+
+Examples:
+
+* `list` +
+`avatar 2 https://avatars0.githubusercontent.com/u/1342004` +
+Adds avatar to the 2nd person in the address book.
+
 === Switching themes : `(t)theme`
 
 Switches theme between dark and bright theme. +
@@ -417,7 +435,6 @@ Examples:
 Theme will be saved upon exit.
 When **boNUS** is opened again, theme will be initialized to the theme that was saved previously.
 ====
-
 
 === Listing entered commands : `(his)history`
 
@@ -537,6 +554,7 @@ For `macOS` and `Linux` users, use `/` instead.
 ====
 // end::importXml[]
 
+// tag::importScript[]
 ==== From `.bo` format
 
 _(Coming in v2.0)_
@@ -568,6 +586,7 @@ Examples:
 For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
 For `macOS` and `Linux` users, use `/` instead.
 ====
+// end::importScript[]
 
 ==== From NUSMods URL
 
@@ -623,6 +642,7 @@ For `macOS` and `Linux` users, use `/` instead.
 ====
 // end::exportXml[]
 
+// tag::exportExcel[]
 ==== To Microsoft Excel^TM^ Worksheet
 
 _(Coming in v2.0)_
@@ -648,12 +668,14 @@ Examples:
 For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
 For `macOS` and `Linux` users, use `/` instead.
 ====
+// end::exportExcel[]
 
 === Advance setting : `(cfg)config`
 
 Changes the configuration of the application or applies some advance settings to the data. Make sure you know what you
 are doing before using any of the following commands. These commands are intended for advance users.
 
+// tag::genericProperty[]
 ==== Adding a customize property : `(cfg)config --add-property`
 
 Adds a new customize property field available to all persons or events. +
@@ -684,6 +706,7 @@ Example:
 `add`/`addE` and `edit`/`editE` commands is invalid.
 * Regular expression is used to check whether the input value for this property is valid.
 ====
+// end::genericProperty[]
 
 ==== Setting the tag color : `(cfg)config --set-tag-color`
 
