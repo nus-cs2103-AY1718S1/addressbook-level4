@@ -1,6 +1,6 @@
 = *Sebastian Tay - Project Portfolio*
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:imagesDir: images
+:imagesDir: ../images
 
 == *Project: Sales Navigator*
 Sales Navigator is a desktop address book application used for sales executives to keep track of their connections and contacts.
@@ -15,7 +15,7 @@ https://github.com/CS2103AUG2017-T14-B3/main/blob/master/collated/test/sebtsh.md
 ---
 Start of Extract [from: User Guide]
 
-include::UserGuide.adoc[lines=64..78;85..109]
+include::../UserGuide.adoc[lines=64..78;85..109]
 End of Extract
 
 ---
@@ -29,7 +29,7 @@ to a NIL value if not explicitly initialized by the user.
 ---
 Start of Extract [from: Developer Guide]
 
-include::DeveloperGuide.adoc[lines=478..547]
+include::../DeveloperGuide.adoc[lines=478..547]
 
 End of Extract
 
@@ -47,7 +47,7 @@ The user will be confused if he edits a field but the change is not reflected in
 ---
 Start of Extract [from: Developer Guide]
 
-include::DeveloperGuide.adoc[tag=autoupdate]
+include::../DeveloperGuide.adoc[tag=autoupdate]
 
 End of Extract
 
