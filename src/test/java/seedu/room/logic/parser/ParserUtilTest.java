@@ -47,19 +47,19 @@ public class ParserUtilTest {
 
     //@@author: Haozhe321
     @Test
-    public void parseTimestamp_invalidInput_throwsNumberFormatException_1() throws Exception {
+    public void parseTimestamp_invalidInput_throwsNumberFormatException1() throws Exception {
         thrown.expect(NumberFormatException.class);
         ParserUtil.parseTimestamp(Optional.of(INVALID_TIMESTAMP_WITH_DECIMAL));
     }
 
     @Test
-    public void parseTimestamp_invalidInput_throwsNumberFormatException_2() throws Exception {
+    public void parseTimestamp_invalidInput_throwsNumberFormatException2() throws Exception {
         thrown.expect(NumberFormatException.class);
         ParserUtil.parseTimestamp(Optional.of("-1.5"));
     }
 
     @Test
-    public void parseTimestamp_invalidInput_throwsNumberFormatException_3() throws Exception {
+    public void parseTimestamp_invalidInput_throwsNumberFormatException3() throws Exception {
         thrown.expect(NumberFormatException.class);
         ParserUtil.parseTimestamp(Optional.of("2/3"));
     }
