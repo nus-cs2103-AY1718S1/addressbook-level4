@@ -435,7 +435,7 @@ public boolean test(ReadOnlyPerson person) {
 }
 ----
 
-The list is filtered and updated through the `updateFilteredPersonList` method in the `Model` component. As the person list is of a `FilteredList<>` type, filtering of the list is handled by Java's `FilteredList` class method, `setPredicate`.
+The list is filtered and updated through the `updateFilteredPersonList` method in the `Model` component. Since the person list is of a `FilteredList<>` type, filtering of the list can be handled by a Java `FilteredList` class method called `setPredicate`.
 
 ==== Design Considerations
 
