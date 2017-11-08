@@ -6,6 +6,7 @@ import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.LinkedList;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +18,6 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 
-import java.util.LinkedList;
 
 public class RecentlyDeletedCommandTest {
     private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
@@ -62,7 +62,8 @@ public class RecentlyDeletedCommandTest {
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         deleteFirstPerson(expectedModel);
         deleteFirstPerson(expectedModel);
-        assertCommandSuccess(recentlyDeletedCommand, model, String.format(RecentlyDeletedCommand.MESSAGE_SUCCESS, String.join("\n", deletedAsText)), expectedModel);
+        assertCommandSuccess(recentlyDeletedCommand, model, String.format(RecentlyDeletedCommand.MESSAGE_SUCCESS,
+                String.join("\n", deletedAsText)), expectedModel);
 
     }
 
