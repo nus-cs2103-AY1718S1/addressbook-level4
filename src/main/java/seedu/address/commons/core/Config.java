@@ -62,11 +62,10 @@ public class Config {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("App title : " + appTitle);
-        sb.append("\nCurrent log level : " + logLevel);
-        sb.append("\nPreference file Location : " + userPrefsFilePath);
-        return sb.toString();
+        String sb = ("App title : " + appTitle) +
+                "\nCurrent log level : " + logLevel +
+                "\nPreference file Location : " + userPrefsFilePath;
+        return sb;
     }
 
 }
