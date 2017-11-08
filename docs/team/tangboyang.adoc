@@ -136,7 +136,7 @@ This feature can remind the user about the task deadline.
 ---
 === Other contributions
 
-* Updated the GUI for command mode(Pull requests https://github.com/CS2103AUG2017-T11-B3/main/pull/114[#114])
-* Updated the GUI for task tags(Pull requests https://github.com/CS2103AUG2017-T11-B3/main/pull/100[#100])
-* Updated the GUI for task manager(https://github.com/CS2103AUG2017-T11-B3/main/pull/60[60])
-* Added some GUI test files for the team to conduct sysyem tests(https://github.com/CS2103AUG2017-T11-B3/main/pull/60[#60])
+* Updated the GUI for command mode(Pull request https://github.com/CS2103AUG2017-T11-B3/main/pull/114[#114])
+* Updated the GUI for task tags(Pull request https://github.com/CS2103AUG2017-T11-B3/main/pull/100[#100])
+* Updated the GUI for task manager(Pull request https://github.com/CS2103AUG2017-T11-B3/main/pull/60[#60])
+* Added some GUI test files for the team to conduct system tests(Pull request https://github.com/CS2103AUG2017-T11-B3/main/pull/60[#60])
