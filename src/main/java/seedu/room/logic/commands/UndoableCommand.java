@@ -2,9 +2,12 @@ package seedu.room.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.room.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.room.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 import static seedu.room.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.room.logic.commands.exceptions.CommandException;
+import seedu.room.model.EventBook;
+import seedu.room.model.ReadOnlyEventBook;
 import seedu.room.model.ReadOnlyResidentBook;
 import seedu.room.model.ResidentBook;
 
@@ -13,6 +16,7 @@ import seedu.room.model.ResidentBook;
  */
 public abstract class UndoableCommand extends Command {
     private ReadOnlyResidentBook previousResidentBook;
+    private ReadOnlyEventBook previousEventBook;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
@@ -22,6 +26,8 @@ public abstract class UndoableCommand extends Command {
     private void saveResidentBookSnapshot() {
         requireNonNull(model);
         this.previousResidentBook = new ResidentBook(model.getResidentBook());
+        this.previousEventBook = new EventBook(model.getEventBook());
+
     }
 
     /**
@@ -30,9 +36,11 @@ public abstract class UndoableCommand extends Command {
      * show all persons.
      */
     protected final void undo() {
-        requireAllNonNull(model, previousResidentBook);
-        model.resetData(previousResidentBook);
+        requireAllNonNull(model, previousResidentBook, previousEventBook);
+        model.resetData(previousResidentBook, previousEventBook);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+
     }
 
     /**
@@ -48,6 +56,8 @@ public abstract class UndoableCommand extends Command {
                     + "it should not fail now");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+
     }
 
     @Override

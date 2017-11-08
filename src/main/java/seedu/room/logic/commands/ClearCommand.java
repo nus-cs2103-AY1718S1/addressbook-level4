@@ -2,6 +2,7 @@ package seedu.room.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.room.model.EventBook;
 import seedu.room.model.ResidentBook;
 
 /**
@@ -17,7 +18,7 @@ public class ClearCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
-        model.resetData(new ResidentBook());
+        model.resetData(new ResidentBook(), new EventBook());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
