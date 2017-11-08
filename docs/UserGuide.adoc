@@ -156,9 +156,10 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [h/HOME_NUMBER] [e/EMAIL] [se/SCHOOL_EMAI
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+By typing this command, you will be able to edit the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+By typing this command, you will be able to edit the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 === Locating persons by name: `find`
 
@@ -178,10 +179,11 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 Examples:
 
 * `find John` +
-Returns `john` and `John Doe`
+If there was john` and `John Doe` in the person list,
+by typing this command, you will be able to find both `john` and `John Doe`.
 
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+By typing this command, you will be able to find any person having names `Betsy`, `Tim`, or `John`
 
 === Finding a person's tag : `findtag`
 
@@ -199,10 +201,10 @@ Format: `findtag TAGS [MORE_TAGS]`
 Examples:
 
 * `findtag friends` +
-Returns any person having tag `friends`.
-* `findtag owesMoney neighbours friends` +
-Returns any person having tags `owesMoney`, `neighbours`, or `friends`.
+By typing this command, you will be able to find any person having tag `friends`.
 
+* `findtag owesMoney neighbours friends` +
+By typing this command, you will be able to find any person having tags `owesMoney`, `neighbours`, or `friends`.
 
 === Selecting a person : `select`
 
@@ -220,7 +222,9 @@ Examples:
 
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+By typing `find Betsy`, you will be able to find any person having the name `Betsy`. +
+By typing `select 1`, you are selecting the 1st person in the results of the `find Betsy` command which will
+displays the information details of the 1st person in the graphical user interface.
 
 * `list` +
 `select 3` +
