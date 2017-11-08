@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.room.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.room.commons.core.index.Index;
-import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.commands.AddImageCommand;
 import seedu.room.logic.parser.exceptions.ParseException;
 
@@ -18,15 +17,16 @@ public class AddImageCommandParser implements Parser<AddImageCommand> {
     public AddImageCommand parse(String args) throws ParseException {
         requireNonNull(args);
 
-        String[] individualArgs = args.split(" ");
-
         Index index;
+        String url;
         try {
+            String[] individualArgs = args.split(" ", 3);
             index = ParserUtil.parseIndex(individualArgs[1]);
-        } catch (IllegalValueException ive) {
+            url = individualArgs[2];
+        } catch (Exception e) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddImageCommand.MESSAGE_USAGE));
         }
 
-        return new AddImageCommand(index, individualArgs[2]);
+        return new AddImageCommand(index, url);
     }
 }
