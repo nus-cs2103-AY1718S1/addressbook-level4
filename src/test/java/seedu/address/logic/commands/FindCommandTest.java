@@ -76,7 +76,7 @@ public class FindCommandTest {
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
-        String[] userInput = {"OR", "n/ali", "e/heinz@example.com werner@example.com"};
+        String[] userInput = {"OR", "ali", "heinz@example.com werner@example.com"};
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
         FindCommand command = prepareCommand(userInput);
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE));
@@ -89,7 +89,7 @@ public class FindCommandTest {
         FindPersonDescriptor personDescriptor = new FindPersonDescriptor();
         personDescriptor.setName(userInput[1]);
         personDescriptor.setEmail(userInput[2]);
-        boolean type = (userInput[0].equals("AND")) ? true : userInput.equals("OR") ? false : null;
+        boolean type = (userInput[0].equals("AND")) ? true : userInput[0].equals("OR") ? false : null;
         FindCommand command = new FindCommand(type,personDescriptor);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;

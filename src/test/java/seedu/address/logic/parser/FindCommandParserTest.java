@@ -11,7 +11,7 @@ import seedu.address.logic.commands.FindPersonDescriptor;
 
 public class FindCommandParserTest {
 
-    private FindByNameCommandParser parser = new FindByNameCommandParser();
+    private FindCommandParser parser = new FindCommandParser();
 
     @Test
     public void parse_emptyArg_throwsParseException() {
@@ -24,11 +24,12 @@ public class FindCommandParserTest {
         // no leading and trailing whitespaces
         FindPersonDescriptor personDescriptor = new FindPersonDescriptor();
         personDescriptor.setName("Alice Bob");
+        personDescriptor.setAddress("Ang Mo Kio");
         FindCommand expectedFindCommand =
                 new FindCommand(true, personDescriptor);
-        assertParseSuccess(parser, "AND n/Alice Bob", expectedFindCommand);
+        assertParseSuccess(parser, "AND n/Alice Bob a/Ang Mo Kio", expectedFindCommand);
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
+        assertParseSuccess(parser, " AND n/\n Alice \n \t Bob  \t a/Ang \n \t Mo Kio", expectedFindCommand);
     }
 }
