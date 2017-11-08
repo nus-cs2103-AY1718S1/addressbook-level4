@@ -15,7 +15,7 @@ public class UndoCommand extends Command {
     public static final String[] COMMAND_WORDS = {"undo", "u", "revert"};
     public static final String COMMAND_WORD = "undo";
     public static final String MESSAGE_SUCCESS = "Undo success!";
-    public static final String MESSAGE_SUCCESS_FULL = "Undo success!\nUndone Command: %1$s";
+    public static final String FULL_MESSAGE_SUCCESS = "Undo success!\nUndone Command: %1$s";
     public static final String MESSAGE_FAILURE = "No more commands to undo!";
 
     @Override
@@ -38,7 +38,7 @@ public class UndoCommand extends Command {
      * Parses the output command to display the previously undone command
      */
     public static String parseCommand(String commandString) {
-        String output = String.format(MESSAGE_SUCCESS_FULL, commandString);
+        String output = String.format(FULL_MESSAGE_SUCCESS, commandString);
         return output;
     }
     //@@author

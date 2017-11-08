@@ -77,8 +77,8 @@ public interface ReadOnlyPerson {
     //@@author arnollim
     default String getAsParagraph() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" Phone: ")
+        builder.append(getName() + "\n")
+                .append("\nPhone: ")
                 .append(getPhone())
                 .append("\nEmail: ")
                 .append(getEmail())
