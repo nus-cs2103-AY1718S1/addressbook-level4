@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.DefaultProfilePhotoChangedEvent;
 import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowBrowserEvent;
@@ -320,5 +321,16 @@ public class MainWindow extends UiPart<Region> {
         }
         scene.getStylesheets().add(cssPath);
     }
-    //@@author
+
+    //@@author liuhang0213
+    @Subscribe
+    private void handleDefaultProfilePhotoChangedEvent(DefaultProfilePhotoChangedEvent event) {
+        ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
+        for (ReadOnlyPerson person : persons) {
+            storage.downloadProfilePhoto(person, prefs.getDefaultProfilePhoto());
+        }
+
+        personListPanel = new PersonListPanel(persons);
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+    }
 }
