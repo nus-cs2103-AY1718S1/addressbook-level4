@@ -1,3 +1,4 @@
+//@@author huiyiiih
 package seedu.address.logic.commands.relationship;
 
 import static org.junit.Assert.assertFalse;
@@ -25,10 +26,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-//import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.EditPersonBuilder;
-//import seedu.address.testutil.PersonBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
@@ -79,6 +78,7 @@ public class SetRelCommandTest {
         assertCommandFailure(setRelCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
     /*@Test
+    Todo: To be completed
     public void execute_addRelToPersons_success() throws Exception {
         EditPerson editPerson = new EditPersonBuilder().withToAddRel("siblings").build();
         SetRelCommand setRelCommand = prepareCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, editPerson,
@@ -134,4 +134,5 @@ public class SetRelCommandTest {
         return setRelCommand;
     }
 }
+//@@author
 
