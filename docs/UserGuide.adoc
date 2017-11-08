@@ -87,7 +87,7 @@ Will set the expiry date of the first person to 2017-10-31. +
 Will remove the expiry date of the first person.
 
 [TIP]
-By omitting the expiry date field in the command, the expiry date set will be removed. + 
+By omitting the expiry date field in the command, the expiry date set will be removed. +
 Expiry date should be in the format YYYY/MM/DD
 
 //end::expire[]
