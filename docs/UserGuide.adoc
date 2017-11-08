@@ -290,8 +290,31 @@ Format: `comment INDEX [c/COMMENT]`
 Example:
 
 * `list` +
-`comment 2 c/Likes to play computer games.` +
-Selects the 2nd person in the address book and adds the above comment.
+`comment 3 c/Likes to play computer games.` +
+Selects the 3rd person in the address book and adds "Likes to play computer games." as comment.
+* `list` +
+`comment 2 c/` +
+Selects the 2nd person in the address book and removes its comment.
+'''
+Adding comment "Likes to play computer games." to 3rd contact.
+
+image::CommentCommand/01-2.png[width="800"]
+
+'''
+The result of `comment 3 c/Likes to play computer games.` shows the following:
+
+image::CommentCommand/02-2.png[width="800"]
+
+'''
+Removing comment from 4th contact.
+
+image::CommentCommand/03-1.png[width="800"]
+
+'''
+The result of `comment 4 c/` shows the following:
+
+image::CommentCommand/04-2.png[width="800"]
+
 // end::comment[]
 
 // tag::appointment[]
@@ -304,6 +327,7 @@ Format: `appoint INDEX [ap/APPOINT]`
 * Makes an appointment for the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
+* The default date format follows the following: `DD/MM/YYYY HR:MN`. However, this format is not enforced and the user has freedom to select his/her own format.
 ****
 
 Example:
@@ -311,6 +335,28 @@ Example:
 * `list` +
 `appoint 2 ap/20/10/2017 14:45` +
 Selects the 2nd person in the address book and assigns the above appointment slot.
+* `list` +
+`appoint 4 ap/` +
+Removes the appointment from the 4th contact.
+'''
+Adding appointment at `October 20th, 2017 14:45` to 2nd contact.
+
+image::AppointCommand/05-1.png[width="800"]
+
+'''
+The result of `ppoint 2 ap/20/10/2017 14:45` shows the following:
+
+image::AppointCommand/06-2.png[width="800"]
+
+'''
+Removing the appointment from 4th contact.
+
+image::AppointCommand/07-1.png[width="800"]
+
+'''
+The result of `appoint 4 ap/` shows the following:
+
+image::AppointCommand/08-2.png[width="800"]
 // end::appointment[]
 
 === Login using Gmail or Yahoo Account: `email_login`
