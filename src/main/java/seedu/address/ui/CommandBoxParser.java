@@ -73,10 +73,6 @@ public class CommandBoxParser {
         return missingPrefixes;
     }
 
-    private boolean isMissing(Prefix prefix, String argument) {
-        return !argument.contains(SPACE + prefix.toString());
-    }
-
     private boolean isValidCommand(String commandWord) {
         return Arrays.asList(AutocompleteCommand.ALL_COMMANDS).contains(commandWord);
     }
