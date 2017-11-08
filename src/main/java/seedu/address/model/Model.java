@@ -52,7 +52,7 @@ public interface Model {
     /** Returns an unmodifiable view of the tag list */
     ObservableList<Tag> getTagList();
 
-    void sortByDataFieldFirst(String dataField, boolean isFavIgnored);
+    void sortByDataFieldFirst(String dataField, boolean isFavIgnored, boolean isReverseOrder);
 
     /**
      * Removes given tag from specified index

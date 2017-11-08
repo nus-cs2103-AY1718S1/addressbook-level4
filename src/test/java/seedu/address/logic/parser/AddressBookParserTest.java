@@ -29,6 +29,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FavouriteCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -38,8 +39,11 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveRemarkCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.TagsCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.FavouriteStatus;
 import seedu.address.model.person.FieldContainsKeywordsPredicate;
 import seedu.address.model.person.Link;
 import seedu.address.model.person.Person;
@@ -203,6 +207,27 @@ public class AddressBookParserTest {
         LinkCommand command = (LinkCommand) parser.parseCommand(LinkCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_LINK + " " + link.value);
         assertEquals(new LinkCommand(INDEX_FIRST_PERSON, link), command);
+    }
+    //@@Houjisan
+    @Test
+    public void parseCommand_favourite() throws Exception {
+        final FavouriteStatus favouriteStatus = new FavouriteStatus(true);
+        FavouriteCommand command = (FavouriteCommand) parser.parseCommand(FavouriteCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new FavouriteCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_sort() throws Exception {
+        SortCommand command = (SortCommand) parser.parseCommand(
+                SortCommand.COMMAND_WORD + " name");
+        assertEquals(new SortCommand("name", false, false), command);
+    }
+
+    @Test
+    public void parseCommand_tags() throws Exception {
+        assertTrue(parser.parseCommand(TagsCommand.COMMAND_WORD) instanceof TagsCommand);
+        assertTrue(parser.parseCommand(TagsCommand.COMMAND_WORD + " 2") instanceof TagsCommand);
     }
     //@@author
     @Test

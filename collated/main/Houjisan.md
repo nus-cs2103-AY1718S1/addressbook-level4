@@ -140,22 +140,32 @@ public class SortCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts the contact list according to the specified data field.\n"
             + "Parameters: DATAFIELD (Possible fields: Name, Phone, Email, Address)\n"
-            + "Example: " + COMMAND_WORD + " address";
+            + "Example: " + COMMAND_WORD + " address\n"
+            + "If you want to ignore favourites, type -ignorefav after the DATAFIELD\n"
+            + "Example: " + COMMAND_WORD + " address -ignorefav\n"
+            + "If you want to sort in reverse order, type -reverse after the DATAFIELD\n"
+            + "Example: " + COMMAND_WORD + " address -reverse";
 
     public static final String MESSAGE_SORT_LIST_SUCCESS = "Sorted list according to %1$s";
 
     private final String dataField;
+    private final boolean isFavIgnored;
+    private final boolean isReverseOrder;
 
-    public SortCommand(String dataField) {
+    public SortCommand(String dataField, boolean isFavIgnored, boolean isReverseOrder) {
         this.dataField = dataField;
+        this.isFavIgnored = isFavIgnored;
+        this.isReverseOrder = isReverseOrder;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
-        model.sortByDataFieldFirst(dataField);
+        model.sortByDataFieldFirst(dataField, isFavIgnored, isReverseOrder);
         model.getFilteredPersonList();
 
-        return new CommandResult(String.format(MESSAGE_SORT_LIST_SUCCESS, dataField));
+        return new CommandResult(String.format(MESSAGE_SORT_LIST_SUCCESS, dataField)
+                + (isReverseOrder ? " in reverse order" : "")
+                + (isFavIgnored ? " ignoring favourites" : ""));
     }
 
     @Override
@@ -230,6 +240,11 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -243,6 +258,20 @@ public class SortCommandParser implements Parser<SortCommand> {
     public static final String DATA_FIELD_EMAIL = "email";
     public static final String DATA_FIELD_ADDRESS = "address";
 
+
+    /**
+     * Used to get the datafield to sort by and check if ignore favourite is inputted
+     */
+    private static final Pattern SORT_ARGUMENT_FORMAT =
+            Pattern.compile("(?<dataField>\\S+)(?<options>.*)");
+
+    private static final String IGNORE_FAV_INPUT = "-ignorefav";
+    private static final boolean FAV_NOT_IGNORED = false;
+    private static final boolean FAV_IGNORED = true;
+    private static final String REVERSE_ORDER_INPUT = "-reverse";
+    private static final boolean NOT_REVERSE_ORDER = false;
+    private static final boolean REVERSE_ORDER = true;
+
     /**
      * Parses the given {@code String} of arguments in the context of the SortCommand
      * and returns an SortCommand object for execution.
@@ -250,19 +279,40 @@ public class SortCommandParser implements Parser<SortCommand> {
      */
     public SortCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+
+        final Matcher matcher = SORT_ARGUMENT_FORMAT.matcher(trimmedArgs);
+
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
 
-        String dataFieldToSortByFirst = trimmedArgs.toLowerCase();
+        String dataFieldToSortByFirst = matcher.group("dataField").toLowerCase();
+        String options = matcher.group("options").trim();
+
+        boolean isFavIgnored = FAV_NOT_IGNORED;
+        boolean isReverseOrder = NOT_REVERSE_ORDER;
+
+        if (!options.isEmpty()) {
+            List<String> separateOptions = Arrays.asList(options.split("\\s+"));
+
+            for (String option : separateOptions) {
+                String trimmedOption = option.trim();
+                if (trimmedOption.equals(IGNORE_FAV_INPUT)) {
+                    isFavIgnored = FAV_IGNORED;
+                } else if (trimmedOption.equals(REVERSE_ORDER_INPUT)) {
+                    isReverseOrder = REVERSE_ORDER;
+                } else if (!trimmedOption.isEmpty()) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+                }
+            }
+        }
 
         switch (dataFieldToSortByFirst) {
         case DATA_FIELD_NAME:
         case DATA_FIELD_PHONE:
         case DATA_FIELD_EMAIL:
         case DATA_FIELD_ADDRESS:
-            return new SortCommand(dataFieldToSortByFirst);
+            return new SortCommand(dataFieldToSortByFirst, isFavIgnored, isReverseOrder);
         default:
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
@@ -308,10 +358,12 @@ public class SortCommandParser implements Parser<SortCommand> {
 
         this.addressBook = new AddressBook(addressBook);
         this.tags = new SortedList<Tag>(this.addressBook.getTagList());
+        tags.setComparator(ComparatorUtil.getTagComparator());
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         sortedFilteredPersons = new SortedList<>(filteredPersons);
         // Sort contacts by favourite status, then name, then phone, then email, then address
-        sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenNameFirst());
+        sortedFilteredPersons.setComparator(ComparatorUtil.getFavouriteComparator()
+                .thenComparing(ComparatorUtil.getAllComparatorsNameFirst()));
     }
 
 ```
@@ -333,23 +385,41 @@ public class SortCommandParser implements Parser<SortCommand> {
     }
 
     @Override
-    public void sortByDataFieldFirst(String dataField) {
+    public void sortByDataFieldFirst(String dataField, boolean isFavIgnored, boolean isReverseOrder) {
         indicateChangedToPersonListView();
+        Comparator<ReadOnlyPerson> comparatorOrder = new Comparator<ReadOnlyPerson>() {
+            @Override
+            public int compare(ReadOnlyPerson o1, ReadOnlyPerson o2) {
+                return 0;
+            }
+        };
         switch (dataField) {
         case DATA_FIELD_NAME:
-            sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenNameFirst());
+            comparatorOrder = isReverseOrder ? ComparatorUtil.getAllComparatorsNameFirstReversed()
+                    : ComparatorUtil.getAllComparatorsNameFirst();
             break;
         case DATA_FIELD_PHONE:
-            sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenPhoneFirst());
+            comparatorOrder = isReverseOrder ? ComparatorUtil.getAllComparatorsPhoneFirstReversed()
+                    : ComparatorUtil.getAllComparatorsPhoneFirst();
             break;
         case DATA_FIELD_EMAIL:
-            sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenEmailFirst());
+            comparatorOrder = isReverseOrder ? ComparatorUtil.getAllComparatorsEmailFirstReversed()
+                    : ComparatorUtil.getAllComparatorsEmailFirst();
             break;
         case DATA_FIELD_ADDRESS:
-            sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenAddressFirst());
+            comparatorOrder = isReverseOrder ? ComparatorUtil.getAllComparatorsAddressFirstReversed()
+                    : ComparatorUtil.getAllComparatorsAddressFirst();
             break;
         default:
             break;
+        }
+
+        if (isFavIgnored) {
+            sortedFilteredPersons.setComparator(comparatorOrder
+                    .thenComparing(ComparatorUtil.getFavouriteComparator()));
+        } else {
+            sortedFilteredPersons.setComparator(ComparatorUtil.getFavouriteComparator()
+                    .thenComparing(comparatorOrder));
         }
     }
 
@@ -395,11 +465,14 @@ package seedu.address.model.util;
 import java.util.Comparator;
 
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.Tag;
 
 /**
  * Contains utility methods for getting Comparators to sort {@code AddressBook}
  */
 public class ComparatorUtil {
+
+    // Person Comparators
 
     // Comparator that sorts ReadOnlyPerson objects by their favourite status, favourited first
     private static final Comparator<ReadOnlyPerson> favouriteComparator = new Comparator<ReadOnlyPerson>() {
@@ -448,6 +521,14 @@ public class ComparatorUtil {
         }
     };
 
+    // Comparator that sorts Tag objects by their name
+    private static final Comparator<Tag> tagComparator = new Comparator<Tag>() {
+        @Override
+        public int compare(Tag t1, Tag t2) {
+            return t1.tagName.compareTo(t2.tagName);
+        }
+    };
+
     public static Comparator<ReadOnlyPerson> getFavouriteComparator() {
         return favouriteComparator;
     }
@@ -468,32 +549,64 @@ public class ComparatorUtil {
         return addressComparator;
     }
 
-    // Returns a lexicographic-order comparator that compares by favourite status first,
-    // followed by name, phone, email then address
-    public static Comparator<ReadOnlyPerson> getAllComparatorsFavThenNameFirst() {
-        return favouriteComparator.thenComparing(nameComparator).thenComparing(phoneComparator)
-                .thenComparing(emailComparator).thenComparing(addressComparator);
+    // Returns a lexicographic-order comparator that compares by name first,
+    // followed by phone, email then address
+    public static Comparator<ReadOnlyPerson> getAllComparatorsNameFirst() {
+        return nameComparator.thenComparing(phoneComparator).thenComparing(emailComparator)
+                .thenComparing(addressComparator);
     }
 
-    // Returns a lexicographic-order comparator that compares by favourite status first,
-    // followed by name, phone, email then address
-    public static Comparator<ReadOnlyPerson> getAllComparatorsFavThenPhoneFirst() {
-        return favouriteComparator.thenComparing(phoneComparator).thenComparing(nameComparator)
-                .thenComparing(emailComparator).thenComparing(addressComparator);
+    // Returns a lexicographic-order comparator that compares by name first in reverse order,
+    // followed by phone, email then address
+    public static Comparator<ReadOnlyPerson> getAllComparatorsNameFirstReversed() {
+        return nameComparator.reversed().thenComparing(phoneComparator).thenComparing(emailComparator)
+                .thenComparing(addressComparator);
     }
 
-    // Returns a lexicographic-order comparator that compares by favourite status first,
-    // followed by name, phone, email then address
-    public static Comparator<ReadOnlyPerson> getAllComparatorsFavThenEmailFirst() {
-        return favouriteComparator.thenComparing(emailComparator).thenComparing(nameComparator)
-                .thenComparing(phoneComparator).thenComparing(addressComparator);
+    // Returns a lexicographic-order comparator that compares by phone first,
+    // followed by name, email then address
+    public static Comparator<ReadOnlyPerson> getAllComparatorsPhoneFirst() {
+        return phoneComparator.thenComparing(nameComparator).thenComparing(emailComparator)
+                .thenComparing(addressComparator);
     }
 
-    // Returns a lexicographic-order comparator that compares by favourite status first,
-    // followed by name, phone, email then address
-    public static Comparator<ReadOnlyPerson> getAllComparatorsFavThenAddressFirst() {
-        return favouriteComparator.thenComparing(addressComparator).thenComparing(nameComparator)
-                .thenComparing(phoneComparator).thenComparing(emailComparator);
+    // Returns a lexicographic-order comparator that compares by phone first in reverse order,
+    // followed by name, email then address
+    public static Comparator<ReadOnlyPerson> getAllComparatorsPhoneFirstReversed() {
+        return phoneComparator.reversed().thenComparing(nameComparator).thenComparing(emailComparator)
+                .thenComparing(addressComparator);
+    }
+
+    // Returns a lexicographic-order comparator that compares by email first,
+    // followed by name, phone then address
+    public static Comparator<ReadOnlyPerson> getAllComparatorsEmailFirst() {
+        return emailComparator.thenComparing(nameComparator).thenComparing(phoneComparator)
+                .thenComparing(addressComparator);
+    }
+
+    // Returns a lexicographic-order comparator that compares by email first in reverse order,
+    // followed by name, phone then address
+    public static Comparator<ReadOnlyPerson> getAllComparatorsEmailFirstReversed() {
+        return emailComparator.reversed().thenComparing(nameComparator).thenComparing(phoneComparator)
+                .thenComparing(addressComparator);
+    }
+
+    // Returns a lexicographic-order comparator that compares by address first,
+    // followed by name, phone, then email
+    public static Comparator<ReadOnlyPerson> getAllComparatorsAddressFirst() {
+        return addressComparator.thenComparing(nameComparator).thenComparing(phoneComparator)
+                .thenComparing(emailComparator);
+    }
+
+    // Returns a lexicographic-order comparator that compares by address first in reverse order,
+    // followed by name, phone, then email
+    public static Comparator<ReadOnlyPerson> getAllComparatorsAddressFirstReversed() {
+        return addressComparator.reversed().thenComparing(nameComparator).thenComparing(phoneComparator)
+                .thenComparing(emailComparator);
+    }
+
+    public static Comparator<Tag> getTagComparator() {
+        return tagComparator;
     }
 }
 ```

@@ -383,7 +383,7 @@ public class RemoveCommandTest {
     public void parseCommand_remove() throws Exception {
         Tag tag = new Tag("friends");
         RemoveTagCommand command = (RemoveTagCommand) parser.parseCommand(
-                RemoveTagCommand.COMMAND_WORD + " friends 1");
+                RemoveTagCommand.COMMAND_WORD + " 1 friends");
         Set<Index> indexSet = new HashSet<>();
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tag);
@@ -397,7 +397,7 @@ public class RemoveCommandTest {
     public void parseCommand_addTag() throws Exception {
         Tag tag = new Tag("enemy");
         AddTagCommand command = (AddTagCommand) parser.parseCommand(
-                AddTagCommand.COMMAND_WORD + " enemy 1");
+                AddTagCommand.COMMAND_WORD + " 1 enemy");
         Set<Index> indexSet = new HashSet<>();
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tag);
@@ -419,7 +419,7 @@ public class AddTagCommandParserTest {
         tagSet.add(tagToAdd);
         indexSet.add(INDEX_SECOND_PERSON);
         AddTagCommand addTagCommand = new AddTagCommand(tagSet, indexSet, "2");
-        assertParseSuccess(parser, "enemy 2", addTagCommand);
+        assertParseSuccess(parser, "2 enemy", addTagCommand);
     }
 
     @Test
@@ -431,7 +431,7 @@ public class AddTagCommandParserTest {
         indexSet.add(INDEX_FIRST_PERSON);
         indexSet.add(INDEX_SECOND_PERSON);
         AddTagCommand addTagCommand = new AddTagCommand(tagSet, indexSet, "1, 2");
-        assertParseSuccess(parser, "enemy 1 2", addTagCommand);
+        assertParseSuccess(parser, "1 2 enemy", addTagCommand);
     }
 
     @Test
@@ -448,7 +448,7 @@ public class AddTagCommandParserTest {
 
     @Test
     public void parse_validArgsWithInvalidIndex_throwsParseException() {
-        assertParseFailure(parser, "friends 0", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+        assertParseFailure(parser, "0 friends", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 AddTagCommand.MESSAGE_USAGE));
     }
 
@@ -460,13 +460,13 @@ public class AddTagCommandParserTest {
 
     @Test
     public void parse_invalidArgsOrder_throwsParseException() {
-        assertParseFailure(parser, "enemy 1 wendy", String.format(
+        assertParseFailure(parser, "1 enemy 3", String.format(
                 MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_validArgsEmptyIndex_throwsParseException() {
-        assertParseFailure(parser, "enemy", "Please provide at least one index.\n"
+        assertParseFailure(parser, "enemy", "Please provide an input for index.\n"
                 + String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
     }
 
@@ -525,7 +525,7 @@ public class RemoveCommandParserTest {
         List<String> indexDisplay = new ArrayList<>();
         indexDisplay.add("2");
         RemoveTagCommand removeCommand = new RemoveTagCommand(tagSet, indexSet, indexDisplay);
-        assertParseSuccess(parser, "friends 2", removeCommand);
+        assertParseSuccess(parser, "2 friends", removeCommand);
     }
 
     @Test
