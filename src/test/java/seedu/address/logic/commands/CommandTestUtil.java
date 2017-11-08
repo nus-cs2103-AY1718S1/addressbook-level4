@@ -3,13 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
+import static seedu.address.logic.parser.CliSyntax.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +15,8 @@ import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.TaskContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.EditReminderDescriptorBuilder;
 
@@ -79,7 +75,7 @@ public class CommandTestUtil {
     public static final String VALID_TAG_OFFICE = "office";
     public static final String VALID_TAG_SOFTCOPY = "softcopy";
 
-    /*
+
     public static final String NAME_DESC_PROJECT = " " + PREFIX_TASK + VALID_TASK_PROJECT;
     public static final String NAME_DESC_ASSIGNMENT = " " + PREFIX_TASK + VALID_TASK_ASSIGNMENT;
     public static final String PHONE_DESC_PROJECT = " " + PREFIX_PRIORITY + VALID_PRIORITY_PROJECT;
@@ -95,7 +91,7 @@ public class CommandTestUtil {
     public static final String INVALID_PRIORITY_DESC = " " + PREFIX_PRIORITY + "low1"; // '1' not allowed in phones
     public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "0!"; // '!' not allowed in dates
     public static final String INVALID_MESSAGE_DESC = " " + PREFIX_MESSAGE; // empty string not allowed for addresses
-    */
+
 
     public static final EditReminderCommand.EditReminderDescriptor DESC_PROJECT;
     public static final EditReminderCommand.EditReminderDescriptor DESC_ASSIGNMENT;
@@ -184,6 +180,17 @@ public class CommandTestUtil {
         model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assert model.getFilteredPersonList().size() == 1;
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the first reminder in the {@code model}'s address book.
+     */
+    public static void showFirstReminderOnly(Model model) {
+        ReadOnlyReminder reminder = model.getAddressBook().getReminderList().get(0);
+        final String[] splitTask = reminder.getTask().taskName.split("\\s+");
+        model.updateFilteredReminderList(new TaskContainsKeywordsPredicate(Arrays.asList(splitTask[0])));
+
+        assert model.getFilteredReminderList().size() == 1;
     }
 
     /**
