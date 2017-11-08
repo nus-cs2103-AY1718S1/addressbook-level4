@@ -149,7 +149,6 @@ public class PersonInformationPanel extends UiPart<Region> {
     //@@author LuLechuan
     /**
      *  Initialise optional phone display list
-    
     public void initOptionalPhone(ReadOnlyPerson person) {
         final int[] index = {1};
         person.getPhoneList().forEach(optionalPhone -> {
