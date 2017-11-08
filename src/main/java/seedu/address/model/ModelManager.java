@@ -625,7 +625,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteEncryptedContacts(String fileName) throws IOException, DataConversionException, PersonNotFoundException {
+    public void deleteEncryptedContacts(String fileName) throws IOException, DataConversionException,
+            PersonNotFoundException {
         File file = new File("data/" + fileName + ".encrypted");
         file.delete();
         emptyPersonList(getListLength());

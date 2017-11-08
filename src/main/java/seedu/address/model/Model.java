@@ -219,5 +219,6 @@ public interface Model {
 
     ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException;
 
-    void releaseEncryptedContact(String substring) throws DataConversionException, DuplicatePersonException, IOException;
+    void releaseEncryptedContact(String substring) throws DataConversionException, DuplicatePersonException,
+            IOException;
 }

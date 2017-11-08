@@ -1,7 +1,5 @@
 package seedu.address.logic;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -13,7 +11,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.commons.util.encryption.FileEncryptor;
 import seedu.address.logic.parser.CalendarViewStateParser;
 import seedu.address.logic.parser.GeneralBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;

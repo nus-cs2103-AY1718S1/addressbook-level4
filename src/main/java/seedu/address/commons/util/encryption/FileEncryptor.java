@@ -147,6 +147,12 @@ public class FileEncryptor {
         target.close();
     }
 
+    /**
+     * Encrypt the public list of contacts with file name as PUBLIC and password as PUBLIC.
+     * @param model
+     * @param isLockCommand
+     * @throws CommandException
+     */
     public static void encryptPublicFile(Model model, boolean isLockCommand) throws CommandException {
         try {
             if (isLockCommand) {
