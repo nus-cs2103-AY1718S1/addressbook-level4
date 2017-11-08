@@ -305,9 +305,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         return commandMode;
     }
 
-    public StringProperty getCommandModeProperty() {
-        return commandMode.getCommandModeProperty();
-    }
     //@@author
     //// util methods
 

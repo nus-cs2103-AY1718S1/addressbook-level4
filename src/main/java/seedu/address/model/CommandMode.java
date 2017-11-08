@@ -49,6 +49,10 @@ public class CommandMode {
     }
 
     public static boolean isValidMode(String test) {
+        String [] mode = test.split(" ");
+        if (mode.length > 1 || test.length() < 2) {
+            return false;
+        }
         return StringUtil.containsWordIgnoreCase(COMMANDMODE_VALIDATION_REGEX, test);
     }
 

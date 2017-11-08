@@ -185,11 +185,6 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.getCommandMode();
     }
 
-    @Override
-    public StringProperty getCommandModeProperty() {
-        return addressBook.getCommandModeProperty();
-    }
-
     private void indicateCommandModeChanged() {
         raise(new CommandModeChangedEvent(addressBook.getCommandMode()));
     }

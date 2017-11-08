@@ -31,7 +31,7 @@ public class CommandModeStatusBarFooter extends UiPart<Region> {
     public CommandModeStatusBarFooter(Model model) {
         super(FXML);
         this.model = model;
-        commandMode.textProperty().bind(model.getCommandModeProperty());
+        commandMode.textProperty().bind(model.getCommandMode().getCommandModeProperty());
         registerAsAnEventHandler(this);
     }
 
