@@ -143,8 +143,7 @@ public class MainWindow extends UiPart<Region> {
             if (event.getCode().equals(KeyCode.TAB)) {
                 if (commandTextField.isFocused()) {
                     searchTextField.requestFocus();
-                }
-                else {
+                } else {
                     commandTextField.requestFocus();
                 }
                 event.consume();
@@ -160,7 +159,7 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        insuranceListPanel = new InsuranceListPanel(logic.getInsuranceList());
+        insuranceListPanel = new InsuranceListPanel(logic.getFilteredInsuranceList());
         insuranceListPanelPlaceholder.getChildren().add(insuranceListPanel.getRoot());
 
         insuranceProfilePanel = new InsuranceProfilePanel();
