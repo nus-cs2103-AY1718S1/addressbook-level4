@@ -13,6 +13,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OFFICE_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSTAL_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TOTAL_DEBT;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -40,8 +41,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_HANDPHONE, PREFIX_HOME_PHONE, PREFIX_OFFICE_PHONE,
-                        PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_POSTAL_CODE, PREFIX_DEBT, PREFIX_INTEREST, PREFIX_DEADLINE,
-                        PREFIX_TAG);
+                        PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_POSTAL_CODE, PREFIX_DEBT, PREFIX_TOTAL_DEBT,
+                        PREFIX_INTEREST, PREFIX_DEADLINE, PREFIX_TAG);
 
         Index index;
 
@@ -69,6 +70,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parsePostalCode(argMultimap.getValue(PREFIX_POSTAL_CODE))
                     .ifPresent(editPersonDescriptor::setPostalCode);
             ParserUtil.parseDebt(argMultimap.getValue(PREFIX_DEBT)).ifPresent(editPersonDescriptor::setDebt);
+            ParserUtil.parseTotalDebt(argMultimap.getValue(PREFIX_TOTAL_DEBT))
+                    .ifPresent(editPersonDescriptor::setTotalDebt);
             ParserUtil.parseInterestForEdit(argMultimap.getValue(PREFIX_INTEREST))
                     .ifPresent(editPersonDescriptor::setInterest);
             ParserUtil.parseDeadlineForEdit(argMultimap.getValue(PREFIX_DEADLINE))

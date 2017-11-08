@@ -27,6 +27,7 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_OFFICE_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_POSTAL_CODE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TOTAL_DEBT_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.OFFICE_PHONE_DESC_AMY;
@@ -35,6 +36,8 @@ import static seedu.address.logic.commands.CommandTestUtil.POSTAL_CODE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.POSTAL_CODE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.TOTAL_DEBT_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.TOTAL_DEBT_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEBT_BOB;
@@ -95,13 +98,14 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         Index index = INDEX_FIRST_PERSON;
         String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_BOB + "  "
                 + HANDPHONE_DESC_BOB + " " + HOME_PHONE_DESC_BOB + " " + OFFICE_PHONE_DESC_BOB + " " + EMAIL_DESC_BOB
-                + "  " + ADDRESS_DESC_BOB + " " + POSTAL_CODE_DESC_BOB + " " + DEBT_DESC_BOB + " " + INTEREST_DESC_BOB
-                + " " + DEADLINE_DESC_BOB + "  " + TAG_DESC_HUSBAND + " ";
+                + "  " + ADDRESS_DESC_BOB + " " + POSTAL_CODE_DESC_BOB + " "
+                + DEBT_DESC_BOB + " " + TOTAL_DEBT_DESC_BOB + " " + INTEREST_DESC_BOB + " " + DEADLINE_DESC_BOB + "  "
+                + TAG_DESC_HUSBAND + " ";
         Person editedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withHandphone(VALID_HANDPHONE_BOB)
                 .withHomePhone(VALID_HOME_PHONE_BOB).withOfficePhone(VALID_OFFICE_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withPostalCode(VALID_POSTAL_CODE_BOB)
                 .withDebt(VALID_DEBT_BOB)
-                .withTotalDebt(getPersonFromAddressBook(model, index).getTotalDebt().toString())
+                .withTotalDebt(VALID_DEBT_BOB)
                 .withInterest(VALID_INTEREST_BOB).withDeadline(VALID_DEADLINE_BOB).withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedPerson);
 
@@ -117,17 +121,16 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 getModel().getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), editedPerson);
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: edit a person with new values same as existing values -> edited */
+        /* Case: edit a person with new values same as existing v
+        alues -> edited */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + HANDPHONE_DESC_BOB
                 + HOME_PHONE_DESC_BOB + OFFICE_PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + INTEREST_DESC_BOB + DEADLINE_DESC_BOB
+                + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + TOTAL_DEBT_DESC_BOB + INTEREST_DESC_BOB + DEADLINE_DESC_BOB
                 + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         /* In the initial state of the address book, Alice was the first person in the list.
          * Although Alice's details was edited to Bob's in lines 86 to 88, the totalDebt for Alice remains unchanged.
          * Hence, there is a need to set totalDebt of BOB to be the same as Alice's*/
-        Person bob = new Person(BOB);
-        bob.setTotalDebt(getPersonFromAddressBook(model, index).getTotalDebt());
-        assertCommandSuccess(command, index, bob);
+        assertCommandSuccess(command, index, BOB);
 
         /* Case: edit some fields -> edited */
         index = INDEX_FIRST_PERSON;
@@ -171,26 +174,26 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         selectPerson(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + HANDPHONE_DESC_AMY
                 + HOME_PHONE_DESC_AMY + OFFICE_PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY + INTEREST_DESC_AMY + DEADLINE_DESC_AMY + TAG_DESC_FRIEND;
+                + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY + TOTAL_DEBT_DESC_AMY + INTEREST_DESC_AMY + DEADLINE_DESC_AMY
+                + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
         // info panel is updated to reflect the new person's name
         /* Although all other information changes, the total debt remains unchanged*/
-        Person amy = new Person(AMY);
-        amy.setTotalDebt(getPersonFromAddressBook(model, index).getTotalDebt());
-        assertCommandSuccess(command, index, amy, index);
+        assertCommandSuccess(command, index, AMY, index);
 
         /* Case: missing index -> edited */
         command = EditCommand.COMMAND_WORD + " " + NAME_DESC_BOB + HANDPHONE_DESC_BOB + HOME_PHONE_DESC_BOB
                 + OFFICE_PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB
-                + INTEREST_DESC_BOB + DEADLINE_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        assertCommandSuccess(command, index, bob, index);
+                + TOTAL_DEBT_DESC_BOB + INTEREST_DESC_BOB + DEADLINE_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+        assertCommandSuccess(command, index, BOB, index);
 
         /* Re-edit to previous state */
         selectPerson(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + HANDPHONE_DESC_AMY
                 + HOME_PHONE_DESC_AMY + OFFICE_PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY + INTEREST_DESC_AMY + DEADLINE_DESC_AMY + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, index, amy, index);
+                + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY + TOTAL_DEBT_DESC_AMY + INTEREST_DESC_AMY
+                + DEADLINE_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, index, AMY, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
 
@@ -243,6 +246,10 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
                 + INVALID_DEBT_DESC, Debt.MESSAGE_DEBT_CONSTRAINTS);
 
+        /* Case: invalid total debt -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
+                + INVALID_TOTAL_DEBT_DESC, Debt.MESSAGE_DEBT_CONSTRAINTS);
+
         /* Case: invalid interest -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
                 + INVALID_INTEREST_DESC, Interest.MESSAGE_INTEREST_CONSTRAINTS);
@@ -262,14 +269,15 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertFalse(getModel().getFilteredPersonList().get(index.getZeroBased()).equals(BOB));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + HANDPHONE_DESC_BOB
                 + HOME_PHONE_DESC_BOB + OFFICE_PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + INTEREST_DESC_BOB + DEADLINE_DESC_BOB
+                + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + TOTAL_DEBT_DESC_BOB + INTEREST_DESC_BOB + DEADLINE_DESC_BOB
                 + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: edit a person with new values same as another person's values but with different tags -> rejected */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + HANDPHONE_DESC_BOB
                 + HOME_PHONE_DESC_BOB + OFFICE_PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + INTEREST_DESC_BOB
+                + ADDRESS_DESC_BOB + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + TOTAL_DEBT_DESC_BOB + INTEREST_DESC_BOB
                 + DEADLINE_DESC_BOB + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
     }
