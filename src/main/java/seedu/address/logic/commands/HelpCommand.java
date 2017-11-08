@@ -22,9 +22,10 @@ public class HelpCommand extends Command {
             + MESSAGE_GET_MORE_HELP;
 
     public static final String SHOWING_HELP_MESSAGE = "Opened help window.";
+    //@@author icehawker
     public static final String COMMAND_QUICK_HELP_WORD = "command";
     public static final String COMMAND_QUICK_HELP =
-            "Quick command keyword help: \n"
+            "Quick command keyword help: " + "    F1: Full Help window;     F2: Calendar; \n"
                     + AddCommand.COMMAND_WORD + " / " + AddCommand.COMMAND_ALIAS + ";     "
                     + ClearCommand.COMMAND_WORD + " / " + ClearCommand.COMMAND_ALIAS + ";     "
                     + CopyCommand.COMMAND_WORD + " / " + CopyCommand.COMMAND_ALIAS + ";     "
