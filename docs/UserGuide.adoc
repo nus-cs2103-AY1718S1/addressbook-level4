@@ -199,6 +199,7 @@ Then, you can set the value of `birthday` property when you add a new person (_s
 
 * `add n/Chris Lee p/98765432 e/johnd@example.com a/23 Chinatown b/12091991 t/friends`
 
+//tag::autoReminders[]
 === Adding an event : `(aE)addE`
 
 Adds an event to the application. +
@@ -218,6 +219,16 @@ or `tomorrow evening`. Then, it will be automatically converted to the standard 
 and the expression is not simple or clear enough.
 * Avoid putting the year in the first place when using the non-standard format.
 ====
+
+[TIP]
+====
+* Reminders will automatically be added and start to notify you from 2 days before the actual event.
+* Reminders in the form of a bell image will be displayed on the event card itself.
+* Red Bell : Day of event +
+  Orange Bell: One day before event +
+  Green Bell: Two days before event.
+====
+//end::autoReminders[]
 
 === Listing all persons/events : `(l)list`
 
