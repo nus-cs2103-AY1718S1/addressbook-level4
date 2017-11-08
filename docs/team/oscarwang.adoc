@@ -4,9 +4,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == LISA: Levels Integrated Secretarial Agent
-LISA: Levels Integrated Secretarial Agent is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+LISA: Levels Integrated Secretarial Agent is a desktop address book application designed for insurance agents to manage the complex relationship between the providers and clients. It is developed by enhancing the original program "addressbook-level4" provided in class for teaching Software Engineering principles. While the main user interactions happen across CLI, LISA also has a GUI built with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-T13-B1/main/tree/master/collated/main/OscarWang114.md[Functional code]] [https://github.com/CS2103AUG2017-T13-B1/main/tree/master/collated/test/OscarWang114.md[Test code]]
 
 === Enhancement Added: 'add' command with only one compulsory field: NAME
 
@@ -16,7 +16,6 @@ LISA: Levels Integrated Secretarial Agent is a desktop address book application 
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=add]
-include::../UserGuide.adoc[tag=addli]
 
 #End of Extract#
 
@@ -32,6 +31,61 @@ include::../UserGuide.adoc[tag=addli]
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Life Insurances
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=li]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=ali]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: 'addli' command for adding life insurances
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addli]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=addli]
 
 #End of Extract#
@@ -40,5 +94,11 @@ include::../DeveloperGuide.adoc[tag=addli]
 
 === Enhancement Proposed:
 
+- All the features listed above
+- Implement date-related classes using Java 8 LocalDate
+- Create a Gender class for each contact
+
 === Other contributions
 
+- Reviewed the majority of the Pull Requests submitted by other team members.
+- Assisted several members personally in programming, debugging, and Git-related issues.
