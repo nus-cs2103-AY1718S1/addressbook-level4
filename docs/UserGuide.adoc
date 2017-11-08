@@ -140,6 +140,7 @@ Returns `0 persons listed! Did you mean Betsy?`
 Lists all favourite contacts. +
 Format: `showFavourite` or `sf`
 // end::showfavourite[]
+// tag::sort[]
 
 ==== Sorting a person : `sort`
 
@@ -156,6 +157,7 @@ Examples:
 
 * `sort` +
 Sort the contacts in Address Book by ascending order.
+// end::sort[]
 
 === Modifying Contacts
 
@@ -220,6 +222,7 @@ Changes the `favourite` status of the 1st person in the latest list.
 
 image::fav-command-ui.png[width="790"]
 // end::favourite[]
+// tag::birthday[]
 
 ==== Adding a birthday to select person : `birthday`
 
@@ -244,6 +247,7 @@ Adds the birthday "21 Oct 95" to the 1st person in the address book.
 Adds the birthday "21 Oct" to the 3rd person in the address book.
 
 image::birthday-command-ui.png[width="790"]
+// end::birthday[]
 
 ==== Adding a tag to select persons : `addtag`
 
