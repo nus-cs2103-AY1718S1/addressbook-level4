@@ -6,7 +6,6 @@ import static seedu.room.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_TITLE;
 
-import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.model.event.Event;
 import seedu.room.model.event.ReadOnlyEvent;

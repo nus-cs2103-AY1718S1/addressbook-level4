@@ -126,9 +126,13 @@ public class Event implements ReadOnlyEvent {
 
     @Override
     public boolean equals(Object other) {
-        if (other == this) { return true; }
+        if (other == this) {
+            return true;
+        }
 
-        if (!(other instanceof Event)) { return false; }
+        if (!(other instanceof Event)) {
+            return false;
+        }
 
         Event otherEvent = (Event) other;
         return this.title.getValue().equals(otherEvent.title.getValue())

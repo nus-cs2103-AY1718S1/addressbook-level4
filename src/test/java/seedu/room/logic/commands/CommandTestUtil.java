@@ -2,12 +2,16 @@ package seedu.room.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static seedu.room.logic.parser.CliSyntax.PREFIX_DATETIME;
+import static seedu.room.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.room.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_ROOM;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_TEMPORARY;
+import static seedu.room.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,6 +67,25 @@ public class CommandTestUtil {
     public static final String INVALID_ROOM_DESC = " " + PREFIX_ROOM; // empty string not allowed for rooms
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_TAG = "testing"; // 'testing' does not exist inside the address book
+
+    public static final String VALID_TITLE_POLYMATH = "USPolymath";
+    public static final String VALID_LOCATION_POLYMATH = "Chatterbox";
+    public static final String VALID_DESCRIPTION_POLYMATH = "Intellectual Night";
+    public static final String VALID_DATETIME_POLYMATH = "25/09/2017 2030 to 2100";
+
+    public static final String VALID_TITLE_ORIENTATION = "USP Orientation";
+    public static final String VALID_DESCRIPTION_ORIENTATION = "Conducted by UsAmbassadors";
+    public static final String VALID_LOCATION_ORIENTATION = "Chua Thian Poh Hall";
+    public static final String VALID_DATETIME_ORIENTATION = "20/12/2017 0700 to 2100";
+
+    public static final String TITLE_DESC_POLYMATH = " " + PREFIX_TITLE + VALID_TITLE_POLYMATH;
+    public static final String TITLE_DESC_ORIENTATION = " " + PREFIX_TITLE + VALID_TITLE_ORIENTATION;
+    public static final String DESCRIPTION_DESC_POLYMATH = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_POLYMATH;
+    public static final String DESCRIPTION_DESC_ORIENTATION = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_ORIENTATION;
+    public static final String LOCATION_DESC_POLYMATH = " " + PREFIX_LOCATION + VALID_LOCATION_POLYMATH;
+    public static final String LOCATION_DESC_ORIENTATION = " " + PREFIX_LOCATION + VALID_LOCATION_ORIENTATION;
+    public static final String DATETIME_DESC_POLYMATH = " " + PREFIX_DATETIME + VALID_DATETIME_POLYMATH;
+    public static final String DATETIME_DESC_ORIENTATION = " " + PREFIX_DATETIME + VALID_DATETIME_ORIENTATION;
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;

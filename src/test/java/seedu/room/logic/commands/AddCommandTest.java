@@ -111,7 +111,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void resetData(ReadOnlyResidentBook newData) {
+        public void resetData(ReadOnlyResidentBook newData, ReadOnlyEventBook newEventData) {
             fail("This method should not be called.");
         }
 

@@ -1,9 +1,19 @@
 package seedu.room.logic.commands;
 
-import javafx.collections.ObservableList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
+import java.util.function.Predicate;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import javafx.collections.ObservableList;
+
 import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.CommandHistory;
 import seedu.room.logic.UndoRedoStack;
@@ -13,9 +23,6 @@ import seedu.room.model.Model;
 import seedu.room.model.ReadOnlyEventBook;
 import seedu.room.model.ReadOnlyResidentBook;
 import seedu.room.model.ResidentBook;
-import seedu.room.model.event.ReadOnlyEvent;
-import seedu.room.model.event.exceptions.DuplicateEventException;
-import seedu.room.model.event.exceptions.EventNotFoundException;
 import seedu.room.model.event.Event;
 import seedu.room.model.event.ReadOnlyEvent;
 import seedu.room.model.event.exceptions.DuplicateEventException;
@@ -26,12 +33,6 @@ import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
 import seedu.room.model.tag.Tag;
 import seedu.room.testutil.EventBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.function.Predicate;
-
-import static org.junit.Assert.*;
 
 public class AddEventCommandTest {
 
@@ -110,7 +111,7 @@ public class AddEventCommandTest {
         }
 
         @Override
-        public void resetData(ReadOnlyResidentBook newData) {
+        public void resetData(ReadOnlyResidentBook newData, ReadOnlyEventBook newEventData) {
             fail("This method should not be called.");
         }
 
