@@ -3,8 +3,13 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: Bluebird
+Written in Java language, Bluebird is a desktop based organisational tool for the working parent on the go. Bluebird is suitable
+for a variety of day-to-day management tasks, including managing appointments for both yourself and your
+child, and also organising the contact information from your Address Book. +
+
+Included in this portfolio are all the enhancements, features and tests that Alpheus Lim Wei Xiang has contributed to the project.
+
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/main/Alim95.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/test/Alim95.md[Test code]]
 
@@ -38,17 +43,6 @@ include::../DeveloperGuide.adoc[tag=sort]
 ---
 
 === Enhancement Added: First time tutorial
-
-==== External behavior
-
----
-#Start of Extract [from: User Guide]#
-
-include::../UserGuide.adoc[tag=tutorial]
-
-#End of Extract#
-
----
 
 ==== Justification
 
@@ -141,7 +135,7 @@ include::../UserGuide.adoc[tag=parentmode]
 ==== Justification
 
 Parents may be worried that their child will delete or alter any of their important contacts/tasks. Therefore, there
-is a need to limit the number of available commands that the child is able to sue.
+is a need to limit the number of available commands that the child is able to use.
 
 ==== Implementation
 
@@ -154,10 +148,6 @@ include::../DeveloperGuide.adoc[tag=parentmode]
 
 ---
 
-=== Enhancement Proposed:
-
-{Explain similar to the Undo/Redo feature above.}
-
 === Other contributions
 
 * Updated the UI of Bluebird
@@ -167,5 +157,7 @@ https://github.com/CS2103AUG2017-T15-B4/main/pull/134[#134], https://github.com/
 https://github.com/CS2103AUG2017-T15-B4/main/pull/144[#144], https://github.com/CS2103AUG2017-T15-B4/main/pull/205[#205],
 https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208], https://github.com/CS2103AUG2017-T15-B4/main/pull/245[#245])
 * Updated a help overlay for Bluebird (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/189[#189], https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208])
-* Added Bluebird result image when inputting commands (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/143[#142],
+* Added Bluebird result image feedback when inputting commands (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/143[#142],
 https://github.com/CS2103AUG2017-T15-B4/main/pull/245[#245])
+* Added toggling of Ui between Person, Task, Pinned, and All lists (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/205[#205],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208], https://github.com/CS2103AUG2017-T15-B4/main/pull/216[#216])
