@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -11,8 +13,14 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -139,12 +147,18 @@ public class MainWindow extends UiPart<Region> {
 
         PersonInformationPanel personInformationPanel = new PersonInformationPanel();
         personInformationPanelPlaceholder.getChildren().add(personInformationPanel.getRoot());
+        setBackground(personInformationPanelPlaceholder,
+                "../addressbook4/docs/images/backgroundRight.jpg", 920, 600);
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        setBackground(personListPanelPlaceholder,
+                "../addressbook4/docs/images/backgroundLeft.jpg", 330, 600);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+        setBackground(resultDisplayPlaceholder,
+                "../addressbook4/docs/images/backgroundUp.jpg", 1250, 105);
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
@@ -182,6 +196,24 @@ public class MainWindow extends UiPart<Region> {
     private void setTitle(String appTitle) {
         primaryStage.setTitle(appTitle);
     }
+
+    //@@author LuLechuan
+    /**
+     *  Sets a background image for a stack pane
+     */
+    private void setBackground(StackPane pane, String pathname, int width, int height) {
+        File file = new File(pathname);
+        try {
+            BackgroundImage backgroundImage = new BackgroundImage(
+                    new Image(file.toURI().toURL().toString(), width, height, false, true),
+                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                    BackgroundSize.DEFAULT);
+            pane.setBackground(new Background(backgroundImage));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+    //@@author
 
     /**
      * Sets the given image as the icon of the main window.

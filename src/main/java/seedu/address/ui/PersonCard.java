@@ -1,14 +1,19 @@
 package seedu.address.ui;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Random;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.shape.Circle;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -47,6 +52,8 @@ public class PersonCard extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView photoContainer;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
@@ -79,6 +86,7 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             initTags(person);
         });*/
+        initPhoto(person);
     }
 
     /**
@@ -92,6 +100,27 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
+
+    //@@author LuLechuan
+    /**
+     *  Initialises icon photo
+     */
+    private void initPhoto(ReadOnlyPerson person) {
+        String pathName = person.getPhoto().pathName;
+
+        File photoImage = new File(pathName);
+        Image photo = null;
+        try {
+            photo = new Image(photoImage.toURI().toURL().toString(), 80, 80, false, false);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        photoContainer.setImage(photo);
+
+        Circle clip = new Circle(60, 60, 50);
+        photoContainer.setClip(clip);
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
