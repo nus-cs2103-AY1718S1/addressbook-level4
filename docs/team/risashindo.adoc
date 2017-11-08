@@ -10,8 +10,6 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 === Enhancement Added: Making comment notes for a contact's profile
 
-==== External behavior
-
 ---
 #Start of Extract [from: User Guide]#
 
@@ -23,10 +21,7 @@ include::../UserGuide.adoc[tag=comment]
 
 ==== Justification
 
-Adding a commenting feature for any existing contact will allow users (e.g. tutors) to leave any remarks about 
-the contact (e.g. students). Anything miscellaneous that does not fit within the exisiting categories/tags can
-be referenced under the comment section.
-With this new feature, the user's experience and convenience will be further improved. 
+Adding a commenting feature for any existing contact will allow users (e.g. tutors) to leave any remarks about the contact (e.g. students). Anything miscellaneous that does not fit within the exisiting categories/tags can be referenced under the comment section. With this new feature, the user's experience and convenience will be further improved. 
 
 === Enhancement Added: Making an appointment with a contact
 
@@ -43,5 +38,4 @@ include::../UserGuide.adoc[tag=appointment]
 
 ==== Justification
 
-Allowing users to make appointments with any contact.
-With this new feature, the user will be able to view what time slots they have alotted for their contact/student.
+Allowing users to make appointments with any contact. With this new feature, the user will be able to view what time slots they have alotted for their contact/student.
