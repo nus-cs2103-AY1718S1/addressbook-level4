@@ -37,8 +37,6 @@ public class ListCommandTest {
 
     private static final String TAG_DESC_FRIENDS = "[" + VALID_TAG_1 + "] ";
     private static final String TAG_DESC_OWESMONEY = "[" + VALID_TAG_2 + "] ";
-    private static final String TAG_DESC_INVALID = "[" + INVALID_TAG_2 + "] ";
-    private static final String TAG_DESC_WRONG= "[" + INVALID_TAG_2 + "] ";
 
     @Before
     public void setUp() {
