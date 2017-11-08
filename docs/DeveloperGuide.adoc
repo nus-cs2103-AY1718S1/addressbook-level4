@@ -238,7 +238,7 @@ _Figure 3.3.3 : Interactions Inside the Logic Component for the `delete 1` Comma
 
 === Model component
 
-image::ModelClassDiagram.png[width="800"]
+image::ModelClassDiagram.png[width="1000"]
 _Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
