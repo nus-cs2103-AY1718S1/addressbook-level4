@@ -1321,10 +1321,11 @@ Use case ends.
 
 *Extensions*
 
-* 2a. No birthdays today.
 [none]
+* 2a. No birthdays today.
 +
 Use case ends.
+
 === Use case: Add event
 
 *MSS*
