@@ -45,6 +45,7 @@ Make the addressbook more useful to a tourguide
 // tag::autocomplete[]
 === Autocomplete
 Pressing kbd:[&tab;] will attempt to autocomplete current command. Turns text red if not suitable command exists. Since v1.2
+
 To see parameters for a command, press tab on a complete command. Pressing tab again will remove the parameters. If the command has no parameters then the text will turn red. Since v1.3
 
 If there are multiple possible commands for a given input, i.e. 'e' could be 'edit', 'exit', or 'export', then a dropdown box will appear with the possible commands. These can be navigated using mouse or arrow keys and enter to select the desired command. Since v1.5
@@ -91,7 +92,7 @@ Export a working version of the database and the images associated to it to a di
 e.g. `export /home/user/`
 
 === Condensed Help
-Open a condensed help screen by default in place of the Google brwoser integration. Since v1.4
+Open a condensed help screen by default in place of the Google browser integration. Since v1.4
 
 === Importing Database
 Import a working version of the database and the images associated to it from a directory specified. Coming v2.0.
@@ -324,9 +325,11 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Filter* : `filter GROUP_NAME`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
+* *Group* : `group GROUP_NAME`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
