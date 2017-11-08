@@ -42,7 +42,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Index TAB_ALL_PARCELS = INDEX_FIRST_TAB;
     private static final Index TAB_COMPLETED_PARCELS = INDEX_SECOND_TAB;
 
-    private static Index tabIndex = Index.fromOneBased(1);
+    private Index tabIndex;
     private final AddressBook addressBook;
 
     private final FilteredList<ReadOnlyParcel> filteredParcels;
@@ -59,10 +59,11 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.tabIndex = INDEX_FIRST_TAB;
         filteredParcels = new FilteredList<>(this.addressBook.getParcelList());
         updatedDeliveredAndUndeliveredList();
         activeFilteredList = filteredUndeliveredParcels;
-        ModelListener ModelListener = new ModelListener(this);
+        ModelListener modelListener = new ModelListener(this);
     }
 
     public ModelManager() {
