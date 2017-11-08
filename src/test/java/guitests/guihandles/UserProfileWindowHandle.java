@@ -106,13 +106,19 @@ public class UserProfileWindowHandle extends StageHandle {
         return cancelButton;
     }
 
+    /**
+     * Click the ok button
+     */
     public void clickOk() {
         Platform.runLater(() -> {
-//            okButton.arm();
+            //okButton.arm();
             okButton.fire();
         });
     }
 
+    /**
+     * Click the cancel button
+     */
     public void clickCancel() {
         Platform.runLater(() -> cancelButton.fire());
     }
