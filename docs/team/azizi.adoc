@@ -3,19 +3,22 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: Bluebird
+Bluebird is a desktop based organisational tool for the working parent on the go. Bluebird is suitable for a variety of
+day-to-day management tasks, including managing appointments for both yourself and your child, and also organising the
+contact information from your Address Book.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/main/aziziazfar.md[Functional code]]
+ [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/test/aziziazfar.md[Test code]]
 
-=== Enhancement Added: Undo/Redo
+=== Enhancement Added: Multiple Delete
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=delete]
 
 #End of Extract#
 
@@ -23,19 +26,48 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Users may need to delete multiple contacts from the Bluebird application and thus, this feature will make it convenient
+for the users to do so.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=delete]
 
 #End of Extract#
 
 ---
 
+=== Enhancement Added: Add fields individually
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users may only intend to add the name and phone number field in Bluebird. Thus, with the enhanced functionality of the
+add command, users can do so without any difficulty.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
 === Enhancement Proposed: Add command `remark`
 
 {Explain similar to the Undo/Redo feature above.}
@@ -45,6 +77,4 @@ include::../DeveloperGuide.adoc[tag=undoredo]
 * Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
+== Project: External
