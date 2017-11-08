@@ -223,7 +223,8 @@ or if the expression is not simple or clear enough.
 * Avoid putting the year first when using the non-standard format.
 ====
 
-=== Listing all persons/events : `(l)list`
+// tag::sortByName[]
+=== Listing all persons : `(l)list`
 
 You want to view all your contacts in your contact list. +
 Format: `(l)list`
@@ -233,6 +234,7 @@ This will list out all of your contacts in alphabetical order.
 Example:
 
 * `list`
+// end::sortByName[]
 
 === Listing all events : `(lE)listE`
 
@@ -314,13 +316,15 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::findtag[]
 === Locating persons by their tag : `(ft)findtag`
 
-Finds persons whose corresponding tags contain any of the given keywords. +
+Finds persons whose corresponding tags contain any of the given keywords and lists them out. +
 Format: `(ft)findtag KEYWORD [MORE_KEYWORDS]...`
 
 ****
-* Same features as locating persons by any property, except this command is only for tags
+* The search is not case insensitive. e.g `friends` will match `Friends`
+* Only full word matching will be returned. e.g. `friend` will not match `friends`
 ****
 
 Examples:
@@ -329,6 +333,7 @@ Examples:
 Returns any person that contains a `family` tag
 * `findtag family colleagues` +
 Returns any person that contains the tags `family` and `colleagues`
+// end::findtag[]
 
 === Deleting a person : `(d)delete`
 
@@ -388,13 +393,14 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::emailCommand[]
 === Emailing a person : `(em)email`
 
 Emails a person (identified by the index number used in the last listing) to email that person. +
 Format: `(em)email INDEX`
 
 ****
-* Emails the person by opening your default mail app with the email field filled up.
+* Emails the person by opening your default mail app with the "To: " field filled up with the person's email.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* like `1, 2, 3, ...`
 ****
@@ -404,6 +410,7 @@ Examples:
 * `list` +
 `email 2` +
 Emails the 2nd person in the address book.
+// end::emailCommand[]
 
 === Listing entered commands : `(his)history`
 

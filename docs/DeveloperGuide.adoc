@@ -615,6 +615,12 @@ or link:{repoURL}/src/main/java/seedu/address/ui/event/EventListPanel.java[`Even
 (i.e. `add` command), all the cards will be loaded in the incremental order by name or date time respectively. The sorting
 mechanism uses the `sort` method which resides inside `List` interface to sort the contacts by name.
 
+// tag::emailMech[]
+=== Emailing mechanism
+
+The automatic opening of email on the user's desktop is facilitated mainly by the `Desktop` class which allows a Java application
+to launch the default mail application registered inside the user's native desktop to handle the email `URI`.
+// end::emailMech[]
 
 === Configuration
 
