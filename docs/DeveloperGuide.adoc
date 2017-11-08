@@ -361,6 +361,232 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 <<<
 
+=== Group Feature
+The group feature enables users to create and delete a group in Circles. It is stored as a `Group` object which contains
+a `GroupName`, which stores the group name, and a `List<ReadOnlyPerson>` which stores the group members. +
+
+A `Group` object is stored in the `UniqueGroupList` inside the `AddressBook` class. The `UniqueGroupList` does not allow duplicate groups that have the same name in Circles.
+Otherwise, it will throw a `DuplicateGroupException`. +
+
+==== Creating a group
+To create a group in Circles, the user will enter the following command: `creategroup n/GROUP_NAME i/INDEXES...`. +
+GROUP_NAME will be the name of the group, and INDEXES are the indexes of the persons that you want to add into the group. +
+
+
+Firstly, when a `creategroup` command has been entered in the Command Box, it enters the `CreateGroupCommandParser` class, which parses the arguments into a `GroupName` and a `List<Index>`,
+containing the indexes of the persons that is being added to the group. +
+The sequence diagram for `CreateGroupCommandParser` is shown below.
+
+image::CreateGroupCommandParserSequenceDiagram.png[width="800"]
+
+Next, the `CreateGroupCommand` class will take in the parameters parsed by `CreateGroupCommandParser`, and use the list of indexes to add the person corresponding to the index into a List<ReadOnlyPerson>.
+A person will only be added to the group once, even if an index has been repeated more than once in the list. +
+
+Then, a new `Group` will be created, and the `addGroup()` method in `Model` will add the group into Circles.
+The code implementation is shown below, and is accessible in link: {repoURL}/src/main/java/seedu/address/logic/commands/CreateGroupCommand.java[`CreateGroupCommand.java`] +
+[source,java]
+----
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyPerson> groupMembers = new ArrayList<>();
+
+        for (Index index: indexes) {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+
+            ReadOnlyPerson personToAdd = lastShownList.get(index.getZeroBased());
+            if (!groupMembers.contains(personToAdd)) {
+                groupMembers.add(personToAdd);
+            }
+        }
+        ReadOnlyGroup newGroup = new Group(groupName, groupMembers);
+        try {
+            model.addGroup(newGroup);
+        } catch (DuplicateGroupException dge) {
+            throw new CommandException(MESSAGE_DUPLICATE_GROUP);
+        }
+        model.updateFilteredGroupList(Model.PREDICATE_SHOW_ALL_GROUPS);
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, groupName, groupMembers.size()));
+    }
+----
+
+Finally, `Model` will call the `addGroup()` method in `AddressBook` to add the group into the `UniqueGroupList`.
+The `addGroup()` method will then call the `add()` method in `UniqueGroupList`, which will check for duplicate groups in Circles.
+Any group that have the same name will be considered as duplicates. If a duplicate group has been found, a `DuplicateGroupException` error will be thrown, and the group will not be added into Circles.
+Otherwise, the group will be successfully added into Circles.
+This method is shown below, and can be found in {repoURL}/src/main/java/seedu/address/model/group/UniqueGroupList.java[`UniqueGroupList.java`]
+[source,java]
+----
+    public void add(ReadOnlyGroup toAdd) throws DuplicateGroupException {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicateGroupException();
+        }
+        internalList.add(new Group(toAdd));
+    }
+----
+
+===== Design Considerations
+*Aspect:* Implementation of the `Group` feature +
+*Alternative 1 (current choice):* Create a Group class to store the persons into a group +
+*Pros:* Creating a separate class called `Group` will look more professional, and allows an additional UI panel to show to list of groups. Enhances the user experience.  +
+*Cons:* Hard to implement, and higher risk for bugs in the application. +
+
+*Alternative 2:* Create a tag for the group +
+*Pros:* Short and easy solution to implement a group, and users can just use the `list tags` command to show the specific groups +
+*Cons:* It violates the Single Responsibility Principle as tags are now being used for two different things, labels for the person as well as groups.
+
+*Aspect:* Handling of group members inside `Group`+
+*Alternative 1 (current choice):* Create a `List<ReadOnlyPerson>` inside `Group` to store the group members +
+*Pros:* Easy to implement, changes in the person list inside Circles will not affect the `Group`. Less coupling.+
+*Cons:* Deleting of contacts in Circles will not reflect in the list inside the `Group`. +
+
+*Alternative 2:* Link the group members to the `UniquePersonList` in `AddressBook`
+*Pros:* Any changes to the contacts list will be updated immediately into the groups.
+*Cons:* It will be harder to implement, and will result in more coupling.
+
+<<<
+
+==== Deleting a group
+To delete a group in Circles, the user will enter `deletegroup INDEX`, where INDEX is the index of the group in the group list panel. +
+
+Firstly, when a `deletegroup` command is entered in the Command Box, it enters the `DeleteGroupCommandParser` class, which parses the index of the group that is going to be deleted.
+The sequence diagram for `DeleteGroupCommandParser` is shown below.
+
+image::DeleteGroupCommandParserSequenceDiagram.png[width="800"]
+
+Next, the `DeleteGroupCommand` class will take in the `Index` that is parsed by `DeleteGroupCommandParser` and calls the `deleteGroup()` method in `Model`.
+The code implementation is shown below, and can be found in {repoURL}/src/main/java/seedu/address/logic/commands/DeleteGroupCommand.java[`DeleteGroupCommand.java`]
+[source,java]
+----
+    public CommandResult executeUndoableCommand() throws CommandException {
+
+        List<ReadOnlyGroup> lastShownList = model.getGroupList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyGroup groupToDelete = lastShownList.get(targetIndex.getZeroBased());
+        try {
+            model.deleteGroup(groupToDelete);
+        } catch (GroupNotFoundException gnfe) {
+            assert false : "The target group cannot be missing";
+        }
+
+        return new CommandResult(String.format(MESSAGE_DELETE_GROUP_SUCCESS, groupToDelete.getGroupName().fullName));
+    }
+----
+
+Finally, `Model` will call the `deleteGroup()` method in `AddressBook`, which will then call the `delete()` method in `UniqueGroupList` which will delete the group from Circles.
+If the group cannot be found inside the `UniqueGroupList`, it will throw a `GroupNotFoundException` error to the user. This method is shown below, and can be found in
+{repoURL}/src/main/java/seedu/address/model/group/UniqueGroupList.java[`UniqueGroupList.java`]
+[source,java]
+----
+    public boolean remove(ReadOnlyGroup toRemove) throws GroupNotFoundException {
+        requireNonNull(toRemove);
+        final boolean groupFoundAndDeleted = internalList.remove(toRemove);
+        if (!groupFoundAndDeleted) {
+            throw new GroupNotFoundException();
+        }
+        return groupFoundAndDeleted;
+    }
+----
+
+=== Pin Feature
+The pin features enables users to pin their contacts to the top of their contact list. This will help them to access contacts that they frequently visit easily. +
+
+A contact is considered pin when the `pinned` is `true`. `pinned` is a `boolean` variable inside the `Person` class. When a person is added into Circles, the `pinned` value will be set to `false`.
+So, every contact in Circles in not pinned by default.
+
+==== Pinning a person
+To pin a person, the user will enter `pin INDEX`, where INDEX is the index of the person in the person list panel. +
+
+Firstly, when a `pin` command is entered into the Command Box, it is parsed by `PinCommandParser`, which will return the `Index` of the target person.
+
+Next, `PinCommand` will get the `Index`, and locate the target person.
+
+Then, `PinCommand` will call the `pinPerson()` method in `Model`, which will set the `pinned` boolean inside `Person` to be true.
+If the person is already pinned, it will show a message, indicating that the person is already pinned. +
+The implementation of the code is shown below, and can be found in
+{repoURL}/src/main/java/seedu/address/logic/commands/PinCommand.java[`PinCommand.java`]
+[source,java]
+----
+ public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToPin = lastShownList.get(index.getZeroBased());
+        try {
+            if (personToPin.isPinned()) {
+                return new CommandResult(MESSAGE_ALREADY_PINNED);
+            } else {
+                model.pinPerson(personToPin);
+                model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+                return new CommandResult(String.format(MESSAGE_PIN_PERSON_SUCCESS, personToPin));
+            }
+        } catch (PersonNotFoundException pnfe) {
+            throw new CommandException(MESSAGE_PIN_PERSON_FAILED);
+        }
+    }
+----
+After that, `Model` will sort the contact list by name, and bring the pinned contact to the top.
+
+Finally, Circles will save the address book, as changes has been made.
+
+==== Unpinning a person
+To unpin a person, the user will enter `unpin INDEX`, where INDEX is the index of the person in the person list panel.
+
+Firstly, when an `unpin` command is entered into the Command Box, it is parsed by `UnpinCommandParser`, which will return the `Index` of the target person.
+
+Next, `UnpinCommand` will get the `Index`, and locate the target person.
+
+Then, `UnpinCommand` will call the unpinPerson() method in `Model`, which will set the `pinned` boolean inside `Person` to be false.
+If the person was already unpinned, it will show a message, indicating that the person is already unpinned.
+The implementation of the code is shown below, and can be found in  {repoURL}/src/main/java/seedu/address/logic/commands/PinCommand.java[`PinCommand.java`]
+[source,java]
+----
+ public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToUnpin = lastShownList.get(index.getZeroBased());
+        try {
+            if (personToUnpin.isPinned()) {
+                model.unpinPerson(personToUnpin);
+                model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+                return new CommandResult(String.format(MESSAGE_UNPIN_PERSON_SUCCESS, personToUnpin));
+            } else {
+                return new CommandResult(MESSAGE_ALREADY_UNPINNED);
+            }
+        } catch (PersonNotFoundException pnfe) {
+            throw new CommandException(MESSAGE_UNPIN_PERSON_FAILED);
+        }
+----
+
+After that, `Model` will sort the contact list by name, bringing the unpinned contact back to the list in alphabetical order.
+
+Finally, Circles will save the address book as changes has been made.
+
+==== Design Considerations
+*Aspect:* Implementation of pin +
+*Alternative 1 (current choice):* Use a boolean variable to store `pin` information +
+*Pros:* Easy to implement, lower risk of having a bug. +
+*Cons:* Required to change the constuctors of `Person`, and modify many existing files to store the boolean `pinned` variable +
+
+*Alternative 2:* Storing the `pin` information as a `Pinned` tag +
+*Pros:* Storing the `pin` information as a tag is easy to implement, and does not cause any storage issues. +
+*Cons:* Potential bug where users can add a similar tag as the pin tag, and thus, be able to pin a contact without using the `pin` command.
+
+
 === Enhanced Find Command
 
 The enhanced `find` command now allows searches for a Person's Name, Phone Number, Email, Address and Tags. It uses the
@@ -807,6 +1033,31 @@ unfortunately the constraints of the module forbid us from doing so.
 // end::expimp[]
 
 <<<
+
+=== Changing Tag Colours
+The `setcolour` command allows users to customise the colour of tags in Circles. +
+
+The colours of the tags are stored as a `HashMap<String, String>` inside the `UserPrefs` class. When a `setcolour` command is called, and there is change in a tag colour,
+`SetColourCommand` will call `setTagColour()` in `Model`, which updates the `HashMap<String, String>` inside `UserPrefs`.
+The method `setTagColour()` is shown below, and the code can be found in {repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager.java`]
+[source,java]
+----
+ public void setTagColour(String tagName, String colour) throws IllegalValueException {
+        List<Tag> tagList = addressBook.getTagList();
+        for (Tag tag: tagList) {
+            if (tagName.equals(tag.tagName)) {
+                tagColours.put(tag, colour);
+                updateAllPersons(tagColours);
+                indicateAddressBookChanged();
+                raise(new NewPersonListEvent(getFilteredPersonList()));
+                colourPrefs.updateColorMap(tagColours);
+                return;
+            }
+        }
+        throw new IllegalValueException("No such tag!");
+    }
+----
+Then, the UI will be notified of the change by `NewPersonListEvent`, and updates the `PersonCard` and `PersonInfo` classes to reflect the change in colour.
 
 === Logging
 

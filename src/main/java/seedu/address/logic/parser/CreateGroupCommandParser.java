@@ -17,7 +17,7 @@ import seedu.address.model.group.GroupName;
 /**
  * Parses input arguments and create a CreateGroupCommand object
  */
-public class GroupCommandParser implements  Parser<CreateGroupCommand> {
+public class CreateGroupCommandParser implements  Parser<CreateGroupCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the GroupCommand
