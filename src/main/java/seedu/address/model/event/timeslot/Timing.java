@@ -99,6 +99,10 @@ public class Timing implements Comparable<Timing> {
         return end;
     }
 
+    public double getDuration() {
+        return duration;
+    }
+
     @Override
     public String toString() {
         return timing;
