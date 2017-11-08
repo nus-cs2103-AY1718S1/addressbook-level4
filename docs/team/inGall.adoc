@@ -18,8 +18,11 @@ It shows how all the features implemented by the author work.
 #Start of extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=birthday]
+
 include::../UserGuide.adoc[tag=find]
+
 include::../UserGuide.adoc[tag=sort]
+
 include::../UserGuide.adoc[tag=listReminder]
 
 #End of extract [from: User Guide]#
@@ -62,6 +65,7 @@ bring them back to the list of all reminders, the `listReminder` command is need
 #Start of extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=birthday]
+
 include::../DeveloperGuide.adoc[tag=birthdayDesignConsideration]
 
 #End of extract [from: Developer Guide]#
