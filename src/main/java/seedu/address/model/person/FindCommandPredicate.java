@@ -1,3 +1,4 @@
+//@@author TravisPhey
 package seedu.address.model.person;
 
 import java.util.List;
@@ -7,6 +8,7 @@ import seedu.address.commons.util.StringUtil;
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code name, number, address, email} matches any of the keywords given.
+ * Tests that a {@code ReadOnlyPerson}'s {@code occupation, website, remark} matches any of the keywords given.
  */
 public class FindCommandPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
@@ -30,9 +32,17 @@ public class FindCommandPredicate implements Predicate<ReadOnlyPerson> {
             .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getEmail().toString(), keyword));
 
         boolean occupation = keywords.stream()
-            .anyMatch(keywords -> StringUtil.containsWordIgnoreCase(person.getOccupation().toString(), keywords));
 
-        if (name || number || address || email || occupation) {
+            .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getOccupation().toString(), keyword));
+
+        boolean website = keywords.stream()
+            .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getWebsite().toString(), keyword));
+
+        boolean remark = keywords.stream()
+            .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getRemark().toString(), keyword));
+
+        if (name || number || address || email || occupation || website || remark) {
+
             return true;
         } else {
             return false;

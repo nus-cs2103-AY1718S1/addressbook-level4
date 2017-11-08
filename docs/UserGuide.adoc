@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= TheYellowPage - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -101,9 +101,11 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::FindCommand[]
+
 === Locating persons: `find`
 
-Finds persons whose name, email, address or phone contains any of the given keywords. +
+Finds persons whose name, email, address, phone, website, occupation or remark contains any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -124,6 +126,8 @@ Returns `john` and `John Doe`
 Returns any person having names `Betsy`, `Tim`, or `John`
 * `find Betsy 85355255 Heinz@example.com 10th street` +
 Returns Betsy, Alice, Carl and Daniel.
+
+// end::FindCommand[]
 
 === Locating person by number: `findnum`
 
@@ -253,6 +257,8 @@ Format: `clear`
 Add multiple contacts to addressBook at once. +
 Format: `Add [numberOfContacts] [Details]`
 
+// tag::deleteMultipleCommand[]
+
 === Delete multiple contacts at once: `deleteMul` (Since v1.2)
 
 Deletes multiple specified contacts from addressBook at once. +
@@ -274,6 +280,8 @@ deletes the contacts with the 1st and 3rd index in the address book.
 deletes the contacts with the 2nd, 4th, 7th and 8th indexes in the address book.
 
 ****
+
+// end::deleteMultipleCommand[]
 
 // tag::remark[]
 === Add remark to a person
