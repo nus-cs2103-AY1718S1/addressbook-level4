@@ -1,0 +1,48 @@
+= Huang Chi Ying - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Rubrika
+Rubrika is a desktop address book application designed for self employed professionals and freelancers to manage their contacts through CLI (Command Line Interface).
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B1/Main/blob/master/collated/main/john19950730.md[Functional code]] [https://github.com/CS2103AUG2017-W15-B1/Main/blob/master/collated/test/john19950730.md[Test code]]
+
+=== Enhancement Added: AutoComplete
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=autocomplete]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+CLI can require many keystrokes to enter commands oftentimes, and AutoComplete feature is designed to combat that inconvenience users face.
+
+Specifically, the main target of the AutoComplete feature is accomplish the following :
+
+* Reduce number of keystrokes required to enter a complete command.
+* Help users remember part of the syntax of commands that require multiple arguments.
+
+Having the AutoComplete feature would increase the productivity of users of this application, since they take less time to enter each command, and will have to refer to the documentations less.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=autocomplete]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Cleaning up and management of ongoing issues raised in the issue tracker by the users.

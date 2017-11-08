@@ -195,7 +195,7 @@ public class RemoveTagCommand extends UndoableCommand {
  */
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
-    public static final String COMMAND_USAGE = COMMAND_WORD;
+    public static final String COMMAND_USAGE = COMMAND_WORD + " ";
 
     public static final String MESSAGE_SUCCESS = "List has been sorted.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the list by FIELD\n"

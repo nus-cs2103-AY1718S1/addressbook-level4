@@ -1,4 +1,4 @@
-package seedu.address.logic.autocomplete.parser;
+package seedu.address.autocomplete.parser;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -10,9 +10,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import seedu.address.logic.autocomplete.AutoCompleteUtils;
+import seedu.address.autocomplete.AutoCompleteUtils;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 
@@ -21,9 +20,9 @@ import seedu.address.model.Model;
  *  based on the names currently present in the address book. */
 public class AutoCompleteByPrefixModelParser implements AutoCompleteParser {
 
-    private final Model model;
+    protected List<String> allPossibleMatches = Collections.emptyList();
     private Prefix currentPrefix;
-    private List<String> allPossibleMatches = Collections.emptyList();
+    private final Model model;
 
     public AutoCompleteByPrefixModelParser(Model model) {
         this.model = model;
@@ -32,22 +31,12 @@ public class AutoCompleteByPrefixModelParser implements AutoCompleteParser {
     @Override
     public List<String> parseForPossibilities(String stub) {
         final LinkedList<String> possibleMatches = new LinkedList<String>();
-        int prefixPosition;
-
-        // if trying to match a tag, do further check that it is the furthest occurence of PREFIX_TAG
-        if (currentPrefix.equals(PREFIX_TAG)) {
-            prefixPosition = AutoCompleteUtils.findLastPrefixPosition(stub, currentPrefix.toString());
-        } else {
-            prefixPosition = AutoCompleteUtils.findFirstPrefixPosition(stub, currentPrefix.toString());
-        }
-
+        int prefixPosition = AutoCompleteUtils.findLastPrefixPosition(stub, currentPrefix.toString());
         String staticSection = stub.substring(0, prefixPosition);
         String autoCompleteSection = stub.substring(prefixPosition, stub.length());
 
-        possibleMatches.addAll(allPossibleMatches.stream()
-                .filter(possibleMatch -> AutoCompleteUtils.startWithSameLetters(autoCompleteSection, possibleMatch))
-                .map(filteredMatch -> staticSection + filteredMatch)
-                .collect(Collectors.toList()));
+        possibleMatches.addAll(AutoCompleteUtils.generateListOfMatches(allPossibleMatches,
+                staticSection, autoCompleteSection));
         possibleMatches.add(stub);
 
         return possibleMatches;

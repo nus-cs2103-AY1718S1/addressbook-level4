@@ -1,9 +1,8 @@
-package seedu.address.logic.autocomplete.parser;
+package seedu.address.autocomplete.parser;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
@@ -22,21 +21,23 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.logic.autocomplete.parser.ModelStub;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.tag.Tag;
 
-public class AutoCompleteWordInNameParserTest {
+public class AutoCompleteTagParserTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private AutoCompleteWordInNameParser parser;
+    private AutoCompleteTagParser parser;
     private ModelStubWithRequiredMethods mockModel;
     private final List<ReadOnlyPerson> allPersonsAdded = Arrays.asList(
-            new ReadOnlyPerson[]{ALICE, AMY, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE});
+            new ReadOnlyPerson[]{ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE});
 
     @Before
     public void fillMockModel() {
@@ -46,33 +47,27 @@ public class AutoCompleteWordInNameParserTest {
         } catch (DuplicatePersonException ex) {
             fail("This exception should not be thrown.");
         }
-        parser = new AutoCompleteWordInNameParser(mockModel);
+        parser = new AutoCompleteTagParser(mockModel);
     }
 
     //@@author john19950730
     @Test
     public void testParsePossibilities() {
         // multiple matches
-        String preamble = "find A";
+        String preamble = "findtag f";
         assertEquals(parser.parseForPossibilities(preamble),
-                Arrays.asList(preamble + "lice",
-                        preamble + "my",
+                Arrays.asList(preamble + "riends",
+                        preamble + "amily",
                         preamble));
 
         // single match
-        preamble = "find P";
+        preamble = "removetag c";
         assertEquals(parser.parseForPossibilities(preamble),
-                Arrays.asList(preamble + "auline",
-                        preamble));
-
-        // single duplicate match
-        preamble = "find Mey";
-        assertEquals(parser.parseForPossibilities(preamble),
-                Arrays.asList(preamble + "er",
+                Arrays.asList(preamble + "olleagues",
                         preamble));
 
         // no match
-        preamble = "find Z";
+        preamble = "removetag friends g";
         assertEquals(parser.parseForPossibilities(preamble),
                 Arrays.asList(preamble));
     }
@@ -103,9 +98,19 @@ public class AutoCompleteWordInNameParserTest {
         }
 
         @Override
-        public List<String> getAllNamesInAddressBook() {
-            return personsAdded.stream()
-                    .map(person -> person.getName().toString())
+        public List<String> getAllTagsInAddressBook() {
+            //generate a unique tag list first
+            final ArrayList<Tag> tagsList = new ArrayList<Tag>();
+            for (ReadOnlyPerson person : personsAdded) {
+                for (Tag tag : person.getTags()) {
+                    if (tagsList.indexOf(tag) == -1) {
+                        tagsList.add(tag);
+                    }
+                }
+            }
+
+            return tagsList.stream()
+                    .map(tag -> tag.toString().substring(1, tag.toString().length() - 1))
                     .collect(Collectors.toList());
         }
 
