@@ -15,6 +15,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Country;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.address.Address;
 import seedu.address.model.person.email.Email;
 import seedu.address.model.schedule.Activity;
 import seedu.address.model.schedule.ScheduleDate;
@@ -65,6 +66,7 @@ public class ParserUtil {
         requireNonNull(phone);
         return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
     }
+
     //@@author icehawker
     /**
      * Parses a {@code Optional<String> country} into an {@code Optional<Country>} if {@code country} is present.

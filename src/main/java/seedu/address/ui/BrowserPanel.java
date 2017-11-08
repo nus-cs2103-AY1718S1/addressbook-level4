@@ -1,5 +1,9 @@
 package seedu.address.ui;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -14,9 +18,8 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowCalendarRequestEvent;
-import seedu.address.commons.events.ui.ShowEmailRequestEvent;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.address.Address;
 
 /**
  * The Browser Panel of the App.
@@ -78,13 +81,6 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     /**
-     * Opens the email window in the browser panel.
-     */
-    public void loadEmail() {
-        loadPage("https://www.google.com/gmail/");
-    }
-
-    /**
      * Frees resources allocated to the browser.
      */
     public void freeResources() {
@@ -103,12 +99,5 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleCalendarRequestEvent(ShowCalendarRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadCalendar();
-    }
-
-    //@@author jin-ting
-    @Subscribe
-    private void handleEmailRequestEvent(ShowEmailRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadEmail();
     }
 }

@@ -48,7 +48,8 @@ public class GuiTestAssert {
     public static void assertCardDisplaysSchedule(Schedule expectedSchedule, ScheduleCardHandle actualCard) {
         assertEquals(expectedSchedule.getScheduleDate().value, actualCard.getDate());
         assertEquals(expectedSchedule.getActivity().value, actualCard.getActivity());
-        assertEquals(expectedSchedule.getPersonInvolvedName().fullName, actualCard.getName());
+        assertEquals(expectedSchedule.getPersonInvolvedNames().stream().map(name -> name.toString())
+                        .collect(Collectors.toList()), actualCard.getNames());
     }
 
     /**

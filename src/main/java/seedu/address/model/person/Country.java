@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+//@@author icehawker
 import java.util.HashMap;
 import java.util.Map;
 

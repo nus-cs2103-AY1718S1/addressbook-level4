@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
 
 /**
  * Helper functions for handling strings.
@@ -37,5 +38,22 @@ public class StringUtil {
         } catch (NumberFormatException nfe) {
             return false;
         }
+    }
+
+    //@@author 17navasaw
+    /**
+     * Returns a {@code String} consisting of each object in a list separated by a semicolon
+     * @param list The list of objects
+     * @param <E> The data type of the object involved in the list
+     * @return The {@code String} consisting of each object in the list
+     */
+    public static <E> String convertListToString(List<E> list) {
+        StringBuilder listStringBuilder = new StringBuilder();
+
+        for (E obj: list) {
+            listStringBuilder.append(obj.toString()).append("; ");
+        }
+
+        return listStringBuilder.toString();
     }
 }

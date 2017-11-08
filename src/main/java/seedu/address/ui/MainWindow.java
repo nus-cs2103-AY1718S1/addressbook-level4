@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -104,7 +106,6 @@ public class MainWindow extends UiPart<Region> {
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
         setAccelerator(calendarItem, KeyCombination.valueOf("F2"));
-        setAccelerator(emailItem, KeyCombination.valueOf("F3"));
     }
 
     /**
@@ -150,6 +151,7 @@ public class MainWindow extends UiPart<Region> {
 
         agendaPanel = new AgendaPanel(model.getAddressBook().getScheduleList());
         agendaPanelPlaceholder.getChildren().add(agendaPanel.getRoot());
+        agendaPanelPlaceholder.setPrefWidth(285);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -220,12 +222,6 @@ public class MainWindow extends UiPart<Region> {
     public void handleCalendar() {
         browserPanel.loadCalendar();
     }
-
-    @FXML
-    public void handleEmail() {
-        browserPanel.loadEmail();
-    }
-
 
     void show() {
         primaryStage.show();

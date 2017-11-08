@@ -54,7 +54,7 @@
             </padding>
         </StackPane>
       <!-- @@author 17navasaw -->
-      <VBox alignment="TOP_RIGHT" minWidth="175.0" prefHeight="20.0" prefWidth="225.0">
+      <VBox alignment="TOP_RIGHT" maxWidth="285.0" minWidth="175.0" prefHeight="20.0" prefWidth="225.0">
          <children>
             <StackPane fx:id="agendaPanelPlaceholder" />
          </children>

@@ -22,6 +22,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.address.Address;
 import seedu.address.model.person.email.Email;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -174,7 +175,6 @@ public class EditCommand extends UndoableCommand {
         public Optional<Phone> getPhone() {
             return Optional.ofNullable(phone);
         }
-
         //@@author icehawker
         public void setCountry(Country country) {
             this.country = country;

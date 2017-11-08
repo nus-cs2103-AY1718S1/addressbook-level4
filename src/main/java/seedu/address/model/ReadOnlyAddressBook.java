@@ -29,4 +29,10 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<Tag> getTagList();
 
+    /**
+     * Returns an unmodifiable view of the list of schedules
+     * needing to be reminded. This list will not contain any
+     * duplicate schedules.
+     */
+    ObservableList<Schedule> getScheduleToRemindList();
 }

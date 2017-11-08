@@ -9,11 +9,11 @@ import java.util.Set;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.Country;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.address.Address;
 import seedu.address.model.person.email.Email;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.schedule.Activity;
@@ -88,15 +88,29 @@ public class SampleDataUtil {
                                                List<String> peopleInvolved)
             throws IllegalValueException {
         HashSet<Schedule> schedules = new HashSet<>();
+        Set<Name> personInvolvedSet = new HashSet<>();
         for (int i = 0; i < scheduleDates.size(); i++) {
+            personInvolvedSet.add(new Name(peopleInvolved.get(i)));
             schedules.add(new Schedule(new ScheduleDate(scheduleDates.get(i)), new Activity(activities.get(i)),
-                    new Name(peopleInvolved.get(i))));
+                    personInvolvedSet));
         }
 
         return schedules;
     }
 
     //@@author 17navasaw
+    /**
+     * Returns a person names set containing the list of strings given.
+     */
+    public static Set<Name> getPersonNamesSet(String... strings) throws IllegalValueException {
+        HashSet<Name> personNames = new HashSet<>();
+        for (String s : strings) {
+            personNames.add(new Name(s));
+        }
+
+        return personNames;
+    }
+
     /**
      * Returns a tag set containing the list of strings given.
      */
