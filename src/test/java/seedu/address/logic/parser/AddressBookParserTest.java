@@ -9,7 +9,9 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.Rule;
@@ -23,6 +25,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -34,10 +37,12 @@ import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.AddressContainsKeywordsPredicate;
+import seedu.address.model.person.CountryContainsKeywordsPredicate;
 import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PhoneContainsKeywordsPredicate;
+import seedu.address.model.person.ScheduleContainsKeywordsPredicate;
 import seedu.address.model.person.TagContainsKeywordsPredicate;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -70,6 +75,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS + " 3") instanceof ClearCommand);
     }
 
+    //@@author 17navasaw
     @Test
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
@@ -83,6 +89,7 @@ public class AddressBookParserTest {
         assertEquals(new DeleteCommand(indices), commandUsingAlias);
     }
 
+    //@@author
     @Test
     public void parseCommand_edit() throws Exception {
         Person person = new PersonBuilder().build();
@@ -103,6 +110,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_ALIAS + " 3") instanceof ExitCommand);
     }
 
+    //@@author jin-ting
     @Test
     public void parseCommand_findName() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
@@ -149,6 +157,18 @@ public class AddressBookParserTest {
 
 
     @Test
+    public void parseCommand_findCountry() throws Exception {
+        List<String> keywords = Arrays.asList("Paris", "China");
+        FindCommand command = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " " + "c/Paris China");
+        FindCommand commandUsingAlias = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " " + "c/Paris China");
+        assertEquals(new FindCommand(new CountryContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindCommand(new CountryContainsKeywordsPredicate(keywords)), commandUsingAlias);
+    }
+
+
+    @Test
     public void parseCommand_findTag() throws Exception {
         List<String> keywords = Arrays.asList("friends", "teachers", "schoolmates");
         FindCommand command = (FindCommand) parser.parseCommand(
@@ -159,8 +179,18 @@ public class AddressBookParserTest {
         assertEquals(new FindCommand(new TagContainsKeywordsPredicate(keywords)), commandUsingAlias);
     }
 
+    @Test
+    public void parseCommand_findSchedule() throws Exception {
+        List<String> keywords = Arrays.asList("interview", "meeting", "party");
+        FindCommand command = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " " + "act/ " + keywords.stream().collect(Collectors.joining(" ")));
+        FindCommand commandUsingAlias = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_ALIAS + " " + "act/ " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new ScheduleContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindCommand(new ScheduleContainsKeywordsPredicate(keywords)), commandUsingAlias);
+    }
 
-
+    //@@author CT15
     @Test
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
@@ -177,6 +207,7 @@ public class AddressBookParserTest {
                 + DeleteCommand.COMMAND_ALIAS) instanceof HelpCommand);
     }
 
+    //@@author
     @Test
     public void parseCommand_history() throws Exception {
         assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD) instanceof HistoryCommand);
@@ -200,19 +231,27 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
     }
 
+    //@@author CT15
     @Test
     public void parseCommand_schedule() throws Exception {
         Schedule schedule = new ScheduleBuilder().build();
+        Set<Index> indices = new HashSet<>();
+        indices.add(INDEX_FIRST_PERSON);
+
         ScheduleCommand command = (ScheduleCommand) parser.parseCommand(ScheduleUtil.getScheduleCommand(
-                INDEX_FIRST_PERSON, schedule));
+                schedule, indices));
         ScheduleCommand commandUsingAlias = (ScheduleCommand) parser.parseCommand(ScheduleUtil
-                .getScheduleCommandUsingAlias(INDEX_FIRST_PERSON, schedule));
-        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, schedule), command);
-        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, schedule), commandUsingAlias);
+                .getScheduleCommandUsingAlias(schedule, indices));
+
+        assertEquals(new ScheduleCommand(indices, schedule.getScheduleDate(),
+                schedule.getActivity()), command);
+        assertEquals(new ScheduleCommand(indices, schedule.getScheduleDate(),
+                schedule.getActivity()), commandUsingAlias);
     }
 
+    //@@author 17navasaw
     @Test
-    public void parseCommand_select() throws Exception {
+    public void parseCommand_locate() throws Exception {
         LocateCommand command = (LocateCommand) parser.parseCommand(
                 LocateCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         LocateCommand commandUsingAlias = (LocateCommand) parser.parseCommand(
@@ -221,12 +260,18 @@ public class AddressBookParserTest {
         assertEquals(new LocateCommand(INDEX_FIRST_PERSON), commandUsingAlias);
     }
 
+    //@@author jin-ting
     @Test
     public void parseCommand_calendar() throws Exception {
         assertTrue(parser.parseCommand(CalendarCommand.COMMAND_WORD) instanceof CalendarCommand);
     }
 
+    @Test
+    public void parseEmail_calendar() throws Exception {
+        assertTrue(parser.parseCommand(EmailCommand.COMMAND_WORD) instanceof EmailCommand);
+    }
 
+    //@@author
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);

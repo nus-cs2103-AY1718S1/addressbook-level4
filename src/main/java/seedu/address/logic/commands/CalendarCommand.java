@@ -4,6 +4,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowCalendarRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author jin-ting
 /**
  * Locates a person's address by showing its location on Google Maps.
  */

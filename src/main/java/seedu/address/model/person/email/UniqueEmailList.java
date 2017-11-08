@@ -1,3 +1,4 @@
+//@@author 17navasaw
 package seedu.address.model.person.email;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;

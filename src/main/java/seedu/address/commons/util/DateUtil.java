@@ -2,16 +2,16 @@ package seedu.address.commons.util;
 
 import static java.util.Objects.requireNonNull;
 
+//@@author CT15
 /**
  * Utility methods related to dates
  */
 public class DateUtil {
 
     public static final String MESSAGE_DATE_CONSTRAINTS =
-            "The date for %1$s must exist and follow DD-MM-YYYY or DD-MM format";
+            "The date for %1$s must exist and follow DD-MM-YYYY format";
 
-    private static final String DATE_VALIDATION_REGEX_1 = "\\d{2}-\\d{2}-\\d{4}";
-    private static final String DATE_VALIDATION_REGEX_2 = "\\d{2}-\\d{2}";
+    private static final String DATE_VALIDATION_REGEX = "\\d{2}-\\d{2}-\\d{4}";
 
     /**
      * Returns true if the date follows the correct date format and exists.
@@ -71,7 +71,7 @@ public class DateUtil {
     public static boolean hasValidFormat(String date) {
         requireNonNull(date);
         date = date.trim();
-        return date.matches(DATE_VALIDATION_REGEX_1) || date.matches(DATE_VALIDATION_REGEX_2);
+        return date.matches(DATE_VALIDATION_REGEX);
     }
 
     /**

@@ -1,3 +1,4 @@
+//@@author 17navasaw
 package seedu.address.model.person.address;
 
 import static java.util.Objects.requireNonNull;
@@ -11,8 +12,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Block {
 
     public static final String MESSAGE_BLOCK_CONSTRAINTS =
-            "Block can only contain numbers or alphabets, and should be at least 1 character long";
-    private static final String BLOCK_VALIDATION_REGEX = "\\w{1,}";
+            "Block can contain alphanumeric characters and spaces, and it should not be blank";
+    private static final String BLOCK_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
     public final String value;
 
     public Block(String block) throws IllegalValueException {

@@ -3,6 +3,7 @@ package seedu.address.model.schedule;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -11,7 +12,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.commons.util.DateUtil;
 
+//@@author CT15
 /**
  * A list of schedules that enforces no nulls and uniqueness between its elements.
  * <p>
@@ -19,6 +22,7 @@ import seedu.address.commons.util.CollectionUtil;
  *
  * @see Schedule#equals(Object)
  */
+
 public class UniqueScheduleList implements Iterable<Schedule> {
 
     private final ObservableList<Schedule> internalList = FXCollections.observableArrayList();
@@ -58,18 +62,29 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    //@@author 17navasaw
     /**
      * Ensures every schedule in the argument list exists in this object.
      */
     public void mergeFrom(UniqueScheduleList from) {
         final Set<Schedule> alreadyInside = this.toSet();
-        from.internalList.stream()
-                .filter(schedule -> !alreadyInside.contains(schedule))
-                .forEach(internalList::add);
 
+        for (Schedule scheduleFrom : from.internalList) {
+            int flag = 1;
+            for (Schedule scheduleInside : alreadyInside) {
+                if (scheduleFrom.equals(scheduleInside)) {
+                    flag = 0;
+                    break;
+                }
+            }
+            if (flag == 1) {
+                this.internalList.add(scheduleFrom);
+            }
+        }
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    //@@author
     /**
      * Returns true if the list contains an equivalent Schedule as the given argument.
      */
@@ -107,6 +122,61 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         return FXCollections.unmodifiableObservableList(internalList);
     }
 
+    //@@author 17navasaw
+    /**
+     * Sorts the list from earliest to latest schedule.
+     */
+    public void sort() {
+        FXCollections.sort(internalList, (schedule1, schedule2) -> {
+            String schedule1DateInString = schedule1.getScheduleDate().value;
+            String schedule2DateInString = schedule2.getScheduleDate().value;
+
+            int schedule1Year = DateUtil.getYear(schedule1DateInString);
+            int schedule2Year = DateUtil.getYear(schedule2DateInString);
+            if (schedule1Year != schedule2Year) {
+                return schedule1Year - schedule2Year;
+            }
+
+            int schedule1Month = DateUtil.getMonth(schedule1DateInString);
+            int schedule2Month = DateUtil.getMonth(schedule2DateInString);
+            if (schedule1Month != schedule2Month) {
+                return schedule1Month - schedule2Month;
+            }
+
+            int schedule1Day = DateUtil.getDay(schedule1DateInString);
+            int schedule2Day = DateUtil.getDay(schedule2DateInString);
+            return schedule1Day - schedule2Day;
+        });
+    }
+
+    /**
+     * Returns true if schedule list contains activity to be done within 1 day from the current date.
+     */
+    public boolean haveScheduleToRemind() {
+        LocalDate currentDate = LocalDate.now();
+
+        for (Schedule schedule : internalList) {
+            String scheduleDateString = schedule.getScheduleDate().value;
+
+            LocalDate scheduleDateToAlter = currentDate;
+            LocalDate scheduleDate = scheduleDateToAlter.withDayOfMonth(DateUtil.getDay(scheduleDateString))
+                    .withMonth(DateUtil.getMonth(scheduleDateString))
+                    .withYear(DateUtil.getYear(scheduleDateString));
+
+            LocalDate dayBeforeSchedule = scheduleDate.minusDays(1);
+            final boolean isYearEqual = (dayBeforeSchedule.getYear() == currentDate.getYear());
+            final boolean isMonthEqual = (dayBeforeSchedule.getMonthValue() == currentDate.getMonthValue());
+            final boolean isDayEqual = (dayBeforeSchedule.getDayOfMonth() == currentDate.getDayOfMonth());
+
+            if (isYearEqual && isMonthEqual && isDayEqual) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    //@@author CT15
     @Override
     public boolean equals(Object other) {
         assert CollectionUtil.elementsAreUnique(internalList);

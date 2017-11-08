@@ -23,6 +23,7 @@ public class HelpCommand extends Command {
 
     public static final String SHOWING_HELP_MESSAGE = "Opened help window.";
 
+    //@@author CT15
     private final CommandIdentifier commandIdentifier;
 
     public HelpCommand(CommandIdentifier targetCommandIdentifier) {
@@ -61,6 +62,13 @@ public class HelpCommand extends Command {
 
         case DeleteCommand.COMMAND_WORD:
             commandResult = DeleteCommand.MESSAGE_USAGE;
+            break;
+
+        case CalendarCommand.COMMAND_ALIAS:
+            //Fallthrough
+
+        case CalendarCommand.COMMAND_WORD:
+            commandResult = CalendarCommand.MESSAGE_USAGE;
             break;
 
         case EditCommand.COMMAND_ALIAS:

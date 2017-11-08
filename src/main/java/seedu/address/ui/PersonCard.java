@@ -19,6 +19,7 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
 
+    //@@author jin-ting
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -26,7 +27,9 @@ public class PersonCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
-    private static String[] colors = { "red", "blue", "orange", "brown", "green", "pink", "black", "grey" };
+    private static String[] colors = {"red", "blue", "orange", "brown", "green", "pink",
+        "black", "oldlace", "royalblue", "salmon", "tomato", "teal",
+        "darkseagreen", "cornflowerblue", "hotpink", "yellowgreen", "palevioletred", "lightsteelblue", "lightcyan"};
     private static HashMap<String, String> tagColors = new HashMap<>();
     private static Random random = new Random();
 
@@ -85,22 +88,25 @@ public class PersonCard extends UiPart<Region> {
             initEmails(person);
         });
 
+        //@@author CT15
         person.scheduleProperty().addListener((observable, oldValue, newValue) -> {
             schedules.getChildren().clear();
             initSchedules(person);
         });
-
+        //@@author
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
         });
     }
 
+    //@@author CT15
     private void initSchedules(ReadOnlyPerson person) {
         person.getSchedules().forEach(schedule -> schedules.getChildren().add(new Label(
                 "Date: " + schedule.getScheduleDate() + " Activity: " + schedule.getActivity())));
     }
 
+    //@@author
     /**
      * Sets the person's emails to the respective UI labels upon startup.
      */

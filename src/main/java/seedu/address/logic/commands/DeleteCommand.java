@@ -21,12 +21,12 @@ public class DeleteCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
             + ": Deletes the people identified by the index numbers used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer) [OTHER_INDICES]...\n"
+            + "Parameters: INDEX (must be a positive integer) [UNIQUE INDEX]...\n"
             + MESSAGE_GET_MORE_HELP;
 
-    //public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted all person(s)!";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted selected person(s)!";
 
+    //@@author 17navasaw
     private final ArrayList<Index> targetIndices;
 
     public DeleteCommand(ArrayList<Index> targetIndices) {
@@ -56,10 +56,10 @@ public class DeleteCommand extends UndoableCommand {
             }
         }
 
-        //return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
         return new CommandResult(MESSAGE_DELETE_PERSON_SUCCESS);
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

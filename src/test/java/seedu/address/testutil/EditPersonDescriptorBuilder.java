@@ -60,6 +60,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author 17navasaw
     /**
      * Parses the {@code emails} into a {@code Set<Email>} and set it to the {@code EditPersonDescriptor}
      * that we are building.
@@ -73,6 +74,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author
     /**
      * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
      */

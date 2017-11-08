@@ -4,16 +4,19 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Country;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.address.Address;
 import seedu.address.model.person.email.Email;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
@@ -39,6 +42,7 @@ public class XmlAdaptedPerson {
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
+    private Logger logger = LogsCenter.getLogger(XmlAdaptedPerson.class);
     /**
      * Constructs an XmlAdaptedPerson.
      * This is the no-arg constructor that is required by JAXB.
@@ -70,6 +74,7 @@ public class XmlAdaptedPerson {
         }
     }
 
+    //@@author 17navasaw
     /**
      * Converts this jaxb-friendly adapted person object into the model's Person object.
      *
@@ -85,18 +90,26 @@ public class XmlAdaptedPerson {
             personTags.add(tag.toModelType());
         }
 
-        final List<Schedule> schedules = new ArrayList<>();
+        final List<Schedule> personSchedules = new ArrayList<>();
         for (XmlAdaptedSchedule schedule : scheduled) {
-            schedules.add(schedule.toModelType());
+            personSchedules.add(schedule.toModelType());
         }
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Country country = new Country(phone.getCountryCode());
         final Set<Email> emails = new HashSet<>(personEmails);
         final Address address = new Address(this.address);
-        final Set<Schedule> schedule = new HashSet<>(schedules);
+        final Set<Schedule> schedules = new HashSet<>(personSchedules);
         final Set<Tag> tags = new HashSet<>(personTags);
 
-        return new Person(name, phone, country, emails, address, schedule, tags);
+        logger.info("Name: " + name.toString()
+                    + " Phone: " + phone.value
+                    + " Country: " + country.toString()
+                    + " Emails: " + StringUtil.convertListToString(personEmails)
+                    + " Address: " + address.toString()
+                    + " Schedules: " + StringUtil.convertListToString(personSchedules)
+                    + " Tags: " + StringUtil.convertListToString(personTags));
+
+        return new Person(name, phone, country, emails, address, schedules, tags);
     }
 }

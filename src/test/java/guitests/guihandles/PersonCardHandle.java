@@ -80,13 +80,14 @@ public class PersonCardHandle extends NodeHandle<Node> {
                 .collect(Collectors.toList());
     }
 
+    //@@author CT15
     public List<String> getSchedules() {
         return scheduleLabels
                 .stream()
                 .map(Label::getText)
                 .collect(Collectors.toList());
     }
-
+    //@@author
     public List<String> getTags() {
         return tagLabels
                 .stream()

@@ -3,8 +3,9 @@ package seedu.address.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
+import seedu.address.commons.util.PredicateUtil;
 
+//@@author jin-ting
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Tags} matches any of the keywords given.
  */
@@ -18,7 +19,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsTagIgnoreCase(person.getTags(), keyword));
+                .anyMatch(keyword -> PredicateUtil.containsTagIgnoreCase(person.getTags(), keyword));
     }
 
     @Override

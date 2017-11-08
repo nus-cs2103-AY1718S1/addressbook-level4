@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.person.address;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -7,6 +7,7 @@ import org.junit.Test;
 
 public class AddressTest {
 
+    //@@author 17navasaw
     @Test
     public void hasValidAddressFormat() {
         // invalid address formats

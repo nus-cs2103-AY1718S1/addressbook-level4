@@ -16,12 +16,12 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.Country;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.address.Address;
 import seedu.address.model.person.email.Email;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -178,7 +178,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Phone> getPhone() {
             return Optional.ofNullable(phone);
         }
-
+        //@@author icehawker
         public void setCountry(Country country) {
             this.country = country;
         }
@@ -187,6 +187,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(country);
         }
 
+        //@@author 17navasaw
         public void setEmails(Set<Email> emails) {
             this.emails = emails;
         }
@@ -195,6 +196,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(emails);
         }
 
+        //@@author
         public void setAddress(Address address) {
             this.address = address;
         }

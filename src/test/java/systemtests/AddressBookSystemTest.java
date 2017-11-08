@@ -125,6 +125,7 @@ public abstract class AddressBookSystemTest {
         assert getModel().getAddressBook().getPersonList().size() == getModel().getFilteredPersonList().size();
     }
 
+    //@@author jin-ting
     /**
      * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
      */
@@ -178,6 +179,7 @@ public abstract class AddressBookSystemTest {
         assertFalse(getPersonListPanel().isAnyCardSelected());
     }
 
+    //@@author 17navasaw
     /**
      * Asserts that the browser's url is changed to display the details of the person in the person list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
@@ -199,6 +201,7 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
 
+    //@@author
     /**
      * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
      *

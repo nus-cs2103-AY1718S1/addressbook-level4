@@ -16,6 +16,7 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<ReadOnlyPerson> getPersonList();
 
+    //@@author CT15
     /**
      * Returns an unmodifiable view of the schedules list.
      * This list will not contain any duplicate schedules.
@@ -28,4 +29,10 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<Tag> getTagList();
 
+    /**
+     * Returns an unmodifiable view of the list of schedules
+     * needing to be reminded. This list will not contain any
+     * duplicate schedules.
+     */
+    ObservableList<Schedule> getScheduleToRemindList();
 }

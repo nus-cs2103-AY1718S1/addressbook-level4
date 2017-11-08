@@ -63,6 +63,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         return new EditCommand(index, editPersonDescriptor);
     }
 
+    //@@author 17navasaw
     /**
      * Parses {@code Collection<String> emails} into a {@code Set<Email>} if {@code emails} is non-empty.
      * If {@code emails} contain only one element which is an empty string, it will be parsed into a
@@ -78,6 +79,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         return Optional.of(ParserUtil.parseEmails(emailSet));
     }
 
+    //@@author
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
      * If {@code tags} contain only one element which is an empty string, it will be parsed into a

@@ -24,6 +24,7 @@ public class DeleteCommandParserTest {
 
     private DeleteCommandParser parser = new DeleteCommandParser();
 
+    //@@author 17navasaw
     @Test
     public void parse_validArgs_returnsDeleteCommand() {
         ArrayList<Index> indices = new ArrayList<>();
@@ -33,6 +34,7 @@ public class DeleteCommandParserTest {
         assertParseSuccess(parser, "1 2", new DeleteCommand(indices));
     }
 
+    //@@author
     @Test
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));

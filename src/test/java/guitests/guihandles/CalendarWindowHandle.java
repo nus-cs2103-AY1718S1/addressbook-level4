@@ -5,7 +5,7 @@ import java.net.URL;
 import guitests.GuiRobot;
 import javafx.stage.Stage;
 
-
+//@@author jin-ting
 /**
  * A handle to the {@code HelpWindow} of the application.
  */
@@ -13,10 +13,11 @@ public class CalendarWindowHandle extends StageHandle {
 
     public static final String CALENDAR_WINDOW_TITLE = "Calendar";
 
+
     private static final String CALENDAR_WINDOW_BROWSER_ID = "#browser";
 
-    public CalendarWindowHandle(Stage helpWindowStage) {
-        super(helpWindowStage);
+    public CalendarWindowHandle(Stage stage) {
+        super(stage);
     }
 
     /**

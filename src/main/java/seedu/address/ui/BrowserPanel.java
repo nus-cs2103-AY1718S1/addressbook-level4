@@ -1,5 +1,9 @@
 package seedu.address.ui;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -14,8 +18,8 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowCalendarRequestEvent;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.address.Address;
 
 /**
  * The Browser Panel of the App.
@@ -40,6 +44,7 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author 17navasaw
     /**
      * Loads google maps web page locating person's address.
      */
@@ -54,6 +59,7 @@ public class BrowserPanel extends UiPart<Region> {
                 + GOOGLE_MAPS_URL_SUFFIX);
     }
 
+    //@@author
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
@@ -66,6 +72,14 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(defaultPage.toExternalForm());
     }
 
+    //@@author jin-ting
+    /**
+     * Opens the Calendar window in the browser panel.
+     */
+    public void loadCalendar() {
+        loadPage("https://www.timeanddate.com/calendar/");
+    }
+
     /**
      * Frees resources allocated to the browser.
      */
@@ -73,19 +87,14 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
+    //@@author
     @Subscribe
     private void handleSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }
 
-    /**
-     * Opens the Calendar window.
-     */
-    private void loadCalendar() {
-        loadPage("https://www.timeanddate.com/calendar/");
-    }
-
+    //@@author jin-ting
     @Subscribe
     private void handleCalendarRequestEvent(ShowCalendarRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

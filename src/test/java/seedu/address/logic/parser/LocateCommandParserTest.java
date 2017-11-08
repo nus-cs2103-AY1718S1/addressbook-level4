@@ -13,6 +13,7 @@ import seedu.address.logic.commands.LocateCommand;
  * Test scope: similar to {@code DeleteCommandParserTest}.
  * @see DeleteCommandParserTest
  */
+//@@author 17navasaw
 public class LocateCommandParserTest {
 
     private LocateCommandParser parser = new LocateCommandParser();
