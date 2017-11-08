@@ -13,8 +13,6 @@
 
 <VBox prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
-    <URL value="@../css/DarkTheme.css" />
-    <URL value="@../css/Extensions.css" />
   </stylesheets>
 
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
