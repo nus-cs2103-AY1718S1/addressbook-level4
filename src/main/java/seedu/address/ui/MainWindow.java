@@ -23,6 +23,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.JumpToTabRequestEvent;
+import seedu.address.commons.events.ui.ParcelPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowParcelListEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -35,7 +36,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/ark_icon.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -138,8 +139,8 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        parcelListPanel = new ParcelListPanel(logic.getUndeliveredParcelList(),
-                logic.getDeliveredParcelList());
+        parcelListPanel = new ParcelListPanel(logic.getUncompletedParcelList(),
+                logic.getCompletedParcelList());
         parcelListPanelPlaceholder.getChildren().add(parcelListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
@@ -152,6 +153,15 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
+
+    //@@author kennard123661
+    /**
+     * Initialize the {@link MainWindow#splitPanePlaceholder} to start in list mode.
+     */
+    public void initSplitPanePlaceholder() {
+        splitPanePlaceholder.setDividerPositions(0.0);
+    }
+    //@@author
 
     void hide() {
         primaryStage.hide();
@@ -229,12 +239,24 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         splitPanePlaceholder.setDividerPositions(0.6);
     }
+
+    @FXML @Subscribe
+    private void handleParcelPanelSelectionChangedEvent(ParcelPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        splitPanePlaceholder.setDividerPositions(0.6);
+    }
     //@@author
 
     //@@author kennard123661
+
+    /**
+     * Sets the active list of the model based on the current selected tab index in the Ui of Ark.
+     */
     @FXML @Subscribe
     private void handleTabEvent(JumpToTabRequestEvent event) {
         logic.setActiveList(event.targetIndex == INDEX_SECOND_TAB.getZeroBased());
+        logger.info("Active list now set to " + (event.targetIndex == INDEX_SECOND_TAB.getZeroBased()
+                ? "completed parcels list." : "uncompleted parcels list."));
     }
     //@@author
 

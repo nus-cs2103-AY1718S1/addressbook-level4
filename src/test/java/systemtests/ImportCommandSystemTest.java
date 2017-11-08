@@ -36,13 +36,13 @@ import seedu.address.testutil.ParcelBuilder;
 //@@author kennard123661
 public class ImportCommandSystemTest extends AddressBookSystemTest {
 
-    private static final String STORAGE_FILE = "testAddressBookForImportSystem.xml";
+    private static final String STORAGE_FILE = "testAddressBookForImportSystem";
 
     @Before
     public void start() throws Exception {
         // reset the storage file used in ImportCommandSystemTest
         AddressBook addressBook = new AddressBookBuilder().build();
-        new XmlAddressBookStorage("./data/import/" + STORAGE_FILE).saveAddressBook(addressBook);
+        new XmlAddressBookStorage("./data/import/" + STORAGE_FILE + ".xml").saveAddressBook(addressBook);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
          */
         AddressBook addressBook = new AddressBookBuilder().withParcel(AMY).withParcel(BOB).build();
         XmlAddressBookStorage storage = new XmlAddressBookStorage(
-                "./data/import/" + STORAGE_FILE);
+                "./data/import/" + STORAGE_FILE + ".xml");
         storage.saveAddressBook(addressBook);
 
         List<ReadOnlyParcel> parcelsAdded;
@@ -77,7 +77,7 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: add a duplicate parcel -> rejected */
         command = ImportCommand.COMMAND_WORD + " " + STORAGE_FILE;
-        assertCommandFailure(command, ImportCommand.MESSAGE_DUPLICATE_PARCELS);
+        assertCommandFailure(command, ImportCommand.MESSAGE_FAILURE_DUPLICATE_PARCELS);
 
         /* Case: import an addressbook xml file containing duplicate parcels except with different tags -> rejected */
         // AddressBook#addAllParcels(List<ReadOnlyParcel>)
@@ -85,7 +85,7 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
                 .withParcel(new ParcelBuilder(BOB).withTags(Tag.FRAGILE.toString()).build()).build();
         storage.saveAddressBook(addressBook);
         command = ImportCommand.COMMAND_WORD + " " + STORAGE_FILE;
-        assertCommandFailure(command, ImportCommand.MESSAGE_DUPLICATE_PARCELS);
+        assertCommandFailure(command, ImportCommand.MESSAGE_FAILURE_DUPLICATE_PARCELS);
 
         /* Case: imports parcels with all fields same as other parcels in the address book except name -> imported */
         addressBook = new AddressBookBuilder().withParcel(new ParcelBuilder(AMY).withName("Kyle").build())
@@ -164,12 +164,12 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: missing file -> rejected */
-        command = "import " + "missing.xml";
+        command = "import " + "missing";
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 ImportCommand.MESSAGE_USAGE) + "\nMore Info: " + MESSAGE_FILE_NOT_FOUND);
 
         /* Case: invalid xml file -> rejected */
-        command = "import " + "testNotXmlFormatAddressBook.xml";
+        command = "import " + "testNotXmlFormatAddressBook";
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 ImportCommand.MESSAGE_USAGE) + "\nMore Info: " + String.format(MESSAGE_INVALID_DATA,
                 "./data/import/testNotXmlFormatAddressBook.xml"));
@@ -180,7 +180,7 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
     public void clear() throws Exception {
         // reset the storage file used in ImportCommandSystemTest
         AddressBook addressBook = new AddressBookBuilder().build();
-        new XmlAddressBookStorage("./data/import/" + STORAGE_FILE).saveAddressBook(addressBook);
+        new XmlAddressBookStorage("./data/import/" + STORAGE_FILE + ".xml").saveAddressBook(addressBook);
     }
 
     /**

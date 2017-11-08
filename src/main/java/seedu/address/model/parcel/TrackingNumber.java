@@ -7,11 +7,12 @@ import seedu.address.commons.exceptions.IllegalValueException;
 //@@author kennard123661
 /**
  * Represents the tracking number of a parcel.
+ * Presently compatible with only SingPost tracking numbers.
  */
 public class TrackingNumber {
 
     public static final String MESSAGE_TRACKING_NUMBER_CONSTRAINTS =
-            "Parcel tracking number should start with 'RR', followed by 9 digits, and ends with 'SG'";
+            "Parcel tracking number should start with 'RR', followed by 9 digits, and end with 'SG'";
     public static final String TRACKING_NUMBER_VALIDATION_REGEX = "^[R]{2}[0-9]{9}[S][G]$";
 
     public final String value;

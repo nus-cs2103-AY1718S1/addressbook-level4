@@ -162,8 +162,8 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
         assertListMatching(getParcelListPanel(), expectedModel.getActiveList());
-        assertListMatching(getDeliveredParcelListPanel(), expectedModel.getFilteredDeliveredParcelList());
-        assertListMatching(getUndeliveredParcelListPanel(), expectedModel.getFilteredUndeliveredParcelList());
+        assertListMatching(getDeliveredParcelListPanel(), expectedModel.getCompletedParcelList());
+        assertListMatching(getUndeliveredParcelListPanel(), expectedModel.getUncompletedParcelList());
     }
 
     /**
