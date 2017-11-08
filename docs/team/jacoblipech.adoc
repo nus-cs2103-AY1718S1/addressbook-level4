@@ -1,0 +1,85 @@
+= Jacob Li PengCheng - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project:  UniCity
+UniCity is a desktop address book application used to help university students manage their ever-growing network.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 16 kLoC (16 000 Lines of Code).
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B1/main/blob/master/collated/main/jacoblipech.md [Functional code]]
+ [https://github.com/CS2103AUG2017-W13-B1/main/blob/master/collated/test/jacoblipech.md [Test code]]
+
+=== Enhancement Added: `sort` command
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The purpose of sorting the contacts is so that users could view their contacts in alphabetical order.
+This allows the user to find the necessary contact easier by simply glancing through UniCity in order. +
+Given a large number of contacts by university students, the user can always view their contacts in sorted order to scroll through their contacts list,
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: `birthday` command
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=birthday]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The purpose of implementing birthday was so that users can record down their friends' birthday details so that they can celebrate other friend's birthday. +
+In university, birthday celebration has always been an occasion for everyone to meet up and wish the well being of the person.
+Hence you would not want to miss out any of these days. This birthday command allows you to keep track of birthdays of your close friends.
+
+==== Implementation
+
+---
+
+It has strict implementation of the date being entered. It ensures that the date entered by the user is valid. +
+On top of that, birthday assigns each contact the date entered or a default "No Birthday Added" will be shown.
+A contact's birthday can be added using the add or birthday command. Eventually, you can simply change someone's birthday using the edit command.
+
+---
+
+=== Other contributions
+
+* Made tags in UniCity to show different colors. (Pull requests https://github.com/CS2103AUG2017-W13-B1/main/pull/59 [#59])
+* Made error message to show a different color in UniCity. (Pull requests https://github.com/CS2103AUG2017-W13-B1/main/pull/60 [#60])
+* Made address, email and birthday optional fields in UniCity. (Pull requests https://github.com/CS2103AUG2017-W13-B1/main/pull/77 [#77])
+* Enhanced UI in UniCity by adding another panel to show more information about a contact. (Pull requests https://github.com/CS2103AUG2017-W13-B1/main/pull/100 [#100])
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}
