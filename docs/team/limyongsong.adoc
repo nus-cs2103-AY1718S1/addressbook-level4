@@ -3,19 +3,23 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: The Classroom
+The Classroom is a desktop application that helps users manage their contacts and keep track of tasks or remarks that pertain to specific contacts.
+It is especially helpful in helping students manage and increase the efficiency of their group work. +
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 8 kLoC. +
+The Classroom is built up from the [https://github.com/se-edu/addressbook-level4[AddressBook - Level 4]] (an address book application used for teaching Software Engineering principles)
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/main/limyongsong.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/test/limyongsong.md[Test code]]
 
-=== Enhancement Added:
+=== Enhancement Added: Remark CheckList
+Allow user to add and remove specific remarks pertaining to any persons in the contact
 
-==== External behavior
+==== External behaviour
 
 ---
 #Start of Extract [from: User Guide]#
 
-//include::../UserGuide.adoc[tag=undoredo]
+include::..\UserGuide.adoc[tag=remarkchecklist]
 
 #End of Extract#
 
@@ -23,28 +27,63 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Since our target users are students that do a lot of group work (or people that work with different people frequently),
+we wanted to include a function that allows the user to save remarks on task that want to do with other people, or
+things they want to make sure other people do. +
+So having a remark checklist helps the user keep track of things they need to do
+with different people.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-//include::../DeveloperGuide.adoc[tag=undoredo]
+include::..\DeveloperGuide.adoc[tag=remarkchecklist]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed:
+=== Enhancement Added: Link Command
+Allow user to add a twitter link to a person in the contact that loads when target person is selected
 
-//{Explain similar to the Undo/Redo feature above.}
+==== External behaviour
+
+---
+#Start of Extract [from: User Guide]#
+
+include::..\UserGuide.adoc[tag=link]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+With a twitter page linked to a person in the contact, the user will be able to determine exactly who is in his contact,
+even if he/she have multiple contact of the same name. +
+On top of this, they would be able to take advantage of the twitter
+messaging feature to handle discussions without leaving the application.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::..\DeveloperGuide.adoc[tag=link]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Private/ public accounts
+Allow user to have a private contact list that is protected by login username and password. +
+Having an account would allow us to save any application information to be used on other computers or platforms if required.
 
 === Other contributions
 
-//* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-//* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+Updated the GUI color scheme (Pull requests https://github.com/CS2103AUG2017-T09-B4/main/pull/104[#104]) +
+Add colours to tags (https://github.com/CS2103AUG2017-T09-B4/main/pull/6[#6]) +
+Added continuous integration tools using Appveyor, Travis CI.
 
-== Project:
 
-{Optionally (not graded), you may include other projects in your portfolio.}
