@@ -690,13 +690,12 @@ public static Optional<Name> parseName(Optional<String> name, String command) th
         }
     }
 ----
-// end::tag[]
 
 ==== Design Considerations
 
 **Aspect**: Implementing an option to accept and create the empty fields +
 ** Alternative 1 (current choice):** By using a command parameter in the ParserUtil class +
-**Pros:** This will allow felxibility in implementing, or calling the necessary constructors in the respective person
+**Pros:** This will allow flexibility in implementing, or calling the necessary constructors in the respective person
   field classes +
 **Cons:** There will be a need for overloading of constructors in the classes for the person fields +
 **Alternative 2**: By having a new class to initialise empty fields for person added, similar to the EditPersonDescriptor
@@ -704,7 +703,9 @@ public static Optional<Name> parseName(Optional<String> name, String command) th
 **Pros:** This is the most comprehensive way to initialise fields without the need of new constructors in the classes for
  the respective fields +
 **Cons:** The code will be unnecessarily lengthy and may cause features to break +
+// end::add[]
 
+// tag::documentation[]
 == Documentation
 
 We use asciidoc for writing documentation.
