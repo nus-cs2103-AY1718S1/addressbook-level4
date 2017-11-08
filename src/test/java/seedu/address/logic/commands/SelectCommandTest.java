@@ -81,6 +81,12 @@ public class SelectCommandTest {
     }
 
     @Test
+    public void execute_emptyList_failure() {
+        model = new ModelManager();
+        assertExecutionFailure(null, SelectCommand.MESSAGE_EMPTY_LIST_SELECTION_FAILURE);
+    }
+
+    @Test
     public void equals() {
         SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_PERSON);
         SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_PERSON);

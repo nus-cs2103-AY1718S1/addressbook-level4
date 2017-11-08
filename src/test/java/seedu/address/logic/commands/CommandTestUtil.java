@@ -13,6 +13,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OFFICE_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSTAL_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TOTAL_DEBT;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,6 +71,8 @@ public class CommandTestUtil {
     public static final String POSTAL_CODE_DESC_BOB = " " + PREFIX_POSTAL_CODE + VALID_POSTAL_CODE_BOB;
     public static final String DEBT_DESC_AMY = " " + PREFIX_DEBT + VALID_DEBT_AMY;
     public static final String DEBT_DESC_BOB = " " + PREFIX_DEBT + VALID_DEBT_BOB;
+    public static final String TOTAL_DEBT_DESC_AMY = " " + PREFIX_TOTAL_DEBT + VALID_DEBT_AMY;
+    public static final String TOTAL_DEBT_DESC_BOB = " " + PREFIX_TOTAL_DEBT + VALID_DEBT_BOB;
     public static final String INTEREST_DESC_AMY = " " + PREFIX_INTEREST + VALID_INTEREST_AMY;
     public static final String INTEREST_DESC_BOB = " " + PREFIX_INTEREST + VALID_INTEREST_BOB;
     public static final String DEADLINE_DESC_AMY = " " + PREFIX_DEADLINE + VALID_DEADLINE_AMY;
@@ -85,6 +88,7 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_POSTAL_CODE_DESC = " " + PREFIX_POSTAL_CODE + "12345"; // not 6 digits
     public static final String INVALID_DEBT_DESC = " " + PREFIX_DEBT + "onehundred"; // String not allowed in debt
+    public static final String INVALID_TOTAL_DEBT_DESC = " " + PREFIX_TOTAL_DEBT + "0"; // String not allowed in debt
     public static final String INVALID_INTEREST_DESC = " " + PREFIX_INTEREST + "two"; // String not allowed in interest
     public static final String INVALID_DEADLINE_DESC = " " + PREFIX_DEADLINE + "0-0-2017"; //Only accepts range
     // of [1-12]
