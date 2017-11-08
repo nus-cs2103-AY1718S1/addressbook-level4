@@ -923,7 +923,7 @@ _Figure 3.5.1 : Sequence Diagram of `FindTags` Operation_
 The `Statistics Panel` is implemented using the `Statistics` class.
 It supports the calculating of statistics for the current list of students in the `PersonListPanel`.
 
-When the user enters any `Command` that modifies the Addressbook,
+When the user enters any `Command` that modifies the Addressbook data,
 a `FilteredPersonListChangedEvent` containing the current `filteredPersonsList` from the `model` is created and posted to the `EventsCenter`.
 
 The `FilteredPersonListChangedEvent` is implemented this way:
@@ -985,12 +985,23 @@ The `loadListStatistics()` is implemented this way:
     }
 ```
 
-The Labels in the User Interface are set to their corresponding values calculated from the `Statistics` instance's getter methods.
+The `Labels` (texts) in the User Interface are set to their corresponding values calculated from the `Statistics` instance's getter methods.
 
-
+//The following sequence diagram shows how the StatisticsPanel mechanism works:
 
 
 ==== Design Considerations
+**Aspect:** Create a new `FilteredPersonListChangedEvent` event to handle the change in persons' data in the `filteredPersonList` +
+**Alternative 1 (current choice):** Have a `TagsContainsKeywordsPredicate` to facilitate search. +
+**Pros:** This adheres to the Single Responsibility Principle (SRP), making the class more robust +
+**Cons:** Makes the application more complex to understand according to the More Is More Complex (MIMC) principle. +
+**Alternative 2:** Build on the existing `AddressBookChangedEvent` event to handle the change +
+**Pros:** It is easier to implement as the `AddressBookChangedEvent` class already exists. +
+          It makes the codebase less complex as there are less classes. +
+          There  is less duplication of code with similar functions. +
+**Cons:** The data in the `AddressBookChangedEvent` is a `ReadOnlyAddressBook` and the `ReadOnlyAddressBook` interface does not have a `getFilteredPersonsList` method.
+Hence it is difficult to separate the data of persons in the `filteredPersonList` and those not in the `filteredPersonList` for processing +
+
 
 // end::statisticspanel[]
 
