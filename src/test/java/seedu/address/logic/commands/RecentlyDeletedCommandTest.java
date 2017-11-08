@@ -44,8 +44,8 @@ public class RecentlyDeletedCommandTest {
 
         deleteCommandOne.execute();
         deleteCommandTwo.execute();
-        recentlyDeletedCommand.setData(model, EMPTY_COMMAND_HISTORY,
-                EMPTY_STACK, queue, DEFAULT_THEME);
+        //recentlyDeletedCommand.setData(model, EMPTY_COMMAND_HISTORY,
+                //EMPTY_STACK, queue, DEFAULT_THEME);
 
         // multiple persons in RecentlyDeleted Queue
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
