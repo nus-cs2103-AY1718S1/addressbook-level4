@@ -161,7 +161,7 @@ public class Autocompleter {
             }
 
             if (lastTwoCharactersArePrefix(commandBoxText)) {
-                resetIndexIfNeeded();
+                setIndexToOneIfNeeded();
                 state = AutocompleteState.COMMAND_CYCLE_PREFIX;
                 return;
             }
@@ -181,9 +181,14 @@ public class Autocompleter {
      * in it's previous state
      */
     private void resetIndexIfNeeded() {
-        if (!state.equals(AutocompleteState.MULTIPLE_COMMAND)
-                && !state.equals(AutocompleteState.COMMAND_CYCLE_PREFIX)) {
+        if (!state.equals(AutocompleteState.MULTIPLE_COMMAND)) {
             resultIndex = 0;
+        }
+    }
+
+    private void setIndexToOneIfNeeded() {
+        if (!state.equals(AutocompleteState.COMMAND_CYCLE_PREFIX)) {
+            resultIndex = 1;
         }
     }
 

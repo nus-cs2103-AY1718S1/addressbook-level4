@@ -71,6 +71,7 @@ public class CommandBoxParser {
     }
 
     private boolean isMissing(Prefix prefix, String argument) {
+        System.out.println(prefix.toString());
         return !argument.contains(SPACE + prefix.toString());
     }
 
