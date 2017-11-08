@@ -434,7 +434,8 @@ The `getSearchText` method inside the `ReadOnlyPerson` class will convert all th
 
 <<<
 
-=== Sort
+// tag::sort[]
+=== Sort mechanism
 
 The `sort` command now allows for the list of contacts to be sorted via phone number, name, or email in lexicographic order.
 It uses the `sorted()` method included in `ObservableList.java`, with comparators defined by the developer.
@@ -500,9 +501,10 @@ and creating a new comparator in link:{repoURL}/src/main/java/seedu/address/mode
 *Pros:* Easy to implement, relatively modular +
 *Cons:* Dependant on Java API, future changes to the method could affect the implementation
 
-*Alternative 2:* Override methods with own implementations +
+*Alternative 2:* Override methods with own implementations; code sorting functionality directly into UniquePersonList +
 *Pros:* Less dependant on provided resources, more flexible with product's requirements +
-*Cons:* Resource-intensive
+*Cons:* Resource-intensive; increases coupling between Logic and Model
+// end::sort[]
 
 <<<
 
@@ -641,6 +643,7 @@ public static boolean isValidAddress(String test) {
 
 <<<
 
+// tag::listtag[]
 === Listing by tags
 The List command was expanded to accommodate listing contacts with specific tags.
 This was done through the creation of predicates based on the argument passed in when the List command is called.
@@ -683,6 +686,40 @@ The initial command, “list”, which merely displayed all the persons in the l
 *Alternative 2:* creating HashMaps for each tag to each person in the contact list +
 *Pros:* O(1) implementation for filtering +
 *Cons:* Extremely space-inefficient +
+// end::listtag[]
+
+<<<
+
+// tag::expimp[]
+=== Export/Import
+The Export and Import commands were added to make users' data more portable and easier to back-up and restore.
+This was done by redirecting the Storage component's `saveAddressBook()` and `readAddressBook()` methods to user-defined file paths.
+The user input for destination file path (export) and origin file path (import) is parsed as a String through `ExportCommandParser` and `ImportCommandParser`.
+
+[source, java]
+----
+public abstract class Command {
+    protected Model model;
+    protected CommandHistory history;
+    protected UndoRedoStack undoRedoStack;
+    protected Storage storage;
+----
+
+The Command abstract class was expanded on to allow access to Storage Components through StorageManager. This is what allows the
+Export and Import Commands to access `storage.saveAddressBook()` and `storage.readAddressBook()`.
+The code snippet shown above can also be found in link:{repoURL}/src/main/java/seedu/address/logic/commands/Command.java[`Command.java`]
+
+==== Design Considerations
+*Aspect:* Mechanism for writing to file +
+*Alternative 1 (Current Choice):* Expanding Command abstract class to allow Commands to have access to StorageManager methods. +
+*Pros:* the addition of Storage access to Command is very unlikely to affect the implementation of other features, and makes efficient use of `StorageManager.java`. +
+*Cons:* Insisting on precise directory location is rather unintuitive for most users, implementations where Windows explorer (or Finder for Mac) is called to show where to save the file would be better,
+unfortunately the constraints of the module forbid us from doing so.
+
+*Alternative 2:* Calling explorer or finder to select the directory location +
+*Pros:* Intuitive method to selecting file destinations +
+*Cons:* Implementation is slightly more complex, command would now be executed in 2 or more steps, which is against the project's allowance.
+// end::expimp[]
 
 <<<
 

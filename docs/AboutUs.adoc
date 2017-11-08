@@ -16,7 +16,7 @@ image::eldonng.png[width="150", align="left"]
 {empty}[https://github.com/eldonng[github]] [<<johndoe#, portfolio>>]
 
 Role: Team Member +
-Responsibilities:
+Responsibilities: UI
 
 '''
 

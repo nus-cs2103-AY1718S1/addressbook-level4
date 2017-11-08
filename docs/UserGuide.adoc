@@ -107,9 +107,12 @@ The tag parameter (t/TAG) can be left empty if there are no tags for the person 
 The fields  `PHONE`, `EMAIL`, `ADDRESS` and `BIRTHDAY` are optional fields. +
 You cannot add the exact same person into the Circles.
 
+// tag::listtag[]
 === Listing all persons : `list`
 To get a clear view of all the contacts available in your address book, you can simply use the List Command as shown in
 Fig 4 below: +
+
+==== Use case 1
 Format: `list all` +
 
 1. Enter `list all` +
@@ -118,6 +121,13 @@ _E.g: Listed all persons_
 
 image::Figure4.png[width="790"]
 _Figure 4: List of Contacts_
+
+==== Use case 2
+Format: `list [tag]` +
+
+1. Enter `list` followed by the tag you wish to display +
+2. All contacts with the corresponding [tag] will be displayed
+// end::listtag[]
 
 === Editing a person : `edit`
 
@@ -331,6 +341,7 @@ The colour that you entered here must be one of the colours in our library. +
 The suitable colours to be changed are `blue, red, brown, green, black, purple, indigo, grey, chocolate, orange,
 aquamarine`.
 
+// tag::sort[]
 === Sorting your contacts : `sort`
 The first step to organizing your address book to make it search-friendly is to have your contacts sorted alphabetically.
 Circles can do the job for you as well! +
@@ -343,9 +354,11 @@ image::Figure18.PNG[width="790"]
 _Figure 18: Sorting address book by name_ +
 
 [TIP]
-You can sort the address book by phone and email too! Just enter `sort phone` or
-`sort email` to sort address book by phone and email respectively
+You can sort the address book by phone number or email address too! Just enter `sort phone` or
+`sort email` to sort address book by phone number and email respectively
+// end::sort[]
 
+// tag::expimp[]
 === Exporting the contacts list : `export`
 Format: `export [directory]\[filename].xml` +
 
@@ -367,6 +380,7 @@ If the exact directory is not provided, Circles will not be able to locate your 
 and will not be able to import your contacts.
 To find the exact directory location of your file, right-click the file and select Properties (or Get Info on Mac); +
 and find the "Location" section. The file in question *MUST BE IN .XML FORMAT*.
+// end::expimp[]
 
 === Clearing all entries : `clear`
 When changing device used for Circles or to start a new address book, you might want to delete all contacts due to
