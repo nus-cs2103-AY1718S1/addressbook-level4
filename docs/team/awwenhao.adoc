@@ -64,7 +64,7 @@ include::../DeveloperGuide.adoc[tag=agenda]
 
 ---
 
-=== Enhancement Added: Pop-up window reminding user of scheduled activites which are coming soon
+=== Enhancement Added: Pop-up reminder window
 
 ==== External behavior
 
@@ -92,7 +92,7 @@ include::../DeveloperGuide.adoc[tag=reminder]
 
 ---
 
-=== Enhancement of existing feature: Adding a person
+=== Enhancement of existing feature: Adding a person with multiple emails
 
 ==== External behavior (enhancement added in v1.3 update)
 
@@ -133,6 +133,7 @@ include::../DeveloperGuide.adoc[tag=addaddressrestriction]
 
 === Other contributions
 
-* Set and created the stylesheet for the user agenda panel
+* Set up TravisCI and Coveralls for the team repo
+* Set and created the stylesheet for the user agenda and reminder window.
 * Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
