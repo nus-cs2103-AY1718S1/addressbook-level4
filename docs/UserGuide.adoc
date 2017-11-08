@@ -399,6 +399,22 @@ Examples:
 `email 2` +
 Emails the 2nd person in the address book.
 
+=== Switching themes : `(t)theme`
+
+Switches theme between dark and bright theme. +
+Format: `(t)theme`
+
+Examples:
+
+* `theme`
+
+[NOTE]
+====
+Theme will be saved upon exit.
+When **boNUS** is opened again, theme will be initialized to the theme that was saved previously.
+====
+
+
 === Listing entered commands : `(his)history`
 
 Lists all the commands that you have entered in reverse chronological order. +
