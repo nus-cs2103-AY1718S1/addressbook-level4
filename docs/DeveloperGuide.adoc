@@ -906,6 +906,9 @@ The following sequence diagram shows how the FindTags operation works:
 image::FindTagsSequenceDiagramForLogic.png[width="800"]
 _Figure 3.5.1 : Sequence Diagram of `FindTags` Operation_
 
+After the addressBook's `filteredPersonsList` has been updated, the `Model` Component posts an `AddressBookChangedEvent`
+to indicate the model has changed and a `FilteredPersonListChangedEvent` to update the `StatisticsPanel` of the UI to reflect the new Statistical values.
+
 ==== Design Considerations
 
 **Aspect:** Have a separate predicate class to support `findtags` +
