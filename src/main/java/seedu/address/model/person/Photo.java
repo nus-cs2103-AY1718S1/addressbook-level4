@@ -20,7 +20,6 @@ public class Photo {
         requireNonNull(filepath);
         if (filepath.equals(DEFAULT_FILEPATH)) {
             this.filepath = DEFAULT_PHOTOURL;
-            this.url = DEFAULT_FILEPATH;
         } else {
             File file = new File(filepath);
             if (isValidFilePath(file)) {
@@ -37,10 +36,6 @@ public class Photo {
     //the filepath of the image
     public String getFilePath() {
         return filepath;
-    }
-    //url of the image that is parsed into Image class
-    public String getUrl() {
-        return this.url;
     }
     /** It is guaranteed that the new filepath exists inside the resources folder */
     public void resetFilePath(String filepath) {

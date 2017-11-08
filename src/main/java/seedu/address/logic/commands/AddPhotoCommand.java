@@ -53,7 +53,7 @@ public class AddPhotoCommand extends UndoableCommand {
         } else if (!photo.getFilePath().equals("")) {
             try {
                 //produces a new filepath and rewrites the new filepath to the photo object held by the contact
-                PhotoStorage rewrite = new PhotoStorage(photo.getFilePath(), personToEdit.getPhoto().hashCode());
+                PhotoStorage rewrite = new PhotoStorage(photo.getFilePath(), personToEdit.getName().hashCode());
                 photo.resetFilePath(rewrite.setNewFilePath());
             } catch (IOException e) {
                 throw new CommandException(e.getMessage());
