@@ -1,203 +1,178 @@
 # vivekscl
-###### \java\seedu\address\logic\commands\AddCommandTest.java
+###### /java/seedu/address/model/ModelManagerTest.java
 ``` java
-        @Override
-        public void removeTag(ArrayList<Index> targetIndexes, Tag toRemove)  {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void addTag(ArrayList<Index> targetIndexes, Tag toAdd)  {
-            fail("This method should not be called.");
-        }
-
-```
-###### \java\seedu\address\logic\commands\AddCommandTest.java
-``` java
-        @Override
-        public String getClosestMatchingName(NameContainsKeywordsPredicate predicate) {
-            fail("This method should not be called.");
-            return null;
-        }
-
-```
-###### \java\seedu\address\logic\commands\AddTagCommandTest.java
-``` java
-/**
- * Contains integration tests (interaction with the Model) and unit tests for {@code AddTagCommand}.
- */
-public class AddTagCommandTest {
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    /**
-     * Tests success of an unfiltered persons list with valid input indexes and tag
+    /*
+     * Tests if the actual output of removeTag is equals to the expected
+     * output when given valid target indexes and a valid tag to remove.
      */
     @Test
-    public void execute_validIndexAndTagUnfilteredList_success() throws Exception {
+    public void removeTag_validIndexesAndTag_success() throws Exception {
+        Person oldPerson1 = new PersonBuilder().withName("BOB").withTags("owesMoney", "friends").build();
+        Person oldPerson2 = new PersonBuilder().withTags("classmate").build();
+        List<ReadOnlyPerson> oldPersonList = new ArrayList<ReadOnlyPerson>();
+        oldPersonList.add(oldPerson1);
+        oldPersonList.add(oldPerson2);
+        AddressBook oldAddressBook = new AddressBook();
+        oldAddressBook.setPersons(oldPersonList);
+
         ArrayList<Index> indexes = new ArrayList<Index>();
         indexes.add(INDEX_FIRST_PERSON);
         indexes.add(INDEX_SECOND_PERSON);
-        Tag toAdd = new Tag("owesMoney");
-        AddTagCommand addTagCommand = prepareCommand(indexes, toAdd);
+        Tag toRemove = new Tag("owesMoney");
 
-        String expectedMessage = String.format(AddTagCommand.MESSAGE_ADD_TAG_SUCCESS, toAdd);
+        ModelManager expectedModel = new ModelManager(oldAddressBook, new UserPrefs());
+        expectedModel.removeTag(indexes, toRemove);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addTag(indexes, toAdd);
+        Person newPerson1 = new PersonBuilder().withName("BOB").withTags("friends").build();
+        Person newPerson2 = new PersonBuilder().withTags("classmate").build();
+        List<ReadOnlyPerson> newPersonList = new ArrayList<ReadOnlyPerson>();
+        newPersonList.add(newPerson1);
+        newPersonList.add(newPerson2);
+        AddressBook newAddressBook = new AddressBook();
+        newAddressBook.setPersons(newPersonList);
+        ModelManager actualModel = new ModelManager(newAddressBook, new UserPrefs());
 
-        assertCommandSuccess(addTagCommand, model, expectedMessage, expectedModel);
+        assertEquals(expectedModel.getAddressBook().getPersonList().toString(),
+                actualModel.getAddressBook().getPersonList().toString());
     }
 
-    /**
-     * Tests success of a filtered persons list with valid input indexes and tag
+    /*
+     * Tests if the actual output of addTag is equals to the expected
+     * output when given valid target indexes and a valid tag to add.
      */
     @Test
-    public void execute_validIndexAndTagFilteredList_success() throws Exception {
-        showFirstPersonOnly(model);
-        ArrayList<Index> indexes = new ArrayList<Index>();
-        indexes.add(INDEX_FIRST_PERSON);
-        Tag toAdd = new Tag("classmate");
-        AddTagCommand addTagCommand = prepareCommand(indexes, toAdd);
+    public void addTag_validIndexesAndTag_success() throws Exception {
+        Person oldPerson1 = new PersonBuilder().withName("BOB").withTags("owesMoney", "friends").build();
+        Person oldPerson2 = new PersonBuilder().withTags("classmate").build();
+        List<ReadOnlyPerson> oldPersonList = new ArrayList<ReadOnlyPerson>();
+        oldPersonList.add(oldPerson1);
+        oldPersonList.add(oldPerson2);
+        AddressBook oldAddressBook = new AddressBook();
+        oldAddressBook.setPersons(oldPersonList);
 
-        String expectedMessage = String.format(AddTagCommand.MESSAGE_ADD_TAG_SUCCESS, toAdd);
-
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        showFirstPersonOnly(expectedModel);
-        expectedModel.addTag(indexes, toAdd);
-
-        assertCommandSuccess(addTagCommand, model, expectedMessage, expectedModel);
-    }
-
-    /**
-     * Tests failure of an unfiltered persons list with invalid input indexes but a valid tag
-     */
-    @Test
-    public void execute_invalidIndexUnfilteredList_failure() throws Exception {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        ArrayList<Index> indexes = new ArrayList<Index>();
-        indexes.add(outOfBoundIndex);
-        Tag toAdd = new Tag("friends");
-        AddTagCommand addTagCommand = prepareCommand(indexes, toAdd);
-
-        assertCommandFailure(addTagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-
-    }
-
-    /**
-     * Tests failure of a filtered persons list with invalid input indexes but a valid tag
-     */
-    @Test
-    public void execute_invalidIndexFilteredList_failure() throws Exception {
-        showFirstPersonOnly(model);
-        ArrayList<Index> indexes = new ArrayList<Index>();
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        indexes.add(outOfBoundIndex);
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
-
-        Tag toAdd = new Tag("friends");
-        AddTagCommand addTagCommand = prepareCommand(indexes, toAdd);
-
-        assertCommandFailure(addTagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    /**
-     * Tests failure of an unfiltered persons list with valid input indexes but a tag that exists in every person
-     */
-    @Test
-    public void execute_invalidTagUnfilteredList_failure() throws Exception {
         ArrayList<Index> indexes = new ArrayList<Index>();
         indexes.add(INDEX_FIRST_PERSON);
         indexes.add(INDEX_SECOND_PERSON);
-        Tag toAdd = new Tag("friends");
-        AddTagCommand addTagCommand = prepareCommand(indexes, toAdd);
+        Tag toAdd = new Tag("rich");
 
-        assertCommandFailure(addTagCommand, model, AddTagCommand.MESSAGE_DUPLICATE_TAG);
+        ModelManager expectedModel = new ModelManager(oldAddressBook, new UserPrefs());
+        expectedModel.addTag(indexes, toAdd);
+
+        Person newPerson1 = new PersonBuilder().withName("BOB").withTags("owesMoney", "friends", "rich").build();
+        Person newPerson2 = new PersonBuilder().withTags("classmate", "rich").build();
+        List<ReadOnlyPerson> newPersonList = new ArrayList<ReadOnlyPerson>();
+        newPersonList.add(newPerson1);
+        newPersonList.add(newPerson2);
+        AddressBook newAddressBook = new AddressBook();
+        newAddressBook.setPersons(newPersonList);
+        ModelManager actualModel = new ModelManager(newAddressBook, new UserPrefs());
+
+        assertEquals(expectedModel.getAddressBook().getPersonList().toString(),
+                actualModel.getAddressBook().getPersonList().toString());
     }
 
-    /**
-     * Tests failure of a filtered persons list with valid input indexes but a tag that exists in every person
-     */
-    @Test
-    public void execute_invalidTagFilteredList_failure() throws Exception {
-        showFirstPersonOnly(model);
-        ArrayList<Index> indexes = new ArrayList<Index>();
-        indexes.add(INDEX_FIRST_PERSON);
-        Tag toAdd = new Tag("friends");
-        AddTagCommand addTagCommand = prepareCommand(indexes, toAdd);
-
-        assertCommandFailure(addTagCommand, model, AddTagCommand.MESSAGE_DUPLICATE_TAG);
-    }
-
-    @Test
-    public void equals() throws Exception {
-        ArrayList<Index> indexes1 = new ArrayList<Index>();
-        ArrayList<Index> indexes2 = new ArrayList<Index>();
-        indexes1.add(INDEX_FIRST_PERSON);
-        indexes1.add(INDEX_SECOND_PERSON);
-        indexes2.add(INDEX_SECOND_PERSON);
-        Tag firstTag = new Tag("friends");
-        Tag secondTag = new Tag("lecturer");
-        final AddTagCommand standardCommand = new AddTagCommand(indexes1, firstTag);
-
-        // same values -> returns true
-        AddTagCommand commandWithSameValues = new AddTagCommand(indexes1, firstTag);
-        assertTrue(standardCommand.equals(commandWithSameValues));
-
-        // same object -> returns true
-        assertTrue(standardCommand.equals(standardCommand));
-
-        // null -> returns false
-        assertFalse(standardCommand.equals(null));
-
-        // different types -> returns false
-        assertFalse(standardCommand.equals(new ClearCommand()));
-
-        // different target indexes -> returns false
-        assertFalse(standardCommand.equals(new AddTagCommand(indexes2, firstTag)));
-
-        // different target tag -> returns false
-        assertFalse(standardCommand.equals(new AddTagCommand(indexes1, secondTag)));
-    }
-
-    /**
-     * Returns an {@code AddTagCommand} with parameters {@code targetIndexes} and {@code toAdd}
-     */
-    private AddTagCommand prepareCommand(ArrayList<Index> targetIndexes, Tag toAdd) {
-        AddTagCommand addTagCommand = new AddTagCommand(targetIndexes, toAdd);
-        addTagCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return addTagCommand;
-    }
-}
 ```
-###### \java\seedu\address\logic\commands\FindCommandTest.java
+###### /java/seedu/address/logic/commands/FindCommandTest.java
 ``` java
     @Test
     public void execute_oneKeyword_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         FindCommand command = prepareCommand("car");
         ArrayList<String> keywordList = new ArrayList<String>();
         keywordList.add("car");
         NameContainsKeywordsPredicate keyword = new NameContainsKeywordsPredicate(keywordList);
-        expectedMessage += String.format(MESSAGE_NO_PERSON_FOUND,
+        String expectedMessage = String.format(MESSAGE_NO_PERSON_FOUND, "car",
                 model.getClosestMatchingName(keyword));
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL));
     }
 
     @Test
     public void execute_multipleKeywords_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        String keywordsAsString = "car ell kun";
+        String keywordsAsString = "kun ell car";
         FindCommand command = prepareCommand(keywordsAsString);
-        expectedMessage += String.format(MESSAGE_NO_PERSON_FOUND,
-                model.getClosestMatchingName(new NameContainsKeywordsPredicate(
-                        Arrays.asList(keywordsAsString.split("\\s+")))));
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+        String targets = model.getClosestMatchingName(
+                new NameContainsKeywordsPredicate(Arrays.asList(keywordsAsString.split("\\s+"))));
+        List<String> targetsAsList = Arrays.asList(targets.split("\\s+"));
+        String expectedMessage = String.format(MESSAGE_NO_PERSON_FOUND, keywordsAsString,
+                String.join(", ", targetsAsList));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, FIONA));
     }
 
 ```
-###### \java\seedu\address\logic\commands\RemoveTagCommandTest.java
+###### /java/seedu/address/logic/commands/ChangeWindowSizeCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code ChangeWindowSizeCommand}.
+ */
+public class ChangeWindowSizeCommandTest {
+
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void executeChangeWindowSizeSuccess() throws Exception {
+        ChangeWindowSizeCommand changeWindowSizeCommand =
+                prepareCommand(ChangeWindowSizeCommand.SMALL_WINDOW_SIZE_PARAM);
+        CommandResult commandResult = changeWindowSizeCommand.execute();
+
+        String expectedMessage = ChangeWindowSizeCommand.MESSAGE_SUCCESS + ChangeWindowSizeCommand.SMALL_WIDTH
+                + " x " + ChangeWindowSizeCommand.SMALL_HEIGHT;
+
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ChangeWindowSizeRequestEvent);
+    }
+
+    @Test
+    public void executeInvalidChangeWindowSizeFailure() throws Exception {
+        ChangeWindowSizeCommand changeWindowSizeCommand =
+                prepareCommand(ChangeWindowSizeCommand.INVALID_WINDOW_SIZE_PARAM);
+
+        String expectedMessage = ChangeWindowSizeCommand.MESSAGE_WINDOW_SIZE_CONSTRAINTS;
+
+        assertCommandFailure(changeWindowSizeCommand, model, expectedMessage);
+    }
+
+    @Test
+    public void equals() {
+        ChangeWindowSizeCommand changeWindowSizeToSmall =
+                new ChangeWindowSizeCommand(ChangeWindowSizeCommand.SMALL_WINDOW_SIZE_PARAM);
+        ChangeWindowSizeCommand changeWindowSizeToMedium =
+                new ChangeWindowSizeCommand(ChangeWindowSizeCommand.MEDIUM_WINDOW_SIZE_PARAM);
+        ChangeWindowSizeCommand changeWindowSizeToBig =
+                new ChangeWindowSizeCommand(ChangeWindowSizeCommand.BIG_WINDOW_SIZE_PARAM);
+
+        // same object -> returns true
+        assertTrue(changeWindowSizeToSmall.equals(changeWindowSizeToSmall));
+
+        // same values -> returns true
+        ChangeWindowSizeCommand changeWindowSizeToSmallCopy = new ChangeWindowSizeCommand("small");
+        assertTrue(changeWindowSizeToSmall.equals(changeWindowSizeToSmallCopy));
+
+        // different types -> returns false
+        assertFalse(changeWindowSizeToSmall.equals(1));
+        assertFalse(changeWindowSizeToSmall.equals(new ShowFavouriteCommand()));
+
+        // null -> returns false
+        assertFalse(changeWindowSizeToSmall.equals(null));
+
+        // different person -> returns false
+        assertFalse(changeWindowSizeToSmall.equals(changeWindowSizeToBig));
+        assertFalse(changeWindowSizeToSmall.equals(changeWindowSizeToMedium));
+    }
+
+    /**
+     * Returns a {@code ChangeWindowSizeCommand} with the parameter {@code index}.
+     */
+    private ChangeWindowSizeCommand prepareCommand(String windowSize) {
+        ChangeWindowSizeCommand changeWindowSizeCommand = new ChangeWindowSizeCommand(windowSize);
+        changeWindowSizeCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return changeWindowSizeCommand;
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/RemoveTagCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code RemoveTagCommand}.
@@ -361,7 +336,206 @@ public class RemoveTagCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/commands/AddTagCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code AddTagCommand}.
+ */
+public class AddTagCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    /**
+     * Tests success of an unfiltered persons list with valid input indexes and tag
+     */
+    @Test
+    public void execute_validIndexAndTagUnfilteredList_success() throws Exception {
+        ArrayList<Index> indexes = new ArrayList<Index>();
+        indexes.add(INDEX_FIRST_PERSON);
+        indexes.add(INDEX_SECOND_PERSON);
+        Tag toAdd = new Tag("owesMoney");
+        AddTagCommand addTagCommand = prepareCommand(indexes, toAdd);
+
+        String expectedMessage = String.format(AddTagCommand.MESSAGE_ADD_TAG_SUCCESS, toAdd);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.addTag(indexes, toAdd);
+
+        assertCommandSuccess(addTagCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * Tests success of a filtered persons list with valid input indexes and tag
+     */
+    @Test
+    public void execute_validIndexAndTagFilteredList_success() throws Exception {
+        showFirstPersonOnly(model);
+        ArrayList<Index> indexes = new ArrayList<Index>();
+        indexes.add(INDEX_FIRST_PERSON);
+        Tag toAdd = new Tag("classmate");
+        AddTagCommand addTagCommand = prepareCommand(indexes, toAdd);
+
+        String expectedMessage = String.format(AddTagCommand.MESSAGE_ADD_TAG_SUCCESS, toAdd);
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        showFirstPersonOnly(expectedModel);
+        expectedModel.addTag(indexes, toAdd);
+
+        assertCommandSuccess(addTagCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * Tests failure of an unfiltered persons list with invalid input indexes but a valid tag
+     */
+    @Test
+    public void execute_invalidIndexUnfilteredList_failure() throws Exception {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        ArrayList<Index> indexes = new ArrayList<Index>();
+        indexes.add(outOfBoundIndex);
+        Tag toAdd = new Tag("friends");
+        AddTagCommand addTagCommand = prepareCommand(indexes, toAdd);
+
+        assertCommandFailure(addTagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
+    }
+
+    /**
+     * Tests failure of a filtered persons list with invalid input indexes but a valid tag
+     */
+    @Test
+    public void execute_invalidIndexFilteredList_failure() throws Exception {
+        showFirstPersonOnly(model);
+        ArrayList<Index> indexes = new ArrayList<Index>();
+        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        indexes.add(outOfBoundIndex);
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        Tag toAdd = new Tag("friends");
+        AddTagCommand addTagCommand = prepareCommand(indexes, toAdd);
+
+        assertCommandFailure(addTagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    /**
+     * Tests failure of an unfiltered persons list with valid input indexes but a tag that exists in every person
+     */
+    @Test
+    public void execute_invalidTagUnfilteredList_failure() throws Exception {
+        ArrayList<Index> indexes = new ArrayList<Index>();
+        indexes.add(INDEX_FIRST_PERSON);
+        indexes.add(INDEX_SECOND_PERSON);
+        Tag toAdd = new Tag("friends");
+        AddTagCommand addTagCommand = prepareCommand(indexes, toAdd);
+
+        assertCommandFailure(addTagCommand, model, AddTagCommand.MESSAGE_DUPLICATE_TAG);
+    }
+
+    /**
+     * Tests failure of a filtered persons list with valid input indexes but a tag that exists in every person
+     */
+    @Test
+    public void execute_invalidTagFilteredList_failure() throws Exception {
+        showFirstPersonOnly(model);
+        ArrayList<Index> indexes = new ArrayList<Index>();
+        indexes.add(INDEX_FIRST_PERSON);
+        Tag toAdd = new Tag("friends");
+        AddTagCommand addTagCommand = prepareCommand(indexes, toAdd);
+
+        assertCommandFailure(addTagCommand, model, AddTagCommand.MESSAGE_DUPLICATE_TAG);
+    }
+
+    @Test
+    public void equals() throws Exception {
+        ArrayList<Index> indexes1 = new ArrayList<Index>();
+        ArrayList<Index> indexes2 = new ArrayList<Index>();
+        indexes1.add(INDEX_FIRST_PERSON);
+        indexes1.add(INDEX_SECOND_PERSON);
+        indexes2.add(INDEX_SECOND_PERSON);
+        Tag firstTag = new Tag("friends");
+        Tag secondTag = new Tag("lecturer");
+        final AddTagCommand standardCommand = new AddTagCommand(indexes1, firstTag);
+
+        // same values -> returns true
+        AddTagCommand commandWithSameValues = new AddTagCommand(indexes1, firstTag);
+        assertTrue(standardCommand.equals(commandWithSameValues));
+
+        // same object -> returns true
+        assertTrue(standardCommand.equals(standardCommand));
+
+        // null -> returns false
+        assertFalse(standardCommand.equals(null));
+
+        // different types -> returns false
+        assertFalse(standardCommand.equals(new ClearCommand()));
+
+        // different target indexes -> returns false
+        assertFalse(standardCommand.equals(new AddTagCommand(indexes2, firstTag)));
+
+        // different target tag -> returns false
+        assertFalse(standardCommand.equals(new AddTagCommand(indexes1, secondTag)));
+    }
+
+    /**
+     * Returns an {@code AddTagCommand} with parameters {@code targetIndexes} and {@code toAdd}
+     */
+    private AddTagCommand prepareCommand(ArrayList<Index> targetIndexes, Tag toAdd) {
+        AddTagCommand addTagCommand = new AddTagCommand(targetIndexes, toAdd);
+        addTagCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return addTagCommand;
+    }
+}
+```
+###### /java/seedu/address/logic/commands/AddCommandTest.java
+``` java
+        @Override
+        public void removeTag(ArrayList<Index> targetIndexes, Tag toRemove)  {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addTag(ArrayList<Index> targetIndexes, Tag toAdd)  {
+            fail("This method should not be called.");
+        }
+
+```
+###### /java/seedu/address/logic/commands/AddCommandTest.java
+``` java
+        @Override
+        public String getClosestMatchingName(NameContainsKeywordsPredicate predicate) {
+            fail("This method should not be called.");
+            return null;
+        }
+
+```
+###### /java/seedu/address/logic/parser/RedoCommandParserTest.java
+``` java
+public class RedoCommandParserTest {
+
+    private RedoCommandParser parser = new RedoCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsRedoCommand() {
+        assertParseSuccess(parser, "2", new RedoCommand(2));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
+        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORDVAR_1) instanceof RedoCommand);
+        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORDVAR_2 + " 1") instanceof RedoCommand);
+        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORDVAR_3 + " 2") instanceof RedoCommand);
+    }
+
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_removeTag() throws Exception {
@@ -391,24 +565,34 @@ public class RemoveTagCommandTest {
         assertEquals(new AddTagCommand(indexes, toAdd), command);
     }
 
-```
-###### \java\seedu\address\logic\parser\RedoCommandParserTest.java
-``` java
-public class RedoCommandParserTest {
-
-    private RedoCommandParser parser = new RedoCommandParser();
-
     @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE));
+    public void parseCommand_changeWindowSizeCommand() throws Exception {
+        assertTrue(parser.parseCommand(ChangeWindowSizeCommand.COMMAND_WORD) instanceof ChangeWindowSizeCommand);
+        assertTrue(parser.parseCommand(ChangeWindowSizeCommand.COMMAND_WORD + " "
+            + ChangeWindowSizeCommand.BIG_WINDOW_SIZE_PARAM) instanceof ChangeWindowSizeCommand);
     }
-}
+
 ```
-###### \java\seedu\address\logic\parser\UndoCommandParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_undoCommandWord_returnsUndoCommand() throws Exception {
+        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORDVAR_1) instanceof UndoCommand);
+        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORDVAR_2 + " 2") instanceof UndoCommand);
+        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORDVAR_3 + " 3") instanceof UndoCommand);
+    }
+
+```
+###### /java/seedu/address/logic/parser/UndoCommandParserTest.java
 ``` java
 public class UndoCommandParserTest {
 
     private UndoCommandParser parser = new UndoCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsUndoCommand() {
+        assertParseSuccess(parser, "2", new UndoCommand(2));
+    }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
@@ -416,80 +600,98 @@ public class UndoCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\model\ModelManagerTest.java
+###### /java/guitests/guihandles/MainMenuHandle.java
 ``` java
-    /*
-     * Tests if the actual output of removeTag is equals to the expected
-     * output when given valid target indexes and a valid tag to remove.
+    /**
+     * Clicks on the window sizes using the menu bar in {@code MainWindow}.
      */
-    @Test
-    public void removeTag_validIndexesAndTag_success() throws Exception {
-        Person oldPerson1 = new PersonBuilder().withName("BOB").withTags("owesMoney", "friends").build();
-        Person oldPerson2 = new PersonBuilder().withTags("classmate").build();
-        List<ReadOnlyPerson> oldPersonList = new ArrayList<ReadOnlyPerson>();
-        oldPersonList.add(oldPerson1);
-        oldPersonList.add(oldPerson2);
-        AddressBook oldAddressBook = new AddressBook();
-        oldAddressBook.setPersons(oldPersonList);
+    public void clickOnWindowSizesUsingMenu(String windowSize) {
+        switch(windowSize) {
+        case ChangeWindowSizeCommand.SMALL_WINDOW_SIZE_PARAM:
+            clickOnMenuItemsSequentially("Window", "Small (800x600)");
+            break;
+        case ChangeWindowSizeCommand.MEDIUM_WINDOW_SIZE_PARAM:
+            clickOnMenuItemsSequentially("Window", "Medium (1024x720)");
+            break;
+        case ChangeWindowSizeCommand.BIG_WINDOW_SIZE_PARAM:
+            clickOnMenuItemsSequentially("Window", "Big (1600x1024)");
+            break;
+        default:
+            assert false : "Invalid window size provided";
+            break;
+        }
 
-        ArrayList<Index> indexes = new ArrayList<Index>();
-        indexes.add(INDEX_FIRST_PERSON);
-        indexes.add(INDEX_SECOND_PERSON);
-        Tag toRemove = new Tag("owesMoney");
-
-        ModelManager expectedModel = new ModelManager(oldAddressBook, new UserPrefs());
-        expectedModel.removeTag(indexes, toRemove);
-
-        Person newPerson1 = new PersonBuilder().withName("BOB").withTags("friends").build();
-        Person newPerson2 = new PersonBuilder().withTags("classmate").build();
-        List<ReadOnlyPerson> newPersonList = new ArrayList<ReadOnlyPerson>();
-        newPersonList.add(newPerson1);
-        newPersonList.add(newPerson2);
-        AddressBook newAddressBook = new AddressBook();
-        newAddressBook.setPersons(newPersonList);
-        ModelManager actualModel = new ModelManager(newAddressBook, new UserPrefs());
-
-        assertEquals(expectedModel.getAddressBook().getPersonList().toString(),
-                actualModel.getAddressBook().getPersonList().toString());
-    }
-
-    /*
-     * Tests if the actual output of addTag is equals to the expected
-     * output when given valid target indexes and a valid tag to add.
-     */
-    @Test
-    public void addTag_validIndexesAndTag_success() throws Exception {
-        Person oldPerson1 = new PersonBuilder().withName("BOB").withTags("owesMoney", "friends").build();
-        Person oldPerson2 = new PersonBuilder().withTags("classmate").build();
-        List<ReadOnlyPerson> oldPersonList = new ArrayList<ReadOnlyPerson>();
-        oldPersonList.add(oldPerson1);
-        oldPersonList.add(oldPerson2);
-        AddressBook oldAddressBook = new AddressBook();
-        oldAddressBook.setPersons(oldPersonList);
-
-        ArrayList<Index> indexes = new ArrayList<Index>();
-        indexes.add(INDEX_FIRST_PERSON);
-        indexes.add(INDEX_SECOND_PERSON);
-        Tag toAdd = new Tag("rich");
-
-        ModelManager expectedModel = new ModelManager(oldAddressBook, new UserPrefs());
-        expectedModel.addTag(indexes, toAdd);
-
-        Person newPerson1 = new PersonBuilder().withName("BOB").withTags("owesMoney", "friends", "rich").build();
-        Person newPerson2 = new PersonBuilder().withTags("classmate", "rich").build();
-        List<ReadOnlyPerson> newPersonList = new ArrayList<ReadOnlyPerson>();
-        newPersonList.add(newPerson1);
-        newPersonList.add(newPerson2);
-        AddressBook newAddressBook = new AddressBook();
-        newAddressBook.setPersons(newPersonList);
-        ModelManager actualModel = new ModelManager(newAddressBook, new UserPrefs());
-
-        assertEquals(expectedModel.getAddressBook().getPersonList().toString(),
-                actualModel.getAddressBook().getPersonList().toString());
     }
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/guitests/ChangeWindowSizeTest.java
+``` java
+public class ChangeWindowSizeTest extends  AddressBookGuiTest {
+
+    @Test
+    public void openWindow() {
+
+        //use menu button
+        getMainMenu().clickOnWindowSizesUsingMenu(ChangeWindowSizeCommand.SMALL_WINDOW_SIZE_PARAM);
+        assertChangeWindowSizeByClickingSuccess(ChangeWindowSizeCommand.SMALL_WINDOW_SIZE_PARAM);
+
+        getMainMenu().clickOnWindowSizesUsingMenu(ChangeWindowSizeCommand.MEDIUM_WINDOW_SIZE_PARAM);
+        assertChangeWindowSizeByClickingSuccess(ChangeWindowSizeCommand.MEDIUM_WINDOW_SIZE_PARAM);
+
+        getMainMenu().clickOnWindowSizesUsingMenu(ChangeWindowSizeCommand.BIG_WINDOW_SIZE_PARAM);
+        assertChangeWindowSizeByClickingSuccess(ChangeWindowSizeCommand.BIG_WINDOW_SIZE_PARAM);
+
+        //use command box
+        runCommand(ChangeWindowSizeCommand.COMMAND_WORD + " " + ChangeWindowSizeCommand.SMALL_WINDOW_SIZE_PARAM);
+        assertChangeToSmallWindowSizeByCommandWordSuccess();
+    }
+
+    /**
+     * Asserts that typed out command to change the window size is a success.
+     */
+    private void assertChangeToSmallWindowSizeByCommandWordSuccess() {
+        assertEquals(ChangeWindowSizeCommand.MESSAGE_SUCCESS + ChangeWindowSizeCommand.SMALL_WIDTH + " x "
+            + ChangeWindowSizeCommand.SMALL_HEIGHT, getResultDisplay().getText());
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Asserts that command to change the window size is a success.
+     */
+    private void assertChangeWindowSizeByClickingSuccess(String windowSize) {
+        switch(windowSize) {
+        case ChangeWindowSizeCommand.SMALL_WINDOW_SIZE_PARAM:
+            assertTrue(ChangeWindowSizeCommand.SMALL_WIDTH == getCurrentWindowWidth());
+            assertTrue(ChangeWindowSizeCommand.SMALL_HEIGHT == getCurrentWindowHeight());
+            break;
+        case ChangeWindowSizeCommand.MEDIUM_WINDOW_SIZE_PARAM:
+            assertTrue(ChangeWindowSizeCommand.MEDIUM_WIDTH == getCurrentWindowWidth());
+            assertTrue(ChangeWindowSizeCommand.MEDIUM_HEIGHT == getCurrentWindowHeight());
+            break;
+        case ChangeWindowSizeCommand.BIG_WINDOW_SIZE_PARAM:
+            assertTrue(ChangeWindowSizeCommand.BIG_WIDTH == getCurrentWindowWidth());
+            assertTrue(ChangeWindowSizeCommand.BIG_HEIGHT == getCurrentWindowHeight());
+            break;
+        default:
+            assert false : "Invalid window size provided";
+            break;
+        }
+
+        guiRobot.pauseForHuman();
+    }
+
+    private double getCurrentWindowWidth() {
+        return stage.getWidth();
+    }
+
+    private double getCurrentWindowHeight() {
+        return stage.getHeight();
+    }
+
+
+}
+```
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
@@ -502,6 +704,7 @@ public class UndoCommandParserTest {
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command, Model expectedModel) {
+        boolean isSuggestionMade = false;
         String expectedResultMessage = String.format(
                 MESSAGE_PERSONS_LISTED_OVERVIEW, expectedModel.getFilteredPersonList().size());
         if (expectedModel.getFilteredPersonList().size() == 0) {
@@ -510,14 +713,33 @@ public class UndoCommandParserTest {
             for (int i = 1; i < parts.length; i++) {
                 keywords.add(parts[i]);
             }
-            expectedResultMessage += String.format(MESSAGE_NO_PERSON_FOUND,
-                    expectedModel.getClosestMatchingName(new NameContainsKeywordsPredicate(keywords)));
+
+            String targets = expectedModel.getClosestMatchingName(new NameContainsKeywordsPredicate(keywords));
+            List<String> targetsAsList = Arrays.asList(targets.split("\\s+"));
+
+            if (targetsAsList.equals(keywords)) {
+                expectedModel.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+                expectedResultMessage = String.format(MESSAGE_NO_MATCHING_NAME_FOUND, targets);
+            } else {
+                expectedModel.updateFilteredPersonList(new NameContainsKeywordsPredicate(targetsAsList));
+                expectedResultMessage = String.format(MESSAGE_NO_PERSON_FOUND, String.join(" ", keywords),
+                        String.join(", ", targetsAsList));
+            }
+
+            isSuggestionMade = true;
         }
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchanged();
+        /*
+         * If a the find command suggests the closest matching name, revert the filtered list back
+         * to its original state afterwards.
+         */
+        if (isSuggestionMade) {
+            ModelHelper.setFilteredList(expectedModel, Collections.emptyList());
+        }
     }
 
 ```

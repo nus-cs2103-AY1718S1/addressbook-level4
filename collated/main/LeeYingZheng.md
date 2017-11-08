@@ -1,170 +1,127 @@
 # LeeYingZheng
-###### \java\seedu\address\commons\events\ui\ShowFacebookRequestEvent.java
+###### /java/seedu/address/model/tag/TagContainsKeywordsPredicate.java
 ``` java
-import seedu.address.commons.events.BaseEvent;
-
 /**
- * An event requesting to view the Facebook Log In page.
+ * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
  */
-public class ShowFacebookRequestEvent extends BaseEvent {
+public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    private final List<String> keywords;
 
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
+    public TagContainsKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
     }
 
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsTag(person.getTags(), keyword));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof TagContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
+    }
 }
 ```
-###### \java\seedu\address\commons\util\StringUtil.java
+###### /java/seedu/address/logic/commands/UndoableCommand.java
+``` java
+    public static final String MESSAGE_DUPLICATE_FIELD = "This person's %1$s is already in use."
+            + "Would you like to continue? YES or NO?";
+    public static final String NAME_FIELD = "name";
+    public static final String PHONE_FIELD = "phone";
+    public static final String ADDRESS_FIELD = "address";
+    public static final String EMAIL_FIELD = "email";
+
+    protected static boolean isWaitingforReply;
+    protected CommandResult result;
+```
+###### /java/seedu/address/logic/commands/UndoableCommand.java
 ``` java
     /**
-     * Returns true if the {@code tagList} contains the {@code word}.
-     *   case sensitive and a full word match is required.
-     *   <br>examples:<pre>
-     *       containsTag(tagList, "abc") == false where tagList does not contain a [abc] tag
-     *       containsTag(tagList, "DEF") == true where tagList contains a [DEF] tag
-     *       containsTag(tagList, "AB") == false where tagList contains only [ABC] tag
-     *       </pre>
-     * @param tagList cannot be null
-     * @param word cannot be null, cannot be empty, must be a single word
+     * Prepare to reply prompt. Sets isWaitingforReply to false.
      */
-    public static boolean containsTag(Set<Tag> tagList, String word) {
-        requireNonNull(tagList);
-        requireNonNull(word);
-
-        String preppedWord = word.trim();
-        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
-        CharSequence space = " ";
-        //check if there is more than one tag searched.
-        //more than 1 tag searched. split into a list of searches.
-        if (preppedWord.contains(space)) {
-            String[] separateTags = word.split(" ");
-            List<String> tagFilters = Arrays.asList(separateTags);
-            for (Tag tag : tagList) {
-                if (haveMatchedTags(tagFilters, tag)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        //only 1 tag searched. Check if tagList contains word as a tag
-        try {
-            Tag checkTag = new Tag(preppedWord);
-            return tagList.contains(checkTag);
-
-        } catch (IllegalValueException e) {
-            return false;
-        }
+    public static void reply() {
+        isWaitingforReply = false;
     }
 
-
     /**
-     * Checks if any of the words in tagFilters match with the tag word.
-     * Used by containsTag method.
+     * Check for duplicate fields shared with {@code toAdd} in current UniCity contacts. Set isWaitingforReply to true
+     * to proceed with prompting user of edit/add command.
      */
-    private static boolean haveMatchedTags(List<String> tagFilters, Tag tag) {
-        String encapsulatedTag = tag.toString();
-        return tagFilters.contains(encapsulatedTag.substring(1, encapsulatedTag.length() - 1));
+    protected void checkDuplicateField(Person toAdd) {
+        List<ReadOnlyPerson> currentContacts = model.getFilteredPersonList();
+        for (ReadOnlyPerson contact: currentContacts) {
+            if (toAdd.getName().toString().trim().equals(contact.getName().toString().trim())) {
+                isWaitingforReply = true;
+                result = new CommandResult(String.format(MESSAGE_DUPLICATE_FIELD, NAME_FIELD));
+
+            } else if (toAdd.getPhone().toString().trim().equals(contact.getPhone().toString().trim())) {
+                isWaitingforReply = true;
+                result = new CommandResult(String.format(MESSAGE_DUPLICATE_FIELD, PHONE_FIELD));
+
+            } else if ((toAdd.getAddress().toString().trim().equals(contact.getAddress().toString().trim()))
+                    && (!toAdd.getAddress().toString().trim().equals(DEFAULT_ADDRESS))) {
+                isWaitingforReply = true;
+                result = new CommandResult(String.format(MESSAGE_DUPLICATE_FIELD, ADDRESS_FIELD));
+
+            } else if ((toAdd.getEmail().toString().trim().equals(contact.getEmail().toString().trim()))
+                    && (!toAdd.getEmail().toString().trim().equals(DEFAULT_EMAIL))) {
+                isWaitingforReply = true;
+                result = new CommandResult(String.format(MESSAGE_DUPLICATE_FIELD, EMAIL_FIELD));
+
+            } else {
+                continue;
+            }
+        }
     }
 ```
-###### \java\seedu\address\logic\commands\AddCommand.java
+###### /java/seedu/address/logic/commands/FacebookCommand.java
 ``` java
-/**
- * Adds a person to the address book.
- */
-public class AddCommand extends UndoableCommand {
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ShowFacebookRequestEvent;
 
-    public static final String COMMAND_WORDVAR_1 = "add";
-    public static final String COMMAND_WORDVAR_2 = "a";
+/**
+ * Displays Facebook Log In page.
+ */
+public class FacebookCommand extends Command {
+
+
+
+    public static final String COMMAND_WORDVAR_1 = "facebook";
+    public static final String COMMAND_WORDVAR_2 = "fb";
 
     public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
-            + " OR "
-            + COMMAND_WORDVAR_2
-            + ": Adds a person to the address book. Command is case-insensitive. "
-            + "Parameters: "
-            + PREFIX_NAME + "NAME "
-            + PREFIX_PHONE + "PHONE "
-            + PREFIX_EMAIL + "EMAIL "
-            + PREFIX_ADDRESS + "ADDRESS "
-            + PREFIX_BIRTHDAY + "BIRTHDAY "
-            + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example 1: " + COMMAND_WORDVAR_1 + " "
-            + PREFIX_NAME + "John Doe "
-            + PREFIX_PHONE + "98765432 "
-            + PREFIX_EMAIL + "johnd@example.com "
-            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_BIRTHDAY + "050595 "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney \n"
-            + "Example 2: " + COMMAND_WORDVAR_2.toUpperCase() + " "
-            + PREFIX_NAME + "Kosaki Yamekuri "
-            + PREFIX_PHONE + "98765432 "
-            + PREFIX_EMAIL + "Yamekos@example.com "
-            + PREFIX_ADDRESS + "255, Bedok Ave 2, #03-18 "
-            + PREFIX_BIRTHDAY + "121287 "
-            + PREFIX_TAG + "colleague "
-            + PREFIX_TAG + "lunch-appointment";
+            + ": Shows facebook log in page.\n"
+            + "Example: "
+            + COMMAND_WORDVAR_1;
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
-    private static boolean requiresHandling;
-
-
-    private final Person toAdd;
-
-    /**
-     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
-     */
-    public AddCommand(ReadOnlyPerson person) {
-        toAdd = new Person(person);
-    }
+    public static final String SHOWING_FACEBOOK_MESSAGE = "Opened facebook window.";
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(model);
-
-        //resets AddCommand
-        if (isWaitingforReply) {
-            isWaitingforReply = false;
-            requiresHandling = false;
-        }
-
-        /* Check if the person to add contains any duplicate fields.
-         * If so, ReplyCommand to store the AddCommand to wait for further instructions.
-         */
-        checkDuplicateField(toAdd);
-
-        if (isWaitingforReply) {
-            requiresHandling = true;
-            ReplyCommand.storeAddCommandParameter(toAdd);
-            return result;
-
-        } else {
-            try {
-                model.addPerson(toAdd);
-                return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-            } catch (DuplicatePersonException e) {
-                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-            }
-        }
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new ShowFacebookRequestEvent());
+        return new CommandResult(SHOWING_FACEBOOK_MESSAGE);
     }
-
-    public static boolean requiresHandling() {
-        return requiresHandling;
-    }
-
+}
 ```
-###### \java\seedu\address\logic\commands\ClearCommand.java
+###### /java/seedu/address/logic/commands/RedoCommand.java
+``` java
+    public static final String COMMAND_WORDVAR_1 = "redo";
+    public static final String COMMAND_WORDVAR_2 = "r";
+```
+###### /java/seedu/address/logic/commands/ListCommand.java
+``` java
+    public static final String COMMAND_WORDVAR_1 = "list";
+    public static final String COMMAND_WORDVAR_2 = "l";
+```
+###### /java/seedu/address/logic/commands/ClearCommand.java
 ``` java
     public static final String COMMAND_WORDVAR_1 = "clear";
     public static final String COMMAND_WORDVAR_2 = "c";
 ```
-###### \java\seedu\address\logic\commands\DeleteCommand.java
-``` java
-    public static final String COMMAND_WORDVAR_1 = "delete";
-    public static final String COMMAND_WORDVAR_2 = "d";
-```
-###### \java\seedu\address\logic\commands\EditCommand.java
+###### /java/seedu/address/logic/commands/EditCommand.java
 ``` java
     public static final String COMMAND_WORDVAR_1 = "edit";
     public static final String COMMAND_WORDVAR_2 = "e";
@@ -249,7 +206,7 @@ public class AddCommand extends UndoableCommand {
         }
     }
 ```
-###### \java\seedu\address\logic\commands\EditCommand.java
+###### /java/seedu/address/logic/commands/EditCommand.java
 ``` java
     public static boolean requiresHandling() {
         return requiresHandling;
@@ -259,96 +216,22 @@ public class AddCommand extends UndoableCommand {
         requiresHandling = false;
     }
 ```
-###### \java\seedu\address\logic\commands\FacebookCommand.java
+###### /java/seedu/address/logic/commands/DeleteCommand.java
 ``` java
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.ShowFacebookRequestEvent;
-
-/**
- * Displays Facebook Log In page.
- */
-public class FacebookCommand extends Command {
-
-
-
-    public static final String COMMAND_WORDVAR_1 = "facebook";
-    public static final String COMMAND_WORDVAR_2 = "fb";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
-            + ": Shows facebook log in page.\n"
-            + "Example: "
-            + COMMAND_WORDVAR_1;
-
-    public static final String SHOWING_FACEBOOK_MESSAGE = "Opened facebook window.";
-
-    @Override
-    public CommandResult execute() {
-        EventsCenter.getInstance().post(new ShowFacebookRequestEvent());
-        return new CommandResult(SHOWING_FACEBOOK_MESSAGE);
-    }
-}
+    public static final String COMMAND_WORDVAR_1 = "delete";
+    public static final String COMMAND_WORDVAR_2 = "d";
 ```
-###### \java\seedu\address\logic\commands\FilterCommand.java
-``` java
-import seedu.address.model.tag.TagContainsKeywordsPredicate;
-
-/**
- * Filters and lists all persons in address book whose tag contains any of the argument keywords.
- * Keyword matching is case sensitive.
- */
-public class FilterCommand extends Command {
-
-    public static final String COMMAND_WORDVAR = "filter";
-
-
-    public static final String MESSAGE_USAGE = COMMAND_WORDVAR
-            + ": Filters all persons whose tags contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers."
-            + " Command is case-insensitive. \n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example 1: " + COMMAND_WORDVAR + " friend colleague \n";
-
-    private final TagContainsKeywordsPredicate predicate;
-
-    public FilterCommand(TagContainsKeywordsPredicate predicate) {
-        this.predicate = predicate;
-    }
-
-    @Override
-    public CommandResult execute() {
-        model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof FilterCommand // instanceof handles nulls
-                && this.predicate.equals(((FilterCommand) other).predicate)); // state check
-    }
-}
-```
-###### \java\seedu\address\logic\commands\FindCommand.java
+###### /java/seedu/address/logic/commands/FindCommand.java
 ``` java
     public static final String COMMAND_WORDVAR_1 = "find";
     public static final String COMMAND_WORDVAR_2 = "f";
 ```
-###### \java\seedu\address\logic\commands\HistoryCommand.java
+###### /java/seedu/address/logic/commands/SelectCommand.java
 ``` java
-    public static final String COMMAND_WORDVAR_1 = "history";
-    public static final String COMMAND_WORDVAR_2 = "h";
+    public static final String COMMAND_WORDVAR_1 = "select";
+    public static final String COMMAND_WORDVAR_2 = "s";
 ```
-###### \java\seedu\address\logic\commands\ListCommand.java
-``` java
-    public static final String COMMAND_WORDVAR_1 = "list";
-    public static final String COMMAND_WORDVAR_2 = "l";
-```
-###### \java\seedu\address\logic\commands\RedoCommand.java
-``` java
-    public static final String COMMAND_WORDVAR_1 = "redo";
-    public static final String COMMAND_WORDVAR_2 = "r";
-```
-###### \java\seedu\address\logic\commands\ReplyCommand.java
+###### /java/seedu/address/logic/commands/ReplyCommand.java
 ``` java
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.commands.AddCommand.MESSAGE_DUPLICATE_PERSON;
@@ -469,64 +352,139 @@ public class ReplyCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\SelectCommand.java
+###### /java/seedu/address/logic/commands/HistoryCommand.java
 ``` java
-    public static final String COMMAND_WORDVAR_1 = "select";
-    public static final String COMMAND_WORDVAR_2 = "s";
+    public static final String COMMAND_WORDVAR_1 = "history";
+    public static final String COMMAND_WORDVAR_2 = "h";
 ```
-###### \java\seedu\address\logic\commands\UndoableCommand.java
+###### /java/seedu/address/logic/commands/AddCommand.java
 ``` java
-    public static final String MESSAGE_DUPLICATE_FIELD = "This person's %1$s is already in use."
-            + "Would you like to continue? YES or NO?";
-    public static final String NAME_FIELD = "name";
-    public static final String PHONE_FIELD = "phone";
-    public static final String ADDRESS_FIELD = "address";
-    public static final String EMAIL_FIELD = "email";
+/**
+ * Adds a person to the address book.
+ */
+public class AddCommand extends UndoableCommand {
 
-    protected static boolean isWaitingforReply;
-    protected CommandResult result;
-```
-###### \java\seedu\address\logic\commands\UndoableCommand.java
-``` java
+    public static final String COMMAND_WORDVAR_1 = "add";
+    public static final String COMMAND_WORDVAR_2 = "a";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
+            + " OR "
+            + COMMAND_WORDVAR_2
+            + ": Adds a person to the address book. Command is case-insensitive. "
+            + "Parameters: "
+            + PREFIX_NAME + "NAME "
+            + PREFIX_PHONE + "PHONE "
+            + PREFIX_EMAIL + "EMAIL "
+            + PREFIX_ADDRESS + "ADDRESS "
+            + PREFIX_BIRTHDAY + "BIRTHDAY "
+            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "Example 1: " + COMMAND_WORDVAR_1 + " "
+            + PREFIX_NAME + "John Doe "
+            + PREFIX_PHONE + "98765432 "
+            + PREFIX_EMAIL + "johnd@example.com "
+            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
+            + PREFIX_BIRTHDAY + "050595 "
+            + PREFIX_TAG + "friends "
+            + PREFIX_TAG + "owesMoney \n"
+            + "Example 2: " + COMMAND_WORDVAR_2.toUpperCase() + " "
+            + PREFIX_NAME + "Kosaki Yamekuri "
+            + PREFIX_PHONE + "98765432 "
+            + PREFIX_EMAIL + "Yamekos@example.com "
+            + PREFIX_ADDRESS + "255, Bedok Ave 2, #03-18 "
+            + PREFIX_BIRTHDAY + "121287 "
+            + PREFIX_TAG + "colleague "
+            + PREFIX_TAG + "lunch-appointment";
+
+    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    private static boolean requiresHandling;
+
+
+    private final Person toAdd;
+
     /**
-     * Prepare to reply prompt. Sets isWaitingforReply to false.
+     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
      */
-    public static void reply() {
-        isWaitingforReply = false;
+    public AddCommand(ReadOnlyPerson person) {
+        toAdd = new Person(person);
     }
 
-    /**
-     * Check for duplicate fields shared with {@code toAdd} in current UniCity contacts. Set isWaitingforReply to true
-     * to proceed with prompting user of edit/add command.
-     */
-    protected void checkDuplicateField(Person toAdd) {
-        List<ReadOnlyPerson> currentContacts = model.getFilteredPersonList();
-        for (ReadOnlyPerson contact: currentContacts) {
-            if (toAdd.getName().toString().trim().equals(contact.getName().toString().trim())) {
-                isWaitingforReply = true;
-                result = new CommandResult(String.format(MESSAGE_DUPLICATE_FIELD, NAME_FIELD));
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
 
-            } else if (toAdd.getPhone().toString().trim().equals(contact.getPhone().toString().trim())) {
-                isWaitingforReply = true;
-                result = new CommandResult(String.format(MESSAGE_DUPLICATE_FIELD, PHONE_FIELD));
+        //resets AddCommand
+        if (isWaitingforReply) {
+            isWaitingforReply = false;
+            requiresHandling = false;
+        }
 
-            } else if ((toAdd.getAddress().toString().trim().equals(contact.getAddress().toString().trim()))
-                    && (!toAdd.getAddress().toString().trim().equals(DEFAULT_ADDRESS))) {
-                isWaitingforReply = true;
-                result = new CommandResult(String.format(MESSAGE_DUPLICATE_FIELD, ADDRESS_FIELD));
+        /* Check if the person to add contains any duplicate fields.
+         * If so, ReplyCommand to store the AddCommand to wait for further instructions.
+         */
+        checkDuplicateField(toAdd);
 
-            } else if ((toAdd.getEmail().toString().trim().equals(contact.getEmail().toString().trim()))
-                    && (!toAdd.getEmail().toString().trim().equals(DEFAULT_EMAIL))) {
-                isWaitingforReply = true;
-                result = new CommandResult(String.format(MESSAGE_DUPLICATE_FIELD, EMAIL_FIELD));
+        if (isWaitingforReply) {
+            requiresHandling = true;
+            ReplyCommand.storeAddCommandParameter(toAdd);
+            return result;
 
-            } else {
-                continue;
+        } else {
+            try {
+                model.addPerson(toAdd);
+                return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+            } catch (DuplicatePersonException e) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
             }
         }
     }
+
+    public static boolean requiresHandling() {
+        return requiresHandling;
+    }
+
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/commands/FilterCommand.java
+``` java
+import seedu.address.model.tag.TagContainsKeywordsPredicate;
+
+/**
+ * Filters and lists all persons in address book whose tag contains any of the argument keywords.
+ * Keyword matching is case sensitive.
+ */
+public class FilterCommand extends Command {
+
+    public static final String COMMAND_WORDVAR = "filter";
+
+
+    public static final String MESSAGE_USAGE = COMMAND_WORDVAR
+            + ": Filters all persons whose tags contain any of "
+            + "the specified keywords (case-sensitive) and displays them as a list with index numbers."
+            + " Command is case-insensitive. \n"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+            + "Example 1: " + COMMAND_WORDVAR + " friend colleague \n";
+
+    private final TagContainsKeywordsPredicate predicate;
+
+    public FilterCommand(TagContainsKeywordsPredicate predicate) {
+        this.predicate = predicate;
+    }
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredPersonList(predicate);
+        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FilterCommand // instanceof handles nulls
+                && this.predicate.equals(((FilterCommand) other).predicate)); // state check
+    }
+}
+```
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
     /**
      * Parses user input into command for execution.
@@ -587,6 +545,9 @@ public class ReplyCommand extends Command {
                 || commandWord.equalsIgnoreCase(ListCommand.COMMAND_WORDVAR_2)) {
             return new ListCommand();
 
+        } else if (commandWord.equalsIgnoreCase(LocateCommand.COMMAND_WORDVAR)) {
+            return new LocateCommandParser().parse(arguments);
+
         } else if (commandWord.equalsIgnoreCase(HistoryCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(HistoryCommand.COMMAND_WORDVAR_2)) {
             return new HistoryCommand();
@@ -631,12 +592,15 @@ public class ReplyCommand extends Command {
                 || commandWord.equalsIgnoreCase(SortCommand.COMMAND_WORDVAR_2)) {
             return new SortCommand();
 
+        } else if (commandWord.equalsIgnoreCase(ChangeWindowSizeCommand.COMMAND_WORD)) {
+            return new ChangeWindowSizeCommand(arguments.trim());
+
         } else {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
 ```
-###### \java\seedu\address\logic\parser\FilterCommandParser.java
+###### /java/seedu/address/logic/parser/FilterCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -662,69 +626,75 @@ public class FilterCommandParser implements Parser<FilterCommand> {
 
 }
 ```
-###### \java\seedu\address\model\tag\TagContainsKeywordsPredicate.java
+###### /java/seedu/address/commons/events/ui/ShowFacebookRequestEvent.java
 ``` java
+import seedu.address.commons.events.BaseEvent;
+
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
+ * An event requesting to view the Facebook Log In page.
  */
-public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
-    private final List<String> keywords;
-
-    public TagContainsKeywordsPredicate(List<String> keywords) {
-        this.keywords = keywords;
-    }
+public class ShowFacebookRequestEvent extends BaseEvent {
 
     @Override
-    public boolean test(ReadOnlyPerson person) {
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsTag(person.getTags(), keyword));
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof TagContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
-    }
 }
 ```
-###### \java\seedu\address\ui\BrowserPanel.java
+###### /java/seedu/address/commons/util/StringUtil.java
 ``` java
-    //different search pages for different commands
-    //GoogleCommand
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+    /**
+     * Returns true if the {@code tagList} contains the {@code word}.
+     *   case sensitive and a full word match is required.
+     *   <br>examples:<pre>
+     *       containsTag(tagList, "abc") == false where tagList does not contain a [abc] tag
+     *       containsTag(tagList, "DEF") == true where tagList contains a [DEF] tag
+     *       containsTag(tagList, "AB") == false where tagList contains only [ABC] tag
+     *       </pre>
+     * @param tagList cannot be null
+     * @param word cannot be null, cannot be empty, must be a single word
+     */
+    public static boolean containsTag(Set<Tag> tagList, String word) {
+        requireNonNull(tagList);
+        requireNonNull(word);
 
-    //FacebookCommand
-    public static final String FACEBOOK_URL = "https://www.facebook.com";
+        String preppedWord = word.trim();
+        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
+        CharSequence space = " ";
+        //check if there is more than one tag searched.
+        //more than 1 tag searched. split into a list of searches.
+        if (preppedWord.contains(space)) {
+            String[] separateTags = word.split(" ");
+            List<String> tagFilters = Arrays.asList(separateTags);
+            for (Tag tag : tagList) {
+                if (haveMatchedTags(tagFilters, tag)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        //only 1 tag searched. Check if tagList contains word as a tag
+        try {
+            Tag checkTag = new Tag(preppedWord);
+            return tagList.contains(checkTag);
 
-    private static final String FXML = "BrowserPanel.fxml";
-
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
-
-    @FXML
-    private WebView browser;
-
-    public BrowserPanel() {
-        super(FXML);
-
-        // To prevent triggering events for typing inside the loaded Web page.
-        getRoot().setOnKeyPressed(Event::consume);
-
-        loadDefaultPage();
-        registerAsAnEventHandler(this);
+        } catch (IllegalValueException e) {
+            return false;
+        }
     }
 
-    private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                    + GOOGLE_SEARCH_URL_SUFFIX);
-    }
 
-    public void loadFacebookPage() {
-        loadPage(FACEBOOK_URL);
+    /**
+     * Checks if any of the words in tagFilters match with the tag word.
+     * Used by containsTag method.
+     */
+    private static boolean haveMatchedTags(List<String> tagFilters, Tag tag) {
+        String encapsulatedTag = tag.toString();
+        return tagFilters.contains(encapsulatedTag.substring(1, encapsulatedTag.length() - 1));
     }
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     /**
      * Opens the Facebook window in BrowserPanel.
@@ -734,7 +704,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         browserPanel.loadFacebookPage();
     }
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     @Subscribe
     private void handleShowFacebookEvent(ShowFacebookRequestEvent event) {
@@ -742,4 +712,20 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         handleFacebook();
     }
 }
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    //different search pages for different commands
+    //GoogleCommand
+    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
+    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+
+    //FacebookCommand
+    public static final String FACEBOOK_URL = "https://www.facebook.com";
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    public void loadFacebookPage() {
+        loadPage(FACEBOOK_URL);
+    }
 ```

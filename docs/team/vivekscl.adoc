@@ -120,4 +120,5 @@ the ControlFX library in JavaFX will prove useful in implementing this feature.
 * Wrote additional GUI automated tests for changing of window size using the window menu item. (Pull request https://github.com/CS2103AUG2017-W13-B1/main/pull/95[#95])
 * Offered enhanced find command in the forum for reuse. (Forum issue https://github.com/nus-cs2103-AY1718S1/forum/issues/189[#189])
 * Added Coveralls to reflect test coverage of UniCity.
+* Updated gradle dependencies to add new libraries and other configurations.
 
