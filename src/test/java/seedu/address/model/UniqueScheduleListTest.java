@@ -42,9 +42,7 @@ public class UniqueScheduleListTest {
         Calendar date = Calendar.getInstance();
         Schedule scheduleOne = new Schedule(TypicalPersons.ALICE.getName().toString(), date);
         Schedule scheduleTwo = new Schedule(TypicalPersons.BENSON.getName().toString(), date);
-        if (scheduleOne.equals(scheduleTwo)) {
-            assert false;
-        }
+        assert !scheduleOne.equals(scheduleTwo);
     }
 
     // Check whether schedule set is non-null
