@@ -5,7 +5,6 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
-import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.Status;
 
@@ -27,20 +26,20 @@ public interface Logic {
 
     //@@author kennard123661
     /**
-     * Returns an unmodifiable view of the filtered list of {@link Parcel} from the {@link Model} that have
+     * Returns an unmodifiable view of the filtered list of {@link ReadOnlyParcel}s from the {@link Model} that have
      * {@link Status} that is COMPLETED.
      */
     ObservableList<ReadOnlyParcel> getCompletedParcelList();
 
     /**
-     * Returns an unmodifiable view of the filtered list of {@link Parcel}s from the {@link Model} that have
+     * Returns an unmodifiable view of the filtered list of {@link ReadOnlyParcel}s from the {@link Model} that have
      * {@link Status} that is not COMPLETED.
      */
     ObservableList<ReadOnlyParcel> getUncompletedParcelList();
 
     /** Sets the active list of {@link Model} at the particular instance
      *
-     * @param isCompleted if true, the active list in {@link Model} will be set to the list of {@link Parcel}s
+     * @param isCompleted if true, the active list in {@link Model} will be set to the list of {@link ReadOnlyParcel}s
      *                    with {@link Status} that is COMPLETED. Otherwise, it will be set the list of parcels
      *                    with {@link Status} that is not COMPLETED.
      */
