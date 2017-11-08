@@ -25,6 +25,9 @@ include::../UserGuide.adoc[tag=pfind]
 {Justify the need for, and the current design (i.e. external behavior) of, the feature}
 
 ==== Implementation
+Follows the implementation of `find` `command` with modification made to predicate class
+
+Usage extends to searchbox which is implemented as follows:
 
 ---
 #Start of Extract [from: Developer Guide]#
@@ -34,6 +37,33 @@ include::../DeveloperGuide.adoc[tag=searchbox]
 #End of Extract#
 
 ---
+=== Enhancement Added: Save & Load contract pdf file
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=pdfSaveLoad]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=searchbox]
+
+#End of Extract#
+
+---
+
 
 === Enhancement Proposed:
 
