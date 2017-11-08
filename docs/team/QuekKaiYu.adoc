@@ -1,0 +1,114 @@
+= Quek Kai Yu - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: TunedIn
+TunedIn is a free-to-use desktop application that brings you the power to organise your information in a neater way.
+Not only does it help to bring order to your life,
+it is also an amazing tool to facilitate the organization of your activities for the following day,
+week or even month. All this, against a beautiful,
+customizable background. Never before, is your calender a work of art.
+Now is the time to bring work-life balance into reality.
+Most of the interaction is done through Command-Line Interface (CLI), and it has a user-friendly Graphical Interface (GUI) created with JavaFX.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 10 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T14-B2/main/blob/master/collated/main/kaiyu92.md[Functional code]] [https://github.com/CS2103AUG2017-T14-B2/main/tree/master/collated/test[Test code]]
+
+=== Enhancement Added: New Command `remark`
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=remark]
+
+---
+
+==== Justification
+
+Remarking on individual contact allows the user to keep track of things that he/she supposed to do with that particular contact.
+This is only one out of many ways to use the remark feature (depending on how the user wants to use the remark feature).
+For example, assuming there is a remark "meeting John at Starbuck 4pm" added to John's contact, it will act as a reminder to the user
+that he/she supposed to meet John at starbuck 4pm.
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=remark]
+
+---
+
+=== Enhancement Added: Events Mechanism
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=event]
+
+---
+
+==== Justification
+
+Users such as students or working adults tends to be busy due to the workload.
+Therefore, they might not be able to keep track of all the events that they supposed to attend to.
+Hence, by including events mechanism in our app, it allows the user to have a simple and beautiful event calendar which
+take notes of events on certain dates.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=event]
+
+---
+
+=== Enhancement Added: New Command `export`
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=export]
+
+---
+
+==== Justification
+
+In the case where data might be accidentally disappeared from the application,
+export feature allows the user to have a backup copy of the file in the format of csv.
+Reason being why in excel format is because user might want to use the data for other purpose apart from backing up the data,
+and excel is a more readable and user-friendly way.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=export]
+
+---
+
+=== Enhancement Proposed: New command `import`
+
+As the problem is mentioned in the enhancement added (export), user might want to import their backup data into the app
+(in the case where the data is already gone and the user still have a backup copy due to the export feature).
+
+=== Enhancement Proposed: Integrating to Online Platform such as Facebook, Google
+
+Allowing the user to add their Facebook friends birthday into the event calendar, so as to
+make things convenient for the user to keep track of the date while not manually adding the events to the calendar (since the birthday date
+comes from Facebook, it will synchronise the birthday dates into the calendar).
+
+=== Other contributions
+
+* Updated the GUI to include an event calendar with the additional feature of mouse click event to show the details of event on that specific day.
+* Updated the GUI to have an additional "event" tab.
+* Updated the architecture of [https://github.com/CS2103AUG2017-T14-B2/main/blob/master/docs/DeveloperGuide.adoc#ui-component[UI]],
+[https://github.com/CS2103AUG2017-T14-B2/main/blob/master/docs/DeveloperGuide.adoc#logic-component[Logic]],
+[https://github.com/CS2103AUG2017-T14-B2/main/blob/master/docs/DeveloperGuide.adoc#model-component[Model]],
+and [https://github.com/CS2103AUG2017-T14-B2/main/blob/master/docs/DeveloperGuide.adoc#storage-component[Storage]] according to the current application.
+

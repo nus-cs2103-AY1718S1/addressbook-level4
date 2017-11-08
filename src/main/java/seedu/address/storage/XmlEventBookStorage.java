@@ -27,12 +27,14 @@ public class XmlEventBookStorage implements EventBookStorage {
     private static final Logger logger = LogsCenter.getLogger(XmlEventBookStorage.class);
 
     private String filePath;
-    private String exportedPath = "data/eventbook.csv";
-    private String header = "Title,Description,Location,Datetime";
+    private String exportedPath;
+    private String header;
 
 
-    public XmlEventBookStorage(String filePath) {
+    public XmlEventBookStorage(String filePath, String exportedPath, String header) {
         this.filePath = filePath;
+        this.exportedPath = exportedPath;
+        this.header = header;
     }
 
     @Override

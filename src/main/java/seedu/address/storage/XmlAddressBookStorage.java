@@ -25,11 +25,13 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
 
     private String filePath;
-    private String exportedPath = "data/addressbook.csv";
-    private String header = "Name,Phone,Address,Birthday,Email,Group,Remark,Tagged";
+    private String exportedPath;
+    private String header;
 
-    public XmlAddressBookStorage(String filePath) {
+    public XmlAddressBookStorage(String filePath, String exportedPath, String header) {
         this.filePath = filePath;
+        this.exportedPath = exportedPath;
+        this.header = header;
     }
 
     public String getAddressBookFilePath() {

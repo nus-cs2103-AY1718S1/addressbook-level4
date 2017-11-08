@@ -76,9 +76,11 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
+        AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath(),
+                userPrefs.getAddressbookExportedPath(), userPrefs.getAddressbookHeader());
         AccountStorage accountStorage = new XmlAccountStorage(userPrefs.getAccountFilePath());
-        EventBookStorage eventBookStorage = new XmlEventBookStorage(userPrefs.getEventBookFilePath());
+        EventBookStorage eventBookStorage = new XmlEventBookStorage(userPrefs.getEventBookFilePath(),
+                userPrefs.getEventbookExportedPath(), userPrefs.getEventbookHeader());
         storage = new StorageManager(addressBookStorage, eventBookStorage, userPrefsStorage, accountStorage);
 
         initLogging(config);

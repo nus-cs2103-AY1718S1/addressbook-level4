@@ -99,6 +99,8 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `a n/Betsy Crowe t/friend a/Newgate Prison p/1234567 b/01-10-1995 t/criminal`
 
+// tag::event[]
+//@@author kaiyu92
 === Adding an event: `addevent` - Since V1.2
 
 Adds an event to the event book +
@@ -108,6 +110,16 @@ Examples:
 
 * `addevent et/Halloween ed/Horror Night el/Universal Studio edt/13-10-17 2359`
 * `addevent et/Basketball Competition ed/Tournament el/UTSH edt/26-10-2017 0800`
+// end::event[]
+
+=== Change Password : `changepassword` - Coming in V2.0
+
+Changes the account password. +
+Format: `changepassword pw/OLD_PASSWORD pwn/NEW_PASSWORD`
+
+Examples:
+
+* `changepassword pw/SPECIAL1PASS pw/SPECIAL2PASS`
 
 === Clearing all entries : `clear` - Since V1.0
 
@@ -135,6 +147,8 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+// tag::event[]
+//@@author kaiyu92
 === Deleting an event : `deleteevent` - Since V1.2
 
 Deletes the specified event from the event book. +
@@ -152,6 +166,7 @@ Examples:
 Deletes the 2nd event in the event book.
 * `deleteevent 1` +
 Deletes the 1st event in the event book.
+// end::event[]
 
 === Editing a person : `edit` - Since V1.0
 
@@ -173,6 +188,8 @@ Edits the phone number and email address of the 1st person in current list of ad
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::event[]
+//@@author kaiyu92
 === Editing an event : `editevent` - Since V1.2
 
 Edits an existing event in the event book. +
@@ -190,12 +207,15 @@ Examples:
 Edits the description and datetime of the 1st event to be `Buy one get one free` and `13-10-2017 0900` respectively.
 * `editevent 2 et/2018 iPhone 11 Release` +
 Edits the title of the 2nd event to be `2018 iPhone 11 Release`.
+// end::event[]
 
 === Exiting the program : `exit` - Since V1.0
 
 Exits the program. +
 Format: `exit`
 
+// tag::export[]
+//@@author kaiyu92
 === Export : `export` - Since V1.5
 
 Exports the TunedIn application data (either event book or address book) into csv format. +
@@ -211,6 +231,7 @@ Examples:
 
 * `export addressbook` +
 Exports the addressbook into csv format
+// end::export[]
 
 === Locating persons by name: `find` - Since V1.0
 
@@ -235,6 +256,8 @@ Returns  any person having names with `john` in the sequence
 * `find n/Jo` +
 Returns any person having names with `jo` in the sequence
 
+// tag::event[]
+//@@author kaiyu92
 === Finding Event : `findevent` - Since V1.3
 
 Finds events whose titles contain any of the given keywords. +
@@ -256,6 +279,7 @@ Returns  any event having title with `Basketball` in the sequence
 
 * `findevent et/ball` +
 Returns  any event having title with `ball` in the sequence
+// end::event[]
 
 //tag::group[]
 === Group person(s) : `group` - Since V1.4
@@ -314,6 +338,11 @@ Examples:
 * `list`
 * `list g/Friends`
 // end::list[]
+
+=== Listing all events : `listevent` - Since V1.3
+
+Shows a list of all events in the event book. +
+Format: `listevent`
 
 === Lock contacts by user : `lock` - Since V1.5
 
@@ -414,6 +443,8 @@ Returns address list sorted by name in alphabetical order.
 Returns address list sorted by birthday then by name.
 // end::order[]
 
+// tag::event[]
+//@@author kaiyu92
 === Order events in Event Book by a parameter: `orderevent` - Since V1.3
 
 Order the list of events according to a specified parameter. Parameters are case insensitive. +
@@ -435,6 +466,7 @@ Examples:
 Returns event list sorted by title
 * `orderevent LOCATION` +
 Returns event list sorted by location
+// end::event[]
 
 === Redoing the previously undone command : `redo` - Since V1.0
 
@@ -459,6 +491,8 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::remark[]
+//@@author kaiyu92
 === Remarking a person : `remark` - Since V1.1
 
 Remarks an existing person in the address book. +
@@ -476,6 +510,7 @@ Examples:
 Edits the remark of the 1st person to be `Likes to swim`.
 * `remark 1 r/` +
 Remove the remark of the 1st person.
+// end::remark[]
 
 === Selecting a person : `select` - Since V1.0
 
@@ -498,6 +533,8 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::event[]
+//@@author kaiyu92
 === Selecting an event : `selectevent` - Since V1.4
 
 Selects the event identified by the index number used in the last event listing. +
@@ -517,6 +554,7 @@ Selects the 2nd event in the event book.
 * `findevent basketball` +
 `selectevent 1` +
 Selects the 1st event in the results of the `findevent` command.
+// end::event[]
 
 // tag::alias[]
 //@@author keloysiusmak
@@ -544,11 +582,22 @@ Examples:
 * `settheme AUTUMN`
 // end::theme[]
 
+// tag::switch[]
+//@@author kaiyu92
 === Switch Tab : `switch` - Since V1.4
 
 Switch to either `contacts` or `events` tab panel. +
 Format: `switch`
 
+<<<<<<< HEAD
+// end::switch[]
+
+=== Sync : `sync` - Coming in V2.0
+
+Sync the TunedIn application to your cloud TunedInLive account. +
+Format: `sync`
+=======
+>>>>>>> b91ad99a416721b91a0c2ae0e090700e5057ab16
 
 === Transfer : `transfer`
 

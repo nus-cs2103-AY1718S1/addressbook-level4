@@ -33,8 +33,10 @@ public class StorageManagerTest {
 
     @Before
     public void setUp() {
-        XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
-        XmlEventBookStorage eventBookStorage = new XmlEventBookStorage(getTempFilePath("eb"));
+        XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"),
+                getTempFilePath("abcsv"), "Name,Phone,Address,Birthday,Email,Group,Remark,Tagged");
+        XmlEventBookStorage eventBookStorage = new XmlEventBookStorage(getTempFilePath("eb"),
+                getTempFilePath("ebcsv"), "Title,Description,Location,Datetime");
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
         XmlAccountStorage account = new XmlAccountStorage(getTempFilePath("ac"));
         storageManager = new StorageManager(addressBookStorage, eventBookStorage, userPrefsStorage, account);
@@ -80,8 +82,9 @@ public class StorageManagerTest {
     @Test
     public void handleAddressBookChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
-        Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
-                new XmlEventBookStorageExceptionThrowingStub("dummy"),
+        Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy",
+                "dummy", "dummy"),
+                new XmlEventBookStorageExceptionThrowingStub("dummy", "dummy", "dummy"),
                 new JsonUserPrefsStorage("dummy"), new XmlAccountStorage("dummy"));
         storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
@@ -104,8 +107,9 @@ public class StorageManagerTest {
     @Test
     public void handleEventBookChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
-        Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
-                new XmlEventBookStorageExceptionThrowingStub("dummy"),
+        Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy",
+                "dummy", "dummy"),
+                new XmlEventBookStorageExceptionThrowingStub("dummy", "dummy", "dummy"),
                 new JsonUserPrefsStorage("dummy"), new XmlAccountStorage("dummy"));
         storage.handleEventBookChangedEvent(new EventBookChangedEvent(new EventBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
@@ -116,8 +120,8 @@ public class StorageManagerTest {
      */
     class XmlAddressBookStorageExceptionThrowingStub extends XmlAddressBookStorage {
 
-        public XmlAddressBookStorageExceptionThrowingStub(String filePath) {
-            super(filePath);
+        public XmlAddressBookStorageExceptionThrowingStub(String filePath, String exportPath, String header) {
+            super(filePath, exportPath, header);
         }
 
         @Override
@@ -131,8 +135,8 @@ public class StorageManagerTest {
      */
     class XmlEventBookStorageExceptionThrowingStub extends XmlEventBookStorage {
 
-        public XmlEventBookStorageExceptionThrowingStub(String filePath) {
-            super(filePath);
+        public XmlEventBookStorageExceptionThrowingStub(String filePath, String exportPath, String header) {
+            super(filePath, exportPath, header);
         }
 
         @Override

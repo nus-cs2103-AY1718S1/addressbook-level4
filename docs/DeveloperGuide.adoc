@@ -153,7 +153,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `CalendarView` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -174,7 +174,7 @@ _Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
+.  `Logic` uses the `GeneralBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
@@ -195,7 +195,8 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the Event Book data.
+* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` and `ObservableList<ReadOnlyEvent>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 === Storage component
@@ -209,6 +210,7 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+* can save the Event data in xml format and read it back.
 
 === Common classes
 
@@ -320,12 +322,21 @@ image::SetAliasActivityDiagram.png[width="200"]
 // end::alias[]
 //@@author
 
+// tag::event[]
 === Event mechanism
 
-The event mechanism will facilitated by `EventBook`, which resides inside `ModelManager`. It supports the additional
-feature of event management, which allows the user to add, edit, delete, or find event.
+The event mechanism is facilitated by `EventBook`, which resides inside `ModelManager`. It supports the additional
+features of event management, which allows the user to add, edit, delete, find, or select event.
+// end::event[]
 
-==== Find From All Text Fields Mechanism
+// tag::export[]
+=== Export mechanism
+
+The export mechanism is facilitated by `XmlFileStorage`, which resides inside `StorageManager`. It allows the user
+to export either their addressbook or eventbook in a excel format.
+//end::export[]
+
+=== Find From All Text Fields Mechanism
 
 The existing find command is enhanced to allow the user to search for text in multiple fields. Previously, users can
 only search for the contact by the name. However, with this mechanism, a user can find texts in the contact's name,
@@ -451,6 +462,7 @@ not be ordered.
 The following sequence diagram shows how the order operation works: //insert sequence diagram.
 // end::order[]
 
+// tag::remark[]
 === Remark mechanism
 
 The remark mechanism is facilitated by `Person`, which resides inside `Addressbook`. It supports adding a custom remark to individual contact
@@ -546,7 +558,9 @@ Person object. +
 **Pros:** User is given the choice to overwrite or save a new remark. +
 **Cons:** Harder to implement.
 
+// end::remark[]
 ---
+
 
 // tag::theme[]
 //@@author keloysiusmak

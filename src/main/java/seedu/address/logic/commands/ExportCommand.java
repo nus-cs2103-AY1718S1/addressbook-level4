@@ -1,19 +1,16 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-
 import java.io.IOException;
-import java.util.Arrays;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import org.xml.sax.SAXException;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
+//@@author kaiyu92
 /**
  * Export data into csv format
  */
@@ -37,25 +34,12 @@ public class ExportCommand extends Command {
         this.targetBook = targetBook;
     }
 
-    /**
-     * Returns true if a given string is a valid book name.
-     */
-    public static boolean isValidBookParameter(String targetBook) {
-        return Arrays.stream(BOOK_VALIDATION).anyMatch(book -> book.equals(targetBook.toLowerCase()));
-    }
-
     public static String getCommandWord() {
         return COMMAND_WORD;
     }
 
     @Override
     public CommandResult execute() throws CommandException, DuplicateUserException {
-        requireNonNull(model);
-        requireNonNull(targetBook);
-
-        if (!isValidBookParameter(targetBook)) {
-            throw new CommandException(Messages.MESSAGE_INVALID_BOOK_PARAMS);
-        }
 
         try {
             if (BOOK_VALIDATION[0].equals(targetBook)) {

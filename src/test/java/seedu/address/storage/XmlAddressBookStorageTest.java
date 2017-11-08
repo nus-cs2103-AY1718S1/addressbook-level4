@@ -21,7 +21,10 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 
 public class XmlAddressBookStorageTest {
-    private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlAddressBookStorageTest/");
+    private static final String TEST_DATA_FOLDER = FileUtil
+            .getPath("./src/test/data/XmlAddressBookStorageTest/");
+    private static final String HEADER = "Name,Phone,Address,Birthday,Email,Group,Remark,Tagged";
+    private static final String EXPORT_DATE = "TempAddressBook.csv";
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -35,8 +38,10 @@ public class XmlAddressBookStorageTest {
         readAddressBook(null);
     }
 
-    private java.util.Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws Exception {
-        return new XmlAddressBookStorage(filePath).readAddressBook(addToTestDataPathIfNotNull(filePath));
+    private java.util.Optional<ReadOnlyAddressBook> readAddressBook(String filePath)
+            throws Exception {
+        return new XmlAddressBookStorage(filePath, TEST_DATA_FOLDER + EXPORT_DATE, HEADER)
+                .readAddressBook(addToTestDataPathIfNotNull(filePath));
     }
 
     private String addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
@@ -64,8 +69,9 @@ public class XmlAddressBookStorageTest {
     @Test
     public void readAndSaveAddressBook_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
+        String exportPath = testFolder.getRoot().getPath() + "TempAddressBook.csv";
         AddressBook original = getTypicalAddressBook();
-        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath, exportPath, HEADER);
 
         //Save in new file and read back
         xmlAddressBookStorage.saveAddressBook(original, filePath);
@@ -112,7 +118,8 @@ public class XmlAddressBookStorageTest {
      */
     private void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) {
         try {
-            new XmlAddressBookStorage(filePath).saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath));
+            new XmlAddressBookStorage(filePath, TEST_DATA_FOLDER + EXPORT_DATE, HEADER)
+                    .saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }

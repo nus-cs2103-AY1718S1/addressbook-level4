@@ -20,6 +20,12 @@ public class UserPrefs {
     private String eventBookFilePath = "data/eventbook.xml";
     private String eventBookName = "MyEventBook";
 
+    private String addressbookExportedPath = "data/addressbook.csv";
+    private String addressbookHeader = "Name,Phone,Address,Birthday,Email,Group,Remark,Tagged";
+
+    private String eventbookExportedPath = "data/eventbook.csv";
+    private String eventbookHeader = "Title,Description,Location,Datetime";
+
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
         this.setAliasSettings();
@@ -85,6 +91,22 @@ public class UserPrefs {
         } catch (UnknownCommandException e) {
             throw new UnknownCommandException(e.getMessage());
         }
+    }
+
+    public String getAddressbookExportedPath() {
+        return addressbookExportedPath;
+    }
+
+    public String getAddressbookHeader() {
+        return addressbookHeader;
+    }
+
+    public String getEventbookExportedPath() {
+        return eventbookExportedPath;
+    }
+
+    public String getEventbookHeader() {
+        return eventbookHeader;
     }
 
     @Override
