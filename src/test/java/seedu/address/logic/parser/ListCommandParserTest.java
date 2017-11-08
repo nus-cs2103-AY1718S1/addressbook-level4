@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.*;
 
@@ -17,24 +18,53 @@ public class ListCommandParserTest {
     private ListCommandParser parser = new ListCommandParser();
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "criminal";
+    private static final String VALID_TAG_3 = "teammate";
+    private static final String VALID_TAG_4 = "family";
     private static final String INVALID_TAG_1 = "invalid";
+    private static final String INVALID_TAG_2 = "wrong";
+
+    private static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_1;
+    private static final String TAG_DESC_CRIMINAL = " " + PREFIX_TAG + VALID_TAG_2;
+    private static final String TAG_DESC_TEAMMATE = " " + PREFIX_TAG + VALID_TAG_3;
+    private static final String TAG_DESC_FAMILY = " " + PREFIX_TAG + VALID_TAG_4;
+    private static final String TAG_DESC_INVALID = " " + PREFIX_TAG + INVALID_TAG_1;
+    private static final String TAG_DESC_WRONG = " " + PREFIX_TAG + INVALID_TAG_2;
+    private static final String TAG_DESC_NOARGUMENT = " " + PREFIX_TAG;
 
     @Test
     public void parse_emptyArg_returnsListCommand() {
-        ListCommand expectedListCommand = new ListCommand();
-        assertParseSuccess(parser, " ", expectedListCommand);
+        assertParseSuccess(parser, ListCommand.COMMAND_WORD, new ListCommand());
+        assertParseSuccess(parser, ListCommand.COMMAND_WORD + "  ", new ListCommand());
     }
 
     @Test
     public void parse_validArgs_returnsListCommand() throws Exception{
-        // no leading and trailing whitespaces
-        Set<Tag> TagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
-        ListCommand expectedListCommand =
-                new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(TagSet)));
-        //assertParseSuccess(parser, " t/friends", expectedListCommand);
+        // Valid tags as arguments
+        Set<Tag> SingleTagSet_one = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1)));
+        Set<Tag> SingleTagSet_two = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_2)));
+        Set<Tag> MultipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
-        // multiple whitespaces between keywords
-        assertParseSuccess(parser, " t/friend t/criminal", expectedListCommand);
+        // List command with one argument
+        ListCommand expectedListCommand =
+                new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(SingleTagSet_one)));
+        assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_FRIEND, expectedListCommand);
+
+        expectedListCommand =  new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(SingleTagSet_two)));
+        assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_CRIMINAL, expectedListCommand);
+
+
+        // List command with multiple arguments
+        expectedListCommand =  new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(MultipleTagSet)));
+        assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_FRIEND + TAG_DESC_CRIMINAL, expectedListCommand);
+
+        MultipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_3), new Tag(VALID_TAG_4)));
+        expectedListCommand =  new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(MultipleTagSet)));
+        assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_FRIEND + TAG_DESC_TEAMMATE + TAG_DESC_FAMILY, expectedListCommand);
+
+        MultipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2), new Tag(VALID_TAG_3), new Tag(VALID_TAG_4)));
+        expectedListCommand =  new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(MultipleTagSet)));
+        assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_FAMILY + TAG_DESC_CRIMINAL + TAG_DESC_FRIEND + TAG_DESC_TEAMMATE, expectedListCommand);
+
     }
 
     @Test
@@ -42,11 +72,15 @@ public class ListCommandParserTest {
         Set<Tag> invalidTagSet = new HashSet<Tag>(Arrays.asList(new Tag(INVALID_TAG_1)));
         ListCommand expectedListCommand =
                 new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(invalidTagSet)));
-        assertParseSuccess(parser, " t/invalidTag", expectedListCommand);
+        assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_INVALID, expectedListCommand);
+
+        invalidTagSet = new HashSet<Tag>(Arrays.asList(new Tag(INVALID_TAG_2)));
+        expectedListCommand = new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(invalidTagSet)));
+        assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_WRONG, expectedListCommand);
     }
 
     @Test
     public void parse_noArgs_throwsParseException() {
-        assertParseFailure(parser, " t/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, ListCommand.COMMAND_WORD + TAG_DESC_NOARGUMENT, String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
     }
 }
