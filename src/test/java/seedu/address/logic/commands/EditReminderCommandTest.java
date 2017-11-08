@@ -1,11 +1,28 @@
 //@@author cqhchan
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_ASSIGNMENT;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_PROJECT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_PROJECT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_PROJECT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_PROJECT;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstReminderOnly;
+import static seedu.address.testutil.TypicalAccounts.getTypicalDatabase;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_REMINDER;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_REMINDER;
+import static seedu.address.testutil.TypicalReminders.getTypicalAddressBook;
+
 import org.junit.Test;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.EditReminderCommand.EditReminderDescriptor;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -15,17 +32,13 @@ import seedu.address.model.reminder.Reminder;
 import seedu.address.testutil.EditReminderDescriptorBuilder;
 import seedu.address.testutil.ReminderBuilder;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static seedu.address.logic.commands.CommandTestUtil.*;
-import static seedu.address.testutil.TypicalAccounts.getTypicalDatabase;
-import seedu.address.logic.commands.EditReminderCommand.EditReminderDescriptor;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_REMINDER;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_REMINDER;
-import static seedu.address.testutil.TypicalReminders.getTypicalAddressBook;
+
+
+
+
 
 public class EditReminderCommandTest {
-    
+
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalDatabase(), new UserPrefs());
 
     @Test
