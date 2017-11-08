@@ -181,7 +181,7 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        calendar = new Calendar(YearMonth.now());
+        calendar = new Calendar(YearMonth.now(),logic.getFilteredEventList());
         calendarPanel.getChildren().add(calendar.getView());
     }
 
