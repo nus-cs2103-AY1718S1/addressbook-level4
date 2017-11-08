@@ -20,6 +20,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindByAddressCommand;
 import seedu.address.logic.commands.FindByEmailCommand;
+import seedu.address.logic.commands.FindByNameCommand;
 import seedu.address.logic.commands.FindByPhoneCommand;
 import seedu.address.logic.commands.FindByTagCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -34,6 +35,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.VisualizeCommand;
+
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -98,6 +100,10 @@ public class AddressBookParser {
         case FindByPhoneCommand.COMMAND_WORD:
         case FindByPhoneCommand.COMMAND_ALIAS:
             return new FindByPhoneCommandParser().parse(arguments);
+
+        case FindByNameCommand.COMMAND_WORD:
+        case FindByNameCommand.COMMAND_ALIAS:
+            return new FindByNameCommandParser().parse(arguments);
 
         case FindByTagCommand.COMMAND_WORD:
         case FindByTagCommand.COMMAND_ALIAS:
