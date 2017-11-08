@@ -1,5 +1,5 @@
 # lauy99
-###### \java\seedu\address\logic\commands\ExpireCommandTest.java
+###### /java/seedu/address/logic/commands/ExpireCommandTest.java
 ``` java
 public class ExpireCommandTest {
 
@@ -40,7 +40,7 @@ public class ExpireCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\ExpireCommandParserTest.java
+###### /java/seedu/address/logic/parser/ExpireCommandParserTest.java
 ``` java
 public class ExpireCommandParserTest {
 
