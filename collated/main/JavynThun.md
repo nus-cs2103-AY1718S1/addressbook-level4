@@ -294,6 +294,7 @@ public class Occupation {
         return occupation.get();
     }
 ```
+
 ###### \java\seedu\address\model\person\Person.java
 ``` java
     public void setRemark(Remark remark) {
@@ -325,6 +326,7 @@ public class Occupation {
     }
 ```
 ###### \java\seedu\address\model\person\Remark.java
+
 ``` java
 /**
  *  Represents a Person's remark in the address book.
