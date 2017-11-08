@@ -97,7 +97,7 @@ public class EditReminderCommandTest {
 
         ReadOnlyReminder reminderInFilteredList =
             model.getFilteredReminderList().get(INDEX_FIRST_REMINDER.getZeroBased());
-        
+
         Reminder editedReminder = new ReminderBuilder(reminderInFilteredList).withTask(VALID_TASK_PROJECT).build();
         EditReminderCommand editReminderCommand = prepareCommand(INDEX_FIRST_REMINDER,
                 new EditReminderDescriptorBuilder().withTask(VALID_TASK_PROJECT).build());
@@ -127,7 +127,7 @@ public class EditReminderCommandTest {
         // edit reminder in filtered list into a duplicate in address book
         ReadOnlyReminder reminderInList =
             model.getAddressBook().getReminderList().get(INDEX_SECOND_REMINDER.getZeroBased());
-        
+
         EditReminderCommand editReminderCommand = prepareCommand(INDEX_FIRST_REMINDER,
                 new EditReminderDescriptorBuilder(reminderInList).build());
 
