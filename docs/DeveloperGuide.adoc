@@ -580,7 +580,10 @@ If arguments given do not comply with the correct format, ParseException will be
 // tag::importexport[]
 === Import function
 
-The import function supports importing of vCard files (.vcf).
+The import function supports importing of vCard files (.vcf) and xml files (.xml).
+
+[NOTE]
+The import function merges the contacts in the export files with the ones currently in the addressbook. If duplicate persons are found, Rubrika will inform the user of the number of duplicated contacts found.
 
 Firstly, the `ImportCommandParser` will create an new `ImportCommand` with a `FileInputSteam` containing the vCard file to be imported.
 
@@ -624,6 +627,29 @@ The contents are then read in this manner;
         ReadOnlyPerson toAdd = new Person(name, phone, email, address, remark, tagList);
         model.addPerson(toAdd);
 ----
+
+=== Export Function
+
+The export function is done by the `ExportCommand` class.
+
+After input validation in the `ExportCommandParser` class, the file path is passed to the `ExportCommand` class.
+
+In the `ExportCommand` class, depending on the file type requested by the user, a different method will be used to create the export file.
+
+If the file defined by the user uses a XML (.xml) file extension then the addressbook is exported into a XML file by using the static method `saveDataToFile` in the `XmlFileStorage` class.
+
+If the file defined by the user uses a vCard (.vcf) file extension, then the addressbook is exported dinto a vCard file by using the static method `saveDataToFile` in the `VcfExport` class.
+
+==== Design Considerations
+
+**Aspect**: Choice of export file types. +
+**Alternative 1 (current choice)**: vCard and XML files are supported +
+**Pros**: Easy to implement as XML file creation is already built into Address Book 4. vCard files are also relatively easy to create. +
+**Cons**: Limited files types supported +
+**Alternative 2**: Include .csv file types +
+**Pros**: More file types to choose from for the users. +
+**Cons**: Relatively harder to create a csv export file.
+
 // end::importexport[]
 
 === FindTag Function
