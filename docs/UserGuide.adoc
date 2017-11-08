@@ -463,16 +463,70 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::addpic[]
+=== Adding a profile picture to a person : `addpic`
+
+Adds a user specified profile picture to the specified person. +
+Format: 'addpic [INDEX]'
+
+****
+* Adds a profile picture to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* If no index is specified, the command acts on the currently selected person.
+****
+
+Examples:
+
+* `list` +
+`addpic 2` +
+Adds a picture to the 2nd person in masterlist.
+* `find Betsy` +
+`addpic 1` +
+Adds a profile picture to the 1st person from the results of the `find` command.
+* `select 3` +
+`addpic`
+Adds a profile picture to the 3rd person from the masterlist in the address book.
+// end::addpic[]
+
+// tag::delpic[]
+=== Deleting the profile picture of a person : `delpic`
+
+Removes the profile picture of the specified person. +
+Format: 'delpic [INDEX]'
+
+****
+* Removes the profile picture of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* If no index is specified, the command acts on currently selected person.
+****
+
+Examples:
+
+* `list` +
+`delpic 2` +
+Deletes the picture of the 2nd person in masterlist.
+* `find Betsy` +
+`delpic 1` +
+Deletes the profile picture of the 1st person from the results of the `find` command.
+* `select 3` +
+`delpic`
+Deletes the profile picture of the 3rd person from the masterlist in the address book.
+// end::delpic[]
+
 // tag::setpath[]
 === Setting the path to local profile pictures folder : `setpath`
 
-Sets the folder location to access debtors profile pictures. +
+Sets the folder location to access and import debtors profile pictures. +
 Format: `setpath`
 
 Examples:
 
 * `setpath C:/Users/acer/Desktop/SE/profilepic/` +
+* `setpath C:\Users\acer\Desktop\SE\profilepic\` +
 * `setpath out/production/resources/images/` +
+* `setpath out\production\resources\images\` +
 // end::setpath[]
 
 === Clearing all entries : `clear`
@@ -577,8 +631,13 @@ e.g.`select 2`
 e.g. `nearby 2`
 * *Sort* : `sort [ORDERING]` +
 e.g. `sort debt`
+* *Add Picture*  : `addpic [INDEX]` +
+e.g. `addpic 2`
+* *Delete Picture*  : `delpic [INDEX]` +
+e.g. `delpic 2`
 * *Setpath* : `setpath`
 e.g. `setpath C:/Users/acer/Desktop/SE/profilepic/`
+e.g. `setpath C:\Users\acer\Desktop\SE\profilepic\`
 * *Filter* : `filter TAG1 TAG2 ...` +
 e.g `filter friendly cooperative`
 * *Undo* : `undo`
@@ -623,15 +682,15 @@ e.g `filter friendly cooperative`
 * List of people who have overdue debts. (since v1.4)
 * A progress bar to indicate how much of the person's debt has been paid off. (since v1.4)
 
+* Specifically import and save profile pictures to existing database of the application. (since v1.5)
+
 == Features to be included by `V2.0`
 
-//[V1.5]
 * Different appearance themes.
 * A feature to export a person's contact in another format.
 * `Help` command that displays screenshots of positive examples.
 * Able to view the last login time.
 * Able to impose different periods of ban on a specified person in the blacklist
-//[end of V1.5]
 * Two FA authentication for login and every other important actions.
 * Validity checks on client's personal information.
 * Email notifications when the user's account in logged in from an unknown device.
