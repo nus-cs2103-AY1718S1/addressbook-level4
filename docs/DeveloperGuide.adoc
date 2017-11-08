@@ -670,7 +670,7 @@ The `DeleteEventCommand` then creates a `CommandResult` object and returns it to
 
 // end::deleteE[]
 
-// tag:: showP[]
+// tag::showP[]
 === ShowParticipants mechanism
 
 The show participants mechanism is facilitated by `PersonJoinsEventsPredicate` and `LogicManager`. This command will help users to find participants of an event. For achieving this function, `PersonJoinsEventsPredicate` will filter the person list. This command inherits from `Command`.
@@ -702,7 +702,6 @@ The show participants command object creates `CommandResult` object and returns 
 **Alternative 2:** Show participants of the event with the specified name. +
 **Pros:** Users can use the command without listing events. +
 **Cons:** Users need more time to type if the event name is too long. +
-
 // end::showP[]
 
 // tag::selectE[]
