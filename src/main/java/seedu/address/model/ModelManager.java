@@ -146,7 +146,7 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author eldonng
     @Override
     public void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException,
-            EmptyAddressBookException{
+            EmptyAddressBookException {
         try {
             person.setPin();
             sort(SortCommand.ARGUMENT_NAME);
@@ -289,7 +289,9 @@ public class ModelManager extends ComponentManager implements Model {
         sortedList = getFilteredPersonList().filtered(PREDICATE_SHOW_UNPINNED_PERSONS).sorted(comparator);
         newList.addAll(sortedList);
 
-        if (newList.isEmpty()) throw new EmptyAddressBookException();
+        if (newList.isEmpty()) {
+            throw new EmptyAddressBookException();
+        }
 
         return newList;
     }
