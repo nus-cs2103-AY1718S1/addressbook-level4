@@ -2,10 +2,15 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.io.IOException;
+import java.util.Optional;
+
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.commands.LoadCommand;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 
+import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.storage.XmlAddressBookStorage;
 
 /**
@@ -13,7 +18,7 @@ import seedu.address.storage.XmlAddressBookStorage;
  */
 public class LoadCommandParser implements Parser<LoadCommand> {
 
-    private String filePath = "data/";
+    private final String filePath = "data/";
 
     /**
      * Parses the given {@code String} of arguments in the context of the LoadCommand
@@ -32,8 +37,17 @@ public class LoadCommandParser implements Parser<LoadCommand> {
 
         XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(filePathWithFileName);
 
-        return new LoadCommand(addressBookStorage);
+        Optional<ReadOnlyAddressBook> inputtedAddressBook;
+        try {
+            inputtedAddressBook = addressBookStorage.readAddressBook();
+        } catch (DataConversionException e) {
+            throw new ParseException(LoadCommand.MESSAGE_ERROR_LOADING_ADDRESSBOOK);
+        } catch (IOException e) {
+            throw new ParseException(LoadCommand.MESSAGE_ERROR_LOADING_ADDRESSBOOK);
+        }
 
+        return new LoadCommand(inputtedAddressBook.orElseThrow(() -> new ParseException(
+            LoadCommand.MESSAGE_ERROR_LOADING_ADDRESSBOOK)));
     }
 
 }
