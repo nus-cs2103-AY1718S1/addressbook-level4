@@ -8,7 +8,6 @@ import org.junit.Test;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -21,13 +20,12 @@ public class AutocompleteManagerTest {
         AutocompleteManager manager = new AutocompleteManager();
 
         // test commands which can be matched by 1 character
-        assertEquals(manager.attemptAutocomplete("f"), FindCommand.COMMAND_WORD);
         assertEquals(manager.attemptAutocomplete("u"), UndoCommand.COMMAND_WORD);
         assertEquals(manager.attemptAutocomplete("r"), RedoCommand.COMMAND_WORD);
 
         // test commands which can be matched by 1 character but 2 is supplied
         assertEquals(manager.attemptAutocomplete("de"), DeleteCommand.COMMAND_WORD);
-        assertEquals(manager.attemptAutocomplete("s"), SelectCommand.COMMAND_WORD);
+        assertEquals(manager.attemptAutocomplete("se"), SelectCommand.COMMAND_WORD);
 
         // test commands which can be matched by 2 characters
         assertEquals(manager.attemptAutocomplete("ed"), EditCommand.COMMAND_WORD);
