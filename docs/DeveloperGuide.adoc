@@ -369,6 +369,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::sort[]
 === Sorting
 The sort mechanism is facilitated by `SortCommand`, which extends `UndoableCommand`.
 It supports the sorting of persons in the address book by the `PREFIX` specified.
@@ -384,6 +385,15 @@ image::SortSequenceDiagram.png[width="800"]
 The execution of `sort` results in the reordering of the in-memory `UniquePersonList`.
 However, the change is transient and the order of the list will return to its
 original starting order as when the App initializes.
+
+=== Finding
+The finding mechanism is facilitated by `FindCommand`, which extends `Command`.
+It supports finding a list of specific persons by offering any substring of person's contact field
+(including name, by default, phone numbers, email, address or even their tags) with `PREFIX` specified.
+
+Finding a person is facilitated using PartialSearchUtil which examine whether a base list contains any word whose
+substring appears in the target list. Mapping each attribute to the find Parser and returns a list of persons
+matching find condition.
 
 ==== Design Considerations
 
@@ -407,7 +417,7 @@ any future changes to these classes may be more contrived and difficult.
 **Alternative 2:** Save address book after every sort +
 **Pros:** Sorting order is preserved after program exits. +
 **Cons:** The original order of the address book is lost during every sort.
-
+// end::sort[]
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

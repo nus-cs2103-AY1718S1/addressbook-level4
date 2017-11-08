@@ -6,9 +6,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Bamboo
 Bamboo is a desktop address book application developed as part of a Software Engineering module requirement. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B4/main/edit/collate/collated/main/jiangLingshuo.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B4/main/blob/collate/collated/test/jiangLingshuo.md[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Group Function
+=== Enhancement Added: Group Function&Find Function
 
 ==== External behavior
 
@@ -17,13 +17,55 @@ Bamboo is a desktop address book application developed as part of a Software Eng
 
 include::../UserGuide.adoc[tag=undoredo]
 
+=== Locating persons by name, address or phone number: `find` (Since V1.4)
+
+Finds persons whose names or name initials or address or phone number contain any of the given keywords. +
+Format: `find [n/] [p/] [e/] [a/] [t/] KEYWORD [MORE_KEYWORDS]` +
+Alias: `f`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The search can be done with initials. e.g. `AY` will match `Alex Yeoh`
+* The search can be done with partial string. e.g. `Ber` will match `Bernice Yu`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Name, phone number and addresses are searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `find John` +
+Returns `john` and `John Doe`
+* `find Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+* `find AY` +
+Returns `Alex Yeoh` whose name initial is `AY`
+* `find Ber` +
+Returns `Bernice Yu` whose name contains the partial string `Ber`
+* `find p/83537423` +
+Returns any person with phone number `83537423`
+* `find a/earth` +
+Returns any person with address containing `earth`
+* `find e/gmail` +
+Returns any person with email containing keyword `gmail`
+* `find t/friends` +
+Returns any person with tags containing keyword `friends`
+
 #End of Extract#
 
 ---
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+* Having a group feature can be regarded as a new framework under our current project.
+It is different from tag system although both serve as linking one person with a particular
+attribute. However, with group implementation, this software can be furthered evolved with more group
+applications such as group meeting tasks
+
+* Enhancing find functions is essential for a large size address book. By allowing multiple ways of finding,
+users could actually access the contacts by remembering anything, names, emails, address... and even
+partial name searching is supported
 
 ==== Implementation
 
@@ -32,18 +74,20 @@ include::../UserGuide.adoc[tag=undoredo]
 
 include::../DeveloperGuide.adoc[tag=undoredo]
 
+
+
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed: Enhance add command so that can take in a incomplete field and propose for completion
 
-{Explain similar to the Undo/Redo feature above.}
+Support adding a person by a few fields included with `PREFIX`, and search for persons with empty field
+as well as propose for completion to the user every time address book is launched
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Write Test Case Group Test (Pull requests https://github.com/CS2103AUG2017-W09-B4/main/pull/84[#36])
 
 == Project:
 
