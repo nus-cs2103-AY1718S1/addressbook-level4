@@ -164,8 +164,6 @@ public class Autocompleter {
 
             if (lastTwoCharactersArePrefix(commandBoxText)) {
                 setIndexToOneIfNeeded();
-                System.out.println(possibleAutocompleteResults.size());
-                System.out.println(missingPrefixes.size());
                 if (missingPrefixes.size() > possibleAutocompleteResults.size()) {
                     possibleAutocompleteResults = missingPrefixes;
                 }
