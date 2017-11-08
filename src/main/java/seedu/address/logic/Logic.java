@@ -28,11 +28,6 @@ public interface Logic {
     ObservableList<ReadOnlyInsurance> getFilteredInsuranceList();
     //@@author
 
-    //@@author RSJunior37
-    /** Returns an unmodifiable view of the list of insurances */
-    ObservableList<ReadOnlyInsurance> getInsuranceList();
-    //@@author
-
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
 }
