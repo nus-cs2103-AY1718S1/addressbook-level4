@@ -37,34 +37,6 @@ include::../DeveloperGuide.adoc[tag=undoredo]
 
 ---
 
-=== Enhancement: Edit an event
-
-==== External behavior
-
----
-#Start of Extract [from: User Guide]#
-
-include::../UserGuide.adoc[tag=editE]
-
-#End of Extract#
-
----
-
-==== Justification
-
-Users should be able to edit an event in case there are some changes of this event
-
-==== Implementation
-
----
-#Start of Extract [from: Developer Guide]#
-
-include::../DeveloperGuide.adoc[tag=]
-
-#End of Extract#
-
----
-
 === Enhancement: Interact events and persons
 
 ==== External behavior

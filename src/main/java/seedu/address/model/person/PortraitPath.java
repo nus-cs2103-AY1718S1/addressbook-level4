@@ -16,7 +16,7 @@ public class PortraitPath {
             "The portrait path should be alphanumeric string and '/', with valid suffix.\n"
             + "The application only supports .png and .jpg portrait files";
 
-    public static final String PORTRAIT_VALIDATION_REGEX = "[A-Z]:[\\w\\s/]+\\.(?:png$|jpg$)";
+    public static final String PORTRAIT_VALIDATION_REGEX = "[A-Z]:[-\\w\\s/]+\\.(?:png$|jpg$)";
 
     public static final String DEFAULT_PORTRAIT_PATH = "/images/sample.png";
     public static final String FILE_PREFIX = "file:///";
