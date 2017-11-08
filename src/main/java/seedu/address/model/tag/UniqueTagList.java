@@ -3,8 +3,10 @@ package seedu.address.model.tag;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javafx.collections.FXCollections;
@@ -138,5 +140,18 @@ public class UniqueTagList implements Iterable<Tag> {
             super("Operation would result in duplicate tags");
         }
     }
-
+    /**
+     * Remove the tag in a taglist
+     */
+    public UniqueTagList removeTag(String str) {
+        List<Tag> list = new ArrayList<Tag>();
+        for (Tag tag: internalList) {
+            if (!tag.isSame(str)) {
+                list.add(tag);
+            }
+        }
+        Set<Tag> replacement = new HashSet<Tag>(list);
+        this.setTags(replacement);
+        return this;
+    }
 }

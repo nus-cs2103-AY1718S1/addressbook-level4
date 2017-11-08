@@ -21,6 +21,9 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindByAddressCommand;
+import seedu.address.logic.commands.FindByEmailCommand;
+import seedu.address.logic.commands.FindByNameCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -28,7 +31,10 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.AddressContainsKeywordsPredicate;
+import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -77,11 +83,27 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_find() throws Exception {
+    public void parseCommand_findbyName() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+        FindByNameCommand command = (FindByNameCommand) parser.parseCommand(
+                FindByNameCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindByNameCommand(new NameContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommand_findbyAddress() throws Exception {
+        List<String> keywords = Arrays.asList("Clemeti", "Chinatown", "street");
+        FindByAddressCommand command = (FindByAddressCommand) parser.parseCommand(
+                FindByAddressCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindByAddressCommand(new AddressContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommand_findbyEmail() throws Exception {
+        List<String> keywords = Arrays.asList("foo@example.com", "bar@gmail.com", "baz@bazzz.com");
+        FindByEmailCommand command = (FindByEmailCommand) parser.parseCommand(
+                FindByEmailCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindByEmailCommand(new EmailContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test

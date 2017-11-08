@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= H.M.U v1.3 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-F10-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103-F10-B2`      Since: `Sep 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -303,6 +303,26 @@ The following activity diagram summarize what happens inside the `UndoRedoStack`
 
 image::UndoRedoActivityDiagram.png[width="200"]
 
+=== Locate mechanism
+
+The Locate Command gets the last shown list, which is the current list of persons being shown before using this command.
+
+Locate Command only deals with the GUI part. When specified an index, it retrieves the person to be located and send a new `LocateCommandEvent` to `EventCenter`.
+
+`BrowserPanel` takes such an event message and uses Google Map to search the person's address when receiving a LocateCommandEvent.
+----
+public class BrowserPanel extends UiPart<Region> {
+    @Subscribe
+    private void handleLocateCommandEvent(LocateCommandEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadLocationPage(event.getPerson());
+    }
+}
+
+----
+
+loadLocationPage adds the person's address info after the searching URL of Google map to get the URL of searching the specified person's address and loads the relevant page.
+
 ==== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
@@ -344,6 +364,62 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+=== Change Password Mechanism
+The Change Password mechanism resides inside `LogicManager`.
+It supports the changing of password which requires the previous username
+and password. The command will not be inherited from `UndoableCommand`. This
+is due to security reasons and users will not be able to `undo` their password
+change. Users have to change the password again through the command `changepw`.
+
+As `ChangePasswordCommand` does not inherit from `UndoableCommand`, it will
+inherit from `Command` instead. The following diagram shows the inheritance
+diagram for commands:
+
+image::ChangePasswordCommandInheritance.png[width="800"]
+
+As you can see from the diagram, `ChangePasswordCommand` does not inherit from `UndoableCommand`
+just like `find` and `undo`.
+
+Below is the sequence diagram of the `ChangePasswordCommand`.
+
+image::ChangePasswordSequenceDiagram.png[width="800"]
+
+Firstly, the `changepw` command is typed into the Command Line. This starts up the `LogicManager` which
+then parses the command using `AddressBookParser`. It then executes using `model`, which retrieves
+the `UserPrefs`. It then changes the password in the `preferences.json` file after hashing it using
+SHA-256 in the `changePassword()` method.
+
+==== Design Considerations
+*Aspect:* To hash or not to hash passwords
+
+*Alternative 1 (current choice):* Hash the password
+
+*Pros:* Added level of security as password is hashed.
+
+*Cons:* Slightly more troublesome to implement hashing algorithm.
+
+*Alternative 2*: Don't hash the password
+
+*Pros:* Straightforward
+
+*Cons:* Less security
+
+*Aspect:* To include username or not to include in `changepw`
+
+*Alternative 1 (current choice):* Require correct username to change password
+
+*Pros:* For future development, where many users can use a single app using different
+usernames.
+
+*Cons:* User might forget username.
+
+*Alternative 2*: Does not require username to change password
+
+*Pros:* Very straightforward (`changepw oldpassword newpassword`)
+
+*Cons:* Might have to change a lot of components if want to add a username in
+the later part of the project.
 
 === Logging
 
@@ -729,10 +805,57 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |search for the user based on certain keywords|find contacts easily
+
+|`* * *` |user |know how to use the commands  |to get familiar with the app
+
+|`* * *` |user with few contacts |sort my contacts by name |find my contacts easily by scrolling
+
+|`* * *` |user |save my contacts both online and offline |quit the project without fear of losing my contacts
+
+|`* * *` |user |exit the program |
+
+|`* * *` |user |list my contacts |see all my entries
+
+|`* * *` |user |edit my contacts |update any changes to my contacts
+
+|`* *` |user |double-confirm the delete command and clear command|avoid accidental commands
+
+|`* *` |user |view my command history |recall what changes I have made
+
+|`* *` |user |add a photo beside my contact |associate my contact using their photos
+
+|`* *` |user |export a contact |share the contact with someone
+
+|`* *` |user |find all contacts with a particular tag |locate all details of the group without having to go through the entire list
+
+|`* *` |experienced user |enter a command shortcut |save time
+
+|`* *` |user |open the program with a keyboard shortcut |save time
+
+|`* *` |new user |import my contacts from other existing contact lists |save time by not needing to manually add my contacts again
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user |have a backup file and a backup command |store the data to avoid accidental data loss
+
+|`* *` |user |set up a login password |prevent someone else from looking at my contacts just by opening the application
+
+|`* *` |user |see a network of my contacts' addresses on Google Maps |see where all my contacts live on a map
+
+|`* *` |user |undo a command |remove any unwanted changes I might accidentally make
+
+|`* *` |user |redo an undone command |reapply the changes that I might accidentally undo
+
+|`* *` |user with many contacts |get the person who was searched by the user for the most times |get the info of frequent contacts easily
+
+|`*` |user |link my contacts to social media platforms |visit my friend's profile easily
+
+|`*` |user |customize the GUI |personalize its aesthetics to my liking
+
+|`*` |user with many contacts |sort persons by name |locate a person easily
 |=======================================================================
+
 
 {More to be added}
 
@@ -742,7 +865,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+== Use case: Delete person
 
 *MSS*
 
@@ -767,7 +890,55 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+== Use case: Sort person
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to sort contacts by name
+4. AddressBook sorts contacts by name
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+== Use case: Help
+
+*MSS*
+
+1. User requests help
+2. AddressBook opens a new help window
++
+Use case ends.
+
+[discrete]
+== Use case: Edit person
+
+*MSS*
+
+1. User requests to edit person
+2. User types in new particulars
+3. AddressBook edits contact
++
+Use case ends.
+
+*Extensions*
+l
+[none]
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
@@ -775,11 +946,15 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The program should be able to start up within 5 seconds.
+.  The program should be able to respond to any queries within 1 second.
 
-{More to be added}
 
 [appendix]
 == Glossary
+
+Tag
+--> A short phrase to describe your contact
 
 [[mainstream-os]]
 Mainstream OS
@@ -798,16 +973,18 @@ A contact detail that is not meant to be shared with others
 [appendix]
 == Product Survey
 
-*Product Name*
+Handy Address Book
 
-Author: ...
+Author: Doctor Java
 
 Pros:
 
-* ...
-* ...
+* Functions Well
+* Custom Categories
+* Import/Export Contacts
+* Label Printing
+* Google Contacts Sync
 
 Cons:
 
-* ...
-* ...
+* Costly
