@@ -1,6 +1,5 @@
 package seedu.address.testutil;
 
-//@@author caoliangnus
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -14,6 +13,7 @@ import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.TimeSlot;
 import seedu.address.model.util.SampleDataUtil;
 
+//@@author caoliangnus
 /**
  * A utility class to help with building Lesson objects.
  */

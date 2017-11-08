@@ -1,7 +1,5 @@
 package systemtests;
 
-//@@author caoliangnus
-
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import org.junit.Test;
@@ -9,7 +7,7 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.ColorKeywordCommand;
 import seedu.address.model.Model;
-
+//@@author caoliangnus
 public class ColorEnableSystemTest extends AddressBookSystemTest {
     @Test
     public void colorEnable() {

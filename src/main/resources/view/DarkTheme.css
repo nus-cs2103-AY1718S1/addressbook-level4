@@ -351,6 +351,7 @@
     -fx-text-fill: #F70D1A;
 }
 
+/*@@author caoliangnus*/
 #commandTextField {
     -fx-background-color: transparent #383838 transparent #383838;
     -fx-background-insets: 0;

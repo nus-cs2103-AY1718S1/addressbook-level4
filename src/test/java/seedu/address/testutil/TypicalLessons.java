@@ -1,6 +1,5 @@
 package seedu.address.testutil;
 
-//@@author caoliangnus
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CLASSTYPE_CS2101;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CLASSTYPE_MA1101R;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_CS2101;
@@ -24,6 +23,7 @@ import seedu.address.model.module.Code;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 
+//@@author caoliangnus
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */

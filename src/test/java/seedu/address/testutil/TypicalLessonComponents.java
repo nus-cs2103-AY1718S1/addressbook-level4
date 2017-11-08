@@ -1,9 +1,8 @@
 package seedu.address.testutil;
 
-//@@author caoliangnus
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.module.Code;
-
+//@@author caoliangnus
 /**
  * A utility class containing a list of {@code LessonComponent} objects to be used in tests.
  */
