@@ -35,13 +35,15 @@ public class WidestPath extends Dijkstra {
                 break;
             }
             dataU.fn = null;
-            if (dataU.edgeFromParent != null)
+            if (dataU.edgeFromParent != null) {
                 edgeOn(dataU.edgeFromParent);
+            }
             for (Edge e : u.getEachLeavingEdge()) {
                 Node v = e.getOpposite(u);
                 Data dataV = v.getAttribute(resultAttribute);
-                if (dataV.fn == null)
+                if (dataV.fn == null) {
                     continue;
+                }
                 double tryDist = Math.max(dataV.distance, Math.min(dataU.distance, getLength(e, v)));
                 if (tryDist > -dataV.fn.getKey()) {
                     dataV.edgeFromParent = e;

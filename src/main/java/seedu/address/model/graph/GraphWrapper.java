@@ -40,7 +40,7 @@ public class GraphWrapper {
     private boolean rebuildNext;
 
     private final String nodeAttributeNodeLabel = "ui.label";
-    private final String nodeAttributeCE = "ce";
+    private final String nodeAttributeCe = "ce";
     private final String nodeAttributePerson = "Person";
 
     private GraphWrapper() {
@@ -205,7 +205,7 @@ public class GraphWrapper {
                 String edgeLabel = relationship.getName().toString() + " "
                         + relationship.getConfidenceEstimate().toString();
                 edge.addAttribute(nodeAttributeNodeLabel, edgeLabel);
-                edge.addAttribute(nodeAttributeCE, relationship.getConfidenceEstimate().value);
+                edge.addAttribute(nodeAttributeCe, relationship.getConfidenceEstimate().value);
             }
         }
 
@@ -245,7 +245,7 @@ public class GraphWrapper {
      * @return the number of nodes in the path between the two given people.
      */
     public int highlightShortestPath(ReadOnlyPerson from, ReadOnlyPerson to) {
-        WidestPath widestPath = new WidestPath(Dijkstra.Element.EDGE, null, nodeAttributeCE);
+        WidestPath widestPath = new WidestPath(Dijkstra.Element.EDGE, null, nodeAttributeCe);
         Node fromNode;
         Node toNode;
 
