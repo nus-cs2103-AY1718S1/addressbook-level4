@@ -16,7 +16,7 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data" + File.separator + "addressbook.xml";
     private String addressBookName = "MyAddressBook";
-    private String addressBookTheme = "css/DarkTheme.css";
+    private String addressBookTheme = "/css/DarkTheme.css"; //Sets the default theme to DarkTheme
 
     public UserPrefs() {
         this.setGuiSettings(DEFAULT_WIDTH, DEFAULT_HEIGHT, 0, 0);

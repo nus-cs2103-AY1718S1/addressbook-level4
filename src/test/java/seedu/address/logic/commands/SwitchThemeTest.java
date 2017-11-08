@@ -10,6 +10,8 @@ import org.junit.Test;
 import seedu.address.commons.events.ui.SwitchThemeEvent;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
+//@@author junyango
+
 public class SwitchThemeTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();

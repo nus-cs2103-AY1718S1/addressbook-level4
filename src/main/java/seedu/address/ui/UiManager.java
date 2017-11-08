@@ -24,7 +24,6 @@ import seedu.address.model.UserPrefs;
 public class UiManager extends ComponentManager implements Ui {
 
     public static final String ALERT_DIALOG_PANE_FIELD_ID = "alertDialogPane";
-
     public static final String FILE_OPS_ERROR_DIALOG_STAGE_TITLE = "File Op Error";
     public static final String FILE_OPS_ERROR_DIALOG_HEADER_MESSAGE = "Could not save data";
     public static final String FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE = "Could not save data to file";
@@ -56,7 +55,6 @@ public class UiManager extends ComponentManager implements Ui {
             mainWindow = new MainWindow(primaryStage, config, prefs, logic);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
-            mainWindow.getRoot().getStylesheets().add(prefs.getAddressBookTheme()); //initialize themes from json prefs
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));

@@ -89,6 +89,7 @@ public class MainWindow extends UiPart<Region> {
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
+        initializeThemes();
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -131,7 +132,6 @@ public class MainWindow extends UiPart<Region> {
             }
         });
     }
-
     /**
      * Fills up all the placeholders of this window.
      */
@@ -272,6 +272,26 @@ public class MainWindow extends UiPart<Region> {
 
     //@@author junyango
 
+    /**
+     * Initializes theme upon start up according to preferences.json file (last saved)
+     */
+    private void initializeThemes() {
+        getRoot().getStylesheets().clear();
+        if (prefs.getAddressBookTheme().equals(darkTheme)) {
+            getRoot().getStylesheets().add(darkTheme);
+            getRoot().getStylesheets().add(darkExtension);
+            prefs.setAddressBookTheme(darkTheme);
+        } else {
+            getRoot().getStylesheets().add(brightTheme);
+            getRoot().getStylesheets().add(brightExtension);
+            prefs.setAddressBookTheme(brightTheme);
+        }
+    }
+
+    /**
+     * Handles the event for theme changing
+     * @param event
+     */
     @Subscribe
     private void handleThemeChanged(SwitchThemeEvent event) {
         if (prefs.getAddressBookTheme() == darkTheme) {

@@ -74,6 +74,12 @@ public class JsonUserPrefsStorageTest {
         assertEquals("some name", json.getUserPrefsFilePath());
     }
 
+    @Test
+    public void getUserPrefsAddressBookTheme_success_checkCorrectness() {
+        JsonUserPrefsStorage json = new JsonUserPrefsStorage("some name", "some theme");
+        assertEquals("some theme" , json.getAddressBookTheme());
+    }
+
     private Optional<UserPrefs> readUserPrefs(String userPrefsFileInTestDataFolder) throws DataConversionException {
         String prefsFilePath = addToTestDataPathIfNotNull(userPrefsFileInTestDataFolder);
         return new JsonUserPrefsStorage(prefsFilePath).readUserPrefs(prefsFilePath);
