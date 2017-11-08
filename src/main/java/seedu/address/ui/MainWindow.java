@@ -246,6 +246,8 @@ public class MainWindow extends UiPart<Region> {
     @FXML @Subscribe
     private void handleTabEvent(JumpToTabRequestEvent event) {
         logic.setActiveList(event.targetIndex == INDEX_SECOND_TAB.getZeroBased());
+        logger.info("Active list now set to " + (event.targetIndex == INDEX_SECOND_TAB.getZeroBased() ?
+                "completed parcels list." : "uncompleted parcels list."));
     }
     //@@author
 

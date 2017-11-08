@@ -80,8 +80,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void setActiveList(boolean isCompleted) {
         activeParcels = isCompleted ? completedParcels : uncompletedParcels;
-        logger.info("Active list now set to " + (isCompleted ? "completed parcels list.":
-                "uncompleted parcels list."));
     }
     //@@author
 
