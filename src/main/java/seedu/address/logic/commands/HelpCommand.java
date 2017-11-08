@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.model.commandidentifier.CommandIdentifier;
+import seedu.address.model.person.Country;
 
 /**
  * Format full help instructions for every command for display.
@@ -138,6 +139,10 @@ public class HelpCommand extends Command {
 
         case UndoCommand.COMMAND_WORD:
             commandResult = UndoCommand.MESSAGE_USAGE;
+            break;
+
+        case Country.COMMAND_WORD:
+            commandResult = Country.getCodeList();
             break;
 
         default:

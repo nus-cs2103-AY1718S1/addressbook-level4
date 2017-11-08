@@ -11,11 +11,16 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Phone {
 
+    /**
+     * Message for both invalid phone numbers and invalid country codes (both are scanned in same regex)
+     */
     public static final String MESSAGE_PHONE_CONSTRAINTS =
             "Phone numbers should be 4-15 digits long, and may only contain numbers,"
-            + "with an optional country code prefix. Example: '97531', '+65 98765432'";
-    public static final String MESSAGE_COUNTRY_CONSTRAINTS =
-            "Country codes can only contain numbers, and should be 1-4 digits long";
+            + "with an optional country code prefix. Example: '97531', '+65 98765432' \n"
+            + "Only valid codes belonging to current states will be accepted. \n"
+            + "Please note that current version does not yet support codes with prefix '1-' or '44-', "
+            + "support expected in version 2.0. Thank you for your understanding.";
+
     // without prefix
     public static final String CODE_VALIDATION_REGEX = "\\d{1,5}";
     private static final String PHONE_VALIDATION_REGEX = "\\d{4,16}";
@@ -55,17 +60,6 @@ public class Phone {
         }
     }
 
-    /**
-     * Checks if country code is valid for use.
-     */
-    /*
-    public String validCode(String trimmedCode) throws IllegalValueException {
-        if (!isValidCode(trimmedCode)) {
-            throw new IllegalValueException(MESSAGE_COUNTRY_CONSTRAINTS);
-        }
-        return trimmedCode;
-    }
-    */
     /**
      * Returns true if a given string is a valid person country code.
      */
