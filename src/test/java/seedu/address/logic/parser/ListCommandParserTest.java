@@ -18,8 +18,6 @@ import seedu.address.model.tag.Tag;
 
 public class ListCommandParserTest {
 
-    private ListCommandParser parser = new ListCommandParser();
-
     private static final String INVALID_TAG_1 = "invalid";
     private static final String INVALID_TAG_2 = "wrong";
     private static final String VALID_TAG_1 = "friend";
@@ -34,6 +32,8 @@ public class ListCommandParserTest {
     private static final String TAG_DESC_NOARGUMENT = " " + PREFIX_TAG;
     private static final String TAG_DESC_TEAMMATE = " " + PREFIX_TAG + VALID_TAG_3;
     private static final String TAG_DESC_WRONG = " " + PREFIX_TAG + INVALID_TAG_2;
+
+    private ListCommandParser parser = new ListCommandParser();
 
     @Test
     public void parse_emptyArg_returnsListCommand() {

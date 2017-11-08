@@ -127,9 +127,9 @@ public class ListCommandTest {
      * return a new PersonContainsKeywordsPredicate with input tag
      */
     private PersonContainsKeywordsPredicate createNewPersonPredicateForSingleTag(Tag tag) throws Exception {
-        Set<Tag> SingleTagSet = new HashSet<Tag>(Arrays.asList(tag));
+        Set<Tag> singleTagSet = new HashSet<Tag>(Arrays.asList(tag));
         PersonContainsKeywordsPredicate newPredicate = new PersonContainsKeywordsPredicate(new
-                ArrayList<>(SingleTagSet));
+                ArrayList<>(singleTagSet));
         return newPredicate;
     }
 
@@ -137,9 +137,9 @@ public class ListCommandTest {
      * return a new PersonContainsKeywordsPredicate with list of input tags
      */
     private PersonContainsKeywordsPredicate createNewPersonPredicateForMultipleTags(List<Tag> tagList) {
-        Set<Tag> MultipleTagSet = new HashSet<Tag>(tagList);
+        Set<Tag> multipleTagSet = new HashSet<Tag>(tagList);
         PersonContainsKeywordsPredicate newPredicate = new PersonContainsKeywordsPredicate(new
-                ArrayList<>(MultipleTagSet));
+                ArrayList<>(multipleTagSet));
         return newPredicate;
     }
 }
