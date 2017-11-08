@@ -30,12 +30,14 @@ public class ListCommandTest {
     private Model expectedModel;
     private ListCommand listCommand;
 
-    private static final String VALID_TAG_1 = "friends";
-    private static final String VALID_TAG_2 = "owesMoney";
     private static final String INVALID_TAG_1 = "invalid";
     private static final String INVALID_TAG_2 = "wrongTag";
+    private static final String VALID_TAG_1 = "friends";
+    private static final String VALID_TAG_2 = "owesMoney";
+    private static final String VALID_TAG_3 = "family";
 
     private static final String TAG_DESC_FRIENDS = "[" + VALID_TAG_1 + "] ";
+    private static final String TAG_DESC_FAMILY = "[" + VALID_TAG_3 + "] ";
     private static final String TAG_DESC_OWESMONEY = "[" + VALID_TAG_2 + "] ";
 
     @Before
@@ -63,7 +65,7 @@ public class ListCommandTest {
         Set<Tag> SingleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1)));
         PersonContainsKeywordsPredicate firstPredicate = new PersonContainsKeywordsPredicate(new ArrayList<>(SingleTagSet));
 
-        Set<Tag> MultipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
+        Set<Tag> MultipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_2), new Tag(VALID_TAG_3)));
         PersonContainsKeywordsPredicate thirdPredicate = new PersonContainsKeywordsPredicate(new ArrayList<>(MultipleTagSet));
 
         // test command with single valid tag argument
@@ -82,7 +84,8 @@ public class ListCommandTest {
         ListCommand thirdListCommand = new ListCommand(thirdPredicate);
         reInitializeModels();
         thirdListCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        assertCommandSuccess(thirdListCommand, model, ListCommand.MESSAGE_SUCCESS_FILTEREDLIST + TAG_DESC_OWESMONEY + TAG_DESC_FRIENDS, expectedModel);
+        expectedModel.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList("Benson", "Fiona", "George")));
+        assertCommandSuccess(thirdListCommand, model, ListCommand.MESSAGE_SUCCESS_FILTEREDLIST + TAG_DESC_OWESMONEY + TAG_DESC_FAMILY, expectedModel);
     }
 
     @Test
