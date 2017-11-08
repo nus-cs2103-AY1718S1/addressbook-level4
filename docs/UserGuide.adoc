@@ -103,7 +103,7 @@ A person can have any number of tags (including 0)
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all persons : `list`
 
@@ -237,12 +237,14 @@ Sort feature available since v1.3
 
 Sorts the list of person in the addressbook. +
 You may choose to sort based on a parameter and display in +
-ascending or descending order. +
+ascending or descending order.
+
+[NOTE]
+Sort command is NOT undoable nor redoable, since the order is not preserved, and will revert to original order on execution of many other commands.
 
 Format: `sort FIELD ORDER` +
 
 ****
-* The sort function does not save the order.
 * FIELD must be name, email or phone.
 * ORDER must be asc (ascending) or dsc (descending)
 ****
@@ -266,6 +268,12 @@ Format: theme KEYWORD
 ****
 * The command is case sensitive. e.g `darktheme` is different from `DarkTheme`.
 * The respective `.css` file must be added into resources before the function can work.
+****
+
+****
+* Currently available themes are:
+* DarkTheme
+* RedTheme
 ****
 Examples:
 
