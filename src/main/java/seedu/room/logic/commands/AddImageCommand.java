@@ -129,4 +129,24 @@ public class AddImageCommand extends UndoableCommand {
             System.out.println("Cannot create Person Image");
         }
     }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            System.out.println("this");
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof AddImageCommand)) {
+            System.out.println("that");
+            return false;
+        }
+
+        // state check
+        AddImageCommand ai = (AddImageCommand) other;
+        return index.equals(ai.index) && newImageUrl.equals(ai.newImageUrl);
+    }
+
 }

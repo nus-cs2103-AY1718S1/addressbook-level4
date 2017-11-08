@@ -33,7 +33,7 @@ public class DeleteImageCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + "Example: " + COMMAND_WORD + " 3 ";
 
-    public static final String MESSAGE_ADD_IMAGE_SUCCESS = "Successfully reset image for Person: %1$s";
+    public static final String MESSAGE_RESET_IMAGE_SUCCESS = "Successfully reset image for Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the resident book.";
 
     private final Index index;
@@ -66,7 +66,7 @@ public class DeleteImageCommand extends UndoableCommand {
         }
         model.updateFilteredPersonListPicture(PREDICATE_SHOW_ALL_PERSONS, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_ADD_IMAGE_SUCCESS, editedPerson.getName()));
+        return new CommandResult(String.format(MESSAGE_RESET_IMAGE_SUCCESS, editedPerson.getName()));
     }
 
     /**
@@ -83,5 +83,24 @@ public class DeleteImageCommand extends UndoableCommand {
 
         Person editedPerson =  new Person(name, phone, email, room, timestamp, tags);
         return editedPerson;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            System.out.println("this");
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof DeleteImageCommand)) {
+            System.out.println("that");
+            return false;
+        }
+
+        // state check
+        DeleteImageCommand ai = (DeleteImageCommand) other;
+        return index.equals(ai.index);
     }
 }
