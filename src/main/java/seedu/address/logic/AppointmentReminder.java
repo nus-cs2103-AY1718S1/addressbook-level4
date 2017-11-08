@@ -30,12 +30,12 @@ public class AppointmentReminder {
         Set<Appointment> appointments = model.getAllAppointments();
         showAppointmentMessage(appointments);
         Timer timer = new Timer();
-        final int MINUTE = 60000;
+        final int minute = 60000;
         timer.schedule(new TimerTask() {
             public void run() {
                 showAppointmentMessage(appointments);
             }
-        }, MINUTE, MINUTE);
+        }, minute, minute);
     }
 
     /**
