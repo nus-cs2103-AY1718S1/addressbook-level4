@@ -1,6 +1,5 @@
 package seedu.address.model.person;
 
-import java.util.Arrays;
 import java.util.function.Predicate;
 import java.util.HashSet;
 import java.util.List;
@@ -52,50 +51,71 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        List<Boolean> lst = testHelper(person);
+        boolean[] match;
+        boolean res = false;
+        Set<Tag> tagSet = person.getTags();
+        Set<String> tagNameSet = new HashSet<String>();
+        for (Tag t : tagSet) {
+            tagNameSet.add(t.tagName);
+        }
 
-        if (isInclusive) { //an AND search
-            return !lst.contains(false);
-        } else { //an or search
-            return lst.contains(true);
+        if (isInclusive) { //an AND search must all return true (no false)
+            match = testHelperIn(person, tagNameSet);
+            //check for any false values
+            for (int i = 0; i < 6; i++) {
+                if (!match[i]) {
+                    res = true;
+                }
+            }
+            return !res;
+        } else { //an or search must have a True
+            match = testHelperEx(person, tagNameSet);
+            //check for any true values
+            for (int i = 0; i < 6; i++) {
+                if (match[i]) {
+                    res = true;
+                }
+            }
+            return res;
         }
     }
 
-    private List<Boolean> testHelper(ReadOnlyPerson person) {
+    private boolean[] testHelperEx(ReadOnlyPerson person, Set<String> tagNameSet) {
         //index: 0-name, 1-phone, 2-email, 3-mrt, 4-address, 5-tags
         boolean[] match = {false, false, false, false, false, false};
 
-        if (nameExist) {
-            match[0] = nameKeyword.stream()
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
-        }
-        if (phoneExist) {
-            match[1] = phoneKeyword.stream()
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getPhone().value, keyword));
-        }
-        if (emailExist) {
-            match[2] = emailKeyword.stream()
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getEmail().value, keyword));
-        }
-        if (mrtExist) {
-            match[3] = mrtKeyword.stream()
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getMrt().value, keyword));
-        }
-        if (addressExist) {
-            match[4] = addressKeyword.stream()
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword));
-        }
-        if (tagExist) {
-            Set<Tag> tagSet = person.getTags();
-            Set<String> tagNameSet = new HashSet<String>();
-            for (Tag t : tagSet) {
-                tagNameSet.add(t.tagName);
-            }
-            match[5] = tagKeyword.stream().anyMatch(keyword -> (tagNameSet.contains(keyword)));
-        }
+        match[0] = nameExist && nameKeyword.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+        match[1] = phoneExist && phoneKeyword.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getPhone().value, keyword));
+        match[2] = emailExist && emailKeyword.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getEmail().value, keyword));
+        match[3] = mrtExist && mrtKeyword.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getMrt().value, keyword));
+        match[4] = addressExist && addressKeyword.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword));
+        match[5] = tagExist && tagKeyword.stream().anyMatch(keyword -> (tagNameSet.contains(keyword)));
 
-        List lst = Arrays.asList(match);
-        return lst;
+        return match;
+    }
+
+    private boolean[] testHelperIn(ReadOnlyPerson person, Set<String> tagNameSet) {
+        //index: 0-name, 1-phone, 2-email, 3-mrt, 4-address, 5-tags
+        boolean[] match = {true, true, true, true, true, true};
+
+        match[0] = !nameExist || nameKeyword.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+        match[1] = !phoneExist || phoneKeyword.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getPhone().value, keyword));
+        match[2] = !emailExist || emailKeyword.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getEmail().value, keyword));
+        match[3] = !mrtExist || mrtKeyword.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getMrt().value, keyword));
+        match[4] = !addressExist || addressKeyword.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword));
+        match[5] = !tagExist || tagKeyword.stream().anyMatch(keyword -> (tagNameSet.contains(keyword)));
+
+        return match;
     }
 
     public FindPersonDescriptor getPersonDescriptor() {
