@@ -57,6 +57,11 @@ public interface Model {
     /** Adds or updates the avatar of the selected person. */
     void setPersonAvatar(ReadOnlyPerson target, Avatar avatar);
 
+    //@@author dennaloh
+    /** Gets URL for google maps. */
+    String getGMapUrl(ReadOnlyPerson target);
+    //@@author
+
     //=========== Model support for tag component =============================================================
 
     /** Removes the specific tag (from all persons with that tag) */
@@ -92,10 +97,6 @@ public interface Model {
     //@@author
 
     //=========== Filtered Person/Activity List support =============================================================
-
-    //@@author dennaloh
-    /** Iterates through person list and checks for duplicates */
-    boolean haveDuplicate (String name, ObservableList<ReadOnlyPerson> list);
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();

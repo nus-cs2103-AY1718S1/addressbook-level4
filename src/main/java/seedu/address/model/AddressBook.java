@@ -200,6 +200,26 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author dennaloh
+    /**
+     * Returns URL for google maps using the person's address
+     * @param key
+     * @return URL
+     */
+    public String getUrl (ReadOnlyPerson key) {
+
+        String address = key.getAddress().toString();
+        String replacedAddress = address.replaceAll(" ", "+");
+        StringBuilder sb = new StringBuilder();
+        sb.append("http://maps.google.com/maps?saddr=");
+        sb.append("&daddr=");
+        sb.append(replacedAddress);
+        String url = sb.toString();
+
+        return url;
+    }
+    //@@author
+
     /**
      * Sorts the persons according to their name.
      */

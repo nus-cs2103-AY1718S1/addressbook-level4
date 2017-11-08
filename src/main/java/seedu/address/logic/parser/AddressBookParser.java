@@ -28,6 +28,7 @@ import seedu.address.logic.commands.person.EditCommand;
 import seedu.address.logic.commands.person.EmailCommand;
 import seedu.address.logic.commands.person.FindCommand;
 import seedu.address.logic.commands.person.FindTagCommand;
+import seedu.address.logic.commands.person.GMapCommand;
 import seedu.address.logic.commands.person.ListCommand;
 import seedu.address.logic.commands.person.SelectCommand;
 import seedu.address.logic.parser.event.AddEventParser;
@@ -41,6 +42,7 @@ import seedu.address.logic.parser.person.EditCommandParser;
 import seedu.address.logic.parser.person.EmailCommandParser;
 import seedu.address.logic.parser.person.FindCommandParser;
 import seedu.address.logic.parser.person.FindTagCommandParser;
+import seedu.address.logic.parser.person.GMapCommandParser;
 import seedu.address.logic.parser.person.SelectCommandParser;
 
 /**
@@ -164,6 +166,10 @@ public class AddressBookParser {
         case EmailCommand.COMMAND_WORD:
         case EmailCommand.COMMAND_ALIAS:
             return new EmailCommandParser().parse(arguments);
+
+        case GMapCommand.COMMAND_WORD:
+        case GMapCommand.COMMAND_ALIAS:
+            return new GMapCommandParser().parse(arguments);
         //@@author
 
         default:

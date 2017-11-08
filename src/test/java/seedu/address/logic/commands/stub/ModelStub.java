@@ -38,11 +38,12 @@ public class ModelStub implements Model {
     }
 
     //@@author dennaloh
-
     @Override
-    public boolean haveDuplicate(String name, ObservableList<ReadOnlyPerson> list) {
-        return false;
+    public String getGMapUrl(ReadOnlyPerson target)  {
+        fail("This method should not be called.");
+        return null;
     }
+    //@@author
 
     @Override
     public void addData(ReadOnlyAddressBook newData) {
