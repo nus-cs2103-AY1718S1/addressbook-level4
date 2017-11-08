@@ -15,28 +15,28 @@ public class SortCommandParserTest {
     @Test
     public void parse_name_success() throws Exception {
         String userInput = "name";
-        SortCommand expectedCommand = new SortCommand("name",false, false);
+        SortCommand expectedCommand = new SortCommand("name", false, false);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
     @Test
     public void parse_nameIgnoreFav_success() throws Exception {
         String userInput = "name -ignorefav";
-        SortCommand expectedCommand = new SortCommand("name",true, false);
+        SortCommand expectedCommand = new SortCommand("name", true, false);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
     @Test
     public void parse_nameReverseOrder_success() throws Exception {
         String userInput = "name -reverse";
-        SortCommand expectedCommand = new SortCommand("name",false, true);
+        SortCommand expectedCommand = new SortCommand("name", false, true);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
     @Test
     public void parse_nameIgnoreFavReverseOrder_success() throws Exception {
         String userInput = "name -ignorefav -reverse";
-        SortCommand expectedCommand = new SortCommand("name",true, true);
+        SortCommand expectedCommand = new SortCommand("name", true, true);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
