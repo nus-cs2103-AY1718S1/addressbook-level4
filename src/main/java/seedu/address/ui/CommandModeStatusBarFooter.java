@@ -33,6 +33,9 @@ public class CommandModeStatusBarFooter extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Handles the command mode changed event
+     */
     @Subscribe
     private void handleCommandModeChangedEvent(CommandModeChangedEvent event) {
         long now = clock.millis();
