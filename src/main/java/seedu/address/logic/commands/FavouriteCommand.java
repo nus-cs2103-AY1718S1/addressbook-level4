@@ -1,4 +1,3 @@
-//@@author aaronyhsoh
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -21,6 +20,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author aaronyhsoh
 /**
  * Favourites an exisiting contact
  */

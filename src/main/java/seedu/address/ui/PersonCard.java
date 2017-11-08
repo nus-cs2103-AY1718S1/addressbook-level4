@@ -15,7 +15,7 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
     //@@author qihao27
-    private static final String tagColor = "#5AC0FB";
+    private static final String tagColor = "#dc143c";
     //@@author
 
     /**
@@ -56,10 +56,8 @@ public class PersonCard extends UiPart<Region> {
      * so that they will be notified of any changes.
      */
     private void bindListeners(ReadOnlyPerson person) {
-        //@@author aaronyhsoh
+
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        highlightName(person);
-        //@@author
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
@@ -81,13 +79,6 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
-    //@@author aaronyhsoh
-    private void highlightName(ReadOnlyPerson person) {
-        if (person.getFavourite()) {
-            name.setStyle("-fx-text-fill: red");
-        }
-    }
-    //@@author
 
     @Override
     public boolean equals(Object other) {
