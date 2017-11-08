@@ -25,9 +25,9 @@ public class MergeCommandSystemTest extends AddressBookSystemTest {
         Model expectedModel = getModel();
 
         /* Case: Merge a new file into the default address book data -> merged **/
-        final String TEST_NEW_FILE_PATH = "./src/test/data/XmlAddressBookStorageTest/TestNewFile.xml";
-        String command = MergeCommand.COMMAND_WORD + " " + TEST_NEW_FILE_PATH;
-        assertCommandSuccess(command, TEST_NEW_FILE_PATH);
+        final String testNewFilePath = "./src/test/data/XmlAddressBookStorageTest/TestNewFile.xml";
+        String command = MergeCommand.COMMAND_WORD + " " + testNewFilePath;
+        assertCommandSuccess(command, testNewFilePath);
 
         /* Case: Undo the previous merge -> address book data back to previous state **/
         command = UndoCommand.COMMAND_WORD;
@@ -35,11 +35,11 @@ public class MergeCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case: Merge the same file twice into the default address book -> merged **/
-        command = MergeCommand.COMMAND_WORD + " " + TEST_NEW_FILE_PATH;
-        assertCommandSuccess(command, TEST_NEW_FILE_PATH);
+        command = MergeCommand.COMMAND_WORD + " " + testNewFilePath;
+        assertCommandSuccess(command, testNewFilePath);
 
-        command = MergeCommand.COMMAND_WORD + " " + TEST_NEW_FILE_PATH;
-        assertCommandSuccess(command, TEST_NEW_FILE_PATH);
+        command = MergeCommand.COMMAND_WORD + " " + testNewFilePath;
+        assertCommandSuccess(command, testNewFilePath);
 
         /* Case: Merge the new file into an empty address book -> merged **/
         command = ClearCommand.COMMAND_WORD;
@@ -47,8 +47,8 @@ public class MergeCommandSystemTest extends AddressBookSystemTest {
         expectedModel.resetData(new AddressBook());
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
-        command = MergeCommand.COMMAND_WORD + " " + TEST_NEW_FILE_PATH;
-        assertCommandSuccess(command, TEST_NEW_FILE_PATH);
+        command = MergeCommand.COMMAND_WORD + " " + testNewFilePath;
+        assertCommandSuccess(command, testNewFilePath);
     }
 
     @Test
@@ -63,7 +63,8 @@ public class MergeCommandSystemTest extends AddressBookSystemTest {
     /**
      * Executes the {@code MergeCommand} that adds {@code toAdd} to the model and verifies that the command box displays
      * an empty string, the result display box displays the success message of executing {@code MergeCommand} with the
-     * details from {@code newFilePath}, and the model related components equal to the current model added with {@code newFilePath}.
+     * details from {@code newFilePath}, and the model related components equal to the current model added with
+     * {@code newFilePath}.
      * These verifications are done by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the command box has the default style class, the status bar's sync status changes,
@@ -100,9 +101,9 @@ public class MergeCommandSystemTest extends AddressBookSystemTest {
     //@@author
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, ArrayList<ReadOnlyPerson>)} except that the result
-     * display box displays {@code expectedResultMessage} and the model related components equal to
-     * {@code expectedModel}.
+     * Performs the same verification as {@code assertCommandSuccess(String, ArrayList<ReadOnlyPerson>)}
+     * except that the result display box displays {@code expectedResultMessage} and the model related components equal
+     * to {@code expectedModel}.
      *
      * @see MergeCommandSystemTest#assertCommandSuccess(String, String)
      */

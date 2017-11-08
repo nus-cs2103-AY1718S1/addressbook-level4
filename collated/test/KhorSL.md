@@ -1,4 +1,385 @@
 # KhorSL
+###### /java/seedu/address/commons/util/StringUtilTest.java
+``` java
+    //---------------- Tests for containsWordIgnoreCaseAndCharacters --------------------------------------
+
+    /*
+     * Invalid equivalence partitions for word: null, empty, multiple words
+     * Invalid equivalence partitions for sentence: null
+     * The four test cases below test one invalid input at a time.
+     */
+
+    @Test
+    public void containsWordIgnoreCaseAndCharacters_nullWord_throwsNullPointerException() {
+        assertExceptionThrownForIgnoreCaseAndCharacters(NullPointerException.class, "typical sentence",
+                null, Optional.empty());
+    }
+
+    private void assertExceptionThrownForIgnoreCaseAndCharacters(Class<? extends Throwable> exceptionClass, String sentence,
+                                                                 String word, Optional<String> errorMessage) {
+        thrown.expect(exceptionClass);
+        errorMessage.ifPresent(message -> thrown.expectMessage(message));
+        StringUtil.containsWordIgnoreCaseAndCharacters(sentence, word);
+    }
+
+    @Test
+    public void containsWordIgnoreCaseAndCharacters_emptyWord_throwsIllegalArgumentException() {
+        assertExceptionThrownForIgnoreCaseAndCharacters(IllegalArgumentException.class, "typical sentence", "  ",
+                Optional.of("Word parameter cannot be empty"));
+    }
+
+    @Test
+    public void containsWordIgnoreCaseAndCharacters_multipleWords_throwsIllegalArgumentException() {
+        assertExceptionThrownForIgnoreCaseAndCharacters(IllegalArgumentException.class, "typical sentence", "aaa BBB",
+                Optional.of("Word parameter should be a single word"));
+    }
+
+    @Test
+    public void containsWordIgnoreCaseAndCharacters_nullSentence_throwsNullPointerException() {
+        assertExceptionThrownForIgnoreCaseAndCharacters(NullPointerException.class, null, "abc", Optional.empty());
+    }
+
+    /*
+     * Valid equivalence partitions for word:
+     *   - any word
+     *   - word containing symbols/numbers
+     *   - word with leading/trailing spaces
+     *
+     * Valid equivalence partitions for sentence:
+     *   - empty string
+     *   - one word
+     *   - multiple words
+     *   - sentence with extra spaces
+     *
+     * Possible scenarios returning true:
+     *   - matches first word in sentence
+     *   - last word in sentence
+     *   - middle word in sentence
+     *   - matches multiple words
+     *
+     * Possible scenarios returning false:
+     *   - query word matches part of a sentence word
+     *   - sentence word matches part of the query word
+     *
+     * The test method below tries to verify all above with a reasonably low number of test cases.
+     */
+
+    @Test
+    public void containsWordIgnoreCaseAndCharacters_validInputs_correctResult() {
+
+        // Empty sentence
+        assertFalse(StringUtil.containsWordIgnoreCaseAndCharacters("", "abc")); // Boundary case
+        assertFalse(StringUtil.containsWordIgnoreCaseAndCharacters("    ", "123"));
+
+        // Matches a partial word only
+        assertFalse(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bbb ccc", "bb")); // Sentence word bigger than query word
+        assertFalse(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bbb ccc", "bbbb")); // Query word bigger than sentence word
+
+        // Matches word in the sentence, different upper/lower case letters
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bBb ccc", "Aaa")); // First word (boundary case)
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa. bBb ccc", "Aaa")); // First word with non-word character (boundary case)
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bBb ccc1", "CCc1")); // Last word (boundary case)
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bBb ccc_1", "CCc_1")); // Last word with non-word character (boundary case)
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("  AAA   bBb   ccc  ", "aaa")); // Sentence has extra spaces
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("Aaa", "aaa")); // Only one word in sentence (boundary case)
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters(",Aaa", "aaa")); // Only one word in sentence with non-word character (boundary case)
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bbb ccc", "  ccc  ")); // Leading/trailing spaces
+
+        // Matches multiple words in sentence
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("AAA bBb ccc  bbb", "bbB"));
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("AAA b_Bb ccc  bb_b", "bbB"));
+    }
+
+    //---------------- Tests for containsDate --------------------------------------
+
+    /*
+     * Invalid equivalence partitions for word: null, empty, multiple words
+     * Invalid equivalence partitions for sentence: null
+     * The four test cases below test one invalid input at a time.
+     */
+
+    @Test
+    public void containsDate_nullWord_throwsNullPointerException() {
+        assertExceptionThrownForDate(NullPointerException.class, "typical sentence", null, Optional.empty());
+    }
+
+    private void assertExceptionThrownForDate(Class<? extends Throwable> exceptionClass, String sentence, String word,
+                                       Optional<String> errorMessage) {
+        thrown.expect(exceptionClass);
+        errorMessage.ifPresent(message -> thrown.expectMessage(message));
+        StringUtil.containsDate(sentence, word);
+    }
+
+    @Test
+    public void containsDate_emptyWord_throwsIllegalArgumentException() {
+        assertExceptionThrownForDate(IllegalArgumentException.class, "typical sentence", "  ",
+                Optional.of("Word parameter cannot be empty"));
+    }
+
+    @Test
+    public void containsDate_multipleWords_throwsIllegalArgumentException() {
+        assertExceptionThrownForDate(IllegalArgumentException.class, "typical sentence", "aaa BBB",
+                Optional.of("Word parameter should be a single word"));
+    }
+
+    @Test
+    public void containsDate_nullSentence_throwsNullPointerException() {
+        assertExceptionThrownForDate(NullPointerException.class, null, "abc", Optional.empty());
+    }
+
+    /*
+     * Valid equivalence partitions for date:
+     *   - any date with valid format
+     *   - date with leading/trailing spaces
+     *
+     * Valid equivalence partitions for sentence:
+     *   - empty string
+     *   - one date
+     *   - multiple words with date
+     *   - sentence with extra spaces
+     *   - sentence with wrong format date
+     *
+     * Possible scenarios returning true:
+     *   - matches first date in sentence
+     *   - last date in sentence
+     *   - middle date in sentence
+     *   - matches multiple dates
+     *
+     * Possible scenarios returning false:
+     *   - query date matches part of a sentence date
+     *   - sentence date matches part of the query date
+     *
+     * The test method below tries to verify all above with a reasonably low number of test cases.
+     */
+
+    @Test
+    public void containsDate_validInputs_correctResult() {
+
+        // Empty sentence
+        assertFalse(StringUtil.containsDate("", "20/10/2017")); // Boundary case
+        assertFalse(StringUtil.containsDate("    ", "20/10/2017"));
+
+        // Matches a partial date only
+        assertFalse(StringUtil.containsDate("20/10/2017 05:30", "20/10/2018"));
+        assertFalse(StringUtil.containsDate("20/10/17 05:30", "20/10/2017")); // Query word bigger than sentence word
+
+        // Sentence with wrong format date
+        assertFalse(StringUtil.containsDate("20/10/17", "20/10/17"));
+
+        // Matches word in the date sentence
+        assertTrue(StringUtil.containsDate("20/10/2017 bBb ccc", "20/10/2017")); // First word (boundary case)
+        assertTrue(StringUtil.containsDate("aaa bBb 20/10/2017", "20/10/2017")); // Last word (boundary case)
+        assertTrue(StringUtil.containsDate("  AAA   20/10/2017   ccc  ", "20/10/2017")); // Sentence has extra spaces
+        assertTrue(StringUtil.containsDate("20/10/2017", "20/10/2017")); // Only one word in sentence (boundary case)
+        assertTrue(StringUtil.containsDate("aaa bbb 20/10/2017", "  20/10/2017  ")); // Leading/trailing spaces
+
+        // Matches multiple words in sentence
+        assertTrue(StringUtil.containsDate("AAA 20/10/2017 ccc  20/10/2017", "20/10/2017"));
+    }
+
+    //---------------- Tests for containsTime --------------------------------------
+
+    /*
+     * Invalid equivalence partitions for word: null, empty, multiple words
+     * Invalid equivalence partitions for sentence: null
+     * The four test cases below test one invalid input at a time.
+     */
+
+    @Test
+    public void containsTime_nullWord_throwsNullPointerException() {
+        assertExceptionThrownForTime(NullPointerException.class, "typical sentence", null, Optional.empty());
+    }
+
+    private void assertExceptionThrownForTime(Class<? extends Throwable> exceptionClass, String sentence, String word,
+                                              Optional<String> errorMessage) {
+        thrown.expect(exceptionClass);
+        errorMessage.ifPresent(message -> thrown.expectMessage(message));
+        StringUtil.containsDate(sentence, word);
+    }
+
+    @Test
+    public void containsTime_emptyWord_throwsIllegalArgumentException() {
+        assertExceptionThrownForTime(IllegalArgumentException.class, "typical sentence", "  ",
+                Optional.of("Word parameter cannot be empty"));
+    }
+
+    @Test
+    public void containsTime_multipleWords_throwsIllegalArgumentException() {
+        assertExceptionThrownForTime(IllegalArgumentException.class, "typical sentence", "aaa BBB",
+                Optional.of("Word parameter should be a single word"));
+    }
+
+    @Test
+    public void containsTime_nullSentence_throwsNullPointerException() {
+        assertExceptionThrownForTime(NullPointerException.class, null, "abc", Optional.empty());
+    }
+
+    /*
+     * Valid equivalence partitions for time:
+     *   - any time with valid format
+     *   - time with leading/trailing spaces
+     *
+     * Valid equivalence partitions for sentence:
+     *   - empty string
+     *   - one time
+     *   - multiple words with time
+     *   - sentence with extra spaces
+     *   - sentence with wrong format time
+     *
+     * Possible scenarios returning true:
+     *   - matches first time in sentence
+     *   - last time in sentence
+     *   - middle time in sentence
+     *   - matches multiple times
+     *
+     * Possible scenarios returning false:
+     *   - query date matches part of a sentence time
+     *   - sentence date matches part of the query time
+     *
+     * The test method below tries to verify all above with a reasonably low number of test cases.
+     */
+
+    @Test
+    public void containsTime_validInputs_correctResult() {
+
+        // Empty sentence
+        assertFalse(StringUtil.containsTime("", "10:50")); // Boundary case
+        assertFalse(StringUtil.containsTime("    ", "10:50"));
+
+        // Matches a partial time only
+        assertFalse(StringUtil.containsTime("20/10/2017 05:30", "05:40"));
+
+        // Sentence with wrong format time
+        assertFalse(StringUtil.containsTime("5:30", "5:30"));
+
+        // Matches word in the date sentence
+        assertTrue(StringUtil.containsTime("05:30 bBb ccc", "05:30")); // First word (boundary case)
+        assertTrue(StringUtil.containsTime("aaa bBb 05:30", "05:30")); // Last word (boundary case)
+        assertTrue(StringUtil.containsTime("  AAA   05:30   ccc  ", "05:30")); // Sentence has extra spaces
+        assertTrue(StringUtil.containsTime("05:30", "05:30")); // Only one word in sentence (boundary case)
+        assertTrue(StringUtil.containsTime("aaa bbb 05:30", "  05:30  ")); // Leading/trailing spaces
+
+        // Matches multiple words in sentence
+        assertTrue(StringUtil.containsTime("AAA 05:30 ccc  05:30", "05:30"));
+    }
+
+    //---------------- Tests for extractDates --------------------------------------
+
+    /*
+     * Equivalence Partitions:
+     *   - empty sentence
+     *   - multiple dates
+     *   - single dates
+     *   - sentence containing other words other that date
+     *
+     * Possible scenario returning dates:
+     *    - There is date is the first word of the sentence
+     *    - date is the middle word of the sentence
+     *    - date is the last word of the sentence
+     *    - matches multiple date in the sentence
+     *    - matches multiple date in a sentence containing other words
+     *
+     * Possible scenario returning empty ArrayList<String>:
+     *     - sentence do not contain any dates
+     *     - sentence do not contain date with correct format
+     */
+
+    @Test
+    public void extractDates_validInputs_correctResults() {
+        ArrayList<String> expectedSingleDateList = new ArrayList<>();
+        expectedSingleDateList.add("20/10/2017");
+
+        ArrayList<String> expectedMultipleDatesList1 = new ArrayList<>();
+        expectedMultipleDatesList1.add("20/10/2017");
+        expectedMultipleDatesList1.add("20/10/2018");
+        expectedMultipleDatesList1.add("20/10/2019");
+
+        ArrayList<String> expectedMultipleDatesList2 = new ArrayList<>();
+        expectedMultipleDatesList2.add("20/10/2017");
+        expectedMultipleDatesList2.add("20/10/2017");
+
+        // Empty sentence
+        assertCorrectDateResult("", new ArrayList<>());
+        assertCorrectDateResult("    ", new ArrayList<>());
+
+        // Sentence with wrong format date
+        assertCorrectDateResult("20/10/17", new ArrayList<>());
+        assertCorrectDateResult("01/13/2017", new ArrayList<>()); // date wrong format with mm/dd/yyyy
+        assertCorrectDateResult("01-01-2017", new ArrayList<>()); // date dd-mm-yyyy
+
+        // single date
+        assertCorrectDateResult("20/10/2017", expectedSingleDateList);
+
+        // multiple dates, dates as the first, middle and last word
+        assertCorrectDateResult("20/10/2017 20/10/2018 20/10/2019", expectedMultipleDatesList1);
+        assertCorrectDateResult("20/10/2017 20/10/2017", expectedMultipleDatesList2); // multiple same dates
+        assertCorrectDateResult("20/10/2017 10:50", expectedSingleDateList);
+    }
+
+    public void assertCorrectDateResult(String sentence, ArrayList<String> expected) {
+        ArrayList<String> actual = StringUtil.extractDates(sentence);
+        assertTrue(actual.equals(expected));
+    }
+
+    //---------------- Tests for extractTimes --------------------------------------
+
+    /*
+     * Equivalence Partitions:
+     *   - empty sentence
+     *   - multiple times
+     *   - single times
+     *   - sentence containing other words other that time
+     *
+     * Possible scenario returning times:
+     *    - There is time is the first word of the sentence
+     *    - date is the middle time of the sentence
+     *    - date is the last time of the sentence
+     *    - matches multiple time in the sentence
+     *    - matches multiple time in a sentence containing other words
+     *
+     * Possible scenario returning empty ArrayList<String>:
+     *     - sentence do not contain any times
+     *     - sentence do not contain time with correct format
+     */
+
+    @Test
+    public void extractTimes_validInputs_correctResults() {
+        ArrayList<String> expectedSingleTimeList = new ArrayList<>();
+        expectedSingleTimeList.add("05:30");
+
+        ArrayList<String> expectedMultipleTimesList1 = new ArrayList<>();
+        expectedMultipleTimesList1.add("00:00");
+        expectedMultipleTimesList1.add("10:40");
+        expectedMultipleTimesList1.add("23:59");
+
+        ArrayList<String> expectedMultipleTimesList2 = new ArrayList<>();
+        expectedMultipleTimesList2.add("10:30");
+        expectedMultipleTimesList2.add("10:30");
+
+        // Empty sentence
+        assertCorrectTimeResult("", new ArrayList<>());
+        assertCorrectTimeResult("    ", new ArrayList<>());
+
+        // Sentence with wrong format time
+        assertCorrectTimeResult("0:00", new ArrayList<>());
+        assertCorrectTimeResult("5:30", new ArrayList<>());
+        assertCorrectTimeResult("24:59", new ArrayList<>());
+        assertCorrectTimeResult("05-30", new ArrayList<>());
+
+        // single date
+        assertCorrectTimeResult("05:30", expectedSingleTimeList);
+
+        // multiple dates, dates as the first, middle and last word
+        assertCorrectTimeResult("00:00 10:40 23:59", expectedMultipleTimesList1);
+        assertCorrectTimeResult("10:30 10:30", expectedMultipleTimesList2); // multiple same dates
+        assertCorrectTimeResult("20/10/2017 05:30", expectedSingleTimeList);
+    }
+
+    public void assertCorrectTimeResult(String sentence, ArrayList<String> expected) {
+        ArrayList<String> actual = StringUtil.extractTimes(sentence);
+        assertTrue(actual.equals(expected));
+    }
+```
 ###### /java/seedu/address/logic/commands/AddMultipleCommandTest.java
 ``` java
 public class AddMultipleCommandTest {
@@ -24,7 +405,7 @@ public class AddMultipleCommandTest {
         CommandResult commandResult = getAddMultipleCommandForPerson(validPersonArrayList, modelStub).execute();
 
         StringBuilder successMessage = new StringBuilder();
-        for(ReadOnlyPerson personToAdd: validPersonArrayList) {
+        for (ReadOnlyPerson personToAdd: validPersonArrayList) {
             successMessage.append(System.lineSeparator());
             successMessage.append(personToAdd);
         }
@@ -187,6 +568,7 @@ public class AddMultipleCommandTest {
 ```
 ###### /java/seedu/address/logic/commands/FindCommandTest.java
 ``` java
+
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
@@ -233,9 +615,46 @@ public class FindCommandTest {
     }
 
     @Test
+    public void execute_singleKeyword() throws ParseException {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FindCommand command = prepareCommand(" n/Kurz");
+        assertCommandSuccess(command, expectedMessage, Collections.singletonList(CARL));
+
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        command = prepareCommand(" e/lydia");
+        assertCommandSuccess(command, expectedMessage, Collections.singletonList(FIONA));
+
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        command = prepareCommand(" p/9482");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ELLE, FIONA, GEORGE));
+
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        command = prepareCommand(" ap/12:12");
+        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        command = prepareCommand(" a/wall");
+        assertCommandSuccess(command, expectedMessage, Collections.singletonList(CARL));
+
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        command = prepareCommand(" c/tetris");
+        assertCommandSuccess(command, expectedMessage, Collections.singletonList(GEORGE));
+
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        command = prepareCommand(" r/friend");
+        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+    }
+
+    @Test
     public void execute_multipleKeywords_multiplePersonsFound() throws ParseException {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand(" n/Kurz Elle Kunz r/dummy e/@dummy.com");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+
+        command = prepareCommand(" e/lydia a/wall p/224");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+
+        command = prepareCommand(" e/lydia werner a/tokyo wall c/swim ap/10:30");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
@@ -243,15 +662,25 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FindCommand prepareCommand(String userInput) throws ParseException {
-        ArgumentMultimap argumentMultimap =
-                ArgumentTokenizer.tokenize(userInput, PREFIX_NAME, PREFIX_TAG, PREFIX_EMAIL);
+        ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(userInput, PREFIX_NAME, PREFIX_TAG, PREFIX_EMAIL,
+                PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_COMMENT, PREFIX_APPOINT);
 
         String trimmedArgsName;
         String trimmedArgsTag;
         String trimmedArgsEmail;
+        String trimmedArgsPhone;
+        String trimmedArgsAddress;
+        String trimmedArgsComment;
+        String trimmedArgsAppoint;
+
         String[] keywordNameList;
         String[] keywordTagList;
         String[] keywordEmailList;
+        String[] keywordPhoneList;
+        String[] keywordAddressList;
+        String[] keywordCommentList;
+        String[] keywordAppointList;
+
         HashMap<String, List<String>> mapKeywords = new HashMap<>();
 
         try {
@@ -282,6 +711,42 @@ public class FindCommandTest {
                 mapKeywords.put(PREFIX_EMAIL.toString(), Arrays.asList(keywordEmailList));
             }
 
+            if (argumentMultimap.getValue(PREFIX_PHONE).isPresent()) {
+                trimmedArgsPhone = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_PHONE)).get().trim();
+                if (trimmedArgsPhone.isEmpty()) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                }
+                keywordPhoneList = trimmedArgsPhone.split("\\s+");
+                mapKeywords.put(PREFIX_PHONE.toString(), Arrays.asList(keywordPhoneList));
+            }
+
+            if (argumentMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
+                trimmedArgsAddress = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_ADDRESS)).get().trim();
+                if (trimmedArgsAddress.isEmpty()) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                }
+                keywordAddressList = trimmedArgsAddress.split("\\s+");
+                mapKeywords.put(PREFIX_ADDRESS.toString(), Arrays.asList(keywordAddressList));
+            }
+
+            if (argumentMultimap.getValue(PREFIX_COMMENT).isPresent()) {
+                trimmedArgsComment = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_COMMENT)).get().trim();
+                if (trimmedArgsComment.isEmpty()) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                }
+                keywordCommentList = trimmedArgsComment.split("\\s+");
+                mapKeywords.put(PREFIX_COMMENT.toString(), Arrays.asList(keywordCommentList));
+            }
+
+            if (argumentMultimap.getValue(PREFIX_APPOINT).isPresent()) {
+                trimmedArgsAppoint = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_APPOINT)).get().trim();
+                if (trimmedArgsAppoint.isEmpty()) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                }
+                keywordAppointList = trimmedArgsAppoint.split("\\s+");
+                mapKeywords.put(PREFIX_APPOINT.toString(), Arrays.asList(keywordAppointList));
+            }
+
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -294,6 +759,7 @@ public class FindCommandTest {
 ```
 ###### /java/seedu/address/logic/commands/MergeCommandTest.java
 ``` java
+
 /**
  * Contains integration test (interaction with Model) for {@code MergeCommand}
  */
@@ -461,6 +927,96 @@ public class MergeCommandTest {
     }
 }
 ```
+###### /java/seedu/address/logic/parser/FindCommandParserTest.java
+``` java
+public class FindCommandParserTest {
+
+    private FindCommandParser parser = new FindCommandParser();
+
+    @Test
+    public void parse_emptyArg_throwsParseException() {
+        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_noPrefix_throwsParseException() {
+        assertParseFailure(parser, "alex john 91234567", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_emptyFields_throwsParseException() {
+        assertParseFailure(parser, " n/ ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " a/ ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " r/ ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " c/ ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " ap/ ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " p/ ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " e/ ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validArgs_returnsFindCommand() {
+
+        // single user input
+        HashMap<String, List<String>> expectedSingleFindCmdMap = new HashMap<>();
+        expectedSingleFindCmdMap.put(PREFIX_NAME.toString(), Collections.singletonList("Alice"));
+        FindCommand expectedSingleFindCmd =
+                new FindCommand(new PersonContainsKeywordsPredicate(expectedSingleFindCmdMap));
+        assertParseSuccess(parser, " n/Alice", expectedSingleFindCmd);
+
+        expectedSingleFindCmdMap = new HashMap<>();
+        expectedSingleFindCmdMap.put(PREFIX_TAG.toString(), Collections.singletonList("friends"));
+        expectedSingleFindCmd = new FindCommand(new PersonContainsKeywordsPredicate(expectedSingleFindCmdMap));
+        assertParseSuccess(parser, " r/friends", expectedSingleFindCmd);
+
+        expectedSingleFindCmdMap = new HashMap<>();
+        expectedSingleFindCmdMap.put(PREFIX_EMAIL.toString(), Collections.singletonList("friends@gmail.com"));
+        expectedSingleFindCmd = new FindCommand(new PersonContainsKeywordsPredicate(expectedSingleFindCmdMap));
+        assertParseSuccess(parser, " e/friends@gmail.com", expectedSingleFindCmd);
+
+        expectedSingleFindCmdMap = new HashMap<>();
+        expectedSingleFindCmdMap.put(PREFIX_PHONE.toString(), Collections.singletonList("91234567"));
+        expectedSingleFindCmd = new FindCommand(new PersonContainsKeywordsPredicate(expectedSingleFindCmdMap));
+        assertParseSuccess(parser, " p/91234567", expectedSingleFindCmd);
+
+        expectedSingleFindCmdMap = new HashMap<>();
+        expectedSingleFindCmdMap.put(PREFIX_ADDRESS.toString(), Arrays.asList("Felix", "Road", "23", "#12-12"));
+        expectedSingleFindCmd = new FindCommand(new PersonContainsKeywordsPredicate(expectedSingleFindCmdMap));
+        assertParseSuccess(parser, " a/Felix Road 23 #12-12", expectedSingleFindCmd);
+
+        expectedSingleFindCmdMap = new HashMap<>();
+        expectedSingleFindCmdMap.put(PREFIX_APPOINT.toString(), Arrays.asList("01/01/2017", "10:30"));
+        expectedSingleFindCmd = new FindCommand(new PersonContainsKeywordsPredicate(expectedSingleFindCmdMap));
+        assertParseSuccess(parser, " ap/01/01/2017 10:30", expectedSingleFindCmd);
+
+        expectedSingleFindCmdMap = new HashMap<>();
+        expectedSingleFindCmdMap.put(PREFIX_COMMENT.toString(), Collections.singletonList("funny"));
+        expectedSingleFindCmd = new FindCommand(new PersonContainsKeywordsPredicate(expectedSingleFindCmdMap));
+        assertParseSuccess(parser, " c/funny", expectedSingleFindCmd);
+
+        // no leading and trailing whitespaces
+        HashMap<String, List<String>> expectedFindCmdMap = new HashMap<>();
+        expectedFindCmdMap.put(PREFIX_NAME.toString(), Arrays.asList("Alice", "Bob"));
+        expectedFindCmdMap.put(PREFIX_TAG.toString(), Arrays.asList("friends", "family"));
+        expectedFindCmdMap.put(PREFIX_EMAIL.toString(), Arrays.asList("@gmail.com", "@hotmail.com"));
+        expectedFindCmdMap.put(PREFIX_ADDRESS.toString(), Arrays.asList("Felix", "Road", "23", "#12-12"));
+        expectedFindCmdMap.put(PREFIX_APPOINT.toString(), Arrays.asList("01/01/2017", "10:30"));
+        expectedFindCmdMap.put(PREFIX_COMMENT.toString(), Arrays.asList("funny", "swim"));
+        expectedFindCmdMap.put(PREFIX_PHONE.toString(), Arrays.asList("91234567", "81234567"));
+
+        FindCommand expectedFindCommand =
+                new FindCommand(new PersonContainsKeywordsPredicate(expectedFindCmdMap));
+        // leading whitespaces is not part of user input, but to accommodate for tokenizer
+        assertParseSuccess(parser, " n/Alice Bob r/friends family e/@gmail.com @hotmail.com a/Felix Road 23 #12-12 " +
+                        "ap/01/01/2017 10:30 c/funny swim p/91234567 81234567", expectedFindCommand);
+        // multiple whitespaces between keywords
+        assertParseSuccess(parser, "  n/ \n Alice \n \t Bob  \t  r/ \n friends \t family   \t e/ @gmail.com \n @hotmail.com " +
+                        "a/Felix Road \n 23 #12-12 ap/01/01/2017 \t  \n 10:30 c/funny \n swim p/91234567 81234567", expectedFindCommand);
+    }
+
+}
+```
 ###### /java/seedu/address/logic/parser/MergeCommandParserTest.java
 ``` java
 public class MergeCommandParserTest {
@@ -480,6 +1036,110 @@ public class MergeCommandParserTest {
                 expectedMergeCommand);
     }
 
+}
+```
+###### /java/seedu/address/model/person/PersonContainsKeywordsPredicateTest.java
+``` java
+public class PersonContainsKeywordsPredicateTest {
+
+    @Test
+    public void equals() {
+        HashMap<String, List<String>> firstPredicateKeywordHashMap = new HashMap<>();
+        firstPredicateKeywordHashMap.put("T", Collections.singletonList("first"));
+        HashMap<String, List<String>> secondPredicateKeywordHashMap = new HashMap<>();
+        secondPredicateKeywordHashMap.put("T", Arrays.asList("first", "second"));
+
+        PersonContainsKeywordsPredicate firstPredicate = new PersonContainsKeywordsPredicate(firstPredicateKeywordHashMap);
+        PersonContainsKeywordsPredicate secondPredicate = new PersonContainsKeywordsPredicate(secondPredicateKeywordHashMap);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        PersonContainsKeywordsPredicate firstPredicateCopy = new PersonContainsKeywordsPredicate(firstPredicateKeywordHashMap);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_personContainsKeywords_returnsTrue() {
+        // One keyword
+        HashMap<String, List<String>> expectedHashMap = new HashMap<>();
+        expectedHashMap.put(PREFIX_NAME.toString(), Collections.singletonList("Alice"));
+        PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate(expectedHashMap);
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // Multiple keywords
+        expectedHashMap.put(PREFIX_NAME.toString(), Arrays.asList("Alice", "Bob"));
+        predicate = new PersonContainsKeywordsPredicate(expectedHashMap);
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // Only one matching keyword
+        expectedHashMap.put(PREFIX_NAME.toString(), Arrays.asList("Bob", "Carol"));
+        predicate = new PersonContainsKeywordsPredicate(expectedHashMap);
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Carol").build()));
+
+        // Mixed-case keywords
+        expectedHashMap.put(PREFIX_NAME.toString(), Arrays.asList("aLIce", "bOB"));
+        predicate = new PersonContainsKeywordsPredicate(expectedHashMap);
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // Single prefix
+        expectedHashMap.put(PREFIX_NAME.toString(), Collections.singletonList("Alice"));
+        predicate = new PersonContainsKeywordsPredicate(expectedHashMap);
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice").build()));
+
+        expectedHashMap.put(PREFIX_TAG.toString(), Collections.singletonList("friends"));
+        predicate = new PersonContainsKeywordsPredicate(expectedHashMap);
+        assertTrue(predicate.test(new PersonBuilder().withTags("friends").build()));
+
+        expectedHashMap.put(PREFIX_PHONE.toString(), Collections.singletonList("12345"));
+        predicate = new PersonContainsKeywordsPredicate(expectedHashMap);
+        assertTrue(predicate.test(new PersonBuilder().withPhone("12345").build()));
+
+        expectedHashMap.put(PREFIX_EMAIL.toString(), Collections.singletonList("@gmail.com"));
+        predicate = new PersonContainsKeywordsPredicate(expectedHashMap);
+        assertTrue(predicate.test(new PersonBuilder().withEmail("test@gmail.com").build()));
+
+        expectedHashMap.put(PREFIX_ADDRESS.toString(), Collections.singletonList("Wall"));
+        predicate = new PersonContainsKeywordsPredicate(expectedHashMap);
+        assertTrue(predicate.test(new PersonBuilder().withAddress("Wall Street").build()));
+
+        expectedHashMap.put(PREFIX_COMMENT.toString(), Collections.singletonList("funny"));
+        predicate = new PersonContainsKeywordsPredicate(expectedHashMap);
+        assertTrue(predicate.test(new PersonBuilder().withComment("funny").build()));
+
+        // Multiple prefixes
+        expectedHashMap = new HashMap<>();
+        expectedHashMap.put(PREFIX_PHONE.toString(), Collections.singletonList("12345"));
+        expectedHashMap.put(PREFIX_EMAIL.toString(), Collections.singletonList("alice@gmail.com"));
+        expectedHashMap.put(PREFIX_ADDRESS.toString(), Arrays.asList("Main", "Street"));
+        predicate = new PersonContainsKeywordsPredicate(expectedHashMap);
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
+                .withEmail("alice@email.com").withAddress("Main Street").build()));
+    }
+
+    @Test
+    public void test_nameDoesNotContainKeywords_returnsFalse() {
+        // Zero keywords
+        HashMap<String, List<String>> expectedHashMap = new HashMap<>();
+        expectedHashMap.put(PREFIX_NAME.toString(), Collections.emptyList());
+        PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate(expectedHashMap);
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
+
+        // Non-matching keyword
+        expectedHashMap.put(PREFIX_NAME.toString(), Collections.singletonList("Carol"));
+        predicate = new PersonContainsKeywordsPredicate(expectedHashMap);
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+    }
 }
 ```
 ###### /java/systemtests/AddMultipleCommandSystemTest.java

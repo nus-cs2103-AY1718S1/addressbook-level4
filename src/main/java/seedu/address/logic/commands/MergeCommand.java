@@ -67,4 +67,4 @@ public class MergeCommand extends UndoableCommand {
                 && this.newFilePath.equals(((MergeCommand) other).newFilePath)); // state check
     }
 }
-//@@author KhorSL
+//@@author

@@ -5,12 +5,17 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -18,6 +23,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -33,14 +39,20 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.ui.GuiUnitTest;
 
 //@@author KhorSL
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
-public class FindCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+public class FindCommandTest extends GuiUnitTest {
+    private Model model;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    }
 
     @Test
     public void equals() {
@@ -82,9 +94,46 @@ public class FindCommandTest {
     }
 
     @Test
+    public void execute_singleKeyword() throws ParseException {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FindCommand command = prepareCommand(" n/Kurz");
+        assertCommandSuccess(command, expectedMessage, Collections.singletonList(CARL));
+
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        command = prepareCommand(" e/lydia");
+        assertCommandSuccess(command, expectedMessage, Collections.singletonList(FIONA));
+
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        command = prepareCommand(" p/9482");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ELLE, FIONA, GEORGE));
+
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        command = prepareCommand(" ap/12:12");
+        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        command = prepareCommand(" a/wall");
+        assertCommandSuccess(command, expectedMessage, Collections.singletonList(CARL));
+
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        command = prepareCommand(" c/tetris");
+        assertCommandSuccess(command, expectedMessage, Collections.singletonList(GEORGE));
+
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        command = prepareCommand(" r/friend");
+        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+    }
+
+    @Test
     public void execute_multipleKeywords_multiplePersonsFound() throws ParseException {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand(" n/Kurz Elle Kunz r/dummy e/@dummy.com");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+
+        command = prepareCommand(" e/lydia a/wall p/224");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+
+        command = prepareCommand(" e/lydia werner a/tokyo wall c/swim ap/10:30");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
@@ -92,15 +141,25 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FindCommand prepareCommand(String userInput) throws ParseException {
-        ArgumentMultimap argumentMultimap =
-                ArgumentTokenizer.tokenize(userInput, PREFIX_NAME, PREFIX_TAG, PREFIX_EMAIL);
+        ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(userInput, PREFIX_NAME, PREFIX_TAG, PREFIX_EMAIL,
+                PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_COMMENT, PREFIX_APPOINT);
 
         String trimmedArgsName;
         String trimmedArgsTag;
         String trimmedArgsEmail;
+        String trimmedArgsPhone;
+        String trimmedArgsAddress;
+        String trimmedArgsComment;
+        String trimmedArgsAppoint;
+
         String[] keywordNameList;
         String[] keywordTagList;
         String[] keywordEmailList;
+        String[] keywordPhoneList;
+        String[] keywordAddressList;
+        String[] keywordCommentList;
+        String[] keywordAppointList;
+
         HashMap<String, List<String>> mapKeywords = new HashMap<>();
 
         try {
@@ -129,6 +188,42 @@ public class FindCommandTest {
                 }
                 keywordEmailList = trimmedArgsEmail.split("\\s+");
                 mapKeywords.put(PREFIX_EMAIL.toString(), Arrays.asList(keywordEmailList));
+            }
+
+            if (argumentMultimap.getValue(PREFIX_PHONE).isPresent()) {
+                trimmedArgsPhone = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_PHONE)).get().trim();
+                if (trimmedArgsPhone.isEmpty()) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                }
+                keywordPhoneList = trimmedArgsPhone.split("\\s+");
+                mapKeywords.put(PREFIX_PHONE.toString(), Arrays.asList(keywordPhoneList));
+            }
+
+            if (argumentMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
+                trimmedArgsAddress = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_ADDRESS)).get().trim();
+                if (trimmedArgsAddress.isEmpty()) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                }
+                keywordAddressList = trimmedArgsAddress.split("\\s+");
+                mapKeywords.put(PREFIX_ADDRESS.toString(), Arrays.asList(keywordAddressList));
+            }
+
+            if (argumentMultimap.getValue(PREFIX_COMMENT).isPresent()) {
+                trimmedArgsComment = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_COMMENT)).get().trim();
+                if (trimmedArgsComment.isEmpty()) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                }
+                keywordCommentList = trimmedArgsComment.split("\\s+");
+                mapKeywords.put(PREFIX_COMMENT.toString(), Arrays.asList(keywordCommentList));
+            }
+
+            if (argumentMultimap.getValue(PREFIX_APPOINT).isPresent()) {
+                trimmedArgsAppoint = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_APPOINT)).get().trim();
+                if (trimmedArgsAppoint.isEmpty()) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                }
+                keywordAppointList = trimmedArgsAppoint.split("\\s+");
+                mapKeywords.put(PREFIX_APPOINT.toString(), Arrays.asList(keywordAppointList));
             }
 
         } catch (IllegalValueException ive) {
