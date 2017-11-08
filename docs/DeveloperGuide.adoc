@@ -386,28 +386,27 @@ _Figure 4.1.8 : Flow chart that explains the design of the `UndoRedoStack`._
 
 === Autocomplete
 
-The autocomplete feature consists mainly two parts, both activated by the autocomplete button `Tab`:
+The autocomplete feature is activated by the autocomplete button `Tab`, and depending on the degree of completeness of user input, do one of the following:
 
-* AutoComplete Command searches through all command words, and looks for matches based on incomplete user input in the command box when autocomplete key is used.
-* AutoComplete Model searches through the model component and automatically completes incomplete information based on existing person data when autocomplete key is used.
+* Spell out the incomplete command the user is trying to input, as well as generate command skeleton for the user to fill in the fields;
+* Fill out the field denoted by the closest prefix for the user, based on the data present in the Model component; or
+* Fill out the command argument based on the command word that is already present, the argument is sometimes filled based on data in the Model component.
 
-At the moment Autocomplete feature latches itself onto Logic component, for three reasons.
+The Autocomplete feature is made its own component since Autocomplete no longer just complete commands (as in version 1.1), but also depend on information in Logic and Model component.
 
-* Since Autocomplete is applied to commands mainly which all belongs under Logic, Autocomplete seems to be a better fit together with them.
-* Autocomplete itself does not model any personal data (doesn't belong under Model), nor presents itself as a separate UI component (not under UI either), and does nothing on the I/O system (nothing to do with storage).
-* Autocomplete also has a parser, like commands, and thus behaves like an address book Logic.
+The Autocomplete is built such that while in operation, the only input is the incomplete user input 'stub' as specified in `AutoCompleteLogic` interface, and the list of possible autocomplete options will be generated from the 'stub'.
 
-Therefore, Autocomplete seems to be best fit in Logic component.
+The list of options is generated according to several defining characteristics of this 'stub', as follows:
 
-The following sequence diagram shows where autocomplete possibilities are evaluated, stored, and subsequently used to help the user with command line input:
+* Number of words (each word is defined as one segment separated by whitespace) in the 'stub';
+* Command word, if present, in the 'stub'; and
+* Closest prefix to the end of the 'stub' if the command utilises prefixes.
 
-image::autocomplete.png[width="800"]
-_Figure 4.2.1 : Sequence diagram that shows how AutoComplete component interacts with Logic and UI components._
+An `AutoCompleteParser` will be chosen for the 'stub' based on the characteristics listed above, each of the specialize in fetching and matching different sets of data.
 
-AutocompleteCommandParser takes in an incomplete user command, match it with a list of command words currently supported in the application, and parses back the corresponding command skeleton for the user to fill in.
+Different implementations of `AutoCompleteParser` to parse different options shall be explained below.
 
-In order to improve flexibility for future command's autocomplete functionality,
-you will have to specify the appropriate format of autocompleted command under `COMMAND_USAGE` constant in every command.
+`AutoCompleteCommandParser` takes in an incomplete user command, match it with a list of command words currently supported in the application, and parses back the corresponding command skeleton for the user to fill in. The command skeleton is specified in each `Command` class in the `COMMAND_USAGE` constant.
 
 Some commands that take in just a single argument (usually a numerical index), can simply autocomplete to the command word itself with a space behind:
 [source,java]
