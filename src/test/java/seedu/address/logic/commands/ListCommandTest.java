@@ -27,10 +27,6 @@ import seedu.address.model.tag.Tag;
  */
 public class ListCommandTest {
 
-    private ListCommand listCommand;
-    private Model expectedModel;
-    private Model model;
-
     private static final String INVALID_TAG_1 = "invalid";
     private static final String INVALID_TAG_2 = "wrongTag";
     private static final String VALID_TAG_1 = "friends";
@@ -40,6 +36,10 @@ public class ListCommandTest {
     private static final String TAG_DESC_FAMILY = "[" + VALID_TAG_3 + "] ";
     private static final String TAG_DESC_FRIENDS = "[" + VALID_TAG_1 + "] ";
     private static final String TAG_DESC_OWESMONEY = "[" + VALID_TAG_2 + "] ";
+
+    private ListCommand listCommand;
+    private Model expectedModel;
+    private Model model;
 
     @Before
     public void setUp() {
