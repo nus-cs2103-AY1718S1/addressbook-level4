@@ -29,7 +29,7 @@ import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Adds a schedule to a person.
+ * Pulls Google Calendar events of a person.
  */
 public class GetCalendarCommand extends UndoableCommand {
 
@@ -124,8 +124,6 @@ public class GetCalendarCommand extends UndoableCommand {
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_DATETIME_ERROR);
         }
-
-
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
                 updatedFavourite, updatedTags, updatedScheduleList.toSet());
