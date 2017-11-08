@@ -27,7 +27,11 @@ include::..\UserGuide.adoc[tag=remarkchecklist]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Since our target users are students that do a lot of group work (or people that work with different people frequently),
+we wanted to include a function that allows the user to save remarks on task that want to do with other people, or
+things they want to make sure other people do. +
+So having a remark checklist helps the user keep track of things they need to do
+with different people.
 
 ==== Implementation
 
@@ -40,15 +44,46 @@ include::..\DeveloperGuide.adoc[tag=remarkchecklist]
 
 ---
 
-=== Enhancement Proposed:
+=== Enhancement Added: Link Command
+Allow user to add a twitter link to a person in the contact that loads when target person is selected
 
-//{Explain similar to the Undo/Redo feature above.}
+==== External behaviour
+
+---
+#Start of Extract [from: User Guide]#
+
+include::..\UserGuide.adoc[tag=link]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+With a twitter page linked to a person in the contact, the user will be able to determine exactly who is in his contact,
+even if he/she have multiple contact of the same name. +
+On top of this, they would be able to take advantage of the twitter
+messaging feature to handle discussions without leaving the application.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::..\DeveloperGuide.adoc[tag=link]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Private/ public accounts
+Allow user to have a private contact list that is protected by login username and password. +
+Having an account would allow us to save any application information to be used on other computers or platforms if required.
 
 === Other contributions
 
-//* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-//* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+Updated the GUI color scheme (Pull requests https://github.com/CS2103AUG2017-T09-B4/main/pull/104[#104]) +
+Add colours to tags (https://github.com/CS2103AUG2017-T09-B4/main/pull/6[#6]) +
+Added continuous integration tools using Appveyor, Travis CI.
 
-== Project:
 
-{Optionally (not graded), you may include other projects in your portfolio.}
