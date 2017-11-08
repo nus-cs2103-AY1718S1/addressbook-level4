@@ -22,10 +22,12 @@ public class SortCommand extends Command {
 
     private final String dataField;
     private final boolean isFavIgnored;
+    private final boolean isReverseOrder;
 
-    public SortCommand(String dataField, boolean isFavIgnored) {
+    public SortCommand(String dataField, boolean isFavIgnored, boolean isReverseOrder) {
         this.dataField = dataField;
         this.isFavIgnored = isFavIgnored;
+        this.isReverseOrder = isReverseOrder;
     }
 
     @Override
@@ -34,7 +36,8 @@ public class SortCommand extends Command {
         model.getFilteredPersonList();
 
         return new CommandResult(String.format(MESSAGE_SORT_LIST_SUCCESS, dataField)
-                + (isFavIgnored ? " ignoring favourites" : ""));
+                + (isFavIgnored ? " ignoring favourites" : "")
+                + (isReverseOrder ? " in reverse order" : ""));
     }
 
     @Override
