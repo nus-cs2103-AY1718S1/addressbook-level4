@@ -33,17 +33,22 @@ public interface Logic {
     ObservableList<ReadOnlyParcel> getCompletedParcelList();
 
     /**
-     * Returns an unmodifiable view of the filtered list of {@link Parcel} from the {@link Model} that have
+     * Returns an unmodifiable view of the filtered list of {@link Parcel}s from the {@link Model} that have
      * {@link Status} that is not COMPLETED.
      */
     ObservableList<ReadOnlyParcel> getUncompletedParcelList();
 
-    /** Returns an unmodifiable view of the active list of {@link Model} */
+    /** Sets the active list of {@link Model} at the particular instance
+     *
+     * @param isCompleted if true, the active list in {@link Model} will be set to the list of {@link Parcel}s
+     *                    with {@link Status} that is COMPLETED. Otherwise, it will be set the list of parcels
+     *                    with {@link Status} that is not COMPLETED.
+     */
     void setActiveList(boolean isCompleted);
-    //@@author
 
-    /** Returns an unmodifiable view of the filtered list of parcels  */
+    /** Returns an unmodifiable view of the current active list in {@link Model} at the instance it waas called. */
     ObservableList<ReadOnlyParcel> getActiveList();
+    //@@author kennard123661
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
