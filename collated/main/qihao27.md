@@ -82,7 +82,7 @@ public class NewResultCheckEvent extends BaseEvent {
         requireNonNull(s);
 
         try {
-            return s.contains(".xml") && s.matches("[\\p{Alnum}][\\p{Graph} ]*");
+            return s.matches("[\\p{Alnum}][\\p{Graph} ]*[.xml]$");
         } catch (IllegalArgumentException ipe) {
             return false;
         }

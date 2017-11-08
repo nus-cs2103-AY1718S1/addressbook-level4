@@ -490,7 +490,9 @@ public class SecurityManager extends ComponentManager implements Security {
 
 When methods in interface `SecureStorage` are called, `SecurityManager` will not realize them by itself. Instead, it calls the methods in `Storage` which also implements `SecureStorage`, because component `Secure` should not read and save files. +
 
-The "raise" method is used to communicate with the `UI` component while "isPermittedCommand" is called in `Logic` component to check whether a certain command have enough permission to be executed. The `Security` component acts like a bridge. It fulfills its function by communicating with every component.
+The "raise" method is used to communicate with the `UI` component while "isPermittedCommand" is called in `Logic` component to check whether a certain command have enough permission to be executed. The `Security` component acts like a bridge. It fulfills its function by communicating with every component. +
+
+After executing lock and unlock command, they will send `ReloadAddressBookEvent` to `MainApp` to clear all history and undo/redo stacks and then reload the address book from storage.
 
 image::LockSequenceDiagram.png[width="800"]
 
@@ -539,6 +541,17 @@ public class FavouriteCommand extends UndoableCommand {
 **Cons:** Will use more memory (significant if favourite list is large).
 
 ---
+
+=== Todo mechanism
+
+Todo mechanism uses `CommandOptionUtil` to parse its options. The model class for each todo item is `TodoItem`, which has three fields including start, end, task to describe an item. +
+
+According to the option, todo command sends different events to `UI`.  Todo mechanism sends `JumpToListRequestEvent` to both `PersonListPanel` and `TodoPanel` to select one person and load his/her todo list. Meanwhile todo mechanism uses `ClearListSelectionEvent` to clear the selection in `PersonListPanel` and `ShowAllTodoItemsEvent` to show all todo items of all contacts.
+When todo command need to add or delete some items, todo mechanism will call methods in `Model` to add, delete, list and access to storage
+
+=== Select mechanism
+
+Select command also has options. After parsed by `AddressBookParser` and `CommandOptionUtil`, select mechanism sends `ChangeSearchEvent` to `BrowserPanel` in order to change search url. Then, it sends `JumpToListRequestEvent` to change selection in `PersonListPanel` and `PersonListPanel` will send `PersonPanelSelectionChangedEvent` to `BrowserPanel` to indicate which person is selected.
 
 === Logging
 

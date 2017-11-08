@@ -55,6 +55,8 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
 
+    private Stage primaryStage;
+
 
     @Override
     public void init() throws Exception {
@@ -72,7 +74,7 @@ public class MainApp extends Application {
 
         setUpSecurityManager(storage);
 
-        model = initModelManager(userPrefs);
+        model = initModelManager(storage, userPrefs);
 
         logic = new LogicManager(model);
 
@@ -87,17 +89,14 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}.
-     */
-    private Model initModelManager(UserPrefs userPrefs) {
-        return new ModelManager(getInitialData(), userPrefs);
-    }
-
-    /**
-     * Reads the data from the sample address book will be used instead if {@code storage}'s address book is not found,
+     * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
+     * <p>
+     * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
+     * <p>
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
-    private ReadOnlyAddressBook getInitialData() {
+
+    private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         ReadOnlyAddressBook initialData;
         try {
@@ -113,7 +112,7 @@ public class MainApp extends Application {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
         }
-        return initialData;
+        return new ModelManager(initialData, userPrefs);
     }
 
     private void initLogging(Config config) {
@@ -202,6 +201,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
+        this.primaryStage = primaryStage;
         ui.start(primaryStage);
     }
 
@@ -219,10 +219,25 @@ public class MainApp extends Application {
     }
 
     //@@author Hailinx
+    /**
+     * Restarts the app.
+     */
+    private void restart() {
+        logger.info("============================ [ Restarting Address Book ] =============================");
+
+        try {
+            storage.saveUserPrefs(userPrefs);
+            init();
+            start(primaryStage);
+        } catch (Exception e) {
+            logger.severe("Failed to restart " + StringUtil.getDetails(e));
+        }
+    }
+
     @Subscribe
     public void handleReloadAddressBookEvent(ReloadAddressBookEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        model.setAddressBook(getInitialData());
+        restart();
     }
     //@@author
 

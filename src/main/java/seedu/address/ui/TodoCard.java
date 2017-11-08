@@ -1,8 +1,6 @@
 //@@author Hailinx
 package seedu.address.ui;
 
-import static seedu.address.model.util.TimeConvertUtil.convertTimeToString;
-
 import java.util.logging.Logger;
 
 import javafx.beans.binding.Bindings;
@@ -38,16 +36,26 @@ public class TodoCard extends UiPart<Region> {
      * so that they will be notified of any changes.
      */
     private void bindListeners(TodoItem item) {
-        String timeStr;
-        String startTimeStr = convertTimeToString(item.start);
-        if (item.end != null) {
-            String endTime = convertTimeToString(item.end);
-            timeStr = "From: " + startTimeStr + "   To: " + endTime;
-        } else {
-            timeStr = "From: " + startTimeStr;
+        time.textProperty().bind(Bindings.convert(new SimpleObjectProperty<>(item.getTimeString())));
+        task.textProperty().bind(Bindings.convert(new SimpleObjectProperty<>(item.task)));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
         }
 
-        time.textProperty().bind(Bindings.convert(new SimpleObjectProperty<>(timeStr)));
-        task.textProperty().bind(Bindings.convert(new SimpleObjectProperty<>(item.task)));
+        // instanceof handles nulls
+        if (!(other instanceof TodoCard)) {
+            return false;
+        }
+
+        // state check
+        TodoCard card = (TodoCard) other;
+        return id.getText().equals(card.id.getText())
+                && time.getText().equals(card.time.getText())
+                && task.getText().equals(card.task.getText());
     }
 }

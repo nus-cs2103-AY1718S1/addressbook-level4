@@ -50,6 +50,21 @@ public class TodoItem implements Comparable<TodoItem> {
         return true;
     }
 
+    /**
+     * @return formatted time string
+     */
+    public String getTimeString() {
+        String timeStr;
+        String startTimeStr = convertTimeToString(start);
+        if (end != null) {
+            String endTime = convertTimeToString(end);
+            timeStr = "From: " + startTimeStr + "   To: " + endTime;
+        } else {
+            timeStr = "From: " + startTimeStr;
+        }
+        return timeStr;
+    }
+
     @Override
     public String toString() {
         return "From:" + convertTimeToString(start)
@@ -62,11 +77,6 @@ public class TodoItem implements Comparable<TodoItem> {
         return other == this // short circuit if same object
                 || (other instanceof TodoItem // instanceof handles nulls
                 && this.toString().equals(other.toString())); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return toString().hashCode();
     }
 
     @Override

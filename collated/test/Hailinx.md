@@ -1,10 +1,87 @@
 # Hailinx
-###### \java\seedu\address\logic\commands\AddCommandTest.java
+###### \java\guitests\guihandles\TodoCardHandle.java
 ``` java
-        @Override
-        public void setAddressBook(ReadOnlyAddressBook newData) {
-            fail("This method should not be called.");
-        }
+package guitests.guihandles;
+
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+
+/**
+ * Provides a handle to a todoCard in the todoList panel.
+ */
+public class TodoCardHandle extends NodeHandle<Node> {
+    private static final String ID_FIELD_ID = "#id";
+    private static final String TIME_FIELD_ID = "#time";
+    private static final String TASK_FIELD_ID = "#task";
+
+    private final Label idLabel;
+    private final Label timeLabel;
+    private final Label taskLabel;
+
+    public TodoCardHandle(Node cardNode) {
+        super(cardNode);
+
+        this.idLabel = getChildNode(ID_FIELD_ID);
+        this.timeLabel = getChildNode(TIME_FIELD_ID);
+        this.taskLabel = getChildNode(TASK_FIELD_ID);
+    }
+
+    public String getId() {
+        return idLabel.getText();
+    }
+
+    public String getTime() {
+        return timeLabel.getText();
+    }
+
+    public String getTask() {
+        return taskLabel.getText();
+    }
+
+    @Override
+    public String toString() {
+        return getId() + getTime() + getTask();
+    }
+}
+```
+###### \java\guitests\guihandles\TodoPanelHandle.java
+``` java
+package guitests.guihandles;
+
+import java.util.Optional;
+
+import javafx.scene.control.ListView;
+import seedu.address.ui.TodoCard;
+
+/**
+ * Provides a handle for {@code TodoPanel} containing the list of {@code TodoCard}.
+ */
+public class TodoPanelHandle extends NodeHandle<ListView<TodoCard>> {
+    public static final String TODO_LIST_VIEW_ID = "#todoCardList";
+
+    public TodoPanelHandle(ListView<TodoCard> todoPanelNode) {
+        super(todoPanelNode);
+    }
+
+    /**
+     * Returns the todoCard handle of a person associated with the {@code index} in the list.
+     */
+    public TodoCardHandle getTodoCardHandle(int index) {
+        return getTodoCardHandle(getRootNode().getItems().get(index));
+    }
+
+    /**
+     * Returns the {@code TodoCardHandle} of the specified {@code todoCard} in the list.
+     */
+    public TodoCardHandle getTodoCardHandle(TodoCard todoCard) {
+        Optional<TodoCardHandle> handle = getRootNode().getItems().stream()
+                .filter(card -> card.equals(todoCard))
+                .map(card -> new TodoCardHandle(card.getRoot()))
+                .findFirst();
+        return handle.orElseThrow(() -> new IllegalArgumentException("TodoCard does not exist."));
+    }
+
+}
 ```
 ###### \java\seedu\address\logic\commands\AddCommandTest.java
 ``` java
@@ -1666,8 +1743,11 @@ public class FuzzySearchPredicateTest {
 ``` java
 package seedu.address.model.person;
 
+import static seedu.address.model.util.TimeConvertUtil.convertTimeToString;
 import static seedu.address.testutil.TodoItemUtil.EARLY_TIME_ONE;
 import static seedu.address.testutil.TodoItemUtil.LATE_TIME_ONE;
+import static seedu.address.testutil.TodoItemUtil.getTodoItemOne;
+import static seedu.address.testutil.TodoItemUtil.getTodoItemThree;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -1705,6 +1785,17 @@ public class TodoItemTest {
         } catch (IllegalValueException e) {
             Assert.assertEquals(e.getMessage(), TodoItem.MESSAGE_TODOITEM_CONSTRAINTS);
         }
+    }
+
+    @Test
+    public void getTimeString_ReturnsCorrect() {
+        TodoItem todoItemWithEndTime = getTodoItemOne();
+        Assert.assertEquals(todoItemWithEndTime.getTimeString(),
+                "From: " + convertTimeToString(EARLY_TIME_ONE) + "   To: " + convertTimeToString(LATE_TIME_ONE));
+
+        TodoItem todoItemWithoutEndTime = getTodoItemThree();
+        Assert.assertEquals(todoItemWithoutEndTime.getTimeString(),
+                "From: " + convertTimeToString(EARLY_TIME_ONE));
     }
 }
 ```
@@ -2417,4 +2508,170 @@ public class TodoItemUtil {
         String searchAddressUrl = GOOGLE_MAP_URL_PREFIX + "123,+Jurong+West+Ave+6,+#08-111";
         assertEquals(browserPanel.getUrl(person), searchAddressUrl);
     }
+```
+###### \java\seedu\address\ui\TodoCardTest.java
+``` java
+package seedu.address.ui;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TodoItemUtil.getTodoItemOne;
+import static seedu.address.testutil.TodoItemUtil.getTodoItemThree;
+import static seedu.address.ui.testutil.GuiTestAssert.assertTodoDisplaysTodoItem;
+
+import org.junit.Test;
+
+import guitests.guihandles.TodoCardHandle;
+import seedu.address.model.person.TodoItem;
+
+public class TodoCardTest extends GuiUnitTest {
+
+    @Test
+    public void display() {
+        // todoItem with end time
+        TodoItem todoItem = getTodoItemOne();
+        TodoCard todoCard = new TodoCard(todoItem, 1);
+        uiPartRule.setUiPart(todoCard);
+        assertCardDisplay(todoCard, todoItem, 1);
+
+        // todoItem without end time
+        todoItem = getTodoItemThree();
+        todoCard = new TodoCard(todoItem, 2);
+        uiPartRule.setUiPart(todoCard);
+        assertCardDisplay(todoCard, todoItem, 2);
+    }
+
+    @Test
+    public void equals() {
+        TodoItem todoItem = getTodoItemOne();
+        TodoCard todoCard = new TodoCard(todoItem, 0);
+
+        // same item, same index -> returns true
+        TodoCard copy = new TodoCard(todoItem, 0);
+        assertTrue(todoCard.equals(copy));
+
+        // same object -> returns true
+        assertTrue(todoCard.equals(todoCard));
+
+        // different types -> returns false
+        assertFalse(todoCard.equals(0));
+    }
+
+    /**
+     * Asserts that {@code todoCard} displays the details of {@code expectedPerson} correctly and matches
+     * {@code expectedId}.
+     */
+    private void assertCardDisplay(TodoCard todoCard, TodoItem expectedTodoItem, int expectedId) {
+        guiRobot.pauseForHuman();
+
+        TodoCardHandle todoCardHandle = new TodoCardHandle(todoCard.getRoot());
+
+        // verify id is displayed correctly
+        assertEquals(Integer.toString(expectedId) + ". ", todoCardHandle.getId());
+
+        // verify person details are displayed correctly
+        assertTodoDisplaysTodoItem(expectedTodoItem, todoCardHandle);
+    }
+}
+```
+###### \java\seedu\address\ui\TodoPanelTest.java
+``` java
+package seedu.address.ui;
+
+import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.EventsUtil.postNow;
+import static seedu.address.testutil.TypicalPersons.BILL;
+import static seedu.address.testutil.TypicalPersons.DARWIN;
+import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
+import static seedu.address.ui.testutil.GuiTestAssert.assertTodoDisplaysTodoItem;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import guitests.guihandles.TodoCardHandle;
+import guitests.guihandles.TodoPanelHandle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.ShowAllTodoItemsEvent;
+import seedu.address.commons.events.ui.ShowPersonTodoEvent;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TodoItem;
+
+public class TodoPanelTest extends GuiUnitTest {
+    private static final ObservableList<ReadOnlyPerson> TYPICAL_PERSONS =
+            FXCollections.observableList(getTypicalPersons());
+
+    private static final ShowPersonTodoEvent SHOW_DARWIN_TODO_EVENT = new ShowPersonTodoEvent(DARWIN);
+    private static final ShowAllTodoItemsEvent SHOW_ALL_TODO_EVENT = new ShowAllTodoItemsEvent();
+    private static final JumpToListRequestEvent JUMP_TO_BILL_TODO_EVENT =
+            new JumpToListRequestEvent(Index.fromOneBased(8));
+
+    private TodoPanelHandle todoPanelHandle;
+
+    @Before
+    public void setUp() {
+        TodoPanel todoPanel = new TodoPanel(TYPICAL_PERSONS);
+        uiPartRule.setUiPart(todoPanel);
+
+        todoPanelHandle = new TodoPanelHandle(getChildNode(todoPanel.getRoot(),
+                TodoPanelHandle.TODO_LIST_VIEW_ID));
+    }
+
+    @Test
+    public void display() {
+        List<TodoItem> expectedList = getAllTodoItemList();
+        assertTodoDisplayTodoPanel(expectedList);
+    }
+
+    @Test
+    public void handleShowPersonTodoEvent() {
+        postNow(SHOW_DARWIN_TODO_EVENT);
+        guiRobot.pauseForHuman();
+        assertTodoDisplayTodoPanel(DARWIN.getTodoItems());
+    }
+
+    @Test
+    public void handleShowAllTodoItemsEvent() {
+        postNow(SHOW_ALL_TODO_EVENT);
+        guiRobot.pauseForHuman();
+
+        List<TodoItem> expectedList = getAllTodoItemList();
+        assertTodoDisplayTodoPanel(expectedList);
+    }
+
+    @Test
+    public void handleJumpToListRequestEvent() {
+        postNow(JUMP_TO_BILL_TODO_EVENT);
+        guiRobot.pauseForHuman();
+        assertTodoDisplayTodoPanel(BILL.getTodoItems());
+    }
+
+    private List<TodoItem> getAllTodoItemList() {
+        List<TodoItem> list = new ArrayList<>();
+        for (ReadOnlyPerson person : TYPICAL_PERSONS) {
+            list.addAll(person.getTodoItems());
+        }
+        return list;
+    }
+
+    /**
+     * Asserts that all {@code actualCard} displays the details of {@code expectedItem} in {@code expectedList}.
+     */
+    private void assertTodoDisplayTodoPanel(List<TodoItem> expectedList) {
+        for (int i = 0; i < expectedList.size(); i++) {
+            TodoItem expectedItem = expectedList.get(i);
+            TodoCardHandle actualCard = todoPanelHandle.getTodoCardHandle(i);
+            guiRobot.pauseForHuman();
+
+            assertTodoDisplaysTodoItem(expectedItem, actualCard);
+            assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
+        }
+    }
+}
 ```

@@ -22,11 +22,6 @@ public interface Model {
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
-    //@@author Hailinx
-    /** Replaces the data in the ModelManager with the given addressBook without writing to Storage */
-    void setAddressBook(ReadOnlyAddressBook newData);
-    //@@author
-
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 

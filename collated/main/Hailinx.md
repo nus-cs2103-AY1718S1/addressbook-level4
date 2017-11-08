@@ -1406,10 +1406,26 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
 ```
 ###### \java\seedu\address\MainApp.java
 ``` java
+
+    /**
+     * Restarts the app.
+     */
+    private void restart() {
+        logger.info("============================ [ Restarting Address Book ] =============================");
+
+        try {
+            storage.saveUserPrefs(userPrefs);
+            init();
+            start(primaryStage);
+        } catch (Exception e) {
+            logger.severe("Failed to restart " + StringUtil.getDetails(e));
+        }
+    }
+
     @Subscribe
     public void handleReloadAddressBookEvent(ReloadAddressBookEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        model.setAddressBook(getInitialData());
+        restart();
     }
 ```
 ###### \java\seedu\address\model\AddressBook.java
@@ -1466,11 +1482,6 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
 ```
 ###### \java\seedu\address\model\Model.java
 ``` java
-    /** Replaces the data in the ModelManager with the given addressBook without writing to Storage */
-    void setAddressBook(ReadOnlyAddressBook newData);
-```
-###### \java\seedu\address\model\Model.java
-``` java
     /** Adds the given todoItem to target person */
     void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
             throws DuplicatePersonException, PersonNotFoundException, DuplicateTodoItemException;
@@ -1487,13 +1498,6 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
 ``` java
     /** Updates the UI to show all todoItems for all persons */
     void updateTodoItemList();
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    @Override
-    public void setAddressBook(ReadOnlyAddressBook newData) {
-        addressBook.resetData(newData);
-    }
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -1742,6 +1746,21 @@ public class TodoItem implements Comparable<TodoItem> {
         return true;
     }
 
+    /**
+     * @return formatted time string
+     */
+    public String getTimeString() {
+        String timeStr;
+        String startTimeStr = convertTimeToString(start);
+        if (end != null) {
+            String endTime = convertTimeToString(end);
+            timeStr = "From: " + startTimeStr + "   To: " + endTime;
+        } else {
+            timeStr = "From: " + startTimeStr;
+        }
+        return timeStr;
+    }
+
     @Override
     public String toString() {
         return "From:" + convertTimeToString(start)
@@ -1754,11 +1773,6 @@ public class TodoItem implements Comparable<TodoItem> {
         return other == this // short circuit if same object
                 || (other instanceof TodoItem // instanceof handles nulls
                 && this.toString().equals(other.toString())); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return toString().hashCode();
     }
 
     @Override
@@ -2353,8 +2367,6 @@ public class BrowserSearchMode {
 ``` java
 package seedu.address.ui;
 
-import static seedu.address.model.util.TimeConvertUtil.convertTimeToString;
-
 import java.util.logging.Logger;
 
 import javafx.beans.binding.Bindings;
@@ -2390,17 +2402,27 @@ public class TodoCard extends UiPart<Region> {
      * so that they will be notified of any changes.
      */
     private void bindListeners(TodoItem item) {
-        String timeStr;
-        String startTimeStr = convertTimeToString(item.start);
-        if (item.end != null) {
-            String endTime = convertTimeToString(item.end);
-            timeStr = "From: " + startTimeStr + "   To: " + endTime;
-        } else {
-            timeStr = "From: " + startTimeStr;
+        time.textProperty().bind(Bindings.convert(new SimpleObjectProperty<>(item.getTimeString())));
+        task.textProperty().bind(Bindings.convert(new SimpleObjectProperty<>(item.task)));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
         }
 
-        time.textProperty().bind(Bindings.convert(new SimpleObjectProperty<>(timeStr)));
-        task.textProperty().bind(Bindings.convert(new SimpleObjectProperty<>(item.task)));
+        // instanceof handles nulls
+        if (!(other instanceof TodoCard)) {
+            return false;
+        }
+
+        // state check
+        TodoCard card = (TodoCard) other;
+        return id.getText().equals(card.id.getText())
+                && time.getText().equals(card.time.getText())
+                && task.getText().equals(card.task.getText());
     }
 }
 ```
@@ -2411,8 +2433,6 @@ package seedu.address.ui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-
-import org.fxmisc.easybind.EasyBind;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -2458,10 +2478,12 @@ public class TodoPanel extends UiPart<Region> {
     }
 
     private void setConnections(List<TodoItem> todoItemList) {
-        ObservableList<TodoItem> allTodoItems = FXCollections.observableArrayList(todoItemList);
+        List<TodoCard> cardList = new ArrayList<>();
+        for (int i = 0; i < todoItemList.size(); i++) {
+            cardList.add(new TodoCard(todoItemList.get(i), i + 1));
+        }
 
-        ObservableList<TodoCard> mappedList = EasyBind.map(
-                allTodoItems, (item) -> new TodoCard(item, allTodoItems.indexOf(item) + 1));
+        ObservableList<TodoCard> mappedList = FXCollections.observableList(cardList);
         todoCardList.setItems(mappedList);
         todoCardList.setCellFactory(listView -> new TodoPanel.TodoListViewCell());
     }
@@ -2506,11 +2528,11 @@ public class TodoPanel extends UiPart<Region> {
 ```
 ###### \resources\view\TodoCard.fxml
 ``` fxml
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
 
 <VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -2521,9 +2543,9 @@ public class TodoPanel extends UiPart<Region> {
                   <Insets bottom="10.0" left="10.0" top="10.0" />
                </HBox.margin>
             </Label>
-            <Label fx:id="time" lineSpacing="5.0" minWidth="100.0" text="dd-MM-yyyy">
+            <Label fx:id="time" lineSpacing="5.0" text="dd-MM-yyyy">
                <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" top="10.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
             </Label>
          </children>
@@ -2538,10 +2560,11 @@ public class TodoPanel extends UiPart<Region> {
 ```
 ###### \resources\view\TodoPanel.fxml
 ``` fxml
+
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
-    <ListView fx:id="todoCardList" style="-fx-background-color: #f3e4c6;" VBox.vgrow="ALWAYS" />
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <ListView fx:id="todoCardList" minWidth="450.0" style="-fx-background-color: #f3e4c6;" VBox.vgrow="ALWAYS" />
 </VBox>
 ```
