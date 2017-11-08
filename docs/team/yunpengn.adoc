@@ -8,22 +8,22 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 **BoNUS** is a desktop personal organizer application dedicated to NUS students to carry out various tasks such as storing
 contacts, scheduling for upcoming events, timetable planning as well as a calendar to better organise their campus life.
 
+This project is the result of a semester-long software engineering https://nus-cs2103.github.io/website/[module] at
+http://www.nus.edu.sg/[NUS]. It is built my teammates and me, as listed link:../AboutUs.adoc[here]. Most of the backend codes
+are written in Java, while https://docs.oracle.com/javase/8/javafx/get-started-tutorial/jfx-overview.htm#JFXST784[JavaFX]
+is adapted as the frontend framework.
+
 *Code contributed*:
 
 * https://github.com/CS2103AUG2017-T09-B3/main/blob/master/collated/main/yunpengn.md[Functional code]
 * https://github.com/CS2103AUG2017-T09-B3/main/blob/master/collated/test/yunpengn.md[Test code]
 
-=== Enhancement Added: Undo/Redo
+=== Enhancement Added: Generic Property
 
 ==== External behavior
 
 ---
-#Start of Extract [from: User Guide]#
-
-include::../UserGuide.adoc[tag=undoredo]
-
-#End of Extract#
-
+include::../UserGuide.adoc[tag=genericProperty]
 ---
 
 ==== Justification
@@ -33,12 +33,7 @@ include::../UserGuide.adoc[tag=undoredo]
 ==== Implementation
 
 ---
-#Start of Extract [from: Developer Guide]#
-
-include::../DeveloperGuide.adoc[tag=undoredo]
-
-#End of Extract#
-
+include::../DeveloperGuide.adoc[tag=genericProperty]
 ---
 
 === Enhancement Proposed: Add command `remark`
@@ -50,6 +45,21 @@ include::../DeveloperGuide.adoc[tag=undoredo]
 * Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 
-== Project: PowerPointLabs
+== Project: Lions Befrienders Management System
 
-{Optionally (not graded), you may include other projects in your portfolio.}
+I worked at http://www.comp.nus.edu.sg/~vwo/[CVWO (Computing for Voluntary Welfare Organisations)] as a web developer during the
+Year 1 summer vacation.
+
+My team at CVWO rewrote, upgraded and deployed the http://www.comp.nus.edu.sg/~vwo/projects/2017-lbsa.html[management
+system] for https://www.lionsbefrienders.org.sg/[Lions Befrienders (Singapore)], which was formed in 1995 and served thousands
+of senior citizens. This system saves a lot of time for staff at Lions Befrienders to manage their growing enormous clients
+across the country, while ensuring high service quality.
+
+== Project: A Multi-User 3D Game Environment for CS1101S
+
+This project aims at building a 3D game environment to assist http://www.comp.nus.edu.sg/~cs1101s/[CS1101S] students in
+learning programming. The game is built using https://unity3d.com/[Unity3D] game engine. It provides vivid visualization
+to help students have a deeper understanding of the related data structure and algorithms used.
+
+CS1101S is a module taught in the Department of Computer Science at the NUS School of Computing. It serves as a rigorous
+and thorough introduction to programming methodology.
