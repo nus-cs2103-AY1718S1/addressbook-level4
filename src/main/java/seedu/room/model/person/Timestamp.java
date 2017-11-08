@@ -11,7 +11,7 @@ import seedu.room.commons.exceptions.IllegalValueException;
 public class Timestamp {
 
     public static final String MESSAGE_TIMESTAMP_CONSTRAINTS =
-            "Timestamp cannot be negative";
+            "Days to expire cannot be negative";
 
     private LocalDateTime creationTime = null;
     private LocalDateTime expiryTime = null; //after construction, a null expiryTime means this person will not expire

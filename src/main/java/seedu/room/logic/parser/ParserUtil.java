@@ -34,6 +34,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_ILLEGAL_NUMBER_FORMAT = "Days to expire cannot be a decimal";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -82,7 +83,7 @@ public class ParserUtil {
     }
 
 
-    public static Optional<Timestamp> parseTimestamp(Optional<String> timestamp) throws IllegalValueException {
+    public static Optional<Timestamp> parseTimestamp(Optional<String> timestamp) throws IllegalValueException, NumberFormatException {
         return timestamp.isPresent() ? Optional.of(new Timestamp(Long.parseLong(timestamp.get()))) : Optional.empty();
     }
 

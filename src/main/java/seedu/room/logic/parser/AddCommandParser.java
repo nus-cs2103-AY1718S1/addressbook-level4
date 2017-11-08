@@ -96,6 +96,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
+        } catch (NumberFormatException nfe) {
+            throw new ParseException("Timestamp cannot have decimals", nfe);
         }
     }
 
