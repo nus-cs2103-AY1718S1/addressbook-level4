@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.commands.EditCommand.MESSAGE_INVALID_TOTAL_DEBT;
 
 import java.util.Collections;
 import java.util.Date;
@@ -328,7 +329,7 @@ public class Person implements ReadOnlyPerson {
     public void setTotalDebt(Debt totalDebt) throws IllegalValueException {
         requireNonNull(totalDebt);
         if (totalDebt.toNumber() < debt.get().toNumber()) {
-            throw new IllegalValueException("Total debt cannot be less than current debt");
+            throw new IllegalValueException(MESSAGE_INVALID_TOTAL_DEBT);
         }
         this.totalDebt.set(totalDebt);
     }
