@@ -1406,7 +1406,6 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
 ```
 ###### \java\seedu\address\MainApp.java
 ``` java
-
     /**
      * Restarts the app.
      */

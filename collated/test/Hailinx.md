@@ -1790,7 +1790,7 @@ public class TodoItemTest {
     }
 
     @Test
-    public void getTimeString_ReturnsCorrect() {
+    public void test_timeString() {
         TodoItem todoItemWithEndTime = getTodoItemOne();
         Assert.assertEquals(todoItemWithEndTime.getTimeString(),
                 "From: " + convertTimeToString(EARLY_TIME_ONE) + "   To: " + convertTimeToString(LATE_TIME_ONE));
@@ -2510,6 +2510,16 @@ public class TodoItemUtil {
         postNow(new ChangeSearchEvent(GOOGLE_SEARCH_ADDRESS));
         String searchAddressUrl = GOOGLE_MAP_URL_PREFIX + "123,+Jurong+West+Ave+6,+#08-111";
         assertEquals(browserPanel.getUrl(person), searchAddressUrl);
+    }
+```
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
+``` java
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedTodoItem}.
+     */
+    public static void assertTodoDisplaysTodoItem(TodoItem expectedTodoItem, TodoCardHandle actualCard) {
+        assertEquals(expectedTodoItem.getTimeString(), actualCard.getTime());
+        assertEquals(expectedTodoItem.task, actualCard.getTask());
     }
 ```
 ###### \java\seedu\address\ui\TodoCardTest.java

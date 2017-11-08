@@ -755,6 +755,7 @@ public class TypicalOptions {
             assertEquals("", actualCard.getFavouriteStar());
         }
     }
+
 ```
 ###### \java\seedu\address\ui\testutil\UiPartRule.java
 ``` java
