@@ -72,7 +72,8 @@ image::UI.jpeg[width="790"]
 _Figure 3.1 : UI_
 +
 ....
-Here are some terms of the components in the GUI for you to refer to before you proceed to the next step (you may refer to the labels in Figure 3.1):
+Here are some terms of the components in the GUI for you to refer to before you proceed to the next step
+(you may refer to the labels in Figure 3.1):
 
 1. File menu: allows you to change colour themes and exit the application
 2. Help menu: clicking on the Help menu will pop out a help window
@@ -82,13 +83,16 @@ Here are some terms of the components in the GUI for you to refer to before you 
    -Photo display: shows the photo of your contact
    (default image is displayed if photo is not uploaded to the contact yet)
    -Details display: shows all the details of your contact
-6. Form display: allows you to input the details of your contact that you clicked for editing (form will auto-fill existing details of the contact in the text-fields when you click on a contact)
+6. Form display: allows you to input the details of your contact that you clicked for editing
+   (form will auto-fill existing details of the contact in the text-fields when you click on a contact)
 7. Delete button: allows you to delete the contact that you chose
 8. Email button: allows you to email the contact that you chose
 9. Save button: saves the edited information of the contact in the form to the chosen contact
-10. Browser panel: shows the logo image and changes to the map view of the contact's location upon clicking on a contact
+10. Browser panel: shows the logo image and changes to the map view of the contact's location
+    upon clicking on a contact
 11. Clear log button: allows you to clear the log
-12. Generate QR button: allows you to generate QR code of the contact's phone number (the QR code will be displayed in the browser panel)
+12. Generate QR button: allows you to generate QR code of the contact's phone number
+(the QR code will be displayed in the browser panel)
 ....
 
 .  Type the command in the command box (labelled 3 in Figure 3.1)  and press kbd:[Enter] to execute it. +
