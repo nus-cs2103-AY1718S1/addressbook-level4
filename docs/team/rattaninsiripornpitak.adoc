@@ -22,7 +22,7 @@ include::../UserGuide.adoc[tag=pfind]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Quick, intuitive and user-friendly filtering mechanism
 
 ==== Implementation
 Follows the implementation of `find` `command` with modification made to predicate class
@@ -51,7 +51,7 @@ include::../UserGuide.adoc[tag=pdfSaveLoad]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Accessing of external files via LISA allows it to act as self-sufficient software for its purpose. This also aids user with managing their files storage directory.
 
 ==== Implementation
 
@@ -63,6 +63,63 @@ include::../DeveloperGuide.adoc[tag=pdfSaveLoad]
 #End of Extract#
 
 ---
+
+=== Enhancement Added: Switching middle panel between Insurance and Profile
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=linkAllProfileAndInsurance]
+
+#End of Extract#
+
+Note : `InsuranceListPanel` is written by OscarWang114. This is later embedded into standalone right panel on `MainWindow` by me.
+
+---
+
+==== Justification
+
+Easy tracking all related persons to insurance contracts and vice versa will improve navigability of LISA
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=switchBetweenProfileAndInsurance]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Restricting 'Tab' only to Textfields
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tabSwitch]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As mentioned above, to lower dependence on mouse
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=restrictTabToTextField]
+
+#End of Extract#
+
+---
+
 
 
 === Enhancement Proposed:

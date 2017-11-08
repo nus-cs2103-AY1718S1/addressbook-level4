@@ -807,21 +807,21 @@ private void activateLinkToInsuranceFile() {
 ----
 // end::pdfSaveLoad[]
 
-// tag::switchBetweenProfileAndInsurance
+// tag::switchBetweenProfileAndInsurance[]
 === Switching middle panel between Profile and Insurance page
 
 Implemented by raising events when one of the following events is detected
 
-1) `Person` card selected from left panel
+1) `Person` card selected from left panel : `PersonPanelSelectionChangedEvent`
 
-2) `Insurance` card selected from right panel
+2) `Insurance` card selected from right panel : `InsurancePanelSelectionChangedEvent`
 
-3) `Person` name selected from `InsuranceProfilePanel` when bound to middle panel
+3) `Person` name selected from `InsuranceProfilePanel` when bound to middle panel : `PersonNameClickedEvent`
 
-4) `Insurance` selected from `ProfilePanel` when bound to middle panel
+4) `Insurance` selected from `ProfilePanel` when bound to middle panel : `InsuranceClickedEvent`
 
 Each of these events call their own respective event handler and raise `SwitchToProfilePanelRequestEvent` or `SwitchToInsurancePanelRequestEvent` as required.
-These 2 events are picked up by `MainWindow` which rebind the middle panel placeholder to respective node.
+These 2 events are picked up by `MainWindow` which switch the middle panel placeholder binding to respective node.
 [source, java]
 ----
  @Subscribe
@@ -840,7 +840,55 @@ These 2 events are picked up by `MainWindow` which rebind the middle panel place
         middlePanelPlaceholder.getChildren().add(insuranceProfilePanel.getRoot());
     }
 ----
+// end::switchBetweenProfileAndInsurance[]
 
+// tag::restrictTabToTextField[]
+
+=== Restrict 'Tab' key to switching only between the textfields
+
+This feature is implemented in `MainWindow` in order to circumvent direct coupling between `CommandBox` and `SearchBox` class. In order to locate the nodes for this two textfields, `lookup` function from `Scene` is utilized.
+
+[source, java]
+----
+    public void setTransversableTextFields() {
+        commandTextField = (TextField) primaryStage.getScene().lookup(COMMANDBOX_TEXTFIELD_ID);
+        searchTextField = (TextField) primaryStage.getScene().lookup(SEARCHBOX_TEXTFIELD_ID);
+    }
+----
+
+[NOTE]
+The function above must be called after the `show()` function
+
+The two static arguments are their respective `fx:id`
+
+[source, java]
+----
+ private static final String COMMANDBOX_TEXTFIELD_ID = "#commandTextField";
+     private static final String SEARCHBOX_TEXTFIELD_ID = "#searchTextField";
+----
+
+Handle for `KeyEvent` is then written in such the way that Tab will be handled by MainWindow and not its children. After setting up the nodes, all is left is to call `requestFocus()` accordingly.
+
+[source, java]
+----
+ getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode().equals(KeyCode.TAB)) {
+                if (commandTextField.isFocused()) {
+                    searchTextField.requestFocus();
+                }
+                else {
+                    commandTextField.requestFocus();
+                }
+                event.consume();
+            }
+            if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
+                menuItem.getOnAction().handle(new ActionEvent());
+                event.consume();
+            }
+        });
+    }
+----
+// end::restrictTabToTextField[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
