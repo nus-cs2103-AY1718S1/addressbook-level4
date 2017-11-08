@@ -45,7 +45,7 @@ public class RelationshipCommandTest {
         String expectedMessage = String.format(RelationshipCommand.MESSAGE_ADD_RELATIONSHIP_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-                expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(relationshipCommand, model, expectedMessage, expectedModel);
     }
@@ -53,7 +53,7 @@ public class RelationshipCommandTest {
     @Test
     public void executeDeleteRelationshipSuccess() throws Exception {
         Person editedPerson = new Person(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
-                editedPerson.setRelationship(new Relationship(""));
+        editedPerson.setRelationship(new Relationship(""));
 
         RelationshipCommand relationshipCommand =
                 prepareCommand(INDEX_FIRST_PERSON, editedPerson.getRelationship().toString());
@@ -79,7 +79,7 @@ public class RelationshipCommandTest {
         String expectedMessage = String.format(RelationshipCommand.MESSAGE_ADD_RELATIONSHIP_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-                expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(relationshipCommand, model, expectedMessage, expectedModel);
     }
