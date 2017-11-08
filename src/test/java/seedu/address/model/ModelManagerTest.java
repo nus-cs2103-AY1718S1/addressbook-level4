@@ -58,12 +58,12 @@ public class ModelManagerTest {
         // ensure that addressbook updated
         assertEquals(3, modelManager.getAddressBook().getTagList().size());
         assertEquals(8, modelManager.getAddressBook().getParcelList().size());
-        assertEquals(2, modelManager.getFilteredDeliveredParcelList().size());
-        assertEquals(6, modelManager.getFilteredUndeliveredParcelList().size());
+        assertEquals(2, modelManager.getCompletedParcelList().size());
+        assertEquals(6, modelManager.getUncompletedParcelList().size());
 
-        assertEquals(modelManager.getActiveList(), modelManager.getFilteredUndeliveredParcelList());
+        assertEquals(modelManager.getActiveList(), modelManager.getUncompletedParcelList());
         modelManager.setActiveList(true);
-        assertEquals(modelManager.getActiveList(), modelManager.getFilteredDeliveredParcelList());
+        assertEquals(modelManager.getActiveList(), modelManager.getCompletedParcelList());
     }
 
     @Test

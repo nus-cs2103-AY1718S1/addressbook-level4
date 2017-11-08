@@ -41,9 +41,10 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
 
     private final FilteredList<ReadOnlyParcel> filteredParcels;
-    private FilteredList<ReadOnlyParcel> filteredDeliveredParcels;
-    private FilteredList<ReadOnlyParcel> filteredUndeliveredParcels;
-    private FilteredList<ReadOnlyParcel> activeFilteredList; // references the current selected list
+    private FilteredList<ReadOnlyParcel> completedParcels;
+    private FilteredList<ReadOnlyParcel> uncompletedParcels;
+    private FilteredList<ReadOnlyParcel> activeParcels; // references the current selected list
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -55,8 +56,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredParcels = new FilteredList<>(this.addressBook.getParcelList());
-        updatedDeliveredAndUndeliveredList();
-        activeFilteredList = filteredUndeliveredParcels;
+        updateSubLists();
+        activeParcels = uncompletedParcels;
     }
 
     public ModelManager() {
@@ -64,29 +65,28 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author kennard123661
-    /**
-     * Updates Delivered and UndeliveredParcelList and resets the Active List to the correct reference
-     */
-    private void updatedDeliveredAndUndeliveredList() {
+    @Override
+    public void updateSubLists() {
         // checks reference equality
-        boolean isActiveDelivered = activeFilteredList == filteredDeliveredParcels;
+        boolean isActiveDelivered = activeParcels == completedParcels;
 
-        filteredDeliveredParcels = filteredParcels.filtered(deliveredPredicate);
-        filteredUndeliveredParcels = filteredParcels.filtered(deliveredPredicate.negate());
+        // filter sub lists
+        completedParcels = filteredParcels.filtered(deliveredPredicate);
+        uncompletedParcels = filteredParcels.filtered(deliveredPredicate.negate());
 
         setActiveList(isActiveDelivered);
     }
 
     @Override
-    public void setActiveList(boolean isDelivered) {
-        activeFilteredList = isDelivered ? filteredDeliveredParcels : filteredUndeliveredParcels;
+    public void setActiveList(boolean isCompleted) {
+        activeParcels = isCompleted ? completedParcels : uncompletedParcels;
     }
     //@@author
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
-        updatedDeliveredAndUndeliveredList();
+        updateSubLists();
         indicateAddressBookChanged();
     }
 
@@ -142,27 +142,27 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
         addressBook.addParcel(parcel);
         updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
-        updatedDeliveredAndUndeliveredList();
+        updateSubLists();
         indicateAddressBookChanged();
     }
 
     //@@author kennard123661
     @Override
-    public synchronized void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> parcelsAdded,
+    public synchronized void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> uniqueParcels,
                                            List<ReadOnlyParcel> duplicateParcels) {
 
         for (ReadOnlyParcel parcel : parcels) {
             ReadOnlyParcel parcelToAdd = new Parcel(parcel);
             try {
-                addressBook.addParcel(parcelToAdd);
-                parcelsAdded.add(parcelToAdd);
+                addressBook.addParcel(parcelToAdd); // throws duplicate parcel exception if parcel is non-unique
+                uniqueParcels.add(parcelToAdd);
             } catch (DuplicateParcelException ive) {
                 duplicateParcels.add(parcelToAdd);
             }
         }
 
         updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
-        updatedDeliveredAndUndeliveredList();
+        updateSubLists();
         indicateAddressBookChanged();
     }
     //@@author
@@ -189,30 +189,29 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author kennard123661
     /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyParcel} backed by the internal list of
-     * {@code addressBook}
+     * Returns an unmodifiable view of the list of {@link ReadOnlyParcel} with {@link Status} that is COMPLETED,
+     * backed by the internal list of {@code addressBook}
      */
     @Override
-    public ObservableList<ReadOnlyParcel> getFilteredDeliveredParcelList() {
-        return FXCollections.unmodifiableObservableList(filteredDeliveredParcels);
+    public ObservableList<ReadOnlyParcel> getCompletedParcelList() {
+        return FXCollections.unmodifiableObservableList(completedParcels);
     }
 
     /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyParcel} backed by the internal list of
-     * {@code addressBook}
+     * Returns an unmodifiable view of the list of {@link ReadOnlyParcel} with {@link Status} that is not COMPLETED,
+     * backed by the internal list of {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyParcel> getUncompletedParcelList() {
+        return FXCollections.unmodifiableObservableList(uncompletedParcels);
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@link ReadOnlyParcel} in the {@code activeParcels}
      */
     @Override
     public ObservableList<ReadOnlyParcel> getActiveList() {
-        return FXCollections.unmodifiableObservableList(activeFilteredList);
-    }
-
-    /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyParcel} backed by the internal list of
-     * {@code addressBook}
-     */
-    @Override
-    public ObservableList<ReadOnlyParcel> getFilteredUndeliveredParcelList() {
-        return FXCollections.unmodifiableObservableList(filteredUndeliveredParcels);
+        return FXCollections.unmodifiableObservableList(activeParcels);
     }
     //@@author
 
@@ -220,7 +219,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate) {
         requireNonNull(predicate);
         filteredParcels.setPredicate(predicate);
-        updatedDeliveredAndUndeliveredList();
+        updateSubLists();
     }
 
     //@@author fustilio
@@ -299,9 +298,9 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredParcels.equals(other.filteredParcels)
-                && filteredDeliveredParcels.equals(other.filteredDeliveredParcels)
-                && filteredUndeliveredParcels.equals(other.filteredUndeliveredParcels)
-                && activeFilteredList.equals(other.activeFilteredList);
+                && completedParcels.equals(other.completedParcels)
+                && uncompletedParcels.equals(other.uncompletedParcels)
+                && activeParcels.equals(other.activeParcels);
     }
     //@@author
 

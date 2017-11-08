@@ -32,11 +32,12 @@ public class StorageManager extends ComponentManager implements Storage {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         try {
             addressBookOptional = addressBookStorage.readAddressBook();
+
             if (addressBookOptional.isPresent()) {
                 backupAddressBook(addressBookOptional.get());
-                logger.info("AddressBook present, back up success");
+                logger.info("AddressBook present, back up success!");
             } else {
-                logger.warning("AddressBook not present, backup not possible");
+                logger.warning("AddressBook not present, backup not possible.");
             }
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. "

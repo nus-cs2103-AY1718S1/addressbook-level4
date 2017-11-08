@@ -64,7 +64,7 @@ public class StorageManagerTest {
 
         // test for log message.
         String capturedLog = testLogger.getTestCapturedLog();
-        String expectedLogMessage = "WARNING - AddressBook not present, backup not possible\n";
+        String expectedLogMessage = "WARNING - AddressBook not present, backup not possible.\n";
         assertEquals(capturedLog, expectedLogMessage);
 
         // testing if backup exists
@@ -86,7 +86,7 @@ public class StorageManagerTest {
         StorageManager backupStorageManager = new StorageManager(addressBookStorage, userPrefsStorage);
 
         String capturedLog = testLogger.getTestCapturedLog();
-        String expectedLog = "INFO - AddressBook present, back up success\n";
+        String expectedLog = "INFO - AddressBook present, back up success!\n";
         assertEquals(capturedLog, expectedLog);
 
         // checks that the backup properly backups the new file.

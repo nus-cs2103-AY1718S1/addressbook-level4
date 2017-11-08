@@ -138,6 +138,59 @@ public class TabPaneHandle extends NodeHandle<TabPane> {
     }
 }
 ```
+###### \java\guitests\SampleDataTest.java
+``` java
+    @Test
+    public void addressBook_dataFileDoesNotExist_loadSampleData() {
+        List<Parcel> expectedList = Arrays.asList(SampleDataUtil.getSampleParcels()).stream()
+                .filter(getDeliveredPredicate().negate()).collect(Collectors.toList());
+        Parcel[] expectedArray = new Parcel[expectedList.size()];
+        expectedList.toArray(expectedArray);
+
+        assertListMatching(getParcelListPanel(), expectedArray);
+    }
+}
+```
+###### \java\guitests\TabPaneTest.java
+``` java
+public class TabPaneTest extends AddressBookGuiTest {
+
+    @Test
+    public void clickTabs() {
+        TabPaneHandle tabPane = getTabPane();
+
+        // check startup is undelivered list
+        assertActiveListSelected(tabPane, INDEX_FIRST_TAB.getZeroBased());
+
+        // check second tab
+        TabHandle tab =  getTabPane().getTabHandle(INDEX_SECOND_TAB.getZeroBased());
+        tab.click();
+        assertActiveListSelected(tabPane, INDEX_SECOND_TAB.getZeroBased());
+
+        guiRobot.pauseForHuman();
+
+        // revert back to first tab
+        tab =  getTabPane().getTabHandle(INDEX_FIRST_TAB.getZeroBased());
+        tab.click();
+        assertActiveListSelected(tabPane, INDEX_FIRST_TAB.getZeroBased());
+    }
+
+
+    /**
+     * checks that the {@code tabPane}'s active list is equivalent to our expected list contained when
+     * the tab with {@code tabIndex} is asserted.
+     */
+    private void assertActiveListSelected(TabPaneHandle tabPane, int tabIndex) {
+        ParcelListPanelHandle actualList = tabPane.getActiveParcelList();
+        ParcelListPanelHandle expectedList = (tabIndex == INDEX_FIRST_TAB.getZeroBased())
+                ? tabPane.getUndeliveredParcelListPanel() : tabPane.getDeliveredParcelListPanel();
+
+        assertEquals(tabIndex, tabPane.getSelectedTabIndex());
+        assertEquals(expectedList, actualList);
+        guiRobot.pauseForHuman();
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\AddCommandIntegrationTest.java
 ``` java
     @Test
@@ -146,12 +199,12 @@ public class TabPaneHandle extends NodeHandle<TabPane> {
         assertCommandFailure(prepareCommand(parcelInList, model), model, AddCommand.MESSAGE_DUPLICATE_PARCEL);
 
         // Adding a parcel from a undelivered list -> fails
-        Parcel parcelInUndeliveredList = new Parcel(model.getFilteredUndeliveredParcelList().get(0));
+        Parcel parcelInUndeliveredList = new Parcel(model.getUncompletedParcelList().get(0));
         assertCommandFailure(prepareCommand(parcelInUndeliveredList, model), model,
                 AddCommand.MESSAGE_DUPLICATE_PARCEL);
 
         // Adding a parcel from a delivered list -> fails
-        Parcel parcelInDeliveredList = new Parcel(model.getFilteredDeliveredParcelList().get(0));
+        Parcel parcelInDeliveredList = new Parcel(model.getCompletedParcelList().get(0));
         assertCommandFailure(prepareCommand(parcelInDeliveredList, model), model,
                 AddCommand.MESSAGE_DUPLICATE_PARCEL);
 
@@ -199,7 +252,7 @@ public class TabPaneHandle extends NodeHandle<TabPane> {
      */
     public static void showFirstParcelInActiveListOnly(Model model) {
         List<ReadOnlyParcel> parcels = model.getAddressBook().getParcelList();
-        Predicate<ReadOnlyParcel> predicate = (model.getActiveList().equals(model.getFilteredUndeliveredParcelList()))
+        Predicate<ReadOnlyParcel> predicate = (model.getActiveList().equals(model.getUncompletedParcelList()))
                 ? getDeliveredPredicate().negate() : getDeliveredPredicate();
 
         // find the first parcel in the master list that meets the active list predicate
@@ -269,7 +322,7 @@ public class ImportCommandTest {
 
         ImportCommand importCommand = getImportCommandForParcel(parcels, modelManager);
         thrown.expect(CommandException.class);
-        thrown.expectMessage(MESSAGE_DUPLICATE_PARCELS);
+        thrown.expectMessage(MESSAGE_FAILURE_DUPLICATE_PARCELS);
         importCommand.execute();
     }
 
@@ -348,11 +401,11 @@ public class ImportCommandTest {
         Logic testLogic = new LogicManager(testModel);
 
         // test for completed parcels
-        ObservableList<ReadOnlyParcel> completedParcels = testLogic.getDeliveredParcelList();
+        ObservableList<ReadOnlyParcel> completedParcels = testLogic.getCompletedParcelList();
         assertTrue(completedParcels.stream().allMatch(parcel -> parcel.getStatus().equals(Status.COMPLETED)));
 
         // Test for uncompleted parcels
-        ObservableList<ReadOnlyParcel> uncompletedParcels = testLogic.getUndeliveredParcelList();
+        ObservableList<ReadOnlyParcel> uncompletedParcels = testLogic.getUncompletedParcelList();
         assertFalse(uncompletedParcels.stream().anyMatch(parcel -> parcel.getStatus().equals(Status.COMPLETED)));
     }
 ```
@@ -368,7 +421,7 @@ public class ImportCommandParserTest {
         thrown.expect(ParseException.class);
         thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE)
                 + "\nMore Info: " + MESSAGE_FILE_NOT_FOUND);
-        new ImportCommandParser().parse("Missing.xml");
+        new ImportCommandParser().parse("Missing");
     }
 
     @Test
@@ -378,7 +431,7 @@ public class ImportCommandParserTest {
                 + "\nMore Info: " + String.format(MESSAGE_INVALID_DATA,
                 "./data/import/testNotXmlFormatAddressBook.xml"));
 
-        new ImportCommandParser().parse("testNotXmlFormatAddressBook.xml");
+        new ImportCommandParser().parse("testNotXmlFormatAddressBook");
     }
 
     @Test
@@ -386,20 +439,35 @@ public class ImportCommandParserTest {
         thrown.expect(ParseException.class);
         thrown.expectMessage(ImportCommandParser.MESSAGE_FILE_NAME_INVALID);
 
-        new ImportCommandParser().parse("#!Hfas.xml");
+        new ImportCommandParser().parse("#!Hfas");
 
         // directory traversal attempt
         thrown.expect(ParseException.class);
         thrown.expectMessage(ImportCommandParser.MESSAGE_FILE_NAME_INVALID);
 
-        new ImportCommandParser().parse("../addressBook.xml");
+        new ImportCommandParser().parse("../addressBook");
     }
 
     @Test
     public void parseImportFilePath_validInput_success() throws Exception {
-        ImportCommand importCommand = new ImportCommandParser().parse("testValidAddressBook.xml");
+        ImportCommand importCommand = new ImportCommandParser().parse("testValidAddressBook");
         assertTrue(importCommand instanceof ImportCommand);
     }
+
+    @Test
+    public void isValidFileName() throws Exception {
+        assertTrue(ImportCommandParser.isValidFileName("123"));
+        assertTrue(ImportCommandParser.isValidFileName("arkbook"));
+        assertTrue(ImportCommandParser.isValidFileName("arkbook123"));
+        assertTrue(ImportCommandParser.isValidFileName("123arkbook123"));
+        assertTrue(ImportCommandParser.isValidFileName("ark_today"));
+        assertTrue(ImportCommandParser.isValidFileName("test_today123"));
+
+        assertFalse(ImportCommandParser.isValidFileName("ark test")); // spaces are invalid
+        assertFalse(ImportCommandParser.isValidFileName("1#!*#(!")); // special symbols are invalid
+        assertFalse(ImportCommandParser.isValidFileName("ark.xml")); // invalid
+    }
+
 }
 ```
 ###### \java\seedu\address\model\ModelManagerTest.java
@@ -430,12 +498,12 @@ public class ImportCommandParserTest {
         // ensure that addressbook updated
         assertEquals(3, modelManager.getAddressBook().getTagList().size());
         assertEquals(8, modelManager.getAddressBook().getParcelList().size());
-        assertEquals(2, modelManager.getFilteredDeliveredParcelList().size());
-        assertEquals(6, modelManager.getFilteredUndeliveredParcelList().size());
+        assertEquals(2, modelManager.getCompletedParcelList().size());
+        assertEquals(6, modelManager.getUncompletedParcelList().size());
 
-        assertEquals(modelManager.getActiveList(), modelManager.getFilteredUndeliveredParcelList());
+        assertEquals(modelManager.getActiveList(), modelManager.getUncompletedParcelList());
         modelManager.setActiveList(true);
-        assertEquals(modelManager.getActiveList(), modelManager.getFilteredDeliveredParcelList());
+        assertEquals(modelManager.getActiveList(), modelManager.getCompletedParcelList());
     }
 
     @Test
@@ -480,7 +548,19 @@ public class ImportCommandParserTest {
 ###### \java\seedu\address\model\ModelStub.java
 ``` java
     @Override
-    public ObservableList<ReadOnlyParcel> getFilteredDeliveredParcelList() {
+    public void updateSubLists() {
+        fail("This method should not be called");
+    }
+
+    @Override
+    public void setActiveList(boolean isCompleted) {
+        fail("This method should not be called.");
+    }
+```
+###### \java\seedu\address\model\ModelStub.java
+``` java
+    @Override
+    public ObservableList<ReadOnlyParcel> getCompletedParcelList() {
         fail("This method should not be called.");
         return null;
     }
@@ -492,7 +572,7 @@ public class ImportCommandParserTest {
     }
 
     @Override
-    public ObservableList<ReadOnlyParcel> getFilteredUndeliveredParcelList() {
+    public ObservableList<ReadOnlyParcel> getUncompletedParcelList() {
         fail("This method should not be called.");
         return null;
     }
@@ -510,12 +590,15 @@ public class AddressTest {
         assertFalse(Address.isValidAddress("Blk 456, Den Road, #01-355 345")); // ends with shorter than 6 digits
         assertFalse(Address.isValidAddress("Blk 456, Den Road, #01-355 345123")); // no S prepending 6 digits
         assertFalse(Address.isValidAddress("- S435342")); // one character
+        assertFalse(Address.isValidAddress(",123 blk 3 S435342")); // starts with ,
 
         // valid addresses
         assertTrue(Address.isValidAddress("Blk 456, Den Road, #01-355 S345123")); // upper case s
-        assertTrue(Address.isValidAddress("12- S435342"));
+        assertTrue(Address.isValidAddress("12- S435342")); // starts with numeric character
         assertTrue(Address.isValidAddress("Blk 456, Den Road, #01-355  s345123")); // lower case s
         assertTrue(Address.isValidAddress("Leng Inc; 1234 Market St; USA s123123")); // long address
+        assertTrue(Address.isValidAddress("A S123661")); // one alphabet character
+        assertTrue(Address.isValidAddress("1 S123661")); // one numeric character
     }
 
     @Test
@@ -554,13 +637,127 @@ public class AddressTest {
     }
 }
 ```
+###### \java\seedu\address\model\parcel\ParcelTest.java
+``` java
+public class ParcelTest {
+
+    @Test
+    public void equals() throws IllegalValueException {
+        Parcel parcel = new Parcel(new ParcelBuilder().build());
+        Parcel sameParcel = new Parcel(new TrackingNumber(DEFAULT_TRACKING_NUMBER),
+                new Name(DEFAULT_NAME), new Phone(DEFAULT_PHONE),
+                new Email(DEFAULT_EMAIL), new Address(DEFAULT_ADDRESS),
+                new DeliveryDate(DEFAULT_DELIVERY_DATE),
+                Status.getInstance(DEFAULT_STATUS),
+                SampleDataUtil.getTagSet(DEFAULT_TAGS));
+        Parcel differentParcel;
+        Parcel sameParcelWithDifferentStatus = new Parcel(parcel);
+        sameParcelWithDifferentStatus.setStatus(Status.OVERDUE);
+
+        // parcel equality
+        assertEquals(parcel, sameParcel); // check different object reference but attributes are the same.
+        assertEquals(parcel, sameParcelWithDifferentStatus); // Status will not influence Parcel#equals()
+        sameParcelWithDifferentStatus.setStatus(Status.DELIVERING);
+        assertEquals(parcel, sameParcelWithDifferentStatus);
+
+        // Internal state checks for Parcel
+        // Tracking number
+        differentParcel = new Parcel(parcel);
+        differentParcel.setTrackingNumber(new TrackingNumber("RR123661123SG"));
+        assertEquals(differentParcel.getTrackingNumber(), new TrackingNumber("RR123661123SG"));
+        assertEquals(differentParcel.trackingNumberProperty().get(),
+                new SimpleObjectProperty<>(new TrackingNumber("RR123661123SG")).get());
+        assertFalse(parcel.equals(differentParcel));
+
+        differentParcel = new Parcel(parcel);
+        // Name equality
+        differentParcel.setName(new Name("John"));
+        assertEquals(differentParcel.getName(), new Name("John"));
+        assertEquals(differentParcel.nameProperty().get(), new SimpleObjectProperty<>(new Name("John")).get());
+
+        // Phone equality
+        differentParcel.setPhone(new Phone("111"));
+        assertEquals(differentParcel.getPhone(), new Phone("111"));
+        assertEquals(differentParcel.phoneProperty().get(), new SimpleObjectProperty<>(new Phone("111")).get());
+
+        // Email equality
+        differentParcel.setEmail(new Email("John@john.com"));
+        assertEquals(differentParcel.getEmail(), new Email("John@john.com"));
+        assertEquals(differentParcel.emailProperty().get(),
+                new SimpleObjectProperty<>(new Email("John@john.com")).get());
+
+        // Address Equality
+        differentParcel.setAddress(new Address("test drive S123661"));
+        assertEquals(differentParcel.getAddress(), new Address("test drive S123661"));
+        assertEquals(differentParcel.addressProperty().get(),
+                new SimpleObjectProperty<>(new Address("test drive S123661")).get());
+
+        // PostalCode Equality
+        assertEquals(differentParcel.addressProperty().get().postalCode,
+                new SimpleObjectProperty<>(new Address("test drive S123661")).get().postalCode);
+
+        // Delivery Date Equality
+        differentParcel.setDeliveryDate(new DeliveryDate("05-05-2005"));
+        assertEquals(differentParcel.getDeliveryDate(), new DeliveryDate("05-05-2005"));
+        assertEquals(differentParcel.deliveryDateProperty().get(),
+                new SimpleObjectProperty<>(new DeliveryDate("05-05-2005")).get());
+
+        // Status Equality (Status does not matter) will be equals as long as other fields are the same.
+        differentParcel.setStatus(Status.getInstance("Completed"));
+        assertEquals(differentParcel.getStatus(), Status.getInstance("Completed"));
+        assertEquals(differentParcel.statusProperty().get(),
+                new SimpleObjectProperty<>(Status.getInstance("Completed")).get());
+        Parcel otherParcel = new Parcel(differentParcel);
+        otherParcel.setStatus(Status.getInstance("Pending"));
+        assertEquals(otherParcel, differentParcel);
+
+        // Tags Equality
+        differentParcel.setTags(SampleDataUtil.getTagSet(Tag.FLAMMABLE.toString()));
+        assertEquals(differentParcel.getTags(), SampleDataUtil.getTagSet(Tag.FLAMMABLE.toString()));
+        assertEquals(differentParcel.tagProperty().get(), new SimpleObjectProperty<>(
+                new UniqueTagList(SampleDataUtil.getTagSet(Tag.FLAMMABLE.toString()))).get());
+
+        // check state equality
+        assertEquals(parcel.getTrackingNumber(), new TrackingNumber(DEFAULT_TRACKING_NUMBER));
+        assertEquals(parcel.getName(), new Name(DEFAULT_NAME));
+        assertEquals(parcel.getPhone(), new Phone(DEFAULT_PHONE));
+        assertEquals(parcel.getEmail(), new Email(DEFAULT_EMAIL));
+        assertEquals(parcel.getAddress(), new Address(DEFAULT_ADDRESS));
+        assertEquals(parcel.getStatus(), Status.getInstance(DEFAULT_STATUS));
+        assertEquals(parcel.getTags(), SampleDataUtil.getTagSet(DEFAULT_TAGS));
+
+        // getFormattedString() equality
+        assertEquals(parcel.toString(), sameParcel.toString());
+        assertEquals(parcel.toString(), "Tracking No.: " + DEFAULT_TRACKING_NUMBER + " Recipient Name: "
+                + DEFAULT_NAME + " Phone: " + DEFAULT_PHONE  + " Email: " + DEFAULT_EMAIL + " Address: "
+                + DEFAULT_ADDRESS + " Delivery Date: " + DEFAULT_DELIVERY_DATE + " Status: " + DEFAULT_STATUS
+                + " Tags: ["  + DEFAULT_TAGS + "]");
+
+    }
+
+    @Test
+    public void compareTo() throws IllegalValueException {
+        Parcel parcel = new Parcel(new ParcelBuilder().build());
+        Parcel sameParcel = new Parcel(new TrackingNumber(DEFAULT_TRACKING_NUMBER),
+                new Name(DEFAULT_NAME), new Phone(DEFAULT_PHONE),
+                new Email(DEFAULT_EMAIL), new Address(DEFAULT_ADDRESS),
+                new DeliveryDate(DEFAULT_DELIVERY_DATE),
+                Status.getInstance(DEFAULT_STATUS),
+                SampleDataUtil.getTagSet(DEFAULT_TAGS));
+        int parcelHash = parcel.hashCode();
+        int sameParcelHash = sameParcel.hashCode();
+        assertFalse(parcelHash == sameParcelHash);
+        assertEquals(parcel.compareTo(sameParcel), 0);
+    }
+
+}
+```
 ###### \java\seedu\address\model\parcel\PostalCodeTest.java
 ``` java
 public class PostalCodeTest {
 
     @Test
     public void isValidPostalCode() {
-
         // invalid postal code
         assertFalse(PostalCode.isValidPostalCode("")); // empty string
         assertFalse(PostalCode.isValidPostalCode(" ")); // spaces only
@@ -571,8 +768,8 @@ public class PostalCodeTest {
         assertFalse(PostalCode.isValidPostalCode("s#!@a11")); // random characters in 6 digits
 
         // valid postal code
-        assertTrue(PostalCode.isValidPostalCode("s000000"));
-        assertTrue(PostalCode.isValidPostalCode("S123456"));
+        assertTrue(PostalCode.isValidPostalCode("s000000")); // appended with 's'
+        assertTrue(PostalCode.isValidPostalCode("S123456"));  // appended with 'S'
         assertTrue(PostalCode.isValidPostalCode("s000845"));
     }
 }
@@ -585,7 +782,7 @@ public class StatusTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void testToStringTest() {
+    public void toStringTest() {
         Status completed = Status.COMPLETED;
         assertEquals("COMPLETED", completed.toString());
 
@@ -600,7 +797,7 @@ public class StatusTest {
     }
 
     @Test
-    public void getStatusInstanceTest() throws IllegalValueException {
+    public void getInstanceTest_success() throws IllegalValueException {
         // all uppercase
         Status pending = Status.getInstance("PENDING");
         assertEquals(Status.PENDING, pending);
@@ -616,34 +813,16 @@ public class StatusTest {
         // mix of uppercase and lowercase characters
         Status overdue = Status.getInstance("overDUE");
         assertEquals(Status.OVERDUE, overdue);
-
-        thrown.expect(IllegalValueException.class);
-        thrown.expectMessage(Status.MESSAGE_STATUS_CONSTRAINTS);
-        Status.getInstance("asd1237fa&(&"); // weird characters
-        Status.getInstance("JUMPING"); // not one of the possible values
     }
 
     @Test
-    public void isValidStatusTest() {
-        assertFalse(Status.isValidStatus("INVALID"));
+    public void getInstanceTest_failure() throws IllegalValueException {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(Status.MESSAGE_STATUS_CONSTRAINTS);
 
-        // uppercase letters
-        assertTrue(Status.isValidStatus("PENDING"));
-        assertTrue(Status.isValidStatus("DELIVERING"));
-        assertTrue(Status.isValidStatus("OVERDUE"));
-        assertTrue(Status.isValidStatus("COMPLETED"));
-
-        // lower case letters
-        assertFalse(Status.isValidStatus("pending"));
-        assertFalse(Status.isValidStatus("completed"));
-
-        // mix of upper and lower case
-        assertFalse(Status.isValidStatus("ComPleTed"));
-
-        // random symbols
-        assertFalse(Status.isValidStatus("$!@HBJ123"));
+        Status.getInstance("asd1237fa&(&"); // weird characters
+        Status.getInstance("JUMPING"); // not one of the possible values
     }
-
 }
 ```
 ###### \java\seedu\address\model\parcel\TrackingNumberTest.java
@@ -720,7 +899,7 @@ public class TrackingNumberTest {
 
         // test for log message.
         String capturedLog = testLogger.getTestCapturedLog();
-        String expectedLogMessage = "WARNING - AddressBook not present, backup not possible\n";
+        String expectedLogMessage = "WARNING - AddressBook not present, backup not possible.\n";
         assertEquals(capturedLog, expectedLogMessage);
 
         // testing if backup exists
@@ -742,7 +921,7 @@ public class TrackingNumberTest {
         StorageManager backupStorageManager = new StorageManager(addressBookStorage, userPrefsStorage);
 
         String capturedLog = testLogger.getTestCapturedLog();
-        String expectedLog = "INFO - AddressBook present, back up success\n";
+        String expectedLog = "INFO - AddressBook present, back up success!\n";
         assertEquals(capturedLog, expectedLog);
 
         // checks that the backup properly backups the new file.
@@ -963,13 +1142,13 @@ public class TrackingNumberTest {
 ``` java
 public class ImportCommandSystemTest extends AddressBookSystemTest {
 
-    private static final String STORAGE_FILE = "testAddressBookForImportSystem.xml";
+    private static final String STORAGE_FILE = "testAddressBookForImportSystem";
 
     @Before
     public void start() throws Exception {
         // reset the storage file used in ImportCommandSystemTest
         AddressBook addressBook = new AddressBookBuilder().build();
-        new XmlAddressBookStorage("./data/import/" + STORAGE_FILE).saveAddressBook(addressBook);
+        new XmlAddressBookStorage("./data/import/" + STORAGE_FILE + ".xml").saveAddressBook(addressBook);
     }
 
     @Test
@@ -981,7 +1160,7 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
          */
         AddressBook addressBook = new AddressBookBuilder().withParcel(AMY).withParcel(BOB).build();
         XmlAddressBookStorage storage = new XmlAddressBookStorage(
-                "./data/import/" + STORAGE_FILE);
+                "./data/import/" + STORAGE_FILE + ".xml");
         storage.saveAddressBook(addressBook);
 
         List<ReadOnlyParcel> parcelsAdded;
@@ -1006,7 +1185,7 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: add a duplicate parcel -> rejected */
         command = ImportCommand.COMMAND_WORD + " " + STORAGE_FILE;
-        assertCommandFailure(command, ImportCommand.MESSAGE_DUPLICATE_PARCELS);
+        assertCommandFailure(command, ImportCommand.MESSAGE_FAILURE_DUPLICATE_PARCELS);
 
         /* Case: import an addressbook xml file containing duplicate parcels except with different tags -> rejected */
         // AddressBook#addAllParcels(List<ReadOnlyParcel>)
@@ -1014,7 +1193,7 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
                 .withParcel(new ParcelBuilder(BOB).withTags(Tag.FRAGILE.toString()).build()).build();
         storage.saveAddressBook(addressBook);
         command = ImportCommand.COMMAND_WORD + " " + STORAGE_FILE;
-        assertCommandFailure(command, ImportCommand.MESSAGE_DUPLICATE_PARCELS);
+        assertCommandFailure(command, ImportCommand.MESSAGE_FAILURE_DUPLICATE_PARCELS);
 
         /* Case: imports parcels with all fields same as other parcels in the address book except name -> imported */
         addressBook = new AddressBookBuilder().withParcel(new ParcelBuilder(AMY).withName("Kyle").build())
@@ -1093,12 +1272,12 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: missing file -> rejected */
-        command = "import " + "missing.xml";
+        command = "import " + "missing";
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 ImportCommand.MESSAGE_USAGE) + "\nMore Info: " + MESSAGE_FILE_NOT_FOUND);
 
         /* Case: invalid xml file -> rejected */
-        command = "import " + "testNotXmlFormatAddressBook.xml";
+        command = "import " + "testNotXmlFormatAddressBook";
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 ImportCommand.MESSAGE_USAGE) + "\nMore Info: " + String.format(MESSAGE_INVALID_DATA,
                 "./data/import/testNotXmlFormatAddressBook.xml"));
@@ -1109,7 +1288,7 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
     public void clear() throws Exception {
         // reset the storage file used in ImportCommandSystemTest
         AddressBook addressBook = new AddressBookBuilder().build();
-        new XmlAddressBookStorage("./data/import/" + STORAGE_FILE).saveAddressBook(addressBook);
+        new XmlAddressBookStorage("./data/import/" + STORAGE_FILE + ".xml").saveAddressBook(addressBook);
     }
 
     /**

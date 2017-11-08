@@ -52,12 +52,12 @@ public class ImportCommandIntegrationTest {
     @Test
     public void execute_allParcelsAreDuplicates_throwsCommandException() {
         List<ReadOnlyParcel> parcels = model.getAddressBook().getParcelList();
-        assertCommandFailure(prepareCommand(parcels, model), model, ImportCommand.MESSAGE_DUPLICATE_PARCELS);
+        assertCommandFailure(prepareCommand(parcels, model), model, ImportCommand.MESSAGE_FAILURE_DUPLICATE_PARCELS);
     }
 
     /**
-     * Generates a new {@code Import} which upon execution, adds all Parcel(s) in {@code parcels} into the
-     * {@code model}.
+     * Generates a new {@code ImportCommand} which upon execution, adds all {@link ReadOnlyParcel}(s) in {@code parcels}
+     *  into the {@link Model}.
      */
     private ImportCommand prepareCommand(List<ReadOnlyParcel> parcels, Model model) {
         ImportCommand command = new ImportCommand(parcels);

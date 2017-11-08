@@ -23,15 +23,22 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> parcelsAdded,
+    public void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> uniqueParcels,
                               List<ReadOnlyParcel> duplicateParcels) {
         fail("This method should not be called.");
     }
 
+    //@@author kennard123661
     @Override
-    public void setActiveList(boolean isDelivered) {
+    public void updateSubLists() {
+        fail("This method should not be called");
+    }
+
+    @Override
+    public void setActiveList(boolean isCompleted) {
         fail("This method should not be called.");
     }
+    //@@author
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
@@ -68,7 +75,7 @@ public class ModelStub implements Model {
 
     //@@author kennard123661
     @Override
-    public ObservableList<ReadOnlyParcel> getFilteredDeliveredParcelList() {
+    public ObservableList<ReadOnlyParcel> getCompletedParcelList() {
         fail("This method should not be called.");
         return null;
     }
@@ -80,7 +87,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public ObservableList<ReadOnlyParcel> getFilteredUndeliveredParcelList() {
+    public ObservableList<ReadOnlyParcel> getUncompletedParcelList() {
         fail("This method should not be called.");
         return null;
     }
