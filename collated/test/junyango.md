@@ -186,6 +186,7 @@ public class EventListPanelHandle extends NodeHandle<ListView<EventCard>> {
 ```
 ###### \java\seedu\address\logic\commands\event\AddEventCommandTest.java
 ``` java
+
 public class AddEventCommandTest {
 
     @Rule
@@ -196,62 +197,60 @@ public class AddEventCommandTest {
         thrown.expect(NullPointerException.class);
         new AddEventCommand(null);
     }
+
+    @Test
+    public void execute_eventAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingEventAdded modelStub = new ModelStubAcceptingEventAdded();
+        Event validEvent = new EventBuilder().build();
+
+        CommandResult commandResult = getAddEventCommandForEvent(validEvent, modelStub).execute();
+
+        assertEquals(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validEvent), modelStub.eventsAdded);
+    }
+
     @Test
     public void execute_duplicateEvent_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStubThrowingDuplicateEventException();
         Event validEvent = new EventBuilder().build();
+
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddEventCommand.MESSAGE_DUPLICATE_EVENT);
 
-        getAddCommandForEvent(validEvent, modelStub).execute();
+        getAddEventCommandForEvent(validEvent, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        Event event1 = new EventBuilder().withName("Nelsons birthday").build();
-        Event event2 = new EventBuilder().withName("Mellys birthday").build();
-        AddEventCommand addEvent1Command = new AddEventCommand(event1);
-        AddEventCommand addEvent2Command = new AddEventCommand(event2);
+        Event hack = new EventBuilder().withName("Hack").build();
+        Event test = new EventBuilder().withName("Test").build();
+        AddEventCommand addHackCommand = new AddEventCommand(hack);
+        AddEventCommand addTestCommand = new AddEventCommand(test);
 
         // same object -> returns true
-        assertTrue(addEvent1Command.equals(addEvent1Command));
+        assertTrue(addHackCommand.equals(addHackCommand));
 
         // same values -> returns true
-        AddEventCommand addEvent1CommandCopy = new AddEventCommand(event1);
-        assertTrue(addEvent1Command.equals(addEvent1CommandCopy));
+        AddEventCommand addHackCommandCopy = new AddEventCommand(hack);
+        assertTrue(addHackCommand.equals(addHackCommandCopy));
 
         // different types -> returns false
-        assertFalse(addEvent1Command.equals(1));
+        assertFalse(addHackCommand.equals(1));
 
         // null -> returns false
-        assertFalse(addEvent1Command.equals(null));
+        assertFalse(addHackCommand.equals(null));
 
-        // different events -> returns false
-        assertFalse(addEvent1Command.equals(addEvent2Command));
+        // different event -> returns false
+        assertFalse(addHackCommand.equals(addTestCommand));
     }
 
     /**
      * Generates a new AddEventCommand with the details of the given event.
      */
-    private AddEventCommand getAddCommandForEvent(Event event, Model model) {
+    private AddEventCommand getAddEventCommandForEvent(Event event, Model model) {
         AddEventCommand command = new AddEventCommand(event);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
-    }
-
-    /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
-     */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
     }
 
     /**
@@ -270,7 +269,7 @@ public class AddEventCommandTest {
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the event being added.
      */
     private class ModelStubAcceptingEventAdded extends ModelStub {
         final ArrayList<Event> eventsAdded = new ArrayList<>();
@@ -285,38 +284,50 @@ public class AddEventCommandTest {
             return new AddressBook();
         }
     }
-
-    /**
-     * A Model stub that always accept the person being added.
-     */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
-
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            personsAdded.add(new Person(person));
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
-
 }
 ```
 ###### \java\seedu\address\logic\commands\event\DeleteEventCommandTest.java
 ``` java
 /**
- * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
+ * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteEventCommand}.
  */
 public class DeleteEventCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
+    public void execute_validIndexUnfilteredList_success() throws Exception {
+        ReadOnlyEvent eventToDelete = model.getFilteredEventList().get(INDEX_FIRST_PERSON.getZeroBased());
+        DeleteEventCommand deleteEventCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = String.format(DeleteEventCommand.MESSAGE_DELETE_EVENT_SUCCESS, eventToDelete);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteEvent(eventToDelete);
+
+        assertCommandSuccess(deleteEventCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_validIndexFilteredList_success() throws Exception {
+        showFirstEventOnly(model);
+
+        ReadOnlyEvent eventToDelete = model.getFilteredEventList().get(INDEX_FIRST_PERSON.getZeroBased());
+        DeleteEventCommand deleteEventCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = String.format(DeleteEventCommand.MESSAGE_DELETE_EVENT_SUCCESS, eventToDelete);
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteEvent(eventToDelete);
+        showNoEvent(expectedModel);
+
+        assertCommandSuccess(deleteEventCommand, model, expectedMessage, expectedModel);
+    }
+
+
+    @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
         DeleteEventCommand deleteEventCommand = prepareCommand(outOfBoundIndex);
 
         assertCommandFailure(deleteEventCommand, model, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
@@ -341,12 +352,12 @@ public class DeleteEventCommandTest {
         // null -> returns false
         assertFalse(deleteFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different event -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
     }
 
     /**
-     * Returns a {@code DeleteCommand} with the parameter {@code index}.
+     * Returns a {@code DeleteEventCommand} with the parameter {@code index}.
      */
     private DeleteEventCommand prepareCommand(Index index) {
         DeleteEventCommand deleteEventCommand = new DeleteEventCommand(index);
@@ -586,12 +597,7 @@ public class ListEventCommandTest {
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
-    @Test
-    public void parseCommand_addEvent() throws Exception {
-        Event event = new EventBuilder().build();
-        AddEventCommand command = (AddEventCommand) parser.parseCommand(EventUtil.getAddEvent(event));
-        assertEquals(new AddEventCommand(event), command);
-    }
+
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
@@ -740,6 +746,13 @@ public class EditEventCommandParserTest {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getEventList().remove(0);
     }
+    @Test
+    public void removeEvent_eventNotFound_expectException() throws Exception {
+        thrown.expect(EventNotFoundException.class);
+
+        AddressBook addressBook = getTypicalAddressBook();
+        addressBook.removeEvent(EVENT1);
+    }
 
     @Test
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
@@ -754,14 +767,12 @@ public class EditEventCommandParserTest {
         private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<ReadOnlyEvent> events = FXCollections.observableArrayList();
-        private final ObservableList<ReadOnlyReminder> reminders = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends ReadOnlyEvent> events,
-                        Collection<? extends Tag> tags, Collection<? extends Reminder> reminders) {
+                        Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
             this.events.setAll(events);
-            this.reminders.setAll(reminders);
         }
 
         @Override
@@ -773,16 +784,52 @@ public class EditEventCommandParserTest {
         public ObservableList<ReadOnlyEvent> getEventList() {
             return events;
         }
-        @Override
-        public ObservableList<ReadOnlyReminder> getReminderList() {
-            return reminders;
-        }
+
         @Override
         public ObservableList<Tag> getTagList() {
             return tags;
         }
     }
 
+}
+```
+###### \java\seedu\address\model\event\EventTest.java
+``` java
+public class EventTest {
+    private static Name name;
+    private static DateTime dateTime;
+    private static Address address;
+
+    @BeforeClass
+    public static void setUp() throws Exception {
+        PropertyManager.initializePropertyManager();
+
+        name = new Name(VALID_NAME_EVENT1);
+        dateTime = new DateTime(VALID_DATE_EVENT1);
+        address = new Address(VALID_ADDRESS_AMY);
+    }
+
+    @Test
+    public void createEvent_preDefinedFieldsPresent_checkCorrectness() throws Exception {
+        Event event = new Event(name, dateTime, address, Collections.emptyList());
+        assertNotNull(event);
+
+        assertEquals(name, event.getName());
+        assertEquals(dateTime, event.getTime());
+        assertEquals(address, event.getAddress());
+        assertEquals(0, event.getReminders().size());
+        assertEquals(3, event.getProperties().size());
+    }
+
+    @Test
+    public void equal_twoSameStateEvent_checkCorrectness() throws Exception {
+        Event event = new Event(name, dateTime, address, new ArrayList<>());
+        Event another = new Event(name, dateTime, address, new ArrayList<>());
+        assertEquals(event, another);
+
+        Event copied = new Event(event);
+        assertEquals(event, copied);
+    }
 }
 ```
 ###### \java\seedu\address\model\event\UniqueEventListTest.java
@@ -829,8 +876,8 @@ public class UniqueEventListTest {
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
         ModelManager modelManager1 = new ModelManager(addressBook, userPrefs);
         modelManager.addEvent(TypicalEvents.EVENT2);
-        modelManager.addEvent(TypicalEvents.EVENT1);
-        modelManager1.addEvent(TypicalEvents.EVENT1);
+        modelManager.addEvent(EVENT1);
+        modelManager1.addEvent(EVENT1);
         modelManager1.addEvent(TypicalEvents.EVENT2);
         System.out.println(modelManager);
         assertEquals(modelManager, modelManager1);
@@ -843,11 +890,10 @@ public class UniqueEventListTest {
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
         ObservableList<ReadOnlyEvent> events = modelManager.getAddressBook().getEventList();
         int originalEventListSize = events.size();
-        modelManager.addEvent(TypicalEvents.EVENT1);
+        modelManager.addEvent(EVENT1);
         int newEventListSize = modelManager.getAddressBook().getEventList().size();
         assertEquals(1, newEventListSize - originalEventListSize);
     }
-
     @Test
     public void removePerson_successfullyRemoveEvent() throws Exception {
         AddressBook addressBook = getTypicalAddressBook();
@@ -867,12 +913,25 @@ public class UniqueEventListTest {
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
         ObservableList<ReadOnlyEvent> events = modelManager.getAddressBook().getEventList();
         int originalEventListSize = events.size();
-        modelManager.addEvent(TypicalEvents.EVENT1);
+        modelManager.addEvent(EVENT1);
         modelManager.addEvent(TypicalEvents.EVENT2);
         modelManager.deleteEvent(events.get(1));
         int newEventListSize = modelManager.getAddressBook().getEventList().size();
         assertEquals(1, newEventListSize - originalEventListSize);
     }
+    @Test
+    public void addEvent_successfullyAddReminder() throws Exception {
+        AddressBook addressBook = getTypicalAddressBook();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        ObservableList<ReadOnlyEvent> events = modelManager.getAddressBook().getEventList();
+        modelManager.addEvent(EVENT1);
+        Reminder r = new Reminder((Event) EVENT1, "You have an event today");
+        events.get(0).addReminder(r);
+        events.get(0).getReminders().size();
+        assertEquals(1, events.get(0).getReminders().size());
+    }
+
 ```
 ###### \java\seedu\address\model\property\DateTimeTest.java
 ``` java
@@ -1044,15 +1103,6 @@ public class EditEventDescriptorBuilder {
 ###### \java\seedu\address\testutil\EventBuilder.java
 ``` java
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.event.Event;
-import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.property.Address;
-import seedu.address.model.property.DateTime;
-import seedu.address.model.property.Name;
-import seedu.address.model.property.PropertyManager;
-import seedu.address.model.property.exceptions.PropertyNotFoundException;
-import seedu.address.model.reminder.Reminder;
 
 
 /**
@@ -1104,7 +1154,7 @@ public class EventBuilder {
      * Adds a reminder into the event.
      */
     public EventBuilder withReminder() {
-        this.event.getReminders().add(new Reminder(event.getName().toString(), event.getTime().toString()));
+        this.event.getReminders().add(new Reminder(event, event.getTime().toString()));
         return this;
     }
 
@@ -1160,7 +1210,64 @@ public class EventUtil {
         sb.append(PREFIX_NAME + event.getName().toString() + " ");
         sb.append(PREFIX_DATE_TIME + event.getTime().toString() + " ");
         sb.append(PREFIX_ADDRESS + event.getAddress().toString());
+        sb.append(event.getReminders());
         return sb.toString();
+    }
+}
+```
+###### \java\seedu\address\testutil\TypicalEvents.java
+``` java
+
+/**
+ * A utility class containing a list of {@code Event} objects to be used in tests.
+ */
+public class TypicalEvents {
+
+    public static final ReadOnlyEvent EVENT1 = new EventBuilder().withName("HHN 6001")
+            .withDateTime("22022015 08:30")
+            .withAddress("123, Sentosa, #08-111").withReminder().build();
+    public static final ReadOnlyEvent EVENT2 = new EventBuilder().withName("ZoukOut 6001")
+            .withDateTime("25122017 10:30")
+            .withAddress("123, Clarke Quay #01-111").withReminder().build();
+
+    // Manually added
+    public static final ReadOnlyEvent EVENTM1 = new EventBuilder().withName("Volleyball Tour 17")
+            .withDateTime("25122017 08:30")
+            .withAddress("OCBC ARENA Hall 3, #01-111").withReminder().build();
+    public static final ReadOnlyEvent EVENTM2 = new EventBuilder().withName("Meeting with Jason")
+            .withDateTime("25112016 02:30")
+            .withAddress("123, Sheraton Towers , #06-111").withReminder().build();
+
+    // Manually added - Person's details found in {@code CommandTestUtil}
+    public static final ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
+    public static final ReadOnlyPerson BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+            .build();
+
+
+    private TypicalEvents() {} // prevents instantiation
+
+    /**
+     * Returns an {@code AddressBook} with all the typical persons.
+     */
+    public static AddressBook getTypicalAddressBook() {
+        AddressBook ab = new AddressBook();
+        for (ReadOnlyEvent events : getTypicalEvents()) {
+            try {
+                ab.addEvent(events);
+            } catch (DuplicateEventException e) {
+                assert false : "not possible";
+            }
+        }
+        return ab;
+    }
+    static {
+        PropertyManager.initializePropertyManager();
+    }
+
+    public static List<ReadOnlyEvent> getTypicalEvents() {
+        return new ArrayList<>(Arrays.asList(EVENT1, EVENT2));
     }
 }
 ```

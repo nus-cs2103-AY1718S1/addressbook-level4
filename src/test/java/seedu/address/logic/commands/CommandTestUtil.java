@@ -115,6 +115,8 @@ public class CommandTestUtil {
     public static final String NOT_FROM_NUSMODS_IMPORT = "--nusmods " + VALID_URL;
     public static final String VALID_EXPORT_PATH = "something.xml";
 
+    public static final String AVATAR_VALID_URL = "https://avatars0.githubusercontent.com/u/134200";
+
     static {
         PropertyManager.initializePropertyManager();
 

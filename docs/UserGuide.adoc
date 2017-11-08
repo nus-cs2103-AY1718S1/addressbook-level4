@@ -155,6 +155,8 @@ can be used as `add n/John Doe`.
 (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be typed in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME`
 is also acceptable.
+* If parameters with the same prefix are typed multiple times, only the last one will be taken. For example,
+`n/John Doe n/Martin Henz`, then only `Martin Henz` will be taken into actual consideration.
 ====
 
 ====
@@ -242,6 +244,8 @@ Example:
 Events will be sorted by date/time (increment).
 
 === Editing a person : `(e)edit`
+
+_(Editing of customize properties coming in v2.0)_
 
 Edits an existing person in the application. +
 Format: `(e)edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
@@ -382,6 +386,23 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Emailing a person : `(em)email`
+
+Emails a person (identified by the index number used in the last listing) to email that person. +
+Format: `(em)email INDEX`
+
+****
+* Emails the person by opening your default mail app with the email field filled up.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* like `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`email 2` +
+Emails the 2nd person in the address book.
+
 === Listing entered commands : `(his)history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -454,18 +475,12 @@ You can view what command you have redone from the user feedback message.
 
 === Clearing all entries : `(c)clear`
 
-Clears all entries from the current component (either contacts or events). +
+Clears all entries from all components (both contacts and events). +
 Format: `(c)clear`
 
-Examples:
+Example:
 
 * `clear`
-* `clear --all`
-
-[NOTE]
-====
-Use `clear --all` if you want to clear data in all components (both contacts and events).
-====
 
 // tag::importXml[]
 === Importing data : `(i)import`

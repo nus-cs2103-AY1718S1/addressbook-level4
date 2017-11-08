@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.property.Property;
@@ -15,18 +16,13 @@ import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author yunpengn
 /**
  * JAXB-friendly version of the Person.
  */
 public class XmlAdaptedPerson {
-    @XmlElement(required = true)
-    private String name;
-    @XmlElement(required = true)
-    private String phone;
-    @XmlElement(required = true)
-    private String email;
-    @XmlElement(required = true)
-    private String address;
+    @XmlElement
+    private String avatar;
 
     @XmlElement
     private List<XmlAdaptedProperty> properties = new ArrayList<>();
@@ -47,15 +43,15 @@ public class XmlAdaptedPerson {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedPerson(ReadOnlyPerson source) {
-        name = source.getName().getValue();
-        phone = source.getPhone().getValue();
-        email = source.getEmail().getValue();
-        address = source.getAddress().getValue();
+        if (source.getAvatar() != null) {
+            avatar = source.getAvatar().getUrl();
+        }
 
         properties = new ArrayList<>();
         for (Property property: source.getProperties()) {
             properties.add(new XmlAdaptedProperty(property));
         }
+
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -72,6 +68,7 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedProperty property: properties) {
             personProperties.add(property.toModelType());
         }
+
         final List<Tag> personTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
@@ -79,7 +76,12 @@ public class XmlAdaptedPerson {
 
         final Set<Property> properties = new HashSet<>(personProperties);
         final Set<Tag> tags = new HashSet<>(personTags);
+        final Person person = new Person(properties, tags);
 
-        return new Person(properties, tags);
+        if (avatar != null) {
+            person.setAvatar(new Avatar(avatar));
+        }
+
+        return person;
     }
 }

@@ -15,10 +15,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.reminder.Reminder;
 import seedu.address.ui.UiPart;
 
-
-
 //@@author junyango
-
 /**
  * An UI component that displays information of a {@code Event}.
  */
@@ -52,8 +49,6 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private ImageView notifications;
 
-
-
     public EventCard(ReadOnlyEvent event, int displayedIndex) {
         super(FXML);
         this.event = event;
@@ -84,8 +79,8 @@ public class EventCard extends UiPart<Region> {
                 notifications.setImage(orangeNotification);
             }
         }
-
     }
+
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

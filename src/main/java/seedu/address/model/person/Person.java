@@ -32,6 +32,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<Avatar> avatar;
     private ObjectProperty<UniquePropertyMap> properties;
     private ObjectProperty<UniqueTagList> tags;
 
@@ -44,6 +45,7 @@ public class Person implements ReadOnlyPerson {
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.avatar = new SimpleObjectProperty<>();
 
         Set<Property> properties = new HashSet<>();
         properties.add(name);
@@ -80,6 +82,7 @@ public class Person implements ReadOnlyPerson {
             System.err.println("This should never happen.");
         }
 
+        this.avatar = new SimpleObjectProperty<>();
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -95,6 +98,10 @@ public class Person implements ReadOnlyPerson {
             // TODO: Better error handling
             e.printStackTrace();
             System.err.println("This should never happen.");
+        }
+
+        if (source.getAvatar() != null) {
+            this.setAvatar(source.getAvatar());
         }
     }
 
@@ -163,6 +170,21 @@ public class Person implements ReadOnlyPerson {
     }
 
     //@@author yunpengn
+    @Override
+    public ObjectProperty<Avatar> avatarProperty() {
+        return avatar;
+    }
+
+    @Override
+    public Avatar getAvatar() {
+        return avatar.get();
+    }
+
+    public void setAvatar(Avatar avatar) {
+        requireNonNull(avatar);
+        this.avatar.set(avatar);
+    }
+
     @Override
     public ObjectProperty<UniquePropertyMap> properties() {
         return properties;
