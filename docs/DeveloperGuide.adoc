@@ -475,6 +475,41 @@ By keying in the command word `recentlyDel`, the command word will be detected i
 We will now create a `LinkedList<Person> RecentlyDeletedQueue = new LinkedList<>();` to store the recently deleted contacts for up to the past 30 contacts.
 In the `RecentlyDeletedCommand` class, the `commandResult` method is used which will show the deleted contacts.
 
+// tag::remark[]
+=== Remark Command
+
+Remark command lets the user enter an additional field of text to a specific contact in the Address Book. Remark command extends undo to allow user to undo the changes made to the remark.
+
+NOTE: Remark command can only be used for contacts already in the Address Book.
+
+A placeholder is then added to PersonCard which displays the remark for each person.
+
+When the user inputs a string of text into the command box, the string of text is then passed on to the AddressbookParser which calls RemarkCommandParser. This will create a new instance of RemarkCommand.
+
+The input string is converted to a remark command object using the following method:
+
+[source, java]
+----
+public class RemarkCommandParser implements Parser<RemarkCommand> {
+    public RemarkCommand parse(String args) throws ParseException {
+        // ... parse logic ...
+    }
+}
+----
+// end::remark[]
+
+// tag::sort[]
+=== Sorting mechanism
+
+The sort mechanism is done first by comparing the names of every contact in the address book in lower case.
+
+Sort extends command which makes it an undoable command.
+
+Sort command can only be executed only if the person list is not empty.
+
+It uses the sort method from the collection class to sort the array list of persons in the address book.
+// end::sort[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

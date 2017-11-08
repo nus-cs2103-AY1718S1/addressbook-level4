@@ -283,6 +283,34 @@ deletes the contacts with the 2nd, 4th, 7th and 8th indexes in the address book.
 
 // end::deleteMultipleCommand[]
 
+// tag::remark[]
+=== Add remark to a person
+
+Adds a remark to an existing person in the address book.
+Format: remark INDEX r/REMARK
+
+****
+* Adds REMARK to the person at the specified INDEX. The index refers to the index number shown in the last person listing.
+* The index must be a positive integer 1, 2, 3,...
+* A remark can take any values, can even blank.
+****
+
+Examples:
+
+* `remark 1 r/owes money` +
+adds the remark "owes money" to person of index 1 in the address book.
+
+* `remark 4 r/' +
+removes any remark from the person of index 4 in the address book.
+// end::remark[]
+
+// tag::sort[]
+=== Sort
+
+Sorts the contacts in the address book in alphabetical order
+Format: sort
+// end::sort[]
+
 === Add photos : (Coming in v1.5)
 
 Add photos to contact details in addressBook. +
@@ -343,3 +371,6 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Remark* : `remark`
+e.g. `remark INDEX r/REMARK
+* *Sort* : `sort`
