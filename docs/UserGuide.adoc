@@ -386,7 +386,7 @@ Creates a new Rolodex file `default.rldx` at the relative directory `data` and r
 === `open`, `o`, `cd`, `ls` or `<`: Opening an Existing Rolodex Storage File _(Since v1.3)_
 
 Reloads the application with data from a rolodex at the specified filepath. +
-Format: `open FILEPATH` or `o FILEPATH`
+Format: `open FILEPATH` or `o FILEPATH` +
 Keyboard Shortcut: kbd:[Ctrl+O]
 
 ****
