@@ -82,11 +82,11 @@ public class ParcelCard extends UiPart<Region> {
         bindListeners(parcel);
     }
 
+    //@@author kennard123661
     /**
      * Binds the individual UI elements to observe their respective {@code Parcel} properties
-     * so that they will be notified of any changes.
+     * so that they will be notified of any changes. Tooltips will also be assigned to their respective {@code Label}
      */
-    //@@author kennard123661
     private void bindListeners(ReadOnlyParcel parcel) {
         trackingNumber.textProperty().bind(Bindings.convert(parcel.trackingNumberProperty()));
         trackingNumberTooltip.textProperty().bind(Bindings.convert(parcel.trackingNumberProperty()));
@@ -115,10 +115,10 @@ public class ParcelCard extends UiPart<Region> {
             initTags(parcel);
         });
     }
-    //@@author kennard123661
 
+    //@@author kennard123661
     /**
-     * Sets color for the status labels based on the current status.
+     * Sets color for the status {@code Label}s based on the {@link ParcelCard#status} text value.
      */
     private void setColorForStatus() {
         switch (status.textProperty().get()) {
@@ -157,7 +157,7 @@ public class ParcelCard extends UiPart<Region> {
 
     //@@author kennard123661
     /**
-     * tags with value tagValue will be assigned a specific colour based on their values
+     * Assign colour to Tag {@code Label} based on {@param tagValue}
      */
     private static String setColorForTag(String tagValue) {
         switch (tagValue) {
