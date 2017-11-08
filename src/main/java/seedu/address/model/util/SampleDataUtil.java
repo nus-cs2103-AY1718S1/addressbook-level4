@@ -59,7 +59,7 @@ public class SampleDataUtil {
             ArrayList<Event> events = new ArrayList<>();
             String reminderMsg = "You have an event!";
 
-            Event event1 =new Event(new Name("Volleyball Practice"), new DateTime("25122017 08:30"),
+            Event event1 =new Event(new Name("Volleyball Practice"), new DateTime("19102017 08:30"),
                         new Address("OCBC ARENA Hall 3, #01-111"), new ArrayList<>());
             event1.addReminder(new Reminder(event1, reminderMsg ));
             Event event2 = new Event(new Name("CS2103T Lecture"), new DateTime("20102017 14:00"),
@@ -68,13 +68,13 @@ public class SampleDataUtil {
             Event event3 = new Event(new Name("Project Meeting"), new DateTime("20102017 14:00"),
                         new Address("iCube Auditorium, NUS"), new ArrayList<>());
             event3.addReminder(new Reminder(event1, reminderMsg ));
-            Event event4 = new Event(new Name("Family Lunch"), new DateTime("09112017 13:00"),
+            Event event4 = new Event(new Name("Family Lunch"), new DateTime("20112017 13:00"),
                         new Address("Sakae Sushi, Causeway Point"), new ArrayList<>());
             event4.addReminder(new Reminder(event1, reminderMsg ));
-            Event event5 = new Event(new Name("Movie date"), new DateTime("10112017 22:00"),
+            Event event5 = new Event(new Name("Movie date"), new DateTime("22112017 22:00"),
                         new Address("Golden Village Yishun"), new ArrayList<>());
             event5.addReminder(new Reminder(event1, reminderMsg ));
-            Event event6 = new Event(new Name("Consultation for EE2020"), new DateTime("11112017 16:00"),
+            Event event6 = new Event(new Name("Consultation for EE2020"), new DateTime("23112017 16:00"),
                         new Address("E3-06-14, Faculty of Engineering, NUS "), new ArrayList<>());
             event6.addReminder(new Reminder(event1, reminderMsg ));
             Event event7 = new Event(new Name("Project Meeting for CS2101"), new DateTime("31112017 09:00"),
