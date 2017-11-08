@@ -3,6 +3,7 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.SortedMap;
 import java.util.Timer;
+import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -40,25 +42,14 @@ public class EventList implements Iterable<Event> {
 
     private static final Logger logger = LogsCenter.getLogger(EventList.class);
 
-    private final ObservableTreeMap<Timeslot, Event> internalMap = new
-            ObservableTreeMap<>();
+    private final ObservableTreeMapWrapper<Timeslot, Event> internalMap = new
+            ObservableTreeMapWrapper<>(new TreeMap<Timeslot, Event>());
+
     // used by asObservableList()
     private final ObservableList<ReadOnlyEvent> mappedList = FXCollections.observableArrayList(new
             ArrayList<>(internalMap.values()));
 
     public EventList() {
-//        internalMap.addListener((MapChangeListener.Change<? extends Timeslot, ? extends Event> change) -> {
-//            logger.info("Change heard.");
-//            boolean removed = change.wasRemoved();
-//            if (removed != change.wasAdded()) {
-//                if (removed) {
-//                    mappedList.remove(change.getValueRemoved());
-//                } else {
-//                    mappedList.add(change.getValueAdded());
-//                }
-//            }
-//        });
-//        EventsCenter.getInstance().registerHandler(this);
         internalMap.addListener(new MapChangeListener<Timeslot, Event>() {
             @Override
             public void onChanged(Change<? extends Timeslot, ? extends Event> change) {
@@ -68,7 +59,9 @@ public class EventList implements Iterable<Event> {
                     if (removed) {
                         mappedList.remove(change.getValueRemoved());
                     } else {
-                        mappedList.add(change.getValueAdded());
+                        ArrayList<Event> currentList = new ArrayList<>(internalMap.values());
+                        int index = currentList.indexOf(change.getValueAdded());
+                        mappedList.add(index, change.getValueAdded());
                     }
                 }
             }
@@ -84,19 +77,8 @@ public class EventList implements Iterable<Event> {
         }
         Event addedEvent = new Event(toAdd);
         internalMap.put(toAdd.getTimeslot(), addedEvent);
-//        scheduleRepeatedEvent(addedEvent);
     }
 
-//    /**
-//     * Schedule repeated event if period is not 0.
-//     */
-//    private void scheduleRepeatedEvent(ReadOnlyEvent addedEvent) {
-//        int repeatPeriod = Integer.parseInt(addedEvent.getPeriod().toString());
-//        if (repeatPeriod != 0) {
-//            Timer timer = new Timer();
-//            timer.schedule(new RepeatEventTimerTask(addedEvent, repeatPeriod), addedEvent.getEndDateTime());
-//        }
-//    }
 
     /**
      * Replaces the event {@code target} in the tree map with {@code editedEvent}.
@@ -122,7 +104,6 @@ public class EventList implements Iterable<Event> {
         internalMap.remove(targetEvent.getTimeslot());
         internalMap.put(editedEvent.getTimeslot(), editedEvent);
 
-//        scheduleRepeatedEvent(editedEvent);
         //@@author
     }
 
@@ -183,9 +164,7 @@ public class EventList implements Iterable<Event> {
      * Returns the backing tree map as an {@code ObservableList}.
      */
     public ObservableList<ReadOnlyEvent> asObservableList() {
-        ObservableList<ReadOnlyEvent> list = FXCollections.observableList(new ArrayList<>(internalMap.values()));
-        logger.info("EventList ------------- got " + mappedList.size() + " list.");
-        return FXCollections.unmodifiableObservableList(list);
+        return FXCollections.unmodifiableObservableList(mappedList);
     }
 
     @Override
@@ -227,15 +206,4 @@ public class EventList implements Iterable<Event> {
         return internalMap.hashCode();
     }
 
-//    //========== Event Handling =================================================================================
-//
-//    @Subscribe
-//    private void handleCreateEventInstanceEvent(CreateEventInstanceEvent e) {
-//        logger.info(LogsCenter.getEventHandlingLogMessage(e));
-//        try {
-//            add(e.eventToAdd);
-//        } catch (EventTimeClashException etce) {
-//            scheduleRepeatedEvent(e.eventToAdd);
-//        }
-//    }
 }

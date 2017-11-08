@@ -3,11 +3,11 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashMap;
 import java.util.Timer;
+import java.util.TreeSet;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
-
-import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,11 +15,11 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.commons.events.model.CreateEventInstanceEvent;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.RepeatEventTimerTask;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.exceptions.EventTimeClashException;
+import seedu.address.model.event.timeslot.Timeslot;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.InvalidSortTypeException;
@@ -36,7 +36,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     //@@author reginleiff
-    private FilteredList<ReadOnlyEvent> filteredEvents;
+    private final FilteredList<ReadOnlyEvent> filteredEvents;
     private FilteredList<ReadOnlyEvent> scheduledEvents;
     //@@author
 
@@ -155,9 +155,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public ObservableList<ReadOnlyEvent> getFilteredEventList() {
-        Predicate<? super ReadOnlyEvent> predicate = filteredEvents.getPredicate();
-        filteredEvents = new FilteredList<>(this.addressBook.getEventList());
-        filteredEvents.setPredicate(predicate);
         ObservableList<ReadOnlyEvent> list = FXCollections.unmodifiableObservableList(filteredEvents);
         return list;
     }
@@ -217,17 +214,5 @@ public class ModelManager extends ComponentManager implements Model {
             timer.schedule(new RepeatEventTimerTask(this, addedEvent, repeatPeriod), addedEvent.getEndDateTime());
         }
     }
-
-//    //========== Event Handling =================================================================================
-//
-//    @Subscribe
-//    private void handleCreateEventInstanceEvent(CreateEventInstanceEvent e) {
-//        logger.info(LogsCenter.getEventHandlingLogMessage(e));
-//        try {
-//            addEvent(e.eventToAdd);
-//        } catch (EventTimeClashException etce) {
-//            scheduleRepeatedEvent(e.eventToAdd);
-//        }
-//    }
 
 }

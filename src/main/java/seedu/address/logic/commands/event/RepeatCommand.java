@@ -17,9 +17,9 @@ import seedu.address.model.event.Period;
  */
 public class RepeatCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "eventedit";
+    public static final String COMMAND_WORD = "repeat";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the event identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the repeat period of the event identified "
             + "by the index number used in the last event listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
@@ -47,6 +47,7 @@ public class RepeatCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+        
         return new CommandResult(String.format(MESSAGE_REPEAT_EVENT_SUCCESS, period));
     }
 

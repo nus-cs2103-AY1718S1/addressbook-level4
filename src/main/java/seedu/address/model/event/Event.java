@@ -11,7 +11,6 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Timer;
 import java.util.logging.Logger;
 
 import javafx.beans.property.ObjectProperty;
@@ -132,7 +131,7 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
         this.description.set(requireNonNull(description));
     }
 
-    //@@author shuangyang
+    //@@author shuang-yang
     @Override
     public ObjectProperty<Period> periodProperty() {
         return period;
