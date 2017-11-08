@@ -2,7 +2,9 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOKADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -17,7 +19,10 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.FacebookAddress;
+import seedu.address.model.person.GoogleId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -32,6 +37,7 @@ import seedu.address.model.tag.Tag;
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
+    public static final String COMMAND_ALIAS = "e";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
@@ -41,6 +47,8 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_BIRTHDAY + "BIRTHDAY] "
+            + "[" + PREFIX_FACEBOOKADDRESS + "FACEBOOK ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -99,9 +107,15 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Birthday updatedBirthday = editPersonDescriptor.getBirthday().orElse(personToEdit.getBirthday());
+        FacebookAddress updatedFacebookAddress = editPersonDescriptor.getFacebookAddress()
+                .orElse(personToEdit.getFacebookAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        GoogleId googleId = editPersonDescriptor.getId().orElse(personToEdit.getGoogleId());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
+                updatedBirthday, updatedFacebookAddress, updatedTags, googleId);
+
     }
 
     @Override
@@ -131,7 +145,10 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        private Birthday birthday;
+        private FacebookAddress facebookAddress;
         private Set<Tag> tags;
+        private GoogleId iD;
 
         public EditPersonDescriptor() {}
 
@@ -140,14 +157,18 @@ public class EditCommand extends UndoableCommand {
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.address = toCopy.address;
+            this.birthday = toCopy.birthday;
+            this.facebookAddress = toCopy.facebookAddress;
             this.tags = toCopy.tags;
+            this.iD = toCopy.iD;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email,
+                    this.address, this.birthday, this.facebookAddress, this.tags);
         }
 
         public void setName(Name name) {
@@ -182,12 +203,40 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        //@@author srishag
+        public void setBirthday(Birthday birthday) {
+            this.birthday = birthday;
+        }
+
+        public Optional<Birthday> getBirthday() {
+            return Optional.ofNullable(birthday);
+        }
+        //@@author
+
+        //@@author PokkaKiyo
+        public void setFacebookAddress(FacebookAddress facebookAddress) {
+            this.facebookAddress = facebookAddress;
+        }
+
+        public Optional<FacebookAddress> getFacebookAddress() {
+            return Optional.ofNullable(facebookAddress);
+        }
+        //@@author
+
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
         }
 
         public Optional<Set<Tag>> getTags() {
             return Optional.ofNullable(tags);
+        }
+
+        public void setId (GoogleId iD) {
+            this.iD = iD;
+        }
+
+        public Optional<GoogleId> getId() {
+            return Optional.ofNullable(iD);
         }
 
         @Override
@@ -209,6 +258,10 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
+                    && getTags().equals(e.getTags())
+                    && getId().equals(e.getId())
+                    && getBirthday().equals(e.getBirthday())
+                    && getFacebookAddress().equals(e.getFacebookAddress())
                     && getTags().equals(e.getTags());
         }
     }

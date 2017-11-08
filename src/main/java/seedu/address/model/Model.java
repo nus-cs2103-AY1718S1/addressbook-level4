@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * The API of the Model component.
@@ -35,6 +36,19 @@ public interface Model {
      */
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
+
+    void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
+
+    ///** Creates the email to be sent */
+    //MimeMessage createEmail(String to, String from, String subject, String bodyText) throws MessagingException;
+
+    ///** Sends the email */
+    //Message sendMessage(Gmail service, String userId, MimeMessage emailContent)
+    //        throws MessagingException, IOException;
+
+    ///** Creates message using email */
+    //Message createMessageWithEmail(MimeMessage emailContent)
+    //        throws MessagingException, IOException;
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();

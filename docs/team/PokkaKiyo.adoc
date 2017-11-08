@@ -1,0 +1,75 @@
+= PokkaKiyo - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Contact'em
+Contact’em is a desktop address book application, and the user interacts with it through typing commands into the application.
+
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]]
+
+=== Enhancement Added: Find Contacts by Tags
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findtags]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The main theme of Contact'em is to be able to easily find/filter the contacts in the application.
+This feature allows users to easily search for contacts in big numbers by locating them according to their tags.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findbytags]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: List Tags
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=listtags]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The main intention of this enhancement is to supplement the find by tags function as described above.
+For users with large numbers of tags, it may be difficult to remember what tags are saved in the application.
+This enhancement allows users to easily refer to the tags that they have saved in the application, enhancing ease of use and quality of life.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=listtags]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Allow contacts to support a Facebook URL field (Pull Request https://github.com/CS2103AUG2017-T11-B4/main/pull/46[46]).
+* Select Command now opens the Facebook URL of the Contact in the Browser
+(Pull Request https://github.com/CS2103AUG2017-T11-B4/main/pull/95[#95]).
+* Updated the GUI color scheme (Pull request https://github.com/CS2103AUG2017-T11-B4/main/pull/93[#93]).

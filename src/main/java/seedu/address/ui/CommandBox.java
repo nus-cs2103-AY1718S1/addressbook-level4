@@ -13,6 +13,7 @@ import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -26,9 +27,11 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private String findWordCommand = "Sfind ";
 
     @FXML
     private TextField commandTextField;
+
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -38,6 +41,35 @@ public class CommandBox extends UiPart<Region> {
         historySnapshot = logic.getHistorySnapshot();
     }
 
+    //@@author PhuaJunJie
+    /**
+     * Handles the key release event, {@code keyEvent}.
+     */
+    @FXML
+    private void handleKeyRelease() {
+        String commandText = commandTextField.getText();
+        int textLength = commandTextField.getLength();
+        //Starts the generation search results with each character typed if command find is entered
+        if ((textLength > 5) && (commandText.substring(0, 5).equals("find "))) {
+            try {
+                CommandResult commandResult = logic.execute(findWordCommand + commandText.substring(5));
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            } catch (CommandException | ParseException | GoogleAuthException e) {
+                logger.info("No smart searches");
+            }
+        }
+
+        if ((textLength == 5) && (commandText.substring(0, 5).equals("find "))) {
+            try {
+                raise(new NewResultAvailableEvent(""));
+                logic.execute("list");
+            } catch (CommandException | ParseException | GoogleAuthException e) {
+                logger.info("No List from smart search");
+            }
+        }
+    }
+
+    //@@author
     /**
      * Handles the key press event, {@code keyEvent}.
      */
@@ -53,13 +85,13 @@ public class CommandBox extends UiPart<Region> {
             break;
         case DOWN:
             keyEvent.consume();
+
             navigateToNextInput();
             break;
         default:
             // let JavaFx handle the keypress
         }
     }
-
     /**
      * Updates the text field with the previous input in {@code historySnapshot},
      * if there exists a previous input in {@code historySnapshot}
@@ -100,6 +132,7 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleCommandInputChanged() {
+        //Prevents the build up og the alphabetNames variable during find function by refreshing it every run
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
             initHistory();
@@ -109,7 +142,7 @@ public class CommandBox extends UiPart<Region> {
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
 
-        } catch (CommandException | ParseException e) {
+        } catch (CommandException | ParseException | GoogleAuthException e) {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
@@ -147,5 +180,5 @@ public class CommandBox extends UiPart<Region> {
 
         styleClass.add(ERROR_STYLE_CLASS);
     }
-
 }
+

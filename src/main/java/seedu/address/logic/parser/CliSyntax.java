@@ -10,6 +10,11 @@ public class CliSyntax {
     public static final Prefix PREFIX_PHONE = new Prefix("p/");
     public static final Prefix PREFIX_EMAIL = new Prefix("e/");
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
+    public static final Prefix PREFIX_BIRTHDAY = new Prefix("b/");
+    public static final Prefix PREFIX_FACEBOOKADDRESS = new Prefix("f/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
+    public static final Prefix PREFIX_EMAIL_SUBJECT = new Prefix("es/");
+    public static final Prefix PREFIX_EMAIL_BODY = new Prefix("eb/");
+    public static final Prefix PREFIX_GOOGLEID = new Prefix("c/");
 
 }

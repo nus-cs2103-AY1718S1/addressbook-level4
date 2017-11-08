@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 
@@ -14,7 +15,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 public abstract class UndoableCommand extends Command {
     private ReadOnlyAddressBook previousAddressBook;
 
-    protected abstract CommandResult executeUndoableCommand() throws CommandException;
+    protected abstract CommandResult executeUndoableCommand() throws CommandException, GoogleAuthException;
 
     /**
      * Stores the current state of {@code model#addressBook}.
@@ -43,7 +44,7 @@ public abstract class UndoableCommand extends Command {
         requireNonNull(model);
         try {
             executeUndoableCommand();
-        } catch (CommandException ce) {
+        } catch (CommandException | GoogleAuthException ce) {
             throw new AssertionError("The command has been successfully executed previously; "
                     + "it should not fail now");
         }
@@ -51,7 +52,7 @@ public abstract class UndoableCommand extends Command {
     }
 
     @Override
-    public final CommandResult execute() throws CommandException {
+    public final CommandResult execute() throws CommandException, GoogleAuthException {
         saveAddressBookSnapshot();
         return executeUndoableCommand();
     }
