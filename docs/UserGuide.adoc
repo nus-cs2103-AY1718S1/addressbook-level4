@@ -500,6 +500,7 @@ Example:
 
 * `clear`
 
+// tag::importXml[]
 === Importing data : `(i)import`
 
 ==== From `.xml` format
@@ -536,6 +537,7 @@ Examples:
 For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
 For `macOS` and `Linux` users, use `/` instead.
 ====
+// end::importXml[]
 
 // tag::importScript[]
 ==== From `.bo` format
@@ -591,6 +593,7 @@ Example:
 
 * `import --nusmods +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01+++`
 
+// tag::exportXml[]
 === Exporting data : `(p)export`
 
 ==== To `.xml` format
@@ -622,6 +625,7 @@ Examples:
 For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
 For `macOS` and `Linux` users, use `/` instead.
 ====
+// end::exportXml[]
 
 // tag::exportExcel[]
 ==== To Microsoft Excel^TM^ Worksheet
