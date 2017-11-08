@@ -32,7 +32,7 @@ public class SelectCommandParser implements Parser<SelectCommand> {
             if (inputs.length < 2) {
                 throw new IllegalValueException("Too little input arguments!");
             } else if (inputs.length > 2 && panelString.isPresent()) {
-                panelChoice = ParserUtil.parsePanelChoice(panelString.get());
+                panelChoice = ParserUtil.parsePanelChoice(panelString.get().toLowerCase());
             } else {
                 panelChoice = SelectCommand.PanelChoice.PERSON;
             }
