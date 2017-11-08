@@ -4,7 +4,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author kennard123661
 /**
- * Status represents the delivery status of a parcel
+ * Status represents the delivery status of a parcel.
  * It can only be one of these values: PENDING, DELIVERING, COMPLETED and OVERDUE.
  *
  * {@code Status.PENDING} means that the {@link Parcel} is pending delivery.
