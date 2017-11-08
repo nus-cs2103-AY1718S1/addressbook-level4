@@ -17,9 +17,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    //@@author derickjw
     private static String[] colors = {"red", "blue", "orange", "green", "black", "grey" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
+    //@@author
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -55,13 +57,14 @@ public class PersonCard extends UiPart<Region> {
         initTags(person);
         bindListeners(person);
     }
-
+    //@@author derickjw
     private static String getColorForTag(String tagValue) {
         if (!tagColors.containsKey(tagValue)) {
             tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
         }
         return tagColors.get(tagValue);
     }
+    //@@author
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
@@ -83,6 +86,8 @@ public class PersonCard extends UiPart<Region> {
      * Initialise the {@code person} tags
      * @param person Person to be assigned tag color.
      */
+
+    //@@author derickjw
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
@@ -90,6 +95,7 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

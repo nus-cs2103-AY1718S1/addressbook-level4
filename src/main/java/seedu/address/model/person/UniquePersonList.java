@@ -169,10 +169,18 @@ public class UniquePersonList implements Iterable<Person> {
         return checker1;
     }
 
+    //@@author YuchenHe98
+    /**
+     * Add free time slot based on the index.
+     */
     public void addSchedule(Integer toAdd, TreeSet<Integer> timeSpan) {
         internalList.get(toAdd).addSpanToSchedule(timeSpan);
     }
 
+    //@@author YuchenHe98
+    /**
+     * Clear free time slot based on the index.
+     */
     public void clearSchedule(Integer toClear, TreeSet<Integer> timeSpan) {
         internalList.get(toClear).clearSpanForSchedule(timeSpan);
     }

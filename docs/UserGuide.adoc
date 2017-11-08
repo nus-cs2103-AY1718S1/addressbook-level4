@@ -65,8 +65,26 @@ Option 1: Format: `help` +
 Option 2.1: Menu -> File -> Help +
 Option 2.2: Menu -> File -> `F1`
 
+=== Creating Default Account : `createDefaultAcc`
+Creates a default login account for a new user
+Format: `createDefaultAcc` +
+
+Username: `Admin` +
+Password: `Admin`
+
+=== Removing Login Account : `removeLogin`
+Removes the login account. +
+This is for users who does not want the need to login to access H.M.U v1.4 +
+Format: `removeLogin username password` +
+
+Examples:
+
+* `removeLogin admin admin`
+* `removeLogin tom123 1642522`
+
+
 === Changing password : `changepw`
-Changes a user's password needed to access H.M.U v1.2 +
+Changes a user's password needed to access H.M.U v1.4 +
 Format: `changepw username old_password new_password` +
 
 Examples:
@@ -96,18 +114,66 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 m/Kranji`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 m/Tanah Merah t/criminal`
 
-=== Adding a person: `addSchedule`
+=== Adding a free time slot to a person: `addSchedule`
 
 Adds a busy time span to a person to the address book +
-Format: `addSchedule index d/BUSY_DAY st/START_TIME et/END_TIME
+Format: `addSchedule index d/DAY st/START_TIME et/END_TIME
 
 [TIP]
-A person can have any number of busy time spans as long as the start time is no earlier than 0600 and the end time is no later than 2330. (including 0)
+A person can have any number of free time spans as long as the start time is no earlier than 0600 and the end time is no later than 2330. (including 0)
 
 Examples:
 
-* `addSchedule 2 d/Monday st/0800 et/1030
-* `addSchedule 4 d/Friday st/1300 et/1500
+* `addSchedule 2 d/Monday st/0800 et/1030`
+* `addSchedule 4 d/Friday st/1300 et/1500`
+
+=== Clear a free time slot for a person: `clearSchedule`
+
+Clear a time span for a person in the address book +
+Format: `ClearSchedule index d/DAY st/START_TIME et/END_TIME
+
+[TIP]
+Any free time spans can be cleared as long as the start time is no earlier than 0600 and the end time is no later than 2330. (including 0)
+
+Examples:
+
+* `clearSchedule 2 d/Monday st/0800 et/1030`
+* `clearSchedule 4 d/Friday st/1300 et/1500`
+
+=== View a person's schedule : `visualize`
+
+Visualizes the person's free time slot identified by the index number used in the last person listing. +
+Format: `visualize INDEX`
+
+****
+* Visualzes the person's schedule.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`visualize 2` +
+Visualizes the 2nd person in the address book.
+* `find Betsy` +
+`visualizes 1` +
+Visualizes the 1st person in the results of the `find` command.
+
+=== Arrange a meeting for a list of people : `arrange`
+
+Arrange a meeting for a list of persons in the address book. +
+Format: `arange INDEX_1 INDEX_2 INDEX_3 ...`
+
+****
+* Arranges the people at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one index should be included.
+****
+
+Examples:
+
+* `arrange 1 2 3` +
+Arranges a meeting for person 1, person 2 and person 3 based on their free time slots.
 
 === Listing all persons : `list`
 
@@ -426,8 +492,13 @@ Contact's photo support +
 Search by Address (Available in v1.2) +
 Add Closest MRT Station to Contacts (Available in v1.2) +
 Search Contacts by Phone Number(Available in v1.2) +
-Scheduling (Available in v1.3) +
+Scheduling (Available in v1.4) +
 Closest Meet-up Point +
 Search by Email (Available in v1.3) +
 Search by Phone Number (Available in v1.3) +
+Search Contact's Location on Google Maps (Available in v1.4) +
+Create Default Account for new users (Available in v1.4) +
+Remove Login Account (Available in v1.4) +
+Arrange Schedule (Available in v1.4) +
+Visualize Schedule (Available in v1.4)
 

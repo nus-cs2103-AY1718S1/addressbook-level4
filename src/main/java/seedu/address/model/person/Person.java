@@ -45,13 +45,27 @@ public class Person implements ReadOnlyPerson {
         initiateSchedule();
     }
 
+    //@@author YuchenHe98
+    public Person(Name name, Phone phone, Email email, Address address, Mrt mrt, Set<Tag> tags, Schedule schedule) {
+        requireAllNonNull(name, phone, email, address, tags, schedule);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.mrt = new SimpleObjectProperty<>(mrt);
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.schedule = new SimpleObjectProperty<>(schedule);
+    }
+    //@@author
+
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getMrt(), source.getTags());
-        initiateSchedule();
+        setSchedule(source.getSchedule());
     }
 
     public void setName(Name name) {
@@ -144,15 +158,18 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    //@@author YuchenHe98
     @Override
     public Schedule getSchedule() {
         return schedule.get();
     }
 
+    //@@author YuchenHe98
     public ObjectProperty<Schedule> scheduleProperty() {
         return schedule;
     }
 
+    //@@author YuchenHe98
     /**
      * Create an empty schedule object
      */
@@ -161,6 +178,7 @@ public class Person implements ReadOnlyPerson {
         this.schedule = new SimpleObjectProperty<>(schedule);
     }
 
+    //@@author YuchenHe98
     /**
      * Set the person's schedule based on a given schedule.
      */
@@ -168,8 +186,9 @@ public class Person implements ReadOnlyPerson {
         this.schedule.set(schedule);
     }
 
+    //@@author YuchenHe98
     /**
-     * Add a time span to a person's schedule to indicate that he is busy at this time.
+     * Add a time span to a person's schedule to indicate that he is free at this time.
      */
     public void addSpanToSchedule(TreeSet<Integer> span) {
         for (Integer startTime : span) {
@@ -177,8 +196,9 @@ public class Person implements ReadOnlyPerson {
         }
     }
 
+    //@@author YuchenHe98
     /**
-     *Clear a time span to a person's schedule to indicate that he is free at this time.
+     *Clear a time span to a person's schedule to indicate that he is busy at this time.
      */
     public void clearSpanForSchedule(TreeSet<Integer> span) {
         for (Integer startTime : span) {

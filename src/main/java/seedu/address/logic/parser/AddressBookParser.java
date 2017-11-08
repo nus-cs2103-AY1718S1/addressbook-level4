@@ -8,11 +8,13 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddScheduleCommand;
+import seedu.address.logic.commands.ArrangeCommand;
 import seedu.address.logic.commands.ChangePasswordCommand;
 import seedu.address.logic.commands.ChangeUsernameCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ClearScheduleCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CreateDefaultAccountCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -26,10 +28,16 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LocateCommand;
+import seedu.address.logic.commands.LocateMrtCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemoveAccountCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
+<<<<<<< HEAD
+=======
+import seedu.address.logic.commands.VisualizeCommand;
+>>>>>>> 2a690c87c33b0d8af9babcc46c2eefa1d67c42df
 
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -133,6 +141,10 @@ public class AddressBookParser {
         case LocateCommand.COMMAND_ALIAS:
             return new LocateCommandParser().parse(arguments);
 
+        case LocateMrtCommand.COMMAND_WORD:
+        case LocateMrtCommand.COMMAND_ALIAS:
+            return new LocateMrtCommandParser().parse(arguments);
+
         case ChangePasswordCommand.COMMAND_WORD:
             return new ChangePasswordCommandParser().parse(arguments);
 
@@ -146,6 +158,20 @@ public class AddressBookParser {
         case ClearScheduleCommand.COMMAND_WORD:
         case ClearScheduleCommand.COMMAND_ALIAS:
             return new ClearScheduleCommandParser().parse(arguments);
+
+        case ArrangeCommand.COMMAND_WORD:
+        case ArrangeCommand.COMMAND_ALIAS:
+            return new ArrangeCommandParser().parse(arguments);
+
+        case VisualizeCommand.COMMAND_WORD:
+        case VisualizeCommand.COMMAND_ALIAS:
+            return new VisualizeCommandParser().parse(arguments);
+
+        case CreateDefaultAccountCommand.COMMAND_WORD:
+            return new CreateDefaultAccountCommand();
+
+        case RemoveAccountCommand.COMMAND_WORD:
+            return new RemoveAccountCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
