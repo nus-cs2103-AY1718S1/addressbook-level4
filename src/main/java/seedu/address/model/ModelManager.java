@@ -33,6 +33,7 @@ import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EmptyAddressBookException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -146,7 +147,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author eldonng
     @Override
-    public void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
+    public void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException,
+            EmptyAddressBookException{
         try {
             Person addPin = addPinTag(person);
             updatePerson(person, addPin);
@@ -157,7 +159,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
+    public void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException,
+            EmptyAddressBookException {
         try {
             Person removePin = removePinTag(person);
             updatePerson(person, removePin);
@@ -291,7 +294,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author LimeFallacie
     @Override
-    public void sort(String sortType) throws DuplicatePersonException {
+    public void sort(String sortType) throws DuplicatePersonException, EmptyAddressBookException {
         switch (sortType) {
         case SortCommand.ARGUMENT_NAME:
             addressBook.setPersons(sortBy(COMPARATOR_SORT_BY_NAME));
@@ -316,7 +319,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Sort the addressbook by the comparator given
      * @return ArrayList<ReadOnlyPerson> sorted list</ReadOnlyPerson>
      */
-    private ArrayList<ReadOnlyPerson> sortBy(Comparator<ReadOnlyPerson> comparator) {
+    private ArrayList<ReadOnlyPerson> sortBy(Comparator<ReadOnlyPerson> comparator) throws EmptyAddressBookException {
         ArrayList<ReadOnlyPerson> newList = new ArrayList<>();
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         SortedList<ReadOnlyPerson> sortedList =
@@ -324,6 +327,8 @@ public class ModelManager extends ComponentManager implements Model {
         newList.addAll(sortedList);
         sortedList = getFilteredPersonList().filtered(PREDICATE_SHOW_UNPINNED_PERSONS).sorted(comparator);
         newList.addAll(sortedList);
+
+        if (newList.isEmpty()) throw new EmptyAddressBookException();
 
         return newList;
     }

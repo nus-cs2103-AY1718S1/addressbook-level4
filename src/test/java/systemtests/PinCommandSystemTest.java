@@ -27,6 +27,7 @@ import seedu.address.logic.commands.UnpinCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.EmptyAddressBookException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -195,6 +196,8 @@ public class PinCommandSystemTest extends AddressBookSystemTest {
             throw new AssertionError("targetPerson is retrieved from model.");
         } catch (CommandException ce) {
             throw new AssertionError("targetPerson unable to be pinned");
+        } catch (EmptyAddressBookException eabe) {
+            throw new AssertionError("address book is empty");
         }
         return targetPerson;
     }
@@ -212,6 +215,8 @@ public class PinCommandSystemTest extends AddressBookSystemTest {
             throw new AssertionError("targetPerson is retrieved from model.");
         } catch (CommandException ce) {
             throw new AssertionError("targetPerson unable to be unpinned");
+        } catch (EmptyAddressBookException eabe) {
+            throw new AssertionError("address book is empty");
         }
         return targetPerson;
     }
@@ -237,7 +242,11 @@ public class PinCommandSystemTest extends AddressBookSystemTest {
         try {
             for (Tag tag : listTags) {
                 if ("Pinned".equals(tag.tagName)) {
-                    model.unpinPerson(person);
+                    try {
+                        model.unpinPerson(person);
+                    } catch (EmptyAddressBookException eabe) {
+                        throw new AssertionError("EmptyAddressBookException error");
+                    }
                 }
 
             }

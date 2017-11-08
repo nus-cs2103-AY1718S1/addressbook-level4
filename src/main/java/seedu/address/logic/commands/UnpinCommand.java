@@ -9,6 +9,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.EmptyAddressBookException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author eldonng
@@ -55,6 +56,8 @@ public class UnpinCommand extends UndoableCommand {
                 return new CommandResult(MESSAGE_ALREADY_UNPINNED);
             }
         } catch (PersonNotFoundException pnfe) {
+            throw new CommandException(MESSAGE_UNPIN_PERSON_FAILED);
+        } catch (EmptyAddressBookException eabe) {
             throw new CommandException(MESSAGE_UNPIN_PERSON_FAILED);
         }
 
