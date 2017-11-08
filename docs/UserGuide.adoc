@@ -219,6 +219,19 @@ Find command currently support finding of name, email and tags.
 
 // end::find[]
 
+=== Find a person without matching the whole keyword: `find_contain`
+
+Finds all persons whose name / phone / address / email contains the given string +
+Format: `find_contain PREFIX_PERSON_ATTRIBUTE/STRING [MORE_PARAMETERS]...`
+
+****
+* The search is an "AND" search.
+* The characters that follow a prefix are treated as one string.
+* A match happens when a person's details contain the given strings
+e.g. "David Li" contains "avid", "93463991" contains "99".
+****
+
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -427,6 +440,61 @@ Format: `exit`
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+=== Using the search bar
+
+The search bar above the person panel shows any person whose name / phone / email / address contains the string typed in
+the search boxes (case-insensitive).
+
+*Interface of the search bar*
+
+image::search-bar.png[width="800"]
+
+*Examples*
+
+'''
+Typing "Li" in the name box returns any person whose name contains "li".
+
+image::search-bar-li.png[width="800"]
+
+'''
+Typing "david" in the name box and "9" in the phone box returns any person whose name contains "david" and phone number
+contains "9".
+
+image::search-bar-david.png[width="800"]
+
+=== Using the email login button
+
+The login button is located under the search bar. Clicking on the login button opens a window for logging email.
+
+*The email login button*
+
+image::email-login-button.png[]
+
+*The email login window*
+
+image::email-login-window.png[]
+
+Any feedback from an login activity will be displayed in the text area at the bottom of the login window, as well as in
+the console.
+
+=== Using the email send button
+
+The send button is located under the search bar, next to the login button. It will only be available after an email is
+logged in. Clicking on the send button opens a window for sending email.
+
+*The email send button*
+
+image::email-send-button.png[]
+
+*The email send window*
+
+image::email-send-window.png[]
+
+Selecting the check box at the far left of a person card will include his email in the "recipients" field when the send
+button is clicked.
+
+image::email-checkbox.png[]
 
 // tag::themeselect[]
 === Selecting an application theme

@@ -24,6 +24,6 @@ image::phungtuanhoang.jpg[width="150", align="left"]
 {empty}[https://github.com/phungtuanhoang1996[github]][<<phungtuanhoang#, portfolio>>]
 
 Role: Developer, Repo Maintainer +
-Responsibilities: Storage
+Responsibilities: Storage, UI
 
 '''

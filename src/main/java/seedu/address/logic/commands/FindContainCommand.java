@@ -9,7 +9,12 @@ import seedu.address.model.person.PersonContainsLettersPredicate;
 public class FindContainCommand extends Command {
 
     public static final String COMMAND_WORD = "find_contain";
-    public static final String MESSAGE_USAGE = "do later";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Finds all persons whose name / phone / address / email contains the given string\n"
+            + "Parameters: " + COMMAND_WORD + " PREFIX_PERSON_ATTRIBUTE/STRING [MORE_PARAMETERS]..."
+            + "Examples: \n"
+            + "1) find_contain n/david li p/91\n"
+            + "2) find_contain e/gmail a/jurong";
 
     private final PersonContainsLettersPredicate predicate;
 
