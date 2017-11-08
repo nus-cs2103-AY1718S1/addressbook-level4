@@ -27,6 +27,11 @@ public class TypicalEvents {
             .withDescription("Performance").withLocation("Dining Hall")
             .withDatetime("24/09/2017 1800 to 2100").build();
 
+    // Manually added - Event's details found in {@code CommandTestUtil}
+    public static final ReadOnlyEvent DANCE = new EventBuilder().withTitle("Livecore Dance")
+            .withDescription("Performance").withLocation("Dining Hall")
+            .withDatetime("24/09/2017 1800 to 2100").build();
+
     private TypicalEvents() {
     } // prevents instantiation
 
