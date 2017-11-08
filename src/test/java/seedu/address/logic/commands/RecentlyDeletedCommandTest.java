@@ -55,7 +55,8 @@ public class RecentlyDeletedCommandTest {
     }
 
     /**
-     * Asserts that the result message from the execution of {@code recentlyDeletedCommand} equals to {@code expectedMessage}
+     * Asserts that the result message from the execution of {@code recentlyDeletedCommand}
+     * equals to {@code expectedMessage}
      */
     private void assertCommandResult(RecentlyDeletedCommand recentlyDeletedCommand, String expectedMessage) {
         assertEquals(expectedMessage, recentlyDeletedCommand.execute().feedbackToUser);
