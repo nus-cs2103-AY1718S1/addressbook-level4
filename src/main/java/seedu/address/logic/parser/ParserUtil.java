@@ -29,6 +29,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
+import seedu.address.model.task.EventTime;
 import seedu.address.model.task.StartDate;
 import seedu.address.model.task.TaskDates;
 
@@ -155,6 +156,14 @@ public class ParserUtil {
                 ? Optional.of(new Deadline(TaskDates.formatDate(parseDate(date.get())), parseRecurInterval(date.get())))
                 : Optional.empty();
     }
+
+    /**
+     * Parses a {@code Optional<String> time into a {@code EventTime} is the {@code time} is present.
+     */
+   /* public static Optional<EventTime> parseEventTimes(Optional<String> time) throws IllegalValueException {
+        requireNonNull(time);
+
+    }*/
 
     /**
      * Parses a {@code String naturalLanguageInput} using PrettyTime NLP, into a {@code Date}.
