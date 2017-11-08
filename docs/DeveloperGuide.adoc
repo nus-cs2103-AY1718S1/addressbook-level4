@@ -403,6 +403,44 @@ column are undoable.
 ** **Cons:** The user might be confused with so many commands to manage a contact's remarks.
 // end::remark[]
 
+
+// tag::access[]
+=== AccessCount (Since v1.3)
+
+The number of accesses to each entry is kept track of. Here, each access is defined to be any command that edits an entry, be it `edit`, `addtags`/`removetags` or `remark`. Clicks on the side panel, or selections through the `select` command are also included.
+
+AccessCount is implemented as an additional property of the `person` class. It is updated whenever an `edit`, `addtags`/`removetags` or `remark` directly as part of the execution of those commands. In the case of selections, it is implemented with the code block below:
+
+[source, java]
+----
+    private void updateAccessCount(PersonCard oldValue,PersonCard newValue) {
+        if (oldValue == null || oldValue.person.getName() != newValue.person.getName()) {
+            newValue.person.incrementAccess();
+        }
+    }
+----
+
+There is a need for such an unusual condition since edit commands themselves will also change the selected person card.
+
+=== Design Considerations
+
+**Aspect:** Implementation of `AccessCount`
+
+Originally, the access counts were implemented as part of the `PersonPanelSelectionChangedEvent` event. However, the way this event is raised is rather buggy, and there are frequently many copies of this event being raised, leading to numerous bugs in the access count being incremented too much.
+
+Success was found when the access count was implemented separately for editing commands as well as for selection commands, while taking careful note of situations where both may happen.
+
+// end::access[]
+
+// tag::accessdisplay[]
+=== AccessDisplay (Since v1.4)
+
+Users may not want the number of accesses to each entry to be displayed at all time, since it might be embarassing if it is seen that they have frequently accessed a particular entry. Such users may use the `accessdisplay off` command to hide the number of accesses.
+
+Access display is implemented with two personcard javafx files, `PersonCardList.fxml` and `PersonCardListNoAccess.fxml`. Both cards are loaded when PIMP is started, and constantly updated in the background. When the user desires to switch from one to the other, this allows for a smooth transition, without any load times.
+
+// end::accessdisplay[]
+
 // tag::statistics[]
 === Statistics Command
 
@@ -495,9 +533,9 @@ We felt that this makes more sense; for example, if someone wants to find the co
 Also, in the `FindRegexCommandParser` which parses the command passed in, we originally decided to not trim the string passed. However, this meant that the space separating the command keyword and the arguments are also included in the regex. This is probably not the user wanted; for example, the command `findregex John` will not match `John` since the regex formed is `␣John` (here ␣ is a space).
 
 We also originally thought of only trimming the first space. We eventually decided to trim every whitespace though, since we believe that any extra whitespace would be unintentional. For example, it does not make much sense for users to search with a regex that starts with two spaces, say `␣␣John`, as it is very rare for contacts to have two consecutive spaces in their name. Those cases are very likely to be a typo instead.
-
 // end::findregex[]
 
+// tag::findtag[]
 === Searching by Tag (Since v1.2)
 
 Searching by tag is implemented by the `FindTagCommand` class. This command allows the user to search through the list of all contacts and output all that are tagged with a certain tag.
@@ -508,6 +546,7 @@ Since this search function involves iterating searching through all tags of all 
 
 However, since these other commands are more commonly used, we decided not to slow down these commands for the performance of the `FingTagCommand` function. Instead, we simply allowed the `FindTagCommand` to search through all possibilities each time it is called.
 
+// end::findtag[]
 // tag::addremovetags[]
 === Add/Remove Tags Command (Since v1.2)
 
@@ -611,6 +650,8 @@ EventsCenter.getInstance().post(new ChangeBrowserPanelUrlEvent(url));
 === Quickhelp Command (Since v1.5)
 
 This command leverages on the `CommandResult` message to display the list of valid command words.
+
+// end::quickhelp[]
 
 // tag::size[]
 === Changing Font Size

@@ -56,12 +56,25 @@ public class PersonListPanel extends UiPart<Region> {
                     if (newValue != null) {
                         logger.fine("Selection in person list panel changed to : '" + newValue + "'");
                         raise(new PersonPanelSelectionChangedEvent(newValue));
-                        if (oldValue == null || oldValue.person.getName() != newValue.person.getName()) {
-                            newValue.person.incrementAccess();
-                        }
+                        updateAccessCount(oldValue, newValue);
                     }
                 });
     }
+
+    //@@author Zzmobie
+    /**
+     * This function updates the access counts only when necessary. The access count should only be incremented
+     * when the card selected is a new card, and when the old card selected was not null. The need for the latter
+     * condition is a result of the way edit commands affect the selected person panel.
+     * @param oldValue Previous value for the PersonCard object
+     * @param newValue New value for the PersonCard object that has changed.
+     */
+    private void updateAccessCount(PersonCard oldValue, PersonCard newValue) {
+        if (oldValue == null || oldValue.person.getName() != newValue.person.getName()) {
+            newValue.person.incrementAccess();
+        }
+    }
+    //@@author
 
     /**
      * Scrolls to the {@code PersonCard} at the {@code index} and selects it.

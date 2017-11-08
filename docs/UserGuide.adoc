@@ -188,9 +188,9 @@ Returns `Jon` and `John`, as well as `John Doe` and `Jane John`.
 Alias example:
 
 * `fr Do?`
-
 // end::findregex[]
 
+// tag::findtag[]
 ==== Locating persons by tags: `findtag` (Since v1.2)
 
 Finds persons who has has a tag matching any of the search tags. +
@@ -205,7 +205,7 @@ Returns all person having tags `friends` or `family`.
 Alias example:
 
 * `ft friends`
-
+// end::findtag[]
 ==== Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -422,6 +422,7 @@ Resets the font size back to the default.
 
 // end::size[]
 
+// tag::accessdisplay[]
 ==== Toggling the display of the access counts : `accessdisplay` (Since v1.4)
 Toggles the display option for the access count numbers. +
 Format: `accessdisplay TYPE` +
@@ -433,6 +434,7 @@ Examples:
 * `accessdisplay off`
 The description cards on the left plane no longer display access counts.
 
+// end::accessdisplay[]
 ==== Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -572,10 +574,11 @@ representing the total number of persons in the last person listing.
 The column titled "New: " at the bottom of the screen contains a numerical value
 representing the total number of newly added persons in the last person listing.
 A newly added person is defined as a person that was added in the current month.
-
+// tag::access[]
 ==== Viewing access counts (Since v1.3)
 
-At the left side of the screen where the address book entries are displayed, we can see an "Accesses: #number" row, which describes the number of times this entry has been accessed. Clicking on this entry, or modifying it using any of the edit, add/remove tag functions will increase this counter. This can be toggled on and off using the `accessdisplay` command.
+At the left side of the screen where the address book entries are displayed, we can see a heart icon, with a number beside it, which describes the number of times this entry has been accessed. Clicking on this entry, or modifying it using any of the edit, add/remove tag commands will increase this counter. This can be toggled on and off using the `accessdisplay` command.
+// end::access[]
 
 ==== Saving the data
 
