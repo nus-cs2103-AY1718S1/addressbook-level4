@@ -1,8 +1,14 @@
+[Deng Hao]
 toggle
 
 clear
 
 undo
+
+portrait 1 p/C:\Users\Leon\Desktop\Uni\Yr2 - Sem 1\CS2103T\Workspace\addressbook-level4\docs\images\Adoby7.png
+portrait 1 p/C:\Users\Leon\Desktop\Uni\Yr2 - Sem 1\CS2103T\Workspace\addressbook-level4\docs\images\damithc.jpg
+
+[Wan Qing]
 
 add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/01/01/1990 t/friends t/owesMoney
 
@@ -10,18 +16,19 @@ delete 2
 
 edit 1 p/91234567 e/johndoe@example.com
 
-addE en/Project Meeting ed/Discuss how to conduct software demo et/30/01/2018 
+find Yu Li
 
-addE en/Project Meeting ed/Discuss how to conduct software demo et/30/10/2017 
+addE en/Project Meeting ed/Discuss how to conduct software demo et/30/01/2018
+(Event time)
+addE en/Project Meeting ed/Discuss how to conduct software demo et/30/10/2017
 
 deleteE 3
 
-editE 1 ed/Discuss how to handle Q&A et/02/11/2017 
-
-find Yu Li
+editE 1 ed/Discuss how to handle Q&A et/02/11/2017
 
 findE Third
 
+[Chunhui]
 list
 
 listE
@@ -30,9 +37,7 @@ select 1
 
 sort
 
-portrait 1 p/[...]
-
-join e/1 p/1 
+join e/1 p/1
 join e/1 p/2
 join e/1 p/3
 join e/1 p/4
@@ -41,7 +46,7 @@ showP 1
 display 1 email
 display 1 phone
 
-join e/1 p/2
+[leon]
 selectE 1
 
 disjoin e/1 p/1
@@ -51,5 +56,10 @@ showP 1
 
 deleteE 1
 delete 1
+
+disjoin e/1 p/3
+disjoin e/1 p/4
+
+deleteE 1
 
 history
