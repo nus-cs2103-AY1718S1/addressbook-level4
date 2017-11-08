@@ -63,15 +63,18 @@ public class CommandBoxParser {
      * @return {@code ArrayList} of missing prefixes as {@code Strings}
      */
     public ArrayList<String> getMissingPrefixes(String argument) {
+        Prefix[] prefixes = ALL_PREFIXES;
         ArrayList<String> missingPrefixes = new ArrayList<>();
-        Arrays.stream(ALL_PREFIXES)
-                .filter(p -> isMissing(p, argument))
-                .forEach(p -> missingPrefixes.add(p.toString()));
+        ArgumentMultimap argMap = ArgumentTokenizer.tokenize(argument, prefixes);
+        for (Prefix p : prefixes) {
+            if (!argMap.getValue(p).isPresent() || argMap.getValue(p).get().equals(EMPTY_STRING)) {
+                missingPrefixes.add(p.toString());
+            }
+        }
         return missingPrefixes;
     }
 
     private boolean isMissing(Prefix prefix, String argument) {
-        System.out.println(prefix.toString());
         return !argument.contains(SPACE + prefix.toString());
     }
 

@@ -142,8 +142,6 @@ public class AutocompleterTest extends GuiUnitTest {
         assertEquals("add #/RR123456789SG n/", autocompleteResult);
         autocompleter.updateState(autocompleteResult);
         autocompleteResult = autocompleter.autocomplete();
-        autocompleter.updateState(autocompleteResult);
-        autocompleteResult = autocompleter.autocomplete();
         assertEquals("add #/RR123456789SG a/", autocompleteResult);
         guiRobot.pauseForEvent();
         assertEquals(EMPTY_STRING, resultDisplayHandle.getText());

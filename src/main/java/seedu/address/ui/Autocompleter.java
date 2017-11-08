@@ -2,7 +2,9 @@ package seedu.address.ui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
+import org.ocpsoft.prettytime.shade.org.apache.commons.lang.ObjectUtils;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
@@ -155,6 +157,7 @@ public class Autocompleter {
 
         if (AutocompleteCommand.hasPrefixParameter(commandWord)) {
 
+            ArrayList<String> missingPrefixes = parser.getMissingPrefixes(arguments);
             if (lastCharIsStartOfPrefix(commandBoxText)) {
                 state = AutocompleteState.COMMAND_COMPLETE_PREFIX;
                 return;
@@ -162,11 +165,16 @@ public class Autocompleter {
 
             if (lastTwoCharactersArePrefix(commandBoxText)) {
                 setIndexToOneIfNeeded();
+                System.out.println(possibleAutocompleteResults.size());
+                System.out.println(missingPrefixes.size());
+                if (missingPrefixes.size() > possibleAutocompleteResults.size()) {
+                    possibleAutocompleteResults = missingPrefixes;
+                }
                 state = AutocompleteState.COMMAND_CYCLE_PREFIX;
                 return;
             }
 
-            possibleAutocompleteResults = parser.getMissingPrefixes(arguments);
+            possibleAutocompleteResults = missingPrefixes;
             state = AutocompleteState.COMMAND_NEXT_PREFIX;
         }
 
@@ -213,9 +221,16 @@ public class Autocompleter {
             parameters = arguments + SPACE;
         }
         ArgumentMultimap argMap = ArgumentTokenizer.tokenize(parameters, prefixes);
-
         String index = argMap.getPreamble();
-        return !index.equals(EMPTY_STRING);
+        return (!index.equals(EMPTY_STRING) && isNumeric(index));
+    }
+
+    private boolean isNumeric (String index) {
+        try {
+            return index.matches("[0-9]+");
+        } catch (NullPointerException e) {
+            return false;
+        }
     }
 
     /**
@@ -256,10 +271,10 @@ public class Autocompleter {
         if (commandBoxText.length() < 1) {
             return false;
         }
-        String lastCharacter = commandBoxText.substring(commandBoxText.length() - 1);
+        String lastTwoCharacter = commandBoxText.substring(commandBoxText.length() - 2);
         return Arrays.stream(AutocompleteCommand.ALL_PREFIXES)
-                .map(s -> s.toString().substring(0, 1))
-                .anyMatch(s -> s.equals(lastCharacter));
+                .map(s -> SPACE + s.toString().substring(0, 1))
+                .anyMatch(s -> s.equals(lastTwoCharacter));
     }
 
     /**
