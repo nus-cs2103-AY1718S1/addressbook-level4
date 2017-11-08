@@ -26,6 +26,7 @@
     <MenuBar fx:id="menuBar" styleClass="menu-bar" VBox.vgrow="NEVER">
         <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#handleExit" styleClass="menu-bar-item" text="Exit" />
+            <MenuItem fx:id="weatherForecast" mnemonicParsing="false" onAction="#handleWeather" text="Weather Forecast" />
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" styleClass="menu-bar-item" text="Help" />
@@ -61,7 +62,11 @@
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
       <GridPane minWidth="1000" prefHeight="650">
-      <StackPane fx:id="personInformationPanelPlaceholder" prefHeight="383.0" prefWidth="198.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+          <AnchorPane minWidth="500" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <children>
+            </children>
+          </AnchorPane>
+      <StackPane fx:id="personInformationPanelPlaceholder" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
          <columnConstraints>
             <ColumnConstraints />
             <ColumnConstraints />
@@ -79,7 +84,8 @@
     </StackPane>-->
   </SplitPane>
 
-  <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER"/>
+
    <stylesheets>
       <URL value="@DarkTheme.css" />
       <URL value="@Extensions.css" />
