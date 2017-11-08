@@ -23,8 +23,9 @@ include::../UserGuide.adoc[tag=comment]
 
 ==== Justification
 
-Adding a commenting feature for any existing contact will allow users (e.g. tutors) to leave any remarks
-about the contact (e.g. students). Anything miscellaneous that does not fit within the exisiting categories/tags can be referenced under the comment section.
+Adding a commenting feature for any existing contact will allow users (e.g. tutors) to leave any remarks about 
+the contact (e.g. students). Anything miscellaneous that does not fit within the exisiting categories/tags can
+be referenced under the comment section.
 With this new feature, the user's experience and convenience will be further improved. 
 
 === Enhancement Added: Making an appointment with a contact
