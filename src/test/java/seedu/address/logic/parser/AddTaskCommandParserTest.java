@@ -1,3 +1,4 @@
+//@@author ShaocongDong
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -41,12 +42,12 @@ public class AddTaskCommandParserTest {
         Task expectedTaskDemo = new Task(VALID_NAME_DEMO, VALID_DESCRIPTION_DEMO, VALID_START_DEMO,
                 VALID_END_DEMO).withTags(VALID_TAG_DEMO);
 
-        assertParseSuccess(parser, AddTaskCommand.COMMAND_WORD + NAME_DESC_HOTPOT +
-                DESC_DESC_HOTPOT + START_DESC_HOTPOT
+        assertParseSuccess(parser, AddTaskCommand.COMMAND_WORD + NAME_DESC_HOTPOT
+                + DESC_DESC_HOTPOT + START_DESC_HOTPOT
                 + END_DESC_HOTPOT + TAG_DESC_HOTPOT, new AddTaskCommand(expectedTaskHotpot));
 
-        assertParseSuccess(parser, AddTaskCommand.COMMAND_WORD + NAME_DESC_DEMO +
-                DESC_DESC_DEMO + START_DESC_DEMO
+        assertParseSuccess(parser, AddTaskCommand.COMMAND_WORD + NAME_DESC_DEMO
+                + DESC_DESC_DEMO + START_DESC_DEMO
                 + END_DESC_DEMO + TAG_DESC_DEMO, new AddTaskCommand(expectedTaskDemo));
     }
 
@@ -55,23 +56,23 @@ public class AddTaskCommandParserTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE);
 
         // missing name prefix
-        assertParseFailure(parser, AddTaskCommand.COMMAND_WORD + VALID_NAME_DEMO +
-                DESC_DESC_DEMO + START_DESC_DEMO
+        assertParseFailure(parser, AddTaskCommand.COMMAND_WORD + VALID_NAME_DEMO
+                + DESC_DESC_DEMO + START_DESC_DEMO
                 + END_DESC_DEMO + TAG_DESC_DEMO, expectedMessage);
 
         // missing description prefix
-        assertParseFailure(parser, AddTaskCommand.COMMAND_WORD + NAME_DESC_DEMO +
-                VALID_DESCRIPTION_DEMO + START_DESC_DEMO
+        assertParseFailure(parser, AddTaskCommand.COMMAND_WORD + NAME_DESC_DEMO
+                + VALID_DESCRIPTION_DEMO + START_DESC_DEMO
                 + END_DESC_DEMO + TAG_DESC_DEMO, expectedMessage);
 
         // missing start prefix
-        assertParseFailure(parser, AddTaskCommand.COMMAND_WORD + NAME_DESC_DEMO +
-                DESC_DESC_DEMO + VALID_START_DEMO
+        assertParseFailure(parser, AddTaskCommand.COMMAND_WORD + NAME_DESC_DEMO
+                + DESC_DESC_DEMO + VALID_START_DEMO
                 + END_DESC_DEMO + TAG_DESC_DEMO, expectedMessage);
 
         // missing end prefix
-        assertParseFailure(parser, AddTaskCommand.COMMAND_WORD + NAME_DESC_DEMO +
-                DESC_DESC_DEMO + START_DESC_DEMO
+        assertParseFailure(parser, AddTaskCommand.COMMAND_WORD + NAME_DESC_DEMO
+                + DESC_DESC_DEMO + START_DESC_DEMO
                 + VALID_END_DEMO + TAG_DESC_DEMO, expectedMessage);
 
         // missing tag prefix -> to be un commented after date field being implemented
@@ -80,8 +81,8 @@ public class AddTaskCommandParserTest {
         //        + END_DESC_DEMO + VALID_TAG_DEMO, expectedMessage);
 
         // missing all prefix
-        assertParseFailure(parser, AddTaskCommand.COMMAND_WORD + VALID_NAME_DEMO +
-                VALID_DESCRIPTION_DEMO + VALID_START_DEMO
+        assertParseFailure(parser, AddTaskCommand.COMMAND_WORD + VALID_NAME_DEMO
+                + VALID_DESCRIPTION_DEMO + VALID_START_DEMO
                 + VALID_END_DEMO + VALID_TAG_DEMO, expectedMessage);
 
     }

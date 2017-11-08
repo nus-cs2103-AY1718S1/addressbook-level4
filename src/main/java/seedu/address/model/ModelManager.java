@@ -128,9 +128,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask)
             throws DuplicateTaskException, TaskNotFoundException {
         requireAllNonNull(target, editedTask);
-
-
-
         taskBook.updateTask(target, editedTask);
         indicateTaskBookChanged();
     }
