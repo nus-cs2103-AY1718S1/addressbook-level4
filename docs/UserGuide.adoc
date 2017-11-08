@@ -171,13 +171,17 @@ Deletes the 1st person in the results of the `find` command.
 
 === Selecting a person : `select`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Selects the person/insurance identified by the index number used in the last listing. +
+Format: `select INDEX [PANEL_CHOICE]`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the personal profile of the person or selects the insurance
+and loads the insurance profile of the insurance at the specified `INDEX`
+* Panel choice can be indicated by adding an additional argument `[left|l|person|p]` for the
+person panel or `[right|r|insurance|i]` for the insurance panel.
+* Panel choice is the person panel by default.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* `1, 2, 3, ...` and *index must be within the respective list.*
 ****
 
 Examples:
@@ -185,9 +189,8 @@ Examples:
 * `list` +
 `select 2` +
 Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+* `select 1 r` +
+Selects the 1st insurance in the insurance panel.
 
 === Adding a Life Insurance: `addli`
 `since v1.4`

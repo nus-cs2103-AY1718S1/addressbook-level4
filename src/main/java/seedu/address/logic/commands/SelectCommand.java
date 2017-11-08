@@ -19,9 +19,11 @@ public class SelectCommand extends Command {
     public static final String COMMAND_WORD = "select";
 
     public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)
-            + ": Selects the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + ": Selects the person/insurance identified by the index number used in the last listing.\n"
+            + "An additional argument left/l/right/r/person/p/insurance/i can be added to indicate\n"
+            + "choice of left or right panel. Choice is person panel by default.\n"
+            + "Parameters: INDEX (must be a positive integer) [PANEL_CHOICE]\n"
+            + "Example: " + COMMAND_WORD + " 1 r";
 
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected Person: %1$s";
     public static final String MESSAGE_SELECT_INSURANCE_SUCCESS = "Selected Insurance: %1$s";
