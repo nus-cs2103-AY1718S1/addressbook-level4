@@ -11,6 +11,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.Region;
+
 import seedu.address.model.Statistics;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -21,9 +22,12 @@ public class StatisticsPanel extends UiPart<Region> {
     private static final String FXML = "StatisticsPanel.fxml";
     private static final Integer PERSON_ADDED_DISPLAY_YEARS = 2;
 
-    private static final String FACEBOOK_BREAKDOWN_CHART_TITLE = "% of Persons with Facebook";
-    private static final String INSTAGRAM_BREAKDOWN_CHART_TITLE = "% of Persons with Instagram";
-    private static final String TWITTER_BREAKDOWN_CHART_TITLE = "% of Persons with Twitter";
+    private static final String FACEBOOK_BREAKDOWN_CHART_TITLE = "Facebook Usage";
+    private static final String INSTAGRAM_BREAKDOWN_CHART_TITLE = "Instagram Usage";
+    private static final String TWITTER_BREAKDOWN_CHART_TITLE = "Twitter Usage";
+
+    private static final String CHART_USING_LABEL = "Using (%d)";
+    private static final String CHART_NOT_USING_LABEL = "Not Using (%d)";
 
     private static final Double PERSON_ADDED_CHART_BAR_GAP = 0.1;
     private static final String PERSON_ADDED_CHART_TITLE = "Persons Added in Recent Months";
@@ -65,7 +69,6 @@ public class StatisticsPanel extends UiPart<Region> {
         initialiseStatisticsPanel(list);
     }
 
-    //@@author 500poundbear
     /**
      * Sets up the fxml objects with data
      */
@@ -76,14 +79,13 @@ public class StatisticsPanel extends UiPart<Region> {
         personAddedChart.setBarGap(PERSON_ADDED_CHART_BAR_GAP);
 
         fbChart.setTitle(FACEBOOK_BREAKDOWN_CHART_TITLE);
-        fbChart.setData(formatFacebookData());
+        fbChart.setData(formatTwitterData());
         twChart.setTitle(TWITTER_BREAKDOWN_CHART_TITLE);
         twChart.setData(formatTwitterData());
         igChart.setTitle(INSTAGRAM_BREAKDOWN_CHART_TITLE);
         igChart.setData(formatInstagramData());
     }
 
-    //@@author 500poundbear
     private ObservableList<XYChart.Series<String, Integer>> getPersonAddedChartData(
             ObservableList<ReadOnlyPerson> list) {
 
@@ -124,7 +126,6 @@ public class StatisticsPanel extends UiPart<Region> {
         return answer;
     }
 
-    //@@author 500poundbear
     /**
      * Formats the number of users with Facebook recorded
      */
@@ -134,15 +135,14 @@ public class StatisticsPanel extends UiPart<Region> {
 
         int hasFacebook = this.totalNumberOfPeople - this.hasNoFacebook;
 
-        String onFacebookLabel = "On Facebook (" + hasFacebook + ")";
-        String notOnFacebookLabel = "Not On Facebook (" + this.hasNoFacebook + ")";
+        String onFacebookLabel = String.format(CHART_USING_LABEL, hasFacebook);
+        String notOnFacebookLabel = String.format(CHART_NOT_USING_LABEL, this.hasNoFacebook);
         data.add(new PieChart.Data(onFacebookLabel, hasFacebook));
         data.add(new PieChart.Data(notOnFacebookLabel, this.hasNoFacebook));
 
         return FXCollections.observableArrayList(data);
     }
 
-    //@@author 500poundbear
     /**
      * Formats the number of users with Twitter recorded
      */
@@ -152,15 +152,14 @@ public class StatisticsPanel extends UiPart<Region> {
 
         int hasTwitter = this.totalNumberOfPeople - this.hasNoTwitter;
 
-        String onTwitterLabel = "On Twitter (" + hasTwitter + ")";
-        String notOnTwitterLabel = "Not On Twitter (" + this.hasNoTwitter + ")";
+        String onTwitterLabel = String.format(CHART_USING_LABEL, hasTwitter);
+        String notOnTwitterLabel = String.format(CHART_NOT_USING_LABEL, this.hasNoTwitter);
         data.add(new PieChart.Data(onTwitterLabel, hasTwitter));
         data.add(new PieChart.Data(notOnTwitterLabel, this.hasNoTwitter));
 
         return FXCollections.observableArrayList(data);
     }
 
-    //@@author 500poundbear
     /**
      * Formats the number of users with Instagram recorded
      */
@@ -170,15 +169,14 @@ public class StatisticsPanel extends UiPart<Region> {
 
         int hasInstagram = this.totalNumberOfPeople - this.hasNoInstagram;
 
-        String onInstagramLabel = "On Instagram (" + hasInstagram + ")";
-        String notOnInstagramLabel = "Not On Instagram (" + this.hasNoInstagram + ")";
+        String onInstagramLabel = String.format(CHART_USING_LABEL, hasInstagram);
+        String notOnInstagramLabel = String.format(CHART_NOT_USING_LABEL, this.hasNoInstagram);
         data.add(new PieChart.Data(onInstagramLabel, hasInstagram));
         data.add(new PieChart.Data(notOnInstagramLabel, this.hasNoInstagram));
 
         return FXCollections.observableArrayList(data);
     }
 
-    //@@author 500poundbear
     /**
      * Fetches the current year
      */
@@ -186,7 +184,6 @@ public class StatisticsPanel extends UiPart<Region> {
         return Calendar.getInstance().get(Calendar.YEAR);
     }
 
-    //@@author 500poundbear
     /**
      * Fetches the current month
      */

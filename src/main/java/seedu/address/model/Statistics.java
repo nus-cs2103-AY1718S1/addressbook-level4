@@ -6,7 +6,9 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -16,6 +18,9 @@ import seedu.address.model.person.SocialMedia;
  * A model for calculating the values for Statistics Panel
  */
 public class Statistics {
+
+    private static final Integer NUMBER_OF_PERSONS_IN_TOP_LIST = 10;
+    private static final Integer NUMBER_OF_PERSONS_IN_BOTTOM_LIST = 10;
 
     private ObservableList<ReadOnlyPerson> personList;
 
@@ -39,7 +44,6 @@ public class Statistics {
         tabulateSocialMediaUsage();
     }
 
-    //@@author 500poundbear
     public ArrayList<Integer> getNewPersonsAddByMonth(int displayYears) {
 
         ArrayList<Integer> countByMonth = new ArrayList<>(Collections.nCopies(displayYears * 12 + 1, 0));
@@ -60,7 +64,6 @@ public class Statistics {
         return countByMonth;
     }
 
-    //@@author 500poundbear
     /**
      * Count the offset when adding to the array list of sum by months
      */
@@ -69,7 +72,6 @@ public class Statistics {
                 + (this.currentMonth - personAddedMonth);
     }
 
-    //@@author 500poundbear
     /**
      * Tabulate the total number of people in the list
      */
@@ -77,7 +79,6 @@ public class Statistics {
         this.totalNumberOfPeople = personList.size();
     }
 
-    //@@author 500poundbear
     /**
      * Tabulates number of users of each social media platform
      */
@@ -96,7 +97,32 @@ public class Statistics {
         }
     }
 
-    //@@author 500poundbear
+    /**
+     * Fetches n people with the highest access count
+     */
+    public List<ReadOnlyPerson> getAllTimeMostAccesses() {
+        ArrayList<ReadOnlyPerson> sortedByMostAccesses = new ArrayList<>(personList);
+        sortedByMostAccesses.sort(sortByGetAccessCount());
+
+        int startingIndex = this.totalNumberOfPeople - NUMBER_OF_PERSONS_IN_TOP_LIST;
+        int endingIndex = this.totalNumberOfPeople - 1;
+
+        return sortedByMostAccesses.subList(startingIndex, endingIndex);
+    }
+
+    /**
+     * Fetches n people with the lowest access count
+     */
+    public List<ReadOnlyPerson> getAllTimeLeastAccesses() {
+        ArrayList<ReadOnlyPerson> sortedByMostAccesses = new ArrayList<>(personList);
+        sortedByMostAccesses.sort(sortByGetAccessCount());
+
+        int startingIndex = 0;
+        int endingIndex = NUMBER_OF_PERSONS_IN_BOTTOM_LIST - 1;
+
+        return sortedByMostAccesses.subList(startingIndex, endingIndex);
+    }
+
     /**
      * Fetches number of persons with no facebook information added
      */
@@ -104,7 +130,6 @@ public class Statistics {
         return this.hasNoFacebook;
     }
 
-    //@@author 500poundbear
     /**
      * Fetches number of persons with no twitter information added
      */
@@ -112,7 +137,6 @@ public class Statistics {
         return this.hasNoTwitter;
     }
 
-    //@@author 500poundbear
     /**
      * Fetches number of persons with no instagram information added
      */
@@ -120,11 +144,23 @@ public class Statistics {
         return this.hasNoInstagram;
     }
 
-    //@@author 500poundbear
     /**
      * Fetches total number of persons
      */
     public Integer getTotalNumberOfPeople() {
         return this.totalNumberOfPeople;
+    }
+
+    /**
+     * Sort by ReadOnlyPerson.getAccessCount()
+     * @return
+     */
+    private static Comparator<ReadOnlyPerson> sortByGetAccessCount() {
+        return new Comparator<ReadOnlyPerson>() {
+            @Override
+            public int compare(ReadOnlyPerson s1, ReadOnlyPerson s2) {
+                return s1.getAccessCount().numAccess() - s2.getAccessCount().numAccess();
+            }
+        };
     }
 }
