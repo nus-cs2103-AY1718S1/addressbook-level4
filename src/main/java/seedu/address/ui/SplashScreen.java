@@ -38,7 +38,7 @@ public class SplashScreen extends UiPart<Region> {
     private void setAnimation() {
         KeyValue moveRight = new KeyValue(splashLoadingImage.translateXProperty(), 460);
 
-        EventHandler onFinished = new EventHandler<ActionEvent>() {
+        EventHandler<ActionEvent> onFinished = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 splashLoadingImage.setTranslateX(-92);
