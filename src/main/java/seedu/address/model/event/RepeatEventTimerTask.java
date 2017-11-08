@@ -10,6 +10,9 @@ import seedu.address.model.Model;
 import seedu.address.model.event.exceptions.EventTimeClashException;
 import seedu.address.model.event.timeslot.Timeslot;
 
+/**
+ * Add a new instance of the event after the specified period.
+ */
 public class RepeatEventTimerTask extends TimerTask {
 
     private ReadOnlyEvent targetEvent;
@@ -49,7 +52,6 @@ public class RepeatEventTimerTask extends TimerTask {
     @Override
     public void run() {
         Event editedEvent = createEditedEvent(targetEvent);
-//        EventsCenter.getInstance().post(new CreateEventInstanceEvent(editedEvent, period));
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

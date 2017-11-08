@@ -60,7 +60,7 @@ public class XmlAdaptedEvent {
             period = new Period(this.period);
         }
         //@@author
-        return new Event(title, timeslot, description,period);
+        return new Event(title, timeslot, description, period);
     }
 }
 

@@ -3,9 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.HashMap;
 import java.util.Timer;
-import java.util.TreeSet;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -19,7 +17,6 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.RepeatEventTimerTask;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.exceptions.EventTimeClashException;
-import seedu.address.model.event.timeslot.Timeslot;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.InvalidSortTypeException;

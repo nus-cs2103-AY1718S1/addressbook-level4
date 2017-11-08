@@ -243,7 +243,6 @@ public class CalendarView extends UiPart<Region> {
             pane.getChildren().add(label);
             GridPane.setHalignment(label, HPos.CENTER);
             if (headers.getChildren().remove(headerPanes[columnIndex])) {
-//                logger.info("removed label " + headerPanes[columnIndex].toString());
             }
             headers.add(pane, columnIndex, 0);
             headerPanes[columnIndex] = pane;
@@ -375,7 +374,6 @@ public class CalendarView extends UiPart<Region> {
 
     private void removeDuplicatedPane(GridPane calendarView, ReadOnlyEvent lastChangedEvent) {
         if (calendarView.getChildren().remove(addedEvents.get(lastChangedEvent))) {
-//            logger.info("EventPane removed --- " + lastChangedEvent);
             addedEvents.remove(lastChangedEvent);
         }
     }

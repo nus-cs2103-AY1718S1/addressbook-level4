@@ -47,10 +47,7 @@ public class RepeatCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        
         return new CommandResult(String.format(MESSAGE_REPEAT_EVENT_SUCCESS, period));
     }
-
-
 
 }

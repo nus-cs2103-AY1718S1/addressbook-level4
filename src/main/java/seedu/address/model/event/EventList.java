@@ -3,25 +3,19 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.SortedMap;
-import java.util.Timer;
 import java.util.TreeMap;
 import java.util.logging.Logger;
-
-import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.CreateEventInstanceEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.exceptions.EventTimeClashException;
@@ -42,8 +36,8 @@ public class EventList implements Iterable<Event> {
 
     private static final Logger logger = LogsCenter.getLogger(EventList.class);
 
-    private final ObservableTreeMapWrapper<Timeslot, Event> internalMap = new
-            ObservableTreeMapWrapper<>(new TreeMap<Timeslot, Event>());
+    private final ObservableTreeMap<Timeslot, Event> internalMap = new
+            ObservableTreeMap<>(new TreeMap<Timeslot, Event>());
 
     // used by asObservableList()
     private final ObservableList<ReadOnlyEvent> mappedList = FXCollections.observableArrayList(new

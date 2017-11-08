@@ -15,7 +15,7 @@ import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableMap;
 
 /**
- * A Map wrapper class that implements observability.
+ * A self-defined TreeMap class that implements observability.
  *
  */
 public class ObservableTreeMap<K, V> implements ObservableMap<K, V> {
@@ -33,7 +33,12 @@ public class ObservableTreeMap<K, V> implements ObservableMap<K, V> {
     public SortedMap<K, V> subMap(K start, K end) {
         return backingMap.subMap(start, end);
     }
-    private class SimpleChange extends MapChangeListener.Change<K,V> {
+
+
+    /**
+     * An adaptation of MapChangeListener.Change for ObservableTreeMap.
+     */
+    private class SimpleChange extends MapChangeListener.Change<K, V> {
 
         private final K key;
         private final V old;
@@ -94,7 +99,7 @@ public class ObservableTreeMap<K, V> implements ObservableMap<K, V> {
 
     }
 
-    protected void callObservers(MapChangeListener.Change<K,V> change) {
+    protected void callObservers(MapChangeListener.Change<K, V> change) {
         MapListenerHelper.fireValueChangedEvent(listenerHelper, change);
     }
 
@@ -104,13 +109,13 @@ public class ObservableTreeMap<K, V> implements ObservableMap<K, V> {
     }
 
     @Override
-    public void removeListener(InvalidationListener listener) {
-        listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
+    public void addListener(MapChangeListener<? super K, ? super V> observer) {
+        listenerHelper = MapListenerHelper.addListener(listenerHelper, observer);
     }
 
     @Override
-    public void addListener(MapChangeListener<? super K, ? super V> observer) {
-        listenerHelper = MapListenerHelper.addListener(listenerHelper, observer);
+    public void removeListener(InvalidationListener listener) {
+        listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
     }
 
     @Override
@@ -165,7 +170,7 @@ public class ObservableTreeMap<K, V> implements ObservableMap<K, V> {
             return null;
         }
         V ret = backingMap.remove(key);
-        callObservers(new SimpleChange((K)key, ret, null, false, true));
+        callObservers(new SimpleChange((K) key, ret, null, false, true));
         return ret;
     }
 
@@ -226,7 +231,10 @@ public class ObservableTreeMap<K, V> implements ObservableMap<K, V> {
         return backingMap.hashCode();
     }
 
-    private class ObservableKeySet implements Set<K>{
+    /**
+     * An adaptation of KeySet implementing observability.
+     */
+    private class ObservableKeySet implements Set<K> {
 
         @Override
         public int size() {
@@ -257,7 +265,7 @@ public class ObservableTreeMap<K, V> implements ObservableMap<K, V> {
 
                 @Override
                 public K next() {
-                    Entry<K,V> last = entryIt.next();
+                    Entry<K, V> last = entryIt.next();
                     lastKey = last.getKey();
                     lastValue = last.getValue();
                     return last.getKey();
@@ -307,6 +315,10 @@ public class ObservableTreeMap<K, V> implements ObservableMap<K, V> {
             return removeRetain(c, false);
         }
 
+
+        /**
+         * Remove the collection of values specified.
+         */
         private boolean removeRetain(Collection<?> c, boolean remove) {
             boolean removed = false;
             for (Iterator<Entry<K, V>> i = backingMap.entrySet().iterator(); i.hasNext();) {
@@ -349,6 +361,10 @@ public class ObservableTreeMap<K, V> implements ObservableMap<K, V> {
 
     }
 
+
+    /**
+     * An adaptation of Values class implementing observability.
+     */
     private class ObservableValues implements Collection<V> {
 
         @Override
@@ -412,7 +428,7 @@ public class ObservableTreeMap<K, V> implements ObservableMap<K, V> {
 
         @Override
         public boolean remove(Object o) {
-            for(Iterator<V> i = iterator(); i.hasNext();) {
+            for (Iterator<V> i = iterator(); i.hasNext();) {
                 if (i.next().equals(o)) {
                     i.remove();
                     return true;
@@ -436,6 +452,9 @@ public class ObservableTreeMap<K, V> implements ObservableMap<K, V> {
             return removeRetain(c, true);
         }
 
+        /**
+         * Remove the collection of values specified.
+         */
         private boolean removeRetain(Collection<?> c, boolean remove) {
             boolean removed = false;
             for (Iterator<Entry<K, V>> i = backingMap.entrySet().iterator(); i.hasNext();) {
@@ -476,12 +495,13 @@ public class ObservableTreeMap<K, V> implements ObservableMap<K, V> {
             return backingMap.values().hashCode();
         }
 
-
-
-
     }
 
-    private class ObservableEntry implements Entry<K,V> {
+
+    /**
+     * An adaptation of Entry class implementing observability.
+     */
+    private class ObservableEntry implements Entry<K, V> {
 
         private final Entry<K, V> backingEntry;
 
@@ -537,7 +557,11 @@ public class ObservableTreeMap<K, V> implements ObservableMap<K, V> {
 
     }
 
-    private class ObservableEntrySet implements Set<Entry<K,V>>{
+
+    /**
+     * An adaptation of EntrySet class implementing observability.
+     */
+    private class ObservableEntrySet implements Set<Entry<K, V>> {
 
         @Override
         public int size() {
@@ -558,7 +582,7 @@ public class ObservableTreeMap<K, V> implements ObservableMap<K, V> {
         public Iterator<Entry<K, V>> iterator() {
             return new Iterator<Entry<K, V>>() {
 
-                private Iterator<Entry<K,V>> backingIt = backingMap.entrySet().iterator();
+                private Iterator<Entry<K, V>> backingIt = backingMap.entrySet().iterator();
                 private K lastKey;
                 private V lastValue;
                 @Override
@@ -587,7 +611,7 @@ public class ObservableTreeMap<K, V> implements ObservableMap<K, V> {
         public Object[] toArray() {
             Object[] array = backingMap.entrySet().toArray();
             for (int i = 0; i < array.length; ++i) {
-                array[i] = new ObservableEntry((Entry<K, V>)array[i]);
+                array[i] = new ObservableEntry((Entry<K, V>) array[i]);
             }
             return array;
         }
@@ -597,7 +621,7 @@ public class ObservableTreeMap<K, V> implements ObservableMap<K, V> {
         public <T> T[] toArray(T[] a) {
             T[] array = backingMap.entrySet().toArray(a);
             for (int i = 0; i < array.length; ++i) {
-                array[i] = (T) new ObservableEntry((Entry<K, V>)array[i]);
+                array[i] = (T) new ObservableEntry((Entry<K, V>) array[i]);
             }
             return array;
         }
@@ -612,7 +636,7 @@ public class ObservableTreeMap<K, V> implements ObservableMap<K, V> {
         public boolean remove(Object o) {
             boolean ret = backingMap.entrySet().remove(o);
             if (ret) {
-                Entry<K,V> entry = (Entry<K, V>) o;
+                Entry<K, V> entry = (Entry<K, V>) o;
                 callObservers(new SimpleChange(entry.getKey(), entry.getValue(), null, false, true));
             }
             return ret;
@@ -633,6 +657,9 @@ public class ObservableTreeMap<K, V> implements ObservableMap<K, V> {
             return removeRetain(c, false);
         }
 
+        /**
+         * Remove the collection of values specified.
+         */
         private boolean removeRetain(Collection<?> c, boolean remove) {
             boolean removed = false;
             for (Iterator<Entry<K, V>> i = backingMap.entrySet().iterator(); i.hasNext();) {
