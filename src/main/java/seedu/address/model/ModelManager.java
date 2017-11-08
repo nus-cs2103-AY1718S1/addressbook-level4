@@ -30,12 +30,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -148,8 +146,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
         try {
-            Person addPin = addPinTag(person);
-            updatePerson(person, addPin);
+            person.setPin();
             sort(SortCommand.ARGUMENT_NAME);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
@@ -159,8 +156,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
         try {
-            Person removePin = removePinTag(person);
-            updatePerson(person, removePin);
+            person.setUnpin();
             sort(SortCommand.ARGUMENT_NAME);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
@@ -191,41 +187,6 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author LimeFallacie
     private void updateAllPersons(HashMap<Tag, String> allTagColours) {
         colourPrefs.updateColorMap(allTagColours);
-    }
-
-    //@@author eldonng
-    /**
-     * @param personToPin
-     * @return updated Person with added pin to be added to the address book
-     * @throws CommandException
-     */
-    private Person addPinTag(ReadOnlyPerson personToPin) throws CommandException {
-        /**
-         * Create a new UniqueTagList to add pin tag into the list.
-         */
-        UniqueTagList updatedTags = new UniqueTagList(personToPin.getTags());
-        updatedTags.addPinTag();
-
-        return new Person(personToPin.getName(), personToPin.getPhone(), personToPin.getBirthday(),
-                personToPin.getEmail(), personToPin.getAddress(), updatedTags.toSet());
-    }
-
-    //@@author eldonng
-    /**
-     * @param personToUnpin
-     * @return updated Person with removed pin to be added to the address book
-     * @throws CommandException
-     */
-    private Person removePinTag(ReadOnlyPerson personToUnpin) throws CommandException {
-        try {
-            UniqueTagList updatedTags = new UniqueTagList(personToUnpin.getTags());
-            updatedTags.removePinTag();
-            return new Person(personToUnpin.getName(), personToUnpin.getPhone(),
-                    personToUnpin.getBirthday(), personToUnpin.getEmail(), personToUnpin.getAddress(),
-                    updatedTags.toSet());
-        } catch (IllegalValueException ive) {
-            throw new CommandException(Tag.MESSAGE_TAG_CONSTRAINTS);
-        }
     }
 
     //@@author eldonng

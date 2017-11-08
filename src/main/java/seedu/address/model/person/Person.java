@@ -30,7 +30,7 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Birthday birthday, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Birthday birthday, Email email, Address address, boolean pin, Set<Tag> tags) {
         requireAllNonNull(name, phone, birthday, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -39,7 +39,7 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        pinned = new SimpleObjectProperty<>(checkPinTag(tags));
+        pinned = new SimpleObjectProperty<>(pin);
     }
 
     /**
@@ -47,22 +47,9 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getBirthday(), source.getEmail(), source.getAddress(),
-                source.getTags());
+                source.isPinned(), source.getTags());
     }
 
-    /**
-     * Checks whether person in pinned in addressbook
-     * @param tags
-     * @return true if Pinned is one of the tags, false if not
-     */
-    private boolean checkPinTag(Set<Tag> tags) {
-        for (Tag tag: tags) {
-            if ("Pinned".equals(tag.tagName)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     public void setName(Name name) {
         this.name.set(requireNonNull(name));
@@ -155,10 +142,14 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public ObjectProperty<Boolean> pinnedProperty() {
-        return pinned;
+    public void setPin() {
+        pinned.set(true);
     }
 
+    @Override
+    public void setUnpin() {
+        pinned.set(false);
+    }
 
     /**
      * Replaces this person's tags with the tags in the argument tag set.

@@ -75,7 +75,7 @@ public class AddressBookParser {
             return new ClearCommand();
 
         case CreateGroupCommand.COMMAND_WORD:
-            return new GroupCommandParser().parse(arguments);
+            return new CreateGroupCommandParser().parse(arguments);
 
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
