@@ -73,7 +73,7 @@ public class AppointCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_APPOINTMENT_CLASH);
         }
 
-        if (!isAfterToday(appointment.getStart())) {
+        if (!appointment.value.equals("") && !isAfterToday(appointment.getStart())) {
             throw new CommandException(MESSAGE_DATETIME_CONSTRAINT);
         }
 
