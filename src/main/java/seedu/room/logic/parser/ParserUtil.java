@@ -82,11 +82,11 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
-
+    //@@author Haozhe321
     public static Optional<Timestamp> parseTimestamp(Optional<String> timestamp) throws IllegalValueException, NumberFormatException {
         return timestamp.isPresent() ? Optional.of(new Timestamp(Long.parseLong(timestamp.get()))) : Optional.empty();
     }
-
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.

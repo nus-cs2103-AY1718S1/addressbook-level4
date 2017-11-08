@@ -97,7 +97,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         } catch (NumberFormatException nfe) {
-            throw new ParseException("Timestamp cannot have decimals", nfe);
+            throw new ParseException("Invalid number format for timestamp", nfe);
         }
     }
 
