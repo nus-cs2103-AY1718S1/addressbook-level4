@@ -21,7 +21,6 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Open">
             <MenuItem fx:id="calendarItem" mnemonicParsing="false" onAction="#handleCalendar" text="Calendar" />
-            <MenuItem fx:id="emailItem" mnemonicParsing="false" onAction="#handleEmail" text="Email" />
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
             <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
