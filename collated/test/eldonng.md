@@ -17,7 +17,6 @@ public class PinCommandTest {
         String expectedMessage = String.format(PinCommand.MESSAGE_PIN_PERSON_SUCCESS, personToPin);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.pinPerson(personToPin);
 
         assertCommandSuccess(pinCommand, model, expectedMessage, expectedModel);
 
@@ -46,6 +45,7 @@ public class PinCommandTest {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personToPin = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        model.unpinPerson(personToPin);
         PinCommand pinCommand = prepareCommand(INDEX_FIRST_PERSON);
 
         String expectedMessage = String.format(PinCommand.MESSAGE_PIN_PERSON_SUCCESS, personToPin);
@@ -457,6 +457,8 @@ public class PinCommandSystemTest extends AddressBookSystemTest {
             throw new AssertionError("targetPerson is retrieved from model.");
         } catch (CommandException ce) {
             throw new AssertionError("targetPerson unable to be pinned");
+        } catch (EmptyAddressBookException eabe) {
+            throw new AssertionError("address book is empty");
         }
         return targetPerson;
     }
@@ -474,6 +476,8 @@ public class PinCommandSystemTest extends AddressBookSystemTest {
             throw new AssertionError("targetPerson is retrieved from model.");
         } catch (CommandException ce) {
             throw new AssertionError("targetPerson unable to be unpinned");
+        } catch (EmptyAddressBookException eabe) {
+            throw new AssertionError("address book is empty");
         }
         return targetPerson;
     }
@@ -499,7 +503,11 @@ public class PinCommandSystemTest extends AddressBookSystemTest {
         try {
             for (Tag tag : listTags) {
                 if ("Pinned".equals(tag.tagName)) {
-                    model.unpinPerson(person);
+                    try {
+                        model.unpinPerson(person);
+                    } catch (EmptyAddressBookException eabe) {
+                        throw new AssertionError("EmptyAddressBookException error");
+                    }
                 }
 
             }

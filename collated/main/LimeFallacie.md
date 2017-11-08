@@ -156,6 +156,8 @@ public class SortCommand extends Command {
 
     public static final String MESSAGE_SORT_SUCCESS = "Sorted all persons by %s.";
 
+    public static final String MESSAGE_NO_CONTACTS_TO_SORT = "There are no contacts available to sort";
+
     private String sortType;
 
     public SortCommand(String type) {
@@ -168,6 +170,8 @@ public class SortCommand extends Command {
             model.sort(sortType);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_USAGE); //It will never reach here.
+        } catch (EmptyAddressBookException eabe) {
+            throw new CommandException(MESSAGE_NO_CONTACTS_TO_SORT);
         }
 
         //lists all contacts after sorting
@@ -330,6 +334,9 @@ public class SortCommandParser implements Parser<SortCommand> {
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
+        if (!model.getFilteredPersonList().isEmpty()) {
+            model.sort("name");
+        }
 
         logic = new LogicManager(model, storage);
 
@@ -384,7 +391,7 @@ public class SortCommandParser implements Parser<SortCommand> {
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
-    public void sort(String sortType) throws DuplicatePersonException {
+    public void sort(String sortType) throws DuplicatePersonException, EmptyAddressBookException {
         switch (sortType) {
         case SortCommand.ARGUMENT_NAME:
             addressBook.setPersons(sortBy(COMPARATOR_SORT_BY_NAME));
@@ -409,7 +416,7 @@ public class SortCommandParser implements Parser<SortCommand> {
      * Sort the addressbook by the comparator given
      * @return ArrayList<ReadOnlyPerson> sorted list</ReadOnlyPerson>
      */
-    private ArrayList<ReadOnlyPerson> sortBy(Comparator<ReadOnlyPerson> comparator) {
+    private ArrayList<ReadOnlyPerson> sortBy(Comparator<ReadOnlyPerson> comparator) throws EmptyAddressBookException {
         ArrayList<ReadOnlyPerson> newList = new ArrayList<>();
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         SortedList<ReadOnlyPerson> sortedList =
@@ -417,6 +424,8 @@ public class SortCommandParser implements Parser<SortCommand> {
         newList.addAll(sortedList);
         sortedList = getFilteredPersonList().filtered(PREDICATE_SHOW_UNPINNED_PERSONS).sorted(comparator);
         newList.addAll(sortedList);
+
+        if (newList.isEmpty()) throw new EmptyAddressBookException();
 
         return newList;
     }

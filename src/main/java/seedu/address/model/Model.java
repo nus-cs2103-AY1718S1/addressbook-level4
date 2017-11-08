@@ -13,6 +13,7 @@ import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EmptyAddressBookException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -74,12 +75,12 @@ public interface Model {
     /**
      * Pins the given person
      */
-    void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException;
+    void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException, EmptyAddressBookException;
 
     /**
      * Unpins the given person
      */
-    void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException;
+    void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException, EmptyAddressBookException;
 
     /**
      * Set the colour for the specific tag
@@ -120,7 +121,7 @@ public interface Model {
 
     void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate);
 
-    void sort(String sortType) throws DuplicatePersonException;
+    void sort(String sortType) throws DuplicatePersonException, EmptyAddressBookException;
 
     Predicate<ReadOnlyPerson> getPredicateForTags(String tag) throws IllegalValueException;
 }
