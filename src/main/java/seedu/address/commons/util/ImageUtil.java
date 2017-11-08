@@ -59,7 +59,7 @@ public class ImageUtil {
      */
     private void checkDirectory(String imageDirectory) throws IOException {
         Path path = Paths.get(imageDirectory);
-        if(!Files.exists(path)) {
+        if (!Files.exists(path)) {
             Files.createDirectories(Paths.get(imageDirectory));
         }
     }
