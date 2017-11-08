@@ -11,6 +11,7 @@ import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.TodoCountHandle;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TodoItem;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -61,6 +62,14 @@ public class GuiTestAssert {
         }
     }
     //@@author
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedTodoItem}.
+     */
+    public static void assertTodoDisplaysTodoItem(TodoItem expectedTodoItem, TodoCardHandle actualCard) {
+        assertEquals(expectedTodoItem.getTimeString(), actualCard.getTime());
+        assertEquals(expectedTodoItem.task, actualCard.getTask());
+    }
 
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and

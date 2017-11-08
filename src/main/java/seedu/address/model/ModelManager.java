@@ -53,13 +53,6 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //@@author Hailinx
-    @Override
-    public void setAddressBook(ReadOnlyAddressBook newData) {
-        addressBook.resetData(newData);
-    }
-    //@@author
-
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;

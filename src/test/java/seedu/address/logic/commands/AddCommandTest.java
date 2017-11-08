@@ -109,13 +109,6 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
-        //@@author Hailinx
-        @Override
-        public void setAddressBook(ReadOnlyAddressBook newData) {
-            fail("This method should not be called.");
-        }
-        //@@author
-
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             fail("This method should not be called.");
