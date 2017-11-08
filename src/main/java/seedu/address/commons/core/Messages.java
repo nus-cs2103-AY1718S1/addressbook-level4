@@ -11,9 +11,9 @@ public class Messages {
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
 
     public static final String[] AUTOCOMPLETE_SUGGESTIONS = {"createDefaultAcc", "removeLogin", "changepw",
-                                                            "changeuser", "add", "addSchedule", "clearSchedule",
-                                                            "visualize", "arrange", "list", "edit", "find",
-                                                            "findByAddress", "findByPhone", "findByEmail", "findByTags",
-                                                            "delete", "locate", "select", "history", "sort", "undo",
-                                                            "clear", "exit" };
+                                                             "changeuser", "add", "addSchedule", "clearSchedule",
+                                                             "visualize", "arrange", "list", "edit", "find",
+                                                             "findByAddress", "findByPhone", "findByEmail",
+                                                             "findByTags", "delete", "locate", "select", "history",
+                                                             "sort", "undo", "clear", "exit" };
 }
