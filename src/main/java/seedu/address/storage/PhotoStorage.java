@@ -25,9 +25,9 @@ public class PhotoStorage {
     private String filePath = "";
     private File fileWriter = null;
     private BufferedImage imageReader = null;
-    private int uniqueFileName;
+    private String uniqueFileName;
     public PhotoStorage(String filePath, int uniqueFileName) {
-        this.uniqueFileName = uniqueFileName;
+        this.uniqueFileName = Integer.toString(uniqueFileName);
         this.filePath = filePath;
         imageReader = new BufferedImage(300, 400, BufferedImage.TYPE_INT_ARGB);
         allowedExt =  new String[]{"jpg", "png", "JPEG"};
