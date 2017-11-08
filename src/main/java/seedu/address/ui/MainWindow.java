@@ -106,7 +106,6 @@ public class MainWindow extends UiPart<Region> {
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
         setAccelerator(calendarItem, KeyCombination.valueOf("F2"));
-        setAccelerator(emailItem, KeyCombination.valueOf("F3"));
     }
 
     /**
@@ -223,12 +222,6 @@ public class MainWindow extends UiPart<Region> {
     public void handleCalendar() {
         browserPanel.loadCalendar();
     }
-
-    @FXML
-    public void handleEmail() throws IOException, URISyntaxException {
-        browserPanel.loadEmail();
-    }
-
 
     void show() {
         primaryStage.show();
