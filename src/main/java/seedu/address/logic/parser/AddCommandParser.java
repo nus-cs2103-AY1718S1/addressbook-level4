@@ -59,11 +59,14 @@ public class AddCommandParser implements Parser<AddCommand> {
 
             //@@author Jeremy
             Phone phone = (!arePrefixesPresent(argMultimap, PREFIX_PHONE))
-                    ? new Phone(NON_COMPULSORY_PHONE) : ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
+                    ? new Phone(NON_COMPULSORY_PHONE) :
+                    ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
             Email email = (!arePrefixesPresent(argMultimap, PREFIX_EMAIL))
-                    ? new Email(NON_COMPULSORY_EMAIL) : ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
+                    ? new Email(NON_COMPULSORY_EMAIL) :
+                    ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = (!arePrefixesPresent(argMultimap, PREFIX_ADDRESS))
-                    ? new Address(NON_COMPULSORY_ADDRESS) : ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+                    ? new Address(NON_COMPULSORY_ADDRESS) :
+                    ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Bloodtype bloodType = (!arePrefixesPresent(argMultimap, PREFIX_BLOODTYPE))
                     ? new Bloodtype(NON_COMPULSORY_BLOODTYPE)
                     : ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE)).get();
