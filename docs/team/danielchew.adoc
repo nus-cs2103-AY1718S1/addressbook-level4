@@ -64,8 +64,13 @@ Implement a login page to improve security of the application.
 
 Feature to import/export external timetable and integrate with ModU.
 
+=== Enhancement Proposed: Support network database
+
+Currently the data is stored at the user's computer but we have to support network database in order to release to public.
+
 === Other contributions
 
+* Proofread and edit the whole User Guide and Developer Guide, changed sentence structure, correct grammar mistakes and language.
 * Updated the GUI theme (Pull request https://github.com/CS2103AUG2017-W13-B4/main/pull/129)
 * Change Model Module UI test cases (Pull request https://github.com/CS2103AUG2017-W13-B4/main/pull/105)
-* Did acceptance testing for group W09-B4 (Pull request https://github.com/CS2103AUG2017-W09-B4/main/issues/78)
+* Did acceptance testing for group W09-B4 (Issue https://github.com/CS2103AUG2017-W09-B4/main/issues/78)

@@ -262,7 +262,7 @@ public class LessonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_lessonAllAttributeContainsKeywords_returnsTrue() {
+    public void test_lessonAllAttributeContainsKeywordsForModule_returnsTrue() {
         // One keyword to find location
         LessonContainsKeywordsPredicate predicate = new LessonContainsKeywordsPredicate(Collections.singletonList(
                 "LT27"), LESSON, ATTRIBUTE_MODULE);
@@ -326,6 +326,76 @@ public class LessonContainsKeywordsPredicateTest {
 
         // partial keywords that is a substring of the class type that user intend to find
         predicate = new LessonContainsKeywordsPredicate(Arrays.asList("T"), LESSON, ATTRIBUTE_MODULE);
+        assertTrue(predicate.test(new LessonBuilder().withClassType("TUT").build()));
+
+    }
+
+    @Test
+    public void test_lessonAllAttributeContainsKeywordsForLocation_returnsTrue() {
+
+        // One keyword to find group
+        LessonContainsKeywordsPredicate predicate = new LessonContainsKeywordsPredicate(Collections.singletonList(
+                "12"), LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withGroup("12").build()));
+
+        // One keyword to find module
+        predicate = new LessonContainsKeywordsPredicate(Collections.singletonList(
+                "MA1101R"), LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withCode("MA1101R").build()));
+
+        // One keyword to find class type
+        predicate = new LessonContainsKeywordsPredicate(Collections.singletonList(
+                "LEC"), LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withClassType("LEC").build()));
+
+        // One keyword to find time slot
+        predicate = new LessonContainsKeywordsPredicate(Collections.singletonList(
+                "MON[1200-1300]"), LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withTimeSlot("MON[1200-1300]").build()));
+
+        // Only one matching keyword to find module
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("MA1101R", "CS2200"), LESSON,
+                ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withCode("CS2200").build()));
+
+        // Only one matching keyword to find group
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("1", "2"), LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withGroup("1").build()));
+
+        // Only one matching keyword to find class type
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("TUT", "LEC"), LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withClassType("LEC").build()));
+
+        // Only one matching keyword to find time slot
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("MON[1200-1300]", "TUE[0900-1000]"),
+                LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withTimeSlot("MON[1200-1300]").build()));
+
+        // Mixed-case keywords to find module
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("cs2200"),
+                LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withCode("CS2200").build()));
+
+        // Mixed-case keywords to find class type
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("LeC"),
+                LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withClassType("LEC").build()));
+
+        // Mixed-case keywords to find time slot
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("mOn[1200-1300]"),
+                LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withTimeSlot("MON[1200-1300]").build()));
+
+        // partial keywords that is a substring of the module that user intend to find
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("CS22"), LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withCode("CS2200").build()));
+
+        // partial keywords that is a substring of the time slot that user intend to find
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("MON"), LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withTimeSlot("MON[1200-1300]").build()));
+
+        // partial keywords that is a substring of the class type that user intend to find
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("T"), LESSON, ATTRIBUTE_LOCATION);
         assertTrue(predicate.test(new LessonBuilder().withClassType("TUT").build()));
 
     }
@@ -649,4 +719,171 @@ public class ModuleContainsKeywordsPredicateTest {
     }
 }
 
+```
+###### /java/systemtests/SortCommandSystemTest.java
+``` java
+public class SortCommandSystemTest extends AddressBookSystemTest {
+
+    private final ListingUnit beginningListingUnit = ListingUnit.getCurrentListingUnit();
+
+    @Test
+    public void sortAnyAttribute() {
+        Model model = getModel();
+        String command;
+        String expectedResultMessage;
+
+        command = SortCommand.COMMAND_WORD;
+        expectedResultMessage = SortCommand.MESSAGE_SORT_LESSON_SUCCESS;
+        model.sortLessons();
+        assertCommandSuccess(command, expectedResultMessage, model);
+
+        /* Case : capped sort command word -> rejected */
+        assertCommandFailure("SORT", MESSAGE_UNKNOWN_COMMAND);
+
+        /* Case : mixed cap command word -> rejected */
+        assertCommandFailure("SoRt", MESSAGE_UNKNOWN_COMMAND);
+    }
+
+    @Test
+    public void sortByModule() {
+        Model model = getModel();
+        String command;
+        String expectedResultMessage;
+
+        command = SortCommand.COMMAND_WORD;
+        expectedResultMessage = SortCommand.MESSAGE_SORT_LESSON_SUCCESS;
+        ListingUnit.setCurrentListingUnit(MODULE);
+        model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
+        model.sortLessons();
+        assertCommandSuccessSortByModule(command, expectedResultMessage, model);
+    }
+
+    @Test
+    public void sortByLocation() {
+        Model model = getModel();
+        String command;
+        String expectedResultMessage;
+
+        command = SortCommand.COMMAND_WORD;
+        expectedResultMessage = SortCommand.MESSAGE_SORT_LESSON_SUCCESS;
+        ListingUnit.setCurrentListingUnit(LOCATION);
+        model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
+        model.sortLessons();
+        assertCommandSuccessSortByLocation(command, expectedResultMessage, model);
+    }
+
+    @Test
+    public void sortByLesson() {
+        Model model = getModel();
+        String command;
+        String expectedResultMessage;
+
+        command = SortCommand.COMMAND_WORD;
+        expectedResultMessage = SortCommand.MESSAGE_SORT_LESSON_SUCCESS;
+        Index index = INDEX_FIRST_LESSON;
+        ReadOnlyLesson toView = model.getFilteredLessonList().get(index.getZeroBased());
+        model.updateFilteredLessonList(new FixedCodePredicate(toView.getCode()));
+        ListingUnit.setCurrentListingUnit(LESSON);
+        model.sortLessons();
+        ListingUnit.setCurrentListingUnit(MODULE);
+        assertCommandSuccessSortByLessons(command, expectedResultMessage, model);
+    }
+
+    @Test
+    public void sortByMarkedLesson() {
+        Model model = getModel();
+        String command;
+        String expectedResultMessage;
+
+        command = SortCommand.COMMAND_WORD;
+        expectedResultMessage = SortCommand.MESSAGE_SORT_LESSON_SUCCESS;
+        ListingUnit.setCurrentListingUnit(LESSON);
+        model.updateFilteredLessonList(new MarkedListPredicate());
+        model.sortLessons();
+        assertCommandSuccessSortByMarkedLessons(command, expectedResultMessage, model);
+    }
+
+    /**
+     * Executes {@code SortCommand} in lesson list and
+     * verifies that the result equals to {@code expectedResultMessage},{@code expectedModel}.
+     */
+    public void assertCommandSuccessSortByLessons(String command, String expectedResultMessage,
+                                                  Model expectedModel) {
+        executeCommand(ViewCommand.COMMAND_WORD + " 1");
+        assertCommandSuccess(command, expectedResultMessage, expectedModel);
+    }
+
+    /**
+     * Executes {@code SortCommand} in marked lesson list and
+     * verifies that the result equals to {@code expectedResultMessage},{@code expectedModel}.
+     */
+    public void assertCommandSuccessSortByMarkedLessons(String command, String expectedResultMessage,
+                                                        Model expectedModel) {
+        executeCommand(ListCommand.COMMAND_WORD + " " + ListCommand.MARKED_LIST_KEYWORD);
+        assertCommandSuccess(command, expectedResultMessage, expectedModel);
+    }
+
+    /**
+     * Executes {@code SortCommand} in location list and
+     * verifies that the result equals to {@code expectedResultMessage},{@code expectedModel}.
+     */
+    public void assertCommandSuccessSortByLocation(String command, String expectedResultMessage, Model expectedModel) {
+        executeCommand(ListCommand.COMMAND_WORD + " " + ListCommand.LOCATION_KEYWORD);
+        assertCommandSuccess(command, expectedResultMessage, expectedModel);
+    }
+
+    /**
+     * Executes {@code SortCommand} in module list and
+     * verifies that the result equals to {@code expectedResultMessage},{@code expectedModel}.
+     */
+    public void assertCommandSuccessSortByModule(String command, String expectedResultMessage, Model expectedModel) {
+        executeCommand(ListCommand.COMMAND_WORD + " " + ListCommand.MODULE_KEYWORD);
+        assertCommandSuccess(command, expectedResultMessage, expectedModel);
+    }
+
+    /**
+     * Executes {@code SortCommand} and verifies that the result equals to {@code expectedResultMessage}.
+     */
+    private void assertCommandSuccess(String command, String expectedResultMessage, Model expectedModel) {
+        executeCommand(command);
+        assertEquals(expectedResultMessage, getResultDisplay().getText());
+        Model model = getModel();
+        assertEquals("", getCommandBox().getInput());
+        assertEquals(expectedModel, model);
+        assertListMatching(getLessonListPanel(), expectedModel.getFilteredLessonList());
+        //assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+    }
+
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays {@code command}.<br>
+     * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
+     * 3. Asserts that the model related components equal to the current model.<br>
+     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
+     * 5. Asserts that the command box has the error style.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertEquals(expectedResultMessage, getResultDisplay().getText());
+        Model model = getModel();
+        assertEquals(expectedModel, model);
+        assertEquals(command, getCommandBox().getInput());
+        assertListMatching(getLessonListPanel(), expectedModel.getFilteredLessonList());
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+
+    @After
+    public void wrapUp() {
+        ListingUnit.setCurrentListingUnit(beginningListingUnit);
+    }
+
+}
 ```

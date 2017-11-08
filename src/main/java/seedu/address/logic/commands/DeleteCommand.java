@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_REMARKS;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.RemarkChangedEvent;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
@@ -16,7 +18,9 @@ import seedu.address.model.module.BookedSlot;
 import seedu.address.model.module.Code;
 import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.Remark;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.exceptions.RemarkNotFoundException;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
@@ -97,30 +101,60 @@ public class DeleteCommand extends UndoableCommand {
     }
 
     /**
-     * Delete all lessons with specified Module Code.
+     * Delete all lessons with specified Module Code and all relevant remarks.
      */
     private CommandResult deleteLessonWithModuleCode(Index targetIndex) {
 
         List<ReadOnlyLesson> lastShownList = model.getFilteredLessonList();
         Code moduleToDelete = lastShownList.get(targetIndex.getZeroBased()).getCode();
         try {
-            model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
-            ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
-            for (int i = 0; i < lessonList.size(); i++) {
-                ReadOnlyLesson lesson = lessonList.get(i);
-                if (lesson.getCode().equals(moduleToDelete)) {
-                    model.unbookBookedSlot(new BookedSlot(lesson.getLocation(), lesson.getTimeSlot()));
-                    model.deleteLesson(lesson);
-                    i--;
-                }
-            }
+
+            deleteLessonsWithCode(moduleToDelete);
+            deleteRemarkWithCode(moduleToDelete);
+
         } catch (LessonNotFoundException e) {
             assert false : "The target lesson cannot be missing";
+        } catch (RemarkNotFoundException e) {
+            assert false : "The target remark cannot be missing";
         }
-        model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
+
         EventsCenter.getInstance().post(new ViewedLessonEvent());
+        EventsCenter.getInstance().post(new RemarkChangedEvent());
         return new CommandResult(String.format(MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS, moduleToDelete));
     }
+
+    /**
+     * Deletes all lessons with the given module code.
+     */
+    private void deleteLessonsWithCode(Code moduleToDelete) throws LessonNotFoundException {
+        model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+        ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
+        for (int i = 0; i < lessonList.size(); i++) {
+            ReadOnlyLesson lesson = lessonList.get(i);
+            if (lesson.getCode().equals(moduleToDelete)) {
+                model.unbookBookedSlot(new BookedSlot(lesson.getLocation(), lesson.getTimeSlot()));
+                model.deleteLesson(lesson);
+                i--;
+            }
+        }
+        model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
+    }
+
+    /**
+     * Deletes all remarks with the given module code.
+     */
+    private void deleteRemarkWithCode(Code moduleToDelete) throws RemarkNotFoundException {
+        model.updateFilteredRemarkList(PREDICATE_SHOW_ALL_REMARKS);
+        ObservableList<Remark> remarkList = model.getFilteredRemarkList();
+        for (int i = 0; i < remarkList.size(); i++) {
+            Remark remark = remarkList.get(i);
+            if (remark.moduleCode.equals(moduleToDelete)) {
+                model.deleteRemark(remark);
+                i--;
+            }
+        }
+    }
+
 
     /**
      * Delete all lessons with specified Module Code.

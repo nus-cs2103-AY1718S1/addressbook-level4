@@ -23,6 +23,7 @@ import seedu.address.model.module.Code;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 
+//@@author caoliangnus
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */
@@ -67,7 +68,7 @@ public class TypicalLessons {
             .withGroup("1").withTimeSlot("FRI[1400-1600]").build();
 
 
-    // Manually added - Person's details found in {@code CommandTestUtil}
+    // Manually added - Lesson's details found in {@code CommandTestUtil}
     public static final ReadOnlyLesson TYPICAL_MA1101R = new LessonBuilder().withCode(VALID_CODE_MA1101R)
                 .withClassType(VALID_CLASSTYPE_MA1101R).withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_MA1101R)
                 .withTimeSlot(VALID_TIMESLOT_MA1101R).withLecturers(VALID_LECTURER_MA1101R).build();
