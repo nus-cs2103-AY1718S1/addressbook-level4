@@ -125,7 +125,34 @@ include::../DeveloperGuide.adoc[tag=pinunpin]
 
 ---
 
+=== Enhancement Added: Parent Mode Command
 
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=parentmode]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Parents may be worried that their child will delete or alter any of their important contacts/tasks. Therefore, there
+is a need to limit the number of available commands that the child is able to sue.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=parentmode]
+
+#End of Extract#
+
+---
 
 === Enhancement Proposed:
 
@@ -138,6 +165,7 @@ include::../DeveloperGuide.adoc[tag=pinunpin]
 https://github.com/CS2103AUG2017-T15-B4/main/pull/73[#73], https://github.com/CS2103AUG2017-T15-B4/main/pull/118[#118],
 https://github.com/CS2103AUG2017-T15-B4/main/pull/134[#134], https://github.com/CS2103AUG2017-T15-B4/main/pull/143[#143],
 https://github.com/CS2103AUG2017-T15-B4/main/pull/144[#144], https://github.com/CS2103AUG2017-T15-B4/main/pull/205[#205],
-https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208])
+https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208], https://github.com/CS2103AUG2017-T15-B4/main/pull/245[#245])
 * Updated a help overlay for Bluebird (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/189[#189], https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208])
-
+* Added Bluebird result image when inputting commands (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/143[#142],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/245[#245])
