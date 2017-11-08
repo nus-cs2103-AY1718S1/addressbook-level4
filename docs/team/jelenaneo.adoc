@@ -12,7 +12,7 @@ Unique features such as an interest calculator help debt collectors manage debts
 
 Codii is evolved from [https://github.com/nus-cs2103-AY1718S1/addressbook-level4[AddressBook - Level 4]] which is a desktop address book application used for teaching Software Engineering principles.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-T17-B1/main/blob/master/collated/main/jelneo.md[Functional code]] [https://github.com/CS2103AUG2017-T17-B1/main/blob/master/collated/test/jelneo.md[Test code]]
 
 === Enhancement Added: Login/Logout
 ==== External behavior
@@ -20,9 +20,9 @@ Codii is evolved from [https://github.com/nus-cs2103-AY1718S1/addressbook-level4
 ---
 #Start of Extract [from: User Guide]#
 
-Login: include::../UserGuide.adoc[tag=login]
+include::../UserGuide.adoc[tag=login]
 
-Logout: include::../UserGuide.adoc[tag=logout]
+include::../UserGuide.adoc[tag=logout]
 
 #End of Extract#
 
@@ -54,6 +54,7 @@ include::../DeveloperGuide.adoc[tag=loginLogout]
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=borrow]
+
 include::../UserGuide.adoc[tag=payback]
 
 #End of Extract#
