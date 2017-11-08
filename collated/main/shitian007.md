@@ -1,8 +1,6 @@
 # shitian007
 ###### /resources/view/PersonPanel.fxml
 ``` fxml
-<?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>

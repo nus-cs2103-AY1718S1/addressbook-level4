@@ -98,26 +98,20 @@ public class EventListPanel extends UiPart<Region> {
         eventListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                        logger.fine("Selection in event list panel changed to : '" + newValue + "'");
                         raise(new EventPanelSelectionChangedEvent(newValue));
                     }
                 });
     }
 
     /**
-     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+     * Scrolls to the {@code EventCard} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
             eventListView.scrollTo(index);
             eventListView.getSelectionModel().clearAndSelect(index);
         });
-    }
-
-    @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
     }
 
     /**
@@ -425,6 +419,60 @@ public class DeleteEventCommandParser implements Parser<DeleteEventCommand> {
 
 }
 ```
+###### /java/seedu/room/logic/commands/AddEventCommand.java
+``` java
+/**
+ * Adds a person to the resident book.
+ */
+public class AddEventCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "addevent";
+    public static final String COMMAND_ALIAS = "ae";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a event to the event book. \n"
+            + "Parameters: "
+            + PREFIX_TITLE + "TITLE "
+            + PREFIX_DESCRIPTION + "DESCRIPTION "
+            + PREFIX_LOCATION + "LOCATION "
+            + "[" +PREFIX_DATETIME + "STARTTIME TO ENDTIME"
+            + " or STARTTIME DURATION (in hours)]\n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_TITLE + "End of Sem Dinner "
+            + PREFIX_DESCRIPTION + "Organised by USC "
+            + PREFIX_LOCATION + "Cinnamon College "
+            + PREFIX_DATETIME + "25/11/2017 2030 to 2359"
+            + " or " + PREFIX_DATETIME + "25/11/2017 2030 2";
+
+    public static final String MESSAGE_SUCCESS = "New event added: %1$s";
+    public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the event book";
+    private final Event toAdd;
+
+    /**
+     * Creates an AddCommand to add the specified {@code ReadOnlyEvent}
+     */
+    public AddEventCommand(ReadOnlyEvent person) {
+        toAdd = new Event(person);
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.addEvent(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (DuplicateEventException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddEventCommand // instanceof handles nulls
+                && toAdd.equals(((AddEventCommand) other).toAdd));
+    }
+}
+```
 ###### /java/seedu/room/logic/commands/SortCommand.java
 ``` java
 /**
@@ -485,6 +533,58 @@ public class AlreadySortedException extends Exception {
     }
 }
 ```
+###### /java/seedu/room/logic/commands/DeleteEventCommand.java
+``` java
+/**
+ * Deletes a event identified using it's last displayed index from the resident book.
+ */
+public class DeleteEventCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "deleteEvent";
+    public static final String COMMAND_ALIAS = "de";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes the event identified by the index number used in the last event listing.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+
+    public static final String MESSAGE_DELETE_EVENT_SUCCESS = "Deleted Event: %1$s";
+
+    private final Index targetIndex;
+
+    public DeleteEventCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+
+        List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyEvent eventToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        try {
+            model.deleteEvent(eventToDelete);
+        } catch (EventNotFoundException enfe) {
+            assert false : "The target event cannot be missing";
+        }
+
+        return new CommandResult(String.format(MESSAGE_DELETE_EVENT_SUCCESS, eventToDelete));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DeleteEventCommand // instanceof handles nulls
+                && this.targetIndex.equals(((DeleteEventCommand) other).targetIndex)); // state check
+    }
+}
+```
 ###### /java/seedu/room/logic/commands/SwaproomCommand.java
 ``` java
 /**
@@ -500,7 +600,8 @@ public class SwaproomCommand extends UndoableCommand {
             + "Parameters: INDEX1 and INDEX2 (both must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1 2";
 
-    public static final String MESSAGE_SWAP_PERSONS_SUCCESS = "Swapped Rooms : %1$s and %2$s";
+    public static final String MESSAGE_SWAP_PERSONS_SUCCESS = "Swapped Rooms : %1$s and %2$s.";
+    public static final String ROOMS_NOT_SET_ERROR = "Both %1$s and %2$s have not been assigned any rooms yet.";
 
     private final Index targetIndex1;
     private final Index targetIndex2;
@@ -516,14 +617,19 @@ public class SwaproomCommand extends UndoableCommand {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if (targetIndex1.getZeroBased() >= lastShownList.size()/*
-        ;lp.oik jhgv*/
+        if (targetIndex1.getZeroBased() >= lastShownList.size()
                 || targetIndex2.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         ReadOnlyPerson person1 = lastShownList.get(targetIndex1.getZeroBased());
         ReadOnlyPerson person2 = lastShownList.get(targetIndex2.getZeroBased());
+
+
+        if (person1.getRoom().toString().equals(ROOM_NOT_SET_DEFAULT)
+                && person2.getRoom().toString().equals(ROOM_NOT_SET_DEFAULT)) {
+            throw new CommandException(String.format(ROOMS_NOT_SET_ERROR, person1.getName(), person2.getName()));
+        }
 
         try {
             model.swapRooms(person1, person2);
@@ -1598,33 +1704,181 @@ public class Location {
 public class Datetime {
 
     public static final String MESSAGE_DATETIME_CONSTRAINTS =
-            "Event datetime should only contain dd-mm-yyyy hhmm";
-    /*
-     * The first character of the datetime must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    public static final String DATETIME_VALIDATION_REGEX = "[^\\s].*";
+            "Event datetime should contain dd/mm/yyyy hhmm DURATION (in hours)";
+
+    public static final String DATE_CONSTRAINTS_VIOLATION =
+            "The date does not exist";
+
+    public static final String NUMBER_CONSTRAINTS_VIOLATION =
+            "Date, time and duration can only be represented using digits";
+
+    public static final String INVALID_TIME_FORMAT =
+            "Time should be represented only by digits and in the format hhmm";
 
     public final String value;
+    public final LocalDateTime datetime;
 
     /**
      * Validates given datetime.
-     *
      * @throws IllegalValueException if given datetime string is invalid.
      */
     public Datetime(String datetime) throws IllegalValueException {
         requireNonNull(datetime);
-        if (!isValidDatetime(datetime)) {
-            throw new IllegalValueException(MESSAGE_DATETIME_CONSTRAINTS);
+        try {
+            if (!isValidDatetime(datetime)) {
+                throw new IllegalValueException(MESSAGE_DATETIME_CONSTRAINTS);
+            }
+
+            //Update datetime
+            String[] components = datetime.split(" ");
+            int starttime = Integer.parseInt(components[1]);;
+            int duration;
+            int endtime;
+
+            //If the format is dd/mm/yyyy hhmm k
+            if (components.length == 3) {
+                duration = Integer.parseInt(components[2]);
+                endtime = (starttime + 100 * duration) % 2400;
+
+            //If the format is dd/mm/yyyy hhmm to hhmm
+            } else if (components.length == 4) {
+                endtime = Integer.parseInt(components[3]);
+            } else {
+                endtime = 0;
+            }
+
+            String endtimeString = this.toValidTimeString(endtime);
+            String starttimeString = this.toValidTimeString(starttime);
+
+            //Store as a LocalDateTime object
+            this.datetime = this.toLocalDateTime(components[0] + " " + starttimeString);
+
+            this.value = components[0] + " " + components[1] + " to " + endtimeString;
+
+        } catch (DateTimeException e) {
+            throw new IllegalValueException(DATE_CONSTRAINTS_VIOLATION);
+        } catch (NumberFormatException e) {
+            throw new IllegalValueException(NUMBER_CONSTRAINTS_VIOLATION);
         }
-        this.value = datetime;
+    }
+
+
+    /**
+     * Returns a LocalDateTime object for the Datetime object
+     */
+    public LocalDateTime getLocalDateTime() {
+        return this.datetime;
     }
 
     /**
-     * Returns true if a given string is a valid event datetime.
+     * Returns true if a given string is a valid datetime in the format dd/mm/yyyy hhmm k.
      */
     public static boolean isValidDatetime(String test) {
-        return test.matches(DATETIME_VALIDATION_REGEX);
+
+        String[] components = test.split(" ");
+
+        //If the format is dd/mm/yyyy hhmm k
+        if (components.length == 3) {
+            return isValidDate(components[0]) && isValidTime(components[1]) && isValidDuration(components[2]);
+        //If the format is dd/mm/yyyy hhmm to hhmm
+        } else if (components.length == 4) {
+
+            for (String k : components) {
+            }
+
+
+            return isValidDate(components[0]) && isValidTime(components[1]) && isValidTime(components[3]);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Returns true if a given string is a valid date in the format dd/mm/yyyy.
+     * @throws NumberFormatException if string contains non-digit characters.
+     * @throws DateTimeException if the date represented by the string is invalid
+     */
+    public static boolean isValidDate(String date) throws DateTimeException, NumberFormatException {
+
+        if (date.length() != 10) {
+            return false;
+        }
+
+        String[] dateComponents = date.split("/");
+
+        if (dateComponents.length != 3) {
+            return false;
+        }
+
+        int day = Integer.parseInt(dateComponents[0]);
+        int month = Integer.parseInt(dateComponents[1]);
+        int year = Integer.parseInt(dateComponents[2]);
+
+        LocalDate localdate;
+        localdate = LocalDate.of(year, month, day);
+        return true;
+    }
+
+    /**
+     * Returns true if a given string is a valid time in the format hhmm.
+     * @throws NumberFormatException if string contains non-digit characters.
+     */
+    public static boolean isValidTime(String time) throws NumberFormatException {
+
+        int timeInt = Integer.parseInt(time); //throws NumberFormatException if "time" contains non-digit characters
+
+        if (time.length() != 4) {
+            return false;
+        }
+
+        char[] timeArray = time.toCharArray();
+        int hour = Integer.parseInt(new String(timeArray, 0, 2));
+
+        int minute = 10 * Integer.parseInt(Character.toString(timeArray[2]))
+                        + Integer.parseInt(Character.toString(timeArray[3]));
+
+        return hour >= 0 && hour < 24 && minute >= 0 && minute < 60;
+
+    }
+
+    /**
+     * Returns true if a given string is a valid duration.
+     * @throws NumberFormatException if string contains non-digit characters
+     */
+    public static boolean isValidDuration(String duratonString) throws NumberFormatException {
+        double duration =  Double.parseDouble(duratonString);
+        return duration > 0 && duration < 24;
+    }
+
+    /**
+     * Returns a LocalDateTime object for the input in the format dd/MM/yyyy HHmm
+     * @throws DateTimeException if the datetime represented by the string is invalid
+     */
+    public LocalDateTime toLocalDateTime(String value) throws DateTimeException {
+        String[] valueComponents = value.split(" ");
+        String dateWithStartTime = valueComponents[0] + " " + valueComponents[1];
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+        return LocalDateTime.parse(dateWithStartTime, formatter);
+    }
+
+    /**
+     * Returns a time string in the format HHmm for an integer input in the format hmm or hhmm
+     * @throws IllegalValueException if the time represented by the integer is invalid
+     */
+    public String toValidTimeString(int time) throws IllegalValueException {
+        String updatedString = String.valueOf(time);
+        if (time < 1000) {
+            while (updatedString.length() < 4) {
+                updatedString = "0" + updatedString;
+            }
+        } else {
+            updatedString = String.valueOf(time);
+        }
+        if (this.isValidTime(updatedString)) {
+            return updatedString;
+        } else {
+            throw new IllegalValueException(INVALID_TIME_FORMAT);
+        }
     }
 
     @Override
