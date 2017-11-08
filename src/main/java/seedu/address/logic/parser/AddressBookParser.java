@@ -18,6 +18,7 @@ import seedu.address.logic.commands.EnableTaskCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ParentModeCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.alias.AliasCommand;
@@ -88,12 +89,14 @@ public class AddressBookParser {
     private final ObservableList<ReadOnlyAliasToken> aliasList = FXCollections.observableArrayList();
     private boolean isPersonEnabled;
     private boolean isTaskEnabled;
+    private boolean isParentEnabled;
 
     public AddressBookParser() {
         this.commandMap = new HashMap<String, Parser<? extends Command>>();
         this.aliasMap = new HashMap<String, ReadOnlyAliasToken>();
         this.isPersonEnabled = true;
         this.isTaskEnabled = false;
+        this.isParentEnabled = false;
     }
 
     /**
@@ -126,6 +129,9 @@ public class AddressBookParser {
             }
 
         case EditCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new EditCommandParser().parse(checkedArguments);
             } else {
@@ -140,6 +146,9 @@ public class AddressBookParser {
             }
 
         case DeleteCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new DeleteCommandParser().parse(checkedArguments);
             } else {
@@ -147,9 +156,16 @@ public class AddressBookParser {
             }
 
         case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            } else {
+                return new ClearCommand();
+            }
 
         case PinCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new PinCommandParser().parse(arguments);
             } else {
@@ -164,6 +180,9 @@ public class AddressBookParser {
             }
 
         case UnpinCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new UnpinCommandParser().parse(arguments);
             } else {
@@ -171,6 +190,9 @@ public class AddressBookParser {
             }
 
         case HideCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new HideCommandParser().parse(checkedArguments);
             } else {
@@ -224,13 +246,22 @@ public class AddressBookParser {
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();
 
+        case ParentModeCommand.COMMAND_WORD:
+            return new ParentModeCommand();
+
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
 
         case AliasCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
             return new AliasCommandParser().parse(checkedArguments);
 
         case UnaliasCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
             return new UnaliasCommandParser().parse(checkedArguments);
 
         case EnableTaskCommand.COMMAND_WORD:
@@ -240,6 +271,9 @@ public class AddressBookParser {
             return new EnablePersonCommand();
 
         case MarkTaskCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
             if (!isPersonEnabled && isTaskEnabled) {
                 return new MarkTaskCommandParser().parse(checkedArguments);
             } else {
@@ -247,6 +281,9 @@ public class AddressBookParser {
             }
 
         case UnmarkTaskCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
             if (!isPersonEnabled && isTaskEnabled) {
                 return new UnmarkTaskCommandParser().parse(checkedArguments);
             } else {
@@ -254,6 +291,9 @@ public class AddressBookParser {
             }
 
         case RenameTaskCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
             if (!isPersonEnabled && isTaskEnabled) {
                 return new RenameTaskCommandParser().parse(checkedArguments);
             } else {
@@ -261,6 +301,9 @@ public class AddressBookParser {
             }
 
         case RescheduleTaskCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
             if (!isPersonEnabled && isTaskEnabled) {
                 return new RescheduleTaskCommandParser().parse(checkedArguments);
             } else {
@@ -392,6 +435,7 @@ public class AddressBookParser {
         commandMap.put("listpin", null);
         commandMap.put("redo", null);
         commandMap.put("undo", null);
+        commandMap.put("parent", null);
     }
 
     public boolean isCommandRegistered(String header) {
@@ -428,5 +472,14 @@ public class AddressBookParser {
         return true;
     }
 
+    /**
+     * Enables the parent command to be used by main parser
+     *
+     * @return true for confirmation of enableParentToggle
+     */
+    public boolean enableParentToggle() {
+        isParentEnabled = true;
+        return true;
+    }
 
 }

@@ -12,6 +12,7 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -21,6 +22,7 @@ import seedu.address.logic.commands.person.UnpinCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+
 //@@author Alim95
 public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
 
@@ -28,6 +30,11 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, PinCommand.MESSAGE_USAGE);
     private static final String MESSAGE_INVALID_UNPIN_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, UnpinCommand.MESSAGE_USAGE);
+
+    @Before
+    public void setParentMode() {
+        executeParentCommand();
+    }
 
     @Test
     public void pinUnpin() {
