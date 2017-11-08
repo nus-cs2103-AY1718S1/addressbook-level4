@@ -68,6 +68,7 @@ Personal access tokens are like passwords so make sure you keep them secret! If 
 We use a new user account to generate the token for team projects to prevent team members from gaining access to other team members' repos. +
 If you are the only one with write access to the repo, you can use your own account to generate the token.
 +
+
 --
 * Add a description for the token. (e.g. `Travis CI - deploy docs to gh-pages`)
 * Check the `public_repo` checkbox.
@@ -83,6 +84,7 @@ image:flick_repository_switch.png[Activate the switch]
 +
 .  Click on the settings button next to the switch. In the Environment Variables section, add a new environment variable with
 +
+
 --
 * name: `GITHUB_TOKEN`
 * value: personal access token copied in step 1
