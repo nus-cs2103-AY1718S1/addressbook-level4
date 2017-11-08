@@ -84,7 +84,7 @@ public class ParserUtilTest {
     }
 
     //@@author
-    
+
     @Test
     public void parseIndex_invalidInput_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
