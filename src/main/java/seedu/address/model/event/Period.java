@@ -1,4 +1,4 @@
-//@@author shuangyang
+//@@author shuang-yang
 package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;

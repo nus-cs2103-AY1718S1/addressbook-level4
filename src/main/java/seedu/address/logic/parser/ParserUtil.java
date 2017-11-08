@@ -149,7 +149,7 @@ public class ParserUtil {
         return note.isPresent() ? Optional.of(new Note(note.get())) : Optional.empty();
     }
 
-    //@@author a0107442n
+    //@@author shuang-yang
     /**
      * Parses a {@code Optional<String> photo} into an {@code Optional<Photo>}
      * if {@code photo} is present.

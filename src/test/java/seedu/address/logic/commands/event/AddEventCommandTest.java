@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -160,6 +161,11 @@ public class AddEventCommandTest {
         public ObservableList<ReadOnlyEvent> getSchedule() {
             fail("This method should not be called.");
             return null;
+        }
+
+        @Override
+        public void scheduleRepeatedEvent(ReadOnlyEvent addedEvent) {
+            fail("This method should not be called.");
         }
     }
 

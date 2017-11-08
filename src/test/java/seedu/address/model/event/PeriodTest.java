@@ -11,13 +11,13 @@ public class PeriodTest {
     public void isValidPeriodTest() {
         //invalid period
         assertFalse(Period.isValidPeriod("")); //empty string
-        assertFalse(Title.isValidTitle(" ")); // spaces only
-        assertFalse(Title.isValidTitle("-1")); // negative number
-        assertFalse(Title.isValidTitle("367")); // exceeding upper limit
-        assertFalse(Title.isValidTitle("2.1")); // not integer number of days
+        assertFalse(Period.isValidPeriod(" ")); // spaces only
+        assertFalse(Period.isValidPeriod("-1")); // negative number
+        assertFalse(Period.isValidPeriod("367")); // exceeding upper limit
+        assertFalse(Period.isValidPeriod("2.1")); // not integer number of days
 
         // valid title
-        assertTrue(Title.isValidTitle("0")); // 0 days indicates no repeat
-        assertTrue(Title.isValidTitle("366")); // maximum number of days
+        assertTrue(Period.isValidPeriod("0")); // 0 days indicates no repeat
+        assertTrue(Period.isValidPeriod("366")); // maximum number of days
     }
 }
