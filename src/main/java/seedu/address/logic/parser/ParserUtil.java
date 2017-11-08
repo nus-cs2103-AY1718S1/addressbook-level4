@@ -126,7 +126,7 @@ public class ParserUtil {
      * @return {@code true} if successfully parsed,
      * {@code false} otherwise.
      */
-    public static boolean tryParseInt(String value) {
+    public static boolean isParseableInt(String value) {
         try {
             parseFirstInt(value);
             return true;
@@ -177,7 +177,7 @@ public class ParserUtil {
      * @return {@code true} if successfully parsed,
      * {@code false} otherwise.
      */
-    public static boolean tryParseFilePath(String value) {
+    public static boolean isParseableFilePath(String value) {
         try {
             String tryFilepath = parseFirstFilePath(value);
             return isValidRolodexStorageFilepath(tryFilepath);
@@ -208,7 +208,7 @@ public class ParserUtil {
      * @return {@code true} if successfully parsed,
      * {@code false} otherwise.
      */
-    public static boolean tryParsePhone(String value) {
+    public static boolean isParseablePhone(String value) {
         try {
             Optional possible = parsePhone(Optional.of(parseFirstPhone(value)));
             return possible.isPresent() && possible.get() instanceof Phone;
@@ -256,7 +256,7 @@ public class ParserUtil {
      * @return {@code true} if successfully parsed,
      * {@code false} otherwise.
      */
-    public static boolean tryParseEmail(String value) {
+    public static boolean isParseableEmail(String value) {
         try {
             Optional possible = parseEmail(Optional.of(parseFirstEmail(value)));
             return possible.isPresent() && possible.get() instanceof Email;
@@ -304,7 +304,7 @@ public class ParserUtil {
      * @return {@code true} if successfully parsed,
      * {@code false} otherwise.
      */
-    public static boolean tryParseAddressTillEnd(String value) {
+    public static boolean isParseableAddressTillEnd(String value) {
         try {
             Optional possible = parseAddress(Optional.of(parseAddressTillEnd(value)));
             return possible.isPresent() && possible.get() instanceof Address;

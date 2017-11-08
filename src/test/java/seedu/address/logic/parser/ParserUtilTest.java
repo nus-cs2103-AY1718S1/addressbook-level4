@@ -14,10 +14,10 @@ import static seedu.address.logic.parser.ParserUtil.parsePhone;
 import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstEmail;
 import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstInt;
 import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstPhone;
-import static seedu.address.logic.parser.ParserUtil.tryParseEmail;
-import static seedu.address.logic.parser.ParserUtil.tryParseFilePath;
-import static seedu.address.logic.parser.ParserUtil.tryParseInt;
-import static seedu.address.logic.parser.ParserUtil.tryParsePhone;
+import static seedu.address.logic.parser.ParserUtil.isParseableEmail;
+import static seedu.address.logic.parser.ParserUtil.isParseableFilePath;
+import static seedu.address.logic.parser.ParserUtil.isParseableInt;
+import static seedu.address.logic.parser.ParserUtil.isParseablePhone;
 import static seedu.address.storage.util.RolodexStorageUtil.isValidRolodexStorageExtension;
 import static seedu.address.storage.util.RolodexStorageUtil.isValidRolodexStorageFilepath;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -230,19 +230,19 @@ public class ParserUtilTest {
 
     @Test
     public void tryParseFirstIntAssertFalse() {
-        assertFalse(tryParseInt("one two three")); // characters
-        assertFalse(tryParseInt("~!@# $%^&*()_+")); // symbols
-        assertFalse(tryParseInt("0")); // zero
-        assertFalse(tryParseInt("00")); // zero
-        assertFalse(tryParseInt("2147483649")); // large numbers
+        assertFalse(isParseableInt("one two three")); // characters
+        assertFalse(isParseableInt("~!@# $%^&*()_+")); // symbols
+        assertFalse(isParseableInt("0")); // zero
+        assertFalse(isParseableInt("00")); // zero
+        assertFalse(isParseableInt("2147483649")); // large numbers
     }
 
     @Test
     public void tryParseFirstIntAssertTrue() {
-        assertTrue(tryParseInt("abc 1")); // word then number
-        assertTrue(tryParseInt("del1")); // word then number, without spacing
-        assertTrue(tryParseInt("add n/ 8 to Rolodex")); // characters then number, then characters
-        assertTrue(tryParseInt("-1, acba")); // negative numbers
+        assertTrue(isParseableInt("abc 1")); // word then number
+        assertTrue(isParseableInt("del1")); // word then number, without spacing
+        assertTrue(isParseableInt("add n/ 8 to Rolodex")); // characters then number, then characters
+        assertTrue(isParseableInt("-1, acba")); // negative numbers
     }
 
     @Test
@@ -289,27 +289,27 @@ public class ParserUtilTest {
 
     @Test
     public void tryParseFirstFilePathAssertFalse() {
-        assertFalse(tryParseFilePath("one two three")); // characters
-        assertFalse(tryParseFilePath("~!@# $%^&*()_+")); // symbols
-        assertFalse(tryParseFilePath("2147483649")); // numbers
-        assertFalse(tryParseFilePath("////")); // empty directory
-        assertFalse(tryParseFilePath("C:/")); // empty directory, with absolute prefix
-        assertFalse(tryParseFilePath("C:////")); // empty directory, with absolute prefix
-        assertFalse(tryParseFilePath("var////")); // empty directory, with relative prefix
-        assertFalse(tryParseFilePath("var\\\\\\\\")); // empty directory, backslashes
+        assertFalse(isParseableFilePath("one two three")); // characters
+        assertFalse(isParseableFilePath("~!@# $%^&*()_+")); // symbols
+        assertFalse(isParseableFilePath("2147483649")); // numbers
+        assertFalse(isParseableFilePath("////")); // empty directory
+        assertFalse(isParseableFilePath("C:/")); // empty directory, with absolute prefix
+        assertFalse(isParseableFilePath("C:////")); // empty directory, with absolute prefix
+        assertFalse(isParseableFilePath("var////")); // empty directory, with relative prefix
+        assertFalse(isParseableFilePath("var\\\\\\\\")); // empty directory, backslashes
     }
 
     @Test
     public void tryParseFirstFilePathAssertTrue() {
-        assertTrue(tryParseFilePath("data/default.rldx"));
-        assertTrue(tryParseFilePath("Prefix data/default"));
-        assertTrue(tryParseFilePath("C:/Users/Downloads/my.rldx postfix"));
-        assertTrue(tryParseFilePath("Some prefix C:/abc.rldx"));
-        assertTrue(tryParseFilePath("pref  214/748/36/49 postfix"));
-        assertTrue(tryParseFilePath("data////r"));
-        assertTrue(tryParseFilePath("C:////g postfix"));
-        assertTrue(tryParseFilePath("prefix var////f"));
-        assertTrue(tryParseFilePath("prefix var\\a\\b\\c\\"));
+        assertTrue(isParseableFilePath("data/default.rldx"));
+        assertTrue(isParseableFilePath("Prefix data/default"));
+        assertTrue(isParseableFilePath("C:/Users/Downloads/my.rldx postfix"));
+        assertTrue(isParseableFilePath("Some prefix C:/abc.rldx"));
+        assertTrue(isParseableFilePath("pref  214/748/36/49 postfix"));
+        assertTrue(isParseableFilePath("data////r"));
+        assertTrue(isParseableFilePath("C:////g postfix"));
+        assertTrue(isParseableFilePath("prefix var////f"));
+        assertTrue(isParseableFilePath("prefix var\\a\\b\\c\\"));
     }
 
     @Test
@@ -396,27 +396,27 @@ public class ParserUtilTest {
 
     @Test
     public void tryParseFirstPhoneAssertFalse() {
-        assertFalse(tryParsePhone("aloha")); // characters only
-        assertFalse(tryParsePhone("+(&%*$^&*")); // symbols only
-        assertFalse(tryParsePhone("123")); // short numbers
-        assertFalse(tryParsePhone("+123")); // short numbers, with +
-        assertFalse(tryParsePhone("add me p/+onetwo"));
-        assertFalse(tryParsePhone("fasdfe+624"));
-        assertFalse(tryParsePhone("015431asd")); // exactly 6 numbers
-        assertFalse(tryParsePhone("+015431words")); // exactly 6 numbers, with +
-        assertFalse(tryParsePhone("asda 0154361")); // starts with 0
-        assertFalse(tryParsePhone("3rfsdf +0154361")); // starts with 0, with +
+        assertFalse(isParseablePhone("aloha")); // characters only
+        assertFalse(isParseablePhone("+(&%*$^&*")); // symbols only
+        assertFalse(isParseablePhone("123")); // short numbers
+        assertFalse(isParseablePhone("+123")); // short numbers, with +
+        assertFalse(isParseablePhone("add me p/+onetwo"));
+        assertFalse(isParseablePhone("fasdfe+624"));
+        assertFalse(isParseablePhone("015431asd")); // exactly 6 numbers
+        assertFalse(isParseablePhone("+015431words")); // exactly 6 numbers, with +
+        assertFalse(isParseablePhone("asda 0154361")); // starts with 0
+        assertFalse(isParseablePhone("3rfsdf +0154361")); // starts with 0, with +
     }
 
     @Test
     public void tryParseFirstPhoneAssertTrue() {
-        assertTrue(tryParsePhone("prefix9154361postfix")); // exactly 7 numbers
-        assertTrue(tryParsePhone("prefix 93121534"));
-        assertTrue(tryParsePhone("prefix 124293842033123postfix")); // long phone numbers
-        assertTrue(tryParsePhone("prefix +9154361asd")); // exactly 7 numbers, with +
-        assertTrue(tryParsePhone("prefix+93121534postfix")); // with +
-        assertTrue(tryParsePhone(" prefix+124293842033123asd")); // long phone numbers, with +
-        assertTrue(tryParsePhone(" 123+124293842033123asd")); // short numbers then long phone numbers, with +
+        assertTrue(isParseablePhone("prefix9154361postfix")); // exactly 7 numbers
+        assertTrue(isParseablePhone("prefix 93121534"));
+        assertTrue(isParseablePhone("prefix 124293842033123postfix")); // long phone numbers
+        assertTrue(isParseablePhone("prefix +9154361asd")); // exactly 7 numbers, with +
+        assertTrue(isParseablePhone("prefix+93121534postfix")); // with +
+        assertTrue(isParseablePhone(" prefix+124293842033123asd")); // long phone numbers, with +
+        assertTrue(isParseablePhone(" 123+124293842033123asd")); // short numbers then long phone numbers, with +
     }
 
     @Test
@@ -510,26 +510,26 @@ public class ParserUtilTest {
 
     @Test
     public void tryParseFirstEmailAssertFalse() {
-        assertFalse(tryParseEmail("aloha")); // characters only
-        assertFalse(tryParseEmail("+(&%*$^&*")); // symbols only
-        assertFalse(tryParseEmail("123")); // numbers
-        assertFalse(tryParseEmail("prefix/abc+@gm.com")); // invalid characters before @
-        assertFalse(tryParseEmail("add me e/abc+@gmab.com")); // invalid characters
-        assertFalse(tryParseEmail("@email")); // missing local part
-        assertFalse(tryParseEmail("peterjackexample.com")); // missing '@' symbol
-        assertFalse(tryParseEmail("peterjack@")); // missing domain name
+        assertFalse(isParseableEmail("aloha")); // characters only
+        assertFalse(isParseableEmail("+(&%*$^&*")); // symbols only
+        assertFalse(isParseableEmail("123")); // numbers
+        assertFalse(isParseableEmail("prefix/abc+@gm.com")); // invalid characters before @
+        assertFalse(isParseableEmail("add me e/abc+@gmab.com")); // invalid characters
+        assertFalse(isParseableEmail("@email")); // missing local part
+        assertFalse(isParseableEmail("peterjackexample.com")); // missing '@' symbol
+        assertFalse(isParseableEmail("peterjack@")); // missing domain name
     }
 
     @Test
     public void tryParseFirstEmailAssertTrue() {
-        assertTrue(tryParseEmail("e/PeterJack_1190@example.com/postfix"));
-        assertTrue(tryParseEmail("addemail/a@b/postfix")); // minimal
-        assertTrue(tryParseEmail("test@localhost/postfix")); // alphabets only
-        assertTrue(tryParseEmail("123@145/postfix")); // numeric local part and domain name
-        assertTrue(tryParseEmail("e/a1@example1.com")); // mixture of alphanumeric and dot characters
-        assertTrue(tryParseEmail("_user_@_e_x_a_m_p_l_e_.com_")); // underscores
-        assertTrue(tryParseEmail("add peter_jack@very_very_very_long_example.com something")); // long domain name
-        assertTrue(tryParseEmail("email if.you.dream.it_you.can.do.it@example.com")); // long local part
+        assertTrue(isParseableEmail("e/PeterJack_1190@example.com/postfix"));
+        assertTrue(isParseableEmail("addemail/a@b/postfix")); // minimal
+        assertTrue(isParseableEmail("test@localhost/postfix")); // alphabets only
+        assertTrue(isParseableEmail("123@145/postfix")); // numeric local part and domain name
+        assertTrue(isParseableEmail("e/a1@example1.com")); // mixture of alphanumeric and dot characters
+        assertTrue(isParseableEmail("_user_@_e_x_a_m_p_l_e_.com_")); // underscores
+        assertTrue(isParseableEmail("add peter_jack@very_very_very_long_example.com something")); // long domain name
+        assertTrue(isParseableEmail("email if.you.dream.it_you.can.do.it@example.com")); // long local part
     }
 
     @Test

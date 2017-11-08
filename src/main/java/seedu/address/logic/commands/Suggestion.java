@@ -5,8 +5,8 @@ import static seedu.address.commons.util.StringUtil.levenshteinDistance;
 import static seedu.address.logic.parser.CliSyntax.POSSIBLE_COMMAND_WORDS;
 import static seedu.address.logic.parser.ParserUtil.parseFirstFilePath;
 import static seedu.address.logic.parser.ParserUtil.parseFirstInt;
-import static seedu.address.logic.parser.ParserUtil.tryParseFilePath;
-import static seedu.address.logic.parser.ParserUtil.tryParseInt;
+import static seedu.address.logic.parser.ParserUtil.isParseableFilePath;
+import static seedu.address.logic.parser.ParserUtil.isParseableInt;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -86,16 +86,16 @@ public class Suggestion {
         // Commands with directory-type arguments.
         } else if (OpenCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
                 || NewCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            if (tryParseFilePath(arguments)) {
+            if (isParseableFilePath(arguments)) {
                 return " " + parseFirstFilePath(arguments);
             }
 
         // Commands with simple index-type arguments.
         } else if (SelectCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
                 || DeleteCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            if (tryParseInt(arguments)) {
+            if (isParseableInt(arguments)) {
                 return " " + Integer.toString(parseFirstInt(arguments));
-            } else if (tryParseInt(commandWord)) {
+            } else if (isParseableInt(commandWord)) {
                 return " " + Integer.toString(parseFirstInt(commandWord));
             }
 
