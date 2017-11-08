@@ -409,6 +409,11 @@
     height: 584px;
 }
 
+#profileName {
+    -fx-font-family: 'HaloHandletter';
+    -fx-font-size: 50px;
+}
+
 .profile_big_label {
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 20px;
