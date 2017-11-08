@@ -23,7 +23,7 @@ public class Photo {
      *  Constructs a default photo.
      */
     public Photo() {
-        pathName = "..\\addressbook4\\docs\\images\\default_photo.png";
+        pathName = "..\\addressbook-level4\\docs\\images\\default_photo.png";
     }
 
     /**

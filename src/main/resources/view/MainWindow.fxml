@@ -63,10 +63,6 @@
     </VBox>
       <GridPane minWidth="1000" prefHeight="650">
 
-          <AnchorPane minWidth="500" GridPane.columnIndex="0" GridPane.rowIndex="0">
-            <children>
-            </children>
-          </AnchorPane>
       <StackPane fx:id="personInformationPanelPlaceholder" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
          <columnConstraints>
             <ColumnConstraints />
