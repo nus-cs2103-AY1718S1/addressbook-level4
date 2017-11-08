@@ -21,6 +21,7 @@ import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.person.Country;
 
 /**
  * Represents the argument that help command takes in.
@@ -42,6 +43,7 @@ public class CommandIdentifier {
             + RedoCommand.COMMAND_WORD + ", "
             + ScheduleCommand.COMMAND_WORD + ", "
             + LocateCommand.COMMAND_WORD + ", "
+            + Country.COMMAND_WORD + ", "
             + UndoCommand.COMMAND_WORD;
 
     public static final List<String> COMMAND_VALIDATION_LIST = ImmutableList.of(
@@ -58,6 +60,7 @@ public class CommandIdentifier {
             RedoCommand.COMMAND_WORD, RedoCommand.COMMAND_ALIAS,
             ScheduleCommand.COMMAND_WORD, ScheduleCommand.COMMAND_ALIAS,
             LocateCommand.COMMAND_WORD, LocateCommand.COMMAND_ALIAS,
+            Country.COMMAND_WORD, // no alias
             UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_ALIAS);
 
     public final String value;
