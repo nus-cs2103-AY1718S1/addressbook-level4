@@ -1,0 +1,71 @@
+= Grant Miller - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Tour Guide Addressbook
+Tour Guide Addressbook is an addressbook with added features to make it easier for a tour guide, or tour agency to use
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T12-B4/main/tree/master/collated/main/grantcm.md[Functional code]] [https://github.com/CS2103AUG2017-T12-B4/main/tree/master/collated/test/grantcm.md[Test code]]
+
+=== Enhancement Added: Autocomplete
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=undoredo]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Autocomplete is a common feature among many applications. It greatly increases the ease of use for a user by speeding up their ability to complete common commands.
+
+My implementation use a dropdown box to visually show the user what possible commands there are for an input, if any, as well as easily enabling the user to see the parameters for their command directly in the command line.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=autocomplete]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Groups
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=group]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Groups were added to the addressbook so that the owner could easily filter their addressbook between groups of people.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=group]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Managed the team github repo
