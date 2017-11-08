@@ -79,9 +79,9 @@ public class RelationshipCommand extends UndoableCommand {
      */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
         if (personToEdit.getRelationship().toString().isEmpty()) {
-            return String.format(MESSAGE_ADD_RELATIONSHIP_SUCCESS, personToEdit);
-        } else {
             return String.format(MESSAGE_DELETE_RELATIONSHIP_SUCCESS, personToEdit);
+        } else {
+            return String.format(MESSAGE_ADD_RELATIONSHIP_SUCCESS, personToEdit);
         }
     }
 

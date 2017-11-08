@@ -67,19 +67,39 @@ public class RelationshipCommandTest {
     }
 
     @Test
-    public void executeFilteredListSuccess() throws Exception {
+    public void executeValidIndexFilteredListEditRelationshipSuccess() throws Exception {
         showFirstPersonOnly(model);
 
-        ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(personInFilteredList)
-                .withRelationship("Some relationship").build();
-        RelationshipCommand relationshipCommand =
-                prepareCommand(INDEX_FIRST_PERSON, editedPerson.getRelationship().value);
+        ReadOnlyPerson personWithRelation = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person editedPerson = new PersonBuilder(personWithRelation).withRelationship("Test").build();
+        RelationshipCommand relationshipCommand = prepareCommand(INDEX_FIRST_PERSON,
+                editedPerson.getRelationship().toString());
 
-        String expectedMessage = String.format(RelationshipCommand.MESSAGE_ADD_RELATIONSHIP_SUCCESS, editedPerson);
+        String expectedMessage = String.format(RelationshipCommand
+                .MESSAGE_ADD_RELATIONSHIP_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        showFirstPersonOnly(expectedModel);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), personWithRelation);
+
+        assertCommandSuccess(relationshipCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void executeValidIndexFilteredListDeleteRelationshipSuccess() throws Exception {
+        showFirstPersonOnly(model);
+
+        ReadOnlyPerson personWithRelation = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person editedPerson = new PersonBuilder(personWithRelation).withRelationship("").build();
+        RelationshipCommand relationshipCommand = prepareCommand(INDEX_FIRST_PERSON,
+                editedPerson.getRelationship().toString());
+
+        String expectedMessage = String.format(RelationshipCommand
+                .MESSAGE_DELETE_RELATIONSHIP_SUCCESS, personWithRelation);
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        showFirstPersonOnly(expectedModel);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), personWithRelation);
 
         assertCommandSuccess(relationshipCommand, model, expectedMessage, expectedModel);
     }
