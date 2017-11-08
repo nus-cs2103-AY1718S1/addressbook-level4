@@ -180,6 +180,18 @@ public class AddressBookParserTest {
         assertEquals(new FindCommand(new TagContainsKeywordsPredicate(keywords)), commandUsingAlias);
     }
 
+
+    @Test
+    public void parseCommand_findSchedule() throws Exception {
+        List<String> keywords = Arrays.asList("interview", "meeting", "party");
+        FindCommand command = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " " + "act/ " + keywords.stream().collect(Collectors.joining(" ")));
+        FindCommand commandUsingAlias = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_ALIAS + " " + "act/ " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new ScheduleContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindCommand(new ScheduleContainsKeywordsPredicate(keywords)), commandUsingAlias);
+    }
+
     @Test
     public void parseCommand_email() throws Exception {
         EmailCommand command = (EmailCommand) parser.parseCommand(
@@ -203,17 +215,6 @@ public class AddressBookParserTest {
 
         assertEquals(new CopyCommand(indices), command);
         assertEquals(new CopyCommand(indices), commandUsingAlias);
-    }
-
-    @Test
-    public void parseCommand_findSchedule() throws Exception {
-        List<String> keywords = Arrays.asList("interview", "meeting", "party");
-        FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + "act/ " + keywords.stream().collect(Collectors.joining(" ")));
-        FindCommand commandUsingAlias = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_ALIAS + " " + "act/ " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new ScheduleContainsKeywordsPredicate(keywords)), command);
-        assertEquals(new FindCommand(new ScheduleContainsKeywordsPredicate(keywords)), commandUsingAlias);
     }
 
     //@@author CT15
@@ -290,11 +291,6 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_calendar() throws Exception {
         assertTrue(parser.parseCommand(CalendarCommand.COMMAND_WORD) instanceof CalendarCommand);
-    }
-
-    @Test
-    public void parseEmail_calendar() throws Exception {
-        assertTrue(parser.parseCommand(EmailCommand.COMMAND_WORD) instanceof EmailCommand);
     }
 
     //@@author
