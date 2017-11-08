@@ -1,13 +1,13 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.commons.util.StringUtil.containsWordIgnoreCase;
-
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
-import javafx.collections.ObservableList;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -16,39 +16,38 @@ import seedu.address.model.person.ReadOnlyPerson;
  * Emails a contact from the address book.
  */
 public class EmailCommand extends Command {
+
     public static final String COMMAND_WORD = "email";
     public static final String COMMAND_ALIAS = "em";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Emails person whose name contains any of "
-            + "the specified keywords (not case-sensitive). Needs Outlook or Apple Mail app.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alex yeoh ";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Emails the person identified "
+            + "by the index number used in the last person listing. Needs Outlook or Apple Mail as default app.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1 ";
 
-    public static final String MESSAGE_DUPLICATE_PERSON = "There are multiple contacts containing this name. "
-            + "Type again with full name.";
-    public static final String MESSAGE_SUCCESS = "Opened email!";
+    public static final String MESSAGE_SUCCESS = "Opened email to %1$s";
 
-    private String email;
-    private String name = "default name";
-    private ObservableList<ReadOnlyPerson> persons;
+    private final Index targetIndex;
 
-    public EmailCommand (String name) {
-        this.name = name;
+    /**
+     * @param targetIndex of the person in the filtered person list to email
+     */
+    public EmailCommand (Index targetIndex) {
+        this.targetIndex = targetIndex;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
         Desktop desktop;
-        persons = model.getAddressBook().getPersonList();
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        for (ReadOnlyPerson person : persons) {
-            if (containsWordIgnoreCase(person.getName().getValue(), name)) {
-                email = person.getEmail().getValue();
-            }
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-        if (model.haveDuplicate(name, persons)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        }
+
+        ReadOnlyPerson personToEmail = lastShownList.get(targetIndex.getZeroBased());
+        String email = personToEmail.getEmail().getValue();
+
         try {
             if (Desktop.isDesktopSupported()
                     && (desktop = Desktop.getDesktop()).isSupported(Desktop.Action.MAIL)) {
@@ -60,6 +59,6 @@ public class EmailCommand extends Command {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, personToEmail));
     }
 }
