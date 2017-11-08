@@ -409,6 +409,14 @@
     height: 584px;
 }
 
+#profilePic {
+    -fx-border-color: deepskyblue;
+}
+
+#profileInfo {
+    -fx-border-color: deepskyblue;
+}
+
 #profileName {
     -fx-font-family: 'HaloHandletter';
     -fx-font-size: 50px;
