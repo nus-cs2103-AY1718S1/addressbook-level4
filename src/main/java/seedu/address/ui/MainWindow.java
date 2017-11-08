@@ -88,7 +88,7 @@ public class MainWindow extends UiPart<Region> {
     private Label allLabel;
 
     @FXML
-    private ScrollPane helpOverlay;
+    private ScrollPane helpOverlayParent;
 
     @FXML
     private MenuItem helpOverlayItem;
@@ -145,7 +145,7 @@ public class MainWindow extends UiPart<Region> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
-        setAccelerator(helpOverlayItem, KeyCombination.valueOf("F2"));
+        setAccelerator(helpOverlayItem, KeyCombination.valueOf("F12"));
         setAccelerator(helpOverlayExit, KeyCombination.valueOf("ESC"));
     }
 
@@ -280,19 +280,19 @@ public class MainWindow extends UiPart<Region> {
     //@@author Alim95
 
     /**
-     * Opens the help overlay
+     * Opens the help overlay for parent commands
      */
     @FXML
     private void handleOverlay() {
-        helpOverlay.setVisible(true);
+        helpOverlayParent.setVisible(true);
     }
 
     /**
-     * Closes the help overlay
+     * Closes the help overlay for parent commands
      */
     @FXML
     private void handleOverlayExit() {
-        helpOverlay.setVisible(false);
+        helpOverlayParent.setVisible(false);
     }
 
     /**

@@ -2,7 +2,7 @@ package systemtests;
 
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_PARENT_COMMAND;
 import static seedu.address.logic.commands.person.PinCommand.MESSAGE_PIN_PERSON_SUCCESS;
 import static seedu.address.logic.commands.person.UnpinCommand.MESSAGE_UNPIN_PERSON_SUCCESS;
 import static seedu.address.testutil.TestUtil.getLastIndex;
@@ -139,8 +139,8 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
         assertUnpinCommandFailure(UnpinCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_UNPIN_COMMAND_FORMAT);
 
         /* Case: mixed case command word -> rejected */
-        assertPinCommandFailure("PiN 1", MESSAGE_UNKNOWN_COMMAND);
-        assertPinCommandFailure("uNPiN 1", MESSAGE_UNKNOWN_COMMAND);
+        assertPinCommandFailure("PiN 1", MESSAGE_UNKNOWN_PARENT_COMMAND);
+        assertPinCommandFailure("uNPiN 1", MESSAGE_UNKNOWN_PARENT_COMMAND);
     }
 
     /**
