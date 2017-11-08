@@ -23,7 +23,7 @@ include::../UserGuide.adoc[tag=favourite]
 
 ==== Justification
 
-Users want to set more important contacts at the top of their contact list. 
+Users want to set more important contacts at the top of their contact list.
 
 ==== Implementation
 
@@ -51,7 +51,7 @@ include::../UserGuide.adoc[tag=add]
 
 ==== Justification
 
-Users want to save contacts that might have details missing. 
+Users want to save contacts that might have details missing.
 
 ==== Implementation
 
@@ -94,7 +94,7 @@ include::../DeveloperGuide.adoc[tag=redo]
 
 ---
 
-=== 
+===
 
 === Enhancement Proposed: Add command `Delete multiple contacts`
 

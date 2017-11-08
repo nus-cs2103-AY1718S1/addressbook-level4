@@ -1,12 +1,12 @@
 # aaronyhsoh
 ###### \java\seedu\address\logic\commands\AddCommandTest.java
 ``` java
-        @Override
-        public void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedPerson)
-                throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-        
+    @Override
+    public void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedPerson)
+            throws DuplicatePersonException {
+        fail("This method should not be called.");
+    }
+
 /**
  * Contains integration tests (interaction with the Model) and unit tests for FavouriteCommand.
  */
