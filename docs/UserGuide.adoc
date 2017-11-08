@@ -281,7 +281,7 @@ image::Figure12.png[width="790"]
 _Figure 12: Redoing a command_ +
 // end::undoredo[]
 
-
+// tag::pinunpin[]
 === Pinning a contact : `pin`
 Pin important contacts on Circles, such as professors or tutors to contact them easily. +
 Format: `pin INDEX`
@@ -303,8 +303,9 @@ Format: `unpin INDEX`
 image::Figure14.png[width="790"]
 _Figure 14: Unpinning a person_ +
 
+// end::pinunpin[]
 
-
+// tag::groups[]
 === Creating a group : `creategroup`
 Creating a group for project work or a group meet-up? You can create a group in Circles in a few simple steps! +
 Format: `creategroup n/GROUP_NAME i/INDEX INDEX...`
@@ -327,6 +328,9 @@ Format: `deletegroup INDEX`
 image::Figure16.PNG[width="790"]
 _Figure 16: Deleting a group_ +
 
+// end::groups[]
+
+// tag::setcolour[]
 === Setting colours for tags : `setcolour`
 Circles allows you to differentiate tags from each other by allowing you to manually set colours for you tags. +
 Format: `setcolour TAGS COLOUR`
@@ -340,6 +344,7 @@ _Figure 17: Changing colour for a tag_ +
 The colour that you entered here must be one of the colours in our library. +
 The suitable colours to be changed are `blue, red, brown, green, black, purple, indigo, grey, chocolate, orange,
 aquamarine`.
+// end::setcolour[]
 
 // tag::sort[]
 === Sorting your contacts : `sort`

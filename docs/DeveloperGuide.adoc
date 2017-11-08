@@ -361,6 +361,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 <<<
 
+// tag::groups[]
 === Group Feature
 The group feature enables users to create and delete a group in Circles. It is stored as a `Group` object which contains
 a `GroupName`, which stores the group name, and a `List<ReadOnlyPerson>` which stores the group members. +
@@ -495,7 +496,9 @@ If the group cannot be found inside the `UniqueGroupList`, it will throw a `Grou
         return groupFoundAndDeleted;
     }
 ----
+// end::groups[]
 
+// tag::pinunpin[]
 === Pin Feature
 The pin features enables users to pin their contacts to the top of their contact list. This will help them to access contacts that they frequently visit easily. +
 
@@ -585,8 +588,9 @@ Finally, Circles will save the address book as changes has been made.
 *Alternative 2:* Storing the `pin` information as a `Pinned` tag +
 *Pros:* Storing the `pin` information as a tag is easy to implement, and does not cause any storage issues. +
 *Cons:* Potential bug where users can add a similar tag as the pin tag, and thus, be able to pin a contact without using the `pin` command.
+// end::pinunpin[]
 
-
+// tag::find[]
 === Enhanced Find Command
 
 The enhanced `find` command now allows searches for a Person's Name, Phone Number, Email, Address and Tags. It uses the
@@ -647,6 +651,8 @@ private boolean checkName(Name personName, String keyword) {
 
 [NOTE]
 The `getSearchText` method inside the `ReadOnlyPerson` class will convert all the Name, Phone Number, Email, Address and Tags into a String, that can be used to search for the person.
+
+// end::find[]
 
 ==== Design Considerations
 *Aspect:* Search conditions for `Person` +
@@ -1034,6 +1040,7 @@ unfortunately the constraints of the module forbid us from doing so.
 
 <<<
 
+// tag::setcolour[]
 === Changing Tag Colours
 The `setcolour` command allows users to customise the colour of tags in Circles. +
 
@@ -1058,6 +1065,7 @@ The method `setTagColour()` is shown below, and the code can be found in {repoUR
     }
 ----
 Then, the UI will be notified of the change by `NewPersonListEvent`, and updates the `PersonCard` and `PersonInfo` classes to reflect the change in colour.
+// end::setcolour[]
 
 === Logging
 
