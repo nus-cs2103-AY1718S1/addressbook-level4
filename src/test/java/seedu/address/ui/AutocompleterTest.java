@@ -199,8 +199,6 @@ public class AutocompleterTest extends GuiUnitTest {
         // cycle to next prefix
         autocompleter.updateState("edit 2 #/");
         autocompleteResult = autocompleter.autocomplete();
-        autocompleter.updateState(autocompleteResult);
-        autocompleteResult = autocompleter.autocomplete();
         assertEquals("edit 2 n/", autocompleteResult);
         guiRobot.pauseForEvent();
         assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
