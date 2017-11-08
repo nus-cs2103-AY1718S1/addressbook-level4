@@ -234,8 +234,6 @@ or if the expression is not simple or clear enough.
 ====
 //end::autoReminders[]
 
-=== Listing all persons/events : `(l)list`
-
 // tag::sortByName[]
 === Listing all persons : `(l)list`
 
@@ -248,13 +246,10 @@ This will list out all of your contacts in alphabetical order.
 Example:
 
 * `list`
-<<<<<<< HEAD
 
 [TIP]
-Contacts will be sorted by their names (increment).them
-=======
+Contacts will be sorted by their names (increment).
 // end::sortByName[]
->>>>>>> master
 
 === Listing all events : `(lE)listE`
 
@@ -466,15 +461,15 @@ When **boNUS** is opened again, theme will be initialized to the theme that was 
 ====
 
 
-As shown in Figure 5.14.1 and Figure 5.14.2, Figures depict the Bright Theme and Dark Theme respectively.
+As shown in Figure 5.15.1 and Figure 5.15.2, Figures depict the Bright Theme and Dark Theme respectively.
 
-image::BrightTheme.png[width="300" height="200"]
-_Figure 5.14.1 : Bright Theme_
+image::BrightTheme.png[width="400"]
+_Figure 5.15.1 : Bright Theme_
 
 
 
-image::DarkTheme.png[width="300" height ="200"]
-_Figure 5.14.2 : Dark Theme_
+image::DarkTheme.png[width="400"]
+_Figure 5.15.2 : Dark Theme_
 
 
 === Listing entered commands : `(his)history`
