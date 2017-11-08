@@ -86,14 +86,6 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setScene(scene);
         setAccelerators();
         registerAsAnEventHandler(this);
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                calendarWindow.getRoot().requestFocus();
-            }
-        });
-
     }
 
     public Stage getPrimaryStage() {
@@ -152,6 +144,9 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        Platform.runLater(() -> commandBox.getCommandTextField().requestFocus());
+
     }
 
     void hide() {

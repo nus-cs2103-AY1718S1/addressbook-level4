@@ -349,6 +349,8 @@ You can add, sort and remove appointments from a specific contact at a given ind
 Appointment can be set using natural language. +
 You can refer to the following http://natty.joestelmach.com/doc.jsp[link] for the supported formats. +
 
+You can add multiple appointments to the same contact.
+
 [NOTE]
 If no end time is specified, default appointment time is 1 hour. +
 However, please include at least the hour and a day that can be specified. +
@@ -360,15 +362,13 @@ You can only set dates that are after current time. (i.e. You cannot set a time 
 |=======================================================================
 |Purpose |Format |Example
 
-|Add an appointment to the contact |`appointment INDEX d/TIME to TIME` |`appointment 1 d/tomorrow 5pm`
+|Add an appointment to the contact |`appointment INDEX d/Description, TIME` |`appointment 1 d/Lunch, tomorrow 5pm to 7pm`
 
-|Shorthand for adding appointment  |`appt INDEX d/TIME to TIME` |`appt 1 d/tomorrow 5pm`
+|Shorthand for adding appointment  |`appt INDEX d/Description, TIME` |`appt 1 d/Lunch, tomorrow 5pm to 7pm`
 
-|Remove an appointment from the contact |`appointment INDEX d/off`| `appointment 1 d/off`
+|Remove an appointment from the contact |`cancel Description with person`| `cancel lunch with James`
 
-|Shorthand for removing appointment |`appt INDEX d/off`| `appt 1 d/off`
-
-|Sort list by appointment dates |`appointment` |`appointment`
+|Sort contacts by appointment dates |`appointment` |`appointment`
 
 |Shorthand for appointment sorting |`appt` |`appt`
 
