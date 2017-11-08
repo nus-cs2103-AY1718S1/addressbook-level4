@@ -1,0 +1,92 @@
+= Jonatan Lehtinen - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: People.connect
+
+People.connect is a desktop address book application. This application allows users to store important information about the people they care about. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T12-B3/main/blob/master/collated/main/joppeel.md[Functional code]] [https://github.com/CS2103AUG2017-T12-B3/main/blob/master/collated/test/joppeel.md[Test code]]
+
+=== Enhancement Added: Birthday attribute
+
+==== External behavior
+
+---
+When adding a new contact, the user can give the birthday of the contact as a parameter for the add command. Birthday can also be edited in case of mistakes.
+
+Examples:
+
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/13/02/1998 pt/JohnDoe.jpg` +
+Adds new contact "John Doe" with 13/02/1998 as its birthday
+* `edit 1 b/13/10/1992` +
+Chooses the contact, who is listed as the first contact in the current listing and edits its birthday to be 13/10/1992
+
+---
+
+==== Justification
+
+As this application is used to store important information about people, it's highly important that the application is also capable of storing something as important as a birthday.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=birthday]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Loading pre-existing address book
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=load]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+In case the user has two different address books and wants to combine those address books as one, this command allows user to avoid having to type every contact's information from the other address book manually. Also, this command allows users to conveniently share their contacts to other users by just sending their addressbook.xml file.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=load]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Remind the user of a contact's birthday
+
+=== External Behaviour
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=informBirthday]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Now that the application is capable of storing birthdays, a natural and useful feature to implement next would be to inform the user if his contacts are having a birthday.
+
+=== Other contributions
+
+* Found bugs from other team's product(Issues https://github.com/CS2103AUG2017-T15-B3/main/issues/108[#108], https://github.com/CS2103AUG2017-T15-B3/main/issues/113[#113], https://github.com/CS2103AUG2017-T15-B3/main/issues/120[#120])

@@ -20,6 +20,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Photo;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -54,8 +55,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
             ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY))
                     .ifPresent(editPersonDescriptor::setBirthday);
-            ParserUtil.parsePhoto(argMultimap.getValue(PREFIX_PHOTO))
-                    .ifPresent(editPersonDescriptor::setPhoto);
+            parsePhotoForEdit(argMultimap.getValue(PREFIX_PHOTO)).ifPresent(editPersonDescriptor::setPhoto);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
@@ -66,6 +66,15 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         return new EditCommand(index, editPersonDescriptor);
+    }
+
+
+    /**
+     * Parses {@code Optional<String> photo} into a {@code Optional<Photo>} if {@code photo} is non-empty.
+     */
+    private Optional<Photo> parsePhotoForEdit(Optional<String> photo) throws IllegalValueException {
+        requireNonNull(photo);
+        return photo.isPresent() ? Optional.of(new Photo(photo)) : Optional.empty();
     }
 
     /**

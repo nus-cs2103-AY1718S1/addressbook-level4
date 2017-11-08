@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Optional;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -23,17 +25,21 @@ public class Photo {
     private String defaultPhoto = "template.png";
 
     /**
-     * Validates given photo.
+     * Validates given photo. If the parameter {@code photoDir} is Empty, uses the default photo.
      *
      * @throws IllegalValueException if given photo address string is invalid.
      */
-    public Photo(String photoDir) throws IllegalValueException {
+    public Photo(Optional<String> photoDir) throws IllegalValueException {
         requireNonNull(photoDir);
-        String trimmedPhoto = photoDir.trim();
-        if (!isValidPhoto(trimmedPhoto)) {
-            throw new IllegalValueException(MESSAGE_PHOTO_CONSTRAINTS);
+        if (photoDir.isPresent()) {
+            String trimmedPhoto = photoDir.get().trim();
+            if (!isValidPhoto(trimmedPhoto)) {
+                throw new IllegalValueException(MESSAGE_PHOTO_CONSTRAINTS);
+            }
+            this.photoDir = trimmedPhoto;
+        } else {
+            this.photoDir = defaultPhoto;
         }
-        this.photoDir = trimmedPhoto;
     }
 
     public String getPhotoDir() {
