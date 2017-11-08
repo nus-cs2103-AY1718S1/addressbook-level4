@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import java.util.function.Predicate;
 
+import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -95,5 +96,8 @@ public interface Model {
 
     /**Returns the current command mode*/
     String getCommandMode();
+
+    /**Returns the String Property of current command mode*/
+    StringProperty getCommandModeProperty();
     //@@author
 }
