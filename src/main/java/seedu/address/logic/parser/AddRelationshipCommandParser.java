@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,10 +26,22 @@ public class AddRelationshipCommandParser implements Parser<AddRelationshipComma
         }
 
         List<String> listOfArgs = Arrays.asList(trimmedArgs.split(" "));
+        String firstIndexString = listOfArgs.get(0);
+        String secondIndexString = listOfArgs.get(1);
 
         if (listOfArgs.size() != 3) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRelationshipCommand.MESSAGE_USAGE));
+        }
+
+        if (firstIndexString.equals(secondIndexString)) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRelationshipCommand.MESSAGE_USAGE));
+        }
+
+        if (firstIndexString.equals("0") || secondIndexString.equals("0")) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, AddRelationshipCommand.MESSAGE_USAGE));
         }
 
         try {

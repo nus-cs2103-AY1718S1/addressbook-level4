@@ -121,7 +121,9 @@ public class ModelManager extends ComponentManager implements Model {
         List<ReadOnlyPerson> lastShownList = getFilteredPersonList();
 
         if (indexFromPerson.getZeroBased() >= lastShownList.size()
-                || indexToPerson.getZeroBased() >= lastShownList.size()) {
+                || indexToPerson.getZeroBased() >= lastShownList.size()
+                || indexFromPerson.getZeroBased() < 0
+                || indexToPerson.getZeroBased() < 0) {
             throw new IllegalValueException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
