@@ -1,7 +1,7 @@
 package seedu.address.testutil;
 
+import seedu.address.commons.core.commandidentifier.CommandIdentifier;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.commandidentifier.CommandIdentifier;
 
 //@@author CT15
 /**

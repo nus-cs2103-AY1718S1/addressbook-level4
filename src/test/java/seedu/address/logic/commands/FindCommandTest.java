@@ -35,7 +35,8 @@ import seedu.address.model.person.TagContainsKeywordsPredicate;
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
 public class FindCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private UserPrefs prefs = new UserPrefs();
+    private Model model = new ModelManager(getTypicalAddressBook(), prefs);
 
     @Test
     public void equalsName() {
@@ -248,7 +249,7 @@ public class FindCommandTest {
     private FindCommand prepareCommand(String userInput) {
         FindCommand command =
                 new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, prefs, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 

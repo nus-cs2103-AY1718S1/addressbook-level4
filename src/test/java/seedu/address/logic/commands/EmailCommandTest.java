@@ -104,8 +104,9 @@ public class EmailCommandTest {
         Set<Index> indices = new HashSet<>();
         indices.add(index);
 
+        UserPrefs prefs = new UserPrefs();
         EmailCommand emailCommand = new EmailCommand(indices);
-        emailCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        emailCommand.setData(model, prefs, new CommandHistory(), new UndoRedoStack());
         return emailCommand;
     }
 
