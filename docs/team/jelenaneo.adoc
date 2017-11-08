@@ -106,14 +106,12 @@ include::../DeveloperGuide.adoc[tag=filterTags]
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
-
-{Explain similar to the Undo/Redo feature above.}
-
 === Other contributions
 
 * Nag about code quality
+* Reduce information in person card (Pull request https://github.com/CS2103AUG2017-T17-B1/main/pull/239[#239])
+* Improve welcome page (Pull request https://github.com/CS2103AUG2017-T17-B1/main/pull/211[#211])
+* Add debt repayment progress bar (Pull requests https://github.com/CS2103AUG2017-T17-B1/main/pull/194[#194], https://github.com/CS2103AUG2017-T17-B1/main/pull/210[#210])
 
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
+== Project: Modulus
+[https://github.com/Kowalski985/Modulus/[Modulus]] is a web app to make module mapping more convenient for NUS students going overseas for exchange. This project was developed in pairs for [http://nusskylab-dev.comp.nus.edu.sg/[CP2106 Independent Software Development Project (Orbital)]].
