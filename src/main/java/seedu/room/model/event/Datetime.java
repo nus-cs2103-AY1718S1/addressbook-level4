@@ -25,6 +25,9 @@ public class Datetime {
     public static final String NUMBER_CONSTRAINTS_VIOLATION =
             "Date, time and duration can only be represented using digits";
 
+    public static final String INVALID_TIME_FORMAT =
+            "Time should be represented only by digits and in the format hhmm";
+
     public final String value;
     public final LocalDateTime datetime;
 
@@ -39,22 +42,29 @@ public class Datetime {
                 throw new IllegalValueException(MESSAGE_DATETIME_CONSTRAINTS);
             }
 
+            //Update datetime
             String[] components = datetime.split(" ");
+            int starttime = Integer.parseInt(components[1]);;
+            int duration;
+            int endtime;
 
-            int starttime = Integer.parseInt(components[1]);
-            int duration = Integer.parseInt(components[2]);
-            int endtime = (starttime + 100 * duration) % 2400;
+            //If the format is dd/mm/yyyy hhmm k
+            if (components.length == 3) {
+                duration = Integer.parseInt(components[2]);
+                endtime = (starttime + 100 * duration) % 2400;
+
+            //If the format is dd/mm/yyyy hhmm to hhmm
+            } else if (components.length == 4) {
+                endtime = Integer.parseInt(components[3]);
+            } else {
+                endtime = 0;
+            }
+
+            String endtimeString = this.toValidTimeString(endtime);
+            String starttimeString = this.toValidTimeString(starttime);
 
             //Store as a LocalDateTime object
-            this.datetime = this.toLocalDateTime(components[0] + " " + components[1]);
-
-            //This converts back integers like 630 to 0630
-            String endtimeString;
-            if (endtime < 1000) {
-                endtimeString = "0" + endtime;
-            } else {
-                endtimeString = String.valueOf(endtime);
-            }
+            this.datetime = this.toLocalDateTime(components[0] + " " + starttimeString);
 
             this.value = datetime;
 
@@ -65,18 +75,36 @@ public class Datetime {
         }
     }
 
+
+    /**
+     * Returns a LocalDateTime object for the Datetime object
+     */
+    public LocalDateTime getLocalDateTime() {
+        return this.datetime;
+    }
+
     /**
      * Returns true if a given string is a valid datetime in the format dd/mm/yyyy hhmm k.
      */
     public static boolean isValidDatetime(String test) {
+
         String[] components = test.split(" ");
 
-        if (components.length != 3) {
+        //If the format is dd/mm/yyyy hhmm k
+        if (components.length == 3) {
+            return isValidDate(components[0]) && isValidTime(components[1]) && isValidDuration(components[2]);
+        //If the format is dd/mm/yyyy hhmm to hhmm
+        } else if (components.length == 4) {
+
+            for (String k : components) {
+            }
+
+
+            return isValidDate(components[0]) && isValidTime(components[1]) && isValidTime(components[3]);
+        } else {
             return false;
         }
-        return isValidDate(components[0]) && isValidTime(components[1]) && isValidDuration(components[2]);
     }
-
 
     /**
      * Returns true if a given string is a valid date in the format dd/mm/yyyy.
@@ -143,8 +171,27 @@ public class Datetime {
         String[] valueComponents = value.split(" ");
         String dateWithStartTime = valueComponents[0] + " " + valueComponents[1];
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
-        System.out.println(LocalDateTime.parse(dateWithStartTime, formatter).toString());
         return LocalDateTime.parse(dateWithStartTime, formatter);
+    }
+
+    /**
+     * Returns a time string in the format HHmm for an integer input in the format hmm or hhmm
+     * @throws IllegalValueException if the time represented by the integer is invalid
+     */
+    public String toValidTimeString(int time) throws IllegalValueException {
+        String updatedString = String.valueOf(time);
+        if (time < 1000) {
+            while (updatedString.length() < 4) {
+                updatedString = "0" + updatedString;
+            }
+        } else {
+            updatedString = String.valueOf(time);
+        }
+        if (this.isValidTime(updatedString)) {
+            return updatedString;
+        } else {
+            throw new IllegalValueException(INVALID_TIME_FORMAT);
+        }
     }
 
     @Override
