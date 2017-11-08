@@ -23,7 +23,6 @@ public class InsuranceIdLabel extends UiPart<Region> {
     @FXML
     private Label insuranceId;
 
-    //@@author RSJunior37
     public InsuranceIdLabel(ReadOnlyInsurance insurance) {
         super(FXML);
         insuranceId.textProperty().bind(insurance.insuranceNameProperty());

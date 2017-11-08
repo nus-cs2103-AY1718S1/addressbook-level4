@@ -59,7 +59,7 @@ public class MainWindow extends UiPart<Region> {
     private VBox mainWindow;
 
     @FXML
-    private StackPane rightPanelPlaceholder;
+    private StackPane middlePanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -165,7 +165,7 @@ public class MainWindow extends UiPart<Region> {
         insuranceProfilePanel = new InsuranceProfilePanel();
 
         profilePanel = new ProfilePanel();
-        rightPanelPlaceholder.getChildren().add(profilePanel.getRoot());
+        middlePanelPlaceholder.getChildren().add(profilePanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -269,16 +269,16 @@ public class MainWindow extends UiPart<Region> {
     private void handleSwitchToProfilePanelRequestEvent(SwitchToProfilePanelRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
-        rightPanelPlaceholder.getChildren().clear();
-        rightPanelPlaceholder.getChildren().add(profilePanel.getRoot());
+        middlePanelPlaceholder.getChildren().clear();
+        middlePanelPlaceholder.getChildren().add(profilePanel.getRoot());
     }
 
     @Subscribe
     private void handleSwitchToInsurancePanelRequestEvent(SwitchToInsurancePanelRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
-        rightPanelPlaceholder.getChildren().clear();
-        rightPanelPlaceholder.getChildren().add(insuranceProfilePanel.getRoot());
+        middlePanelPlaceholder.getChildren().clear();
+        middlePanelPlaceholder.getChildren().add(insuranceProfilePanel.getRoot());
     }
     //@@author
 }

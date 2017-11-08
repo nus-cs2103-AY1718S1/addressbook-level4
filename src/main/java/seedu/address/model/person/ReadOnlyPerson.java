@@ -74,5 +74,25 @@ public interface ReadOnlyPerson {
         return builder.toString();
     }
 
+    //@@author arnollim
+    default String getAsParagraph() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName() + "\n")
+                .append("\nPhone: ")
+                .append(getPhone())
+                .append("\nEmail: ")
+                .append(getEmail())
+                .append("\nAddress: ")
+                .append(getAddress())
+                .append("\nDateOfBirth: ")
+                .append(getDateOfBirth())
+                .append("\nGender: ")
+                .append(getGender())
+                .append("\nTags: ");
+        getTags().forEach(builder::append);
+        return builder.toString();
+    }
+    //@@author
+
     String getDetailByPrefix(Prefix prefix);
 }

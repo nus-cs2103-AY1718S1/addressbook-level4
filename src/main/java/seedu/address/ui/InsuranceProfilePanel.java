@@ -109,6 +109,8 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         if (isFileExists(insuranceFile)) {
             activateLinkToInsuranceFile();
         } else {
+            contractPath.getStyleClass().clear();
+            contractPath.getStyleClass().add("missing-file");
             contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -136,7 +138,8 @@ public class InsuranceProfilePanel extends UiPart<Region> {
      *  Enable the link to open contract pdf file and adjusting the text hover highlight
      */
     private void activateLinkToInsuranceFile() {
-        contractPath.getStyleClass().add("particular-link");
+        contractPath.getStyleClass().clear();
+        contractPath.getStyleClass().add("valid-file");
         contractPath.setOnMouseClicked(event -> {
             try {
                 Desktop.getDesktop().open(insuranceFile);

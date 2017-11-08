@@ -65,7 +65,6 @@ public class PersonListPanel extends UiPart<Region> {
         });
     }
 
-    //@@author RSJunior37
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         if (event.panelChoice == PanelChoice.PERSON) {
@@ -73,7 +72,6 @@ public class PersonListPanel extends UiPart<Region> {
             scrollTo(event.targetIndex);
         }
     }
-    //@@author
 
     //@@author Juxarius
     @Subscribe
