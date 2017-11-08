@@ -449,6 +449,27 @@ public class AddRemarkCommandParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_LINK + " " + link.value);
         assertEquals(new LinkCommand(INDEX_FIRST_PERSON, link), command);
     }
+    //@@Houjisan
+    @Test
+    public void parseCommand_favourite() throws Exception {
+        final FavouriteStatus favouriteStatus = new FavouriteStatus(true);
+        FavouriteCommand command = (FavouriteCommand) parser.parseCommand(FavouriteCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new FavouriteCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_sort() throws Exception {
+        SortCommand command = (SortCommand) parser.parseCommand(
+                SortCommand.COMMAND_WORD + " name");
+        assertEquals(new SortCommand("name", false, false), command);
+    }
+
+    @Test
+    public void parseCommand_tags() throws Exception {
+        assertTrue(parser.parseCommand(TagsCommand.COMMAND_WORD) instanceof TagsCommand);
+        assertTrue(parser.parseCommand(TagsCommand.COMMAND_WORD + " 2") instanceof TagsCommand);
+    }
 ```
 ###### \java\seedu\address\logic\parser\LinkCommandParserTest.java
 ``` java

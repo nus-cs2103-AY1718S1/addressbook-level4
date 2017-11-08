@@ -150,6 +150,9 @@ public class SortCommandTest {
     private String addressField = "address";
     private boolean favIgnored = true;
     private boolean favNotIgnored = false;
+    private boolean notReverseOrder = false;
+    private boolean reverseOrder = true;
+
 
     @Before
     public void setUp() {
@@ -159,7 +162,7 @@ public class SortCommandTest {
 
     @Test
     public void execute_listIsNotFilteredSortsByName_sameList() {
-        SortCommand sortCommand = prepareCommand(nameField, favNotIgnored);
+        SortCommand sortCommand = prepareCommand(nameField, favNotIgnored, notReverseOrder);
         assertCommandSuccess(sortCommand, model,
                 String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, nameField), expectedModel);
     }
@@ -168,14 +171,14 @@ public class SortCommandTest {
     public void execute_listIsFilteredSortsByName_sameList() {
         showFirstPersonOnly(model);
         showFirstPersonOnly(expectedModel);
-        SortCommand sortCommand = prepareCommand(nameField, favNotIgnored);
+        SortCommand sortCommand = prepareCommand(nameField, favNotIgnored, notReverseOrder);
         assertCommandSuccess(sortCommand, model,
                 String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, nameField), expectedModel);
     }
 
     @Test
     public void execute_listIsNotFilteredSortsByPhone_sameList() {
-        SortCommand sortCommand = prepareCommand(phoneField, favNotIgnored);
+        SortCommand sortCommand = prepareCommand(phoneField, favNotIgnored, notReverseOrder);
         assertCommandSuccess(sortCommand, model,
                 String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, phoneField), expectedModel);
     }
@@ -184,14 +187,14 @@ public class SortCommandTest {
     public void execute_listIsFilteredSortsByPhone_sameList() {
         showFirstPersonOnly(model);
         showFirstPersonOnly(expectedModel);
-        SortCommand sortCommand = prepareCommand(phoneField, favNotIgnored);
+        SortCommand sortCommand = prepareCommand(phoneField, favNotIgnored, notReverseOrder);
         assertCommandSuccess(sortCommand, model,
                 String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, phoneField), expectedModel);
     }
 
     @Test
     public void execute_listIsNotFilteredSortsByEmail_sameList() {
-        SortCommand sortCommand = prepareCommand(emailField, favNotIgnored);
+        SortCommand sortCommand = prepareCommand(emailField, favNotIgnored, notReverseOrder);
         assertCommandSuccess(sortCommand, model,
                 String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, emailField), expectedModel);
     }
@@ -200,14 +203,14 @@ public class SortCommandTest {
     public void execute_listIsFilteredSortsByEmail_sameList() {
         showFirstPersonOnly(model);
         showFirstPersonOnly(expectedModel);
-        SortCommand sortCommand = prepareCommand(emailField, favNotIgnored);
+        SortCommand sortCommand = prepareCommand(emailField, favNotIgnored, notReverseOrder);
         assertCommandSuccess(sortCommand, model,
                 String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, emailField), expectedModel);
     }
 
     @Test
     public void execute_listIsNotFilteredSortsByAddress_sameList() {
-        SortCommand sortCommand = prepareCommand(addressField, favNotIgnored);
+        SortCommand sortCommand = prepareCommand(addressField, favNotIgnored, notReverseOrder);
         assertCommandSuccess(sortCommand, model,
                 String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, addressField), expectedModel);
     }
@@ -216,24 +219,32 @@ public class SortCommandTest {
     public void execute_listIsFilteredSortsByAddress_sameList() {
         showFirstPersonOnly(model);
         showFirstPersonOnly(expectedModel);
-        SortCommand sortCommand = prepareCommand(addressField, favNotIgnored);
+        SortCommand sortCommand = prepareCommand(addressField, favNotIgnored, notReverseOrder);
         assertCommandSuccess(sortCommand, model,
                 String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, addressField), expectedModel);
     }
 
     @Test
     public void execute_listIsNotFilteredSortsByNameIgnoreFav_sameList() {
-        SortCommand sortCommand = prepareCommand(addressField, favIgnored);
+        SortCommand sortCommand = prepareCommand(nameField, favIgnored, notReverseOrder);
         assertCommandSuccess(sortCommand, model,
-                String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, addressField)
+                String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, nameField)
                         + " ignoring favourites", expectedModel);
+    }
+
+    @Test
+    public void execute_listIsNotFilteredSortsByNameReverseOrder_sameList() {
+        SortCommand sortCommand = prepareCommand(nameField, favNotIgnored, reverseOrder);
+        assertCommandSuccess(sortCommand, model,
+                String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, nameField)
+                        + " in reverse order", expectedModel);
     }
 
     /**
      * Returns an {@code SortCommand} with parameter {@code datafield}
      */
-    private SortCommand prepareCommand(String datafield, boolean isFavIgnored) {
-        SortCommand sortCommand = new SortCommand(datafield, isFavIgnored);
+    private SortCommand prepareCommand(String datafield, boolean isFavIgnored, boolean isReverseOrder) {
+        SortCommand sortCommand = new SortCommand(datafield, isFavIgnored, isReverseOrder);
         sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return sortCommand;
     }
@@ -276,6 +287,126 @@ public class TagsCommandTest {
     @Test
     public void execute_showTags_success() {
         assertCommandSuccess(tagsCommand, model, TagsCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\FavouriteCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.FavouriteCommand;
+
+public class FavouriteCommandParserTest {
+    private FavouriteCommandParser parser = new FavouriteCommandParser();
+
+    @Test
+    public void parse_indexSpecified_success() throws Exception {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + "";
+        FavouriteCommand expectedCommand = new FavouriteCommand(INDEX_FIRST_PERSON);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_noFieldSpecified_failure() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FavouriteCommand.MESSAGE_USAGE);
+
+        // nothing at all
+        assertParseFailure(parser, FavouriteCommand.COMMAND_WORD, expectedMessage);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\SortCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.SortCommand;
+
+public class SortCommandParserTest {
+    private SortCommandParser parser = new SortCommandParser();
+
+    @Test
+    public void parse_name_success() throws Exception {
+        String userInput = "name";
+        SortCommand expectedCommand = new SortCommand("name", false, false);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_nameIgnoreFav_success() throws Exception {
+        String userInput = "name -ignorefav";
+        SortCommand expectedCommand = new SortCommand("name", true, false);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_nameReverseOrder_success() throws Exception {
+        String userInput = "name -reverse";
+        SortCommand expectedCommand = new SortCommand("name", false, true);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_nameIgnoreFavReverseOrder_success() throws Exception {
+        String userInput = "name -ignorefav -reverse";
+        SortCommand expectedCommand = new SortCommand("name", true, true);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_noFieldSpecified_failure() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE);
+
+        // nothing at all
+        assertParseFailure(parser, SortCommand.COMMAND_WORD, expectedMessage);
+    }
+}
+```
+###### \java\seedu\address\model\person\FavouriteStatusTest.java
+``` java
+package seedu.address.model.person;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+public class FavouriteStatusTest {
+
+    @Test
+    public void equals() {
+        FavouriteStatus favouriteStatus = new FavouriteStatus(false);
+
+        // same object -> returns true
+        assertTrue(favouriteStatus.equals(favouriteStatus));
+
+        // same values -> returns true
+        FavouriteStatus favouriteStatusCopy = new FavouriteStatus(favouriteStatus.isFavourite);
+        assertTrue(favouriteStatus.equals(favouriteStatusCopy));
+
+        // different types -> returns false
+        assertFalse(favouriteStatus.equals(1));
+
+        // null -> returns false
+        assertFalse(favouriteStatus.equals(null));
+
+        // different favourite status -> returns false
+        FavouriteStatus differentFavouriteStatus = new FavouriteStatus(true);
+        assertFalse(favouriteStatus.equals(differentFavouriteStatus));
     }
 }
 ```

@@ -95,10 +95,24 @@ public class ComparatorUtil {
                 .thenComparing(addressComparator);
     }
 
+    // Returns a lexicographic-order comparator that compares by name first in reverse order,
+    // followed by phone, email then address
+    public static Comparator<ReadOnlyPerson> getAllComparatorsNameFirstReversed() {
+        return nameComparator.reversed().thenComparing(phoneComparator).thenComparing(emailComparator)
+                .thenComparing(addressComparator);
+    }
+
     // Returns a lexicographic-order comparator that compares by phone first,
     // followed by name, email then address
     public static Comparator<ReadOnlyPerson> getAllComparatorsPhoneFirst() {
         return phoneComparator.thenComparing(nameComparator).thenComparing(emailComparator)
+                .thenComparing(addressComparator);
+    }
+
+    // Returns a lexicographic-order comparator that compares by phone first in reverse order,
+    // followed by name, email then address
+    public static Comparator<ReadOnlyPerson> getAllComparatorsPhoneFirstReversed() {
+        return phoneComparator.reversed().thenComparing(nameComparator).thenComparing(emailComparator)
                 .thenComparing(addressComparator);
     }
 
@@ -109,10 +123,24 @@ public class ComparatorUtil {
                 .thenComparing(addressComparator);
     }
 
+    // Returns a lexicographic-order comparator that compares by email first in reverse order,
+    // followed by name, phone then address
+    public static Comparator<ReadOnlyPerson> getAllComparatorsEmailFirstReversed() {
+        return emailComparator.reversed().thenComparing(nameComparator).thenComparing(phoneComparator)
+                .thenComparing(addressComparator);
+    }
+
     // Returns a lexicographic-order comparator that compares by address first,
     // followed by name, phone, then email
     public static Comparator<ReadOnlyPerson> getAllComparatorsAddressFirst() {
         return addressComparator.thenComparing(nameComparator).thenComparing(phoneComparator)
+                .thenComparing(emailComparator);
+    }
+
+    // Returns a lexicographic-order comparator that compares by address first in reverse order,
+    // followed by name, phone, then email
+    public static Comparator<ReadOnlyPerson> getAllComparatorsAddressFirstReversed() {
+        return addressComparator.reversed().thenComparing(nameComparator).thenComparing(phoneComparator)
                 .thenComparing(emailComparator);
     }
 

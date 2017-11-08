@@ -99,6 +99,7 @@ Adding `TAGS` are optional.
 
 *Suggestion for use:* If you want to view all contacts in the contact list.
 
+// tag::tags[]
 ==== Listing all tags : `tags`
 
 *Description:* Shows a list of all tags in the contact list.
@@ -106,6 +107,8 @@ Adding `TAGS` are optional.
 *Format:* `tags`
 
 *Suggestion for use:* If you want to view all existing tags in _**The Classroom**_.
+
+// end::tags[]
 
 ==== Editing a person : `edit`
 
@@ -130,6 +133,7 @@ Adding `TAGS` are optional.
 
 *Suggestion for use:* If you need to update the contact details of any of your contacts.
 
+// tag::favourite[]
 ==== Favouriting a person : `favourite`
 
 *Description:* Favourites or unfavourites an existing person in the contact list.
@@ -153,7 +157,11 @@ Favourites/Unfavourites the 1st person from the results of the `find` command.
 
 *Suggestion for use:* You want to easily access a particular contact.
 
+// end::favourite[]
+
+
 // tag::find[]
+
 ==== Finding persons : `find`
 
 *Description:* Finds persons whose specified _field_ contain any of the given keywords.
@@ -221,6 +229,7 @@ Deletes the 1st person from the results of the `find` command.
 
 *Suggestion for use:* If you do not want to keep a contact in the contact list.
 
+// tag::sort[]
 ==== Sorting the contact list : `sort`
 
 *Description:* Sorts the contact list according to the specified _data field_.
@@ -232,6 +241,7 @@ Deletes the 1st person from the results of the `find` command.
 * `DATAFIELD` is *case-insensitive*.
 * *Note that favourited contacts will be shown at the top*.
 * If you want to sort without prioritising favourites, type `-ignorefav` after `DATAFIELD`.
+* If you want to sort in reverse order, type `-reverse` after `DATAFIELD`.
 ****
 
 *Examples:*
@@ -242,8 +252,14 @@ Sorts the contact list according to their phone numbers.
 Sorts the contact list according to their addresses.
 * `sort` `email` `-ignorefav`
 Sorts the contact list according to their emails without prioritising favourited contacts first.
+* `sort` `name` `-reverse`
+Sorts the contact list according to their names in reverse order.
+* `sort` `phone` `-ignorefav` `-reverse`
+Sorts the contact list according to their phone numbers in reverse order without prioritising favourited contacts first.
 
 *Suggestion for use:* If you want to view the number of contacts having names starting with the same letter.
+
+// end::sort[]
 
 ==== Selecting a person : `select`
 
@@ -432,6 +448,7 @@ Removes the `friends` tag from the second to fifth person in the contact list.
 // end::removetag[]
 // end::addremove[]
 
+// tag::remarkchecklist[]
 ==== Add/remove a remark note to contact: `addremark`, `removeremark`
 
 *Description:* Adds/Removes the specified remarks(s).
@@ -442,14 +459,14 @@ Format to remove remark: `removeremark INDEX REMARKINDEX`
 ****
 * Add/Remove multiple remarks from multiple indexes as specified.
 * `INDEX` refers to the index number shown in the last person listing.
-* The `INDEX` must be a *positive integer* ( `1, 2, 3, ...`).
-* Range of index can be used.
-** Lower limit of range must be *lower than* or *equal to* the upper limit  (`1-4`, `3-3`).
+* The `INDEX` and `REMARKINDEX` must be a *positive integer* ( `1, 2, 3, ...`).
 ****
 [TIP]
 A person can have any number of remarks (including 0) +
 Remarks can be anything (including a blank) +
-GUI will display a list of person with pending remarks.
+GUI will display a list of person with pending remarks on the right.
+
+image::remarkchecklist.png[width="400"]
 
 Examples:
 
@@ -458,6 +475,9 @@ Examples:
 * `removeremark 1 1 3`
 * `removeremark 2 1`
 
+// end::remarkchecklist[]
+
+// tag::link[]
 ==== Link twitter page to contact: `link`
 
 Adds a twitter link to a person existing in the address book based on their index +
@@ -468,9 +488,13 @@ Format: `link PERSONINDEX l/WEBSITEURL` +
 A person can have only one link, any changes will update the existing link to be the new link +
 Only twitter links are accepted
 
+image::twitterlink.png[width="500"]
+
 Examples:
 
 * `link 1 l/https://www.twitter.com/john.doe`
+
+// end::link[]
 
 ==== Clearing all entries : `clear`
 
