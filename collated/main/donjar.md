@@ -188,6 +188,29 @@ public class FontSizeOutOfBoundsException extends IllegalValueException {
         raise(new FontSizeChangeRequestEvent(fontSizeChange));
     }
 ```
+###### /java/seedu/address/logic/commands/HistoryCommand.java
+``` java
+
+    /**
+     * Returns the text displayed when executing the `history` command.
+     * @param previousCommands a list containing the previous commands
+     * @return the text displayed when executing the `history` command
+     */
+    public static String getHistoryText(List<String> previousCommands) {
+        StringBuilder historyText = new StringBuilder();
+
+        int idx = 1;
+        for (String command : previousCommands) {
+            historyText.append(String.format("(%1$s) %2$s", idx, command));
+            if (idx != previousCommands.size()) {
+                historyText.append("\n");
+            }
+            idx++;
+        }
+
+        return historyText.toString();
+    }
+```
 ###### /java/seedu/address/logic/commands/UndoCommand.java
 ``` java
     private final int amount;

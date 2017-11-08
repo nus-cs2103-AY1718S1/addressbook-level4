@@ -1,6 +1,21 @@
 # Zzmobie
 ###### /java/seedu/address/ui/PersonListPanel.java
 ``` java
+    /**
+     * This function updates the access counts only when necessary. The access count should only be incremented
+     * when the card selected is a new card, and when the old card selected was not null. The need for the latter
+     * condition is a result of the way edit commands affect the selected person panel.
+     * @param oldValue Previous value for the PersonCard object
+     * @param newValue New value for the PersonCard object that has changed.
+     */
+    private void updateAccessCount(PersonCard oldValue, PersonCard newValue) {
+        if (oldValue == null || oldValue.person.getName() != newValue.person.getName()) {
+            newValue.person.incrementAccess();
+        }
+    }
+```
+###### /java/seedu/address/ui/PersonListPanel.java
+``` java
     @Subscribe
     private void handleAccessCountDisplayToggleEvent(AccessCountDisplayToggleEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event) + event.isDisplayed());

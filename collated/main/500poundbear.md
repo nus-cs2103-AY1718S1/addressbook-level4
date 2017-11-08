@@ -132,9 +132,6 @@
         initialiseStatisticsPanel(list);
     }
 
-```
-###### /java/seedu/address/ui/StatisticsPanel.java
-``` java
     /**
      * Sets up the fxml objects with data
      */
@@ -145,16 +142,13 @@
         personAddedChart.setBarGap(PERSON_ADDED_CHART_BAR_GAP);
 
         fbChart.setTitle(FACEBOOK_BREAKDOWN_CHART_TITLE);
-        fbChart.setData(formatFacebookData());
+        fbChart.setData(formatTwitterData());
         twChart.setTitle(TWITTER_BREAKDOWN_CHART_TITLE);
         twChart.setData(formatTwitterData());
         igChart.setTitle(INSTAGRAM_BREAKDOWN_CHART_TITLE);
         igChart.setData(formatInstagramData());
     }
 
-```
-###### /java/seedu/address/ui/StatisticsPanel.java
-``` java
     private ObservableList<XYChart.Series<String, Integer>> getPersonAddedChartData(
             ObservableList<ReadOnlyPerson> list) {
 
@@ -195,9 +189,6 @@
         return answer;
     }
 
-```
-###### /java/seedu/address/ui/StatisticsPanel.java
-``` java
     /**
      * Formats the number of users with Facebook recorded
      */
@@ -207,17 +198,14 @@
 
         int hasFacebook = this.totalNumberOfPeople - this.hasNoFacebook;
 
-        String onFacebookLabel = "On Facebook (" + hasFacebook + ")";
-        String notOnFacebookLabel = "Not On Facebook (" + this.hasNoFacebook + ")";
+        String onFacebookLabel = String.format(CHART_USING_LABEL, hasFacebook);
+        String notOnFacebookLabel = String.format(CHART_NOT_USING_LABEL, this.hasNoFacebook);
         data.add(new PieChart.Data(onFacebookLabel, hasFacebook));
         data.add(new PieChart.Data(notOnFacebookLabel, this.hasNoFacebook));
 
         return FXCollections.observableArrayList(data);
     }
 
-```
-###### /java/seedu/address/ui/StatisticsPanel.java
-``` java
     /**
      * Formats the number of users with Twitter recorded
      */
@@ -227,17 +215,14 @@
 
         int hasTwitter = this.totalNumberOfPeople - this.hasNoTwitter;
 
-        String onTwitterLabel = "On Twitter (" + hasTwitter + ")";
-        String notOnTwitterLabel = "Not On Twitter (" + this.hasNoTwitter + ")";
+        String onTwitterLabel = String.format(CHART_USING_LABEL, hasTwitter);
+        String notOnTwitterLabel = String.format(CHART_NOT_USING_LABEL, this.hasNoTwitter);
         data.add(new PieChart.Data(onTwitterLabel, hasTwitter));
         data.add(new PieChart.Data(notOnTwitterLabel, this.hasNoTwitter));
 
         return FXCollections.observableArrayList(data);
     }
 
-```
-###### /java/seedu/address/ui/StatisticsPanel.java
-``` java
     /**
      * Formats the number of users with Instagram recorded
      */
@@ -247,17 +232,14 @@
 
         int hasInstagram = this.totalNumberOfPeople - this.hasNoInstagram;
 
-        String onInstagramLabel = "On Instagram (" + hasInstagram + ")";
-        String notOnInstagramLabel = "Not On Instagram (" + this.hasNoInstagram + ")";
+        String onInstagramLabel = String.format(CHART_USING_LABEL, hasInstagram);
+        String notOnInstagramLabel = String.format(CHART_NOT_USING_LABEL, this.hasNoInstagram);
         data.add(new PieChart.Data(onInstagramLabel, hasInstagram));
         data.add(new PieChart.Data(notOnInstagramLabel, this.hasNoInstagram));
 
         return FXCollections.observableArrayList(data);
     }
 
-```
-###### /java/seedu/address/ui/StatisticsPanel.java
-``` java
     /**
      * Fetches the current year
      */
@@ -265,9 +247,6 @@
         return Calendar.getInstance().get(Calendar.YEAR);
     }
 
-```
-###### /java/seedu/address/ui/StatisticsPanel.java
-``` java
     /**
      * Fetches the current month
      */
@@ -290,9 +269,6 @@
         tabulateSocialMediaUsage();
     }
 
-```
-###### /java/seedu/address/model/Statistics.java
-``` java
     public ArrayList<Integer> getNewPersonsAddByMonth(int displayYears) {
 
         ArrayList<Integer> countByMonth = new ArrayList<>(Collections.nCopies(displayYears * 12 + 1, 0));
@@ -313,9 +289,6 @@
         return countByMonth;
     }
 
-```
-###### /java/seedu/address/model/Statistics.java
-``` java
     /**
      * Count the offset when adding to the array list of sum by months
      */
@@ -324,9 +297,6 @@
                 + (this.currentMonth - personAddedMonth);
     }
 
-```
-###### /java/seedu/address/model/Statistics.java
-``` java
     /**
      * Tabulate the total number of people in the list
      */
@@ -334,9 +304,6 @@
         this.totalNumberOfPeople = personList.size();
     }
 
-```
-###### /java/seedu/address/model/Statistics.java
-``` java
     /**
      * Tabulates number of users of each social media platform
      */
@@ -355,9 +322,32 @@
         }
     }
 
-```
-###### /java/seedu/address/model/Statistics.java
-``` java
+    /**
+     * Fetches n people with the highest access count
+     */
+    public List<ReadOnlyPerson> getAllTimeMostAccesses() {
+        ArrayList<ReadOnlyPerson> sortedByMostAccesses = new ArrayList<>(personList);
+        sortedByMostAccesses.sort(sortByGetAccessCount());
+
+        int startingIndex = this.totalNumberOfPeople - NUMBER_OF_PERSONS_IN_TOP_LIST;
+        int endingIndex = this.totalNumberOfPeople - 1;
+
+        return sortedByMostAccesses.subList(startingIndex, endingIndex);
+    }
+
+    /**
+     * Fetches n people with the lowest access count
+     */
+    public List<ReadOnlyPerson> getAllTimeLeastAccesses() {
+        ArrayList<ReadOnlyPerson> sortedByMostAccesses = new ArrayList<>(personList);
+        sortedByMostAccesses.sort(sortByGetAccessCount());
+
+        int startingIndex = 0;
+        int endingIndex = NUMBER_OF_PERSONS_IN_BOTTOM_LIST - 1;
+
+        return sortedByMostAccesses.subList(startingIndex, endingIndex);
+    }
+
     /**
      * Fetches number of persons with no facebook information added
      */
@@ -365,9 +355,6 @@
         return this.hasNoFacebook;
     }
 
-```
-###### /java/seedu/address/model/Statistics.java
-``` java
     /**
      * Fetches number of persons with no twitter information added
      */
@@ -375,9 +362,6 @@
         return this.hasNoTwitter;
     }
 
-```
-###### /java/seedu/address/model/Statistics.java
-``` java
     /**
      * Fetches number of persons with no instagram information added
      */
@@ -385,14 +369,24 @@
         return this.hasNoInstagram;
     }
 
-```
-###### /java/seedu/address/model/Statistics.java
-``` java
     /**
      * Fetches total number of persons
      */
     public Integer getTotalNumberOfPeople() {
         return this.totalNumberOfPeople;
+    }
+
+    /**
+     * Sort by ReadOnlyPerson.getAccessCount()
+     * @return
+     */
+    private static Comparator<ReadOnlyPerson> sortByGetAccessCount() {
+        return new Comparator<ReadOnlyPerson>() {
+            @Override
+            public int compare(ReadOnlyPerson s1, ReadOnlyPerson s2) {
+                return s1.getAccessCount().numAccess() - s2.getAccessCount().numAccess();
+            }
+        };
     }
 }
 ```
