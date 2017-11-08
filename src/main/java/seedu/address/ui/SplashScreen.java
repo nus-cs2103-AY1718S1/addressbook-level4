@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
 
+//@@author fongwz
 /**
  * UI component to load splash screen and animate it
  */

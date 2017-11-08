@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -28,6 +30,7 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_ARGUMENT = "Argument contains special characters";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
     /**
@@ -42,6 +45,24 @@ public class ParserUtil {
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
+
+    //@@author fongwz
+    /**
+     * Parses {@code args} into a trimmed argument and returns it.
+     * @throws IllegalValueException if the argument provided is invalid (contains special characters).
+     */
+    public static String parseArgument(String args) throws IllegalValueException {
+        String parsedArgs = args.trim();
+        Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(parsedArgs);
+        boolean b = m.find();
+
+        if (b) {
+            throw new IllegalValueException(MESSAGE_INVALID_ARGUMENT);
+        }
+        return parsedArgs;
+    }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.

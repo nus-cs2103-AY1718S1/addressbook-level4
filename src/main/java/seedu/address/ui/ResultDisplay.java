@@ -38,9 +38,9 @@ public class ResultDisplay extends UiPart<Region> {
         Platform.runLater(() -> {
             displayed.setValue(event.message);
             if (event.errorStatus) {
-                resultDisplay.setStyle("-fx-text-fill: lime");
+                resultDisplay.setStyle("-fx-text-fill: #e35252");
             } else {
-                resultDisplay.setStyle("-fx-text-fill: white");
+                resultDisplay.setStyle("-fx-text-fill: #70db75");
             }
         });
     }
