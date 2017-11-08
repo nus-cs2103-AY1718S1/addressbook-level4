@@ -1,5 +1,5 @@
 # lauy99
-###### \java\seedu\address\logic\commands\ExpireCommand.java
+###### /java/seedu/address/logic/commands/ExpireCommand.java
 ``` java
 /**
  * Sets expiry date of a person in the address book.
@@ -89,7 +89,7 @@ public class ExpireCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\EditCommandParser.java
+###### /java/seedu/address/logic/parser/EditCommandParser.java
 ``` java
             ExpiryDate editedDate;
             try {
@@ -99,7 +99,7 @@ public class ExpireCommand extends UndoableCommand {
             }
             editPersonDescriptor.setExpiryDate(editedDate);
 ```
-###### \java\seedu\address\logic\parser\ExpireCommandParser.java
+###### /java/seedu/address/logic/parser/ExpireCommandParser.java
 ``` java
 /**
  * Parses arguments of expire command
@@ -129,7 +129,7 @@ public class ExpireCommandParser implements Parser<ExpireCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> dateString} into an {@code Optional<ExpiryDate>}
@@ -145,7 +145,7 @@ public class ExpireCommandParser implements Parser<ExpireCommand> {
     }
 }
 ```
-###### \java\seedu\address\model\person\ExpiryDate.java
+###### /java/seedu/address/model/person/ExpiryDate.java
 ``` java
 /**
  * Represents a Person's expiry date in the address book.

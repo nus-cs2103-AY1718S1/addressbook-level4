@@ -59,7 +59,12 @@
 
         if (model.groupExists(new Group(filterName))) {
             model.updateFilteredPersonList(predicate);
-            return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+            if (model.getFilteredPersonList().size() == 0) {
+                model.updateFilteredListToShowAll();
+                return new CommandResult(MESSAGE_GROUP_IS_EMPTY);
+            } else {
+                return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+            }
         } else {
             return new CommandResult(MESSAGE_GROUP_DOESNT_EXIST);
         }
@@ -174,11 +179,10 @@
 ```
 ###### /java/seedu/address/logic/trie/CommandTrie.java
 ``` java
-    public CommandTrie () {
-        commandCollection = new CommandCollection ();
+    public CommandTrie() {
+        commandCollection = new CommandCollection();
         commandSet = commandCollection.getCommandSet();
         commandMap = commandCollection.getCommandMap();
-
         for (String command : commandSet) {
             this.insert(command);
         }
@@ -195,12 +199,12 @@
      * @param input key to autocomplete
      * @return input if the command is not found, otherwise String representation of command word
      */
-    public String attemptAutoComplete (String input) throws NullPointerException {
+    public String attemptAutoComplete(String input) throws NullPointerException {
         StringBuilder output = new StringBuilder();
 
         if (commandSet.contains(input)) {
             //Don't need to traverse trie
-            if (commandMap.containsKey (input)) {
+            if (commandMap.containsKey(input)) {
                 output.append(" ");
                 output.append(commandMap.get(input));
             }
@@ -228,19 +232,19 @@
             }
             output.append(temp.getKey());
         }
-
         return output.toString();
     }
 
     /**
      * Insert function for trie
+     *
      * @param input key
      */
-    public void insert (String input) {
+    public void insert(String input) {
         char[] inputArray = input.toCharArray();
 
         if (root == null) {
-            root = new Node (inputArray[0], null, null);
+            root = new Node(inputArray[0], null, null);
             Node temp = root;
             for (int i = 1; i < inputArray.length; i++) {
                 temp.setChild(new Node(inputArray[i], null, null));
@@ -276,6 +280,53 @@
                 }
             }
         }
+    }
+
+    /**
+     * @return a list of all possible strings for the given input
+     */
+    public List<String> getOptions(String input) {
+        List<String> options = new ArrayList<String>();
+        char[] inputArray = input.toLowerCase().toCharArray();
+        Node temp = root;
+        int i = 0;
+
+        while (!isLeaf(temp) && i < inputArray.length) {
+            if (temp.getKey() == inputArray[i]) {
+                i++;
+                temp = temp.getChild();
+            } else {
+                temp = temp.getNext();
+            }
+        }
+
+        return recursiveGetOptions(temp, input);
+    }
+
+    /**
+     * Recursive helper function for traversing the trie and getting possible options
+     */
+    private List<String> recursiveGetOptions(Node start, String stub) {
+        List<String> options = new ArrayList<>();
+        StringBuilder output = new StringBuilder();
+        output.append(stub);
+
+        while (!isLeaf(start)) {
+            if (start.hasNext()) {
+                options.addAll(recursiveGetOptions(start.getNext(), output.toString()));
+                if (start.hasChild()) {
+                    output.append(start.getKey());
+                    options.addAll(recursiveGetOptions(start.getChild(), output.toString()));
+                }
+                return options;
+            } else {
+                output.append(start.getKey());
+                start = start.getChild();
+            }
+        }
+        output.append(start.getKey());
+        options.add(output.toString());
+        return options;
     }
 
     public Set<String> getCommandSet() {
@@ -347,26 +398,44 @@
         String input = commandTextField.getText();
         try {
             String command = commandTrie.attemptAutoComplete(input);
-
             if (input.equals(command)) {
-                //No command exists in trie
+                //Multiple options for autocomplete
                 setStyleToIndicateCommandFailure();
-                logger.info("Autocomplete failed with input: " + input);
+                showAutoCompleteOptions(commandTrie.getOptions(input));
             } else if (commandSet.contains(command)) {
                 //Able to autocomplete to a correct command
                 this.replaceText(command);
-                logger.info("Autocomplete successful with input: " + input + " to " + command);
+                logger.info(String.format("Autocomplete successful with input: ", input, " to ", command));
             } else if (commandSet.contains(input)) {
                 //Add parameters
                 this.replaceText(input + command);
-                logger.info("Autocomplete successful with input: " + input + " to " + input + command);
+                logger.info(String.format("Autocomplete successful with input: ", input, " to ", input, command));
             }
         } catch (NullPointerException e) {
+            //No command exists in trie or no trie exists
             setStyleToIndicateCommandFailure();
             logger.info("Autocomplete failed with input: " + input);
         }
+    }
 
-
+    /**
+     * Handles the construction of the ContextMenu for autocomplete failure
+     * @param options representing potential completion options
+     */
+    private void showAutoCompleteOptions(List<String> options) {
+        for (String option : options) {
+            MenuItem item = new MenuItem(option);
+            item.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    replaceText(item.getText());
+                    autoCompleteBox.getItems().clear();
+                }
+            });
+            autoCompleteBox.getItems().add(item);
+        }
+        logger.info("Autocomplete returned possible options.");
+        autoCompleteBox.show(commandTextField, Side.BOTTOM, 0.0, 0.0);
     }
 ```
 ###### /java/seedu/address/ui/GroupCard.java
@@ -444,7 +513,7 @@
     @Subscribe
     private void handleGroupSelectedEvent (GroupPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        commandBox.handleCommandInputChanged("filter " + event.getNewSelection().group.groupName);
+        commandBox.handleCommandInputChanged(String.format("filter ", event.getNewSelection().group.groupName));
     }
 ```
 ###### /resources/view/GroupListCard.fxml
