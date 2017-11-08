@@ -628,7 +628,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         final String arguments = matcher.group("arguments");
 
            //switch case to identify the the prefix for allocation of searched keywords into its predicate
-                
+
 }
 
 ----
