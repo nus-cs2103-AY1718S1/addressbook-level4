@@ -84,6 +84,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         setTags(new HashSet<>(newData.getTagList()));
         setMeetings(meetingList);
+        sortMeeting();
         syncMasterTagListWith(persons);
         syncMasterMeetingListWith(persons);
     }
@@ -192,14 +193,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         final UniqueMeetingList personMeetings = new UniqueMeetingList(person.getMeetings());
         meetings.mergeFrom(personMeetings);
 
-        // Create map with values = meeting object references in the master list
-        // used for checking person meeting references
-        final Map<Meeting, Meeting> masterMeetingObjects = new HashMap<>();
-        meetings.forEach(meeting -> masterMeetingObjects.put(meeting, meeting));
+        final Map<Meeting, Meeting> masterMeetingObjectReferences = new HashMap<>();
+        meetings.forEach(meeting -> masterMeetingObjectReferences.put(meeting, meeting));
 
-        // Rebuild the list of person meetings to point to the relevant meetings in the master tag list.
         final Set<Meeting> correctMeetingReferences = new HashSet<>();
-        personMeetings.forEach(meeting -> correctMeetingReferences.add(masterMeetingObjects.get(meeting)));
+        personMeetings.forEach(meeting -> correctMeetingReferences.add(masterMeetingObjectReferences.get(meeting)));
         person.setMeetings(correctMeetingReferences);
     }
 
@@ -236,8 +234,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         meetings.remove(meeting);
     }
 
+    /**
+     * Sorts contacts by {@code field}.
+     */
     public void sort(String field) {
         persons.sort(field);
+        sortMeeting();
     }
 
     //@@author

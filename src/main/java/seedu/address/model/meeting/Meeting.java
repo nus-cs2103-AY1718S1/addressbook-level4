@@ -31,9 +31,9 @@ public class Meeting {
     private ObjectProperty<String> displayMeetingName;
 
     /**
-     * Validates given tag name.
+     * Validates given meeting name.
      *
-     * @throws IllegalValueException if the given tag name string is invalid.
+     * @throws IllegalValueException if the given meeting name string is invalid.
      */
     public Meeting(ReadOnlyPerson person, String meetingName, String time) throws IllegalValueException {
         setPerson(person);

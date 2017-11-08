@@ -51,40 +51,54 @@ public class DeleteTagCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
 
         if (index == null) {
-            try {
-                model.deleteTag(targetTag);
-            } catch (DuplicatePersonException | PersonNotFoundException ex) {
-                throw new AssertionError("The target person cannot be missing");
-            } catch (TagNotFoundException tnfe) {
-                throw new CommandException(Messages.MESSAGE_INVALID_TAG_DISPLAYED);
-            }
+            deleteAllTags();
         } else {
-            List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-            if (index.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
-
-            ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-
-            Set<Tag> oldTags = new HashSet<Tag>(personToEdit.getTags());
-            if (!(oldTags.contains(targetTag))) {
-                throw new CommandException(MESSAGE_NO_TAG);
-            }
-            Person editedPerson = new Person(personToEdit);
-            oldTags.remove(targetTag);
-            editedPerson.setTags(oldTags);
-
-            try {
-                model.updatePerson(personToEdit, editedPerson);
-            } catch (DuplicatePersonException dpe) {
-                throw new AssertionError("Not creating a new person");
-            } catch (PersonNotFoundException pnfe) {
-                throw new AssertionError("The target person cannot be missing");
-            }
+            deleteOneTag();
         }
 
         return new CommandResult(String.format(MESSAGE_DELETE_TAG_SUCCESS, targetTag.tagName));
+    }
+
+    /**
+     * Deletes all instances of a tag from the address book.
+     */
+    private void deleteAllTags() throws CommandException {
+        try {
+            model.deleteTag(targetTag);
+        } catch (DuplicatePersonException | PersonNotFoundException ex) {
+            throw new AssertionError("The target person cannot be missing");
+        } catch (TagNotFoundException tnfe) {
+            throw new CommandException(Messages.MESSAGE_INVALID_TAG_DISPLAYED);
+        }
+    }
+
+    /**
+     * Deletes a single tag from a person.
+     */
+    private void deleteOneTag() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+
+        Set<Tag> oldTags = new HashSet<Tag>(personToEdit.getTags());
+        if (!(oldTags.contains(targetTag))) {
+            throw new CommandException(MESSAGE_NO_TAG);
+        }
+        Person editedPerson = new Person(personToEdit);
+        oldTags.remove(targetTag);
+        editedPerson.setTags(oldTags);
+
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("Not creating a new person");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
     }
 
     @Override
