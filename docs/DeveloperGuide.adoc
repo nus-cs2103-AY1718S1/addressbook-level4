@@ -839,7 +839,7 @@ For example, the sequence diagram below shows the sequence of events to update t
 image::DetailPanelSequenceDiagram.png[width="800"]
 
 The information displayed on the panel is extracted from the `ReadOnlyPerson` that is returned by the `EventsCenter`.
-The details of the implementation can be seen from the following code snippet.
+The details of the implementation can be seen from the following code snippets.
 [source, java]
 ----
 /**
@@ -849,6 +849,18 @@ private void showPersonDetails(ReadOnlyPerson person) {
     setAvatar(person);
     setTextFields(person);
     setTags(person);
+}
+----
+The `showPersonDetails` method is called when a `PersonEditedEvent` is raised.
+[source,java]
+----
+/**
+* Updates the panel when the details of the selected person is changed
+*/
+@Subscribe
+private void handlePersonDetailsChangedEvent(PersonEditedEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    showPersonDetails(event.editedPerson);
 }
 ----
 
