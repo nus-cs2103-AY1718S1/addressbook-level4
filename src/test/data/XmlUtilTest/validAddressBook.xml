@@ -15,6 +15,7 @@
         <isBlacklisted isPrivate="false">false</isBlacklisted>>
         <isWhitelisted isPrivate="false">false</isWhitelisted>>
         <hasOverdueDebt isPrivate="false">false</hasOverdueDebt>>
+        <hasDisplayPicture isPrivate="false">false</hasDisplayPicture>>
         <deadline isPrivate="false">13-11-2017</deadline>>
     </persons>
     <persons>
@@ -32,6 +33,7 @@
         <isBlacklisted isPrivate="false">false</isBlacklisted>>
         <isWhitelisted isPrivate="false">false</isWhitelisted>>
         <hasOverdueDebt isPrivate="false">false</hasOverdueDebt>>
+        <hasDisplayPicture isPrivate="false">false</hasDisplayPicture>>
         <deadline isPrivate="false">12-11-2017</deadline>>
     </persons>
     <persons>
@@ -49,6 +51,7 @@
         <isBlacklisted isPrivate="false">false</isBlacklisted>>
         <isWhitelisted isPrivate="false">false</isWhitelisted>>
         <hasOverdueDebt isPrivate="false">false</hasOverdueDebt>>
+        <hasDisplayPicture isPrivate="false">false</hasDisplayPicture>>
         <deadline isPrivate="false">17-12-2017</deadline>>
     </persons>
     <persons>
@@ -66,6 +69,7 @@
         <isBlacklisted isPrivate="false">false</isBlacklisted>>
         <isWhitelisted isPrivate="false">false</isWhitelisted>>
         <hasOverdueDebt isPrivate="false">false</hasOverdueDebt>>
+        <hasDisplayPicture isPrivate="false">false</hasDisplayPicture>>
         <deadline isPrivate="false">16-12-2017</deadline>>
     </persons>
     <persons>
@@ -83,6 +87,7 @@
         <isBlacklisted isPrivate="false">false</isBlacklisted>>
         <isWhitelisted isPrivate="false">false</isWhitelisted>>
         <hasOverdueDebt isPrivate="false">false</hasOverdueDebt>>
+        <hasDisplayPicture isPrivate="false">false</hasDisplayPicture>>
         <deadline isPrivate="false">15-12-2017</deadline>>
     </persons>
     <persons>
@@ -100,6 +105,7 @@
         <isBlacklisted isPrivate="false">false</isBlacklisted>>
         <isWhitelisted isPrivate="false">false</isWhitelisted>>
         <hasOverdueDebt isPrivate="false">false</hasOverdueDebt>>
+        <hasDisplayPicture isPrivate="false">false</hasDisplayPicture>>
         <deadline isPrivate="false">14-12-2017</deadline>>
     </persons>
     <persons>
@@ -117,6 +123,7 @@
         <isBlacklisted isPrivate="false">false</isBlacklisted>>
         <isWhitelisted isPrivate="false">false</isWhitelisted>>
         <hasOverdueDebt isPrivate="false">false</hasOverdueDebt>>
+        <hasDisplayPicture isPrivate="false">false</hasDisplayPicture>>
         <deadline isPrivate="false">13-12-2017</deadline>>
     </persons>
     <persons>
@@ -134,6 +141,7 @@
         <isBlacklisted isPrivate="false">false</isBlacklisted>>
         <isWhitelisted isPrivate="false">false</isWhitelisted>>
         <hasOverdueDebt isPrivate="false">false</hasOverdueDebt>>
+        <hasDisplayPicture isPrivate="false">false</hasDisplayPicture>>
         <deadline isPrivate="false">12-12-2017</deadline>>
     </persons>
     <persons>
@@ -151,6 +159,7 @@
         <isBlacklisted isPrivate="false">false</isBlacklisted>>
         <isWhitelisted isPrivate="false">false</isWhitelisted>>
         <hasOverdueDebt isPrivate="false">false</hasOverdueDebt>>
+        <hasDisplayPicture isPrivate="false">false</hasDisplayPicture>>
         <deadline isPrivate="false">11-12-2017</deadline>>
     </persons>
 </addressbook>
