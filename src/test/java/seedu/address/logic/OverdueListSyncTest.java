@@ -1,7 +1,9 @@
 package seedu.address.logic;
 
+import static junit.framework.TestCase.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_OVERDUE_PERSONS;
+import static seedu.address.testutil.TypicalPersons.getSizeOfTypicalOverdueListPersons;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.text.SimpleDateFormat;
@@ -38,6 +40,9 @@ public class OverdueListSyncTest {
 
     @Test
     public void execute_deleteCommandOnMasterListDeletesPersonFromOverdueList_success() throws Exception {
+        int numberOfOverduePersons = getSizeOfTypicalOverdueListPersons();
+        assertEquals(numberOfOverduePersons, model
+                .updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS));
         ReadOnlyPerson personInOverdueList = model.getFilteredOverduePersonList().get(0);
         Index personToTestIdx = Index.fromZeroBased(model.getFilteredPersonList().indexOf(personInOverdueList));
 
@@ -54,10 +59,16 @@ public class OverdueListSyncTest {
         model.setCurrentListName("overduelist");
 
         assertCommandSuccess(overdueListCommand, model, expectedMessage, expectedModel);
+        assertEquals(numberOfOverduePersons - 1,
+                model.updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS));
     }
 
     @Test
     public void execute_editCommandOnMasterListRemovesPersonFromOverdueList_success() throws Exception {
+        int numberOfOverduePersons = getSizeOfTypicalOverdueListPersons();
+        assertEquals(numberOfOverduePersons, model
+                .updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS));
+
         Person personInOverdueList = (Person) model.getFilteredOverduePersonList().get(0);
         Index personToTestIdx = Index.fromZeroBased(model.getFilteredPersonList().indexOf(personInOverdueList));
 
@@ -78,6 +89,8 @@ public class OverdueListSyncTest {
         model.setCurrentListName("overduelist");
 
         assertCommandSuccess(overdueListCommand, model, expectedMessage, expectedModel);
+        assertEquals(numberOfOverduePersons - 1,
+                model.updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS));
     }
 
     /**

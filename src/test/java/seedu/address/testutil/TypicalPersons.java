@@ -189,7 +189,16 @@ public class TypicalPersons {
     }
     //@@author
 
+    //@@author lawwman
     public static List<ReadOnlyPerson> getTypicalOverdueListPersons() {
         return new ArrayList<>(Arrays.asList(KENNARD));
+    }
+
+    public static int getSizeOfTypicalPersonsList() {
+        return getTypicalPersons().size();
+    }
+
+    public static int getSizeOfTypicalOverdueListPersons() {
+        return getTypicalOverdueListPersons().size();
     }
 }
