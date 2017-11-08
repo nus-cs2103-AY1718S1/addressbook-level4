@@ -1,5 +1,5 @@
 # LuLechuan
-###### /java/seedu/address/logic/commands/CustomCommand.java
+###### \java\seedu\address\logic\commands\CustomCommand.java
 ``` java
 /**
  * Adds or updates a custom field of a person identified using it's last displayed index from the address book.
@@ -73,7 +73,7 @@ public class CustomCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/DeleteByNameCommand.java
+###### \java\seedu\address\logic\commands\DeleteByNameCommand.java
 ``` java
 /**
  * Deletes a person identified using the person's name from the address book.
@@ -131,7 +131,7 @@ public class DeleteByNameCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/UploadPhotoCommand.java
+###### \java\seedu\address\logic\commands\UploadPhotoCommand.java
 ``` java
 /**
  * Adds or updates the photo of a person identified using it's last displayed index from the address book.
@@ -205,7 +205,7 @@ public class UploadPhotoCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/CustomCommandParser.java
+###### \java\seedu\address\logic\parser\CustomCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new CustomCommand object
@@ -240,7 +240,7 @@ public class CustomCommandParser implements Parser<CustomCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/DeleteByNameCommandParser.java
+###### \java\seedu\address\logic\parser\DeleteByNameCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new DeleteByNameCommand object
@@ -264,7 +264,7 @@ public class DeleteByNameCommandParser implements Parser<DeleteByNameCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/UploadPhotoCommandParser.java
+###### \java\seedu\address\logic\parser\UploadPhotoCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new UploadPhotoCommand object
@@ -303,7 +303,7 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
 
 }
 ```
-###### /java/seedu/address/model/customField/CustomField.java
+###### \java\seedu\address\model\customField\CustomField.java
 ``` java
 /**
  * Represents a CustomField in the address book.
@@ -369,7 +369,7 @@ public class CustomField {
 
 }
 ```
-###### /java/seedu/address/model/customField/UniqueCustomFieldList.java
+###### \java\seedu\address\model\customField\UniqueCustomFieldList.java
 ``` java
 /**
  * A list of customField that enforces no nulls and uniqueness between its elements.
@@ -516,7 +516,7 @@ public class UniqueCustomFieldList implements Iterable<CustomField> {
 
 }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     public void setPhoto(Photo photo) {
         this.photo.set(requireNonNull(photo));
@@ -532,7 +532,7 @@ public class UniqueCustomFieldList implements Iterable<CustomField> {
         return photo.get();
     }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     /**
      * Returns an immutable custom field set, which throws {@code UnsupportedOperationException}
@@ -564,7 +564,7 @@ public class UniqueCustomFieldList implements Iterable<CustomField> {
         customFields.set(new UniqueCustomFieldList(replacement));
     }
 ```
-###### /java/seedu/address/model/person/Photo.java
+###### \java\seedu\address\model\person\Photo.java
 ``` java
 /**
  * Represents a Person's photo in the address book.
@@ -648,7 +648,7 @@ public class Photo {
 
 }
 ```
-###### /java/seedu/address/storage/XmlAdaptedCustomField.java
+###### \java\seedu\address\storage\XmlAdaptedCustomField.java
 ``` java
 /**
  * JAXB-friendly adapted version of the Custom Field.
@@ -692,7 +692,7 @@ public class XmlAdaptedCustomField {
 
 }
 ```
-###### /java/seedu/address/storage/XmlAdaptedPhone.java
+###### \java\seedu\address\storage\XmlAdaptedPhone.java
 ``` java
 /**
  * JAXB-friendly adapted version of the Phone.

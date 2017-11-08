@@ -38,6 +38,11 @@ public class CommandBox extends UiPart<Region> {
         historySnapshot = logic.getHistorySnapshot();
     }
 
+    //@@author willxujun
+    public TextField getCommandTextField() {
+        return commandTextField;
+    }
+    //@@author
     /**
      * Handles the key press event, {@code keyEvent}.
      */

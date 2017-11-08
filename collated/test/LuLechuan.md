@@ -1,5 +1,5 @@
 # LuLechuan
-###### /java/seedu/address/logic/commands/CustomCommandTest.java
+###### \java\seedu\address\logic\commands\CustomCommandTest.java
 ``` java
 public class CustomCommandTest {
 
@@ -34,7 +34,7 @@ public class CustomCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/DeleteByNameCommandTest.java
+###### \java\seedu\address\logic\commands\DeleteByNameCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
