@@ -97,7 +97,7 @@ public class GeneralBookParser {
                 || commandWord.equals(aliasSettings.getCurrentUserCommand().getAlias())) {
             return new CurrentUserCommand();
         } else if (commandWord.equals(SaveCommand.COMMAND_WORD)) {
-//                || commandWord.equals(aliasSettings.getSaveCommand().getAlias()))
+            //    || commandWord.equals(aliasSettings.getSaveCommand().getAlias()))
             return new SaveCommand();
         } else if (commandWord.equals(AddCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getAddCommand().getAlias())) {

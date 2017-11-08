@@ -95,6 +95,9 @@ public class MainApp extends Application {
         initEventsCenter();
     }
 
+    /**
+     * Decrypt PUBLIC.encrypted file
+     */
     private void decryptPublicFile() {
         try {
             FileEncryptor.decryptFile("PUBLIC", "PUBLIC");
