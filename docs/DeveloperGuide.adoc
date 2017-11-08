@@ -493,7 +493,9 @@ Examples for a invalid photo file name:
 * `123.txt`
 * `EddyTan`
 //end::photo[]
+
 =======
+=== Load command
 
 Load command's implementation is similar to other commands: LoadCommand class inherits UndoableCommand and load command's parser implements Parser interface. The following sequence diagram shows the execution of command "load testbook.xml"
 
