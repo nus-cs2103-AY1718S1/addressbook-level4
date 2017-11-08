@@ -22,10 +22,7 @@ public class SortCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "All contacts are sorted alphabetically by name.";
 
-    private ArrayList<ReadOnlyPerson> contactList;
-
     public SortCommand() {
-        contactList = new ArrayList<>();
     }
 
     @Override
