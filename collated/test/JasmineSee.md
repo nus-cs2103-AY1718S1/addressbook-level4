@@ -1,5 +1,5 @@
 # JasmineSee
-###### /java/seedu/address/logic/commands/RemoveTagCommandTest.java
+###### \java\seedu\address\logic\commands\RemoveTagCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for RemoveTagCommand.
@@ -79,7 +79,7 @@ public class RemoveTagCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/TagCommandTest.java
+###### \java\seedu\address\logic\commands\TagCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code TagCommand}.
@@ -155,7 +155,7 @@ public class TagCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/UploadPhotoCommandTest.java
+###### \java\seedu\address\logic\commands\UploadPhotoCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code UploadPhotoCommand}.
@@ -163,12 +163,14 @@ public class TagCommandTest {
 public class UploadPhotoCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private String validFilePath = "./src/test/resources/photos/connectus_icon.png";
+    private String invalidFilePath = "./src/test/resources/photos/default.jpeg";
 
     @Test
     public void execute_validIndex_success() throws Exception {
         ReadOnlyPerson personToUploadPhoto = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UploadPhotoCommand uploadPhotoCommand = prepareCommand(INDEX_FIRST_PERSON,
-                "./src/test/resources/photos/connectus_icon.png");
+                validFilePath);
 
         String expectedMessage = String.format(UploadPhotoCommand.MESSAGE_UPLOAD_IMAGE_SUCCESS, personToUploadPhoto);
 
@@ -181,7 +183,7 @@ public class UploadPhotoCommandTest {
     public void execute_invalidIndexValidFile_throwsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         UploadPhotoCommand uploadPhotoCommand = prepareCommand(outOfBoundIndex,
-                "./src/test/resources/photos/connectus_icon.png");
+                validFilePath);
 
         assertCommandFailure(uploadPhotoCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -190,7 +192,7 @@ public class UploadPhotoCommandTest {
     public void execute_validIndexInvalidFile_throwsCommandException() throws Exception {
         ReadOnlyPerson personToUploadPhoto = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UploadPhotoCommand uploadPhotoCommand = prepareCommand(INDEX_FIRST_PERSON,
-                "./src/test/resources/photos/default.jpeg");
+                invalidFilePath);
 
         assertCommandFailure(uploadPhotoCommand, model, UploadPhotoCommand.MESSAGE_UPLOAD_IMAGE_FALURE);
     }
@@ -228,7 +230,7 @@ public class UploadPhotoCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/parser/RemoveTagCommandParserTest.java
+###### \java\seedu\address\logic\parser\RemoveTagCommandParserTest.java
 ``` java
 public class RemoveTagCommandParserTest {
     private RemoveTagCommandParser parser = new RemoveTagCommandParser();
@@ -249,7 +251,7 @@ public class RemoveTagCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/TagCommandParserTest.java
+###### \java\seedu\address\logic\parser\TagCommandParserTest.java
 ``` java
 public class TagCommandParserTest {
     private TagCommandParser parser = new TagCommandParser();
@@ -267,7 +269,7 @@ public class TagCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/UploadPhotoCommandParserTest.java
+###### \java\seedu\address\logic\parser\UploadPhotoCommandParserTest.java
 ``` java
 public class UploadPhotoCommandParserTest {
     private UploadPhotoCommandParser parser = new UploadPhotoCommandParser();
@@ -291,7 +293,7 @@ public class UploadPhotoCommandParserTest {
     }
 }
 ```
-###### /java/systemtests/TagCommandSystemTest.java
+###### \java\systemtests\TagCommandSystemTest.java
 ``` java
 public class TagCommandSystemTest extends AddressBookSystemTest {
 
