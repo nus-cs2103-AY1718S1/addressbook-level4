@@ -70,11 +70,6 @@
 
           <AnchorPane minWidth="500" GridPane.columnIndex="0" GridPane.rowIndex="0">
             <children>
-               <ImageView fitHeight="283.0" fitWidth="231.0" nodeOrientation="INHERIT" pickOnBounds="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
-                  <image>
-                     <Image url="@../docs/images/default_photo.png" />
-                  </image>
-               </ImageView>
             </children>
           </AnchorPane>
       <StackPane fx:id="personInformationPanelPlaceholder" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
