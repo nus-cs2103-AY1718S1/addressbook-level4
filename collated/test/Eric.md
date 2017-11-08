@@ -596,33 +596,9 @@ public class CalendarWindowTest extends GuiUnitTest {
     @Test
     public void display() {
         assertNotNull(calendarWindow.getRoot());
+        //default page should be daily
+        assertEquals(calendarWindow.getRoot().getSelectedPage(), calendarWindow.getRoot().getDayPage());
     }
-
-    @Test
-    public void setNextViewTest() {
-
-        //Default view should be day view
-        CalendarView calendarView = calendarWindow.getRoot();
-        assertEquals(calendarView.getSelectedPage(), calendarView.getDayPage());
-
-        //Switch to week view
-        guiRobot.push(KeyCode.C);
-        assertEquals(calendarView.getSelectedPage(), calendarView.getWeekPage());
-
-        //Switch to month view
-        guiRobot.push(KeyCode.C);
-        assertEquals(calendarView.getSelectedPage(), calendarView.getMonthPage());
-
-        //Switch to year view
-        guiRobot.push(KeyCode.C);
-        assertEquals(calendarView.getSelectedPage(), calendarView.getYearPage());
-
-        //Switch to day view
-        guiRobot.push(KeyCode.C);
-        assertEquals(calendarView.getSelectedPage(), calendarView.getDayPage());
-    }
-
-
 }
 ```
 ###### \java\systemtests\AppointmentSystemTest.java
@@ -643,6 +619,23 @@ public class AppointmentSystemTest extends AddressBookSystemTest {
     }
 
 
+    @Test
+    public void changeCalendarView() {
+        assertCommandSuccess(CalendarViewCommand.COMMAND_WORD + " d", CalendarViewCommand.MESSAGE_SUCCESS);
+        assertCommandSuccess(CalendarViewCommand.COMMAND_WORD + " w", CalendarViewCommand.MESSAGE_SUCCESS);
+        assertCommandSuccess(CalendarViewCommand.COMMAND_WORD + " m", CalendarViewCommand.MESSAGE_SUCCESS);
+        assertCommandSuccess(CalendarViewCommand.COMMAND_WORD + " y", CalendarViewCommand.MESSAGE_SUCCESS);
+        assertCommandSuccess(CalendarViewCommand.COMMAND_WORD + " q",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, CalendarViewCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * Performs verification that calendarview changed
+     */
+    private void assertCommandSuccess(String command, String message) {
+        executeCommand(command);
+        assertEquals(getResultDisplay().getText() , message);
+    }
 
     /**
      * Performs verification that the expected model is the same after command is executing

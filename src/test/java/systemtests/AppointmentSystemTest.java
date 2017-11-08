@@ -2,13 +2,19 @@ package systemtests;
 
 import org.junit.Test;
 
+import seedu.address.commons.events.ui.CalendarViewEvent;
 import seedu.address.logic.commands.AddAppointmentCommand;
+import seedu.address.logic.commands.CalendarViewCommand;
 import seedu.address.logic.commands.CancelAppointmentCommand;
 import seedu.address.logic.parser.AddAppointmentParser;
+import seedu.address.logic.parser.CalendarViewParser;
 import seedu.address.model.Model;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+
+import static org.junit.Assert.assertEquals;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 //@@author Eric
 public class AppointmentSystemTest extends AddressBookSystemTest {
@@ -27,6 +33,23 @@ public class AppointmentSystemTest extends AddressBookSystemTest {
     }
 
 
+    @Test
+    public void changeCalendarView() {
+        assertCommandSuccess(CalendarViewCommand.COMMAND_WORD + " d", CalendarViewCommand.MESSAGE_SUCCESS);
+        assertCommandSuccess(CalendarViewCommand.COMMAND_WORD + " w", CalendarViewCommand.MESSAGE_SUCCESS);
+        assertCommandSuccess(CalendarViewCommand.COMMAND_WORD + " m", CalendarViewCommand.MESSAGE_SUCCESS);
+        assertCommandSuccess(CalendarViewCommand.COMMAND_WORD + " y", CalendarViewCommand.MESSAGE_SUCCESS);
+        assertCommandSuccess(CalendarViewCommand.COMMAND_WORD + " q",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, CalendarViewCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * Performs verification that calendarview changed
+     */
+    private void assertCommandSuccess(String command, String message) {
+        executeCommand(command);
+        assertEquals(getResultDisplay().getText() , message);
+    }
 
     /**
      * Performs verification that the expected model is the same after command is executing

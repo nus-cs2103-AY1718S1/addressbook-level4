@@ -20,6 +20,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.CalendarViewEvent;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -46,7 +47,6 @@ public class CalendarWindow extends UiPart<Region> {
         calendarView.setToday(LocalDate.now());
         calendarView.setTime(LocalTime.now());
         updateCalendar();
-        setKeyBindings();
         disableViews();
         registerAsAnEventHandler(this);
     }
@@ -62,32 +62,26 @@ public class CalendarWindow extends UiPart<Region> {
         calendarView.showDayPage();
     }
 
-    private void setKeyBindings() {
-
-        calendarView.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
-            case C:
-                event.consume();
-                showNextPage();
-                break;
-            default:
-            }
-        });
-    }
-
     /**
-     * When user press c, the calendar will shift to the next view
-     * Order of shifting: day -> week -> month -> year
+     * Changes calendar view accordingly
      */
-    public void showNextPage() {
-        if (calendarView.getSelectedPage() == calendarView.getMonthPage()) {
-            calendarView.showYearPage();
-        } else if (calendarView.getSelectedPage() == calendarView.getDayPage()) {
-            calendarView.showWeekPage();
-        } else if (calendarView.getSelectedPage() == calendarView.getYearPage()) {
+    private void showPage(Character c) {
+        switch(c) {
+        case ('d'):
             calendarView.showDayPage();
-        } else {
+            return;
+        case ('w'):
+            calendarView.showWeekPage();
+            return;
+        case ('m'):
             calendarView.showMonthPage();
+            return;
+        case ('y'):
+            calendarView.showYearPage();
+            return;
+        default:
+            //should not reach here
+            assert (false);
         }
     }
 
@@ -102,6 +96,12 @@ public class CalendarWindow extends UiPart<Region> {
                 this::updateCalendar
         );
 
+    }
+
+    @Subscribe
+    private void handleCalendarViewEvent(CalendarViewEvent event) {
+        Character c = event.c;
+        Platform.runLater(() -> showPage(c));
     }
 
     /**
