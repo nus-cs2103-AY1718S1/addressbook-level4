@@ -24,6 +24,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
      * and returns a new EmailCommand object
      * /@throws ParseException if the user input does not conform the expected format
      */
+
     public EmailCommand parse(String args) throws ParseException {
         requireNonNull(args);
         String trimmedArgs = args.trim();
