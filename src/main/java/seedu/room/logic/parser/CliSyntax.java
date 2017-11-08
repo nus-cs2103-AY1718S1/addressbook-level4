@@ -14,6 +14,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_TEMPORARY = new Prefix("temp/");
     public static final Prefix PREFIX_TITLE = new Prefix("ti/");
     public static final Prefix PREFIX_DESCRIPTION = new Prefix("des/");
-    public static final Prefix PREFIX_LOCATION = new Prefix("l/");
-    public static final Prefix PREFIX_DATETIME = new Prefix("tme/");
+    public static final Prefix PREFIX_LOCATION = new Prefix("loc/");
+    public static final Prefix PREFIX_DATETIME = new Prefix("time/");
 }
