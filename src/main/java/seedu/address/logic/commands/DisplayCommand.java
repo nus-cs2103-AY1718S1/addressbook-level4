@@ -22,7 +22,7 @@ public class DisplayCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the event identified by the index number used in the last event listing "
-            + "and displays the emails of every person that has joined.\n"
+            + "and displays the target particular of every person that has joined.\n"
             + "Parameters: INDEX (must be a positive integer) PARTICULAR (either email, phone, or address)"
             + "Example: " + COMMAND_WORD + " 1 " + PARTICULAR_EMAIL;
     public static final String MESSAGE_NO_PARTICIPANT = "No one has joined this event.";

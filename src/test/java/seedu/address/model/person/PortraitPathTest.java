@@ -33,6 +33,6 @@ public class PortraitPathTest {
         assertTrue(PortraitPath.isValidPortraitPath("D:/name12WithNumber34.png"));
         assertTrue(PortraitPath.isValidPortraitPath("E:/very/very/deep/path/name_with_underscore.jpg"));
         assertTrue(PortraitPath.isValidPortraitPath("F:/name with space.png"));
-        assertTrue(PortraitPath.isValidPortraitPath("G:/Name_mixed/ with every\thing 1234.png"));
+        assertTrue(PortraitPath.isValidPortraitPath("G:/Name_mixed/ with -every\thi-ng 1234.png"));
     }
 }

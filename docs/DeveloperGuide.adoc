@@ -740,7 +740,8 @@ The `SelectJoinedEventsCommand` then creates a `CommandResult` object and return
 **Cons:** Users would have to type more if the name is long. User may mistype the name. +
 // end::selectE[]
 
-// tag::joinDisjoin[]
+
+// tag::interaction[]
 === Person-Event interaction
 In this application, we allow users to connect events and persons to show that some persons participate some events. +
 We will explain it in terms of Model and Storage. +
@@ -789,8 +790,9 @@ _Figure 3.9.3: interaction storage_
 **Alternative 2:** Use association class +
 **Pros:** Can save every participation entry. +
 **Cons:** Need to implement extra storage for association class, and it is costly in terms of time to operate `show person` and `select event`.
-// end::joinDisjoin[]
+// end::interaction[]
 
+// tag::portrait[]
 === Portrait Command mechanism
 The portrait command is facilitated by `LogicManager` and is extended from `UndoableCommand`. +
 The following diagram shows the structure of PortraitPath class:
@@ -820,6 +822,7 @@ _Figure 3.10.2 defensive code for loading file_
 **Alternative 2:** Store the image file. +
 **Pros:** No need to load the image every time. +
 **Cons:** Hard to store images into .xml file. +
+// end::portrait[]
 
 // tag::toggle[]
 === Toggle mechanism
@@ -911,8 +914,6 @@ public class TogglePanel extends UiPart<Region> {
 As seen from the above code snippet, the `BrowserPanel` handles the event posted whenever the select command is executed.
 It does so by raising a `ToggleSelectEvent`, which the `TogglePanel` handles by calling `browserToFront` method which will set the browser to be at the front.
 
-// end::toggle[]
-
 [discrete]
 ===== Design Considerations
 
@@ -923,6 +924,7 @@ It does so by raising a `ToggleSelectEvent`, which the `TogglePanel` handles by 
 **Alternative 2:** Have each togglable panel know how to toggle. +
 **Pros:** No need change the FXML file when changes are made to what is togglable. +
 **Cons:** Will have to make large changes to the actual panels themselves. +
+// end::toggle[]
 
 === Logging
 

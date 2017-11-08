@@ -185,6 +185,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::editE[]
 ==== Editing an event : `editE`
 You can use it to edits an existing event in the event list. +
 Format: `editE INDEX [en/NAME] [ed/DESCRIPTION] [et/TIME]`
@@ -207,6 +208,7 @@ You will see the following after typing 4 above edit command:
 
 image::UG_edit.png[width="790"]
 _Figure 3.5: edit command result_
+// end::editE[]
 
 // tag::find[]
 === Finding
@@ -335,6 +337,7 @@ You will see the following after typing above commands: +
 image::UG_join.png[width='790']
 _Figure 3.8: join result_
 
+// tag::disjoin[]
 === Disconnecting a person to an event : `disjoin`
 You can use it to show a person is not involved in an event any more. +
 Format : `disjoin p/INDEX_P e/INDEX_E` +
@@ -358,6 +361,7 @@ You will see the following after typing above commands: +
 
 image::UG_disjoin.png[width='790']
 _Figure 3.9: disjoin result_
+// end::disjoin[]
 
 // tag::showP[]
 === Showing all participants of an event : `showP`
@@ -437,9 +441,17 @@ You will see the following after typing `list` and `displayEmails 1`: +
 image::UG_displayEmails.png[width='790']
 _Figure 3.12:  display emails result_
 
+// tag::portrait[]
 === Attaching a portrait to a person: `portrait`
 
 You can use this command to attach a portrait to a person so that you can identify him easily.
+
+[NOTE]
+`portrait` command is the only way to change a person's portrait. +
+The default portrait for every person is the following picture:
+
+image::portraitDefault.png[]
+_Figure 3.13.1 default portrait_
 
 Format: `portrait PERSON_INDEX p/IMAGE_FILE_PATH`
 
@@ -460,13 +472,15 @@ The image named `sample picture.png` and located at `C:/Users/My Profile/Images/
 ****
 Assume the `sample picture.png` looks like this:
 
-image::sample.png[]
-_Figure 3.12.1 the sample.png_
+image::portraitSample.png[]
+_Figure 3.13.2 the sample.png_
 
 Then you will see the following after typing the example portrait command
 
 image::UG_portrait.png[]
-_Figure 3.12.2 attach a portrait_
+_Figure 3.13.3 attach a portrait_
+
+// end::portrait[]
 
 // tag::toggle[]
 === Toggling between details and browser: `toggle`
