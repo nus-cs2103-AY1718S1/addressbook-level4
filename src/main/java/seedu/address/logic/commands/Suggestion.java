@@ -3,10 +3,10 @@ package seedu.address.logic.commands;
 import static seedu.address.commons.core.Messages.MESSAGE_PROMPT_COMMAND;
 import static seedu.address.commons.util.StringUtil.levenshteinDistance;
 import static seedu.address.logic.parser.CliSyntax.POSSIBLE_COMMAND_WORDS;
-import static seedu.address.logic.parser.ParserUtil.parseFirstFilePath;
-import static seedu.address.logic.parser.ParserUtil.parseFirstInt;
 import static seedu.address.logic.parser.ParserUtil.isParseableFilePath;
 import static seedu.address.logic.parser.ParserUtil.isParseableInt;
+import static seedu.address.logic.parser.ParserUtil.parseFirstFilePath;
+import static seedu.address.logic.parser.ParserUtil.parseFirstInt;
 
 import java.util.Arrays;
 import java.util.HashSet;
