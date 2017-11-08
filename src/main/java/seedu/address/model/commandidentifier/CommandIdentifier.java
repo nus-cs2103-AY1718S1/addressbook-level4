@@ -47,6 +47,7 @@ public class CommandIdentifier {
             + RedoCommand.COMMAND_WORD + ", "
             + ScheduleCommand.COMMAND_WORD + ", "
             + LocateCommand.COMMAND_WORD + ", "
+            + Country.COMMAND_WORD + ", "
             + UndoCommand.COMMAND_WORD;
 
     public static final List<String> COMMAND_VALIDATION_LIST = ImmutableList.of(
@@ -64,6 +65,7 @@ public class CommandIdentifier {
             RedoCommand.COMMAND_WORD, RedoCommand.COMMAND_ALIAS,
             ScheduleCommand.COMMAND_WORD, ScheduleCommand.COMMAND_ALIAS,
             LocateCommand.COMMAND_WORD, LocateCommand.COMMAND_ALIAS,
+            Country.COMMAND_WORD, // no alias
             UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_ALIAS);
 
     public final String value;
