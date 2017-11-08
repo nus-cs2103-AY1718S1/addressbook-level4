@@ -29,7 +29,8 @@ public class ChooseCommandTest {
     }
 
     /**
-     * Executes a {@code ChooseCommand} with the given {@code arguments}, and checks that {@code JumpToBrowserListRequestEvent}
+     * Executes a {@code ChooseCommand} with the given {@code arguments},
+     * and checks that {@code JumpToBrowserListRequestEvent}
      * is raised with the correct index.
      */
     private void assertExecutionSuccess(String args) {
@@ -48,7 +49,8 @@ public class ChooseCommandTest {
     }
 
     /**
-     *  Executes a {@code ChooseCommand} with the given {@code arguments}, and checks that a {@code CommandException}
+     * Executes a {@code ChooseCommand} with the given {@code arguments},
+     * and checks that a {@code CommandException}
      * is thrown with the {@code expectedMessage}.
      */
     private void assertExecutionFailure(String args, String expectedMessage) {
