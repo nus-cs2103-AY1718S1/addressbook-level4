@@ -199,6 +199,7 @@ Given below is the *_Sequence Diagram_* _(Figure 2.2.2.3)_ for interactions with
 image::DeletePersonSdForLogic.png[width="800"]
 _Figure 2.2.2.3: Interactions Inside the Logic Component for the `delete 1` Command_
 
+// tag::model[]
 ==== Model component
 
 The following diagram _(Figure 2.2.3)_ shows the class structure of the Model component.
@@ -225,6 +226,7 @@ In detail, the `AddressBook` and the `EventList` are respectively responsible fo
 * The `EventList`
 ** stores event's information as an event list.
 ** for each event in the list, the event maintains a modifiable list to keep track of who the participants of the events are.
+// end::model[]
 
 ==== Storage component
 
@@ -493,7 +495,7 @@ Similar as `add` command, if the `editedPerson` causes some change in `tagList`,
 1. Assign an empty address book to the model. +
 // end::undoredo[]
 
-//tag:: find[]
+// tag::find[]
 === Find mechanism
 The Find mechanism is facilitated by `NameContainsKeyWordPredicate` class, which resides in `model.person` package. This command
 supports users of finding a list of persons by tags and names. Any person that has either of the entered keyword will be filtered
@@ -592,7 +594,7 @@ The sort command object receives the sorted list and creates `CommandResult` obj
 **Cons:** Because address/email/phone number is unique, you can usually find them without sorting the list. +
 // end::sort[]
 
-// tag:: addE[]
+// tag::addE[]
 === AddEvent mechanism
 The add event command is facilitated by `LogicManager` class. It allows user to add a new event to the event list. +
 
@@ -601,11 +603,11 @@ The following *_sequence diagram_* _(Figure 3.4)_ shows how add event command wo
 image::AddEventCommandSequenceDiagram.png[width="800"]
 _Figure 3.4: AddEvent command sequence diagram_
 
-The user enters an addEvent command, which is received by `LogicManager`. `LogicManager` calls `AddressBookParser` to parse the command. +
-`AddressBookParser` will first check the format of the parameters. If the format is valid, it calls `AddEventCommand` constructor, which returns an `AddEventCommand` object. +
-`Logic Manager` receives the `AddEventCommand` object and calls execute(). Then, `AddEventCommand` uses `Model` to execute adding operation, and returns `CommandResult`. +
+The user enters an addEvent command, which is received by `LogicManager`. `LogicManager` calls `AddressBookParser` to parse the command.
+`AddressBookParser` will first check the format of the parameters. If the format is valid, it calls `AddEventCommand` constructor, which returns an `AddEventCommand` object.
+`Logic Manager` receives the `AddEventCommand` object and calls execute(). Then, `AddEventCommand` uses `Model` to execute adding operation, and returns `CommandResult`.
 `Logic Manager` receives the `CommandResult`, and returns to `UI`. +
-// end:: addE[]
+// end::addE[]
 
 // tag::listE[]
 === ListEvent mechanism

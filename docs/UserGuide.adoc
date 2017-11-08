@@ -96,6 +96,7 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+// tag::addE[]
 ==== Adding an event : `addE`
 You can use it to add an event to the event list +
 Format: `addE en/EVENT_NAME ed/EVENT_DESCRIPTION et/EVENT_TIME`
@@ -127,6 +128,7 @@ You will see the following after typing 4 above example add command to
 
 image::UG_add.png[width="790"]
 _Figure 3.2.2: add command result_
+// end::addE[]
 
 === Listing
 
@@ -314,6 +316,7 @@ You will see the following after typing `delete 1` and `deleteE 1`:
 image::UG_delete.png[width="790"]
 _Figure 3.7: delete command result_
 
+// tag::join[]
 === Connecting a person to an event : `join`
 You can use it to show a person is involved in an event. +
 Format : `join p/INDEX_P e/INDEX_E` +
@@ -335,6 +338,7 @@ You will see the following after typing above commands: +
 
 image::UG_join.png[width='790']
 _Figure 3.8: join result_
+// end::join[]
 
 // tag::disjoin[]
 === Disconnecting a person to an event : `disjoin`
