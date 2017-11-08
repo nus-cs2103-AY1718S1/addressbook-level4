@@ -99,13 +99,13 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: undo adding Amy to the list -> Amy deleted */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, model, expectedResultMessage);
+        assertUndoCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: redo adding Amy to the list -> Amy added again */
         command = RedoCommand.COMMAND_WORD;
         model.addPerson(toAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, model, expectedResultMessage);
+        assertRedoCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a duplicate person -> rejected */
 
@@ -139,7 +139,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
 
-        assertCommandSuccess(command, toAdd);
+        assertCommandSuccess(command, toAdd, Index.fromZeroBased(model.getFilteredPersonList().size()));
 
         /* Case: add a person with all fields same as another person in the address book except phone -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_BOB)
@@ -151,7 +151,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + SCH_EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
+        assertCommandSuccess(command, toAdd, Index.fromZeroBased(model.getFilteredPersonList().size()));
 
         /* Case: add a person with all fields same as another person in the address book except home number -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
@@ -163,7 +163,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + SCH_EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
+        assertCommandSuccess(command, toAdd, Index.fromZeroBased(model.getFilteredPersonList().size()));
 
         /* Case: add a person with all fields same as another person in the address book except email -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
@@ -175,7 +175,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + SCH_EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
+        assertCommandSuccess(command, toAdd, Index.fromZeroBased(model.getFilteredPersonList().size()));
 
         /* Case: add a person with all fields same as another person in the address book except schEmail -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
@@ -190,7 +190,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
 
-        assertCommandSuccess(command, toAdd);
+        assertCommandSuccess(command, toAdd, Index.fromZeroBased(model.getFilteredPersonList().size()));
 
         /* Case: add a person with all fields same as another person in the address book except address -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
@@ -202,7 +202,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + SCH_EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_BOB
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
+        assertCommandSuccess(command, toAdd, Index.fromZeroBased(model.getFilteredPersonList().size()));
 
         /* Case: filters the person list before adding -> added */
         executeCommand(FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER);
@@ -383,6 +383,32 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         } else {
             assertSelectedCardChanged(expectedSelectedCardIndex);
         }
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, Model, String)}
+     * except that the selected card is deselected.
+     * @see AddCommandSystemTest#assertCommandSuccess(String, Model, String)
+     */
+    private void assertUndoCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardDeselected();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, Model, String)}
+     * except that the selected card is deselected.
+     * @see AddCommandSystemTest#assertCommandSuccess(String, Model, String)
+     */
+    private void assertRedoCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertPersonListSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
     }
