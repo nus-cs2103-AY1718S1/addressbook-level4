@@ -1,8 +1,11 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.index.Index.INDEX_VALIDATION_REGEX;
 import static seedu.address.commons.util.StringUtil.replaceBackslashes;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.model.person.Address.ADDRESS_BLOCK_NUMBER_MATCHING_REGEX;
 import static seedu.address.model.person.Address.ADDRESS_BLOCK_WORD_MATCHING_REGEX;
 import static seedu.address.model.person.Email.EMAIL_VALIDATION_REGEX;
@@ -128,7 +131,7 @@ public class ParserUtil {
      * @return {@code true} if successfully parsed,
      * {@code false} otherwise.
      */
-    public static boolean isParseableInt(String value) {
+    public static boolean isParsableInt(String value) {
         try {
             parseFirstInt(value);
             return true;
@@ -144,7 +147,7 @@ public class ParserUtil {
      * @throws NumberFormatException if no integer was found.
      */
     public static int parseFirstInt(String value) throws NumberFormatException {
-        Pattern numbers = Pattern.compile("-?\\d+");
+        Pattern numbers = Pattern.compile(INDEX_VALIDATION_REGEX);
         Matcher m = numbers.matcher(value);
         if (m.find()) {
             int firstInt = Integer.parseInt(m.group());
@@ -179,7 +182,7 @@ public class ParserUtil {
      * @return {@code true} if successfully parsed,
      * {@code false} otherwise.
      */
-    public static boolean isParseableFilePath(String value) {
+    public static boolean isParsableFilePath(String value) {
         try {
             String tryFilepath = parseFirstFilePath(value);
             return isValidRolodexStorageFilepath(tryFilepath);
@@ -195,8 +198,7 @@ public class ParserUtil {
      * @throws IllegalArgumentException if no file path was found.
      */
     public static String parseFirstFilePath(String value) throws IllegalArgumentException {
-        Pattern filepath = Pattern.compile(FILEPATH_REGEX_NON_STRICT);
-        Matcher m = filepath.matcher(replaceBackslashes(value).trim());
+        Matcher m = Pattern.compile(FILEPATH_REGEX_NON_STRICT).matcher(replaceBackslashes(value).trim());
         if (m.find() && isValidRolodexStorageFilepath(m.group())) {
             return m.group().replaceAll(ROLODEX_FILE_EXTENSION, "").trim() + ROLODEX_FILE_EXTENSION;
         }
@@ -210,7 +212,7 @@ public class ParserUtil {
      * @return {@code true} if successfully parsed,
      * {@code false} otherwise.
      */
-    public static boolean isParseablePhone(String value) {
+    public static boolean isParsablePhone(String value) {
         try {
             Optional possible = parsePhone(Optional.of(parseFirstPhone(value)));
             return possible.isPresent() && possible.get() instanceof Phone;
@@ -226,8 +228,7 @@ public class ParserUtil {
      * @throws IllegalArgumentException if no phone was found.
      */
     public static String parseFirstPhone(String value) throws IllegalArgumentException {
-        Pattern phone = Pattern.compile(PHONE_VALIDATION_REGEX);
-        Matcher m = phone.matcher(value);
+        Matcher m = Pattern.compile(PHONE_VALIDATION_REGEX).matcher(value);
         if (m.find()) {
             return m.group();
         }
@@ -258,7 +259,7 @@ public class ParserUtil {
      * @return {@code true} if successfully parsed,
      * {@code false} otherwise.
      */
-    public static boolean isParseableEmail(String value) {
+    public static boolean isParsableEmail(String value) {
         try {
             Optional possible = parseEmail(Optional.of(parseFirstEmail(value)));
             return possible.isPresent() && possible.get() instanceof Email;
@@ -274,8 +275,7 @@ public class ParserUtil {
      * @throws IllegalArgumentException if no email was found.
      */
     public static String parseFirstEmail(String value) throws IllegalArgumentException {
-        Pattern email = Pattern.compile(EMAIL_VALIDATION_REGEX);
-        Matcher m = email.matcher(value);
+        Matcher m = Pattern.compile(EMAIL_VALIDATION_REGEX).matcher(value);
         if (m.find()) {
             return m.group();
         }
