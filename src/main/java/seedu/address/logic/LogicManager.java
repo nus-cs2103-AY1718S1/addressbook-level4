@@ -64,6 +64,7 @@ public class LogicManager extends ComponentManager implements Logic {
         return autocompleteManager;
     }
 
+    //@@author namvd2709
     @Override
     public AppointmentReminder getAppointmentReminder() {
         return appointmentReminder;

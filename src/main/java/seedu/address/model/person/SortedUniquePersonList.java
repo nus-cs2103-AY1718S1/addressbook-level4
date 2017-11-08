@@ -112,7 +112,6 @@ public class SortedUniquePersonList implements Iterable<Person> {
     }
 
     //@@author namvd2709
-
     /**
      * Returns all the appointments in the internal list
      */
@@ -129,6 +128,7 @@ public class SortedUniquePersonList implements Iterable<Person> {
         return appointments;
     }
 
+    //@@author
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */

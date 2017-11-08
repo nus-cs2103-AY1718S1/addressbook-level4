@@ -146,6 +146,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedReadOnlyPerson);
 
         Person editedPerson = new Person(editedReadOnlyPerson);
+        //@@author namvd2709
         Appointment oldAppointment = target.getAppointment();
         Appointment newAppointment = editedPerson.getAppointment();
         syncMasterTagListWith(editedPerson);
@@ -164,6 +165,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 e.printStackTrace();
             }
         }
+        //@@author
     }
 
     /**
