@@ -22,8 +22,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static String[] colors = { "red", "forestgreen", "blue", "orange", "brown", "navyblue", "pink",
-        "snow", "limegreen", "yellow" };
+    private static String[] colors = { "red", "forestgreen", "olive", "orange", "teal", "wheat", "pink",
+        "oldlace", "limegreen", "yellow", "aquamarine", "thistle", "cadetblue", "lightskyblue" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Integer colourNum = 0;
     private static final String FAVOURITE_IMAGE = "/images/favouriteIcon.png";
@@ -76,9 +76,9 @@ public class PersonCard extends UiPart<Region> {
      */
     private static String getColorForTag(String tagValue) {
 
-        if (!tagColors.containsKey(tagValue) && colourNum < colors.length) {
+        if ((!tagColors.containsKey(tagValue)) && (colourNum < colors.length)) {
             tagColors.put(tagValue, colors[colourNum++]);
-        } else if (colourNum >= colors.length && !tagColors.containsKey(tagValue)) {
+        } else if ((colourNum >= colors.length) && (!tagColors.containsKey(tagValue))) {
             colourNum = 0; //Resets the color num for reuse
         } else if (tagColors.containsKey(tagValue)) {
             //if the tag already has a colour in the hasmap, we do not need to do anything
@@ -114,7 +114,8 @@ public class PersonCard extends UiPart<Region> {
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            String setColour = "-fx-background-color: " + getColorForTag(tag.tagName);
+            tagLabel.setStyle("-fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid; " + setColour);
             tags.getChildren().add(tagLabel);
         });
     }

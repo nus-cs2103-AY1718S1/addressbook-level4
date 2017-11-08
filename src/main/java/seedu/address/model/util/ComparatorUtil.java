@@ -4,11 +4,14 @@ package seedu.address.model.util;
 import java.util.Comparator;
 
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.Tag;
 
 /**
  * Contains utility methods for getting Comparators to sort {@code AddressBook}
  */
 public class ComparatorUtil {
+
+    // Person Comparators
 
     // Comparator that sorts ReadOnlyPerson objects by their favourite status, favourited first
     private static final Comparator<ReadOnlyPerson> favouriteComparator = new Comparator<ReadOnlyPerson>() {
@@ -57,6 +60,14 @@ public class ComparatorUtil {
         }
     };
 
+    // Comparator that sorts Tag objects by their name
+    private static final Comparator<Tag> tagComparator = new Comparator<Tag>() {
+        @Override
+        public int compare(Tag t1, Tag t2) {
+            return t1.tagName.compareTo(t2.tagName);
+        }
+    };
+
     public static Comparator<ReadOnlyPerson> getFavouriteComparator() {
         return favouriteComparator;
     }
@@ -77,31 +88,35 @@ public class ComparatorUtil {
         return addressComparator;
     }
 
-    // Returns a lexicographic-order comparator that compares by favourite status first,
-    // followed by name, phone, email then address
-    public static Comparator<ReadOnlyPerson> getAllComparatorsFavThenNameFirst() {
-        return favouriteComparator.thenComparing(nameComparator).thenComparing(phoneComparator)
-                .thenComparing(emailComparator).thenComparing(addressComparator);
+    // Returns a lexicographic-order comparator that compares by name first,
+    // followed by phone, email then address
+    public static Comparator<ReadOnlyPerson> getAllComparatorsNameFirst() {
+        return nameComparator.thenComparing(phoneComparator).thenComparing(emailComparator)
+                .thenComparing(addressComparator);
     }
 
-    // Returns a lexicographic-order comparator that compares by favourite status first,
-    // followed by name, phone, email then address
-    public static Comparator<ReadOnlyPerson> getAllComparatorsFavThenPhoneFirst() {
-        return favouriteComparator.thenComparing(phoneComparator).thenComparing(nameComparator)
-                .thenComparing(emailComparator).thenComparing(addressComparator);
+    // Returns a lexicographic-order comparator that compares by phone first,
+    // followed by name, email then address
+    public static Comparator<ReadOnlyPerson> getAllComparatorsPhoneFirst() {
+        return phoneComparator.thenComparing(nameComparator).thenComparing(emailComparator)
+                .thenComparing(addressComparator);
     }
 
-    // Returns a lexicographic-order comparator that compares by favourite status first,
-    // followed by name, phone, email then address
-    public static Comparator<ReadOnlyPerson> getAllComparatorsFavThenEmailFirst() {
-        return favouriteComparator.thenComparing(emailComparator).thenComparing(nameComparator)
-                .thenComparing(phoneComparator).thenComparing(addressComparator);
+    // Returns a lexicographic-order comparator that compares by email first,
+    // followed by name, phone then address
+    public static Comparator<ReadOnlyPerson> getAllComparatorsEmailFirst() {
+        return emailComparator.thenComparing(nameComparator).thenComparing(phoneComparator)
+                .thenComparing(addressComparator);
     }
 
-    // Returns a lexicographic-order comparator that compares by favourite status first,
-    // followed by name, phone, email then address
-    public static Comparator<ReadOnlyPerson> getAllComparatorsFavThenAddressFirst() {
-        return favouriteComparator.thenComparing(addressComparator).thenComparing(nameComparator)
-                .thenComparing(phoneComparator).thenComparing(emailComparator);
+    // Returns a lexicographic-order comparator that compares by address first,
+    // followed by name, phone, then email
+    public static Comparator<ReadOnlyPerson> getAllComparatorsAddressFirst() {
+        return addressComparator.thenComparing(nameComparator).thenComparing(phoneComparator)
+                .thenComparing(emailComparator);
+    }
+
+    public static Comparator<Tag> getTagComparator() {
+        return tagComparator;
     }
 }

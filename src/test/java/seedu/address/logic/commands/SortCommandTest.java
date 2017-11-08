@@ -25,6 +25,8 @@ public class SortCommandTest {
     private String phoneField = "phone";
     private String emailField = "email";
     private String addressField = "address";
+    private boolean favIgnored = true;
+    private boolean favNotIgnored = false;
 
     @Before
     public void setUp() {
@@ -34,7 +36,7 @@ public class SortCommandTest {
 
     @Test
     public void execute_listIsNotFilteredSortsByName_sameList() {
-        SortCommand sortCommand = prepareCommand(nameField);
+        SortCommand sortCommand = prepareCommand(nameField, favNotIgnored);
         assertCommandSuccess(sortCommand, model,
                 String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, nameField), expectedModel);
     }
@@ -43,14 +45,14 @@ public class SortCommandTest {
     public void execute_listIsFilteredSortsByName_sameList() {
         showFirstPersonOnly(model);
         showFirstPersonOnly(expectedModel);
-        SortCommand sortCommand = prepareCommand(nameField);
+        SortCommand sortCommand = prepareCommand(nameField, favNotIgnored);
         assertCommandSuccess(sortCommand, model,
                 String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, nameField), expectedModel);
     }
 
     @Test
     public void execute_listIsNotFilteredSortsByPhone_sameList() {
-        SortCommand sortCommand = prepareCommand(phoneField);
+        SortCommand sortCommand = prepareCommand(phoneField, favNotIgnored);
         assertCommandSuccess(sortCommand, model,
                 String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, phoneField), expectedModel);
     }
@@ -59,14 +61,14 @@ public class SortCommandTest {
     public void execute_listIsFilteredSortsByPhone_sameList() {
         showFirstPersonOnly(model);
         showFirstPersonOnly(expectedModel);
-        SortCommand sortCommand = prepareCommand(phoneField);
+        SortCommand sortCommand = prepareCommand(phoneField, favNotIgnored);
         assertCommandSuccess(sortCommand, model,
                 String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, phoneField), expectedModel);
     }
 
     @Test
     public void execute_listIsNotFilteredSortsByEmail_sameList() {
-        SortCommand sortCommand = prepareCommand(emailField);
+        SortCommand sortCommand = prepareCommand(emailField, favNotIgnored);
         assertCommandSuccess(sortCommand, model,
                 String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, emailField), expectedModel);
     }
@@ -75,14 +77,14 @@ public class SortCommandTest {
     public void execute_listIsFilteredSortsByEmail_sameList() {
         showFirstPersonOnly(model);
         showFirstPersonOnly(expectedModel);
-        SortCommand sortCommand = prepareCommand(emailField);
+        SortCommand sortCommand = prepareCommand(emailField, favNotIgnored);
         assertCommandSuccess(sortCommand, model,
                 String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, emailField), expectedModel);
     }
 
     @Test
     public void execute_listIsNotFilteredSortsByAddress_sameList() {
-        SortCommand sortCommand = prepareCommand(addressField);
+        SortCommand sortCommand = prepareCommand(addressField, favNotIgnored);
         assertCommandSuccess(sortCommand, model,
                 String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, addressField), expectedModel);
     }
@@ -91,16 +93,24 @@ public class SortCommandTest {
     public void execute_listIsFilteredSortsByAddress_sameList() {
         showFirstPersonOnly(model);
         showFirstPersonOnly(expectedModel);
-        SortCommand sortCommand = prepareCommand(addressField);
+        SortCommand sortCommand = prepareCommand(addressField, favNotIgnored);
         assertCommandSuccess(sortCommand, model,
                 String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, addressField), expectedModel);
+    }
+
+    @Test
+    public void execute_listIsNotFilteredSortsByNameIgnoreFav_sameList() {
+        SortCommand sortCommand = prepareCommand(addressField, favIgnored);
+        assertCommandSuccess(sortCommand, model,
+                String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, addressField)
+                        + " ignoring favourites", expectedModel);
     }
 
     /**
      * Returns an {@code SortCommand} with parameter {@code datafield}
      */
-    private SortCommand prepareCommand(String datafield) {
-        SortCommand sortCommand = new SortCommand(datafield);
+    private SortCommand prepareCommand(String datafield, boolean isFavIgnored) {
+        SortCommand sortCommand = new SortCommand(datafield, isFavIgnored);
         sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return sortCommand;
     }

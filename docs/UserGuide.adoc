@@ -24,7 +24,7 @@ This guide shows you how to get started using _**The Classroom**_.
 This guide gives you an in-depth walk-through on the various features of the _**The Classroom**_ and
 teaches you to perform the various commands with the aid of examples.
 
-Each feature stated in this guide provides you with  suggestions on the suitable use of the features and functions.
+Each feature stated in this guide provides you with suggestions on the suitable use of the features and functions.
 
 == *Getting Started*
 
@@ -161,11 +161,11 @@ Favourites/Unfavourites the 1st person from the results of the `find` command.
 
 ****
 * `PREFIX` has to be given to specify which _field_ to search for.
-* Keyword must *not* contain whitespaces.
-** e.g. `n/Hans Bo` is *not* accepted.
+* Keyword can contain whitespaces.
+** e.g. `n/Hans Bo` is accepted.
 * The search is *case-insensitive* for all _fields_. +
 ** e.g. `hans` will match `Hans`
-//* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Any _fields_ can be searched.
 ** `name`, `phone`, `address`, `email`, `tags`
 * Partial keyword will be matched
@@ -228,6 +228,7 @@ Deletes the 1st person from the results of the `find` command.
 * Possible `DATAFIELD` entries are: `Name`, `Phone`, `Email`, `Address`.
 * `DATAFIELD` is *case-insensitive*.
 * *Note that favourited contacts will be shown at the top*.
+* If you want to sort without prioritising favourites, type `-ignorefav` after `DATAFIELD`.
 ****
 
 *Examples:*
@@ -236,6 +237,8 @@ Deletes the 1st person from the results of the `find` command.
 Sorts the contact list according to their phone numbers.
 * `sort` `address` +
 Sorts the contact list according to their addresses.
+* `sort` `email` `-ignorefav`
+Sorts the contact list according to their emails without prioritising favourited contacts first.
 
 *Suggestion for use:* If you want to view the number of contacts having names starting with the same letter.
 
