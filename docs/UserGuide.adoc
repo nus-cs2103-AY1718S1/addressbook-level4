@@ -155,6 +155,9 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 Finds persons whose contain any of the given keywords. +
 Format: `find PREFIX_PERSON_ATTRIBUTE/KEYWORD [MORE_KEYWORDS]... [MORE_PARAMETERS]...`
 
+[TIP]
+Supported prefixes: `n/`, `p/`, `e/`, `a/`, `ap/`, `r/`, `c/`
+
 ****
 * The search is a `OR` search.
 e.g. finding `n/alex r/friends` will display all persons that name contain `alex` along with all persons that have `friends` tag
@@ -215,7 +218,7 @@ any person whose comment have the word `funny` in it, any person who have `10:30
 and any person whose phone number contain the sequence `9123`
 
 [NOTE]
-Find command currently support finding of name, email and tags.
+Find command currently support finding of name, email, phone, comment, address, appointment and tags.
 
 // end::find[]
 
