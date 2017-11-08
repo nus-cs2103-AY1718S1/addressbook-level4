@@ -5,54 +5,38 @@ import seedu.address.commons.exceptions.IllegalValueException;
 //@@author kennard123661
 /**
  * Status represents the delivery status of a parcel
- * It can only be one of these values: PENDING, DELIVER, COMPLETED
+ * It can only be one of these values: PENDING, DELIVERING, COMPLETED and OVERDUE.
+ *
+ * {@code Status.PENDING} means that the {@link Parcel} is pending delivery.
+ * {@code Status.DELIVERING} means that the {@link Parcel} is being delivered.
+ * {@code Status.COMPLETED} means that the {@link Parcel} has successfully been delivered.
+ * {@code Status.OVERDUE} means that the {@link Parcel} is pending delivery and the present date is past the delivery
+ * date.
  */
 public enum Status {
 
     PENDING, DELIVERING, COMPLETED, OVERDUE;
 
     public static final String MESSAGE_STATUS_CONSTRAINTS =
-            "Status can only be PENDING, COMPLETED, COMPLETED or OVERDUE";
-
-    public static Status getInstance(String status) throws IllegalValueException {
-        String trimmedAndUpperCasedStatus = status.trim().toUpperCase();
-
-        if (!isValidStatus(trimmedAndUpperCasedStatus)) {
-            throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
-        }
-
-        switch (trimmedAndUpperCasedStatus) {
-
-        case "OVERDUE":
-            return OVERDUE;
-
-        case "PENDING":
-            return PENDING;
-
-        case "DELIVERING":
-            return DELIVERING;
-
-        case "COMPLETED":
-            return COMPLETED;
-
-        default:
-            throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
-        }
-    }
+            "Status can only be PENDING, DELIVERING, COMPLETED or OVERDUE";
 
     /**
-     * @return true if status is case-insensitive equal to the value of any enum Status values.
+     * Returns a static instance of Status based on the {@param status}.
+     *
+     * @param status can be case-insensitive {@code String} of PENDING, DELIVERING, COMPLETED or OVERDUE.
+     * @return one of four possible {@code Status} values.
+     * @throws IllegalValueException if {@param status} is not a possible value of {@code Status}
      */
-    public static boolean isValidStatus(String status) {
-        switch(status) {
-        case "PENDING":  // fallthrough
-        case "DELIVERING": // fallthrough
-        case "COMPLETED": // fallthrough
-        case "OVERDUE": // fallthrough
-            return true;
+    public static Status getInstance(String status) throws IllegalValueException {
+        String trimmedStatus = status.trim().toUpperCase();
 
-        default:
-            return false;
+        // checks if trimmedStatus can be any of the possible values of Status.
+        for (Status value : Status.values()) {
+            if (value.toString().equalsIgnoreCase(trimmedStatus)) {
+                return value;
+            }
         }
+
+        throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
     }
 }
