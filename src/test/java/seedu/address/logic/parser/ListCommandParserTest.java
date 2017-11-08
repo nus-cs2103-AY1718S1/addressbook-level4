@@ -1,9 +1,9 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,20 +19,21 @@ import seedu.address.model.tag.Tag;
 public class ListCommandParserTest {
 
     private ListCommandParser parser = new ListCommandParser();
+
+    private static final String INVALID_TAG_1 = "invalid";
+    private static final String INVALID_TAG_2 = "wrong";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "criminal";
     private static final String VALID_TAG_3 = "teammate";
     private static final String VALID_TAG_4 = "family";
-    private static final String INVALID_TAG_1 = "invalid";
-    private static final String INVALID_TAG_2 = "wrong";
 
-    private static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_1;
     private static final String TAG_DESC_CRIMINAL = " " + PREFIX_TAG + VALID_TAG_2;
-    private static final String TAG_DESC_TEAMMATE = " " + PREFIX_TAG + VALID_TAG_3;
     private static final String TAG_DESC_FAMILY = " " + PREFIX_TAG + VALID_TAG_4;
+    private static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_1;
     private static final String TAG_DESC_INVALID = " " + PREFIX_TAG + INVALID_TAG_1;
-    private static final String TAG_DESC_WRONG = " " + PREFIX_TAG + INVALID_TAG_2;
     private static final String TAG_DESC_NOARGUMENT = " " + PREFIX_TAG;
+    private static final String TAG_DESC_TEAMMATE = " " + PREFIX_TAG + VALID_TAG_3;
+    private static final String TAG_DESC_WRONG = " " + PREFIX_TAG + INVALID_TAG_2;
 
     @Test
     public void parse_emptyArg_returnsListCommand() {
@@ -41,18 +42,18 @@ public class ListCommandParserTest {
     }
 
     @Test
-    public void parse_validArgs_returnsListCommand() throws Exception{
+    public void parse_validArgs_returnsListCommand() throws Exception {
         // Valid tags as arguments
-        Set<Tag> singleTagSet_one = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1)));
-        Set<Tag> singleTagSet_two = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_2)));
+        Set<Tag> singleTagSetOne = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1)));
+        Set<Tag> singleTagSetTwo = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_2)));
         Set<Tag> multipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         // List command with one argument
         ListCommand expectedListCommand =
-                new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(singleTagSet_one)));
+                new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(singleTagSetOne)));
         assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_FRIEND, expectedListCommand);
 
-        expectedListCommand =  new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(singleTagSet_two)));
+        expectedListCommand =  new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(singleTagSetTwo)));
         assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_CRIMINAL, expectedListCommand);
 
 
