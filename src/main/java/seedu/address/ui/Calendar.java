@@ -107,6 +107,7 @@ public class Calendar {
             ap.setDate(calendarDate);
             ap.setTopAnchor(txt, 5.0);
             ap.setLeftAnchor(txt, 5.0);
+            ap.setStyle("-fx-background-color: #e6e6fa;");
             ap.getChildren().add(txt);
             calendarDate = calendarDate.plusDays(1);
         }
@@ -118,6 +119,9 @@ public class Calendar {
                 if (newDate.equals(event.getDate().toString())) {
                     ap.getChildren();
                     ap.setStyle("-fx-background-color: #fff8dc;");
+                } else {
+                    ap.getChildren();
+                    ap.setStyle("-fx-background-color: #e6e6fa;");
                 }
             }
         }
