@@ -56,26 +56,149 @@ public class AutoCompleteTest {
     }
 }
 ```
-###### /java/seedu/room/logic/parser/HighlightCommandParserTest.java
+###### /java/seedu/room/logic/commands/AddCommandTest.java
 ``` java
-package seedu.room.logic.parser;
+        @Override
+        public void updateFilteredPersonListPicture(Predicate<ReadOnlyPerson> predicate, Person editedPerson) {
+            fail("This method should not be called.");
+        }
+```
+###### /java/seedu/room/logic/commands/AddImageCommandTest.java
+``` java
+package seedu.room.logic.commands;
 
-import static seedu.room.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.room.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.room.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.room.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.room.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
 
 import org.junit.Test;
 
-import seedu.room.logic.commands.HighlightCommand;
+import seedu.room.commons.core.Messages;
+import seedu.room.commons.core.index.Index;
+import seedu.room.logic.CommandHistory;
+import seedu.room.logic.UndoRedoStack;
+import seedu.room.model.Model;
+import seedu.room.model.ModelManager;
+import seedu.room.model.ResidentBook;
+import seedu.room.model.UserPrefs;
+import seedu.room.model.person.Person;
+import seedu.room.model.person.Picture;
 
-public class HighlightCommandParserTest {
+public class AddImageCommandTest {
 
-    private HighlightCommandParser parser = new HighlightCommandParser();
+    private Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
 
     @Test
-    public void parse_invalidArgs_throwsParseException() {
-        String emptyArg = "";
-        assertParseFailure(parser, emptyArg,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, HighlightCommand.MESSAGE_USAGE));
+    public void execute_imageUrlValid_success() throws Exception {
+        final String validUrl = Picture.PLACEHOLDER_IMAGE;
+        Person editedPerson = (Person) model.getFilteredPersonList().get(0);
+        editedPerson.getPicture().setPictureUrl(validUrl);
+        AddImageCommand addImageCommand = prepareCommand(INDEX_FIRST_PERSON, validUrl);
+
+        String expectedMessage = String.format(AddImageCommand.MESSAGE_ADD_IMAGE_SUCCESS,
+                editedPerson.getName().toString());
+
+        Model expectedModel = new ModelManager(new ResidentBook(model.getResidentBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.updateFilteredPersonListPicture(Model.PREDICATE_SHOW_ALL_PERSONS, editedPerson);
+
+        assertCommandSuccess(addImageCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidPersonIndex_failure() throws Exception {
+        final String validUrl = "Invalid Image Url";
+        final Index invalidIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Person editedPerson = (Person) model.getFilteredPersonList().get(0);
+        AddImageCommand addImageCommand = prepareCommand(invalidIndex, validUrl);
+
+        String expectedMessage = String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX,
+                editedPerson.getName().toString());
+
+        assertCommandFailure(addImageCommand, model, expectedMessage);
+    }
+
+    @Test
+    public void execute_invalidImageUrlValid_failure() throws Exception {
+        final String validUrl = "Invalid Image Url";
+        Person editedPerson = (Person) model.getFilteredPersonList().get(0);
+        AddImageCommand addImageCommand = prepareCommand(INDEX_FIRST_PERSON, validUrl);
+
+        String expectedMessage = String.format(Messages.MESSAGE_INVALID_IMAGE_URL,
+                editedPerson.getName().toString());
+
+        assertCommandFailure(addImageCommand, model, expectedMessage);
+    }
+
+    /**
+     * Returns an {@code AddImageCommand} with parameters {@code index} and {@code imageURL}
+     */
+    private AddImageCommand prepareCommand(Index index, String imageUrl) {
+        AddImageCommand addImageCommand = new AddImageCommand(index, imageUrl);
+        addImageCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return addImageCommand;
+    }
+}
+```
+###### /java/seedu/room/logic/commands/DeleteImageCommandTest.java
+``` java
+package seedu.room.logic.commands;
+
+import static seedu.room.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.room.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.room.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
+
+import org.junit.Test;
+
+import seedu.room.commons.core.Messages;
+import seedu.room.commons.core.index.Index;
+import seedu.room.logic.CommandHistory;
+import seedu.room.logic.UndoRedoStack;
+import seedu.room.model.Model;
+import seedu.room.model.ModelManager;
+import seedu.room.model.ResidentBook;
+import seedu.room.model.UserPrefs;
+import seedu.room.model.person.Person;
+import seedu.room.model.person.Picture;
+
+public class DeleteImageCommandTest {
+
+    private Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
+
+    @Test
+    public void execute_validPersonIndex_success() throws Exception {
+        Person editedPerson = (Person) model.getFilteredPersonList().get(0);
+        editedPerson.getPicture().setPictureUrl(Picture.PLACEHOLDER_IMAGE);
+        DeleteImageCommand deleteImageCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = String.format(DeleteImageCommand.MESSAGE_RESET_IMAGE_SUCCESS,
+                editedPerson.getName().toString());
+
+        Model expectedModel = new ModelManager(new ResidentBook(model.getResidentBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.updateFilteredPersonListPicture(Model.PREDICATE_SHOW_ALL_PERSONS, editedPerson);
+
+        assertCommandSuccess(deleteImageCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidPersonIndex_failure() throws Exception {
+        Person editedPerson = (Person) model.getFilteredPersonList().get(0);
+        final Index invalidIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        DeleteImageCommand deleteImageCommand = prepareCommand(invalidIndex);
+
+        String expectedMessage = String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX,
+                editedPerson.getName().toString());
+
+        assertCommandFailure(deleteImageCommand, model, expectedMessage);
+    }
+
+    private DeleteImageCommand prepareCommand(Index index) {
+        DeleteImageCommand deleteImageCommand = new DeleteImageCommand(index);
+        deleteImageCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return deleteImageCommand;
     }
 }
 ```
@@ -195,4 +318,121 @@ public class HighlightCommandTest {
     }
 }
 
+```
+###### /java/seedu/room/logic/parser/AddImageCommandParserTest.java
+``` java
+public class AddImageCommandParserTest {
+
+    private AddImageCommandParser parser = new AddImageCommandParser();
+
+    @Test
+    public void parse_allFieldsValid_success() {
+        String validInput = " " + INDEX_FIRST_PERSON.getOneBased() + " " + Picture.PLACEHOLDER_IMAGE;
+        AddImageCommand expectedCommand = new AddImageCommand(INDEX_FIRST_PERSON, Picture.PLACEHOLDER_IMAGE);
+
+        assertParseSuccess(parser, validInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_indexNonInteger_failure() {
+        String invalidIndexArgs = "one " + Picture.PLACEHOLDER_IMAGE;
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddImageCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, invalidIndexArgs, expectedMessage);
+    }
+
+    @Test
+    public void parse_invalidArgNumber_failure() {
+        String invalidArgs = "1";
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddImageCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, invalidArgs, expectedMessage);
+    }
+}
+```
+###### /java/seedu/room/logic/parser/DeleteImageCommandParserTest.java
+``` java
+public class DeleteImageCommandParserTest {
+
+    private DeleteImageCommandParser parser = new DeleteImageCommandParser();
+
+    @Test
+    public void parse_validIndex_success() {
+        String validInput = " " + INDEX_FIRST_PERSON.getOneBased();
+        DeleteImageCommand expectedCommand = new DeleteImageCommand(INDEX_FIRST_PERSON);
+
+        assertParseSuccess(parser, validInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_indexNonInteger_failure() {
+        String invalidIndexArgs = "one ";
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteImageCommand.MESSAGE_USAGE);
+
+        assertParseFailure(parser, invalidIndexArgs, expectedMessage);
+    }
+
+}
+
+```
+###### /java/seedu/room/logic/parser/HighlightCommandParserTest.java
+``` java
+package seedu.room.logic.parser;
+
+import static seedu.room.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.room.logic.parser.CommandParserTestUtil.assertParseFailure;
+
+import org.junit.Test;
+
+import seedu.room.logic.commands.HighlightCommand;
+
+public class HighlightCommandParserTest {
+
+    private HighlightCommandParser parser = new HighlightCommandParser();
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        String emptyArg = "";
+        assertParseFailure(parser, emptyArg,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, HighlightCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### /java/seedu/room/model/ModelManagerTest.java
+``` java
+    @Test
+    public void updatePersonPictureTest() throws IllegalValueException, PersonNotFoundException {
+        ResidentBook residentBook = new ResidentBookBuilder().withPerson(TEMPORARY_JOE).build();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(residentBook, userPrefs);
+
+        //modelManager has nobody in it -> returns false
+        assertFalse(modelManager.equals(null));
+
+        Person editedPerson = (Person) modelManager.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        editedPerson.getPicture().setPictureUrl("TestUrl");
+
+        modelManager.updateFilteredPersonListPicture(PREDICATE_SHOW_ALL_PERSONS, editedPerson);
+        assertTrue(modelManager.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()).equals(editedPerson));
+
+    }
+```
+###### /java/seedu/room/model/person/PictureTest.java
+``` java
+public class PictureTest {
+
+    @Test
+    public void isValidUrl() {
+        // Invalid picture urls
+        assertFalse(Picture.isValidImageUrl("")); // empty string
+        assertFalse(Picture.isValidImageUrl(" ")); // spaces only
+        assertFalse(Picture.isValidImageUrl("folder//folder/image.jpg")); // Double slash invalid file url
+
+        // Valid picture numbers
+        assertTrue(Picture.isValidImageUrl("folder1/folder2/image.jpg"));
+        assertTrue(Picture.isValidImageUrl("folder1/folder2/image.png"));
+
+        // Default picture url
+        Picture defaultPicture = new Picture();
+        assertTrue(defaultPicture.getPictureUrl().equals(Picture.PLACEHOLDER_IMAGE));
+    }
+}
 ```

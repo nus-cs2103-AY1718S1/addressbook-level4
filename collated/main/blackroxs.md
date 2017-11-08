@@ -1,76 +1,4 @@
 # blackroxs
-###### /java/seedu/room/ui/MainWindow.java
-``` java
-    /**
-     * Handles import and allows user to choose file
-     */
-    @FXML
-    public void handleImport() {
-        FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showOpenDialog(null);
-        String filePath = file.getAbsolutePath();
-        System.out.println(filePath);
-
-        if (file != null) {
-            try {
-                CommandResult commandResult = logic.execute(ImportCommand.COMMAND_WORD + " " + filePath);
-                logger.info("Result: " + commandResult.feedbackToUser);
-                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
-            } catch (CommandException e) {
-                logger.info("Invalid command: " + ImportCommand.MESSAGE_ERROR);
-                raise(new NewResultAvailableEvent(e.getMessage()));
-            } catch (ParseException e) {
-                logger.info("Invalid command: " + ImportCommand.MESSAGE_ERROR);
-                raise(new NewResultAvailableEvent(e.getMessage()));
-            }
-        }
-    }
-
-```
-###### /java/seedu/room/logic/parser/ImportCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new ImportCommand object
- */
-public class ImportCommandParser implements Parser<ImportCommand> {
-    /**
-     * Parses the given {@code String} of arguments in the context of the ImportCommand
-     * and returns an ImportCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-
-    public ImportCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
-        }
-        return new ImportCommand(trimmedArgs);
-    }
-}
-```
-###### /java/seedu/room/logic/parser/RemoveTagParser.java
-``` java
-/**
- * Parses input arguments and creates a new RemoveTagCommand object
- */
-public class RemoveTagParser implements Parser<RemoveTagCommand> {
-    /**
-     * Parses the given {@code String} of arguments in the context of the RemoveTagCommand
-     * and returns an RemoveTagCommand object for execution.
-     *
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public RemoveTagCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
-        }
-        return new RemoveTagCommand(trimmedArgs);
-    }
-}
-```
 ###### /java/seedu/room/logic/commands/BackupCommand.java
 ``` java
 /**
@@ -267,6 +195,56 @@ public class RemoveTagCommand extends UndoableCommand {
     }
 }
 ```
+###### /java/seedu/room/logic/parser/ImportCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ImportCommand object
+ */
+public class ImportCommandParser implements Parser<ImportCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the ImportCommand
+     * and returns an ImportCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+
+    public ImportCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+        }
+        return new ImportCommand(trimmedArgs);
+    }
+}
+```
+###### /java/seedu/room/logic/parser/RemoveTagParser.java
+``` java
+/**
+ * Parses input arguments and creates a new RemoveTagCommand object
+ */
+public class RemoveTagParser implements Parser<RemoveTagCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the RemoveTagCommand
+     * and returns an RemoveTagCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public RemoveTagCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+        }
+        return new RemoveTagCommand(trimmedArgs);
+    }
+}
+```
+###### /java/seedu/room/MainApp.java
+``` java
+    public static Storage getBackup() {
+        return backup;
+    }
+```
 ###### /java/seedu/room/storage/StorageManager.java
 ``` java
     @Override
@@ -338,9 +316,31 @@ public class RemoveTagCommand extends UndoableCommand {
 
 }
 ```
-###### /java/seedu/room/MainApp.java
+###### /java/seedu/room/ui/MainWindow.java
 ``` java
-    public static Storage getBackup() {
-        return backup;
+    /**
+     * Handles import and allows user to choose file
+     */
+    @FXML
+    public void handleImport() {
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(null);
+        String filePath = file.getAbsolutePath();
+        System.out.println(filePath);
+
+        if (file != null) {
+            try {
+                CommandResult commandResult = logic.execute(ImportCommand.COMMAND_WORD + " " + filePath);
+                logger.info("Result: " + commandResult.feedbackToUser);
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            } catch (CommandException e) {
+                logger.info("Invalid command: " + ImportCommand.MESSAGE_ERROR);
+                raise(new NewResultAvailableEvent(e.getMessage()));
+            } catch (ParseException e) {
+                logger.info("Invalid command: " + ImportCommand.MESSAGE_ERROR);
+                raise(new NewResultAvailableEvent(e.getMessage()));
+            }
+        }
     }
+
 ```

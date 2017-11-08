@@ -5,6 +5,7 @@ import seedu.room.logic.commands.CommandResult;
 import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.logic.parser.exceptions.ParseException;
 import seedu.room.model.event.ReadOnlyEvent;
+import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 
 /**
@@ -27,6 +28,11 @@ public interface Logic {
     ObservableList<ReadOnlyEvent> getFilteredEventList();
 
     //@@author shitian007
+    /**
+     * Updates Picture of person list within model
+     */
+    void updatePersonListPicture(Person p);
+
     /** Updates and gets list of Auto-complete Strings */
     void updateAutoCompleteList(String userInput);
     String[] getAutoCompleteList();
