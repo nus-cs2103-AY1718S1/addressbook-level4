@@ -9,6 +9,7 @@ import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -184,6 +185,35 @@ public class UniquePersonList implements Iterable<Person> {
                 list.add(appointment);
                 person.setAppointment(list);
                 return;
+            }
+        }
+        throw new PersonNotFoundException();
+    }
+    /**
+     * Removes an appointment from a person in the internal list
+     *
+     * @throws PersonNotFoundException if no such person exist in the internal list
+     */
+    public void removeAppointment(ReadOnlyPerson target, Appointment appointment)
+            throws PersonNotFoundException {
+        requireNonNull(target);
+        requireNonNull(appointment);
+
+        Person person = getPerson(target);
+        List<Appointment> newApptList = person.getAppointments();
+        newApptList.remove(appointment);
+        person.setAppointment(newApptList);
+
+    }
+
+    /**
+     * Util method to extract person out from a list
+     */
+    private Person getPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        requireNonNull(target);
+        for (Person person : internalList) {
+            if (person.equals(target)) {
+                return person;
             }
         }
         throw new PersonNotFoundException();

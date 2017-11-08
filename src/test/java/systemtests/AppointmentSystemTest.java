@@ -3,6 +3,7 @@ package systemtests;
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddAppointmentCommand;
+import seedu.address.logic.commands.CancelAppointmentCommand;
 import seedu.address.logic.parser.AddAppointmentParser;
 import seedu.address.model.Model;
 import seedu.address.model.person.Appointment;
@@ -10,16 +11,21 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author Eric
-public class AddAppointmentSystemTest extends AddressBookSystemTest {
+public class AppointmentSystemTest extends AddressBookSystemTest {
 
     @Test
-    public void addAppointment() throws Exception {
+    public void addAndRemoveAppointment() throws Exception {
         Model model = getModel();
         ReadOnlyPerson toAddAppointment = model.getAddressBook().getPersonList().get(0);
-        String str = " 1 d/Dinner, tonight 7pm to 10pm";
+        String description = "dinner";
+        String str = " 1 d/" + description + ", tonight 7pm to 10pm";
         String command = AddAppointmentCommand.COMMAND_WORD + str;
         assertCommandSuccess(command, toAddAppointment, AddAppointmentParser.getAppointmentFromString(str));
+
+        command = CancelAppointmentCommand.COMMAND_WORD + " " + description + " with " + toAddAppointment.getName();
+        assertCommandSuccess(command, toAddAppointment, AddAppointmentParser.getAppointmentFromString(str));
     }
+
 
 
     /**
@@ -27,12 +33,19 @@ public class AddAppointmentSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, ReadOnlyPerson toAdd, Appointment appointment) {
         Model expectedModel = getModel();
+        String expectedResultMessage;
+
         try {
-            expectedModel.addAppointment(toAdd, appointment);
+            if (!command.contains("cancel")) {
+                expectedModel.addAppointment(toAdd, appointment);
+                expectedResultMessage = AddAppointmentCommand.MESSAGE_SUCCESS;
+            } else {
+                expectedModel.removeAppointment(toAdd, appointment);
+                expectedResultMessage = CancelAppointmentCommand.MESSAGE_SUCCESS;
+            }
         } catch (PersonNotFoundException e) {
             throw new IllegalArgumentException("person not found in model.");
         }
-        String expectedResultMessage = AddAppointmentCommand.MESSAGE_SUCCESS;
 
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }
@@ -41,7 +54,7 @@ public class AddAppointmentSystemTest extends AddressBookSystemTest {
      * display box displays {@code expectedResultMessage} and the model related components equal to
      * {@code expectedModel}.
      *
-     * @see AddAppointmentSystemTest#assertCommandSuccess(String, ReadOnlyPerson, Appointment)
+     * @see AppointmentSystemTest#assertCommandSuccess(String, ReadOnlyPerson, Appointment)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
