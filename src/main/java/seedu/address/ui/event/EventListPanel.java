@@ -17,6 +17,7 @@ import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.ui.UiPart;
+
 //@@author junyango
 /**
  * Panel containing the list of events.

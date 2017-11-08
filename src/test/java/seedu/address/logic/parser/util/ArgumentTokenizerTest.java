@@ -1,4 +1,4 @@
-package seedu.address.logic.parser;
+package seedu.address.logic.parser.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -8,10 +8,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashSet;
 
 import org.junit.Test;
-
-import seedu.address.logic.parser.util.ArgumentMultimap;
-import seedu.address.logic.parser.util.ArgumentTokenizer;
-import seedu.address.logic.parser.util.Prefix;
 
 public class ArgumentTokenizerTest {
 

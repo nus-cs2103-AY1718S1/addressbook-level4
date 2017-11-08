@@ -141,13 +141,13 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * Parses a {@code Optional<String> time} into an {@code Optional<Name>} if {@code time} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<DateTime> parseTime(Optional<String> name)
+    public static Optional<DateTime> parseTime(Optional<String> time)
             throws IllegalValueException, PropertyNotFoundException {
-        requireNonNull(name);
-        return name.isPresent() ? Optional.of(new DateTime(name.get())) : Optional.empty();
+        requireNonNull(time);
+        return time.isPresent() ? Optional.of(new DateTime(time.get())) : Optional.empty();
     }
 
     //@@author low5545

@@ -178,6 +178,7 @@ public abstract class ImportCommand extends UndoableCommand {
             + "file.\nYou need to specify with explicit parameter if you want to use other formats.";
     public static final String MESSAGE_NOT_BO_FILE = "According to the extension, the file is not a valid BoNUS"
             + "script file (should end with .bo).";
+
 ```
 ###### \java\seedu\address\logic\commands\imports\ImportCommand.java
 ``` java
@@ -452,35 +453,52 @@ public class ModuleInfo {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ArgumentMultimap.java
+###### \java\seedu\address\logic\commands\person\AddAvatarCommand.java
 ``` java
-    /**
-     * Returns the mapping of {@code Prefix} and their corresponding last values for all {@code prefix}es (only if
-     * there is a value present). <b>Notice</b>: the return {@code HashMap} does not include preamble and tags.
-     */
-    public HashMap<Prefix, String> getAllValues() {
-        HashMap<Prefix, String> values = new HashMap<>();
+/**
+ * Adds an {@link Avatar} to the selected person.
+ */
+public class AddAvatarCommand extends UndoableCommand {
+    public static final String COMMAND_WORD = "avatar";
+    public static final String COMMAND_ALIAS = "avr";
 
-        // Need to manually remove preamble from here. We are creating a new copy of all prefixes, so the actual
-        // instance variable will not be affected.
-        Set<Prefix> prefixes = new HashSet<>(internalMap.keySet());
-        prefixes.remove(new Prefix(""));
-        prefixes.remove(PREFIX_TAG);
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Adds avatar to the person identified by the index number used in the last person listing.\n"
+            + "Parameters: INDEX (must be a positive integer) IMAGE_URL\n"
+            + "Example: " + COMMAND_WORD + " 1 https://avatars0.githubusercontent.com/u/1342004";
 
-        for (Prefix prefix: prefixes) {
-            getValue(prefix).ifPresent(s -> values.put(prefix, s));
+    public static final String MESSAGE_ADD_AVATAR_SUCCESS = "Added avatar to person: %1$s";
+
+    private final Index targetIndex;
+    private final Avatar avatar;
+
+    public AddAvatarCommand(Index targetIndex, Avatar avatar) {
+        this.targetIndex = targetIndex;
+        this.avatar = avatar;
+    }
+
+    @Override
+    protected CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        return values;
+        ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
+        model.setPersonAvatar(person, avatar);
+
+        return new CommandResult(String.format(MESSAGE_ADD_AVATAR_SUCCESS, person));
     }
-```
-###### \java\seedu\address\logic\parser\CliSyntax.java
-``` java
-    /* Prefix definitions for adding a new customize property. */
-    public static final Prefix PREFIX_SHORT_NAME = new Prefix("s/");
-    public static final Prefix PREFIX_FULL_NAME = new Prefix("f/");
-    public static final Prefix PREFIX_MESSAGE = new Prefix("m/");
-    public static final Prefix PREFIX_REGEX = new Prefix("r/");
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddAvatarCommand // instanceof handles nulls
+                && this.targetIndex.equals(((AddAvatarCommand) other).targetIndex)
+                && this.avatar.equals(((AddAvatarCommand) other).avatar)); // state check
+    }
+}
 ```
 ###### \java\seedu\address\logic\parser\ConfigCommandParser.java
 ``` java
@@ -726,6 +744,41 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\person\AddAvatarCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new {@link AddAvatarCommand} object.
+ */
+public class AddAvatarCommandParser implements Parser<AddAvatarCommand> {
+    /* Regular expressions for validation. ArgumentMultiMap not applicable here. */
+    private static final Pattern COMMAND_FORMAT = Pattern.compile("(?<index>\\S+)(?<url>.+)");
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the {@link AddAvatarCommand}
+     * and returns an {@link AddAvatarCommand} object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    @Override
+    public AddAvatarCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+
+        // Defensive programming here to use trim again.
+        final Matcher matcher = COMMAND_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAvatarCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            Index index = ParserUtil.parseIndex(matcher.group("index").trim());
+            Avatar avatar = new Avatar(matcher.group("url").trim());
+            return new AddAvatarCommand(index, avatar);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAvatarCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\person\AddCommandParser.java
 ``` java
 /**
@@ -756,6 +809,36 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
     }
 }
+```
+###### \java\seedu\address\logic\parser\util\ArgumentMultimap.java
+``` java
+    /**
+     * Returns the mapping of {@code Prefix} and their corresponding last values for all {@code prefix}es (only if
+     * there is a value present). <b>Notice</b>: the return {@code HashMap} does not include preamble and tags.
+     */
+    public HashMap<Prefix, String> getAllValues() {
+        HashMap<Prefix, String> values = new HashMap<>();
+
+        // Need to manually remove preamble from here. We are creating a new copy of all prefixes, so the actual
+        // instance variable will not be affected.
+        Set<Prefix> prefixes = new HashSet<>(internalMap.keySet());
+        prefixes.remove(new Prefix(""));
+        prefixes.remove(PREFIX_TAG);
+
+        for (Prefix prefix: prefixes) {
+            getValue(prefix).ifPresent(s -> values.put(prefix, s));
+        }
+
+        return values;
+    }
+```
+###### \java\seedu\address\logic\parser\util\CliSyntax.java
+``` java
+    /* Prefix definitions for adding a new customize property. */
+    public static final Prefix PREFIX_SHORT_NAME = new Prefix("s/");
+    public static final Prefix PREFIX_FULL_NAME = new Prefix("f/");
+    public static final Prefix PREFIX_MESSAGE = new Prefix("m/");
+    public static final Prefix PREFIX_REGEX = new Prefix("r/");
 ```
 ###### \java\seedu\address\logic\parser\util\NaturalLanguageUtil.java
 ``` java
@@ -809,6 +892,7 @@ public class NaturalLanguageUtil {
 ``` java
     /** Changes the color of an existing tag (through TagColorManager) */
     void setTagColor(Tag tag, String color);
+
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -829,6 +913,15 @@ public class NaturalLanguageUtil {
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
+    @Override
+    public void setPersonAvatar(ReadOnlyPerson target, Avatar avatar) {
+        requireAllNonNull(target, avatar);
+        target.setAvatar(avatar);
+        indicateAddressBookChanged();
+    }
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
     /**
      * Changes the displayed color of an existing tag (through {@link TagColorManager}).
      */
@@ -838,8 +931,86 @@ public class NaturalLanguageUtil {
         raise(new TagColorChangedEvent(tag, color));
     }
 ```
+###### \java\seedu\address\model\person\Avatar.java
+``` java
+/**
+ * Represents the {@link Avatar} image of each {@link Person}. This is a one-to-one relationship, meaning that each
+ * {@link Person} should have at most one {@link Avatar}.<br>
+ *
+ * Notice {@link Avatar} is not a {@link Property}. This is because it is indeed different from other fields of
+ * {@link Person}. It is not shown as a row in the {@link PersonDetailsPanel}. Meanwhile, the input validation is
+ * done by separate methods rather than a single regular expression (the complexity is not at the same level).
+ */
+public class Avatar {
+    private static final String INVALID_URL_MESSAGE = "The provided URL is invalid.";
+    private static final String IMG_URL_PATTERN = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}"
+            + "\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)";
+
+    private String url;
+
+    public Avatar(String url) throws IllegalValueException {
+        if (!isValidImageUrl(url)) {
+            throw new IllegalValueException(INVALID_URL_MESSAGE);
+        }
+        this.url = url;
+    }
+
+    /**
+     * An all-in-one checking for the path of the provided image.
+     */
+    private boolean isValidAvatarPath(String path) {
+        return !FileUtil.hasConsecutiveExtensionSeparators(path)
+                && !FileUtil.hasConsecutiveNameSeparators(path)
+                && !FileUtil.hasInvalidNames(path)
+                && !FileUtil.hasInvalidNameSeparators(path);
+    }
+
+    /**
+     * Checks whether a given string is a valid URL and it points to an image.
+     */
+    private boolean isValidImageUrl(String url) {
+        return url.matches(IMG_URL_PATTERN);
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Avatar // instanceof handles nulls
+                && this.url.equals(((Avatar) other).url));
+    }
+
+    @Override
+    public int hashCode() {
+        return url.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Avatar from " + url;
+    }
+}
+```
 ###### \java\seedu\address\model\person\Person.java
 ``` java
+    @Override
+    public ObjectProperty<Avatar> avatarProperty() {
+        return avatar;
+    }
+
+    @Override
+    public Avatar getAvatar() {
+        return avatar.get();
+    }
+
+    public void setAvatar(Avatar avatar) {
+        requireNonNull(avatar);
+        this.avatar.set(avatar);
+    }
+
     @Override
     public ObjectProperty<UniquePropertyMap> properties() {
         return properties;
@@ -1522,21 +1693,43 @@ public class TagColorManager {
 ```
 ###### \java\seedu\address\storage\XmlAdaptedPerson.java
 ``` java
+/**
+ * JAXB-friendly version of the Person.
+ */
+public class XmlAdaptedPerson {
+    @XmlElement
+    private String avatar;
+
+    @XmlElement
+    private List<XmlAdaptedProperty> properties = new ArrayList<>();
+
+    @XmlElement
+    private List<XmlAdaptedTag> tagged = new ArrayList<>();
+
+    /**
+     * Constructs an XmlAdaptedPerson.
+     * This is the no-arg constructor that is required by JAXB.
+     */
+    public XmlAdaptedPerson() {}
+
+```
+###### \java\seedu\address\storage\XmlAdaptedPerson.java
+``` java
     /**
      * Converts a given Person into this class for JAXB use.
      *
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedPerson(ReadOnlyPerson source) {
-        name = source.getName().getValue();
-        phone = source.getPhone().getValue();
-        email = source.getEmail().getValue();
-        address = source.getAddress().getValue();
+        if (source.getAvatar() != null) {
+            avatar = source.getAvatar().getUrl();
+        }
 
         properties = new ArrayList<>();
         for (Property property: source.getProperties()) {
             properties.add(new XmlAdaptedProperty(property));
         }
+
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -1561,8 +1754,13 @@ public class TagColorManager {
 
         final Set<Property> properties = new HashSet<>(personProperties);
         final Set<Tag> tags = new HashSet<>(personTags);
+        final Person person = new Person(properties, tags);
 
-        return new Person(properties, tags);
+        if (avatar != null) {
+            person.setAvatar(new Avatar(avatar));
+        }
+
+        return person;
     }
 }
 ```
@@ -1829,6 +2027,7 @@ public class PropertyLabel extends Label {
 ```
 ###### \resources\view\person\PersonDetailsPanel.fxml
 ``` fxml
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -1837,13 +2036,11 @@ public class PropertyLabel extends Label {
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
-
 <VBox prefHeight="600.0" prefWidth="580.0" stylesheets="@../../css/Extensions.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox prefHeight="200.0">
          <children>
-            <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="avatar" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/default_person_photo.png" />
                </image>

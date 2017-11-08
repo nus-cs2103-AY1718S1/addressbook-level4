@@ -25,6 +25,7 @@ public abstract class ImportCommand extends UndoableCommand {
             + "file.\nYou need to specify with explicit parameter if you want to use other formats.";
     public static final String MESSAGE_NOT_BO_FILE = "According to the extension, the file is not a valid BoNUS"
             + "script file (should end with .bo).";
+
     //@@author low5545
     public static final String MESSAGE_FILE_NOT_FOUND = "The specified file does not exist.";
     public static final String MESSAGE_INVALID_NAME = "The file path contains a file name or folder names with"
