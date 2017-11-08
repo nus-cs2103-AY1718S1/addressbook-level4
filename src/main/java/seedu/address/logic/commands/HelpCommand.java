@@ -62,7 +62,7 @@ public class HelpCommand extends Command {
 
         switch(commandIdentifier.value) {
 
-        case COMMAND_QUICK_HELP_WORD:
+        case HelpCommand.COMMAND_QUICK_HELP_WORD:
             commandResult = COMMAND_QUICK_HELP;
             break;
 

@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.HelpCommand.COMMAND_QUICK_HELP;
+
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -15,9 +17,9 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
-import seedu.address.logic.commands.HelpCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
@@ -73,8 +75,9 @@ public class UiManager extends ComponentManager implements Ui {
                 ReminderWindow reminderWindow = new ReminderWindow(schedulesToRemindList);
                 reminderWindow.show();
             }
-            HelpCommand startUpHelp = new HelpCommand("command");
-            startUpHelp.execute();
+            //@@author icehawker
+            raise(new NewResultAvailableEvent(COMMAND_QUICK_HELP, false));
+            //@@author
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
