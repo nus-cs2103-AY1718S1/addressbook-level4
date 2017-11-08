@@ -16,6 +16,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.PersonBuilder;
@@ -61,7 +62,7 @@ public class ScheduleCommandTest {
     private ScheduleCommand getScheduleCommandForPerson(Set<Index> indices, Schedule validSchedule, Model model) {
         ScheduleCommand command =
                 new ScheduleCommand(indices, validSchedule.getScheduleDate(), validSchedule.getActivity());
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new UserPrefs(), new CommandHistory(), new UndoRedoStack());
         return command;
     }
 
