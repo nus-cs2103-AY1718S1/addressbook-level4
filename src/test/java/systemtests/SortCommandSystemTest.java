@@ -48,7 +48,7 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid arguments -> rejected */
         assertCommandFailure(SortCommand.COMMAND_WORD + " 1 abc",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
 
         /* Case: sort from empty address book -> rejected */
         executeCommand(ClearCommand.COMMAND_WORD);
