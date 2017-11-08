@@ -1,8 +1,8 @@
 package systemtests;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.SortCommand.ARGUMENT_EMAIL;
 import static seedu.address.logic.commands.SortCommand.ARGUMENT_NAME;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.SortCommand.MESSAGE_NO_CONTACTS_TO_SORT;
 import static seedu.address.logic.commands.SortCommand.MESSAGE_SORT_SUCCESS;
 import static seedu.address.logic.commands.SortCommand.MESSAGE_USAGE;
@@ -33,7 +33,7 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
         } catch (DuplicatePersonException dpe) {
             assertCommandFailure(command, MESSAGE_USAGE);
         }
-        assertCommandSuccess(command, expectedModel, String.format(MESSAGE_SORT_SUCCESS,ARGUMENT_NAME));
+        assertCommandSuccess(command, expectedModel, String.format(MESSAGE_SORT_SUCCESS, ARGUMENT_NAME));
 
         /* Case: sort the list by email -> sorted */
         command = SortCommand.COMMAND_WORD + " " + ARGUMENT_EMAIL;
@@ -44,7 +44,7 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
         } catch (DuplicatePersonException dpe) {
             assertCommandFailure(command, MESSAGE_USAGE);
         }
-        assertCommandSuccess(command, expectedModel, String.format(MESSAGE_SORT_SUCCESS,ARGUMENT_EMAIL));
+        assertCommandSuccess(command, expectedModel, String.format(MESSAGE_SORT_SUCCESS, ARGUMENT_EMAIL));
 
         /* Case: invalid arguments -> rejected */
         assertCommandFailure(SortCommand.COMMAND_WORD + " 1 abc",
