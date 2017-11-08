@@ -26,7 +26,7 @@ public class AddEventCommand extends UndoableCommand {
             + PREFIX_TITLE + "TITLE "
             + PREFIX_DESCRIPTION + "DESCRIPTION "
             + PREFIX_LOCATION + "LOCATION "
-            + "[" +PREFIX_DATETIME + "STARTTIME TO ENDTIME"
+            + "[" + PREFIX_DATETIME + "STARTTIME TO ENDTIME"
             + " or STARTTIME DURATION (in hours)]\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_TITLE + "End of Sem Dinner "
