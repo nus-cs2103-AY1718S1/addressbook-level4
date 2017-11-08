@@ -11,10 +11,8 @@ import com.google.common.eventbus.Subscribe;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -28,9 +26,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonInformationPanel extends UiPart<Region> {
 
     private static final String FXML = "PersonInformationPanel.fxml";
-    private static String[] colors = {"red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey"};
+    private static String[] colors = {"red", "blue", "orange", "brown", "green", "black", "grey"};
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
+    private static final int MIN_HEIGHT = 40;
+    private static final int MIN_WIDTH = 160;
 
     protected List<String> optionalPhoneDisplayList = new ArrayList<String>();
     protected ListProperty<String> listProperty = new SimpleListProperty<>();
@@ -42,6 +42,8 @@ public class PersonInformationPanel extends UiPart<Region> {
     @FXML
     private VBox informationPane;
     @FXML
+    private VBox optionalPhoneList;
+    @FXML
     private FlowPane tags;
     @FXML
     private Label name;
@@ -50,18 +52,27 @@ public class PersonInformationPanel extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
+    private VBox optionalPhoneLabel;
+    @FXML
+    private Label phoneLabel;
+    @FXML
     private Label address;
+    @FXML
+    private Label addressLabel;
     @FXML
     private Label email;
     @FXML
-    private Label customFields;
+    private Label emailLabel;
     @FXML
-    private ListView optionalPhoneList;
+    private Label customFields;
 
     public PersonInformationPanel() {
         super(FXML);
         loadDefaultScreen();
         registerAsAnEventHandler(this);
+
+        //Configure UI
+        setLabelIndentation();
     }
 
     private static String getColorForTag(String tagValue) {
@@ -102,7 +113,7 @@ public class PersonInformationPanel extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         customFields.textProperty().bind(Bindings.convert(person.customFieldProperty()));
         id.setText(Integer.toString(personId));
-        optionalPhoneDisplayList.clear();
+        optionalPhoneList.getChildren().clear();
         initOptionalPhones(person);
     }
 
@@ -118,22 +129,38 @@ public class PersonInformationPanel extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initialise optional phone display flowpane
+     */
+    public void initOptionalPhones(ReadOnlyPerson person) {
+        optionalPhoneLabel.getChildren().clear();
+        person.getPhoneList().forEach(optionalPhone -> {
+            Label additionalLabel = new Label("Other Phones: ");
+            setIndentation(additionalLabel);
+            optionalPhoneLabel.getChildren().add(additionalLabel);
+            Label otherPhone = new Label(optionalPhone.value);
+            setIndentation(otherPhone);
+            optionalPhoneList.getChildren().add(otherPhone);
+        });
+    }
+
+    /*
     //@@author LuLechuan
     /**
      *  Initialise optional phone display list
-     */
-    public void initOptionalPhones(ReadOnlyPerson person) {
+    public void initOptionalPhone(ReadOnlyPerson person) {
         final int[] index = {1};
         person.getPhoneList().forEach(optionalPhone -> {
             optionalPhoneDisplayList.add("Other phone " + index[0] + " : " + optionalPhone.value);
             index[0]++;
         });
 
-        optionalPhoneList.itemsProperty().bind(listProperty);
+        //optionalPhoneList.itemsProperty().bind(listProperty);
 
         listProperty.set(FXCollections.observableArrayList(optionalPhoneDisplayList));
     }
     //@@author
+    */
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
@@ -141,6 +168,27 @@ public class PersonInformationPanel extends UiPart<Region> {
         loadPersonInformation(event.getNewSelection().person, event.getNewSelection().stringid);
         bindListeners(event.getNewSelection().person, event.getNewSelection().stringid);
     }
+
+    //@@author ngzuyao
+    private void setLabelIndentation() {
+        phoneLabel.setMinHeight(MIN_HEIGHT);
+        phoneLabel.setMinWidth(MIN_WIDTH);
+        phone.setMinHeight(MIN_HEIGHT);
+        addressLabel.setMinHeight(MIN_HEIGHT);
+        addressLabel.setMinWidth(MIN_WIDTH);
+        address.setMinHeight(MIN_HEIGHT);
+        emailLabel.setMinHeight(MIN_HEIGHT);
+        emailLabel.setMinWidth(MIN_WIDTH);
+        email.setMinHeight(MIN_HEIGHT);
+        //customFieldsLabel.setMinWidth(MIN_WIDTH);
+        //customFieldsLabel.setMinHeight(MIN_HEIGHT);
+    }
+
+    private void setIndentation(Label label) {
+        label.setMinWidth(MIN_WIDTH);
+        label.setMinHeight(MIN_HEIGHT);
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
