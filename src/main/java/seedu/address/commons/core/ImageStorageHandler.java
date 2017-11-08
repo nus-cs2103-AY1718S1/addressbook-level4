@@ -1,3 +1,4 @@
+//@@author nguyenvanhoang7398
 package seedu.address.commons.core;
 
 import java.awt.image.BufferedImage;
