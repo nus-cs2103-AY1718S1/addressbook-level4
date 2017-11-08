@@ -41,6 +41,7 @@ public class Person implements ReadOnlyPerson {
     private boolean isBlacklisted = false;
     private boolean isWhitelisted = false;
     private boolean hasOverdueDebt = false;
+    private boolean hasDisplayPicture = false;
     private Date lastAccruedDate; // the last time debt was updated by interest
 
     /**
@@ -84,6 +85,7 @@ public class Person implements ReadOnlyPerson {
         this.isWhitelisted = source.isWhitelisted();
         this.lastAccruedDate = source.getLastAccruedDate();
         this.hasOverdueDebt = source.hasOverdueDebt();
+        this.hasDisplayPicture = source.hasDisplayPicture();
     }
 
     /**
@@ -393,6 +395,22 @@ public class Person implements ReadOnlyPerson {
     }
 
     //@@author
+
+    /**
+     * Returns boolean status of a person's display picture status.
+     */
+    @Override
+    public boolean hasDisplayPicture() {
+        return hasDisplayPicture;
+    }
+
+    /**
+     * Sets boolean status of a person's display picture status using the value of {@param hasDisplayPicture}.
+     */
+    @Override
+    public void setHasDisplayPicture(boolean hasDisplayPicture) {
+        this.hasDisplayPicture = hasDisplayPicture;
+    }
 
     //@@author jaivigneshvenugopal
     /**

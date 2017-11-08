@@ -53,8 +53,7 @@ public interface ReadOnlyPerson {
     boolean isBlacklisted();
 
     /**
-     * Accepts {@code boolean} as parameter.
-     *
+     * {@param} is {@code boolean} value.
      * Sets {@code boolean} variable as the value of {@param isBlacklisted}
      */
     void setIsBlacklisted(boolean isBlacklisted);
@@ -69,6 +68,17 @@ public interface ReadOnlyPerson {
      * Sets {@code boolean} variable as the value of {@param isWhitelisted}
      */
     void setIsWhitelisted(boolean isWhitelisted);
+
+    /**
+     * Returns true if person has display picture.
+     */
+    boolean hasDisplayPicture();
+
+    /**
+     * {@param} is {@code boolean} value.
+     * Sets {@code boolean} variable as the value of {@param hasDisplayPicture}
+     */
+    void setHasDisplayPicture(boolean hasDisplayPicture);
     //@@author
 
     /**
