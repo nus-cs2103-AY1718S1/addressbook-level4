@@ -34,10 +34,7 @@ import seedu.address.logic.commands.RemoveAccountCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
-<<<<<<< HEAD
-=======
 import seedu.address.logic.commands.VisualizeCommand;
->>>>>>> 2a690c87c33b0d8af9babcc46c2eefa1d67c42df
 
 import seedu.address.logic.parser.exceptions.ParseException;
 
