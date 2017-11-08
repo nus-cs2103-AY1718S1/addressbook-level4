@@ -33,7 +33,7 @@ public class XmlAdaptedSchedule {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedSchedule(Schedule source) {
-        name = source.getPersonName().toString();
+        name = source.getPersonName();
         dateString = DATE_FORMAT.format(source.getDate());
     }
 
@@ -50,12 +50,12 @@ public class XmlAdaptedSchedule {
         if (calendar != null) {
             try {
                 calendar.setTime(DATE_FORMAT.parse(dateString));
-                return new Schedule(name.toString(), calendar);
+                return new Schedule(name, calendar);
             } catch (java.text.ParseException e) {
                 e.printStackTrace();
             }
         }
-        schedule = new Schedule(name.toString(), calendar);
-        return new Schedule(name.toString(), calendar);
+        schedule = new Schedule(name, calendar);
+        return new Schedule(name, calendar);
     }
 }
