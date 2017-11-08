@@ -1,5 +1,7 @@
 package seedu.room.logic.commands;
 
+import static seedu.room.model.person.Room.ROOM_NOT_SET_DEFAULT;
+
 import java.util.List;
 
 import seedu.room.commons.core.Messages;
@@ -22,7 +24,8 @@ public class SwaproomCommand extends UndoableCommand {
             + "Parameters: INDEX1 and INDEX2 (both must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1 2";
 
-    public static final String MESSAGE_SWAP_PERSONS_SUCCESS = "Swapped Rooms : %1$s and %2$s";
+    public static final String MESSAGE_SWAP_PERSONS_SUCCESS = "Swapped Rooms : %1$s and %2$s.";
+    public static final String ROOMS_NOT_SET_ERROR = "Both %1$s and %2$s have not been assigned any rooms yet.";
 
     private final Index targetIndex1;
     private final Index targetIndex2;
@@ -38,14 +41,19 @@ public class SwaproomCommand extends UndoableCommand {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if (targetIndex1.getZeroBased() >= lastShownList.size()/*
-        ;lp.oik jhgv*/
+        if (targetIndex1.getZeroBased() >= lastShownList.size()
                 || targetIndex2.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         ReadOnlyPerson person1 = lastShownList.get(targetIndex1.getZeroBased());
         ReadOnlyPerson person2 = lastShownList.get(targetIndex2.getZeroBased());
+
+
+        if (person1.getRoom().toString().equals(ROOM_NOT_SET_DEFAULT)
+                && person2.getRoom().toString().equals(ROOM_NOT_SET_DEFAULT)) {
+            throw new CommandException(String.format(ROOMS_NOT_SET_ERROR, person1.getName(), person2.getName()));
+        }
 
         try {
             model.swapRooms(person1, person2);
