@@ -116,7 +116,8 @@ include::../UserGuide.adoc[leveloffset=2, tag=picture]
 * Updated the General Documentation (Pull requests https://github.com/CS2103AUG2017-W11-B2/main/pull/2[#2],
 https://github.com/CS2103AUG2017-W11-B2/main/pull/66[#66],
 https://github.com/CS2103AUG2017-W11-B2/main/pull/112[#112],
-https://github.com/CS2103AUG2017-W11-B2/main/pull/124[#124])
+https://github.com/CS2103AUG2017-W11-B2/main/pull/124[#124],
+https://github.com/CS2103AUG2017-W11-B2/main/pull/134[#134])
 
 endif::[]
 
