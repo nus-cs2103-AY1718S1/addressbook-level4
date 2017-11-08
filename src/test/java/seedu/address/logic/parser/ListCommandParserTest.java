@@ -5,7 +5,10 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -40,29 +43,29 @@ public class ListCommandParserTest {
     @Test
     public void parse_validArgs_returnsListCommand() throws Exception{
         // Valid tags as arguments
-        Set<Tag> SingleTagSet_one = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1)));
-        Set<Tag> SingleTagSet_two = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_2)));
-        Set<Tag> MultipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
+        Set<Tag> singleTagSet_one = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1)));
+        Set<Tag> singleTagSet_two = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_2)));
+        Set<Tag> multipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         // List command with one argument
         ListCommand expectedListCommand =
-                new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(SingleTagSet_one)));
+                new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(singleTagSet_one)));
         assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_FRIEND, expectedListCommand);
 
-        expectedListCommand =  new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(SingleTagSet_two)));
+        expectedListCommand =  new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(singleTagSet_two)));
         assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_CRIMINAL, expectedListCommand);
 
 
         // List command with multiple arguments
-        expectedListCommand =  new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(MultipleTagSet)));
+        expectedListCommand =  new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(multipleTagSet)));
         assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_FRIEND + TAG_DESC_CRIMINAL, expectedListCommand);
 
-        MultipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_3), new Tag(VALID_TAG_4)));
-        expectedListCommand =  new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(MultipleTagSet)));
+        multipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_3), new Tag(VALID_TAG_4)));
+        expectedListCommand =  new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(multipleTagSet)));
         assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_FRIEND + TAG_DESC_TEAMMATE + TAG_DESC_FAMILY, expectedListCommand);
 
-        MultipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2), new Tag(VALID_TAG_3), new Tag(VALID_TAG_4)));
-        expectedListCommand =  new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(MultipleTagSet)));
+        multipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2), new Tag(VALID_TAG_3), new Tag(VALID_TAG_4)));
+        expectedListCommand =  new ListCommand(new PersonContainsKeywordsPredicate(new ArrayList<>(multipleTagSet)));
         assertParseSuccess(parser, ListCommand.COMMAND_WORD + TAG_DESC_FAMILY + TAG_DESC_CRIMINAL + TAG_DESC_FRIEND + TAG_DESC_TEAMMATE, expectedListCommand);
 
     }
