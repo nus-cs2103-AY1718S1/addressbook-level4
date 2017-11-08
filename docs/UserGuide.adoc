@@ -321,13 +321,13 @@ The `redo` command fails as there are no `undo` commands executed previously.
 // tag::themeslist[]
 === Listing all themes : `themeslist`
 
-This command shows a list of all themes that is available to you in The Myth's Book. +
-
+This command shows a list of all themes that is available to you in pop-up window format in The Myth's Book. +
 Format: `themeslist`
 
-You should be able to see the result of using `themeslist` in the command result box.
+You should be able to see the result of using `themeslist` as seen in Figure 5.13.1.
 
-The displayed result should look like the figure below.
+image::themeslist.png[width="800"]
+Figure 5.13.1 `themeslist` Result for Themes List Command
 // end::themeslist[]
 
 // tag::switch[]
@@ -349,8 +349,10 @@ Examples:
 1. By typing `themeslist`, you will be able to see the available themes that The Myth's Book has to offer. +
 2. By typing `switch 2`, you will be able to switch to the 2nd theme listed in the themes list.
 
-You should be able to see the result of using `switch INDEX`
-as seen in the figure below.
+You should see the result of using `switch 2` as seen in Figure 5.14.1.
+
+image::Switch.png[width="800"]
+Figure 5.14.1 `switch 2` Result for Switch Command
 // end::switch[]
 
 === Checking for birthdays : `birthdays`
