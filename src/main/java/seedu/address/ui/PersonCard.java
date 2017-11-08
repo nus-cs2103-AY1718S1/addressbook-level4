@@ -23,7 +23,7 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
     private static String[] colors = { "red", "forestgreen", "olive", "orange", "teal", "wheat", "pink",
-        "oldlace", "limegreen", "yellow", "aquamarine" };
+        "oldlace", "limegreen", "yellow", "aquamarine", "thistle", "cadetblue", "lightskyblue" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Integer colourNum = 0;
     private static final String FAVOURITE_IMAGE = "/images/favouriteIcon.png";
