@@ -38,8 +38,8 @@ public class SearchBox extends UiPart<Region> {
         return searchTextField;
     }
 
-    /*
-    Captures user input in searchBox.
+    /**
+     * Captures user input in searchBox.
      */
     @FXML
     private void handleKeyTyped(KeyEvent keyEvent) {
