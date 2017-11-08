@@ -3,6 +3,7 @@ package seedu.address.ui.person;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -67,7 +68,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
      */
     private void setAvatar() {
         if (person.getAvatar() != null) {
-            avatar.setImage(new Image(person.getAvatar().getUrl()));
+            Platform.runLater(() -> avatar.setImage(new Image(person.getAvatar().getUrl())));
         }
     }
 }
