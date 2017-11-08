@@ -147,9 +147,9 @@ public class AppointCommand extends UndoableCommand {
     public static final String MESSAGE_APPOINTMENT_CLASH = "Appointment clash";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add an appointment to a person to the address book "
-            + "by the index number in the last person listing. "
+            + "by the index number in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[date (dd/mm/yy)] [time (hh:mm)] [duration (mins)";
+            + "[date (dd/mm/yyyy)] [time (hh:mm)] [duration (mins)";
 
     private final Index index;
     private final Appointment appointment;
