@@ -126,7 +126,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
      * @param list
      * @return MeetingList
      */
-    private ObservableList<Meeting> sort(ObservableList<Meeting> list){
+    private ObservableList<Meeting> sort(ObservableList<Meeting> list) {
         list.sort((m1, m2) -> m1.getActualDate(m1.getDate().toString())
                 .compareTo(m2.getActualDate(m2.getDate().toString())));
 
