@@ -19,7 +19,7 @@ public class Address {
      */
     public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
     public static final String ADDRESS_BLOCK_WORD_MATCHING_REGEX = "Block |block |Blk |blk ";
-    public static final String ADDRESS_BLOCK_NUMBER_MATCHING_REGEX = "^\\d{1,5} | \\d{1,5}[a-zA-Z, ]";
+    public static final String ADDRESS_BLOCK_NUMBER_MATCHING_REGEX = "^\\d{1,5} | \\d{1,5}[a-zA-Z, -]|a\\/\\d{1,5}";
 
     public final String value;
 
