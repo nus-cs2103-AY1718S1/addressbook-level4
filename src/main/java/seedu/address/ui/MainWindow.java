@@ -15,6 +15,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import seedu.address.autocomplete.AutoCompleteLogic;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
@@ -40,6 +41,7 @@ public class MainWindow extends UiPart<Region> {
 
     private Stage primaryStage;
     private Logic logic;
+    private AutoCompleteLogic autoCompleteLogic;
 
     // Independent Ui parts residing in this Ui container
     private MapPanel mapPanel;
@@ -72,12 +74,17 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private VBox vbox;
 
-    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
+    public MainWindow(Stage primaryStage,
+                      Config config,
+                      UserPrefs prefs,
+                      Logic logic,
+                      AutoCompleteLogic autoCompleteLogic) {
         super(FXML);
 
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+        this.autoCompleteLogic = autoCompleteLogic;
         this.config = config;
         this.prefs = prefs;
 
@@ -150,7 +157,7 @@ public class MainWindow extends UiPart<Region> {
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
+        CommandBox commandBox = new CommandBox(autoCompleteLogic, logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
@@ -235,14 +242,10 @@ public class MainWindow extends UiPart<Region> {
      */
     @Subscribe
     public void handleChangeThemeEvent(ChangeThemeEvent event) {
-        if (event.getTheme().equals("DarkTheme"))
-        {
+        if (event.getTheme().equals("DarkTheme")) {
             vbox.getStylesheets().remove("/view/RedTheme.css");
             vbox.getStylesheets().add("/view/" + event.getTheme() + ".css");
-        }
-
-        else
-        {
+        } else {
             vbox.getStylesheets().remove("/view/DarkTheme.css");
             vbox.getStylesheets().add("/view/" + event.getTheme() + ".css");
         }

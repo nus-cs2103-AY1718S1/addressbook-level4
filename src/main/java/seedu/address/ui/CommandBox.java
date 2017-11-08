@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+import seedu.address.autocomplete.AutoCompleteLogic;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
@@ -24,6 +25,7 @@ public class CommandBox extends UiPart<Region> {
     private static final String FXML = "CommandBox.fxml";
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
+    private final AutoCompleteLogic autoCompleteLogic;
     private final Logic logic;
     private ListElementPointer historySnapshot;
     private ListElementPointer autoCompleteSnapshot;
@@ -34,13 +36,14 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private TextField commandTextField;
 
-    public CommandBox(Logic logic) {
+    public CommandBox(AutoCompleteLogic autoCompleteLogic, Logic logic) {
         super(FXML);
         this.logic = logic;
+        this.autoCompleteLogic = autoCompleteLogic;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
-        autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
+        autoCompleteSnapshot = autoCompleteLogic.getAutoCompleteSnapshot();
     }
 
     /**
@@ -118,7 +121,7 @@ public class CommandBox extends UiPart<Region> {
         // loop back to the start (original user input) if all autocomplete options are exhausted
         if (!autoCompleteSnapshot.hasPrevious()) {
             logger.info("No more options, go back to original user input stub.");
-            autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
+            autoCompleteSnapshot = autoCompleteLogic.getAutoCompleteSnapshot();
             replaceText(autoCompleteSnapshot.current());
             appendText(textAfterCaret);
         } else {
@@ -203,14 +206,14 @@ public class CommandBox extends UiPart<Region> {
 
         logger.info("Retrieve autocomplete options: " + autoCompleteStub);
         // only pass the text before the caret into autocomplete
-        logic.updateAutoCompletePossibilities(autoCompleteStub);
+        autoCompleteLogic.updateAutoCompletePossibilities(autoCompleteStub);
 
         // remember the text after caret
         textAfterCaret = commandTextField.getText()
             .substring(commandTextField.getCaretPosition(), commandTextField.getText().length());
         logger.info("Ignore text after caret: " + textAfterCaret);
 
-        autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
+        autoCompleteSnapshot = autoCompleteLogic.getAutoCompleteSnapshot();
         isAutoCompletePossibilitiesUpToDate = true;
     }
 

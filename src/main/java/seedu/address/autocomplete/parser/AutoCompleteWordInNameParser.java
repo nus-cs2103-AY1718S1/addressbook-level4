@@ -1,4 +1,4 @@
-package seedu.address.logic.autocomplete.parser;
+package seedu.address.autocomplete.parser;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import seedu.address.logic.autocomplete.AutoCompleteUtils;
+import seedu.address.autocomplete.AutoCompleteUtils;
 import seedu.address.model.Model;
 
 //@@author john19950730

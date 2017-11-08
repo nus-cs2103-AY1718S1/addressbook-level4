@@ -1,8 +1,8 @@
-package seedu.address.logic.autocomplete;
+package seedu.address.autocomplete;
 
 import java.util.List;
 
-import seedu.address.logic.autocomplete.parser.AutoCompleteParser;
+import seedu.address.autocomplete.parser.AutoCompleteParser;
 
 //@@author john19950730
 /**

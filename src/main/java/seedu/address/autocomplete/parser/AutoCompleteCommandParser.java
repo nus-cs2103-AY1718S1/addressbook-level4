@@ -1,12 +1,12 @@
-package seedu.address.logic.autocomplete.parser;
+package seedu.address.autocomplete.parser;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import seedu.address.logic.autocomplete.AutoCompleteUtils;
-import seedu.address.logic.autocomplete.CommandWordUsageTuple;
+import seedu.address.autocomplete.AutoCompleteUtils;
+import seedu.address.autocomplete.CommandWordUsageTuple;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;

@@ -1,4 +1,4 @@
-package seedu.address.logic.autocomplete;
+package seedu.address.autocomplete;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,7 +13,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.logic.autocomplete.parser.ModelStub;
+import seedu.address.autocomplete.parser.ModelStub;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -24,11 +24,11 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.TypicalPersons;
 
 //@@author john19950730
-public class AutoCompleteLogicTest {
+public class AutoCompletePossibilitiesManagerTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final AutoCompleteLogic logic = new AutoCompleteManager(new ModelStubWithRequiredMethods(), 10);
+    private final AutoCompletePossibilitiesManager logic = new AutoCompletePossibilitiesManager(new ModelStubWithRequiredMethods(), 10);
 
     @Test
     public void testEmptyInput() {
@@ -90,7 +90,7 @@ public class AutoCompleteLogicTest {
     }
 
     private List<String> listOfOptions(String stub) {
-        return logic.generateAutoCompletePossibilities(stub).getPossibilities();
+        return logic.search(stub).getPossibilities();
     }
 
     //@@author

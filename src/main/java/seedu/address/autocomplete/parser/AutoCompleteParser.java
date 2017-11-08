@@ -1,4 +1,4 @@
-package seedu.address.logic.autocomplete.parser;
+package seedu.address.autocomplete.parser;
 
 import java.util.List;
 

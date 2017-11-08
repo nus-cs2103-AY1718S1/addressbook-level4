@@ -1,4 +1,4 @@
-package seedu.address.logic.autocomplete;
+package seedu.address.autocomplete;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -13,14 +13,14 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import seedu.address.autocomplete.parser.AutoCompleteByPrefixModelParser;
+import seedu.address.autocomplete.parser.AutoCompleteCommandParser;
+import seedu.address.autocomplete.parser.AutoCompleteParser;
+import seedu.address.autocomplete.parser.AutoCompleteSetStringParser;
+import seedu.address.autocomplete.parser.AutoCompleteTagParser;
+import seedu.address.autocomplete.parser.AutoCompleteWordInNameParser;
+import seedu.address.autocomplete.parser.IdentityParser;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.autocomplete.parser.AutoCompleteByPrefixModelParser;
-import seedu.address.logic.autocomplete.parser.AutoCompleteCommandParser;
-import seedu.address.logic.autocomplete.parser.AutoCompleteParser;
-import seedu.address.logic.autocomplete.parser.AutoCompleteSetStringParser;
-import seedu.address.logic.autocomplete.parser.AutoCompleteTagParser;
-import seedu.address.logic.autocomplete.parser.AutoCompleteWordInNameParser;
-import seedu.address.logic.autocomplete.parser.IdentityParser;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -33,10 +33,8 @@ import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 
 //@@author john19950730
-/**
- * Manages autocomplete logic, as well as optimizations such as memoization.
- */
-public class AutoCompleteManager implements AutoCompleteLogic {
+/** Manages how possibilities are generated and optimizations of how possibilities are stored for later use. */
+public class AutoCompletePossibilitiesManager {
 
     private final Logger logger = LogsCenter.getLogger(AutoCompleteManager.class);
 
@@ -63,17 +61,12 @@ public class AutoCompleteManager implements AutoCompleteLogic {
     private final LinkedList<AutoCompletePossibilities> cache = new LinkedList<AutoCompletePossibilities>();
     private final int maxSize;
 
-    public AutoCompleteManager(Model model, int size) {
+    public AutoCompletePossibilitiesManager(Model model, int size) {
         this.model = model;
         modelParser = new AutoCompleteByPrefixModelParser(model);
         wordInNameParser = new AutoCompleteWordInNameParser(model);
         tagParser = new AutoCompleteTagParser(model);
         maxSize = size;
-    }
-
-    @Override
-    public AutoCompletePossibilities generateAutoCompletePossibilities(String stub) {
-        return search(stub);
     }
 
     /**
@@ -83,7 +76,7 @@ public class AutoCompleteManager implements AutoCompleteLogic {
      * @return AutoCompletePossibilities object that contains all autocomplete options,
      * new object will be generated if not found in cache
      */
-    private AutoCompletePossibilities search(String stub) {
+    public AutoCompletePossibilities search(String stub) {
         for (AutoCompletePossibilities entryInCache : cache) {
             if (stub.equals(entryInCache.getStub())) {
                 logger.info("Found memoized autocomplete options.");

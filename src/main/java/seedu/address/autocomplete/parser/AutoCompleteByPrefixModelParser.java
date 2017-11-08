@@ -1,4 +1,4 @@
-package seedu.address.logic.autocomplete.parser;
+package seedu.address.autocomplete.parser;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import seedu.address.logic.autocomplete.AutoCompleteUtils;
+import seedu.address.autocomplete.AutoCompleteUtils;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 

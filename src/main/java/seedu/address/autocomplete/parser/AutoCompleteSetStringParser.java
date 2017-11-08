@@ -1,9 +1,9 @@
-package seedu.address.logic.autocomplete.parser;
+package seedu.address.autocomplete.parser;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import seedu.address.logic.autocomplete.AutoCompleteUtils;
+import seedu.address.autocomplete.AutoCompleteUtils;
 
 //@@author john19950730
 /** Represents autocomplete parser that matches a fixed set of strings, defined in the constructor. */

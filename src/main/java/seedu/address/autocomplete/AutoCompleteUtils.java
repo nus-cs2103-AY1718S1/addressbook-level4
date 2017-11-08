@@ -1,4 +1,4 @@
-package seedu.address.logic.autocomplete;
+package seedu.address.autocomplete;
 
 //@@author john19950730
 
