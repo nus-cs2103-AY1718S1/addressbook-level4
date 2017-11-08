@@ -1,5 +1,6 @@
 package systemtests;
 
+import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
@@ -21,6 +22,8 @@ import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_COMPLETED;
 import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_DELIVERING;
+import static seedu.address.logic.commands.CommandTestUtil.TAB_ALL_PARCELS;
+import static seedu.address.logic.commands.CommandTestUtil.TAB_COMPLETED_PARCELS;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FLAMMABLE;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FROZEN;
 import static seedu.address.logic.commands.CommandTestUtil.TRACKING_NUMBER_DESC_AMY;
@@ -97,6 +100,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: redo adding Amy to the list -> Amy added again */
         command = RedoCommand.COMMAND_WORD;
         model.addParcel(toAdd);
+        model.maintainSorted();
+        model.forceSelectParcel(toAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
@@ -238,7 +243,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /*
          * Case: selects first card in the parcel list, add a parcel -> added, card selection
-         * remains unchanged
+         * changes to recently added card
          */
         executeCommand(SelectCommand.COMMAND_WORD + " 1");
         selectParcel(INDEX_FIRST_PARCEL);
@@ -271,7 +276,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING + TAG_DESC_FLAMMABLE;
         assertCommandSuccess(command, toAdd);
 
-
         /* Case: missing tracking number -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING;
@@ -299,8 +303,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: missing status -> accepted */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_BOB).withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withTags(VALID_TAG_FLAMMABLE)
-                .withStatus("PENDING").build();
+                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withTags(VALID_TAG_FLAMMABLE).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_BOB + NAME_DESC_AMY + PHONE_DESC_BOB
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + TAG_DESC_FLAMMABLE;
         assertCommandSuccess(command, toAdd);
@@ -349,6 +352,18 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
+
+        //@@author fustilio
+        /* Case: add Hoon's parcel (completed) and Ida's parcel (pending) and check if tab is switched back and forth*/
+        model = getModel();
+        assertTrue(model.getTabIndex().equals(TAB_ALL_PARCELS));
+        model.addParcelCommand(HOON);
+        assertTrue(model.getTabIndex().equals(TAB_COMPLETED_PARCELS));
+        model.addParcelCommand(IDA);
+        assertTrue(model.getTabIndex().equals(TAB_ALL_PARCELS));
+        model.deleteParcel(HOON);
+        model.deleteParcel(IDA);
+        //@@author
     }
 
     /**
@@ -372,9 +387,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, ReadOnlyParcel toAdd) {
         Model expectedModel = getModel();
-
         try {
-            expectedModel.addParcel(toAdd);
+            expectedModel.addParcelCommand(toAdd);
         } catch (DuplicateParcelException dpe) {
             throw new IllegalArgumentException("toAdd already exists in the model.");
         }
@@ -391,9 +405,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
-        expectedModel.maintainSorted();
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
     }

@@ -60,4 +60,8 @@ public class Name {
         return fullName.hashCode();
     }
 
+    public int compareTo(Name other) {
+        return this.toString().compareTo(other.toString());
+    }
+
 }

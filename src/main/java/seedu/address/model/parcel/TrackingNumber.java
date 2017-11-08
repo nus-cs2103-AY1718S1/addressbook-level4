@@ -55,4 +55,8 @@ public class TrackingNumber {
         return value.hashCode();
     }
 
+    public int compareTo(TrackingNumber other) {
+        return this.toString().compareTo(other.toString());
+    }
+
 }
