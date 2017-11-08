@@ -76,6 +76,7 @@ public class ParserUtil {
         return numbers;
 
     }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.

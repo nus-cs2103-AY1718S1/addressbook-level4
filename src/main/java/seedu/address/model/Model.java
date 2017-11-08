@@ -119,4 +119,12 @@ public interface Model {
      * @param date
      */
     void sortEvents(LocalDate date);
+
+    /**
+     * Checks if there exist a clash between list of events and the given event.
+     *
+     * @param event
+     * @return true if a clash exist, otherwise return false
+     */
+    boolean hasEvenClashes(Event event);
 }

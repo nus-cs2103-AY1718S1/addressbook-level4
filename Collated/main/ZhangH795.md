@@ -1,5 +1,5 @@
 # ZhangH795
-###### \java\seedu\address\logic\commands\TagAddCommand.java
+###### /java/seedu/address/logic/commands/TagAddCommand.java
 ``` java
 /**
  * Edits the details of an existing person in the address book.
@@ -271,7 +271,7 @@ public class TagAddCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\TagFindCommand.java
+###### /java/seedu/address/logic/commands/TagFindCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book whose name contains a certain tag.
@@ -306,7 +306,7 @@ public class TagFindCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\TagRemoveCommand.java
+###### /java/seedu/address/logic/commands/TagRemoveCommand.java
 ``` java
 
 /**
@@ -618,7 +618,7 @@ public class TagRemoveCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\TagAddCommandParser.java
+###### /java/seedu/address/logic/parser/TagAddCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new TagAddCommand object
@@ -692,7 +692,7 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\TagFindCommandParser.java
+###### /java/seedu/address/logic/parser/TagFindCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new TagFindCommand object
@@ -716,7 +716,7 @@ public class TagFindCommandParser implements Parser<TagFindCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\TagRemoveCommandParser.java
+###### /java/seedu/address/logic/parser/TagRemoveCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new TagRemoveCommand object
@@ -791,7 +791,7 @@ public class TagRemoveCommandParser implements Parser<TagRemoveCommand> {
 
 }
 ```
-###### \resources\view\BrightTheme.css
+###### /resources/view/BrightTheme.css
 ``` css
 .background {
     -fx-background-color: derive(#1d1d1d, 20%);

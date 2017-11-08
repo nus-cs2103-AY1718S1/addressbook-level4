@@ -20,7 +20,6 @@ import seedu.address.model.event.EventDuration;
 import seedu.address.model.event.EventName;
 import seedu.address.model.event.EventTime;
 
-//@@author eldriclim
 /**
  * Parses input arguments and creates a new ScheduleAddCommand object
  */
@@ -66,7 +65,9 @@ public class ScheduleAddCommandParser implements Parser<ScheduleAddCommand> {
                     durationInput);
 
 
-            ArrayList<Index> indexList = ParserUtil.parseIndexes(argMultimap.getValue(PREFIX_EVENT_MEMBER).get());
+            ArrayList<Index> indexList = argMultimap.getValue(PREFIX_EVENT_MEMBER).isPresent()
+                    ? ParserUtil.parseIndexes(argMultimap.getValue(PREFIX_EVENT_MEMBER).get())
+                    : new ArrayList<>();
 
             Set<Index> uniqueMemberIndexes = new HashSet<>(indexList);
 

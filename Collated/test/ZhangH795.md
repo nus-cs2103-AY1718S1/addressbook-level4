@@ -1,5 +1,5 @@
 # ZhangH795
-###### \java\seedu\address\logic\commands\TagAddCommandTest.java
+###### /java/seedu/address/logic/commands/TagAddCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
@@ -148,7 +148,7 @@ public class TagAddCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\TagFindCommandTest.java
+###### /java/seedu/address/logic/commands/TagFindCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code TagFindCommand}.
@@ -235,7 +235,7 @@ public class TagFindCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\TagRemoveCommandTest.java
+###### /java/seedu/address/logic/commands/TagRemoveCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.

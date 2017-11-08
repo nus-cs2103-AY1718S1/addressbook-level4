@@ -1,5 +1,5 @@
 # dalessr
-###### \java\seedu\address\commons\events\ui\BrowserPanelFindRouteEvent.java
+###### /java/seedu/address/commons/events/ui/BrowserPanelFindRouteEvent.java
 ``` java
 /**
  * Represents a display of route from start location to end location in the Browser Panel
@@ -28,7 +28,7 @@ public class BrowserPanelFindRouteEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\BrowserPanelShowLocationEvent.java
+###### /java/seedu/address/commons/events/ui/BrowserPanelShowLocationEvent.java
 ``` java
 /**
  * Represents a display of location in the Browser Panel
@@ -51,7 +51,7 @@ public class BrowserPanelShowLocationEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\ClearPersonListEvent.java
+###### /java/seedu/address/commons/events/ui/ClearPersonListEvent.java
 ``` java
 /**
  * Indicates a request to clear the person list
@@ -64,7 +64,7 @@ public class ClearPersonListEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\OpenFaceBookWebViewEvent.java
+###### /java/seedu/address/commons/events/ui/OpenFaceBookWebViewEvent.java
 ``` java
 /**
  * Indicates a request for opening facebook webview
@@ -87,7 +87,7 @@ public class OpenFaceBookWebViewEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\OpenGithubWebViewEvent.java
+###### /java/seedu/address/commons/events/ui/OpenGithubWebViewEvent.java
 ``` java
 /**
  * Indicates a request for opening github webview
@@ -110,7 +110,7 @@ public class OpenGithubWebViewEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\OpenInstagramWebViewEvent.java
+###### /java/seedu/address/commons/events/ui/OpenInstagramWebViewEvent.java
 ``` java
 /**
  * Indicates a request for opening instagram webview
@@ -133,7 +133,7 @@ public class OpenInstagramWebViewEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\OpenNusModsWebViewEvent.java
+###### /java/seedu/address/commons/events/ui/OpenNusModsWebViewEvent.java
 ``` java
 /**
  * Indicates a request for opening nusmods webview
@@ -156,7 +156,7 @@ public class OpenNusModsWebViewEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\OpenTwitterWebViewEvent.java
+###### /java/seedu/address/commons/events/ui/OpenTwitterWebViewEvent.java
 ``` java
 /**
  * Indicates a request for opening twitter webview
@@ -179,7 +179,7 @@ public class OpenTwitterWebViewEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\BirthdayAddCommand.java
+###### /java/seedu/address/logic/commands/BirthdayAddCommand.java
 ``` java
 /**
  * Add a birthday to an existing person in the address book.
@@ -241,7 +241,7 @@ public class BirthdayAddCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\BirthdayRemoveCommand.java
+###### /java/seedu/address/logic/commands/BirthdayRemoveCommand.java
 ``` java
 /**
  * Remove a birthday from an existing person in the address book.
@@ -298,7 +298,7 @@ public class BirthdayRemoveCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FindCommand.java
+###### /java/seedu/address/logic/commands/FindCommand.java
 ``` java
     @Override
     public CommandResult execute() {
@@ -458,7 +458,7 @@ public class BirthdayRemoveCommand extends UndoableCommand {
     }
 
 ```
-###### \java\seedu\address\logic\commands\MapRouteCommand.java
+###### /java/seedu/address/logic/commands/MapRouteCommand.java
 ``` java
 /**
  * Shows the route from the entered location to the selected person's address on Google map.
@@ -507,7 +507,7 @@ public class MapRouteCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\MapShowCommand.java
+###### /java/seedu/address/logic/commands/MapShowCommand.java
 ``` java
 /**
  * Shows the location of a person on Google map identified using it's last displayed index from the address book.
@@ -552,7 +552,7 @@ public class MapShowCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
     private static ArrayList<String> commandNames = new ArrayList<>();
 
@@ -586,7 +586,7 @@ public class MapShowCommand extends Command {
     }
 
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
     public static ArrayList<String> getCommandNames() {
         return commandNames;
@@ -594,7 +594,7 @@ public class MapShowCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\parser\BirthdayAddCommandParser.java
+###### /java/seedu/address/logic/parser/BirthdayAddCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new BirthdayAddCommand object
@@ -625,7 +625,7 @@ public class BirthdayAddCommandParser implements Parser<BirthdayAddCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\BirthdayRemoveCommandParser.java
+###### /java/seedu/address/logic/parser/BirthdayRemoveCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new BirthdayRemoveCommand object
@@ -650,7 +650,7 @@ public class BirthdayRemoveCommandParser implements Parser<BirthdayRemoveCommand
     }
 }
 ```
-###### \java\seedu\address\logic\parser\FindCommandParser.java
+###### /java/seedu/address/logic/parser/FindCommandParser.java
 ``` java
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
@@ -794,7 +794,7 @@ public class BirthdayRemoveCommandParser implements Parser<BirthdayRemoveCommand
     }
 }
 ```
-###### \java\seedu\address\logic\parser\MapRouteCommandParser.java
+###### /java/seedu/address/logic/parser/MapRouteCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new MapRouteCommand object
@@ -825,7 +825,7 @@ public class MapRouteCommandParser implements Parser<MapRouteCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\MapShowCommandParser.java
+###### /java/seedu/address/logic/parser/MapShowCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new MapShowCommand object
@@ -847,7 +847,7 @@ public class MapShowCommandParser implements Parser<MapShowCommand> {
     }
 }
 ```
-###### \java\seedu\address\model\person\Birthday.java
+###### /java/seedu/address/model/person/Birthday.java
 ``` java
 /**
  * Represents a Person's birthday in the address book.
@@ -912,7 +912,7 @@ public class Birthday {
 
 }
 ```
-###### \java\seedu\address\model\util\SampleDataUtil.java
+###### /java/seedu/address/model/util/SampleDataUtil.java
 ``` java
         try {
             Person[] persons =  new Person[] {
@@ -1199,7 +1199,7 @@ public class Birthday {
 
 }
 ```
-###### \java\seedu\address\ui\BrowserPanel.java
+###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
     /**
      * Loads the google map page on the browser specifying the location of the person selected.
@@ -1225,7 +1225,7 @@ public class Birthday {
     }
 
 ```
-###### \java\seedu\address\ui\BrowserPanel.java
+###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
     @Subscribe
     private void handleBrowserPanelShowLocationEvent(BrowserPanelShowLocationEvent event) {
@@ -1240,7 +1240,7 @@ public class Birthday {
     }
 }
 ```
-###### \java\seedu\address\ui\PersonDetailsPanel.java
+###### /java/seedu/address/ui/PersonDetailsPanel.java
 ``` java
 /**
  * The Contact Details Panel of the App.
@@ -1497,7 +1497,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
     }
 }
 ```
-###### \resources\view\PersonDetailsPanel.fxml
+###### /resources/view/PersonDetailsPanel.fxml
 ``` fxml
 <StackPane xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
    <children>

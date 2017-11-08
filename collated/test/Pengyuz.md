@@ -1,5 +1,5 @@
 # Pengyuz
-###### \java\seedu\address\logic\commands\BinclearCommandTest.java
+###### /java/seedu/address/logic/commands/BinclearCommandTest.java
 ``` java
 public class BinclearCommandTest {
 
@@ -25,7 +25,7 @@ public class BinclearCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\BindeleteCommandTest.java
+###### /java/seedu/address/logic/commands/BindeleteCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -182,7 +182,7 @@ public class BindeleteCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\BinrestoreCommandTest.java
+###### /java/seedu/address/logic/commands/BinrestoreCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -339,7 +339,7 @@ public class BinrestoreCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\DeleteCommandTest.java
+###### /java/seedu/address/logic/commands/DeleteCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -573,7 +573,7 @@ public class DeleteCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\HelpCommandTest.java
+###### /java/seedu/address/logic/commands/HelpCommandTest.java
 ``` java
 
 public class HelpCommandTest {
@@ -664,7 +664,7 @@ public class HelpCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
 public class AddressBookParserTest {
     @Rule
@@ -959,7 +959,88 @@ public class AddressBookParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\DeleteCommandParserTest.java
+###### /java/seedu/address/logic/parser/BindeleteCommandPaserTest.java
+``` java
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the DeleteCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the BindeleteCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class BindeleteCommandPaserTest {
+
+    private BindeleteCommandParser parser = new BindeleteCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsBindeleteCommand() {
+        ArrayList<Index> todelete = new ArrayList<>();
+        todelete.add(INDEX_FIRST_PERSON);
+        assertParseSuccess(parser, "1", new BindeleteCommand(todelete));
+    }
+
+    @Test
+    public void parse_twovalidArgs_returnsBindeleteCommand() {
+        ArrayList<Index> todelete = new ArrayList<>();
+        todelete.add(INDEX_FIRST_PERSON);
+        todelete.add(INDEX_SECOND_PERSON);
+        assertParseSuccess(parser, "1 2", new BindeleteCommand(todelete));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "I/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, BindeleteCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_emptyArgs_throwsParseException() {
+        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, BindeleteCommand.MESSAGE_USAGE));
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/BinrestoreCommandPaserTest.java
+``` java
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the DeleteCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the BindeleteCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class BinrestoreCommandPaserTest {
+
+    private BinrestoreCommandParser parser = new BinrestoreCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsBindresotreCommand() {
+        ArrayList<Index> todelete = new ArrayList<>();
+        todelete.add(INDEX_FIRST_PERSON);
+        assertParseSuccess(parser, "1", new BinrestoreCommand(todelete));
+    }
+
+    @Test
+    public void parse_twovalidArgs_returnsBindrestoreCommand() {
+        ArrayList<Index> todelete = new ArrayList<>();
+        todelete.add(INDEX_FIRST_PERSON);
+        todelete.add(INDEX_SECOND_PERSON);
+        assertParseSuccess(parser, "1 2", new BinrestoreCommand(todelete));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "I/", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                BinrestoreCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_emptyArgs_throwsParseException() {
+        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, BinrestoreCommand.MESSAGE_USAGE));
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/DeleteCommandParserTest.java
 ``` java
 
 /**
@@ -1022,7 +1103,7 @@ public class DeleteCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\HelpCommandParserTest.java
+###### /java/seedu/address/logic/parser/HelpCommandParserTest.java
 ``` java
 
 public class HelpCommandParserTest {
@@ -1086,7 +1167,7 @@ public class HelpCommandParserTest {
 
 }
 ```
-###### \java\seedu\address\testutil\TypicalRecycleBin.java
+###### /java/seedu/address/testutil/TypicalRecycleBin.java
 ``` java
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.

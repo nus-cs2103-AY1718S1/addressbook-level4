@@ -1,5 +1,5 @@
 # dalessr
-###### \java\guitests\guihandles\PersonDetailsPanelHandle.java
+###### /java/guitests/guihandles/PersonDetailsPanelHandle.java
 ``` java
 /**
  * A handler for the {@code PersonDetailsPanel} of the UI.
@@ -44,7 +44,7 @@ public class PersonDetailsPanelHandle extends NodeHandle<Node> {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\BirthdayAddCommandTest.java
+###### /java/seedu/address/logic/commands/BirthdayAddCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for BirthdayAddCommand.
@@ -145,7 +145,7 @@ public class BirthdayAddCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\BirthdayRemoveCommandTest.java
+###### /java/seedu/address/logic/commands/BirthdayRemoveCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for BirthdayRemoveCommand.
@@ -252,7 +252,7 @@ public class BirthdayRemoveCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FindCommandTest.java
+###### /java/seedu/address/logic/commands/FindCommandTest.java
 ``` java
     @Test
     public void execute_multipleNameKeywords_multiplePersonsFound() {
@@ -332,7 +332,7 @@ public class BirthdayRemoveCommandTest {
     }
 
 ```
-###### \java\seedu\address\logic\commands\MapRouteCommandTest.java
+###### /java/seedu/address/logic/commands/MapRouteCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code MapRouteCommand}.
@@ -451,7 +451,7 @@ public class MapRouteCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\MapShowCommandTest.java
+###### /java/seedu/address/logic/commands/MapShowCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code MapShowCommand}.
@@ -569,7 +569,7 @@ public class MapShowCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\BirthdayAddCommandParserTest.java
+###### /java/seedu/address/logic/parser/BirthdayAddCommandParserTest.java
 ``` java
 /**
  * Test scope: similar to {@code SelectCommandParserTest}.
@@ -609,7 +609,7 @@ public class BirthdayAddCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\BirthdayRemoveCommandParserTest.java
+###### /java/seedu/address/logic/parser/BirthdayRemoveCommandParserTest.java
 ``` java
 /**
  * Test scope: similar to {@code SelectCommandParserTest}.
@@ -643,7 +643,7 @@ public class BirthdayRemoveCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\FindCommandParserTest.java
+###### /java/seedu/address/logic/parser/FindCommandParserTest.java
 ``` java
     @Test
     public void parse_emptyArg_throwsParseException() {
@@ -697,7 +697,7 @@ public class BirthdayRemoveCommandParserTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\MapRouteCommandParserTest.java
+###### /java/seedu/address/logic/parser/MapRouteCommandParserTest.java
 ``` java
 /**
  * Test scope: similar to {@code SelectCommandParserTest}.
@@ -726,7 +726,7 @@ public class MapRouteCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\MapShowCommandParserTest.java
+###### /java/seedu/address/logic/parser/MapShowCommandParserTest.java
 ``` java
 /**
  * Test scope: similar to {@code SelectCommandParserTest}.
@@ -747,7 +747,7 @@ public class MapShowCommandParserTest {
     }
 }
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
     @Test
     public void find() {

@@ -163,6 +163,7 @@ Returns the person having email `johndoe@gmail.com`
 Returns any person having names `Betsy`, `Tim`, `John` or living at `Clementi Street`
 // end::find[]
 
+// tag::sort[]
 === Sorting list of persons: `sort` _[Since v1.2]_
 
 Sorts the full list of persons based on the specified attribute. +
@@ -190,6 +191,7 @@ Returns list of persons sorted by name added in ascending order
 Returns list of persons sorted by phone in ascending order
 * `sort t/DSC` +
 Returns list of persons sorted by time added in descending order
+// tag::sort[]
 
 // tag::delete[]
 === Deleting a person : `delete` _[Since v1.2]_
