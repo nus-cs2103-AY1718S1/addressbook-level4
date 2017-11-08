@@ -17,9 +17,9 @@ import seedu.address.commons.util.ExtensionCheckerUtil;
  * Guarantees : The newly written filepath must exist if ImageIO.write is successful
  */
 public class PhotoStorage {
-    public static final String WRITE_FAILURE_MESSAGE = "Unable to write to local resource folder: displaypictures.\n" +
-            "Make sure that the image type is supported and the image file cannot be hidden.\n" +
-            "Supported types: JPEG, JPG, PNG.";
+    public static final String WRITE_FAILURE_MESSAGE = "Unable to write to local resource folder: displaypictures.\n" 
+            + "Make sure that the image type is supported and the image file cannot be hidden.\n" 
+            + "Supported types: JPEG, JPG, PNG.";
     private String[] allowedExt = null;
     private File fileReader = null;
     private String filePath = "";
@@ -36,7 +36,7 @@ public class PhotoStorage {
     public String setNewFilePath() throws IOException {
         requireNonNull(allowedExt);
         String ext = ExtensionCheckerUtil.getExtension(filePath);
-        if(!ExtensionCheckerUtil.isOfType(ext, allowedExt)) {
+        if (!ExtensionCheckerUtil.isOfType(ext, allowedExt)) {
             throw new IOException(WRITE_FAILURE_MESSAGE);
         }
         String newFilePath = "displaypictures/" + uniqueFileName + "." + ext;
