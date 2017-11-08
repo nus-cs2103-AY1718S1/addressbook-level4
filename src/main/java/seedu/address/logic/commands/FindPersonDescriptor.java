@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Helper class to collate fields for Find Command
+ */
 public class FindPersonDescriptor {
     private List<String> name;
     private List<String> phone;
