@@ -14,6 +14,7 @@ public class Config {
     private String appTitle = "BoNUS";
     private Level logLevel = Level.INFO;
     private String userPrefsFilePath = "preferences.json";
+    private String addressBookTheme = "preferences.json";
 
     public String getAppTitle() {
         return appTitle;
@@ -33,6 +34,10 @@ public class Config {
 
     public String getUserPrefsFilePath() {
         return userPrefsFilePath;
+    }
+
+    public String getAddressBookTheme() {
+        return addressBookTheme;
     }
 
     public void setUserPrefsFilePath(String userPrefsFilePath) {

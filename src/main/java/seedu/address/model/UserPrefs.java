@@ -16,9 +16,11 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data" + File.separator + "addressbook.xml";
     private String addressBookName = "MyAddressBook";
+    private String addressBookTheme = "css/DarkTheme.css";
 
     public UserPrefs() {
         this.setGuiSettings(DEFAULT_WIDTH, DEFAULT_HEIGHT, 0, 0);
+        this.setAddressBookTheme(addressBookTheme);
     }
 
     public GuiSettings getGuiSettings() {
@@ -47,6 +49,14 @@ public class UserPrefs {
 
     public void setAddressBookName(String addressBookName) {
         this.addressBookName = addressBookName;
+    }
+
+
+    public String getAddressBookTheme() {
+        return addressBookTheme;
+    }
+    public void setAddressBookTheme(String theme) {
+        this.addressBookTheme = theme;
     }
 
     @Override
