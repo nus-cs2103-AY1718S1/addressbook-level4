@@ -508,6 +508,9 @@ The favourite mechanism is very similar to the one used in edit command. The fea
 . The `favouritePerson` method in AddressBook then creates two `UniquePersonList` to implement the sorting. Persons with `favourite` = `true` will be sorted into the `favouriteList`. Persons with `favourite` = `false` will be sorted into the `notFavouriteList`.
 . The two lists will then be merged into the `persons` list in `AddressBook`, with `favouriteList` being at the top.
 
+The following sequence diagram shows how FavouriteCommand works:
+image::FavouriteCommandSequenceDiagram.png[width="800"]
+
 The code below shows how FavouriteCommand is implemented:
 
 [source,java]
@@ -589,15 +592,6 @@ public RedoCommand parse(String args) throws ParseException {
 }
 ----
 
-==== Design Consideration
-
-**Aspect:** Sorting of contact list with favourites +
-**Alternative 1 (current choice):** Create two lists to overwrite original order. +
-**Pros:** Easy to implement. +
-**Cons:** Does not preserve the original order of the contact list. +
-**Alternative 2:** Save the favourite contacts in a separate list without overwriting the original contact list +
-**Pros:** Does not mess up the original order. +
-**Cons:** Will use more memory (significant if favourite/contact list is large).
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
