@@ -6,6 +6,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Set;
 
 import org.graphstream.algorithm.Dijkstra;
+import org.graphstream.algorithm.WidestPath;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
@@ -39,6 +40,7 @@ public class GraphWrapper {
     private boolean rebuildNext;
 
     private final String nodeAttributeNodeLabel = "ui.label";
+    private final String nodeAttributeCE = "ce";
     private final String nodeAttributePerson = "Person";
 
     private GraphWrapper() {
@@ -203,6 +205,7 @@ public class GraphWrapper {
                 String edgeLabel = relationship.getName().toString() + " "
                         + relationship.getConfidenceEstimate().toString();
                 edge.addAttribute(nodeAttributeNodeLabel, edgeLabel);
+                edge.addAttribute(nodeAttributeCE, relationship.getConfidenceEstimate().value);
             }
         }
 
@@ -236,12 +239,13 @@ public class GraphWrapper {
 
     //@@author Xenonym
     /**
-     * Highlights the shortest path between two people.
+     * Highlights the shortest path between two people with the highest confidence.
+     * Paths with higher minimum confidence estimates are preferred.
      * Cancels next graph rebuild for styling to remain.
      * @return the number of nodes in the path between the two given people.
      */
     public int highlightShortestPath(ReadOnlyPerson from, ReadOnlyPerson to) {
-        Dijkstra shortestPath = new Dijkstra(Dijkstra.Element.EDGE, null, null);
+        WidestPath widestPath = new WidestPath(Dijkstra.Element.EDGE, null, nodeAttributeCE);
         Node fromNode;
         Node toNode;
 
@@ -253,20 +257,20 @@ public class GraphWrapper {
             throw new AssertionError("impossible to have nonexistent persons in graph");
         }
 
-        shortestPath.init(graph);
-        shortestPath.setSource(fromNode);
-        shortestPath.compute();
+        widestPath.init(graph);
+        widestPath.setSource(fromNode);
+        widestPath.compute();
 
-        for (Node n : shortestPath.getPathNodes(toNode)) {
+        for (Node n : widestPath.getPathNodes(toNode)) {
             n.addAttribute("ui.style", "fill-color: blue;");
         }
 
-        for (Edge e : shortestPath.getPathEdges(toNode)) {
+        for (Edge e : widestPath.getPathEdges(toNode)) {
             e.addAttribute("ui.style", "fill-color: red;");
         }
 
         rebuildNext = false;
-        return shortestPath.getPath(toNode).getNodeCount();
+        return widestPath.getPath(toNode).getNodeCount();
     }
 
     private void resetGraph() {

@@ -272,6 +272,7 @@ Format: `relPath FROM_INDEX TO_INDEX`
 
 ****
 * Highlights the shortest relationship path between two people as specified by `FROM_INDEX` and `TO_INDEX`.
+* Paths with higher minimum confidence estimates are preferred.
 * The indices refers to the index number shown in the most recent listing.
 * The indices *must be positive integers* 1, 2, 3, ...
 ****

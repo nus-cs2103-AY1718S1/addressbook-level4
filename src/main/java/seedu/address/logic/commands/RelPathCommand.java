@@ -12,7 +12,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author Xenonym
 /**
- * Gets the shortest relationship path between two persons.
+ * Gets the shortest relationship path between two persons with the highest confidence.
  */
 public class RelPathCommand extends Command {
     public static final String COMMAND_WORD = "relPath";
@@ -22,7 +22,7 @@ public class RelPathCommand extends Command {
 
     public static final String SHORT_MESSAGE_USAGE = COMMAND_WORD + " " + COMMAND_PARAMETERS;
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Gets the shortest relationship path between the two persons specified by "
+            + ": Gets the shortest relationship path with the highest confidence between the two persons specified by "
             + "the index numbers used in the last person listing.\n"
             + "Parameters: " + COMMAND_PARAMETERS + "\n"
             + "Example: " + COMMAND_WORD + "1 2";
@@ -51,7 +51,7 @@ public class RelPathCommand extends Command {
         ReadOnlyPerson toPerson = lastShownList.get(to.getZeroBased());
         int nodeCount = GraphWrapper.getInstance().highlightShortestPath(fromPerson, toPerson);
 
-        if (nodeCount > 0) {
+        if (nodeCount > 1) {
             return new CommandResult(String.format(MESSAGE_PATH_FOUND, fromPerson.getName(), toPerson.getName()));
         } else {
             return new CommandResult(String.format(MESSAGE_NO_PATH, fromPerson.getName(), toPerson.getName()));
