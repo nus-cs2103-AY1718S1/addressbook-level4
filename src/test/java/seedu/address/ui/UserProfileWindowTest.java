@@ -80,26 +80,6 @@ public class UserProfileWindowTest extends GuiUnitTest {
         assertUserProfileWindowEquals(userProfileWindowHandle, userPerson);
     }
 
-    @Test
-    public void updateUserPersonFailure() throws Exception {
-        userPerson = new UserPerson();
-        UserPerson william = new UserPerson(WILLIAM);
-        userProfileWindowHandle.getNameTextField().setText(william.getName().toString());
-        userProfileWindowHandle.getAddressTextField().setText(william.getAddress().toString());
-        userProfileWindowHandle.getPhoneTextField().setText("abc");
-        userProfileWindowHandle.getEmailTextField().setText(william.getEmailAsText());
-        userProfileWindowHandle.getWebLinkTextField().setText(william.getWebLinksAsText());
-
-        userProfileWindowHandle.clickOk();
-
-        // userProfileWindowHandle.getPhoneTextField().setText(william.getPhone().toString());
-        // assertUserProfileWindowNotOpen();
-        // setUp();
-        // assertUserProfileWindowEquals(userProfileWindowHandle, model.getUserPerson());
-
-
-    }
-
     /**
      * Asserts that the UserProfile window isn't open.
      */
