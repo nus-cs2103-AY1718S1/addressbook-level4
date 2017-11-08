@@ -77,25 +77,15 @@ public class PersonDetailPanel extends UiPart<Region> {
      * Shows the details of the person on the panel
      */
     private void showPersonDetails(ReadOnlyPerson person) {
-
-        initial.setText(Avatar.getInitial(person.getName().fullName));
-        avatar.setFill(Paint.valueOf(Avatar.getColor(person.getName().fullName)));
-
+        setAvatar(person);
         setTextFields(person);
         setTags(person);
         showIcons();
     }
 
-    private void hideIcons() {
-        iconPhone.setVisible(false);
-        iconEmail.setVisible(false);
-        iconAddress.setVisible(false);
-    }
-
-    private void showIcons() {
-        iconPhone.setVisible(true);
-        iconEmail.setVisible(true);
-        iconAddress.setVisible(true);
+    private void setAvatar(ReadOnlyPerson person) {
+        initial.setText(Avatar.getInitial(person.getName().fullName));
+        avatar.setFill(Paint.valueOf(Avatar.getColor(person.getName().fullName)));
     }
 
     private void setTextFields(ReadOnlyPerson person) {
@@ -119,6 +109,18 @@ public class PersonDetailPanel extends UiPart<Region> {
         } else {
             remark.setManaged(true);
         }
+    }
+
+    private void hideIcons() {
+        iconPhone.setVisible(false);
+        iconEmail.setVisible(false);
+        iconAddress.setVisible(false);
+    }
+
+    private void showIcons() {
+        iconPhone.setVisible(true);
+        iconEmail.setVisible(true);
+        iconAddress.setVisible(true);
     }
 
     /**
