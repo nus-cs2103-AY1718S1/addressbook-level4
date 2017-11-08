@@ -7,6 +7,7 @@ import seedu.address.logic.commands.ColourTagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
+//@@author Xenonym
 /**
  * Parses input arguments and creates a new {@code ColourTagCommand} object.
  */

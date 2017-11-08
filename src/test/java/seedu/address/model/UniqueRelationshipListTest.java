@@ -6,6 +6,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.model.relationship.UniqueRelationshipList;
 
+//@@author wenmogu
 public class UniqueRelationshipListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

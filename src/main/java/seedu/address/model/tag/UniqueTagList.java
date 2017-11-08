@@ -80,19 +80,20 @@ public class UniqueTagList implements Iterable<Tag> {
         return internalList.contains(toCheck);
     }
 
+    //@@author wenmogu
     /**
      * If the tag name is valid and the tag present in the list.
      * @param tagName
      * @return the index of the tag in the list
      * @throws IllegalValueException
      */
-
     public int indexOfTagWithName(String tagName) throws IllegalValueException {
         requireNonNull(tagName);
         Tag temp = new Tag(tagName);
         return internalList.indexOf(temp);
     }
 
+    //@@author
     /**
      * Adds a Tag to the list.
      *
@@ -108,6 +109,7 @@ public class UniqueTagList implements Iterable<Tag> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    //@@author wenmogu
     /**
      * Remove a Tag from the list. The tag is identified by its name.
      *
@@ -133,6 +135,7 @@ public class UniqueTagList implements Iterable<Tag> {
         return internalList.remove(tagGettingRemoved);
     }
 
+    //@@author
     @Override
     public Iterator<Tag> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);

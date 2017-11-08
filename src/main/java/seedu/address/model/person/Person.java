@@ -35,12 +35,13 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<UniqueRelationshipList> relationships;
 
+    //@@ author wenmogu
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags,
                   Set<Relationship> relationships) {
-        requireAllNonNull(name, phone, email, address, tags, relationships);
+        requireAllNonNull(name, phone, email, address, remark, tags, relationships);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -158,6 +159,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         tags.set(new UniqueTagList(replacement));
     }
 
+    //@@ author wenmogu
     /**
      * Remove a tag from the person's tag list.
      */
@@ -166,11 +168,13 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         return tagsList.removeTag(tagGettingRemoved);
     }
 
+    //@@ author wenmogu
     @Override
     public Set<Relationship> getRelationships() {
         return Collections.unmodifiableSet(relationships.get().toSet());
     }
 
+    //@@ author wenmogu
     /**
      * Add a relationship to a person's relationships
      */
@@ -191,6 +195,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         return true;
     }
 
+    //@@author wenmogu
     /**
      * Removes a relationship from a person's relationships
      */
@@ -199,6 +204,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         return reList.removeRelationship(re);
     }
 
+    //@@author
     @Override
     public ReadOnlyPerson copy() {
         Name name = this.getName();
@@ -221,7 +227,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, remark, tags);
     }
 
     @Override

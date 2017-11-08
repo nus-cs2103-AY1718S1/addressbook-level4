@@ -366,6 +366,7 @@
     -fx-font-size: 11;
 }
 
+/* @@author joanneong */
 #tags .friends {
     -fx-background-color: red;
 }

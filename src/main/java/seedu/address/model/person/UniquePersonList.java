@@ -68,7 +68,7 @@ public class UniquePersonList implements Iterable<Person> {
 
         internalList.set(index, new Person(editedPerson));
     }
-
+    //@@author TanYikai
     /**
      * Sorts the persons object in the list alphanumerically by name.
      */
@@ -76,7 +76,7 @@ public class UniquePersonList implements Iterable<Person> {
         requireNonNull(internalList);
         Collections.sort(internalList);
     }
-
+    //@@author
     /**
      * Removes the equivalent person from the list.
      *

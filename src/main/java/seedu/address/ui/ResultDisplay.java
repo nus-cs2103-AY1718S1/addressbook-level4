@@ -36,6 +36,7 @@ public class ResultDisplay extends UiPart<Region> {
     @FXML
     private TextArea infoDisplay;
 
+    //@@author joanneong
     public ResultDisplay() {
         super(FXML);
         resultDisplay.textProperty().bind(displayed);
@@ -52,7 +53,6 @@ public class ResultDisplay extends UiPart<Region> {
 
     /**
      * Updates the information display according to the user input in the command box.
-     * Note that "clearhistory" has been hardcoded as a unique case.
      */
     private void updateInfoDisplay(String oldInput, String newInput) {
         if (lastFoundCommand.isEmpty()
@@ -67,6 +67,7 @@ public class ResultDisplay extends UiPart<Region> {
         }
     }
 
+    //@@author
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

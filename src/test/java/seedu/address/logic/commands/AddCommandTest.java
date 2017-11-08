@@ -23,12 +23,14 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
+import seedu.address.model.relationship.ConfidenceEstimate;
 import seedu.address.model.relationship.RelationshipDirection;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.StorageStub;
@@ -133,12 +135,14 @@ public class AddCommandTest {
         public void removeTag(String tagToBeRemoved) throws TagNotFoundException, IllegalValueException {
             fail("This method should not be called.");
         }
-
+        //@@author TanYikai
         @Override
         public void sortPersons() {
             fail("This method should not be called.");
         }
+        //@@author
 
+        //@@author wenmogu
         /**
          * This method is called as the construction of a new graph needs the FilteredPersonList.
          * Therefore a dummy list is given.
@@ -149,13 +153,15 @@ public class AddCommandTest {
             return FXCollections.unmodifiableObservableList(dummyList.asObservableList());
         }
 
+        //@@author
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
 
         @Override
-        public void addRelationship(Index fromPerson, Index toPerson, RelationshipDirection direction) {
+        public void addRelationship(Index fromPerson, Index toPerson, RelationshipDirection direction, Name name,
+                                    ConfidenceEstimate confidenceEstimate) {
             fail("This method should not be called.");
         }
     }

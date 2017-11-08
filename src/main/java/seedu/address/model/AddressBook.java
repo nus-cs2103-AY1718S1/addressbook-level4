@@ -171,7 +171,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
-
+    //@@author wenmogu
     /**
      * Remove a Tag from tags and everyone with the tag.
      * @param tagGettingRemoved
@@ -193,6 +193,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// util methods
 
+    //@@author
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
