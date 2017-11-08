@@ -629,17 +629,44 @@ public class Avatar {
     private static Random random = new Random();
     private static String[] colors = ColorsUtil.getColors();
 
+    private static final int COLOR_VALUE_MAX = 255;
+    private static final int COLOR_VALUE_MIN = 0;
+    private static final int COLOR_OFFSET_BOUND = 50;
+
     private Avatar() {}
 
     public static String getColor(String name) {
         if (!avatarColors.containsKey(name)) {
-            avatarColors.put(name, colors[random.nextInt(colors.length)]);
+            Color defaultColor = Color.decode(colors[random.nextInt(colors.length)]);
+            String newColor = generateNewColor(defaultColor);
+            avatarColors.put(name, newColor);
         }
         return avatarColors.get(name);
     }
 
     public static String getInitial(String name) {
         return name.substring(0, 1);
+    }
+
+    /**
+     * Generates a new color with a random offset from {@code defaultColor}.
+     */
+    private static String generateNewColor(Color defaultColor) {
+        int r = defaultColor.getRed();
+        int g = defaultColor.getGreen();
+        int b = defaultColor.getBlue();
+        int newR = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (r + generateOffset())));
+        int newG = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (g + generateOffset())));
+        int newB = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (b + generateOffset())));
+
+        return String.format("#%02x%02x%02x", newR, newG, newB);
+    }
+
+    /**
+     * Generates a random offset in the range [-1 * COLOR_OFFSET_BOUND, COLOR_OFFSET_BOUND].
+     */
+    private static int generateOffset() {
+        return random.nextInt(COLOR_OFFSET_BOUND * 2) - COLOR_OFFSET_BOUND;
     }
 }
 ```
@@ -712,6 +739,12 @@ public class KeyListenerUtil {
 ```
 ###### \resources\view\LightTheme.css
 ``` css
+@font-face {
+    src: url("fonts/segoe-ui.ttf"),
+         url("fonts/segou-ui-light.ttf"),
+         url("fonts/segou-ui-semibold.otf");
+}
+
 .root {
     -fx-background-color: #f7f5f4;
     -fx-accent: derive(#f7f5f4, -10%);
@@ -837,14 +870,7 @@ public class KeyListenerUtil {
      -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
 }
 
-.result-text-area {
-    -fx-background-color: transparent;
-    -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 16px;
-    -fx-text-fill: gray;
-}
-
-.person-detail-panel {
+.person-detail-pane {
     -fx-background-color: #ffffff;
     -fx-background-radius: 10 10 10 10;
     -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
@@ -987,7 +1013,11 @@ public class KeyListenerUtil {
 ###### \resources\view\LightTheme.css
 ``` css
 #resultDisplay {
-    -fx-prompt-text-fill: gray;
+    -fx-background-color: transparent;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 16px;
+    -fx-text-fill: #746d75;
+    -fx-prompt-text-fill: #746d75;
 }
 
 #resultDisplay .content {
