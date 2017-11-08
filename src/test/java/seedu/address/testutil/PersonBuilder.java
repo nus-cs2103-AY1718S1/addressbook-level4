@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -36,7 +37,7 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Birthday defaultBirthday = new Birthday(DEFAULT_BIRTHDAY);
-            Photo defaultPhoto = new Photo(DEFAULT_PHOTO);
+            Photo defaultPhoto = new Photo(Optional.of(DEFAULT_PHOTO));
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultBirthday,
                     defaultPhoto, defaultTags);
@@ -129,7 +130,7 @@ public class PersonBuilder {
      */
     public PersonBuilder withPhoto(String photo) {
         try {
-            this.person.setPhoto(new Photo(photo));
+            this.person.setPhoto(new Photo(Optional.of(photo)));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("photo is expected to be unique.");
         }
