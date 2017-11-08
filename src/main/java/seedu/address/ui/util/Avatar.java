@@ -46,7 +46,7 @@ public class Avatar {
     }
 
     /**
-     * Generates an offset in the range [-1 * COLOR_OFFSET_BOUND, COLOR_OFFSET_BOUND].
+     * Generates a random offset in the range [-1 * COLOR_OFFSET_BOUND, COLOR_OFFSET_BOUND].
      */
     private static int generateOffset() {
         return random.nextInt(COLOR_OFFSET_BOUND * 2) - COLOR_OFFSET_BOUND;
