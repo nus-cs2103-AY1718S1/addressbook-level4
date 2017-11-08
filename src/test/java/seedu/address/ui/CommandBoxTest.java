@@ -131,8 +131,8 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.TAB, "");
 
         // successfully autocomplete
-        commandBoxHandle.setInput("f");
-        assertInputHistory(KeyCode.TAB, "find ");
+        commandBoxHandle.setInput("s");
+        assertInputHistory(KeyCode.TAB, "select ");
         assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
 
         // fail autocomplete
