@@ -153,8 +153,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         }
 
         internalMeetingList.set(index, new Meeting(editedMeeting));
-        internalMeetingList.sort((m1, m2)-> m1.getActualDate(m1.getDate().toString())
-                .compareTo(m2.getActualDate(m2.getDate().toString())));
+        sort(internalMeetingList);
     }
 
     //@@author nelsonqyj
@@ -181,17 +180,26 @@ public class UniqueMeetingList implements Iterable<Meeting> {
                                 MeetingClashException {
         final UniqueMeetingList replacement = new UniqueMeetingList();
         for (final ReadOnlyMeeting meeting : meetings) {
-            DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-            LocalDateTime currDate = LocalDateTime.now();
-            LocalDateTime meetDate = LocalDateTime.parse(meeting.getDate().toString(), formatter);
-            if (meetDate.isAfter((currDate))) {
+            if (dateIsAfter((meeting.getDate().toString()))) { //to delete meetings that have passed automatically
                 replacement.add(new Meeting(meeting));
             }
         }
         setMeetings(replacement);
     }
+    /**
+     * To check if date is after log in (current) date and time
+     * @return true if meet date is after current date and time
+     */
+    private boolean dateIsAfter (String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        LocalDateTime currDate = LocalDateTime.now();
+        LocalDateTime meetDate = LocalDateTime.parse(date, formatter);
+        if (meetDate.isAfter((currDate))) {
+            return true;
+        }
+        return false;
+    }
     //@@author nelsonqyj
-
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
