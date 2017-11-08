@@ -151,13 +151,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         for (int i = 0; i < list.size(); i++) {
             ReadOnlyPerson person = list.get(i);
-            Person newPerson = new Person(person);
-            Set<Tag> tagList = newPerson.getTags();
-            tagList = new HashSet<Tag>(tagList);
-            tagList.remove(tag);
-
-            newPerson.setTags(tagList);
-            addressBook.updatePerson(person, newPerson);
+            removeTagFromPerson(tag, person);
         }
         indicateAddressBookChanged();
     }
@@ -166,6 +160,12 @@ public class ModelManager extends ComponentManager implements Model {
     public void removeTag(Index index, Tag tag) throws PersonNotFoundException, DuplicatePersonException {
         List<ReadOnlyPerson> list = getFilteredPersonList();
         ReadOnlyPerson person = list.get(index.getZeroBased());
+        removeTagFromPerson(tag, person);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void removeTagFromPerson(Tag tag, ReadOnlyPerson person) throws DuplicatePersonException, PersonNotFoundException {
         Person newPerson = new Person(person);
         Set<Tag> tagList = newPerson.getTags();
         tagList = new HashSet<>(tagList);
@@ -173,7 +173,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         newPerson.setTags(tagList);
         addressBook.updatePerson(person, newPerson);
-        indicateAddressBookChanged();
     }
     //@@author
     //=========== Filtered Person List Accessors =============================================================
