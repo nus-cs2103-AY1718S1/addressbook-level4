@@ -29,7 +29,7 @@ potential leads)
 ** Added features and enhancement:
 *** Use a calendar interface to check scheduled events, and edit event's
 timing through drag-and-drop interactions
-*** Get reminders of upcoming events
+*** Viewing of today's schedule via a timetable view
 *** Add relationship between multiple clients
 *** Check event details in an event panel
 

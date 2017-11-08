@@ -32,7 +32,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     //@@author reginleiff
     private FilteredList<ReadOnlyEvent> filteredEvents;
-    private FilteredList<ReadOnlyEvent> scheduledEvents;
+    private FilteredList<ReadOnlyEvent> timetableEvents;
     //@@author
 
     /**
@@ -47,7 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredEvents = new FilteredList<>(this.addressBook.getEventList());
-        scheduledEvents = new FilteredList<>(this.addressBook.getSchedule(this.addressBook.getCurrentDate()));
+        timetableEvents = new FilteredList<>(this.addressBook.getTimetable(this.addressBook.getCurrentDate()));
     }
 
     public ModelManager() {
@@ -136,8 +136,8 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Schedule Accessors  =========================================================================
 
     @Override
-    public ObservableList<ReadOnlyEvent> getSchedule() {
-        return FXCollections.unmodifiableObservableList(scheduledEvents);
+    public ObservableList<ReadOnlyEvent> getTimetable() {
+        return FXCollections.unmodifiableObservableList(timetableEvents);
     }
 
     //=========== Filtered Event List Accessors  ==============================================================

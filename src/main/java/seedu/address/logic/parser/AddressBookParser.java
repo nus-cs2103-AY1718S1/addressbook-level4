@@ -20,6 +20,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UpdatePhotoCommand;
 import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.logic.commands.event.CheckScheduleCommand;
 import seedu.address.logic.commands.event.DeleteEventCommand;
@@ -117,6 +118,9 @@ public class AddressBookParser {
 
         case SetRelCommand.COMMAND_WORD:
             return new SetRelCommandParser().parse(arguments);
+
+        case UpdatePhotoCommand.COMMAND_WORD:
+            return new UpdatePhotoCommandParser().parse(arguments);
 
         case ToggleTimetableCommand.COMMAND_WORD:
             return new ToggleTimetableCommand();

@@ -353,7 +353,7 @@ Commands are first read from `CommandBox` which then calls upon the `LogicManage
 
 The specific command type is passed through its specific parser along with its arguments (E.g. `AddEventCommand` is parsed via `AddEventCommandParser`). The specific parser creates a specific command to return to `LogicManager` (E.g. `AddEventCommandParser` returns `AddEventCommand` with the `Event` to be be added once executed). +
 
-`LogicManager` proceeds to exectute the received command. In this implementation, the Command will call upon `ModelManager` to do complete the CRUD operations onto its internal database. (E.g. `AddEventCommand` calls `model.addEvent(event)` to add the event created by `AddEventCommandParser` to the event list in `AddressBook`. +
+`LogicManager` proceeds to execute the received command. In this implementation, the Command will call upon `ModelManager` to do complete the CRUD operations onto its internal database. (E.g. `AddEventCommand` calls `model.addEvent(event)` to add the event created by `AddEventCommandParser` to the event list in `AddressBook`. +
 
 Once this is complete, an update is sent to the the `filteredEventList` which updates the `UI` Component. +
 
@@ -370,10 +370,10 @@ Additionally, an `AddressBookChangedEvent` is also raised to the `EventsCenter` 
 **Cons:** Separate files are harder to manage.
 
 ---
-
-
-
 // end::eventcrud[]
+
+// tag::timetable[]
+// end::timetable[]
 
 // tag::Scheduling[]
 === Event Scheduling

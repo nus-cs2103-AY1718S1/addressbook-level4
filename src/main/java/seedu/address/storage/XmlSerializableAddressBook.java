@@ -106,7 +106,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<ReadOnlyEvent> getSchedule(Date currentDate) {
+    public ObservableList<ReadOnlyEvent> getTimetable(Date currentDate) {
         return null;
     }
     //@@author
@@ -127,6 +127,11 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
 
     @Override
     public ReadOnlyEvent getLastChangedEvent() {
+        return null;
+    }
+
+    @Override
+    public ReadOnlyEvent getNewlyAddedEvent() {
         return null;
     }
 
