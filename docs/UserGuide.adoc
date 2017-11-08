@@ -22,25 +22,28 @@ By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
 
 As the name implies, link:{repoURL}[**BoNUS**] helps you _better(B) organize(o) your NUS life_.
 
-* **BoNUS** is a desktop personal organizer application dedicated to NUS students to carry out various tasks such as storing
-contacts, scheduling for upcoming events, timetable planning as well as a calendar to better organise their campus life.
-* Apart from storing important information such as name, email, address and phone number. you are given _infinite freedom_
-to customize your own fields as you deem fit.
+* As an NUS student, do you feel like your schedules are all over the place and your contacts are too messy making searching through it a pain?
+* Sounds like you need a "Bonus"!
+* Our **BoNUS** is a desktop personal organizer application dedicated to NUS students to carry out various tasks such as storing
+contacts, scheduling for upcoming events, timetable planning as well as a calendar to better organise your campus life.
+* Apart from storing essential information such as name, email, address and phone number, you have _infinite freedom_
+to customize your own fields!
 * **BoNUS** is convenient, fast, secured, integrated, solely with the motivation of giving you a bonus for your student
-life in NUS.
-* **BoNUS** is oriented for typist user (most operations should be done using keyboard rather than mouse).
+life in NUS. It is also oriented for typist users (most operations should be done using keyboard rather than mouse), which makes it all the more simple!
+
+Let's begin!
 
 === Purpose
-This user guide aims to provide potential users with a comprehensive step-by-step guide on how to better utilise **BoNUS**
-to make their NUS life a more organised one.
+This user guide will provide you with a comprehensive step-by-step guide on how to better utilise **BoNUS**
+to make your NUS life a breeze.
 
 == Quick Start
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Start by ensuring you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+If you only have earlier versions of Java 8, this app will not work.
 +
 .  Download the latest `bonus.jar` release from link:{repoURL}/releases[here].
 .  Create a folder you want to use as home folder for **BoNUS** and copy the `jar` you have downloaded there.
@@ -64,11 +67,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 == Components
 
-**BoNUS** mainly consists on three components: *contacts*, *events* and *calendar*. They work independently and each is
-considered as a collection of one kind of `data items`.
-
-[TIP]
-You can use the sidebar on the left-hand side of the application interface to switch between different components.
+**BoNUS** consists of three main components: *contacts*, *events* and *calendar* which you can select using the sidebar on the left-hand side.
 
 image::UiSideBarHighlight.png[width="500"]
 _Figure 3.1 : Sidebar for Switching between Different Components_
@@ -77,34 +76,32 @@ They are described in details as follows:
 
 === Contacts
 
-You can store personal information of your contacts (friends, classmates, professors, etc.) in **BoNUS**.
+Time to deal with the many contacts you have accumulated while studying in NUS.
 
-* By default, you can store and update their name, phone number, email address and mailing address. Refer to the `add`
-and `edit` command in the section below for more information.
-* You can store other information of your contacts by adding customize properties. Refer to the `config add-property`
-command in the section below for more information.
-* You can group your contacts by adding one or multiple tags to them. Contacts with the same tag will be classified
-under the same group. Tag can be displayed in the color specified by `config --set-tag-color` command.
+* By default, you can store and update names, phone numbers, email and mailing addresses. (`add`
+and `edit` command)
+* Additionally, you can customize an additional field to a contact that is not in the default. (`config add-property`
+command)
+* Now, let's organize all your contacts by adding one or more tags to them. Those with the same tag will be classified
+under the same group. You can even customize the colour of the tags to your liking. (`config --set-tag-color` command)
 
 === Events
 
-You can store your upcoming events (meeting with professor tomorrow, assignment deadline, lecture/tutorial time slot, etc.) in **BoNUS**.
+Got a meeting with professor or an assignment deadline you need to remember?
 
-* By default, you can store and update their title, interval (starting time and end time), venue and description. Refer
-to the `addE` and `editE` command in the section below for more information.
-* Similar to link:#contacts[contacts], you can add customize properties to events as well.
-* Similar to link:#contacts[contacts], you can add tags to events as well.
-* If you have set starting and/or end time for an event, it will be reflected accordingly on the link:#calendar[calendar] component.
-* You can set notification at specific time before an event starts (when you should arrive at the venue before a meeting
-begins) or at specific time before an event ends (when you need to finalize your assignment and submit it to your professor).
-* You can link one or more link:#contacts[contacts] to an event (if they are going to attend the event together with you).
+* By default, you can store and update the title, interval (starting time and end time), venue and description of the event. (`addE` and `editE` command)
+* Similar to link:#contacts[contacts], you can add customize properties and add tags to events as well.
+* Setting a starting and/or end time for an event, will be reflected accordingly on the link:#calendar[calendar] component.
+* You can set a notification at a specific time before an event starts (when to arrive at the venue before a meeting
+begins) or before an event ends (when you need to finalize your assignment and submit it to your professor).
+* If one or more of your link:#contacts[contacts] are attending the event with you, you can link them to the event too.
 
 === Calendar
 
 _(Coming in v2.0)_
 
-Calender provides a more convenient interface for you to view your upcoming link:#events[events]. All events are displayed
-based on their time interval. Events whose time intervals are not specified will not be displayed here.
+Calender provides a clearer image for you to view your upcoming link:#events[events]. All events are displayed
+based on their time interval for you to be able to attend to them one by one. However, events without time intervals will not be displayed here.
 
 * You can choose the style to display the upcoming events (weekly/monthly/yearly view).
 * You can add/update/delete events here, but the actual operation will be handled by the link:#events[events] component.
@@ -113,7 +110,7 @@ based on their time interval. Events whose time intervals are not specified will
 
 === Convenient
 
-**BoNUS** can provide ultimate convenience and save much time in your daily life.
+**BoNUS** is the ultimate application as it will provide you with the utmost convenience and gives you more time to focus on your more important tasks.
 
 * Import contacts from _iCloud_, _Google+_, _Facebook_, etc.
 * Import events from _Google_ _Calendar_, _Outlook_ _Calendar_, etc.
@@ -124,7 +121,7 @@ based on their time interval. Events whose time intervals are not specified will
 === Fast
 
 As long as the number of records stored is less than 50,000 and the size of the storage file is smaller than 20MB, **BoNUS**
-is expected to
+will be able to
 
 * Start the application in 5 seconds.
 * Return the result of all link:#commands[commands] available with _human-invisible_ delay.
@@ -132,8 +129,8 @@ is expected to
 
 === Secured
 
-The **BoNUS** developers understand our users will store personal data in the application. We value privacy and security
-a lot.
+The **BoNUS** developers understand that you will be storing personal data in the application. The following are features of our application that ensures
+you will have privacy and security.
 
 * All data saved to the storage file will be encrypted using the state-of-the-art encryption scheme (AES-256).
 * You will be prompted to enter their password whenever they open the application (if you has decided to lock your application
@@ -142,27 +139,29 @@ the last time before you exited).
 
 == Commands
 
-The listing below shows a summary of all commands currently available to users and how to use them.
+The following is a list of commands that you can use in the application.
 
 ====
 *Command Format*
 
 * Words in parentheses represent the command shortcut e.g. in `(a)add n/NAME`, `a` is the shorthand-equivalent notation for the `add` command.
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which
-can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}`
+* Words in `UPPER_CASE` is information to be supplied by you e.g. in `add n/NAME`, `NAME` is to be filled in by you.
+e.g `add n/John Doe`.
+* Words in square brackets are optional e.g `n/NAME [t/TAG]`, `t/TAG` is optional.
+e.g `n/John Doe t/friend` or as `n/John Doe`.
+* Items with `…`​ after them can be used from zero times to as many times as you like e.g. `[t/TAG]...` can be used as `{nbsp}`
 (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be typed in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME`
-is also acceptable.
+* You can type the information in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME`
+works too.
 * If parameters with the same prefix are typed multiple times, only the last one will be taken. For example,
 `n/John Doe n/Martin Henz`, then only `Martin Henz` will be taken into actual consideration.
+>>>>>>> master
 ====
 
 ====
 *Command in different components*
 
-* Most command can be applied to either a person or an event, whose result will depend on the context e.g. `add` will add
+* Most commands can be applied to either a person or an event, whose result will depend on the context e.g. `add` will add
 a person if the user is currently in the link:#contacts[contacts] component, otherwise `addE` will add a new link:#events[event].
 * All commands entered in the link:#calendar[calendar] component will actually be handled by either link:#contacts[contacts]
 component or link:#events[events] component.
@@ -170,15 +169,18 @@ component or link:#events[events] component.
 
 === Viewing help : `(h)help`
 
+Have a query? Use the `help` command! +
 Format: `(h)help` (or press `F1` on the keyboard)
 
 === Adding a person : `(a)add`
 
-Adds a person to the application. +
+You just met someone and want to add their contact information into your contact list. +
 Format: `(a)add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
+This adds the person to your contact list.
+
 [TIP]
-A person can have any number of tags (including 0).
+Your contact can have any number of tags (including 0).
 
 Examples:
 
@@ -186,23 +188,26 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 [TIP]
-In a similar format, you can also add customize properties when adding a new person, as long as you have used `config
---add-property` command to define that property before.
+In a similar format, you can also add customize properties when adding a new person, just use `config
+--add-property` command before to define that property.
 
 Example:
 
-First, add a birthday property with the short name `b`
+If you want to add birthday as a field for a contact and use `b` as the short name,
 
 * `config --add-property s/b f/birthday`
 
-Then, you can set the value of `birthday` property when you add a new person (_see `b/12091191` below_)
+Then, you can set a contact's `birthday` when you add a new contact (_see `b/12091191` below_)
 
 * `add n/Chris Lee p/98765432 e/johnd@example.com a/23 Chinatown b/12091991 t/friends`
 
+//tag::autoReminders[]
 === Adding an event : `(aE)addE`
 
-Adds an event to the application. +
+You want to record your friend's birthday party coming up. +
 Format: `(aE)addE n/NAME dt/DATE_TIME a/EMAIL a/ADDRESS`
+
+This will add a new event to your list of events.
 
 Examples:
 
@@ -212,36 +217,50 @@ Examples:
 [NOTE]
 ====
 * The standard format for time should be `DDMMYYYY HH:MM` in 24-hour format.
-* However, the application may sometimes be _smart_ to interpret what you say. For example, you may type `this afternoon`
-or `tomorrow evening`. Then, it will be automatically converted to the standard format.
+* However, the application may sometimes be _smart_ enough to interpret what you typed. For example, if you type `this afternoon`
+or `tomorrow evening`, it will be automatically converted to the standard format.
 * Do NOT try to _challenge_ the application, it is not promised to produce an expected result if you use non-standard format
-and the expression is not simple or clear enough.
-* Avoid putting the year in the first place when using the non-standard format.
+or if the expression is not simple or clear enough.
+* Avoid putting the year first when using the non-standard format.
 ====
+
+
+[TIP]
+====
+* Reminders will automatically be added and start to notify you from 2 days before the actual event.
+* Reminders in the form of a bell image will be displayed on the event card itself.
+* Red Bell : Day of event +
+  Orange Bell: One day before event +
+  Green Bell: Two days before event.
+====
+//end::autoReminders[]
 
 === Listing all persons/events : `(l)list`
 
-Shows a list of all persons in the application. +
+// tag::sortByName[]
+=== Listing all persons : `(l)list`
+
+
+You want to view all your contacts in your contact list. +
 Format: `(l)list`
+
+This will list out all of your contacts in alphabetical order.
 
 Example:
 
 * `list`
-
-[TIP]
-Contacts will be sorted by their names (increment).
+// end::sortByName[]
 
 === Listing all events : `(lE)listE`
 
 Shows a list of all events in the application. +
 Format: `(lE)listE`
 
+This will list out all of your events by date/time.
+
 Example:
 
 * `listE`
-
-[TIP]
-Events will be sorted by date/time (increment).
 
 === Editing a person : `(e)edit`
 
@@ -293,7 +312,7 @@ Finds persons/events whose corresponding field(s) contain any of the given keywo
 Format: `(f)find KEYWORD [MORE_KEYWORDS] [p/KEYWORD [MORE_KEYWORDS]]...`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
+* The search is not case insensitive. e.g `hans` will match `Hans`
 * The search can be based on one or multiple properties. The short name of the property `n/` can be omitted if the searching
 criteria is for the `name` property.
 * Apply `OR` search for keywords of the same property, i.e. persons/events matching at least one keyword will be returned.
@@ -312,13 +331,15 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::findtag[]
 === Locating persons by their tag : `(ft)findtag`
 
-Finds persons whose corresponding tags contain any of the given keywords. +
+Finds persons whose corresponding tags contain any of the given keywords and lists them out. +
 Format: `(ft)findtag KEYWORD [MORE_KEYWORDS]...`
 
 ****
-* Same features as locating persons by any property, except this command is only for tags
+* The search is not case insensitive. e.g `friends` will match `Friends`
+* Only full word matching will be returned. e.g. `friend` will not match `friends`
 ****
 
 Examples:
@@ -327,6 +348,7 @@ Examples:
 Returns any person that contains a `family` tag
 * `findtag family colleagues` +
 Returns any person that contains the tags `family` and `colleagues`
+// end::findtag[]
 
 === Deleting a person : `(d)delete`
 
@@ -386,13 +408,14 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::emailCommand[]
 === Emailing a person : `(em)email`
 
 Emails a person (identified by the index number used in the last listing) to email that person. +
 Format: `(em)email INDEX`
 
 ****
-* Emails the person by opening your default mail app with the email field filled up.
+* Emails the person by opening your default mail app with the "To: " field filled up with the person's email.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* like `1, 2, 3, ...`
 ****
@@ -402,6 +425,7 @@ Examples:
 * `list` +
 `email 2` +
 Emails the 2nd person in the address book.
+// end::emailCommand[]
 
 === Adding avatar to a person : `(avr)avatar`
 
