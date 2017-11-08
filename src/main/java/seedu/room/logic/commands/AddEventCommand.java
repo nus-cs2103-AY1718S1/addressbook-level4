@@ -11,6 +11,8 @@ import seedu.room.model.event.Event;
 import seedu.room.model.event.ReadOnlyEvent;
 import seedu.room.model.event.exceptions.DuplicateEventException;
 
+
+//@@author sushinoya
 /**
  * Adds a person to the resident book.
  */
@@ -19,17 +21,19 @@ public class AddEventCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "addevent";
     public static final String COMMAND_ALIAS = "ae";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a event to the event book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a event to the event book. \n"
             + "Parameters: "
             + PREFIX_TITLE + "TITLE "
             + PREFIX_DESCRIPTION + "DESCRIPTION "
             + PREFIX_LOCATION + "LOCATION "
-            + PREFIX_DATETIME + "DATETIME\n"
+            + "[" +PREFIX_DATETIME + "STARTTIME TO ENDTIME"
+            + " or STARTTIME DURATION (in hours)]\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_TITLE + "End of Sem Dinner "
             + PREFIX_DESCRIPTION + "Organised by USC "
             + PREFIX_LOCATION + "Cinnamon College "
-            + PREFIX_DATETIME + "25/11/2017 2030 2";
+            + PREFIX_DATETIME + "25/11/2017 2030 to 2359"
+            + " or " + PREFIX_DATETIME + "25/11/2017 2030 2";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the event book";
