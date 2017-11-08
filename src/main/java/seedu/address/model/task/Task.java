@@ -19,7 +19,6 @@ import seedu.address.model.util.SampleDataUtil;
  */
 public class Task implements ReadOnlyTask {
 
-    private static Integer nextId = 0;
     private ObjectProperty<String> taskName;
     private ObjectProperty<String> taskDescription;
     private ObjectProperty<String> startDateTime;
@@ -39,8 +38,7 @@ public class Task implements ReadOnlyTask {
         this.endDateTime = new SimpleObjectProperty<>("");
         this.complete = new SimpleObjectProperty<>(false);
         this.taskPriority = new SimpleObjectProperty<>(1);
-        this.id = new SimpleObjectProperty<>(nextId);
-        nextId++;
+        this.id = new SimpleObjectProperty<>(this.hashCode());
         this.peopleIds = new SimpleObjectProperty<>(new ArrayList<Integer>());
     }
 
@@ -156,22 +154,6 @@ public class Task implements ReadOnlyTask {
         this(task.getName(), task.getDescription(), task.getStartDateTime(),
                 task.getEndDateTime(), task.getTags(), task.getComplete(), task.getPriority(), task.getId(),
                 task.getPeopleIds());
-    }
-
-    /**
-     * get nextId
-     * @return nextId
-     */
-    public static Integer getNextId() {
-        return nextId;
-    }
-
-    /**
-     * set nextId
-     * @param nextOne
-     */
-    public static void setNextId(Integer nextOne) {
-        nextId = nextOne;
     }
 
     /**
