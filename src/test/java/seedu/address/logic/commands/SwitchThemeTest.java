@@ -1,0 +1,27 @@
+package seedu.address.logic.commands;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.SwitchTheme.MESSAGE_SUCCESS;
+
+import org.junit.Rule;
+import org.junit.Test;
+
+import seedu.address.commons.events.ui.SwitchThemeEvent;
+import seedu.address.ui.testutil.EventsCollectorRule;
+
+public class SwitchThemeTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    @Test
+    public void execute_switch_theme_success() {
+        CommandResult result = new SwitchTheme().executeUndoableCommand();
+        assertEquals(MESSAGE_SUCCESS, result.feedbackToUser);
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof SwitchThemeEvent);
+        assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
+    }
+}
+
+
+
