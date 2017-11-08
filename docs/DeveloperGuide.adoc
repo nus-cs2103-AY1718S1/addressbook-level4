@@ -377,10 +377,16 @@ _Figure 3.1.7 : Activity Diagram of UndoRedoStack_
 // end::undoredo[]
 
 
-// tag::sort[]
 === Sort mechanism
+// tag::sortreason[]
+The reason for the implementation of sort allows the user to organise their list of contacts in cherBook more easily.
+Provide an alternative for them to view their contacts instead of the usual way - most recent added contact being added to the last index of the list.
+Makes it easy for users to browse through their list of contacts in situations where `find` command cannot be used.
 The `sort` mechanism is implemented using `SortCommand`. It supports sorting of contacts names in the AddressBook according to alphabetical order from A to Z.
 
+// end::sortreason[]
+
+// tag::sortimplementation[]
 When the user calls for sorting to be implemented, an empty `ArrayList` would be created. Under the `Model` component, `UniquePersonList` would compare the names of all persons in lower case using a comparator and return an `Observable List` containing of `ReadOnlyPerson`.
 
 `SortCommand` inherits from `Command`.
@@ -454,13 +460,18 @@ It is implemented this way to ensure that all person names in the `UniquePersonL
 **Alternative 2:** Manually edits the list of contacts in the AddressBook. +
 **Pros:** We do not need to maintain a separate list, and just reuse what is already in the codebase, and it saves space. +
 **Cons:**  Inefficient as compared to using an algorithm. If the user made a mistake, the change cannot be reverted as the original list of contacts is not saved. +
-// end::sort[]
+// end::sortimplementation[]
 
 
-// tag::schedule[]
 === Schedule mechanism
+// tag::schedulereason[]
 The `schedule` mechanism is implemented using `ScheduleCommand`. It supports scheduling of contacts in the AddressBook for better management of time.
+The reason for the implementation of scheduling is to allow cherBook users (teacher/educator) to add schedules they have like consultations or meetings with their students or fellow colleagues.
+With this scheduling command, users are able add their schedules with any person from their list of contacts just by typing the index of the person, the date and time of the schedule.
+The date and time can be entered in natural language, helping users save their time to manually pen down their scheduled dates and timings.
+// end::schedulereason[]
 
+// tag::scheduleimplementation[]
 When the user calls for scheduling to be implemented, two arguments would have to be passed into the constructor.
 The two arguments are Name of the person being scheduled and the Calendar date with time.
 Under the `Model` component, `UniqueScheduleList` would add the created `schedule` into the `set of schedules`.
@@ -528,7 +539,31 @@ It is implemented this way to ensure that all `schedules` are added into the Add
 **Alternative 2:** Add a new field in each individual person card to hold their respective `schedule`. +
 **Pros:** The teacher would be able to identify each student respectively, and it makes tracking and debugging easier. +
 **Cons:** Inefficiency and time consuming because to find a `schedule`, the algorithm would have to iterate through all `PersonCards` to get the list of `schedules`.
-// end::schedule[]
+// end::scheduleimplementation[]
+
+=== View Schedule mechanism
+// tag::viewschedulereason[]
+The `viewschedule` mechanism is implemented using `ViewScheduleCommand`. It displays the schedules of the user of cherBook.
+The reason for the implementation of viewing schedules is to allow cherBook users (teacher/educator) to keep track of their schedules as they often have many consultations or meetings with their students or fellow colleagues.
+With this view schedule command, users are able to view all their schedules at once, sorted by date and time.
+This way, the user is able to maintain their timetable easily.
+// end::viewschedulereason[]
+
+// tag::viewscheduleimplementation[]
+When the user calls to view all the schedules, the `'Model'` component would  call `UniqueScheduleList` to return with the set of schedules that was previously added into cherBook.
+
+ViewScheduleCommand is implemented this way:
+[source,java]
+----
+public class ViewScheduleCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... view schedule logic ...
+    }
+}
+----
+The schedules would be listed in the `ResultDisplay` panel, and each schedule would be separated with a new line.
+// end::viewscheduleimplementation[]
 
 
 // tag::studentparentcontact[]
