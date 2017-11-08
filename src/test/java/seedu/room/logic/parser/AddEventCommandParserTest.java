@@ -30,7 +30,7 @@ import seedu.room.model.event.Location;
 import seedu.room.model.event.Title;
 import seedu.room.testutil.EventBuilder;
 
-//@@author sushionya
+//@@author sushinoya
 public class AddEventCommandParserTest {
     private AddEventCommandParser parser = new AddEventCommandParser();
 
