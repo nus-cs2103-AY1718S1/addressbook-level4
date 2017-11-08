@@ -1,19 +1,15 @@
 //@@author qihao27
 package seedu.address.model.person;
 
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
 
 /**
- * A list of TodoItems that enforces no nulls and uniqueness between its elements.
+ * A list of TodoItems.
  *
  * Supports minimal set of list operations for the app's features.
  *
@@ -24,38 +20,9 @@ public class UniqueTodoList implements Iterable<TodoItem> {
     private final ObservableList<TodoItem> internalList = FXCollections.observableArrayList();
 
     /**
-     * Constructs empty TagList.
+     * Constructs empty TodoList.
      */
     public UniqueTodoList() {}
-
-    /**
-     * Creates a UniqueTagList using given tags.
-     * Enforces no nulls.
-     */
-    public UniqueTodoList(Set<TodoItem> todoItems) {
-        requireAllNonNull(todoItems);
-        internalList.addAll(todoItems);
-
-        assert CollectionUtil.elementsAreUnique(internalList);
-    }
-
-    /**
-     * Returns all todoItems in this list as a Set.
-     * This set is mutable and change-insulated against the internal list.
-     */
-    public Set<TodoItem> toSet() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return new HashSet<>(internalList);
-    }
-
-    /**
-     * Replaces the todoItems in this list with those in the argument todoItem list.
-     */
-    public void setTodo(Set<TodoItem> todoItems) {
-        requireAllNonNull(todoItems);
-        internalList.setAll(todoItems);
-        assert CollectionUtil.elementsAreUnique(internalList);
-    }
 
     @Override
     public Iterator<TodoItem> iterator() {
@@ -93,15 +60,6 @@ public class UniqueTodoList implements Iterable<TodoItem> {
     public int hashCode() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.hashCode();
-    }
-
-    /**
-     * Signals that an operation would have violated the 'no duplicates' property of the list.
-     */
-    public static class DuplicateTodoItemException extends DuplicateDataException {
-        protected DuplicateTodoItemException() {
-            super("Operation would result in duplicate tags");
-        }
     }
 
 }

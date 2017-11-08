@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
@@ -40,27 +41,30 @@
          <RowConstraints />
       </rowConstraints>
   </GridPane>
-   <!-- @@author qihao27 -->
-   <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
-     <items>
-       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="50.0" stylesheets="@LightTheme.css">
-         <children>
-               <Label fx:id="favourite" alignment="TOP_RIGHT" text="">
-                  <graphic>
-                 <ImageView fx:id="favouriteIcon" fitHeight="30" fitWidth="30" preserveRatio="true" />
-                  </graphic>
-               </Label>
-         </children>
-       </AnchorPane>
-       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="158.0">
-         <children>
-           <Label fx:id="totalTodo" alignment="BOTTOM_RIGHT" styleClass="cell_small_label" text="\$totalTodo">
-             <graphic>
-               <ImageView fx:id="todo" fitHeight="30" fitWidth="30" preserveRatio="true" />
-             </graphic>
-           </Label>
-         </children>
-       </AnchorPane>
-     </items>
-   </SplitPane>
+  <!-- @@author qihao27 -->
+  <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+    <items>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="50.0" stylesheets="@LightTheme.css">
+        <children>
+          <Label fx:id="favourite" alignment="TOP_RIGHT" text="">
+            <graphic>
+              <ImageView fx:id="favouriteIcon" fitHeight="30" fitWidth="30" preserveRatio="true" />
+            </graphic>
+          </Label>
+        </children>
+      </AnchorPane>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="158.0">
+        <children>
+          <Label fx:id="totalTodo" alignment="BOTTOM_RIGHT" text="\$totalTodo">
+            <graphic>
+              <ImageView fx:id="todo" fitHeight="30" fitWidth="30" preserveRatio="true" />
+            </graphic>
+              <font>
+                <Font name="System Bold" size="20.0" />
+              </font>
+          </Label>
+        </children>
+      </AnchorPane>
+    </items>
+  </SplitPane>
 </HBox>

@@ -33,7 +33,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
-    private final UniqueTodoList todo;
+    private final UniqueTodoList todos;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -45,7 +45,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
-        todo = new UniqueTodoList();
+        todos = new UniqueTodoList();
     }
 
     public AddressBook() {}
@@ -68,12 +68,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
-    //@@author qihao27
-    public void setTodo(Set<TodoItem> todoItems) {
-        this.todo.setTodo(todoItems);
-    }
-    //@@author
-
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -86,7 +80,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
         setTags(new HashSet<>(newData.getTagList()));
-        setTodo(new HashSet<>(newData.getTodoList()));
         syncMasterTagListWith(persons);
     }
 
@@ -131,6 +124,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
 
     }
+
     //@@author aaronyhsoh
     /**
      * Replaces the given person {@code target} in the list with {@code favouritedReadOnlyPerson}.
@@ -282,7 +276,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags";
+        return persons.asObservableList().size() + " persons, "
+            + tags.asObservableList().size() + " tags, "
+            + todos.asObservableList().size() + " todos";
         // TODO: refine later
     }
 
@@ -299,7 +295,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     //@@author qihao27
     @Override
     public ObservableList<TodoItem> getTodoList() {
-        return todo.asObservableList();
+        return todos.asObservableList();
     }
     //@@author
 
@@ -308,7 +304,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags)
+                && this.todos.equalsOrderInsensitive(((AddressBook) other).todos));
     }
 
     @Override
