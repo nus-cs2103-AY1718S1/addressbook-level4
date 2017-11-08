@@ -699,7 +699,7 @@ if (numOfSpaces >= 2 && currentInput.charAt(currentInput.length() - 1) != ' '
 
 }
 ----
-**Cons:** Although '*' is an invalid password character, the user may still use it while entering the password. If the user types '*', the cursor will remain at its original position. User will be under the impression that the command box is not registering what was typed.
+**Cons:** Although '\*' is an invalid password character, the user may still use it while entering the password. If the user types '*', the cursor will remain at its original position. User will be under the impression that the command box is not registering what was typed.
 // end::loginLogout[]
 
 === Logging
