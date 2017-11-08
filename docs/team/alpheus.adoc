@@ -125,7 +125,34 @@ include::../DeveloperGuide.adoc[tag=pinunpin]
 
 ---
 
+=== Enhancement Added: Parent Mode Command
 
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=parentmode]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Parents may be worried that their child will delete or alter any of their important contacts/tasks. Therefore, there
+is a need to limit the number of available commands that the child is able to sue.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=parentmode]
+
+#End of Extract#
+
+---
 
 === Enhancement Proposed:
 

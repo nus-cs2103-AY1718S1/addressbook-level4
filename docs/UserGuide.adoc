@@ -196,9 +196,9 @@ Adds a phone number `90189056` and tag `friend` to previously empty fields for p
 // end::edit[]
 
 // tag::find[]
-=== Locate persons by the person's details: `find`
+=== Search for contact: `find`
 
-Finds persons whose details contain any of the given keywords input by the user. +
+Trying to find one of your contacts? You can do so easily with the `find` command! +
 Format: `find` `KEYWORD` `[MORE_KEYWORDS]` `...`
 
 Examples:
@@ -216,7 +216,7 @@ Returns any person whose phone starts with `98291`
 * The search is case insensitive. e.g `hans` will match `Hans`.
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * The person's name, phone, email, address and tags will be searched.
-* Partial starting words for name, phone, email and tags will be matched e.g. `Ha` will match `Hans` `an` will NOT
+* Partial starting words for name, phone, email and tags will be matched e.g. `Ha` will match `Hans`, `an` will NOT
   match `Hans`
 * Address will be searched if the address contains any of the keywords. `eyla` will match `Geylang`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`,
@@ -266,6 +266,17 @@ Shows the updated list of hidden contacts.
 * User can then undo the hidden command with the command `unhide` from the list of hidden contacts.
 ****
 // end::unhide[]
+
+// tag::parentmode[]
+=== Set Bluebird to parent mode : `parent`
+
+Sets Bluebird to parent mode which will enable all commands for you.
+Format: `parent`
+
+****
+* Want to set a different keyword for parent mode? Check out the alias command below!
+****
+//end::parentmode[]
 
 // tag::alias[]
 === Creates an alias for command or shortcut : `alias`
