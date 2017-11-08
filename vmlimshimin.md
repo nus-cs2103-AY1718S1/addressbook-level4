@@ -71,7 +71,7 @@ public class RecentlyDeletedQueue {
 ```
 ###### \build\reports\jacoco\coverage\html\seedu.address.logic.commands\DeleteCommand.java.html
 ``` html
-<span class="fc" id="L51">            queue.offer(personToDelete);</span>
+<span class="fc" id="L50">            queue.offer(personToDelete);</span>
 ```
 ###### \build\reports\jacoco\coverage\html\seedu.address.logic.commands\DeleteCommand.java.html
 ``` html
