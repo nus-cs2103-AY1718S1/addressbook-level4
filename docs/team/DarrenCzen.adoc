@@ -7,7 +7,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 This project portfolio displays the contributions and enhancements made to the software, The Myth's Book,
 along with its justifications. The portfolio will first introduce The Myth's Book and subsequently talk
-about the enhancements and contributions made by Darren Chin Jhun Pyng.
+about the enhancements and contributions made by Darren Chin.
 
 == Project: The Myth's Book
 The Myth's Book is an address book dedicated for university students to store useful information such
@@ -25,6 +25,7 @@ The Myth's Book is a software application that is coded in `Java` programming la
 ---
 === Enhancement Added: Sort Command, Sort Names Alphabetically
 
+Code on GitHub: +
 Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/46[#46]
 
 ==== External behavior
@@ -40,7 +41,9 @@ include::../UserGuide.adoc[tag=sort]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+The `Sort Command` enhances the organization of contact/person list of The Myth's Book by sorting the contacts based
+on their names alphabetically. Therefore, this allows users to be able to view and look through the overall contacts list in
+an orderly manner whenever needed which attributes to the factor of user-friendliness and user-readability.
 
 ==== Implementation
 
@@ -54,6 +57,8 @@ include::../DeveloperGuide.adoc[tag=sort]
 ---
 
 === Enhancement Added: Access Command, Accessing a website of a contact
+
+Code on GitHub: +
 Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/77[#77]
 
 ==== External behavior
@@ -69,7 +74,9 @@ include::../UserGuide.adoc[tag=access]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+The `Access Command` allows users to be able to access the website of a contact through the in-built browser panel which
+helps to facilitate ease of access for users. The command also helps users to avoid opening other programs and avoid switching
+between programs so as to facilitate user-friendliness and create an `all-in-one` platform in The Myth's Book.
 
 ==== Implementation
 
@@ -83,6 +90,8 @@ include::../DeveloperGuide.adoc[tag=access]
 ---
 
 === Enhancement Added: Location Command, Locate an address of a user
+
+Code on GitHub: +
 Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/79[#79]
 
 ==== External behavior
@@ -98,7 +107,10 @@ include::../UserGuide.adoc[tag=locate]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+The `Location Command` allows users to be able to access the address of a contact through the in-built browser panel
+using Google Maps Search which helps to facilitate ease of access for users.
+The command also helps users to avoid opening other programs and avoid switching between programs so as to facilitate
+user-friendliness and create an `all-in-one` platform in The Myth's Book.
 
 ==== Implementation
 
@@ -113,6 +125,8 @@ include::../DeveloperGuide.adoc[tag=locate]
 
 
 === Enhancement: Add Command, Optional fields
+
+Code on GitHub: +
 Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/99[#99], https://github.com/CS2103AUG2017-T15-B3/main/pull/96[#96]
 
 ==== External behavior
@@ -128,12 +142,15 @@ include::../UserGuide.adoc[tag=add]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+The implementation of optional fields when adding a contact allows users to be able to add contacts with ease
+as it is not realistically possible for users to attain every information of a contact when adding a contact.
+The enhancement also helps to facilitate user-friendliness in using The Myth's Book.
 
 ---
 
-
 === Enhancement: Website field for Person Class
+
+Code on GitHub: +
 Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/57[#57]
 
 ==== External behavior
@@ -144,12 +161,14 @@ Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/57[#57]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+The implementation of website field for a contact allows users to carry out activities
+of university students such as browsing a person's social network website in The Myth's Book.
 
 ---
 
 === Enhancement: Allow inputted names to become capitalized fully
 
+Code on GitHub: +
 Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/123/commits/cf57e5e78374ec3ee69125e8342ed27c9efa06da[#123]
 
 ==== External behavior
@@ -157,8 +176,17 @@ Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/123/commits/cf57
 ---
 
 ---
+==== Justification
+
+The implementation of capitalizing names fully for a contact being added allows users to
+be able to view a sorted person list in a more orderly manner(alphabetically and lexicographically)
+in The Myth's Book.
+
+---
+
 === Enhancement: Alias for basic commands
 
+Code on GitHub: +
 Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/34[#34]
 
 ==== External behavior
@@ -169,7 +197,8 @@ Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/34[#34]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+The implementation of website field for a contact allows users to carry out activities
+of university students such as browsing a person's social network website in The Myth's Book.
 
 ---
 
@@ -183,7 +212,6 @@ Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/34[#34]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
 
 === Other contributions
 
