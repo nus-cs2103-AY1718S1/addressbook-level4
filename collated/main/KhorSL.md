@@ -617,3 +617,22 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
 
 }
 ```
+###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+``` java
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+```
+###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+``` java
+    @Override
+    public ObservableList<ReadOnlyPerson> getPersonList() {
+        final List<ReadOnlyPerson> persons = new ArrayList<>();
+        for (XmlAdaptedPerson rop : this.persons) {
+            try {
+                persons.add(rop.toModelType());
+            } catch (NullPointerException | IllegalValueException e) {
+                logger.warning("Illegal data found in storage.");
+            }
+        }
+        return FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(persons));
+    }
+```
