@@ -9,7 +9,6 @@ import java.util.Objects;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
 
 /**
  * Represents a Event in the address book.
@@ -17,14 +16,14 @@ import seedu.address.model.person.Name;
  */
 public class Event implements ReadOnlyEvent {
 
-    private ObjectProperty<Name> name;
+    private ObjectProperty<EventName> name;
     private ObjectProperty<Date> date;
     private ObjectProperty<Address> address;
 
     /**
      * Every field must be present and not null.
      */
-    public Event(Name name, Date date, Address address) {
+    public Event(EventName name, Date date, Address address) {
         requireAllNonNull(name, date, address);
         this.name = new SimpleObjectProperty<>(name);
         this.date = new SimpleObjectProperty<>(date);
@@ -38,17 +37,17 @@ public class Event implements ReadOnlyEvent {
         this(source.getName(), source.getDate(), source.getAddress());
     }
 
-    public void setName(Name name) {
+    public void setName(EventName name) {
         this.name.set(requireNonNull(name));
     }
 
     @Override
-    public ObjectProperty<Name> nameProperty() {
+    public ObjectProperty<EventName> nameProperty() {
         return name;
     }
 
     @Override
-    public Name getName() {
+    public EventName getName() {
         return name.get();
     }
 

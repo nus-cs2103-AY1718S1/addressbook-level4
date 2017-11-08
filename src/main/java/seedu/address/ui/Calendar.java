@@ -112,8 +112,8 @@ public class Calendar {
             calendarDate = calendarDate.plusDays(1);
         }
 
-        for (AnchorPaneNode ap : allCalendarDays) {
-            for (ReadOnlyEvent event : allEvents) {
+        for (ReadOnlyEvent event : events) {
+            for (AnchorPaneNode ap : allCalendarDays) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
                 String newDate = formatter.format(ap.getDate());
                 if (newDate.equals(event.getDate().toString())) {

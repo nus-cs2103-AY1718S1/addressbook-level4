@@ -17,6 +17,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.model.event.Date;
+import seedu.address.model.event.EventName;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
 
@@ -48,7 +49,7 @@ public class AddEventParserTest {
     public void parse_invalidValue_failure() {
         // invalid name
         assertParseFailure(parser, AddEventCommand.COMMAND_WORD + INVALID_NAME_DESC
-                + EVENT_DATE_B_DESC + EVENT_ADDRESS_B_DESC, Name.MESSAGE_NAME_CONSTRAINTS);
+                + EVENT_DATE_B_DESC + EVENT_ADDRESS_B_DESC, EventName.MESSAGE_EVENT_NAME_CONSTRAINTS);
 
         // invalid date
         assertParseFailure(parser, AddEventCommand.COMMAND_WORD + EVENT_NAME_B_DESC

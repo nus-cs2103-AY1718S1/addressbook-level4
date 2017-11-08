@@ -4,8 +4,8 @@ package seedu.address.model.event.exceptions;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Date;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.EventName;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
 
 /**
  * A utility class to help with building Event objects.
@@ -19,7 +19,7 @@ public class BuildEvent {
 
     public BuildEvent() {
         try {
-            Name defaultName = new Name(DEFAULT_NAME);
+            EventName defaultName = new EventName(DEFAULT_NAME);
             Date defaultDate = new Date(DEFAULT_DATE);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
 
@@ -35,7 +35,7 @@ public class BuildEvent {
      */
     public BuildEvent withName(String name) {
         try {
-            this.event.setName(new Name(name));
+            this.event.setName(new EventName(name));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("name is expected to be unique.");
         }

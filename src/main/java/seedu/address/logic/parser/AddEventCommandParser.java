@@ -13,9 +13,9 @@ import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Date;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.EventName;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
 
 /**
  * Parses input arguments and creates a new AddEventCommand object
@@ -36,7 +36,7 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
         }
 
         try {
-            Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+            EventName name = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_NAME)).get();
             Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
 
