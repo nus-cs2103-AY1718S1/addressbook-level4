@@ -20,7 +20,8 @@ public class HistoryCommandTest {
         Model model = new ModelManager();
         history = new CommandHistory();
         historyCommand = new HistoryCommand();
-        historyCommand.setData(model, history, new UndoRedoStack(), new RecentlyDeletedQueue());
+        historyCommand.setData(model, history,
+                new UndoRedoStack(), new RecentlyDeletedQueue(), new String());
     }
 
     @Test

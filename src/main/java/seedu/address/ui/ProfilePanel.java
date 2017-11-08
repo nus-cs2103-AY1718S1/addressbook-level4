@@ -25,6 +25,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
+import seedu.address.commons.core.ImageStorageHandler;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
@@ -101,7 +102,11 @@ public class ProfilePanel extends UiPart<Region> {
                         setExtFilters(fileChooser);
                         File file = fileChooser.showOpenDialog(primaryStage);
                         if (file != null) {
-                            saveImageToStorage(file);
+                            try {
+                                ImageStorageHandler.saveImageToStorage(file, person);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             refreshState();
                         }
                     }
@@ -114,22 +119,6 @@ public class ProfilePanel extends UiPart<Region> {
                 new FileChooser.ExtensionFilter("All Images", "*.*"),
                 new FileChooser.ExtensionFilter("PNG", "*.png")
         );
-    }
-
-    /**
-     * Save a given image file to storage
-     * @param file
-     */
-    private void saveImageToStorage(File file) {
-        Image image = new Image(file.toURI().toString());
-        String phoneNum = person.getPhone().value;
-
-        try {
-            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png",
-                    new File(DEFAULT_IMAGE_STORAGE_PREFIX + phoneNum + DEFAULT_IMAGE_STORAGE_SUFFIX));
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
     }
 
     /**

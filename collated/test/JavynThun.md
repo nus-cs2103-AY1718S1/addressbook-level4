@@ -15,6 +15,22 @@
         return websiteLabel.getText();
     }
 ```
+###### \java\seedu\address\logic\commands\AddCommandTest.java
+``` java
+        @Override
+        public Boolean sortPersonList(ArrayList<ReadOnlyPerson> personlist) {
+            fail("This method should not be called.");
+            return null;
+        }
+```
+###### \java\seedu\address\logic\commands\AddMultipleByTsvCommandTest.java
+``` java
+        @Override
+        public Boolean sortPersonList(ArrayList<ReadOnlyPerson> personList) {
+            fail("This method should not be called.");
+            return null;
+        }
+```
 ###### \java\seedu\address\logic\commands\RemarkCommandTest.java
 ``` java
 /**

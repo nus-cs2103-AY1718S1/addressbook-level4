@@ -1,0 +1,74 @@
+= Vanessa Lim Shi Min - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+
+=== 1st Enhancement Added: Recently Deleted
+
+==== External behavior for 1st Enhancement
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=recentlydeleted]
+
+#End of Extract#
+
+---
+
+==== Justification for 1st Enhancement
+
+When a huge amount of contacts are deleted at one shot, via the `DeleteMultipleCommand`, `RecentlyDeletedCommand` allows the user to sift through the list of previously deleted contacts and extract the ones that the user wants to add back into TheYellowPage. This is so that the user does not need to undo the `DeleteMultipleCommand` (which will retrieve all the deleted contacts) to retrieve just one or a few contacts that were accidentally deleted.
+
+==== Implementation for 1st Enhancement
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=recentlydeleted]
+
+#End of Extract#
+
+---
+
+=== 2nd Enhancement Added: Theme
+
+==== External behavior for 2nd Enhancement
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=theme]
+
+#End of Extract#
+
+---
+
+==== Justification for 2nd Enhancement
+
+This allows the user to choose the theme of TheYellowPage that they prefer, not limited to only the default theme.
+
+==== Implementation for 2nd Enhancement
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=theme]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `remark`
+
+{Explain similar to the Undo/Redo feature above.}
+
+=== Other contributions
+
+* Wrote additional tests to increase coverage from 86% to 87% (Pull requests https://github.com/CS2103AUG2017-T10-B4/main/pull/120[#120])
+

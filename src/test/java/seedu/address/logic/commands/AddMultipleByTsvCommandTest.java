@@ -70,7 +70,8 @@ public class AddMultipleByTsvCommandTest {
                                                                         ArrayList<Integer> failedEntries,
                                                                         boolean isFileFound, Model model) {
         AddMultipleByTsvCommand command = new AddMultipleByTsvCommand(toAddPeople, failedEntries, isFileFound);
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), new RecentlyDeletedQueue());
+        command.setData(model, new CommandHistory(),
+                new UndoRedoStack(), new RecentlyDeletedQueue(), new String());
         return command;
     }
 
@@ -107,6 +108,14 @@ public class AddMultipleByTsvCommandTest {
             fail("This method should not be called.");
             return null;
         }
+
+        //@@author JavynThun
+        @Override
+        public Boolean sortPersonList(ArrayList<ReadOnlyPerson> personList) {
+            fail("This method should not be called.");
+            return null;
+        }
+        //@@author
 
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {

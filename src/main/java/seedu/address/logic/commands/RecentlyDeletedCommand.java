@@ -41,7 +41,8 @@ public class RecentlyDeletedCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, String.join("\n", deletedAsText)));
     }
 
-    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {
+    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack,
+                        RecentlyDeletedQueue queue, String theme) {
         this.queue = queue;
     }
 }

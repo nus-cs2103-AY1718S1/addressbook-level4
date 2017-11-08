@@ -1,4 +1,54 @@
 # nguyenvanhoang7398
+###### \java\seedu\address\commons\core\ImageStorageHandler.java
+``` java
+package seedu.address.commons.core;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.ReadOnlyPerson;
+
+/**
+ * Class for handling save/delete image in the storage
+ */
+public class ImageStorageHandler {
+    private static final String DEFAULT_IMAGE_STORAGE_PREFIX = "data/";
+    private static final String DEFAULT_IMAGE_STORAGE_SUFFIX = ".png";
+    private static final String PROFILE_PICTURE_PATH_FORMAT = DEFAULT_IMAGE_STORAGE_PREFIX
+            + "%s" + DEFAULT_IMAGE_STORAGE_SUFFIX;
+
+    private static String getProfilePicturePath(ReadOnlyPerson person) {
+        return String.format(PROFILE_PICTURE_PATH_FORMAT, person.getPhone().value);
+    }
+
+    /**
+     * Save a given image file to storage
+     * @param file
+     */
+    public static void saveImageToStorage(File file, ReadOnlyPerson person) throws CommandException {
+
+        try {
+            BufferedImage image = ImageIO.read(file);
+            ImageIO.write(image, "png", new File(getProfilePicturePath(person)));
+        } catch (IOException | IllegalArgumentException e) {
+            throw new CommandException(Messages.MESSAGE_FILE_NOT_FOUND);
+        }
+    }
+
+    /**
+     * Delete a person's profile picture in storage
+     * @param personToDelete
+     */
+    public static void deleteProfilePicture(ReadOnlyPerson personToDelete) {
+        String profilePictureToDeletePath = getProfilePicturePath(personToDelete);
+        File profilePictureToDelete = new File(profilePictureToDeletePath);
+        Boolean isSuccessfullyDeleted = profilePictureToDelete.delete();
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\AddMultipleByTsvCommand.java
 ``` java
 package seedu.address.logic.commands;
@@ -8,6 +58,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 import java.util.StringJoiner;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -18,8 +69,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
  */
 public class AddMultipleByTsvCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "addMulTsv";
-    public static final String COMMAND_ALIAS = "addMT";
+    public static final String COMMAND_WORD = "addMul";
+    public static final String COMMAND_ALIAS = "addM";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds multiple people to the address book "
             + "given a tsv (tab separated value) txt file containing their contact information. "
             + "Parameters: TSV_PATH\n"
@@ -28,7 +79,6 @@ public class AddMultipleByTsvCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "%d new person (people) added";
     public static final String MESSAGE_DUPLICATE_PERSON = "%d new person (people) duplicated";
     public static final String MESSAGE_NUMBER_OF_ENTRIES_FAILED = "%d entry (entries) failed: ";
-    public static final String MESSAGE_FILE_NOT_FOUND = "The system cannot find the file specified";
 
     private final ArrayList<Person> toAdd;
     private final ArrayList<Integer> failedEntries;
@@ -48,7 +98,7 @@ public class AddMultipleByTsvCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         if (!isFileFound) {
-            return new CommandResult(MESSAGE_FILE_NOT_FOUND);
+            return new CommandResult(Messages.MESSAGE_FILE_NOT_FOUND);
         }
         int numAdded = 0;
         int numDuplicated = 0;
@@ -88,6 +138,65 @@ public class AddMultipleByTsvCommand extends UndoableCommand {
                 && toAdd.equals(((AddMultipleByTsvCommand) other).toAdd));
     }
 
+}
+```
+###### \java\seedu\address\logic\commands\ChangeProfilePictureCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import java.io.File;
+import java.util.List;
+
+import seedu.address.commons.core.ImageStorageHandler;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.ReadOnlyPerson;
+
+/**
+ * Change profile picture of a contact
+ */
+public class ChangeProfilePictureCommand extends Command {
+
+    public static final String COMMAND_WORD = "changePicture";
+    public static final String COMMAND_ALIAS = "chgPic";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Change profile picture of the person identified by the index number used in the last person listing.\n"
+            + "Parameters: INDEX (must be a positive integer) PICTURE_PATH (must be in PNG or JPG format)\n"
+            + "Example: " + COMMAND_WORD + " 1 D:/JamesProfilePicture.png";
+
+    public static final String MESSAGE_CHANGE_PROFILE_PICTURE_SUCCESS = "Successfully change profile picture "
+            + "of person: %1$s";
+
+    private final Index targetIndex;
+    private final String picturePath;
+
+    public ChangeProfilePictureCommand(Index targetIndex, String picturePath) {
+        this.targetIndex = targetIndex;
+        this.picturePath = picturePath;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToChangeProfilePicture = lastShownList.get(targetIndex.getZeroBased());
+        ImageStorageHandler.saveImageToStorage(new File(picturePath), personToChangeProfilePicture);
+
+        return new CommandResult(String.format(MESSAGE_CHANGE_PROFILE_PICTURE_SUCCESS, targetIndex.getOneBased()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ChangeProfilePictureCommand // instanceof handles nulls
+                && this.targetIndex.equals(((ChangeProfilePictureCommand) other).targetIndex)); // state check
+    }
 }
 ```
 ###### \java\seedu\address\logic\commands\FindTagCommand.java
@@ -302,7 +411,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class AddMultipleByTsvCommandParser implements Parser<AddMultipleByTsvCommand> {
 
     /**
-     * Parse arguments given by AddressBookParser
+     * Parse arguments given by AddressBookParser to add multiple contacts
      * @param args
      * @return
      * @throws ParseException
@@ -339,6 +448,52 @@ public class AddMultipleByTsvCommandParser implements Parser<AddMultipleByTsvCom
         case AddMultipleByTsvCommand.COMMAND_WORD:
         case AddMultipleByTsvCommand.COMMAND_ALIAS:
             return new AddMultipleByTsvCommandParser().parse(arguments);
+
+        case ChangeProfilePictureCommand.COMMAND_WORD:
+        case ChangeProfilePictureCommand.COMMAND_ALIAS:
+            return new ChangeProfilePictureCommandParser().parse(arguments);
+```
+###### \java\seedu\address\logic\parser\ChangeProfilePictureCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.ChangeProfilePictureCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parser for ChangeProfilePictureCommand
+ */
+public class ChangeProfilePictureCommandParser implements Parser<ChangeProfilePictureCommand> {
+
+    /**
+     * Parse arguments given by AddressBookParser to change profile picture
+     * @param args
+     * @return
+     * @throws ParseException
+     */
+    public ChangeProfilePictureCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        String[] parameters = trimmedArgs.split("\\s+");
+
+        if (trimmedArgs.isEmpty() || parameters.length != 2) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeProfilePictureCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            Index index = ParserUtil.parseIndex(parameters[0]);
+            String picturePath = parameters[1];
+            return new ChangeProfilePictureCommand(index, picturePath);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeProfilePictureCommand.MESSAGE_USAGE));
+        }
+    }
+}
 ```
 ###### \java\seedu\address\logic\parser\FindTagCommandParser.java
 ``` java
@@ -513,6 +668,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
+import seedu.address.commons.core.ImageStorageHandler;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
@@ -527,6 +683,7 @@ public class ProfilePanel extends UiPart<Region> {
     private static final String DEFAULT_IMAGE_STORAGE_PREFIX = "data/";
     private static final String DEFAULT_IMAGE_STORAGE_SUFFIX = ".png";
     private static final String DEFAULT_PROFILE_PICTURE_PATH = "/images/default_profile_picture.png";
+    private static final String DEFAULT_PROFILE_BACKGROUND_PATH = "/images/profile_background.jpg";
     private static String[] colors = { "red", "yellow", "blue", "orange", "indigo", "green", "violet", "black" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
@@ -588,7 +745,11 @@ public class ProfilePanel extends UiPart<Region> {
                         setExtFilters(fileChooser);
                         File file = fileChooser.showOpenDialog(primaryStage);
                         if (file != null) {
-                            saveImageToStorage(file);
+                            try {
+                                ImageStorageHandler.saveImageToStorage(file, person);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             refreshState();
                         }
                     }
@@ -601,22 +762,6 @@ public class ProfilePanel extends UiPart<Region> {
                 new FileChooser.ExtensionFilter("All Images", "*.*"),
                 new FileChooser.ExtensionFilter("PNG", "*.png")
         );
-    }
-
-    /**
-     * Save a given image file to storage
-     * @param file
-     */
-    private void saveImageToStorage(File file) {
-        Image image = new Image(file.toURI().toString());
-        String phoneNum = person.getPhone().value;
-
-        try {
-            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png",
-                    new File(DEFAULT_IMAGE_STORAGE_PREFIX + phoneNum + DEFAULT_IMAGE_STORAGE_SUFFIX));
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
     }
 
     /**
@@ -641,7 +786,9 @@ public class ProfilePanel extends UiPart<Region> {
      * Initialize panel's style such as color
      */
     private void initStyle() {
-        profilePane.setStyle("-fx-background-color: #FFFFFF;");
+        profilePane.setStyle(String.format("-fx-background-image: url(%s); "
+                        + "-fx-background-position: center center; -fx-background-size: cover;",
+                DEFAULT_PROFILE_BACKGROUND_PATH));
     }
 
     /**
@@ -720,6 +867,7 @@ public class ProfilePanel extends UiPart<Region> {
 ```
 ###### \resources\view\ProfilePanel.fxml
 ``` fxml
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -731,6 +879,7 @@ public class ProfilePanel extends UiPart<Region> {
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <HBox id="profilePane" fx:id="profilePane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane HBox.hgrow="ALWAYS">
@@ -762,7 +911,13 @@ public class ProfilePanel extends UiPart<Region> {
             <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
             <Label fx:id="website" styleClass="cell_small_label" text="\$website" />
             <Label fx:id="remark" styleClass="cell_small_label" text="\$remark" />
-         <Button fx:id="changePictureButton" mnemonicParsing="false" prefWidth="119.0" text="Change" />
+         <Button fx:id="changePictureButton" mnemonicParsing="false" prefWidth="200.0" text="Change photo">
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
+            <font>
+               <Font size="24.0" />
+            </font></Button>
         </VBox>
       <rowConstraints>
          <RowConstraints />
