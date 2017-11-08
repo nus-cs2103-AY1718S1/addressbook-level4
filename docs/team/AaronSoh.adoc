@@ -1,0 +1,106 @@
+= Aaron Soh Yu Han - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AcquaiNote
+The AcquaNote is a free command line program to manage your personal contact list easily and safely. Additionally, AcquaNote also helps you to manage your schedule.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T10-B1/main/blob/master/collated/main/aaronyhsoh.md[Functional code]] [https://github.com/CS2103AUG2017-T10-B1/main/blob/master/collated/test/aaronyhsoh.md[Test code]]
+
+=== Enhancement Added: Favourite
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=favourite]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users want to set more important contacts at the top of their contact list. 
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=favourite]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users want to save contacts that might have details missing. 
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Undo/Redo
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=undo]
+include::../UserGuide.adoc[tag=redo]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This command allow users to redo/undo multiple commands at one go, which makes it faster if there are alot of commands to be undone/redone.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=undo]
+include::../DeveloperGuide.adoc[tag=redo]
+
+#End of Extract#
+
+---
+
+=== 
+
+=== Enhancement Proposed: Add command `Delete multiple contacts`
+
+This will allow users to delete more than 1 contacts at the same time. Users will not need to type the delete command multiple times.
+
+=== Other contributions
+
+* Contributed to the UI layout
+* Edited team mates' documentations
