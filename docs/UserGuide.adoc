@@ -87,8 +87,22 @@ Example:
 
 * `image 1 /home/user/someexamplepic.jpg`
 
+//tag::expire[]
 === Expiry Date: `expire`
-Set the expiry date of a person. The entry will be automatically removed from addressbook once it expires. Coming v1.5
+Set the expiry date of a person.
+Format: `expire INDEX [d/EXPIRY DATE]`
+
+Example: +
+`expire 1 d/2017-10-31`
+Will set the expiry date of the first person to 2017-10-31. +
+`expire 1`
+Will remove the expiry date of the first person.
+
+[TIP]
+By omitting the expiry date field in the command, the expiry date set will be removed. +
+Expiry date should be in the format YYYY/MM/DD
+
+//end::expire[]
 
 === Exporting Database: `export`
 Export a working version of the database and the images associated with it to the application directory or a specified directory. Since v1.5rc.+
