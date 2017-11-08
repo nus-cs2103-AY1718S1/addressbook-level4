@@ -91,7 +91,7 @@ public class XmlAdaptedPerson {
         }
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
-        final Country country = new Country(this.country);
+        final Country country = new Country(phone.getCountryCode());
         final Set<Email> emails = new HashSet<>(personEmails);
         final Address address = new Address(this.address);
         final Set<Schedule> schedule = new HashSet<>(schedules);

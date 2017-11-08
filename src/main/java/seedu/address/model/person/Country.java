@@ -14,7 +14,6 @@ public class Country {
     public static final String COMMAND_WORD = "codes";
     public static final String DEFAULT_COUNTRY_CODE = "";
     public static final String DEFAULT_COUNTRY = "Country Unavailable";
-    public static final String MESSAGE_COUNTRY_ERROR = "Country not detected";
     private static String codeList;
     public final String value;
     public final Map <String, String> countryMap;
@@ -287,7 +286,7 @@ public class Country {
     }
 
     public String getName(String code) {
-        return countryMap.getOrDefault(code, MESSAGE_COUNTRY_ERROR);
+        return countryMap.getOrDefault(code, DEFAULT_COUNTRY);
     }
 
     @Override
