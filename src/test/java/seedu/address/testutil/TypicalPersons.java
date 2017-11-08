@@ -16,10 +16,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
-import seedu.address.model.meeting.ReadOnlyMeeting;
-import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
-import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
-import seedu.address.model.meeting.exceptions.MeetingClashException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
@@ -74,17 +70,6 @@ public class TypicalPersons {
                 ab.addPerson(person);
             } catch (DuplicatePersonException e) {
                 assert false : "not possible";
-            }
-        }
-        for (ReadOnlyMeeting meeting : TypicalMeetings.getTypicalMeetings()) {
-            try {
-                ab.addMeeting(meeting);
-            } catch (DuplicateMeetingException e) {
-                assert false : "duplicate not possible";
-            } catch (MeetingBeforeCurrDateException mbcde) {
-                assert false : "mbcde not possible";
-            } catch (MeetingClashException mce) {
-                assert false : "mce not possible";
             }
         }
         return ab;

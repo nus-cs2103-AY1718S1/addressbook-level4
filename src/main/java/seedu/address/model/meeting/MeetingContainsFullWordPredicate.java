@@ -20,7 +20,8 @@ public class MeetingContainsFullWordPredicate implements Predicate<ReadOnlyMeeti
     public boolean test(ReadOnlyMeeting meeting) {
         return (keywords.stream()
                 .anyMatch(keyword ->
-                        StringUtil.containsFullWordIgnoreCase(meeting.getPersonName().fullName, keyword)));
+                        StringUtil.containsFullWordIgnoreCase(
+                                meeting.getPersonsMeet().get(0).getName().fullName, keyword)));
     }
 
     @Override

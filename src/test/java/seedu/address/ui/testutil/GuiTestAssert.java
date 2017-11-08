@@ -59,10 +59,10 @@ public class GuiTestAssert {
      */
     public static void assertCardDisplaysMeeting(ReadOnlyMeeting expectedMeeting, MeetingCardHandle actualCard) {
         assertEquals(expectedMeeting.getName().fullName, actualCard.getNameMeeting());
-        assertEquals(expectedMeeting.getPersonPhone().phone, actualCard.getPhoneNum());
+        assertEquals(expectedMeeting.getPersonsMeet().get(0).getPhone().value, actualCard.getPhoneNum());
         assertEquals(expectedMeeting.getPlace().value, actualCard.getPlace());
         assertEquals(expectedMeeting.getDate().value, actualCard.getDateTime());
-        assertEquals(expectedMeeting.getPersonName().fullName, actualCard.getPersonToMeet());
+        assertEquals(expectedMeeting.getPersonsMeet().get(0).getName().fullName, actualCard.getPersonToMeet());
     }
     //@@author
 
