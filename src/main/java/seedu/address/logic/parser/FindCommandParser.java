@@ -2,18 +2,22 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MRT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.Set;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -32,27 +36,23 @@ public class FindCommandParser implements Parser<FindCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE,
                         PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_MRT, PREFIX_TAG);
 
-        Index index;
+        boolean isInclusive;
 
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            isInclusive = ParserUtil.parseType(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        FindCommand.FindPersonDescriptor personDescriptor = new FindCommand.FindPersonDescriptor();
-        try {
-            ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(personDescriptor::setName);
-            ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(personDescriptor::setPhone);
-            ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(personDescriptor::setEmail);
-            ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(personDescriptor::setAddress);
-            ParserUtil.parseMrt(argMultimap.getValue(PREFIX_MRT)).ifPresent(personDescriptor::setMrt);
-            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(personDescriptor::setTags);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        }
+        FindPersonDescriptor personDescriptor = new FindPersonDescriptor();
+        argMultimap.getValue(PREFIX_NAME).ifPresent(personDescriptor::setName);
+        argMultimap.getValue(PREFIX_PHONE).ifPresent(personDescriptor::setPhone);
+        argMultimap.getValue(PREFIX_EMAIL).ifPresent(personDescriptor::setEmail);
+        argMultimap.getValue(PREFIX_ADDRESS).ifPresent(personDescriptor::setAddress);
+        argMultimap.getValue(PREFIX_MRT).ifPresent(personDescriptor::setMrt);
+        argMultimap.getValue(PREFIX_TAG).ifPresent(personDescriptor::setTag);
 
-        return new FindCommand(personDescriptor);
+        return new FindCommand(isInclusive, personDescriptor);
     }
 
     /**
@@ -69,7 +69,5 @@ public class FindCommandParser implements Parser<FindCommand> {
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
     }
-
-}
 
 }
