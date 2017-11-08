@@ -363,15 +363,21 @@ Exits Death Note. +
 
   Format: `exit`
 
-=== Open new contact list kbd:[V2.0]
+=== Open or create new contact list kbd:[V2.0]
 //tag::openbook[]
-Opens another Death Note data file from within the application.
+Opens or creates another Death Note data file from within the application.
 
-On GUI:
+`Open` On GUI:
 
 . Go to the top menu and click File > Open.
 . Locate your desired Death Note data file on the pop-up window. The file will be in an xml format.
 . Select the file and click Open
+
+`New` On GUI:
+
+. Go to the top menu and click File > New.
+. Locate your desired Death Note data file on the pop-up window. The file will be in an xml format.
+. Select the file and click Save
 // end::openbook[]
 
 === Saving the data

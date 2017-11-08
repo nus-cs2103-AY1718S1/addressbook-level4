@@ -108,6 +108,7 @@ public abstract class AddressBookSystemTest {
         // after each command is predictable and also different from the previous command.
         clockRule.setInjectedClockToCurrentTime();
 
+
         mainWindowHandle.getCommandBox().run(command);
 
         waitUntilBrowserLoaded(getBrowserPanel());

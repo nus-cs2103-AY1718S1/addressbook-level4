@@ -9,7 +9,7 @@ import seedu.address.ui.UiStyle;
 public class ThemeCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "theme";
-    public static final String COMMAND_ALIAS = "t";
+    public static final String COMMAND_SHORT = "t";
     public static final String LIGHT_THEME = "light";
     public static final String DARK_THEME = "dark";
     public static final String LIGHT_THEME2 = "holy";

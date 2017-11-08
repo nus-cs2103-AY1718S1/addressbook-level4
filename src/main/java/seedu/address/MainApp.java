@@ -15,6 +15,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.NewAddressBookRequestEvent;
 import seedu.address.commons.events.ui.OpenAddressBookRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
@@ -243,6 +244,22 @@ public class MainApp extends Application {
             userPrefs = JsonUtil.readJsonFile("preferences.json", UserPrefs.class).get();
             userPrefs.setAddressBookName(addressBookFileName);
             JsonUtil.saveJsonFile(userPrefs, "preferences.json");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void handleNewAddressBookRequestEvent(NewAddressBookRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        try {
+            // change addressbook file path
+            setAddressBookFilePath(event.getFilePath());
+            setAddressBookAppName(event.getFileName());
+
+            init();
+            start(this.primaryStage);
         } catch (Exception e) {
             e.printStackTrace();
         }
