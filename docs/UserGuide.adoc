@@ -201,6 +201,7 @@ Then, you can set a contact's `birthday` when you add a new contact (_see `b/120
 
 * `add n/Chris Lee p/98765432 e/johnd@example.com a/23 Chinatown b/12091991 t/friends`
 
+//tag::autoReminders[]
 === Adding an event : `(aE)addE`
 
 You want to record your friend's birthday party coming up. +
@@ -223,8 +224,22 @@ or if the expression is not simple or clear enough.
 * Avoid putting the year first when using the non-standard format.
 ====
 
+
+[TIP]
+====
+* Reminders will automatically be added and start to notify you from 2 days before the actual event.
+* Reminders in the form of a bell image will be displayed on the event card itself.
+* Red Bell : Day of event +
+  Orange Bell: One day before event +
+  Green Bell: Two days before event.
+====
+//end::autoReminders[]
+
+=== Listing all persons/events : `(l)list`
+
 // tag::sortByName[]
 === Listing all persons : `(l)list`
+
 
 You want to view all your contacts in your contact list. +
 Format: `(l)list`

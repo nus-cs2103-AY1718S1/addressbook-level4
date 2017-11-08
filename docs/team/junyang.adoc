@@ -1,0 +1,58 @@
+= Ng Jun Yang - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: BoNUS
+BoNUS is a desktop personal organizer application created for National University of Singapore (NUS) students, by NUS students.
+The application aims to better organize the lives of NUS students. This is accomplished through having a contacts list
+for students to keep up with their social lives and a planner for students to keep abreast of their upcoming events in school.
+BoNUS uses a Command Line Interface (CLI) where users input their commands to a console.
+
+This project is the result of a semester-long Software Engineering module, https://nus-cs2103.github.io/website/[CS2103T],
+in NUS. BoNUS is developed alongside my teammates  based on https://github.com/se-edu/addressbook-level4[Address Book (Level 4)], an initiative from the
+https://se-edu.github.io/[SE-EDU team], the current codebase has expanded to around 10 kLoC. The backend of the application
+is done in Java. The frontend of the application is mostly done up with JavaFX.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T09-B3/main/blob/master/collated/main/junyango.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B3/main/blob/master/collated/test/junyango.md[Test code]]
+
+=== Enhancement Added: Auto Reminders
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=autoReminders]
+
+
+---
+
+==== Justification
+
+The support for auto reminders in BoNUS is pivotal. Taking into consideration the busy schedules of students, having an auto reminder
+function allows students to be more in line with their upcoming events.
+
+As for the latest BoNUS v1.5 official release, reminders only come in the form of additional icons at the side of their events.
+We seek to further improve the auto reminders function to allow students to be notified of upcoming events in a better manner.
+
+==== Realization
+
+---
+
+include::../DeveloperGuide.adoc[tag=autoReminders]
+
+---
+
+=== Other contributions
+
+* Added a command to switch in between bright and dark themes for students to personalize BoNUS.
+(Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/166[#166])
+* Introduced Events component in BoNUS
+(Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/55[#55], https://github.com/CS2103AUG2017-T09-B3/main/pull/73[#73], https://github.com/CS2103AUG2017-T09-B3/main/pull/76[#76])
+* Modified small parts of the UI
+(Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/90[#90], https://github.com/CS2103AUG2017-T09-B3/main/pull/68[#68])
+* Wrote JUnit tests in various classes
+(Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/140[#140], https://github.com/CS2103AUG2017-T09-B3/main/pull/55[#55])
+* Assisted Project UNIBOOK in bug reporting
+(Issues https://github.com/CS2103AUG2017-T13-B2/main/issues/73[#73])
+
