@@ -153,9 +153,7 @@ Returns `john` and `John Doe`
 Returns any person whose phone number contains number `999` and email address contains `nus`
 // end::find[]
 
-=== Deleting a person : `delete`
-
-==== Option1
+=== Deleting a person by index: `delete`
 
 Deletes the specified person from the address book using his/her corresponding index. +
 Format: `delete INDEX`
@@ -173,25 +171,6 @@ Examples:
 Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
-==== Option2
-
-Deletes the specified person from the address book using his/her name. +
-Format: `del NAME`
-
-****
-* Deletes the person with the first occurrence of the specified `NAME`.
-* The name refers to the name shown in the contact list (case sensitive temporarily).
-* The name *must be a alphabets* john, Jane, Bob ...
-****
-
-Examples:
-
-* `del Alex` +
-Deletes the first person named Alex in the address book contact list.
-* `find Betsy` +
-`del Betsy` +
 Deletes the 1st person in the results of the `find` command.
 
 // tag::select[]
@@ -304,6 +283,27 @@ There is no need to save manually.
 
 == Since v1.2
 
+// tag::deletebyname[]
+=== Deleting a person by name: `del`
+
+Deletes the specified person from the address book using his/her name. +
+Format: `del NAME`
+
+****
+* Deletes the person with the first occurrence of the specified `NAME`.
+* The name refers to the name shown in the contact list (case insensitive).
+* The name *must be more than 3 characters*: john, James, William ...
+****
+
+Examples:
+
+* `del Alex` +
+Deletes the first person named Alex in the address book contact list.
+* `find Betsy` +
+`del Betsy` +
+Deletes the 1st person in the results of the `find` command.
+// end::deletebyname[]
+
 // tag::sort[]
 === Sorting all persons : `sort`
 
@@ -375,6 +375,7 @@ Favourites the 1st person in the address book. +
 `favourite 1` +
 Unfavourite the 1st person in the address book.
 
+// tag::export[]
 === Exporting address book : `export`
 
 Exports a copy of the address book. +
@@ -383,14 +384,15 @@ Format: `export FILEPATH`
 ****
 * Exports the address book into specified `FILEPATH`.
 * The filepath refers to a local directory in the computer.
-* The filepath *must be suffixed with .xml* e.g. 'C:\', 'docs/', ...
+* The filepath *must be suffixed with .xml* e.g. 'D:\', 'docs/', ...
 * If specified directory is missing, it will be automatically created when exporting.
 ****
 
 Examples:
 
-* `export C:\exported\AcquaiNote.xml` +
-Exports the address book into exported folder in C drive in xml file format.
+* `export D:\exported\AcquaiNote.xml` +
+Exports the address book into exported folder in D drive in xml file format.
+// end::export[]
 
 // tag::tdo[]
 === To-do list: `todo`
