@@ -238,8 +238,8 @@ public class EditCommand extends UndoableCommand {
      * Renames image file of person to new email if image of person exists.
      */
     private void renamePhoto(String oldEmail, String newEmail) {
-        File oldFile = new File("src/main/photos/" + oldEmail + ".png");
-        File newFile = new File("src/main/photos/" + newEmail + ".png");
+        File oldFile = new File("photos/" + oldEmail + ".png");
+        File newFile = new File("photos/" + newEmail + ".png");
         if (oldFile.exists()) {
             oldFile.renameTo(newFile);
         }

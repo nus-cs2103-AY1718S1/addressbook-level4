@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.commands.LoggingCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 //@@author blaqkrow
@@ -23,6 +24,7 @@ public class EmailButton extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private String selectedEmail  = "";
+    private LoggingCommand lg = new LoggingCommand();
 
     @FXML
     private Button emailButton;
@@ -38,6 +40,7 @@ public class EmailButton extends UiPart<Region> {
     private void handleEmailButtonPressed() throws CommandException, ParseException, IOException {
         OpenEmailClient emailClient = new OpenEmailClient(this.selectedEmail);
         emailClient.sendMail();
+        lg.keepLog("Email client opened!", "Email");
     }
 
     @Subscribe

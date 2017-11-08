@@ -1,5 +1,5 @@
 # limshunyong
-###### \java\seedu\address\logic\commands\ExportCommand.java
+###### /java/seedu/address/logic/commands/ExportCommand.java
 ``` java
 /**
  * export contacts to external source (in .vcf format)
@@ -15,18 +15,23 @@ public class ExportCommand extends Command {
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "Contacts successfully exported as output.vcf !!";
+    public static final String MESSAGE_FAIL = "Contacts not exported!!";
+    public static final String MESSAGE_EMPTY_AB = "AddressBook is empty. Nothing to export !!";
 
 
 
     @Override
     public CommandResult execute() {
-
-        try {
-            writeToFile();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (model.getAddressBook().getPersonList().isEmpty()) {
+            return new CommandResult(MESSAGE_EMPTY_AB);
+        } else {
+            try {
+                writeToFile();
+            } catch (IOException e) {
+                return new CommandResult(MESSAGE_FAIL);
+            }
+            return new CommandResult(MESSAGE_SUCCESS);
         }
-        return new CommandResult(MESSAGE_SUCCESS);
     }
 
     /**
@@ -71,7 +76,7 @@ public class ExportCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ImportCommand.java
+###### /java/seedu/address/logic/commands/ImportCommand.java
 ``` java
 /**
  * import contacts from external source (in .vcf format)
@@ -114,7 +119,7 @@ public class ImportCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\SortCommand.java
+###### /java/seedu/address/logic/commands/SortCommand.java
 ``` java
 /**
  * Sorts the contacts in the address book based on name.
@@ -132,7 +137,7 @@ public class SortCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ImportCommandParser.java
+###### /java/seedu/address/logic/parser/ImportCommandParser.java
 ``` java
 /**
  * Parses input arguments as file and adds the contact into the address book
@@ -213,7 +218,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
 }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
      *  Sorts the address book
@@ -223,7 +228,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     }
 
 ```
-###### \java\seedu\address\model\person\UniquePersonList.java
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
     /**
      * Sorts the list
@@ -234,12 +239,12 @@ public class ImportCommandParser implements Parser<ImportCommand> {
                         .compareToIgnoreCase(person2.getName().fullName)));
     }
 ```
-###### \java\seedu\address\storage\AddressBookStorage.java
+###### /java/seedu/address/storage/AddressBookStorage.java
 ``` java
     void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 }
 ```
-###### \java\seedu\address\storage\StorageManager.java
+###### /java/seedu/address/storage/StorageManager.java
 ``` java
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-copy.xml");

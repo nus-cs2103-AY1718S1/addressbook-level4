@@ -1,5 +1,5 @@
 # JasmineSee
-###### \java\seedu\address\commons\events\ui\PhotoChangeEvent.java
+###### /java/seedu/address/commons/events/ui/PhotoChangeEvent.java
 ``` java
 /**
  * Indicates that a photo change is occurring.
@@ -15,7 +15,7 @@ public class PhotoChangeEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\EditCommand.java
+###### /java/seedu/address/logic/commands/EditCommand.java
 ``` java
         /**
          * Returns true if email field is edited.
@@ -24,7 +24,7 @@ public class PhotoChangeEvent extends BaseEvent {
             return CollectionUtil.isAnyNonNull(this.email);
         }
 ```
-###### \java\seedu\address\logic\commands\EditCommand.java
+###### /java/seedu/address/logic/commands/EditCommand.java
 ``` java
     /**
      * Renames image file of person to new email if image of person exists.
@@ -37,7 +37,7 @@ public class PhotoChangeEvent extends BaseEvent {
         }
     }
 ```
-###### \java\seedu\address\logic\commands\RemoveTagCommand.java
+###### /java/seedu/address/logic/commands/RemoveTagCommand.java
 ``` java
 /**
  * Removes specified tag from all persons from the address book.
@@ -101,7 +101,7 @@ public class RemoveTagCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\TagCommand.java
+###### /java/seedu/address/logic/commands/TagCommand.java
 ``` java
 /**
  * Lists all persons in the address book to the user.
@@ -137,7 +137,7 @@ public class TagCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\UploadPhotoCommand.java
+###### /java/seedu/address/logic/commands/UploadPhotoCommand.java
 ``` java
 /**
  * Uploads image file to specified person.
@@ -253,7 +253,7 @@ public class UploadPhotoCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\parser\RemoveTagCommandParser.java
+###### /java/seedu/address/logic/parser/RemoveTagCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new RemoveTagCommand object
@@ -289,7 +289,7 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\TagCommandParser.java
+###### /java/seedu/address/logic/parser/TagCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new TagCommand object
@@ -315,7 +315,7 @@ public class TagCommandParser implements Parser<TagCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\UploadPhotoCommandParser.java
+###### /java/seedu/address/logic/parser/UploadPhotoCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new UploadImageCommand object
@@ -347,11 +347,11 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
 }
 
 ```
-###### \java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException;
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public void resetData(ReadOnlyAddressBook newData, boolean isUndo) {
@@ -368,7 +368,7 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
         indicateAddressBookChanged();
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
@@ -378,7 +378,7 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
         indicateAddressBookChanged();
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException {
@@ -394,7 +394,7 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
         }
     }
 ```
-###### \java\seedu\address\model\person\UniquePersonList.java
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
     /**
      * Returns true if the list contains a person with identical email in the given argument.
@@ -422,7 +422,7 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
         internalList.add(new Person(toAdd));
     }
 ```
-###### \java\seedu\address\model\tag\TagContainsKeywordsPredicate.java
+###### /java/seedu/address/model/tag/TagContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the keywords given.
@@ -449,7 +449,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 
 }
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     /**
      * Changes to default dark theme.
@@ -492,7 +492,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         vBox.getStylesheets().add("view/GreenTheme.css");
     }
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
@@ -548,7 +548,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 
     }
 ```
-###### \resources\view\GreenTheme.css
+###### /resources/view/GreenTheme.css
 ``` css
 .background {
     -fx-background-color: derive(#527623, 20%);
@@ -925,7 +925,7 @@ h2 {
     -fx-font-size: 11;
 }
 ```
-###### \resources\view\MainWindow.fxml
+###### /resources/view/MainWindow.fxml
 ``` fxml
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
     <Menu mnemonicParsing="false" text="File">
@@ -935,11 +935,11 @@ h2 {
       <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
     </Menu>
 ```
-###### \resources\view\PersonListCard.fxml
+###### /resources/view/PersonListCard.fxml
 ``` fxml
    <ImageView fx:id="photo" fitHeight="150.0" fitWidth="157.0" pickOnBounds="true" preserveRatio="true" />
 ```
-###### \resources\view\WhiteTheme.css
+###### /resources/view/WhiteTheme.css
 ``` css
 .background {
     -fx-background-color: derive(#e6e6e6, 20%);

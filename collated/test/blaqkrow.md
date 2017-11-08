@@ -1,5 +1,19 @@
 # blaqkrow
-###### /java/systemtests/EmailCommandSystemTest.java
+###### \java\seedu\address\logic\LogicManagerTest.java
+``` java
+    @Test
+    public void execute_deleteCommandExecutionError_throwsCommandException() {
+        String deleteCommand = "delete 9";
+        assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertHistoryCorrect(deleteCommand);
+    }
+    @Test
+    public void execute_emailCommandExecutionError_throwsCommandException() {
+        String emailCommand = "email 9";
+        assertCommandException(emailCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+```
+###### \java\systemtests\EmailCommandSystemTest.java
 ``` java
 public class EmailCommandSystemTest extends AddressBookSystemTest {
 
@@ -104,18 +118,4 @@ public class EmailCommandSystemTest extends AddressBookSystemTest {
         assertCommandBoxShowsErrorStyle();
     }
 }
-```
-###### /java/seedu/address/logic/LogicManagerTest.java
-``` java
-    @Test
-    public void execute_deleteCommandExecutionError_throwsCommandException() {
-        String deleteCommand = "delete 9";
-        assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        assertHistoryCorrect(deleteCommand);
-    }
-    @Test
-    public void execute_emailCommandExecutionError_throwsCommandException() {
-        String emailCommand = "email 9";
-        assertCommandException(emailCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
 ```

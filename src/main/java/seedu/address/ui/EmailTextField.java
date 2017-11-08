@@ -36,6 +36,10 @@ public class EmailTextField extends UiPart<Region> {
         emailTextField.setText(text);
     }
 
+    public TextField getObject() {
+        return emailTextField;
+    }
+
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

@@ -60,6 +60,9 @@ public class TagTextField extends UiPart<Region> {
         }
         setTagTextArea(currTags.toString());
     }
+    public TextArea getObject() {
+        return tagTextArea;
+    }
 
 
 }

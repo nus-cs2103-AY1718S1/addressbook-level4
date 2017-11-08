@@ -549,7 +549,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-// tag::ImportCommand[]
+// tag::import[]
 === Import Command
 (added in v1.2)
 
@@ -563,19 +563,90 @@ Once the required information (name, email, address, phone number) is retrieved 
 
 * Next, the `AddressBookParser` class will retrieve the command as well as the argument and then call the `ImportCommandParser` class with the `FILENAME` as the argument.
 
+----
+        case ImportCommand.COMMAND_WORD:
+        case ImportCommand.COMMAND_ALIAS:
+            return new ImportCommandParser().parse(arguments);
+----
+
 * Then, in the `ImportCommandParser` class the file will be retrieved by the java `FILE` class which will access and convert the file into a byte stream using `bufferedReader` and `fileReader` class.
 
 * Once the file is loaded into the `bufferedReader`, the `ImportCommandParser` class will read the file line by line to identify the required contact information that is inside the file.
 
+---
+    public ImportCommand parse(String args) {
+        String filename = args.trim();
+        ArrayList<ReadOnlyPerson> p = new ArrayList<ReadOnlyPerson>();
+        BufferedReader br = null;
+        FileReader fr = null;
+
+---
+
 * The class uses simple String comparison to identify key words such as "FN" for name and "EMAIL" for email address etc.
+
+---
+                if (currLine.contains("FN")) {
+                    name = currLine.split(":")[1];
+                }
+                if (currLine.contains("TEL")) {
+                    phone = currLine.split(":")[1];
+                }
+                if (currLine.contains("ADR")) {
+                    address = currLine.split(";")[2];
+                }
+                if (currLine.contains("EMAIL")) {
+                    email = currLine.split(":")[1];
+                }
+
+---
 
 * Once the line reads the keyword "END", it means that the end of the first contact has been accessed and all its required values were all retrieved by the class.
 
 * Then using the informaton the class retrieved, it will then create a `Person` object. This object is then stored inside a `ReadOnlyPerson` array.
 
+---
+
+ try {
+    Name n = new Name(name);
+    Phone pe = new Phone(phone);
+    Email e = new Email(email);
+    Address a = new Address(address);
+    ReadOnlyPerson person = new Person(n, pe, e, a, tagList);
+         p.add(person);
+      } catch (IllegalValueException ie) {
+        ie.getMessage();
+     }
+
+---
+
 * When all the contact in the file has been accessed and created as a `Person` object and stored inside the array, the `ImportCommandParser` will then return a new `ImportCommand()` that will parse the array to the `ImportCommand` class for execution.
 
 * The `ImportCommand` class will retrieve the `ReadOnlyPerson` array that was parsed into its' constructor and then loop through the array and add each `Person` object into the addressbook.
+
+---
+    private ArrayList<ReadOnlyPerson> p;
+    public ImportCommand(ArrayList<ReadOnlyPerson> list) {
+        this.p = list;
+    }
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        if (p.isEmpty()) {
+            return new CommandResult(MESSAGE_FAILURE);
+        } else {
+            try {
+                for (ReadOnlyPerson pp : p) {
+                    model.addPerson(pp);
+                }
+            } catch (DuplicatePersonException de) {
+                throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
+            }
+            LoggingCommand loggingCommand = new LoggingCommand();
+            loggingCommand.keepLog("", "Import Action");
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
+    }
+
+---
 
 * Lastly, the `ImportCommand` class will return a success message to inform the user that all the contacts has been imported.
 
@@ -599,7 +670,7 @@ Once the required information (name, email, address, phone number) is retrieved 
 **Pros:** User friendly. User can upload a file that is residing in any part of the user's PC. Does not require user to specifically place the file at the /data directory. +
 **Cons:** Requires an `Upload` button to be created, involves UI component. Requires more time to develop the upload function. +
 
-// end::ImportCommand[]
+// end::import[]
 
 // tag::filtertag[]
 
@@ -625,7 +696,9 @@ that has the tags similar to the keywords. +
 **Cons:** If the user only type a common letter or substring found in all tag names, more persons will be returned which makes it difficult to search for the specific tag. +
 **Alternative 2:** Only keywords(case-sensitive) that are exactly equal to the tag names will match +
 **Pros:** Results in an accurate filtered list  +
-**Cons:** Requires user to type the exact tag name which makes it inconvenient. As convenience is more important, Alternative 1 is chosen. +
+**Cons:** Requires user to type the exact tag name which makes it inconvenient. As convenience is more important, Alternative 1 is chosen.
+
+// end::filtertag[]
 
 // tag::removetag[]
 === Remove tag mechanism
@@ -635,7 +708,8 @@ The remove tag mechanism is implemented by `Logic` and `Model`.
 
 * When parsing the command,each of the keywords inputted by the user is used to create a new Tag object that is put into a ArrayList<Tag>. +
 * The ArrayList<Tag> is then parsed in to `RemoveTagCommand` which is returned by the `RemoveTagCommandParser` class. +
-* In the execution stage (executeUndoableCommand()) in the `RemoveTagCommand` under `Logic`, each `Tag` inside the ArrayList<Tag> is then sent to the removeTag(Tag) method which is handled by the
+* The `RemoveTagCommand` is undoable so it will execute and override executeUndoableCommand() instead of overriding execute().
+* Under the executeUndoableCommand() method in the `RemoveTagCommand` under `Logic`, each `Tag` inside the ArrayList<Tag> is then sent to the removeTag(Tag) method which is handled by the
 `ModelManager` which implements `Model`. The method removes any tags of a person that matches the tag in the ArrayList. +
 * The method works by looping the person list in the 'AddressBook' and creating a new `Person` object called newPerson for each `Person` in the list. The Set<Tag> is then obtained from the newPerson
 and then removes the `Tag` that is parsed into the method. +
@@ -644,8 +718,6 @@ and then removes the `Tag` that is parsed into the method. +
 
 [NOTE]
 If the keywords is not identical to any of the existing tag names, 'CommandResult' will notify the user that no tags has been removed. Otherwise, a success message will be shown.
-
-The remove tag command is undoable so it will execute and override executeUndoableCommand() instead of overriding execute().
 
 The following sequence diagram shows how the remove tag operation works:
 
@@ -672,6 +744,9 @@ _Figure 4.8.1: Remove Tag Sequence Diagram_
 **Pros:** Less overhead as can compare between keyword strings and tag name strings +
 **Cons:** Further implementation and checks required to check that the keyword is identical to the tag name +
 
+// end::removetag[]
+
+// tag::colourtheme[]
 === Change colour theme mechanism
 (added in v1.2)
 
@@ -687,12 +762,15 @@ that belongs to other colours. +
 
 The diagrams shows the UI of the additional colour themes:
 
-image::whiteThemeUI.png[width="800"]
+image::whiteThemeUI.jpeg[width="800"]
 _Figure 4.9.1 : White Theme_
 
-image::greenThemeUI.png[width="800"]
+image::greenThemeUI.jpeg[width="800"]
 _Figure 4.9.2 : Green Theme_
 
+// end::colourtheme[]
+
+// tag::uploadphoto[]
 === Upload photo mechanism
 (added in v1.4)
 
@@ -700,19 +778,19 @@ The uploading photo mechanism is implemented by `EventsCenter` and `Logic`.
 
 * There are two ways a user can upload a photo to the contact, either by choosing an image from a file explorer or inputting in the image file path in the command. +
 * After the user enters the command, the `UploadPhotoCommandParser` will separate the argument into the index and file path before parsing both variables into `UploadPhotoCommand`. +
-* In `UploadPhotoCommand`, the `executeUndoableCommand()` method will check for invalid index before checking if filePath string is empty. The file explorer will open for the user to choose an image if the filePath string is empty. +
+* In `UploadPhotoCommand`, the execute() method will check for invalid index before checking if filePath string is empty. The file explorer will open for the user to choose an image if the filePath string is empty. +
 * Next, the method will check if the file is a valid image file before saving the file into the project directory, as well as raising an event called `PhotoChangeEvent` as seen below.
 [source,java]
 ----
     if (isValidImageFile(imageFile)) {
-                imageFile = saveFile(imageFile, personToUploadImage.getEmail());
+                saveFile(imageFile, personToUploadImage.getEmail());
                 EventsCenter.getInstance().post(new PhotoChangeEvent());
             } else {
                 throw new CommandException(String.format(MESSAGE_UPLOAD_IMAGE_FALURE));
             }
 ----
-* The event is raised to allow instant display of the modification of the photo. To implement this, `PersonCard` is registered as an event handler and includes a `@Subscribe handlePhotoChange` to handle the event of uploading the photo. +
-* The `handlePhotoChange` method will set the `ImageView` to the new image file path of the uploaded photo in the project directory.
+* The event is raised to allow instant display of the modification of the photo. To implement this, `PersonCard` is registered as an event handler and includes a @Subscribe handlePhotoChange to handle the event of uploading the photo. +
+* The handlePhotoChange method will set the `ImageView` to the new image file path of the uploaded photo in the project directory.
 
 [NOTE]
 If the file given is not a valid image file, a 'CommandException' will be thrown to specify that the file is invalid.
@@ -724,11 +802,112 @@ If the file given is not a valid image file, a 'CommandException' will be thrown
 **Cons:** Requires other modification to the storage of photo logic such as deleting or clearing contacts, as well as adding and editing a contact. +
 **Alternative 2 :** Modify `Person` in `Model` to include a `Photo` attribute. +
 **Pros:** Reliable as the photo path is always stored for each `Person`. +
-**Cons:** Requires a lot of modification to codes that will requires `Person` , as well as changing tests to reflect the additional attribute.
+**Cons:** Requires a lot of modification to codes that will require `Person` , as well as changing tests to reflect the additional attribute.
+
+// end::uploadphoto[]
+
+// tag::export[]
+=== Export Command
+(added in v1.3)
+
+The export command is a new feature implemented that allows the user to export contact details to other external applications.
+
+This feature enables the user to do a backup of their contact details from our application to other applications that support the vCard format for contact details.
+
+Similar to the import command, the logic for the export command will read all the `ReadOnlyPerson` object that is stored in the addressbook array.
+
+And for each `ReadOnlyPerson` object found in the array, the required information (name, email, address, phone number) will be retrieved and placed onto a crafted vCard format string variable for writing to a vCard file.
+
+* The user will first enter the command `export` from the command line interface
+
+* Next, the `AddressBookParser` class will be invoked and the  `ExportCommand` class will be called.
+
+---
+    case ExportCommand.COMMAND_WORD:
+    case ExportCommand.COMMAND_ALIAS:
+        return new ExportCommand();
+
+---
+
+* In the `ExportCommand` class, the class will first check if the address book is empty.
+
+* If the address book is empty, it will return an error message to the user indicating that there is nothing to export.`
+
+---
+        if (model.getAddressBook().getPersonList().isEmpty()) {
+            return new CommandResult(MESSAGE_EMPTY_AB);
+
+---
+
+* Once the class checks that there are objects in the address book array that can be retrieved, the class will call the method `writeToFile()` to do the necessary retrieving of the data
+
+* The `writeTofile()` method will first create a filename called `output.vcf`.
+
+* The method then use the `bufferedWriter` and the `fileWriter` class to write all the information retrieved onto a string variable in each iteration..
+
+* Lastly, we call the `close()` method in both `bufferedWriter` and `fileWriter` in order to save the output onto the file `output.vcf`.
+
+---
+    /**
+     * This method handles the writing of contacts to a file
+     */
+    private void writeToFile() throws IOException {
+        final String filename = "output.vcf";
+        FileWriter fw = new FileWriter(filename);
+        BufferedWriter bw = new BufferedWriter(fw);
+        for (ReadOnlyPerson p : model.getAddressBook().getPersonList()) {
+            String header = "BEGIN:VCARD\n";
+            String version = "VERSION:3.0\n";
+            String fullName = "FN:" + p.getName().toString() + "\n";
+            String name = "N:;" + p.getName().toString() + ";;;\n";
+            String email = "EMAIL;TYPE=INTERNET;TYPE=HOME:" + p.getEmail().toString() + "\n";
+            String tel = "TEL;TYPE=CELL:" + p.getPhone().toString() + "\n";
+            String address = "ADR:;;" + p.getAddress().toString() + ";;;;\n";
+            String footer = "END:VCARD\n";
+            bw.write(header);
+            bw.write(version);
+            bw.write(fullName);
+            bw.write(name);
+            bw.write(email);
+            bw.write(tel);
+            bw.write(address);
+            bw.write(footer);
+        }
+        if (bw != null) {
+            bw.close();
+        }
+        if (fw != null) {
+            fw.close();
+        }
+    }
+
+---
+
+==== Design Considerations
+
+**Aspect:** The types of file that can be exported using the export command. +
+**Alternative 1 (current choice):** Currently, the export command can only output files onto a file with the extension `.vcf`. +
+**Pros:** Multi platform compatibility and the format in `.vcf` file enables the user to use our output as a backup onto other application that supports it. +
+**Cons:** Since the logic is written specifically for `.vcf` files, we will have to rewrite the logic if we want to support other file types in the future. +
+**Alternative 2:** use `.csv` file as the import source +
+**Pros:** Format is simple, each value is separated by a comma. +
+**Cons:** All values will have a hard time to be retrieved and mapped into each variable as each value is only separated by a comma, mistakes can be made when trying to map each values into each category. +
+
+---
+
+**Aspect:** Which directory to access the source file. +
+**Alternative 1 (current choice):** Currently, the file will be stored in `/main` directory. +
+**Pros:** Easy to develop the logic as there is only one filepath . +
+**Cons:** User will have to specifically place the file in the /main directory which does not really make sense. +
+**Alternative 2:** Create a `Export` button for the user on the GUI. +
+**Pros:** User friendly. User can simply click on an `Export` button and all the contacts will be exported.
+**Cons:** Requires an `Export` button to be created, involves UI component.
+
+// end::export[]
 
 == Documentation
 
-We use asciidoc for writing documentation.
+We use asciidoc for riting documentation.
 
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.

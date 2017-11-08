@@ -9,13 +9,13 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author JasmineSee
 /**
- * Parses input arguments and creates a new UploadImageCommand object
+ * Parses input arguments and creates a new UploadPhotoCommand object
  */
 public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the UploadImageCommand
-     * and returns an UploadImageCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the UploadPhotoCommand
+     * and returns an UploadPhotoCommand object for execution.
      *
      * @throws ParseException if the user input does not conform the expected format
      */
@@ -25,11 +25,14 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
 
             String indexString = argsArr[0];
             String filePath = "";
+
             if (argsArr.length > 1) {
                 filePath = argsArr[1];
             }
+
             Index index = ParserUtil.parseIndex(indexString);
             return new UploadPhotoCommand(index, filePath);
+
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadPhotoCommand.MESSAGE_USAGE));
