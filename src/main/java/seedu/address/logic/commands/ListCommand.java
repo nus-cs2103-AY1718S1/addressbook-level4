@@ -29,7 +29,7 @@ public class ListCommand extends Command {
         this.predicate = null;
     }
 
-    public ListCommand(PersonContainsKeywordsPredicate predicate) {
+    public ListCommand (PersonContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -39,7 +39,7 @@ public class ListCommand extends Command {
             model.updateFilteredPersonList(predicate);
         } else {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            return new CommandResult(MESSAGE_SUCCESS_FULLLIST );
+            return new CommandResult(MESSAGE_SUCCESS_FULLLIST);
         }
 
         if (areEntriesWithTagsFound()) {
@@ -63,17 +63,17 @@ public class ListCommand extends Command {
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
-        if (other == this){
+        if (other == this) {
             return true;
         }
 
         // instanceof handles nulls
-        if (!(other instanceof ListCommand)){
+        if (!(other instanceof ListCommand)) {
             return false;
         }
 
         // other has null predicate
-        if ((((ListCommand) other).predicate == null) && (this.predicate == null)){
+        if ((((ListCommand) other).predicate == null) && (this.predicate == null)) {
             return true;
         }
 

@@ -32,10 +32,9 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
     /**
      * Returns all the tags as a single string
      */
-    public String returnListOfTagsAsString(){
+    public String returnListOfTagsAsString() {
         String stringOfTags = "";
-        for (Tag t : this.keywords)
-        {
+        for (Tag t : this.keywords) {
             stringOfTags += t.toString() + " ";
         }
         return stringOfTags;
