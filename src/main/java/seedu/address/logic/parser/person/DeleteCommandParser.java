@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.util.ParserUtil;
 
 /**
- * Parses input arguments and creates a new DeleteCommand object
+ * Parses input arguments and creates a new {@link DeleteCommand} object.
  */
 public class DeleteCommandParser implements Parser<DeleteCommand> {
 

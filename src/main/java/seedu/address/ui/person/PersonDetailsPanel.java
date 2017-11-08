@@ -3,11 +3,14 @@ package seedu.address.ui.person;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.PropertyLabel;
@@ -25,6 +28,8 @@ public class PersonDetailsPanel extends UiPart<Region> {
     @FXML
     private Label name;
     @FXML
+    private ImageView avatar;
+    @FXML
     private ListView<Label> propertyListKeys;
     @FXML
     private ListView<Label> propertyListValues;
@@ -33,6 +38,8 @@ public class PersonDetailsPanel extends UiPart<Region> {
         super(FXML);
         this.person = person;
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        person.avatarProperty().addListener((observable, oldValue, newValue) -> setAvatar());
+        setAvatar();
         person.properties().addListener((observable, oldValue, newValue) -> bindProperties());
         bindProperties();
     }
@@ -54,5 +61,14 @@ public class PersonDetailsPanel extends UiPart<Region> {
 
         propertyListKeys.setItems(FXCollections.observableList(keys));
         propertyListValues.setItems(FXCollections.observableList(values));
+    }
+
+    /**
+     * Displays the avatar of the person if the {@code avatar} has been set before.
+     */
+    private void setAvatar() {
+        if (person.getAvatar() != null) {
+            Platform.runLater(() -> avatar.setImage(new Image(person.getAvatar().getUrl())));
+        }
     }
 }

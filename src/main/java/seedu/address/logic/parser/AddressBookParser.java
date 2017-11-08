@@ -8,10 +8,8 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.ExportCommand;
-import seedu.address.logic.commands.FindTagCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -23,20 +21,26 @@ import seedu.address.logic.commands.event.DeleteEventCommand;
 import seedu.address.logic.commands.event.EditEventCommand;
 import seedu.address.logic.commands.event.ListEventCommand;
 import seedu.address.logic.commands.imports.ImportCommand;
+import seedu.address.logic.commands.person.AddAvatarCommand;
 import seedu.address.logic.commands.person.AddCommand;
 import seedu.address.logic.commands.person.DeleteCommand;
 import seedu.address.logic.commands.person.EditCommand;
+import seedu.address.logic.commands.person.EmailCommand;
 import seedu.address.logic.commands.person.FindCommand;
+import seedu.address.logic.commands.person.FindTagCommand;
 import seedu.address.logic.commands.person.ListCommand;
 import seedu.address.logic.commands.person.SelectCommand;
 import seedu.address.logic.parser.event.AddEventParser;
 import seedu.address.logic.parser.event.DeleteEventParser;
 import seedu.address.logic.parser.event.EditEventParser;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.person.AddAvatarCommandParser;
 import seedu.address.logic.parser.person.AddCommandParser;
 import seedu.address.logic.parser.person.DeleteCommandParser;
 import seedu.address.logic.parser.person.EditCommandParser;
+import seedu.address.logic.parser.person.EmailCommandParser;
 import seedu.address.logic.parser.person.FindCommandParser;
+import seedu.address.logic.parser.person.FindTagCommandParser;
 import seedu.address.logic.parser.person.SelectCommandParser;
 
 /**
@@ -69,16 +73,20 @@ public class AddressBookParser {
         case AddCommand.COMMAND_WORD:
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
+
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
+
         //@@author junyango
         case AddEventCommand.COMMAND_WORD:
         case AddEventCommand.COMMAND_ALIAS:
             return new AddEventParser().parse(arguments);
+
         case EditEventCommand.COMMAND_WORD:
         case EditEventCommand.COMMAND_ALIAS:
             return new EditEventParser().parse(arguments);
+
         case DeleteEventCommand.COMMAND_WORD:
         case DeleteEventCommand.COMMAND_ALIAS:
             return new DeleteEventParser().parse(arguments);
@@ -91,6 +99,7 @@ public class AddressBookParser {
         case ListEventCommand.COMMAND_ALIAS:
             return new ListEventCommand();
         //@@author
+
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
             return new SelectCommandParser().parse(arguments);
@@ -126,6 +135,10 @@ public class AddressBookParser {
         case ExportCommand.COMMAND_WORD:
         case ExportCommand.COMMAND_ALIAS:
             return new ExportCommandParser().parse(arguments);
+
+        case AddAvatarCommand.COMMAND_WORD:
+        case AddAvatarCommand.COMMAND_ALIAS:
+            return new AddAvatarCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
         case ExitCommand.COMMAND_ALIAS:
