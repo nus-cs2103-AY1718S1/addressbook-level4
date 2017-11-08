@@ -70,7 +70,8 @@ public class AddMultipleByTsvCommandTest {
                                                                         ArrayList<Integer> failedEntries,
                                                                         boolean isFileFound, Model model) {
         AddMultipleByTsvCommand command = new AddMultipleByTsvCommand(toAddPeople, failedEntries, isFileFound);
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), new RecentlyDeletedQueue());
+        command.setData(model, new CommandHistory(),
+                new UndoRedoStack(), new RecentlyDeletedQueue(), new String());
         return command;
     }
 
