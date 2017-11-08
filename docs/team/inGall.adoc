@@ -12,9 +12,7 @@ Gentleman's Guide is a desktop address book application modified from the Addres
 It shows how all the features implemented by the author work.
 
 === Enhancement Added : Birthday Feature
-
 ==== External Behaviour
-
 ===== Modifying birthday to person: `birthday`
 
 Adds / Edits / Removes a birthday parameter to an existing person in the address book. +
@@ -34,12 +32,10 @@ Adds / changes birthday of the 1st person to be `20/07/1995`
 Removes the birthday of the 3rd person.
 
 ==== Justification
-
 It allows users to store and keep track of their contacts' birthday so that they can be reminded of upcoming birthdays.
 This enhances relations between individuals.
 
 ==== Implementation
-
 =====  Modifying birthday to person: `birthday`
 
 `BirthdayCommand` : It allows the adding, editing and removing of birthday parameter to/from a person. +
@@ -71,9 +67,7 @@ _Figure 4.3.1.1b : Interactions in the Birthday Command._
 **Cons:** More parameters to add while creating person class and harder to implement. +
 
 === Enhancement Added : Different types of Find command
-
 ==== External Behaviour
-
 ===== Locating persons by emails: `findEmail`
 
 Finds persons whose emails is same as the keyword. +
@@ -151,7 +145,6 @@ Returns reminder with the priority `High`
 Returns reminders with priority `Medium` , `Low`
 
 ==== Justification
-
 It allows users to traverse through the lists and find contacts and reminders easily. +
 For  `findPhone` and `findEmail` command, it is very handy when the user receives a call or email from an unknown person.
 The user can use the number or email to search through the contact list using these commands to see if it belongs to any
@@ -160,26 +153,23 @@ one of his or her contact. +
 Similarly, the user can use `findReminder` and `findPriority` command to search for reminders that he wants at any moment.
 
 === Enhancement Added : Different types of sort command
-
 ==== External Behaviour
-
 ===== Sorting all entries by age : `sortAge`
 
 Sorts all entries in the person list by their age, from the oldest to youngest. +
 Format: `sortAge`
 
-=== Sorting all entries by birthday: `sortBirthday`
+===== Sorting all entries by birthday: `sortBirthday`
 
 Sorts all entries in the person list by their birthday, from 1st Jan to 31st Dec. +
 Format: `sortBirthday`
 
-=== Sorting all entries by priority: `sortPriority`
+===== Sorting all entries by priority: `sortPriority`
 
 Sorts all entries in the reminder list by their priority, from High to Medium to Low. +
 Format: `sortPriority`
 
 ==== Justification
-
 It offers more ways for users to look at the list. +
 For example, `sortBirthday` enables users to view the list in the order of birthday,
 allowing them to view upcoming birthday in a glance without searching through the entire list. +
@@ -189,16 +179,13 @@ On the other hand, `sortPriority` allows users to rearrange the list and view re
 that have a high priority at the top.
 
 === Enhancement Added : Different types of sort command
-
 ==== External Behaviour
-
 ==== Listing all reminders : `listReminder`
 
 Shows a list of all persons in the address book. +
 Format: `listReminder`
 
 ==== Justification
-
 It allows users to see all the reminders at a time after they are done searching for specific reminders. +
 For example, a user may search for a specific reminder. It will bring them to the screen with only the reminder. To
 bring them back to the list of all reminders, a `listReminder` command is needed.
