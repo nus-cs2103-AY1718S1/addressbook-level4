@@ -229,7 +229,7 @@ Example:
 * `list`
 
 [TIP]
-Contacts will be sorted by their names (increment).
+Contacts will be sorted by their names (increment).them
 
 === Listing all events : `(lE)listE`
 
@@ -405,7 +405,7 @@ Emails the 2nd person in the address book.
 
 === Switching themes : `(t)theme`
 
-Switches theme between dark and bright theme. +
+Switches between Dark Theme and Bright Theme. +
 Format: `(t)theme`
 
 Examples:
@@ -417,6 +417,16 @@ Examples:
 Theme will be saved upon exit.
 When **boNUS** is opened again, theme will be initialized to the theme that was saved previously.
 ====
+
+As shown in Figure 5.14.1 and Figure 5.14.2, Figures depict the Bright Theme and Dark Theme respectively.
+
+image::BrightTheme.png[width="300" height="200"]
+_Figure 5.14.1 : Bright Theme_
+
+
+
+image::DarkTheme.png[width="300" height ="200"]
+_Figure 5.14.2 : Dark Theme_
 
 
 === Listing entered commands : `(his)history`
@@ -751,6 +761,7 @@ e.g. `editE 2 n/Lees Day`
 e.g. `find James Jake`
 * *List* : `(l)list`
 * *List event* : `(lE)listE`
+* *Switch Themes* : `(t)theme`
 * *Help* : `(h)help`
 * *Select* : `(s)select INDEX` +
 e.g.`select 2`
