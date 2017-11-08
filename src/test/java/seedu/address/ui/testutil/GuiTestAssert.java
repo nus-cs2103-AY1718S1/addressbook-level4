@@ -9,6 +9,7 @@ import guitests.guihandles.FavouriteStarHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.TodoCardHandle;
 import guitests.guihandles.TodoCountHandle;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TodoItem;
@@ -61,8 +62,8 @@ public class GuiTestAssert {
             assertEquals("", actualCard.getFavouriteStar());
         }
     }
-    //@@author
 
+    //@@author Hailinx
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedTodoItem}.
      */
@@ -70,6 +71,7 @@ public class GuiTestAssert {
         assertEquals(expectedTodoItem.getTimeString(), actualCard.getTime());
         assertEquals(expectedTodoItem.task, actualCard.getTask());
     }
+    //@@author
 
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
