@@ -497,7 +497,7 @@ As seen above, execution of `RemoveTagCommand` is governed by the `removeTag` me
 
 // end::removetag[]
 
-// tag:: remark[]
+// tag::remarkchecklist[]
 === Remark CheckList Implementation
 
 The remark checklist serves as command to allow users to keep notes on individual persons. +
@@ -522,11 +522,19 @@ image::UI.png[width="800"]
 Remarks can not be added when adding a person. It can only be done to a person already existing in the address book.
 
 [NOTE]
-If a person is without a remark, he/she still contains an ArrayList or empty remarks. +
+If a person is without a remark, he/she still contains an ArrayList of empty remarks. +
 ArrayList should never contain null objects.
 
+==== Design Considerations
+**Aspect:** Implementation of RemoveTag command. +
+**Alternative 1 (current choice):** Executes user input and provides one result of command output. +
+**Pros:** With current implementation, it allows for multiple removal of `Tags` in one command execution. +
+**Cons:** The use of the `Undo/Redo` command may not be applicable. +
+**Alternative 2:** Incorporate mechanism such as Stacks to store individual removal of `Tag`. +
+**Pros:** Complements the use of `Undo/Redo`. +
+**Cons:** Current method of removing tags has to accommodate the use of the new mechanism. +
 
-// end::remark[]
+// end::remarkchecklist[]
 
 === Logging
 

@@ -3,19 +3,23 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: The Classroom
+The Classroom is a desktop application that helps users manage their contacts and keep track of tasks or remarks that pertain to specific contacts.
+It is especially helpful in helping students manage and increase the efficiency of their group work. +
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 8 kLoC. +
+The Classroom is built up from the [https://github.com/se-edu/addressbook-level4[AddressBook - Level 4]] (an address book application used for teaching Software Engineering principles)
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/main/limyongsong.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/test/limyongsong.md[Test code]]
 
-=== Enhancement Added:
+=== Enhancement Added: Remark CheckList 
+Allow user to add and remove specific remarks pertaining to any persons in the contact
 
-==== External behavior
+==== External behaviour
 
 ---
 #Start of Extract [from: User Guide]#
 
-//include::../UserGuide.adoc[tag=undoredo]
+include::..\UserGuide.adoc[tag=remarkchecklist]
 
 #End of Extract#
 
@@ -30,7 +34,7 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 ---
 #Start of Extract [from: Developer Guide]#
 
-//include::../DeveloperGuide.adoc[tag=undoredo]
+include::..\DeveloperGuide.adoc[tag=remarkchecklist]
 
 #End of Extract#
 
