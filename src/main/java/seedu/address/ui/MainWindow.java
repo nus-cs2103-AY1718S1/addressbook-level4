@@ -91,6 +91,7 @@ public class MainWindow extends UiPart<Region> {
         setWindowMinSize();
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
+        primaryStage.setResizable(true);
         primaryStage.setScene(scene);
 
         setAccelerators();

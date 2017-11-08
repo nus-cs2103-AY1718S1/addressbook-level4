@@ -23,28 +23,117 @@ include::../UserGuide.adoc[tag=locate]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+In this feature, a pinned location of a contact's address will be shown on Google Maps immediately upon inputting a valid command. This may be useful for a busy business man who has a few upcoming meetings at unfamiliar addresses.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=locate]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Added: Showing the agenda of the user based on schedule
 
-{Explain similar to the Undo/Redo feature above.}
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=agenda]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+A new activity will be displayed in the `AgendaPanel` after the user schedules one. The activities are displayed from earliest to latest date, with the earliest being at the most top. The user will be able to scroll through and view all his planned activities at once. This is especially useful for a typical busy business man as he will be able to view his agenda for the upcoming days and prepare for his activities in advance.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=agenda]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Pop-up reminder window
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=reminder]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Upon starting the ConTag application, a separate pop-up window will appear after the main window, if the user has activities scheduled 1 day from the current date. These activities are shown in the pop-up to remind the user that they are around the corner, in case the user does not pay attention to them in the agenda in the main window.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=reminder]
+
+#End of Extract#
+
+---
+
+=== Enhancement of existing feature: Adding a person with multiple emails
+
+==== External behavior (enhancement added in v1.3 update)
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+People in the workplace usually have an email for work and another for informal purposes, hence the implementation of allowing the adding of more than 1 email for a person. The introduced restrictions for adding a person's address is an attempt to prevent the user from inputting characters that do not usually appear in addresses. This also ensures that the google maps in the locate feature will not attempt to locate invalid addresses which contain unorthodox characters.
+
+==== Implementation: Adding a person with multiple emails
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addemails]
+
+#End of Extract#
+
+---
+
+==== Implementation: Greater restriction to address input in add feature
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addaddressrestriction]
+
+#End of Extract#
+
+---
 
 === Other contributions
 
+* Set up TravisCI and Coveralls for the team repo
+* Set and created the stylesheet for the user agenda and reminder window.
 * Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}

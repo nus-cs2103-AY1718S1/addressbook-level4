@@ -1,9 +1,9 @@
 package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.commandidentifier.CommandIdentifier;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.commandidentifier.CommandIdentifier;
 import seedu.address.model.person.Country;
 
 /**

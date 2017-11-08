@@ -1,4 +1,4 @@
-package seedu.address.model.commandidentifier;
+package seedu.address.commons.core.commandidentifier;
 
 import static java.util.Objects.requireNonNull;
 
@@ -13,6 +13,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CopyCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -22,9 +23,11 @@ import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.WelcomeCommand;
 import seedu.address.model.person.Country;
 
 //@@author CT15
+
 /**
  * Represents the argument that help command takes in.
  * Guarantees: parameter is present and not null, parameter is validated.
@@ -40,6 +43,7 @@ public class CommandIdentifier {
             + CopyCommand.COMMAND_WORD + ", "
             + DeleteCommand.COMMAND_WORD + ", "
             + EditCommand.COMMAND_WORD + ", "
+            + EmailCommand.COMMAND_WORD + ", "
             + ExitCommand.COMMAND_WORD + ", "
             + FindCommand.COMMAND_WORD + ", "
             + HelpCommand.COMMAND_WORD + ", "
@@ -48,8 +52,9 @@ public class CommandIdentifier {
             + RedoCommand.COMMAND_WORD + ", "
             + ScheduleCommand.COMMAND_WORD + ", "
             + LocateCommand.COMMAND_WORD + ", "
-            + Country.COMMAND_WORD + ", "
-            + UndoCommand.COMMAND_WORD;
+            + UndoCommand.COMMAND_WORD + ", "
+            + WelcomeCommand.COMMAND_WORD + ", "
+            + Country.COMMAND_WORD;
 
     public static final List<String> COMMAND_VALIDATION_LIST = ImmutableList.of(
             HelpCommand.COMMAND_QUICK_HELP_WORD,
@@ -59,6 +64,7 @@ public class CommandIdentifier {
             CopyCommand.COMMAND_WORD, CopyCommand.COMMAND_ALIAS,
             DeleteCommand.COMMAND_WORD, DeleteCommand.COMMAND_ALIAS,
             EditCommand.COMMAND_WORD, EditCommand.COMMAND_ALIAS,
+            EmailCommand.COMMAND_WORD, EmailCommand.COMMAND_ALIAS,
             ExitCommand.COMMAND_WORD, ExitCommand.COMMAND_ALIAS,
             FindCommand.COMMAND_WORD, FindCommand.COMMAND_ALIAS,
             HelpCommand.COMMAND_WORD, HelpCommand.COMMAND_ALIAS,
@@ -67,15 +73,16 @@ public class CommandIdentifier {
             RedoCommand.COMMAND_WORD, RedoCommand.COMMAND_ALIAS,
             ScheduleCommand.COMMAND_WORD, ScheduleCommand.COMMAND_ALIAS,
             LocateCommand.COMMAND_WORD, LocateCommand.COMMAND_ALIAS,
-            Country.COMMAND_WORD, // no alias
-            UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_ALIAS);
+            UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_ALIAS,
+            WelcomeCommand.COMMAND_WORD, WelcomeCommand.COMMAND_ALIAS,
+            Country.COMMAND_WORD); // no alias
 
     public final String value;
 
     /**
      * Validates given command word.
      *
-     * @throws IllegalValueException if the given tag name string is invalid.
+     * @throws IllegalValueException if the given commandIdentifier string is invalid.
      */
     public CommandIdentifier(String commandIdentifier) throws IllegalValueException {
         requireNonNull(commandIdentifier);

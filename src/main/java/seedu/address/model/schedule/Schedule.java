@@ -101,11 +101,10 @@ public class Schedule {
         final boolean isDayEqual = (dayBeforeSchedule.getDayOfMonth() == currentDate.getDayOfMonth());
 
         if (isYearEqual && isMonthEqual && isDayEqual) {
-            logger.info("Schedule date: " + scheduleDate.toString());
             return true;
+        } else {
+            return false;
         }
-
-        return false;
     }
 
     //@@author

@@ -113,8 +113,9 @@ public class DeleteCommandTest {
         ArrayList<Index> indices = new ArrayList<>();
         indices.add(index);
 
+        UserPrefs prefs = new UserPrefs();
         DeleteCommand deleteCommand = new DeleteCommand(indices);
-        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        deleteCommand.setData(model, prefs, new CommandHistory(), new UndoRedoStack());
         return deleteCommand;
     }
 

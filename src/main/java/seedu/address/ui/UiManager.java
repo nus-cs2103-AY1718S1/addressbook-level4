@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -21,9 +20,7 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.schedule.Schedule;
 
 /**
  * The manager of the UI component.
@@ -43,6 +40,7 @@ public class UiManager extends ComponentManager implements Ui {
     private Model model;
     private Config config;
     private UserPrefs prefs;
+    private WelcomeScreen welcomeScreen;
     private MainWindow mainWindow;
 
     public UiManager(Logic logic, Model model, Config config, UserPrefs prefs) {
@@ -61,24 +59,18 @@ public class UiManager extends ComponentManager implements Ui {
         //Set the application icon.
         primaryStage.getIcons().add(getImage(ICON_APPLICATION));
 
+        //@@author CT15
         try {
-            mainWindow = new MainWindow(primaryStage, config, prefs, logic, model);
-            mainWindow.show(); //This should be called before creating other UI parts
-            mainWindow.fillInnerParts();
-            // show reminder pop-up if there exists upcoming activities the next day
-            ReadOnlyAddressBook addressBook = model.getAddressBook();
-            ObservableList<Schedule> schedulesToRemindList = addressBook.getScheduleToRemindList();
-            for (Schedule schedule : schedulesToRemindList) {
-                logger.info("Schedules for reminder: " + schedule);
-            }
-            if (!schedulesToRemindList.isEmpty()) {
-                ReminderWindow reminderWindow = new ReminderWindow(schedulesToRemindList);
-                reminderWindow.show();
+            welcomeScreen = new WelcomeScreen(primaryStage, config, prefs, logic, model);
+            if (prefs.getWelcomeScreenEnabledInfo()) {
+                welcomeScreen.show(); //This should be called before creating other UI parts
+                welcomeScreen.fillInnerParts();
+            } else {
+                welcomeScreen.loadMainWindow();
             }
             //@@author icehawker
             raise(new NewResultAvailableEvent(COMMAND_QUICK_HELP, false));
             //@@author
-
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
@@ -87,9 +79,7 @@ public class UiManager extends ComponentManager implements Ui {
 
     @Override
     public void stop() {
-        prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
-        mainWindow.hide();
-        mainWindow.releaseResources();
+        welcomeScreen.stop();
     }
 
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {
@@ -102,7 +92,7 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     void showAlertDialogAndWait(Alert.AlertType type, String title, String headerText, String contentText) {
-        showAlertDialogAndWait(mainWindow.getPrimaryStage(), type, title, headerText, contentText);
+        showAlertDialogAndWait(welcomeScreen.getMainWindow().getPrimaryStage(), type, title, headerText, contentText);
     }
 
     /**

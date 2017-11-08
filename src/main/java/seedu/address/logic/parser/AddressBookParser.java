@@ -23,6 +23,7 @@ import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.WelcomeCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -74,7 +75,7 @@ public class AddressBookParser {
              //Fallthrough
 
         case EmailCommand.COMMAND_ALIAS:
-            return new EmailCommand();
+            return new EmailCommandParser().parse(arguments);
 
         case LocateCommand.COMMAND_WORD:
             //Fallthrough
@@ -148,7 +149,11 @@ public class AddressBookParser {
         case CopyCommand.COMMAND_ALIAS:
             return new CopyCommandParser().parse(arguments);
 
+        case WelcomeCommand.COMMAND_WORD:
+            //Fallthrough
 
+        case WelcomeCommand.COMMAND_ALIAS:
+            return new WelcomeCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
