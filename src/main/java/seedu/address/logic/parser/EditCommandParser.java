@@ -99,11 +99,11 @@ public class EditCommandParser implements Parser<EditCommand> {
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
     }
+    //@@author huiyiiih
     /**
-     * @@A0160452N
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
-     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Tag>} containing zero tags.
+     * Parses {@code Collection<String> rel} into a {@code Set<Relationship>} if {@code rel} is non-empty.
+     * If {@code rel} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<Relationship>} containing zero rel.
      */
     private Optional<Set<Relationship>> parseRelForEdit(Collection<String> rel) throws IllegalValueException {
         assert rel != null;
@@ -114,6 +114,5 @@ public class EditCommandParser implements Parser<EditCommand> {
         Collection<String> tagSet = rel.size() == 1 && rel.contains("") ? Collections.emptySet() : rel;
         return Optional.of(ParserUtil.parseRel(tagSet));
     }
-
-
+    //@@author
 }

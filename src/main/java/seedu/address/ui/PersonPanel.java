@@ -71,6 +71,8 @@ public class PersonPanel extends UiPart<Region> {
     private Label noteLabel;
 
     @FXML
+    private FlowPane relationshipPane;
+    @FXML
     private FlowPane tagsPane;
 
     @FXML
@@ -141,7 +143,9 @@ public class PersonPanel extends UiPart<Region> {
         noteLabel.setText(person.getNote().toString());
         tagsPane.getChildren().removeAll(tagsPane.getChildren());
         person.getTags().forEach(tag -> tagsPane.getChildren().add(new Label(tag.tagName)));
-
+        relationshipPane.getChildren().removeAll(relationshipPane.getChildren());
+        person.getRelation().forEach
+            (relationship -> relationshipPane.getChildren().add(new Label(relationship.relType)));
         //@@author a0107442n
         //Load the photo of the contact
         String imagePath = person.getPhoto().toString();
