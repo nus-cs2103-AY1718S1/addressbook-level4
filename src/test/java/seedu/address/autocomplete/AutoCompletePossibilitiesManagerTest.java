@@ -28,7 +28,8 @@ public class AutoCompletePossibilitiesManagerTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final AutoCompletePossibilitiesManager logic = new AutoCompletePossibilitiesManager(new ModelStubWithRequiredMethods(), 10);
+    private final AutoCompletePossibilitiesManager logic =
+            new AutoCompletePossibilitiesManager(new ModelStubWithRequiredMethods(), 10);
 
     @Test
     public void testEmptyInput() {
