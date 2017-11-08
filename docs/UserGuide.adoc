@@ -153,6 +153,10 @@ _Figure 3.3: list command result_
 You can use it to view a list of sorted persons in the address book according to the alphabetical order of their names,
  and a list of sorted events in the event list according to the event time. +
 Format & Example: `sort`
+****
+* The sorting of person names is case-insensitive.
+* event is sorted in ascending order
+****
 
 You will see the following after typing sort command:
 
@@ -206,6 +210,7 @@ image::UG_edit.png[width="790"]
 _Figure 3.5: edit command result_
 // end::editE[]
 
+// tag::find[]
 === Finding
 ==== Locating persons by name: `find`
 
@@ -242,6 +247,8 @@ Subsequently, you will see the following after typing `find Betsy john`:
 
 image::UG_find_2.png[width="790"]
 _Figure 3.6.2: find command result 2_
+// end::find[]
+
 
 // tag::findE[]
 ==== Locating events by name: `findE`
@@ -382,6 +389,7 @@ _Figure 3.10: show persons result_
 
 // end::showP[]
 
+// tag::selectE[]
 === Selecting all events which a person joins : `selectE`
 
 You can use it to view all events which a certain person joins. +
@@ -407,6 +415,8 @@ You will see the following after typing `list` and `selectE 2`: +
 
 image::UG_selectEvent.png[width='790']
 _Figure 3.11: select events result_
+
+// end::selectE[]
 
 === Displaying emails of every person in an event : `displayEmails`
 
@@ -472,6 +482,7 @@ _Figure 3.13.3 attach a portrait_
 
 // end::portrait[]
 
+// tag::toggle[]
 === Toggling between details and browser: `toggle`
 
 You can use this command to toggle between displaying the information board and events list, or a browser.
@@ -498,6 +509,8 @@ You will see the following after typing the toggle command when the information 
 
 image::UG_Toggle3.png[]
 _Figure 3.14.3 toggle result when information board and events list are displayed and a `select` command is entered before_
+
+// end::toggle[]
 
 === Listing entered commands : `history`
 

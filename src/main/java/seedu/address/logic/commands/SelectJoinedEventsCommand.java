@@ -34,22 +34,27 @@ public class SelectJoinedEventsCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        String temp = "";
+        StringBuilder eventNames = new StringBuilder();
+        StringBuilder personNames = new StringBuilder();
+
+        personNames.append("For ");
 
         for (Index targetIndex: indexList) {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
+            personNames.append(lastShownList.get(targetIndex.getZeroBased()).getName()).append(", ");
             for (ReadOnlyEvent event: lastShownList.get(targetIndex.getZeroBased()).getParticipation()) {
-                temp += (event.getEventName()) + "[-]";
+                eventNames.append(event.getEventName()).append("[-]");
             }
         }
 
-        String[] eventNameKeywords = (temp.trim()).split("\\[-]+");
-
+        String[] eventNameKeywords = (eventNames.toString().trim()).split("\\[-]+");
         EventContainsKeywordPredicate predicate = new EventContainsKeywordPredicate(Arrays.asList(eventNameKeywords));
         model.updateFilteredEventList(predicate);
-        return new CommandResult(getMessageForEventListShownSummary(model.getFilteredEventList().size()));
+
+        personNames.append(getMessageForEventListShownSummary(model.getFilteredEventList().size()));
+        return new CommandResult(personNames.toString());
     }
 
     @Override

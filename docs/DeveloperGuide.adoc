@@ -592,6 +592,7 @@ The sort command object receives the sorted list and creates `CommandResult` obj
 **Cons:** Because address/email/phone number is unique, you can usually find them without sorting the list. +
 // end::sort[]
 
+// tag:: addE[]
 === AddEvent mechanism
 The add event command is facilitated by `LogicManager` class. It allows user to add a new event to the event list. +
 
@@ -604,6 +605,7 @@ The user enters an addEvent command, which is received by `LogicManager`. `Logic
 `AddressBookParser` will first check the format of the parameters. If the format is valid, it calls `AddEventCommand` constructor, which returns an `AddEventCommand` object. +
 `Logic Manager` receives the `AddEventCommand` object and calls execute(). Then, `AddEventCommand` uses `Model` to execute adding operation, and returns `CommandResult`. +
 `Logic Manager` receives the `CommandResult`, and returns to `UI`. +
+// end:: addE[]
 
 // tag::listE[]
 === ListEvent mechanism
@@ -738,6 +740,7 @@ The `SelectJoinedEventsCommand` then creates a `CommandResult` object and return
 **Cons:** Users would have to type more if the name is long. User may mistype the name. +
 // end::selectE[]
 
+
 // tag::interaction[]
 === Person-Event interaction
 In this application, we allow users to connect events and persons to show that some persons participate some events. +
@@ -821,6 +824,7 @@ _Figure 3.10.2 defensive code for loading file_
 **Cons:** Hard to store images into .xml file. +
 // end::portrait[]
 
+// tag::toggle[]
 === Toggle mechanism
 The toggle mechanism is an event-driven mechanism. The following diagram _(Figure 3.11.1)_ below shows the overview of the high-level interactions between components for the toggle mechanism:
 
@@ -920,6 +924,7 @@ It does so by raising a `ToggleSelectEvent`, which the `TogglePanel` handles by 
 **Alternative 2:** Have each togglable panel know how to toggle. +
 **Pros:** No need change the FXML file when changes are made to what is togglable. +
 **Cons:** Will have to make large changes to the actual panels themselves. +
+// end::toggle[]
 
 === Logging
 
