@@ -43,10 +43,6 @@ public class UserPrefs {
         this.addressBookFilePath = addressBookFilePath;
     }
 
-    public String getAddressBookName() {
-        return addressBookName;
-    }
-
     public void setAddressBookName(String addressBookName) {
         this.addressBookName = addressBookName;
     }
@@ -72,12 +68,13 @@ public class UserPrefs {
 
         return Objects.equals(guiSettings, o.guiSettings)
                 && Objects.equals(addressBookFilePath, o.addressBookFilePath)
-                && Objects.equals(addressBookName, o.addressBookName);
+                && Objects.equals(addressBookName, o.addressBookName)
+                && Objects.equals(addressBookTheme, o.addressBookTheme);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, addressBookFilePath, addressBookName);
+        return Objects.hash(guiSettings, addressBookFilePath, addressBookName, addressBookTheme);
     }
 
     @Override
