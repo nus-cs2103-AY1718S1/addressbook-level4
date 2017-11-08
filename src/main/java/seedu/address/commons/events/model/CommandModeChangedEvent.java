@@ -5,7 +5,7 @@ import seedu.address.model.CommandMode;
 
 //@@author tby1994
 /**Indicates that Command Mode has changed*/
-public class CommandModeChangedEvent extends BaseEvent{
+public class CommandModeChangedEvent extends BaseEvent {
 
     public final CommandMode commandMode;
 
