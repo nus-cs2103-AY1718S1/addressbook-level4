@@ -154,9 +154,14 @@ public class MainWindow extends UiPart<Region> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
+    //@@author kennard123661
+    /**
+     * Initialize the {@link MainWindow#splitPanePlaceholder} to start in list mode.
+     */
     public void initSplitPanePlaceholder() {
         splitPanePlaceholder.setDividerPositions(0.0);
     }
+    //@@author
 
     void hide() {
         primaryStage.hide();
@@ -243,6 +248,10 @@ public class MainWindow extends UiPart<Region> {
     //@@author
 
     //@@author kennard123661
+
+    /**
+     * Sets the active list of the model based on the current selected tab index in the Ui of Ark.
+     */
     @FXML @Subscribe
     private void handleTabEvent(JumpToTabRequestEvent event) {
         logic.setActiveList(event.targetIndex == INDEX_SECOND_TAB.getZeroBased());
