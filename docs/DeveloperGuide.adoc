@@ -347,7 +347,7 @@ The reason that ascii is used as the regex is to allowed "+" and "-" to be enter
 the Rh factor of blood types.
 
 // tag::appointment[]
-=== *Enhancement: Set appointment* +
+=== *Enhancement: Set Appointments* +
 
 *Reason for implementation* +
 
@@ -358,46 +358,48 @@ doctor will be remind of their most upcoming appointment in the midst of their b
 
 *How it is implemented* +
 
-An appointment class is created and has 2 different constructors. +
+As of version 1.5, each person now has a class AppointmentList under himself.
 
- new Appointment("Alice Yeo")               new Appointment("Alice Yeo", calendarInstance);
+image::personclassdiagram.png[width="300"]
+    Figure 17: Person class diagram with appointments
 
-The first constructor only consists of the person's name in string. It is used if the person has no appointment set. +
+The AppointmentList class holds an internal list that holds Appointments.
+Appointments are made up of 3 internal variables.
 
-The second constructor has person's name in string, and also a date wrapped in a Calendar class.
+*Appointment* +
 
-As of version 1.2, Person constructor includes Appointment.
-
- new Person(name, phone, email, address, bloodType, tags, remark, appointment);
-
-The CalendarView UI refreshes every 1 second in another thread to update all the appointments in the Observable person
-list.
-
-         Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
-             @Override
-             public void run() {
-                 while (true) {
-                     Platform.runLater(() -> {
-                         calendarView.setToday(LocalDate.now());
-                         calendarView.setTime(LocalTime.now());
-                         setAppointments();
-                     });
-                     try {
-                         // update every second
-                         sleep(1000);
-                     } catch (InterruptedException e) {
-                         e.printStackTrace();
-                     }
-                 }
-             }
-         };
+** Description: Holds a string about the appointment. Used for identifying the appointment.
+** Start Date: Holds the starting time of the appointment. Used for sorting appointments and UI.
+** End Date: Holds the end time of the appointment. Used for UI.
 
 
-image::SDforAppointment.png[width="800"]
-    Figure 17: Sequence diagram for `add appointment` Model Component
+*Adding/Canceling appointments* +
 
-As seen from the diagram, CalendarView depends on the UniquePersonList to update every second on another thread.
-There is no need for the model to prompt the UI to update.
+Defensive programming is implemented for appointment adding/canceling.
+
+When there is a call to the model to add/cancel an appointment to a person,
+the AppointmentList returns a mutable copy of the appointment list to the caller and this list is
+changed-insulated against the internal list.
+
+  public List<Appointment> toList() { return new ArrayList<>(internalList); }
+
+This ensures that no methods can directly change the internal list. The only way to update the list is to
+create a new appointmentList through the person and passing the new List<Appointment> through the constructor.
+
+    public void setAppointment(List<Appointment> appointments) {
+        this.appointments.set(new AppointmentList(appointments));
+      }
+
+To illustrate the process of adding an appointment, a sequence diagram is provided below.
+
+image::SDforAppointment.png[width=""]
+    Figure 18: Person class diagram with appointments
+
+As seen from the diagram, the original appointment list is untouched. The method call causes a new appointment list
+to be made which is a copy of the original list and the addition of the new appointment. This ensures that the
+internal list is untouched.
+
+
 // end::appointment[]
 
 === *Enhancement: Set tag color*
@@ -421,7 +423,7 @@ image::SDforTagColor.png[width="800"]
     Figure 18: Sequence diagram for `add appointment` Model Component
 
 The sequence diagram is given if the command requests the model to set all the tags to a random color. As seen from
-above diagram, each tag is updated to a certain color and does not need to know which tag belongs towhich person.
+above diagram, each tag is updated to a certain color and does not need to know which tag belongs to which person.
 
 
 
