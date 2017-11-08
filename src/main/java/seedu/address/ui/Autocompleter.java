@@ -2,12 +2,11 @@ package seedu.address.ui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.regex.Pattern;
 
-import org.ocpsoft.prettytime.shade.org.apache.commons.lang.ObjectUtils;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+
 import seedu.address.logic.Logic;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
@@ -225,6 +224,9 @@ public class Autocompleter {
         return (!index.equals(EMPTY_STRING) && isNumeric(index));
     }
 
+    /**
+     * Returns true if the string is numeric
+     */
     private boolean isNumeric (String index) {
         try {
             return index.matches("[0-9]+");
@@ -267,6 +269,10 @@ public class Autocompleter {
         }
     }
 
+    /**
+     * Returns true if the last 2 characters of {@code String} is a space
+     * followed the first letter of a {@code Prefix}
+     */
     private boolean lastCharIsStartOfPrefix(String commandBoxText) {
         if (commandBoxText.length() < 1) {
             return false;
