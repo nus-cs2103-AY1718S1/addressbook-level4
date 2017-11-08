@@ -232,6 +232,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::find[]
 === Find mechanism
 
 The find command is a little bit different from other commands like `AddCommand`. It can specify options in in its arguments. There are three steps for parsing commands with options, which are as follows:
@@ -272,6 +273,7 @@ public class FindOptionByName extends CommandOption<FindCommand> {
 **Cons:** This structure is not clear.
 
 ---
+// end::find[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -542,16 +544,47 @@ public class FavouriteCommand extends UndoableCommand {
 **Pros:** Does not mess up the original order. +
 **Cons:** Will use more memory (significant if favourite list is large).
 
+// tag::tdo[]
 === Todo mechanism
 
 Todo mechanism uses `CommandOptionUtil` to parse its options. The model class for each todo item is `TodoItem`, which has three fields including start, end, task to describe an item. +
 
 According to the option, todo command sends different events to `UI`.  Todo mechanism sends `JumpToListRequestEvent` to both `PersonListPanel` and `TodoPanel` to select one person and load his/her todo list. Meanwhile todo mechanism uses `ClearListSelectionEvent` to clear the selection in `PersonListPanel` and `ShowAllTodoItemsEvent` to show all todo items of all contacts.
 When todo command need to add or delete some items, todo mechanism will call methods in `Model` to add, delete, list and access to storage
+// end::tdo[]
 
+// tag::switch[]
+=== Switch mechanism
+
+Switch mechanism just sends the `SwitchDisplayEvent` to `MainWindow`. It will change the child in `switchablePlaceholder` according to the user input.
+
+The code below shows how switching is done:
+
+[source,java]
+----
+private void switchPlaceholderDisplay(int mode) {
+        switchablePlaceholder.getChildren().clear();
+        switch (mode) {
+        case SwitchCommand.SWITCH_TO_TODOLIST:
+            switchablePlaceholder.getChildren().add(todoPanel.getRoot());
+            break;
+        case SwitchCommand.SWITCH_TO_BROWSER:
+            switchablePlaceholder.getChildren().add(browserPanel.getRoot());
+            break;
+        default:
+            // Only two modes, no default option here.
+            break;
+        }
+    }
+----
+
+// end::switch[]
+
+// tag::select[]
 === Select mechanism
 
 Select command also has options. After parsed by `AddressBookParser` and `CommandOptionUtil`, select mechanism sends `ChangeSearchEvent` to `BrowserPanel` in order to change search url. Then, it sends `JumpToListRequestEvent` to change selection in `PersonListPanel` and `PersonListPanel` will send `PersonPanelSelectionChangedEvent` to `BrowserPanel` to indicate which person is selected.
+// end::select[]
 
 // tag::deletebyname[]
 === Delete by name mechanism
