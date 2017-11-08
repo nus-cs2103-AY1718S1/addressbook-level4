@@ -109,6 +109,8 @@ Returns any contacts having at least a `[professor]` or `[tutor]` tags, or both.
 Hides contacts that do not contain `[professor]` and `[tutor]`. Example: Contacts with `[coursemate]`'[friend]' tags will not be shown.
 // end::filterbytags[]
 
+// tag::find[]
+
 ==== Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
@@ -122,7 +124,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return
  `Hans Gruber`, `Bo Yang`
 * When no persons are found, the command will return a decently accurate suggestion of
-  who you might have been referring to.
+  who you might have been referring to, with the results of that suggestion shown as well.
 ****
 
 Examples:
@@ -131,8 +133,12 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
-* `find Bets` +
-Returns `0 persons listed! Did you mean Betsy?`
+* `find alx` +
+Returns `No results for alx. Showing results for Alex instead`
+
+image::FindCommandBeforeAndAfter.png[width="790"]
+
+// end::find[]
 
 // tag::showfavourite[]
 ==== Listing all favourite contacts : `showFavourite"
@@ -248,6 +254,9 @@ Adds the birthday "21 Oct 1995" to the 3rd person in the address book.
 image::birthday-command-ui.png[width="790"]
 // end::birthday[]
 
+
+// tag::addremove[]
+
 ==== Adding a tag to select persons : `addtag`
 
 Adds the given tag to the specified persons . +
@@ -289,6 +298,8 @@ Removes the tag "friends" from 1st, 2nd and 3rd person in the address book.
 * `find Betsy` +
 `removetag 2 5 t/classmate` +
 Removes the tag "classmate" from the 2nd and 5th person in the results of the `find` command.
+
+// end::addremove[]
 
 ==== Deleting a person : `delete`
 
@@ -449,6 +460,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 Shows this user guide. +
 Format: `help`
+
 // tag::reply[]
 ==== Adding or editing contacts with duplicate fields
 
@@ -473,6 +485,8 @@ Otherwise, he may choose to reply with `no`.
 
 // end::reply[]
 
+// tag::windowsize[]
+
 ==== Changing the window size : `ws`
 
 Changes the window size according to predefined sizes that the user can choose from.
@@ -480,7 +494,7 @@ Format: `ws WINDOWSIZE`
 
 ****
 * Changes the window size to the specified `WINDOWSIZE`.
-* The index *must be from the predefined choices* small, medium and big.
+* The window size *must be from the predefined choices* small, medium and big.
 ****
 
 Examples:
@@ -489,6 +503,10 @@ Examples:
 Changes the window size to small.
 * `ws med` +
 Changes the window size to medium.
+* `ws big` +
+Changes the window size to big.
+
+// end::windowsize[]
 
 ==== Exiting the program : `exit`
 
@@ -517,8 +535,6 @@ There is no need to save manually.
 === Choosing personalized wallpaper for the background of UniCity
 
 === Auto-completion of commands through analysing commands history
-
-=== Suggestions when typing a name in find command
 
 === Group contacts by their courses of study
 
