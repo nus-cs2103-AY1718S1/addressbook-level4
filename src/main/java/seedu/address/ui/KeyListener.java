@@ -69,8 +69,7 @@ public class KeyListener {
     }
 
     /**
-     * Executes the key event.
-     * Matches {@code keyEvent} with non-command events before handling keys mapped to command words.
+     * Executes the {@code keyEvent} matching an assigned {@code KeyCombination}.
      */
     private void executeKeyEvent(KeyEvent keyEvent) {
 
