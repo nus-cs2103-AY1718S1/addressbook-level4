@@ -5,13 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
@@ -26,12 +19,14 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.email.Email;
+import seedu.address.email.EmailManager;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.Logic;
+import seedu.address.logic.LogicManager;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.parser.ArgumentMultimap;
-import seedu.address.logic.parser.ArgumentTokenizer;
-import seedu.address.logic.parser.ParserUtil;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.FindCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -48,6 +43,8 @@ import seedu.address.ui.GuiUnitTest;
  */
 public class FindCommandTest extends GuiUnitTest {
     private Model model;
+    private Email emailManager = new EmailManager();
+    private Logic logic = new LogicManager(model, emailManager);
 
     @Before
     public void setUp() {
@@ -88,9 +85,9 @@ public class FindCommandTest extends GuiUnitTest {
 
     @Test
     public void execute_zeroKeywords_noPersonFound() throws ParseException {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        FindCommand command = prepareCommand(" ");
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+        String command = FindCommand.COMMAND_WORD + " ";
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
+        assertCommandFailure(ParseException.class, command, expectedMessage, logic);
     }
 
     @Test
@@ -141,99 +138,31 @@ public class FindCommandTest extends GuiUnitTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FindCommand prepareCommand(String userInput) throws ParseException {
-        ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(userInput, PREFIX_NAME, PREFIX_TAG, PREFIX_EMAIL,
-                PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_COMMENT, PREFIX_APPOINT);
-
-        String trimmedArgsName;
-        String trimmedArgsTag;
-        String trimmedArgsEmail;
-        String trimmedArgsPhone;
-        String trimmedArgsAddress;
-        String trimmedArgsComment;
-        String trimmedArgsAppoint;
-
-        String[] keywordNameList;
-        String[] keywordTagList;
-        String[] keywordEmailList;
-        String[] keywordPhoneList;
-        String[] keywordAddressList;
-        String[] keywordCommentList;
-        String[] keywordAppointList;
-
-        HashMap<String, List<String>> mapKeywords = new HashMap<>();
-
-        try {
-            if (argumentMultimap.getValue(PREFIX_NAME).isPresent()) {
-                trimmedArgsName = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_NAME)).get().trim();
-                if (trimmedArgsName.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordNameList = trimmedArgsName.split("\\s+");
-                mapKeywords.put(PREFIX_NAME.toString(), Arrays.asList(keywordNameList));
-            }
-
-            if (argumentMultimap.getValue(PREFIX_TAG).isPresent()) {
-                trimmedArgsTag = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_TAG)).get().trim();
-                if (trimmedArgsTag.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordTagList = trimmedArgsTag.split("\\s+");
-                mapKeywords.put(PREFIX_TAG.toString(), Arrays.asList(keywordTagList));
-            }
-
-            if (argumentMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-                trimmedArgsEmail = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_EMAIL)).get().trim();
-                if (trimmedArgsEmail.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordEmailList = trimmedArgsEmail.split("\\s+");
-                mapKeywords.put(PREFIX_EMAIL.toString(), Arrays.asList(keywordEmailList));
-            }
-
-            if (argumentMultimap.getValue(PREFIX_PHONE).isPresent()) {
-                trimmedArgsPhone = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_PHONE)).get().trim();
-                if (trimmedArgsPhone.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordPhoneList = trimmedArgsPhone.split("\\s+");
-                mapKeywords.put(PREFIX_PHONE.toString(), Arrays.asList(keywordPhoneList));
-            }
-
-            if (argumentMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-                trimmedArgsAddress = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_ADDRESS)).get().trim();
-                if (trimmedArgsAddress.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordAddressList = trimmedArgsAddress.split("\\s+");
-                mapKeywords.put(PREFIX_ADDRESS.toString(), Arrays.asList(keywordAddressList));
-            }
-
-            if (argumentMultimap.getValue(PREFIX_COMMENT).isPresent()) {
-                trimmedArgsComment = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_COMMENT)).get().trim();
-                if (trimmedArgsComment.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordCommentList = trimmedArgsComment.split("\\s+");
-                mapKeywords.put(PREFIX_COMMENT.toString(), Arrays.asList(keywordCommentList));
-            }
-
-            if (argumentMultimap.getValue(PREFIX_APPOINT).isPresent()) {
-                trimmedArgsAppoint = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_APPOINT)).get().trim();
-                if (trimmedArgsAppoint.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordAppointList = trimmedArgsAppoint.split("\\s+");
-                mapKeywords.put(PREFIX_APPOINT.toString(), Arrays.asList(keywordAppointList));
-            }
-
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        }
-
-        FindCommand command =
-                new FindCommand(new PersonContainsKeywordsPredicate(mapKeywords));
+        FindCommandParser parser = new FindCommandParser();
+        FindCommand command = parser.parse(userInput);
         command.setData(model, new CommandHistory(), new UndoRedoStack(), null);
         return command;
+    }
+
+    /**
+     * Executes the command, confirms that the exception is thrown and that the result message is correct.
+     * @param expectedException expected exception
+     * @param inputCommand input command
+     * @param expectedMessage expected message
+     * @param expectedLogic expected logic
+     */
+    private void assertCommandFailure(Class<?> expectedException, String inputCommand,
+                                       String expectedMessage, Logic expectedLogic) {
+
+        try {
+            CommandResult result = expectedLogic.execute(inputCommand);
+            assertEquals(expectedException, null);
+            assertEquals(expectedMessage, result.feedbackToUser);
+        } catch (CommandException | ParseException e) {
+            assertEquals(expectedException, e.getClass());
+            assertEquals(expectedMessage, e.getMessage());
+        }
+
     }
     //@@author
 
