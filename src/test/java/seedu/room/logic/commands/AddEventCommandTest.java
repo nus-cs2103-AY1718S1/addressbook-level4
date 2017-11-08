@@ -19,6 +19,7 @@ import seedu.room.logic.CommandHistory;
 import seedu.room.logic.UndoRedoStack;
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
 import seedu.room.logic.commands.exceptions.CommandException;
+import seedu.room.model.EventBook;
 import seedu.room.model.Model;
 import seedu.room.model.ReadOnlyEventBook;
 import seedu.room.model.ReadOnlyResidentBook;
@@ -230,6 +231,11 @@ public class AddEventCommandTest {
         public ReadOnlyResidentBook getResidentBook() {
             return new ResidentBook();
         }
+
+        @Override
+        public ReadOnlyEventBook getEventBook() {
+            return new EventBook();
+        }
     }
 
     /**
@@ -246,6 +252,11 @@ public class AddEventCommandTest {
         @Override
         public ReadOnlyResidentBook getResidentBook() {
             return new ResidentBook();
+        }
+
+        @Override
+        public ReadOnlyEventBook getEventBook() {
+            return new EventBook();
         }
     }
 
