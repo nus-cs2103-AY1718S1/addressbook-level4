@@ -98,6 +98,15 @@ public class ImportXmlCommandTest {
     }
 
     @Test
+    public void executeUndoableCommand_missingFileName_throwsCommandException() {
+        String filePath = getTempFilePath(".xml");
+        ImportXmlCommand command = prepareCommand(filePath);
+        String expectedMessage = ImportCommand.MESSAGE_INVALID_NAME;
+
+        assertCommandFailure(command, model, expectedMessage);
+    }
+
+    @Test
     public void executeUndoableCommand_invalidNameSeparator_throwsCommandException() {
         String filePath = getTempFilePath("folder\\folder/invalidImportXmlE.xml");
         ImportXmlCommand command = prepareCommand(filePath);
@@ -164,7 +173,7 @@ public class ImportXmlCommandTest {
      * Helper method to provide temporary file paths
      */
     private String getTempFilePath(String fileName) {
-        return testFolder.getRoot().getPath() + fileName;
+        return testFolder.getRoot().getPath() + File.separator + fileName;
     }
 
     /**
