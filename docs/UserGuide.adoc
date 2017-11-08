@@ -451,7 +451,7 @@ To *transfer data* to another Computer, install the app in the other computer an
 [width="59%",cols="5%,<2%,<50%,<42%",options="header",]
 |=======================================================================
 |Commands Words |Commands Alias |Format|Example
-|link:#adding-a-person-code-add-code[Add] | `a`  |`add n/NAME p/PHONE_NUMBER e/EMAIL [e/UNIQUE EMAIL] a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
+|link:#adding-a-person-code-add-code-last-updated-in-v1-3[Add] | `a`  |`add n/NAME p/PHONE_NUMBER e/EMAIL [e/UNIQUE EMAIL] a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
 
 |link:#opening-calendar-code-calendar-code-since-v1-3[Calendar] |`cl` |`calendar` |
 
@@ -459,15 +459,15 @@ To *transfer data* to another Computer, install the app in the other computer an
 
 |link:#getting-email-addresses-code-copy-code-since-v1-3[Copy] |`cp` |`copy INDEX [UNIQUE INDEX]...`|
 
-|link:#deleting-person-s-code-delete-code[Delete] |`d`|`delete INDEX [UNIQUE INDEX]...`|
+|link:#deleting-person-s-code-delete-code-last-updated-in-v1-1[Delete] |`d`|`delete INDEX [UNIQUE INDEX]...`|
 
 |link:#editing-a-person-code-edit-code[Edit] | `e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`edit 2 n/James Lee e/jameslee@example.com`
 
-|link:#emailing-a-person-code-email-code-since-v1-5[Email] |`em` |`delete INDEX [UNIQUE INDEX]...`| `email 2`
+|link:#emailing-persons-code-email-code-since-v1-5[Email] |`em` |`delete INDEX [UNIQUE INDEX]...`| `email 2`
 
 |link:#exiting-the-program-code-exit-code[Exit] |  | `exit` |
 
-|link:#finding-persons-by-any-field-code-find-code-since-v1-2-and-v1-5[Find]|`f` |`find KEYWORD based on [n/NAME] or  [p/PHONE]  or [c/COUNTRY] or [e/EMAIL] or [a/ADDRESS] or  [t/TAG] or [act/ACTIVTY]` |`find n/James Jake`
+|link:#finding-persons-by-any-field-code-find-code-since-v1-2-and-v1-4[Find]|`f` |`find KEYWORD based on [n/NAME] or  [p/PHONE]  or [c/COUNTRY] or [e/EMAIL] or [a/ADDRESS] or  [t/TAG] or [act/ACTIVTY]` |`find n/James Jake`
 
 |link:#viewing-help-code-help-code[Help] | `h` | `help COMMAND WORD` | `help add`
 
