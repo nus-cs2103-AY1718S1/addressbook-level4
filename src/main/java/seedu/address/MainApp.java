@@ -219,7 +219,6 @@ public class MainApp extends Application {
     }
 
     //@@author Hailinx
-
     /**
      * Restarts the app.
      */

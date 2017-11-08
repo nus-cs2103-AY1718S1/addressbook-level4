@@ -46,7 +46,7 @@ public class TodoItemTest {
     }
 
     @Test
-    public void getTimeString_ReturnsCorrect() {
+    public void test_timeString() {
         TodoItem todoItemWithEndTime = getTodoItemOne();
         Assert.assertEquals(todoItemWithEndTime.getTimeString(),
                 "From: " + convertTimeToString(EARLY_TIME_ONE) + "   To: " + convertTimeToString(LATE_TIME_ONE));
