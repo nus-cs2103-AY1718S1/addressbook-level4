@@ -25,8 +25,6 @@ Adding a commenting feature for any existing contact will allow users (e.g. tuto
 
 === Enhancement Added: Making an appointment with a contact
 
-==== External behavior
-
 ---
 #Start of Extract [from: User Guide]#
 
