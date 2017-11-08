@@ -152,7 +152,8 @@ Format: `list`
 // tag::sort[]
 === Sorts the list : `sort`
 
-Sorts the contact person list in Bluebird based on the keyword input by the user. +
+Want to sort your contact list based on name, phone, email or address?
+Use the `sort` command! +
 Format: `sort` `KEYWORD`
 
 Examples:
@@ -269,7 +270,7 @@ Shows the updated list of hidden contacts.
 // tag::parentmode[]
 === Set Bluebird to parent mode : `parent`
 
-Sets Bluebird to parent mode which will enable all commands for you.
+Sets Bluebird to parent mode which will enable all commands for you. +
 Format: `parent`
 
 ****
@@ -320,7 +321,7 @@ Removes the alias shortcut 'ph'. Next instances of ph will no longer translate t
 // tag::pinunpin[]
 === Pin a person : `pin`
 
-Pins a person to a pin panel for easy access. +
+Have an important contact that you need for easy access? Use the `pin` command! +
 Format: `pin` `INDEX`
 
 Examples:
@@ -339,7 +340,7 @@ Pins the person at index 1.
 
 === Unpin a person: `unpin`
 
-Unpins a person from the list +
+Pinned the wrong contact or you want to unpin that contact? Use the `unpin` command! +
 Format: `unpin` `INDEX`
 
 Examples
