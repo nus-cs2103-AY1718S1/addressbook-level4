@@ -7,7 +7,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.DeletePictureCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-public class DeletePictureCommandParser {
+public class DeletePictureCommandParser implements Parser<DeletePictureCommand> {
 
     public DeletePictureCommand parse(String args) throws ParseException {
         try {
