@@ -51,3 +51,6 @@ include::../DeveloperGuide.adoc[tag=calendar]
 
 
 === Other contributions
+* Acceptance Testing
+- Provide suggestions for improvement (Pull request https://github.com/CS2103AUG2017-W09-B1/main/issues/121#event-1330982844[#121])
+- Found a bug in implementation (Pull request https://github.com/CS2103AUG2017-W09-B1/main/issues/113[#113])
