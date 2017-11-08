@@ -1,17 +1,12 @@
 package seedu.address.ui;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
-
-import javax.imageio.ImageIO;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.ProfilePicturesFolder;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author jaivigneshvenugopal
@@ -19,7 +14,10 @@ import seedu.address.model.person.ReadOnlyPerson;
  * Displays profile picture of each debtor
  */
 public class DebtorProfilePicture extends UiPart<Region> {
-    private static final String FXML = "DebtorProfilePicture.fxml";
+    public static final String FXML = "DebtorProfilePicture.fxml";
+    public static final String DEFAULT_INTERNAL_PROFILEPIC_FOLDER_PATH = "src/main/resources/images/profilePics/";
+    public static final String DEFAULT_PROFILEPIC_PATH = "src/main/resources/images/profilePics/unknown.jpg";
+    public static final String JPG_EXTENSION = ".jpg";
 
     @FXML
     private ImageView profilePic = new ImageView();
@@ -27,33 +25,19 @@ public class DebtorProfilePicture extends UiPart<Region> {
     public DebtorProfilePicture(ReadOnlyPerson person) {
         super(FXML);
         String imageName = person.getName().toString().replaceAll("\\s+", "");
-        String imagePath = ProfilePicturesFolder.getPath() + imageName + ".jpg";
+        String imagePath = DEFAULT_PROFILEPIC_PATH;
 
-        File file = new File(imagePath);
-
-        if (!file.exists()) {
-            file = new File("src/main/resources/images/unknown.jpg");
+        if (person.hasDisplayPicture()) {
+            imagePath =  DEFAULT_INTERNAL_PROFILEPIC_FOLDER_PATH + imageName + JPG_EXTENSION;
         }
 
+        File file = new File(imagePath);
 
         Image image = null;
 
         try {
             image = new Image(file.toURI().toURL().toExternalForm());
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        BufferedImage bufferedImage = null;
-        try {
-            bufferedImage = ImageIO.read(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            ImageIO.write(bufferedImage, "jpg", new File("src/main/resources/images/test.jpg"));
-        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -66,4 +50,5 @@ public class DebtorProfilePicture extends UiPart<Region> {
     public ImageView getImageView() {
         return profilePic;
     }
+
 }
