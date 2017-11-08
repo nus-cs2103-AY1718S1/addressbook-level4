@@ -171,6 +171,16 @@ public class EventListPanelHandle extends NodeHandle<ListView<EventCard>> {
     }
 }
 ```
+###### \java\seedu\address\commons\events\ui\SwitchThemeEventTest.java
+``` java
+public class SwitchThemeEventTest {
+    @Test
+    public void createEvent_success() throws Exception {
+        BaseEvent event = new SwitchThemeEvent();
+        assertEquals("SwitchThemeEvent", event.toString());
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\CommandTestUtil.java
 ``` java
     /**
@@ -595,8 +605,23 @@ public class ListEventCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### \java\seedu\address\logic\commands\SwitchThemeTest.java
 ``` java
+
+public class SwitchThemeTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    @Test
+    public void execute_switch_success() {
+        CommandResult result = new SwitchTheme().executeUndoableCommand();
+        assertEquals(MESSAGE_SUCCESS, result.feedbackToUser);
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof SwitchThemeEvent);
+        assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
+    }
+}
+
+
 
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
@@ -606,6 +631,14 @@ public class ListEventCommandTest {
         DeleteEventCommand command = (DeleteEventCommand) parser.parseCommand(
                 DeleteEventCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteEventCommand(INDEX_FIRST_PERSON), command);
+    }
+```
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_theme() throws Exception {
+        assertTrue(parser.parseCommand(SwitchTheme.COMMAND_WORD) instanceof SwitchTheme);
+        assertTrue(parser.parseCommand(SwitchTheme.COMMAND_WORD + " 3") instanceof SwitchTheme);
     }
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
