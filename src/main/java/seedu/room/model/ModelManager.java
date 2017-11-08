@@ -161,10 +161,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updateFilteredPersonListPicture(Predicate<ReadOnlyPerson> predicate, int index, Person p) {
+    public void updateFilteredPersonListPicture(Predicate<ReadOnlyPerson> predicate, Person person) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
-        filteredPersons.get(index).getPicture().setPictureUrl(p.getPicture().getPictureUrl());
+        for (ReadOnlyPerson p : filteredPersons) {
+            if (p.getName().toString().equals(person.getName().toString())
+                    && p.getPhone().toString().equals(person.getPhone().toString())) {
+                p.getPicture().setPictureUrl(person.getPicture().getPictureUrl());
+            }
+        }
         indicateResidentBookChanged();
     }
 

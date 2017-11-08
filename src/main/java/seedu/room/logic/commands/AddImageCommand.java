@@ -76,7 +76,7 @@ public class AddImageCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        model.updateFilteredPersonListPicture(PREDICATE_SHOW_ALL_PERSONS, index.getZeroBased(), editedPerson);
+        model.updateFilteredPersonListPicture(PREDICATE_SHOW_ALL_PERSONS, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_ADD_IMAGE_SUCCESS, editedPerson.getName()));
     }

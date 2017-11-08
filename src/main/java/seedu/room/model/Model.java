@@ -82,9 +82,9 @@ public interface Model {
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /**
-     * Updates
+     * Updates Picture of Person with FilteredPersonList
      */
-    void updateFilteredPersonListPicture(Predicate<ReadOnlyPerson> predicate, int index, Person p);
+    void updateFilteredPersonListPicture(Predicate<ReadOnlyPerson> predicate, Person p);
 
     /**
      * Remove tag inside the Resident Book
