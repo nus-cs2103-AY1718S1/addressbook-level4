@@ -1,4 +1,4 @@
-﻿= Sales Nagivator- Developer Guide
+﻿= Sales Navigator- Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble

@@ -1,0 +1,5 @@
+= *Sebastian Tay - Project Portfolio*
+
+== Project: Sales Navigator
+Sales Navigator is a desktop address book application used for sales executives to keep track of their connections and contacts.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
