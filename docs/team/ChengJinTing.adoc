@@ -1,0 +1,106 @@
+= Cheng Jin Ting- Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== ConTag
+ConTag is an efficient and feature-packed desktop address book application for the most demanding business users and busiest frequent travellers. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/main/jin-ting.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/test/17navasaw.md[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Expansion of existing find function
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To provide a more convenient way of allowing users to search for a contact via any attributes, enhancing productivity for the users.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Opening up calendar
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=calendar]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To allow users to
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+
+=== Enhancement Added: Emailing persons
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=email]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `remark`
+
+{Explain similar to the Undo/Redo feature above.}
+
+=== Other contributions
+
+* Updated the UI of ConTag
+(Pull requests https://github.com/CS2103AUG2017-T15-B2/main/pull/99[#99])
+* Backup ConTag
+(Pull requests https://github.com/CS2103AUG2017-T15-B2/main/pull/107[#107])
+
