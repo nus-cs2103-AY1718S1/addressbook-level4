@@ -63,8 +63,8 @@ public class FindMeetingCommandTest {
      * Parses {@code userInput} into a {@code FindMeetingCommand}.
      */
     private FindMeetingCommand prepareCommand(String userInput) {
-        FindMeetingCommand command =
-                new FindMeetingCommand(new MeetingContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+        FindMeetingCommand command = new FindMeetingCommand(
+                new MeetingContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
