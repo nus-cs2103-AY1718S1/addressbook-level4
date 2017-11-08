@@ -2,10 +2,6 @@ package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.ArrayList;
-
-import seedu.address.model.person.ReadOnlyPerson;
-
 //@@author limcel
 /**
  * Sorts all contacts in alphabetical order by their names from the address book.
