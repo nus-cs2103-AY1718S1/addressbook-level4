@@ -11,6 +11,7 @@ import static seedu.address.testutil.TypicalPersons.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -25,13 +26,19 @@ import seedu.address.model.person.Comment;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.ui.GuiUnitTest;
+
 //@@author risashindo7
 /**
  * Contains integration tests (interaction with the Model) and unit tests for CommentCommand.
  */
-public class CommentCommandTest {
+public class CommentCommandTest extends GuiUnitTest {
+    private Model model;
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    }
 
     @Test
     public void execute_addComment_success() throws Exception {

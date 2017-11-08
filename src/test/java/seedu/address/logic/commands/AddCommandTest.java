@@ -26,8 +26,9 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.ui.GuiUnitTest;
 
-public class AddCommandTest {
+public class AddCommandTest extends GuiUnitTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

@@ -87,11 +87,14 @@ Examples:
 * `multiple ./data/personsToAdd.txt`
 * `multiple ./data/newStudentsToAdd.txt`
 
+'''
 image::MultipleCommand/TypeMultipleCommand.png[width="800]
 
+'''
 The message display box will display successful persons that are added.
 
 image::MultipleCommand/MultipleCommandSuccess.png[width="800]
+'''
 
 Person format in `.txt` file: `n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/AVATAR_FILE_PATH [t/TAG]...`
 
@@ -163,24 +166,33 @@ e.g. `r/friends family` will return persons with tags that match both `friends` 
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * When finding name, only full words will be matched e.g. `Han` will not match `Hans`
-* When finding email, any part of the email will be matched e.g. `mail` will match `@gmail.com` and `@hotmail.com`
+* When finding email, any part of the email will be matched with the character sequence of the input e.g. `mail` will match `@gmail.com` and `@hotmail.com`
+* When finding phone, any part of the phone will be matched with the character sequence of the input e.g. `123` will match `91234567` and `81234567`
+* When finding appointment, only date and time with correct format will be matched e.g. `10:30` will match all `10:30` appointments and `20/10/2017` will match all `20/10/2017` appointments
+* When finding comment, only full words will be matched e.g. `swim` will not match `swims`
+* When finding address, any part of the address will be matched
 ****
 
+'''
 Searching for contacts with `friends` tag with the command `find r/friends`.
 
 image::FindCommand/TypeFindCommandOne.png[width="800"]
 
+'''
 The result of `find r/friends` will show all contacts with `friends` tag.
 
 image::FindCommand/FindCommandSuccessListOne.png[width="800"]
 
+'''
 Searching for contacts with `colleagues` and `friends` tags with the command `find r/colleagues friends`.
 
 image::FindCommand/TypeFindCommandTwo.png[width="800"]
 
+'''
 The result of `find r/colleagues friends` will show all contacts have both `colleagues` and `friends` tags.
 
 image::FindCommand/FindCommandSuccessTwo.png[width="800"]
+'''
 
 Examples:
 
@@ -197,6 +209,10 @@ Returns any person having names `Betsy`, `Tim`, or `John` or any person with `fr
 * `find n/Betsy Tim John r/friends e/@gmail.com` +
 Returns any person having names `Betsy`, `Tim`, or `John`, any person with `friends` tag
 and any person whose email contain `@gmail.com`
+* `find n/Betsy r/friends e/@gmail.com c/funny ap/10:30 a/clementi p/9123` +
+Returns any person having names `Betsy`, any person with `friends` tag, any person whose email contain `@gmail.com`,
+any person whose comment have the word `funny` in it, any person who have `10:30` appointment, any person whose address contain `clementi`
+and any person whose phone number contain the sequence `9123`
 
 [NOTE]
 Find command currently support finding of name, email and tags.
@@ -386,11 +402,14 @@ Examples:
 * `merge ./data/newFile.xml`
 * `merge ./data/otherClass.xml`
 
+'''
 image::MergeCommand/TypeMergeCommand.png[width="800"]
 
+'''
 Unique persons that are successfully merge into the address book will appear in the person card list.
 
 image::MergeCommand/MergeCommandSuccess.png[width="800"]
+'''
 
 [TIP]
 Merge command is an undoable/redoable command
@@ -442,7 +461,7 @@ e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+e.g. `find n/James Jake r/friends e/@gmail.com p/9123`
 * *Comment* : `comment INDEX [c/COMMENT]` +
 e.g. `comment 4 c/Likes to code`
 * *Appoint* : `appoint INDEX [c/APPOINTMENT]` +
@@ -458,4 +477,5 @@ e.g. `email_send "firstemail@gmail.com;secondemail@yahoo.com" "Test title" "Test
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Merge* : `merge`
+* *Merge* : `merge FILE_PATH` +
+e.g. `merge data/newfile.xml`

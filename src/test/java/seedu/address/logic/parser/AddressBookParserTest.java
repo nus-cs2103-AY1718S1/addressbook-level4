@@ -19,19 +19,35 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.logic.commands.*;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AppointCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.CommentCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EmailLoginCommand;
+import seedu.address.logic.commands.EmailSendCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.PersonContainsKeywordsPredicate;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Comment;
 import seedu.address.model.person.Appoint;
+import seedu.address.model.person.Comment;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
-import javax.mail.internet.AddressException;
+import seedu.address.ui.GuiUnitTest;
 
-public class AddressBookParserTest {
+public class AddressBookParserTest extends GuiUnitTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -94,7 +110,7 @@ public class AddressBookParserTest {
     public void parseCommand_comment() throws Exception {
         final Comment comment = new Comment("Some comment.");
         CommentCommand command = (CommentCommand) parser.parseCommand(CommentCommand.COMMAND_WORD + " "
-                +                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_COMMENT + " " + comment.value);
+                                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_COMMENT + " " + comment.value);
         assertEquals(new CommentCommand(INDEX_FIRST_PERSON, comment), command);
     }
 
@@ -124,7 +140,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_export() throws Exception{
+    public void parseCommand_export() throws Exception {
         assertTrue((parser.parseCommand("export .txt C:\\random") instanceof ExportCommand));
     }
 

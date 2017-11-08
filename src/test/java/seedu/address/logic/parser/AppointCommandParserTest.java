@@ -11,8 +11,10 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AppointCommand;
 import seedu.address.model.person.Appoint;
+import seedu.address.ui.GuiUnitTest;
+
 //@@author risashindo7
-public class AppointCommandParserTest {
+public class AppointCommandParserTest extends GuiUnitTest {
     private AppointCommandParser parser = new AppointCommandParser();
 
     @Test
