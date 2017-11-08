@@ -428,6 +428,28 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
 public class FindCommandParser implements Parser<FindCommand> {
 
     /**
+     * Parses the given {@code argsMap} and stores the keywords in {@code mapKeywords}
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    private void parseMultiMap(ArgumentMultimap argsMap, HashMap<String, List<String>> mapKeywords, Prefix prefix)
+            throws ParseException {
+        String trimmedArgs;
+        try {
+            if (argsMap.getValue(prefix).isPresent()) {
+                trimmedArgs = ParserUtil.parseKeywords(argsMap.getValue(prefix)).get().trim();
+                if (trimmedArgs.isEmpty()) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                }
+                String[] keywordNameList = trimmedArgs.split("\\s+");
+                mapKeywords.put(prefix.toString(), Arrays.asList(keywordNameList));
+            }
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindCommand object for execution.
      *
@@ -443,88 +465,18 @@ public class FindCommandParser implements Parser<FindCommand> {
         ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TAG, PREFIX_EMAIL,
                 PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_COMMENT, PREFIX_APPOINT);
 
-        String trimmedArgsName;
-        String trimmedArgsTag;
-        String trimmedArgsEmail;
-        String trimmedArgsPhone;
-        String trimmedArgsAddress;
-        String trimmedArgsComment;
-        String trimmedArgsAppoint;
 
-        String[] keywordNameList;
-        String[] keywordTagList;
-        String[] keywordEmailList;
-        String[] keywordPhoneList;
-        String[] keywordAddressList;
-        String[] keywordCommentList;
-        String[] keywordAppointList;
 
         HashMap<String, List<String>> mapKeywords = new HashMap<>();
 
         try {
-            if (argumentMultimap.getValue(PREFIX_NAME).isPresent()) {
-                trimmedArgsName = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_NAME)).get().trim();
-                if (trimmedArgsName.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordNameList = trimmedArgsName.split("\\s+");
-                mapKeywords.put(PREFIX_NAME.toString(), Arrays.asList(keywordNameList));
-            }
-
-            if (argumentMultimap.getValue(PREFIX_TAG).isPresent()) {
-                trimmedArgsTag = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_TAG)).get().trim();
-                if (trimmedArgsTag.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordTagList = trimmedArgsTag.split("\\s+");
-                mapKeywords.put(PREFIX_TAG.toString(), Arrays.asList(keywordTagList));
-            }
-
-            if (argumentMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-                trimmedArgsEmail = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_EMAIL)).get().trim();
-                if (trimmedArgsEmail.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordEmailList = trimmedArgsEmail.split("\\s+");
-                mapKeywords.put(PREFIX_EMAIL.toString(), Arrays.asList(keywordEmailList));
-            }
-
-            if (argumentMultimap.getValue(PREFIX_PHONE).isPresent()) {
-                trimmedArgsPhone = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_PHONE)).get().trim();
-                if (trimmedArgsPhone.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordPhoneList = trimmedArgsPhone.split("\\s+");
-                mapKeywords.put(PREFIX_PHONE.toString(), Arrays.asList(keywordPhoneList));
-            }
-
-            if (argumentMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-                trimmedArgsAddress = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_ADDRESS)).get().trim();
-                if (trimmedArgsAddress.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordAddressList = trimmedArgsAddress.split("\\s+");
-                mapKeywords.put(PREFIX_ADDRESS.toString(), Arrays.asList(keywordAddressList));
-            }
-
-            if (argumentMultimap.getValue(PREFIX_COMMENT).isPresent()) {
-                trimmedArgsComment = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_COMMENT)).get().trim();
-                if (trimmedArgsComment.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordCommentList = trimmedArgsComment.split("\\s+");
-                mapKeywords.put(PREFIX_COMMENT.toString(), Arrays.asList(keywordCommentList));
-            }
-
-            if (argumentMultimap.getValue(PREFIX_APPOINT).isPresent()) {
-                trimmedArgsAppoint = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_APPOINT)).get().trim();
-                if (trimmedArgsAppoint.isEmpty()) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-                }
-                keywordAppointList = trimmedArgsAppoint.split("\\s+");
-                mapKeywords.put(PREFIX_APPOINT.toString(), Arrays.asList(keywordAppointList));
-            }
-
+            parseMultiMap(argumentMultimap, mapKeywords, PREFIX_NAME);
+            parseMultiMap(argumentMultimap, mapKeywords, PREFIX_TAG);
+            parseMultiMap(argumentMultimap, mapKeywords, PREFIX_EMAIL);
+            parseMultiMap(argumentMultimap, mapKeywords, PREFIX_PHONE);
+            parseMultiMap(argumentMultimap, mapKeywords, PREFIX_ADDRESS);
+            parseMultiMap(argumentMultimap, mapKeywords, PREFIX_COMMENT);
+            parseMultiMap(argumentMultimap, mapKeywords, PREFIX_APPOINT);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
