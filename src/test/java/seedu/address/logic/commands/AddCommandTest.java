@@ -189,6 +189,30 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return null;
         }
+
+        //@@author archthegit
+
+        @Override
+        public void unselectPerson() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public boolean ifSelectedPerson() {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public ReadOnlyPerson getSelectedPerson() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateSelectedPerson(ReadOnlyPerson person) {
+            fail("This method should not be called.");
+        }
     }
 
     /**

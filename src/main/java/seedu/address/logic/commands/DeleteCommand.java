@@ -43,6 +43,7 @@ public class DeleteCommand extends UndoableCommand {
 
         try {
             model.deletePerson(personToDelete);
+            model.unselectPerson();
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }

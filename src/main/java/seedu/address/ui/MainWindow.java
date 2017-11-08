@@ -20,6 +20,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelUnselectEvent;
 import seedu.address.commons.events.ui.PopulateRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowThemeRequestEvent;
@@ -331,6 +332,17 @@ public class MainWindow extends UiPart<Region> {
     }
     // @@author
 
+    // @@author archthegit
+    @Subscribe
+    private void handleUnselectOfPersonCardEvent(PersonPanelUnselectEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        detailsPanel = new DetailsPanel();
+        detailsPanelPlaceholder.getChildren().clear();
+        detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
+
+    }
+    // @@author
+
     //@@author chernghann
     @Subscribe
     private void handlePopulateEvent(PopulateRequestEvent request) {
@@ -338,5 +350,5 @@ public class MainWindow extends UiPart<Region> {
         // calendar.populateNewCalendar(request.event);
         calendar.populateUpdatedCalendar(request.eventList, YearMonth.now());
     }
-    //@@author
+
 }

@@ -35,6 +35,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyEvent> filteredEvents;
+    private  ReadOnlyPerson person;
+    private int flag;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -132,7 +134,6 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-
     @Override
     public ArrayList<String> getThemesList() {
         return this.addressBook.getThemesList();
@@ -147,6 +148,32 @@ public class ModelManager extends ComponentManager implements Model {
     public String getCurrentTheme() {
         return currentTheme;
     }
+
+    //@@author archthegit
+    @Override
+    public void updateSelectedPerson(ReadOnlyPerson person) {
+        this.person = person;
+        flag = 1;
+    }
+
+    @Override
+    public void unselectPerson() {
+        this.person = null;
+    }
+
+    @Override
+    public boolean ifSelectedPerson() {
+        if (flag == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public ReadOnlyPerson getSelectedPerson() {
+        return person;
+    }
+
     // @@author
 
     //=========== Filtered Person List Accessors =============================================================

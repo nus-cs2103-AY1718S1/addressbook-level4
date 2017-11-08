@@ -47,6 +47,14 @@ public interface Model {
     void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
     // @@author
 
+    void updateSelectedPerson(ReadOnlyPerson person);
+
+    void unselectPerson();
+
+    boolean ifSelectedPerson();
+
+    ReadOnlyPerson getSelectedPerson();
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
