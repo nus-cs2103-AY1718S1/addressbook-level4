@@ -109,20 +109,25 @@ Format: `help`
 
 === Adding a person: `add` `Since v1.0`
 
+[NOTE]
+====
+Optional fields will be explained in greater detail in the next section.
+====
+
 Adds a person to cherBook +
-Format: `add n/NAME p/[student/(STUDENT_NUMBER)] parent/(PARENT_NUMBER) [e/EMAIL] [a/ADDRESS] f/FORMCLASS g/GRADES [c/POSTALCODE] [t/TAG]...` +
-Shorthand: `a n/NAME p/[student/(STUDENT_NUMBER)] parent/(PARENT_NUMBER) [e/EMAIL] [a/ADDRESS] f/FORMCLASS g/GRADES [c/POSTALCODE] [t/TAG]...`
+Format: `add n/NAME [p/(STUDENT_NUMBER)] pp/(PARENT_NUMBER) [e/EMAIL] [a/ADDRESS] f/FORMCLASS g/GRADES [c/POSTALCODE] [t/TAG]...` +
+Shorthand: `a n/NAME [p/(STUDENT_NUMBER)] pp/(PARENT_NUMBER) [e/EMAIL] [a/ADDRESS] f/FORMCLASS g/GRADES [c/POSTALCODE] [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0) +
+A person can have any number of tags (including 0). +
 Adding of student or/and parent's number must be preceded by the phone prefix `p/`.
 
 Examples:
 
-* `add n/John Doe p/parent/97979797 e/johnd@example.com a/John street, block 123, #01-01 f/12S11 g/123.0 c/203904`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/student/97272030 parent/97979797 f/B12 g/100.0 t/criminal`
-* `a n/Jane Doe p/parent/97979791 e/janed@example.com a/Jane street, block 456, #01-01 f/6C g/98`
-* `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/student/97272231 parent/97979997 f/12A2 g/66 t/criminal`
+* `add n/John Doe pp/97979797 e/johnd@example.com a/John street, block 123, #01-01 f/12S11 g/123.0 c/203904`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/97272030 pp/97979797 f/B12 g/100.0 t/criminal`
+* `a n/Jane Doe p/97979791 e/janed@example.com a/Jane street, block 456, #01-01 f/6C g/98`
+* `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/97272231 pp/97979997 f/12A2 g/66 t/criminal`
 
 === Listing all persons : `list` `Since v1.0`
 
@@ -133,8 +138,8 @@ Shorthand: `l`
 === Editing a person : `edit` `Since v1.0`
 
 Edits an existing person in cherBook. +
-Format: `edit INDEX [n/NAME] [p/student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)] [e/EMAIL] [a/ADDRESS] [f/FORMCLASS] [g/GRADES] [c/POSTALCODE] [t/TAG]...` +
-Shorthand: `e INDEX [n/NAME] [p/student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)] [e/EMAIL] [a/ADDRESS] [f/FORMCLASS] [g/GRADES] [c/POSTALCODE] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/(STUDENT_NUMBER)] [pp/(PARENT_NUMBER)] [e/EMAIL] [a/ADDRESS] [f/FORMCLASS] [g/GRADES] [c/POSTALCODE] [t/TAG]...` +
+Shorthand: `e INDEX [n/NAME] [p/(STUDENT_NUMBER)] [pp/(PARENT_NUMBER)] [e/EMAIL] [a/ADDRESS] [f/FORMCLASS] [g/GRADES] [c/POSTALCODE] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -146,11 +151,11 @@ Shorthand: `e INDEX [n/NAME] [p/student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)]
 
 Examples:
 
-* `edit 1 p/parent/91234567 e/johndoe@example.com c/309428` +
+* `edit 1 pp/91234567 e/johndoe@example.com c/309428` +
 Edits the parent phone number, email address and postal code of the 1st person to be `91234567`, `johndoe@example.com` and `309428` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-* `e 1 p/student/91234567 parent/91242271 e/johndoe@example.com` +
+* `e 1 p/91234567 pp/91242271 e/johndoe@example.com` +
 Edits the student and parent phone number, and email address of the 1st person to be `91234567`, `91242271` and `johndoe@example.com` respectively.
 * `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
