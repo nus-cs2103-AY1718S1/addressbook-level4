@@ -609,6 +609,7 @@ This section answers some common questions that you may have. If you have any mo
 |*Find* | `f KEYWORD [MORE_KEYWORDS]` |`f James Jake`
 |*List* | `l` | `l`
 |*Select* | `s INDEX` |`s 2`
+|*Email* | `em INDEX` |`em 1`
 |*History* | `h` |`h`
 |*Undo* | `u` | `u`
 |*Redo* | `r` | `r`
