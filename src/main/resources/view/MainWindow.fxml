@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
     <URL value="@DarkTheme.css" />
     <URL value="@Extensions.css" />
@@ -22,6 +22,14 @@
     <Menu mnemonicParsing="false" text="Help">
       <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
     </Menu>
+      <!--@@author vivekscl-->
+      <Menu mnemonicParsing="false" text="Window">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#handleSmallWindowSize" text="Small (800x600)" />
+            <MenuItem mnemonicParsing="false" onAction="#handleMediumWindowSize" text="Medium (1024x720)" />
+            <MenuItem mnemonicParsing="false" onAction="#handleBigWindowSize" text="Big (1600x1024)" />
+        </items>
+      </Menu>
   </MenuBar>
 
   <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
@@ -43,6 +51,8 @@
       </padding>
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
+
+    <!--@@author jacoblipech-->
       <SplitPane orientation="VERTICAL" prefHeight="200.0" prefWidth="80.0">
         <items>
             <StackPane fx:id="extendedPersonDisplayPlaceholder" prefHeight="150.0" prefWidth="50.0">
@@ -53,6 +63,7 @@
         </items>
       </SplitPane>
 
+    <!--@@author -->
     <StackPane fx:id="browserPlaceholder" prefWidth="340">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />

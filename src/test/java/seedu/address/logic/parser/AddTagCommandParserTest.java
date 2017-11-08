@@ -43,7 +43,6 @@ public class AddTagCommandParserTest {
         // no indexes
         ArrayList<Index> indexes = new ArrayList<Index>();
         final String tagName = "friends";
-        Tag toRemove = new Tag(tagName);
         String userInput = " " + PREFIX_TAG.toString() + tagName;
 
         assertParseFailure(parser, userInput, MESSAGE_INVALID_INDEX);

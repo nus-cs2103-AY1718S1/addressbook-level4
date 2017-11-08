@@ -33,4 +33,9 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
         return this.keywords;
     }
 
+    @Override
+    public String toString() {
+        String[] resultArray = new String[keywords.size()];
+        return String.join(" ", keywords.toArray(resultArray));
+    }
 }

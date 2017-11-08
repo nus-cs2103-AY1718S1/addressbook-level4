@@ -94,6 +94,7 @@ public class PersonCard extends UiPart<Region> {
         }
         cardPane.getChildren().add(favouriteLabel);
     }
+    //@@author
 
     //@@author jacoblipech
     /**
