@@ -48,22 +48,11 @@ public class ModelManager extends ComponentManager implements Model {
         this(new AddressBook(), new UserPrefs());
     }
 
-    //@@author JasmineSee
     @Override
-    public void resetData(ReadOnlyAddressBook newData, boolean isUndo) {
+    public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
-
-        if (!isUndo) {
-            File dir = new File("photos/");
-            for (File file : dir.listFiles()) {
-                if (!(file.getName().equals("default.jpeg"))) {
-                    file.delete();
-                }
-            }
-        }
         indicateAddressBookChanged();
     }
-    //@@author
 
     @Override
     public ReadOnlyAddressBook getAddressBook() {

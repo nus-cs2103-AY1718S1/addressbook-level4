@@ -16,7 +16,7 @@ public interface Model {
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData, boolean isUndo);
+    void resetData(ReadOnlyAddressBook newData);
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
