@@ -1,6 +1,7 @@
 package guitests.guihandles;
 
 import guitests.GuiRobot;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -77,11 +78,42 @@ public class UserProfileWindowHandle extends StageHandle {
         return webLinkTextField.getText();
     }
 
+    public TextField getAddressTextField() {
+        return addressTextField;
+    }
+
+    public TextField getEmailTextField() {
+        return emailTextField;
+    }
+
+    public TextField getNameTextField() {
+        return nameTextField;
+    }
+
+    public TextField getPhoneTextField() {
+        return phoneTextField;
+    }
+
+    public TextField getWebLinkTextField() {
+        return webLinkTextField;
+    }
+
     public Button getOkButton() {
         return okButton;
     }
 
     public Button getCancelButton() {
         return cancelButton;
+    }
+
+    public void clickOk() {
+        Platform.runLater(() -> {
+//            okButton.arm();
+            okButton.fire();
+        });
+    }
+
+    public void clickCancel() {
+        Platform.runLater(() -> cancelButton.fire());
     }
 }

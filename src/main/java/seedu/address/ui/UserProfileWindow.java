@@ -125,6 +125,7 @@ public class UserProfileWindow extends UiPart<Region> {
         try {
             updateUserPerson();
             raise(new UserPersonChangedEvent(userPerson));
+            logger.info("UserPerson updated via UserProfileWindow, saving");
             stage.close();
         } catch (Exception e) {
             logger.fine("Invalid UserPerson modification");
@@ -189,7 +190,7 @@ public class UserProfileWindow extends UiPart<Region> {
             statusLabel.setText("Please input a valid webLink");
             throw new Exception();
         } catch (ClassCastException e) {
-            statusLabel.setText("Hey");
+            statusLabel.setText("Class cast exception");
             throw new Exception();
         }
     }

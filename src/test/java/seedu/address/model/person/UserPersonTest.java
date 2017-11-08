@@ -9,10 +9,6 @@ import static seedu.address.testutil.TypicalUserPerson.getTypicalUserPerson;
 
 import org.junit.Test;
 
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.UpdateUserCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -46,14 +42,5 @@ public class UserPersonTest {
 
         userPerson = new UserPerson(WILLIAM);
         assertFalse(userPerson.equals(expectedUserPerson));
-    }
-
-    /**
-     * Returns an {@code UserCommand} with parameters {@code descriptor}
-     */
-    private UpdateUserCommand prepareCommand(EditCommand.EditPersonDescriptor descriptor) {
-        UpdateUserCommand updateUserCommand = new UpdateUserCommand(descriptor);
-        updateUserCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return updateUserCommand;
     }
 }

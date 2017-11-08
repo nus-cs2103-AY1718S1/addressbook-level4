@@ -6,8 +6,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import guitests.guihandles.UserProfileWindowHandle;
-import javafx.application.Platform;
-import javafx.scene.control.Button;
 
 //@@author bladerail
 public class UserProfileWindowTest extends AddressBookGuiTest {
@@ -23,7 +21,6 @@ public class UserProfileWindowTest extends AddressBookGuiTest {
         getCommandBox().click();
         getMainMenu().openUserProfileWindowUsingAccelerator();
         assertUserProfileWindowOpenThenCloseDefault();
-
 
         getResultDisplay().click();
         getMainMenu().openUserProfileWindowUsingAccelerator();
@@ -120,10 +117,9 @@ public class UserProfileWindowTest extends AddressBookGuiTest {
         assertTrue(ERROR_MESSAGE, UserProfileWindowHandle.isWindowPresent());
         guiRobot.pauseForHuman();
 
-        Button okButton = new UserProfileWindowHandle(
+        new UserProfileWindowHandle(
                 guiRobot.getStage(UserProfileWindowHandle.USERPROFILE_WINDOW_TITLE)
-        ).getOkButton();
-        Platform.runLater(() -> okButton.fire());
+        ).clickOk();
         mainWindowHandle.focus();
     }
 
@@ -135,10 +131,9 @@ public class UserProfileWindowTest extends AddressBookGuiTest {
         assertTrue(ERROR_MESSAGE, UserProfileWindowHandle.isWindowPresent());
         guiRobot.pauseForHuman();
 
-        Button cancelButton = new UserProfileWindowHandle(
+        new UserProfileWindowHandle(
                 guiRobot.getStage(UserProfileWindowHandle.USERPROFILE_WINDOW_TITLE)
-        ).getCancelButton();
-        Platform.runLater(() -> cancelButton.fire());
+        ).clickCancel();
         mainWindowHandle.focus();
     }
 
