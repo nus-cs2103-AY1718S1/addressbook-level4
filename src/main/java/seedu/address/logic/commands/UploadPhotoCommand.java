@@ -85,10 +85,6 @@ public class UploadPhotoCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        List<ReadOnlyPerson> checkList = model.getFilteredPersonList();
-        ReadOnlyPerson personChecked = checkList.get(targetIndex.getZeroBased());
-        Photo img = personChecked.getPhoto();
-        img.showPhoto();
 
         return new CommandResult(String.format(MESSAGE_UPDATE_PERSON_PHOTO_SUCCESS, personUpdated));
     }
