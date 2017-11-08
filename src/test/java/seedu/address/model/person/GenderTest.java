@@ -18,10 +18,12 @@ public class GenderTest {
         assertFalse(Gender.isValidGender("MALEEEEE"));
         assertFalse(Gender.isValidGender("Male123(*)"));
 
-        // valid name
+        // valid gender
         assertTrue(Gender.isValidGender("FeMaLe")); // alphabets only
         assertTrue(Gender.isValidGender("MALE")); // alphabets only
         assertTrue(Gender.isValidGender("other")); // alphabets only
+        assertTrue(Gender.isValidGender("Not_SpeCified")); // alphabets only
+        assertTrue(Gender.isValidGender("OtHeR")); // alphabets only
     }
 }
 

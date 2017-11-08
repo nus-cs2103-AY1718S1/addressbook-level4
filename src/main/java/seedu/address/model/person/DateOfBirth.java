@@ -36,6 +36,7 @@ public class DateOfBirth {
         this.dateOfBirth = LocalDate.now();
         this.dateSet = false;
     }
+    //@@author
     //@@author Pujitha97
     /**
      * Validates given Date of Birth.
@@ -64,7 +65,6 @@ public class DateOfBirth {
     public String toString() {
         return dateSet ? dateOfBirth.format(DateParser.DATE_FORMAT) : "";
     }
-    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

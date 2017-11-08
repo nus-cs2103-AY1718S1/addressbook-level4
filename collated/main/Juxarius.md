@@ -1,4 +1,30 @@
 # Juxarius
+###### \java\seedu\address\commons\events\ui\InsuranceClickedEvent.java
+``` java
+/**
+ * Represents a click on one of the names in Insurance Profile
+ */
+public class InsuranceClickedEvent extends BaseEvent {
+
+
+    private final ReadOnlyInsurance insurance;
+
+    public InsuranceClickedEvent(ReadOnlyInsurance insurance) {
+        this.insurance = insurance;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+
+    public ReadOnlyInsurance getInsurance() {
+        return insurance;
+    }
+}
+
+```
 ###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
     /**
@@ -421,10 +447,9 @@ public class DateParser {
             ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
             ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
-            ParserUtil.parseDateOfBirth(argMultimap.getValue(PREFIX_DOB))
-                    .ifPresent(editPersonDescriptor::setDateOfBirth);
-            ParserUtil.parseGender(argMultimap.getValue(PREFIX_GENDER))
-                    .ifPresent(editPersonDescriptor::setGender);
+```
+###### \java\seedu\address\logic\parser\EditCommandParser.java
+``` java
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
             parseDetagsForEdit(argMultimap.getAllValues(PREFIX_DELTAG)).ifPresent(editPersonDescriptor::setTagsToDel);
         } catch (EmptyFieldException efe) {
@@ -503,11 +528,42 @@ public class EmptyFieldException extends ParseException {
     }
 }
 ```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    /**
+     * Function to update the overall links between insurances and persons after a change in LISA
+     */
+    private void syncWithUpdate() {
+        syncMasterLifeInsuranceMap();
+        try {
+            syncMasterPersonList();
+        } catch (InsuranceNotFoundException infe) {
+            assert false : "AddressBooks should not have duplicate insurances";
+        }
+    }
+```
 ###### \java\seedu\address\model\insurance\LifeInsurance.java
 ``` java
     private StringProperty insuranceName;
     private LocalDate signingDate;
     private LocalDate expiryDate;
+```
+###### \java\seedu\address\model\insurance\UniqueLifeInsuranceList.java
+``` java
+
+    /**
+     * sort insurance in descending order according to premium,
+     * change the sign in the return statement to make it ascending
+     */
+    public void sortInsurances() {
+        internalList.sort((insurance1, insurance2) -> {
+            if (insurance1.getPremium().equals(insurance2.getPremium())) {
+                return 0;
+            } else {
+                return insurance1.getPremium() < insurance2.getPremium() ? 1 : -1;
+            }
+        });
+    }
 ```
 ###### \java\seedu\address\model\person\Address.java
 ``` java
@@ -517,10 +573,6 @@ public class EmptyFieldException extends ParseException {
 ```
 ###### \java\seedu\address\model\person\DateOfBirth.java
 ``` java
-    public static final String MESSAGE_DOB_CONSTRAINTS =
-            "Please enter in Day Month Year format where the month can be a number or the name"
-                    + " and the year can be input in 2-digit or 4-digit format.";
-
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
@@ -537,34 +589,6 @@ public class EmptyFieldException extends ParseException {
     public DateOfBirth() {
         this.dateOfBirth = LocalDate.now();
         this.dateSet = false;
-    }
-
-    /**
-     * Validates given Date of Birth.
-     *
-     * @throws IllegalValueException if given date of birth string is invalid.
-     */
-    public DateOfBirth(String dob) throws IllegalValueException {
-        requireNonNull(dob);
-        if (dob.isEmpty()) {
-            throw new EmptyFieldException(PREFIX_DOB);
-        }
-        if (!isValidDateOfBirth(dob)) {
-            throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
-        }
-        this.dateOfBirth = new DateParser().parse(dob);
-        this.dateSet = true;
-    }
-
-    /**
-     * Returns true if a given string is a valid person date of birth.
-     */
-    public static boolean isValidDateOfBirth(String test) {
-        return test.matches(DOB_VALIDATION_REGEX);
-    }
-    @Override
-    public String toString() {
-        return dateSet ? dateOfBirth.format(DateParser.DATE_FORMAT) : "";
     }
 ```
 ###### \java\seedu\address\ui\CommandBox.java
@@ -619,13 +643,18 @@ public class EmptyFieldException extends ParseException {
         insuranceListView.getSelectionModel().clearSelection();
     }
 
-    /*@Subscribe
-    private void handleInsurancePanelSelectionChangedEvent(InsurancePanelSelectionChangedEvent event) {
-        InsuranceProfile selected = insuranceListView.getItems().filtered(insuranceProfile -> {
-            return insuranceProfile.getInsurance().equals(event.getInsurance());
-        }).get(0);
-        insuranceListView.getSelectionModel().select(selected);
-    }*/
+    @Subscribe
+    private void handleInsuranceClickedEvent(InsuranceClickedEvent event) {
+        ObservableList<InsuranceProfile> insurances = insuranceListView.getItems();
+        for (int i = 0; i < insurances.size(); i++) {
+            if (insurances.get(i).getInsurance().getInsuranceName().equals(event.getInsurance().getInsuranceName())) {
+                insuranceListView.getSelectionModel().select(i);
+                break;
+            }
+        }
+    }
+    // weird phenomenon that a filteredList does not contain elements in the original list and cannot be used
+    // in the select command
 ```
 ###### \java\seedu\address\ui\InsuranceProfile.java
 ``` java
@@ -657,7 +686,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     private ReadOnlyInsurance insurance;
 
     @FXML
-    private ScrollPane scrollPane;
+    private ScrollPane insuranceScrollPane;
     @FXML
     private AnchorPane insuranceProfilePanel;
     @FXML
@@ -679,8 +708,9 @@ public class InsuranceProfilePanel extends UiPart<Region> {
 
     public InsuranceProfilePanel() {
         super(FXML);
-        scrollPane.setFitToWidth(true);
-        insuranceProfilePanel.prefWidthProperty().bind(scrollPane.widthProperty());
+        insuranceScrollPane.setFitToWidth(true);
+        insuranceProfilePanel.prefWidthProperty().bind(insuranceScrollPane.widthProperty());
+        insuranceProfilePanel.prefHeightProperty().bind(insuranceScrollPane.heightProperty());
         enableNameToProfileLink(insurance);
         registerAsAnEventHandler(this);
     }
@@ -689,6 +719,8 @@ public class InsuranceProfilePanel extends UiPart<Region> {
 ###### \java\seedu\address\ui\InsuranceProfilePanel.java
 ``` java
     private void setPremiumLevel(Double premium) {
+        insuranceName.getStyleClass().clear();
+        insuranceName.getStyleClass().add("insurance-profile-header");
         if (premium > 500.0) {
             insuranceName.getStyleClass().add("gold-insurance-header");
         } else if (premium > 100.0) {
@@ -701,8 +733,10 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     @Subscribe
     private void handleSwitchToInsurancePanelRequestEvent(InsurancePanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        enableNameToProfileLink(event.getInsurance());
         initializeContractFile(event.getInsurance());
         bindListeners(event.getInsurance());
+        setPremiumLevel(event.getInsurance().getPremium());
         raise(new SwitchToInsurancePanelRequestEvent());
     }
 ```
@@ -715,10 +749,14 @@ public class InsuranceProfilePanel extends UiPart<Region> {
 
     @Subscribe
     private void handlePersonNameClickedEvent(PersonNameClickedEvent event) {
-        PersonCard selected = personListView.getItems().filtered((p) -> {
-            return p.person.getName().toString().equals(event.getPerson().get().getName().toString());
-        }).get(0);
-        personListView.getSelectionModel().select(selected);
+        FilteredList<PersonCard> filtered = personListView.getItems().filtered(p ->
+                p.person.getName().toString().equals(event.getName())
+        );
+        if (filtered.size() < 1) {
+            return;
+        } else {
+            personListView.getSelectionModel().select(filtered.get(0));
+        }
     }
 ```
 ###### \resources\view\DarkTheme.css
@@ -730,7 +768,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     -fx-opacity: 1;
 }
 
-#profilePanel .profile-field {
+.profile-field {
     -fx-font-size: 15pt;
     -fx-font-family: "Segoe UI SemiLight";
     -fx-text-fill: white;
@@ -744,9 +782,16 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     -fx-opacity: 1;
 }
 
+#insuranceProfilePanel .dynamic-labels {
+    -fx-font-size: 15pt;
+    -fx-font-family: "Segoe UI SemiLight";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
 .static-insurance-labels {
     -fx-font-size: 13pt;
-    -fx-font-family: "Segoe UI SemiBold";
+    -fx-font-family: "Segoe UI Bold";
     -fx-text-fill: white;
     -fx-opacity: 1;
 }
@@ -756,6 +801,28 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: #ff4500;
     -fx-opacity: 1;
+}
+
+#insuranceProfilePanel #owner:hover, #insuranceProfilePanel #insured:hover, #insuranceProfilePanel #beneficiary:hover {
+    -fx-text-fill: #ff4500;
+}
+
+.insurance-profile-header {
+    -fx-font-size: 30pt;
+    -fx-font-family: "Impact";
+    -fx-opacity: 1;
+}
+
+#insuranceProfilePanel .gold-insurance-header {
+    -fx-text-fill: #daa520;
+}
+
+#insuranceProfilePanel .silver-insurance-header {
+    -fx-text-fill: #a9a9a9;
+}
+
+#insuranceProfilePanel .normal-insurance-header {
+    -fx-text-fill: white;
 }
 
 #insuranceListView .insurance-header {
@@ -808,4 +875,46 @@ public class InsuranceProfilePanel extends UiPart<Region> {
                </HBox>
             </children>
          </VBox>
+```
+###### \resources\view\InsuranceProfilePanel.fxml
+``` fxml
+<StackPane prefHeight="439.0" prefWidth="556.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ScrollPane fx:id="insuranceScrollPane" styleClass="anchor-pane">
+        <content>
+            <AnchorPane fx:id="insuranceProfilePanel" styleClass="anchor-pane">
+               <children>
+                  <Label fx:id="insuranceName" layoutX="5.0" layoutY="5.0" styleClass="insurance-profile-header" text="\$insuranceName" />
+                  <HBox layoutX="28.0" layoutY="63.0" prefHeight="342.0" prefWidth="500.0" spacing="10.0">
+                     <children>
+                        <VBox prefHeight="201.0" prefWidth="131.0">
+                           <children>
+                              <Label styleClass="static-labels" text="Owner" />
+                              <Label styleClass="static-labels" text="Insured" />
+                              <Label styleClass="static-labels" text="Beneficiary" />
+                              <Label styleClass="static-labels" text="Contract File" />
+                              <Label styleClass="static-labels" text="Premium" />
+                              <Label styleClass="static-labels" text="Signing Date" />
+                              <Label styleClass="static-labels" text="Expiry Date" />
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="201.0" prefWidth="250.0">
+                           <children>
+                              <Label fx:id="owner" styleClass="dynamic-labels" text="\$owner" />
+                              <Label fx:id="insured" styleClass="dynamic-labels" text="\$insured" />
+                              <Label fx:id="beneficiary" styleClass="dynamic-labels" text="\$beneficiary" />
+                              <Label fx:id="contractPath" styleClass="dynamic-labels" text="\$contractPath" />
+                              <Label fx:id="premium" styleClass="dynamic-labels" text="\$premium" />
+                              <Label fx:id="signingDate" styleClass="dynamic-labels" text="\$signingDate" />
+                              <Label fx:id="expiryDate" styleClass="dynamic-labels" text="\$expiryDate" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </children>
+</StackPane>
 ```

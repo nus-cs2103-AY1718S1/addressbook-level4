@@ -45,6 +45,10 @@ public class PersonNameClickedEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 
+    public String getName() {
+        return target.getName();
+    }
+
 ```
 ###### \java\seedu\address\commons\events\ui\SwitchToInsurancePanelRequestEvent.java
 ``` java
@@ -159,7 +163,7 @@ public class PartialFindCommandParser implements Parser<PartialFindCommand> {
 ``` java
     /**
      * Accessor to insurance list
-     * @return all existing insurances as ObservableList<ReadOnlyInsurance>
+     * @return all existing insurances as ReadOnly, ObservableList
      */
     public ObservableList<ReadOnlyInsurance> asObservableList() {
         assert CollectionUtil.elementsAreUnique(internalMap.values());
@@ -175,8 +179,6 @@ public class PartialFindCommandParser implements Parser<PartialFindCommand> {
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
-    //=========== Insurance List Accessors ===================================================================
-
     @Override
     public ObservableList<ReadOnlyInsurance> getInsuranceList() {
         return addressBook.getInsuranceList();
@@ -229,12 +231,11 @@ public class InsuranceIdLabel extends UiPart<Region> {
 ``` java
     public InsuranceIdLabel(ReadOnlyInsurance insurance) {
         super(FXML);
-        insuranceId.textProperty().bind(insurance.signingDateStringProperty());
-        insuranceId.setOnMouseClicked(e -> raise(new InsurancePanelSelectionChangedEvent(insurance)));
-
-
+        insuranceId.textProperty().bind(insurance.insuranceNameProperty());
+        setPremiumLevel(insurance.getPremium());
+        insuranceId.setOnMouseClicked(e -> raise(new InsuranceClickedEvent(insurance)));
     }
-}
+
 ```
 ###### \java\seedu\address\ui\InsuranceListPanel.java
 ``` java
@@ -256,11 +257,12 @@ public class InsuranceIdLabel extends UiPart<Region> {
         this.insurance = insurance;
         index.setText(displayIndex + ".");
 
-        initializeContractFile(insurance);
+        // initializeContractFile(insurance);
 
         enableNameToProfileLink(insurance);
 
         bindListeners(insurance);
+        setPremiumLevel(insurance.getPremium());
     }
 
     public ReadOnlyInsurance getInsurance() {
@@ -278,11 +280,106 @@ public class InsuranceIdLabel extends UiPart<Region> {
         beneficiary.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getBeneficiary())));
     }
 
+
     /**
      * Checks if pdf file exist in project, if not add click event on contract field to add file with filechooser
      * Then add click event on contract field to open up the file
      * @param insurance
      */
+    /*
+    private void initializeContractFile(ReadOnlyInsurance insurance) {
+        insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractPath());
+        if (isFileExists(insuranceFile)) {
+            activateLinkToInsuranceFile();
+        } else {
+            contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    FileChooser.ExtensionFilter extFilter =
+                            new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+                    FileChooser chooser = new FileChooser();
+                    chooser.getExtensionFilters().add(extFilter);
+                    File openedFile = chooser.showOpenDialog(null);
+                    activateLinkToInsuranceFile();
+
+                    if (isFileExists(openedFile)) {
+                        try {
+                            Files.copy(openedFile.toPath(), insuranceFile.toPath());
+                        } catch (IOException ex) {
+                            logger.info("Unable to open at path: " + openedFile.getAbsolutePath());
+                        }
+                    }
+                }
+            });
+
+        }
+    }*/
+
+    /**
+     *  Enable the link to open contract pdf file and adjusting the text hover highlight
+     */
+    /*private void activateLinkToInsuranceFile() {
+        contractPath.getStyleClass().add("particular-link");
+        contractPath.setOnMouseClicked(event -> {
+            try {
+                Desktop.getDesktop().open(insuranceFile);
+            } catch (IOException ee) {
+                logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
+            }
+        });
+    }*/
+```
+###### \java\seedu\address\ui\InsuranceProfile.java
+``` java
+    @Subscribe
+    private void handleInsurancePanelSelectionChangedEvent(InsurancePanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        insurance = event.getInsurance();
+
+        //initializeContractFile(insurance);
+        enableNameToProfileLink(insurance);
+        bindListeners(insurance);
+        index.setText(null);
+        raise(new SwitchToInsurancePanelRequestEvent());
+    }
+```
+###### \java\seedu\address\ui\InsuranceProfilePanel.java
+``` java
+
+    public InsuranceProfilePanel(ReadOnlyInsurance insurance) {
+        super(FXML);
+        this.insurance = insurance;
+
+        initializeContractFile(insurance);
+
+        enableNameToProfileLink(insurance);
+
+        bindListeners(insurance);
+        setPremiumLevel(insurance.getPremium());
+    }
+
+    public ReadOnlyInsurance getInsurance() {
+        return insurance;
+    }
+
+
+    /**
+     * Listen for click event on person names to be displayed as profile
+     * @param insurance
+     */
+    private void enableNameToProfileLink(ReadOnlyInsurance insurance) {
+        owner.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getOwner())));
+        insured.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getInsured())));
+        beneficiary.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getBeneficiary())));
+    }
+
+
+    /**
+     * Checks if pdf file exist in project, if not add click event on contract field to add file with filechooser
+     * Then add click event on contract field to open up the file
+     * @param insurance
+     */
+
     private void initializeContractFile(ReadOnlyInsurance insurance) {
         insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractPath());
         if (isFileExists(insuranceFile)) {
@@ -325,20 +422,6 @@ public class InsuranceIdLabel extends UiPart<Region> {
         });
     }
 ```
-###### \java\seedu\address\ui\InsuranceProfile.java
-``` java
-    @Subscribe
-    private void handleInsurancePanelSelectionChangedEvent(InsurancePanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        insurance = event.getInsurance();
-
-        initializeContractFile(insurance);
-        enableNameToProfileLink(insurance);
-        bindListeners(insurance);
-        index.setText(null);
-        raise(new SwitchToInsurancePanelRequestEvent());
-    }
-```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
     @Subscribe
@@ -354,7 +437,7 @@ public class InsuranceIdLabel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
         rightPanelPlaceholder.getChildren().clear();
-        rightPanelPlaceholder.getChildren().add(insuranceProfile.getRoot());
+        rightPanelPlaceholder.getChildren().add(insuranceProfilePanel.getRoot());
     }
 ```
 ###### \java\seedu\address\ui\PersonCard.java
@@ -415,10 +498,10 @@ public class InsuranceIdLabel extends UiPart<Region> {
  */
 public class ProfilePanel extends UiPart<Region> {
 
-    public static final String DEFAULT_MESSAGE = "Ain't Nobody here but us chickens!";
+    public static final String DEFAULT_MESSAGE = "Welcome to LISA!";
     public static final String INSURANCE_LIST_HEADER = "List of Insurance Contracts Involved: ";
     public static final String NO_INSURANCE_MESSAGE = "This person is not related to any Insurance Contracts";
-    public static final String PERSON_DOES_NOT_EXIST_MESSAGE = "This person does not exist in Lisa.";
+    public static final String PERSON_DOES_NOT_EXIST_IN_LISA_MESSAGE = "This person does not exist in Lisa.";
 
     private static final String FXML = "ProfilePanel.fxml";
 
@@ -436,47 +519,6 @@ public class ProfilePanel extends UiPart<Region> {
     private Label phone;
     @FXML
     private Label address;
-    @FXML
-    private Label dob;
-    @FXML
-    private Label email;
-    @FXML
-    private Label insuranceHeader;
-    @FXML
-    private ListView<InsuranceIdLabel> insuranceListView;
-
-    public ProfilePanel() {
-        super(FXML);
-        scrollPane.setFitToWidth(true);
-        profilePanel.prefWidthProperty().bind(scrollPane.widthProperty());
-        // To prevent triggering events for typing inside the loaded Web page.
-        getRoot().setOnKeyPressed(Event::consume);
-
-        loadDefaultPage();
-        registerAsAnEventHandler(this);
-    }
-
-    /**
-     * Updates selected person
-     * @param person
-     */
-    private void loadPersonPage(ReadOnlyPerson person) {
-        bindListeners(person);
-        if (person.getLifeInsuranceIds().isEmpty()) {
-            insuranceHeader.setText(NO_INSURANCE_MESSAGE);
-        } else {
-            insuranceHeader.setText(INSURANCE_LIST_HEADER);
-        }
-        ObservableList<ReadOnlyInsurance> insuranceList = person.getLifeInsurances().asObservableList();
-        for (ReadOnlyInsurance i : insuranceList) {
-            insurance.add(new InsuranceIdLabel(i));
-        }
-        insuranceListView.setItems(insurance);
-        insuranceListView.setCellFactory(insuranceListView -> new ProfilePanel.InsuranceIdListViewCell());
-
-
-    }
-
 ```
 ###### \java\seedu\address\ui\SearchBox.java
 ``` java
@@ -553,7 +595,7 @@ public class SearchBox extends UiPart<Region> {
 ###### \resources\view\DarkTheme.css
 ``` css
 .particular-field {
-    -fx-font-size: 13pt;
+    -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
     -fx-opacity: 1;
@@ -565,6 +607,7 @@ public class SearchBox extends UiPart<Region> {
     -fx-text-fill: white;
     -fx-opacity: 1;
 }
+
 ```
 ###### \resources\view\DarkTheme.css
 ``` css
@@ -609,13 +652,14 @@ public class SearchBox extends UiPart<Region> {
             <content>
                 <AnchorPane fx:id="profilePanel" prefHeight="1000.0" prefWidth="1200" styleClass="anchor-pane">
                     <children>
-                        <Label fx:id="name" layoutX="2.0" styleClass="particular-name" text="\$name" />
+                        <Label fx:id="name" layoutX="2.0" styleClass="profile-header" text="\$name" />
                         <VBox layoutX="14.0" layoutY="72.0" spacing="3.0">
-                            <Label fx:id="phone" styleClass="particular-field" text="\$phone" />
-                            <Label fx:id="address" styleClass="particular-field" text="\$address" />
-                            <Label fx:id="dob" styleClass="particular-field" text="\$dob" />
-                            <Label fx:id="email" styleClass="particular-field" text="\$email" />
-                            <Label fx:id="insuranceHeader" styleClass="particular-field" text="\$insuranceHeader" />
+                            <Label fx:id="phone" styleClass="profile-field" text="\$phone" />
+                            <Label fx:id="address" styleClass="profile-field" text="\$address" />
+                            <Label fx:id="dob" styleClass="profile-field" text="\$dob" />
+                            <Label fx:id="gender" styleClass="profile-field" text="\$gender" />
+                            <Label fx:id="email" styleClass="profile-field" text="\$email" />
+                            <Label fx:id="insuranceHeader" styleClass="profile-field" text="\$insuranceHeader" />
                      <ListView fx:id="insuranceListView" prefHeight="200.0" prefWidth="200.0">
                         <VBox.margin>
                            <Insets />

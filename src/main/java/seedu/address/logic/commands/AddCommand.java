@@ -123,7 +123,7 @@ public class AddCommand extends UndoableCommand {
         public Address getAddress() {
             return address;
         }
-
+        //@@author Pujitha97
         public void setDateOfBirth(DateOfBirth dateofbirth) {
             this.dateofbirth = dateofbirth;
         }
@@ -139,7 +139,7 @@ public class AddCommand extends UndoableCommand {
         public Gender getGender() {
             return gender;
         }
-
+        //@@author
         @Override
         public boolean equals(Object other) {
             // short circuit if same object
