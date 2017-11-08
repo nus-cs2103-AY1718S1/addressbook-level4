@@ -535,6 +535,27 @@ _Figure 5.22.2 : Tooltip to show more of John's address_
 
 //end::tooltip[]
 
+//tag::gui-tab[]
+
+=== GUI tab mechanism
+
+To help you organise between the parcels you have delivered and the parcels you have delivered, Ark provides you two
+lists, one containing the parcels you have yet to deliver, and the other, the parcels that you have already delivered.
+
+When you launch the application, Ark will show the list of undelivered parcels in your inventory. To view
+the list of delivered parcels, you can click on the `Completed Parcel` tab located on the Tab Panel of Ark.
+
+image::completed-parcel-list.PNG[width="1000"]
+_Figure 5.23.1 : Clicking on `Completed Parcel` tab_
+
+As seen above, the list has changed to the list of parcels that have been delivered. To revert back to the list of
+parcels that have not been delivered, simply click on the `All Parcels` tab.
+
+[NOTE]
+Parcels that have a `COMPLETED` status will be added to the list of delivered parcels directly while Parcels
+that do not have a `COMPLETED` status will  be added to the list of undelivered parcels.
+
+//end::gui-tab[]
 
 === Saving the data
 
