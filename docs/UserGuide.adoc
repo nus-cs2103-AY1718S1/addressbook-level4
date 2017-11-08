@@ -402,6 +402,34 @@ File will be exported onto the main folder as `output.vcf`
 Format: `export` or `ex`
 // end::export[]
 
+// tag::changetheme[]
+=== Change colour theme : `theme`
+(added in v1.3)
+
+You can customise the colour theme in order to feel more familiar with ConnectUs and to suit your preferences. +
+Currently, the available colour themes are:
+
+* Dark (default theme)
+* White
+* Green
+
+You can change the colour theme with the following command. +
+Format: `theme COLOUR THEME` or `th COLOUR THEME` where `COLOUR THEME` is the colour theme that you wish to change to.
+
+If you want to change the colour theme using the GUI:
+
+. Click on the `File` drop down menu on the top left hand corner of the screen.
+. A drop down menu appears with all the colour themes listed.
+. Click on the theme you want to apply.
+
+
+Examples:
+
+* `theme white` +
+* `th white` +
+Changes the colour theme to white.
+// end::changetheme[]
+
 // tag::uploadphoto[]
 === Upload photo image for a contact : `photo`
 (added in v1.3)
@@ -435,6 +463,40 @@ Opens file explorer and uploads photo to the 1st person in the address book.
 * `p 2 C:\Users\Pictures\photo.jpg` +
 Uploads photo of specified image file path to the 2nd person in the address book.
 // end::uploadphoto[]
+
+// tag::deletephoto[]
+=== Delete photo image of a contact : `dphoto`
+(added in v1.5)
+
+You can delete the photo of a contact if the photo is outdated. You can do so with the following command. +
+Format: `dphoto INDEX` or `dp INDEX`
+
+****
+* Deletes photo of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `dphoto 1` +
+* `dp 1` +
+Deletes photo of the 1st person in the address book.
+// end::deletephoto[]
+
+// tag::deleteallphotos[]
+=== Delete all photos from all contacts : `daphotos`
+(added in v1.5)
+
+If you want to have a fresh start as all the photos are outdated,you can delete all the photos from all contacts. You can do so with the following command. +
+Format: `daphotos` or `dap INDEX`
+
+Examples:
+
+* `daphotos` +
+* `dap` +
+Deletes all photos from all contacts in the address book.
+// end::deleteallphotos[]
 
 === Clearing all entries : `clear`
 
@@ -592,7 +654,10 @@ This section answers some common questions that you may have. If you have any mo
 |*Remove Tag* | `rtag KEYWORD [MORE_KEYWORDS]` |`rtag friends classmates`
 |*Import* | `import FILENAME.vcf` | `import contacts.vcf`
 |*Export* | `export` | `export`
+|*Change theme* | `theme COLOUR THEME` |`theme white`
 |*Upload Photo* | `photo INDEX` OR `photo INDEX FILEPATH` |`photo 3` OR `photo 3 C:\Users\Pictures\photo.jpg`
+|*Delete Photo* | `dphoto INDEX` |`dphoto 3`
+|*Delete All Photos* | `daphotos` |`daphotos`
 
 |=======================================================================
 
@@ -618,5 +683,8 @@ This section answers some common questions that you may have. If you have any mo
 |*Remove Tag* | `rt KEYWORD [MORE_KEYWORDS]` |`rt friends classmates`
 |*Import* | `im FILENAME.vcf` | `im contacts.vcf`
 |*Export* | `exp` | `exp`
+|*Change theme* | `th COLOUR THEME` |`th white`
 |*Upload Photo* | `p INDEX` OR `p INDEX FILEPATH` |`p 3` OR `p 3 C:\Users\Pictures\photo.jpg`
+|*Delete Photo* | `dp INDEX` |`dp 3`
+|*Delete All Photos* | `dap` |`dap`
 |=======================================================================

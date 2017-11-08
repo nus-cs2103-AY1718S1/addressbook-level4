@@ -12,8 +12,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
  * Delete all photos from all persons.
  */
 public class DeleteAllPhotosCommand extends Command {
-    public static final String COMMAND_WORD = "dallphotos";
-    public static final String COMMAND_ALIAS = "dpall";
+    public static final String COMMAND_WORD = "daphotos";
+    public static final String COMMAND_ALIAS = "dap";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes all photos from all persons. "

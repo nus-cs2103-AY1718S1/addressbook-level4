@@ -87,6 +87,7 @@ include::../DeveloperGuide.adoc[tag=removetag]
 ---
 #Start of Extract [from: User Guide]#
 
+include::../UserGuide.adoc[tag=changetheme]
 include::../UserGuide.adoc[tag=colourtheme]
 
 #End of Extract#
