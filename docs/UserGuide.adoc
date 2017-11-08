@@ -248,6 +248,7 @@ __Constraints__
 * Every TAG must have a prefix.
 ****
 
+// tag::detag[]
 ==== Removing tags from multiple contacts : `detag`
 
 When a tag is no longer in used, you can use the detag command to remove the tag from multiple contacts. +
@@ -270,7 +271,7 @@ Note the following constraints when trying to remove tag: +
 * INDEX refers to the index number shown in the most recent listing. +
 * The index *must be a positive integer* 1, 2, 3, ... +
 * Every index must be separated by a comma.
-
+// end::detag[]
 
 ==== Editing contacts : `edit` +
 
@@ -604,6 +605,7 @@ To exit the program, without using the pointer, use: +
 
 Format: `exit`
 
+// tag::calendar[]
 === Using the calendar
 
 A calendar is useful for marking the important dates. When you have many deadlines and birthdays to take note, the calendar allows you to view all these important dates at a glance. +
@@ -642,7 +644,7 @@ __Constraint__
 When a date is clicked and it is not a deadline or not a birthday or both, an empty task list or an empty contacts list or both will be shown, which will be represented by a blank field on the application. +
 
 To return back to original task list or contacts list, you can use the `list` command.
-
+// end::calendar[]
 
 === Saving the data
 
