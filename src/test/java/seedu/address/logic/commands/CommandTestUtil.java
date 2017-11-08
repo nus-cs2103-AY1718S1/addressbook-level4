@@ -76,8 +76,8 @@ public class CommandTestUtil {
     public static final String VALID_TASK_ASSIGNMENT = "Task assignment";
     public static final String VALID_PRIORITY_PROJECT = "High";
     public static final String VALID_PRIORITY_ASSIGNMENT = "Medium";
-    public static final String VALID_DATE_PROJECT = "09/09/2017 0900";
-    public static final String VALID_DATE_ASSIGNMENT = "10/10/2017 1000";
+    public static final String VALID_DATE_PROJECT = "09/09/2017 09:00";
+    public static final String VALID_DATE_ASSIGNMENT = "10/10/2017 10:00";
     public static final String VALID_MESSAGE_PROJECT = "Submit to Manager";
     public static final String VALID_MESSAGE_ASSIGNMENT = "Submit by soft copy";
     public static final String VALID_TAG_OFFICE = "office";

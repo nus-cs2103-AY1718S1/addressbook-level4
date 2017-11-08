@@ -20,7 +20,7 @@ public class ReminderBuilder {
 
     public static final String DEFAULT_TASK = "James birthday";
     public static final String DEFAULT_PRIORITY = "Low";
-    public static final String DEFAULT_DATE = "02/02/2017 2017";
+    public static final String DEFAULT_DATE = "02/02/2017 20:17";
     public static final String DEFAULT_MESSAGE = "Buy present with others";
     public static final String DEFAULT_TAGS = "Watch";
 

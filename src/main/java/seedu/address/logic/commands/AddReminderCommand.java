@@ -31,7 +31,7 @@ public class AddReminderCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_TASK + "Proposal submission "
             + PREFIX_PRIORITY + "Low "
-            + PREFIX_DATE + "25/12/2017 1500 "
+            + PREFIX_DATE + "25/12/2017 15:00 "
             + PREFIX_MESSAGE + "Submit to manager "
             + PREFIX_TAG + "Work "
             + PREFIX_TAG + "John";
