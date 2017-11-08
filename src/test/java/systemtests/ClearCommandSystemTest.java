@@ -85,7 +85,7 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
      * box displays {@code expectedResultMessage} and the model related components equal to the current model.
      * These verifications are done by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
+     * Also verifies that the info panel, selected card and status bar remain unchanged, and the command box has the
      * error style.
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
