@@ -1,5 +1,5 @@
 # caoliangnus
-###### /java/seedu/address/logic/commands/ColorKeywordCommandTest.java
+###### \java\seedu\address\logic\commands\ColorKeywordCommandTest.java
 ``` java
 public class ColorKeywordCommandTest {
 
@@ -24,7 +24,7 @@ public class ColorKeywordCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/CommandTestUtil.java
+###### \java\seedu\address\logic\commands\CommandTestUtil.java
 ``` java
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -181,7 +181,7 @@ public class CommandTestUtil {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/EditPersonDescriptorTest.java
+###### \java\seedu\address\logic\commands\EditPersonDescriptorTest.java
 ``` java
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -246,7 +246,7 @@ public class EditPersonDescriptorTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ColorKeywordCommandParserTest.java
+###### \java\seedu\address\logic\parser\ColorKeywordCommandParserTest.java
 ``` java
 public class ColorKeywordCommandParserTest {
     private ColorKeywordCommandParser parser = new ColorKeywordCommandParser();
@@ -264,7 +264,7 @@ public class ColorKeywordCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtilTest.java
+###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -484,7 +484,7 @@ public class ParserUtilTest {
     }
 }
 ```
-###### /java/seedu/address/model/AddressBookTest.java
+###### \java\seedu\address\model\AddressBookTest.java
 ``` java
 public class AddressBookTest {
 
@@ -568,7 +568,7 @@ public class AddressBookTest {
 
 }
 ```
-###### /java/seedu/address/model/lesson/ClassTypeTest.java
+###### \java\seedu\address\model\lesson\ClassTypeTest.java
 ``` java
 public class ClassTypeTest {
 
@@ -594,7 +594,7 @@ public class ClassTypeTest {
     }
 }
 ```
-###### /java/seedu/address/model/lesson/CodeTest.java
+###### \java\seedu\address\model\lesson\CodeTest.java
 ``` java
 public class CodeTest {
     @Test
@@ -624,7 +624,7 @@ public class CodeTest {
     }
 }
 ```
-###### /java/seedu/address/model/lesson/GroupTest.java
+###### \java\seedu\address\model\lesson\GroupTest.java
 ``` java
 public class GroupTest {
 
@@ -644,7 +644,7 @@ public class GroupTest {
     }
 }
 ```
-###### /java/seedu/address/model/lesson/LocationTest.java
+###### \java\seedu\address\model\lesson\LocationTest.java
 ``` java
 public class LocationTest {
     @Test
@@ -660,7 +660,7 @@ public class LocationTest {
     }
 }
 ```
-###### /java/seedu/address/model/lesson/TimeSlotTest.java
+###### \java\seedu\address\model\lesson\TimeSlotTest.java
 ``` java
 public class TimeSlotTest {
     @Test
@@ -679,7 +679,7 @@ public class TimeSlotTest {
     }
 }
 ```
-###### /java/seedu/address/model/ModelManagerTest.java
+###### \java\seedu\address\model\ModelManagerTest.java
 ``` java
 public class ModelManagerTest {
     @Rule
@@ -732,7 +732,7 @@ public class ModelManagerTest {
     }
 }
 ```
-###### /java/seedu/address/model/UniqueLecturerListTest.java
+###### \java\seedu\address\model\UniqueLecturerListTest.java
 ``` java
 public class UniqueLecturerListTest {
     @Rule
@@ -746,7 +746,7 @@ public class UniqueLecturerListTest {
     }
 }
 ```
-###### /java/seedu/address/model/UniqueLessonListTest.java
+###### \java\seedu\address\model\UniqueLessonListTest.java
 ``` java
 public class UniqueLessonListTest {
     @Rule
@@ -760,7 +760,7 @@ public class UniqueLessonListTest {
     }
 }
 ```
-###### /java/seedu/address/testutil/AddressBookBuilder.java
+###### \java\seedu\address\testutil\AddressBookBuilder.java
 ``` java
 /**
  * A utility class to help with building Addressbook objects.
@@ -808,7 +808,7 @@ public class AddressBookBuilder {
     }
 }
 ```
-###### /java/seedu/address/testutil/EditLessonDescriptorBuilder.java
+###### \java\seedu\address\testutil\EditLessonDescriptorBuilder.java
 ``` java
 /**
  * A utility class to help with building EditPersonDescriptor objects.
@@ -916,7 +916,7 @@ public class EditLessonDescriptorBuilder {
     }
 }
 ```
-###### /java/seedu/address/testutil/LessonBuilder.java
+###### \java\seedu\address\testutil\LessonBuilder.java
 ``` java
 /**
  * A utility class to help with building Lesson objects.
@@ -1048,7 +1048,7 @@ public class LessonBuilder {
 
 }
 ```
-###### /java/seedu/address/testutil/LessonUtil.java
+###### \java\seedu\address\testutil\LessonUtil.java
 ``` java
 /**
  * A utility class for Lesson.
@@ -1080,7 +1080,7 @@ public class LessonUtil {
     }
 }
 ```
-###### /java/seedu/address/testutil/TypicalLessonComponents.java
+###### \java\seedu\address\testutil\TypicalLessonComponents.java
 ``` java
 /**
  * A utility class containing a list of {@code LessonComponent} objects to be used in tests.
@@ -1109,7 +1109,7 @@ public class TypicalLessonComponents {
 
 }
 ```
-###### /java/seedu/address/testutil/TypicalLessons.java
+###### \java\seedu\address\testutil\TypicalLessons.java
 ``` java
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -1201,7 +1201,7 @@ public class TypicalLessons {
     }
 }
 ```
-###### /java/seedu/address/ui/CommandBoxTest.java
+###### \java\seedu\address\ui\CommandBoxTest.java
 ``` java
     @Test
     public void configActiveKeywordTest() {
@@ -1221,7 +1221,7 @@ public class TypicalLessons {
         assertNotEquals(commandColor, keywordColorMap.get(commandKeyword));
     }
 ```
-###### /java/seedu/address/ui/LessonCardTest.java
+###### \java\seedu\address\ui\LessonCardTest.java
 ``` java
 public class LessonCardTest extends GuiUnitTest {
 
@@ -1294,7 +1294,7 @@ public class LessonCardTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/systemtests/ColorEnableSystemTest.java
+###### \java\systemtests\ColorEnableSystemTest.java
 ``` java
 public class ColorEnableSystemTest extends AddressBookSystemTest {
     @Test
