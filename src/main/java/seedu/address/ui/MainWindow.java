@@ -213,9 +213,9 @@ public class MainWindow extends UiPart<Region> {
      * Selects the theme given by user input
      */
     public void handleSelectTheme(String theme) {
-        if (getRoot().getStylesheets().size() > 1) {
-            getRoot().getStylesheets().remove(CURRENT_THEME);
-        }
+        //if (getRoot().getStylesheets().size() > 1) {
+        getRoot().getStylesheets().remove(CURRENT_THEME);
+        //}
         getRoot().getStylesheets().add("/view/" + theme);
     }
 
