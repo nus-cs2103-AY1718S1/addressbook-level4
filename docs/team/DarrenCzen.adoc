@@ -3,6 +3,12 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
+== Purpose
+
+This project portfolio displays the contributions and enhancements made to the software, The Myth's Book,
+along with its justifications. The portfolio will first introduce The Myth's Book and subsequently talk
+about the enhancements and contributions made by Darren Chin Jhun Pyng.
+
 == Project: The Myth's Book
 The Myth's Book is an address book dedicated for university students to store useful information such
 as websites, phone numbers and emails of the people around them for personal usage. The application helps students
@@ -16,14 +22,15 @@ The Myth's Book is a software application that is coded in `Java` programming la
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/main/DarrenCzen.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/test/DarrenCzen.md[Test code]]
 
-=== Enhancement Added: Undo/Redo
+---
+=== Enhancement Added: Sort Command, Sort Names Alphabetically
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=sort]
 
 #End of Extract#
 
@@ -38,21 +45,151 @@ include::../UserGuide.adoc[tag=undoredo]
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=sort]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Added: Access Command, Accessing a website of a contact
 
-{Explain similar to the Undo/Redo feature above.}
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=access]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=access]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Location Command, Locate an address of a user
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=locate]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=locate]
+
+#End of Extract#
+
+---
+
+
+=== Enhancement Proposed: Add Command, Optional fields
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+---
+
+=== Enhancement: Allow inputted names to become capitalized fully
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+=== Enhancement: Alias for basic commands
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+---
+
+=== Enhancement proposed: Toggling of Person List and Events List
+
+==== External behavior
+
+---
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Wrote introduction and about of The Myth's Book for User Guide and Developer Guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/91[#91])
+* Change structure of software's user guide and updated preface of most sections in user guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/123[#123])
+* Added prefix table for Add Command in user guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/123[#123])
+* Updated software's user guide to be more user friendly and user focused. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/134[#134])
 
-== Project: PowerPointLabs
+==== Contribution to Acceptance Testing: HitMeUp (CS2103AUG2017-W14-B3)
 
-{Optionally (not graded), you may include other projects in your portfolio.}
+*Suggestion/Bug Finding contributed*:
+
+1. Provided suggestion for sort command to be non case-sensitive.
+(Issue #114 - https://github.com/CS2103AUG2017-W14-B3/main/issues/114[Suggestion - sort])
+
+2. Provided suggestion for select command to show a user's twitter/instagram instead of google search.
+(Issue #109 - https://github.com/CS2103AUG2017-W14-B3/main/issues/109[Suggestion for select function])
+
+3. Provided suggestion for user guide to show better user guidance for email command.
+(Issue #106 - https://github.com/CS2103AUG2017-W14-B3/main/issues/106[Suggestion - user guide for email function ])
+
+4. Provided suggestion/bug fix for birthday inputted to account for leap year so that all contacts can have their birthday properly accounted for.
+(Issue #105 - https://github.com/CS2103AUG2017-W14-B3/main/issues/105[Bug for Birthday])
+
