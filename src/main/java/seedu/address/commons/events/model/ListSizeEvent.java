@@ -4,9 +4,14 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.events.BaseEvent;
 
+/**
+ *  Represents an event where displayed list size is updated
+ *  Find, List, Delete multiple.
+ *
+ */
 public class ListSizeEvent extends BaseEvent {
 
-    public int sizeOfList;
+    private int sizeOfList;
 
     public ListSizeEvent(int size) {
         requireNonNull(size);
