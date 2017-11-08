@@ -82,10 +82,9 @@ image::introUiUG.png[width="790"]
 . The different sections of the UI are as follows:
 .. Command Box - This is where you type your commands
 .. Result Display - The outcome of your commands will display here
+.. Person & Task list - Your list of contacts and tasks will be shown here
 .. Sort menu - You can use this menu to sort the list
 .. Search Box - You can search for your contacts and tasks here
-.. Person and task list - Your list of contacts and tasks will be shown here
-.. Browser Panel - This is where the browser will appear
 
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
