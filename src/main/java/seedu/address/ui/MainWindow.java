@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
