@@ -52,7 +52,7 @@ public class GraphPanelTest extends GuiUnitTest {
     @Test
     public void display() throws Exception {
         // select ALICE
-        postNow(new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0)));;
+        postNow(new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0)));
         XYChart.Series<String, Double> testSeries = new XYChart.Series<>();
         for (ReadOnlyPerson people : TYPICAL_PERSONS) {
             if (ALICE.getFormClass().equals(people.getFormClass())) {
