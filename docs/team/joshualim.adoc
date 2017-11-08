@@ -28,7 +28,12 @@ include::../UserGuide.adoc[tag=mapbutton]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+"Edit profile" form was implemented because so as to enhance user efficiency in using the application. It would be hard for users to manually remember the commands, also, typing the commands exposes the user to potential input errors. +
+"Google maps" was implemented because displaying the location of a contact would prove useful to users who require
+location based services such as food delivery and door to door services. +
+"Email" feature was implemented because it can be tedious to manually find and organise emails. With the email function, emailing contacts is one click/command away. Similar to edit profile, automatically filling up +
+the "to:" field in the email minimises the chance of human error.
+
 
 ==== Implementation
 

@@ -20,7 +20,6 @@ ConnectUs is a professional address book application tailored to small to medium
 who wish for prompt lookup of their business partners particulars. It allows for storage and management of business contacts, quick and easy
 access to their emails, and displays their location on Google Maps.
 
-ConnectUs v1.2 is available for Windows and Mac OS X Operating Systems.
 
 == About
 
@@ -327,11 +326,13 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::sort[]
 === Sorting contacts in the Address Book : `sort`
 (added in v1.2)
 
 If you want your contact names to be displayed in neat and tidy order, you may do so with the sort command. Which sorts the contact list by name. +
 Format: `sort` or `ss`
+// end::sort[]
 
 // tag::filtertag[]
 === Filtering list by tags : `tag`
@@ -378,6 +379,8 @@ Removes "friends", "classmates", "colleagues" tag from all persons
 
 // end::removetag[]
 
+// tag::import[]
+
 === Importing Contacts from external source : `import`
 (added in v1.2)
 
@@ -386,7 +389,9 @@ If you have an existing contact list information which is in forms of '.vcf' for
 File must also be placed in the main folder.
 
 Format: `import FILENAME.vcf` or `im FILENAME.vcf` where `FILENAME` is the name of the file that you wish to import.
+// end::import[]
 
+// tag::export[]
 === Exporting Contacts to external source : `export`
 (added in v1.3)
 
@@ -395,6 +400,7 @@ If you want to backup your contact list information, you may do so with our expo
 File will be exported onto the main folder as `output.vcf`
 
 Format: `export` or `ex`
+// end::export[]
 
 // tag::uploadphoto[]
 === Upload photo image for a contact : `photo`
