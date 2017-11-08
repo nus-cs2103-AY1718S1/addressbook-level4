@@ -250,20 +250,22 @@ There is no need to save manually.
 
 == New Features
 
-=== Since `v1.0`
+=== Static `coloured` tags (v1.0)
 
-==== Static `coloured` tags
+*Author*: Ng Choon Heng
 
 Tags generated will automatically be assigned a unique color.+
 Similar tags will also be assigned the same colour as long as tags have the same spelling.
 
-==== Display of `total person`
+=== Display of `total person` (v1.0)
+
+*Author*: Ng Choon Heng
 
 Total number of person in addressbook will now be displayed at the footer bar.
 
-=== Since `v1.1`
+=== Locating persons by names or phone numbers or emails or tags: `finds` (v1.1)
 
-==== Locating persons by names or phone numbers or emails or tags: `finds`
+*Author*: Soh Hong Hwee
 
 Finds persons who contain any of the given keywords. +
 Format: `finds n/[MORE_KEYWORDS] or p/[MORE_KEYWORDS] or e/[MORE_KEYWORDS] or t/[MORE_KEYWORDS]`
@@ -298,19 +300,23 @@ Returns any person having tag `[friends]` exactly
 * `finds t/[friends] [colleagues]` +
 Returns any person having tags `[friends]` or `[colleagues]` exactly
 
-==== Extra `options` menu
+=== Extra `Options` menu (v1.1)
+
+*Author*: Ng Choon Heng
 
 Each user will have an extra list of options to choose from beside their name. +
 Icon is similar to a down arrow.
 
-==== `Delete` option
+=== Option Menu `Delete` (v1.1)
+
+*Author*: Ng Choon Heng
 
 This feature can be found under the new `options` menu
 Deletes the user according to the selected option's parent person.
 
-=== Since `v1.2`
+=== Displaying google map : `gmap` (v1.2)
 
-==== Displaying google map : `gmap`
+*Author*: Ng Choon Heng
 
 Displays the google map of the person identified by the index number used in the last person listing. +
 Format: `gmap INDEX`
@@ -330,38 +336,48 @@ Display google map of the 2nd person in the address book.
 `gmap 1` +
 Display google map the 1st person in the results of the `find` command.
 
-==== `Google map` option
+=== Option Menu `Google map` (v1.2)
+
+*Author*: Ng Choon Heng
 
 This feature can be found under the new `options` menu. +
 Display the google map data into browser panel based on person's address.
 
-==== Themes selection from `File` toolbar
+=== Themes selection from `File` toolbar (v1.2)
+
+*Author*: Ng Choon Heng
 
 Allows user to select from a range of user interface themes +
 Function will be found from under the `File` section of menu toolbar. +
 Selected themes will be saved into user preference file upon exit of program. +
 Reinitializing of myBook will display the previous choice of theme.
 
-==== `Important` or `important` tag
+=== `Important` or `important` tag (v1.2)
+
+*Author*: Soh Hong Hwee
 
 Contacts in user myBook app that has `Important` or `important` tag will always appear at the top of the list. +
 User using versions before v1.2 should add a new person with `important` tag first to enjoy this feature.
 
-=== Since `v1.3`
+=== Add Birthday
 
-==== Add Birthday
+*Author*: Wei Ren Kai
 
 All persons can now add in their birthday on the command line
 Format `b/dd/mm/yyyy` allow Mybook to keep track all students birthday
 Easy to identify who's birthday is coming up on that month.
 
-==== Sorted Contacts
+=== Sorted Contacts (v1.3)
+
+*Author*: Soh Hong Hwee
 
 All persons displayed will be sorted in ascending alphabetical order based on their name. +
 Using `List` command will always display all persons in sorted ascedning alphabetical order. +
 Persons with `Important` or `important` tag will be at the top in ascending alphabetical order then follow by other persons.
 
-==== Gmap command accepts uperson name
+=== Gmap command accepts uperson name (v1.3)
+
+*Author*: Ng Choon Heng
 
 Gmap command can now accept person name instead of just Index only.
 
@@ -383,7 +399,9 @@ Display google map of the person with name *Bernice* in the address book.
 `gmap Yu` +
 Display google map of the person in the results of the `find` command with *Yu* surname.
 
-==== Changing theme with CLI command
+=== Changing theme with CLI command (v1.3)
+
+*Author*: Ng Choon Heng
 
 Theme command can now accept both theme NAME and INDEX.
 
@@ -416,7 +434,9 @@ Changes the addressbook theme to *Caspian* theme. +
 `theme 1` +
 Changes the addressbook theme to theme `INDEX` of one, which is default *DarkTheme*.
 
-==== Remarking a person with `remark` command
+=== Remarking a person with `remark` command (v1.3)
+
+*Author*: Beh Bee Yee
 
 Edits the remark for a person specified in the INDEX. +
 Format: `remark INDEX r/[REMARK]`
@@ -435,9 +455,9 @@ Edits the remark for the first person in the existing to Likes to drink milk.
 * `remark 1 r/` +
 Removes the remark for the first person.
 
-=== Since `v1.4`
+=== Quick adding using improved `add` Command (v1.4)
 
-==== Quick adding using improved `add` Command
+*Author*: Soh Hong Hwee
 
 User can now add a person with just name and phone details. +
 All other details that are not provided will be filled in by default values as shown in `Figure 3.5.1.1`.
@@ -445,12 +465,16 @@ All other details that are not provided will be filled in by default values as s
 image::Default_for_empty_fields.png[width="400"]
 _Figure 3.5.1.1 : Default values for empty fields_
 
-==== `Add photo` option
+=== Option Menu `Add photo` (v1.4)
+
+*Author*: Wei Ren Kai
 
 This feature is to add photo to individual. +
 Display the photo data into browser panel with a photo size of 100X100.
 
-==== Import XML addressbook command
+=== Import XML addressbook command (v1.4)
+
+*Author*: Ng Choon Heng
 
 External addressbook can now be imported using `import` command
 
@@ -474,7 +498,9 @@ Add new persons from newAddressBook into local addressbook. +
 Add new persons from addressbook2 from local project +
 folder *data* into local addressbook.
 
-==== Add a remark in `add` command
+=== Add a remark in `add` command (v1.4)
+
+*Author*: Soh Hong Hwee
 
 Add remark to a person in `add` command with `r/` prefix. +
 Format: `add n/NAME p/PHONE_NUMBER b/BIRTHDAY e/EMAIL a/ADDRESS r/[REMARK] [t/TAG]...`
@@ -491,11 +517,6 @@ Adds the remark together with name, phone, email and address for the new person 
 Adds the remark together with name, phone, email, address and tag for the new person in the list.
 
 === Coming soon in `v2.0`
-
-==== Import & export of addressbook
-
-User is able to import or export an xml file of an addressbook from +
-the commandline or menu toolbar
 
 ==== Close panels in UI from `Button`
 
