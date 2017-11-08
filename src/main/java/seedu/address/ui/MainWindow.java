@@ -23,8 +23,11 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 
 import seedu.address.commons.events.ui.ShowThemeRequestEvent;
+import seedu.address.commons.events.ui.TogglePanelEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.EventsCommand;
+import seedu.address.logic.commands.ListCommand;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -49,6 +52,7 @@ public class MainWindow extends UiPart<Region> {
     private BrowserPanel browserPanel;
     private DetailsPanel detailsPanel;
     private PersonListPanel personListPanel;
+    private EventListPanel eventListPanel;
     private Config config;
     private UserPrefs prefs;
     private Calendar calendar;
@@ -67,6 +71,12 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane eventListPanelPlaceholder;
+
+    @FXML
+    private StackPane personAndEventListPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -149,8 +159,16 @@ public class MainWindow extends UiPart<Region> {
         detailsPanelPlaceholder.getChildren().clear();
         detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
 
+        eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        personAndEventListPlaceholder.getChildren().add(personListPanelPlaceholder);
+        personAndEventListPlaceholder.getChildren().add(eventListPanelPlaceholder);
+
+        personListPanelPlaceholder.toFront();
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -239,14 +257,24 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
-     * Changes the theme based on the input theme
-     * @param theme
+     * Changes the theme based on the input theme.
      */
     public void handleChangeTheme(String theme) {
         if (getRoot().getStylesheets().size() > 1) {
             getRoot().getStylesheets().remove(CURRENT_THEME_INDEX);
         }
         getRoot().getStylesheets().add(VIEW_PATH + theme);
+    }
+
+    /**
+     * Toggles the list panel based on the input panel.
+     */
+    public void handleToggle(String selectedPanel) {
+        if (selectedPanel.equals(EventsCommand.COMMAND_WORD)) {
+            eventListPanelPlaceholder.toFront();
+        } else if (selectedPanel.equals(ListCommand.COMMAND_WORD)) {
+            personListPanelPlaceholder.toFront();
+        }
     }
 
     void show() {
@@ -288,5 +316,11 @@ public class MainWindow extends UiPart<Region> {
         handleChangeTheme(event.theme);
         browserPanel.setDefaultPage(event.theme);
         logic.setCurrentTheme(getCurrentTheme());
+    }
+
+    @Subscribe
+    private void handleToggleEvent(TogglePanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleToggle(event.selectedPanel);
     }
 }
