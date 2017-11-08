@@ -13,7 +13,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.autocomplete.parser.ModelStub;
+import seedu.address.logic.autocomplete.parser.ModelStub;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;

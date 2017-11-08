@@ -1,4 +1,4 @@
-package seedu.address.autocomplete.parser;
+package seedu.address.logic.autocomplete.parser;
 
 import static org.junit.Assert.fail;
 
