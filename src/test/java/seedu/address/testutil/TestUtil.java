@@ -7,6 +7,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.reminder.ReadOnlyReminder;
 
 /**
  * A utility class for test cases.
@@ -50,5 +51,24 @@ public class TestUtil {
      */
     public static ReadOnlyPerson getPerson(Model model, Index index) {
         return model.getAddressBook().getPersonList().get(index.getZeroBased());
+    }
+    /**
+     * Returns the middle index of the person in the {@code model}'s reminder list.
+     */
+    public static Index getMidIndexReminder(Model model) {
+        return Index.fromOneBased(model.getAddressBook().getReminderList().size() / 2);
+    }
+
+    /**
+     * Returns the last index of the reminder in the {@code model}'s reminder list.
+     */
+    public static Index getLastIndexReminder(Model model) {
+        return Index.fromOneBased(model.getAddressBook().getReminderList().size());
+    }
+    /**
+     * Returns the reminder in the {@code model}'s reminder list at {@code index}.
+     */
+    public static ReadOnlyReminder getReminder(Model model, Index index) {
+        return model.getAddressBook().getReminderList().get(index.getZeroBased());
     }
 }

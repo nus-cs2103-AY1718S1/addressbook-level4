@@ -28,7 +28,7 @@ import systemtests.ModelHelper;
 public class TestApp extends MainApp {
 
     public static final String SAVE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("sampleData.xml");
-    public static final String APP_TITLE = "Test App";
+    public static final String APP_TITLE = "Weaver";
 
     protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
@@ -101,7 +101,7 @@ public class TestApp extends MainApp {
 
     @Override
     public void start(Stage primaryStage) {
-        ui.start(primaryStage);
+        ui.start(primaryStage, 1);
     }
 
     public static void main(String[] args) {

@@ -2,7 +2,6 @@ package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
@@ -82,8 +81,9 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(SelectCommand.COMMAND_WORD + " 1 abc",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
-        /* Case: mixed case command word -> rejected */
-        assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
+        /* Case: mixed case command word -> success */
+        command = "SeLeCt 1";
+        assertCommandSuccess(command, INDEX_FIRST_PERSON);
 
         /* Case: select from empty address book -> rejected */
         executeCommand(ClearCommand.COMMAND_WORD);
@@ -98,7 +98,8 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
      * of the selected person, and the model related components equal to the current model.
      * These verifications are done by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the command box has the default style class and the status bar remain unchanged. The resulting
+     * Also verifies that the command box has the default style class and the status bar remain unchanged. The
+ resulting
      * browser url and selected card will be verified if the current selected card and the card at
      * {@code expectedSelectedCardIndex} are different.
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
@@ -141,4 +142,5 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }
+
 }

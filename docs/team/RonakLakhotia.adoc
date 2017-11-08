@@ -1,0 +1,74 @@
+= Ronak Lakhotia - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Weaver
+Weaver is a desktop address book application meant for NUS students.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+*Code contributed*: [https://github.com/RonakLakhotia/addressbook-level4/blob/master/collated/main/RonakLakhotia.md[Functional code]] [https://github.com/RonakLakhotia/addressbook-level4/blob/master/collated/test/RonakLakhotia.md[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Facebook Integration
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=facebook]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This implementation is very useful for users as they can connect with their friends and family through
+Weaver, therby saving them the trouble of opening a browser on their desktop. +
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=facebook]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `photo`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addphoto]
+
+#End of Extract#
+
+---
+==== Justification
+
+Allows user to choose any image in their pc and use CLI to specify the path of the image. +
+This way the user can display the pictures on their contact lists. +
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addphoto]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Set up a reminders panel (Pull requests https://github.com[#33], https://github.com[#34])
+* Wrote additional tests to increase coverage (Pull requests https://github.com[#36], https://github.com[#38])
+
+

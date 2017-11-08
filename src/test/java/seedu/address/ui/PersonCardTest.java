@@ -36,6 +36,10 @@ public class PersonCardTest extends GuiUnitTest {
             personWithTags.setEmail(ALICE.getEmail());
             personWithTags.setPhone(ALICE.getPhone());
             personWithTags.setTags(ALICE.getTags());
+            personWithTags.setRemark(ALICE.getRemark());
+            personWithTags.setImage(ALICE.getImage());
+            personWithTags.setUsername(ALICE.getUsername());
+
         });
         assertCardDisplay(personCard, personWithTags, 2);
     }
@@ -64,6 +68,25 @@ public class PersonCardTest extends GuiUnitTest {
 
         // same person, different index -> returns false
         assertFalse(personCard.equals(new PersonCard(person, 1)));
+    }
+    @Test
+    public void displayImage() {
+        Person personWithDisplayPicture = new PersonBuilder().withImage("src/main/resources/images/clock.png")
+                .build();
+        PersonCard personCard = new PersonCard(personWithDisplayPicture, 1);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithDisplayPicture, 1);
+
+        // changes made to Person reflects on card
+        guiRobot.interact(() -> {
+            personWithDisplayPicture.setName(ALICE.getName());
+            personWithDisplayPicture.setAddress(ALICE.getAddress());
+            personWithDisplayPicture.setEmail(ALICE.getEmail());
+            personWithDisplayPicture.setPhone(ALICE.getPhone());
+            personWithDisplayPicture.setRemark(ALICE.getRemark());
+            personWithDisplayPicture.setImage(ALICE.getImage());
+            personWithDisplayPicture.setTags(ALICE.getTags());
+        });
     }
 
     /**

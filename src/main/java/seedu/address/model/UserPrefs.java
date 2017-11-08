@@ -3,6 +3,8 @@ package seedu.address.model;
 import java.util.Objects;
 
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.font.FontSize;
+import seedu.address.model.theme.Theme;
 
 /**
  * Represents User's preferences.
@@ -14,7 +16,7 @@ public class UserPrefs {
     private String addressBookName = "MyAddressBook";
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0);
+        this.setGuiSettings(500, 500, 0, 0, FontSize.FONT_SIZE_M_LABEL, Theme.BRIGHT_THEME);
     }
 
     public GuiSettings getGuiSettings() {
@@ -25,8 +27,12 @@ public class UserPrefs {
         this.guiSettings = guiSettings;
     }
 
+    public void setGuiSettings(double width, double height, int x, int y, String fontSize, String theme) {
+        guiSettings = new GuiSettings(width, height, x, y, fontSize, theme);
+    }
+
     public void setGuiSettings(double width, double height, int x, int y) {
-        guiSettings = new GuiSettings(width, height, x, y);
+        guiSettings = new GuiSettings(width, height, x, y, FontSize.getCurrentFontSizeLabel(), Theme.getCurrentTheme());
     }
 
     public String getAddressBookFilePath() {
@@ -35,10 +41,6 @@ public class UserPrefs {
 
     public void setAddressBookFilePath(String addressBookFilePath) {
         this.addressBookFilePath = addressBookFilePath;
-    }
-
-    public String getAddressBookName() {
-        return addressBookName;
     }
 
     public void setAddressBookName(String addressBookName) {

@@ -1,3 +1,4 @@
+//@@author ChenXiaoman
 package seedu.address.model.tag;
 
 import static java.util.Objects.requireNonNull;
@@ -5,7 +6,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Tag in the address book.
+ * Represents a Tag of a person.
  * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}
  */
 public class Tag {
@@ -14,6 +15,7 @@ public class Tag {
     public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
     public final String tagName;
+    public final TagColor tagColor;
 
     /**
      * Validates given tag name.
@@ -27,6 +29,22 @@ public class Tag {
             throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
         }
         this.tagName = trimmedName;
+        this.tagColor = new TagColor(TagColor.DEFAULT_TAG_COLOR);
+    }
+
+    /**
+     * Validates given tag name and color
+     *
+     * @throws IllegalValueException if the given tag name string is invalid.
+     */
+    public Tag(String name, String color) throws IllegalValueException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!isValidTagName(trimmedName)) {
+            throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
+        }
+        this.tagName = trimmedName;
+        this.tagColor = new TagColor(color);
     }
 
     /**

@@ -7,8 +7,10 @@ import java.util.stream.Collectors;
 
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
+import guitests.guihandles.ReminderCardHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.reminder.ReadOnlyReminder;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -25,6 +27,15 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertCardEqualsReminders(ReminderCardHandle expectedCard, ReminderCardHandle actualCard) {
+        assertEquals(expectedCard.getId(), actualCard.getId());
+        assertEquals(expectedCard.getDetails(), actualCard.getDetails());
+        assertEquals(expectedCard.getDueDate(), actualCard.getDueDate());
+        assertEquals(expectedCard.getPriority(), actualCard.getPriority());
+    }
 
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
@@ -36,6 +47,15 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+        assertEquals(expectedPerson.getDateOfBirth().date, actualCard.getDate());
+    }
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedReminder}.
+     */
+    public static void assertCardDisplaysReminder(ReadOnlyReminder expectedReminder, ReminderCardHandle actualCard) {
+        assertEquals(expectedReminder.getDetails().details, actualCard.getDetails());
+        assertEquals(expectedReminder.getPriority().priority, actualCard.getPriority());
+        assertEquals(expectedReminder.getDueDate().date, actualCard.getDueDate());
     }
 
     /**

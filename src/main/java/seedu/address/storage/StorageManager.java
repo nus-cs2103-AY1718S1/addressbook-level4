@@ -9,6 +9,7 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.BackUpEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -31,6 +32,9 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     // ================ UserPrefs methods ==============================
+    public void setAddressBookStorage(AddressBookStorage addressBookStorage) {
+        this.addressBookStorage = addressBookStorage;
+    }
 
     @Override
     public String getUserPrefsFilePath() {
@@ -49,6 +53,9 @@ public class StorageManager extends ComponentManager implements Storage {
 
 
     // ================ AddressBook methods ==============================
+    public void setUserPrefsStorage(UserPrefsStorage userPrefsStorage) {
+        this.userPrefsStorage = userPrefsStorage;
+    }
 
     @Override
     public String getAddressBookFilePath() {
@@ -77,13 +84,29 @@ public class StorageManager extends ComponentManager implements Storage {
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
-
     @Override
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveAddressBook(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
+    //@@author pjunwei95
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        logger.fine("Attempting to create backup for: " + addressBook);
+        addressBookStorage.backupAddressBook(addressBook);
+    }
+
+    @Subscribe
+    public void handleBackUpEvent(BackUpEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Backup requested, creating backup file"));
+        try {
+            backupAddressBook(event.data);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }

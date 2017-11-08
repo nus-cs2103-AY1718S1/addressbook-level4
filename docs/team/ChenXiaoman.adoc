@@ -1,0 +1,119 @@
+= Chen Xiaoman - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Weaver
+Weaver is a desktop address book application used by university students to
+manage their contacts and school life. +
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B2/main/blob/master/collated/main/ChenXiaoman.md[Functional code]]
+ [https://github.com/CS2103AUG2017-W13-B2/main/blob/master/collated/test/ChenXiaoman.md[Test code]]
+
+=== Enhancement Added: Customize tag color command
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=customizetagcolor]
+
+---
+
+==== Justification
+
+Defining different color for different tag helps user distinguish tags visually.
+Also, the various colors of tags make the whole user interface colorful and beautiful.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=customizetagcolor]
+
+---
+
+=== Enhancement Added: Customize font size command
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=customizefontsize]
+
+---
+
+==== Justification
+
+Allowing users to change font size of the application makes the app more user-friendly for those with poor eyesight.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=customizeFontSize]
+
+---
+
+=== Enhancement Added: Show google map command
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=map]
+
+---
+
+==== Justification
+
+When user wants to check the address of a person in his contacts, he/she can now view the address
+ in Google Map conveniently.
+
+=== Enhancement Added: Change theme command
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=theme]
+
+---
+
+==== Justification
+
+Having different themes make the app looks more beautiful.
+When users are allowed to choose the theme for the app, the user experience will become nicer.
+
+=== Enhancement Added: Parse the command while the user is typing
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=parse]
+
+---
+
+==== Justification
+
+User can know whether the command typed is valid while typing. User does not need to press enter key and then discover
+an error message and then fix the command typed earlier.
+
+=== Other contributions
+
+* Bugs reported and suggestions posted for other team's products (Issues
+https://github.com/CS2103AUG2017-T13-B1/main/issues/126[#126],
+https://github.com/CS2103AUG2017-T13-B1/main/issues/129[#129],
+https://github.com/CS2103AUG2017-T13-B1/main/issues/131[#131])
+* Wrote additional tests to increase coverage from 80% to 82%
+(Pull request https://github.com/CS2103AUG2017-W13-B2/main/pull/120[#120])
+* Made suggestion for AddressBook level 4 (Issue
+https://github.com/nus-cs2103-AY1718S1/forum/issues/195[#195])
+* Made suggestion for CS2103 website (Issue
+https://github.com/nus-cs2103/website/issues/42[#42])
+* Offering features for others to reuse (Issues
+https://github.com/nus-cs2103-AY1718S1/forum/issues/176[#176],
+https://github.com/nus-cs2103-AY1718S1/forum/issues/179[#179])
+
