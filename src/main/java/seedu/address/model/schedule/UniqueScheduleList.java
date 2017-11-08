@@ -3,6 +3,7 @@ package seedu.address.model.schedule;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -146,6 +147,33 @@ public class UniqueScheduleList implements Iterable<Schedule> {
             int schedule2Day = DateUtil.getDay(schedule2DateInString);
             return schedule1Day - schedule2Day;
         });
+    }
+
+    /**
+     * Returns true if schedule list contains activity to be done within 1 day from the current date.
+     */
+    public boolean haveScheduleToRemind() {
+        LocalDate currentDate = LocalDate.now();
+
+        for (Schedule schedule : internalList) {
+            String scheduleDateString = schedule.getScheduleDate().value;
+
+            LocalDate scheduleDateToAlter = currentDate;
+            LocalDate scheduleDate = scheduleDateToAlter.withDayOfMonth(DateUtil.getDay(scheduleDateString))
+                    .withMonth(DateUtil.getMonth(scheduleDateString))
+                    .withYear(DateUtil.getYear(scheduleDateString));
+
+            LocalDate dayBeforeSchedule = scheduleDate.minusDays(1);
+            final boolean isYearEqual = (dayBeforeSchedule.getYear() == currentDate.getYear());
+            final boolean isMonthEqual = (dayBeforeSchedule.getMonthValue() == currentDate.getMonthValue());
+            final boolean isDayEqual = (dayBeforeSchedule.getDayOfMonth() == currentDate.getDayOfMonth());
+
+            if (isYearEqual && isMonthEqual && isDayEqual) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     //@@author CT15

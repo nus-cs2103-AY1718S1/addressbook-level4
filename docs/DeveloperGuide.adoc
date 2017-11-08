@@ -28,24 +28,10 @@ This comprehensive guide brings you all the necessary information you need to na
 
 * Step by step guide to set up your project
 * Design and implementation of ConTag features
-* *(NOT SURE WHETHER TO INCLUDE THE REST)*
 
 === Overview of the ConTag Project
 
 ConTag was initially developed to be an efficient and feature-packed desktop address book application for the most demanding business users and busiest frequent travellers.
-
-*(ANY MORE THINGS TO ADD HERE? It has the following capabilities:??)*
-
-*(MENTION THAT CONTAG IS STILL IN DEVELOPMENT? MANAGE THEIR EXPECTATION THAT IT WILL STILL CHANGE?)*
-
-*(MENTION THAT THIS IS AN OPEN SOURCE PROJECT? THEY ARE WELCOME TO CONTRIBUTE OR FORK TO DEVELOP THEIR OWN APPLICATION? OR SAY THAT THEY CANNOT PR, SOLELY FOR THE DEVELOPMENT OF THEIR OWN APPLICATION ONLY, AND HENCE THE EXPECTATION THAT CONTAG MAY CHANGE IF THEY FORK AT DIFFERENT TIME)*
-
-*(ENSURE THEM THAT WE WILL ONLY MOVE ON TO THE NEXT VERSION WHEN EVERYTHING IS WORKING PROPERLY, SO NO MATTER WHEN THEY FORK, THEY WILL ALWAYS HAVE A WORKING COPY OF THE PROJECT)*
-*(WE NEED TO MAKE SURE WE KNOW THE CONTEXT OF THE DEVELOPER GUIDE)*
-
-*(WHERE DO WE MENTION THAT THIS IS V1.5? WE WANT TO DEVELOP UNTIL V2.0, AND HENCE THE USER STORIES THAT HAVE NOT BEEN IMPLEMENTED. MENTION THAT EVERYTHING IN THE USER STORIES WILL BE IMPLEMENTED BY V2.0?)*
-
-*(MENTION THAT DEVELOPMENT WILL BE HALTED AT V2.0. SO AFTER THAT, CAN FORK TO DEVELOP THEIR OWN ADDRESS BOOK. NO MORE PR?)*
 
 === How to Use the Developer Guide
 
@@ -60,8 +46,6 @@ This symbol indicates something for you to take note of.
 
 [TIP]
 This symbol indicates a tip to help you.
-
-*(NOT SURE WHETHER TO MENTION THAT APPENDIX A IS CATERED TOWARDS BEGINNER DEVELOPER TO GET THEM STARTED)*
 
 == Setting Up
 
@@ -87,13 +71,10 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 [NOTE]
 This application is written in JAVA. +
 All example codes in the guide uses JAVA language. +
-*(HOW ABOUT JAVAFX THAT REQUIRES MINIMUM UNDERSTANDING OF XML, JSON AND CSS?)*
 
-=== Setting up the Project in Your Computer (PICTURES - BUT HOW MANY?)
+=== Setting up the Project in Your Computer
 
-*(SHOULD WE PUT A SINGLE SENTENCE HERE? AND OTHER PLACES AS WELL? THE SENTENCE WILL BE A REITERATION OF THE SUBHEADING ...)*
-
-. Fork this repository and clone the fork to your computer *(WHEN CAN WE COMBINE TO ACTION INTO ONE POINT?)*
+. Fork this repository and clone the fork to your computer
 . Open IntelliJ IDEA
 [NOTE]
 If you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first.
@@ -112,14 +93,14 @@ If everything goes well, it should finish with the `BUILD SUCCESSFUL` message. T
 
 To make sure that the application runs as expected after the initial set up setting up, do the following: *(DO WE NEED THIS LINE? OR HOW CAN WE IMPROVE IT?)*
 
-. Run the `seedu.address.MainApp` and try a few commands *(REFER TO USER GUIDE? CAN WE SAY THIS? LINK?)*
-. link:#testing[Run the tests] to ensure they all pass. *(DO WE NEED TO WRITE REFER TO SECTION ... FOR THE TYPES OF TESTS, ETC? SAME FOR ALL THE LINKS?)*
+. Run the `seedu.address.MainApp` and try a few commands
+. link:#testing[Run the tests] to ensure they all pass.
 
-=== Configurations to Do Before Writing Code (PICTURES!!!)
+=== Configurations to Do Before Writing Code
 
 ==== Configuring the Coding Style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours *(CHANGE TO CONTAG'S?)*. However, it uses a different import order from ours *(CHANGE TO CONTAG'S?)*. To rectify, *(WHEN TO USE , AND WHEN TO USE : ? ANY WAY TO STANDARDISE?)*
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours. However, it uses a different import order from ours. To rectify,
 
 . Go to `File` > `Settings...` (Windows/Linux) or `IntelliJ IDEA` > `Preferences...` (macOS)
 . Select `Editor` > `Code Style` > `Java`
@@ -135,13 +116,13 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 .. `import com.*`
 .. `import all other imports`
 
-Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code. *(FOR THIS KIND OF LINK, DO WE NEED TO PROVIDE CONTEXT (WHAT IT IS ABOUT) OR WHICH FOLDER IT CAN BE FOUND?)*
+Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
-==== Updating Documentation to Match Your Fork (DELETE THIS PART? OR SET IT AS A TIP AND CHANGE THE LINK TO POINT TO OUR PROJECT?)
+==== Updating Documentation to Match Your Fork
 
 After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repository. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
-==== Setting up CI (TO BE DELETED? OR SET IT AS A TIP?)
+==== Setting up CI
 
 Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
@@ -155,11 +136,9 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 When you are ready to start coding,
 
 1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started]. *(PUT THIS AT THE INTRODUCTION PART INSTEAD? BOTH?)*
+2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
-
-*(WRITE SOMETHING HERE? WHAT IS DESIGN? WHY IS IT IMPORTANT FOR DEVELOPER TO KNOW ABOUT DESIGN?)*
 
 === Architecture
 
@@ -514,7 +493,7 @@ The `HelpCommand` execution is done in `AddressBookParser`. _Figure 4.2.5_ below
 image::HelpEnhancementScreenShot.PNG[width="800"]
 _Figure 4.2.5 : Output of `HelpCommand` execution_
 
-//tag::LocateCommand[]
+//tag::locate[]
 === Locating a contact's address [Since v1.2]
 
 This function is mainly facilitated by two events: `JumpToListRequestEvent` and `PersonPanelSelectionChangedEvent`.
@@ -633,6 +612,7 @@ _Figure 4.3.6 : Full UI outcome of locate implementation_
 **Cons:** User will not able to view contact's location when a `PersonCard` is manually selected.
 
 ---
+// end::locate[]
 
 //tag::FindCommand[]
 === FindCommand by any search field [Since v1.2]
@@ -1242,6 +1222,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |busy user |view my agenda for the upcoming days |prepare for my tasks in advance
 
+|`* *` |busy user |be reminded of upcoming activities |avoid missing important events
+
 |`* *` |user |get suggestions on the tags I have used |be consistent with the tags I use
 
 |`* *` |user |see a sorted list of my contacts |save time and energy on my end
@@ -1284,9 +1266,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |sort persons by birthday |view whose birthdays are in the upcoming months
 
-|`*` |user |key in a contact's birthday and be reminded about it when the time comes |wish him/her happy birthday
+|`*` |forgeful user |key in a contact's birthday and be reminded about it when the time comes |wish him/her happy birthday
 
-|`*` |user |be prompted to confirm my input whenever I add a person |avoid adding a person with the wrong details
+|`*` |careless user |be prompted to confirm my input whenever I add a person |avoid adding a person with the wrong details
 
 |=======================================================================
 
@@ -1423,7 +1405,7 @@ A contact detail that is not meant to be shared with others
 CI
 
 ....
-Continuous Integration (CI) is the process of automating the build and testing of code every time a team member commits changes to version contron
+Continuous Integration (CI) is the process of automating the build and testing of code every time a team member commits changes to version control
 ....
 
 [[gradle]]

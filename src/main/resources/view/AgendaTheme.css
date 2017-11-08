@@ -10,3 +10,11 @@
     -fx-text-fill: #00c1a7;
     -fx-opacity: 0.9;
 }
+
+.list-cell:filled:even {
+    -fx-background-color: #025b87;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #19a1e5;
+}

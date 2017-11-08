@@ -5,12 +5,12 @@ import static java.util.Arrays.asList;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.Country;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.address.Address;
 import seedu.address.model.person.email.Email;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
@@ -23,7 +23,7 @@ public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
-    public static final String DEFAULT_COUNTRY_CODE = "Singapore";
+    public static final String DEFAULT_COUNTRY = "Country Unavailable";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, Singapore 408769";
     public static final String DEFAULT_SCHEDULE_DATE = "15-01-1997";
@@ -36,7 +36,7 @@ public class PersonBuilder {
         try {
             Name defaultName = new Name(DEFAULT_NAME);
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
-            Country defaultCountry = new Country(DEFAULT_COUNTRY_CODE);
+            Country defaultCountry = new Country(DEFAULT_COUNTRY);
             Set<Email> defaultEmail = SampleDataUtil.getEmailSet(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Schedule> defaultSchedule = SampleDataUtil.getScheduleSet(asList(DEFAULT_SCHEDULE_DATE),
@@ -109,8 +109,8 @@ public class PersonBuilder {
     /**
      * Sets the {@code Country} of the {@code Person} that we are building.
      */
-    public PersonBuilder withCountry(String countryCode) {
-        this.person.setCountry(new Country(countryCode));
+    public PersonBuilder withCountry(String country) {
+        this.person.setCountry(new Country(country));
         // any illegal values already caught in Phone, where code is extracted.
         return this;
     }

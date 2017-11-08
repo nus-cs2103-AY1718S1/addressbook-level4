@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- @@author 17navasaw -->
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -29,16 +30,16 @@
         </Label>
         <Label fx:id="activity" styleClass="cell_big_label" text="\\$Activity" />
       </HBox>
-      <Label styleClass="cell_small_label" text="Date:">
+      <Label fx:id="dateHeader" styleClass="cell_small_label" stylesheets="@ScheduleCardHeaders.css" text="Date:">
             <font>
                <Font name="System Bold" size="13.0" />
             </font></Label>
       <Label fx:id="date" styleClass="cell_small_label" text="\\$date" />
-         <Label text="Person(s) Involved:">
+         <Label fx:id="personsInvolvedHeader" stylesheets="@ScheduleCardHeaders.css" text="Contact(s) Involved:">
             <font>
                <Font name="System Bold" size="13.0" />
             </font></Label>
-         <Label fx:id="personName" text="\\$person" />
+         <VBox fx:id="personNames" prefWidth="100.0" />
     </VBox>
       <rowConstraints>
          <RowConstraints />

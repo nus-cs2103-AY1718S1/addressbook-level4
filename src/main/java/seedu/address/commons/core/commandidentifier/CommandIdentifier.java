@@ -23,6 +23,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.WelcomeCommand;
+import seedu.address.model.person.Country;
 
 //@@author CT15
 /**
@@ -47,7 +48,8 @@ public class CommandIdentifier {
             + ScheduleCommand.COMMAND_WORD + ", "
             + LocateCommand.COMMAND_WORD + ", "
             + UndoCommand.COMMAND_WORD + ", "
-            + WelcomeCommand.COMMAND_WORD;
+            + WelcomeCommand.COMMAND_WORD + ", "
+            + Country.COMMAND_WORD;
 
     public static final List<String> COMMAND_VALIDATION_LIST = ImmutableList.of(
             AddCommand.COMMAND_WORD, AddCommand.COMMAND_ALIAS,
@@ -65,7 +67,8 @@ public class CommandIdentifier {
             ScheduleCommand.COMMAND_WORD, ScheduleCommand.COMMAND_ALIAS,
             LocateCommand.COMMAND_WORD, LocateCommand.COMMAND_ALIAS,
             UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_ALIAS,
-            WelcomeCommand.COMMAND_WORD, WelcomeCommand.COMMAND_ALIAS);
+            WelcomeCommand.COMMAND_WORD, WelcomeCommand.COMMAND_ALIAS,
+            Country.COMMAND_WORD); // no alias
 
     public final String value;
 
