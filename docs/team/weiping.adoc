@@ -114,7 +114,7 @@ Debt collectors may want to see details of nearby contacts to plan a more effect
 ==== External behavior
 
 ---
-#Start of Extract [from: User Guide]#
+#Start of Extract [from: User Guide] written by Jelena Neo Hui Ling#
 
 include::../UserGuide.adoc[tag=borrow]
 
