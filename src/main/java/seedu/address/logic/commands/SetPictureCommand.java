@@ -46,8 +46,10 @@ public class SetPictureCommand extends UndoableCommand {
     public static final String MESSAGE_INVALID_FILE = "File at given file path was not type .png";
     public static final String MESSAGE_FILE_NOT_EXIST = "File does not exist at given file path";
 
+    private static String type;
     private final Index targetIndex;
     private final String filePath;
+
 
     public SetPictureCommand(Index index, ProfPic filePath) {
         requireNonNull(index);
@@ -69,11 +71,13 @@ public class SetPictureCommand extends UndoableCommand {
         }
         try {
             fileType = Files.probeContentType(file.toPath());
-            System.out.println(file.toPath());
-            System.out.println(fileType);
-            /*if (!("image/png".equals(fileType))) { // jpeg or png?
+            if ("image/png".equals(fileType)) { // png verification
+                type = ".png";
+            } else if ("image/jpeg".equals(fileType)) { // jpg verification
+                type = ".jpg";
+            } else {
                 throw new CommandException(MESSAGE_INVALID_FILE);
-            }*/
+            }
         } catch (IOException ioException) {
             throw new CommandException(MESSAGE_FILE_NOT_EXIST);
         }
@@ -82,7 +86,7 @@ public class SetPictureCommand extends UndoableCommand {
 
 
         // copy picture to resource/image folder and name copied file as PERSON_NAME.png
-        Path dest = new File("images/" + personToEdit.getName().toString() + ".png").toPath();
+        Path dest = new File("images/" + personToEdit.getName().toString() + type).toPath();
 
 
         try {
@@ -113,7 +117,7 @@ public class SetPictureCommand extends UndoableCommand {
         Phone updatedPhone = personToEdit.getPhone();
         Email updatedEmail = personToEdit.getEmail();
         Address updatedAddress = personToEdit.getAddress();
-        ProfPic updatedProfPic = new ProfPic(updatedName + ".png");
+        ProfPic updatedProfPic = new ProfPic(updatedName + type);
         Favourite updatedFavourite = personToEdit.getFavourite();
         Set<Tag> updatedTags = personToEdit.getTags();
 
