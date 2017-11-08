@@ -641,6 +641,91 @@ public static boolean isValidAddress(String test) {
 
 <<<
 
+//tag::birthday[]
+=== Birthday Parameter
+
+A birthday parameter has been introduced to `Add` Command for users to input contact's birthdate into Circles.
+
+The logic has been taught to accept the new parameter in `logic/commands/AddCommand.java` and `EditCommand.java`.
+The parser for Birthday has been implemented in `logic/parser/ParserUtil.java` as shown below:
+[source,java]
+----
+public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
+          requireNonNull(birthday);
+          return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
+      }
+----
+
+The `Person` class will then have to include `birthday` as a field:
+[source,java]
+----
+ public Person(Name name, Phone phone, Birthday birthday, Email email, Address address, Set<Tag> tags) {
+         requireAllNonNull(name, phone, birthday, email, address, tags);
+         ...
+ this.birthday = new SimpleObjectProperty<>(birthday);
+   ...
+ public Person(ReadOnlyPerson source) {
+    this(source.getName(), source.getPhone(), source.getBirthday(), source.getEmail(), source.getAddress(),
+    source.getTags());
+----
+
+The UI has to be edited to include a placeholder for the field in `PersonInfoPanel.fxml`:
+
+[source,java]
+----
+<Label fx:id="birthday" styleClass="label-bright" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+----
+To implement `birthday` field, the parameter is added into the Person class as shown below in the model diagram. This is
+ implemented as `Birthday.c` +
+
+image::ModelClassDiagramupdated.png[width="800"]
+_Figure 3 : Structure of the Model Component_ +
+
+[source,java]
+----
+public Birthday(String birthday) throws IllegalValueException {
+        if (birthday == null) {
+            this.value = BIRTHDAY_EMPTY;
+        } else {
+            String trimmedBirthday = birthday.trim();
+            if (!isValidBirthday(trimmedBirthday)) {
+                throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+            }
+            this.value = trimmedBirthday;
+        }
+    }
+
+----
+
+As shown in the model diagram, `ReadOnlyPerson` will have to be modified to support the `birthday` field:
+[source,java]
+----
+ObjectProperty<Birthday> birthdayProperty();
+    Birthday getBirthday();
+----
+
+In the storage aspect, new field will need to be added in the `XMLAdaptedPerson` class so that
+the data will be saved even when Circles is closed:
+[source,java]
+----
+public XmlAdaptedPerson(ReadOnlyPerson source) {
+            name = source.getName().fullName;
+            phone = source.getPhone().value;
+            birthday = source.getBirthday().value;
+            email = source.getEmail().value;
+            ...
+            }
+----
+==== Design Considerations
+*Aspect:* Birthday Field +
+*Alternative 1 (current choice):* To build a new field in Person and replicate from the previous fields given +
+*Pros:* Implementation is similar to `phone` field+
+*Cons:* Extremely complicated regex to take into consideration of leap years and number of days in a month +
+//end::birthday[]
+
+<<<
+
 === Listing by tags
 The List command was expanded to accommodate listing contacts with specific tags.
 This was done through the creation of predicates based on the argument passed in when the List command is called.
