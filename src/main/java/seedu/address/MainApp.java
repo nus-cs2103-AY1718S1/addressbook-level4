@@ -214,13 +214,15 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Loading custom fonts for date and time.");
+        logger.info("Loading custom fonts.");
         Font timeFont = Font.loadFont(MainApp.class.getClassLoader().getResourceAsStream(
                 "fonts/NovaSquare.ttf"), 10);
         Font dateFont = Font.loadFont(MainApp.class.getClassLoader().getResourceAsStream(
                 "fonts/digital-7 (italic).ttf"), 10);
-        if (dateFont == null || timeFont == null) {
-            logger.warning("Failed to load custom fonts for date and time.");
+        Font profileNameFont = Font.loadFont(MainApp.class.getClassLoader().getResourceAsStream(
+                "fonts/HaloHandletter.otf"), 10);
+        if (dateFont == null || timeFont == null || profileNameFont == null) {
+            logger.warning("Failed to load custom fonts.");
         }
 
         logger.info("Starting AddressBook " + MainApp.VERSION);

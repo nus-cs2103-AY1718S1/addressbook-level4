@@ -408,4 +408,35 @@
 .opening-img {
     height: 584px;
 }
+
+#profilePic {
+    -fx-border-color: deepskyblue;
+}
+
+#profileInfo {
+    -fx-border-color: deepskyblue;
+}
+
+#profileName {
+    -fx-font-family: 'HaloHandletter';
+    -fx-font-size: 50px;
+}
+
+.profile_big_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 20px;
+    -fx-font-style: italic;
+    -fx-text-fill: white;
+}
+
+.profile_small_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+}
+
+.profile_small_text_area {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 18px;
+}
 /* @@author */
