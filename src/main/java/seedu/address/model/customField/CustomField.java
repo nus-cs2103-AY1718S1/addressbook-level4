@@ -64,7 +64,7 @@ public class CustomField {
      * Format state as text for viewing.
      */
     public String toString() {
-        return " " + customFieldName + ": " + customFieldValue;
+        return customFieldValue;
     }
 
 }
