@@ -77,7 +77,7 @@ public class RedoCommandTest {
     }
 
     @Test
-    public void executeIndexGreaterThanRedoStack_Success() throws CommandException {
+    public void executeIndexGreaterThanRedoStack_success() throws CommandException {
         UndoRedoStack undoRedoStack = prepareStack(Collections.emptyList(),
                 Arrays.asList(deleteCommandOne));
         RedoCommand redoCommand = new RedoCommand(INDEX_SECOND_COMMAND);

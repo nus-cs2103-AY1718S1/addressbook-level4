@@ -508,8 +508,8 @@ The favourite mechanism is very similar to the one used in edit command. The fea
 . The `favouritePerson` method in AddressBook then creates two `UniquePersonList` to implement the sorting. Persons with `favourite` = `true` will be sorted into the `favouriteList`. Persons with `favourite` = `false` will be sorted into the `notFavouriteList`.
 . The two lists will then be merged into the `persons` list in `AddressBook`, with `favouriteList` being at the top.
 
-The following sequence diagram shows how FavouriteCommand works:
-image::FavouriteCommandSequenceDiagram.png[width="800"]
+The following sequence diagram shows how FavouriteCommand works: +
+![](src/Main/resources/imagesFavouriteCommandSequenceDiagram.png)
 
 The code below shows how FavouriteCommand is implemented:
 

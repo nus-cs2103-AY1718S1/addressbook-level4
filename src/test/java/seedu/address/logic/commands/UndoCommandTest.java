@@ -7,9 +7,8 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COMMAND;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_COMMAND;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -80,7 +79,7 @@ public class UndoCommandTest {
     }
 
     @Test
-    public void executeIndexGreaterThanUndoStack_Success() throws CommandException{
+    public void executeIndexGreaterThanUndoStack_success() throws CommandException {
         UndoRedoStack undoRedoStack = prepareStack(
                 Arrays.asList(deleteCommandOne), Collections.emptyList());
         UndoCommand undoCommand = new UndoCommand(INDEX_SECOND_COMMAND);
