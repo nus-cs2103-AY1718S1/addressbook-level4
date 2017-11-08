@@ -20,7 +20,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SwitchTheme;
+import seedu.address.logic.commands.SwitchThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.event.DeleteEventCommand;
 import seedu.address.logic.commands.event.ListEventCommand;
@@ -102,8 +102,8 @@ public class AddressBookParserTest {
     //@@author junyango
     @Test
     public void parseCommand_theme() throws Exception {
-        assertTrue(parser.parseCommand(SwitchTheme.COMMAND_WORD) instanceof SwitchTheme);
-        assertTrue(parser.parseCommand(SwitchTheme.COMMAND_WORD + " 3") instanceof SwitchTheme);
+        assertTrue(parser.parseCommand(SwitchThemeCommand.COMMAND_WORD) instanceof SwitchThemeCommand);
+        assertTrue(parser.parseCommand(SwitchThemeCommand.COMMAND_WORD + " 3") instanceof SwitchThemeCommand);
     }
     //@@author
     @Test
