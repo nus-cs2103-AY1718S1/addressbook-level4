@@ -54,7 +54,7 @@ public class Autocompleter {
         switch (state) {
         case COMMAND:
             clearResultsWindow();
-            return (possibleAutocompleteResults.isEmpty()) ? EMPTY_STRING : possibleAutocompleteResults.get(0);
+            return (possibleAutocompleteResults.isEmpty()) ? textInCommandBox : possibleAutocompleteResults.get(0);
 
         case EMPTY:
             raise(new NewResultAvailableEvent(PROMPT_USER_TO_USE_HELP_MESSAGE, false));
@@ -173,6 +173,8 @@ public class Autocompleter {
 
             possibleAutocompleteResults = missingPrefixes;
             state = AutocompleteState.COMMAND_NEXT_PREFIX;
+        } else {
+            state = AutocompleteState.COMMAND;
         }
 
     }
