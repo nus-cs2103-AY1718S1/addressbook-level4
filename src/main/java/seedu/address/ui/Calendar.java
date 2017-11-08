@@ -90,7 +90,7 @@ public class Calendar {
      * Set the days of the calendar to correspond to the appropriate date
      * @param yearMonth year and month of month to render
      */
-    public void populateCalendar(YearMonth yearMonth, ArrayList<ReadOnlyEvent> events ) {
+    public void populateCalendar(YearMonth yearMonth, ArrayList<ReadOnlyEvent> events) {
         // Get the date we want to start with on the calendar
         LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
         // Dial back the day until it is SUNDAY (unless the month starts on a sunday)
