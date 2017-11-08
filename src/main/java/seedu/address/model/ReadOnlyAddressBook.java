@@ -33,7 +33,7 @@ public interface ReadOnlyAddressBook {
     /**
      * Returns an unmodifiable view of the schedule.
      */
-    ObservableList<ReadOnlyEvent> getSchedule(Date currentDate);
+    ObservableList<ReadOnlyEvent> getTimetable(Date currentDate);
 
     //@@author
 
