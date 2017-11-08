@@ -557,7 +557,7 @@ e.g. `delete 3`
 e.g. `ban 3`
 * *Unban* : `unban [INDEX]` +
 e.g. `unban 3`
-* *Edit* : `edit [INDEX] [n/NAME] [hp/HANDPHONE_NUMBER] [home/HOME_PHONE_NUMBER] [op/OFFICE_PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pc/POSTAL_CODE] [d/DEBT] [dl/DEADLINE] [int/INTEREST] [t/TAG]...` +
+* *Edit* : `edit [INDEX] [n/NAME] [hp/HANDPHONE_NUMBER] [home/HOME_PHONE_NUMBER] [op/OFFICE_PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pc/POSTAL_CODE] [d/DEBT] [td/TOTAL DEBT] [dl/DEADLINE] [int/INTEREST] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
