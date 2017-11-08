@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.group.Group;
@@ -71,6 +72,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.groups.setGroups(groups);
     }
 
+    public void setAppointments(Set<Appointment> appointments) {
+        this.appointments.setAppointments(appointments);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -84,6 +89,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setTags(new HashSet<>(newData.getTagList()));
         setGroups(new HashSet<>(newData.getGroupList()));
+        setAppointments(getAllAppointments());
         syncMasterTagListWith(persons);
         syncMasterGroupListWith(persons);
     }
@@ -107,6 +113,24 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(newPerson);
     }
 
+    //@@author namvd2709
+    /**
+     * Adds an appointment to address book.
+     */
+    public void addAppointment(Appointment a) throws IllegalValueException,
+            UniqueAppointmentList.ClashAppointmentException {
+        Appointment newAppointment = new Appointment(Appointment.getOriginalAppointment(a.toString()));
+        appointments.add(newAppointment);
+    }
+
+    /**
+     * Removes an appointment
+     */
+    public void removeAppointment(Appointment a) {
+        appointments.remove(a);
+    }
+
+    //@@author
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
@@ -122,12 +146,26 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedReadOnlyPerson);
 
         Person editedPerson = new Person(editedReadOnlyPerson);
+        //@@author namvd2709
+        Appointment oldAppointment = target.getAppointment();
+        Appointment newAppointment = editedPerson.getAppointment();
         syncMasterTagListWith(editedPerson);
         syncMasterGroupListWith(editedPerson);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, editedPerson);
+        appointments.remove(oldAppointment);
+        if (!newAppointment.value.equals("")) {
+            try {
+                appointments.add(newAppointment);
+            } catch (UniqueAppointmentList.DuplicateAppointmentException e) {
+                e.printStackTrace();
+            } catch (UniqueAppointmentList.ClashAppointmentException e) {
+                e.printStackTrace();
+            }
+        }
+        //@@author
     }
 
     /**
@@ -249,6 +287,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 && this.groups.equalsOrderInsensitive(((AddressBook) other).groups));
     }
 
+    //@@author
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own

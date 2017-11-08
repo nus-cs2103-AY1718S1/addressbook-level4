@@ -27,4 +27,8 @@ public interface Logic {
 
     /** Returns the autocomplete manager */
     AutocompleteManager getAutocompleteManager();
+
+    //@@author namvd2709
+    /** Returns the appointment reminder */
+    AppointmentReminder getAppointmentReminder();
 }

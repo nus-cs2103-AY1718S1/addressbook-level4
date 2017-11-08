@@ -153,6 +153,16 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return null;
         }
+
+        @Override
+        public void addAppointment(Appointment appointment) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteAppointment(Appointment target) {
+            fail("This method should not be called.");
+        }
     }
 
     /**
