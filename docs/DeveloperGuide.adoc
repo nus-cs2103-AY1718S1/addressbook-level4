@@ -409,6 +409,7 @@ The attributes of Meeting class include `NameMeeting`, `DateTime`, `Place`, `Per
 **Pros:** Allows developers to be more flexible to implement with meeting class  +
 **Cons:** It is difficult to implement.
 
+// tag::addmeeting[]
 === Add Meeting
 
 The add meeting command inherits from UndoableCommand which allows user to add meeting with the following parameters: 'INDEX' of person in the last person listing,
@@ -441,6 +442,8 @@ The following sequence diagram below shows how AddMeeting operation works:
 
 image::addMeetingSequenceDiagram.png[width="800"]
 _Figure 3.5.1 : Sequence diagram of Add Meeting_
+
+// end::addmeeting[]
 
 === Delete Meeting
 
