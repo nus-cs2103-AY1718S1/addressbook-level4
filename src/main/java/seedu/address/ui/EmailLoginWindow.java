@@ -1,3 +1,4 @@
+//@@author Hoang
 package seedu.address.ui;
 
 import java.util.logging.Logger;
@@ -76,8 +77,8 @@ public class EmailLoginWindow extends UiPart<Region> {
 
         try {
             CommandResult commandResult = logic.execute("email_login "
-                                    + "\"" + emailString + "\"" + " "
-                                    + "\"" + passwordString + "\"");
+                    + "\"" + emailString + "\"" + " "
+                    + "\"" + passwordString + "\"");
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
             functionButtonsPanel.updateLoginStatus();
@@ -109,3 +110,4 @@ public class EmailLoginWindow extends UiPart<Region> {
         primaryStage.show();
     }
 }
+//@@author Hoang

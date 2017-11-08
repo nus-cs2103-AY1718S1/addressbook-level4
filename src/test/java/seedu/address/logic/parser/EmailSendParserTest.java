@@ -1,3 +1,4 @@
+//@@author Hoang
 package seedu.address.logic.parser;
 
 import org.junit.Test;
@@ -30,3 +31,4 @@ public class EmailSendParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailSendCommand.MESSAGE_USAGE));
     }
 }
+//@@author Hoang

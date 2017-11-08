@@ -38,6 +38,7 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
      * Parses the given {@code String} of arguments in the context of the AddMultipleCommand
      * then parse data from file name given arguments if it exists
      * and returns an AddMultipleCommand object for execution.
+     *
      * @param args arguments
      * @throws ParseException if the user input does not conform the expected format
      */
@@ -64,7 +65,7 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
 
         String[] lines = data.split(System.lineSeparator());
 
-        for (String eachLine: lines) {
+        for (String eachLine : lines) {
             String toAdd = " " + eachLine;
             ArgumentMultimap argMultimap =
                     ArgumentTokenizer.tokenize(toAdd, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,

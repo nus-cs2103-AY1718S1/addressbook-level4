@@ -1,3 +1,5 @@
+//@@author vsudhakar
+
 package seedu.address.ui;
 
 import javafx.fxml.FXML;
@@ -84,3 +86,5 @@ public class ThemeSelectionWindow extends UiPart<Region> {
         currentThemeLabel.setText("Current Theme: " + prefs.getCurrentUserTheme());
     }
 }
+
+//@@author

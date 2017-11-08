@@ -14,6 +14,7 @@ public class MergeCommandParser implements Parser<MergeCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public MergeCommand parse(String args) throws ParseException {

@@ -23,7 +23,7 @@ public class FindCommand extends Command {
             + "1) " + COMMAND_WORD + " " + PREFIX_NAME.toString() + "alice bob charlie" + System.lineSeparator()
             + "2) " + COMMAND_WORD + " " + PREFIX_TAG.toString() + "family friends" + System.lineSeparator()
             + "3) " + COMMAND_WORD + " " + PREFIX_NAME.toString() + "alice bob charlie"
-                                   + " " + PREFIX_TAG.toString() + "family friends";
+            + " " + PREFIX_TAG.toString() + "family friends";
 
     private final PersonContainsKeywordsPredicate predicate;
 

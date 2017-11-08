@@ -1,12 +1,14 @@
+//@@author Hoang
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
+import static seedu.address.logic.commands.EmailLoginCommand.MESSAGE_SUCCESS;
+
 import org.junit.Test;
+
 import seedu.address.email.Email;
 import seedu.address.email.EmailManager;
 import seedu.address.logic.commands.exceptions.CommandException;
-
-import static org.junit.Assert.*;
-import static seedu.address.logic.commands.EmailLoginCommand.MESSAGE_SUCCESS;
 
 public class EmailLoginCommandTest {
     private EmailLoginCommand command;
@@ -33,3 +35,4 @@ public class EmailLoginCommandTest {
                 result.feedbackToUser);
     }
 }
+//@@author Hoang

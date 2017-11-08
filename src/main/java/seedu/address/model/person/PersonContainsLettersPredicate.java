@@ -1,3 +1,4 @@
+//@@author Hoang
 package seedu.address.model.person;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
@@ -54,7 +55,7 @@ public class PersonContainsLettersPredicate implements Predicate<ReadOnlyPerson>
             String keyword = keywords.get(PREFIX_TAG.toString());
             Set<Tag> tagSet = readOnlyPerson.getTags();
             result = result && tagSet.stream().anyMatch(tag -> tag.toString().toLowerCase()
-                                                            .contains(keyword.toLowerCase()));
+                    .contains(keyword.toLowerCase()));
         }
 
         return result;
@@ -67,3 +68,4 @@ public class PersonContainsLettersPredicate implements Predicate<ReadOnlyPerson>
                 && this.keywords.equals(((PersonContainsLettersPredicate) other).keywords)); // state check
     }
 }
+//@@author Hoang

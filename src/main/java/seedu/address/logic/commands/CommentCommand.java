@@ -37,7 +37,7 @@ public class CommentCommand extends UndoableCommand {
     private final Comment comment;
 
     /**
-     * @param index of the person in the filtered person list to edit the comment
+     * @param index   of the person in the filtered person list to edit the comment
      * @param comment of the person
      */
     public CommentCommand(Index index, Comment comment) {

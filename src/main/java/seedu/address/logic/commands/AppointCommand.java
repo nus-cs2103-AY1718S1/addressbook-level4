@@ -75,6 +75,7 @@ public class AppointCommand extends UndoableCommand {
 
     /**
      * Produces success/failure messages when adding an appointment
+     *
      * @param personToEdit the person making the appointment for
      */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {

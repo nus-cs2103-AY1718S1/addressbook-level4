@@ -1,3 +1,4 @@
+//@@author Hoang
 package seedu.address.logic.commands;
 
 import seedu.address.model.person.PersonContainsLettersPredicate;
@@ -29,3 +30,4 @@ public class FindContainCommand extends Command {
                 && this.predicate.equals(((FindContainCommand) other).predicate)); // state check
     }
 }
+//@@author Hoang
