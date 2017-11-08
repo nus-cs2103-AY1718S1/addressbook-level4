@@ -16,10 +16,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.tag.Tag;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -62,26 +59,23 @@ public class ListCommandTest {
 
     @Test
     public void execute_listIsFiltered_showOnlyNecessaryPersons() throws Exception{
-        Set<Tag> SingleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1)));
-        PersonContainsKeywordsPredicate firstPredicate = new PersonContainsKeywordsPredicate(new ArrayList<>(SingleTagSet));
+        PersonContainsKeywordsPredicate firstPredicate = createNewPersonPredicateForSingleTag(new Tag(VALID_TAG_1));
 
-        Set<Tag> MultipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_2), new Tag(VALID_TAG_3)));
-        PersonContainsKeywordsPredicate thirdPredicate = new PersonContainsKeywordsPredicate(new ArrayList<>(MultipleTagSet));
+        PersonContainsKeywordsPredicate secondPredicate = createNewPersonPredicateForMultipleTags(Arrays.asList(new Tag(VALID_TAG_2), new Tag(VALID_TAG_3)));
 
         // test command with single valid tag argument
         ListCommand firstListCommand = new ListCommand(firstPredicate);
         firstListCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         assertCommandSuccess(firstListCommand, model, ListCommand.MESSAGE_SUCCESS_FILTEREDLIST + TAG_DESC_FRIENDS, expectedModel);
 
-        SingleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_2)));
-        PersonContainsKeywordsPredicate secondPredicate = new PersonContainsKeywordsPredicate(new ArrayList<>(SingleTagSet));
-        ListCommand secondListCommand = new ListCommand(secondPredicate);
+        firstPredicate = createNewPersonPredicateForSingleTag(new Tag(VALID_TAG_2));
+        ListCommand secondListCommand = new ListCommand(firstPredicate);
         secondListCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         expectedModel.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList("Benson")));
         assertCommandSuccess(secondListCommand, model, ListCommand.MESSAGE_SUCCESS_FILTEREDLIST + TAG_DESC_OWESMONEY, expectedModel);
 
         // test command with multiple valid tag arguments
-        ListCommand thirdListCommand = new ListCommand(thirdPredicate);
+        ListCommand thirdListCommand = new ListCommand(secondPredicate);
         reInitializeModels();
         thirdListCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         expectedModel.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList("Benson", "Fiona", "George")));
@@ -90,11 +84,8 @@ public class ListCommandTest {
 
     @Test
     public void execute_listIsFiltered_showNoPersons() throws Exception {
-        Set<Tag> SingleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(INVALID_TAG_1)));
-        PersonContainsKeywordsPredicate firstPredicate = new PersonContainsKeywordsPredicate(new ArrayList<>(SingleTagSet));
-
-        Set<Tag> MultipleTagSet = new HashSet<Tag>(Arrays.asList(new Tag(INVALID_TAG_1), new Tag(INVALID_TAG_2)));
-        PersonContainsKeywordsPredicate secondPredicate = new PersonContainsKeywordsPredicate(new ArrayList<>(MultipleTagSet));
+        PersonContainsKeywordsPredicate firstPredicate = createNewPersonPredicateForSingleTag(new Tag(INVALID_TAG_1));
+        PersonContainsKeywordsPredicate secondPredicate = createNewPersonPredicateForMultipleTags(Arrays.asList(new Tag(INVALID_TAG_1), new Tag(INVALID_TAG_2)));
 
         reInitializeModels();
 
@@ -120,5 +111,23 @@ public class ListCommandTest {
     public void reInitializeModels () {
         this.model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         this.expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+    }
+
+    /**
+     * return a new PersonContainsKeywordsPredicate with input tag
+     */
+    private PersonContainsKeywordsPredicate createNewPersonPredicateForSingleTag(Tag tag) throws Exception {
+        Set<Tag> SingleTagSet = new HashSet<Tag>(Arrays.asList(tag));
+        PersonContainsKeywordsPredicate newPredicate = new PersonContainsKeywordsPredicate(new ArrayList<>(SingleTagSet));
+        return newPredicate;
+    }
+
+    /**
+     * return a new PersonContainsKeywordsPredicate with list of input tags
+     */
+    private PersonContainsKeywordsPredicate createNewPersonPredicateForMultipleTags(List<Tag> tagList) {
+        Set<Tag> MultipleTagSet = new HashSet<Tag>(tagList);
+        PersonContainsKeywordsPredicate newPredicate = new PersonContainsKeywordsPredicate(new ArrayList<>(MultipleTagSet));
+        return newPredicate;
     }
 }
