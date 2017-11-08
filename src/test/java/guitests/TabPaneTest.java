@@ -10,6 +10,7 @@ import guitests.guihandles.ParcelListPanelHandle;
 import guitests.guihandles.TabHandle;
 import guitests.guihandles.TabPaneHandle;
 
+//@@author kennard123661
 public class TabPaneTest extends AddressBookGuiTest {
 
     @Test
@@ -34,7 +35,8 @@ public class TabPaneTest extends AddressBookGuiTest {
 
 
     /**
-     * checks that the tabPane's active list is equivalent to our expected list contained with the tab with tabIndex
+     * checks that the {@param tabPane}'s active list is equivalent to our expected list contained when
+     * the tab with {@param tabIndex} is asserted.
      */
     private void assertActiveListSelected(TabPaneHandle tabPane, int tabIndex) {
         ParcelListPanelHandle actualList = tabPane.getActiveParcelList();
