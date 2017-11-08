@@ -60,7 +60,8 @@ public class MainApp extends Application {
 
         config = initConfig(getApplicationParameter("config"));
 
-        UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+        UserPrefsStorage userPrefsStorage =
+                new JsonUserPrefsStorage(config.getUserPrefsFilePath(), config.getAddressBookTheme());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
