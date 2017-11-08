@@ -126,12 +126,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Returns an observable list as as an unmodifiable {@code ObservableList}
      */
     public ObservableList<ReadOnlyPerson> asObservableListSortedByName() {
-        internalList.sort(new Comparator<Person>() {
-            @Override
-            public int compare(Person o1, Person o2) {
-                return ((o1.getName().toString().toLowerCase()).compareTo(o2.getName().toString().toLowerCase()));
-            }
-        });
+        internalList.sort((o1, o2) -> ((o1.getName().toString().toLowerCase()).compareTo(o2.getName().toString().toLowerCase())));
         return FXCollections.unmodifiableObservableList(mappedList);
     }
     //@@author
