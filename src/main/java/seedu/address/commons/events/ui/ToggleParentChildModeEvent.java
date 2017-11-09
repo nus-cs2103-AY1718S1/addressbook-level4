@@ -7,7 +7,13 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * An event requesting to toggle the to ParentMode.
  */
-public class ToggleToParentModeEvent extends BaseEvent {
+public class ToggleParentChildModeEvent extends BaseEvent {
+
+    public final boolean isSetToParentMode;
+
+    public ToggleParentChildModeEvent(boolean isSetToParentMode) {
+        this.isSetToParentMode = isSetToParentMode;
+    }
 
     @Override
     public String toString() {

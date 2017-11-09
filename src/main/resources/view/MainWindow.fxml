@@ -128,6 +128,9 @@
       </VBox>
       <!-- @@author Alim95 -->
       <ScrollPane fx:id="helpOverlay" fitToHeight="true" fitToWidth="true" opacity="0.9" pannable="true" visible="false" StackPane.alignment="TOP_CENTER">
+         <StackPane.margin>
+            <Insets bottom="310.0" left="8.0" right="8.0" top="40.0" />
+         </StackPane.margin>
          <content>
             <GridPane alignment="TOP_CENTER" blendMode="SRC_ATOP" gridLinesVisible="true" minWidth="1144.0" style="-fx-background-color: white;">
               <columnConstraints>
@@ -140,6 +143,11 @@
                 <RowConstraints maxHeight="58.0" minHeight="50.0" prefHeight="58.0" vgrow="SOMETIMES" />
                 <RowConstraints vgrow="SOMETIMES" />
                 <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
                   <RowConstraints vgrow="SOMETIMES" />
                   <RowConstraints vgrow="SOMETIMES" />
                   <RowConstraints vgrow="SOMETIMES" />
@@ -355,12 +363,49 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
+                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Person View" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="20">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <TextField alignment="CENTER" editable="false" text="person" GridPane.columnIndex="1" GridPane.rowIndex="20">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Task View" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="21">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <TextField alignment="CENTER" editable="false" text="task" GridPane.columnIndex="1" GridPane.rowIndex="21">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Parent Mode" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="23">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <TextField alignment="CENTER" editable="false" text="parent" GridPane.columnIndex="1" GridPane.rowIndex="23">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <TextField alignment="CENTER" editable="false" text="child" GridPane.columnIndex="1" GridPane.rowIndex="24">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Child Mode" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="24">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
                </children>
             </GridPane>
          </content>
-         <StackPane.margin>
-            <Insets bottom="310.0" left="8.0" right="8.0" top="40.0" />
-         </StackPane.margin>
       </ScrollPane>
       <!-- @@author -->
    </children>

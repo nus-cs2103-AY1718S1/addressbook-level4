@@ -27,9 +27,9 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.SwitchToBrowserEvent;
 import seedu.address.commons.events.ui.ToggleListAllStyleEvent;
 import seedu.address.commons.events.ui.ToggleListPinStyleEvent;
+import seedu.address.commons.events.ui.ToggleParentChildModeEvent;
 import seedu.address.commons.events.ui.ToggleSortByLabelEvent;
 import seedu.address.commons.events.ui.ToggleToAllPersonViewEvent;
-import seedu.address.commons.events.ui.ToggleToParentModeEvent;
 import seedu.address.commons.events.ui.ToggleToTaskViewEvent;
 import seedu.address.commons.events.ui.UpdatePinnedPanelEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -149,8 +149,8 @@ public class MainWindow extends UiPart<Region> {
     }
 
     private void setAccelerators() {
-        setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
-        setAccelerator(helpOverlayItem, KeyCombination.valueOf("F2"));
+        setAccelerator(helpMenuItem, KeyCombination.valueOf("SHIFT + F1"));
+        setAccelerator(helpOverlayItem, KeyCombination.valueOf("SHIFT + F2"));
         setAccelerator(helpOverlayExit, KeyCombination.valueOf("ESC"));
     }
 
@@ -395,9 +395,9 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleToggleToParentModeEvent(ToggleToParentModeEvent event) {
+    private void handleToggleParentChildModeEvent(ToggleParentChildModeEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        helpMenu.setVisible(true);
+        helpMenu.setVisible(event.isSetToParentMode);
     }
 
 
