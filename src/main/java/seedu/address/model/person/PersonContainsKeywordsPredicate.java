@@ -30,6 +30,18 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
                 && this.keywords.equals(((PersonContainsKeywordsPredicate) other).keywords)); // state check
     }
 
+    /**
+     * Returns all the tags as a single string
+     */
+    public String returnListOfTagsAsString() {
+        String stringOfTags = "";
+        for (Tag t : this.keywords) {
+            stringOfTags += t.toString() + " ";
+        }
+        return stringOfTags;
+    }
+
+
 }
 
 

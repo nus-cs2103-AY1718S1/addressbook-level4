@@ -13,7 +13,8 @@ public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
 
-    public static final String MESSAGE_SUCCESS = "Listed all persons";
+    public static final String MESSAGE_SUCCESS_FULLLIST  = "Listed all persons";
+    public static final String MESSAGE_SUCCESS_FILTEREDLIST  = "Listed all persons with tag: ";
 
     public static final String MESSAGE_NOENTRIESFOUND = "No person with given tags found.";
 
@@ -29,7 +30,7 @@ public class ListCommand extends Command {
         this.predicate = null;
     }
 
-    public ListCommand(PersonContainsKeywordsPredicate predicate) {
+    public ListCommand (PersonContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -39,11 +40,11 @@ public class ListCommand extends Command {
             model.updateFilteredPersonList(predicate);
         } else {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            return new CommandResult(MESSAGE_SUCCESS);
+            return new CommandResult(MESSAGE_SUCCESS_FULLLIST);
         }
 
         if (areEntriesWithTagsFound()) {
-            return new CommandResult(MESSAGE_SUCCESS);
+            return new CommandResult(MESSAGE_SUCCESS_FILTEREDLIST + this.predicate.returnListOfTagsAsString());
         } else {
             return new CommandResult(MESSAGE_NOENTRIESFOUND);
         }
@@ -58,5 +59,25 @@ public class ListCommand extends Command {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof ListCommand)) {
+            return false;
+        }
+
+        // other has null predicate
+        if ((((ListCommand) other).predicate == null) && (this.predicate == null)) {
+            return true;
+        }
+
+        return this.predicate.equals(((ListCommand) other).predicate);
     }
 }
