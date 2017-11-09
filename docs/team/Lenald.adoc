@@ -3,19 +3,27 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: cherBook
+cherBook is an address book application used by teachers to monitor students' academic progress.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 8 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/Lenaldnwj/main/blob/master/collated/main/Lenaldnwj.md[Functional code]] [https://github.com/Lenaldnwj/main/blob/master/collated/test/Lenaldnwj.md[Test code]]
 
-=== Enhancement Added: Undo/Redo
+=== Enhancement Added: Randomised Unique Tag Colors
 
 ==== External behavior
 
 ---
-#Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+#Start of Extract [from: Developer Guide]#
+
+For the convenience of the user, the assignment of colors will be automated by cherBook.
+
+Whenever the user access the cherBook, a new range of random colors will be assigned to the background of the tags.
+
+Modifications were made to the range of possible colors. It is to ensure that the background color's saturation and brightness is at an optimal level
+to match with the white font of the tag description.
 
 #End of Extract#
 
@@ -23,28 +31,104 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+In this day and age, educators have many classes of students to teach. They will have difficulty differentiating between
+tags of different descriptions if they are to tag many of their students.
+
+This feature will assign tags of the same descriptions with a unique color. With the implementation of this feature,
+ educators will be able to distinguish between the different tags easily.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=uniquetagcolor]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
 
-{Explain similar to the Undo/Redo feature above.}
+=== Enhancement Added: Optional Inputs/Fields
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=optionalinputtags]
+
+include::../UserGuide.adoc[tag=optionalinputtagstwo]
+
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As we increased the number of attributes for the person who is being added into the address book, we realised that it is getting very cumbersome for the user to
+input all the compulsory attributes into cherBook. Furthermore, the person to be added might not have all the attributes deemed compulsory.
+
+
+Thus, we decided that several non essential attributes can
+be optional inputs for the user.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=optionalInput]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Multiple Numbers (Parent and Student number)
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=optionalinputtagstwo]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Initially, cherBook had the option of only being able to record the student's number.
+We decided to come out with multiple numbers (Parent and Student number)
+as many educators believe that there needs to be good communication between not only the students, but their parents too.
+
+This enhancement is especially useful for those who are in charge of younger students
+in primary school. Educators in institution with younger students
+will find having parents numbers more important than the student's number as there tends to be more communication
+between the teachers and the parent of the students.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=studentparentcontact]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `Study Buddy`
+
+{Explain similar to the feature above.}
 
 === Other contributions
 
 * Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 
-== Project: PowerPointLabs
+== Project: NUS Interactive Food Map
 
-{Optionally (not graded), you may include other projects in your portfolio.}
+It is an interactive food map of the NUS campus that shows information of major food places in the nus map.

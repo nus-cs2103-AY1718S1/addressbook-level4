@@ -6,7 +6,6 @@
  */
 public class ExtendedPersonCardHandle extends NodeHandle<Node> {
     public static final String EXTENDED_PERSON_CARD_ID = "#extendedPersonCardPlaceholder";
-    private static final String ID_FIELD_ID = "#id";
     private static final String NAME_FIELD_ID = "#name";
     private static final String ADDRESS_FIELD_ID = "#address";
     private static final String PHONE_FIELD_ID = "#phone";
@@ -17,7 +16,6 @@ public class ExtendedPersonCardHandle extends NodeHandle<Node> {
     private static final String REMARK_FIELD_ID = "#remark";
 
 
-    private final Label idLabel;
     private final Label nameLabel;
     private final Label addressLabel;
     private final Label phoneLabel;
@@ -31,7 +29,6 @@ public class ExtendedPersonCardHandle extends NodeHandle<Node> {
     public ExtendedPersonCardHandle(Node cardNode) {
         super(cardNode);
 
-        this.idLabel = getChildNode(ID_FIELD_ID);
         this.nameLabel = getChildNode(NAME_FIELD_ID);
         this.phoneLabel = getChildNode(PHONE_FIELD_ID);
         this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
@@ -40,10 +37,6 @@ public class ExtendedPersonCardHandle extends NodeHandle<Node> {
         this.postalCodeLabel = getChildNode(POSTALCODE_FIELD_ID);
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
         this.remarkLabel = getChildNode(REMARK_FIELD_ID);
-    }
-
-    public String getId() {
-        return idLabel.getText();
     }
 
     public String getName() {
@@ -130,21 +123,20 @@ public class ScheduleCommandTest {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(ScheduleCommandParser.DATE_FORMAT.parse("2018-12-25 10:00:00"));
 
-        int listSize = model.getFilteredPersonList().size();
         Schedule schedulePerson = new Schedule(model.getFilteredPersonList().get(0).getName().toString(), calendar);
         ScheduleCommand scheduleCommand = new ScheduleCommand(firstPersonIndex, calendar);
-        Model model1 = new ModelManager();
+        Model model1 = createAndSetModel(scheduleCommand);
         model1.addPerson(TypicalPersons.ALICE);
-        scheduleCommand.setData(model1, new CommandHistory(), new UndoRedoStack());
         CommandResult result = scheduleCommand.execute();
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         //Add the schedule to the expected model to compare with the model created
         expectedModel.addSchedule(schedulePerson);
 
         String expectedMessage = "Added " + schedulePerson.getPersonName() + " to consultations schedule "
-                + "on " + schedulePerson.getDate().toString();
+                + "on " + schedulePerson.getDate().toString() + ".\n"
+                + "Use 'viewsch' or 'viewschedule' command to view all your schedules.";
 
-        assertEquals(result.feedbackToUser, expectedMessage);
+        assertEquals(expectedMessage , result.feedbackToUser);
 
     }
 
@@ -153,9 +145,8 @@ public class ScheduleCommandTest {
         Index targetIndex = Index.fromOneBased(1000);
         Calendar date = Calendar.getInstance();
         ScheduleCommand scheduleCommand = new ScheduleCommand(targetIndex, date);
-        Model model = new ModelManager();
+        Model model = createAndSetModel(scheduleCommand);
         model.addPerson(TypicalPersons.ALICE);
-        scheduleCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         thrown.expect(CommandException.class);
         scheduleCommand.execute();
     }
@@ -176,7 +167,17 @@ public class ScheduleCommandTest {
         assertEquals(expectedDate, dateInSchedule);
 
     }
-}
+
+    //================================= HELPER METHODS =====================================
+
+    /**
+     * Returns a model that is set
+     */
+    public Model createAndSetModel(ScheduleCommand scheduleCommand) {
+        Model model = new ModelManager();
+        scheduleCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return model;
+    }
 ```
 ###### \java\seedu\address\logic\commands\SortCommandTest.java
 ``` java
@@ -213,6 +214,40 @@ public class SortCommandTest {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\ViewScheduleCommandTest.java
+``` java
+public class ViewScheduleCommandTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private Model model;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    }
+
+    @Test
+    public void executeViewScheduleCommand_success() throws PersonNotFoundException {
+        Model model = new ModelManager();
+        Calendar date = Calendar.getInstance();
+        Schedule newSchedule = new Schedule(getTypicalAddressBook().getPersonList().get(0).getName().toString(), date);
+        ViewScheduleCommand newViewCommand = new ViewScheduleCommand();
+        model.addSchedule(newSchedule);
+        newViewCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        ObservableList<Schedule> newScheduleList = model.getAddressBook().getScheduleList();
+        String expectedMessage = "Listed your schedule. \n" + newScheduleList.toString();
+
+        CommandResult result = newViewCommand.execute();
+
+        assertEquals(expectedMessage, result.feedbackToUser);
+
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
@@ -226,6 +261,7 @@ public class SortCommandTest {
         assertTrue(parser.parseCommand(SortCommand.COMMAND_ALIAS) instanceof SortCommand);
         assertTrue(parser.parseCommand(SortCommand.COMMAND_ALIAS + " 3") instanceof SortCommand);
     }
+
     @Test
     public void parseCommand_schedule() throws Exception {
         Calendar calendar = Calendar.getInstance();
@@ -244,6 +280,18 @@ public class SortCommandTest {
                 ScheduleCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_SCHEDULE
                         + "25 December 2018 at 10am");
         assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, calendar), command);
+    }
+
+    @Test
+    public void parseCommand_viewSchedule() throws Exception {
+        assertTrue(parser.parseCommand(ViewScheduleCommand.COMMAND_WORD) instanceof ViewScheduleCommand);
+        assertTrue(parser.parseCommand(ViewScheduleCommand.COMMAND_WORD + " 3") instanceof ViewScheduleCommand);
+    }
+
+    @Test
+    public void parseCommand_alias_viewSchedule() throws Exception {
+        assertTrue(parser.parseCommand(ViewScheduleCommand.COMMAND_ALIAS) instanceof ViewScheduleCommand);
+        assertTrue(parser.parseCommand(ViewScheduleCommand.COMMAND_ALIAS + " 3") instanceof ViewScheduleCommand);
     }
 ```
 ###### \java\seedu\address\logic\parser\ParserUtilTest.java
@@ -393,7 +441,62 @@ public class UniqueScheduleListTest {
         scheduleList.remove(scheduleOne);
         assertFalse(scheduleList.contains(scheduleOne));
     }
-}
+
+    @Test
+    public void test_chronologicallySortedList() throws ParseException {
+        UniqueScheduleList uniqueScheduleList = new UniqueScheduleList();
+        Calendar dateOne = Calendar.getInstance();
+        Calendar dateTwo = Calendar.getInstance();
+        dateOne.setTime(ScheduleCommandParser.DATE_FORMAT.parse("2019-12-25 10:00:00"));
+        dateTwo.setTime(ScheduleCommandParser.DATE_FORMAT.parse("2018-12-25 10:00:00"));
+        Schedule scheduleOne = new Schedule(ALICE.getName().toString(), dateOne);
+        Schedule scheduleTwo = new Schedule(ELLE.getName().toString(), dateTwo);
+
+        uniqueScheduleList.add(scheduleOne);
+        uniqueScheduleList.add(scheduleTwo);
+
+        TestCase.assertTrue(isSorted(uniqueScheduleList));
+
+        ObservableList<Schedule> sortedList = uniqueScheduleList.asObservableListSortedChronologically();
+        assertTrue(isSorted(sortedList));
+    }
+
+
+    //===================================== HELPER METHODS ========================================
+
+    /**
+     * @return boolean of value true if the list is not sorted chronologically, false otherwise.
+     */
+    private boolean isSorted(UniqueScheduleList e) {
+        Iterator<Schedule> iterator = e.iterator();
+        while (iterator.hasNext()) {
+            Schedule date1 = iterator.next();
+            Schedule date2 = iterator.hasNext() ? iterator.next() : null;
+            if (date2 != null) {
+                if (date1.getDate().compareTo(date2.getDate()) < 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @returns true if the list is sorted chronologically, false otherwise.
+     */
+    private boolean isSorted(ObservableList<Schedule> e) {
+        Iterator<Schedule> iterator = e.iterator();
+        while (iterator.hasNext()) {
+            Schedule date1 = iterator.next();
+            Schedule date2 = iterator.hasNext() ? iterator.next() : null;
+            if (date2 != null) {
+                if (date1.getDate().compareTo(date2.getDate()) > 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 ```
 ###### \java\seedu\address\model\UniqueTagListTest.java
 ``` java

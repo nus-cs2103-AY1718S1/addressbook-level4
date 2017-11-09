@@ -1,14 +1,14 @@
 # lincredibleJC
-###### \java\seedu\address\commons\events\ui\FilteredListChangedEvent.java
+###### \java\seedu\address\commons\events\model\FilteredPersonListChangedEvent.java
 ``` java
 /**
- * Represents a Change in the current Filtered List
+ * Represents a Change in the current FilteredPersonList
  */
-public class FilteredListChangedEvent extends BaseEvent {
+public class FilteredPersonListChangedEvent extends BaseEvent {
 
     private final ObservableList<ReadOnlyPerson> currentFilteredList;
 
-    public FilteredListChangedEvent(ObservableList<ReadOnlyPerson> currentFilteredList) {
+    public FilteredPersonListChangedEvent(ObservableList<ReadOnlyPerson> currentFilteredList) {
         this.currentFilteredList = currentFilteredList;
     }
 
@@ -17,7 +17,7 @@ public class FilteredListChangedEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 
-    public ObservableList<ReadOnlyPerson> getCurrentFilteredList() {
+    public ObservableList<ReadOnlyPerson> getCurrentFilteredPersonList() {
         return currentFilteredList;
     }
 }
@@ -47,7 +47,7 @@ public class FindTagsCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
-        EventsCenter.getInstance().post(new FilteredListChangedEvent(model.getFilteredPersonList()));
+        EventsCenter.getInstance().post(new FilteredPersonListChangedEvent(model.getFilteredPersonList()));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
@@ -137,9 +137,16 @@ public class FindTagsCommand extends Command {
         case SortCommand.COMMAND_ALIAS:
             return new SortCommand();
 
+        case ViewScheduleCommand.COMMAND_WORD:
+        case ViewScheduleCommand.COMMAND_ALIAS:
+            return new ViewScheduleCommand();
+
         case RemarkCommand.COMMAND_WORD:
         case RemarkCommand.COMMAND_ALIAS:
             return new RemarkCommandParser().parse(arguments);
+
+        case TabCommand.COMMAND_WORD:
+            return new TabCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
@@ -597,7 +604,7 @@ public class StatisticsPanel extends UiPart<Region> {
         super(FXML);
         registerAsAnEventHandler(this);
         statistics = new Statistics(currentList);
-
+        loadListStatistics();
     }
 
     /**
@@ -616,18 +623,90 @@ public class StatisticsPanel extends UiPart<Region> {
 
     @FXML
     @Subscribe
-    private void handleFilteredListChangedEvent(FilteredListChangedEvent event) {
+    private void handleFilteredPersonListChangedEvent(FilteredPersonListChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        statistics.initScore(event.getCurrentFilteredList()); // Update currentList data
+        statistics.initScore(event.getCurrentFilteredPersonList()); // Update currentList data
         loadListStatistics();
     }
 
 }
 ```
+###### \resources\view\MainWindow.fxml
+``` fxml
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@DarkTheme.css" />
+        <URL value="@Extensions.css" />
+    </stylesheets>
+
+
+    <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
+        <Menu mnemonicParsing="false" text="File">
+            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+        </Menu>
+    </MenuBar>
+
+    <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
+        <padding>
+            <Insets bottom="5" left="10" right="10" top="5" />
+        </padding>
+    </StackPane>
+
+    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="120" minHeight="120" prefHeight="120" styleClass="pane-with-border" VBox.vgrow="NEVER">
+        <padding>
+            <Insets bottom="5" left="10" right="10" top="5" />
+        </padding>
+    </StackPane>
+
+    <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" VBox.vgrow="ALWAYS">
+        <VBox fx:id="personList" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" SplitPane.resizableWithParent="false">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+        </VBox>
+        <SplitPane dividerPositions="0.5" orientation="VERTICAL">
+            <items>
+
+                <StackPane fx:id="extendedPersonCardPlaceholder">
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                </StackPane>
+                <StackPane fx:id="statisticsPanelPlaceholder" />
+            </items>
+        </SplitPane>
+
+        <StackPane fx:id="graphPanelPlaceholder">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+        </StackPane>
+    </SplitPane>
+
+    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+</VBox>
+```
 ###### \resources\view\StatisticsPanel.fxml
 ``` fxml
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -636,10 +715,17 @@ public class StatisticsPanel extends UiPart<Region> {
         <Insets bottom="5" left="5" right="15" top="5" />
     </padding>
     <children>
-        <Label layoutX="10.0" layoutY="172.0" text="Group Statistics">
+        <Label fx:id="groupStatistics" layoutX="10.0" layoutY="172.0" text="Statistics of the current list">
             <font>
                 <Font size="28.0" />
             </font>
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/statistics.png" />
+               </image>
+            </ImageView>
+         </graphic>
         </Label>
         <Label id="mean" fx:id="mean" text="\$mean">
             <graphic>

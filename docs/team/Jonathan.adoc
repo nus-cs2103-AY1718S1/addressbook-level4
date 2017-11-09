@@ -62,6 +62,33 @@ include::../DeveloperGuide.adoc[tag=linechart]
 #End of Extract#
 
 ---
+=== Enhancement Added: Tab
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tab]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To display different representations of graphs as some are more appropriate in different scenarios.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=tab]
+
+#End of Extract#
+
+---
 === Enhancement Proposed: Add 25 & 75 percentile lines
 adds a horizontal line across the graph to show the 75th and 25th percentile of the current list grades.
 
@@ -69,6 +96,7 @@ adds a horizontal line across the graph to show the 75th and 25th percentile of 
 
 * Updated the GUI to include graphs of students either in class or tags (pull request https://github.com[#65], https://github.com[#87])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Logic tabCommand implementation (Special thanks to Celine who helped me layout tabCommand)
 
 == Project: Tea (Game)
 

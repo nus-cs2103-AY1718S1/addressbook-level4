@@ -9,7 +9,10 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.Image?>
 
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.ImageView?>
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
@@ -29,8 +32,55 @@
         <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
       </HBox>
       <FlowPane fx:id="tags" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="formClass" styleClass="cell_small_label" text="\$formClass" />
+
+      <Label fx:id="phone" lineSpacing="10.0" styleClass="cell_small_label" text="\$phone">
+        <graphic>
+          <ImageView>
+            <image>
+              <Image url="@../images/studentPhone.png" />
+            </image>
+          </ImageView>
+        </graphic>
+        <padding>
+          <Insets bottom="5.0" />
+        </padding>
+        <font>
+          <Font size="14.0" />
+        </font>
+      </Label>
+
+      <Label fx:id="parentPhone" lineSpacing="10.0" styleClass="cell_small_label" text="\$parentPhone">
+        <graphic>
+          <ImageView>
+            <image>
+              <Image url="@../images/parentPhone.png" />
+            </image>
+          </ImageView>
+        </graphic>
+        <padding>
+          <Insets bottom="5.0" />
+        </padding>
+        <font>
+          <Font size="14.0" />
+        </font>
+      </Label>
+
+      <Label fx:id="formClass" lineSpacing="10.0" styleClass="cell_small_label" text="\$formClass">
+        <graphic>
+          <ImageView>
+            <image>
+              <Image url="@../images/formClass.png" />
+            </image>
+          </ImageView>
+        </graphic>
+        <padding>
+          <Insets bottom="5.0" />
+        </padding>
+        <font>
+          <Font size="14.0" />
+        </font>
+      </Label>
+
     </VBox>
       <rowConstraints>
          <RowConstraints />

@@ -20,6 +20,7 @@ public class Person implements ReadOnlyPerson {
 
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
+    private ObjectProperty<ParentPhone> parentPhone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<FormClass> formClass;
@@ -32,11 +33,12 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      */
 
-    public Person(Name name, Phone phone, Email email, Address address, FormClass formClass, Grades grades,
-                  PostalCode postalCode, Remark remark, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, formClass, postalCode, remark, tags);
+    public Person(Name name, Phone phone, ParentPhone parentPhone, Email email, Address address,
+                  FormClass formClass, Grades grades, PostalCode postalCode, Remark remark, Set<Tag> tags) {
+        requireAllNonNull(name, phone, parentPhone, email, address, formClass, postalCode, remark, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
+        this.parentPhone = new SimpleObjectProperty<>(parentPhone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.formClass = new SimpleObjectProperty<>(formClass);
@@ -51,8 +53,9 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getFormClass(),
-                source.getGrades(), source.getPostalCode(), source.getRemark(), source.getTags());
+        this(source.getName(), source.getPhone(), source.getParentPhone(), source.getEmail(), source.getAddress(),
+                source.getFormClass(), source.getGrades(), source.getPostalCode(),
+                source.getRemark(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -122,8 +125,23 @@ public class Person implements ReadOnlyPerson {
 
     @Override
     public FormClass getFormClass() {
-        return formClass.get();
+        return formClass.get(); }
+
+    //@@author Lenaldnwj
+    public void setParentPhone(ParentPhone parentPhone) {
+        this.parentPhone.set(requireNonNull(parentPhone));
     }
+
+    @Override
+    public ObjectProperty<ParentPhone> parentPhoneProperty() {
+        return parentPhone;
+    }
+
+    @Override
+    public ParentPhone getParentPhone() {
+        return parentPhone.get();
+    }
+    //@@author
 
     public void setGrades(Grades grades) {
         this.grades.set(requireNonNull(grades));

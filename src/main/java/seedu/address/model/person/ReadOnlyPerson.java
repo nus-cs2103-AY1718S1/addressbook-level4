@@ -20,6 +20,10 @@ public interface ReadOnlyPerson {
 
     Phone getPhone();
 
+    ObjectProperty<ParentPhone> parentPhoneProperty();
+
+    ParentPhone getParentPhone();
+
     ObjectProperty<Email> emailProperty();
 
     Email getEmail();
@@ -56,6 +60,7 @@ public interface ReadOnlyPerson {
                 || (other != null // this is first to avoid NPE below
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
+                && other.getParentPhone().equals(this.getParentPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress())
                 && other.getFormClass().equals(this.getFormClass())
@@ -72,6 +77,8 @@ public interface ReadOnlyPerson {
         builder.append(getName())
                .append(" Phone: ")
                .append(getPhone())
+               .append(" ParentPhone: ")
+               .append(getParentPhone())
                .append(" Email: ")
                .append(getEmail())
                .append(" Address: ")

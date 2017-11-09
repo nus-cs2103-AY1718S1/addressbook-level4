@@ -560,7 +560,7 @@ public class TagsContainsKeywordsPredicateTest {
         // Keywords match phone, email and address, but does not match tags
         predicate = new TagsContainsKeywordsPredicate(Arrays.asList("12345", "person@email.com", "Main", "Street"));
         assertFalse(predicate.test(new PersonBuilder().withName("personName")
-                .withPhone("student/97272031 parent/97979797")
+                .withPhone("97979797").withParentPhone("97272022")
                 .withEmail("alice@email.com").withAddress("Main Street").withTags("tag1", "tag2", "tag3").build()));
     }
 }
@@ -654,7 +654,7 @@ public class StatisticsPanelTest extends GuiUnitTest {
     @Test
     public void display() throws Exception {
         guiRobot.pauseForHuman();
-        postNow(new FilteredListChangedEvent(TYPICAL_PERSONS));
+        postNow(new FilteredPersonListChangedEvent(TYPICAL_PERSONS));
         assertPanelDisplaysStatistics(TYPICAL_PERSONS, statisticsPanelHandle);
     }
 

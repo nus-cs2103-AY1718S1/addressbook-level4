@@ -47,6 +47,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
+    private Label parentPhone;
+    @FXML
     private Label formClass;
     @FXML
     private FlowPane tags;
@@ -112,6 +114,7 @@ public class PersonCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        parentPhone.textProperty().bind(Bindings.convert(person.parentPhoneProperty()));
         formClass.textProperty().bind(Bindings.convert(person.formClassProperty()));
         tags.getChildren().clear();
         initialiseTags(person);

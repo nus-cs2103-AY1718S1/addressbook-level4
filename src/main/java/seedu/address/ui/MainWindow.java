@@ -29,7 +29,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/cherbookicon.jpg";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -141,7 +141,7 @@ public class MainWindow extends UiPart<Region> {
         extendedPersonCard = new ExtendedPersonCard();
         extendedPersonCardPlaceholder.getChildren().add(extendedPersonCard.getRoot());
 
-        graphPanel = new GraphPanel(logic.getFilteredPersonList());
+        GraphPanel graphPanel = new GraphPanel(logic);
         graphPanelPlaceholder.getChildren().add(graphPanel.getRoot());
 
         StatisticsPanel statisticsPanel = new StatisticsPanel(logic.getFilteredPersonList());

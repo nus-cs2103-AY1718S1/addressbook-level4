@@ -15,19 +15,20 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.schedule.Schedule;
 
+//@@author limcel
 /**
  * Schedules a consultation timeslot with the person identified using it's last displayed index from the address book.
  */
 public class ScheduleCommand extends Command {
 
     public static final String COMMAND_WORD = "schedule";
-    public static final String COMMAND_ALIAS = "sche";
+    public static final String COMMAND_ALIAS = "sch";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Schedules the selected indexed person to a consultation timeslot.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_SCHEDULE + "today, 5.45pm";
+            + PREFIX_SCHEDULE + "tomorrow 6.30pm";
 
     public static final String MESSAGE_SCHEDULE_PERSON_SUCCESS = "Scheduled Person: %1$s";
     public static final String PERSON_NOT_FOUND = "This person cannot be found";
@@ -64,8 +65,9 @@ public class ScheduleCommand extends Command {
         }
 
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
-        return new CommandResult("Added " + personAddedToSchedule.getName().toString() + " to consultations schedule "
-                + "on " + schedule.getDate().toString());
+        return new CommandResult("Added " + personAddedToSchedule.getName().toString()
+                + " to consultations schedule " + "on " + schedule.getDate().toString() + ".\n"
+                + "Use 'viewsch' or 'viewschedule' command to view all your schedules.");
 
     }
 

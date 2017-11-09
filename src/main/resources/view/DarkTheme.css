@@ -219,7 +219,31 @@
     -fx-font-size: 1.6em;
 }
 
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-effect: null;
+}
 
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
+
+.tab-pane {
+    -fx-tab-max-width: 200px;
+    -fx-tab-min-width: 100px;
+}
+
+#tabPaneGraphs .tab {
+    -fx-background-color: #ffffff;
+}
+
+#tabPaneGraphs .tab:selected {
+    -fx-background-color: #606060;
+    -fx-focus-color:transparent;
+}
+
+.default-color0.chart-bar{
+    -fx-bar-fill: #4169E1;
+}
 /*
  * Metro style Push Button
  * Author: Pedro Duque Vieira

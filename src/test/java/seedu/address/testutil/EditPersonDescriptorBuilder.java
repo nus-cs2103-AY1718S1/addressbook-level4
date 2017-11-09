@@ -30,6 +30,7 @@ public class EditPersonDescriptorBuilder {
         descriptor = new EditPersonDescriptor();
         descriptor.setName(person.getName());
         descriptor.setPhone(person.getPhone());
+        descriptor.setParentPhone(person.getParentPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setFormClass(person.getFormClass());
@@ -85,6 +86,20 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+
+    //@@author Lenaldnwj
+    /**
+     * Sets the {@code ParentPhone} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withParentPhone(String parentPhone) {
+        try {
+            ParserUtil.parseParentPhone(Optional.of(parentPhone)).ifPresent(descriptor::setParentPhone);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("parentPhone is expected to be unique.");
+        }
+        return this;
+    }
+    //@@author
 
     //@@author lincredibleJC
     /**

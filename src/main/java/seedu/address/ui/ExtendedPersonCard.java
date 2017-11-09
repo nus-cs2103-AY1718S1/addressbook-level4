@@ -31,6 +31,8 @@ public class ExtendedPersonCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
+    private Label parentPhone;
+    @FXML
     private Label address;
     @FXML
     private Label formClass;
@@ -46,6 +48,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
     public ExtendedPersonCard() {
         super(FXML);
         registerAsAnEventHandler(this);
+        loadIconDescriptionOnStartUp();
     }
 
     /**
@@ -54,6 +57,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
     protected void loadPersonDetails(ReadOnlyPerson person) {
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().toString());
+        parentPhone.setText(person.getParentPhone().toString());
         address.setText(person.getAddress().toString());
         formClass.setText(person.getFormClass().toString());
         grades.setText(person.getGrades().toString());
@@ -62,6 +66,23 @@ public class ExtendedPersonCard extends UiPart<Region> {
         remark.setText(person.getRemark().toString());
     }
 
+    //@@author Lenaldnwj
+    /**
+     * Displays text description of the icons when cherBook starts up
+     */
+    protected void loadIconDescriptionOnStartUp() {
+        name.setText("Name of student");
+        phone.setText("Phone number of student");
+        parentPhone.setText("Phone number of parent");
+        address.setText("Address of student");
+        formClass.setText("Form class of student");
+        grades.setText("Grades of student");
+        postalCode.setText("Postal code of student");
+        email.setText("Email of student");
+        remark.setText("Remark of student");
+    }
+
+    //@@author limcel
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
