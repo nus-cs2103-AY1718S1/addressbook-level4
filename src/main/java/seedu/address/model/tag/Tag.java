@@ -24,6 +24,7 @@ public class Tag {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (!isValidTagName(trimmedName)) {
+            System.out.println(trimmedName);
             throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
         }
         this.tagName = trimmedName;

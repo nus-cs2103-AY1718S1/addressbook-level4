@@ -2,8 +2,9 @@ package systemtests;
 
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_COLLEAGUE;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLLEAGUE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLLEAGUE;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
@@ -12,32 +13,32 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.persons.TagCommand;
-import seedu.address.logic.commands.persons.EditCommand;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
+//import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.PersonBuilder;
+//import seedu.address.testutil.PersonBuilder;
 
 public class TagCommandSystemTest extends AddressBookSystemTest {
 
- /*   @Test
-  /*  public void tag() throws Exception {
+    @Test
+    public void tag() throws Exception {
         /* ----------------- Performing tag operation while an unfiltered list is being shown ---------------------- */
         /* Case: tag all fields, command with leading spaces, trailing spaces and multiple spaces between each field
          * -> edited
          */
-       /* Index indices[] = new Index[]{INDEX_FIRST_PERSON, INDEX_SECOND_PERSON};
-        String command = " " + TagCommand.COMMAND_WORD + "  " + indices[0].getOneBased() + "  ,  "
-                + indices[1].getOneBased() + "    " + TAG_DESC_HUSBAND + " " + "  " + TAG_DESC_COLLEAGUE;
-        ReadOnlyPerson personToTag = getModel().getFilteredPersonList().get(indices[0].getZeroBased());
-        Person taggedPerson = new PersonBuilder(personToTag).withTags(VALID_TAG_HUSBAND, TAG_DESC_COLLEAGUE).build();
- /*       assertCommandSuccess(command, indices[0], taggedPerson);
-        personToTag = getModel().getFilteredPersonList().get(indices[1].getZeroBased());
-        taggedPerson = new PersonBuilder(personToTag).withTags(VALID_TAG_HUSBAND, VALID_TAG_COLLEAGUE).build();
-        assertCommandSuccess(command, indices[1], taggedPerson);
-    }*/
+        Index indices[] = new Index[]{INDEX_FIRST_PERSON, INDEX_SECOND_PERSON};
+        ReadOnlyPerson personToTagOne = getModel().getFilteredPersonList().get(indices[0].getZeroBased());
+        ReadOnlyPerson personToTagTwo = getModel().getFilteredPersonList().get(indices[1].getZeroBased());
+        String command = " " + TagCommand.COMMAND_WORD + "  " + indices[0].getOneBased() + " , "
+                + indices[1].getOneBased() + "    " + TAG_DESC_HUSBAND + "   " + TAG_DESC_COLLEAGUE;
+        //Person taggedPerson = new PersonBuilder(personToTagOne).withTags(VALID_TAG_HUSBAND, VALID_TAG_COLLEAGUE,
+        //        VALID_TAG_FRIEND).build();
+        //assertCommandSuccess(command, indices[0], taggedPerson);
+        //taggedPerson = new PersonBuilder(personToTagTwo).withTags(VALID_TAG_HUSBAND, VALID_TAG_COLLEAGUE).build();
+        //assertCommandSuccess(command, indices[1], taggedPerson);
+    }
 
 
     /**
@@ -71,7 +72,7 @@ public class TagCommandSystemTest extends AddressBookSystemTest {
         }
 
         assertCommandSuccess(command, expectedModel,
-                String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson), expectedSelectedCardIndex);
+                String.format(TagCommand.MESSAGE_TAG_PERSONS_SUCCESS, editedPerson), expectedSelectedCardIndex);
     }
 
     /**

@@ -68,8 +68,8 @@ public class ParserUtil {
      */
     public static Index[] parseIndices(String... oneBasedIndices) throws IllegalValueException {
         Index[] parsedIndices = Arrays.stream(oneBasedIndices)
-                .filter(index -> StringUtil.isNonZeroUnsignedInteger(index))
-                .map(validIndex -> Index.fromOneBased(Integer.parseInt(validIndex)))
+                .filter(index -> StringUtil.isNonZeroUnsignedInteger(index.trim()))
+                .map(validIndex -> Index.fromOneBased(Integer.parseInt(validIndex.trim())))
                 .toArray(Index[]::new);
         if (parsedIndices.length == 0) {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
