@@ -60,6 +60,12 @@ public interface Model {
     //@@author dennaloh
     /** Gets URL for google maps. */
     String getGMapUrl(ReadOnlyPerson target);
+
+    /** Gets URL to search on facebook. */
+    String getFbUrl (ReadOnlyPerson target);
+
+    /** Opens URL in default browser. */
+    void openUrl (String url);
     //@@author
 
     //=========== Model support for tag component =============================================================

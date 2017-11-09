@@ -3,6 +3,10 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -139,8 +143,31 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author dennaloh
     @Override
     public synchronized String getGMapUrl(ReadOnlyPerson target) {
-        String url = addressBook.getUrl(target);
-        return url;
+        String gMapUrl = addressBook.getGMapUrl(target);
+        return gMapUrl;
+    }
+
+    @Override
+    public synchronized String getFbUrl (ReadOnlyPerson target) {
+        String fbUrl = addressBook.getFbUrl(target);
+        return fbUrl;
+    }
+
+    /**
+     * Opens the url in the default browser.
+     * @param url is the url that will be opened.
+     */
+    @Override
+    public void openUrl (String url) {
+        Desktop desktop = Desktop.getDesktop();
+        try {
+            if (Desktop.isDesktopSupported()) {
+                URI urlToOpen = new URI(url);
+                desktop.browse(urlToOpen);
+            }
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
     //@@author
 
