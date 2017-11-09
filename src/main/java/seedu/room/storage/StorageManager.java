@@ -134,7 +134,6 @@ public class StorageManager extends ComponentManager implements Storage {
 
         handleImageBackupFolder(backupFolder);
         handleImagesBackupFiles(backupFolder, originalFolder);
-
     }
 
     /**
@@ -146,11 +145,13 @@ public class StorageManager extends ComponentManager implements Storage {
      */
     private void handleImagesBackupFiles(String backupFolder, String originalFolder) throws IOException {
         File source = new File(originalFolder);
-        File[] listOfImages = source.listFiles();
+        if(source.exists()) {
+            File[] listOfImages = source.listFiles();
 
-        for (int i = 0; i < listOfImages.length; i++) {
-            File dest = new File(backupFolder + File.separator + listOfImages[i].getName());
-            copy(listOfImages[i], dest);
+            for (int i = 0; i < listOfImages.length; i++) {
+                File dest = new File(backupFolder + File.separator + listOfImages[i].getName());
+                copy(listOfImages[i], dest);
+            }
         }
     }
 
