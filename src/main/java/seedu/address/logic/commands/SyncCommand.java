@@ -91,12 +91,13 @@ public class SyncCommand extends Command {
 
                 checkContacts();
                 updateContacts();
+                exportContacts(personList);
 
                 if (connections != null) {
                     importContacts();
                 }
 
-                exportContacts(personList);
+
 
                 saveStatus(syncedIDs);
             } catch (Exception e) {
@@ -116,10 +117,8 @@ public class SyncCommand extends Command {
             String id = person.getId().getValue();
 
             if (!hashGoogleId.containsKey(id)) {
-                logger.info("Unlinking contact");
-                seedu.address.model.person.Person updatedPerson = new seedu.address.model.person.Person(person);
-                updatedPerson.setId(new Id(""));
-                model.updatePerson(person, updatedPerson);
+                logger.info("Deleting local contact");
+                model.deletePerson(person);
                 syncedIDs.remove(id);
                 continue;
             }
@@ -280,6 +279,7 @@ public class SyncCommand extends Command {
     }
 
     /** Converts a Google Person to a local Person
+     * @TODO Take in middle name
      *
      * @param person
      * @return
@@ -523,7 +523,7 @@ public class SyncCommand extends Command {
         boolean equalEmail;
 
         if (email != null) {
-            gEmail = email.getDisplayName();
+            gEmail = email.getValue();
             equalEmail = gEmail.equals(abcEmail);
         } else {
             equalEmail = abcEmail.equals("No Email");
