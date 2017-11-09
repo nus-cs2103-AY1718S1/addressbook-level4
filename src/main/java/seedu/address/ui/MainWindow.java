@@ -71,6 +71,9 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane calendarPlaceholder;
 
+    @FXML
+    private StackPane commandModeStatusbarPlaceholder;
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic, Model model) {
         super(FXML);
 
@@ -140,6 +143,10 @@ public class MainWindow extends UiPart<Region> {
 
         CalendarPanel calendarPanel = new CalendarPanel(logic, model);
         calendarPlaceholder.getChildren().add(calendarPanel.getRoot());
+
+        CommandModeStatusBarFooter commandModeStatusBarFooter =
+            new CommandModeStatusBarFooter(model);
+        commandModeStatusbarPlaceholder.getChildren().add(commandModeStatusBarFooter.getRoot());
 
         TaskListPanel taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
         taskListPanelPlaceHolder.getChildren().add(taskListPanel.getRoot());
