@@ -312,6 +312,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::bloodtype[]
 === *Enhancement: Bloodtype* +
 
 *Reason for implementation* +
@@ -345,7 +346,7 @@ and three characters input, inclusive of "+" or "-", at maximum (e.g "AB-"). +
 
 The reason that ascii is used as the regex is to allowed "+" and "-" to be entered as inputs to take into account +
 the Rh factor of blood types.
-
+// end::bloodtype[]
 
 === *Enhancement: Set Appointments* +
 
