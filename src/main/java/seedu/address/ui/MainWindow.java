@@ -300,6 +300,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     //@@author bladerail
+    //Update the filteredPersonList when addressBook is changed, mainly for sort
     @Subscribe
     void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
