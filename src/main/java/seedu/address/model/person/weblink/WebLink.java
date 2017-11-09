@@ -39,7 +39,7 @@ public class WebLink {
         }
         this.webLinkTag = DEFAULT_TAG;
 
-        HashMap<String, String> webLinkTagMap = new WebLinkUtil().matchingWebsites;
+        HashMap<String, String> webLinkTagMap = new WebLinkUtil().getMatchingWebsites();
         Iterator<String> keySetIterator = webLinkTagMap.keySet().iterator();
 
         while(keySetIterator.hasNext()){

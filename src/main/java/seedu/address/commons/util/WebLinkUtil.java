@@ -3,7 +3,6 @@ package seedu.address.commons.util;
 //@@author AngularJiaSheng
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Contains Command Line Interface (CLI) syntax definitions common to multiple commands
@@ -11,7 +10,7 @@ import java.util.Iterator;
  */
 public class WebLinkUtil {
 
-    public HashMap<String, String> matchingWebsites = new HashMap<>();
+    private HashMap<String, String> matchingWebsites = new HashMap<>();
 
     /*Keywords that can be used to match website to certain categories. */
     private static final String FACEBOOK_MATCH_REGEX = "(?i)^^.*(facebook.com|fb.com/|facebook).*$";
@@ -29,4 +28,7 @@ public class WebLinkUtil {
         matchingWebsites.put(TWITTER_MATCH_REGEX, TWITTER_TAG);
     }
 
+    public HashMap<String, String> getMatchingWebsites() {
+        return matchingWebsites;
+    }
 }
