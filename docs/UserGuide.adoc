@@ -285,10 +285,27 @@ Example:
 * `removeTag friend` +
 Removes the tag `friend` from all the persons in the address book.
 
-=== Setting a tag colour: `colourtag`
+=== Finding shortest relationship path between two people: `relPath`
+
+Highlights the shortest relationship path between two people in the address book in the graph display, if it exists. +
+Format: `relPath FROM_INDEX TO_INDEX`
+
+****
+* Highlights the shortest relationship path between two people as specified by `FROM_INDEX` and `TO_INDEX`.
+* Paths with higher minimum confidence estimates are preferred.
+* The indices refers to the index number shown in the most recent listing.
+* The indices *must be positive integers* 1, 2, 3, ...
+****
+
+Example:
+
+* `relPath 1 2` +
+Highlights the shortest path between the first and second person in the address book, if it exists.
+
+=== Setting a tag colour: `colourTag`
 
 Sets a colour of a tag to a new colour. +
-Format: `colourtag TAG COLOUR`
+Format: `colourTag TAG COLOUR`
 
 ****
 * Sets the colour of tag `TAG` to `COLOUR`.
@@ -299,7 +316,7 @@ Format: `colourtag TAG COLOUR`
 
 Example:
 
-* `colourtag friend red` +
+* `colourTag friend red` +
 Sets the colour of the tag `friend` to red on next program start.
 
 === Selecting a person : `select`
@@ -388,10 +405,10 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Clearing command history : `clearhistory`
+=== Clearing command history : `clearHistory`
 
 Clears the command history. +
-Format: `clearhistory`
+Format: `clearHistory`
 
 [WARNING]
 ====
@@ -536,10 +553,10 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 * *AddRelationship* : `addRelationship INDEX_FROM_PERSON INDEX_TO_PERSON DIRECTION [n/NAME] [ce/CONFIDENCE_ESTIMATE}` +
 e.g. `addRelationship 2 3 directed ce/1212312.2 n/is cousin of`
 * *Back up* : `backup`
-* *Colour tags* : `colourtag TAG COLOUR` +
-e.g. `colourtag friend red`
+* *Colour tags* : `colourTag TAG COLOUR` +
+e.g. `colourTag friend red`
 * *Clear* : `clear`
-* *Clear history* : `clearhistory`
+* *Clear history* : `clearHistory`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
 * *DeleteRelationship* : `deleteRelationship FROM_PERSON_INDEX TO_PERSON_INDEX` +
@@ -557,6 +574,8 @@ e.g. `find James Jake`
 e.g. `remark 2 r/The husband of Juliet Lee`
 * *Remove tag* : `removeTag TAG` +
 e.g. `removeTag friend`
+* *Find shortest relationship path* : `relPath FROM_INDEX TO_INDEX` +
+e.g. `relPath 1 2`
 * *Sort* : `sort`
 * *Select* : `select INDEX` +
 e.g.`select 2`
