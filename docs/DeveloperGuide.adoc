@@ -364,7 +364,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-// tag::picture
+// tag::picture[]
 === Add Picture
 
 The add picture mechanism allows the adding of a picture to every individual person. +
@@ -416,8 +416,9 @@ This is implemented by updating the image field whenever the residentBook is upd
         phone.textProperty().setValue(person.getPhone().toString());
         ...
 ----
+// end::picture[]
 
-// tag::autocomplete
+// tag::autocomplete[]
 === Autocomplete Feature
 
 The autocomplete mechanism implements a list of commands to be auto-completed upon user input
@@ -447,6 +448,7 @@ The autocomplete list is obtained from the creation of an AutoComplete object an
         case "select":
         ...
 ----
+// end::autocomplete[]
 
 === Swap Rooms Command
 
@@ -470,6 +472,7 @@ In the method above is defined in `SwaproomCommand.java`. It is important to not
 
 Illegal arguments will raise a CommandException which will be displayed to the user in the command output box.
 
+// tag::highlight[]
 === Highlight Command
 
 The highlight command is implemented to highlight the contacts with the specified tag
@@ -518,6 +521,7 @@ The highlight command also allows removal of highlighting through input of "-" a
         }
     }
 ----
+// end::highlight[]
 
 // tag::temporaryperson[]
 === Temporary Contact mechanism

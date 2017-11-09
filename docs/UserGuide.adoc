@@ -66,6 +66,16 @@ image::Ui_short_error.PNG[width="790"]
 
 Format: `help`
 
+// tag::autocomplete[]
+=== Autocomplete CLI
+
+Command Line Interface autocomplete feature which auto-generates list of resident names on commands such as find.
+
+Examples:
+* typing `a` returns a list of commands starting with `add`.
+* typing `find ` returns a list of resident names autocompleted.
+// end::autocomplete[]
+
 // tag::addevent[]
 === Adding a event: `addEvent`
 
@@ -119,6 +129,7 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 temp/2 t/criminal`
 // end::temporaryperson[]
 
+// tag::picture[]
 === Adding a picture: addImage
 
 Adds an image to a resident in the resident book as specified by the current index +
@@ -166,7 +177,9 @@ Format: `click on the placeholder image after adding the person into the address
 Example:
 
 image::delete_person.png[width="400"]
+// end::picture[]
 
+// tag::highlight[]
 === Highlighting by tag : `highlight`
 
 Highlights all residents with specified tag / Removes highlighting when residents highlighted
@@ -176,6 +189,7 @@ Examples:
 * `highlight colleague`
 * `highlight owes money`
 * `highlight -` - Clears current highlighting
+// end::highlight[]
 
 // tag::swaproom[]
 === Swap Rooms: `swaproom`
