@@ -55,7 +55,7 @@ public class PhotoStorage {
     /** generates a unique file path that is to be saved into displaypictures */
     private String generateUniqueFileName() {
         UUID uuid = UUID.randomUUID();
-        String randomUUIDString = uuid.toString();
-        return randomUUIDString;
+        String uniqueFilePath = uuid.toString();
+        return uniqueFilePath;
     }
 }
