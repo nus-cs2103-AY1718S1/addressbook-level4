@@ -9,7 +9,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_IS_ENCRYPTD;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalFilePath.FILE_PATH_DOCS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalNames.NAME_FIRST_PERSON;
 import static seedu.address.testutil.TypicalOptions.OPTION_NAME;
 
 import java.util.Arrays;
@@ -23,7 +22,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.DeleteAltCommand;
+import seedu.address.logic.commands.DeleteByNameCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
@@ -110,10 +109,11 @@ public class AddressBookParserTest {
 
     //@@author qihao27
     @Test
-    public void parseCommand_delete_alt() throws Exception {
-        DeleteAltCommand command = (DeleteAltCommand) parser.parseCommand(
-                DeleteAltCommand.COMMAND_WORD + " " + NAME_FIRST_PERSON);
-        assertEquals(new DeleteAltCommand(NAME_FIRST_PERSON), command);
+    public void parseCommand_deleteByName() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        DeleteByNameCommand command = (DeleteByNameCommand) parser.parseCommand(
+            DeleteByNameCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new DeleteByNameCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
     //@@author Hailinx

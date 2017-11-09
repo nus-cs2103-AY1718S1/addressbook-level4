@@ -34,9 +34,9 @@ public class FavouriteCommand extends UndoableCommand {
             + "Parameters: [INDEX] (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_FAVOURITE_PERSON_SUCCESS = "Added person to favourites:\n%1$s";
+    public static final String MESSAGE_FAVOURITE_PERSON_SUCCESS = "Added person to favourites: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    public static final String MESSAGE_UNFAVOURITE_PERSON_SUCCESS = "Removed person from favourites:\n%1$s";
+    public static final String MESSAGE_UNFAVOURITE_PERSON_SUCCESS = "Removed person from favourites: %1$s";
 
     private final Index index;
 
