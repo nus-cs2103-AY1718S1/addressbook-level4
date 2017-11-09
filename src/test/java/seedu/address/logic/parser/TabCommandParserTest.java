@@ -13,6 +13,7 @@ import seedu.address.logic.commands.TabCommand;
  * Test scope: similar to {@code DeleteCommandParserTest}.
  * @see DeleteCommandParserTest
  */
+//@@author nahtanojmil
 public class TabCommandParserTest {
 
     private TabCommandParser parser = new TabCommandParser();

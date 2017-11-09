@@ -115,7 +115,9 @@ Shorthand: `a n/NAME p/[student/(STUDENT_NUMBER)] parent/(PARENT_NUMBER) [e/EMAI
 
 [TIP]
 A person can have any number of tags (including 0) +
-Adding of student or/and parent's number must be preceded by the phone prefix `p/`.
+Adding of student or/and parent's number must be preceded by the phone prefix `p/`. +
+Tags added must be a single word. e.g. myName instead of my name. +
+Remark cannot be add through the add command and has to be done though the remark command.
 
 Examples:
 
@@ -143,6 +145,10 @@ Shorthand: `e INDEX [n/NAME] [p/student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)]
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
+
+[TIP]
+Tags edited must be a single word. e.g. myName instead of my name.
+Remark cannot be edited and have to be done through the remark command.
 
 Examples:
 
@@ -194,6 +200,10 @@ Shorthand: `ft KEYWORD [MORE_KEYWORDS]`
 * Only full words will be matched e.g. `friends` will not match `closefriends`
 * Persons matching at least all keywords will be returned (i.e. `AND` search). e.g. `friends owesMoney` will not return people with only `friends` or only `owesMoney`
 ****
+
+[TIP]
+Only one tag can be searched at any one time.
+
 
 Examples:
 
@@ -331,12 +341,15 @@ Format: `remark Index [rm/REMARK]` +
 Shorthand: `rm Index [rm/REMARK]`
 
 ****
-* Adds or deletes a remark at the specific`INDEX`.
+* Adds or deletes a `remark` at the specific`INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be positive integer* 1, 2, 3, ...
-* Addition of remarks on a person already with remarks will be overwritten.
-* Person with no remarks will display `(add a new remark)`.
 ****
+
+[TIP]
+Addition of remarks on a person already with remarks will be overwritten. +
+Person with no remarks will display `(add a new remark)`. +
+Can only be changed through the use of the `remark` command.
 
 Examples:
 
@@ -348,20 +361,36 @@ Overwrites/adds the 1st person remark.
 Overwrites/adds the 1st person in the results of `find` command.
 * `list` +
 `remark 2 rm/` +
-removes remark from the 2nd person in cherBook.
+removes `remark` from the 2nd person in the address book.
 
 // end::remark[]
 
 // tag::linechart[]
 === Displaying results : `lineChart` `Since v1.3`
 
-Plots a graph of names against grades based on the selected student's class.
+Automatically plots a graph of names against grades based on the selected student's class.
 
-[NOTE]
+[TIP]
 ====
 Selecting another student from a different class would plot a different graph.
 ====
 // end::linechart[]
+
+// tag::tab[]
+=== Listing entered commands : `tab` `Since v1.5`
+Switches between tabs listed above the graph. +
+Format: `tab index`
+
+[NOTE]
+Valid numbers are determined by number of tabs available. In this case, only 1 and 2 are valid, which displays line or bar respectively. +
+Typing the same index on the selected graph would just do nothing.
+
+Example:
+
+* `tab 2` +
+Remains at tab 2 if tab 2 is selected else switches to tab 2.
+
+// end::tab[]
 
 === Listing entered commands : `history` `Since v1.0`
 
