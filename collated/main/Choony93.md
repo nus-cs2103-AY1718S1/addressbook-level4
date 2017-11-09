@@ -1,5 +1,5 @@
 # Choony93
-###### \java\seedu\address\commons\events\model\AddressBookImportEvent.java
+###### /java/seedu/address/commons/events/model/AddressBookImportEvent.java
 ``` java
 public class AddressBookImportEvent extends BaseEvent {
 
@@ -17,7 +17,7 @@ public class AddressBookImportEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\ChangeThemeEvent.java
+###### /java/seedu/address/commons/events/ui/ChangeThemeEvent.java
 ``` java
 public class ChangeThemeEvent extends BaseEvent {
 
@@ -34,7 +34,7 @@ public class ChangeThemeEvent extends BaseEvent {
 
 }
 ```
-###### \java\seedu\address\commons\events\ui\DisplayGmapEvent.java
+###### /java/seedu/address/commons/events/ui/DisplayGmapEvent.java
 ``` java
 public class DisplayGmapEvent extends BaseEvent {
 
@@ -51,7 +51,7 @@ public class DisplayGmapEvent extends BaseEvent {
 
 }
 ```
-###### \java\seedu\address\commons\events\ui\PersonPanelDeleteEvent.java
+###### /java/seedu/address/commons/events/ui/PersonPanelDeleteEvent.java
 ``` java
 public class PersonPanelDeleteEvent extends BaseEvent {
 
@@ -68,7 +68,7 @@ public class PersonPanelDeleteEvent extends BaseEvent {
 
 }
 ```
-###### \java\seedu\address\logic\commands\GmapCommand.java
+###### /java/seedu/address/logic/commands/GmapCommand.java
 ``` java
 public class GmapCommand extends Command {
 
@@ -130,7 +130,7 @@ public class GmapCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ImportCommand.java
+###### /java/seedu/address/logic/commands/ImportCommand.java
 ``` java
 public class ImportCommand extends Command {
 
@@ -174,7 +174,7 @@ public class ImportCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ThemeCommand.java
+###### /java/seedu/address/logic/commands/ThemeCommand.java
 ``` java
 public class ThemeCommand extends Command {
 
@@ -249,7 +249,7 @@ public class ThemeCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case GmapCommand.COMMAND_WORD:
             return new GmapCommandParser().parse(arguments);
@@ -260,7 +260,7 @@ public class ThemeCommand extends Command {
         case ImportCommand.COMMAND_WORD:
             return new ImportCommandParser().parse(arguments);
 ```
-###### \java\seedu\address\logic\parser\GmapCommandParser.java
+###### /java/seedu/address/logic/parser/GmapCommandParser.java
 ``` java
         String trimmedArgs = args.trim();
 
@@ -282,7 +282,7 @@ public class ThemeCommand extends Command {
             }
         }
 ```
-###### \java\seedu\address\logic\parser\ThemeCommandParser.java
+###### /java/seedu/address/logic/parser/ThemeCommandParser.java
 ``` java
         String trimmedArgs = args.trim();
 
@@ -303,11 +303,11 @@ public class ThemeCommand extends Command {
 
         return new ThemeCommand(trimmedArgs);
 ```
-###### \java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     void handleAddressBookImportEvent(AddressBookImportEvent abce);
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public List<ReadOnlyPerson> getPersonListByPredicate(Predicate<ReadOnlyPerson> predicate) {
@@ -316,7 +316,7 @@ public class ThemeCommand extends Command {
         return FXCollections.unmodifiableObservableList(filteredList);
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     @Subscribe
@@ -343,7 +343,7 @@ public class ThemeCommand extends Command {
         }
     }
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     private static String getColorForTag(String tagValue) {
 
@@ -387,7 +387,7 @@ public class ThemeCommand extends Command {
         raise(new DisplayGmapEvent(Index.fromOneBased(this.displayedIndex)));
     }
 ```
-###### \java\seedu\address\ui\UiManager.java
+###### /java/seedu/address/ui/UiManager.java
 ``` java
     @Subscribe
     private void handleOptionsDeleteEvent(PersonPanelDeleteEvent event) throws CommandException, ParseException {
@@ -395,7 +395,7 @@ public class ThemeCommand extends Command {
         this.logic.execute("delete " + event.targetIndex);
     }
 ```
-###### \java\seedu\address\ui\UiPart.java
+###### /java/seedu/address/ui/UiPart.java
 ``` java
     public static final String THEME_CSS_DARKTHEME = "/darktheme/DarkTheme.css";
     public static final String THEME_CSS_BOOTSTRAP3 = "/bootstrap3/bootstrap3.css";
@@ -416,7 +416,7 @@ public class ThemeCommand extends Command {
                 add(THEME_CSS_MODENA_YELLOWONBLACK);
             }});
 ```
-###### \java\seedu\address\ui\UiPart.java
+###### /java/seedu/address/ui/UiPart.java
 ``` java
     public static String getThemeNameByIndex(int index) {
         String themeName = THEME_LIST_DIR.get(index);
@@ -430,7 +430,7 @@ public class ThemeCommand extends Command {
         return themeName;
     }
 ```
-###### \resources\view\Extensions.css
+###### /resources/view/Extensions.css
 ``` css
 .menu-personcard {
     -fx-border-color: transparent;
@@ -446,7 +446,7 @@ public class ThemeCommand extends Command {
     -fx-mark-color: #00FFFF;
 }
 ```
-###### \resources\view\MainWindow.fxml
+###### /resources/view/MainWindow.fxml
 ``` fxml
         <MenuItem mnemonicParsing="false" text="Import Addressbook (TDB)"/>
         <MenuItem mnemonicParsing="false" text="Export Addressbook (TDB)"/>
@@ -462,7 +462,7 @@ public class ThemeCommand extends Command {
             </Menu>
         </Menu>
 ```
-###### \resources\view\PersonListCard.fxml
+###### /resources/view/PersonListCard.fxml
 ``` fxml
                 <Pane HBox.hgrow="ALWAYS"/>
                 <MenuButton fx:id="options_button" text="" alignment="CENTER_RIGHT" styleClass="menu-personcard">

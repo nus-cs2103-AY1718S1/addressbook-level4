@@ -17,23 +17,22 @@ The user interacts with it using a CLI, and it has a GUI created with JavaFX. It
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[https://github.com/CS2103AUG2017-F10-B4/main/blob/master/docs/UserGuide.adoc]
+include::../UserGuide.adoc[]
 
 #End of Extract#
 
 ---
 
-==== Justification
+== Justification
 
-Adding birthday to person list of Mybook in the command box when they are filling up information. This
-allows the user to identify who's birthday is coming up, so that they can celebrate their birthday.
+Adding birthday to person list of Mybook in the command box when they are filling up information. This allows the user to identify who's birthday is coming up, so that they can celebrate their birthday.
 
-==== Implementation
+== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[https://github.com/CS2103AUG2017-F10-B4/main/blob/master/docs/UserGuide.adoc]
+include::../DeveloperGuide.adoc[]
 
 #End of Extract#
 
@@ -48,6 +47,6 @@ It help the user to identify the correct person.
 
 * Change our address book display bar to our app name
 
-== Project: PowerPointLabs
+=== Project: PowerPointLabs
 
 {Optionally (not graded), you may include other projects in your portfolio.}
