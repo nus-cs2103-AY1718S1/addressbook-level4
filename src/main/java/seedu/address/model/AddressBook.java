@@ -263,7 +263,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             newTask.setDeadline(new Deadline(DateTimeValidator.formatDate(new Date())));
         }
         System.out.println(newTask);
-        syncMasterTagListWith(newTask);  xc
+        syncMasterTagListWith(newTask);
         tasks.add(newTask);
     }
 

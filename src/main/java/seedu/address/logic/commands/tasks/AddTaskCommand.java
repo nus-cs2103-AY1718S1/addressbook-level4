@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_ON;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -13,7 +12,7 @@ import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
-import seedu.address.model.task.exceptions.DuplicateTaskException;
+
 //@@author raisa2010
 /**
  * Adds a task to the task manager
@@ -25,7 +24,6 @@ public class AddTaskCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the task manager. "
             + "Parameters: "
             + "DESCRIPTION "
-            + PREFIX_STARTDATE + " START DATE "
             + PREFIX_DEADLINE_BY + "/" + PREFIX_DEADLINE_ON + " DEADLINE DATE "
             + PREFIX_TAG + "TAG";
 

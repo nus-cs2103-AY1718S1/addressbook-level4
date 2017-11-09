@@ -9,7 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_ON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_AT;
 
@@ -87,7 +86,6 @@ public class CommandTestUtil {
     public static final String INVALID_DESCRIPTION = " " + "///??::!!";
     public static final String INVALID_DOTTED_DATE = "13.02.2012";
     public static final String INVALID_DASHED_DATE = "13-02-2015";
-    public static final String INVALID_STARTDATE_INTERNSHIP = "Thu, Oct 26, '17";
 
     public static final String DESCRIPTION_QUOTED_PAPER = " " + "\"" + UNQUOTED_DESCRIPTION_PAPER + "\"";;
     public static final String DEADLINE_DESC_INTERNSHIP = " " + PREFIX_DEADLINE_ON + " " + VALID_DEADLINE_INTERNSHIP;
@@ -106,8 +104,6 @@ public class CommandTestUtil {
     public static final String TAG_DESC_GROUP = " " + PREFIX_TAG + VALID_TAG_GROUP;
     public static final String TAG_DESC_NOT_URGENT = " " + PREFIX_TAG + VALID_TAG_NOT_URGENT;
     public static final String INVALID_DEADLINE_DESC = " " + PREFIX_DEADLINE_ON + " " + INVALID_DASHED_DATE;
-    public static final String INVALID_STARTDATE_INTERNSHIP_DESC = " " + PREFIX_STARTDATE + " "
-            + INVALID_STARTDATE_INTERNSHIP;
 
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;

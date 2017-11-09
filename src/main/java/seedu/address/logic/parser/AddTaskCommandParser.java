@@ -4,8 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_FROM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_ON;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_AT;
 
@@ -41,7 +41,7 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
         requireNonNull(args);
 
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_STARTDATE, PREFIX_DEADLINE_ON, PREFIX_DEADLINE_BY,
+                ArgumentTokenizer.tokenize(args, PREFIX_DEADLINE_ON, PREFIX_DEADLINE_BY, PREFIX_DEADLINE_FROM,
                         PREFIX_TIME_AT, PREFIX_TAG);
 
         if (!isDescriptionPresent(argMultimap) | !isSinglePrefixPresent(argMultimap)) {
@@ -50,7 +50,8 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
 
         try {
             Description description = ParserUtil.parseDescription(argMultimap.getPreamble()).get();
-            Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE_BY, PREFIX_DEADLINE_ON))
+            Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE_BY,
+                    PREFIX_DEADLINE_FROM, PREFIX_DEADLINE_ON))
                     .orElse(new Deadline());
             EventTime[] eventTimes = ParserUtil.parseEventTimes(argMultimap.getValue(PREFIX_TIME_AT))
                     .orElse(new EventTime[]{new EventTime(""), new EventTime("")});

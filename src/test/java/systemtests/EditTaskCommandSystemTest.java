@@ -17,7 +17,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_INT
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_NOT_URGENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_URGENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TASKS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;

@@ -3,7 +3,6 @@ package seedu.address.logic.commands.tasks;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_ON;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
@@ -44,7 +43,6 @@ public class EditTaskCommand extends UndoableCommand {
             + "[" + PREFIX_DEADLINE_BY + "/" + PREFIX_DEADLINE_ON + " DEADLINE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_STARTDATE + " wed "
             + PREFIX_DEADLINE_BY + " 10-25-2017 [dates must be in (M)M(d)d(yy)yy format]";
 
     public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited Task: %1$s";

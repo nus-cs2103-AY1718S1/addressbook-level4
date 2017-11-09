@@ -14,7 +14,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
     public static final Prefix PREFIX_BIRTHDAY = new Prefix("b/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
-    public static final Prefix PREFIX_STARTDATE = new Prefix("from");
+    public static final Prefix PREFIX_DEADLINE_FROM = new Prefix("from");
     public static final Prefix PREFIX_DEADLINE_BY = new Prefix("by");
     public static final Prefix PREFIX_DEADLINE_ON = new Prefix("on");
     public static final Prefix PREFIX_TIME_AT = new Prefix("at");

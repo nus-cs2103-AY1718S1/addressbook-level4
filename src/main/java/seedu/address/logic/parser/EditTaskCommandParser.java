@@ -3,8 +3,8 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_FROM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_ON;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_AT;
 import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
@@ -38,7 +38,7 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
     public EditTaskCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_STARTDATE, PREFIX_DEADLINE_BY, PREFIX_DEADLINE_ON,
+                ArgumentTokenizer.tokenize(args, PREFIX_DEADLINE_BY, PREFIX_DEADLINE_ON, PREFIX_DEADLINE_FROM,
                         PREFIX_TIME_AT, PREFIX_TAG);
 
         Index index;
@@ -52,7 +52,7 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
         EditTaskDescriptor editTaskDescriptor = new EditTaskCommand.EditTaskDescriptor();
         try {
             parseDescriptionForEdit(argMultimap.getPreamble()).ifPresent(editTaskDescriptor::setDescription);
-            parseDeadlineForEdit(argMultimap.getAllValues(PREFIX_DEADLINE_BY, PREFIX_DEADLINE_ON))
+            parseDeadlineForEdit(argMultimap.getAllValues(PREFIX_DEADLINE_BY, PREFIX_DEADLINE_FROM, PREFIX_DEADLINE_ON))
                     .ifPresent(editTaskDescriptor::setDeadline);
             ParserUtil.parseEventTimes(argMultimap.getValue(PREFIX_TIME_AT))
                     .ifPresent(editTaskDescriptor::setEventTimes);
