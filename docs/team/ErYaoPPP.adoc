@@ -15,7 +15,7 @@ Mobilize is a organizing and planning desktop application used for teaching Soft
 ---
 #Start of Extract [from: User Guide]#
 
-include::./UserGuide.adoc[tag=birthday]
+include::../UserGuide.adoc[tag=birthday]
 
 #End of Extract#
 
@@ -32,7 +32,7 @@ Hence, users can use the optional parameter to save the birthday of their friend
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::./DeveloperGuide.adoc[tag=birthday]
+include::../DeveloperGuide.adoc[tag=birthday]
 
 #End of Extract#
 
@@ -45,7 +45,7 @@ include::./DeveloperGuide.adoc[tag=birthday]
 ---
 #Start of Extract [from: User Guide]#
 
-include::./UserGuide.adoc[tag=deletetask]
+include::../UserGuide.adoc[tag=deletetask]
 
 #End of Extract#
 
@@ -63,7 +63,7 @@ Hence, users can use the deletetask feature to delete away the task at any index
 
 #Start of Extract [from: Developer Guide]#
 
-include::./DeveloperGuide.adoc[tag=deletetask]
+include::../DeveloperGuide.adoc[tag=deletetask]
 
 #End of Extract#
 
@@ -76,7 +76,7 @@ include::./DeveloperGuide.adoc[tag=deletetask]
 ---
 #Start of Extract [from: User Guide]#
 
-include::./UserGuide.adoc[tag=findtag]
+include::../UserGuide.adoc[tag=findtag]
 
 #End of Extract#
 
@@ -94,7 +94,7 @@ Hence, users can use findtag feature to filter out all the people that are under
 
 #Start of Extract [from: Developer Guide]#
 
-include::./DeveloperGuide.adoc[tag=findtag]
+include::../DeveloperGuide.adoc[tag=findtag]
 
 #End of Extract#
 

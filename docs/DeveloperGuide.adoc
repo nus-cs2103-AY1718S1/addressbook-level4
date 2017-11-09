@@ -239,9 +239,10 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-=== Switchmode mechanism
+// tag::switch[]
+=== SwitchMode mechanism
 
-The switchmode mechanism is facilitated by the ChangeModeCommand class which inherits from Command class. It allows the user switch between 2 sets of command for either addressbook or taskmanager.
+The switchMode mechanism is facilitated by the ChangeModeCommand class which inherits from Command class. It allows the user switch between 2 sets of command for either addressbook or taskmanager.
 
 Suppose the user has just executed the ChangeMode using:
 
@@ -254,7 +255,7 @@ In any command mode, the execute() function of the LogicManager class is first c
 A diagram is shown below to illustrate this mechanism.
 
 image::ChangeModeDiagram.png[width="800", height="500"]
-
+// end::switch[]
 // tag::birthday[]
 === Add contact mechanism: birthday parameter
 
@@ -457,6 +458,7 @@ public class DeleteTaskCommand extends UndoableCommand {
 ----
 // end::deletetask[]
 
+// tag::find[]
 === FindTask mechanism
 
 The FindTask mechanism is facilitated by the `FindTaskCommand` class which inherits from `Command` class. It allows the user to find tasks using descriptions. User can search using multiple descriptions too.
@@ -478,7 +480,8 @@ At first, the `execute()` function of the `LogicManager` class is called, which 
 **Alternative 2:** Use string.contains() to find tasks. +
 **Pros:** Keywords do not have to be exactly the same as those in the description of tasks. +
 **Cons:** The search result might not be accurate. For e.g. if the user searches using the keyword 'a' all the tasks'descriptions that contains the character 'a' will appear.
-
+// end::find[]
+// tag::list[]
 === ListTask mechanism
 
 The ListTask mechanism is facilitated by the `ListTaskCommand` class which inherits from `Command` class. It allows the user to list out all the current tasks.
@@ -490,7 +493,8 @@ Suppose the user has just executed the `ListTaskCommand` using:
 ----
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `ListTaskCommand` feature is being evoked and calls the `execute()` in the `ListTaskCommand` class which update the current list to show all tasks creates and return a `CommandResult` object.
-
+// end::list[]
+// tag::select[]
 === SelectTask mechanism
 
 The SelectTask mechanism is facilitated by the `SelectTaskCommand` class which inherits from `Command` class. It allows the user to select the task at specific index.
@@ -502,7 +506,7 @@ Suppose the user has just executed the `SelectTaskCommand` using:
 ----
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `SelectTaskCommand` feature is being evoked and calls the `SelectTaskCommandParser` to parse the string and check if the index is valid. After validation the `SelectTaskCommand` class is been called. `SelectTaskCommand` will then paraphrase the tag of selected task and pass it through `conductSearch`. `conductSearch` will call `model.updateFilteredPersonList()` with `PersonContainsKeywordsPredicate` with keyword `tag` as parameter to find the tag among person list and update person list. If there are no match found, all person will be listed. Then `LogicManager` then calls the `execute()` in the `SelectTaskCommand` class which calls `EventCenter` with the parameter of `JumpToTaskListRequestEvent` class to highlight selected task card in Ui at target index. Then `execute()` creates and return a `CommandResult` object.
-
+// end::select[]
 // tag::calendar[]
 === Calendar mechanism
 
