@@ -15,7 +15,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BrowserPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.MapPersonEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -75,9 +74,7 @@ public class BrowserPanel extends UiPart<Region> {
             } catch (CommandException e) {
                 e.printStackTrace();
             }
-        }
-          else {
-
+        } else {
             loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
                     + GOOGLE_SEARCH_URL_SUFFIX);
         }
