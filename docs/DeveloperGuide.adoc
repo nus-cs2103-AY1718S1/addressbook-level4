@@ -550,6 +550,8 @@ Edit a person, Add a person or Favorite a person.
 == Birthday Detail
 
 A birthday detail is implemented under the Person class as Birthday. Users will add the birthday in along with the add command.
+It is a compulsory attribute like the Name, Phone, Email, Address of the Person class. It's implementation is similar as well.
+
 
 === Description
 
@@ -558,6 +560,15 @@ Format: b/[dd/mm/yyyy]
 === Full solution
 
 See this http://github.com/NgSuli/main[PR] for the full solution.
+
+==== Design Considerations
+**Aspect:** Should this be an optional attribute instead?
+**Alternative 1(current choice):** It is easier to implement it as an compulsory field.
+**Pros:** Adding the birthday details makes the AddressBook more personal.
+**Cons:** Users have no choice but to key in the birthday detail.
+**Alternative 2:** Make the birthday attribute optional.
+**Pros:** Allows the user freedom to decide what they want in the addressbook.
+**Cons:** Slightly more tedious to implement.
 
 
 == Documentation
@@ -1074,6 +1085,7 @@ Use cse ends.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  The addressbook will only work with english text.
+.  The addressbook should be easy enough for new users to understand and use (i.e. no complicated commands)
 
 {More to be added}
 

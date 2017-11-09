@@ -55,7 +55,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Viewing help : `help`
 
-Format: `help`
+Format: `help` or `h`
 
 === Adding a person: `add`
 
@@ -80,6 +80,9 @@ Format: `list`
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [m/MAJOR]? [fb/FACEBOOK]? [t/TAG]...`
 
+or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [m/MAJOR]? [fb/FACEBOOK]? [t/TAG]..`
+
+
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
@@ -94,6 +97,12 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+or
+* `e 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `e 2 n/Betsy Crower t/` +
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
 
 === Locating persons by name: `find`
 
@@ -265,7 +274,7 @@ Deletes the third person in the group.
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX [INDEX]...`
+Format: `delete INDEX [INDEX]...` or  `d INDEX[INDEX]...`
 
 ****
 * Deletes the list of people at the specified `INDEX` s.
@@ -291,7 +300,7 @@ Deletes the 1st, 3rd, 7th person in the results of the `find` command.
 
 
 Favorites the specified person from the address book so they will appear on top of the contact list or unfavorite a favorited person. +
-Format: `favorite INDEX`
+Format: `favorite INDEX` or `fav INDEX`
 
 ****
 * Favorites the person at the specified `INDEX`.
