@@ -6,9 +6,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEB_LINK;
 
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.CopyToClipboardRequestEvent;
 
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -25,15 +24,12 @@ public class ShareCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Add Command generated. Copied to clipboard! \n%1$s";
 
-
     @Override
     public CommandResult execute() {
         UserPerson userPerson = model.getUserPerson();
         String result = addCommandBuilder(userPerson);
 
-        StringSelection selection = new StringSelection(result);
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clipboard.setContents(selection, selection);
+        EventsCenter.getInstance().post(new CopyToClipboardRequestEvent(result));
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, result));
     }
