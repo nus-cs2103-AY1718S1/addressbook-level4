@@ -2,7 +2,10 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.commands.CommandTestUtil.DAY_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.END_TIME_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_ST_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_ET_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.START_TIME_DESC_AMY;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.Test;
@@ -32,7 +35,15 @@ public class AddScheduleCommandParserTest {
     }
 
     @Test
-    public void parseInvalidTimeFailure() {
+    public void parseInvalidTimeFailure() throws IllegalValueException {
+        String tooEarly =  "1" + DAY_DESC_AMY
+                + INVALID_ST_DESC
+                + END_TIME_DESC_AMY;
+        assertParseFailure(parser, tooEarly, "Not a proper time form");
 
+        String tooLate =  "1" + DAY_DESC_AMY
+                + START_TIME_DESC_AMY
+                + INVALID_ET_DESC;
+        assertParseFailure(parser, tooLate, "Not a proper time form");
     }
 }
