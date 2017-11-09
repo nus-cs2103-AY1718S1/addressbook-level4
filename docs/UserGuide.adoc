@@ -110,8 +110,8 @@ For the following tutorials, command formatting will be explained using the foll
 This is not applicable for parameters without a prefix.
 For example, if a command syntax uses: edit INDEX n/NAME, then the INDEX parameter MUST be in the
 exact position as in the syntax, in this case, after the command word i.e. edit.
-
-=== Switching Between Address Book and Task Manager
+// tag::switch[]
+=== Switching Between Address Book and Task Manager : `switch`
 
 To help you save time to remember all the commands in Mobilize, you can toggle between address book and task manager using:
 
@@ -119,7 +119,7 @@ Format: `switch ab` or `switch tm`
 
 [NOTE]
 The default system of Mobilize will be address book.
-
+// end::switch[]
 === Managing Contacts
 
 ==== Adding new contacts : `add`
@@ -396,7 +396,7 @@ _Constraints_ +
 ****
 * Dates MUST be preceded by one of the prefixes.
 ****
-
+// tag::find[]
 ==== Finding tasks by description or deadline: `find`
 
 To find people whose description contain any of the given keywords, use +
@@ -425,7 +425,7 @@ __Constraints:__
 * Only full words will be matched e.g `Finish` will not match `Finished`.
 * Only valid date will be matched e.g `291017` will not match `29-10-2017`.
 ****
-
+// end::find[]
 ==== Deleting tasks : `delete`
 
 To delete the specified task from the task manager, use: +
@@ -489,13 +489,14 @@ __Constraints:__
 * If a contact is first searched by the “find” feature, then the new index of the contact according to the filtered list of Contact Cards, is what must be used in the INDEX parameter.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
-
+// tag::list[]
 ==== Listing tasks : `list` +
 
 To go back to the default list of tasks after a round of filtering, use:
 
 Format: `list`
-
+// end::list[]
+// tag::select[]
 ==== Selecting a task: `select`
 
 To select the task identified by the index number used in the last task listing, use: +
@@ -520,7 +521,7 @@ Selects the 1st task in the results of the `find` command.
 ====
 The selected task will show involved people in the address book. If there are no involved personnel, there will be no changes in the displayed list of contacts.
 ====
-
+// end::select[]
 === Managing Common Features
 
 ==== Showing help window : `help`
