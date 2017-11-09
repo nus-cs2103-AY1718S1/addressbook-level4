@@ -1323,7 +1323,6 @@ Use case ends.
 
 * 2a. No birthdays today.
 [none]
-+
 Use case ends.
 === Use case: Add event
 

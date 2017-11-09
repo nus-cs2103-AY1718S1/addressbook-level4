@@ -1,13 +1,14 @@
 package seedu.address.storage;
 
+//@@author chernghann
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Date;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.EventName;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
 
 /**
  * JAXB-friendly version of the Person.
@@ -45,7 +46,7 @@ public class XmlAdaptedEvent {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Event toModelType() throws IllegalValueException {
-        final Name name = new Name(this.name);
+        final EventName name = new EventName(this.name);
         final Date date = new Date(this.date);
         final Address address = new Address(this.address);
 
