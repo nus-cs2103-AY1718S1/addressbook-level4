@@ -390,7 +390,7 @@ An alternative implementation would be "Do not create the field object at all if
 This approach is more flexible, but may require resolving `null` value problems when adding and editing a person.
 // end::add[]
 
-// tag::dob
+// tag::dob[]
 === Addition of Date of Birth field
 
 The Date of birth field includes information concerning the age of the user stored in the record.
@@ -398,34 +398,40 @@ Its impact is noticed in the add and edit command.
 
 The `add` command has the following format:
 
-`add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE_OF_BIRTH] [t/TAG]...`
+`add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [g/Gender] [d/DATE_OF_BIRTH] [t/TAG]...`
 
 The prefix d/ as indicated in the CliSyntax.java denotes the beginning of the date of birth argument.
 
 The class DateOfBirth.java within the Model component , validates the input from the user through the following regex:
 [source,java]
 ----
- public static final String DOB_VALIDATION_REGEX = "[0-9][0-9]\\s+[0-9][0-9]\\s+[0-9][0-9][0-9][0-9].*";
+ public static final String DOB_VALIDATION_REGEX = "\\d+[\\s-./,]\\p{Alnum}+[\\s-./,]\\d+.*";
 ----
-The above regex only accepts dates with format : dd mm yyyy
+
+With the help of the date parser(details mentioned above) , the acceptance of the date format
+is flexible and inclusive.
 
 When the d/ is encountered , the trailing argument is passed into `isValidDateOfBirth(String test)` for validation when constructing the `DateOfBirth` object.
-eg : `add n/John Doe p/98765432 d/27 01 1997`
+eg : `add n/John Doe p/98765432 d/27 01 1997 g/MALE`
 
 [source,java]
 ----
  /**
- * Validates given Date of Birth.
- *
- * @throws IllegalValueException if given date of birth string is invalid.
- */
- public DateOfBirth(String dob) throws IllegalValueException {
-        requireNonNull(dob);
-        if (!isValidDateOfBirth(dob)) {
-            throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
-        }
-        this.finalDateOfBirth = dob;
-  }
+      * Validates given Date of Birth.
+      *
+      * @throws IllegalValueException if given date of birth string is invalid.
+      */
+     public DateOfBirth(String dob) throws IllegalValueException {
+         requireNonNull(dob);
+         if (dob.isEmpty()) {
+             throw new EmptyFieldException(PREFIX_DOB);
+         }
+         if (!isValidDateOfBirth(dob)) {
+             throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
+         }
+         this.dateOfBirth = new DateParser().parse(dob);
+         this.dateSet = true;
+     }
 
  /**
  * Returns true if a given string is a valid person date of birth.
@@ -444,16 +450,16 @@ It sets the `value` of the `DateOfBirth` object to an empty string without any v
 [source,java]
 ----
 public DateOfBirth() {
-        this.finalDateOfBirth = "";
+        this.dateOfBirth = LocalDate.now();
+        this.dateSet = false;
     }
 ----
-
-An alternative implementation would be to implement JAVA 8 to easily calculate the age of the entry using the string input.
-
+In the above code snippet , the dataset variable denotes if the user specified the date
+of birth of the entry. This helps in assigning an empty string to an empty object.
 
 // end::dob[]
 
-// tag::gender
+// tag::gender[]
 === Addition of Gender field
 
 The Gender field includes information concerning the gender of the user stored in the record.
@@ -468,9 +474,11 @@ The prefix g/ as indicated in the CliSyntax.java denotes the beginning of the ge
 The class Gender.java within the Model component , validates the input from the user through the following regex:
 [source,java]
 ----
- public static final String GENDER_VALIDATION_REGEX = "(?i)\\b(female|f|male|m|other|o)\\b";
+private static final String GENDER_VALIDATION_REGEX = "(?i)\\b(female|f|male|m|other|o|"
+            + "notspecified|not_specified|not specified)\\b";
 ----
-The above regex accepts the words : female, male , other , o , f or m regardless of the case they are entered in.
+The above regex accepts the words : female, male , other , o , f or m
+, not_specified regardless of the case they are entered in.
 
 The gender field is of type ENUM and can consist of the following values:
 [source,java]
@@ -515,12 +523,17 @@ Therefore, in the above example, `"m"` is passed as the argument.
          default:
              this.value = GenderType.NOT_SPECIFIED;
          }
+         this.genderset = true;
      }
 ----
 
 
 As can be seen from the above code snippet , the given argument is converted to lower case and then given a value amongst
 the available enumerated constants : FEMALE , MALE and NOT_SPECIFIED (when no gender is specified)
+
+The genderset variable is specified to know if the user has entered the gender of the entry
+or not. If not , instead of displaying the default enum type :NOT_SPECIFIED , we can display
+a blank string. If specified , we can display the actual gender of the entry in a string format.
 
 Gender field is also an optional field , unlike the Name field. When the gender is not specified,
 eg :  add n/Johnny Doe  , the no-argument constructor is used.
@@ -530,10 +543,25 @@ It sets the `value` of the `Gender` object to the following :
 ----
 public Gender() {
         this.value = GenderType.NOT_SPECIFIED;
+        this.genderset = false;
+    }
+----
+As the value above specified by the user is empty , we make sure to set the genderset variable
+to False.
+
+When requested by the UI , to display , teh following code snippet is used to display either
+an empty string or the gender:
+
+[source,java]
+----
+@Override
+    public String toString() {
+        return genderset ? value.toString() : "";
     }
 ----
 
 // end::gender[]
+
 // tag::tagManagement[]
 === Improved Tag Management
 

@@ -492,10 +492,9 @@ public class DateParser {
             ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
             ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
-            ParserUtil.parseDateOfBirth(argMultimap.getValue(PREFIX_DOB))
-                    .ifPresent(editPersonDescriptor::setDateOfBirth);
-            ParserUtil.parseGender(argMultimap.getValue(PREFIX_GENDER))
-                    .ifPresent(editPersonDescriptor::setGender);
+```
+###### \java\seedu\address\logic\parser\EditCommandParser.java
+``` java
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
             parseDetagsForEdit(argMultimap.getAllValues(PREFIX_DELTAG)).ifPresent(editPersonDescriptor::setTagsToDel);
         } catch (EmptyFieldException efe) {
@@ -668,10 +667,6 @@ public class EmptyFieldException extends ParseException {
 ```
 ###### \java\seedu\address\model\person\DateOfBirth.java
 ``` java
-    public static final String MESSAGE_DOB_CONSTRAINTS =
-            "Please enter in Day Month Year format where the month can be a number or the name"
-                    + " and the year can be input in 2-digit or 4-digit format.";
-
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
@@ -688,34 +683,6 @@ public class EmptyFieldException extends ParseException {
     public DateOfBirth() {
         this.dateOfBirth = LocalDate.now();
         this.dateSet = false;
-    }
-
-    /**
-     * Validates given Date of Birth.
-     *
-     * @throws IllegalValueException if given date of birth string is invalid.
-     */
-    public DateOfBirth(String dob) throws IllegalValueException {
-        requireNonNull(dob);
-        if (dob.isEmpty()) {
-            throw new EmptyFieldException(PREFIX_DOB);
-        }
-        if (!isValidDateOfBirth(dob)) {
-            throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
-        }
-        this.dateOfBirth = new DateParser().parse(dob);
-        this.dateSet = true;
-    }
-
-    /**
-     * Returns true if a given string is a valid person date of birth.
-     */
-    public static boolean isValidDateOfBirth(String test) {
-        return test.matches(DOB_VALIDATION_REGEX);
-    }
-    @Override
-    public String toString() {
-        return dateSet ? dateOfBirth.format(DateParser.DATE_FORMAT) : "";
     }
 ```
 ###### \java\seedu\address\ui\CommandBox.java
@@ -787,7 +754,6 @@ public class EmptyFieldException extends ParseException {
             scrollTo(event.targetIndex);
         }
     }
-
     @Subscribe
     private void handleInsuranceClickedEvent(InsuranceClickedEvent event) {
         ObservableList<InsuranceProfile> insurances = insuranceListView.getItems();
