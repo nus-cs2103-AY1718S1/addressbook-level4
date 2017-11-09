@@ -1,4 +1,3 @@
-//@@author aggarwalRuchir
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -62,6 +61,7 @@ public class ListCommandTest {
         assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS_FULLLIST, expectedModel);
     }
 
+    //@@author aggarwalRuchir
     @Test
     public void execute_listIsFiltered_showOnlyNecessaryPersons() throws Exception {
         PersonContainsKeywordsPredicate firstPredicate = createNewPersonPredicateForSingleTag(new Tag(VALID_TAG_1));

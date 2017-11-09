@@ -1,21 +1,8 @@
 # aggarwalRuchir
 ###### /java/seedu/address/logic/commands/ListCommand.java
 ``` java
-package seedu.address.logic.commands;
-
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-
-import seedu.address.model.person.PersonContainsKeywordsPredicate;
-
-/**
- * Lists all persons in the address book to the user.
- */
-public class ListCommand extends Command {
-
-    public static final String COMMAND_WORD = "list";
-
-    public static final String MESSAGE_SUCCESS = "Listed all persons";
+    public static final String MESSAGE_SUCCESS_FULLLIST  = "Listed all persons";
+    public static final String MESSAGE_SUCCESS_FILTEREDLIST  = "Listed all persons with tag: ";
 
     public static final String MESSAGE_NOENTRIESFOUND = "No person with given tags found.";
 
@@ -31,7 +18,7 @@ public class ListCommand extends Command {
         this.predicate = null;
     }
 
-    public ListCommand(PersonContainsKeywordsPredicate predicate) {
+    public ListCommand (PersonContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -41,11 +28,11 @@ public class ListCommand extends Command {
             model.updateFilteredPersonList(predicate);
         } else {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            return new CommandResult(MESSAGE_SUCCESS);
+            return new CommandResult(MESSAGE_SUCCESS_FULLLIST);
         }
 
         if (areEntriesWithTagsFound()) {
-            return new CommandResult(MESSAGE_SUCCESS);
+            return new CommandResult(MESSAGE_SUCCESS_FILTEREDLIST + this.predicate.returnListOfTagsAsString());
         } else {
             return new CommandResult(MESSAGE_NOENTRIESFOUND);
         }
@@ -60,6 +47,26 @@ public class ListCommand extends Command {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof ListCommand)) {
+            return false;
+        }
+
+        // other has null predicate
+        if ((((ListCommand) other).predicate == null) && (this.predicate == null)) {
+            return true;
+        }
+
+        return this.predicate.equals(((ListCommand) other).predicate);
     }
 }
 ```
@@ -152,6 +159,18 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
                 || (other instanceof PersonContainsKeywordsPredicate // instanceof handles nulls
                 && this.keywords.equals(((PersonContainsKeywordsPredicate) other).keywords)); // state check
     }
+
+    /**
+     * Returns all the tags as a single string
+     */
+    public String returnListOfTagsAsString() {
+        String stringOfTags = "";
+        for (Tag t : this.keywords) {
+            stringOfTags += t.toString() + " ";
+        }
+        return stringOfTags;
+    }
+
 
 }
 
@@ -300,6 +319,7 @@ public class LoginWindow extends UiPart<Region> {
      */
     private void setStyleToDefault() {
         //TODO - restore if user restarts entering details
+        ;
     }
 
     /**
@@ -307,9 +327,13 @@ public class LoginWindow extends UiPart<Region> {
      */
     private void setMotionToindicateLoginFailure() {
         //TODO - change look/shake of dialog if user enters wrong details
+        ;
     }
 
-
+    /**
+     * Performs a check whether the username and password entered by the user are correct or not
+     * @return true if log in details are correct, else false
+     */
     public boolean performLoginAttempt() {
         boolean loginAttemptBool = false;
         try {
@@ -327,8 +351,7 @@ public class LoginWindow extends UiPart<Region> {
                 loginAttemptBool = true;
             } else {
                 //TODO - In case wrong details entered
-                errorMessage += "Incorrect username or password." +
-                        " Please enter correct details to start the app.";
+                errorMessage += "Incorrect username or password. Please enter correct details to start the app.";
             }
 
             if (errorMessage.length() != 0) {
