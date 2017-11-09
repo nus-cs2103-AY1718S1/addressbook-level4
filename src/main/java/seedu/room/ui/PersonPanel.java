@@ -171,7 +171,7 @@ public class PersonPanel extends UiPart<Region> {
     }
 
     /**
-     * Handler for adding image to person
+     * Button handler for adding image to person
      */
     @FXML
     private void handleAddImage() {
@@ -201,10 +201,10 @@ public class PersonPanel extends UiPart<Region> {
     }
 
     /**
-     * Handler for deleting a person's image
+     * Button handler for resetting a person's image
      */
     @FXML
-    private void handleDeleteImage() {
+    private void handleResetImage() {
         try {
             person.getPicture().resetPictureUrl();
             if (person.getPicture().checkJarResourcePath()) {

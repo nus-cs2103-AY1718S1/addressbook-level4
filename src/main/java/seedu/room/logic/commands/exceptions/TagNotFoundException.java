@@ -1,6 +1,6 @@
-//@@author shitian007
 package seedu.room.logic.commands.exceptions;
 
+//@@author shitian007
 /**
  * Signals that the operation will result in duplicate Person objects.
  */

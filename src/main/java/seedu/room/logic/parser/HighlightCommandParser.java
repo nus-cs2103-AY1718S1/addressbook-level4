@@ -1,4 +1,3 @@
-//@@author shitian007
 package seedu.room.logic.parser;
 
 import static seedu.room.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -6,6 +5,7 @@ import static seedu.room.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import seedu.room.logic.commands.HighlightCommand;
 import seedu.room.logic.parser.exceptions.ParseException;
 
+//@@author shitian007
 /**
  * Parses input arguments and creates a new AddCommand object
  */

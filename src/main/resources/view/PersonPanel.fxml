@@ -44,7 +44,7 @@
                         <Insets right="80.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="resetImageButton" mnemonicParsing="false" onAction="#handleDeleteImage" text="-Image" />
+                  <Button fx:id="resetImageButton" mnemonicParsing="false" onAction="#handleResetImage" text="-Image" />
                </children>
                <padding>
                   <Insets left="50.0" right="50.0" />
