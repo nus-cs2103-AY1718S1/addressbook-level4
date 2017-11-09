@@ -110,12 +110,10 @@ public class Person implements ReadOnlyPerson {
         return room.get();
     }
 
-    //@@author shitian007
     @Override
     public ObjectProperty<Picture> pictureProperty() {
         return picture;
     }
-    //@@author
 
     @Override
     public Picture getPicture() {

@@ -14,7 +14,7 @@ public class Tag {
     public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
     public final String tagName;
-    public String tagColor;
+    private String tagColor;
 
     /**
      * Validates given tag name.
