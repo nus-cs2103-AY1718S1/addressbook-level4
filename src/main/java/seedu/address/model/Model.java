@@ -65,13 +65,13 @@ public interface Model {
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
     /** Removes a tag from every person in the list.*/
-    void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, NoSuchTagException;
+    void removeTag(Tag tag) throws NoSuchTagException;
 
     /** Removes a tag from the specified Index on the list.*/
-    void removeTag(Index index, Tag tag) throws PersonNotFoundException, DuplicatePersonException, NoSuchTagException;
+    void removeTag(Index index, Tag tag) throws NoSuchTagException;
 
     /** Removes a tag from a specified person.*/
-    void removeTagFromPerson(Tag tag, ReadOnlyPerson person) throws DuplicatePersonException, PersonNotFoundException;
+    void removeTagFromPerson(Tag tag, ReadOnlyPerson person);
 
     /** Sorts the filtered list.*/
     void sortFilteredPersonList(Comparator<ReadOnlyPerson> comparator);

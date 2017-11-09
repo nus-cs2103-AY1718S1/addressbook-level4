@@ -9,9 +9,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.NoSuchTagException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 //@@author freesoup
@@ -28,8 +26,6 @@ public class RemoveTagCommand extends UndoableCommand {
             + "Example: removetag 30 prospective OR removetag all colleagues";
 
     public static final String MESSAGE_SUCCESS = "Tag removed";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
-    public static final String MESSAGE_NOT_DELETED = "Tag not deleted";
     public static final String MESSAGE_EXCEEDTAGNUM = "Please type one TAG to be removed";
     public static final String MESSAGE_TAG_NOT_FOUND = "Tag given does not exist in address book";
     public static final String MESSAGE_TAG_NOT_FOUND_IN = "Index %s does not have the given tag.";
@@ -53,18 +49,12 @@ public class RemoveTagCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
-        try {
-            if (index.orElse(null) == null) {
-                removeAllTag(toRemove);
-            } else {
-                remvoeOneTag(index.get(), toRemove);
-            }
-            return new CommandResult(String.format(MESSAGE_SUCCESS));
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
-            throw new CommandException(MESSAGE_NOT_DELETED);
+        if (index.orElse(null) == null) {
+            removeAllTag(toRemove);
+        } else {
+            remvoeOneTag(index.get(), toRemove);
         }
+        return new CommandResult(String.format(MESSAGE_SUCCESS));
     }
 
     /**
@@ -86,8 +76,7 @@ public class RemoveTagCommand extends UndoableCommand {
      * @param toRemove is the tag to be removed from the person
      * @throws CommandException if the tag to be removed does not exist in the person.
      */
-    private void remvoeOneTag(Index index, Tag toRemove) throws PersonNotFoundException, DuplicatePersonException,
-            CommandException {
+    private void remvoeOneTag(Index index, Tag toRemove) throws CommandException {
         requireIndexValid(index);
         try {
             model.removeTag(index, toRemove);
@@ -101,8 +90,7 @@ public class RemoveTagCommand extends UndoableCommand {
      * @param toRemove is the tag to be removed from the addressbook.
      * @throws CommandException if tag does not exist in the addressbook.
      */
-    private void removeAllTag(Tag toRemove) throws PersonNotFoundException, DuplicatePersonException,
-            CommandException {
+    private void removeAllTag(Tag toRemove) throws CommandException {
         try {
             model.removeTag(toRemove);
         } catch (NoSuchTagException nste) {

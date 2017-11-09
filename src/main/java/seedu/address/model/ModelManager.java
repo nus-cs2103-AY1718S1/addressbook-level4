@@ -147,8 +147,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author freesoup
     @Override
-    public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException,
-            NoSuchTagException {
+    public void removeTag(Tag tag) throws NoSuchTagException {
         if (!addressBook.getTagList().contains(tag)) {
             throw new NoSuchTagException();
         }
@@ -162,8 +161,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void removeTag(Index index, Tag tag) throws PersonNotFoundException, DuplicatePersonException,
-            NoSuchTagException {
+    public void removeTag(Index index, Tag tag) throws NoSuchTagException {
         List<ReadOnlyPerson> list = getFilteredPersonList();
         ReadOnlyPerson person = list.get(index.getZeroBased());
         if (!person.getTags().contains(tag)) {
@@ -175,15 +173,21 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void removeTagFromPerson(Tag tag, ReadOnlyPerson person) throws DuplicatePersonException,
-            PersonNotFoundException {
+    public void removeTagFromPerson(Tag tag, ReadOnlyPerson person) {
         Person newPerson = new Person(person);
         Set<Tag> tagList = newPerson.getTags();
         tagList = new HashSet<>(tagList);
         tagList.remove(tag);
 
         newPerson.setTags(tagList);
-        addressBook.updatePerson(person, newPerson);
+
+        try {
+            addressBook.updatePerson(person, newPerson);
+        } catch (PersonNotFoundException pnfe) {
+            assert false: "Person will always be found";
+        } catch (DuplicatePersonException dpe) {
+            assert false: "There will never be duplicates";
+        }
     }
     //@@author
     //=========== Filtered Person List Accessors =============================================================
