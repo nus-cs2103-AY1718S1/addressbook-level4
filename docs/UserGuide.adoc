@@ -366,7 +366,7 @@ removes `remark` from the 2nd person in the address book.
 // end::remark[]
 
 // tag::linechart[]
-=== Displaying results : `lineChart` `Since v1.3`
+=== Displaying results : `lineChart/barChart` `Since v1.3`
 
 Automatically plots a graph of names against grades based on the selected student's class.
 
@@ -495,7 +495,11 @@ You can use these statistics to pick out trends in your student's grades and als
 // tag::graphpanel[]
 === Graph Panel
 
-//TODO: Jonathan can add explanations for this
+cherBook uses a `GraphPanel` to plot the grades of all classmates of the selected student on a graph.
+The graphs are automatically sorted from the lowest grade to the highest.
+There are two tabs for you to choose from, line or bar and can be switch by using the `tab` command.
+The details changes when another student from a different class is selected.
+You can use these graph to better understand the trends of `grades` in a glance to easily see who are the weaker or stronger students.
 
 
 // end::graphpanel[]
