@@ -36,9 +36,11 @@ public abstract class UndoableCommand extends Command {
      */
     protected final void undo() throws CommandException {
         requireAllNonNull(model, previousAddressBook);
+        //@@author archthegit
         if (model.ifSelectedPerson()) {
             model.unselectPerson();
         }
+        //@@author
         model.resetData(previousAddressBook);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 

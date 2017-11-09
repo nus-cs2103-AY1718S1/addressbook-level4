@@ -159,7 +159,7 @@ public class PersonBuilder {
         return this;
     }
 
-    //@@author
+    //@@author archthegit
     /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.
      */

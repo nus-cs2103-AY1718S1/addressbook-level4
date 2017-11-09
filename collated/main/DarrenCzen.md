@@ -1,5 +1,5 @@
 # DarrenCzen
-###### \java\seedu\address\commons\events\ui\AccessLocationRequestEvent.java
+###### /java/seedu/address/commons/events/ui/AccessLocationRequestEvent.java
 ``` java
 /**
  * An event requesting to view the location of a person.
@@ -17,7 +17,7 @@ public class AccessLocationRequestEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\AccessWebsiteRequestEvent.java
+###### /java/seedu/address/commons/events/ui/AccessWebsiteRequestEvent.java
 ``` java
 /**
  * An event requesting to view the website of a person.
@@ -36,7 +36,7 @@ public class AccessWebsiteRequestEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\AccessCommand.java
+###### /java/seedu/address/logic/commands/AccessCommand.java
 ``` java
 /**
  * Accesses a person's website in the address book.
@@ -85,7 +85,7 @@ public class AccessCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\EditCommand.java
+###### /java/seedu/address/logic/commands/EditCommand.java
 ``` java
         public void setWebsite(Website website) {
             this.website = website;
@@ -96,7 +96,7 @@ public class AccessCommand extends Command {
         }
 
 ```
-###### \java\seedu\address\logic\commands\LocationCommand.java
+###### /java/seedu/address/logic/commands/LocationCommand.java
 ``` java
 /**
  * Accesses a person's location in the address book.
@@ -145,7 +145,7 @@ public class LocationCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\SortCommand.java
+###### /java/seedu/address/logic/commands/SortCommand.java
 ``` java
 /**
  * Sorts all persons in the address book alphabetically for the user.
@@ -164,7 +164,7 @@ public class SortCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AccessCommandParser.java
+###### /java/seedu/address/logic/parser/AccessCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AccessCommand object
@@ -187,7 +187,7 @@ public class AccessCommandParser implements Parser<AccessCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddCommandParser.java
+###### /java/seedu/address/logic/parser/AddCommandParser.java
 ``` java
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
@@ -247,7 +247,7 @@ public class AccessCommandParser implements Parser<AccessCommand> {
     }
 
 ```
-###### \java\seedu\address\logic\parser\LocationCommandParser.java
+###### /java/seedu/address/logic/parser/LocationCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AccessCommand object
@@ -271,7 +271,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     /** Ensures that every person in the AddressBook
      *  is sorted in an alphabetical order.
@@ -281,7 +281,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public synchronized void sort() {
@@ -291,7 +291,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 
 ```
-###### \java\seedu\address\model\person\Address.java
+###### /java/seedu/address/model/person/Address.java
 ``` java
     /**
      * Validates given address.
@@ -318,7 +318,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 
 ```
-###### \java\seedu\address\model\person\Birthday.java
+###### /java/seedu/address/model/person/Birthday.java
 ``` java
     /**
      * Validates given address.
@@ -346,7 +346,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
                 || test.matches(BIRTHDAY_TEMPORARY);
     }
 ```
-###### \java\seedu\address\model\person\HomeNumber.java
+###### /java/seedu/address/model/person/HomeNumber.java
 ``` java
     /**
      * Validates given home number.
@@ -374,24 +374,34 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Name.java
+``` java
+    /**
+     * This method converts a name to become capitalized fully.
+     * e.g. from "dArrEn cHiN" to "Darren Chin"
+     */
+    public static String toCapitalized(String s) {
+
+        final String delimiters = " ";
+        StringBuilder newString = new StringBuilder();
+        boolean isCapital = true;
+
+        for (char c : s.toCharArray()) {
+            c = (isCapital) ? Character.toUpperCase(c) : Character.toLowerCase(c);
+            newString.append(c);
+
+            isCapital = (delimiters.indexOf((int) c) >= 0);
+        }
+        return newString.toString();
+    }
+```
+###### /java/seedu/address/model/person/Person.java
 ``` java
     public void setWebsite(Website website) {
         this.website.set(requireNonNull(website));
     }
-
-    @Override
-    public ObjectProperty<Website> websiteProperty() {
-        return website;
-    }
-
-    @Override
-    public Website getWebsite() {
-        return website.get();
-    }
-
 ```
-###### \java\seedu\address\model\person\SchEmail.java
+###### /java/seedu/address/model/person/SchEmail.java
 ``` java
     /**
      * Validates given email.
@@ -419,7 +429,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 
 ```
-###### \java\seedu\address\model\person\UniquePersonList.java
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
     /**
      * Sorts every person in the list alphabetically.
@@ -430,7 +440,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 
 ```
-###### \java\seedu\address\model\person\Website.java
+###### /java/seedu/address/model/person/Website.java
 ``` java
 /**
  * Represents a Person's website information in the address book.
@@ -439,7 +449,9 @@ public class LocationCommandParser implements Parser<LocationCommand> {
 
 public class Website {
     public static final String MESSAGE_WEBSITE_CONSTRAINTS =
-            "Person websites should be 3 alphanumeric strings separated by '.'";
+            "Website inputted should follow format https://www.anyName.com/anyContent"
+                    + " where both anyName and anyContent can be alphanumeric."
+                    + " You must have https://www. and a domain name like .com";
     public static final String WEBSITE_TEMPORARY = "NIL";
 
     public final String value;
@@ -492,11 +504,8 @@ public class Website {
 
 }
 ```
-###### \java\seedu\address\ui\BrowserPanel.java
+###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
-
     /**
      * Access website through browser panel based on person's link
      * @param website
@@ -511,7 +520,7 @@ public class Website {
     }
 
 ```
-###### \java\seedu\address\ui\BrowserPanel.java
+###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
     @Subscribe
     private void handleAccessWebsiteEvent(AccessWebsiteRequestEvent event) {

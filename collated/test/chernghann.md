@@ -1,5 +1,5 @@
 # chernghann
-###### \java\seedu\address\logic\commands\AddEventCommandTest.java
+###### /java/seedu/address/logic/commands/AddEventCommandTest.java
 ``` java
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -38,7 +38,7 @@ public class AddEventCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddEventParserTest.java
+###### /java/seedu/address/logic/parser/AddEventParserTest.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.EVENT_ADDRESS_B_DESC;
@@ -99,7 +99,7 @@ public class AddEventParserTest {
     }
 }
 ```
-###### \java\seedu\address\model\event\DateTest.java
+###### /java/seedu/address/model/event/DateTest.java
 ``` java
 public class DateTest {
     @Test
@@ -118,7 +118,7 @@ public class DateTest {
     }
 }
 ```
-###### \java\seedu\address\model\UniqueEventListTest.java
+###### /java/seedu/address/model/UniqueEventListTest.java
 ``` java
 import org.junit.Rule;
 import org.junit.Test;
@@ -138,7 +138,7 @@ public class UniqueEventListTest {
     }
 }
 ```
-###### \java\seedu\address\testutil\AddEventUtil.java
+###### /java/seedu/address/testutil/AddEventUtil.java
 ``` java
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
@@ -171,7 +171,7 @@ public class AddEventUtil {
     }
 }
 ```
-###### \java\seedu\address\testutil\EventBuilder.java
+###### /java/seedu/address/testutil/EventBuilder.java
 ``` java
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Date;
@@ -244,7 +244,7 @@ public class EventBuilder {
 
 }
 ```
-###### \java\seedu\address\testutil\TypicalEvents.java
+###### /java/seedu/address/testutil/TypicalEvents.java
 ``` java
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_ADDRESS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_DATE;
@@ -264,17 +264,17 @@ import seedu.address.model.event.exceptions.DuplicateEventException;
  */
 public class TypicalEvents {
 
-    public static final ReadOnlyEvent ZOUKOUT = new EventBuilder().withName("ZoukOut").withDate("2017-12-12")
+    public static final ReadOnlyEvent ZOUKOUT = new EventBuilder().withName("ZoukOut").withDate("12/12/2017")
             .withAddress("Sentosa, Siloso Beach").build();
     public static final ReadOnlyEvent HALLOWEEN = new EventBuilder().withName("Halloween Horror Night")
-            .withDate("2017-10-31").withAddress("Universal Studios Singapore").build();
-    public static final ReadOnlyEvent FINALS = new EventBuilder().withName("Finals").withDate("2017-12-04")
+            .withDate("31/10/2017").withAddress("Universal Studios Singapore").build();
+    public static final ReadOnlyEvent FINALS = new EventBuilder().withName("Finals").withDate("04/12/2017")
             .withAddress("MPSH 2A").build();
     public static final ReadOnlyEvent CONCERT = new EventBuilder().withName("Ed Sheeren Concert")
-            .withDate("2018-01-01").withAddress("National Stadium").build();
-    public static final ReadOnlyEvent STARBUCKS = new EventBuilder().withName("Starbucks").withDate("2017-10-04")
+            .withDate("01/01/2018").withAddress("National Stadium").build();
+    public static final ReadOnlyEvent STARBUCKS = new EventBuilder().withName("Starbucks").withDate("04/10/2017")
             .withAddress("MD7, NUS").build();
-    public static final ReadOnlyEvent NATIONALDAY = new EventBuilder().withName("National Day").withDate("2017-09-08")
+    public static final ReadOnlyEvent NATIONALDAY = new EventBuilder().withName("National Day").withDate("08/09/2017")
             .withAddress("Padang").build();
 
     // Manually added - Event's details found in {@code CommandTestUtil}
