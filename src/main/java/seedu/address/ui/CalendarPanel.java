@@ -99,7 +99,7 @@ public class CalendarPanel extends UiPart<Region> {
         datePicker.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                String currentMode = model.getCommandMode();
+                String currentMode = model.getCommandMode().toString();
                 String date = convertDateFromPicker();
 
                 findPersonsWithBirthday(date);
