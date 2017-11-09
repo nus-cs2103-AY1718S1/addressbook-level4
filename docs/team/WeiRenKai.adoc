@@ -1,21 +1,23 @@
-= John Doe - Project Portfolio
+= Wei Renkai - Project Portfolio
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: Mybook
+Mybook is a desktop address book application used for students or teachers who want to record the details of students.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-F10-B4/main/blob/master/collated/main/renkai91.md[Functional code]]
+[https://github.com/CS2103AUG2017-F10-B4/main/blob/master/collated/test/renkai91.md[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Undo/Redo
+=== Enhancement Added: Add command "Birthday"
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[https://github.com/CS2103AUG2017-F10-B4/main/blob/master/docs/UserGuide.adoc]
 
 #End of Extract#
 
@@ -23,27 +25,28 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Adding birthday to person list of Mybook in the command box when they are filling up information. This
+allows the user to identify who's birthday is coming up, so that they can celebrate their birthday.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[https://github.com/CS2103AUG2017-F10-B4/main/blob/master/docs/UserGuide.adoc]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed: Add "profile photos"
 
-{Explain similar to the Undo/Redo feature above.}
+Adding profile photos for each students, so that we can identify the students by photo and not getting the wrong student.
+It help the user to identify the correct person.
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Change our address book display bar to our app name
 
 == Project: PowerPointLabs
 
