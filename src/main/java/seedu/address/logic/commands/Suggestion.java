@@ -74,7 +74,7 @@ public class Suggestion {
 
         // Custom parser for EditCommand.
         } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            return EditCommandParser.parseArguments(arguments);
+            return EditCommandParser.parseArguments(commandWord, arguments);
 
         // Custom parser for EmailCommand.
         } else if (EmailCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {

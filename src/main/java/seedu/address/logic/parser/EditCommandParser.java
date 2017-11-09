@@ -8,12 +8,22 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.ModelParserUtil.buildParsedArguments;
+import static seedu.address.logic.parser.ModelParserUtil.parseExistingRemarkPrefixes;
+import static seedu.address.logic.parser.ModelParserUtil.parseExistingTagPrefixes;
+import static seedu.address.logic.parser.ModelParserUtil.parseMandatoryAddress;
+import static seedu.address.logic.parser.ModelParserUtil.parseMandatoryEmail;
+import static seedu.address.logic.parser.ModelParserUtil.parseMandatoryName;
+import static seedu.address.logic.parser.ModelParserUtil.parseMandatoryPhone;
+import static seedu.address.logic.parser.ModelParserUtil.parsePossibleTagWords;
 import static seedu.address.logic.parser.ParserUtil.isParsableAddressTillEnd;
 import static seedu.address.logic.parser.ParserUtil.isParsableEmail;
+import static seedu.address.logic.parser.ParserUtil.isParsableInt;
 import static seedu.address.logic.parser.ParserUtil.isParsableName;
 import static seedu.address.logic.parser.ParserUtil.isParsablePhone;
 import static seedu.address.logic.parser.ParserUtil.parseAddressTillEnd;
 import static seedu.address.logic.parser.ParserUtil.parseFirstEmail;
+import static seedu.address.logic.parser.ParserUtil.parseFirstInt;
 import static seedu.address.logic.parser.ParserUtil.parseFirstPhone;
 import static seedu.address.logic.parser.ParserUtil.parseRemainingName;
 import static seedu.address.logic.parser.ParserUtil.parseRemoveAddressTillEnd;
@@ -31,6 +41,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javafx.util.Pair;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
@@ -100,63 +111,73 @@ public class EditCommandParser implements Parser<EditCommand> {
      * Returns a formatted argument string given unformatted {@code rawArgs}
      * or a {@code null} {@code String} if not formattable.
      * Uses a simple flow by checking the {@code Model}'s data in the following order:
-     * 1. {@code Phone} (mandatory)
-     * 2. {@code Email} (mandatory)
-     * 3. {@code Tags} (optional)
-     * 4. {@code Address} (mandatory)
-     * 5. {@code Name} (remaining)
+     * 1. Index of person (mandatory)
+     * 2. {@code Phone} (optional)
+     * 3. {@code Email} (optional)
+     * 4. Existing {@code Tags} (optional)
+     * 5. {@code Tags} prefixes (optional)
+     * 6. {@code Remark} prefixes (optional)
+     * 7. {@code Address} (optional)
+     * 8. {@code Name} (remaining)
      */
-    public static String parseArguments(String rawArgs) {
+    public static String parseArguments(String commandWord, String rawArgs) {
         String remaining = rawArgs;
 
-        // Check for Phone & Email
-        String phone;
-        String email;
-        if (isParsablePhone(remaining) && isParsableEmail(remaining)) {
-            phone = parseFirstPhone(remaining);
-            remaining = parseRemoveFirstPhone(remaining).trim().replaceAll(PREFIX_PHONE.toString(), "");
-            email = parseFirstEmail(remaining);
-            remaining = parseRemoveFirstEmail(remaining).trim().replaceAll(PREFIX_EMAIL.toString(), "");
-        } else {
-            return null;
+        String index = "";
+        if (isParsableInt(rawArgs)) {
+            index = Integer.toString(parseFirstInt(rawArgs));
+        } else if (isParsableInt(commandWord)) {
+            index = Integer.toString(parseFirstInt(commandWord));
         }
 
-        // Check for Existing Tags
+        // Check for Optional Phone
+        String phone = "";
+        Optional<Pair<String, String>> mandatoryPhone = parseMandatoryPhone(remaining);
+        if (mandatoryPhone.isPresent()) {
+            phone = mandatoryPhone.get().getKey();
+            remaining = mandatoryPhone.get().getValue();
+        }
+
+        // Check for Optional Email
+        String email = "";
+        Optional<Pair<String, String>> mandatoryEmail = parseMandatoryEmail(remaining);
+        if (mandatoryEmail.isPresent()) {
+            email = mandatoryEmail.get().getKey();
+            remaining = mandatoryEmail.get().getValue();
+        }
+
+        // Check for possible existing Tags without prefixes
         StringBuilder tags = new StringBuilder();
-        String[] words = remaining.split(" ");
-        if (hasAnyExistingTags(words)) {
-            List<String> tagsAdded = new ArrayList<>();
-            Arrays.stream(words).forEach(word -> {
-                if (isKnownTag(word) && !tagsAdded.contains(word)) {
-                    tags.append(" " + PREFIX_TAG + word);
-                    tagsAdded.add(word);
-                }
-            });
-            remaining = parseRemoveTags(remaining, tagsAdded);
+        Optional<Pair<String, String>> optionalPossibleTags = parsePossibleTagWords(remaining);
+        if (optionalPossibleTags.isPresent()) {
+            tags.append(optionalPossibleTags.get().getKey());
+            remaining = optionalPossibleTags.get().getValue();
         }
 
-        // Check for Address till end of remainder string
-        String address;
-        if (isParsableAddressTillEnd(remaining)) {
-            address = parseAddressTillEnd(remaining);
-            remaining = parseRemoveAddressTillEnd(remaining).trim().replaceAll(PREFIX_ADDRESS.toString(), "");
-        } else {
-            return null;
+        // Check for existing tag prefix using tokenizer
+        Optional<Pair<String, String>> optionalExistingTags = parseExistingTagPrefixes(remaining);
+        if (optionalExistingTags.isPresent()) {
+            tags.append(optionalExistingTags.get().getKey());
+            remaining = optionalExistingTags.get().getValue();
         }
 
-        // Check for alphanumeric Name in remainder string
-        String name;
-        if (isParsableName(remaining)) {
-            name = parseRemainingName(remaining);
-        } else {
-            return null;
+        // Check for existing remark prefix using tokenizer
+        String remark = "";
+        Optional<Pair<String, String>> optionalExistingRemarks = parseExistingRemarkPrefixes(remaining);
+        if (optionalExistingRemarks.isPresent()) {
+            remark = optionalExistingRemarks.get().getKey();
+            remaining = optionalExistingRemarks.get().getValue();
         }
 
-        return " ".concat(PREFIX_NAME.toString()).concat(name)
-                .concat(" ").concat(PREFIX_PHONE.toString()).concat(phone)
-                .concat(" ").concat(PREFIX_EMAIL.toString()).concat(email)
-                .concat(" ").concat(PREFIX_ADDRESS.toString()).concat(address)
-                .concat(tags.toString());
+        // Check for Optional Address till end of remainder string
+        String address = "";
+        Optional<Pair<String, String>> mandatoryAddress = parseMandatoryAddress(remaining);
+        if (mandatoryAddress.isPresent()) {
+            address = mandatoryAddress.get().getKey();
+            remaining = mandatoryAddress.get().getValue();
+        }
+
+        return buildParsedArguments(index, "", phone, email, remark, address, tags.toString());
     }
 
 }
