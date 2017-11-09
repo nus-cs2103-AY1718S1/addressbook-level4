@@ -298,22 +298,22 @@ Selects the 2nd person in the address book and removes its comment.
 '''
 Adding comment "Likes to play computer games." to 3rd contact.
 
-image::CommentCommand/01-2.png[width="800"]
+image::CommentCommand/addComment.png[width="800"]
 
 '''
 The result of `comment 3 c/Likes to play computer games.` shows the following:
 
-image::CommentCommand/02-2.png[width="800"]
+image::CommentCommand/addCommentResult.png[width="800"]
 
 '''
 Removing comment from 4th contact.
 
-image::CommentCommand/03-1.png[width="800"]
+image::CommentCommand/removeComment.png[width="800"]
 
 '''
 The result of `comment 4 c/` shows the following:
 
-image::CommentCommand/04-2.png[width="800"]
+image::CommentCommand/removeCommentResult.png[width="800"]
 
 // end::comment[]
 
@@ -341,22 +341,22 @@ Removes the appointment from the 4th contact.
 '''
 Adding appointment at `October 20th, 2017 14:45` to 2nd contact.
 
-image::AppointCommand/05-1.png[width="800"]
+image::AppointCommand/addAppoint.png[width="800"]
 
 '''
 The result of `ppoint 2 ap/20/10/2017 14:45` shows the following:
 
-image::AppointCommand/06-2.png[width="800"]
+image::AppointCommand/addAppointResult.png[width="800"]
 
 '''
 Removing the appointment from 4th contact.
 
-image::AppointCommand/07-1.png[width="800"]
+image::AppointCommand/removeAppoint.png[width="800"]
 
 '''
 The result of `appoint 4 ap/` shows the following:
 
-image::AppointCommand/08-2.png[width="800"]
+image::AppointCommand/removeAppointResult.png[width="800"]
 // end::appointment[]
 
 === Login using Gmail or Yahoo Account: `email_login`
