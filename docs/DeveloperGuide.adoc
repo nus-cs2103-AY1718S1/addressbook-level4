@@ -386,6 +386,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::customField[]
 === Custom Field
 ==== Model
 A UniqueCustomFieldList Class is created which will be used to store a person's Custom Fields.
@@ -417,7 +418,9 @@ A new label will be displaced for each person for each custom field.
 ==== Sequence Diagram
 image::CustomCommandSequenceDiagram.png[width="800"]
 image::CustomCommandSequenceDiagramForStorage[width="800"]
+// end:: customField[]
 
+// tag::photo[]
 === Upload photo
 ==== Model
 A Photo class is created and added as an attribute to the Person class to store the icon photo of each person.
@@ -446,6 +449,17 @@ Image of the icon photo will be displayed after uploaded.
 
 ==== Sequence Diagram
 image::UploadPhotoCommandSequenceDiagram.png[width="800"]
+// end:: photo[]
+
+// tag::deleteByName[]
+=== DeleteByName
+==== Logic
+A Command - `DeleteByName` Command is created to serve the purpose of deleting an contact from the `Contact book` via its name.
+The Command takes into a String as the parameter which represents the `Name` of the person that is intended to delete.
+When the command is called, the `Contact Book` will get the internal list of all persons and check through the `Name` attribute of each person.
+If there is a person with name equals to the parameter input, the person will be removed from the `Contact Book`.
+If the input name does not match any `Name` in the internal list of all `Person` objects, the internal list will not be modified but the `Result Box` will feedback to users that the person name is not found.
+// end:: deleteByName[]
 
 === Search bar
 ==== Front end
@@ -511,10 +525,15 @@ inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
 === Multiple phone numbers supported
 (launched in V1.3)
 
-==== Description
+ ====Description
+
+Since our target audience are the NUS students, which include a large proportion of international students, our addressBook will support the users to add multiple phone numbers.
+=======
+
+
+ ====Description
 
 Since our target audience are the NUS students, which include a large propotion of international students, our addressBook will support the users to add multiple phone numbers, emails addresses and home addresses.
-
 ==== Model
 
 UniquePhoneList Classes are created for each person to store the person's multiple phone numbers.
@@ -540,6 +559,7 @@ The 3 parameters represents the index of the person in the AddressBook, action t
 For add, we will add the phone to the uniquePhoneList and check for duplicate. Example call of add is illustrated as below.
 image::add.png[width="200"]
 
+
 For remove, we will loop through the uniquePhoneList and remove this phone and check for NoPhoneFoundException. The illustration is below.
 image::remove.png[width="200']
 
@@ -551,7 +571,6 @@ image::showAllPhones.png[width="200']
 
 ==== Storage
 New XML element for UniquePhoneList and new XmlAdaptedPhone class with XML value Phone are created to allow the storage for unique phone list and optional phones.
-
 ==== Ui
 A new label will be displaced for each person for each instance of the same fields.
 

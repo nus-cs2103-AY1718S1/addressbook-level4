@@ -1,0 +1,119 @@
+= Lu Lechuan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+Our Contact Book is an addressbook that strives to serve all the NUS students body.
+Other than some standard operations, it also support some operations that going to be handy for NUS students.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T14-B1/main/blob/master/collated/main/LuLechuan.md[Functional code]]
+ [https://github.com/CS2103AUG2017-T14-B1/main/blob/master/collated/test/LuLechuan.md[Test code]]
+ [https://github.com/CS2103AUG2017-T14-B1/main/blob/master/collated/unused/LuLechuan.md[Unused code]]
+
+=== Enhancement Added: Photo
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=photo]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users might like to have icon photos for their contacts. One reason is that it is easier for users to recognise the contacts. Another reason is that the contact book will have a better appearance with photos
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=photo]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Custom Field
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=customField]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Different students have their own custom fields such a nick name, courses etc. which is not exhaustive.
+Therefore, this feature is designed for users to add as many custom fields for each contact as they want so that they can customise each contact.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=customField]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=customField]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: DeleteByName
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deleteByName]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+When there is a lot of contacts in the contact book, it will be easier for users to locate a particular contact by the name and delete it directly, as compared to finding the index of the contact in the long list.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deleteByName]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `Background`
+
+The Background command will allow users to add a background image for the Contact Book.
+This command would allow users to customise their Contact Book to have an appearance that they desire.
+
+=== Other contributions
+
+* Allow Storage for all new fields for the team (Pull requests https://github.com/CS2103AUG2017-T14-B1/main/pull/59)
+* Add a default background image for the Contact Book (Pull requests https://github.com/CS2103AUG2017-T14-B1/main/pull/79)
+
