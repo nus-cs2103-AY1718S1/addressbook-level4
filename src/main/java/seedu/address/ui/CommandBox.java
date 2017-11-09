@@ -3,6 +3,8 @@ package seedu.address.ui;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import org.controlsfx.control.textfield.TextFields;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -40,6 +42,7 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
         suggestions = AddressBookParser.getCommandNames();
+        TextFields.bindAutoCompletion(commandTextField, suggestions);
     }
 
     /**
