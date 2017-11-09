@@ -97,8 +97,6 @@ public class SyncCommand extends Command {
                     importContacts();
                 }
 
-
-
                 saveStatus(syncedIDs);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -170,10 +168,7 @@ public class SyncCommand extends Command {
             try {
                 seedu.address.model.person.Person convertedaPerson = convertGooglePerson(person);
                 String id = person.getResourceName();
-                String gName = (person.getNames().get(0).getFamilyName() == null)
-                        ? person.getNames().get(0).getGivenName()
-                        : person.getNames().get(0).getGivenName() + " " +
-                        person.getNames().get(0).getFamilyName();
+                String gName = retrieveFullGName(person);
                 if (!syncedIDs.contains(id) && !hashName.containsKey(gName)) {
                     model.addPerson(convertedaPerson);
                     syncedIDs.add(id);
@@ -279,8 +274,7 @@ public class SyncCommand extends Command {
     }
 
     /** Converts a Google Person to a local Person
-     * @TODO Take in middle name
-     *
+     * @derrickchua TODO:Fix phone numbers
      * @param person
      * @return
      * @throws IllegalValueException
@@ -307,9 +301,7 @@ public class SyncCommand extends Command {
         if (name == null) {
             logger.warning("Google Contact has no retrievable name");
         } else {
-            seedu.address.model.person.Name aName = (name.getFamilyName() == null)
-                ? new seedu.address.model.person.Name(name.getGivenName())
-                : new seedu.address.model.person.Name(name.getGivenName() + " " + name.getFamilyName());
+            seedu.address.model.person.Name aName = new seedu.address.model.person.Name(retrieveFullGName(person));
             Phone aPhone = (phone == null || !Phone.isValidPhone(phone.getValue()))
                     ? new Phone(null)
                     : new seedu.address.model.person.Phone(phone.getValue());
@@ -374,6 +366,29 @@ public class SyncCommand extends Command {
             e.printStackTrace();
         }
 
+    }
+
+    /** Retrieves full name from a Google Contact
+     *
+     * @param person
+     * @return
+     */
+    private String retrieveFullGName (Person person) {
+        Name name = person.getNames().get(0);
+
+        String result;
+
+        if (name.getFamilyName() != null) {
+            if (name.getMiddleName() != null) {
+                result = name.getGivenName() + " " + name.getMiddleName() + " " + name.getFamilyName();
+            } else {
+                result = name.getGivenName() + " " + name.getFamilyName();
+            }
+        } else {
+            result = name.getGivenName();
+        }
+
+        return result;
     }
 
     /**Creates a new seedu.address.model.person.Person,
@@ -456,11 +471,8 @@ public class SyncCommand extends Command {
         HashMap<String, Person> result = new HashMap<>();
 
         connections.forEach(e -> {
-            if (e.getNames().get(0).getFamilyName() == null) {
-                result.put(e.getNames().get(0).getGivenName(),e);
-            } else {
-                result.put(e.getNames().get(0).getGivenName() + " " + e.getNames().get(0).getFamilyName(),e);
-            }
+            String name = retrieveFullGName(e);
+            result.put(name, e);
 
         });
 
@@ -509,9 +521,7 @@ public class SyncCommand extends Command {
         String gName;
         boolean equalName = false;
         if (name != null) {
-            gName = (name.getFamilyName() == null)
-                    ? name.getGivenName()
-                    : name.getGivenName() + " " + name.getFamilyName();
+            gName = retrieveFullGName(gPerson);
             equalName = gName.equals(abcName);
         }
 

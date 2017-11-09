@@ -24,9 +24,12 @@ public class LogoutCommand extends Command {
     private final java.io.File dataStoreDir =
             new java.io.File(System.getProperty("user.home"), ".store/addressbook/StoredCredential");
 
+    private final java.io.File syncedIDs =
+            new java.io.File( "syncedIDs.dat");
+
     @Override
     public CommandResult execute() throws CommandException {
-
+        syncedIDs.delete();
         if (dataStoreDir.delete()) {
             return new CommandResult(String.format(MESSAGE_SUCCESS));
         } else {
