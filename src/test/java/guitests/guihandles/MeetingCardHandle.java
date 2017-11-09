@@ -1,11 +1,7 @@
 package guitests.guihandles;
 
-import java.util.stream.Collectors;
-
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.Region;
 //@@author Melvin-leo
 /**
  * Provides a handle to a meeting card in the meeting list panel.
