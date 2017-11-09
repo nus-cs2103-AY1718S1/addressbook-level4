@@ -182,6 +182,9 @@ public class ModelManager extends ComponentManager implements Model {
         indicateResidentBookChanged();
     }
 
+    /**
+     * Removes the highlight status of all residents
+     */
     public void resetHighlightStatus() throws NoneHighlightedException {
         residentBook.resetHighlightStatus();
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);

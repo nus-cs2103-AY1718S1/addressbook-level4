@@ -62,10 +62,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Updates the highlight status of the persons with the specified tag
      */
     public void updateHighlightStatus(String highlightTag) throws TagNotFoundException {
-        try {
-            resetHighlightStatus();
-        } catch (NoneHighlightedException e) {
-        }
+        resetHighlightStatusHelper();
         boolean tagFound = false;
         for (Person person : this.internalList) {
             for (Tag t : person.getTags()) {
@@ -84,6 +81,16 @@ public class UniquePersonList implements Iterable<Person> {
      * Removes highlighting of everyone
      */
     public void resetHighlightStatus() throws NoneHighlightedException {
+        boolean highlightReset = resetHighlightStatusHelper();
+        if (!highlightReset) {
+            throw new NoneHighlightedException("No Residents Highlighted");
+        }
+    }
+
+    /**
+     * @return true if at least one resident's highlight status has been reset
+     */
+    public boolean resetHighlightStatusHelper() {
         boolean highlightReset = false;
         for (Person person : this.internalList) {
             if (person.getHighlightStatus()) {
@@ -91,10 +98,9 @@ public class UniquePersonList implements Iterable<Person> {
                 highlightReset = true;
             }
         }
-        if (!highlightReset) {
-            throw new NoneHighlightedException("No Residents Highlighted");
-        }
+        return highlightReset;
     }
+
     //@@author
 
     /**
