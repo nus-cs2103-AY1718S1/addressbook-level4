@@ -3,7 +3,6 @@ package seedu.address.model.event;
 //@@author chernghann
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
 
 /**
  * A read-only immutable interface for a Person in the addressbook.
@@ -11,8 +10,8 @@ import seedu.address.model.person.Name;
  */
 public interface ReadOnlyEvent {
 
-    ObjectProperty<Name> nameProperty();
-    Name getName();
+    ObjectProperty<EventName> nameProperty();
+    EventName getName();
     ObjectProperty<Date> dateProperty();
     Date getDate();
     ObjectProperty<Address> addressProperty();

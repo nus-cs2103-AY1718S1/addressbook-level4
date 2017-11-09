@@ -181,7 +181,7 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        calendar = new Calendar(YearMonth.now());
+        calendar = new Calendar(YearMonth.now(), logic.getFilteredEventList());
         calendarPanel.getChildren().add(calendar.getView());
     }
 
@@ -350,5 +350,6 @@ public class MainWindow extends UiPart<Region> {
         // calendar.populateNewCalendar(request.event);
         calendar.populateUpdatedCalendar(request.eventList, YearMonth.now());
     }
+    //@@author
 
 }
