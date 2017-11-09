@@ -17,7 +17,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.DisplayGmapEvent;
 import seedu.address.commons.events.ui.PersonPanelDeleteEvent;
@@ -116,7 +115,6 @@ public class PersonCard extends UiPart<Region> {
     public void handleDelete() throws CommandException, ParseException {
         raise(new PersonPanelDeleteEvent(Index.fromOneBased(this.displayedIndex)));
     }
-    //@@author
 
     /**
      * Menu list option: GoogleMap
@@ -127,6 +125,8 @@ public class PersonCard extends UiPart<Region> {
     public void handleGoogleMap() {
         raise(new DisplayGmapEvent(Index.fromOneBased(this.displayedIndex)));
     }
+    //@@author
+
     //@@author renkai91
     /**
      * Menu list option: add image

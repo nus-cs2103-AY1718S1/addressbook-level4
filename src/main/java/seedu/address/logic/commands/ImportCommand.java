@@ -23,9 +23,9 @@ public class ImportCommand extends Command {
             + "Parameters: FILEPATH (must be absolute)\n"
             + "Example: " + COMMAND_WORD + " FILEPATH";
 
-    private static final String MESSAGE_IMPORT_SUCCESS = "Addressbook successfully imported from: %1$s";
-    private static final String MESSAGE_INVALID_IMPORT_FILE_ERROR = "Problem reading file: %1$s";
-    private static final String MESSAGE_INVALID_XML_FORMAT_ERROR = "XML syntax not well-formed: %1$s";
+    public static final String MESSAGE_IMPORT_SUCCESS = "Addressbook successfully imported from: %1$s";
+    public static final String MESSAGE_INVALID_IMPORT_FILE_ERROR = "Problem reading file: %1$s";
+    public static final String MESSAGE_INVALID_XML_FORMAT_ERROR = "XML syntax not well-formed: %1$s";
 
     private final String filePath;
 
