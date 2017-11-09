@@ -60,10 +60,6 @@ public class OAuth extends Observable {
 
     private com.google.api.services.people.v1.PeopleService client;
 
-    private OAuth() {
-        registerAsAnEventHandler(this);
-    }
-
     protected void registerAsAnEventHandler(Object handler) {
         EventsCenter.getInstance().registerHandler(handler);
     }
@@ -88,7 +84,6 @@ public class OAuth extends Observable {
                 .build();
 
         // authorize
-
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 

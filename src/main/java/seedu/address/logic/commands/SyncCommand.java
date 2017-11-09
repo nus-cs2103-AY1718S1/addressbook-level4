@@ -39,7 +39,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Adds a person to the address book.
  */
-public class SyncCommand extends UndoableCommand {
+public class SyncCommand extends Command {
 
     public static final String COMMAND_WORD = "sync";
     public static final String COMMAND_ALIAS = "sy";
@@ -55,16 +55,15 @@ public class SyncCommand extends UndoableCommand {
 
     private static final Logger logger = LogsCenter.getLogger(SyncCommand.class);
 
-    private HashMap<String, ReadOnlyPerson> hashId;
+    private HashMap<String, ReadOnlyPerson> hashId, hashName;
 
     private List<Person> connections;
 
-    private HashMap<String, Person> hashGoogleId;
-
+    private HashMap<String, Person> hashGoogleId, hashGoogleName;
 
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
 
         if (clientFuture == null || !clientFuture.isDone()) {
             throw new CommandException(MESSAGE_FAILURE);
@@ -80,11 +79,14 @@ public class SyncCommand extends UndoableCommand {
                 connections = response.getConnections();
                 List<ReadOnlyPerson> personList = model.getFilteredPersonList();
                 hashId = constructHashId(personList);
+                hashName = constructHashName(personList);
 
                 if (connections != null) {
                     hashGoogleId = constructGoogleHashId();
+                    hashGoogleName = constructGoogleHashName();
                 } else {
                     hashGoogleId = new HashMap<String, Person>();
+                    hashGoogleName = new HashMap<String, Person>();
                 }
 
                 checkContacts();
@@ -133,7 +135,7 @@ public class SyncCommand extends UndoableCommand {
 
     public void exportContacts (List<ReadOnlyPerson> personList) throws Exception {
         for (ReadOnlyPerson person : personList) {
-            if (person.getId().getValue().equals("")) {
+            if (person.getId().getValue().equals("") && !hashGoogleName.containsKey(person.getName().fullName)) {
                 Person contactToCreate = convertAPerson(person);
                 Person createdContact = client.people().createContact(contactToCreate).execute();
 
@@ -144,6 +146,18 @@ public class SyncCommand extends UndoableCommand {
 
                 updatePerson(person, updatedPerson);
                 syncedIDs.add(id);
+            } else if (hashGoogleName.containsKey(person.getName().fullName)) {
+                // We check if the person is identical, and link them if they are
+                Person gPerson = hashGoogleName.get(person.getName().fullName);
+                if (equalPerson(person, gPerson)) {
+                    seedu.address.model.person.Person updatedPerson = new seedu.address.model.person.Person(person);
+                    updatedPerson.setId(new Id(gPerson.getResourceName()));
+
+                    // We now set last update time to the Google one
+                    updatedPerson.setLastUpdated(new LastUpdated(gPerson.getMetadata().getSources().get(0).getUpdateTime()));
+                    updatePerson(person, updatedPerson);
+
+                }
             }
         }
     }
@@ -155,11 +169,25 @@ public class SyncCommand extends UndoableCommand {
 
         for (Person person : connections) {
             try {
-                seedu.address.model.person.Person aPerson = convertGooglePerson(person);
+                seedu.address.model.person.Person convertedaPerson = convertGooglePerson(person);
                 String id = person.getResourceName();
-                if (!syncedIDs.contains(id)) {
-                    model.addPerson(aPerson);
+                String gName = (person.getNames().get(0).getFamilyName() == null)
+                        ? person.getNames().get(0).getGivenName()
+                        : person.getNames().get(0).getGivenName() + " " +
+                        person.getNames().get(0).getFamilyName();
+                if (!syncedIDs.contains(id) && !hashName.containsKey(gName)) {
+                    model.addPerson(convertedaPerson);
                     syncedIDs.add(id);
+                } else if(hashName.containsKey((gName))) {
+                    seedu.address.model.person.ReadOnlyPerson aPerson = hashName.get(gName);
+                    if (equalPerson(aPerson, person)) {
+                        seedu.address.model.person.Person updatedPerson = new seedu.address.model.person.Person(aPerson);
+                        updatedPerson.setId(new Id(person.getResourceName()));
+
+                        // We now set last update time to the Google one
+                        updatedPerson.setLastUpdated(new LastUpdated(person.getMetadata().getSources().get(0).getUpdateTime()));
+                        updatePerson(aPerson, updatedPerson);
+                    }
                 }
             } catch (DuplicatePersonException e) {
                 logger.info("Not importing duplicate");
@@ -387,6 +415,23 @@ public class SyncCommand extends UndoableCommand {
         return result;
     }
 
+    /**Constructs a HashMap of a Person's Name and itself
+     *
+     * @param personList
+     * @return
+     */
+
+    private HashMap<String, ReadOnlyPerson> constructHashName (List<ReadOnlyPerson> personList) {
+        HashMap<String, ReadOnlyPerson> result = new HashMap<>();
+
+        personList.forEach(e -> {
+            result.put(e.getName().fullName, e);
+        });
+
+        return result;
+    }
+
+
     /**Constructs a HashMap of Google ResourceName and their Person objects
      *
      * @return Hashmap
@@ -402,7 +447,25 @@ public class SyncCommand extends UndoableCommand {
         return result;
     }
 
+    /**Constructs a HashMap of Google ResourceName and their Person objects
+     *
+     * @return Hashmap
+     */
 
+    private HashMap<String, Person> constructGoogleHashName () {
+        HashMap<String, Person> result = new HashMap<>();
+
+        connections.forEach(e -> {
+            if (e.getNames().get(0).getFamilyName() == null) {
+                result.put(e.getNames().get(0).getGivenName(),e);
+            } else {
+                result.put(e.getNames().get(0).getGivenName() + " " + e.getNames().get(0).getFamilyName(),e);
+            }
+
+        });
+
+        return result;
+    }
 
     /** Saves the HashSet tracking synchronised entries
      *
@@ -436,6 +499,65 @@ public class SyncCommand extends UndoableCommand {
             logger.info("Initialising saved file");
         }
         return result;
+    }
+
+    private boolean equalPerson (ReadOnlyPerson abcPerson, Person gPerson) {
+        Name name = (gPerson.getNames() == null)
+                ? null
+                : gPerson.getNames().get(0);
+        String abcName = abcPerson.getName().fullName;
+        String gName;
+        boolean equalName = false;
+        if (name != null) {
+            gName = (name.getFamilyName() == null)
+                    ? name.getGivenName()
+                    : name.getGivenName() + " " + name.getFamilyName();
+            equalName = gName.equals(abcName);
+        }
+
+        EmailAddress email = (gPerson.getEmailAddresses() == null)
+                ? null
+                : gPerson.getEmailAddresses().get(0);
+        String abcEmail = abcPerson.getEmail().value;
+        String gEmail;
+        boolean equalEmail;
+
+        if (email != null) {
+            gEmail = email.getDisplayName();
+            equalEmail = gEmail.equals(abcEmail);
+        } else {
+            equalEmail = abcEmail.equals("No Email");
+        }
+
+        PhoneNumber phone = (gPerson.getPhoneNumbers() == null)
+                ? null
+                : gPerson.getPhoneNumbers().get(0);
+        String abcPhone = abcPerson.getPhone().value;
+        String gPhone;
+        boolean equalPhone;
+
+        if (phone != null) {
+            gPhone = phone.getValue();
+            equalPhone = gPhone.equals(abcPhone);
+        } else {
+            equalPhone = abcPhone.equals("No Phone Number");
+        }
+
+        Address address = (gPerson.getAddresses() == null)
+                ? null
+                : gPerson.getAddresses().get(0);
+        String abcAddress = abcPerson.getAddress().value;
+        String gAddress;
+        boolean equalAddress;
+
+        if (address != null) {
+            gAddress = address.getStreetAddress();
+            equalAddress = gAddress.equals(abcAddress);
+        } else {
+            equalAddress = abcAddress.equals("No Address");
+        }
+
+        return equalName && equalPhone && equalAddress && equalEmail;
     }
 
     @Override
