@@ -53,6 +53,50 @@ public class DeleteTagCommand extends UndoableCommand {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\UndoableCommand.java
+``` java
+    /**
+     * Stores the current state of {@code model#addressBook}.
+     */
+    private void saveAddressBookSnapshot() {
+        requireNonNull(model);
+        this.previousAddressBook = new AddressBook(model.getAddressBook());
+        this.previousActiveListIsAll = model.getActiveIsAllBool();
+    }
+
+    /**
+     * Reverts the AddressBook to the state before this command
+     * was executed and updates the filtered parcel list to
+     * show all parcels.
+     */
+    protected final void undo() {
+        requireAllNonNull(model, previousAddressBook);
+        model.resetData(previousAddressBook);
+        model.updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
+        model.setActiveList(!previousActiveListIsAll);
+        if (previousActiveListIsAll) {
+            model.uiJumpToTabAll();
+        } else {
+            model.uiJumpToTabCompleted();
+        }
+    }
+
+    /**
+     * Executes the command and updates the filtered parcel
+     * list to show all parcels.
+     */
+    protected final void redo() {
+        requireNonNull(model);
+        try {
+            executeUndoableCommand();
+        } catch (CommandException ce) {
+            throw new AssertionError("The command has been successfully executed previously; "
+                    + "it should not fail now");
+        }
+
+        model.updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
+    }
+```
 ###### \java\seedu\address\logic\parser\DeleteTagCommandParser.java
 ``` java
 package seedu.address.logic.parser;
@@ -114,39 +158,100 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand> {
     void maintainSorted();
 
     /**
-     * Method to check if there is a parcel selected.
-     */
-    boolean hasSelected();
-
-    /**
-     * Method to toggle whether or not a parcel has been selected
-     */
-    void select();
-
-    /**
-     * Method to toggle whether or not a parcel has been selected
-     */
-    void unselect();
-
-    /**
-     * Method to set the prevIndex attribute to the specified target.
-     */
-    void setPrevIndex(Index target);
-
-    /**
-     * Method to retrieve Index of last selected Parcel Card.
-     */
-    Index getPrevIndex();
-
-    /**
      * Method to force the model to select a card without using the select command.
      */
     void forceSelect(Index target);
 
+
     /**
-     * Method to reselect a parcel card if there is a card selected.
+     * Method to force the model to select a card without using the select command.
      */
-    void reselect(ReadOnlyParcel parcel);
+    void forceSelectParcel(ReadOnlyParcel target);
+
+    /**
+     * Method to set tabIndex attribute in Model.
+     */
+    void setTabIndex(Index index);
+
+    /**
+     * Method to get tabIndex attribute in Model.
+     */
+    Index getTabIndex();
+
+    /**
+     * Method to encapsulate all the sub methods to be executed when AddCommand is executed.
+     * @param parcel the parcel to add
+     * @throws DuplicateParcelException if parcel is already inside the list of parcels, reject the input
+     */
+    void addParcelCommand(ReadOnlyParcel parcel) throws DuplicateParcelException;
+
+    /**
+     * Method to encapsulate all the sub methods to be executed when EditCommand is executed.
+     * @param parcelToEdit the parcel to edit
+     * @param editedParcel the edited parcel to replace the parcel to edit.
+     * @throws DuplicateParcelException if editedParcel already exists unless the parcelToEdit is the same entity.
+     * @throws ParcelNotFoundException if parcelToEdit cannot be found in the list
+     */
+    void editParcelCommand(ReadOnlyParcel parcelToEdit, ReadOnlyParcel editedParcel)
+            throws DuplicateParcelException, ParcelNotFoundException;
+
+    /**
+     * Method to retrieve flag that represents whether the current tab selected is all parcels.
+     */
+    boolean getActiveIsAllBool();
+
+    /**
+     * Method to forcefully raise the event to switch tabs to all parcels.
+     */
+    void uiJumpToTabAll();
+
+    /**
+     * Method to forcefully rasie the event to switch tabs to completed parcels.
+     */
+    void uiJumpToTabCompleted();
+```
+###### \java\seedu\address\model\ModelListener.java
+``` java
+package seedu.address.model;
+
+import com.google.common.eventbus.Subscribe;
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToTabRequestEvent;
+
+/**
+ * SelectionListener listens for events that select a parcel card.
+ */
+public class ModelListener {
+
+    private Model model = null;
+
+    /**
+     * Initializes a SelectionLister with the given model.
+     */
+    public ModelListener(Model model) {
+        this.model = model;
+        registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Registers the object as an event handler at the {@link EventsCenter}
+     * @param handler usually {@code this}
+     */
+    protected void registerAsAnEventHandler(Object handler) {
+        EventsCenter.getInstance().registerHandler(handler);
+    }
+
+    /**
+     * Triggers when there is a JumpToTabRequestEvent and sets the tabIndex in the model
+     * to keep track of which tab the model is "on".
+     */
+    @Subscribe
+    private void handleJumpToTabEvent(JumpToTabRequestEvent event) {
+        model.setTabIndex(Index.fromZeroBased(event.targetIndex));
+    }
+}
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -189,77 +294,88 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand> {
     }
 
     @Override
-    public boolean hasSelected() {
-        return selected;
-    }
-
-    @Override
-    public void select() {
-        selected = true;
-    }
-
-    @Override
-    public void unselect() {
-        selected = false;
-    }
-
-    @Override
     public void forceSelect(Index target) {
         EventsCenter.getInstance().post(new JumpToListRequestEvent(target));
     }
 
     @Override
-    public void reselect(ReadOnlyParcel parcel) {
-        // With sorting, we lose our selected card. As such we have to reselect the
-        // parcel that was previously selected. This leads to the need to have some way of
-        // keeping track of which card had been previously selected. Hence the prevIndex
-        // attribute in the ModelManager class and also it's corresponding to get and set it.
-        // We first get the identity of the previously selected parcel.
-        ReadOnlyParcel previous = getActiveList().get(getPrevIndex().getZeroBased());
-        // if the previous parcel belongs after the editedParcel, we just reselect the parcel
-        // at the previous index because all the parcels get pushed down.
-        if (previous.compareTo(parcel) > 0) {
-            forceSelect(getPrevIndex());
-        } else {
-            // otherwise the parcel toAdd belongs before the previously selected parcel
-            // so we select the parcel with the next index.
-            forceSelect(Index.fromZeroBased(findIndex(previous)));
-        }
+    public void forceSelectParcel(ReadOnlyParcel target) {
+        forceSelect(Index.fromZeroBased(findIndex(target)));
     }
 
+    @Override
+    public void setTabIndex(Index index) {
+        this.tabIndex = index;
+    }
+
+    @Override
+    public Index getTabIndex() {
+        return this.tabIndex;
+    }
+
+    @Override
+    public void addParcelCommand(ReadOnlyParcel toAdd) throws DuplicateParcelException {
+        this.addParcel(toAdd);
+        this.maintainSorted();
+        this.handleTabChange(toAdd);
+        this.forceSelectParcel(toAdd);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void editParcelCommand(ReadOnlyParcel parcelToEdit, ReadOnlyParcel editedParcel)
+            throws DuplicateParcelException, ParcelNotFoundException {
+        this.updateParcel(parcelToEdit, editedParcel);
+        this.maintainSorted();
+        this.handleTabChange(editedParcel);
+        this.forceSelectParcel(editedParcel);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public boolean getActiveIsAllBool() {
+        return tabIndex.equals(TAB_ALL_PARCELS);
+    }
+
+    /**
+     * Method to internally change the active list to the correct tab according to the changed parcel.
+     * @param targetParcel
+     */
+
+    private void handleTabChange(ReadOnlyParcel targetParcel) {
+        try {
+            if (targetParcel.getStatus().equals(Status.getInstance("COMPLETED"))) {
+                if (this.getTabIndex().equals(TAB_ALL_PARCELS)) {
+                    this.setActiveList(true);
+                    uiJumpToTabCompleted();
+                }
+            } else {
+                if (this.getTabIndex().equals(TAB_COMPLETED_PARCELS)) {
+                    this.setActiveList(false);
+                    uiJumpToTabAll();
+                }
+            }
+        } catch (IllegalValueException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void uiJumpToTabAll() {
+        EventsCenter.getInstance().post(new JumpToTabRequestEvent(TAB_ALL_PARCELS));
+    }
+
+    @Override
+    public void uiJumpToTabCompleted() {
+        EventsCenter.getInstance().post(new JumpToTabRequestEvent(TAB_COMPLETED_PARCELS));
+    }
+
+    /**
+     * Method to retrieve the index of a given parcel in the active list.
+     */
     private int findIndex(ReadOnlyParcel target) {
         return getActiveList().indexOf(target);
-    }
-
-    @Override
-    public void setPrevIndex(Index newIndex) {
-        prevIndex = newIndex;
-    }
-
-    @Override
-    public Index getPrevIndex() {
-        return prevIndex;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        // short circuit if same object
-        if (obj == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(obj instanceof ModelManager)) {
-            return false;
-        }
-
-        // state check
-        ModelManager other = (ModelManager) obj;
-        return addressBook.equals(other.addressBook)
-                && filteredParcels.equals(other.filteredParcels)
-                && filteredDeliveredParcels.equals(other.filteredDeliveredParcels)
-                && filteredUndeliveredParcels.equals(other.filteredUndeliveredParcels)
-                && activeFilteredList.equals(other.activeFilteredList);
     }
 ```
 ###### \java\seedu\address\model\parcel\DeliveryDate.java
@@ -314,11 +430,14 @@ public class DeliveryDate {
         // Check if input is in a format we can understand
         if (!isValidDateFormat(trimmedDate)) {
             // Check if input is in a format that PrettyTime(NLP) can understand
-            if (!isValidPrettyTimeDate(trimmedDate)) {
-                throw new IllegalValueException(MESSAGE_DELIVERY_DATE_CONSTRAINTS);
-            } else { // NLP appears to understand the intention, so we accept the input
+            if (isValidPrettyTimeDate(trimmedDate)
+                    && hasMinimumLength(trimmedDate)
+                    && !containsAllNumbers(trimmedDate)) {
+                // NLP appears to understand the intention, so we accept the input
                 List<Date> dates = new PrettyTimeParser().parse(trimmedDate);
                 this.date = dates.get(0);
+            } else {
+                throw new IllegalValueException(MESSAGE_DELIVERY_DATE_CONSTRAINTS);
             }
         } else { // We understand the intention, so we accept the input
             try {
@@ -379,6 +498,21 @@ public class DeliveryDate {
         return dates.size() > 0;
     }
 
+    /**
+     * Returns true if a given string is of a minimum length, more than 2 chars
+     */
+    public static boolean hasMinimumLength(String test) {
+        return test.length() > 2;
+    }
+
+    /**
+     * Returns true if a given string contains all numbers.
+     */
+    public static boolean containsAllNumbers(String test) {
+        String regex = "\\d+";
+        return test.matches(regex);
+    }
+
     private Date getDate() {
         return this.date;
     }
@@ -404,6 +538,28 @@ public class DeliveryDate {
         return this.date.compareTo(deliveryDate.getDate());
     }
 }
+```
+###### \java\seedu\address\model\parcel\Parcel.java
+``` java
+    /**
+     * We choose to order parcels first by delivery date, next by tracking number if the delivery dates
+     * are the same, and lastly by name if the tracking numbers are the same as well.
+     */
+    @Override
+    public int compareTo(Object o) {
+        Parcel other = (Parcel) o;
+        if (other == this) { // short circuit if same object
+            return 0;
+        } else if (this.getDeliveryDate().compareTo(other.getDeliveryDate()) == 0) { // delivery dates are equal
+            if (this.getName().compareTo(other.getName()) == 0) { // names are equal
+                return this.getTrackingNumber().compareTo(other.getTrackingNumber()); // compare tracking numbers
+            } else {
+                return this.getName().compareTo(other.getName()); // compare names
+            }
+        } else {
+            return this.getDeliveryDate().compareTo(other.getDeliveryDate()); // compare delivery dates
+        }
+    }
 ```
 ###### \java\seedu\address\model\tag\exceptions\TagInternalErrorException.java
 ``` java
