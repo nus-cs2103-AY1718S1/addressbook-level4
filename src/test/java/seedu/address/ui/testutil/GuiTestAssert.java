@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.UserProfileWindowHandle;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.UserPerson;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -64,4 +66,18 @@ public class GuiTestAssert {
     public static void assertResultMessage(ResultDisplayHandle resultDisplayHandle, String expected) {
         assertEquals(expected, resultDisplayHandle.getText());
     }
+
+    //@@author bladerail
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertUserProfileWindowEquals(UserProfileWindowHandle userProfileWindowHandle,
+                                                     UserPerson userPerson) {
+        assertEquals(userProfileWindowHandle.getName(), userPerson.getName().toString());
+        assertEquals(userProfileWindowHandle.getPhone(), userPerson.getPhone().toString());
+        assertEquals(userProfileWindowHandle.getAddress(), userPerson.getAddress().toString());
+        assertEquals(userProfileWindowHandle.getEmail(), userPerson.getEmailAsText());
+        assertEquals(userProfileWindowHandle.getWebLink(), userPerson.getWebLinksAsText());
+    }
+    //@@author
 }

@@ -28,14 +28,18 @@ import systemtests.ModelHelper;
  */
 public class TestApp extends MainApp {
 
-    public static final String SAVE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("sampleData.xml");
+    public static final String SAVE_LOCATION_FOR_TESTING_ADDRESSBOOK = TestUtil
+            .getFilePathInSandboxFolder("sampleData.xml");
+    public static final String SAVE_LOCATION_FOR_TESTING_USERPROFILE = TestUtil
+            .getFilePathInSandboxFolder("sampleUserProfile.xml");
     public static final String APP_TITLE = "Test App";
 
     protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
     protected static final String ADDRESS_BOOK_NAME = "Test";
     protected Supplier<ReadOnlyAddressBook> initialDataSupplier = () -> null;
-    protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;
+    protected String saveFileLocationAddressBook = SAVE_LOCATION_FOR_TESTING_ADDRESSBOOK;
+    protected String saveFileLocationUserProfile = SAVE_LOCATION_FOR_TESTING_USERPROFILE;
 
     public TestApp() {
     }
@@ -43,12 +47,12 @@ public class TestApp extends MainApp {
     public TestApp(Supplier<ReadOnlyAddressBook> initialDataSupplier, String saveFileLocation) {
         super();
         this.initialDataSupplier = initialDataSupplier;
-        this.saveFileLocation = saveFileLocation;
+        this.saveFileLocationAddressBook = saveFileLocation;
 
         // If some initial local data has been provided, write those to the file
         if (initialDataSupplier.get() != null) {
             createDataFileWithData(new XmlSerializableAddressBook(this.initialDataSupplier.get()),
-                    this.saveFileLocation);
+                    this.saveFileLocationAddressBook);
         }
     }
 
@@ -66,8 +70,8 @@ public class TestApp extends MainApp {
         double x = Screen.getPrimary().getVisualBounds().getMinX();
         double y = Screen.getPrimary().getVisualBounds().getMinY();
         userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
-        userPrefs.setAddressBookFilePath(saveFileLocation);
-        userPrefs.setUserProfileFilePath(saveFileLocation);
+        userPrefs.setAddressBookFilePath(saveFileLocationAddressBook);
+        userPrefs.setUserProfileFilePath(saveFileLocationUserProfile);
         userPrefs.setAddressBookName(ADDRESS_BOOK_NAME);
         return userPrefs;
     }

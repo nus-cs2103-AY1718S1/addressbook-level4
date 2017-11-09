@@ -15,6 +15,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_WEB_LINK_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.WEB_LINK_DESC_AMY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -118,6 +120,12 @@ public class UpdateUserCommandParserTest {
         // address
         userInput = ADDRESS_DESC_AMY;
         descriptor = new EditPersonDescriptorBuilder().withAddress(VALID_ADDRESS_AMY).build();
+        expectedCommand = new UpdateUserCommand(descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // weblink
+        userInput = WEB_LINK_DESC_AMY;
+        descriptor = new EditPersonDescriptorBuilder().withWebLinks(VALID_WEB_LINK_AMY).build();
         expectedCommand = new UpdateUserCommand(descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }

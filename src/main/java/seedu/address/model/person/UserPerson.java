@@ -63,7 +63,7 @@ public class UserPerson implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(src.getAddress());
         this.remark = new SimpleObjectProperty<>(new Remark(""));
         this.tags = new SimpleObjectProperty<>(new UniqueTagList());
-        this.webLinks = new SimpleObjectProperty<>(new UniqueWebLinkList());
+        this.webLinks = new SimpleObjectProperty<>(new UniqueWebLinkList(src.getWebLinks()));
     }
 
     public void setName(Name name) {

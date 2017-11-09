@@ -51,7 +51,7 @@ public class UpdateUserCommand extends Command {
 
     public UpdateUserCommand (EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(editPersonDescriptor);
-        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.editPersonDescriptor = editPersonDescriptor;
     }
 
     public EditPersonDescriptor getEditPersonDescriptor() {
@@ -60,6 +60,10 @@ public class UpdateUserCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+
+        if (!editPersonDescriptor.isAnyFieldEdited()) {
+            throw new CommandException(MESSAGE_NOT_UPDATED);
+        }
 
         ReadOnlyPerson personToEdit = model.getUserPerson();
         Person editedPerson = EditCommand.createEditedPerson(personToEdit, editPersonDescriptor);
