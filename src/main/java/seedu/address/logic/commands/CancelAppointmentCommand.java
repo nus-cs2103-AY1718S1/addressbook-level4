@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.CalendarViewEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -20,6 +22,7 @@ public class CancelAppointmentCommand extends UndoableCommand {
             + "Parameters: " + "DESCRIPTION with PERSON NAME \n"
             + "Example 1:" + COMMAND_WORD + " "
             + "Lunch with John Doe";
+    public static final String REFER_PROMPT = "Please refer to the appointment description.";
     private String personString;
     private String appointmentString;
 
@@ -35,9 +38,9 @@ public class CancelAppointmentCommand extends UndoableCommand {
             Appointment appointment = getAppointmentFromPerson(person, appointmentString);
             model.removeAppointment(person, appointment);
         } catch (PersonNotFoundException e) {
-            throw new CommandException(NO_SUCH_PERSON_FOUND);
+            throw new CommandException(NO_SUCH_PERSON_FOUND + "\n" + REFER_PROMPT);
         } catch (AppointmentNotFoundException e) {
-            throw new CommandException(NO_SUCH_APPOINTMENT);
+            throw new CommandException(NO_SUCH_APPOINTMENT + "\n" + REFER_PROMPT);
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }
@@ -55,6 +58,8 @@ public class CancelAppointmentCommand extends UndoableCommand {
                 return appointment;
             }
         }
+        //Show Daily page for calendar
+        EventsCenter.getInstance().post(new CalendarViewEvent('d'));
         throw new AppointmentNotFoundException();
     }
 

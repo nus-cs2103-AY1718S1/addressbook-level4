@@ -179,15 +179,10 @@ public class UniquePersonList implements Iterable<Person> {
     public void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
         requireNonNull(target);
         requireNonNull(appointment);
-        for (Person person : internalList) {
-            if (person.equals(target)) {
-                List<Appointment> list = target.getAppointments();
-                list.add(appointment);
-                person.setAppointment(list);
-                return;
-            }
-        }
-        throw new PersonNotFoundException();
+        Person person = getPerson(target);
+        List<Appointment> list = target.getAppointments();
+        list.add(appointment);
+        person.setAppointment(list);
     }
     /**
      * Removes an appointment from a person in the internal list
