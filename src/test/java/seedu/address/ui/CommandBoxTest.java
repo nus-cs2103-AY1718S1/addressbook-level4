@@ -174,6 +174,15 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
+    public void getTagIndexListTest() {
+        String textInput = "l/Victor l/Jack";
+        ArrayList<Integer> expectedList = new ArrayList<Integer>();
+        expectedList.add(0); // the first index for l/ is 0
+        expectedList.add(9); // the second index for l/ is 9
+        assertEquals(commandBox.getTagIndexList(textInput), expectedList);
+    }
+
+    @Test
     public void configActiveKeywordTest() {
         String commandKeyword = "list";
         String commandColorTrue = "red";

@@ -270,7 +270,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
 
-    private ArrayList<Integer> getTagIndexList(String allTextInput) {
+    public ArrayList<Integer> getTagIndexList(String allTextInput) {
         ArrayList<Integer> tagList = new ArrayList<>();
         int index = 0;
         while (index < allTextInput.length()) {
