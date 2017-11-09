@@ -61,15 +61,23 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Updates the highlight status of the persons with the specified tag
      */
-    public void updateHighlight(String highlightTag) throws TagNotFoundException {
-        for (Person p : internalList) {
-            p.setHighlightStatus(false);
-            Set<Tag> personTags = p.getTags();
-            for (Tag t : personTags) {
-                if (t.toString().equals("[" + highlightTag + "]")) {
-                    p.setHighlightStatus(true);
+    public void updateHighlightStatus(String highlightTag) throws TagNotFoundException {
+        resetHighlightStatus();
+        for (Person person : this.internalList) {
+            for (Tag t : person.getTags()) {
+                if (t.getTagName().equals(highlightTag)) {
+                    person.setHighlightStatus(true);
                 }
             }
+        }
+    }
+
+    /**
+     * Removes highlighting of everyone
+     */
+    public void resetHighlightStatus() {
+        for (Person person : this.internalList) {
+            person.setHighlightStatus(false);
         }
     }
     //@@author

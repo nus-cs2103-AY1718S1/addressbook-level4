@@ -224,7 +224,7 @@ public class ResidentBook implements ReadOnlyResidentBook {
      */
     public void updateHighlight(String highlightTag) {
         try {
-            persons.updateHighlight(highlightTag);
+            persons.updateHighlightStatus(highlightTag);
             if (!this.tags.contains(new Tag(highlightTag))) {
                 throw new TagNotFoundException("Tag not found");
             }
