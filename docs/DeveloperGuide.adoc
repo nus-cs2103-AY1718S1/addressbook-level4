@@ -447,30 +447,41 @@ Image of the icon photo will be displayed after uploaded.
 ==== Sequence Diagram
 image::UploadPhotoCommandSequenceDiagram.png[width="800"]
 
-=== Search bar
-==== Front end
-The search bar is implemented in the front end using `SearchBox.fxml`, which controls the text field that receives query keywords from user.
+// tag::search[]
+=== The search box
+Efficient search via the search box is facilitated in UI and Logic components.
 
-At construction time, a buffer string is initialised to empty and is ready to store the current user input on the search bar.
+==== UI
+The mark-up for search box is `SearchBox.fxml`, which just describes a Javafx Textfield.
+This mark-up is hooked with `SearchBox.java`.
+
+At program initialisation, along with other components, UI is started with `UiManager.java`
+which constructs a `MainWindow`. `MainWindow#fillInnerParts()` is called to construct all visual sections of
+the UI, including `SearchBox`.
+
+`SearchBox` is constructed with awareness of Logic, similar to `CommandBox`. At construction time of `SearchBox`, a buffer string is initialised to empty and is ready to store the current user input on the search bar.
+
 Each time a user types an alphanumeric character, a `KeyTypedEvent` is generated which is captured by the handler `handleKeyTyped()`.
-The character is concatenated to the buffer string and passed to logic component and executed using `#logic:executeSearch(String)`.
-Conversely, if a user hits backspace, a `KeyPressedEvent` is generated and captured in `handleKeyPress()`.
-The handler deletes the last character in the buffer string using `Substring()` and passes the resulting buffer string to logic for processing.
+The character is concatenated to the buffer string and passed to logic component and executed using `Logic#executeSearch(String)`.
 
-==== Back end
+If a user hits backspace, situation differs according to OS. If MacOS is used, a `KeyPressedEvent` is generated and captured in `handleKeyPress()`.
+The handler deletes the last character in the buffer string using `Substring()` and passes the resulting buffer string to logic for processing.
+If Windows is used, because backspace returns a unicode character which would generate both `KeyPressedEvent` and `KeyTypedEvent` that results in double deletion,
+only `KeyTypedEvent` is used to handle user input.
+
+==== Logic
 You are expected to have read `2.3 logic component` (especially the class diagram) before you could understand this part.
 
-Like `CommandBox`, `SearchBox` has the same logic component to execute query words. Different from `#logic:execute(commandText)` that executes commands,
-a dedicated method `executeSearch(searchText)` is used to parse the user input.
-A separate parser `SearchParser` is implemented in the same level of abstraction as `AddressBookParser`, and would return a `Command` like `AddressbookParser` does.
-What is different is `SearchParser` returns either `FindCommand(Predicate)` or `ListCommand`,
-depending on whether the searchText is empty - empty search word is interpreted as listing all persons, like other convenient modern address book search features behave.
+Like `CommandBox`, `SearchBox` has the same logic component to execute query words. Different from `logic#execute()` that executes commands,
+a dedicated method `executeSearch()` is used to handle requests from UI component.
 
-The logic that executes commands returned by `SearchParser` is largely the same as before, with minor modifications.
-Previously, a person would only be listed if an exact match of name is found; in this version, a person will be displayed as long as
-all words in his full name contains all the search keywords as prefix.
-For example, `Hansen Johannah` can be found by typing `Han Johan` in the search bar,
-but `Hansen Jonannah` cannot be found because the prefix `Johan` is not in any part of the full name.
+A separate parser `SearchParser` is implemented in the same level of abstraction as `AddressBookParser`, and would return a `Command` like `AddressbookParser` does.
+What is different is `SearchParser` returns `SearchCommand(Predicate)` or a `ListCommand()`,
+depending on whether the searchText is empty - empty search word is interpreted as listing all persons.
+
+`SearchCommand` is the same abstraction as `FindCommand`, except for a different predicate `NamePhoneTagContainsKeywordsPredicate`.
+This long predicate tests the person list in Model for name, phone and tag one by one, and would update the filtered person list
+once there is a match.
 
 ==== Sequence diagram
 image::SearchBarSequenceDiagram.png[width="800"]
@@ -494,18 +505,7 @@ inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
 **Alternative 2:** integrate into `execute()` method using a flag +
 **Pros:** cohesion in `execute()` is maintained +
 **Cons:** modularity compromised, can envision the method getting larger as more features are integrated as flags.
-
----
-{stub to be copied and pasted later on for further entries}
-
-**Aspect:** +
-**Alternative 1 (current choice):** +
-**Pros:**  +
-**Cons:** +
-**Alternative 2:** +
-**Pros:**   +
-**Cons:**
-
+// end::search[]
 
 === Multiple phone numbers supported
 (launched in V1.3)
