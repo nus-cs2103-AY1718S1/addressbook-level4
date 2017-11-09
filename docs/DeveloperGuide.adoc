@@ -520,6 +520,7 @@ inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
 **Pros:**   +
 **Cons:**
 
+//tag::additionalPhoneList[]
 
 === Multiple phone numbers supported
 (launched in V1.3)
@@ -528,8 +529,7 @@ inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
 
 Since our target audience are the NUS students, which include a large proportion of international students, our addressBook will support the users to add multiple phone numbers.
 =======
-=== More than one instance for each field
- (Coming in V1.3)
+
 
  ====Description
 
@@ -576,6 +576,39 @@ A new label will be displaced for each person for each instance of the same fiel
 
 == Documentation
 We use asciidoc for writing documentation.
+
+//end::additionalPhoneList[]
+
+//tag::weatherWindow[]
+
+=== Yahoo Weather Display Mechanism
+The Yahoo weather information display is aided by the external library "yahoo-weather-java-api:2.0.2". This library queries data from Yahoo Weather API, and the application display the information returned by calling the library functions with
+a simple string parser method to format the data return. The formatted data is displayed on the `StatusFooterBar`. +
+
+The query of weather information is closely related to the location. The location is specified by WOEID, so in this application we take the link:#WOEID[WOEID] of Singapore by default. +
+
+[source,java]
+----
+private final String woeid = "1062617";
+----
+
+The API method is called, and data returned as follows:
+
+[source,java]
+----
+YahooWeatherService service = new YahooWeatherService();
+Channel channel = service.getForecast(woeid, DegreeUnit.CELSIUS);
+
+return conditionStringParser(channel.getItem().getCondition().toString());
+----
+
+==== Prerequisites/Dependencies
+
+* This feature has a strong dependency on Yahoo Weather Server. Some exceptions or assertions should be implemented to prevent the failure of the application
+due to the failure of Yahoo Weather Server. +
+
+//end::weatherWindow[]
+
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 === Editing Documentation

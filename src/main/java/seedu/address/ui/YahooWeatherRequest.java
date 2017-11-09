@@ -11,6 +11,7 @@ import com.github.fedy2.weather.data.unit.DegreeUnit;
 /**
  * The class that retrieve weather information and format the string according to its unique pattern.
  */
+//@@author eeching
 public class YahooWeatherRequest {
     private final String woeid = "1062617";
 
