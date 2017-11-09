@@ -134,6 +134,12 @@ public class AddTaskCommandTest {
         }
 
         @Override
+        public void updatePersonTags(ReadOnlyPerson target, Set<Tag> newTags)
+                throws PersonNotFoundException, DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void deleteTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
                 DuplicatePersonException, TagNotFoundException {
             fail("This method must not be called.");
