@@ -92,6 +92,7 @@ Examples:
 
 * `addRelationship 1 3 directed ce/12.32131`
 * `addRelationship 2 3 undirected n/husband and wife ce/123123`
+// end::addrelationship[]
 
 === Listing all persons : `list`
 
@@ -270,6 +271,7 @@ Examples:
 * `list` +
 `deleteRelationship 1 2` +
 Deletes the relationship between the first and the 2nd person in the address book.
+// end::deleterelationship[]
 
 // tag::removetag[]
 === Removing a tag: `removeTag`
@@ -286,6 +288,7 @@ Example:
 
 * `removeTag friend` +
 Removes the tag `friend` from all the persons in the address book.
+// end::removetag[]
 
 === Finding shortest relationship path between two people: `relPath`
 

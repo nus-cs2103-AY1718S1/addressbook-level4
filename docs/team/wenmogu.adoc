@@ -94,4 +94,4 @@ include::../DeveloperGuide.adoc[tag=removetag]
 
 === Other contributions
 
-* Wrote additional tests to increase coverage from 78% to 83% (Pull requests https://github.com[#36], https://github.com[#38])
+* Wrote additional tests to increase coverage from 78% to 83% (Pull requests https://github.com/CS2103AUG2017-F10-B1/main/pull/130[#130], https://github.com/CS2103AUG2017-F10-B1/main/pull/133[#133])
