@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.logic.parser.AddCommandParser;
+import seedu.address.logic.parser.EditCommandParser;
 import seedu.address.logic.parser.EmailCommandParser;
 import seedu.address.logic.parser.FindCommandParser;
 import seedu.address.logic.parser.RemarkCommandParser;
@@ -73,8 +74,7 @@ public class Suggestion {
 
         // Custom parser for EditCommand.
         } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            // TODO: v1.5 try to match arguments with SOME person models, otherwise return null
-            return null;
+            return EditCommandParser.parseArguments(arguments);
 
         // Custom parser for EmailCommand.
         } else if (EmailCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {

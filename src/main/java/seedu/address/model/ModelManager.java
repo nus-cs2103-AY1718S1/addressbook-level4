@@ -37,7 +37,7 @@ import seedu.address.model.tag.Tag;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private static ModelManager instance;
+    private static final Set<Tag> knownTags = new HashSet<>();
 
     private final Rolodex rolodex;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
@@ -49,7 +49,6 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public ModelManager(ReadOnlyRolodex rolodex, UserPrefs userPrefs) {
         super();
-        instance = this;
         requireAllNonNull(rolodex, userPrefs);
 
         logger.fine("Initializing with rolodex: " + rolodex + " and user prefs " + userPrefs);
@@ -58,6 +57,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.rolodex.getPersonList());
         sortedPersons = new SortedList<>(filteredPersons);
         updateSortComparator(null);
+        knownTags.addAll(rolodex.getTagList());
     }
 
     public ModelManager() {
@@ -91,6 +91,7 @@ public class ModelManager extends ComponentManager implements Model {
         rolodex.addPerson(person);
         updateSortComparator(null);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        knownTags.addAll(person.getTags());
         indicateRolodexChanged();
     }
 
@@ -100,6 +101,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         rolodex.updatePerson(target, editedPerson);
+        knownTags.addAll(editedPerson.getTags());
         indicateRolodexChanged();
     }
 
@@ -126,15 +128,15 @@ public class ModelManager extends ComponentManager implements Model {
             } catch (IllegalValueException e) {
                 return false;
             }
-        }).collect(Collectors.toList()), instance.rolodex.getTagList());
+        }).collect(Collectors.toList()), knownTags);
     }
 
     /**
      * Returns true if a given String array as equivalent to any known tags in the Rolodex.
      */
-    public static boolean isExistingTag(String tag) {
+    public static boolean isKnownTag(String tag) {
         try {
-            return instance.rolodex.getTagList().contains(new Tag(tag));
+            return knownTags.contains(new Tag(tag));
         } catch (IllegalValueException e) {
             return false;
         }

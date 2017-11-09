@@ -20,7 +20,7 @@ import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstEmail;
 import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstPhone;
 import static seedu.address.logic.parser.ParserUtil.parseRemoveTags;
 import static seedu.address.model.ModelManager.hasAnyExistingTags;
-import static seedu.address.model.ModelManager.isExistingTag;
+import static seedu.address.model.ModelManager.isKnownTag;
 import static seedu.address.model.tag.Tag.TAG_REPLACEMENT_REGEX;
 
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class ModelParserUtil {
         if (hasAnyExistingTags(words)) {
             List<String> tagsAdded = new ArrayList<>();
             Arrays.stream(words).forEach(word -> {
-                if (isExistingTag(word) && !tagsAdded.contains(word)) {
+                if (isKnownTag(word) && !tagsAdded.contains(word)) {
                     tagBuilder.append(" " + PREFIX_TAG + word.trim());
                     tagsAdded.add(word);
                 }
