@@ -7,7 +7,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: MedNus
 MedNus is a desktop contacts application targeted at medical professionals.
 With the rise of electronic health records, doctors are increasingly proficient with the keyboard.
-MedNus is designed to complement this new trend by ensuring that all features may be accessed through the speedy command-line interface.
+MedNus is designed to complement this new trend by ensuring that all its contacts management features may be accessed through the speedy command-line interface.
 No feature is exclusive to the GUI or mouse. +
 
 MedNus has a GUI which aids the visualisation of appointment timings in particular. This was created with JavaFX. +
