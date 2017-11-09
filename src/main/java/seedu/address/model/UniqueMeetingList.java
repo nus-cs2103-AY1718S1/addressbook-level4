@@ -7,8 +7,8 @@ import java.util.*;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.Exceptions.DuplicateMeetingException;
 //@@author liuhang0213
 /**
  * A list of meetings that enforces no nulls and uniqueness between its elements.
@@ -61,8 +61,9 @@ public class UniqueMeetingList implements Iterable<ReadOnlyMeeting>, ReadOnlyMee
 
     /**
      * Replaces the Meetings in this list with those in the argument meeting list.
+     * @param meetings
      */
-    public void setMeetings(List<Meeting> meetings) {
+    public void setMeetings(ObservableList<ReadOnlyMeeting> meetings) {
         requireAllNonNull(meetings);
         internalList.setAll(meetings);
         assert CollectionUtil.elementsAreUnique(internalList);
@@ -180,12 +181,4 @@ public class UniqueMeetingList implements Iterable<ReadOnlyMeeting>, ReadOnlyMee
         return internalList.hashCode();
     }
 
-    /**
-     * Signals that an operation would have violated the 'no duplicates' property of the list.
-     */
-    public static class DuplicateMeetingException extends DuplicateDataException {
-        protected DuplicateMeetingException() {
-            super("Operation would result in duplicate meetings");
-        }
-    }
 }

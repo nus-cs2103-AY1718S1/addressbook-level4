@@ -4,8 +4,9 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Exceptions.DuplicateMeetingException;
+import seedu.address.model.Exceptions.IllegalIdException;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicateMeetingException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -31,7 +32,7 @@ public interface Model {
     /** Deletes given tag from everyone in the addressbook */
     boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException;
     /** Adds the given person */
-    void addMeeting(ReadOnlyMeeting meeting) throws UniqueMeetingList.DuplicateMeetingException;
+    void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException;
     //@@author
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;

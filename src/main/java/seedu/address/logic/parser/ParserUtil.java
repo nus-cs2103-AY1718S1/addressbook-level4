@@ -2,11 +2,15 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.parser.exceptions.IllegalDateTimeException;
 import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 
@@ -97,7 +101,7 @@ public class ParserUtil {
 
     //@@author Sri-vatsa
     /**
-     * Parses a {@code Optional<String> location} into an {@code Optional<String>} if {@code location} is present.
+     * Parses a {@code Optional<String> date} into an {@code Optional<String>} if {@code date} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<String> parseDate(Optional<String> date) throws IllegalValueException {
@@ -107,7 +111,7 @@ public class ParserUtil {
 
     //@@author Sri-vatsa
     /**
-     * Parses a {@code Optional<String> location} into an {@code Optional<String>} if {@code location} is present.
+     * Parses a {@code Optional<String> time} into an {@code Optional<String>} if {@code time} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<String> parseTime(Optional<String> time) throws IllegalValueException {
@@ -115,10 +119,30 @@ public class ParserUtil {
         return time.isPresent() ? Optional.of(time.get()) : Optional.empty();
     }
 
+    //@@author Sri-vatsa
+    /**
+     * Parses {@code String date} & {@code String time} if {@code date} & {@code time} are present.
+     */
+    public static LocalDateTime parseDateTime(String date, String time) throws IllegalValueException {
+        requireNonNull(date);
+        requireNonNull(time);
+
+        try {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu HHmm");
+            String dateTime = date + " " + time;
+            LocalDateTime localDateTime = LocalDateTime.parse(dateTime, formatter);
+            return localDateTime;
+        } catch (DateTimeParseException dtpe) {
+           throw new IllegalValueException("Please enter a date & time in the format dd/mm/yyyy & hhmm respectively!");
+        }
+    }
+
+
 
     //@@author Sri-vatsa
     /**
-     * Parses a {@code Optional<String> location} into an {@code Optional<String>} if {@code location} is present.
+     * Parses a {@code Optional<String> notes} into an {@code Optional<String>} if {@code notes} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<String> parseNotes(Optional<String> notes) throws IllegalValueException {

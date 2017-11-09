@@ -7,6 +7,7 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.Exceptions.DuplicateMeetingException;
 import seedu.address.model.Meeting;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyMeetingList;
@@ -83,7 +84,7 @@ public class SampleDataUtil {
                 meetings.add(sampleMeeting);
             }
             return meetings;
-        } catch (UniqueMeetingList.DuplicateMeetingException e) {
+        } catch (DuplicateMeetingException e) {
             throw new AssertionError("sample data cannot contain duplicate meetings", e);
         }
     }

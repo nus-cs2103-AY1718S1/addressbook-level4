@@ -19,10 +19,12 @@ import seedu.address.commons.events.model.MeetingListChangedEvent;
 import seedu.address.commons.events.model.PersonChangedEvent;
 import seedu.address.commons.events.ui.MapPersonEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Exceptions.DuplicateMeetingException;
+import seedu.address.model.Exceptions.IllegalIdException;
+import seedu.address.model.person.InternalId;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.SearchData;
-import seedu.address.model.person.exceptions.DuplicateMeetingException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -136,7 +138,23 @@ public class ModelManager extends ComponentManager implements Model {
         return hasOneOrMoreDeletion;
     }
     //@@author Sri-vatsa
-    public synchronized void addMeeting(ReadOnlyMeeting meeting) throws UniqueMeetingList.DuplicateMeetingException {
+    public synchronized void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException {
+        boolean isIdValid;
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        //search through all Internal Ids, making sure that every id provided in argument is valid.
+        for (InternalId id: meeting.getListOfPersonsId()) {
+            isIdValid = false;
+            for (ReadOnlyPerson person:filteredPersons) {
+                if(person.getInternalId().equals(id)){
+                    isIdValid = true;
+                }
+            }
+            if(!isIdValid) {
+                throw new IllegalIdException("Please input a valid person id");
+            }
+        }
+
         meetingList.add(meeting);
         indicateMeetingListChanged();
     }
@@ -214,7 +232,7 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
     }
-
+    //@@author Sri-vatsa
     //=========== Sort addressBook methods =============================================================
     /***
      * Sorts persons in address book by searchCount
@@ -225,7 +243,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
-
+    //@@author Sri-vatsa
     /***
      * Sorts persons in Address book alphabetically
      */

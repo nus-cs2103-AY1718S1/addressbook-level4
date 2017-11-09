@@ -2,15 +2,12 @@ package seedu.address.logic.parser;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddMeetingCommand;
-import seedu.address.logic.parser.exceptions.IllegalDateException;
-import seedu.address.logic.parser.exceptions.IllegalDateTimeException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Meeting;
 import seedu.address.model.ReadOnlyMeeting;
 import seedu.address.model.person.*;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
@@ -39,12 +36,12 @@ public class AddMeetingCommandParser implements Parser<AddMeetingCommand>  {
 
         try {
             String location = ParserUtil.parseLocation(argMultimap.getValue(PREFIX_LOCATION)).get();
-            String date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
-            String time = ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME)).get();
             String notes = ParserUtil.parseNotes(argMultimap.getValue(PREFIX_NOTES)).get();
             ArrayList<InternalId> idList = ParserUtil.parseIds(argMultimap.getAllValues(PREFIX_PERSON));
 
-            LocalDateTime localDateTime = (new DateTimeConverter(date, time)).getLocalDateTime();
+            String date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
+            String time = ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME)).get();
+            LocalDateTime localDateTime = ParserUtil.parseDateTime(date, time);
 
             ReadOnlyMeeting meeting = new Meeting(localDateTime, location, notes, idList);
 

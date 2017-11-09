@@ -1,6 +1,9 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Exceptions.DuplicateMeetingException;
+import seedu.address.model.Exceptions.IllegalIdException;
 import seedu.address.model.Meeting;
 import seedu.address.model.ReadOnlyMeeting;
 import seedu.address.model.UniqueMeetingList;
@@ -32,11 +35,12 @@ public class AddMeetingCommand extends UndoableCommand {
             + PREFIX_TIME + "1800 "
             + PREFIX_LOCATION + "UTown Starbucks "
             + PREFIX_NOTES + "Project Meeting "
-            + PREFIX_PERSON + "Alex Yeoh";
+            + PREFIX_PERSON + "1";
 
 
     public static final String MESSAGE_SUCCESS = "New meeting added!";
     public static final String MESSAGE_DUPLICATE_MEETING = "This meeting already exists in the address book";
+    public static final String MESSAGE_INVALID_ID = "Please input a valid person id!";
     public static final String MESSAGE_TEMPLATE = COMMAND_WORD
             + PREFIX_DATE + "DATE "
             + PREFIX_TIME + "TIME "
@@ -55,12 +59,21 @@ public class AddMeetingCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addMeeting(toAdd);
-        } catch (UniqueMeetingList.DuplicateMeetingException e) {
+        } catch (DuplicateMeetingException e) {
             throw new CommandException(MESSAGE_DUPLICATE_MEETING);
+        } catch (IllegalIdException ive) {
+            throw new CommandException(MESSAGE_INVALID_ID);
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
 
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddMeetingCommand // instanceof handles nulls
+                && toAdd.equals(((AddMeetingCommand) other).toAdd));
     }
 }
 

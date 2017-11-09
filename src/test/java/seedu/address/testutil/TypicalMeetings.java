@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.model.Exceptions.DuplicateMeetingException;
 import seedu.address.model.Meeting;
 import seedu.address.model.UniqueMeetingList;
 //@@author liuhang0213
@@ -27,7 +28,7 @@ public class TypicalMeetings {
                 meetings.add(m);
             }
             return meetings;
-        } catch (UniqueMeetingList.DuplicateMeetingException e) {
+        } catch (DuplicateMeetingException e) {
             throw new AssertionError("sample data cannot contain duplicate meetings", e);
         }
     }
