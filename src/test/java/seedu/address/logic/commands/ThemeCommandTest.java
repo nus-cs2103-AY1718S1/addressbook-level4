@@ -1,3 +1,4 @@
+//@@author chilipadiboy
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
@@ -5,14 +6,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Rule;
 import org.junit.Test;
 
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class ThemeCommandTest {
-
-    private ThemeCommand themeCommand;
 
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
