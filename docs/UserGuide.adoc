@@ -98,7 +98,9 @@ Here’s how you can use them:
 *Command Format*
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+// tag::optionalinputtags[]
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+// end::optionalinputtags[]
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
@@ -119,15 +121,21 @@ Format: `add n/NAME [p/(STUDENT_NUMBER)] pp/(PARENT_NUMBER) [e/EMAIL] [a/ADDRESS
 Shorthand: `a n/NAME [p/(STUDENT_NUMBER)] pp/(PARENT_NUMBER) [e/EMAIL] [a/ADDRESS] f/FORMCLASS g/GRADES [c/POSTALCODE] [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0). +
-Adding of student or/and parent's number must be preceded by the phone prefix `p/`.
+A person can have any number of tags (including 0) +
+// tag::multiplenumberstags[]
+Adding of student or/and parent's number must be preceded by the phone prefix `p/`. +
+// end::multiplenumberstags[]
+Tags added must be a single word. e.g. myName instead of my name. +
+Remark cannot be add through the add command and has to be done though the remark command.
 
 Examples:
 
 * `add n/John Doe pp/97979797 e/johnd@example.com a/John street, block 123, #01-01 f/12S11 g/123.0 c/203904`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/97272030 pp/97979797 f/B12 g/100.0 t/criminal`
-* `a n/Jane Doe p/97979791 e/janed@example.com a/Jane street, block 456, #01-01 f/6C g/98`
+* `a n/Jane Doe pp/97979791 e/janed@example.com a/Jane street, block 456, #01-01 f/6C g/98`
 * `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/97272231 pp/97979997 f/12A2 g/66 t/criminal`
+
+// tag::optionalinputtagstwo[]
 
 === Optional fields: `add` `Since v1.3`
 
@@ -149,6 +157,8 @@ The messages are shown in the table below.
 | Tag | t/ + | add n/John p/97602611 pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 +
 |=======================================================================
 
+// end::optionalinputtagstwo[]
+
 === Listing all persons : `list` `Since v1.0`
 
 Shows a list of all persons in cherBook. +
@@ -168,6 +178,10 @@ Shorthand: `e INDEX [n/NAME] [p/(STUDENT_NUMBER)] [pp/(PARENT_NUMBER)] [e/EMAIL]
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
+
+[TIP]
+Tags edited must be a single word. e.g. myName instead of my name.
+Remark cannot be edited and have to be done through the remark command.
 
 Examples:
 
@@ -219,6 +233,10 @@ Shorthand: `ft KEYWORD [MORE_KEYWORDS]`
 * Only full words will be matched e.g. `friends` will not match `closefriends`
 * Persons matching at least all keywords will be returned (i.e. `AND` search). e.g. `friends owesMoney` will not return people with only `friends` or only `owesMoney`
 ****
+
+[TIP]
+Only one tag can be searched at any one time.
+
 
 Examples:
 
@@ -376,12 +394,15 @@ Format: `remark Index [rm/REMARK]` +
 Shorthand: `rm Index [rm/REMARK]`
 
 ****
-* Adds or deletes a remark at the specific`INDEX`.
+* Adds or deletes a `remark` at the specific`INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be positive integer* 1, 2, 3, ...
-* Addition of remarks on a person already with remarks will be overwritten.
-* Person with no remarks will display `(add a new remark)`.
 ****
+
+[TIP]
+Addition of remarks on a person already with remarks will be overwritten. +
+Person with no remarks will display `(add a new remark)`. +
+Can only be changed through the use of the `remark` command.
 
 Examples:
 
@@ -393,19 +414,35 @@ Overwrites/adds the 1st person remark.
 Overwrites/adds the 1st person in the results of `find` command.
 * `list` +
 `remark 2 rm/` +
-removes remark from the 2nd person in cherBook.
+removes `remark` from the 2nd person in the address book.
 
 // end::remark[]
 
-// tag::tab[]
-=== Switching Between LineChart and BarGraph : `tab` `Since v1.3`
-//TODO: jonathan to explain how the tab command works
-Plots a graph of names against grades based on the selected student's class.
+// tag::linechart[]
+=== Displaying results : `lineChart/barChart` `Since v1.3`
 
-[NOTE]
+Automatically plots a graph of names against grades based on the selected student's class.
+
+[TIP]
 ====
 Selecting another student from a different class would plot a different graph.
 ====
+// end::linechart[]
+
+// tag::tab[]
+=== Listing entered commands : `tab` `Since v1.5`
+Switches between tabs listed above the graph. +
+Format: `tab index`
+
+[NOTE]
+Valid numbers are determined by number of tabs available. In this case, only 1 and 2 are valid, which displays line or bar respectively. +
+Typing the same index on the selected graph would just do nothing.
+
+Example:
+
+* `tab 2` +
+Remains at tab 2 if tab 2 is selected else switches to tab 2.
+
 // end::tab[]
 
 === Listing entered commands : `history` `Since v1.0`
@@ -510,8 +547,12 @@ You can use these statistics to pick out trends in your student's grades and als
 
 // tag::graphpanel[]
 === Graph Panel
-//TODO: Jonathan can add explanations for how this brhaves and works
 
+cherBook uses a `GraphPanel` to plot the grades of all classmates of the selected student on a graph.
+The graphs are automatically sorted from the lowest grade to the highest.
+There are two tabs for you to choose from, line or bar and can be switch by using the `tab` command.
+The details changes when another student from a different class is selected.
+You can use these graph to better understand the trends of `grades` in a glance to easily see who are the weaker or stronger students.
 
 // end::graphpanel[]
 
