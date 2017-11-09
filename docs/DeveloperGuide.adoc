@@ -421,6 +421,18 @@ usernames.
 *Cons:* Might have to change a lot of components if want to add a username in
 the later part of the project.
 
+=== Search Mechanism
+The Search Mechanism is implemented mainly in the logic and model component. It allows for searches to be performed on different fields,
+with 2 different types of searches to be performed on multiple fields: "AND" and "OR" search.
+The command will not make any changes to the addressbook and thus does not inherit from `Undoable Command`.
+
+The variety of search mechanisms are implemented to enable users to find their contacts easily when they have a large number of contacts in their addressbook.
+This is also to get a filtered view of persons such that the command `arrange` which requires the indices of the persons is more user friendly.
+
+The commands for the search mechanisms are as follows:
+
+Below is a sequence diagram for the FindCommand.
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
