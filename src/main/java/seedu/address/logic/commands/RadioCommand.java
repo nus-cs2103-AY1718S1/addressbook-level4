@@ -73,6 +73,14 @@ public class RadioCommand extends Command {
             return new CommandResult(MESSAGE_USAGE);
         }
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof RadioCommand // instanceof handles nulls
+                && (this.genre == null || this.genre.equals(((RadioCommand) other).genre)) // state check
+                && (this.command == null || this.command.equals(((RadioCommand) other).command))); // state check
+    }
 }
 
 

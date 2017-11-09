@@ -62,8 +62,8 @@ public class ShareCommandTest {
      * Returns a {@code ShareCommand} with the parameter {@code index}.
      */
     private ShareCommand prepareCommand(Index index) {
-        ShareCommand ShareCommand = new ShareCommand(index, shareEmailArray);
-        ShareCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return ShareCommand;
+        ShareCommand shareCommand = new ShareCommand(index, shareEmailArray);
+        shareCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return shareCommand;
     }
 }
