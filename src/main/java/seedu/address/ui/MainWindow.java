@@ -255,25 +255,21 @@ public class MainWindow extends UiPart<Region> {
     private void handleDarkTheme() {
         String themeUrl = getClass().getResource("/view/DarkTheme.css").toExternalForm();
         setTheme(themeUrl);
-        raise(new ChangeThemeRequestEvent());
     }
     @FXML
     private void handleDarkTheme2() {
         String themeUrl = getClass().getResource("/view/DarkTheme2.css").toExternalForm();
         setTheme(themeUrl);
-        raise(new ChangeThemeRequestEvent());
     }
     @FXML
     private void handleLightTheme() {
         String themeUrl = getClass().getResource("/view/LightTheme.css").toExternalForm();
         setTheme(themeUrl);
-        raise(new ChangeThemeRequestEvent());
     }
     @FXML
     private void handleLightTheme2() {
         String themeUrl = getClass().getResource("/view/LightTheme2.css").toExternalForm();
         setTheme(themeUrl);
-        raise(new ChangeThemeRequestEvent());
     }
     public void setTheme(String themeUrl) {
         scene2.getStylesheets().clear();
@@ -295,4 +291,11 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+    //@@author zhoukai07
+    @Subscribe
+    private void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setTheme(event.getThemeUrl());
+    }
+    //@@author
 }

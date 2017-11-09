@@ -63,11 +63,13 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL... a/ADDRESS [t/TAG] [w/WebLink]...`
 
 [TIP]
 A person can have any number of tags, email and weblinks (including 0)
+phone number, address, tags and weblinks are optional when adding a new contact
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com e/betsy@workemail.com a/Newgate Prison p/1234567 t/criminal w/facebook.com`
+* `add n/LeBron James e/kingjames@nba.com
 // end::add[]
 
 === Listing all persons : `list` or `l`
@@ -361,7 +363,13 @@ Contact must be selected before selecting the buttons.
 // tag::changeTheme[]
 === Changing Theme
 
-Allows the user to switch between dark and light themes.
+Allows the user to switch between 1-dark, 2-darker, 3-light and 4-lighter theme.
+Format: `ChangeToTheme Index`
+
+****
+* The index refers to the corresponding number of the theme as shown above.
+* The valid index includes 1, 2, 3, 4
+****
 // end::changeTheme[]
 
 // tag::userProfileUI[]
