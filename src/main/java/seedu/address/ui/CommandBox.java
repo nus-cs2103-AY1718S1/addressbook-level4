@@ -475,7 +475,7 @@ public class CommandBox extends UiPart<Region> {
      * @param str the text used to compute the width
      * @return
      */
-    private double computeMargin(int index, String str) {
+    public double computeMargin(int index, String str) {
         Text text = new Text(str);
         text.getStyleClass().clear();
         switch (index) {
