@@ -681,27 +681,17 @@ The rest of the execution then, follows closely to the case where the command is
 // end::searchbox[]
 
 // tag::li[]
-=== Life Insurances:
+=== Reading and Storing Life Insurances:
 `since v1.3`
-// end::li[]
 
-// end::addli[]
+TBA
+// end::li[]
 
 // tag::addli[]
 === Add Life Insurance Command:
 `since v1.4`
 
-Adds a life insurance in Lisa +
-
-Format: `add n/NAME o/OWNER i/INSURED b/BENEFICIARY pr/PREMIUM c/CONTRACT_FILE_PATH sd/SIGNING_DATE ed/EXPIRY_DATE`
-
-Examples:
-
-* `addli n/Term Life o/Alex Yeoh i/John Doe b/Mary Jane c/TermLife.pdf
-         pr/600 sd/01 11 2017 ed/01 11 2037`
-* `addli n/Whole Life o/Bernice Yu i/David Li b/Roy Balakrishnan c/WholeLife.pdf
-            pr/8500 sd/01 11 2017 ed/01 11 2117`
-
+TBA
 // end::addli[]
 
 // tag::print[]
