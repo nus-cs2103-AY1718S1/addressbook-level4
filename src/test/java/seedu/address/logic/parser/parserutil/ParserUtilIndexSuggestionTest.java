@@ -17,61 +17,68 @@ public class ParserUtilIndexSuggestionTest {
     public final ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void isParsableFirstIntAssertFalse() {
-        assertFalse(isParsableIndex("one two three")); // characters
-        assertFalse(isParsableIndex("~!@# $%^&*()_+")); // symbols
-        assertFalse(isParsableIndex("0")); // zero
-        assertFalse(isParsableIndex("00")); // zero
-        assertFalse(isParsableIndex("2147483649")); // large numbers
+    public void isParsableFirstIndexAssertFalse() {
+        assertFalse(isParsableIndex("one two three", 4)); // characters
+        assertFalse(isParsableIndex("~!@# $%^&*()_+", Integer.MAX_VALUE)); // symbols
+        assertFalse(isParsableIndex("0", Integer.MAX_VALUE)); // zero
+        assertFalse(isParsableIndex("00", Integer.MAX_VALUE)); // zero
+        assertFalse(isParsableIndex("51", 50)); // large numbers > rolodex size
+        assertFalse(isParsableIndex("2147483649", Integer.MAX_VALUE)); // large numbers > 2^31
     }
 
     @Test
-    public void isParsableFirstIntAssertTrue() {
-        assertTrue(isParsableIndex("abc 1")); // word then number
-        assertTrue(isParsableIndex("del1")); // word then number, without spacing
-        assertTrue(isParsableIndex("add n/ 8 to Rolodex")); // characters then number, then characters
-        assertTrue(isParsableIndex("-1, acba")); // negative numbers
+    public void isParsableFirstIndexAssertTrue() {
+        assertTrue(isParsableIndex("abc 1", 1)); // word then number
+        assertTrue(isParsableIndex("del1", 1)); // word then number, without spacing
+        assertTrue(isParsableIndex("add n/ 8 to Rolodex", 8)); // characters then number, then characters
+        assertTrue(isParsableIndex("-1, acba", 1)); // negative numbers
     }
 
     @Test
-    public void parseFirstIntReturnsNonZeroPositiveInteger() throws Exception {
-        assertEquals(parseFirstIndex("abc 1"), 1); // word then number
-        assertEquals(parseFirstIndex("del1"), 1); // word then number, without spacing
-        assertEquals(parseFirstIndex("add n/ 8 to Rolodex"), 8); // characters then number, then characters
-        assertEquals(parseFirstIndex("-1, acba"), 1); // negative numbers
-        assertEquals(parseFirstIndex("-7"), 7); // negative numbers
+    public void parseFirstIndexReturnsNonZeroPositiveInteger() throws Exception {
+        assertEquals(parseFirstIndex("abc 1", 1), 1); // word then number
+        assertEquals(parseFirstIndex("del1", 1), 1); // word then number, without spacing
+        assertEquals(parseFirstIndex("add n/ 8 to Rolodex", 8), 8); // characters then number, then characters
+        assertEquals(parseFirstIndex("-1, acba", 1), 1); // negative numbers
+        assertEquals(parseFirstIndex("-7", 7), 7); // negative numbers
     }
 
     @Test
-    public void parseFirstIntCharactersOnlyThrowsNumberFormatException() {
+    public void parseFirstIndexCharactersOnlyThrowsNumberFormatException() {
         thrown.expect(NumberFormatException.class);
-        parseFirstIndex("one two three");
+        parseFirstIndex("one two three", 4);
     }
 
     @Test
-    public void parseFirstIntSymbolsOnlyThrowsNumberFormatException() {
+    public void parseFirstIndexSymbolsOnlyThrowsNumberFormatException() {
         thrown.expect(NumberFormatException.class);
-        parseFirstIndex("~!@# $%^&*()_+");
+        parseFirstIndex("~!@# $%^&*()_+", Integer.MAX_VALUE);
     }
 
     @Test
-    public void parseFirstIntZeroThrowsNumberFormatException() {
+    public void parseFirstIndexExceedLimitsThrowsNumberFormatException() {
         thrown.expect(NumberFormatException.class);
-        parseFirstIndex("0");
+        parseFirstIndex("51", 50);
     }
 
     @Test
-    public void parseFirstIntLargeNumbersThrowsNumberFormatException() {
+    public void parseFirstIndexZeroThrowsNumberFormatException() {
         thrown.expect(NumberFormatException.class);
-        parseFirstIndex("2147483649");
+        parseFirstIndex("0", Integer.MAX_VALUE);
     }
 
     @Test
-    public void parseRemoveFirstIntRemovesFirstInt() {
-        assertEquals("delete second2", parseRemoveFirstIndex("delete1second2"));
-        assertEquals("de", parseRemoveFirstIndex("de2"));
-        assertEquals("2 3 4 5 6 7", parseRemoveFirstIndex("1 2 3 4 5 6 7"));
-        assertEquals("", parseRemoveFirstIndex("1234567"));
-        assertEquals("nothing here", parseRemoveFirstIndex("nothing here"));
+    public void parseFirstIndexLargeNumbersThrowsNumberFormatException() {
+        thrown.expect(NumberFormatException.class);
+        parseFirstIndex("2147483649", Integer.MAX_VALUE);
+    }
+
+    @Test
+    public void parseRemoveFirstIndexRemovesFirstIndex() {
+        assertEquals("delete second2", parseRemoveFirstIndex("delete1second2", 1));
+        assertEquals("de", parseRemoveFirstIndex("de2", 2));
+        assertEquals("2 3 4 5 6 7", parseRemoveFirstIndex("1 2 3 4 5 6 7", 1));
+        assertEquals("", parseRemoveFirstIndex("1234567", 1234567));
+        assertEquals("nothing here", parseRemoveFirstIndex("nothing here", Integer.MAX_VALUE));
     }
 }
