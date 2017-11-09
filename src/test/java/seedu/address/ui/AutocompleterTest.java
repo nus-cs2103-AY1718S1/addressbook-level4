@@ -225,7 +225,4 @@ public class AutocompleterTest extends GuiUnitTest {
         guiRobot.pauseForEvent();
         assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
     }
-
-
-
 }
