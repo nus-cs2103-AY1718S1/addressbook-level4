@@ -1,27 +1,30 @@
 # nahtanojmil
-###### /java/guitests/guihandles/GraphPanelHandle.java
+###### \java\guitests\guihandles\GraphPanelHandle.java
 ``` java
 /**
  * Provides a handle to the graph of a person in the person list panel.
  */
 public class GraphPanelHandle extends NodeHandle<Node> {
 
-    public static final String GRAPH_DISPLAY_ID = "#lineChart";
-    private ReadOnlyPerson person;
+    public static final String GRAPH_DISPLAY_ID = "#graphPanelPlaceholder";
+    private static final String TAB_PANEL_ID = "#tabPaneGraphs";
+
+    private final TabPane tabPane;
 
     public GraphPanelHandle(Node graphPanelNode) {
         super(graphPanelNode);
+        this.tabPane = getChildNode(TAB_PANEL_ID);
     }
 
-    /**
-     * Returns the graph in the graph panel display.
-     */
-    public void getGraph() {
-    // TODO: get the graph of the person
+    public TabPane getTabPanel() {
+        return tabPane;
     }
+
+
+
 }
 ```
-###### /java/seedu/address/logic/commands/RemarkCommandTest.java
+###### \java\seedu\address\logic\commands\RemarkCommandTest.java
 ``` java
 public class RemarkCommandTest {
 
@@ -128,7 +131,25 @@ public class RemarkCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\commands\TabCommandTest.java
+``` java
+public class TabCommandTest {
+
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+
+    @Test
+    public void execute_help_success() throws CommandException {
+        CommandResult result = new TabCommand(INDEX_ONE).execute();
+        String expectedMessage = "Selected Tab: " + INDEX_ONE.getOneBased();
+        assertEquals(expectedMessage, result.feedbackToUser);
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof JumpToTabRequestEvent);
+        assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_remarkCommandWord_returnsRemarkCommand() throws Exception {
@@ -138,9 +159,7 @@ public class RemarkCommandTest {
         assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remarks), testCommand);
     }
 
-```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
-``` java
+
     @Test
     public void parseCommand_remarkCommandAlias_returnsRemarkCommand() throws Exception {
         final Remark remarks = new Remark("I'm so done.");
@@ -150,21 +169,11 @@ public class RemarkCommandTest {
     }
 
     @Test
-    public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
-        thrown.expect(ParseException.class);
-        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
-        parser.parseCommand("");
+    public void parseCommand_tabCommandWord_returnsTabCommand() throws Exception {
+        assertTrue(parser.parseCommand(TabCommand.COMMAND_WORD + " 1") instanceof TabCommand);
     }
-
-    @Test
-    public void parseCommand_unknownCommand_throwsParseException() throws Exception {
-        thrown.expect(ParseException.class);
-        thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
-        parser.parseCommand("unknownCommand");
-    }
-}
 ```
-###### /java/seedu/address/logic/parser/ParserUtilTest.java
+###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
     @Test
     public void parseRemark_invalidValue_throwsIllegalValueException() throws Exception {
@@ -185,7 +194,7 @@ public class RemarkCommandTest {
         assertEquals(expectedRemark, actualRemark.get());
     }
 ```
-###### /java/seedu/address/logic/parser/RemarkCommandParserTest.java
+###### \java\seedu\address\logic\parser\RemarkCommandParserTest.java
 ``` java
 public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
@@ -215,7 +224,24 @@ public class RemarkCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### \java\seedu\address\logic\parser\TabCommandParserTest.java
+``` java
+public class TabCommandParserTest {
+
+    private TabCommandParser parser = new TabCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsTabCommand() {
+        assertParseSuccess(parser, "1", new TabCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "-1", String.format(MESSAGE_INVALID_COMMAND_FORMAT, TabCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Remark} of the {@code Person} that we are building.
@@ -226,7 +252,7 @@ public class RemarkCommandParserTest {
         return this;
     }
 ```
-###### /java/seedu/address/ui/GraphPanelTest.java
+###### \java\seedu\address\ui\GraphPanelTest.java
 ``` java
 public class GraphPanelTest extends GuiUnitTest {
 
@@ -236,10 +262,13 @@ public class GraphPanelTest extends GuiUnitTest {
     private GraphPanel graphPanel;
     private GraphPanelHandle graphPanelHandle;
 
+
     @Before
     public void setUp() {
         try {
-            guiRobot.interact(() -> graphPanel = new GraphPanel(TYPICAL_PERSONS));
+            Model model = new ModelManager();
+            Logic logic = new LogicManager(model);
+            guiRobot.interact(() -> graphPanel = new GraphPanel(logic));
             uiPartRule.setUiPart(graphPanel);
             graphPanelHandle = new GraphPanelHandle(graphPanel.getRoot());
         } catch (NullPointerException e) {
@@ -251,8 +280,24 @@ public class GraphPanelTest extends GuiUnitTest {
     public void display() throws Exception {
         // select ALICE
         postNow(new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0)));;
-        // select BOB
+        XYChart.Series<String, Double> testSeries = new XYChart.Series<>();
+        for (ReadOnlyPerson people : TYPICAL_PERSONS) {
+            if (ALICE.getFormClass().equals(people.getFormClass())) {
+                testSeries.getData().add(new XYChart.Data<>(people.getName().toString(),
+                        Double.parseDouble(people.getGrades().toString())));
+            }
+        }
+        assertEquals(testSeries.getData().get(0).getXValue(), TYPICAL_PERSONS.get(0).getName().toString());
+
+        //select BOB
         postNow(new PersonPanelSelectionChangedEvent(new PersonCard(BOB, 1)));
+        assertFalse(BOB.getFormClass().equals(TYPICAL_PERSONS.get(0).getFormClass()));
+    }
+
+    @Test
+    public void changeTab() throws Exception {
+        postNow(new JumpToTabRequestEvent(INDEX_ONE));
+        assertTrue(graphPanelHandle.getTabPanel().getSelectionModel().isSelected(0));
     }
 }
 ```

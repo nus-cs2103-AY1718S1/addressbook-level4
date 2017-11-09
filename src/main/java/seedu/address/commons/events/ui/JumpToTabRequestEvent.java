@@ -6,6 +6,7 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * Indicates a request to jump to the lists of graphs
  */
+//@@author limcel
 public class JumpToTabRequestEvent extends BaseEvent {
 
     public final int targetIndex;

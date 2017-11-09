@@ -16,11 +16,11 @@ By: `CS2103AUG2017 T16-B2`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
 
-`cherBook` is an application specifically designed to help teachers keep up with their hectic schedule adn monitor students' academic progress.
+`cherBook` is an application specifically designed to help teachers keep up with their hectic schedule and monitor students' academic progress.
 Need to do reports on students' academic progress and help students lagging behind?
 No worries, `cherBook`'s data analysis helps you find trends in student's academic development and identify students that need extra help.
-//TODO: celine please add in your scheduling part:
-Too many consultations to take care of??? Insert problem here.
+For teachers and educators like you who often have countless meetings and consultations every week, we also have you covered.
+`cherBook`'s scheduling feature allows you to keep track of your dates and times easily within seconds.
 
 `cherBook v1.5` is available for the Linux, Unix and Windows and Mac OS X operating systems
 
@@ -115,7 +115,9 @@ Shorthand: `a n/NAME p/[student/(STUDENT_NUMBER)] parent/(PARENT_NUMBER) [e/EMAI
 
 [TIP]
 A person can have any number of tags (including 0) +
-Adding of student or/and parent's number must be preceded by the phone prefix `p/`.
+Adding of student or/and parent's number must be preceded by the phone prefix `p/`. +
+Tags added must be a single word. e.g. myName instead of my name. +
+Remark cannot be add through the add command and has to be done though the remark command.
 
 Examples:
 
@@ -143,6 +145,10 @@ Shorthand: `e INDEX [n/NAME] [p/student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)]
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
+
+[TIP]
+Tags edited must be a single word. e.g. myName instead of my name.
+Remark cannot be edited and have to be done through the remark command.
 
 Examples:
 
@@ -195,6 +201,10 @@ Shorthand: `ft KEYWORD [MORE_KEYWORDS]`
 * Persons matching at least all keywords will be returned (i.e. `AND` search). e.g. `friends owesMoney` will not return people with only `friends` or only `owesMoney`
 ****
 
+[TIP]
+Only one tag can be searched at any one time.
+
+
 Examples:
 
 * `findtags friends` +
@@ -231,6 +241,7 @@ Deletes the 1st person in the results of the `find` command.
 `d 3` (`delete 3` command) +
 Deletes the 3rd person in cherBook.
 
+// tag::schedule[]
 === Scheduling a person : `schedule` `Since v1.4`
 
 Schedules the person identified by the index number used in the last person listing. +
@@ -251,7 +262,9 @@ Schedules the 2nd person in cherBook for tomorrow at 7pm and adds the schedule t
 * `find Betsy` +
 `sch 1 s/25 december 2017 3pm` +
 Schedules the 1st person in cherBook on 25 December at 3pm and adds the schedule to the schedule list in the results of the `find` command.
+// end::schedule[]
 
+// tag::viewschedule[]
 === Viewing my schedule : `viewschedule` `Since v1.5`
 
 Views your full schedule list. +
@@ -270,6 +283,7 @@ Displays all your schedules in the command box.
 * `find Betsy` +
 `viewsch` +
 Displays all your schedules in the command box.
+// end::viewschedule[]
 
 
 === Selecting a person : `select` `Since v1.0`
@@ -296,6 +310,7 @@ Selects the 1st person in the results of the `find` command.
 `s 3` (`select 3` command) +
 Selects the 3rd person in cherBook.
 
+// tag::sort[]
 === Sorting all persons : `sort` `Since v1.2`
 
 Shows a list of all persons in cherBook sorted in alphabetical order. +
@@ -316,6 +331,7 @@ Sorts the list in alphabetical order.
 * `find Betsy` +
 `st` +
 Sorts the list in alphabetical order.
+// end::sort[]
 
 // tag::remark[]
 === Adding/Deleting a remark to a person : `remark` `Since v1.2`
@@ -325,12 +341,15 @@ Format: `remark Index [rm/REMARK]` +
 Shorthand: `rm Index [rm/REMARK]`
 
 ****
-* Adds or deletes a remark at the specific`INDEX`.
+* Adds or deletes a `remark` at the specific`INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be positive integer* 1, 2, 3, ...
-* Addition of remarks on a person already with remarks will be overwritten.
-* Person with no remarks will display `(add a new remark)`.
 ****
+
+[TIP]
+Addition of remarks on a person already with remarks will be overwritten. +
+Person with no remarks will display `(add a new remark)`. +
+Can only be changed through the use of the `remark` command.
 
 Examples:
 
@@ -342,20 +361,36 @@ Overwrites/adds the 1st person remark.
 Overwrites/adds the 1st person in the results of `find` command.
 * `list` +
 `remark 2 rm/` +
-removes remark from the 2nd person in cherBook.
+removes `remark` from the 2nd person in the address book.
 
 // end::remark[]
 
 // tag::linechart[]
-=== Displaying results : `lineChart` `Since v1.3`
+=== Displaying results : `lineChart/barChart` `Since v1.3`
 
-Plots a graph of names against grades based on the selected student's class.
+Automatically plots a graph of names against grades based on the selected student's class.
 
-[NOTE]
+[TIP]
 ====
 Selecting another student from a different class would plot a different graph.
 ====
 // end::linechart[]
+
+// tag::tab[]
+=== Listing entered commands : `tab` `Since v1.5`
+Switches between tabs listed above the graph. +
+Format: `tab index`
+
+[NOTE]
+Valid numbers are determined by number of tabs available. In this case, only 1 and 2 are valid, which displays line or bar respectively. +
+Typing the same index on the selected graph would just do nothing.
+
+Example:
+
+* `tab 2` +
+Remains at tab 2 if tab 2 is selected else switches to tab 2.
+
+// end::tab[]
 
 === Listing entered commands : `history` `Since v1.0`
 
@@ -441,7 +476,9 @@ Format: `exit`
 // tag::studentdetailspanel[]
 === Student Details Panel
 
-//TODO: Celine can add explanations for this
+cherBook uses a `Student Details Panel` to display the selected student details from the `Students Panel`.
+The details changes automatically where there is a change to the list of students in the `Students Panel`.
+You can use these details to pick out relevant information you need from your student.
 
 // end::studentdetailspanel[]
 
@@ -450,7 +487,7 @@ Format: `exit`
 === Statistics Panel
 
 cherBook uses a `Statistics Panel` to display the relevant statistics for the current list of students in the `Students Panel`.
-The statistics automatically changes whenever there is a change to the list of students in the `Students Panel`.
+The statistics changes automatically when there is a change to the list of students in the `Students Panel`.
 E.g. When you enter the command `findtags studentCouncil`, the `Students Panel` will only show students with the `studentcouncil` tag and `Statistics Panel` will then show statistics for students with the `studentcouncil` tag.
 You can use these statistics to pick out trends in your student's grades and also monitor how well they are coping with their studies.
 // end::statisticspanel[]
@@ -458,7 +495,11 @@ You can use these statistics to pick out trends in your student's grades and als
 // tag::graphpanel[]
 === Graph Panel
 
-//TODO: Jonathan can add explanations for this
+cherBook uses a `GraphPanel` to plot the grades of all classmates of the selected student on a graph.
+The graphs are automatically sorted from the lowest grade to the highest.
+There are two tabs for you to choose from, line or bar and can be switch by using the `tab` command.
+The details changes when another student from a different class is selected.
+You can use these graph to better understand the trends of `grades` in a glance to easily see who are the weaker or stronger students.
 
 
 // end::graphpanel[]
@@ -545,35 +586,38 @@ In version v1.0, users will be able to:
 * Use command shortcuts
 
 === Features added in v1.1
-In version v1.1, users will be able to:
+In version v1.1, you are be able to:
 
 * Find students by tags using the `findtags` command
-* Sort Students by name using the `sort` command
 * Add `PostalCode` attributes to their students
+* Add multiple numbers for each student
 
 === Features added in v1.2
-In version v1.2, users will be able to:
+In version v1.2, you are be able to:
 
-* Add `Grades` and `FormClass` attributes to their students
-* Add multiple phone numbers for each student
+* Add `Grades`,`FormClass` and `Remarks` attributes to their students
+* Differentiate the multiple phone numbers for each student
+* Sort students names in alphabetical order using the `sort` command
 
 === Features added in v1.3
-In version v1.3, users will be able to:
+In version v1.3, you are be able to:
 
-* Add Remarks to their students
+* View graph of your student's academics grades
+* View all your student's information on the `Student Details Panel`
+* Have optional fields like (email, grades, address, postal code, remarks and tags) when adding a student
 
 === Features added in v1.4
-In version v1.4, users will be able to:
+In version v1.4, you are be able to:
 
 * View statistics of the current list of students from the `Statistics Panel`
-* View the grades of the currently selected student's class in the `Graph Panel`
-//TODO: uhm celine...
-* Schedule appointments?
+* Use the `ScheduleComand` to add a schedule into your schedule list
+* Have automated assignment of different colours to different tags according to suitable RGB values
 
 === Features added in v1.5
-In version v1.5, users will be able to:
+In version v1.5, you are be able to:
 
-* Select between two graphs: Line graph or Bar chart, to see the statistics of the currently selected person's class
+* Use the `TabCommand` to display different graph types (Line/Bar Chart) of the selected student's academic grades
+* Use the `ViewScheduleCommand` to view all your schedules in a list sorted by date and time
 
 === Features Coming in v2.0
 In version v2.0, users will be able to:

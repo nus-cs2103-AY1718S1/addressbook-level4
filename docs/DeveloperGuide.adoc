@@ -107,14 +107,14 @@ When you are ready to start coding,
 
 == Design
 
-This section illustrates and identifies the architecture used to design and implement cherBook.
-This section contains an overall view of the system architecture and details the reasons and mechanisms behind major system components,
+This section helps you illustrates and identifies the architecture used to design and implement cherBook.
+This section contains an overall view of the system architecture, details, reasons and mechanisms behind major system components,
 their attributes and interactions between these components.
 
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 3.1.1 : Architecture Diagram_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -154,7 +154,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -162,7 +162,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -172,7 +172,7 @@ The sections below give more details of each component.
 === UI component
 
 image::UiComponentClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 3.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -189,10 +189,10 @@ The `UI` component,
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 3.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -205,12 +205,12 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -224,7 +224,7 @@ The `Model`,
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 3.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -239,7 +239,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 == Implementation
 
-This section explains in detail how certain features of the cherBook are implemented.
+This section explains to you in detail how certain features of the cherBook are implemented.
 The relevant diagrams and code examples will be used to aid the understanding of the features' implementation.
 
 // tag::undoredo[]
@@ -289,12 +289,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
-_Figure 3.1.1 : Stack Diagram of Initial Stack_
+_Figure 4.1.1 : Stack Diagram of Initial Stack_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
-_Figure 3.1.2 : Stack Diagram of Commands Added_
+_Figure 4.1.2 : Stack Diagram of Commands Added_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -304,7 +304,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
-_Figure 3.1.3 : Stack Diagram of Undo Execution_
+_Figure 4.1.3 : Stack Diagram of Undo Execution_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -312,7 +312,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
-_Figure 3.1.4 : Sequence Diagram of UndoRedo Feature_
+_Figure 4.1.4 : Sequence Diagram of UndoRedo Feature_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -322,17 +322,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
-_Figure 3.1.5 : Stack Diagram when a new Command, Clear is Executed_
+_Figure 4.1.5 : Stack Diagram when a new Command, Clear is Executed_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
-_Figure 3.1.6 : Stack Diagram when Undoable Command is Executed_
+_Figure 4.1.6 : Stack Diagram when Undoable Command is Executed_
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
-_Figure 3.1.7 : Activity Diagram of UndoRedoStack_
+_Figure 4.1.7 : Activity Diagram of UndoRedoStack_
 
 ==== Design Considerations
 
@@ -377,10 +377,16 @@ _Figure 3.1.7 : Activity Diagram of UndoRedoStack_
 // end::undoredo[]
 
 
-// tag::sort[]
 === Sort mechanism
+// tag::sortreason[]
+The reason for the implementation of sort allows the user to organise their list of contacts in cherBook more easily.
+Provide an alternative for them to view their contacts instead of the usual way - most recent added contact being added to the last index of the list.
+Makes it easy for users to browse through their list of contacts in situations where `find` command cannot be used.
 The `sort` mechanism is implemented using `SortCommand`. It supports sorting of contacts names in the AddressBook according to alphabetical order from A to Z.
 
+// end::sortreason[]
+
+// tag::sortimplementation[]
 When the user calls for sorting to be implemented, an empty `ArrayList` would be created. Under the `Model` component, `UniquePersonList` would compare the names of all persons in lower case using a comparator and return an `Observable List` containing of `ReadOnlyPerson`.
 
 `SortCommand` inherits from `Command`.
@@ -401,7 +407,7 @@ The `sort` is case insensitive.
 The following sequence diagram shows how the `sort` operation works:
 
 image::SortSequenceDiagram.png[width="800"]
-_Figure 3.2.1 : Sequence Diagram of Sort Operation_
+_Figure 4.2.1 : Sequence Diagram of Sort Operation_
 
 When the user calls ‘sort’ or ‘st’ to `sort` the contacts, the `Model` will take in an `ArrayList` named contactList from the `Parser`.
 
@@ -454,13 +460,18 @@ It is implemented this way to ensure that all person names in the `UniquePersonL
 **Alternative 2:** Manually edits the list of contacts in the AddressBook. +
 **Pros:** We do not need to maintain a separate list, and just reuse what is already in the codebase, and it saves space. +
 **Cons:**  Inefficient as compared to using an algorithm. If the user made a mistake, the change cannot be reverted as the original list of contacts is not saved. +
-// end::sort[]
+// end::sortimplementation[]
 
 
-// tag::schedule[]
 === Schedule mechanism
+// tag::schedulereason[]
 The `schedule` mechanism is implemented using `ScheduleCommand`. It supports scheduling of contacts in the AddressBook for better management of time.
+The reason for the implementation of scheduling is to allow cherBook users (teacher/educator) to add schedules they have like consultations or meetings with their students or fellow colleagues.
+With this scheduling command, users are able add their schedules with any person from their list of contacts just by typing the index of the person, the date and time of the schedule.
+The date and time can be entered in natural language, helping users save their time to manually pen down their scheduled dates and timings.
+// end::schedulereason[]
 
+// tag::scheduleimplementation[]
 When the user calls for scheduling to be implemented, two arguments would have to be passed into the constructor.
 The two arguments are Name of the person being scheduled and the Calendar date with time.
 Under the `Model` component, `UniqueScheduleList` would add the created `schedule` into the `set of schedules`.
@@ -483,7 +494,7 @@ Adding of `schedules` into the AddressBook can be done in natural language.
 The following sequence diagram shows how the `schedule` operation works:
 
 image::ScheduleSequenceDiagram.png[width="800"]
-_Figure 3.2.1 : Sequence Diagram of Schedule Operation_
+_Figure 4.3.1 : Sequence Diagram of Schedule Operation_
 
 When the user calls ‘schedule’ or ‘sch’ to schedule the contacts in cherBook, the Model will receive a schedule from the Parser.
 
@@ -528,7 +539,31 @@ It is implemented this way to ensure that all `schedules` are added into the Add
 **Alternative 2:** Add a new field in each individual person card to hold their respective `schedule`. +
 **Pros:** The teacher would be able to identify each student respectively, and it makes tracking and debugging easier. +
 **Cons:** Inefficiency and time consuming because to find a `schedule`, the algorithm would have to iterate through all `PersonCards` to get the list of `schedules`.
-// end::schedule[]
+// end::scheduleimplementation[]
+
+=== View Schedule mechanism
+// tag::viewschedulereason[]
+The `viewschedule` mechanism is implemented using `ViewScheduleCommand`. It displays the schedules of the user of cherBook.
+The reason for the implementation of viewing schedules is to allow cherBook users (teacher/educator) to keep track of their schedules as they often have many consultations or meetings with their students or fellow colleagues.
+With this view schedule command, users are able to view all their schedules at once, sorted by date and time.
+This way, the user is able to maintain their timetable easily.
+// end::viewschedulereason[]
+
+// tag::viewscheduleimplementation[]
+When the user calls to view all the schedules, the `'Model'` component would  call `UniqueScheduleList` to return with the set of schedules that was previously added into cherBook.
+
+ViewScheduleCommand is implemented this way:
+[source,java]
+----
+public class ViewScheduleCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... view schedule logic ...
+    }
+}
+----
+The schedules would be listed in the `ResultDisplay` panel, and each schedule would be separated with a new line.
+// end::viewscheduleimplementation[]
 
 
 // tag::studentparentcontact[]
@@ -544,7 +579,7 @@ instead of p/ Student: (STUDENT_NUMBER) Parent: (PARENT_NUMBER).
 The following sequence diagram shows how the `student/parent phone contact` operation works:
 
 image::MultipleNumberSequenceDiagram.png[width="800"]
-_Figure 4.4.1 : Sequence Diagram of Student/Parent Phone Contact Operation_
+_Figure 4.5.1 : Sequence Diagram of Student/Parent Phone Contact Operation_
 
 The following method replaces `/` with `:`````, `s` with `S`, and `p` with `P` in the user input string
 for appropriate presentation of `displayed person card phone information`:
@@ -577,14 +612,14 @@ add the phone number of students.
 The phone numbers must be exactly `8 digits` long.
 
 image::PhoneDisplay.png[width="400"]
-_Figure 4.4.2 : Valid Displayed Person Card Phone Information_
+_Figure 4.5.2 : Valid Displayed Person Card Phone Information_
 
 If the string format for `displayed person card phone information` is valid, the
 phone contact information of the student and his/her parent will be displayed
 below the student's name in the person card as seen in the figure above.
 
 image::message_constraint.png[width="1100"]
-_Figure 4.4.3 : Message to prompt Users to Enter Correct Phone Format_
+_Figure 4.5.3 : Message to prompt Users to Enter Correct Phone Format_
 
 If the string format for `displayed person card phone information` is invalid, an `IllegalValueException`
 is thrown. The user will be prompted to follow the accepted format as seen in the figure above.
@@ -636,7 +671,7 @@ associated to the tagName.
 The following sequence diagram shows how the `unique color tag` operation works:
 
 image::UniqueTagColorSequenceDiagram.png[width="800"]
-_Figure 4.5.1 : Sequence Diagram of Unique Color Tag Operation_
+_Figure 4.6.1 : Sequence Diagram of Unique Color Tag Operation_
 
 ----
 public static String obtainTagColors(String tagName) {
@@ -685,7 +720,7 @@ Random range of saturation and luminance are specified to ensure that the random
 the tag description. This can be seen in the picture below.
 
 image::tagColorPic.png[width="400"]
-_Figure 4.5.2 : Tag color meshes well with white font of tag description_
+_Figure 4.6.2 : Tag color meshes well with white font of tag description_
 
 Next, in the code segment below, the `red`, `green` and `blue` components are extracted from `color`. It is then formatted into a `hexadecimal
 representation` of the color, before being converted to a String data type and assigned to `assignedColor`.
@@ -737,12 +772,12 @@ To avoid confusion and an overly complicated `UI`, only one `remark` per person 
 The following sequence diagram shows how the `remark` operation works:
 
 image::RemarkSequenceDiagramForLogic.PNG[width="800"]
-_Figure 3.4.1 : Sequence Diagram of `Remark` Operation_
+_Figure 4.7.1 : Sequence Diagram of `Remark` Operation_
 
 `Remark` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 3.4.2 : Inheritance Diagram for Commands_
+_Figure 4.7.2 : Inheritance Diagram for Commands_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -774,17 +809,17 @@ public class DeleteCommand extends UndoableCommand {
     }
 }
 ----
-When the user adds a new person to the address book, the person's `remark` field will be denoted by `(add a remark)`. Users are then able to add a single `remark`.
+When the user adds a new `person` to the address book, that person's `remark` field will be denoted by `(add a remark)`. Users are then able to add a single `remark`.
 
 [NOTE]
-If the user tries to add `remark` together with adding a new `Person`, it will be displayed as invalid as the `addCommand` does not allow the addition of remarks other then through the use of using the `Remark` command.
+If the user tries to add `remark` together with adding a new `Person`, it will display as invalid as the `addCommand` does not allow the addition of remarks other then through the use of using the `Remark` command.
 
 [NOTE]
-When a user attempts to `add`/`edit` a `remark` via the `add`/`edit` command, he will be prompted by a message stating
+When the user attempts to `add`/`edit` a remark via the `add`/`edit` command, he will be prompted by a message stating
 that adding of remarks in `add`/`edit` command is not allowed.
 
 [NOTE]
-Only one `remark` is saved at any one time, if the user does adds a `remark` on the same person, it will be overwritten.
+Only one `remark` is saved at any one time, if the user does `Remark` on the same person, it will be overwritten.
 
 ==== Design Considerations
 **Aspect:** Implementation of `UndoableCommand` +
@@ -830,16 +865,43 @@ for (ReadOnlyPerson people : people) {
 ----
 
 ==== Design Considerations
-**Aspect:** What graph to be displayed to show the most effective visual aid +
-**Alternative 1 (current choice):** Do a `lineChart` using XYChart.series. +
+**Aspect:** Graph to be displayed for an effective visual aid +
+**Alternative 1 (current choice):** Line chart to display the grades of student. +
 **Pros:** Easier to implement. +
 **Cons:** May not be the most appropriate way to display grades of students.  +
-**Alternative 2:** Create a bell curve to display the grades of students. +
+**Alternative 2:** Bell curve to display the grades of students. +
 **Pros:** A better representation of the student grades and it is easier to interpret. +
 **Cons:** Much harder to plot a graph based on statistics then raw data.
 
 ---
 //end::linechart[]
+
+//tag::tab[]
+=== Tabs mechanism
+`Tabs` mechanism is implemented using TabsCommand.
+It swaps tab panel between lineChart and barChart based on the index input by the user.
+
+When user types `tab [INDEX]`, it creates raises new `event` named `JumpToTabRequestEvent`, which prompts the subscribed
+method in `GraphPanel` to change the tab page based on[INDEX].
+
+[NOTE]
+The number of valid index is based on the number of tabs created, in this case it would be 2. +
+A invalid index would be displayed if the index provided is out of bounds.
+
+image::TabSequenceDiagram.png[width="800"]
+_Figure 4.9.1 : Sequence Diagram of `Tab` Operation_
+
+==== Design Considerations
+**Aspect:**  To display different chart types to help visual aid. +
+**Alternative 1 (current choice):** Do a TabPane. +
+**Pros:** More versatile and easier to further expand in the future. +
+**Cons:** More cumbersome to start.  +
+**Alternative 2:** Multiple graphs on the same pane. +
+**Pros:** A easier comparison of the student grades between different graph types. +
+**Cons:** Difficult to further expand as there are limited space. Graph may be shrinked as well.
+
+---
+//end::tab[]
 
 // tag::findtags[]
 === FindTags mechanism
@@ -904,7 +966,7 @@ The code with Predicates is also much more readable than using if-else blocks.
 The following sequence diagram shows how the FindTags operation works:
 
 image::FindTagsSequenceDiagramForLogic.png[width="800"]
-_Figure 3.5.1 : Sequence Diagram of `FindTags` Operation_
+_Figure 4.10.1 : Sequence Diagram of `FindTags` Operation_
 
 ==== Design Considerations.
 
