@@ -49,11 +49,14 @@ public class DeliveryDate {
         // Check if input is in a format we can understand
         if (!isValidDateFormat(trimmedDate)) {
             // Check if input is in a format that PrettyTime(NLP) can understand
-            if (!isValidPrettyTimeDate(trimmedDate)) {
-                throw new IllegalValueException(MESSAGE_DELIVERY_DATE_CONSTRAINTS);
-            } else { // NLP appears to understand the intention, so we accept the input
+            if (isValidPrettyTimeDate(trimmedDate)
+                    && hasMinimumLength(trimmedDate)
+                    && !containsAllNumbers(trimmedDate)) {
+                // NLP appears to understand the intention, so we accept the input
                 List<Date> dates = new PrettyTimeParser().parse(trimmedDate);
                 this.date = dates.get(0);
+            } else {
+                throw new IllegalValueException(MESSAGE_DELIVERY_DATE_CONSTRAINTS);
             }
         } else { // We understand the intention, so we accept the input
             try {
@@ -112,6 +115,18 @@ public class DeliveryDate {
         List<Date> dates = new PrettyTimeParser().parse(test);
 
         return dates.size() > 0;
+    }
+
+    /**
+     * Returns true if a given string is of a minimum length, more than 2 chars
+     */
+    public static boolean hasMinimumLength(String test) {
+        return test.length() > 2;
+    }
+
+    public static boolean containsAllNumbers(String test) {
+        String regex = "\\d+";
+        return test.matches(regex);
     }
 
     private Date getDate() {
