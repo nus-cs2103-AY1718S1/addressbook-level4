@@ -22,6 +22,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.property.TagContainsKeywordsPredicate;
 
+//@@author dennaloh
 /**
  * Contains integration tests (interaction with the Model) for {@code FindTagCommand}.
  */
@@ -35,24 +36,24 @@ public class FindTagCommandTest {
         TagContainsKeywordsPredicate secondPredicate =
                 new TagContainsKeywordsPredicate(Collections.singletonList("second"));
 
-        FindTagCommand findFirstCommand = new FindTagCommand(firstPredicate);
-        FindTagCommand findSecondCommand = new FindTagCommand(secondPredicate);
+        FindTagCommand findtagFirstCommand = new FindTagCommand(firstPredicate);
+        FindTagCommand findtagSecondCommand = new FindTagCommand(secondPredicate);
 
         // same object -> returns true
-        assertTrue(findFirstCommand.equals(findFirstCommand));
+        assertTrue(findtagFirstCommand.equals(findtagFirstCommand));
 
         // same values -> returns true
         FindTagCommand findFirstCommandCopy = new FindTagCommand(firstPredicate);
-        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+        assertTrue(findtagFirstCommand.equals(findFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(findFirstCommand.equals(1));
+        assertFalse(findtagFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(findFirstCommand.equals(null));
+        assertFalse(findtagFirstCommand.equals(null));
 
         // different person -> returns false
-        assertFalse(findFirstCommand.equals(findSecondCommand));
+        assertFalse(findtagFirstCommand.equals(findtagSecondCommand));
     }
 
     @Test
