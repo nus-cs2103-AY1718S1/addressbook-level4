@@ -8,6 +8,8 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 *Code contributed*: [https://github.com/CS2103AUG2017-F10-B1/main/tree/master/collated[Functional code]] [https://github.com/CS2103AUG2017-F10-B1/main/tree/master/collated[Test code]] {give links to collated code files}
 
+=== Enhancement Added: Alias
+
 === Enhancement Added: Sort
 
 ==== External behavior
@@ -106,6 +108,9 @@ include::../DeveloperGuide.adoc[tag=EnhancedAddCommand]
 
 ---
 
+==== Enhancement Proposed: Enhanced sort command
+
+---
 
 === Other contributions
 
