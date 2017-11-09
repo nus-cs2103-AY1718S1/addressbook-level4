@@ -28,7 +28,7 @@ public class TagCommandSystemTest extends AddressBookSystemTest {
         /* Case: tag all fields, command with leading spaces, trailing spaces and multiple spaces between each field
          * -> edited
          */
-        Index indices[] = new Index[]{INDEX_FIRST_PERSON, INDEX_SECOND_PERSON};
+        Index[] indices = new Index[]{INDEX_FIRST_PERSON, INDEX_SECOND_PERSON};
         ReadOnlyPerson personToTagOne = getModel().getFilteredPersonList().get(indices[0].getZeroBased());
         ReadOnlyPerson personToTagTwo = getModel().getFilteredPersonList().get(indices[1].getZeroBased());
         String command = " " + TagCommand.COMMAND_WORD + "  " + indices[0].getOneBased() + " , "
