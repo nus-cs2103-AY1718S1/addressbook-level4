@@ -1,0 +1,76 @@
+= Suyash Shekhar - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ResidentBook
+ResidentBook is a newly conceptualised administrative tool catered for staffs handling hostel and college operations.. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B1/main/blob/master/collated/main/sushinoya.md[Functional code]] [https://github.com/CS2103AUG2017-F09-B1/main/blob/master/collated/test/sushinoya.md[Test code]]
+
+=== Enhancement Added: SwapRoom Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=swaproom]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+One of the most common requests that hostel managers face is that to swap rooms with a friend. It is difficult for the managers to accomodate such events because swapping rooms entails other logistics issues that come with swapping rooms. This is made easy in Resident Book where swapping rooms is a simple one line command.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=swaproom]
+
+
+#End of Extract#
+
+---
+
+
+=== Enhancement Added: Sort Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Sorting the residents by name or room allows the hostel management to efficiently see patterns which would have been difficult to see otherwise. For example, sorting by room allows them to see who is neighbours with whom and hopefully be able to provide a more homogenous mixture of residents across the hostel.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+
+#End of Extract#
+
+---
+
+
+=== Other contributions
+
+* Set-up basic testng and notification base for the repository
+* Designed mockups and implemented them
+* Contributed major overhauls to the codebase by changing AddressBook to ResidentBook and fixing all the accompanying tests and validations
+* Created EventsBook to handle events and wrote all accompanying tests and validations.
