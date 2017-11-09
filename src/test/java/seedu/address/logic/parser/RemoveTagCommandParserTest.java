@@ -24,8 +24,33 @@ public class RemoveTagCommandParserTest {
     }
 
     @Test
-    public void parse_multipleArg_throwsParseException() {
+    public void parse_noRange_throwsParseException() {
+        //1 tags no range
+        assertParseFailure(parser, "friends", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+
+        //2 tags no range
         assertParseFailure(parser, "friends owesMoney", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+
+        //3 tags no range
+        assertParseFailure(parser, "friends owesMoney prospective", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_EXCEEDTAGNUM));
+    }
+
+    @Test
+    public void parse_multipleTag_throwsParseException() {
+        //all range 2 tags
+        assertParseFailure(parser, "all owesMoney prospective", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_EXCEEDTAGNUM));
+
+        assertParseFailure(parser, "5 owesMoney prospective", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_EXCEEDTAGNUM));
+    }
+
+    @Test
+    public void parse_invalidArg_throwsParseException() {
+        assertParseFailure(parser, ".123\\5", String.format(
                 MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
     }
 
@@ -33,14 +58,14 @@ public class RemoveTagCommandParserTest {
     public void parse_validArgs_returnsRemoveTagCommand() throws IllegalValueException {
         // no leading and trailing whitespaces
         RemoveTagCommand expectedCommand = new RemoveTagCommand (new Tag("friends"));
-        assertTrue(parser.parse("friends") instanceof RemoveTagCommand);
-        assertParseSuccess(parser, "friends", expectedCommand);
+        assertTrue(parser.parse("all friends") instanceof RemoveTagCommand);
+        assertParseSuccess(parser, "all friends", expectedCommand);
 
         // no leading and trailing whitespaces but with Index.
         RemoveTagCommand expectedCommand2 = new RemoveTagCommand (Index.fromZeroBased(0), new Tag(
                 "enemy"));
         assertTrue(parser.parse("1 enemy") instanceof RemoveTagCommand);
-        assertParseSuccess(parser, " 1 enemy", expectedCommand2);
+        assertParseSuccess(parser, "1 enemy", expectedCommand2);
     }
 
 }

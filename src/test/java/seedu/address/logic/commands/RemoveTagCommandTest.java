@@ -18,6 +18,7 @@ import seedu.address.logic.parser.RemoveTagCommandParser;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.exceptions.NoSuchTagException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -39,7 +40,7 @@ public class RemoveTagCommandTest {
     }
 
     @Test
-    public void execute_removeTag_success() throws IllegalValueException, PersonNotFoundException {
+    public void execute_removeTag_success() throws IllegalValueException, PersonNotFoundException, NoSuchTagException {
         String expectedMessage = MESSAGE_TAG_REMOVED;
 
         RemoveTagCommand command = prepareCommand("friends");
@@ -49,12 +50,12 @@ public class RemoveTagCommandTest {
     }
 
     @Test
-    public void execute_removeSingleTag_success() throws IllegalValueException, PersonNotFoundException {
+    public void execute_removeSingleTag_success() throws IllegalValueException, PersonNotFoundException, NoSuchTagException {
         String expectedMessage = MESSAGE_TAG_REMOVED;
 
-        RemoveTagCommand command = prepareCommand(5, "owesMoney");
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.removeTag(Index.fromOneBased(5), new Tag("owesMoney"));
+        RemoveTagCommand command = prepareCommand(4, "family");
+        ModelManager expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        expectedModel.removeTag(Index.fromZeroBased(4), new Tag("family"));
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
