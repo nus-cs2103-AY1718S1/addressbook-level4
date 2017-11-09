@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -50,6 +51,12 @@ public interface Model {
     //@@author marvinchin
     /** Selects the given person. Should update the last accessed time of the person. */
     void selectPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    /**
+     * Gets the index of the person {@code target} in the filtered person list.
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     */
+    Index getPersonIndex(ReadOnlyPerson target) throws PersonNotFoundException;
 
     //@@author
     /**

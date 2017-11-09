@@ -40,6 +40,7 @@ public class SelectCommand extends Command {
     }
     //@@author
 
+    //@@author marvinchin
     @Override
     public CommandResult execute() throws CommandException {
 
@@ -52,14 +53,17 @@ public class SelectCommand extends Command {
         ReadOnlyPerson selectedPerson = lastShownList.get(targetIndex.getZeroBased());
         try {
             model.selectPerson(selectedPerson);
+            // index of person might have shifted because of the select operation
+            // so we need to find the new index
+            Index newIndex = model.getPersonIndex(selectedPerson);
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(newIndex, socialType));
         } catch (PersonNotFoundException e) {
             assert false : "The selected person should be in the last shown list";
         }
 
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex, socialType));
-
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
