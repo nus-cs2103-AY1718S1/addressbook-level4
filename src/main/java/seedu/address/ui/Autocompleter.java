@@ -6,6 +6,7 @@ import java.util.Arrays;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+
 import seedu.address.logic.Logic;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
@@ -53,7 +54,7 @@ public class Autocompleter {
         switch (state) {
         case COMMAND:
             clearResultsWindow();
-            return (possibleAutocompleteResults.isEmpty()) ? EMPTY_STRING : possibleAutocompleteResults.get(0);
+            return (possibleAutocompleteResults.isEmpty()) ? textInCommandBox : possibleAutocompleteResults.get(0);
 
         case EMPTY:
             raise(new NewResultAvailableEvent(PROMPT_USER_TO_USE_HELP_MESSAGE, false));
@@ -70,6 +71,10 @@ public class Autocompleter {
             clearResultsWindow();
             return textInCommandBox.substring(0, textInCommandBox.length() - 2)
                     + possibleAutocompleteResults.get(cycleIndex());
+
+        case COMMAND_COMPLETE_PREFIX:
+            clearResultsWindow();
+            return textInCommandBox + "/";
 
         case INDEX:
             clearResultsWindow();
@@ -150,13 +155,26 @@ public class Autocompleter {
         }
 
         if (AutocompleteCommand.hasPrefixParameter(commandWord)) {
+
+            ArrayList<String> missingPrefixes = parser.getMissingPrefixes(arguments);
+            if (lastCharIsStartOfPrefix(commandBoxText)) {
+                state = AutocompleteState.COMMAND_COMPLETE_PREFIX;
+                return;
+            }
+
             if (lastTwoCharactersArePrefix(commandBoxText)) {
-                resetIndexIfNeeded();
+                setIndexToOneIfNeeded();
+                if (missingPrefixes.size() > possibleAutocompleteResults.size()) {
+                    possibleAutocompleteResults = missingPrefixes;
+                }
                 state = AutocompleteState.COMMAND_CYCLE_PREFIX;
                 return;
             }
-            possibleAutocompleteResults = getMissingPrefixes(arguments);
+
+            possibleAutocompleteResults = missingPrefixes;
             state = AutocompleteState.COMMAND_NEXT_PREFIX;
+        } else {
+            state = AutocompleteState.COMMAND;
         }
 
     }
@@ -170,9 +188,14 @@ public class Autocompleter {
      * in it's previous state
      */
     private void resetIndexIfNeeded() {
-        if (!state.equals(AutocompleteState.MULTIPLE_COMMAND)
-                && !state.equals(AutocompleteState.COMMAND_CYCLE_PREFIX)) {
+        if (!state.equals(AutocompleteState.MULTIPLE_COMMAND)) {
             resultIndex = 0;
+        }
+    }
+
+    private void setIndexToOneIfNeeded() {
+        if (!state.equals(AutocompleteState.COMMAND_CYCLE_PREFIX)) {
+            resultIndex = 1;
         }
     }
 
@@ -197,9 +220,19 @@ public class Autocompleter {
             parameters = arguments + SPACE;
         }
         ArgumentMultimap argMap = ArgumentTokenizer.tokenize(parameters, prefixes);
-
         String index = argMap.getPreamble();
-        return !index.equals(EMPTY_STRING);
+        return (!index.equals(EMPTY_STRING) && isNumeric(index));
+    }
+
+    /**
+     * Returns true if the string is numeric
+     */
+    private boolean isNumeric (String index) {
+        try {
+            return index.matches("[0-9]+");
+        } catch (NullPointerException e) {
+            return false;
+        }
     }
 
     /**
@@ -237,6 +270,20 @@ public class Autocompleter {
     }
 
     /**
+     * Returns true if the last 2 characters of {@code String} is a space
+     * followed the first letter of a {@code Prefix}
+     */
+    private boolean lastCharIsStartOfPrefix(String commandBoxText) {
+        if (commandBoxText.length() < 1) {
+            return false;
+        }
+        String lastTwoCharacter = commandBoxText.substring(commandBoxText.length() - 2);
+        return Arrays.stream(AutocompleteCommand.ALL_PREFIXES)
+                .map(s -> SPACE + s.toString().substring(0, 1))
+                .anyMatch(s -> s.equals(lastTwoCharacter));
+    }
+
+    /**
      * Checks if the last two characters of the {@code String} are prefixes
      */
     private boolean lastTwoCharactersArePrefix(String commandBoxText) {
@@ -248,20 +295,6 @@ public class Autocompleter {
                 .anyMatch(s -> lastTwoCharacters.equals(s.toString()));
     }
 
-    /**
-     * Returns the ArrayList of prefixes that are missing from the {@code String}
-     */
-    private ArrayList<String> getMissingPrefixes(String arguments) {
-        Prefix[] prefixes = AutocompleteCommand.ALL_PREFIXES;
-        ArrayList<String> missingPrefixes = new ArrayList<>();
-        ArgumentMultimap argMap = ArgumentTokenizer.tokenize(arguments, prefixes);
-        for (Prefix p : prefixes) {
-            if (!argMap.getValue(p).isPresent()) {
-                missingPrefixes.add(p.toString());
-            }
-        }
-        return missingPrefixes;
-    }
 
     /**
      * Get a list of possible commands to autocomplete

@@ -1,8 +1,22 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERY_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TRACKING_NUMBER;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import seedu.address.logic.parser.ArgumentMultimap;
+import seedu.address.logic.parser.ArgumentTokenizer;
+import seedu.address.logic.parser.Prefix;
 
 //@@author Kowalski985
 /**
@@ -19,6 +33,9 @@ public class CommandBoxParser {
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
+    private static final Prefix[] ALL_PREFIXES = {PREFIX_TRACKING_NUMBER, PREFIX_NAME, PREFIX_ADDRESS,
+        PREFIX_DELIVERY_DATE, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_STATUS, PREFIX_TAG};
 
     /**
      * Parses {@code String} to see if it contains any instances of a {@code Command} and {@code Prefix}
@@ -37,6 +54,29 @@ public class CommandBoxParser {
         }
         parseResults[ARGUMENT_INDEX] = arguments;
         return parseResults;
+    }
+
+    /**
+     * Returns the ArrayList of prefixes that are missing from the {@code String argument}
+     * @return {@code ArrayList} of missing prefixes as {@code Strings}
+     */
+    public ArrayList<String> getMissingPrefixes(String argument) {
+        Prefix[] prefixes = ALL_PREFIXES;
+        ArrayList<String> missingPrefixes = new ArrayList<>();
+        ArgumentMultimap argMap = ArgumentTokenizer.tokenize(argument, prefixes);
+        Arrays.stream(ALL_PREFIXES)
+                .filter(p -> isMissing(argMap, p))
+                .forEach(p -> missingPrefixes.add(p.toString()));
+        return missingPrefixes;
+    }
+
+    /**
+     * Returns true if the {@code Prefix} is not present in the {@code ArgumentMultiMap}
+     * or if it is present but is still missing arguments
+     */
+    private boolean isMissing(ArgumentMultimap argMap, Prefix prefix) {
+        return !argMap.getValue(prefix).isPresent()
+                || argMap.getValue(prefix).get().equals(EMPTY_STRING);
     }
 
     private boolean isValidCommand(String commandWord) {

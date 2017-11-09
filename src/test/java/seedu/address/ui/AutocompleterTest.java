@@ -43,6 +43,16 @@ public class AutocompleterTest extends GuiUnitTest {
     }
 
     @Test
+    public void autocomplete_forNoIndexesOrPrefixes() throws Exception {
+        autocompleter.updateState("li");
+        String autocompleteResult = autocompleter.autocomplete();
+        assertEquals("list", autocompleteResult);
+        guiRobot.pauseForEvent();
+        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+
+    }
+
+    @Test
     public void autocomplete_forCommand() throws Exception {
         // default result text
         guiRobot.pauseForEvent();
@@ -115,9 +125,16 @@ public class AutocompleterTest extends GuiUnitTest {
     @Test
     public void autocomplete_forPrefixesOnly() throws Exception {
 
+        // autocomplete prefix with first letter of prefix filled in
+        autocompleter.updateState("add #");
+        String autocompleteResult = autocompleter.autocomplete();
+        assertEquals("add #/", autocompleteResult);
+        guiRobot.pauseForEvent();
+        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+
         // autocomplete first prefix after command word
         autocompleter.updateState("add");
-        String autocompleteResult = autocompleter.autocomplete();
+        autocompleteResult = autocompleter.autocomplete();
         assertEquals("add #/", autocompleteResult);
         guiRobot.pauseForEvent();
         assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
@@ -140,8 +157,6 @@ public class AutocompleterTest extends GuiUnitTest {
         autocompleter.updateState("add #/RR123456789SG");
         autocompleteResult = autocompleter.autocomplete();
         assertEquals("add #/RR123456789SG n/", autocompleteResult);
-        autocompleter.updateState(autocompleteResult);
-        autocompleteResult = autocompleter.autocomplete();
         autocompleter.updateState(autocompleteResult);
         autocompleteResult = autocompleter.autocomplete();
         assertEquals("add #/RR123456789SG a/", autocompleteResult);
@@ -199,8 +214,6 @@ public class AutocompleterTest extends GuiUnitTest {
         // cycle to next prefix
         autocompleter.updateState("edit 2 #/");
         autocompleteResult = autocompleter.autocomplete();
-        autocompleter.updateState(autocompleteResult);
-        autocompleteResult = autocompleter.autocomplete();
         assertEquals("edit 2 n/", autocompleteResult);
         guiRobot.pauseForEvent();
         assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
@@ -212,5 +225,4 @@ public class AutocompleterTest extends GuiUnitTest {
         guiRobot.pauseForEvent();
         assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
     }
-
 }
