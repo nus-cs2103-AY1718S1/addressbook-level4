@@ -149,7 +149,7 @@
             <padding>
                <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
-            <StackPane fx:id="nearbyPersonListPanelPlaceholder" HBox.hgrow="ALWAYS" />
+            <StackPane fx:id="nearbyPersonListPanelPlaceholder" prefWidth="480" HBox.hgrow="NEVER" />
          </HBox>
          <StackPane fx:id="profilePicPlaceholder" prefHeight="0.0" prefWidth="774.0" translateX="200.0" translateY="-650.0" />
       </children>
