@@ -13,9 +13,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 //@@author danielweide
 public class QrCallCommandParser implements Parser<QrCallCommand> {
     /**
-     * Parses the given {@code String} of arguments in the context of the QrCallCommand
-     * and returns an QrCallCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * QrCallCommand Parser for String for QrCallCommand
      */
     public QrCallCommand parse(String args) throws ParseException {
         try {

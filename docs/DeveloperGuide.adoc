@@ -1195,6 +1195,132 @@ The QrGenSmsCommand to retrieve QrCode with the following codes.
     }
 ----
 
+=== QrSaveContact Function
+(added in v1.4)
+[NOTE]
+Currently only available for Android Users.
+
+In this section, we explain how users can generation Quick Response(QR) Code for saving contact into their android smartphone.
+
+To make user experience more convenience, QR Code can make saving contact easy through the use of Smartphone with QR Scanner application installed.
+
+This function has been mapped to `QrSaveButton` and `qrsave` `qrs` for commandline.
+
+The following sequence diagram describes how 'QrSave' Generates QR Code using commandline.
+
+image::QrSaveContactCommand.png[]
+_Figure 4.17.1 : Sequence Diagram of the QrSaveContactCommand_
+
+The QrSaveContactCommandParser Method is implemented with the following code.
+[source,java]
+----
+    public QrSaveContactCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new QrSaveContactCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, QrSaveContactCommand.MESSAGE_USAGE));
+        }
+    }
+----
+
+The QrSaveContactCommand Method implementation for commandline with the following codes.
+[source,java]
+----
+   @Override
+      public CommandResult execute() throws CommandException {
+
+          List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+          if (targetIndex.getZeroBased() >= lastShownList.size()) {
+              throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+          }
+          int indexOfPersonInList = 0;
+          indexOfPersonInList = targetIndex.getOneBased() - 1;
+          EventsCenter.getInstance().post(new QrSaveEvent(lastShownList.get(indexOfPersonInList)));
+          return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+
+      }
+----
+
+The QrSaveEvent Method implementation for commandline with the following codes.
+[source,java]
+----
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+    public ReadOnlyPerson getPerson() {
+        return person;
+    }
+----
+
+The QrSaveButton Method implementation for commandline with the following codes.
+[source,java]
+----
+    @FXML
+    private void handleQrSaveButtonPressed() throws CommandException, ParseException, IOException {
+        if ( person != null) {
+            bp.loadSaveQrCode(person);
+            logger.info("QR Code displayed");
+        } else {
+            logger.info(MESSAGE_FAIL);
+        }
+    }
+----
+
+The BrowserPanel Method implementation for commandline with the following codes.
+[source,java]
+----
+ public void loadSaveQrCode(ReadOnlyPerson person) {
+        QrGenSaveContactCommand qrGenSaveContactCommand = new QrGenSaveContactCommand();
+        browser.getEngine().setUserAgent("Mozilla/5.0 "
+                + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
+        loadPage(qrGenSaveContactCommand.qrSaveContact(person.getPhone().toString(), person.getName().fullName,
+                person.getEmail().toString()));
+    }
+----
+
+The QrGenSmsCommand to retrieve QrCode with the following codes.
+[source,java]
+----
+    public String qrSaveContact(String phoneNum, String contactName, String contactEmail) {
+        String qrA = "http://";
+        String qrB = "api.qrserver.com/";
+        String qrC = "v1/";
+        String qrD = "create-qr-code/";
+        String qrE = "?color=000000";
+        String qrF = "&bgcolor=FFFFFF";
+        String qrG = "&data=BEGIN";
+        String qrH = "%3AVCARD";
+        String qrI = "%0AVERSION";
+        String qrJ = "%3A2.1%0";
+        String qrK = "AFN%3A";
+        String lineA = qrA + qrB + qrC + qrD + qrE + qrF + qrG + qrH + qrI
+                + qrJ + qrK;
+        String newName = contactName.replace(' ', '+');
+        String lineB = "%0AN%3A%3B";
+        String qrL = "%0ATEL";
+        String qrM = "%3BWORK";
+        String qrN = "%3BVOICE%3A";
+        String lineC = qrL + qrM + qrN;
+        String qrO = "%0AEMAIL";
+        String qrP = "%3BWORK";
+        String qrQ = "%3BINTERNET%3A";
+        String lineD = qrO + qrP + qrQ;
+        String qrCodeA = "%0AEND";
+        String qrCodeB = "%3AVCARD";
+        String qrCodeC = "%0A&qzone=1";
+        String qrCodeD = "&margin=0";
+        String qrCodeE = "&size=500x500";
+        String qrCodeF = "&ecc=L";
+        String lineE = qrCodeA + qrCodeB + qrCodeC + qrCodeD + qrCodeE + qrCodeF;
+        String fullQr = lineA + newName + lineB + newName + lineC + phoneNum + lineD + contactEmail + lineE;
+        System.out.println(fullQr);
+        return fullQr;
+    }
+----
+
 == Documentation
 
 We use asciidoc for riting documentation.
