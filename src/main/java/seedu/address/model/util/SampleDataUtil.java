@@ -40,7 +40,7 @@ public class SampleDataUtil {
                     new Remark(""), getTagSet("classmates")),
                 new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Birthday("20/10/1991"),
                         new Email("royb@example.com"), new Address("Blk 45 Aljunied Street 85, #11-31"),
-                    new Remark(""), getTagSet("colleagues")),
+                    new Remark(""), getTagSet("colleagues")), //@@author aver0214
                 new Person(new Name("Zed Toh"), new Phone("82315756"), new Birthday("20/10/1991"),
                         new Email("zedtoh@example.com"), new Address("Blk 30 Geylang Street 29, #06-40"),
                     new Remark(""), getTagSet("friends")),
@@ -82,7 +82,7 @@ public class SampleDataUtil {
                     new Remark(""), getTagSet("classmates")),
                 new Person(new Name("Kawhi Leonard"), new Phone("92612317"), new Birthday("20/10/1991"),
                         new Email("leonard@example.com"), new Address("Blk 45 Aljunied Street 85, #11-31"),
-                    new Remark(""), getTagSet("colleagues"))
+                    new Remark(""), getTagSet("colleagues"))//@@author
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
