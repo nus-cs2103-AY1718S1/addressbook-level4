@@ -88,13 +88,20 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
     }
 
+    //@@author freesoup
     @Test
     public void parseCommand_removetag() throws Exception {
         String tag = "foo";
         RemoveTagCommand command = (RemoveTagCommand) parser.parseCommand(
-                RemoveTagCommand.COMMAND_WORD + " " + tag);
+                RemoveTagCommand.COMMAND_WORD + " " + "all" + " " + tag);
         assertTrue(command instanceof RemoveTagCommand);
+
+
+        RemoveTagCommand command2 = (RemoveTagCommand) parser.parseCommand(
+                RemoveTagCommand.COMMAND_WORD + " " + "5" + " " + tag);
+        assertTrue(command2 instanceof RemoveTagCommand);
     }
+    //@@author
 
     @Test
     public void parseCommand_find() throws Exception {
