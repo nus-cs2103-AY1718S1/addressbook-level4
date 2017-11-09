@@ -145,6 +145,7 @@ public class EditMeetingCommand extends UndoableCommand {
             this.name = toCopy.name;
             this.date = toCopy.date;
             this.place = toCopy.place;
+            this.meetTag = toCopy.meetTag;
         }
 
         /**
@@ -177,15 +178,15 @@ public class EditMeetingCommand extends UndoableCommand {
             return Optional.ofNullable(place);
         }
 
+        public void setMeetTag (MeetingTag meetTag) { this.meetTag = meetTag; }
+
         public Optional<MeetingTag> getMeetTag() {
             return Optional.ofNullable(meetTag);
         }
 
-        public void setPersonsMeet(List<ReadOnlyPerson> persons) {
-            this.personsMeet = persons; }
+        public void setPersonsMeet(List<ReadOnlyPerson> persons) { this.personsMeet = persons; }
 
-        public void setMeetTag (MeetingTag meetTag) {
-            this.meetTag = meetTag; }
+        public Optional<List<ReadOnlyPerson>> getPersonsMeet() { return Optional.ofNullable(personsMeet); }
 
         @Override
         public boolean equals(Object other) {
@@ -204,7 +205,8 @@ public class EditMeetingCommand extends UndoableCommand {
 
             return getName().equals(e.getName())
                     && getDate().equals(e.getDate())
-                    && getPlace().equals(e.getPlace());
+                    && getPlace().equals(e.getPlace())
+                    && getMeetTag().equals(e.getMeetTag());
         }
     }
 }
