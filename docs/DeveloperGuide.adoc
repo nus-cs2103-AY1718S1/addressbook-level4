@@ -936,7 +936,7 @@ This function has been mapped to `ClearLogButton` and 'clearlog' 'cl' for comman
 
 The following sequence diagram describes how 'ClearLogCommand' delete ConnectUsLog.txt file when method is called.
 
-image::ClearLogSeq.png[]
+image::clearlogseq.png[]
 _Figure 4.14.1 : Sequence Diagram of the ClearLogCommand_
 
 The ClearLog Method is implemented in the 'ClearLogButton' with the following codes.
