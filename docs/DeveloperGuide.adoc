@@ -448,6 +448,7 @@ The autocomplete list is obtained from the creation of an AutoComplete object an
         ...
 ----
 
+// tag::swaproom[]
 === Swap Rooms Command
 
 The swaproom command swaps the rooms of two residents specified with indexes.
@@ -578,6 +579,7 @@ image::ImportCommandActivityDiagram.png[width="300"]
 Future enhancements may include a selection option from the UI and allowing the users to specify if they would like to overwrite contacts with identical names.
 
 
+// tag::sort[]
 === Sort Command
 
 The sort command is implemented to sort the current Resident book according to the following possible criteria:
