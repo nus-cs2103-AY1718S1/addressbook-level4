@@ -1,4 +1,4 @@
-= Pang Er Yao
+= Pang Er Yao - Project Portfolio
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imageDir: ../images
 :styleDir: ../stylesheets
