@@ -63,7 +63,7 @@ public class PersonListPanel extends UiPart<Region> {
     }
 
     public HashMap<String, String> getTagColors() {
-        return personListView.getItems().get(1).getTagColors();
+        return personListView.getItems().get(0).getTagColors();
     }
 
     @Subscribe
