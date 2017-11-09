@@ -253,6 +253,7 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+// tag::deleterelationship[]
 === Deleting a relationship between two persons : `deleteRelationship`
 
 Deletes the relationship between two persons from the address book. +
@@ -270,7 +271,7 @@ Examples:
 `deleteRelationship 1 2` +
 Deletes the relationship between the first and the 2nd person in the address book.
 
-
+// tag::removetag[]
 === Removing a tag: `removeTag`
 
 Removes the specific tag from the address book. +

@@ -43,7 +43,7 @@ include::../DeveloperGuide.adoc[tag=addrelationship]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=addrelationship]
+include::../UserGuide.adoc[tag=deleterelationship]
 
 #End of Extract#
 
@@ -58,7 +58,35 @@ include::../UserGuide.adoc[tag=addrelationship]
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=addrelationship]
+include::../DeveloperGuide.adoc[tag=deleterelationship]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Remove tags
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=removetag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=removetag]
 
 #End of Extract#
 
@@ -66,5 +94,4 @@ include::../DeveloperGuide.adoc[tag=addrelationship]
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Wrote additional tests to increase coverage from 78% to 83% (Pull requests https://github.com[#36], https://github.com[#38])
