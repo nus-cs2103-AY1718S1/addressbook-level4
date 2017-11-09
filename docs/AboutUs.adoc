@@ -40,9 +40,9 @@ Responsibilities: Ui
 
 === Lu Lechuan
 image::lulechuan.jpg[width="150", align="left"]
-{empty}[https://github.com/lulechuan[github]]
+{empty}[https://github.com/lulechuan[github]] [<<LuLechuan#, portfolio>>]
 
 Role: Developer
-Responsibilities: Logic + Storage
+Responsibilities: Logic + Storage + Ui
 
 '''
