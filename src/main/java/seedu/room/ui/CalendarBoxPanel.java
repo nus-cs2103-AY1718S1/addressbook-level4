@@ -5,6 +5,7 @@ import java.time.YearMonth;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import seedu.room.logic.Logic;
 
 //@@author Haozhe321
 
@@ -17,9 +18,9 @@ public class CalendarBoxPanel extends UiPart<Region> {
     @FXML
     private Pane calendarPane;
 
-    public CalendarBoxPanel() {
+    public CalendarBoxPanel(Logic logic) {
         super(FXML);
-        calendarPane.getChildren().add(new CalendarBox(YearMonth.now()).getView());
+        calendarPane.getChildren().add(new CalendarBox(YearMonth.now(), logic).getView());
     }
 
     public void freeResources() {
