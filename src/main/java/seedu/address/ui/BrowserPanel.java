@@ -168,18 +168,14 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleBrowserPanelSelectionChangedEvent(BrowserPanelSelectionChangedEvent event)
             throws CommandException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        switch (event.getBrowserSelection()) {
-            case "linkedin":
-                loadLinkedIn();
-                break;
-            case "google":
-                hasLinkedinBeenChosen = false;
-                hasMapsBeenChosen = false;
-                loadPersonPage(personSelected);
-                break;
-            case "maps":
-                loadPersonMap(personSelected);
-                break;
+        if (event.getBrowserSelection().equals("linkedin")) {
+            loadLinkedIn();
+        } else if (event.getBrowserSelection().equals("google")) {
+            hasLinkedinBeenChosen = false;
+            hasMapsBeenChosen = false;
+            loadPersonPage(personSelected);
+        } else if (event.getBrowserSelection().equals("maps")) {
+            loadPersonMap(personSelected);
         }
     }
 
