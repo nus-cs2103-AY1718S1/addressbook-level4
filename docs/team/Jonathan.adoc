@@ -35,14 +35,14 @@ include::../DeveloperGuide.adoc[tag=remark]
 #End of Extract#
 
 ---
-=== Enhancement Added: lineChart
+=== Enhancement Added: GraphPanel
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=linechart]
+include::../UserGuide.adoc[tag=graphpanel]
 
 #End of Extract#
 
@@ -57,7 +57,7 @@ To display the results of all students in the same class to see the difference i
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=linechart]
+include::../DeveloperGuide.adoc[tag=graphpanel]
 
 #End of Extract#
 

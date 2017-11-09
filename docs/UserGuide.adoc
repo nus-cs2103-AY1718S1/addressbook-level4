@@ -418,17 +418,6 @@ removes `remark` from the 2nd person in the address book.
 
 // end::remark[]
 
-// tag::linechart[]
-=== Displaying results : `lineChart/barChart` `Since v1.3`
-
-Automatically plots a graph of names against grades based on the selected student's class.
-
-[TIP]
-====
-Selecting another student from a different class would plot a different graph.
-====
-// end::linechart[]
-
 // tag::tab[]
 === Listing entered commands : `tab` `Since v1.5`
 Switches between tabs listed above the graph. +
