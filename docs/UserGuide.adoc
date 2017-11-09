@@ -122,6 +122,7 @@ The default system of Mobilize will be address book.
 // end::switch[]
 === Managing Contacts
 
+// tag::birthday[]
 ==== Adding new contacts : `add`
 
 Whether you’ve just met a new colleague or reconnected with an old friend, adding new contacts to Mobilize is easy! +
@@ -153,7 +154,9 @@ __Constraints:__
 * BIRTHDAY must be a eight-digit number in “dd-mm-yyyy” format.
 * Every TAG must be preceded by a tag prefix, t/.
 ****
+// end::birthday[]
 
+// tag::findtag[]
 ==== Finding contacts: `find`
 
 Whether you’re a social butterfly or a networking pro, sifting through contacts can be a tedious task. +
@@ -191,6 +194,7 @@ Returns any person having birthday on `17-07`
 __Constraints:__
 
 * Only full words will be matched e.g `Han` will not match `Hans`, `friend` will not match `friends` and `1707` will not match `17-07`
+// end::findtag[]
 
 ==== Deleting contacts : `delete`
 
@@ -425,6 +429,8 @@ __Constraints:__
 * Only full words will be matched e.g `Finish` will not match `Finished`.
 * Only valid date will be matched e.g `291017` will not match `29-10-2017`.
 ****
+// tag::deletetask[]
+
 // end::find[]
 ==== Deleting tasks : `delete`
 
@@ -440,6 +446,7 @@ __Constraints__
 * If a task is first searched by the “find” feature, then the new index of the task according to the filtered list of Task Cards, is what must be used in the INDEX parameter.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
+// end::deletetask[]
 
 ==== Editing tasks: `edit`
 
