@@ -44,7 +44,7 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.AddQuickCommand;
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindSpecificCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -135,7 +135,7 @@ public class AddQuickCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, toAdd);
         //@@author
         /* Case: filters the person list before adding -> added */
-        executeCommand(FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER);
+        executeCommand(FindSpecificCommand.COMMAND_WORD + " n/" + KEYWORD_MATCHING_MEIER);
         assert getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size();
         assertCommandSuccess(IDA);
 
