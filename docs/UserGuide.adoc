@@ -322,6 +322,17 @@ The User Profile can also be edited via the User Interface by clicking on "File"
 More information
 // end::updateUserPerson[]
 
+// tag::shareCommand[]
+=== Generate an add command for your contact: 'share'
+
+Generates an add command for the User Person in the AddressBook. The User Person is modified via the `update`
+command or via the User Profile Window (Press F2 in the main window). +
+
+The generated add command is displayed on the result display, as well as copied to your clipboard automatically. +
+
+Format: 'share'
+// end:shareCommand[]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -373,7 +384,11 @@ The User Profile Window can be accessed by clicking on "File" -> "User Profile".
 You can edit the User Profile directly from here. Changes, if any, are only saved when the "OK" button is clicked. +
 Invalid values will not be accepted, and changes will not be saved. For multiple emails, add emails with a comma followed
 by a space, then the next email address.
-Pressing "Enter" has the same action as clicking the "Cancel" button, to avoid unwanted changes.
+
+Pressing "Enter" has the same action as clicking the "Cancel" button, to avoid unwanted changes. +
+
+Note: If you experience issues with opening up the User Profile Window, delete the UserProfile.xml file in your data folder
+,then try again. A new User Profile will be created.
 // end::userProfileUI[]
 
 === Saving the data

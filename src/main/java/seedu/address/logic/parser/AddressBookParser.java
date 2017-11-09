@@ -21,6 +21,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ShareCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UpdateUserCommand;
@@ -124,6 +125,10 @@ public class AddressBookParser {
         case UpdateUserCommand.COMMAND_WORD:
         case UpdateUserCommand.COMMAND_ALIAS:
             return new UpdateUserCommandParser().parse(arguments);
+
+        case ShareCommand.COMMAND_WORD:
+        case ShareCommand.COMMAND_ALIAS:
+            return new ShareCommand();
 
         //@@author hansiang93
         case WebCommand.COMMAND_WORD:

@@ -86,6 +86,30 @@ The user would then be able to share their contact instead of requiring others t
 be extended to implementation of multiple users of one address book app. Each user profile would contain their own address
 book and user contact card. A GUI will allow ease of user profile editing as well as viewing of the user profile.
 
+---
+
+=== Enhancement Added: Share Command
+
+==== External Behaviour
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=shareCommand]
+
+#End of Extract#
+
+---
+
+=== Justification
+
+The User Profile was set up as a means of sharing the user's contact easily, by allowing the user to edit their own contact
+details and share it with others so that they would not have to repeat the information each time. The share command
+generates an add command that will be copied to the clipboard and thus can be copied and sent to another person immediately.
+
+---
+
 === Other contributions
 
 * Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
