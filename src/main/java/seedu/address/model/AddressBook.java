@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import com.sun.tools.corba.se.idl.constExpr.Not;
 import javafx.collections.ObservableList;
 
 import seedu.address.model.lecturer.Lecturer;
