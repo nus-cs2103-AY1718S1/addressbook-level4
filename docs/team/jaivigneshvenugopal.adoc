@@ -82,7 +82,9 @@ This is very similar to the `Payback` command, however, `Repaid` command excels 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=profilepic(soon to appear)]
+include::../UserGuide.adoc[tag=addpic]
+
+include::../UserGuide.adoc[tag=delpic]
 
 #End of Extract#
 
