@@ -36,6 +36,7 @@ public class MainWindow extends UiPart<Region> {
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 800;
+    private static final float SPLIT_PANE_DIVIDER_POSITION = 0.35f;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -198,10 +199,10 @@ public class MainWindow extends UiPart<Region> {
     private void setSplitPaneDividerProperty() {
 
         primaryStage.showingProperty().addListener((observable, oldValue, newValue) ->
-                splitPane.setDividerPositions(0.35f));
+                splitPane.setDividerPositions(SPLIT_PANE_DIVIDER_POSITION));
 
         primaryStage.widthProperty().addListener((observable, oldValue, newValue) ->
-                splitPane.setDividerPositions(0.35f));
+                splitPane.setDividerPositions(SPLIT_PANE_DIVIDER_POSITION));
     }
 
     /**
