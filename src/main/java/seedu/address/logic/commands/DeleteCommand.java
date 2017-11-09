@@ -59,7 +59,7 @@ public abstract class DeleteCommand extends UndoableCommand {
      * Returns the collection of persons to be deleted.
      * To be implemented by the classes inheriting this class.
      */
-    public abstract Collection<ReadOnlyPerson> getPersonsToDelete() throws CommandException;
+    protected abstract Collection<ReadOnlyPerson> getPersonsToDelete() throws CommandException;
     //@@author
 
     @Override

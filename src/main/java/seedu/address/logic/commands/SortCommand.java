@@ -34,5 +34,5 @@ public abstract class SortCommand extends Command {
     /**
      * Gets the comparator used to order the person list
      */
-    public abstract Comparator<ReadOnlyPerson> getComparator();
+    protected abstract Comparator<ReadOnlyPerson> getComparator();
 }

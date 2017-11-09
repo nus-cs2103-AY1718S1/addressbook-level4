@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.StorageUtil.getNullStorage;
+import static seedu.address.testutil.StorageUtil.getDummyStorage;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class HistoryCommandTest {
         Model model = new ModelManager();
         history = new CommandHistory();
         historyCommand = new HistoryCommand();
-        historyCommand.setData(model, getNullStorage(), history, new UndoRedoStack());
+        historyCommand.setData(model, getDummyStorage(), history, new UndoRedoStack());
     }
 
     @Test

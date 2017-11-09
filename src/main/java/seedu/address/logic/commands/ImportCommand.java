@@ -33,8 +33,6 @@ public class ImportCommand extends Command {
     private final Path importFilePath;
 
     public ImportCommand(String filePath) {
-        // we store it as a Path rather than a String so that we can get the absolute file path
-        // this makes it clearer to the user where the file is imported from
         importFilePath = Paths.get(filePath);
     }
 

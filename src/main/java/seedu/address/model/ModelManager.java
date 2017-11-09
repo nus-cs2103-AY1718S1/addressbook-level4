@@ -102,6 +102,7 @@ public class ModelManager extends ComponentManager implements Model {
                 continue;
             }
         }
+
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }

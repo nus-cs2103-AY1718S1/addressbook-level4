@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.address.testutil.StorageUtil.getNullStorage;
+import static seedu.address.testutil.StorageUtil.getDummyStorage;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Before;
@@ -69,7 +69,7 @@ public class ListCommandTest {
      */
     private ListCommand prepareCommand(String argument) {
         ListCommand listCommand = new ListCommand(argument);
-        listCommand.setData(model, getNullStorage(), new CommandHistory(), new UndoRedoStack());
+        listCommand.setData(model, getDummyStorage(), new CommandHistory(), new UndoRedoStack());
         return listCommand;
     }
     //@@author

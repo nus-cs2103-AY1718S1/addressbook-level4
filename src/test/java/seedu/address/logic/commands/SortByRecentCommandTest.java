@@ -4,7 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.SortCommandTestUtil.assertFilteredSortCommandSuccess;
 import static seedu.address.logic.commands.SortCommandTestUtil.assertUnfilteredSortCommandSuccess;
-import static seedu.address.testutil.StorageUtil.getNullStorage;
+import static seedu.address.testutil.StorageUtil.getDummyStorage;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
@@ -59,14 +59,11 @@ public class SortByRecentCommandTest {
     }
 
     /**
-     * Returns a {@code DeleteCommand} with the parameter {@code index}.
+     * Returns a {@code SortByRecentCommand}.
      */
     private SortByRecentCommand prepareCommand() {
         SortByRecentCommand sortCommand = new SortByRecentCommand();
-        sortCommand.setData(model, getNullStorage(), new CommandHistory(), new UndoRedoStack());
+        sortCommand.setData(model, getDummyStorage(), new CommandHistory(), new UndoRedoStack());
         return sortCommand;
     }
-
-    // TODO(Marvin): Move this to a util file, update to take variable number of persons
-
 }
