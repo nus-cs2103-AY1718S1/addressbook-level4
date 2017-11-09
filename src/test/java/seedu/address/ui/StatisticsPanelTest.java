@@ -40,6 +40,4 @@ public class StatisticsPanelTest extends GuiUnitTest {
         assertPanelDisplaysStatistics(TYPICAL_PERSONS, statisticsPanelHandle);
     }
 
-    //TODO: Add GUI tests for all commands
-
 }
