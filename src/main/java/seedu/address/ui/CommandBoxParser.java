@@ -64,12 +64,19 @@ public class CommandBoxParser {
         Prefix[] prefixes = ALL_PREFIXES;
         ArrayList<String> missingPrefixes = new ArrayList<>();
         ArgumentMultimap argMap = ArgumentTokenizer.tokenize(argument, prefixes);
-        for (Prefix p : prefixes) {
-            if (!argMap.getValue(p).isPresent() || argMap.getValue(p).get().equals(EMPTY_STRING)) {
-                missingPrefixes.add(p.toString());
-            }
-        }
+        Arrays.stream(ALL_PREFIXES)
+                .filter(p -> isMissing(argMap, p))
+                .forEach(p -> missingPrefixes.add(p.toString()));
         return missingPrefixes;
+    }
+
+    /**
+     * Returns true if the {@code Prefix} is not present in the {@code ArgumentMultiMap}
+     * or if it is present but is still missing arguments
+     */
+    private boolean isMissing(ArgumentMultimap argMap, Prefix prefix) {
+        return !argMap.getValue(prefix).isPresent()
+                || argMap.getValue(prefix).get().equals(EMPTY_STRING);
     }
 
     private boolean isValidCommand(String commandWord) {
