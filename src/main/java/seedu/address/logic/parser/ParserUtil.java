@@ -14,7 +14,6 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.commons.util.WebLinkUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -123,7 +122,7 @@ public class ParserUtil {
                 webLinkSet.add(new WebLink(inputWebLinkString));
             } else {
                 throw new IllegalValueException("Only one link per category: facebook ,"
-                        + "instagram, twitter or linkedin.");
+                        + "instagram or twitter");
             }
         }
         return webLinkSet;
@@ -142,9 +141,9 @@ public class ParserUtil {
         } else {
 
             for (Iterator<WebLink> iterateInternalList = webLinkSet.iterator(); iterateInternalList.hasNext(); ) {
-                WebLink WebLinkForChecking = iterateInternalList.next();
-                String WebLinkTagForChecking = WebLinkForChecking.toStringWebLinkTag();
-                if (inputWebLinkTag.equals(WebLinkTagForChecking)) {
+                WebLink webLinkForChecking = iterateInternalList.next();
+                String webLinkTagForChecking = webLinkForChecking.toStringWebLinkTag();
+                if (inputWebLinkTag.equals(webLinkTagForChecking)) {
                     duplicateCheck = FALSE;
                     break;
                 }
