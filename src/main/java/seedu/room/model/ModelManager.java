@@ -2,11 +2,7 @@ package seedu.room.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.room.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.room.model.Model.PREDICATE_SHOW_ALL_EVENTS;
-import static seedu.room.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.time.LocalDateTime;
-import java.util.Iterator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -27,7 +23,6 @@ import seedu.room.model.event.exceptions.DuplicateEventException;
 import seedu.room.model.event.exceptions.EventNotFoundException;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
-import seedu.room.model.person.UniquePersonList;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
 import seedu.room.model.tag.Tag;

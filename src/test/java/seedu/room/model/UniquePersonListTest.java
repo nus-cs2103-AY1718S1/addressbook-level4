@@ -59,7 +59,8 @@ public class UniquePersonListTest {
     }
 
     @Test
-    public void removeByTag_NonExistentTag_throwsIllegalValueException() throws IllegalValueException, CommandException{
+    public void removeByTag_nonExistentTag_throwsException() throws IllegalValueException,
+            CommandException {
         UniquePersonList uniquePersonList = new UniquePersonList();
         uniquePersonList.add(ALICE);
         uniquePersonList.add(BENSON);

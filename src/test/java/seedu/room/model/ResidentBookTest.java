@@ -87,8 +87,8 @@ public class ResidentBookTest {
         //added temporary has argument of 0, so it stays permanently -> returns false
         assertFalse(residentBookOne.getPersonList().size() == 0);
 
-        ResidentBook residentBookTwo = new ResidentBookBuilder().withPerson(TEMPORARY_JOE).
-                withPerson(TEMPORARY_DOE).build();
+        ResidentBook residentBookTwo = new ResidentBookBuilder().withPerson(TEMPORARY_JOE)
+                .withPerson(TEMPORARY_DOE).build();
 
         residentBookTwo.deleteTemporary();
         //added new temporary contact has expiry day of 1000 years, so it won't be deleted
@@ -128,7 +128,8 @@ public class ResidentBookTest {
     }
 
     @Test
-    public void removeByTag_NonExistentTag_throwsIllegalValueException() throws IllegalValueException, CommandException{
+    public void removeByTag_nonExistentTag_throwsCommandException() throws IllegalValueException,
+            CommandException {
         ResidentBook residentBook = new ResidentBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         assertTrue(residentBook.getUniquePersonList().getInternalList().size() == 2);
 
