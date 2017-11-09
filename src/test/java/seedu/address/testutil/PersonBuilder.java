@@ -111,8 +111,9 @@ public class PersonBuilder {
         }
         return this;
     }
+    //@@author renkai91
     /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
+     * Sets the {@code Birthday} of the {@code Person} that we are building.
      */
     public PersonBuilder withBirthday(String birthday) {
         try {
@@ -122,7 +123,7 @@ public class PersonBuilder {
         }
         return this;
     }
-
+    //@@author
     /**
      * Sets the {@code Remark} of the {@code Person} that we are building.
      */

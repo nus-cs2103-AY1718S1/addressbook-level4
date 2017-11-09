@@ -1,5 +1,5 @@
 # Choony93reused
-###### \build\resources\main\view\themes\bootstrap3\bootstrap3.css
+###### /out/production/resources/view/themes/bootstrap3/bootstrap3.css
 ``` css
 .list-cell:filled:even {
     -fx-background-color: #f6ffff;
@@ -18,7 +18,7 @@
 	-fx-text-fill: black;
 }
 ```
-###### \build\resources\main\view\themes\caspian\caspian.css
+###### /out/production/resources/view/themes/caspian/caspian.css
 ``` css
 .list-cell:filled:even {
     -fx-background-color: #bbffff;
@@ -28,7 +28,7 @@
     -fx-background-color: #e2ffff;
 }
 ```
-###### \build\resources\main\view\themes\modena\blackOnWhite.css
+###### /out/production/resources/view/themes/modena/blackOnWhite.css
 ``` css
 .list-cell:filled:even {
     -fx-background-color: #e9e9e9;
@@ -48,7 +48,7 @@
     -fx-background: white;
 }
 ```
-###### \build\resources\main\view\themes\modena\modena.css
+###### /out/production/resources/view/themes/modena/modena.css
 ``` css
 .list-cell:filled:even {
     -fx-background-color: #bbffff;
@@ -66,7 +66,7 @@
     -fx-background: black;
 }
 ```
-###### \build\resources\main\view\themes\modena\whiteOnBlack.css
+###### /out/production/resources/view/themes/modena/whiteOnBlack.css
 ``` css
 .list-cell:filled:even {
     -fx-background-color: #000000;
@@ -80,7 +80,7 @@
     -fx-background-color: #939393;
 }
 ```
-###### \build\resources\main\view\themes\modena\yellowOnBlack.css
+###### /out/production/resources/view/themes/modena/yellowOnBlack.css
 ``` css
 .list-cell:filled:even {
     -fx-background-color: #333300;
@@ -103,7 +103,7 @@
     -fx-background: black;
 }
 ```
-###### \out\production\resources\view\themes\bootstrap3\bootstrap3.css
+###### /src/main/resources/view/themes/bootstrap3/bootstrap3.css
 ``` css
 .list-cell:filled:even {
     -fx-background-color: #f6ffff;
@@ -122,7 +122,7 @@
 	-fx-text-fill: black;
 }
 ```
-###### \out\production\resources\view\themes\caspian\caspian.css
+###### /src/main/resources/view/themes/caspian/caspian.css
 ``` css
 .list-cell:filled:even {
     -fx-background-color: #bbffff;
@@ -132,7 +132,7 @@
     -fx-background-color: #e2ffff;
 }
 ```
-###### \out\production\resources\view\themes\modena\blackOnWhite.css
+###### /src/main/resources/view/themes/modena/blackOnWhite.css
 ``` css
 .list-cell:filled:even {
     -fx-background-color: #e9e9e9;
@@ -152,7 +152,7 @@
     -fx-background: white;
 }
 ```
-###### \out\production\resources\view\themes\modena\modena.css
+###### /src/main/resources/view/themes/modena/modena.css
 ``` css
 .list-cell:filled:even {
     -fx-background-color: #bbffff;
@@ -170,7 +170,7 @@
     -fx-background: black;
 }
 ```
-###### \out\production\resources\view\themes\modena\whiteOnBlack.css
+###### /src/main/resources/view/themes/modena/whiteOnBlack.css
 ``` css
 .list-cell:filled:even {
     -fx-background-color: #000000;
@@ -184,111 +184,7 @@
     -fx-background-color: #939393;
 }
 ```
-###### \out\production\resources\view\themes\modena\yellowOnBlack.css
-``` css
-.list-cell:filled:even {
-    -fx-background-color: #333300;
-}
-
-.list-cell:filled:odd {
-    -fx-background-color: #191900;
-}
-
-.list-cell:filled:selected {
-    -fx-background-color: #ffffb2;
-}
-
-.list-cell:filled:selected .label {
-    -fx-text-fill: black;
-}
-
-.list-view .list-cell:empty {
-    /* Empty cells will not have alternating colours */
-    -fx-background: black;
-}
-```
-###### \src\main\resources\view\themes\bootstrap3\bootstrap3.css
-``` css
-.list-cell:filled:even {
-    -fx-background-color: #f6ffff;
-}
-
-.list-cell:filled:odd {
-    -fx-background-color: #ffffff;
-}
-
-.list-view .list-cell:empty {
-    -fx-background: #ffffff;
-}
-
-.list-cell:filled:selected {
-    -fx-background-color: #bbffff;
-	-fx-text-fill: black;
-}
-```
-###### \src\main\resources\view\themes\caspian\caspian.css
-``` css
-.list-cell:filled:even {
-    -fx-background-color: #bbffff;
-}
-
-.list-cell:filled:odd {
-    -fx-background-color: #e2ffff;
-}
-```
-###### \src\main\resources\view\themes\modena\blackOnWhite.css
-``` css
-.list-cell:filled:even {
-    -fx-background-color: #e9e9e9;
-}
-
-.list-cell:filled:odd {
-    -fx-background-color: #fafafa;
-}
-
-.list-cell:filled:selected {
-    -fx-background-color: #939393;
-	-fx-text-fill: black;
-}
-
-.list-view .list-cell:empty {
-    /* Empty cells will not have alternating colours */
-    -fx-background: white;
-}
-```
-###### \src\main\resources\view\themes\modena\modena.css
-``` css
-.list-cell:filled:even {
-    -fx-background-color: #bbffff;
-}
-
-.list-cell:filled:odd {
-    -fx-background-color: #e2ffff;
-}
-
-.list-cell:filled:selected {
-    -fx-background-color: #939393;
-}
-
-.list-view .list-cell:empty {
-    -fx-background: black;
-}
-```
-###### \src\main\resources\view\themes\modena\whiteOnBlack.css
-``` css
-.list-cell:filled:even {
-    -fx-background-color: #000000;
-}
-
-.list-cell:filled:odd {
-    -fx-background-color: #323232;
-}
-
-.list-cell:filled:selected {
-    -fx-background-color: #939393;
-}
-```
-###### \src\main\resources\view\themes\modena\yellowOnBlack.css
+###### /src/main/resources/view/themes/modena/yellowOnBlack.css
 ``` css
 .list-cell:filled:even {
     -fx-background-color: #333300;
