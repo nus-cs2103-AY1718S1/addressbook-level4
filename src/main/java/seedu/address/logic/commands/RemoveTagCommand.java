@@ -40,58 +40,66 @@ public class RemoveTagCommand extends UndoableCommand {
     public static final String MESSAGE_NO_SUCH_TAG = "This tag does not exist in any of the given persons.";
 
     private final ArrayList<Index> targetIndexes;
-    private final Tag toRemove;
+    private final Tag tagToRemove;
 
     /**
      * @param targetIndexes of the persons in the filtered person list to edit
-     * @param toRemove tag to remove from given target indexes
+     * @param tagToRemove tag to remove from given target indexes
      */
-    public RemoveTagCommand(ArrayList<Index> targetIndexes, Tag toRemove) {
+    public RemoveTagCommand(ArrayList<Index> targetIndexes, Tag tagToRemove) {
 
         requireNonNull(targetIndexes);
-        requireNonNull(toRemove);
+        requireNonNull(tagToRemove);
 
         this.targetIndexes = targetIndexes;
-        this.toRemove = toRemove;
+        this.tagToRemove = tagToRemove;
     }
 
     /**
-     * First checks if all target indexes are not out of bounds and then checks if the tag exists among
-     * the given target indexes of person and then removes tag from each target person that has the given tag.
+     * Removes tag to remove from each target person that has the given tag.
      */
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        boolean noPersonContainsTagToRemove = true;
 
-        for (Index targetIndex : targetIndexes) {
-            if (targetIndex.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
-        }
-
-        for (int i = 0; i < targetIndexes.size(); i++) {
-            int targetIndex = targetIndexes.get(i).getZeroBased();
-            ReadOnlyPerson readOnlyPerson = lastShownList.get(targetIndex);
-            if (readOnlyPerson.getTags().contains(toRemove)) {
-                noPersonContainsTagToRemove = false;
-            }
-        }
-
-        if (noPersonContainsTagToRemove) {
-            throw  new CommandException(MESSAGE_NO_SUCH_TAG);
-        }
+        targetIndexesOutOfBoundsChecker(lastShownList);
+        tagInTargetIndexesChecker(lastShownList);
 
         try {
-            model.removeTag(this.targetIndexes, this.toRemove);
+            model.removeTag(this.targetIndexes, this.tagToRemove);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
 
-        return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS, toRemove));
+        return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS, tagToRemove));
+    }
+
+    /**
+     * Checks if all target indexes are not out of bounds.
+     */
+    private void targetIndexesOutOfBoundsChecker(List<ReadOnlyPerson> lastShownList) throws CommandException {
+        for (Index index : targetIndexes) {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+        }
+    }
+
+    /**
+     * Checks if the tag exists among the given target indexes.
+     */
+    private void tagInTargetIndexesChecker(List<ReadOnlyPerson> lastShownList) throws CommandException {
+        for (Index index : targetIndexes) {
+            int targetIndex = index.getZeroBased();
+            ReadOnlyPerson readOnlyPerson = lastShownList.get(targetIndex);
+            if (readOnlyPerson.getTags().contains(tagToRemove)) {
+                return;
+            }
+        }
+        throw new CommandException(MESSAGE_NO_SUCH_TAG);
     }
 
     @Override
@@ -109,6 +117,6 @@ public class RemoveTagCommand extends UndoableCommand {
         // state check
         RemoveTagCommand e = (RemoveTagCommand) other;
         return targetIndexes.equals(e.targetIndexes)
-                && toRemove.equals(e.toRemove);
+                && tagToRemove.equals(e.tagToRemove);
     }
 }
