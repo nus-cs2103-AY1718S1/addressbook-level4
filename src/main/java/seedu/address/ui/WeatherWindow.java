@@ -14,6 +14,7 @@ import seedu.address.commons.core.LogsCenter;
 /**
  * A controller for Yahoo weather forecast window
  * */
+//@@author eeching
 public class WeatherWindow extends UiPart<Region> {
 
     public static final String USERGUIDE_FILE_PATH = "https://www.yahoo.com/news/weather";

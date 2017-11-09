@@ -98,17 +98,30 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+// tag::search[]
+=== Locating persons: The search box
 
-Finds persons whose names contain any of the given keywords. +
-Format: just type in the search bar the name or the phone number you want to search for, and the results will be automatically displayed in the left panel. `since v1.2`
+Finds persons whose names, phones or tags contain any of the given keywords. +
+Format: just type in the search box the name, the phone number, or the tag you want to search for, and the results will be automatically displayed in the left panel. `since v1.2`
 
 ****
+*For names*
+
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Either name or phone number is searched. `coming in v2.0`
+* Either name or phone number is searched. `since v1.5rc`
 * Words will be matched according to prefix e.g. `Han` will match `Hans` and `Hansen` `since v1.2`
 * Only persons matching all keyword as prefixes will be returned (i.e. `AND` search). e.g. `Hans Bo` will return `Hanschler Bonobo`, `Hansen Boening` `since v1.2`
+
+*For phones*
+
+*Prefix will br matched e.g `8269` will match `82699402`
+*If a person has multiple phones, he/she will be displayed as long as one of them matches the search word
+
+*For tags*
+
+*Exact match
+*All persons with the specified tag will be displayed
 ****
 
 Examples:
@@ -117,6 +130,11 @@ Examples:
 Displays `john` and `Johnson`
 * `Betsy Tim John` +
 Displays persons who have ALL prefixes `Betsy`, `Tim`, and `John` in ANY part of their names
+* `8269` +
+Displays persons having 8269 as a prefix of his/her phone numbers
+* `friends` +
+Displays all persons tagged as `friends`
+// end::search[]
 
 === Deleting a person : `delete`
 
@@ -138,6 +156,7 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+// tag::deleteByName[]
 === Deleting a person by his/her full name: `deleteByName`
 
 Deletes the specified person from the address book. +
@@ -151,8 +170,9 @@ Format: `delete String(the person's full name)`
 Examples:
 
 * `list` +
-`delete John Doe` +
+`deleteByName John Doe` +
 Deletes person named John Doe in the address book.
+// end:: deleteByName[]
 
 === Selecting a person : `select`
 
@@ -174,6 +194,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::customField[]
 === Adding/Updating a person's custom field : `custom`
 
 Adds or updates an existing person's custom fields in the address book. +
@@ -191,7 +212,9 @@ Examples:
 Updates the Nickname custom field of the 1st person to be Ahchuang.
 * `custom 1 Nickname`
 Remove the Nickname custom field of the 1st person.
+// end::customField[]
 
+// tag::photo[]
 === Adding/Updating a person's icon photo : `upload`
 
 Adds or updates an existing person's icon photo in the address book. +
@@ -209,6 +232,7 @@ Examples:
 Updates the icon photo of the 1st person to be wolf.jpg located in D:\Git Projects.
 * `custom 1`
 Remove the icon photo of the 1st person, the default photo will be shown instead.
+// end::photo[]
 
 === Listing entered commands : `history`
 
