@@ -97,22 +97,37 @@ public class StringUtil {
 ```
 ###### \java\seedu\address\commons\util\WebLinkUtil.java
 ``` java
+
+import java.util.HashMap;
+
 /**
  * Contains Command Line Interface (CLI) syntax definitions common to multiple commands
+ * Hashmap implementation
  */
 public class WebLinkUtil {
-
-    /*Keywords that can be used to match website to certain categories. */
-    public static final String FACEBOOK_MATCH_STRING = "facebook.com";
-    public static final String INSTAGRAM_MATCH_STRING = "instagram.com";
-    public static final String TWITTER_MATCH_STRING = "twitter.com";
-    public static final String LINKEDIN_MATCH_STRING = "linkedin.com";
 
     /*tag names for the categorized web links*/
     public static final String FACEBOOK_TAG = "facebook";
     public static final String TWITTER_TAG = "twitter";
-    public static final String LINKEDIN_TAG = "linkedin";
     public static final String INSTAGRAM_TAG = "instagram";
+
+    /*Keywords that can be used to match website to certain categories. */
+    private static final String INSTAGRAM_MATCH_REGEX = "(?i)^^.*(instagram.com|instagram|insta).*$";
+    private static final String FACEBOOK_MATCH_REGEX = "(?i)^^.*(facebook.com|fb.com/|facebook).*$";
+    private static final String TWITTER_MATCH_REGEX = "(?i)^^.*(twitter.com|t.co|twitter).*$";
+
+    private HashMap<String, String> matchingWebsites = new HashMap<>();
+
+
+    public WebLinkUtil() {
+        matchingWebsites.put(FACEBOOK_MATCH_REGEX, FACEBOOK_TAG);
+        matchingWebsites.put(INSTAGRAM_MATCH_REGEX, INSTAGRAM_TAG);
+        matchingWebsites.put(TWITTER_MATCH_REGEX, TWITTER_TAG);
+    }
+
+    public HashMap<String, String> getMatchingWebsites() {
+        return matchingWebsites;
+    }
 }
 ```
 ###### \java\seedu\address\logic\commands\DeleteTagCommand.java
@@ -197,12 +212,12 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand> {
     public static Set<WebLink> parseWebLink(Collection<String> webLinks) throws IllegalValueException {
         requireNonNull(webLinks);
         final Set<WebLink> webLinkSet = new HashSet<>();
-        for (String webLinkName : webLinks) {
-            if (checkRepeatedWebLinkInCategory(webLinkSet, webLinkName)) {
-                webLinkSet.add(new WebLink(webLinkName));
+        for (String inputWebLinkString : webLinks) {
+            if (checkRepeatedWebLinkInCategory(webLinkSet, inputWebLinkString)) {
+                webLinkSet.add(new WebLink(inputWebLinkString));
             } else {
                 throw new IllegalValueException("Only one link per category: facebook ,"
-                        + "instagram, twitter or linkedin.");
+                        + "instagram or twitter");
             }
         }
         return webLinkSet;
@@ -211,17 +226,19 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand> {
     /**
      * Checks whether webLinkSet to be passed contains weblinks from the same category.
      */
-    public static boolean checkRepeatedWebLinkInCategory (Set<WebLink> webLinkSet, String inputWebLink)
+    public static boolean checkRepeatedWebLinkInCategory (Set<WebLink> webLinkSet, String inputWebLinkString)
             throws IllegalValueException {
         boolean duplicateCheck = TRUE;
+        WebLink inputWebLink = new WebLink(inputWebLinkString);
+        String inputWebLinkTag = inputWebLink.toStringWebLinkTag();
         if (webLinkSet.isEmpty()) {
             return duplicateCheck;
         } else {
 
             for (Iterator<WebLink> iterateInternalList = webLinkSet.iterator(); iterateInternalList.hasNext(); ) {
-                WebLink checkWebLink = iterateInternalList.next();
-                String checkWebLinkTag = checkWebLink.toStringWebLinkTag();
-                if (inputWebLink.contains(checkWebLinkTag)) {
+                WebLink webLinkForChecking = iterateInternalList.next();
+                String webLinkTagForChecking = webLinkForChecking.toStringWebLinkTag();
+                if (inputWebLinkTag.equals(webLinkTagForChecking)) {
                     duplicateCheck = FALSE;
                     break;
                 }
@@ -310,7 +327,8 @@ public class FilterKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         String combinedReferenceList = person.getAsOneString();
 
         return !keywords.isEmpty() && keywords.stream().allMatch(keyword
-            -> StringUtil.containsWordIgnoreCase(combinedReferenceList, keyword));
+            -> StringUtil.containsWordIgnoreCase(combinedReferenceList, keyword) && !keyword.contains("[")
+                && !keyword.contains("]"));
     }
 
     @Override
@@ -516,53 +534,40 @@ public class UniqueWebLinkList implements Iterable<WebLink> {
 ``` java
 /**
  * Represents a WebLink in the address book.
- * Guarantees: immutable; name is valid as declared in {@link #isValidWebLink(String)}
- * only accept twitter, facebook, linkedin and instagram links
+ * only accept twitter, facebook and instagram links
  * WebLinkTag defines the category of this webLink.
  */
 public class WebLink {
 
-    public static final String MESSAGE_WEB_LINK_CONSTRAINTS = "Hi, only valid facebook,"
-            + " instagram, linkedin or twitter links will be accepted:)";
-    public static final String WEB_LINK_VALIDATION_REGEX = "^^.*(|instagram.com|linkedin.com|twitter.com"
-            + "|facebook.com).*$";
+    private static final String MESSAGE_WEB_LINK_CONSTRAINTS = "No spaces should be allowed in the weblink inputted.";
+    private static final String DEFAULT_TAG = "others";
 
-    public final String webLinkInput;
-    public final String webLinkTag;
+    private  String webLinkInput;
+    private  String webLinkTag;
 
     /**
      * Validates given web link.
      *
      * @throws IllegalValueException if the given webLink name string is invalid.
-     * TODO: better implementation in the future instead of hard code.
      */
     public WebLink(String name) throws IllegalValueException {
+
         requireNonNull(name);
-        String trimmedWebLink = name.trim();
-        if (!isValidWebLink(trimmedWebLink)) {
-            throw new IllegalValueException(MESSAGE_WEB_LINK_CONSTRAINTS);
-        }
-        this.webLinkInput = trimmedWebLink;
+        this.webLinkInput = name.trim();
+        this.webLinkTag = DEFAULT_TAG;
 
-        if (webLinkInput.contains(FACEBOOK_MATCH_STRING)) {
-            this.webLinkTag = FACEBOOK_TAG;
-        } else if (webLinkInput.contains(TWITTER_MATCH_STRING)) {
-            this.webLinkTag = TWITTER_TAG;
-        } else if (webLinkInput.contains(LINKEDIN_MATCH_STRING)) {
-            this.webLinkTag = LINKEDIN_TAG;
-        } else if (webLinkInput.contains(INSTAGRAM_MATCH_STRING)) {
-            this.webLinkTag = INSTAGRAM_TAG;
-        } else {
-            throw new IllegalValueException(MESSAGE_WEB_LINK_CONSTRAINTS);
+        HashMap<String, String> webLinkTagMap = new WebLinkUtil().getMatchingWebsites();
+        Iterator<String> keySetIterator = webLinkTagMap.keySet().iterator();
+
+        while (keySetIterator.hasNext()) {
+            String webLinkMatchingRegex = keySetIterator.next();
+            if (webLinkInput.matches(webLinkMatchingRegex)) {
+                this.webLinkTag = webLinkTagMap.get(webLinkMatchingRegex);
+                break;
+            }
         }
     }
 
-    /**
-     * Returns true if a given string is a valid tag name.
-     */
-    public static boolean isValidWebLink(String test) {
-        return test.matches(WEB_LINK_VALIDATION_REGEX);
-    }
 
     @Override
     public boolean equals(Object other) {
@@ -631,7 +636,7 @@ public class XmlAdaptedWebLink {
      * @param source future changes to this will not affect the created
      */
     public XmlAdaptedWebLink(WebLink source) {
-        webLinkInput = source.webLinkInput;
+        webLinkInput = source.toStringWebLink();
     }
 
     /**

@@ -1,7 +1,7 @@
 # bladerail
 ###### \java\seedu\address\commons\events\model\UserPersonChangedEvent.java
 ``` java
-/** Indicates the UserProfileManager in the model has changed*/
+/** Indicates the UserPerson in the model has changed*/
 public class UserPersonChangedEvent extends BaseEvent {
 
     public final UserPerson userPerson;
@@ -17,6 +17,30 @@ public class UserPersonChangedEvent extends BaseEvent {
 
     public UserPerson getUserPerson() {
         return userPerson;
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\CopyToClipboardRequestEvent.java
+``` java
+/**
+ * Indicates a request for copying a string to clipboard
+ */
+public class CopyToClipboardRequestEvent extends BaseEvent {
+
+    public final ClipboardContent toCopy;
+
+    public CopyToClipboardRequestEvent(String toCopy) {
+        this.toCopy = new ClipboardContent();
+        this.toCopy.putString(toCopy);
+    }
+
+    public ClipboardContent getToCopy() {
+        return this.toCopy;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 }
 ```
@@ -116,6 +140,60 @@ public class RemarkCommand extends UndoableCommand {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\ShareCommand.java
+``` java
+/**
+ * Displays an add command for the user's contact
+ */
+public class ShareCommand extends Command {
+    public static final String COMMAND_WORD = "share";
+    public static final String COMMAND_ALIAS = "sh";
+
+    public static final String MESSAGE_SUCCESS = "Add Command generated. Copied to clipboard! \n%1$s";
+
+    @Override
+    public CommandResult execute() {
+        UserPerson userPerson = model.getUserPerson();
+        String result = addCommandBuilder(userPerson);
+
+        EventsCenter.getInstance().post(new CopyToClipboardRequestEvent(result));
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, result));
+    }
+
+    /**
+     * Builds an addCommand for the model's userPerson
+     * @return String
+     */
+    public static String addCommandBuilder(ReadOnlyPerson src) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(AddCommand.COMMAND_WORD)
+                .append(" ")
+                .append(PREFIX_NAME)
+                .append(src.getName())
+                .append(" ")
+                .append(PREFIX_PHONE)
+                .append(src.getPhone())
+                .append(" ")
+                .append(PREFIX_ADDRESS)
+                .append(src.getAddress());
+        for (Email email : src.getEmail()) {
+            builder.append(" ")
+                    .append(PREFIX_EMAIL)
+                    .append(email);
+        }
+
+        for (WebLink webLink : src.getWebLinks()) {
+            builder.append(" ")
+                    .append(PREFIX_WEB_LINK)
+                    .append(webLink.toStringWebLink());
+        }
+
+        return builder.toString();
+    }
+}
+
+```
 ###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
 /**
@@ -133,7 +211,7 @@ public class SortCommand extends Command {
             + "Accepts aliases 'n', 'e', 'p', 'a' respectively."
             + "Parameters: "
             + COMMAND_WORD
-            + " [name/email/phone/address/tag]\n"
+            + " [name/email/phone/address]\n"
             + "Example: " + COMMAND_WORD + " name";
 
 ```
@@ -207,7 +285,7 @@ public class UpdateUserCommand extends Command {
 
     public UpdateUserCommand (EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(editPersonDescriptor);
-        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.editPersonDescriptor = editPersonDescriptor;
     }
 
     public EditPersonDescriptor getEditPersonDescriptor() {
@@ -216,6 +294,10 @@ public class UpdateUserCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+
+        if (!editPersonDescriptor.isAnyFieldEdited()) {
+            throw new CommandException(MESSAGE_NOT_UPDATED);
+        }
 
         ReadOnlyPerson personToEdit = model.getUserPerson();
         Person editedPerson = EditCommand.createEditedPerson(personToEdit, editPersonDescriptor);
@@ -272,6 +354,10 @@ public class UpdateUserCommand extends Command {
         case UpdateUserCommand.COMMAND_WORD:
         case UpdateUserCommand.COMMAND_ALIAS:
             return new UpdateUserCommandParser().parse(arguments);
+
+        case ShareCommand.COMMAND_WORD:
+        case ShareCommand.COMMAND_ALIAS:
+            return new ShareCommand();
 
 ```
 ###### \java\seedu\address\logic\parser\CliSyntax.java
@@ -483,6 +569,26 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
 ```
 ###### \java\seedu\address\MainApp.java
 ``` java
+    protected Clipboard clipboard;
+```
+###### \java\seedu\address\MainApp.java
+``` java
+        try {
+            userPersonOptional = storage.readUserProfile();
+            if (!userPersonOptional.isPresent()) {
+                logger.info(" No userProfile found, will be starting with a new user");
+            }
+            initialUser = userPersonOptional.orElse(new UserPerson());
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with a new User");
+            initialUser = new UserPerson();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with a new User");
+            initialUser = new UserPerson();
+        }
+```
+###### \java\seedu\address\MainApp.java
+``` java
     /**
      * Returns a {@code UserPerson} using the file at {@code storage}'s user prefs file path,
      * or a new {@code UserPerson} with default configuration if errors occur when
@@ -518,7 +624,19 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
 ```
 ###### \java\seedu\address\MainApp.java
 ``` java
+        this.clipboard = Clipboard.getSystemClipboard();
+```
+###### \java\seedu\address\MainApp.java
+``` java
             storage.saveUserPerson(model.getUserPerson());
+```
+###### \java\seedu\address\MainApp.java
+``` java
+    @Subscribe
+    public void handleCopyToClipboardRequestEvent (CopyToClipboardRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        clipboard.setContent(event.getToCopy());
+    }
 ```
 ###### \java\seedu\address\model\Model.java
 ``` java
@@ -557,7 +675,8 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
     public void sortFilteredPersonList(String filterType) {
         addressBook.sortPersons(filterType);
         ObservableList<ReadOnlyPerson> sortedList = this.addressBook.getPersonList();
-        filteredPersons = new FilteredList<>(sortedList);
+        this.filteredPersons = new FilteredList<>(sortedList);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
 
@@ -569,6 +688,12 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
         requireAllNonNull(editedPerson);
         userPerson.update(editedPerson);
         indicateUserPersonChanged();
+    }
+
+    /** Raises an event to indicate the model has changed */
+    public void indicateUserPersonChanged() {
+        raise(new UserPersonChangedEvent(userPerson));
+        logger.info("Updated User Person: " + userPerson);
     }
 
 ```
@@ -661,7 +786,7 @@ public class UserPerson implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(src.getAddress());
         this.remark = new SimpleObjectProperty<>(new Remark(""));
         this.tags = new SimpleObjectProperty<>(new UniqueTagList());
-        this.webLinks = new SimpleObjectProperty<>(new UniqueWebLinkList());
+        this.webLinks = new SimpleObjectProperty<>(new UniqueWebLinkList(src.getWebLinks()));
     }
 
     public void setName(Name name) {
@@ -858,48 +983,6 @@ public class UserPerson implements ReadOnlyPerson {
     }
 
 ```
-###### \java\seedu\address\model\UserProfileManager.java
-``` java
-/**
- * Represents the user's Profile in the address book.
- *
- */
-public class UserProfileManager extends ComponentManager {
-    private final UserPerson userPerson;
-
-    public UserProfileManager() throws IllegalValueException {
-        this.userPerson = new UserPerson();
-    }
-
-    /** Raises an event to indicate the model has changed */
-    private void indicateUserPersonChanged() {
-        raise(new UserPersonChangedEvent(userPerson));
-    }
-
-    /**
-     * Updates the UserPerson to another UserPerson
-     *
-     */
-    public void updateUserPerson(UserPerson target) {
-        userPerson.update(target);
-        indicateUserPersonChanged();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(userPerson);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Gui Settings : ");
-        sb.append("\nLocal data file location : ");
-        sb.append("\nAddressBook name : ");
-        return sb.toString();
-    }
-}
-```
 ###### \java\seedu\address\model\util\SampleUserPersonUtil.java
 ``` java
 /**
@@ -976,12 +1059,12 @@ public class SampleUserPersonUtil {
 public interface UserProfileStorage {
 
     /**
-     * Returns the file path of the UserProfileManager data file.
+     * Returns the file path of the UserProfile data file.
      */
     String getUserProfileFilePath();
 
     /**
-     * Returns UserProfileManager data from storage.
+     * Returns UserProfile data from storage.
      *   Returns {@code Optional.empty()} if storage file is not found.
      * @throws DataConversionException if the data in storage is not in the expected format.
      * @throws IOException if there was any problem when reading from the storage.
@@ -989,7 +1072,7 @@ public interface UserProfileStorage {
     Optional<UserPerson> readUserProfile() throws DataConversionException, IOException;
 
     /**
-     * Saves the given {@link UserProfileManager} to the storage.
+     * Saves the given {@link UserPerson} to the storage.
      * @param userPerson cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
@@ -1060,7 +1143,7 @@ public class XmlUserPerson {
 ###### \java\seedu\address\storage\XmlUserProfileStorage.java
 ``` java
 /**
- * A class to access UserProfileManager stored in the hard disk as an xml file
+ * A class to access UserProfile stored in the hard disk as an xml file
  */
 public class XmlUserProfileStorage implements UserProfileStorage {
 
@@ -1143,10 +1226,20 @@ public class XmlUserProfileStorage implements UserProfileStorage {
      */
     @FXML
     private void handleUserProfile() {
+        logger.info("Opening User Profile Window");
         UserProfileWindow userProfileWindow = new UserProfileWindow(logic.getUserPerson());
         userProfileWindow.show();
     }
 
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    //Update the filteredPersonList when addressBook is changed, mainly for sort
+    @Subscribe
+    void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        personListPanel.setConnections(logic.getFilteredPersonList());
+    }
 ```
 ###### \java\seedu\address\ui\UserProfileWindow.java
 ``` java
@@ -1155,7 +1248,7 @@ public class XmlUserProfileStorage implements UserProfileStorage {
  */
 public class UserProfileWindow extends UiPart<Region> {
 
-    private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
+    private static final Logger logger = LogsCenter.getLogger(UserProfileWindow.class);
     private static final String FXML = "UserProfileWindow.fxml";
     private static final String TITLE = "User Profile";
 
@@ -1225,23 +1318,6 @@ public class UserProfileWindow extends UiPart<Region> {
         webLinkTextField.textProperty().bind(Bindings.convert(userPerson.webLinkProperty()));
     }
 
-    @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof DetailedPersonCard)) {
-            return false;
-        }
-
-        // state check
-        UserProfileWindow otherUserProfileWindow = (UserProfileWindow) other;
-        return userPerson.equals(otherUserProfileWindow.userPerson);
-    }
-
     /**
      *
      */
@@ -1263,6 +1339,7 @@ public class UserProfileWindow extends UiPart<Region> {
         try {
             updateUserPerson();
             raise(new UserPersonChangedEvent(userPerson));
+            logger.info("UserPerson updated via UserProfileWindow, saving");
             stage.close();
         } catch (Exception e) {
             logger.fine("Invalid UserPerson modification");
@@ -1272,7 +1349,6 @@ public class UserProfileWindow extends UiPart<Region> {
     @Subscribe
     private void handleUserPersonChangedEvent(UserPersonChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        //bindListeners(userPerson);
     }
 
     /**
@@ -1328,7 +1404,7 @@ public class UserProfileWindow extends UiPart<Region> {
             statusLabel.setText("Please input a valid webLink");
             throw new Exception();
         } catch (ClassCastException e) {
-            statusLabel.setText("Hey");
+            statusLabel.setText("Class cast exception");
             throw new Exception();
         }
     }

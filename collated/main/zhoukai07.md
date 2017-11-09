@@ -1,4 +1,67 @@
 # zhoukai07
+###### \java\seedu\address\commons\events\ui\ChangeThemeRequestEvent.java
+``` java
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * Indicates a request for theme change
+ */
+public class ChangeThemeRequestEvent extends BaseEvent {
+    public final String themeUrl;
+    public ChangeThemeRequestEvent (String themeUrl) {
+        this.themeUrl = themeUrl;
+    }
+    public String getThemeUrl() {
+        return this.themeUrl;
+    }
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\logic\commands\ChangeThemeCommand.java
+``` java
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
+
+/**
+ * Selects a person identified using it's last displayed index from the address book.
+ */
+public class ChangeThemeCommand extends Command {
+
+    public static final String COMMAND_WORD = "ChangeToTheme";
+    public static final String COMMAND_ALIAS = "ct";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Change theme by the index number of the 4 inbuilt themes.\n"
+            + "Parameters: INDEX (1, 2, 3 or 4)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {index}";
+
+    public static final String MESSAGE_SELECT_THEME_SUCCESS = "Selected Theme: %1$s";
+
+    private final Integer targetIndex;
+    public ChangeThemeCommand(Integer targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        String[] themeList = new String[]{"/view/DarkTheme.css", "/view/DarkTheme2.css", "/view/LightTheme.css",
+            "/view/LightTheme.css"};
+        if (targetIndex > themeList.length) {
+            throw new CommandException(Messages.MESSAGE_INVALID_THEME_INDEX);
+        }
+        String themeUrl = getClass().getResource(themeList[targetIndex - 1]).toExternalForm();
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent(themeUrl));
+        return new CommandResult(String.format(MESSAGE_SELECT_THEME_SUCCESS, targetIndex));
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
             + "[" + PREFIX_ADD_TAG + "TAG]..."
@@ -22,11 +85,46 @@
             this.clearTags = clearTags;
         }
 ```
+###### \java\seedu\address\logic\parser\AddressBookParser.java
+``` java
+        case ChangeThemeCommand.COMMAND_WORD:
+        case ChangeThemeCommand.COMMAND_ALIAS:
+            return new ChangeThemeCommandParser().parse(arguments);
+```
 ###### \java\seedu\address\logic\parser\ArgumentMultimap.java
 ``` java
     public String getPreamble() {
         return getValue(new Prefix("")).orElse("");
     }
+```
+###### \java\seedu\address\logic\parser\ChangeThemeCommandParser.java
+``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.ChangeThemeCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new SelectCommand object
+ */
+public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the SelectCommand
+     * and returns an SelectCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ChangeThemeCommand parse(String args) throws ParseException {
+        try {
+            int index = ParserUtil.parseTheme(args);
+            return new ChangeThemeCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeThemeCommand.MESSAGE_USAGE));
+        }
+    }
+}
 ```
 ###### \java\seedu\address\logic\parser\CliSyntax.java
 ``` java
@@ -85,31 +183,36 @@
     private void handleDarkTheme() {
         String themeUrl = getClass().getResource("/view/DarkTheme.css").toExternalForm();
         setTheme(themeUrl);
-        raise(new ChangeThemeRequestEvent());
     }
     @FXML
     private void handleDarkTheme2() {
         String themeUrl = getClass().getResource("/view/DarkTheme2.css").toExternalForm();
         setTheme(themeUrl);
-        raise(new ChangeThemeRequestEvent());
     }
     @FXML
     private void handleLightTheme() {
         String themeUrl = getClass().getResource("/view/LightTheme.css").toExternalForm();
         setTheme(themeUrl);
-        raise(new ChangeThemeRequestEvent());
     }
     @FXML
     private void handleLightTheme2() {
         String themeUrl = getClass().getResource("/view/LightTheme2.css").toExternalForm();
         setTheme(themeUrl);
-        raise(new ChangeThemeRequestEvent());
     }
     public void setTheme(String themeUrl) {
         scene2.getStylesheets().clear();
         scene2.getStylesheets().add(themeUrl);
         primaryStage.setScene(scene2);
     }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    @Subscribe
+    private void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setTheme(event.getThemeUrl());
+    }
+
 ```
 ###### \resources\view\LightTheme.css
 ``` css
@@ -430,6 +533,61 @@
     -fx-padding: 8 1 8 1;
 }
 
+.auto-complete-popup {
+    -fx-translate-y: -100;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0.0px;
+    -fx-background-radius: 0.0px;
+    -fx-border-width: 0.0px;
+    -fx-border-color: transparent;
+    -fx-border-radius: 0.0px;
+}
+
+.auto-complete-popup > .list-view {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0.0px;
+    -fx-background-radius: 0.0px;
+    -fx-border-color: transparent;
+    -fx-border-width: 0.0px;
+    -fx-border-radius: 0.0px;
+    -fx-padding: 0.0px;
+}
+
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0.0px;
+    -fx-alignment: CENTER-LEFT;
+    -fx-text-fill: #65728B;
+    -fx-font-size: 1.0em;
+    -fx-font-weight: normal;
+    -fx-padding: 8.0px;
+    -fx-cursor: hand;
+}
+
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled {
+}
+
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:hover,
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:focused {
+    -fx-background-color: #0078ce;
+    -fx-text-fill: black;
+}
+
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected {
+    -fx-background-color: #0078ce;
+    -fx-text-fill: black;
+    -fx-cursor: default;
+}
+
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected:hover {
+    -fx-background-color: #0078ce;
+    -fx-cursor: default;
+}
+
+.auto-complete-popup > .list-view > .placeholder > .label {
+    -fx-text-fill: #65728B;
+}
+
 #cardPane {
     -fx-background-color: transparent;
     -fx-border-width: 0;
@@ -457,6 +615,18 @@
 
 #filterField, #personListPanel, #personWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+}
+
+#phoneicon {
+    -fx-image: url("../images/ic_phone_black_24dp.png");
+}
+
+#addressicon {
+    -fx-image: url("../images/ic_home_black_24dp.png");
+}
+
+#emailicon {
+    -fx-image: url("../images/ic_email_black_24dp.png");
 }
 
 #resultDisplay .content {
@@ -500,9 +670,9 @@
 ###### \resources\view\MainWindow.fxml
 ``` fxml
         <Menu mnemonicParsing="false" text="Theme">
-            <MenuItem mnemonicParsing="false" onAction="#handleDarkTheme" text="Dark Theme" />
-            <MenuItem mnemonicParsing="false" onAction="#handleDarkTheme2" text="Dark Theme 2" />
-            <MenuItem mnemonicParsing="false" onAction="#handleLightTheme" text="Light Theme" />
-            <MenuItem mnemonicParsing="false" onAction="#handleLightTheme2" text="Light Theme 2" />
+            <MenuItem mnemonicParsing="false" onAction="#handleDarkTheme" text="Dark Theme"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleDarkTheme2" text="Dark Theme 2"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleLightTheme" text="Light Theme"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleLightTheme2" text="Light Theme 2"/>
         </Menu>
 ```
