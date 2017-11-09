@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import seedu.address.ui.SplashScreen;
 
+//@@author fongwz
 /**
  * Preloader class
  */

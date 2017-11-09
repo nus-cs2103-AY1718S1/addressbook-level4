@@ -2,6 +2,7 @@ package seedu.address;
 
 import com.sun.javafx.application.LauncherImpl;
 
+//@@author fongwz
 /**
  * Launches the splash screen before mainapp is started
  */
