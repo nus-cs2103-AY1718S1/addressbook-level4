@@ -94,7 +94,6 @@ public class WelcomeScreen extends UiPart<Region> {
             public void handle(ActionEvent event) {
                 welcomeWindow.getScene().getWindow().hide();
                 loadMainWindow();
-                openReminderWindowIfRequired();
             }
         });
         buttonPlaceHolder.getChildren().add(continueButton);
@@ -107,6 +106,7 @@ public class WelcomeScreen extends UiPart<Region> {
         mainWindow = new MainWindow(primaryStage, config, prefs, logic, model);
         mainWindow.show(); //This should be called before creating other UI parts
         mainWindow.fillInnerParts();
+        openReminderWindowIfRequired();
     }
 
     void show() {
