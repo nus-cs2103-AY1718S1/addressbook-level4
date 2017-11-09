@@ -541,16 +541,17 @@ image::RemarkCommandActivityDiagram.png[width="900"]
 // tag::sort[]
 === Sort mechanism
 
-The sort mechanism is facilitated by link:#event-bus[`Event Bus`]. Whenever sort command is executed, in `SortCommand` it will raise a `SortListRequestEvent` via `EventCenter` which there is an listerner in `PersonListPanel` which will conduct the sorting list according to the attribute type of `list` command which was executed previously.
+The sort command is executed by sorting the `internalList` in `uniqueLessonList` based on current `ListingUnit`.
 
 [NOTE]
-If the previous attribute type of `list` command is location, the list will be sorted by person's address lexicographically, such sorting will also be applied for attribute email and phone. If there is no attribute in the execution of previous `list` command, the list will be sorted by person's name lexicographically by default.
+If the current `ListingUnit` is location, the list will be sort lesson's location lexicographically. +
+If the current `ListingUnit` is module, the list will be sort lesson's module code lexicographically. +
+If the current `ListingUnit` is lesson, the list will be sort lesson's group number lexicographically. +
+
 
 The following link:#sequence-diagram[sequence diagram] shows how the sort operation works:
 
 image::SortCommandSeqDiagram.png[width="900"]
-
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
 The following link:#activity-diagram[activity diagram] summarize what happens when an user execute sort command.
 

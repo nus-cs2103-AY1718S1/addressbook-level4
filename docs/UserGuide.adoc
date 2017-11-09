@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W13-B4/main
 
-By: `CS2103AUG2017-W13-B4`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017-W13-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 == Introduction
 
@@ -243,6 +243,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Any detail of a lesson will be search if view is called previously
 * Partial of the code will be matched e.g. `MA1101` will match `MA1101R`
 * Lessons matching at least one keyword will be returned (i.e. `OR` search). e.g. `MA1101R CS2101` will return `MA1101R` or `CS2101`
+* If find command is executed after executing view command, the find command would not support find module code if it is viewed into a specific module code and if it is viewed into a specific location, it will not support find location.
 ****
 
 Examples:
@@ -278,14 +279,14 @@ Examples:
 * `list location` +
 Returns a list of location +
 `sort` +
-Return a list of location sorted lexicographically
+Return a list of location sorted in alphabetical order for letters and increasing order for numbers.
 
 image::video/sortLocation.gif[width="790"]
 
 * `list lesson` +
 Returns whole module +
 `sort` +
-Return a list sorted by code lexicographically
+Return a list sorted by code in alphabetical order for letters and increasing order for numbers.
 
 image::video/sortModule.gif[width="790"]
 // end::sort[]
