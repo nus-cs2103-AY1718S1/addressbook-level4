@@ -48,7 +48,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the jar file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The graphical user interface (GUI) should appear in a few seconds.
 +
-image::Ui.png[width="700"]
+image::Ui.png[width="800"]
     Figure 1: Successful start up UI Sample
 +
 .  You can type the command in the command box and press kbd:[Enter] to execute it. +
@@ -92,7 +92,7 @@ You can also click the `Help` at the top left corner of MedNus.
 
 *Example:*
 
-image::helpUI.png[width="700"]
+image::helpUI.png[width="800"]
     Figure 2: Methods to access `help` command
 
 === Adding a person: `add`
@@ -108,7 +108,7 @@ You can add appointment or none at all.
 
 *Example:*
 
-image::addexample.png[width="700"]
+image::addexample.png[width="800"]
     Figure 3: Add Command Usage Diagram
 
 [NOTE]
@@ -180,7 +180,7 @@ You can use `bloodtype` to show a list of people with that specific blood type. 
 
 *Example:*
 
-image::btexample.png[width="700"]
+image::btexample.png[width="800"]
     Figure 5: Bloodtype Command Usage Diagram
 
 [NOTE]
@@ -218,7 +218,7 @@ You can edit the information of a person you have added in the address book. +
 
 *Example:*
 
-image::editexample.png[width="700"]
+image::editexample.png[width="800"]
     Figure 6: Edit Command Usage Diagram
 
 [WARNING]
@@ -255,7 +255,7 @@ You can find people whose names contain any of the given keywords. +
 
 *Example:*
 
-image::findexample.png[width="700"]
+image::findexample.png[width="800"]
     Figure 7: Find Command Usage Diagram
 
 === Deleting a person : `delete`
@@ -266,7 +266,7 @@ You can delete a specific person from the address book at a specified `INDEX`. +
 
 *Example:*
 
-image::deleteexample.png[width="700"]
+image::deleteexample.png[width="800"]
     Figure 8: Delete Command Usage Diagram
 
 [WARNING]
@@ -299,7 +299,7 @@ Undoable commands: those commands that modify the address book's content (`add`,
 
 *Example:*
 
-image::undoexample.png[width="700"]
+image::undoexample.png[width="800"]
     Figure 9: Undo Command Usage Diagram
 
 === Redoing the previously undone command : `redo`
@@ -310,7 +310,7 @@ You can reverse the most recent `undo` command. +
 
 *Example:*
 
-image::redoexample.png[width="700"]
+image::redoexample.png[width="800"]
     Figure 10: Redo Command Usage Diagram
 
 // end::undoredo[]
@@ -376,7 +376,7 @@ You can only set dates that are after current time. (i.e. You cannot set a time 
 
 *Example:*
 
-image::aptexample.png[width="700"]
+image::aptexample.png[width="800"]
     Figure 11: Appointment Command Usage Diagram
 
 // end::appointment[]
@@ -394,7 +394,7 @@ Removing a Remark: You can remove a remark by typing 'r/' without specifying any
 
 *Examples:*
 
-image::remarkexample.png[width="700"]
+image::remarkexample.png[width="800"]
     Figure 12: Remark Command Usage Diagram
 
 [WARNING]
@@ -436,7 +436,7 @@ You can exit MedNus by using the `exit` command. +
 You can also exit MedNus by clicking on `File` in the top left corner +
 and clicking on `Exit`.
 
-image::exitUI.png[width="700"]
+image::exitUI.png[width="800"]
     Figure 13: Methods to access `exit` command
 
 === Adding/Deleting a Tag to a Person : [Coming in v2.0]
