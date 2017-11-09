@@ -184,9 +184,9 @@ public class ModelManager extends ComponentManager implements Model {
         try {
             addressBook.updatePerson(person, newPerson);
         } catch (PersonNotFoundException pnfe) {
-            assert false: "Person will always be found";
+            assert false : "Person will always be found";
         } catch (DuplicatePersonException dpe) {
-            assert false: "There will never be duplicates";
+            assert false : "There will never be duplicates";
         }
     }
     //@@author
