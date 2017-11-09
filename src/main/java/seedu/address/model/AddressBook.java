@@ -230,24 +230,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         updatePerson(oldPerson, newPerson);
     }
-
-    /**
-     * Attach {@code newTag} to list of person stated by {@code indices}
-     * from the {@code AddressBook}
-     * @param oldPerson
-     * @param newTag
-     * @throws DuplicatePersonException
-     * @throws PersonNotFoundException
-     */
-    public void attachTag(ReadOnlyPerson oldPerson, Tag newTag)
-            throws DuplicatePersonException, PersonNotFoundException, UniqueTagList.DuplicateTagException {
-        Person newPerson = new Person(oldPerson);
-        Set<Tag> newTags = new HashSet<>(newPerson.getTags());
-        newTags.add(newTag);
-        newPerson.setTags(newTags);
-
-        updatePerson(oldPerson, newPerson);
-    }
     //@@author
 
     ////task-level operations

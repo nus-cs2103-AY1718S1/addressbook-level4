@@ -28,7 +28,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
@@ -137,13 +136,6 @@ public class AddTaskCommandTest {
         public void deleteTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
                 DuplicatePersonException, TagNotFoundException {
             fail("This method must not be called.");
-        }
-
-        @Override
-        /** Add tag of given person */
-        public void attachTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
-                DuplicatePersonException, UniqueTagList.DuplicateTagException {
-            fail("This method should not be called.");
         }
 
         @Override
