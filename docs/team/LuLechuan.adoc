@@ -1,6 +1,7 @@
 = Lu Lechuan - Project Portfolio
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
+:stylesDir: ../stylesheets
 
 == Project: Contact Book
 Contact book is a desktop address book application designed for University students. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 8 kLoC.
