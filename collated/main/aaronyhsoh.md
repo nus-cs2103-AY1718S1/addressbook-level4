@@ -258,6 +258,9 @@ public class FavouriteCommandParser implements Parser<FavouriteCommand> {
 ```
 ###### \java\seedu\address\logic\parser\RedoCommandParser.java
 ``` java
+/**
+ * Parses input arguments and creates a new RedoCommand object
+ */
 public class RedoCommandParser implements Parser<RedoCommand> {
 
     /**
@@ -284,6 +287,9 @@ public class RedoCommandParser implements Parser<RedoCommand> {
 ```
 ###### \java\seedu\address\logic\parser\UndoCommandParser.java
 ``` java
+/**
+ * Parses input arguments and creates a new UndoCommand object
+ */
 public class UndoCommandParser implements Parser<UndoCommand> {
 
     /**
