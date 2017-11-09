@@ -22,6 +22,8 @@ Codii is evolved from [https://github.com/nus-cs2103-AY1718S1/addressbook-level4
 
 include::../UserGuide.adoc[tag=login]
 
+include::../UserGuide.adoc[tag=loginGUI]
+
 include::../UserGuide.adoc[tag=logout]
 
 #End of Extract#
