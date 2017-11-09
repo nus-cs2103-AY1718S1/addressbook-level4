@@ -19,9 +19,9 @@ import seedu.address.model.person.NameConsistsKeywordsPredicate;
  */
 public class GmapCommandParserTest {
 
+    // @@author Choony93
     private GmapCommandParser parser = new GmapCommandParser();
 
-    // @@author Choony93
     @Test
     public void parse_validArgs_returnsSelectCommand() {
         assertParseSuccess(parser, "1", new GmapCommand(INDEX_FIRST_PERSON));
