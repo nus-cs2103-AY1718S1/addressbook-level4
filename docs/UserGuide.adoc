@@ -196,8 +196,13 @@ This makes it convenient for finding and resolving duplicate contacts. +
 *Format:* `duplicates` +
 *Shorthand Format:* `dups`
 
+*Example:*
+
+image::dupsexample.png[width="800"]
+    Figure 5: Duplicates Command Usage Example
+
 [NOTE]
-The results are from case-sensitive comparisons.
+The results are from case-insensitive comparisons.
 // end::dups[]
 
 === Editing a person : `edit`
