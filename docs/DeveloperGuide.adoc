@@ -763,7 +763,7 @@ Alternatively, it may also be possible to permanently display all fields in each
 //tag::Calendar[]
 === Opening Calendar [Since v1.3]
 
-`CalendarCommand` which reside in `Logic` will  open up a new browser webpage in the `BrowserPanel` that shows calendar for the entire year. The webpage will display the calendar from January to December, inclusive of public holidays. 
+`CalendarCommand` which reside in `Logic` will  open up a new browser webpage in the `BrowserPanel` that shows calendar for the entire year. The webpage will display the calendar from January to December, inclusive of public holidays.
 
 The sequence diagram of `CalendarCommand` in _Figure 4.6.1_ below indicates the sequence diagram of the calendar function.
 
