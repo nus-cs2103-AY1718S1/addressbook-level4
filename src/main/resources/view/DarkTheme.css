@@ -233,11 +233,11 @@
 }
 
 #tabPaneGraphs .tab {
-    -fx-background-color: #ffffff;
+    -fx-background-color: #606060;
 }
 
 #tabPaneGraphs .tab:selected {
-    -fx-background-color: #606060;
+    -fx-background-color: #ffffff;
     -fx-focus-color:transparent;
 }
 

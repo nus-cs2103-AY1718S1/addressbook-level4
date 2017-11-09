@@ -35,14 +35,14 @@ include::../DeveloperGuide.adoc[tag=remark]
 #End of Extract#
 
 ---
-=== Enhancement Added: lineChart
+=== Enhancement Added: GraphPanel
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=linechart]
+include::../UserGuide.adoc[tag=graphpanel]
 
 #End of Extract#
 
@@ -57,7 +57,34 @@ To display the results of all students in the same class to see the difference i
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=linechart]
+include::../DeveloperGuide.adoc[tag=graphpanel]
+
+#End of Extract#
+
+---
+=== Enhancement Added: Tab
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tab]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To display different representations of graphs as some are more appropriate in different scenarios.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=tab]
 
 #End of Extract#
 
@@ -69,6 +96,7 @@ adds a horizontal line across the graph to show the 75th and 25th percentile of 
 
 * Updated the GUI to include graphs of students either in class or tags (pull request https://github.com[#65], https://github.com[#87])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Logic tabCommand implementation (Special thanks to Celine who helped me layout tabCommand)
 
 == Project: Tea (Game)
 

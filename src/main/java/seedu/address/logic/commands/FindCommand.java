@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.model.FilteredPersonListChangedEvent;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
@@ -27,7 +25,6 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
-        EventsCenter.getInstance().post(new FilteredPersonListChangedEvent(model.getFilteredPersonList()));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 

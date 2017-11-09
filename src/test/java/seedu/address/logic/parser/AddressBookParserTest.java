@@ -8,6 +8,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SCHEDULE;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -21,6 +22,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteScheduleCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
@@ -270,6 +272,20 @@ public class AddressBookParserTest {
     public void parseCommand_alias_viewSchedule() throws Exception {
         assertTrue(parser.parseCommand(ViewScheduleCommand.COMMAND_ALIAS) instanceof ViewScheduleCommand);
         assertTrue(parser.parseCommand(ViewScheduleCommand.COMMAND_ALIAS + " 3") instanceof ViewScheduleCommand);
+    }
+
+    @Test
+    public void parseCommand_deleteSchedule() throws Exception {
+        DeleteScheduleCommand command = (DeleteScheduleCommand) parser.parseCommand(
+                DeleteScheduleCommand.COMMAND_WORD + " " + INDEX_FIRST_SCHEDULE.getOneBased());
+        assertEquals(new DeleteScheduleCommand(INDEX_FIRST_SCHEDULE), command);
+    }
+
+    @Test
+    public void parseCommand_alias_deleteSchedule() throws Exception {
+        DeleteScheduleCommand command = (DeleteScheduleCommand) parser.parseCommand(
+                DeleteScheduleCommand.COMMAND_ALIAS + " " + INDEX_FIRST_SCHEDULE.getOneBased());
+        assertEquals(new DeleteScheduleCommand(INDEX_FIRST_SCHEDULE), command);
     }
     //@@author
 

@@ -7,8 +7,8 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -25,7 +25,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
     private ObservableList<ReadOnlyPerson> people;
 
     @FXML
-    private VBox cardpane;
+    private GridPane gridPane;
     @FXML
     private Label name;
     @FXML
@@ -48,6 +48,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
     public ExtendedPersonCard() {
         super(FXML);
         registerAsAnEventHandler(this);
+        loadIconDescriptionOnStartUp();
     }
 
     /**
@@ -65,6 +66,23 @@ public class ExtendedPersonCard extends UiPart<Region> {
         remark.setText(person.getRemark().toString());
     }
 
+    //@@author Lenaldnwj
+    /**
+     * Displays text description of the icons when cherBook starts up
+     */
+    protected void loadIconDescriptionOnStartUp() {
+        name.setText("Name of student");
+        phone.setText("Phone number of student");
+        parentPhone.setText("Phone number of parent");
+        address.setText("Address of student");
+        formClass.setText("Form class of student");
+        grades.setText("Grades of student");
+        postalCode.setText("Postal code of student");
+        email.setText("Email of student");
+        remark.setText("Remark of student");
+    }
+
+    //@@author limcel
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
