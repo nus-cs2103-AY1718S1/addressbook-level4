@@ -26,8 +26,11 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.MusicCommand;
+import seedu.address.logic.commands.RadioCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ShareCommand;
 import seedu.address.logic.commands.UnaliasCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -165,4 +168,29 @@ public class AddressBookParserTest {
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
         parser.parseCommand("unknownCommand");
     }
+
+    //@@author hanselblack
+    @Test
+    public void parseCommand_music() throws Exception {
+        MusicCommand command = (MusicCommand) parser.parseCommand(
+                MusicCommand.COMMAND_WORD + " play ");
+        assertEquals(new MusicCommand("play"), command);
+    }
+
+    @Test
+    public void parseCommand_radio() throws Exception {
+        RadioCommand command = (RadioCommand) parser.parseCommand(
+                RadioCommand.COMMAND_WORD + " play ");
+        assertEquals(new RadioCommand("play"), command);
+    }
+
+    @Test
+    public void parseCommand_share() throws Exception {
+        String[] shareEmailArray = {"unifycs2103@gmail.com"};
+        ShareCommand command = (ShareCommand) parser.parseCommand(
+                ShareCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
+                        + " s/" + shareEmailArray);
+        assertEquals(new ShareCommand(INDEX_FIRST_PERSON, shareEmailArray) , command);
+    }
+    //@@author
 }
