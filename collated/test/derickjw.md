@@ -1,5 +1,5 @@
 # derickjw
-###### /java/seedu/address/logic/commands/FindByPhoneCommandTest.java
+###### \java\seedu\address\logic\commands\FindByPhoneCommandTest.java
 ``` java
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
@@ -8,7 +8,7 @@
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, DANIEL, ELLE));
     }
 ```
-###### /java/seedu/address/logic/LogicManagerTest.java
+###### \java\seedu\address\logic\LogicManagerTest.java
 ``` java
     @Test
     public void execute_listCommandSuccess_noDefaultAccount() {
@@ -34,7 +34,7 @@
         assertCommandSuccess(sortCommand, SortCommand.MESSAGE_SUCCESS, model);
     }
 ```
-###### /java/seedu/address/model/person/PhoneContainsKeywordsPredicateTest.java
+###### \java\seedu\address\model\person\PhoneContainsKeywordsPredicateTest.java
 ``` java
     @Test
     public void testPhoneContainsKeywordsReturnsTrue() {
