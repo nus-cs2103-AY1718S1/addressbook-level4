@@ -26,7 +26,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
- * Contains integration tests (interaction with the Model) for {@code SelectCommand}.
+ * Contains integration tests (interaction with the Model) for {@code VisualizeCommand}.
  */
 public class VisualizeCommandTest {
     @Rule
@@ -115,7 +115,7 @@ public class VisualizeCommandTest {
     }
 
     /**
-     * Executes a {@code SelectCommand} with the given {@code index}, and checks that a {@code CommandException}
+     * Executes a {@code VisualizeCommand} with the given {@code index}, and checks that a {@code CommandException}
      * is thrown with the {@code expectedMessage}.
      */
     private void assertExecutionFailure(Index index, String expectedMessage) {
@@ -131,7 +131,7 @@ public class VisualizeCommandTest {
     }
 
     /**
-     * Returns a {@code SelectCommand} with parameters {@code index}.
+     * Returns a {@code VisualizeCommand} with parameters {@code index}.
      */
     private VisualizeCommand prepareCommand(Index index) {
         VisualizeCommand visualizeCommand = new VisualizeCommand(index);
