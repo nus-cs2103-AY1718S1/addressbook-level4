@@ -150,20 +150,20 @@ public class MainWindow extends UiPart<Region> {
         PersonInformationPanel personInformationPanel = new PersonInformationPanel();
         personInformationPanelPlaceholder.getChildren().add(personInformationPanel.getRoot());
         setBackground(personInformationPanelPlaceholder,
-                System.getProperty("user.dir") +
-                        "/docs/images/backgroundRight.jpg", 920, 600);
+                System.getProperty("user.dir")
+                        + "/docs/images/backgroundRight.jpg", 920, 600);
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
         setBackground(personListPanelPlaceholder,
-                System.getProperty("user.dir") +
-                "/docs/images/backgroundLeft.jpg", 330, 600);
+                System.getProperty("user.dir")
+                        + "/docs/images/backgroundLeft.jpg", 330, 600);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
         setBackground(resultDisplayPlaceholder,
-                System.getProperty("user.dir") +
-                "/docs/images/backgroundUp.jpg", 1250, 105);
+                System.getProperty("user.dir")
+                        + "/docs/images/backgroundUp.jpg", 1250, 105);
 
         //StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getFilteredPersonList().size());
