@@ -67,6 +67,12 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises events to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
+    }
+
+    //@@author lincredibleJC
+
+    /** Raises an event to update the StatisticsPanel */
+    private void updateStatisticsPanel() {
         raise(new FilteredPersonListChangedEvent(filteredPersons));
     }
     //@@author
@@ -75,6 +81,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
+        updateStatisticsPanel();
     }
 
     @Override
@@ -82,6 +89,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
+        updateStatisticsPanel();
     }
 
     @Override
@@ -91,6 +99,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+        updateStatisticsPanel();
     }
 
     //@@author limcel
@@ -155,7 +164,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
-        raise(new FilteredPersonListChangedEvent(filteredPersons));
+        updateStatisticsPanel();
     }
     //@@author
 
