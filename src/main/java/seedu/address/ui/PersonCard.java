@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.Random;
 
 import javafx.beans.binding.Bindings;
@@ -149,8 +150,8 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
-    public static HashMap<String, String> getTagColors() {
-        return tagColors;
+    public static Optional<HashMap<String, String>> getTagColors() {
+        return Optional.of(tagColors);
     }
 
     public static HashMap<String, String> getWebLinkColors() {
