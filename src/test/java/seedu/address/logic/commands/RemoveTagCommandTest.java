@@ -51,7 +51,7 @@ public class RemoveTagCommandTest {
     }
 
     @Test
-    public void execute_removeNonExistantTag_sucess() throws IllegalValueException {
+    public void execute_removeNonExistantTag_failure() throws IllegalValueException {
         //addressbook does not contain enemy tag.
         assertCommandFailure(prepareCommand("enemy"), model, RemoveTagCommand.MESSAGE_TAG_NOT_FOUND);
 
