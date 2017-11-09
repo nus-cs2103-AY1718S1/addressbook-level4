@@ -17,14 +17,17 @@ import javafx.scene.paint.Color;
  */
 public class AnchorPaneNode extends AnchorPane {
 
+    public final Color yellow = Color.web("#CA9733");
+    public final Color green = Color.web("#336D1C");
     // Date associated with this pane
     private LocalDate date;
     private final Background focusBackground = new Background(new BackgroundFill(
-            Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY));
+            green, CornerRadii.EMPTY, Insets.EMPTY));
     private final Background todayBackground = new Background(new BackgroundFill(
             Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY));
     private final Background unfocusBackground = new Background(new BackgroundFill(
-            Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY));
+            yellow, CornerRadii.EMPTY, Insets.EMPTY));
+
 
     /**
      * Create a anchor pane node. Date is not assigned in the constructor.
@@ -33,7 +36,9 @@ public class AnchorPaneNode extends AnchorPane {
     public AnchorPaneNode(Node... children) {
         super(children);
         // Add action handler for mouse clicked
-
+        this.setBackgroundUnfocused();
+        this.setStyle("-fx-border-width: 2;");
+        this.setStyle("-fx-border-color: white;");
 
         this.setOnMouseClicked((e) -> {
             if (this.getBackground() == focusBackground) {
@@ -42,8 +47,6 @@ public class AnchorPaneNode extends AnchorPane {
                 this.focusGrid();
             }
         });
-
-
 
     }
 
@@ -70,6 +73,11 @@ public class AnchorPaneNode extends AnchorPane {
             );
         }
 
+    }
+
+    public void setBackgroundUnfocused() {
+        this.backgroundProperty().unbind();
+        this.backgroundProperty().setValue(unfocusBackground);
     }
 
     /**

@@ -40,23 +40,23 @@
   </StackPane>
 
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+    <VBox fx:id="personList" minWidth="270" prefWidth="270" SplitPane.resizableWithParent="false">
       <TabPane fx:id="tabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab fx:id="residentBook" text="Residents">
-            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+          <Tab fx:id="residentBookTab" text="Residents">
+            <StackPane fx:id="personListPanelPlaceholder" minWidth="257" maxWidth="257" VBox.vgrow="ALWAYS"/>
           </Tab>
-          <Tab fx:id="eventBook" text="Events">
-            <StackPane fx:id="eventListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+          <Tab fx:id="eventBookTab" text="Events">
+            <StackPane fx:id="eventListPanelPlaceholder" minWidth="257" maxWidth="257" VBox.vgrow="ALWAYS"/>
           </Tab>
         </tabs>
       </TabPane>
     </VBox>
 
-      <StackPane fx:id="personPanelPlaceholder" minWidth="325" maxWidth="350" VBox.vgrow="NEVER" SplitPane.resizableWithParent="false">
+      <StackPane fx:id="personPanelPlaceholder" minWidth="360" maxWidth="360" VBox.vgrow="NEVER" SplitPane.resizableWithParent="false">
       </StackPane>
 
-    <StackPane fx:id="calendarPlaceholder" prefWidth="340">
+    <StackPane fx:id="calendarPlaceholder" prefWidth="300">
         <padding>
             <Insets bottom="10" left="10" right="10" top="10" />
         </padding>

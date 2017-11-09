@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 
 <!--@@author shitian007-->
-<HBox prefHeight="400" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<HBox prefHeight="400" fx:id="personPanel" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-      <VBox alignment="TOP_CENTER" prefHeight="400.0">
+      <VBox fx:id="personDetailsBox" alignment="CENTER" maxHeight="300.0">
         <children>
           <ImageView fx:id="picture" fitHeight="1.0" fitWidth="1.0" />
           <Label fx:id="name" text="\$name" />
@@ -41,7 +41,7 @@
                <children>
                   <Button fx:id="addImageButton" mnemonicParsing="false" onAction="#handleAddImage" text="+Image">
                      <HBox.margin>
-                        <Insets right="80.0" />
+                        <Insets right="20.0" />
                      </HBox.margin>
                   </Button>
                   <Button fx:id="resetImageButton" mnemonicParsing="false" onAction="#handleResetImage" text="-Image" />

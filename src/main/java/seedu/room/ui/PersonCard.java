@@ -73,12 +73,11 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * Initializes highlight border for highlighted persons
+     * Initializes highlight background for highlighted persons
      */
     private void initHighlightStatus() {
         if (person.getHighlightStatus()) {
-            cardPane.setStyle("-fx-border-style: solid inside; -fx-border-width: 2;"
-                + "-fx-border-insets: 5; -fx-border-radius: 5; -fx-border-color: red;");
+            cardPane.setStyle("-fx-background-color: #336D1C;");
         }
     }
 

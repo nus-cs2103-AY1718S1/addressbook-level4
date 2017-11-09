@@ -13,7 +13,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import seedu.room.logic.Logic;
 import seedu.room.model.event.ReadOnlyEvent;
 
@@ -28,6 +32,7 @@ public class CalendarBox {
     private VBox view;
     private Text calendarTitle;
     private YearMonth currentYearMonth;
+    private final Color yellow = Color.web("#CA9733");
     private Logic logic;
 
 
@@ -40,13 +45,13 @@ public class CalendarBox {
         currentYearMonth = yearMonth;
         // Create the calendar grid pane
         GridPane calendar = new GridPane();
-        calendar.setPrefSize(500, 500);
+        calendar.setPrefSize(500, 450);
         calendar.setGridLinesVisible(true);
         // Create rows and columns with anchor panes for the calendar
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 7; j++) {
                 AnchorPaneNode ap = new AnchorPaneNode();
-                ap.setPrefSize(200, 200);
+                ap.setPrefSize(200, 90);
                 calendar.add(ap, j, i);
                 allCalendarDays.add(ap);
             }
@@ -59,21 +64,31 @@ public class CalendarBox {
         dayLabels.setPrefWidth(600);
         Integer col = 0;
         for (Text txt : dayNames) {
+            txt.setFill(Color.WHITE);
             AnchorPane ap = new AnchorPane();
+            ap.setId("calendarDaysPane");
             ap.setPrefSize(200, 10);
             ap.setBottomAnchor(txt, 5.0);
             ap.getChildren().add(txt);
+            txt.setTextAlignment(TextAlignment.CENTER);
+            ap.setStyle("-fx-text-align: center;");
             dayLabels.add(ap, col++, 0);
         }
         // Create calendarTitle and buttons to change current month
         calendarTitle = new Text();
-        Button previousMonth = new Button(" << ");
+        calendarTitle.setFill(yellow);
+        calendarTitle.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
+
+        Button previousMonth = new Button(" PREV ");
         previousMonth.setOnAction(e -> previousMonth());
-        Button nextMonth = new Button(" >> ");
+
+        Button nextMonth = new Button(" NEXT ");
         nextMonth.setOnAction(e -> nextMonth());
+
         HBox titleBar = new HBox(previousMonth, calendarTitle, nextMonth);
-        HBox.setMargin(previousMonth, new Insets(0, 5, 0, 0));
-        HBox.setMargin(nextMonth, new Insets(0, 5, 0, 5));
+        HBox.setMargin(previousMonth, new Insets(0, 13, 0, 13));
+        HBox.setMargin(nextMonth, new Insets(0, 13, 0, 13));
+
         titleBar.setAlignment(Pos.BASELINE_CENTER);
         // Populate calendar with the appropriate day numbers
         logic.getFilteredEventList();
@@ -102,6 +117,7 @@ public class CalendarBox {
 
         // Populate the calendar with day numbers
         for (AnchorPaneNode ap : allCalendarDays) {
+            ap.setId("calendarCell");
             if (ap.getChildren().size() != 0) {
                 ap.getChildren().remove(0);
             }
