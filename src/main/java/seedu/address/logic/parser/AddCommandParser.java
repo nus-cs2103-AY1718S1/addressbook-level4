@@ -71,7 +71,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             if (statusOptional.isPresent()) {
                 status = statusOptional.get();
             } else {
-                status = Status.getInstance("Pending");
+                status = Status.PENDING;
             }
 
             if (phoneOptional.isPresent()) {
