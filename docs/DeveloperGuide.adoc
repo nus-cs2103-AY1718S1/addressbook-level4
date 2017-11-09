@@ -698,7 +698,7 @@ _Figure 4.4.5 : Find sequence diagram_
 **Cons:** Have to look through all the attribute of contact thus slowing down the execution of FindCommand. +
 
 ---
-end::Find[]
+//end::Find[]
 
 //tag::CopyCommand[]
 === Copy email address to clipboard [Since v1.2]
@@ -825,8 +825,9 @@ _Figure 4.6.5: Output of `CalendarCommand.java` execution_
 **Cons:** Unable to view public holidays.User also have to go through the hassle of logging in just to view the calendar. +
 
 ---
-end::Calendar[]
+//end::Calendar[]
 // tag::agenda[]
+
 === Viewing of user's agenda [Since v1.4]
 
 All scheduled activities by the user are displayed as a list view in the `AgendaPanel`. The `AgendaPanel` is first initialised in the `MainWindow`, with the observable schedule list of the `AddressBook` being passed in as a parameter to its constructor. This can be observed in _Figure 4.7.1_ below.
@@ -895,7 +896,6 @@ _Figure 4.7.4: UI display for user's agenda_
 
 ---
 // end::agenda[]
-
 // tag::reminder[]
 === Pop-up reminder window [Since v1.4]
 
@@ -1000,28 +1000,14 @@ public class EmailCommand extends Command {
 }
 
 ----
-_Figure 4.6.1: Code section in CalendarCommand.java_
+_Figure 4.6.1: Code section in EmailCommand.java_
 
 
-The  `BrowserPanel`  which reside in `UI` will handle the event of `ShowCalendarRequestEvent`
-as shown in _Figure 4.6.2_:
-[source,java]
-----
-public class BrowserPanel extends UiPart<Region> {
-@Subscribe
-    private void handleCalendarRequestEvent(ShowCalendarRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadCalendar();
-   }
-}
-----
-_Figure 4.6.2: Code section in BrowserPanel.java_
+The outcome of successful launching of email platform to send email to multiple contacts r is shown in _Figure 4.9.3_:
 
-The method `loadCalendar` will pass the calendar url to `BrowserPanel` to open up calendar website in `BrowserPanel`. The outcome of successful launching of calendar webpage in browser is shown in _Figure 4.6.3_:
+image::EmailCommand.PNG[width="800"]
 
-image::CalendarCommand.png[width="800"]
-
-_Figure 4.6.3: Output of `CalendarCommand.java` execution_
+_Figure 4.9.3: Output of `EmailCommand.java` execution_
 
 
 ==== Design Considerations for `EmailCommand`
@@ -1037,7 +1023,8 @@ _Figure 4.6.3: Output of `CalendarCommand.java` execution_
 
 ---
 
-end::Email[]
+//end::Email[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
