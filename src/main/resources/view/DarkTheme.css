@@ -321,3 +321,53 @@
     -fx-fill: white;
     -fx-text-fill: white;
 }
+
+
+/*SCROLL BAR STYLING*/
+.scroll-bar {
+    -fx-background-color: #232A34;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #232A34;
+    -fx-background-insets: 3;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: #232A34;
+    -fx-padding: 0 0 0 0;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 1 8 1 8;
+}
+
+.scroll-bar:horizontal .increment-arrow,
+.scroll-bar:horizontal .decrement-arrow {
+    -fx-padding: 8 1 8 1;
+}
+
+.scroll-bar {
+    -fx-background-color: #232A34;
+
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track {
+	-fx-background-color: transparent;
+	-fx-border-color: transparent;
+	-fx-background-radius: 0em;
+	-fx-border-radius: 1em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color:derive(black,90%);
+	-fx-background-insets: 1, 0, 0;
+	-fx-background-radius: 1em;
+}
