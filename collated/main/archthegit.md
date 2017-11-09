@@ -1,4 +1,51 @@
 # archthegit
+###### /java/seedu/address/commons/core/EventsCenter.java
+``` java
+    public void unregisterHandler(Object handler) {
+        eventBus.unregister(handler);
+    }
+
+```
+###### /java/seedu/address/commons/events/ui/PersonPanelUnselectEvent.java
+``` java
+/**
+ * event to unselect a person card in the case of a delete
+ */
+public class PersonPanelUnselectEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### /java/seedu/address/commons/events/ui/PersonSelectionChangedEvent.java
+``` java
+
+/**
+ * Event to handle info change in the case of edit
+ */
+
+public class PersonSelectionChangedEvent extends BaseEvent {
+
+    private final ReadOnlyPerson newSelection;
+
+    public PersonSelectionChangedEvent(ReadOnlyPerson newSelection) {
+        this.newSelection = newSelection;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public ReadOnlyPerson getNewSelection() {
+        return newSelection;
+    }
+}
+
+
+```
 ###### /java/seedu/address/commons/util/StringUtil.java
 ``` java
 
@@ -90,6 +137,49 @@ public class BirthdaysCommand extends Command {
 
 }
 ```
+###### /java/seedu/address/logic/commands/UndoableCommand.java
+``` java
+        if (model.ifSelectedPerson()) {
+            model.unselectPerson();
+        }
+```
+###### /java/seedu/address/logic/LogicManager.java
+``` java
+
+    @Override
+    public void updateSelectedPerson(ReadOnlyPerson person) {
+        model.updateSelectedPerson(person);
+    }
+
+}
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public void updateSelectedPerson(ReadOnlyPerson person) {
+        this.person = person;
+        flag = 1;
+    }
+
+    @Override
+    public void unselectPerson() {
+        this.person = null;
+    }
+
+    @Override
+    public boolean ifSelectedPerson() {
+        if (flag == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public ReadOnlyPerson getSelectedPerson() {
+        return person;
+    }
+
+```
 ###### /java/seedu/address/model/person/Birthday.java
 ``` java
 /**
@@ -111,31 +201,9 @@ public class Birthday {
 
     public final String value;
 
-    /**
-     * Validates given address.
-     *
-     * @throws IllegalValueException if given address string is invalid.
-     */
-    public Birthday(String birthday) throws IllegalValueException {
-        if (birthday == null) {
-            this.value = BIRTHDAY_TEMPORARY;
-        } else {
-            String trimmedBirthday = birthday.trim();
-            if (!isValidBirthday(trimmedBirthday)) {
-                throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
-            }
-            this.value = trimmedBirthday;
-        }
-    }
-
-    /**
-     * Returns true if a given string is a valid person birthday.
-     */
-    public static boolean isValidBirthday(String test) {
-        return test.matches(BIRTHDAY_VALIDATION_REGEX)
-                || test.matches(BIRTHDAY_TEMPORARY);
-    }
-
+```
+###### /java/seedu/address/model/person/Birthday.java
+``` java
     @Override
     public String toString() {
         return value;
@@ -159,16 +227,14 @@ public class Birthday {
 ###### /java/seedu/address/model/person/CheckIfBirthday.java
 ``` java
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code Birthday month and day} matches today.
+ * Tests that a {@code ReadOnlyPerson}'s {@code Birthday} matches today.
  */
 public class CheckIfBirthday implements Predicate<ReadOnlyPerson> {
 
     public CheckIfBirthday(){ }
+
     /**
-     * Checks if today's day and month matches a person's birthday
-     * @param person
-     * @return
-     * @throws ParseException
+     * Method checks if month and day match
      */
     public boolean birthdayList(ReadOnlyPerson person)throws ParseException {
         String birthday = person.getBirthday().toString();
@@ -215,6 +281,24 @@ public class CheckIfBirthday implements Predicate<ReadOnlyPerson> {
 
 }
 ```
+###### /java/seedu/address/model/person/Person.java
+``` java
+
+    public void setBirthday(Birthday birthday) {
+        this.birthday.set(requireNonNull(birthday));
+    }
+
+    @Override
+    public ObjectProperty<Birthday> birthdayProperty() {
+        return birthday;
+    }
+
+    @Override
+    public Birthday getBirthday() {
+        return birthday.get();
+    }
+
+```
 ###### /java/seedu/address/ui/DetailsPanel.java
 ``` java
 
@@ -234,6 +318,8 @@ public class DetailsPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Logic logic;
+
+    private ObservableList<ReadOnlyPerson> personList;
 
     @FXML
     private Pane pane;
@@ -270,6 +356,7 @@ public class DetailsPanel extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
+    private ListView<PersonCard> personListView;
 
     public DetailsPanel() {
         super(FXML);
@@ -310,8 +397,8 @@ public class DetailsPanel extends UiPart<Region> {
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         website.textProperty().bind(Bindings.convert(person.websiteProperty()));
         homePhone.textProperty().bind(Bindings.convert(person.homeNumberProperty()));
-            tags.getChildren().clear();
-            initTags(person);
+        tags.getChildren().clear();
+        initTags(person);
     }
 
     /**
@@ -359,10 +446,11 @@ public class DetailsPanel extends UiPart<Region> {
                         .map(Label::getText)
                         .collect(Collectors.toList()));
     }
+
     /**
      * Sets all info fields to not display anything when the app is just started.
      */
-    private void loadBlankPage() {
+    public void loadBlankPage() {
         Label label;
         Text text;
         for (Node node: pane.getChildren()) {
@@ -392,9 +480,38 @@ public class DetailsPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonInfo(event.getNewSelection().person);
     }
+
+    @Subscribe
+    private void handleUnselectOfPersonCardEvent(PersonPanelUnselectEvent event) {
+        unregisterAsAnEventHandler(this);
+    }
+
+    @Subscribe
+    private void handlePersonSelectionChangedEvent(PersonSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonInfo(event.getNewSelection());
+    }
+
 }
 
 
+```
+###### /java/seedu/address/ui/MainWindow.java
+``` java
+    @Subscribe
+    private void handleUnselectOfPersonCardEvent(PersonPanelUnselectEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        detailsPanel = new DetailsPanel();
+        detailsPanelPlaceholder.getChildren().clear();
+        detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
+
+    }
+```
+###### /java/seedu/address/ui/UiPart.java
+``` java
+    protected void unregisterAsAnEventHandler(Object handler) {
+        EventsCenter.getInstance().unregisterHandler(handler);
+    }
 ```
 ###### /resources/view/DetailsPanel.fxml
 ``` fxml

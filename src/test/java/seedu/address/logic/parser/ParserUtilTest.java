@@ -205,6 +205,8 @@ public class ParserUtilTest {
         assertFalse(ParserUtil.parseBirthday(Optional.empty()).isPresent());
     }
 
+    //@@author archthegit
+
     @Test
     public void parseBirthday_validValue_returnsBirthday() throws Exception {
         Birthday expectedBirthday = new Birthday(VALID_BIRTHDAY);
@@ -230,6 +232,7 @@ public class ParserUtilTest {
         thrown.expect(NullPointerException.class);
         ParserUtil.parseSchEmail(null);
     }
+    //@@author
 
     @Test
     public void parseSchEmail_invalidValue_throwsIllegalValueException() throws Exception {

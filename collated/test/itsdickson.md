@@ -1,5 +1,5 @@
 # itsdickson
-###### \java\guitests\guihandles\ThemesWindowHandle.java
+###### /java/guitests/guihandles/ThemesWindowHandle.java
 ``` java
 
 import java.net.URL;
@@ -35,7 +35,7 @@ public class ThemesWindowHandle extends StageHandle {
     }
 }
 ```
-###### \java\guitests\ThemesWindowTest.java
+###### /java/guitests/ThemesWindowTest.java
 ``` java
 
 import static org.junit.Assert.assertTrue;
@@ -71,7 +71,7 @@ public class ThemesWindowTest extends AddressBookGuiTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FavouriteCommandTest.java
+###### /java/seedu/address/logic/commands/FavouriteCommandTest.java
 ``` java
 
 import static org.junit.Assert.assertEquals;
@@ -168,7 +168,7 @@ public class FavouriteCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FavouriteListCommandTest.java
+###### /java/seedu/address/logic/commands/FavouriteListCommandTest.java
 ``` java
 
 import static org.junit.Assert.assertEquals;
@@ -220,7 +220,7 @@ public class FavouriteListCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FindTagCommandTest.java
+###### /java/seedu/address/logic/commands/FindTagCommandTest.java
 ``` java
 
 import static org.junit.Assert.assertEquals;
@@ -321,7 +321,7 @@ public class FindTagCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\SwitchThemeCommandTest.java
+###### /java/seedu/address/logic/commands/SwitchThemeCommandTest.java
 ``` java
 
 import static org.junit.Assert.assertEquals;
@@ -416,7 +416,7 @@ public class SwitchThemeCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ThemeListCommandTest.java
+###### /java/seedu/address/logic/commands/ThemeListCommandTest.java
 ``` java
 
 import static org.junit.Assert.assertEquals;
@@ -442,7 +442,7 @@ public class ThemeListCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\UnfavouriteCommandTest.java
+###### /java/seedu/address/logic/commands/UnfavouriteCommandTest.java
 ``` java
 
 import static org.junit.Assert.assertEquals;
@@ -540,7 +540,7 @@ public class UnfavouriteCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\FavouriteCommandParserTest.java
+###### /java/seedu/address/logic/parser/FavouriteCommandParserTest.java
 ``` java
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -567,7 +567,7 @@ public class FavouriteCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\FindTagCommandParserTest.java
+###### /java/seedu/address/logic/parser/FindTagCommandParserTest.java
 ``` java
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -603,7 +603,7 @@ public class FindTagCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\SwitchThemeCommandParserTest.java
+###### /java/seedu/address/logic/parser/SwitchThemeCommandParserTest.java
 ``` java
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -631,7 +631,7 @@ public class SwitchThemeCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\UnfavouriteCommandParserTest.java
+###### /java/seedu/address/logic/parser/UnfavouriteCommandParserTest.java
 ``` java
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -659,7 +659,7 @@ public class UnfavouriteCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
+###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
 ``` java
     /**
      * Sets the {@code Favourite} of the {@code EditPersonDescriptor} that we are building.
@@ -669,7 +669,7 @@ public class UnfavouriteCommandParserTest {
         return this;
     }
 ```
-###### \java\seedu\address\testutil\PersonBuilder.java
+###### /java/seedu/address/testutil/PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Boolean} of the {@code Person} that we are building.
@@ -679,7 +679,7 @@ public class UnfavouriteCommandParserTest {
         return this;
     }
 ```
-###### \java\seedu\address\ui\ThemesWindowTest.java
+###### /java/seedu/address/ui/ThemesWindowTest.java
 ``` java
 
 import static org.junit.Assert.assertEquals;
@@ -714,7 +714,7 @@ public class ThemesWindowTest extends GuiUnitTest {
     }
 }
 ```
-###### \java\systemtests\FindTagCommandSystemTest.java
+###### /java/systemtests/FindTagCommandSystemTest.java
 ``` java
 
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;

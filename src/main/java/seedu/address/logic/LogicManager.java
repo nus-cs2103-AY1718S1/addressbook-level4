@@ -70,6 +70,8 @@ public class LogicManager extends ComponentManager implements Logic {
     }
     //@@author
 
+    //@@author archthegit
+
     @Override
     public void updateSelectedPerson(ReadOnlyPerson person) {
         model.updateSelectedPerson(person);
