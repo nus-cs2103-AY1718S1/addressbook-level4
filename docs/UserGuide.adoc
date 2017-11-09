@@ -141,15 +141,19 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+// tag::blacklist[]
 === Listing all blacklisted persons : `blacklist`
 
 Shows a list of all blacklisted persons in the address book. +
 Format: `blacklist`
+// end::blacklist[]
 
+// tag::whitelist[]
 === Listing all whitelisted persons : `whitelist`
 
 Shows a list of all whitelisted persons in the address book. +
 Format: `whitelist`
+// end::whitelist[]
 
 // tag::overduelist[]
 === Listing all persons with overdue debt: `overduelist`
@@ -253,6 +257,7 @@ Decreases the debt of the 2nd person by $1000.10.
 Decreases the debt of the 3rd person by $234.
 // end::payback[]
 
+// tag::repaid[]
 === Resetting the debt of a person: `repaid`
 
 Resets the debt of a person to zero and sets the date repaid field of that person. +
@@ -270,6 +275,7 @@ Resets the debt of the 1st person to zero and sets the date of repayment in his/
 * `select 2` +
 `repaid` +
 Resets the debt of the 2nd person to zero and sets the date of repayment in his/her record.
+// tag::repaid[]
 
 === Deleting a person : `delete`
 
