@@ -60,6 +60,7 @@ public class CombinePanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private final Logic logic;
     private GridData[][] gridData;
+    private int[][]  gridDataCheckTable;
     private String[][]noteData;
     private ReadOnlyLesson selectedModule;
 
@@ -82,6 +83,7 @@ public class CombinePanel extends UiPart<Region> {
         super(FXML);
         this.logic = logic;
         gridData = new GridData[ROW][COL];
+        gridDataCheckTable = new int[ROW][COL];
         initGridData();
         generateTimeTableGrid();
         // To prevent triggering events for typing inside the loaded Web page.
@@ -125,6 +127,7 @@ public class CombinePanel extends UiPart<Region> {
         for (int i = 0; i < ROW; i++) {
             for (int j = 0; j < COL; j++) {
                 gridData[i][j] = new GridData();
+                gridDataCheckTable[i][j] = 0;
             }
         }
     }
@@ -158,7 +161,7 @@ public class CombinePanel extends UiPart<Region> {
 
     public void generateWeekDay() {
         for (int i = 1; i < ROW; i++) {
-            String dayOfWeek = DayOfWeek.of(i).toString();
+            String dayOfWeek = DayOfWeek.of(i).toString().substring(0, 3);
             Label label = new Label(dayOfWeek);
             label.setId(HEADER);
             timetableGrid.setValignment(label, VPos.CENTER);
@@ -186,15 +189,37 @@ public class CombinePanel extends UiPart<Region> {
             int weekDayRow = getWeekDay(timeText.substring(0, 3));
             int startHourCol = getTime(timeText.substring(4, 6));
             int endHourSpan = getTime(timeText.substring(9, 11)) - startHourCol;
+            boolean isAvailable = false;
+            if (!isOccupy(weekDayRow, startHourCol, endHourSpan)) {
+                isAvailable = true;
+            }
 
-            if (gridData[weekDayRow][startHourCol].getCount() == 0) {
+            if (isAvailable && gridData[weekDayRow][startHourCol].getCount() == 0) {
                 gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol, endHourSpan, 1);
             } else {
                 int count = gridData[weekDayRow][startHourCol].getCount();
-                gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol, endHourSpan, ++count);
+                gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol,
+                        endHourSpan, count + 2);
+            }
+
+            for (int j = 0; j < endHourSpan; j++) {
+                gridDataCheckTable[weekDayRow][startHourCol + j] = 1;
             }
         }
     }
+
+    /**
+     * Check for timetable grid.
+     */
+    public boolean isOccupy(int row, int col, int span) {
+        for (int i = 0; i < span; i++) {
+            if (gridDataCheckTable[row][col + i] == 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     /**
      * Generate timetable grid.
