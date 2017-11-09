@@ -1,4 +1,4 @@
-﻿= Sales Nagivator- Developer Guide
+﻿= Sales Navigator- Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -529,6 +529,53 @@ try {
 The 4 required fields are checked to see if they are present. If any of them are missing, a `ParseException` is thrown and the add command is invalid.
 
 The 5 optional fields are handled differently. They are first initialized to a placeholder value ("NIL" for Company, Position, Status and Note, "L" for Priority, indicating the lowest priority). Each field is then checked to see if it has been entered in the user command through its prefix. If it has, the placeholder value is replaced by the entered string. This way, the user is able to selectively enter any of these fields (or none at all) and the `ReadOnlyPerson` object created will still have all fields initialized properly.
+
+==== Design Considerations:
+*Aspect*: Implementation of Company, Position, Status, Priority, and Note
+
+*Alternative 1*: Make these fields compulsory like Name, Address, Phone and Email
+
+*Pros*: Code and tests can be easily duplicated from existing fields.
+
+*Cons*: User may not always need to enter these fields and will become burdensome.
+
+*Alternative 2 (current choice)*: Make these fields optional
+
+*Pros*: Users have flexibility to omit any fields they do not think is necessary. Current tests do not have to be
+completely changed, instead can be extended to include additional fields.
+
+*Cons*: New logic required to handle fields that may not be input by the user.
+
+// tag::autoupdate[]
+=== Automatic update of Person card and Person panel details when edits are made
+The Person cards and Person panel are automatically updated when the user makes any edits to the fields. This is done
+by registering the PersonCard and PersonPanel classes as event handlers, and subscribing to the AddressBookChangedEvent
+that the EventsCenter sends out when the address book is altered. The Person card has an additional feature
+of changing the colour of the priority tag depending on what the priority is. The described behaviour is illustrated in
+the sequence diagram below:
+
+image::AutoUpdateSequenceDiagram.png[width=800]
+
+==== Design Considerations:
+*Aspect*: Implementation of binding card and panel fields to fields
+
+*Alternative 1*: Bind variables to listen for observables
+
+*Pros*: Person card fields already use this method, code can be easily duplicated.
+
+*Cons*: Priority field will not change colour just by changing the text value. Also, Person panel will need to
+change the person its variables are listening to every time a different selection is made.
+
+*Alternative 2 (current choice)*: Register PersonCard and PersonPanel as event handlers and subscribe to
+AddressBookChangedEvent
+
+*Pros*: Priority field can change colour this way, by setting the JavaFX id of the pane the priority label is in to
+different values and hence different CSS settings. Person panel will also be able to reuse the code for
+handlePersonPanelSelectionChangedEvent() as they both require the reloading of person details
+
+*Cons*: Computationally more expensive as the functions will be called whenever the address book is changed, even if
+the change does not affect that particular panel or card.
+// end::autoupdate[]
 
 // tag::photo[]
 === Attaching photo to a contact
