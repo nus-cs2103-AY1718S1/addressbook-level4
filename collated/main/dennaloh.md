@@ -1,4 +1,54 @@
 # dennaloh
+###### /java/seedu/address/logic/commands/FbCommand.java
+``` java
+/**
+ * Searches for your contact on Facebook
+ */
+public class FbCommand extends Command {
+
+    public static final String COMMAND_WORD = "facebook";
+    public static final String COMMAND_ALIAS = "fb";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Searches for the person identified by the index "
+            + "number used in the last person listing on Facebook.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1 ";
+
+    public static final String MESSAGE_SUCCESS = "Opened Facebook to search for %1$s";
+
+    private final Index targetIndex;
+
+    /**
+     * @param targetIndex of the person in the filtered person list to search on Facebook for
+     */
+    public FbCommand (Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToSearchFor = lastShownList.get(targetIndex.getZeroBased());
+
+        String fbUrl = model.getFbUrl(personToSearchFor);
+        model.openUrl(fbUrl);
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, personToSearchFor));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FbCommand // instanceof handles nulls
+                && this.targetIndex.equals(((FbCommand) other).targetIndex)); // state check
+    }
+}
+```
 ###### /java/seedu/address/logic/commands/person/EmailCommand.java
 ``` java
 /**
@@ -123,7 +173,6 @@ public class GMapCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        Desktop desktop = Desktop.getDesktop();
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -132,16 +181,8 @@ public class GMapCommand extends Command {
 
         ReadOnlyPerson personToGetDirectionsTo = lastShownList.get(targetIndex.getZeroBased());
 
-        String url = model.getGMapUrl(personToGetDirectionsTo);
-
-        try {
-            if (Desktop.isDesktopSupported()) {
-                URI googleMaps = new URI(url);
-                desktop.browse(googleMaps);
-            }
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-        }
+        String gmapUrl = model.getGMapUrl(personToGetDirectionsTo);
+        model.openUrl(gmapUrl);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, personToGetDirectionsTo));
     }
@@ -167,6 +208,33 @@ public class GMapCommand extends Command {
         case GMapCommand.COMMAND_WORD:
         case GMapCommand.COMMAND_ALIAS:
             return new GMapCommandParser().parse(arguments);
+
+        case FbCommand.COMMAND_WORD:
+        case FbCommand.COMMAND_ALIAS:
+            return new FbCommandParser().parse(arguments);
+```
+###### /java/seedu/address/logic/parser/FbCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new FbCommand object
+ */
+public class FbCommandParser implements Parser<FbCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the FbCommand
+     * and returns an FbCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public FbCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new FbCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX));
+        }
+    }
+}
 ```
 ###### /java/seedu/address/logic/parser/person/EmailCommandParser.java
 ``` java
@@ -244,10 +312,10 @@ public class GMapCommandParser implements Parser<GMapCommand> {
 ``` java
     /**
      * Returns URL for google maps using the person's address
-     * @param key
+     * @param key is target person
      * @return URL
      */
-    public String getUrl (ReadOnlyPerson key) {
+    public String getGMapUrl (ReadOnlyPerson key) {
 
         String address = key.getAddress().toString();
         String replacedAddress = address.replaceAll(" ", "+");
@@ -255,22 +323,67 @@ public class GMapCommandParser implements Parser<GMapCommand> {
         sb.append("http://maps.google.com/maps?saddr=");
         sb.append("&daddr=");
         sb.append(replacedAddress);
-        String url = sb.toString();
+        String gMapUrl = sb.toString();
 
-        return url;
+        return gMapUrl;
+    }
+
+    /**
+     * Returns URL to search for person on facebook
+     * @param key is target person
+     * @return URL
+     */
+    public String getFbUrl (ReadOnlyPerson key) {
+        String name = key.getName().toString();
+        String replacedName = name.replaceAll(" ", "%20");
+        StringBuilder sb = new StringBuilder();
+        sb.append("https://www.facebook.com/search/top/?q=");
+        sb.append(replacedName);
+        String fbUrl = sb.toString();
+
+        return fbUrl;
     }
 ```
 ###### /java/seedu/address/model/Model.java
 ``` java
     /** Gets URL for google maps. */
     String getGMapUrl(ReadOnlyPerson target);
+
+    /** Gets URL to search on facebook. */
+    String getFbUrl (ReadOnlyPerson target);
+
+    /** Opens URL in default browser. */
+    void openUrl (String url);
 ```
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public synchronized String getGMapUrl(ReadOnlyPerson target) {
-        String url = addressBook.getUrl(target);
-        return url;
+        String gMapUrl = addressBook.getGMapUrl(target);
+        return gMapUrl;
+    }
+
+    @Override
+    public synchronized String getFbUrl (ReadOnlyPerson target) {
+        String fbUrl = addressBook.getFbUrl(target);
+        return fbUrl;
+    }
+
+    /**
+     * Opens the url in the default browser.
+     * @param url is the url that will be opened.
+     */
+    @Override
+    public void openUrl (String url) {
+        Desktop desktop = Desktop.getDesktop();
+        try {
+            if (Desktop.isDesktopSupported()) {
+                URI urlToOpen = new URI(url);
+                desktop.browse(urlToOpen);
+            }
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 ```
 ###### /java/seedu/address/model/person/Person.java
