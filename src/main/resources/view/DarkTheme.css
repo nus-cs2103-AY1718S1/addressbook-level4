@@ -68,3 +68,51 @@
 .table-view:focused .table-row-cell:filled:focused:selected {
     -fx-background-color: #232A34;
 }
+
+
+/*TAB AND TAB PANE STYLING*/
+.tab-pane {
+    -fx-padding: 0 0 0 1;
+    -fx-background-color: #232A34;
+}
+
+.tab-pane .tab-header-area {
+    -fx-background-color: #232A34;
+    -fx-padding: 0 0 0 0;
+    -fx-min-height: 0;
+    -fx-max-height: 0;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
+
+.tab-pane {
+    -fx-tab-min-width:115px;
+}
+
+.tab {
+    -fx-background-insets: 0 1 0 1,0,0;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #404040;
+
+}
+
+.tab-pane .tab:selected {
+    -fx.border-color: transparent !important;
+    -fx-background-color: #336D1C;
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #f3f3f3;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.tab:selected .tab-label {
+    -fx.border-color: transparent !important;
+    -fx-text-fill: white;
+}
