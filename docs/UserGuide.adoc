@@ -288,7 +288,7 @@ Schedules an activity with person(s) specified by the index number(s). +
 Format: `schedule INDEX [UNIQUE INDEX]... d/DATE act/ACTIVITY`
 
 ****
-* DATE must follow DD-MM-YYYY format
+* DATE must follow DD-MM-YYYY format.
 ****
 
 Examples:
@@ -433,6 +433,17 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
+
+==== Enabling and disabling the welcome screen: `welcome`
+
+=> Alias: `w` <=
+
+Enables or disables the welcome screen.
+Format: `welcome ENABLING_KEYWORD`
+
+[NOTE]
+ENABLING_KEYWORD takes in 2 values: `enable` and `disable` +
+The welcome screen is disabled by default.
 
 ==== Exiting the program : `exit`
 
