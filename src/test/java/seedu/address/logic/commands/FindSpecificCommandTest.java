@@ -1,6 +1,37 @@
-# aver0214
-###### /java/seedu/address/logic/commands/FindSpecificCommandTest.java
-``` java
+package seedu.address.logic.commands;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.person.EmailContainsSpecifiedKeywordsPredicate;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.PhoneContainsSpecifiedKeywordsPredicate;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TagContainsSpecifiedKeywordsPredicate;
+
+/**
+ * Contains integration tests (interaction with the Model) for {@code FindSpecificCommand}.
+ */
+//@@author aver0214
 public class FindSpecificCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -179,54 +210,22 @@ public class FindSpecificCommandTest {
                 new TagContainsSpecifiedKeywordsPredicate(Arrays.asList(inputString.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
-```
-###### /java/seedu/address/logic/parser/AddQuickCommandParserTest.java
+    } //@@author
 
-###### \java\seedu\address\logic\parser\AddQuickCommandParserTest.java
+    /**
+     * Asserts that {@code command} is successfully executed, and<br>
+     *     - the command feedback is equal to {@code expectedMessage}<br>
+     *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
+     *     - the {@code AddressBook} in model remains the same after executing the {@code command}
+     */
+    private void assertCommandSuccess(FindSpecificCommand command, String expectedMessage,
+                                      List<ReadOnlyPerson> expectedList) {
+        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
+        CommandResult commandResult = command.execute();
 
-``` java
-    @Test
-    public void parse_compulsoryFieldMissing_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                AddQuickCommand.MESSAGE_USAGE);
-
-        // missing name prefix
-        assertParseFailure(parser, AddQuickCommand.COMMAND_WORD + VALID_NAME_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB, expectedMessage);
-
-        // missing phone prefix
-        assertParseFailure(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_BOB + VALID_PHONE_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB, expectedMessage);
-
-        // all prefixes missing
-        assertParseFailure(parser, AddQuickCommand.COMMAND_WORD + VALID_NAME_BOB + VALID_PHONE_BOB
-                + VALID_EMAIL_BOB + VALID_ADDRESS_BOB + VALID_ADDRESS_BOB, expectedMessage);
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+        assertEquals(expectedList, model.getFilteredPersonList());
+        assertEquals(expectedAddressBook, model.getAddressBook());
     }
-```
-###### \java\systemtests\AddQuickCommandSystemTest.java
-``` java
-        /* Case: missing email -> added */
-        expectedResultMessage = AddQuickCommand.MESSAGE_SUCCESS;
-        command = AddQuickCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY;
-        assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: missing address -> added */
-        expectedResultMessage = AddQuickCommand.MESSAGE_SUCCESS;
-        command = AddQuickCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + BIRTHDAY_DESC_AMY;
-        assertCommandSuccess(command, model, expectedResultMessage);
-
-        /* Case: missing birthday -> added */
-        expectedResultMessage = AddQuickCommand.MESSAGE_SUCCESS;
-        command = AddQuickCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
-        assertCommandSuccess(command, model, expectedResultMessage);
-
-        /* Case: missing name -> rejected */
-        expectedResultMessage = AddQuickCommand.MESSAGE_USAGE;
-        command = AddQuickCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, expectedResultMessage));
-
-        /* Case: missing phone -> rejected */
-        expectedResultMessage = AddQuickCommand.MESSAGE_USAGE;
-        command = AddQuickCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, expectedResultMessage));
-```
+}
