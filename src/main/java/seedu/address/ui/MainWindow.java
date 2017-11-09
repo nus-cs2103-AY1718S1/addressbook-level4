@@ -23,8 +23,8 @@ import seedu.address.commons.events.ui.ShowFacebookRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
-import seedu.address.logic.commands.ChangeWindowSizeCommand;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.windowsize.WindowSize;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -242,8 +242,8 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleSmallWindowSize() {
-        raise(new ChangeWindowSizeRequestEvent(ChangeWindowSizeCommand.SMALL_WIDTH,
-                ChangeWindowSizeCommand.SMALL_HEIGHT));
+        raise(new ChangeWindowSizeRequestEvent(WindowSize.SMALL_WIDTH,
+                WindowSize.SMALL_HEIGHT));
     }
 
     /**
@@ -251,8 +251,8 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleMediumWindowSize() {
-        raise(new ChangeWindowSizeRequestEvent(ChangeWindowSizeCommand.MEDIUM_WIDTH,
-                ChangeWindowSizeCommand.MEDIUM_HEIGHT));
+        raise(new ChangeWindowSizeRequestEvent(WindowSize.MEDIUM_WIDTH,
+                WindowSize.MEDIUM_HEIGHT));
     }
 
     /**
@@ -260,8 +260,8 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleBigWindowSize() {
-        raise(new ChangeWindowSizeRequestEvent(ChangeWindowSizeCommand.BIG_WIDTH,
-                ChangeWindowSizeCommand.BIG_HEIGHT));
+        raise(new ChangeWindowSizeRequestEvent(WindowSize.BIG_WIDTH,
+                WindowSize.BIG_HEIGHT));
     }
 
     /**

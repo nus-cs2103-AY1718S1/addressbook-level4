@@ -62,6 +62,8 @@ public class CommandTestUtil {
     public static final String INVALID_MONTH_DESC = " " + PREFIX_BIRTHDAY + "20/13/94"; // invalid month entered
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
+    public static final String INVALID_WINDOW_SIZE_INPUT = "invalid window size";
+
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
