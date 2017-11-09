@@ -237,6 +237,8 @@ The user is able to view the changes in the relationships in the graph window.
 **Cons:** Maintenance of this single entity of graph can be costly as it can become massive. +
 **Cons:** Currently a person is identified by his/her index in the most recent listing. As the indexes of persons change, matching the relationship to the correct persons involved will be a headache.
 
+---
+
 **Aspect:** Record of the relationship in the address book +
 **Alternative 1 (current choice):** A relationship between two persons are recorded in both persons' `UniqueRelationshipList`. +
 **Pros:** Easy search of the relationship in the address book as both parties involved in the relationship have record of it. +
@@ -244,6 +246,7 @@ The user is able to view the changes in the relationships in the graph window.
 **Alternative 2:** A relationship between two persons are recorded in the `fromPerson`'s `UniqueRelationshipList`, except that when the relationship is undirected, it is recorded twice under both parties. +
 **Pros:** Easy maintenance of the relationships. +
 **Cons:** More scenarios to consider when performing actions to the relationship. Hence, it will lead to more difficult implementation.
+// end::addrelationship[]
 
 // tag::deleterelationship[]
 === deleteRelationship command
@@ -260,6 +263,7 @@ The user is able to view the disappearance of the relationship in the graph wind
 **Alternative 2:** The indexes of the persons specified in user input matters. +
 **Pros:** Less memory needed for recording the relationship. +
 **Cons:** User has to know the specific information of the relationship, making this command not user-friendly.
+// end::deleterelationship[]
 
 // tag::removetag[]
 === removeTag command
@@ -296,6 +300,7 @@ This command is implemented in the style of the `edit` command and `delete` comm
 **Alternative 2:** The command allows the user input to specify the persons from whom the tag should be removed. +
 **Pros:** The user can remove the tags from a few specific people in one command. +
 **Cons:** Implementation is more difficult as parsing of additional user input required. It is also unlikely for user to remove the tag from many persons at once, hence there is a function overlap with `edit` command.
+// end::removetag[]
 
 // tag::find[]
 === Enhanced `find` command
