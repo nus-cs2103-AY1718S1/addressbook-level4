@@ -1,5 +1,22 @@
 # limcel
-###### /java/seedu/address/logic/commands/ScheduleCommand.java
+###### \java\seedu\address\commons\events\ui\JumpToTabRequestEvent.java
+``` java
+public class JumpToTabRequestEvent extends BaseEvent {
+
+    public final int targetIndex;
+
+    public JumpToTabRequestEvent(Index targetIndex) {
+        this.targetIndex = targetIndex.getZeroBased();
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
+###### \java\seedu\address\logic\commands\ScheduleCommand.java
 ``` java
 /**
  * Schedules a consultation timeslot with the person identified using it's last displayed index from the address book.
@@ -74,7 +91,7 @@ public class ScheduleCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/SortCommand.java
+###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
 /**
  * Sorts all contacts in alphabetical order by their names from the address book.
@@ -105,7 +122,48 @@ public class SortCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ViewScheduleCommand.java
+###### \java\seedu\address\logic\commands\TabCommand.java
+``` java
+public class TabCommand extends Command {
+    public static final String COMMAND_WORD = "tab";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + " : Parameters: INDEX (must be a positive integer) "
+            + "Example: " + COMMAND_WORD + " 1 ";
+
+    public static final String MESSAGE_SELECT_TAB_SUCCESS = "Selected Tab: %1$s";
+    public static final String MESSAGE_INVALID_TAB_INDEX = "Invalid Tab Value";
+
+    // there are only 2 types of graphs available for display (Graph / Bar)
+    public static final int NUM_TAB = 2;
+
+    private final Index targetIndex;
+
+    /**
+     * @param targetIndex of the TabPane in the graph panel for switching
+     */
+    public TabCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        if (targetIndex.getZeroBased() >= NUM_TAB) {
+            throw new CommandException(MESSAGE_INVALID_TAB_INDEX);
+        }
+        EventsCenter.getInstance().post(new JumpToTabRequestEvent(targetIndex));
+        return new CommandResult(String.format(MESSAGE_SELECT_TAB_SUCCESS, targetIndex.getOneBased()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof TabCommand // instanceof handles nulls
+                && this.targetIndex.equals(((TabCommand) other).targetIndex)); // state check
+    }
+}
+```
+###### \java\seedu\address\logic\commands\ViewScheduleCommand.java
 ``` java
 /**
  * Lists all persons in the address book to the user.
@@ -136,18 +194,18 @@ public class ViewScheduleCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/Logic.java
+###### \java\seedu\address\logic\Logic.java
 ``` java
     /** Returns an unmodifiable view of the schedule list */
     ObservableList<Schedule> getScheduleList();
 ```
-###### /java/seedu/address/logic/LogicManager.java
+###### \java\seedu\address\logic\LogicManager.java
 ``` java
     @Override
     public ObservableList<Schedule> getScheduleList() {
         return model.getScheduleList(); }
 ```
-###### /java/seedu/address/logic/parser/ScheduleCommandParser.java
+###### \java\seedu\address\logic\parser\ScheduleCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ScheduleCommand object
@@ -208,7 +266,27 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\logic\parser\TabCommandParser.java
+``` java
+public class TabCommandParser implements Parser<TabCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the TabCommand
+     * and returns an TabCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public TabCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new TabCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, TabCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     //// schedule-level operations
 
@@ -220,19 +298,23 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         schedules.remove(s);
     }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     public ObservableList<Schedule> getScheduleList() {
         return schedules.asObservableList();
     }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     public ObservableList<ReadOnlyPerson> listOfPersonNameSorted() {
         return persons.asObservableListSortedByName();
     }
+
+    public ObservableList<Schedule> sortSchedules() {
+        return schedules.asObservableListSortedChronologically();
+    }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /**
      * Deletes the given {@code tag} associated with any person in the addressbook.
@@ -242,7 +324,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
      */
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException;
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /**
      * Sorts the list in alphabetical order.
@@ -259,7 +341,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
     /** Returns an unmodifiable view of the schedules list */
     ObservableList<Schedule> getScheduleList();
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException {
@@ -286,6 +368,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
     @Override
     public void addSchedule(Schedule schedule) {
         addressBook.addSchedule(schedule);
+        addressBook.sortSchedules();
         indicateAddressBookChanged();
     }
 
@@ -304,7 +387,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         return FXCollections.unmodifiableObservableList(list);
     }
 ```
-###### /java/seedu/address/model/person/PostalCode.java
+###### \java\seedu\address\model\person\PostalCode.java
 ``` java
 /**
  * Represents a Person's postal code in the address book.
@@ -355,7 +438,22 @@ public class PostalCode {
     }
 }
 ```
-###### /java/seedu/address/model/ReadOnlyAddressBook.java
+###### \java\seedu\address\model\person\UniquePersonList.java
+``` java
+    /**
+     * Returns an observable list as as an unmodifiable {@code ObservableList}
+     */
+    public ObservableList<ReadOnlyPerson> asObservableListSortedByName() {
+        internalList.sort(new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                return ((o1.getName().toString().toLowerCase()).compareTo(o2.getName().toString().toLowerCase()));
+            }
+        });
+        return FXCollections.unmodifiableObservableList(mappedList);
+    }
+```
+###### \java\seedu\address\model\ReadOnlyAddressBook.java
 ``` java
     /**
      * Returns an unmodifiable view of the schedules list.
@@ -363,14 +461,14 @@ public class PostalCode {
      */
     ObservableList<Schedule> getScheduleList();
 ```
-###### /java/seedu/address/model/schedule/exceptions/ScheduleNotFoundException.java
+###### \java\seedu\address\model\schedule\exceptions\ScheduleNotFoundException.java
 ``` java
 /**
  * Signals that the operation is unable to find the specified schedule.
  */
 public class ScheduleNotFoundException extends Exception {}
 ```
-###### /java/seedu/address/model/schedule/Schedule.java
+###### \java\seedu\address\model\schedule\Schedule.java
 ``` java
 /**
  * Represents the user's schedule in the address book.
@@ -423,7 +521,7 @@ public class Schedule {
     }
 }
 ```
-###### /java/seedu/address/model/schedule/UniqueScheduleList.java
+###### \java\seedu\address\model\schedule\UniqueScheduleList.java
 ``` java
 /**
  * A list of schedules that enforces no nulls between its elements.
@@ -529,9 +627,24 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         return internalList.hashCode();
     }
 
-}
 ```
-###### /java/seedu/address/storage/XmlAdaptedSchedule.java
+###### \java\seedu\address\model\schedule\UniqueScheduleList.java
+``` java
+    /**
+     * Returns an observable list as as an unmodifiable {@code ObservableList}
+     */
+    public ObservableList<Schedule> asObservableListSortedChronologically() {
+        internalList.sort(new Comparator<Schedule>() {
+
+            @Override
+            public int compare(Schedule date1, Schedule date2) {
+                return (date1.getDate().compareTo(date2.getDate()));
+            }
+        });
+        return FXCollections.unmodifiableObservableList(internalList);
+    }
+```
+###### \java\seedu\address\storage\XmlAdaptedSchedule.java
 ``` java
 /**
  * JAXB-friendly adapted version of the Schedule.
@@ -583,7 +696,7 @@ public class XmlAdaptedSchedule {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
 ``` java
     @Override
     public ObservableList<Schedule> getScheduleList() {
@@ -599,12 +712,12 @@ public class XmlAdaptedSchedule {
         return FXCollections.unmodifiableObservableList(schedules);
     }
 ```
-###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
 ``` java
 
 }
 ```
-###### /java/seedu/address/ui/ExtendedPersonCard.java
+###### \java\seedu\address\ui\ExtendedPersonCard.java
 ``` java
 /**
  * Extended Person Card Panel that displays the details of a Person
@@ -622,6 +735,8 @@ public class ExtendedPersonCard extends UiPart<Region> {
     private Label name;
     @FXML
     private Label phone;
+    @FXML
+    private Label parentPhone;
     @FXML
     private Label address;
     @FXML
@@ -646,6 +761,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
     protected void loadPersonDetails(ReadOnlyPerson person) {
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().toString());
+        parentPhone.setText(person.getParentPhone().toString());
         address.setText(person.getAddress().toString());
         formClass.setText(person.getFormClass().toString());
         grades.setText(person.getGrades().toString());
@@ -662,7 +778,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
 
 }
 ```
-###### /resources/view/ExtendedPersonCard.fxml
+###### \resources\view\ExtendedPersonCard.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
@@ -672,9 +788,10 @@ public class ExtendedPersonCard extends UiPart<Region> {
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+
 <VBox fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Label fx:id="name" lineSpacing="10.0" styleClass="cell_big_label" text="\$name">
+        <Label fx:id="name" lineSpacing="10" styleClass="cell_big_label" text="\$name">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
@@ -693,7 +810,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
             <graphic>
                 <ImageView>
                     <image>
-                        <Image url="@../images/phone.png" />
+                        <Image url="@../images/studentPhone.png" />
                     </image>
                 </ImageView>
             </graphic>
@@ -703,6 +820,21 @@ public class ExtendedPersonCard extends UiPart<Region> {
          <font>
             <Font size="14.0" />
          </font>
+        </Label>
+        <Label fx:id="parentPhone" lineSpacing="10.0" styleClass="cell_small_label" text="\$parentPhone">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@../images/parentPhone.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+            <padding>
+                <Insets bottom="5.0" />
+            </padding>
+            <font>
+                <Font size="14.0" />
+            </font>
         </Label>
         <Label fx:id="address" lineSpacing="10.0" styleClass="cell_small_label" text="\$address">
             <graphic>
