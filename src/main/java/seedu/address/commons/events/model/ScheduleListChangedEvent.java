@@ -6,22 +6,18 @@ import seedu.address.model.schedule.Schedule;
 
 //@@author limcel
 /**
- * Represents a Change in the current FilteredPersonList
+ * Represents a change in the current schedule list
  */
 public class ScheduleListChangedEvent extends BaseEvent {
 
     private final ObservableList<Schedule> currentList;
 
-    public ScheduleListChangedEvent(ObservableList<Schedule> currentFilteredList) {
-        this.currentList = currentFilteredList;
+    public ScheduleListChangedEvent(ObservableList<Schedule> currentList) {
+        this.currentList = currentList;
     }
 
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
-    }
-
-    public ObservableList<Schedule> getCurrentScheduleList() {
-        return currentList;
     }
 }

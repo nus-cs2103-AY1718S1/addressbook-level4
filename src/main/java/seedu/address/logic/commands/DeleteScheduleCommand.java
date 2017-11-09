@@ -6,12 +6,14 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.ScheduleListChangedEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 
 //@@author limcel
 /**
- * Deletes a schedule identified using it's last displayed index from the address book.
+ * Deletes a schedule identified from the address book's schedule list.
  */
 public class DeleteScheduleCommand extends Command {
 
@@ -33,6 +35,7 @@ public class DeleteScheduleCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+        Model modelManager = new ModelManager();
         ObservableList<Schedule> lastShownList = model.getScheduleList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -43,7 +46,7 @@ public class DeleteScheduleCommand extends Command {
 
         try {
             model.removeSchedule(scheduleToDelete);
-            EventsCenter.getInstance().post(new ScheduleListChangedEvent(model.getScheduleList()));
+            EventsCenter.getInstance().post(new ScheduleListChangedEvent(modelManager.getScheduleList()));
         } catch (ScheduleNotFoundException e) {
             assert false : "The target schedule cannot be missing";
         }

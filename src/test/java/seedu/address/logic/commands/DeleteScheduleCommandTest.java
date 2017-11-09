@@ -24,7 +24,7 @@ import seedu.address.model.schedule.Schedule;
 
 //@@author limcel
 /**
- * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
+ * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteScheduleCommand}.
  */
 public class DeleteScheduleCommandTest {
 
@@ -44,25 +44,6 @@ public class DeleteScheduleCommandTest {
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.removeSchedule(scheduleToDelete);
-
-        assertCommandSuccess(deleteScheduleCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_validIndexFilteredList_success() throws Exception {
-
-        Calendar calendar = Calendar.getInstance();
-        Schedule newSchedule = new Schedule(ALICE.getName().toString(), calendar);
-        model.addSchedule(newSchedule);
-        Schedule scheduleToDelete = model.getScheduleList().get(INDEX_FIRST_SCHEDULE.getZeroBased());
-        DeleteScheduleCommand deleteScheduleCommand = prepareCommand(INDEX_FIRST_SCHEDULE);
-
-        String expectedMessage = String.format(DeleteScheduleCommand.MESSAGE_DELETE_SCHEDULE_SUCCESS,
-                scheduleToDelete);
-
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.removeSchedule(scheduleToDelete);
-        showNoSchedule(expectedModel);
 
         assertCommandSuccess(deleteScheduleCommand, model, expectedMessage, expectedModel);
     }
@@ -113,7 +94,7 @@ public class DeleteScheduleCommandTest {
     }
 
     /**
-     * Updates {@code model}'s filtered list to show no schedule.
+     * Updates {@code model}'s list to show no schedule.
      */
     private void showNoSchedule(Model model) {
         assert model.getScheduleList().isEmpty();
