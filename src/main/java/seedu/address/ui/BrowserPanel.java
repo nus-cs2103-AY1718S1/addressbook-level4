@@ -81,6 +81,10 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     //@@author martyn-wong
+    /***
+     * Loads google map of person
+     * @param person
+     */
     private void loadPersonMap(ReadOnlyPerson person) throws CommandException {
         if (personSelected == null) {
             throw new CommandException("Please select a person");
