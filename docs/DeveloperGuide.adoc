@@ -978,8 +978,11 @@ The `personListView` in `PersonListPanel` will subsequently scroll to the person
 
 ==== Responsive Split Pane
 
-The split pane which separates the contact list from the other UI components is responsive;
-its divider is automatically maintained at the optimal position when window size changes.
+The split pane which separates the contact list from the other UI components is responsive.
+Its divider is automatically maintained at the optimal position when the window size changes.
+
+This is achieved by setting up listeners to the property of the window. The divider will be repositioned when the listener
+detects any changes in the window property.
 
 // end::uiImprovements[]
 
