@@ -763,14 +763,14 @@ Alternatively, it may also be possible to permanently display all fields in each
 //tag::Calendar[]
 === Opening Calendar [Since v1.3]
 
-`CalendarCommand` which reside in `Logic` will  open up a new browser webpage in the `BrowserPanel` that shows calendar for the entire year. The webpage will display the calendar from January to December, inclusive of public holidays.
+`CalendarCommand` which reside in `Logic` will  open up a new browser webpage in the `BrowserPanel` that shows calendar for the entire year. The webpage will display the calendar from January to December, inclusive of public holidays.User are also able to navigate to other website that show useful information such as weather, time zone and more.
 
-The sequence diagram of `CalendarCommand` in _Figure 4.6.1_ below indicates the sequence diagram of the calendar function.
+The sequence diagram of `CalendarCommand` in _Figure 4.4.1_ below indicates the sequence diagram of the calendar function.
 
 image::SequenceDiagramCalendar.PNG[width="800"]
-_Figure 4.6.1 : Clenader sequence diagram_
+_Figure 4.4.1 : Clenader sequence diagram_
 
-Upon taking in `CalendarCommand`  in the command line, a new `ShowCalendarRequestEvent` is posted by the `EventsCenter` class to its `EventBus`, as shown in _Figure 4.6.2_. In addition , user are bypass `CalendarCommand` by pressing on `F2` key to post `ShowCalendarRequestEvent` thus allow user to launch calendar webpage via command line or via accelerators.
+Upon taking in `CalendarCommand`  in the command line, a new `ShowCalendarRequestEvent` is posted by the `EventsCenter` class to its `EventBus`, as shown in _Figure 4.4.2_.  In addition , user are able  bypass `CalendarCommand` by pressing on `F2` key to post `ShowCalendarRequestEvent` thus allow user to launch calendar webpage via command line or via accelerators.
 
 [source,java]
 ----
@@ -784,17 +784,17 @@ public class CalendarCommand extends Command {
 }
 
 ----
-_Figure 4.6.2: Code section in CalendarCommand.java_
+_Figure 4.4.2: Code section in CalendarCommand.java_
 
-The component diagram in _Figure 4.6.3_ below indicates the interactions within the Logic component for the execution of calendar command.
+The component diagram in _Figure 4.4.3_ below indicates the interactions within the Logic component for the execution of calendar command.
 
-image::CalendarCommandComponentDiagram[width="800"]
-_Figure 4.6.3 : Clenader sequence diagram_
+image::CalendarCommandComponentDiagram.PNG[width="800"]
+_Figure 4.4.3 : Clenader sequence diagram_
 
 
 
 The  `BrowserPanel`  which reside in `UI` will handle the event of `ShowCalendarRequestEvent`
-as shown in _Figure 4.6.4_:
+as shown in _Figure 4.4.4_:
 [source,java]
 ----
 public class BrowserPanel extends UiPart<Region> {
@@ -805,13 +805,13 @@ public class BrowserPanel extends UiPart<Region> {
    }
 }
 ----
-_Figure 4.6.4: Code section in BrowserPanel.java_
+_Figure 4.4.4: Code section in BrowserPanel.java_
 
-The method `loadCalendar` will pass the calendar url to `BrowserPanel` to open up calendar website in `BrowserPanel`. The outcome of successful launching of calendar webpage in browser is shown in _Figure 4.6.5_:
+The method `loadCalendar` will pass the calendar url to `BrowserPanel` to open up calendar website in `BrowserPanel`. The outcome of successful launching of calendar webpage in browser is shown in _Figure 4.4.5_:
 
 image::CalendarCommand.png[width="800"]
 
-_Figure 4.6.5: Output of `CalendarCommand.java` execution_
+_Figure 4.4.5: Output of `CalendarCommand.java` execution_
 
 ==== Design Considerations for `CalendarCommand`
 
@@ -989,7 +989,7 @@ _Figure 4.8.3: Code section in Schedule.java_
 
 `EmailCommand` utilise `Desktop` to launch a email platform for users to send email to multiple contacts. _Figure 4.9.1_ below indicates the sequence diagram that illsutrate how the components interact in the scenario where the user issues the email command.
 
-image::SequenceDiagramEmail.PNG[width="800"]
+image::SequenceDiagramEmail.PNG[width="500"]
 _Figure 4.9.1: Component interactions for email function_
 
 User will first have to key in indexes of the contact. `Logic` will use `AddressBookParser` class to parse user command. `ParseException` will be thrown in `EmailCommandParser` when there is detection of illegal value.By using a `Set` to store the indices inputed by user, this will prevent duplication of indicies. Also, Figure 4.9.2_ below indicates the parsing of user input in `EmailCommandParser`.
@@ -1011,7 +1011,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
 
 ----
 
-A `Command` object will be executed by `Logic Manger`.During command excution, a filtered person list will be extracted from `Model`. The emails extracted from the filtered person list will be stored in a `recipientList` as shown in Figure 4.9.3_ .'Desktop` class will be used to send email using `Desktop.Action.Mail` baed on recipientList.
+A `Command` object will be executed by `Logic Manger`.During command excution, a filtered person list will be extracted from `Model`. The emails extracted from the filtered person list will be stored in a `recipientList` as shown in Figure 4.9.3_ .`Desktop` class will be used to send email using `Desktop.Action.Mail` baed on recipientList.
 
 [source,java]
 ----
@@ -1033,8 +1033,7 @@ image::LogicComponentSequenceDiagramEmail.PNG[width="800"]
 _Figure 4.9.4: Component interactions inside Logic Component when user issue email command_
 
 
-
-The outcome of successful launching of email platform to send email to multiple contacts is shown in _Figure 4.9.5:
+The outcome of successful launching of email platform to send email to multiple contacts is shown in _Figure 4.9.5.
 
 image::EmailCommand.PNG[width="800"]
 _Figure 4.9.5: Output of `EmailCommand.java` execution_
