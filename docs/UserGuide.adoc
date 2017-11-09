@@ -583,7 +583,7 @@ image::popupwindow.PNG[width="300"]
 Figure 7.2.2
 
 After adding an event, the Calendar will be populated with a colour over the chosen date of the Event. The day that has an event will be shown as seen in Figure 7.2.3 below.
-The calendar will also be populated after adding an event through the link:#62-adding-an-event--addevent[Add Event Command].
+The calendar will also be populated after adding an event through the link:#adding-an-event-code-addevent-code[Add Event Command].
 
 image::populatecalendar.PNG[width="700"]
 Figure 7.2.3

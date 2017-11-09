@@ -944,7 +944,97 @@ Figure 5.8.2 What the user sees
 //tag::calendar[]
 === Calendar mechanism
 
-The Calendar mechanism is facilitated by the `AnchorPaneNode` class.
+The Calendar mechanism is facilitated by the `AnchorPaneNode` class. It is then created and populated GridPanes and VBox.
+
+----
+    public Calendar(YearMonth yearMonth, ObservableList<ReadOnlyEvent> eventList) {
+        currentYearMonth = yearMonth;
+        // Create the calendar grid pane
+        GridPane calendar = new GridPane();
+        calendar.setPrefSize(600, 400);
+        // Create rows and columns with anchor panes for the calendar
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 7; j++) {
+                AnchorPaneNode ap = new AnchorPaneNode();
+                ap.setPrefSize(200, 200);
+                calendar.add(ap, j, i);
+                allCalendarDays.add(ap);
+                ap.getStyleClass().add("calendar-color");
+            }
+        }
+
+        for (ReadOnlyEvent event: eventList) {
+            allEvents.add(event);
+        }
+
+        // Days of the week labels
+        Text[] dayNames = new Text[]{ new Text("Sunday"), new Text("Monday"),
+                                      new Text("Tuesday"), new Text("Wednesday"), new Text("Thursday"),
+                                      new Text("Friday"), new Text("Saturday") };
+
+        GridPane dayLabels = new GridPane();
+        dayLabels.setPrefWidth(600);
+        Integer col = 0;
+        for (Text txt : dayNames) {
+            txt.getStyleClass().add("calendar-color");
+            AnchorPane ap = new AnchorPane();
+            ap.setPrefSize(200, 10);
+            ap.setBottomAnchor(txt, 5.0);
+            ap.getChildren().add(txt);
+            dayLabels.add(ap, col++, 0);
+        }
+
+        // Create calendarTitle and buttons to change current month
+        calendarTitle = new Text();
+        calendarTitle.getStyleClass().add("calendar-color");
+        Button previousMonth = new Button("<");
+        previousMonth.setOnAction(e -> previousMonth());
+        Button nextMonth = new Button(">");
+        nextMonth.setOnAction(e -> nextMonth());
+        HBox titleBar = new HBox(previousMonth, calendarTitle, nextMonth);
+        titleBar.setSpacing(5);
+        titleBar.setAlignment(Pos.BASELINE_CENTER);
+        // Populate calendar with the appropriate day numbers
+        populateCalendar(yearMonth, allEvents);
+        // Create the calendar view
+        view = new VBox(titleBar, dayLabels, calendar);
+    }
+----
+
+The mechanism behind the process of adding an event from the dialog box is shown in Figure 5.9.1 below.
+
+image::dialogaddeventsequencediagram.PNG[width="800"]
+
+From the startDialog method in `AnchorPaneNode` class, after receiving a valid Event, an `AddEventRequestEvent` object will be posted to `EventsCenter`.
+Then with the `@Subscribe` function, a handleAddEvent() method in `ModelManager` will be called to addEvent of the `AddressBook` object. The following code snippets
+shows the key implementation of how an Event object is added to the addressbook.
+
+----
+   dialog.setResultConverter(dialogButton -> {
+        if (dialogButton == button) {
+                return new BuildEvent().withName(text1.getText()).withDate(date).withAddress(text2.getText()).build();
+            }
+            return null;
+        });
+
+        Optional<Event> result = dialog.showAndWait();
+        result.ifPresent(event -> {
+            EventsCenter.getInstance().post(new AddEventRequestEvent(event));
+   });
+----
+
+----
+    @Subscribe
+    private void handleAddEvent(AddEventRequestEvent event) throws DuplicateEventException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        addressBook.addEvent(event.event);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        indicateAddressBookChanged();
+    }
+----
+
+
+
 
 ==== Design Considerations
 
