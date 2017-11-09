@@ -468,7 +468,7 @@ Uploads photo of specified image file path to the 2nd person in the address book
 === Delete photo image of a contact : `dphoto`
 (added in v1.5)
 
-You can delete the photo of a contact if the photo is outdated. You can do so with the following command. +
+You can delete the photo of a contact if the photo is outdated or if you mistakenly uploaded the wrong photo. You can do so with the following command. +
 Format: `dphoto INDEX` or `dp INDEX`
 
 ****
