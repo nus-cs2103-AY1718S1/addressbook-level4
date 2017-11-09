@@ -64,7 +64,7 @@ public class PersonListPanel extends UiPart<Region> {
     }
 
     public Optional<HashMap<String, String>> getTagColors() {
-        if (personListView.getItems().isEmpty()){
+        if (personListView.getItems().isEmpty()) {
             return Optional.empty();
         }
         return personListView.getItems().get(1).getTagColors();

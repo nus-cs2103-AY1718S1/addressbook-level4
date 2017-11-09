@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 
 import org.controlsfx.control.textfield.AutoCompletionBinding;
