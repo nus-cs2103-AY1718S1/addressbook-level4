@@ -29,11 +29,13 @@ e.g. entering "l" will also return a list of persons in the address book
 
 #End of Extract#
 
-----
+---
 
 ==== Justification
 
 To make it more convenient for experienced users
+
+---
 
 ==== Implementation
 
@@ -45,7 +47,7 @@ image::shortcut-example.png[width="800"]
 
 #End of Extract#
 
- ----
+---
 
 === Design Considerations
 
@@ -100,6 +102,7 @@ people is then continually updated, before it is finally returned to the user
 ---
 
 #End of Extract#
+---
 
 === Enhancement Proposed: Find Nearest Meeting Location
 
