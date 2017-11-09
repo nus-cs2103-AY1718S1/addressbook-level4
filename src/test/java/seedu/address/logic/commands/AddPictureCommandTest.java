@@ -30,7 +30,7 @@ public class AddPictureCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_validIndexUnfilteredList_success() throws Exception {
+    public void execute_validIndexUnfilteredListInvalidPath_success() throws Exception {
         ReadOnlyPerson personToUpdate = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         AddPictureCommand addPictureCommand = prepareCommand(INDEX_FIRST_PERSON);
 
@@ -39,6 +39,24 @@ public class AddPictureCommandTest {
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.addProfilePicture(personToUpdate);
+
+        assertCommandSuccess(addPictureCommand, model, expectedMessage, expectedModel);
+        assertTrue(personToUpdate.getAsText().equals(model.getFilteredPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased()).getAsText()));
+    }
+
+    @Test
+    public void execute_validIndexUnfilteredListValidPath_success() throws Exception {
+        ReadOnlyPerson personToUpdate = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        AddPictureCommand addPictureCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(AddPictureCommand.MESSAGE_ADDPIC_SUCCESS, personToUpdate.getName());
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.addProfilePicture(personToUpdate);
+        SetPathCommand setPathCommand = prepareSetPathCommand("src/test/resources/TestProfilePics/");
+        setPathCommand.execute();
 
         assertCommandSuccess(addPictureCommand, model, expectedMessage, expectedModel);
         assertTrue(personToUpdate.getAsText().equals(model.getFilteredPersonList()
@@ -95,6 +113,15 @@ public class AddPictureCommandTest {
         AddPictureCommand addPictureCommand = new AddPictureCommand(index);
         addPictureCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return addPictureCommand;
+    }
+
+    /**
+     * Returns a {@code SetPathCommand} with the parameter {@code path}.
+     */
+    private SetPathCommand prepareSetPathCommand(String path) {
+        SetPathCommand setPathCommand = new SetPathCommand(path);
+        setPathCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return setPathCommand;
     }
 
 }
