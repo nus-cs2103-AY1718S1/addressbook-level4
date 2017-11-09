@@ -467,11 +467,11 @@ The index *must be a positive integer* `1, 2, 3, ...`
 // end::remark[]
 
 // tag::batch[]
-=== Deleting all persons with a particular tag : `batch` [Since v1.2]
+=== Delete all patients with any of the following tags : `batch` [Since v1.2]
 
-You can delete multiple contacts by tags +
-*Format:* `batch TAG` +
-*Shorthand format:* `b TAG`
+You can delete multiple contacts who contain a single specified tag. Or, you may specify multiple tags and MedNus will perform the same operation for all of these tags. +
+*Format:* `batch TAG TAG TAG...` +
+*Shorthand format:* `b TAG TAG...`
 
 *Example:*
 
@@ -493,6 +493,7 @@ You can copy a patient's email address to your clipboard +
 
 image::copyexample.png[width="800"]
     Figure 5: Copy Command Usage Example
+
 // end::copy[]
 
 === Adding a person's relationships: `relation` [Since v1.5]
