@@ -17,6 +17,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FbCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -28,12 +29,16 @@ import seedu.address.logic.commands.person.AddCommand;
 import seedu.address.logic.commands.person.DeleteCommand;
 import seedu.address.logic.commands.person.EditCommand;
 import seedu.address.logic.commands.person.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.person.EmailCommand;
 import seedu.address.logic.commands.person.FindCommand;
+import seedu.address.logic.commands.person.FindTagCommand;
+import seedu.address.logic.commands.person.GMapCommand;
 import seedu.address.logic.commands.person.ListCommand;
 import seedu.address.logic.commands.person.SelectCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
 import seedu.address.model.property.NameContainsKeywordsPredicate;
+import seedu.address.model.property.TagContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -63,6 +68,38 @@ public class AddressBookParserTest {
                 DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
+
+    //@@author dennaloh
+    @Test
+    public void parseCommand_fb() throws Exception {
+        FbCommand command = (FbCommand) parser.parseCommand(
+                FbCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new FbCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_gMap() throws Exception {
+        GMapCommand command = (GMapCommand) parser.parseCommand(
+                GMapCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new GMapCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_findTag() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        FindTagCommand command = (FindTagCommand) parser.parseCommand(
+                FindTagCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindTagCommand(new TagContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommand_email() throws Exception {
+        EmailCommand command = (EmailCommand) parser.parseCommand(
+                EmailCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new EmailCommand(INDEX_FIRST_PERSON), command);
+    }
+    //@@author
+
     //@@author junyango
     @Test
     public void parseCommand_deleteEvent() throws Exception {

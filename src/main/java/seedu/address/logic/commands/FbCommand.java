@@ -40,12 +40,12 @@ public class FbCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToSearchFor = lastShownList.get(targetIndex.getZeroBased());
+        ReadOnlyPerson personToSearch = lastShownList.get(targetIndex.getZeroBased());
 
-        String fbUrl = model.getFbUrl(personToSearchFor);
+        String fbUrl = model.getFbUrl(personToSearch);
         model.openUrl(fbUrl);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, personToSearchFor));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, personToSearch));
     }
 
     @Override

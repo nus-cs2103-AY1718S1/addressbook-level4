@@ -1,119 +1,142 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.ui.testutil.EventsCollectorRule;
 
+//@@author dennaloh
 /**
- * Contains integration tests (interaction with the Model) and unit tests for {@code FbCommand}.
+ * Contains integration tests (interaction with the Model) for {@code FbCommand}.
  */
 public class FbCommandTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model;
 
-    @Test
-    public void execute_validIndexUnfilteredList_success() throws Exception {
-        ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        FbCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-
-        String expectedMessage = String.format(FbCommand.MESSAGE_SUCCESS, personToDelete);
-
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
-
-        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     }
 
     @Test
-    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        FbCommand deleteCommand = prepareCommand(outOfBoundIndex);
+    public void execute_validIndexUnfilteredList_success() {
+        Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertExecutionSuccess(INDEX_FIRST_PERSON);
+        assertExecutionSuccess(INDEX_THIRD_PERSON);
+        assertExecutionSuccess(lastPersonIndex);
     }
 
     @Test
-    public void execute_validIndexFilteredList_success() throws Exception {
+    public void execute_invalidIndexUnfilteredList_failure() {
+        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_validIndexFilteredList_success() {
         showFirstPersonOnly(model);
 
-        ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        FbCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-
-        String expectedMessage = String.format(FbCommand.MESSAGE_SUCCESS, personToDelete);
-
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
-        showNoPerson(expectedModel);
-
-        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+        assertExecutionSuccess(INDEX_FIRST_PERSON);
     }
 
     @Test
-    public void execute_invalidIndexFilteredList_throwsCommandException() {
+    public void execute_invalidIndexFilteredList_failure() {
         showFirstPersonOnly(model);
 
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        Index outOfBoundsIndex = INDEX_SECOND_PERSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+        assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        FbCommand deleteCommand = prepareCommand(outOfBoundIndex);
-
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
-        FbCommand deleteFirstCommand = new FbCommand(INDEX_FIRST_PERSON);
-        FbCommand deleteSecondCommand = new FbCommand(INDEX_SECOND_PERSON);
+        FbCommand fbFirstCommand = new FbCommand(INDEX_FIRST_PERSON);
+        FbCommand fbSecondCommand = new FbCommand(INDEX_SECOND_PERSON);
 
         // same object -> returns true
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
+        assertTrue(fbFirstCommand.equals(fbFirstCommand));
 
         // same values -> returns true
-        FbCommand deleteFirstCommandCopy = new FbCommand(INDEX_FIRST_PERSON);
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
+        FbCommand fbFirstCommandCopy = new FbCommand(INDEX_FIRST_PERSON);
+        assertTrue(fbFirstCommand.equals(fbFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(deleteFirstCommand.equals(1));
+        assertFalse(fbFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(deleteFirstCommand.equals(null));
+        assertFalse(fbFirstCommand.equals(null));
 
         // different person -> returns false
-        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+        assertFalse(fbFirstCommand.equals(fbSecondCommand));
     }
 
     /**
-     * Returns a {@code DeleteCommand} with the parameter {@code index}.
+     * Executes a {@code FbCommand} with the given {@code index}, and checks that {@code JumpToListRequestEvent}
+     * is raised with the correct index.
+     */
+    private void assertExecutionSuccess(Index index) {
+        FbCommand fbCommand = prepareCommand(index);
+
+        try {
+            CommandResult commandResult = fbCommand.execute();
+            assertEquals(String.format(FbCommand.MESSAGE_SUCCESS, index.getOneBased()),
+                    commandResult.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+
+        JumpToListRequestEvent lastEvent = (JumpToListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
+    }
+
+    /**
+     * Executes a {@code FbCommand} with the given {@code index}, and checks that a {@code CommandException}
+     * is thrown with the {@code expectedMessage}.
+     */
+    private void assertExecutionFailure(Index index, String expectedMessage) {
+        FbCommand fbCommand = prepareCommand(index);
+
+        try {
+            fbCommand.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException ce) {
+            assertEquals(expectedMessage, ce.getMessage());
+            assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
+        }
+    }
+
+    /**
+     * Returns a {@code FbCommand} with parameters {@code index}.
      */
     private FbCommand prepareCommand(Index index) {
-        FbCommand deleteCommand = new FbCommand(index);
-        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return deleteCommand;
-    }
-
-    /**
-     * Updates {@code model}'s filtered list to show no one.
-     */
-    private void showNoPerson(Model model) {
-        model.updateFilteredPersonList(p -> false);
-
-        assert model.getFilteredPersonList().isEmpty();
+        FbCommand fbCommand = new FbCommand(index);
+        fbCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return fbCommand;
     }
 }
