@@ -106,15 +106,19 @@ Here’s how you can use them:
 ====
 
 === Viewing help : `help` `Since v1.0`
-
+//TODO: add before and after screenshots for features
 Format: `help`
 
-// tag::optionalinputtagstwo[]
 === Adding a person: `add` `Since v1.0`
 
+[NOTE]
+====
+Optional fields will be explained in greater detail in the next section.
+====
+
 Adds a person to cherBook +
-Format: `add n/NAME p/[student/(STUDENT_NUMBER)] parent/(PARENT_NUMBER) [e/EMAIL] [a/ADDRESS] f/FORMCLASS g/GRADES [c/POSTALCODE] [t/TAG]...` +
-Shorthand: `a n/NAME p/[student/(STUDENT_NUMBER)] parent/(PARENT_NUMBER) [e/EMAIL] [a/ADDRESS] f/FORMCLASS g/GRADES [c/POSTALCODE] [t/TAG]...`
+Format: `add n/NAME [p/(STUDENT_NUMBER)] pp/(PARENT_NUMBER) [e/EMAIL] [a/ADDRESS] f/FORMCLASS g/GRADES [c/POSTALCODE] [t/TAG]...` +
+Shorthand: `a n/NAME [p/(STUDENT_NUMBER)] pp/(PARENT_NUMBER) [e/EMAIL] [a/ADDRESS] f/FORMCLASS g/GRADES [c/POSTALCODE] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0) +
@@ -126,10 +130,33 @@ Remark cannot be add through the add command and has to be done though the remar
 
 Examples:
 
-* `add n/John Doe p/parent/97979797 e/johnd@example.com a/John street, block 123, #01-01 f/12S11 g/123.0 c/203904`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/student/97272030 parent/97979797 f/B12 g/100.0 t/criminal`
-* `a n/Jane Doe p/parent/97979791 e/janed@example.com a/Jane street, block 456, #01-01 f/6C g/98`
-* `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/student/97272231 parent/97979997 f/12A2 g/66 t/criminal`
+* `add n/John Doe pp/97979797 e/johnd@example.com a/John street, block 123, #01-01 f/12S11 g/123.0 c/203904`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/97272030 pp/97979797 f/B12 g/100.0 t/criminal`
+* `a n/Jane Doe pp/97979791 e/janed@example.com a/Jane street, block 456, #01-01 f/6C g/98`
+* `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/97272231 pp/97979997 f/12A2 g/66 t/criminal`
+
+// tag::optionalinputtagstwo[]
+
+=== Optional fields: `add` `Since v1.3`
+
+You can find a list of optional input fields for the add command in the table below.
+
+[NOTE]
+====
+When you do not enter any of the optional fields, a message will be generated to inform you that the particular field is not recorded.
+The messages are shown in the table below.
+====
+
+[width="100%",cols="10%,<10%,<80%",options="header",]
+|=======================================================================
+|Optional Field |Prefix | Example of user's input in cherBook's command box without the optional field
+| Student Phone Number | p/ +| add n/John pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 t/Smart +
+| Address | a/ + | add n/John p/97602611 pp/97272700 e/John@gmail.com f/6C g/91 c/600321 t/Smart +
+| Postal Code | c/  | add n/John p/97602611 pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 t/Smart +
+| Email | e/ + | add n/John p/97602611 pp/97272700 a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 t/Smart +
+| Tag | t/ + | add n/John p/97602611 pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 +
+|=======================================================================
+
 // end::optionalinputtagstwo[]
 
 === Listing all persons : `list` `Since v1.0`
@@ -141,8 +168,8 @@ Shorthand: `l`
 === Editing a person : `edit` `Since v1.0`
 
 Edits an existing person in cherBook. +
-Format: `edit INDEX [n/NAME] [p/student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)] [e/EMAIL] [a/ADDRESS] [f/FORMCLASS] [g/GRADES] [c/POSTALCODE] [t/TAG]...` +
-Shorthand: `e INDEX [n/NAME] [p/student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)] [e/EMAIL] [a/ADDRESS] [f/FORMCLASS] [g/GRADES] [c/POSTALCODE] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/(STUDENT_NUMBER)] [pp/(PARENT_NUMBER)] [e/EMAIL] [a/ADDRESS] [f/FORMCLASS] [g/GRADES] [c/POSTALCODE] [t/TAG]...` +
+Shorthand: `e INDEX [n/NAME] [p/(STUDENT_NUMBER)] [pp/(PARENT_NUMBER)] [e/EMAIL] [a/ADDRESS] [f/FORMCLASS] [g/GRADES] [c/POSTALCODE] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -158,11 +185,11 @@ Remark cannot be edited and have to be done through the remark command.
 
 Examples:
 
-* `edit 1 p/parent/91234567 e/johndoe@example.com c/309428` +
+* `edit 1 pp/91234567 e/johndoe@example.com c/309428` +
 Edits the parent phone number, email address and postal code of the 1st person to be `91234567`, `johndoe@example.com` and `309428` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-* `e 1 p/student/91234567 parent/91242271 e/johndoe@example.com` +
+* `e 1 p/91234567 pp/91242271 e/johndoe@example.com` +
 Edits the student and parent phone number, and email address of the 1st person to be `91234567`, `91242271` and `johndoe@example.com` respectively.
 * `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
@@ -291,6 +318,26 @@ Displays all your schedules in the command box.
 Displays all your schedules in the command box.
 // end::viewschedule[]
 
+=== Deleting a schedule : `deleteschedule` `Since v1.5`
+
+Deletes the specified schedule from cherBook. +
+Format: `deleteschedule INDEX` +
+Shorthand: `dsch INDEX`
+
+****
+* Deletes the schedule at the specified `INDEX`.
+* The index refers to the schedule shown in schedules list.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `viewschedule` +
+`deleteschedule 2` +
+Deletes the 2nd schedule in the results of the `viewschedule` command which returns a list of schedules.
+* `viewsch` +
+`dsch 1` +
+Deletes the 1st schedule in the results of the `viewsch` command which returns a list of schedules.
 
 === Selecting a person : `select` `Since v1.0`
 
@@ -507,7 +554,6 @@ There are two tabs for you to choose from, line or bar and can be switch by usin
 The details changes when another student from a different class is selected.
 You can use these graph to better understand the trends of `grades` in a glance to easily see who are the weaker or stronger students.
 
-
 // end::graphpanel[]
 
 === Saving the data
@@ -525,6 +571,7 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 | add | `a` +| `a n/NAME student/STUDENT_NUMBER parent/PARENT_NUMBER e/EMAIL a/ADDRESS c/POSTALCODE [t/TAG]...` +
 | clear | `c` + | `c` +
 | delete | `d`  | `d 3` +
+| deleteschedule | `dsch`  | `dsch 1` +
 | edit | `e` + | `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...` +
 | find | `f` + | `f KEYWORD [MORE_KEYWORDS]` +
 | findtags | `ft` + | `ft KEYWORD [MORE_KEYWORDS]` +
@@ -537,11 +584,12 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 | undo | `u` + | `u` +
 | redo | `r` + | `r` +
 | remark | `rm` + | `rm Index [rm/REMARK]` +
+| viewschedule | `viewsch` + | `viewsch` +
 |=======================================================================
 // end::commandshortcuts[]
 
 == FAQ
-
+//TODO: Update and Populate FAQ
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
@@ -614,7 +662,7 @@ In version v1.3, you are be able to:
 In version v1.4, you are be able to:
 
 * View statistics of the current list of students from the `Statistics Panel`
-* Use the `ScheduleComand` to add a schedule into your schedule list
+* Use the `ScheduleCommand` to add a schedule into your schedule list
 * Have automated assignment of different colours to different tags according to suitable RGB values
 
 === Features added in v1.5
@@ -622,6 +670,7 @@ In version v1.5, you are be able to:
 
 * Use the `TabCommand` to display different graph types (Line/Bar Chart) of the selected student's academic grades
 * Use the `ViewScheduleCommand` to view all your schedules in a list sorted by date and time
+* Use the `DeleteScheduleCommand` to delete schedules that are overdue
 
 === Features Coming in v2.0
 In version v2.0, users will be able to:
