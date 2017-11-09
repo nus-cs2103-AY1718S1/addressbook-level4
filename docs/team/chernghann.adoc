@@ -84,7 +84,7 @@ include::../DeveloperGuide.adoc[tag=calendar]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc
+include::../UserGuide.adoc[tag=add]
 
 #End of Extract#
 
@@ -92,18 +92,9 @@ include::../UserGuide.adoc
 
 ==== Justification
 
-
-
-==== Implementation
-
----
-#Start of Extract [from: Developer Guide]#
-
-include::../DeveloperGuide.adoc
-
-#End of Extract#
-
----
+As university students, most of us would have school emails and personal emails. An extra field for the user to store an extra set of
+emails is definitely useful such that can contact the particular contact at a different email.
+Same idea applies to having an additional Home Number Field to be implemented for adding of a person into The Myth's Book.
 
 === Enhancement Proposed: Sending of Text Messages
 
@@ -114,7 +105,3 @@ include::../DeveloperGuide.adoc
 * Acceptance Testing
 - Provide suggestions for improvement (Pull request https://github.com/CS2103AUG2017-W09-B1/main/issues/121#event-1330982844[#121])
 - Found a bug in implementation (Pull request https://github.com/CS2103AUG2017-W09-B1/main/issues/113[#113])
-
-
-== Project: Ping!
-
