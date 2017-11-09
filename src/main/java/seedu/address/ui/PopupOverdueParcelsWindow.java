@@ -42,11 +42,11 @@ public class PopupOverdueParcelsWindow extends UiPart<Region> {
         contentPlaceholder.setText(CONTENT_TEXT + numOverdueParcels);
     }
 
-    private int getNumOverdueParcels (ObservableList<ReadOnlyParcel> uncompletedParcels){
+    private int getNumOverdueParcels (ObservableList<ReadOnlyParcel> uncompletedParcels) {
         int numOverdueParcels = 0;
 
-        for(int i = 0 ; i < uncompletedParcels.size() ; i++) {
-            if(uncompletedParcels.get(i).getStatus().equals(Status.OVERDUE)){
+        for (int i = 0 ; i < uncompletedParcels.size() ; i++) {
+            if (uncompletedParcels.get(i).getStatus().equals(Status.OVERDUE)) {
                 numOverdueParcels++;
             }
         }

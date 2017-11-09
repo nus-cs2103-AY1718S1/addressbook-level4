@@ -77,7 +77,7 @@ public class UiManager extends ComponentManager implements Ui {
     /**
      * Checks for presence of overdue parcels in parcel list
      */
-    public boolean overDueParcels (ObservableList<ReadOnlyParcel> uncompletedParcelList){
+    public boolean overDueParcels (ObservableList<ReadOnlyParcel> uncompletedParcelList) {
 
         // if there are overdue parcels
         for (int i = 0 ; i < uncompletedParcelList.size() ; i++) {
