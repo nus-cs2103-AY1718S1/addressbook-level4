@@ -1,5 +1,8 @@
 package seedu.address.model.parcel;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author kennard123661
@@ -22,7 +25,7 @@ public enum Status {
             "Status can only be PENDING, DELIVERING, COMPLETED or OVERDUE";
 
     /**
-     * Returns a static instance of Status based on the {@param status}.
+     * Returns a static instance of Status based on the {@code status} parameter.
      *
      * @param status can be case-insensitive {@code String} of PENDING, DELIVERING, COMPLETED or OVERDUE.
      * @return one of four possible {@code Status} values.
@@ -39,5 +42,41 @@ public enum Status {
         }
 
         throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
+    }
+
+    /**
+     * Returns an updated Status based on the delivery date of the parcel relative to the today's date.
+     *
+     * @param status the {@code Status} to be updated.
+     * @param date the {@link DeliveryDate} of a parcel.
+     * @return an updated {@code Status}. If {@code Status} is {@code PENDING} or {@code OVERDUE},
+     *         returns {@code PENDING Status} if {@code date} is not after the present date or {@code OVERDUE Status}
+     *         if {@code date} is after the present date. If {@code status} is not {@code OVERDUE} or {@code PENDING},
+     *         returns {@code status}
+     */
+    public static Status getUpdatedInstance(Status status, DeliveryDate date) {
+        switch (status.toString()) {
+        case "PENDING": // fallthrough
+        case "OVERDUE":
+            return getUpdatedInstance(date);
+
+        default:
+            return status;
+        }
+    }
+
+    /**
+     * Returns an updated Status based on the delivery date of the parcel relative to the today's date.
+     *
+     * @param date the {@link DeliveryDate} of a parcel.
+     * @return an updated {@code Status} based on the {@code date}. returns {@code PENDING Status} if {@code date} is
+     * not after the present date and returns {@code OVERDUE Status} if {@code date} is after the present date.
+     */
+    private static Status getUpdatedInstance(DeliveryDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate delivery = LocalDate.parse(date.toString(), formatter);
+        LocalDate present = LocalDate.now();
+
+        return present.isAfter(delivery) ? Status.OVERDUE : Status.PENDING;
     }
 }
