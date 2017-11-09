@@ -45,7 +45,7 @@ include::../DeveloperGuide.adoc[tag=autocomplete]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=group]
+include::../UserGuide.adoc[tag=groups]
 
 #End of Extract#
 
@@ -60,7 +60,7 @@ Groups were added to the addressbook so that the owner could easily filter their
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=group]
+include::../DeveloperGuide.adoc[tag=groups]
 
 #End of Extract#
 
