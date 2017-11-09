@@ -1049,7 +1049,7 @@ be populated with a change in background color.
 The mechanism behind the process of adding an event from the dialog box is shown in Figure 5.9.1 below.
 
 image::dialogaddeventsequencediagram.PNG[width="800"]
-Figure 5.9.1
+Figure 5.9.1 Dialog Add Event Sequence Diagram
 
 From the startDialog method in `AnchorPaneNode` class, after receiving a valid Event, an `AddEventRequestEvent` object will be posted to `EventsCenter`.
 Then with the `@Subscribe` function, a handleAddEvent() method in `ModelManager` will be called to addEvent of the `AddressBook` object. The following code snippets
