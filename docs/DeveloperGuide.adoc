@@ -775,7 +775,7 @@ If you would like to implement such a feature, please do so by adding additional
 
  BatchCommand(TypeOfBatchCommand type, Set<Tag> tagsToDelete)
 
-This is for reasons of structural elegance - we would like the "type of batch command" to be easily extendable. +
+This is for reasons of complying with a Facade design pattern which is used throughout MedNus - particularly in cases where we want to retain polymorphism and support the Open-Closed principle. +
 
 // end::batch[]
 
@@ -860,6 +860,7 @@ corresponding to the new function e.g. +
 
  CopyCommand(NewFunction newFunction, Index targetIndex)
 
+This is for reasons of complying with a Facade design pattern which is used throughout MedNus - particularly in cases where we want to retain polymorphism and support the Open-Closed principle. +
 // end::copy[]
 
 == Documentation
