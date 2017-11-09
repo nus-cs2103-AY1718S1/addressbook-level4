@@ -2,6 +2,10 @@
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
+image::https://travis-ci.org/CS2103AUG2017-T12-B2/main.svg?branch=master[]
+
+___
+
 ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
 endif::[]
