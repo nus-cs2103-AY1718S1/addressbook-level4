@@ -191,13 +191,18 @@ BLOODTYPE is case insensitive.
 // tag::dups[]
 === Showing duplicate persons: `duplicates` [Since v1.3]
 
-You can use duplicates to show a list of people who share the same name. +
+You may use the duplicates command to narrow down patients who share the same name. +
 This makes it convenient for finding and resolving duplicate contacts. +
 *Format:* `duplicates` +
 *Shorthand Format:* `dups`
 
+*Example:*
+
+image::dupsexample.png[width="800"]
+    Figure 5: Duplicates Command Usage Example
+
 [NOTE]
-The results are from case-sensitive comparisons.
+The results are from case-insensitive comparisons.
 // end::dups[]
 
 === Editing a person : `edit`
@@ -462,23 +467,34 @@ The index *must be a positive integer* `1, 2, 3, ...`
 // end::remark[]
 
 // tag::batch[]
-=== Deleting all persons with a particular tag : `batch` [Since v1.2]
+=== Delete all patients with any of the following tags : `batch` [Since v1.2]
 
-You can delete multiple contacts by tags +
-*Format:* `batch TAG` +
-*Shorthand format:* `b TAG`
+You can delete a batch of patients who share a single tag. Or, you may specify multiple tags and MedNus will perform this same batch deletion operation for each of these tags. +
+*Format:* `batch TAG TAG TAG...` +
+*Shorthand format:* `b TAG TAG...`
 
-[WARNING]
-Command can only delete one tag at a time
+*Example:*
+
+image::batchexample.png[width="800"]
+    Figure 5: Batch Command Usage Example
+
+[NOTE]
+If one or more of the specified tags does not exist in MedNus, the command will not be executed.
 // end::batch[]
 
-// tag::batch[]
-=== Copy a person's email address to your clipboard : `copy` [Since v1.4]
+// tag::copy[]
+=== Copy a patient's email address to your clipboard : `copy` [Since v1.4]
 
-You can copy a person's email address to your clipboard +
+You can copy a patient's email address to your clipboard +
 *Format:* `copy INDEX` +
 *Shorthand format:* `c INDEX`
-// end::batch[]
+
+*Example:*
+
+image::copyexample.png[width="800"]
+    Figure 5: Copy Command Usage Example
+
+// end::copy[]
 
 === Adding a person's relationships: `relation` [Since v1.5]
 
