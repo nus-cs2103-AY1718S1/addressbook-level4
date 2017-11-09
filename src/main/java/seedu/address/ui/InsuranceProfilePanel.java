@@ -119,11 +119,13 @@ public class InsuranceProfilePanel extends UiPart<Region> {
                     FileChooser chooser = new FileChooser();
                     chooser.getExtensionFilters().add(extFilter);
                     File openedFile = chooser.showOpenDialog(null);
-                    activateLinkToInsuranceFile();
-
                     if (isFileExists(openedFile)) {
                         try {
+                            insuranceFile =  new File(PDFFOLDERPATH + openedFile.getName());
                             Files.copy(openedFile.toPath(), insuranceFile.toPath());
+                            if (isFileExists(insuranceFile)) {
+                                activateLinkToInsuranceFile();
+                            }
                         } catch (IOException ex) {
                             logger.info("Unable to open at path: " + openedFile.getAbsolutePath());
                         }
