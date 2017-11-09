@@ -79,7 +79,9 @@ public class Person implements ReadOnlyPerson {
         return name.get();
     }
 
-    public void setPhone(Phone phone) { this.phone.set(phone); }
+    public void setPhone(Phone phone) {
+        this.phone.set(phone);
+    }
 
     @Override
     public ObjectProperty<Phone> phoneProperty() {
@@ -91,7 +93,9 @@ public class Person implements ReadOnlyPerson {
         return phone.get();
     }
 
-    public void setEmail(Email email) { this.email.set(email); }
+    public void setEmail(Email email) {
+        this.email.set(email);
+    }
 
     @Override
     public ObjectProperty<Email> emailProperty() {
@@ -103,7 +107,9 @@ public class Person implements ReadOnlyPerson {
         return email.get();
     }
 
-    public void setAddress(Address address) { this.address.set(address); }
+    public void setAddress(Address address) {
+        this.address.set(address);
+    }
 
     @Override
     public ObjectProperty<Address> addressProperty() {
@@ -116,7 +122,9 @@ public class Person implements ReadOnlyPerson {
     }
 
     //@@author keithsoc
-    public void setFavorite(Favorite favorite) { this.favorite.set(requireNonNull(favorite)); }
+    public void setFavorite(Favorite favorite) {
+        this.favorite.set(requireNonNull(favorite));
+    }
 
     @Override
     public ObjectProperty<Favorite> favoriteProperty() {
