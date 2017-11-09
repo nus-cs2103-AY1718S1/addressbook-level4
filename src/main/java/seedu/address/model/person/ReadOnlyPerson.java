@@ -115,6 +115,7 @@ public interface ReadOnlyPerson {
                 && (other.isWhitelisted() == (this.isWhitelisted()))
                 && (other.hasOverdueDebt() == (this.hasOverdueDebt()))
                 && other.getDebt().equals(this.getDebt())
+                && other.getTotalDebt().equals(this.getTotalDebt())
                 && other.getInterest().equals(this.getInterest())
                 && other.getDateBorrow().equals(this.getDateBorrow())
                 && other.getDeadline().equals(this.getDeadline())

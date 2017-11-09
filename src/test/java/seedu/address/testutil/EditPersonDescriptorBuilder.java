@@ -36,6 +36,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setAddress(person.getAddress());
         descriptor.setPostalCode(person.getPostalCode());
         descriptor.setDebt(person.getDebt());
+        descriptor.setTotalDebt(person.getTotalDebt());
         descriptor.setInterest(person.getInterest());
         descriptor.setDeadline(person.getDeadline());
         descriptor.setTags(person.getTags());
@@ -97,6 +98,18 @@ public class EditPersonDescriptorBuilder {
             ParserUtil.parseDebt(Optional.of(debt)).ifPresent(descriptor::setDebt);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("debt is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code totalDebt} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withTotalDebt(String totalDebt) {
+        try {
+            ParserUtil.parseDebt(Optional.of(totalDebt)).ifPresent(descriptor::setTotalDebt);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("total debt is expected to be unique.");
         }
         return this;
     }

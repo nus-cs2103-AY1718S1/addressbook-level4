@@ -51,11 +51,13 @@ public class PersonBuilder {
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             PostalCode defaultPostalCode = new PostalCode(DEFAULT_POSTAL_CODE);
             Debt defaultDebt = new Debt(DEFAULT_DEBT);
+            Debt defaultTotalDebt = new Debt(DEFAULT_DEBT);
             Interest defaultInterest = new Interest(DEFAULT_INTEREST);
             Deadline defaultDeadline = new Deadline(DEFAULT_DEADLINE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultHandphone, defaultHomePhone, defaultOfficePhone, defaultEmail,
                     defaultAddress, defaultPostalCode, defaultDebt, defaultInterest, defaultDeadline, defaultTags);
+            person.setTotalDebt(defaultTotalDebt);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -66,6 +68,11 @@ public class PersonBuilder {
      */
     public PersonBuilder(ReadOnlyPerson personToCopy) {
         this.person = new Person(personToCopy);
+        try {
+            person.setTotalDebt(personToCopy.getTotalDebt());
+        } catch (IllegalValueException ive) {
+            assert false : "Total debt should be valid.";
+        }
     }
 
     /**

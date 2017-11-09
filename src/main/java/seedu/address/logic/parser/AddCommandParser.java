@@ -39,6 +39,8 @@ import seedu.address.model.tag.Tag;
  */
 public class AddCommandParser implements Parser<AddCommand> {
 
+    public static final String MESSAGE_INVALID_DEBT = "Unable to add a person with no debt.";
+
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
      * and returns an AddCommand object for execution.
@@ -63,12 +65,15 @@ public class AddCommandParser implements Parser<AddCommand> {
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             PostalCode postalCode = ParserUtil.parsePostalCode(argMultimap.getValue(PREFIX_POSTAL_CODE)).get();
-            Debt debt = ParserUtil.parseDebt(argMultimap.getValue(PREFIX_DEBT)).get();
             Interest interest = ParserUtil.parseInterest(argMultimap.getValue(PREFIX_INTEREST)).get();
             Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE)).get();
             if (!deadline.value.equals(Deadline.NO_DEADLINE_SET)) {
                 //check if deadline entered is before the date borrowed
                 deadline.checkDateBorrow(new Date());
+            }
+            Debt debt = ParserUtil.parseDebt(argMultimap.getValue(PREFIX_DEBT)).get();
+            if (debt.toNumber() == 0) {
+                throw new ParseException(MESSAGE_INVALID_DEBT);
             }
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 

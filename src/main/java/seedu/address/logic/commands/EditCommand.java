@@ -12,6 +12,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OFFICE_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSTAL_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TOTAL_DEBT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.util.DateUtil.formatDate;
 
@@ -63,6 +64,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_POSTAL_CODE + "POSTAL CODE] "
             + "[" + PREFIX_DEBT + "DEBT] "
+            + "[" + PREFIX_TOTAL_DEBT + "TOTAL DEBT] "
             + "[" + PREFIX_INTEREST + "INTEREST] "
             + "[" + PREFIX_DEADLINE + "DEADLINE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
@@ -75,6 +77,8 @@ public class EditCommand extends UndoableCommand {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_INVALID_TOTAL_DEBT = "Total debt cannot be less than current debt";
+
 
     private final Index targetIndex;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -229,7 +233,6 @@ public class EditCommand extends UndoableCommand {
             this.postalCode = toCopy.postalCode;
             this.debt = toCopy.debt;
             this.totalDebt = toCopy.totalDebt;
-            this.totalDebt = toCopy.totalDebt;
             this.interest = toCopy.interest;
             this.deadline = toCopy.deadline;
             this.tags = toCopy.tags;
@@ -240,7 +243,8 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.handphone, this.homePhone, this.officePhone,
-                    this.email, this.address, this.postalCode, this.debt, this.interest, this.deadline, this.tags);
+                    this.email, this.address, this.postalCode, this.debt, this.totalDebt, this.interest, this.deadline,
+                    this.tags);
         }
 
         public void setName(Name name) {
@@ -362,6 +366,7 @@ public class EditCommand extends UndoableCommand {
                     && getAddress().equals(e.getAddress())
                     && getPostalCode().equals(e.getPostalCode())
                     && getDebt().equals(e.getDebt())
+                    && getTotalDebt().equals(e.getTotalDebt())
                     && getInterest().equals(e.getInterest())
                     && getDeadline().equals(e.getDeadline())
                     && getTags().equals(e.getTags());

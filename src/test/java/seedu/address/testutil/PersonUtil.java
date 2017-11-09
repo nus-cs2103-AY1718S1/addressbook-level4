@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OFFICE_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSTAL_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TOTAL_DEBT;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -24,13 +25,13 @@ public class PersonUtil {
      * Returns an add command string for adding the {@code person}.
      */
     public static String getAddCommand(ReadOnlyPerson person) {
-        return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
+        return AddCommand.COMMAND_WORD + " " + getPersonDetailsForAddCommand(person);
     }
 
     /**
-     * Returns the part of command string for the given {@code person}'s details.
+     * Returns the part of command string for the given {@code person}'s details for {@code add} command.
      */
-    public static String getPersonDetails(ReadOnlyPerson person) {
+    public static String getPersonDetailsForAddCommand (ReadOnlyPerson person) {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + person.getName().fullName + " ");
         sb.append(PREFIX_HANDPHONE + person.getHandphone().value + " ");
@@ -46,5 +47,12 @@ public class PersonUtil {
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
         return sb.toString();
+    }
+
+    /**
+     * Returns the part of command string for the given {@code person}'s details for {@code edit} command.
+     */
+    public static String getPersonDetailsForEditCommand (ReadOnlyPerson person) {
+        return getPersonDetailsForAddCommand(person).concat(PREFIX_TOTAL_DEBT + person.getTotalDebt().toString());
     }
 }

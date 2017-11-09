@@ -36,6 +36,7 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_TOTAL_DEBT = "Total debt cannot be set to zero.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
     /**
@@ -107,7 +108,7 @@ public class ParserUtil {
      * Parses a {@code Optional<String> debt} into an {@code Optional<Debt>} if {@code debt} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Debt> parseDebt(Optional<String> debt) throws IllegalValueException {
+    public static Optional<Debt> parseDebt (Optional<String> debt) throws IllegalValueException {
         requireNonNull(debt);
         return debt.isPresent() ? Optional.of(new Debt(debt.get())) : Optional.empty();
     }
@@ -229,5 +230,20 @@ public class ParserUtil {
         requireNonNull(password);
         String trimmedPassword = password.trim();
         return new Password(trimmedPassword);
+    }
+
+    /**
+     * Parses a {@code Optional<String> totalDebt} into an {@code Optional<Debt>} if {@code totalDebt}
+     * is present.
+     * Meant for parsing for Edit command.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     * @throws IllegalValueException when {@code totalDebt} is 0
+     */
+    public static Optional<Debt> parseTotalDebt(Optional<String> totalDebt) throws IllegalValueException {
+        requireNonNull(totalDebt);
+        if (totalDebt.isPresent() && Double.valueOf(totalDebt.get()) == 0) {
+            throw new IllegalValueException(MESSAGE_INVALID_TOTAL_DEBT);
+        }
+        return totalDebt.isPresent() ? Optional.of(new Debt(totalDebt.get())) : Optional.empty();
     }
 }

@@ -55,8 +55,8 @@ public class MainWindow extends UiPart<Region> {
     private PersonListStartUpPanel personListStartUpPanel;
     private Config config;
     private UserPrefs prefs;
-
     private CommandBox commandBox = null;
+    private HelpWindow helpWindow;
 
     @FXML
     private StackPane infoPanelPlaceholder;
@@ -92,6 +92,8 @@ public class MainWindow extends UiPart<Region> {
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
+
+        helpWindow = new HelpWindow();
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -269,7 +271,6 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
 

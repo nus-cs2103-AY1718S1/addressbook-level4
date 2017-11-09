@@ -24,6 +24,7 @@ public class SelectCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected Person: %1$s";
+    public static final String MESSAGE_EMPTY_LIST_SELECTION_FAILURE = "List is empty!";
     private static final int INDEX_FIRST_PERSON = 1;
 
     private final Index targetIndex;
@@ -44,6 +45,9 @@ public class SelectCommand extends Command {
         Index selectIndex;
 
         if (targetIndex == null) {
+            if (lastShownList.isEmpty()) {
+                throw new CommandException(MESSAGE_EMPTY_LIST_SELECTION_FAILURE);
+            }
             if (model.getSelectedPerson() == null) {
                 selectIndex = Index.fromOneBased(INDEX_FIRST_PERSON);
             } else {

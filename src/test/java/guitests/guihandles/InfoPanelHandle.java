@@ -83,7 +83,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private String lastRememberedPostalCode;
     private String lastRememberedCluster;
     private String lastRememberedDebt;
-    private String lastRememberedtotalDebt;
+    private String lastRememberedTotalDebt;
     private String lastRememberedInterest;
     private String lastRememberedDateBorrow;
     private String lastRememberedDeadline;
@@ -166,7 +166,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     }
 
     public String getTotalDebt() {
-        return debtLabel.getText();
+        return totalDebtLabel.getText();
     }
 
     public String getInterest() {
@@ -226,7 +226,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     }
 
     public String getTotalDebtField() {
-        return debtText.getText();
+        return totalDebtText.getText();
     }
 
     public String getInterestField() {
@@ -262,6 +262,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     public void rememberSelectedPersonDetails() {
         lastRememberedAddress = getAddress();
         lastRememberedDebt = getDebt();
+        lastRememberedTotalDebt = getTotalDebt();
         lastRememberedInterest = getInterest();
         lastRememberedEmail = getEmail();
         lastRememberedName = getName();
@@ -287,6 +288,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
                 || !getHomePhone().equals(lastRememberedHomePhone)
                 || !getOfficePhone().equals(lastRememberedOfficePhone)
                 || !getDebt().equals(lastRememberedDebt)
+                || !getTotalDebt().equals(lastRememberedTotalDebt)
                 || !getInterest().equals(lastRememberedInterest)
                 || !getEmail().equals(lastRememberedEmail)
                 || !getPostalCode().equals(lastRememberedPostalCode)

@@ -13,6 +13,7 @@ public class Debt {
 
     public static final String MESSAGE_DEBT_CONSTRAINTS = "Debt must have at least 1 digit and be either "
             + "a positive integer or a positive number with two decimal places";
+    public static final String MESSAGE_DEBT_MAXIMUM = "Debt cannot exceed $" + Double.MAX_VALUE;
     // validation regex validates empty string. Check for presence of at least 1 digit is needed.
     public static final String DEBT_VALIDATION_REGEX = "^(?=.*\\d)\\d*(?:\\.\\d\\d)?$";
     public static final String DEBT_ZER0_VALUE = "0";
@@ -49,7 +50,10 @@ public class Debt {
     /**
      * Returns true if a given string is a valid person debt.
      */
-    public static boolean isValidDebt(String test) {
+    public static boolean isValidDebt(String test) throws IllegalValueException {
+        if (test.matches(DEBT_VALIDATION_REGEX) && Double.valueOf(test) > Double.MAX_VALUE) {
+            throw new IllegalValueException(MESSAGE_DEBT_MAXIMUM);
+        }
         return test.matches(DEBT_VALIDATION_REGEX) && test.length() >= 1;
     }
 

@@ -56,6 +56,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_POSTAL_CODE_AMY
 import static seedu.address.logic.commands.CommandTestUtil.VALID_POSTAL_CODE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.parser.AddCommandParser.MESSAGE_INVALID_DEBT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -180,8 +181,8 @@ public class AddCommandParserTest {
                 + DEBT_DESC_AMY + INTEREST_DESC_AMY + DEADLINE_DESC_AMY, new AddCommand(expectedPerson));
         Person expectedPerson2 = new PersonBuilder().withName(VALID_NAME_AMY).withHandphone(VALID_HANDPHONE_AMY)
                 .withHomePhone(VALID_HOME_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withPostalCode(VALID_POSTAL_CODE_AMY).withDebt(VALID_DEBT_AMY).withInterest(VALID_INTEREST_AMY)
-                .withDeadline(VALID_DEADLINE_AMY).withTags(VALID_TAG_FRIEND)
+                .withPostalCode(VALID_POSTAL_CODE_AMY).withDebt(VALID_DEBT_AMY).withTotalDebt(VALID_DEBT_AMY)
+                .withInterest(VALID_INTEREST_AMY).withDeadline(VALID_DEADLINE_AMY).withTags(VALID_TAG_FRIEND)
                 .withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET).build();
         // no office phone
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + HANDPHONE_DESC_AMY
@@ -310,12 +311,19 @@ public class AddCommandParserTest {
                 + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 PostalCode.MESSAGE_POSTAL_CODE_CONSTRAINTS);
 
-        // invalid debt
+        // invalid debt - non-digit characters
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + HANDPHONE_DESC_BOB
                 + HOME_PHONE_DESC_BOB + OFFICE_PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + POSTAL_CODE_DESC_BOB + INVALID_DEBT_DESC + INTEREST_DESC_BOB
                 + DEADLINE_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 Debt.MESSAGE_DEBT_CONSTRAINTS);
+
+        // invalid debt - debt is zero
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + HANDPHONE_DESC_BOB
+                + HOME_PHONE_DESC_BOB + OFFICE_PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB + POSTAL_CODE_DESC_BOB + " d/0" + INTEREST_DESC_BOB
+                + DEADLINE_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                MESSAGE_INVALID_DEBT);
 
         // invalid interest
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + HANDPHONE_DESC_BOB
