@@ -24,6 +24,7 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
     private static final String FXML = "DebtRepaymentProgressBar.fxml";
     private static final String COMPLETED_REPAYMENT_MESSAGE = "Completed";
     private static final String NO_DEADLINE_REPAYMENT_MESSAGE = "No deadline set";
+    public static final String DAYS_LEFT_TO_REPAY_DEBT_MESSAGE = " day(s) left to repay debt";
     private Double totalDebt;
     private Double repaid;
     private Double ratio;
@@ -95,7 +96,7 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
             LocalDate deadlineDate = LocalDate.parse(deadlineFormatted, DateTimeFormatter.BASIC_ISO_DATE);
             LocalDate today = LocalDate.now();
             return new SimpleObjectProperty<>(Long.toString(
-                    ChronoUnit.DAYS.between(today, deadlineDate)) + " days left to repay debt");
+                    ChronoUnit.DAYS.between(today, deadlineDate)) + DAYS_LEFT_TO_REPAY_DEBT_MESSAGE);
         } else {
             return new SimpleObjectProperty<>(NO_DEADLINE_REPAYMENT_MESSAGE);
         }
