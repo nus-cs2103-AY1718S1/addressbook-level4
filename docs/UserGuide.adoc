@@ -571,9 +571,10 @@ Examples:
 Clears all entries from the address book. +
 Format: `clear`
 
+// tag::theme[]
 === Changing themes: `theme`
 
-Changes between the two available themes. +
+Changes between the two available themes shown below in Figures 4.25.1 and 4.25.2 below. +
 Format: `theme`
 
 image::Ui.png[width="790"]
@@ -581,6 +582,7 @@ _Figure 4.25.1 : Dark theme (default)_
 
 image::BrightTheme.PNG[width="790"]
 _Figure 4.25.2 : Bright theme_
+// end::theme[]
 
 === Exiting the program : `exit`
 

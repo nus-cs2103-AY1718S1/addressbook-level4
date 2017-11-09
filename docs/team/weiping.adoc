@@ -138,6 +138,35 @@ include::../DeveloperGuide.adoc[tag=optionalIndex]
 
 ---
 
+=== Enhancement Added: Switching themes
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=theme]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The ability to change themes can make the user feel more as though the app belongs to him/her as it is a form of
+customisation. It allows for a much better user experience.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=theme]
+
+#End of Extract#
+
+---
+
 === Other contributions
 
 ==== Various UI enhancements
@@ -150,4 +179,4 @@ include::../DeveloperGuide.adoc[tag=optionalIndex]
 
 == Project: Dog Mario
 
-[https://github.com/DogMario/Dog-Mario[Dog Mario]] is a game developed with [https://github.com/tbhbhbh[Tan Bing Hwang]] as an independent project for Orbital 2017.
+[https://github.com/DogMario/Dog-Mario[Dog Mario]] is a game developed with [https://github.com/tbhbhbh[Tan Bing Hwang]] as an independent project for [http://nusskylab-dev.comp.nus.edu.sg/[CP2106 Independent Software Development Project (Orbital)]].
