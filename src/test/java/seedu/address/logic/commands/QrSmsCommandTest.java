@@ -8,7 +8,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 
 import org.junit.Test;
 
-
+//@@author danielweide
 /**
  * Test For QrSmsCommand for Equal Cases
  */

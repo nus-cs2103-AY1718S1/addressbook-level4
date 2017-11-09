@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-
+//@@author danielweide
 /**
  * Test For QrCallCommand for Equal Cases
  */
