@@ -1,0 +1,59 @@
+= Muhammad Syabil Bin Mohamed Sazali - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T09-B2/main/blob/master/collated/main/Syabil.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B2/main/blob/master/collated/test/Syabil.md[Test code]] {give links to collated code files}
+
+=== Enhancement Added: DeleteMeeting, FindMeeting
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deletemeeting]
+
+include::../UserGuide.adoc[tag=findmeeting]
+
+include::../UserGuide.adoc[tag=splash]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+There is a need for students to properly plan their important meetings. After the addmeeting function done by Nelson, the deletemeeting feature allows student
+to delete meetings with existing contacts and to get rid of unnecessary meetings. Next, the
+findmeeting command will find the meetings that the user wants to find by name of the meeting or the contact itself.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deletemeeting]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add delete multiple meetings
+
+Allows user to delete multiple meetings at once whenever the user wants to remove multiple meetings that are unnecessary.
+
+=== Other contributions
+
+* Show total contacts in status bar (Pull requests https://github.com/CS2103AUG2017-T09-B2/main/pull/42)
+* Added splash page as a home page to the app (Pull requests https://github.com/CS2103AUG2017-T09-B2/main/pull/118)
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}
