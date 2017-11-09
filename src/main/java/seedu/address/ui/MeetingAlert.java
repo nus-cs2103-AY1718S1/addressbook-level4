@@ -1,8 +1,5 @@
 package seedu.address.ui;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -51,12 +48,12 @@ public class MeetingAlert extends UiPart<Region> {
         warningMessage.setText(MESSAGE);
         if (isGroupMeeting(list)) {
             int indexDate = list.get(0).getDate().toString().indexOf(' ');
-            firstMeeting.setText("Group Meeting with " + list.get(0).getPersonName().toString()
-                    + " at " + list.get(0).getDate().toString().substring(indexDate + 1) + " for");
+            firstMeeting.setText("Group Meeting at "
+                    + list.get(0).getDate().toString().substring(indexDate + 1) + " for");
             nameMeeting.setText(list.get(0).getName().toString());
         } else {
             int indexDate = list.get(0).getDate().toString().indexOf(' ');
-            firstMeeting.setText("Meeting with " + list.get(0).getPersonName().toString()
+            firstMeeting.setText("Meeting with " + list.get(0).getPersonsMeet().get(0).getName().toString()
                     + " at " + list.get(0).getDate().toString().substring(indexDate + 1) + " for");
             nameMeeting.setText(list.get(0).getName().toString());
         }
@@ -87,28 +84,7 @@ public class MeetingAlert extends UiPart<Region> {
     *Get the number of individual meetings to be shown to user
      */
     private boolean isGroupMeeting(ObservableList<ReadOnlyMeeting> list) {
-        int numMeet = 0;
-        for (int i = 0; i < list.size(); i++) {
-            DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-            LocalDateTime currDate = LocalDateTime.now();
-            LocalDateTime meetDate = LocalDateTime.parse(list.get(i).getDate().toString(), formatter);
-            long daysBet = ChronoUnit.DAYS.between(currDate, meetDate);
-            if (daysBet == 0) {
-                int j = i + 1;
-                if (j >= list.size()) {
-                    break;
-                }
-                while (list.get(i).getDate().equals(list.get(j).getDate())) {
-                    numMeet++;
-                    j++;
-                    if (j >= list.size()) {
-                        break;
-                    }
-                }
-
-            }
-        }
-        if (numMeet > 0) {
+        if (list.get(0).getPersonsMeet().size() > 1) {
             return true;
         }
         return false;

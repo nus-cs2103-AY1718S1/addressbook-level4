@@ -8,6 +8,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -40,7 +41,7 @@ public class AddMeetingCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private Index index;
+    private List<Index> indexes;
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
@@ -73,13 +74,14 @@ public class AddMeetingCommandTest {
 
     @Test
     public void equals() {
-        this.index = Index.fromOneBased(1);
+        List<Index> indexes = new ArrayList<>();
+        indexes.add(Index.fromOneBased(1));
         Meeting project = new MeetingBuilder().withNameMeeting("Project").build();
         Meeting meeting = new MeetingBuilder().withNameMeeting("Meeting").build();
         AddMeetingCommand addProjectCommand = new AddMeetingCommand(project.getName(), project.getDate(),
-                project.getPlace(), index, project.getMeetTag());
+                project.getPlace(), indexes, project.getMeetTag());
         AddMeetingCommand addMeetingCommand = new AddMeetingCommand(meeting.getName(), meeting.getDate(),
-                meeting.getPlace(), index, meeting.getMeetTag());
+                meeting.getPlace(), indexes, meeting.getMeetTag());
 
         // same object -> returns true
         assertTrue(addProjectCommand.equals(addProjectCommand));
@@ -105,9 +107,10 @@ public class AddMeetingCommandTest {
      * Generates a new AddMeetingCommand with the details of the given meeting.
      */
     private AddMeetingCommand getAddMeetingCommandForMeeting(Meeting meeting, Model model) {
-        this.index = Index.fromOneBased(1);
+        List<Index> indexes = new ArrayList<>();
+        indexes.add(Index.fromOneBased(1));
         AddMeetingCommand command = new AddMeetingCommand(meeting.getName(), meeting.getDate(),
-                meeting.getPlace(), index, meeting.getMeetTag());
+                meeting.getPlace(), indexes, meeting.getMeetTag());
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

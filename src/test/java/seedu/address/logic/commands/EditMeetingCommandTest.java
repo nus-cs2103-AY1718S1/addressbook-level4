@@ -6,15 +6,12 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_ACTIVITY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BIKING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_BIKING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BIKING;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_PERSONTOMEET_BIKING;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONENUM_BIKING;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_PLACE_BIKING;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstMeetingOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_MEETING;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_MEETING;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalMeetings.getTypicalAddressBook;
 
 import org.junit.Test;
 

@@ -43,10 +43,8 @@ public class CommandTestUtil {
     public static final String VALID_NAME_BIKING = "Biking training";
     public static final String VALID_DATE_ACTIVITY = "12-12-9999 00:00";
     public static final String VALID_DATE_BIKING = "12-12-9999 00:01";
-    public static final String VALID_PERSONTOMEET_ACTIVITY = "Amy Bee";
-    public static final String VALID_PERSONTOMEET_BIKING = "Bob Choo";
-    public static final String VALID_PHONENUM_ACTIVITY = "87987987";
-    public static final String VALID_PHONENUM_BIKING = "67887987";
+    public static final String VALID_INDEX_ACTIVITY = "1";
+    public static final String VALID_INDEX_BIKING = "2";
     public static final String VALID_PLACE_ACTIVITY = "Vivocity";
     public static final String VALID_PLACE_BIKING = "Bishan";
 
@@ -81,12 +79,12 @@ public class CommandTestUtil {
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
         DESC_ACTIVITY = new EditMeetingDescriptorBuilder().withMeetingName(VALID_NAME_ACTIVITY)
-                .withDate(VALID_DATE_ACTIVITY).withPersonToMeet(VALID_PERSONTOMEET_ACTIVITY)
-                .withPlace(VALID_PLACE_ACTIVITY).withPhoneNum(VALID_PHONENUM_ACTIVITY)
+                .withDate(VALID_DATE_ACTIVITY)
+                .withPlace(VALID_PLACE_ACTIVITY)
                 .build();
         DESC_BIKING = new EditMeetingDescriptorBuilder().withMeetingName(VALID_NAME_BIKING)
-                .withDate(VALID_DATE_BIKING).withPersonToMeet(VALID_PERSONTOMEET_BIKING)
-                .withPlace(VALID_PLACE_BIKING).withPhoneNum(VALID_PHONENUM_BIKING).build();
+                .withDate(VALID_DATE_BIKING)
+                .withPlace(VALID_PLACE_BIKING).build();
     }
 
     /**

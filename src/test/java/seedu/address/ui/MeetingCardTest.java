@@ -28,8 +28,7 @@ public class MeetingCardTest extends GuiUnitTest {
             meeting.setName(DIVING.getName());
             meeting.setPlace(DIVING.getPlace());
             meeting.setDateTime(DIVING.getDate());
-            meeting.setPhoneNum(DIVING.getPersonPhone());
-            meeting.setPersonName(DIVING.getPersonName());
+            meeting.setPersonsMeet(DIVING.getPersonsMeet());
         });
         assertCardDisplay(meetingCard, meeting, 1);
     }

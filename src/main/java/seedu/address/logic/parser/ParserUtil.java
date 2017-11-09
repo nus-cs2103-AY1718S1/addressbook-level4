@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 //import java.util.NoSuchElementException;
@@ -15,8 +16,6 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.meeting.DateTime;
 import seedu.address.model.meeting.MeetingTag;
 import seedu.address.model.meeting.NameMeeting;
-import seedu.address.model.meeting.PersonToMeet;
-import seedu.address.model.meeting.PhoneNum;
 import seedu.address.model.meeting.Place;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -116,26 +115,6 @@ public class ParserUtil {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
-
-    //@@author Melvin-leo
-    /**
-     * Parses a {@code Optional<String> name} into an {@code Optional<PersonToMeet>} if {@code name} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<PersonToMeet> parsePersonToMeet(Optional<String> personName) throws IllegalValueException {
-        requireNonNull(personName);
-        return personName.isPresent() ? Optional.of(new PersonToMeet(personName.get())) : Optional.empty();
-    }
-
-    //@@author Melvin-leo
-    /**
-     * Parses a {@code Optional<String> phonenum} into an {@code Optional<PhoneNum>} if {@code phonenum} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<PhoneNum> parsePhoneNum(Optional<String> phoneNum) throws IllegalValueException {
-        requireNonNull(phoneNum);
-        return phoneNum.isPresent() ? Optional.of(new PhoneNum(phoneNum.get())) : Optional.empty();
-    }
     /**
      * Parses a {@code Optional<String> tagname} into an {@code Optional<MeetingTag>} if {@code ntagame} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -155,6 +134,22 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+    /**
+     * Parses {@code oneBasedIndex} into an {@code Index} and returns it.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static ArrayList<Index> parseIndexes(String indexes) throws IllegalValueException {
+        ArrayList<Index> listOfIndex = new ArrayList<>();
+        String trimmedIndex = indexes.trim();
+        String[] indexs = trimmedIndex.split("\\s+");
+        for (String index : indexs) {
+            if (!StringUtil.isNonZeroUnsignedInteger(index)) {
+                throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+            }
+            listOfIndex.add(Index.fromOneBased(Integer.parseInt(index)));
+        }
+        return listOfIndex;
     }
 
 }
