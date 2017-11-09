@@ -138,7 +138,7 @@ public class DetailedPersonCard extends UiPart<Region> {
     private void initWebLinks(ReadOnlyPerson person) {
         webLinks.getChildren().clear();
         person.getWebLinks().forEach(webLink -> {
-            Label webLinkLabel = new Label(webLink.webLinkInput);
+            Label webLinkLabel = new Label(webLink.toStringWebLink());
             webLinkLabel.setStyle("-fx-background-color: " + getColorForWeblinks(webLink.toStringWebLinkTag()));
             webLinks.getChildren().add(webLinkLabel);
         });

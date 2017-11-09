@@ -23,7 +23,8 @@ public class FilterKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         String combinedReferenceList = person.getAsOneString();
 
         return !keywords.isEmpty() && keywords.stream().allMatch(keyword
-            -> StringUtil.containsWordIgnoreCase(combinedReferenceList, keyword));
+            -> StringUtil.containsWordIgnoreCase(combinedReferenceList, keyword) && !keyword.contains("[")
+                && !keyword.contains("]"));
     }
 
     @Override

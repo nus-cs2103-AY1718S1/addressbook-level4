@@ -38,7 +38,7 @@ public class PersonUtil {
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
         person.getWebLinks().stream().forEach(
-            s -> sb.append(PREFIX_WEB_LINK + s.webLinkInput + " ")
+            s -> sb.append(PREFIX_WEB_LINK + s.toStringWebLink() + " ")
         );
 
         return sb.toString();
@@ -59,7 +59,7 @@ public class PersonUtil {
             s -> sb.append(PREFIX_ADD_TAG + s.tagName + " ")
         );
         person.getWebLinks().stream().forEach(
-            s -> sb.append(PREFIX_WEB_LINK + s.webLinkInput + " ")
+            s -> sb.append(PREFIX_WEB_LINK + s.toStringWebLink() + " ")
         );
 
         return sb.toString();
