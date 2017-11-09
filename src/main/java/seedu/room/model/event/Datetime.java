@@ -17,7 +17,7 @@ import seedu.room.commons.exceptions.IllegalValueException;
 public class Datetime {
 
     public static final String MESSAGE_DATETIME_CONSTRAINTS =
-            "Event datetime should contain dd/mm/yyyy hhmm DURATION (in hours)";
+            "Event datetime should contain dd/mm/yyyy hhmm to hhmm";
 
     public static final String DATE_CONSTRAINTS_VIOLATION =
             "The date does not exist";
@@ -44,6 +44,7 @@ public class Datetime {
 
             //Update datetime
             String[] components = datetime.split(" ");
+            String date = components[0];
             int starttime = Integer.parseInt(components[1]);;
             int duration;
             int endtime;
@@ -66,7 +67,7 @@ public class Datetime {
             //Store as a LocalDateTime object
             this.datetime = this.toLocalDateTime(components[0] + " " + starttimeString);
 
-            this.value = datetime;
+            this.value = date + " " + starttimeString + " to " + endtimeString;
 
         } catch (DateTimeException e) {
             throw new IllegalValueException(DATE_CONSTRAINTS_VIOLATION);

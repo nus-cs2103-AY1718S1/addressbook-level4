@@ -55,7 +55,7 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
             if (optionalLocation.isPresent()) {
                 location = optionalLocation.get();
             } else {
-                location = new Location(null);
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
             }
 
             //Gets the description of the event being added. If no description is provided, it creates an description
@@ -65,7 +65,7 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
             if (optionalDescription.isPresent()) {
                 description = optionalDescription.get();
             } else {
-                description = new Description(null);
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
             }
 
             //Gets the datetime of the event being added. If no datetime is provided, it creates an datetime with null
@@ -74,9 +74,8 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
             if (optionalDatetime.isPresent()) {
                 datetime = optionalDatetime.get();
             } else {
-                datetime = new Datetime(null);
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
             }
-
 
             ReadOnlyEvent event = new Event(title, description, location, datetime);
 

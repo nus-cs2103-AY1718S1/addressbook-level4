@@ -125,6 +125,22 @@ public class Event implements ReadOnlyEvent {
     }
 
     @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Event)) {
+            return false;
+        }
+
+        Event otherEvent = (Event) other;
+        return this.title.getValue().equals(otherEvent.title.getValue())
+                &&  this.location.getValue().equals(otherEvent.location.getValue())
+                && this.datetime.getValue().equals(otherEvent.datetime.getValue());
+    }
+
+    @Override
     public int compareTo(Object otherEvent) {
 
         ReadOnlyEvent event = (ReadOnlyEvent) otherEvent;

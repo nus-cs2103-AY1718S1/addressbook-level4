@@ -68,9 +68,11 @@ public class ModelManager extends ComponentManager implements Model {
 
 
     @Override
-    public void resetData(ReadOnlyResidentBook newData) {
+    public void resetData(ReadOnlyResidentBook newData, ReadOnlyEventBook newEventData) {
         residentBook.resetData(newData);
+        eventBook.resetData(newEventData);
         indicateResidentBookChanged();
+        indicateEventBookChanged();
     }
 
     @Override
@@ -211,7 +213,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public ReadOnlyEventBook getEventBook() {
-        return null;
+        return this.eventBook;
     }
 
     @Override

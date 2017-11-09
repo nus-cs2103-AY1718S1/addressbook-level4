@@ -343,7 +343,7 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
             if (optionalLocation.isPresent()) {
                 location = optionalLocation.get();
             } else {
-                location = new Location(null);
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
             }
 
             //Gets the description of the event being added. If no description is provided, it creates an description
@@ -353,7 +353,7 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
             if (optionalDescription.isPresent()) {
                 description = optionalDescription.get();
             } else {
-                description = new Description(null);
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
             }
 
             //Gets the datetime of the event being added. If no datetime is provided, it creates an datetime with null
@@ -362,9 +362,8 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
             if (optionalDatetime.isPresent()) {
                 datetime = optionalDatetime.get();
             } else {
-                datetime = new Datetime(null);
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
             }
-
 
             ReadOnlyEvent event = new Event(title, description, location, datetime);
 
@@ -1268,7 +1267,7 @@ public interface ReadOnlyEventBook {
 
     @Override
     public ReadOnlyEventBook getEventBook() {
-        return null;
+        return this.eventBook;
     }
 
     @Override
@@ -1625,6 +1624,22 @@ public class Event implements ReadOnlyEvent {
     }
 
     @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Event)) {
+            return false;
+        }
+
+        Event otherEvent = (Event) other;
+        return this.title.getValue().equals(otherEvent.title.getValue())
+                &&  this.location.getValue().equals(otherEvent.location.getValue())
+                && this.datetime.getValue().equals(otherEvent.datetime.getValue());
+    }
+
+    @Override
     public int compareTo(Object otherEvent) {
 
         ReadOnlyEvent event = (ReadOnlyEvent) otherEvent;
@@ -1724,7 +1739,7 @@ public class Location {
 public class Datetime {
 
     public static final String MESSAGE_DATETIME_CONSTRAINTS =
-            "Event datetime should contain dd/mm/yyyy hhmm DURATION (in hours)";
+            "Event datetime should contain dd/mm/yyyy hhmm to hhmm";
 
     public static final String DATE_CONSTRAINTS_VIOLATION =
             "The date does not exist";
@@ -1751,6 +1766,7 @@ public class Datetime {
 
             //Update datetime
             String[] components = datetime.split(" ");
+            String date = components[0];
             int starttime = Integer.parseInt(components[1]);;
             int duration;
             int endtime;
@@ -1773,7 +1789,7 @@ public class Datetime {
             //Store as a LocalDateTime object
             this.datetime = this.toLocalDateTime(components[0] + " " + starttimeString);
 
-            this.value = datetime;
+            this.value = date + " " + starttimeString + " to " + endtimeString;
 
         } catch (DateTimeException e) {
             throw new IllegalValueException(DATE_CONSTRAINTS_VIOLATION);

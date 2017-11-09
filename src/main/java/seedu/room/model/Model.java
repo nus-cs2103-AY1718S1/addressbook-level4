@@ -35,7 +35,7 @@ public interface Model {
     /**
      * Clears existing backing model and replaces with the provided new data.
      */
-    void resetData(ReadOnlyResidentBook newData);
+    void resetData(ReadOnlyResidentBook newData, ReadOnlyEventBook newEventData);
 
     /**
      * Returns the ResidentBook

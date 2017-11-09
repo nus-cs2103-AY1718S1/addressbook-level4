@@ -28,11 +28,13 @@ public class CalendarBoxPanel extends UiPart<Region> {
     public CalendarBoxPanel() {
         super(FXML);
         calendarPane.getChildren().add(new CalendarBox(YearMonth.now()).getView());
+
     }
 
     public void freeResources() {
         calendarPane = null;
     }
+
 }
 ```
 ###### /java/seedu/room/ui/AnchorPaneNode.java
@@ -103,6 +105,7 @@ public class AnchorPaneNode extends AnchorPane {
     public void revertBackground() {
         this.backgroundProperty().unbind();
         this.backgroundProperty().setValue(unfocusBackground);
+
     }
 
     /**
@@ -207,6 +210,7 @@ public class DeleteByTagCommand extends UndoableCommand {
             + ": Deletes the persons identified by the tag supplied in this argument\n"
             + "Parameters: TAG\n"
             + "Example: " + COMMAND_WORD + " friends";
+
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Persons with the following tag: %1$s";
 
@@ -350,6 +354,7 @@ public class Timestamp {
     public void removeByTag(Tag tag) throws IllegalValueException, CommandException {
         persons.removeByTag(tag);
     }
+
 ```
 ###### /java/seedu/room/model/ModelManager.java
 ``` java

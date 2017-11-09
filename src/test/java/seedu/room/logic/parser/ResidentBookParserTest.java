@@ -1,10 +1,11 @@
 package seedu.room.logic.parser;
 
-import static org.junit.Assert.assertEquals;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static seedu.room.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.room.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.room.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static seedu.room.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -16,8 +17,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.room.logic.commands.AddCommand;
+import seedu.room.logic.commands.AddEventCommand;
 import seedu.room.logic.commands.ClearCommand;
 import seedu.room.logic.commands.DeleteCommand;
+import seedu.room.logic.commands.DeleteEventCommand;
 import seedu.room.logic.commands.EditCommand;
 import seedu.room.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.room.logic.commands.ExitCommand;
@@ -29,9 +32,12 @@ import seedu.room.logic.commands.RedoCommand;
 import seedu.room.logic.commands.SelectCommand;
 import seedu.room.logic.commands.UndoCommand;
 import seedu.room.logic.parser.exceptions.ParseException;
+import seedu.room.model.event.Event;
 import seedu.room.model.person.NameContainsKeywordsPredicate;
 import seedu.room.model.person.Person;
 import seedu.room.testutil.EditPersonDescriptorBuilder;
+import seedu.room.testutil.EventBuilder;
+import seedu.room.testutil.EventUtil;
 import seedu.room.testutil.PersonBuilder;
 import seedu.room.testutil.PersonUtil;
 
@@ -48,6 +54,14 @@ public class ResidentBookParserTest {
         assertEquals(new AddCommand(person), command);
     }
 
+    //@@author sushinoya
+    @Test
+    public void parseCommand_addEvent() throws Exception {
+        Event event = new EventBuilder().build();
+        AddEventCommand command = (AddEventCommand) parser.parseCommand(EventUtil.getAddEventCommand(event));
+        assertEquals(new AddEventCommand(event), command);
+    }
+    //@@author
     @Test
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
@@ -56,11 +70,19 @@ public class ResidentBookParserTest {
 
     @Test
     public void parseCommand_delete() throws Exception {
+        DeleteEventCommand command = (DeleteEventCommand) parser.parseCommand(
+                DeleteEventCommand.COMMAND_WORD + " " + INDEX_FIRST_EVENT.getOneBased());
+        assertEquals(new DeleteEventCommand(INDEX_FIRST_EVENT), command);
+    }
+
+    //@@author sushinoya
+    @Test
+    public void parseCommand_deleteEvent() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
-
+    //@@author
     @Test
     public void parseCommand_edit() throws Exception {
         Person person = new PersonBuilder().build();
