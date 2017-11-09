@@ -17,7 +17,7 @@ public class HighlightCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Highlights names with the specified tag. "
             + "Parameters: " + "tag."
             + "Example: " + COMMAND_WORD + " "
-            + "Unregistered";
+            + "friends";
 
     public static final String MESSAGE_SUCCESS = "Highlighted persons with tag: ";
     public static final String MESSAGE_TAG_NOT_FOUND = "Tag not found: ";
@@ -40,5 +40,24 @@ public class HighlightCommand extends UndoableCommand {
         } catch (TagNotFoundException e) {
             throw new CommandException(MESSAGE_TAG_NOT_FOUND + highlightTag);
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            System.out.println("this");
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof HighlightCommand)) {
+            System.out.println("that");
+            return false;
+        }
+
+        // state check
+        HighlightCommand hl = (HighlightCommand) other;
+        return highlightTag.equals(hl.highlightTag);
     }
 }
