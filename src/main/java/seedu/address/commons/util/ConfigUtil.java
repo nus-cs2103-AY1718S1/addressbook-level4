@@ -19,4 +19,12 @@ public class ConfigUtil {
         JsonUtil.saveJsonFile(config, configFilePath);
     }
 
+    /**
+     * Update the appTitle field in config.json
+     */
+    public static void updateConfig(String addressBookFileName) {
+        Config config = JsonUtil.readJsonFile("config.json", Config.class).get();
+        config.setAppTitle(addressBookFileName);
+        JsonUtil.saveJsonFile(config, "config.json");
+    }
 }

@@ -1,5 +1,7 @@
 package seedu.address;
 
+import static seedu.address.commons.util.ConfigUtil.updateConfig;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
@@ -219,6 +221,7 @@ public class MainApp extends Application {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
         try {
+            updateConfig();
             // change AddressBook file path
             setAddressBookFilePath(event.getFilePath());
             setAddressBookAppName(event.getFileName());
@@ -241,10 +244,6 @@ public class MainApp extends Application {
 
     public void setAddressBookAppName(String addressBookFileName) {
         try {
-            config = JsonUtil.readJsonFile("config.json", Config.class).get();
-            config.setAppTitle(addressBookFileName);
-            JsonUtil.saveJsonFile(config, "config.json");
-
             userPrefs = JsonUtil.readJsonFile("preferences.json", UserPrefs.class).get();
             userPrefs.setAddressBookName(addressBookFileName);
             JsonUtil.saveJsonFile(userPrefs, "preferences.json");
