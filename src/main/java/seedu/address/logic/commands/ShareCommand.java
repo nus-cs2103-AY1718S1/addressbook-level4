@@ -2,20 +2,17 @@ package seedu.address.logic.commands;
 
 import java.util.List;
 import java.util.Properties;
-import javax.mail.Message;
+
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.SendEmail;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -25,7 +22,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Emails the list of contact details to the input email address
  */
-public class EmailCommand extends Command {
+public class ShareCommand extends Command {
 
     public static final String COMMAND_WORD = "share";
 
@@ -36,14 +33,18 @@ public class EmailCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Email Sent!";
 
+    public static final String MESSAGE_EMAILNOTVALID= "Email address is not valid!";
+
     private static final String MESSAGE_FAILURE = "Email was not sent!";
+
+    private static SendEmail sendEmail;
 
     private Index targetIndex;
     private Index recipientIndexEmail;
     private String recipientEmail;
     private String[] shareEmailArray;
 
-    public EmailCommand(Index targetIndex, String[] shareEmailArray) {
+    public ShareCommand(Index targetIndex, String[] shareEmailArray) {
         this.targetIndex = targetIndex;
         this.shareEmailArray = shareEmailArray;
     }
@@ -90,7 +91,6 @@ public class EmailCommand extends Command {
                 }
         );
 
-
         for (int index = 0; index < shareEmailArray.length; index++) {
             to = shareEmailArray[index];
             if (isNumeric(to)) {
@@ -106,58 +106,14 @@ public class EmailCommand extends Command {
                     return new CommandResult(MESSAGE_FAILURE);
                 }
             }
-
-
-            try {
-
-                // Create a default MimeMessage object.
-                MimeMessage message = new MimeMessage(session);
-
-                // Set From: header field of the header.
-                message.setFrom(new InternetAddress(from));
-
-                // Set To: header field of the header.
-                message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-
-                // Set Subject: header field
-                message.setSubject("Unify: Address Book: " + name + "Exported Data");
-
-                MimeBodyPart messageBodyPart = new MimeBodyPart();
-
-                //set the actual message
-                messageBodyPart.setContent("<img src='https://github.com/CS2103AUG2017-W11-B4/"
-                                + "main/blob/master/docs/images/email_header.png?raw=true'/>"
-                                + "<br/><br/><br/><img src='https://github.com/CS2103AUG2017-W11-B4/"
-                                + "main/blob/master/docs/images/email_subheader.png?raw=true'/>"
-                                + "<br/><br/>"
-                                + "<table>"
-                                + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
-                                + "<b>Name</b></td><td>" + name + "</td></tr>"
-                                + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
-                                + "<b>Phone</b></td><td>" + phone + "</td></tr>"
-                                + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
-                                + "<b>Address</b></td><td>" + address + "</td></tr>"
-                                + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
-                                + "<b>Email</b></td><td>" + email + "</td></tr>"
-                                + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
-                                + "<b>Remark</b></td><td>" + remark + "</td></tr>"
-                                + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
-                                + "<b>Tags</b></td><td>" + tags + "</td></tr>"
-                                + "</table>",
-                        "text/html");
-
-                Multipart multipart = new MimeMultipart();
-
-                //set text message part
-                multipart.addBodyPart(messageBodyPart);
-                message.setContent(multipart);
-
-                Transport.send(message);
-
-            } catch (MessagingException msg) {
-                msg.printStackTrace();
-                return new CommandResult(MESSAGE_FAILURE);
+            if (isValidEmailAddress(to)) {
+                sendEmail = new SendEmail(to, person);
+                sendEmail.start();
             }
+            else {
+                return new CommandResult(MESSAGE_EMAILNOTVALID);
+            }
+
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }
@@ -169,7 +125,21 @@ public class EmailCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof EmailCommand // instanceof handles nulls
-                && this.targetIndex.equals(((EmailCommand) other).targetIndex)); // state check
+                || (other instanceof ShareCommand // instanceof handles nulls
+                && this.targetIndex.equals(((ShareCommand) other).targetIndex)); // state check
+    }
+
+    /**
+     * returns true if string is a valid email address
+     */
+    public static boolean isValidEmailAddress(String email) {
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
     }
 }
