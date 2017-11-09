@@ -99,7 +99,7 @@ public class UniqueLifeInsuranceMap {
         this.internalList.clear();
         this.internalList.setAll(this.internalMap.values());
     }
-    //author
+    //@@author
 
     //@@author RSJunior37
     /**
@@ -112,6 +112,7 @@ public class UniqueLifeInsuranceMap {
     }
     //@@author
 
+    //@@author OscarWang114
     /**
      * Returns the backing map as an unmodifiable {@code ObservableList}.
      */
@@ -131,4 +132,5 @@ public class UniqueLifeInsuranceMap {
     public int hashCode() {
         return internalMap.hashCode();
     }
+    //@@author
 }
