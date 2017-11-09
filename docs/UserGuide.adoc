@@ -137,7 +137,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Search for persons by parameter: 'Search' 'Since v1.3'
+=== Search for persons by parameter: `Search` `Since v1.3`
 
 Finds persons whose details match the given keywords. +
 Format: 'search KEYWORD [MORE KEYWORD]'
