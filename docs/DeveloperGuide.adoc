@@ -924,7 +924,7 @@ This is how you can use the LoggingCommand method in your code.
    loggingCommand.keepLog("Information", "Type of Action such as Add,Clear,etc.");
 ----
 [NOTE]
-Where "information" indicate the data that the user are editing with while "type of action" indicate the action taken by the user.
+With reference to the code for LoggingCommand, the "information" indicate the data that the user are editing with while "type of action" indicate the action taken by the user.
 
 === ClearLog Function
 (added in v1.3)
@@ -971,7 +971,7 @@ The ClearLog Method implementation for commandline with the following codes.
 === QrCall Function
 (added in v1.4)
 
-In this section, we explain how users can generation Quick Response(QR) Code for any contact available in the addressbook using the phone number of the contact.
+In this section, we explain how users can generation Quick Response(QR) Code for calling with any contact number available in the addressbook.
 
 To make user experience more convenience, QR Code can make calling easy through the use of Smartphone with QR Scanner application installed.
 
@@ -1079,6 +1079,120 @@ The QrGenCallCommand to retrieve QrCode with the following codes.
               String fullQr = qrLineA + phoneNum + qrLineB;
               return fullQr;
           }
+----
+
+=== QrSms Function
+(added in v1.4)
+
+In this section, we explain how users can generation Quick Response(QR) Code for Sms(Short Message Services) with any contact number available in the addressbook.
+
+To make user experience more convenience, QR Code can make sms easy through the use of Smartphone with QR Scanner application installed.
+
+This function has been mapped to `QrSmsButton` and `qrsms` `qs` for commandline.
+
+The following sequence diagram describes how 'QrSms' Generates QR Code using commandline.
+
+image::QrSmsCommand.png[]
+_Figure 4.16.1 : Sequence Diagram of the QrSmsCommand_
+
+The QrSmsCommandParser Method is implemented with the following code.
+[source,java]
+----
+ public QrSmsCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new QrSmsCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, QrSmsCommand.MESSAGE_USAGE));
+        }
+    }
+----
+
+The QrSmsCommand Method implementation for commandline with the following codes.
+[source,java]
+----
+   @Override
+       public CommandResult execute() throws CommandException {
+
+           List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+           if (targetIndex.getZeroBased() >= lastShownList.size()) {
+               throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+           }
+           int indexOfPersonInList;
+           indexOfPersonInList = targetIndex.getOneBased() - 1;
+           EventsCenter.getInstance().post(new QrSmsEvent(lastShownList.get(indexOfPersonInList)));
+           return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+
+       }
+----
+
+The QrSmsEvent Method implementation for commandline with the following codes.
+[source,java]
+----
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName();
+        }
+        public ReadOnlyPerson getPerson() {
+            return person;
+        }
+----
+
+The QrSmsButton Method implementation for commandline with the following codes.
+[source,java]
+----
+     @FXML
+        private void handleQrSmsButtonPressed() throws CommandException, ParseException, IOException {
+            if ( person != null) {
+                bp.loadSmsQrCode(person);
+                logger.info("QR Code displayed");
+            } else {
+                logger.info(MESSAGE_FAIL);
+            }
+        }
+----
+
+The BrowserPanel Method implementation for commandline with the following codes.
+[source,java]
+----
+ public void loadSmsQrCode(ReadOnlyPerson person) {
+        QrGenSmsCommand qrGenSmsCommand = new QrGenSmsCommand();
+        browser.getEngine().setUserAgent("Mozilla/5.0 "
+                + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
+        loadPage(qrGenSmsCommand.qrSms(person.getPhone().toString(), person.getName().fullName));
+    }
+----
+
+The QrGenSmsCommand to retrieve QrCode with the following codes.
+[source,java]
+----
+  public String qrSms(String phoneNum, String contactName) {
+        String qrCodeA = "http://";
+        String qrCodeB = "api.qrserver.com/";
+        String qrCodeC = "v1/";
+        String qrCodeD = "create-qr-code/";
+        String qrCodeE = "?color=000000";
+        String qrCodeF = "&bgcolor=FFFFFF";
+        String qrCodeG = "&data";
+        String qrCodeH = "=SMSTO";
+        String qrCodeI = "%3A";
+        String qrCodeJ = "&qzone";
+        String qrCodeK = "=1";
+        String qrCodeL = "&margin";
+        String qrCodeM = "=0";
+        String qrCodeN = "&size";
+        String qrCodeO = "=500x500";
+        String qrCodeP = "&ecc";
+        String qrCodeQ = "=L";
+        String qrLineA = qrCodeA + qrCodeB + qrCodeC + qrCodeD + qrCodeE + qrCodeF
+                + qrCodeG + qrCodeH + qrCodeI;
+        String qrLineB = qrCodeI + "Dear+" + contactName + "%2C";
+        String qrLineC = qrCodeJ + qrCodeK + qrCodeL + qrCodeM + qrCodeN + qrCodeO
+                + qrCodeP + qrCodeQ;
+        String fullQr = qrLineA + phoneNum + qrLineB + qrLineC;
+        return fullQr;
+    }
 ----
 
 == Documentation
