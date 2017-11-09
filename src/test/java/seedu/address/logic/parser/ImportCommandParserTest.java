@@ -32,6 +32,16 @@ public class ImportCommandParserTest {
     }
 
     @Test
+    public void parse_missingFile_throwsParseException() {
+        //Missing .xml
+        assertParseFailure(parser, TEST_FILE_DIRECTORY + "missing.xml",
+                ImportCommand.MESSAGE_FILE_NOT_FOUND);
+        //Missing .vcf
+        assertParseFailure(parser, TEST_FILE_DIRECTORY + "missing.vcf",
+                ImportCommand.MESSAGE_FILE_NOT_FOUND);
+    }
+
+    @Test
     public void parse_corruptedFile_throwsParseException() {
         //Corrupted xml
         assertParseFailure(parser,
