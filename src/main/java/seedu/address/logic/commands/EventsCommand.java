@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.PersonPanelUnselectEvent;
 import seedu.address.commons.events.ui.TogglePanelEvent;
 
 //@@author itsdickson
@@ -19,6 +20,7 @@ public class EventsCommand extends Command {
     @Override
     public CommandResult execute() {
         EventsCenter.getInstance().post(new TogglePanelEvent(COMMAND_WORD));
+        EventsCenter.getInstance().post(new PersonPanelUnselectEvent());
         return new CommandResult(SHOWING_EVENTS_MESSAGE);
     }
 }
