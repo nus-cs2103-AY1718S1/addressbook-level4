@@ -11,11 +11,11 @@ public interface ReadOnlyMeetingList {
      * Returns an unmodifiable view of the meetings list.
      * This list will not contain any duplicate meetings.
      */
-    ObservableList<Meeting> getMeetingList();
+    ObservableList<ReadOnlyMeeting> getMeetingList();
 
     /**
      * Returns the next upcoming meeting
      * This is required for nextMeeting command
      */
-    Meeting getUpcomingMeeting();
+    ReadOnlyMeeting getUpcomingMeeting();
 }

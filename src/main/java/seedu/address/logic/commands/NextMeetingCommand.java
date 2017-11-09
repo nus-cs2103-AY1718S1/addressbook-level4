@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Meeting;
+import seedu.address.model.ReadOnlyMeeting;
 import seedu.address.model.person.InternalId;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -22,7 +22,7 @@ public class NextMeetingCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        Meeting nextMeeting = model.getMeetingList().getUpcomingMeeting();
+        ReadOnlyMeeting nextMeeting = model.getMeetingList().getUpcomingMeeting();
         if (nextMeeting == null) {
             return new CommandResult(MESSAGE_NO_UPCOMING_MEETINGS);
         }

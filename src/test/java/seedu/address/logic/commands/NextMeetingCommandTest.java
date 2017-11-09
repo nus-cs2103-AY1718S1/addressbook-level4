@@ -9,9 +9,9 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.Meeting;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.ReadOnlyMeeting;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.InternalId;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -23,7 +23,7 @@ public class NextMeetingCommandTest {
 
     private Model model;
     private NextMeetingCommand nextMeetingCommand;
-    private Meeting meeting;
+    private ReadOnlyMeeting meeting;
 
     @Before
     public void setUp() {

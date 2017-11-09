@@ -35,8 +35,8 @@ public class BrowserSelectorCard extends UiPart<Region> {
     private void fillImage(String imageName) {
         if (imageName.equals("linkedin")) {
             browserCardImage.setImage(new Image("/images/linkedin.png"));
-        } else if (imageName.equals("facebook")) {
-            browserCardImage.setImage(new Image("/images/facebook.png"));
+        } else if (imageName.equals("google")) {
+            browserCardImage.setImage(new Image("/images/google.png"));
         } else if (imageName.equals("meeting")) {
             browserCardImage.setImage(new Image("/images/meeting.png"));
         } else if (imageName.equals("maps")) {

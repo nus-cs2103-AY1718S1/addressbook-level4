@@ -1,51 +1,23 @@
 package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.function.Predicate;
+//@@author Sri-vatsa
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javafx.collections.ObservableList;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.ReadOnlyMeeting;
-import seedu.address.model.ReadOnlyMeetingList;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.exceptions.DuplicateMeetingException;
-import seedu.address.model.exceptions.IllegalIdException;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
-
-public class AddCommandTest {
-
+public class AddMeetingCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullMeeting_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCommand(null);
+        new AddMeetingCommand(null);
     }
-
+    /*
     @Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        AddCommandTest.ModelStubAcceptingPersonAdded modelStub = new AddCommandTest.ModelStubAcceptingPersonAdded();
         Person validPerson = new PersonBuilder().build();
 
         CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
@@ -56,7 +28,7 @@ public class AddCommandTest {
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
+        AddCommandTest.ModelStub modelStub = new AddCommandTest.ModelStubThrowingDuplicatePersonException();
         Person validPerson = new PersonBuilder().build();
 
         thrown.expect(CommandException.class);
@@ -91,7 +63,7 @@ public class AddCommandTest {
 
     /**
      * Generates a new AddCommand with the details of the given person.
-     */
+     *
     private AddCommand getAddCommandForPerson(Person person, Model model) {
         AddCommand command = new AddCommand(person);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
@@ -100,7 +72,7 @@ public class AddCommandTest {
 
     /**
      * A default model stub that have all of the methods failing.
-     */
+     *
     private class ModelStub implements Model {
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
@@ -134,12 +106,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return false;
         }
-        //@@author Srivatsa
-        @Override
-        public void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException {
-            fail("This method should not be called.");
-        }
-        //@author
+
         @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
@@ -172,7 +139,7 @@ public class AddCommandTest {
         public void recordSearchHistory() throws CommandException {
             fail("This method should not be called.");
         }
-        //@@author Srivatsa
+
         @Override
         public void sortPersonListBySearchCount() {
             fail("This method should not be called.");
@@ -182,7 +149,7 @@ public class AddCommandTest {
         public void sortPersonListLexicographically() {
             fail("This method should not be called.");
         }
-        //@@author
+
         @Override
         public void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException {
 
@@ -191,8 +158,8 @@ public class AddCommandTest {
 
     /**
      * A Model stub that always throw a DuplicatePersonException when trying to add a person.
-     */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
+     *
+    private class ModelStubThrowingDuplicatePersonException extends AddCommandTest.ModelStub {
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             throw new DuplicatePersonException();
@@ -206,8 +173,8 @@ public class AddCommandTest {
 
     /**
      * A Model stub that always accept the person being added.
-     */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
+     *
+    private class ModelStubAcceptingPersonAdded extends AddCommandTest.ModelStub {
         final ArrayList<Person> personsAdded = new ArrayList<>();
 
         @Override
@@ -220,5 +187,5 @@ public class AddCommandTest {
             return new AddressBook();
         }
     }
-
+    */
 }

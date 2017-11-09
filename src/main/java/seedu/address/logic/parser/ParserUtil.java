@@ -2,6 +2,10 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -14,6 +18,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.InternalId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -110,5 +115,79 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    //@@author Sri-vatsa
+    /**
+     * Parses a {@code Optional<String> location} into an {@code Optional<String>} if {@code location} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseLocation(Optional<String> location) throws IllegalValueException {
+        requireNonNull(location);
+        return location.isPresent() ? Optional.of(location.get()) : Optional.empty();
+    }
+
+    //@@author Sri-vatsa
+    /**
+     * Parses a {@code Optional<String> date} into an {@code Optional<String>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(date.get()) : Optional.empty();
+    }
+
+    //@@author Sri-vatsa
+    /**
+     * Parses a {@code Optional<String> time} into an {@code Optional<String>} if {@code time} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseTime(Optional<String> time) throws IllegalValueException {
+        requireNonNull(time);
+        return time.isPresent() ? Optional.of(time.get()) : Optional.empty();
+    }
+
+    //@@author Sri-vatsa
+    /**
+     * Parses {@code String date} & {@code String time} if {@code date} & {@code time} are present.
+     */
+    public static LocalDateTime parseDateTime(String date, String time) throws IllegalValueException {
+        requireNonNull(date);
+        requireNonNull(time);
+
+        try {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu HHmm");
+            String dateTime = date + " " + time;
+            LocalDateTime localDateTime = LocalDateTime.parse(dateTime, formatter);
+            return localDateTime;
+        } catch (DateTimeParseException dtpe) {
+            throw new IllegalValueException("Please enter a date & time in the format dd/mm/yyyy & hhmm respectively!");
+        }
+    }
+
+
+
+    //@@author Sri-vatsa
+    /**
+     * Parses a {@code Optional<String> notes} into an {@code Optional<String>} if {@code notes} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseNotes(Optional<String> notes) throws IllegalValueException {
+        requireNonNull(notes);
+        return notes.isPresent() ? Optional.of(notes.get()) : Optional.empty();
+    }
+
+    //@@author Sri-vatsa
+    /**
+     * Parses {@code Collection<String> ids} into a {@code Set<>}.
+     */
+    public static ArrayList<InternalId> parseIds(Collection<String> ids) throws IllegalValueException {
+        requireNonNull(ids);
+        final ArrayList<InternalId> idSet = new ArrayList<>();
+        for (String id : ids) {
+            idSet.add(new InternalId(Integer.parseInt(id)));
+        }
+        return idSet;
     }
 }

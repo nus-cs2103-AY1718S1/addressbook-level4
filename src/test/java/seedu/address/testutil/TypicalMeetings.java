@@ -6,6 +6,8 @@ import java.util.List;
 
 import seedu.address.model.Meeting;
 import seedu.address.model.UniqueMeetingList;
+import seedu.address.model.exceptions.DuplicateMeetingException;
+
 //@@author liuhang0213
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -27,7 +29,7 @@ public class TypicalMeetings {
                 meetings.add(m);
             }
             return meetings;
-        } catch (UniqueMeetingList.DuplicateMeetingException e) {
+        } catch (DuplicateMeetingException e) {
             throw new AssertionError("sample data cannot contain duplicate meetings", e);
         }
     }
