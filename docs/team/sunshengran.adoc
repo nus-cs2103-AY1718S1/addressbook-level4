@@ -44,9 +44,9 @@ include::../DeveloperGuide.adoc[tag=birthdaymech]
 
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=shell]
-
 include::../UserGuide.adoc[tag=link]
+
+include::../UserGuide.adoc[tag=shell]
 
 #End of Extract#
 
