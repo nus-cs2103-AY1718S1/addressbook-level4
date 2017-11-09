@@ -17,6 +17,8 @@ public class DeliveryDateTest {
         assertFalse(DeliveryDate.isValidDate("")); // empty string
         assertFalse(DeliveryDate.isValidDate(" ")); // spaces only
         assertFalse(DeliveryDate.isValidDate("91")); // less than 3 numbers
+        assertFalse(DeliveryDate.isValidDate("9321313213213123212131")); // only numbers, can't understand
+        assertFalse(DeliveryDate.isValidDate("a")); // short string
         assertFalse(DeliveryDate.isValidDate("date")); // non-numeric
         assertFalse(DeliveryDate.isValidDate("#(_!@!@(")); // special charactors
         assertFalse(DeliveryDate.isValidDate("\u200E\uD83D\uDE03\uD83D\uDC81")); // emojis
@@ -52,6 +54,7 @@ public class DeliveryDateTest {
         assertEquals(new DeliveryDate("02-08-2017"), new DeliveryDate("Second day of August 2017"));
         assertEquals(new DeliveryDate("4-7-2017"), new DeliveryDate("independence day 2017"));
         assertEquals(new DeliveryDate("14-2-2017"), new DeliveryDate("Valentines day 2017"));
+        assertEquals(new DeliveryDate("24-12-2017"), new DeliveryDate("Christmas eve 2017"));
     }
     //@@author
 
