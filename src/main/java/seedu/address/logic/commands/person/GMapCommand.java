@@ -32,12 +32,12 @@ public class GMapCommand extends Command {
      * @param targetIndex of the person in the filtered person list to get directions to
      */
     public GMapCommand (Index targetIndex) {
-        System.setProperty("java.awt.headless", "true");
         this.targetIndex = targetIndex;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
+        System.setProperty("java.awt.headless", "false");
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
