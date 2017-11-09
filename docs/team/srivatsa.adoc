@@ -289,7 +289,10 @@ For Asana Integration to be fully functional, make sure you have: +
 
 ==== Justification
 
-Allows users to conveniently connect with contacts in addressbook & get to know more about these contacts.
+Increase user productivity by adding meetings to the addressbook & Asana. +
+This helps users track their meetings easily both offline & Online. +
+Furthermore, users get a friendly reminder to their inbox in all by simply adding +
+meetings to ourAB.
 
 ---
 
@@ -297,30 +300,46 @@ Allows users to conveniently connect with contacts in addressbook & get to know 
 
 #Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
 
-When the `choose` command is activated with the argument `linkedin`, the `BrowserPanel` handles by calling:
+===== Implementation
+
+When the command is called, the user input is parsed as shown in the sequence diagram below.
+
+image::AddMeetingCommandLogic.png[width="800"]
+
+In the model, there are two primary methods that are called:
+
+1. To add unique meetings (ensured by `DuplicateMeetingException`) associated with valid people in +
+addressbook (ensured by `IllegalIdException`).
+
 [source, java]
 ----
-private void loadOtherPages(String page);
+    try {
+        model.addMeeting(toAdd);
+    } catch (DuplicateMeetingException e) {
+        throw new CommandException(MESSAGE_DUPLICATE_MEETING);
+    } catch (IllegalIdException ive) {
+        throw new CommandException(MESSAGE_INVALID_ID);
+    }
 ----
 
-image::LinkedInProfile.png[width="200"]
+2. To post a task on Asana
+[source, java]
+----
+    newAsanaTask = new PostTask(toAdd.getNotes(), toAdd.getDate());
+    newAsanaTask.execute();
+----
 
-LinkedIn results page with parameters, such as `Name`, passed in from the selected `Person` class.
+Create a new instance of `PostTask` and authenticate user using https://github.com/Asana/java-asana[OAuth2].
 
-Note: Cookies are stored to maintain login session for the length of the addressbook session.
+===== Design Considerations
 
----
-
-==== Design considerations
-
-**Aspect:** Implementation of display linked in authorisation +
-**Alternative 1 (current option):** Manual key in of user-id and password into browser +
-**Pros:** More details of user profile is viewable +
-**Pros:** More secure +
-**Cons:** Tedious to type login credentials into browser +
-**Alternative 2:** Use OAuth 2.0 with LinkedIn Api +
-**Pros:** More convenient as login credentials are required only once +
-**Cons:** LinkedIn API available does not allow for viewing of full profile +
+**Aspect:** Post on Asana +
+**Alternative 1 (current choice):** Incorporate posting on Asana with every addCommand +
+**Pros:** Convenient for user to keep track of tasks related to meetings +
+**Cons:** Reduces control that user has in uploading tasks to Asana+
+**Alternative 2:** Create a separate command to add tasks onto Asana +
+**Pros:** More flexibility on the content that is saved onto Asana workspace +
+**Cons:** Unnecessary number of commands in the addressbook & reduce productivity of user
 
 #End of Extract#
 ---
