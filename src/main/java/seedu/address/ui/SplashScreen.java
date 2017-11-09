@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
 
+//@@author fongwz
 /**
  * UI component to load splash screen and animate it
  */
@@ -37,7 +38,7 @@ public class SplashScreen extends UiPart<Region> {
     private void setAnimation() {
         KeyValue moveRight = new KeyValue(splashLoadingImage.translateXProperty(), 460);
 
-        EventHandler onFinished = new EventHandler<ActionEvent>() {
+        EventHandler<ActionEvent> onFinished = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 splashLoadingImage.setTranslateX(-92);
