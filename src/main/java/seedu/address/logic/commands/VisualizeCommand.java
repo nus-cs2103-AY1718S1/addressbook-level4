@@ -10,6 +10,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.Time;
+import seedu.address.ui.ScheduleTable;
 
 
 //@@author YuchenHe98
@@ -42,6 +43,9 @@ public class VisualizeCommand extends Command {
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
+        Schedule scheduleToBeShown =
+                model.getAddressBook().getPersonList().get(targetIndex.getZeroBased()).getSchedule();
+        ScheduleTable.generates(scheduleToBeShown);
         String toShow = scheduleInfo();
         return new CommandResult(String.format(MESSAGE_VISUALIZE_PERSON_SUCCESS + targetIndex.getOneBased() + toShow));
 

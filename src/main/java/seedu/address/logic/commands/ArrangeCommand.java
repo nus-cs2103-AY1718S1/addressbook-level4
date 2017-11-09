@@ -11,6 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.Time;
+import seedu.address.ui.ScheduleTable;
 
 //@@author YuchenHe98
 /**
@@ -47,6 +48,8 @@ public class ArrangeCommand extends Command {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
         }
+        TreeSet<Integer>[] timeSetArray = Schedule.splitScheduleToDays(model.generateMeetingTime(listOfIndex));
+        ScheduleTable.generates(timeSetArray);
         String toShow = scheduleInfo();
         return new CommandResult(String.format(MESSAGE_ARRANGE_PERSON_SUCCESS) + toShow);
 
