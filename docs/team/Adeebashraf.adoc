@@ -23,9 +23,9 @@ Allows the adding of remarks using the `remark ` command. +
 ---
 #Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
 
-include::../UserGuide.adoc[tag=bday] +
+include::../UserGuide.adoc[tag=bday]
 
-include::../UserGuide.adoc[tag=remark] +
+include::../UserGuide.adoc[tag=remark]
 
 #End of Extract#
 
