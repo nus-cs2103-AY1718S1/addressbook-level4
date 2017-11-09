@@ -386,6 +386,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::customField[]
 === Custom Field
 ==== Model
 A UniqueCustomFieldList Class is created which will be used to store a person's Custom Fields.
@@ -417,7 +418,9 @@ A new label will be displaced for each person for each custom field.
 ==== Sequence Diagram
 image::CustomCommandSequenceDiagram.png[width="800"]
 image::CustomCommandSequenceDiagramForStorage[width="800"]
+// end:: customField[]
 
+// tag::photo[]
 === Upload photo
 ==== Model
 A Photo class is created and added as an attribute to the Person class to store the icon photo of each person.
@@ -446,6 +449,17 @@ Image of the icon photo will be displayed after uploaded.
 
 ==== Sequence Diagram
 image::UploadPhotoCommandSequenceDiagram.png[width="800"]
+// end:: photo[]
+
+// tag::deleteByName[]
+=== DeleteByName
+==== Logic
+A Command - `DeleteByName` Command is created to serve the purpose of deleting an contact from the `Contact book` via its name.
+The Command takes into a String as the parameter which represents the `Name` of the person that is intended to delete.
+When the command is called, the `Contact Book` will get the internal list of all persons and check through the `Name` attribute of each person.
+If there is a person with name equals to the parameter input, the person will be removed from the `Contact Book`.
+If the input name does not match any `Name` in the internal list of all `Person` objects, the internal list will not be modified but the `Result Box` will feedback to users that the person name is not found.
+// end:: deleteByName[]
 
 === Search bar
 ==== Front end

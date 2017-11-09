@@ -144,24 +144,6 @@ public class PersonInformationPanel extends UiPart<Region> {
         });
     }
 
-    /*
-    //@@author LuLechuan
-    /**
-     *  Initialise optional phone display list
-    public void initOptionalPhone(ReadOnlyPerson person) {
-        final int[] index = {1};
-        person.getPhoneList().forEach(optionalPhone -> {
-            optionalPhoneDisplayList.add("Other phone " + index[0] + " : " + optionalPhone.value);
-            index[0]++;
-        });
-
-        //optionalPhoneList.itemsProperty().bind(listProperty);
-
-        listProperty.set(FXCollections.observableArrayList(optionalPhoneDisplayList));
-    }
-    //@@author
-    */
-
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

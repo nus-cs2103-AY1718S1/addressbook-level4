@@ -138,6 +138,7 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+// tag::deleteByName[]
 === Deleting a person by his/her full name: `deleteByName`
 
 Deletes the specified person from the address book. +
@@ -153,6 +154,7 @@ Examples:
 * `list` +
 `delete John Doe` +
 Deletes person named John Doe in the address book.
+// end:: deleteByName[]
 
 === Selecting a person : `select`
 
@@ -174,6 +176,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::customField[]
 === Adding/Updating a person's custom field : `custom`
 
 Adds or updates an existing person's custom fields in the address book. +
@@ -191,7 +194,9 @@ Examples:
 Updates the Nickname custom field of the 1st person to be Ahchuang.
 * `custom 1 Nickname`
 Remove the Nickname custom field of the 1st person.
+// end::customField[]
 
+// tag::photo[]
 === Adding/Updating a person's icon photo : `upload`
 
 Adds or updates an existing person's icon photo in the address book. +
@@ -209,6 +214,7 @@ Examples:
 Updates the icon photo of the 1st person to be wolf.jpg located in D:\Git Projects.
 * `custom 1`
 Remove the icon photo of the 1st person, the default photo will be shown instead.
+// end::photo[]
 
 === Listing entered commands : `history`
 
