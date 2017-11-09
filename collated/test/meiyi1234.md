@@ -1,17 +1,6 @@
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-
-import org.junit.Test;
-
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.RemarkCommand;
-import seedu.address.model.person.Remark;
-//@@author meiyi1234
+# meiyi1234
+###### /java/seedu/address/logic/parser/RemarkCommandParserTest.java
+``` java
 public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
 
@@ -41,3 +30,32 @@ public class RemarkCommandParserTest {
     }
 }
 
+```
+###### /java/seedu/address/model/person/RemarkTest.java
+``` java
+public class RemarkTest {
+
+    @Test
+    public void equals() {
+        Remark remark = new Remark("Hello");
+
+        // Return true if same object
+        assertTrue(remark.equals(remark));
+
+        // Returns true if remarks have the same value
+        Remark remarkSameValue = new Remark(remark.value);
+        assertTrue(remark.equals(remarkSameValue));
+
+        // Returns false if different type
+        assertFalse(remark.equals(1));
+
+        // Returns false if null
+        assertFalse(remark.equals(null));
+
+        // Returns false if different person
+        Remark differentRemark = new Remark("Hey");
+        assertFalse(remark.equals(differentRemark));
+    }
+}
+
+```

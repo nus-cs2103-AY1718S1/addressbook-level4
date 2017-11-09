@@ -16,7 +16,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
-import seedu.address.MainApp;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.DisplayGmapEvent;
 import seedu.address.commons.events.ui.PersonPanelDeleteEvent;
@@ -127,6 +127,7 @@ public class PersonCard extends UiPart<Region> {
     }
     //@@author
 
+    //@@author renkai91
     /**
      * Menu list option: add image
      * Raises PersonPanelOptionsDelete, handled by UIManager
@@ -140,8 +141,7 @@ public class PersonCard extends UiPart<Region> {
             try {
                 person.getPicture().setPictureUrl(person.getName().toString() + person.getPhone().toString() + ".jpg");
                 ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
-                String fileUrl = MainApp.class.getResource(person.getPicture().getPictureUrl()).getPath();
-                FileInputStream fileStream = new FileInputStream(fileUrl);
+                FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
                 Image newPicture = new Image(fileStream);
                 picture.setImage(newPicture);
             } catch (Exception e) {
@@ -151,7 +151,7 @@ public class PersonCard extends UiPart<Region> {
             System.out.println("Invalid File");
         }
     }
-
+    //@@author
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
@@ -168,7 +168,7 @@ public class PersonCard extends UiPart<Region> {
             initTags(person);
         });
     }
-
+    //@@author renkai91
     /**
      * Initialize image for ever person
      */
@@ -185,7 +185,7 @@ public class PersonCard extends UiPart<Region> {
             System.out.println("Image not found");
         }
     }
-
+    //@@author
     /**
      * Initialize respective person tag style {@code Person}
      */

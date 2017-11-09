@@ -1,5 +1,65 @@
 # Choony93
-###### /java/seedu/address/commons/events/model/AddressBookImportEvent.java
+###### /out/production/resources/view/default.html
+``` html
+    <!-- On page load, extract selected theme from parameter in the URL and edit respective css file -->
+		window.onload = function(e){
+			var theme  = getParameterByName('theme');
+			if (theme) {
+				var oldlink = document.getElementsByTagName("link").item(0);
+				var newlink = document.createElement("link");
+
+				newlink.setAttribute("rel", "stylesheet");
+				newlink.setAttribute("type", "text/css");
+				newlink.setAttribute("href", theme);
+
+				document.getElementsByTagName("head").item(0).replaceChild(newlink, oldlink);
+			}
+		}
+```
+###### /out/production/resources/view/Extensions.css
+``` css
+.menu-personcard {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+	-fx-mark-color: grey;
+	-fx-pref-width: 120px;
+	-fx-text-alignment: right;
+}
+
+.menu-personcard:showing {
+    -fx-mark-color: #00FFFF;
+}
+```
+###### /out/production/resources/view/MainWindow.fxml
+``` fxml
+        <MenuItem mnemonicParsing="false" text="Import Addressbook (TDB)"/>
+        <MenuItem mnemonicParsing="false" text="Export Addressbook (TDB)"/>
+        <Menu text="Themes">
+            <MenuItem text="Bootstrap3" onAction="#handleThemeBootstrap3" userData="0"/>
+            <MenuItem text="Dark" onAction="#handleThemeDark" userData="1"/>
+            <MenuItem text="Caspian" onAction="#handleThemeCaspian" userData="2"/>
+            <Menu text="Modena">
+                <MenuItem text="Default" onAction="#handleThemeModena" userData="3"/>
+                <MenuItem text="Black On White" onAction="#handleThemeModenaBoW" userData="4"/>
+                <MenuItem text="White On Black" onAction="#handleThemeModenaWoB" userData="5"/>
+                <MenuItem text="Yellow On Black" onAction="#handleThemeModenaYoB" userData="6"/>
+            </Menu>
+        </Menu>
+```
+###### /out/production/resources/view/PersonListCard.fxml
+``` fxml
+                <Pane HBox.hgrow="ALWAYS"/>
+                <MenuButton fx:id="options_button" text="" alignment="CENTER_RIGHT" styleClass="menu-personcard">
+                    <items>
+                        <MenuItem text="Delete" onAction="#handleDelete"/>
+                        <MenuItem text="Google Map" onAction="#handleGoogleMap"/>
+                        <MenuItem text="Add photo" onAction="#handleAddImage"/>
+                    </items>
+                </MenuButton>
+```
+###### /src/main/java/seedu/address/commons/events/model/AddressBookImportEvent.java
 ``` java
 public class AddressBookImportEvent extends BaseEvent {
 
@@ -17,7 +77,7 @@ public class AddressBookImportEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/ChangeThemeEvent.java
+###### /src/main/java/seedu/address/commons/events/ui/ChangeThemeEvent.java
 ``` java
 public class ChangeThemeEvent extends BaseEvent {
 
@@ -34,7 +94,7 @@ public class ChangeThemeEvent extends BaseEvent {
 
 }
 ```
-###### /java/seedu/address/commons/events/ui/DisplayGmapEvent.java
+###### /src/main/java/seedu/address/commons/events/ui/DisplayGmapEvent.java
 ``` java
 public class DisplayGmapEvent extends BaseEvent {
 
@@ -51,7 +111,7 @@ public class DisplayGmapEvent extends BaseEvent {
 
 }
 ```
-###### /java/seedu/address/commons/events/ui/PersonPanelDeleteEvent.java
+###### /src/main/java/seedu/address/commons/events/ui/PersonPanelDeleteEvent.java
 ``` java
 public class PersonPanelDeleteEvent extends BaseEvent {
 
@@ -68,7 +128,7 @@ public class PersonPanelDeleteEvent extends BaseEvent {
 
 }
 ```
-###### /java/seedu/address/logic/commands/GmapCommand.java
+###### /src/main/java/seedu/address/logic/commands/GmapCommand.java
 ``` java
 public class GmapCommand extends Command {
 
@@ -130,7 +190,7 @@ public class GmapCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ImportCommand.java
+###### /src/main/java/seedu/address/logic/commands/ImportCommand.java
 ``` java
 public class ImportCommand extends Command {
 
@@ -174,7 +234,7 @@ public class ImportCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ThemeCommand.java
+###### /src/main/java/seedu/address/logic/commands/ThemeCommand.java
 ``` java
 public class ThemeCommand extends Command {
 
@@ -249,7 +309,7 @@ public class ThemeCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
+###### /src/main/java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case GmapCommand.COMMAND_WORD:
             return new GmapCommandParser().parse(arguments);
@@ -260,7 +320,7 @@ public class ThemeCommand extends Command {
         case ImportCommand.COMMAND_WORD:
             return new ImportCommandParser().parse(arguments);
 ```
-###### /java/seedu/address/logic/parser/GmapCommandParser.java
+###### /src/main/java/seedu/address/logic/parser/GmapCommandParser.java
 ``` java
         String trimmedArgs = args.trim();
         if (Character.isDigit(trimmedArgs.charAt(0))) {
@@ -280,7 +340,7 @@ public class ThemeCommand extends Command {
             return new GmapCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
         }
 ```
-###### /java/seedu/address/logic/parser/ThemeCommandParser.java
+###### /src/main/java/seedu/address/logic/parser/ThemeCommandParser.java
 ``` java
         String trimmedArgs = args.trim();
 
@@ -301,11 +361,11 @@ public class ThemeCommand extends Command {
 
         return new ThemeCommand(trimmedArgs);
 ```
-###### /java/seedu/address/model/Model.java
+###### /src/main/java/seedu/address/model/Model.java
 ``` java
     void handleAddressBookImportEvent(AddressBookImportEvent abce);
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### /src/main/java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public List<ReadOnlyPerson> getPersonListByPredicate(Predicate<ReadOnlyPerson> predicate) {
@@ -314,7 +374,7 @@ public class ThemeCommand extends Command {
         return FXCollections.unmodifiableObservableList(filteredList);
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### /src/main/java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     @Subscribe
@@ -341,7 +401,7 @@ public class ThemeCommand extends Command {
         }
     }
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### /src/main/java/seedu/address/ui/PersonCard.java
 ``` java
     private static String getColorForTag(String tagValue) {
 
@@ -375,7 +435,7 @@ public class ThemeCommand extends Command {
         raise(new PersonPanelDeleteEvent(Index.fromOneBased(this.displayedIndex)));
     }
 ```
-###### /java/seedu/address/ui/UiManager.java
+###### /src/main/java/seedu/address/ui/UiManager.java
 ``` java
     @Subscribe
     private void handleOptionsDeleteEvent(PersonPanelDeleteEvent event) throws CommandException, ParseException {
@@ -383,7 +443,7 @@ public class ThemeCommand extends Command {
         this.logic.execute("delete " + event.targetIndex);
     }
 ```
-###### /java/seedu/address/ui/UiPart.java
+###### /src/main/java/seedu/address/ui/UiPart.java
 ``` java
     public static final String THEME_CSS_DARKTHEME = "/darktheme/DarkTheme.css";
     public static final String THEME_CSS_BOOTSTRAP3 = "/bootstrap3/bootstrap3.css";
@@ -404,7 +464,7 @@ public class ThemeCommand extends Command {
                 add(THEME_CSS_MODENA_YELLOWONBLACK);
             }});
 ```
-###### /java/seedu/address/ui/UiPart.java
+###### /src/main/java/seedu/address/ui/UiPart.java
 ``` java
     public static String getThemeNameByIndex(int index) {
         String themeName = THEME_LIST_DIR.get(index);
@@ -418,7 +478,24 @@ public class ThemeCommand extends Command {
         return themeName;
     }
 ```
-###### /resources/view/Extensions.css
+###### /src/main/resources/view/default.html
+``` html
+    <!-- On page load, extract selected theme from parameter in the URL and edit respective css file -->
+		window.onload = function(e){
+			var theme  = getParameterByName('theme');
+			if (theme) {
+				var oldlink = document.getElementsByTagName("link").item(0);
+				var newlink = document.createElement("link");
+
+				newlink.setAttribute("rel", "stylesheet");
+				newlink.setAttribute("type", "text/css");
+				newlink.setAttribute("href", theme);
+
+				document.getElementsByTagName("head").item(0).replaceChild(newlink, oldlink);
+			}
+		}
+```
+###### /src/main/resources/view/Extensions.css
 ``` css
 .menu-personcard {
     -fx-border-color: transparent;
@@ -434,7 +511,7 @@ public class ThemeCommand extends Command {
     -fx-mark-color: #00FFFF;
 }
 ```
-###### /resources/view/MainWindow.fxml
+###### /src/main/resources/view/MainWindow.fxml
 ``` fxml
         <MenuItem mnemonicParsing="false" text="Import Addressbook (TDB)"/>
         <MenuItem mnemonicParsing="false" text="Export Addressbook (TDB)"/>
@@ -450,7 +527,7 @@ public class ThemeCommand extends Command {
             </Menu>
         </Menu>
 ```
-###### /resources/view/PersonListCard.fxml
+###### /src/main/resources/view/PersonListCard.fxml
 ``` fxml
                 <Pane HBox.hgrow="ALWAYS"/>
                 <MenuButton fx:id="options_button" text="" alignment="CENTER_RIGHT" styleClass="menu-personcard">
@@ -460,4 +537,43 @@ public class ThemeCommand extends Command {
                         <MenuItem text="Add photo" onAction="#handleAddImage"/>
                     </items>
                 </MenuButton>
+```
+###### /src/test/java/seedu/address/logic/parser/GmapCommandParserTest.java
+``` java
+    @Test
+    public void parse_validArgs_returnsSelectCommand() {
+        assertParseSuccess(parser, "1", new GmapCommand(INDEX_FIRST_PERSON));
+
+        GmapCommand expectedFindCommand =
+                new GmapCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        assertParseSuccess(parser, "Alice Bob", expectedFindCommand);
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "0", String.format(MESSAGE_INVALID_COMMAND_FORMAT, GmapCommand.MESSAGE_USAGE));
+    }
+```
+###### /src/test/java/seedu/address/logic/parser/ThemeCommandParserTest.java
+``` java
+    @Test
+    public void parse_validArgs_returnsSelectCommand() {
+        assertParseSuccess(parser, "1", new ThemeCommand(Index.fromOneBased(1)));
+
+        assertParseSuccess(parser, "caspian", new ThemeCommand("caspian"));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "0", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
+    }
+```
+###### /src/test/java/seedu/address/ui/BrowserPanelTest.java
+``` java
+        // associated google map page of a person
+        postNow(gmapEventStub);
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertTrue(browserPanelHandle.getLoadedUrl().toString(), browserPanelHandle.getLoadedUrl()
+                .toString().contains("https://www.google.com/maps/search/"));
 ```
