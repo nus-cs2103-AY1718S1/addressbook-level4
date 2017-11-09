@@ -300,9 +300,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         commandMode.setCommandMode(mode);
     }
 
-    public String getCommandMode() {
-        return commandMode.toString();
+    public CommandMode getCommandMode() {
+        return commandMode;
     }
+
     //@@author
     //// util methods
 

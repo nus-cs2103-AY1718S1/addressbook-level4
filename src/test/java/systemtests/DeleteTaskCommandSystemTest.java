@@ -34,7 +34,7 @@ public class DeleteTaskCommandSystemTest extends AddressBookSystemTest {
         /*Case: change the current command mode to task manager -> success*/
         Model expectedModel = getModel();
         String command = ChangeModeCommand.COMMAND_WORD + " tm";
-        String expectedResultMessage = String.format(MESSAGE_CHANGE_MODE_SUCCESS, "taskmanager");
+        String expectedResultMessage = String.format(MESSAGE_CHANGE_MODE_SUCCESS, "TaskManager");
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case: delete the first task in the list, command with leading spaces and trailing spaces -> deleted */

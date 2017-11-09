@@ -115,7 +115,7 @@ public class CalendarPanel extends UiPart<Region> {
                     dateMode.add(birthdayString);
                     dateMode.add(dateString);
 
-                    if (model.getCommandMode().equals(mode.get(1))) {
+                    if (model.getCommandMode().toString().equals(mode.get(1))) {
                         order = 1;
                     }
                     int changedOrder = ((order - 1) == 0) ? 0 : 1;
