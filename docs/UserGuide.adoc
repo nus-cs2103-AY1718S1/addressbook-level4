@@ -265,6 +265,7 @@ Similar tags will also be assigned the same color as long as tags have the same 
 
 Total number of person in addressbook will now be displayed at the footer bar.
 
+// tag::finds[]
 === Locating persons by names or phone numbers or emails or tags: `finds` (v1.1)
 
 *Author*: Soh Hong Hwee
@@ -361,6 +362,7 @@ Function will be found from under the `File` section of menu toolbar. +
 Selected themes will be saved into user preference file upon exit of program. +
 Reinitializing of myBook will display the previous choice of theme.
 
+// tag::Important[]
 === `Important` or `important` tag (v1.2)
 
 *Author*: Soh Hong Hwee
