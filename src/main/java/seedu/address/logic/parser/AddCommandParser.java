@@ -71,7 +71,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             if (statusOptional.isPresent()) {
                 status = statusOptional.get();
             } else {
-                status = Status.getInstance("Pending");
+                status = Status.PENDING;
             }
 
             if (phoneOptional.isPresent()) {
@@ -80,8 +80,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 phone = new Phone();
             }
 
-            ReadOnlyParcel parcel = new Parcel(trackingNumber, name, phone, email, address, deliveryDate, status,
-                    tagList);
+            ReadOnlyParcel parcel = new Parcel(trackingNumber, name, phone, email, address, deliveryDate, status, tagList);
 
             return new AddCommand(parcel);
         } catch (IllegalValueException ive) {
