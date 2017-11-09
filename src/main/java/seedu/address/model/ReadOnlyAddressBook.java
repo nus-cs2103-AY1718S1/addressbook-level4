@@ -27,8 +27,8 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate persons.
      */
     ObservableList<ReadOnlyPerson> getWhitelistedPersonList();
-    //@@author
 
+    //@@author
     /**
      * Returns an unmodifiable view of the list of persons with overdue debt.
      * This list will not contain any duplicate persons.
