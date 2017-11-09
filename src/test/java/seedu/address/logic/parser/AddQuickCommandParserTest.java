@@ -17,6 +17,8 @@ import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
@@ -29,6 +31,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -43,6 +47,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+//import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
@@ -53,40 +58,44 @@ public class AddQuickCommandParserTest {
     public void parse_allFieldsPresent_success() {
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withBirthday(VALID_BIRTHDAY_BOB)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withRemark(VALID_REMARK_BOB).withTags(VALID_TAG_FRIEND).build();
 
         // multiple names - last name accepted
         assertParseSuccess(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_AMY + NAME_DESC_BOB + PHONE_DESC_BOB
-                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND,
+                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + REMARK_DESC_BOB + TAG_DESC_FRIEND,
                 new AddQuickCommand(expectedPerson));
 
         // multiple phones - last phone accepted
         assertParseSuccess(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB
-                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND,
+                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + REMARK_DESC_BOB + TAG_DESC_FRIEND,
                 new AddQuickCommand(expectedPerson));
 
         // multiple emails - last email accepted
         assertParseSuccess(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_AMY
-                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND,
+                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + REMARK_DESC_BOB + TAG_DESC_FRIEND,
                 new AddQuickCommand(expectedPerson));
 
         // multiple addresses - last address accepted
         assertParseSuccess(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-
-                        + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND,
+                        + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + REMARK_DESC_BOB + TAG_DESC_FRIEND,
                 new AddQuickCommand(expectedPerson));
 
         // multiple birthdays - last birthday accepted
         assertParseSuccess(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                        + ADDRESS_DESC_BOB + BIRTHDAY_DESC_AMY + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND,
+                        + ADDRESS_DESC_BOB + BIRTHDAY_DESC_AMY + BIRTHDAY_DESC_BOB + REMARK_DESC_BOB + TAG_DESC_FRIEND,
                 new AddQuickCommand(expectedPerson));
+
+        // multiple remarks - last remark accepted
+        assertParseSuccess(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                        + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + REMARK_DESC_AMY + REMARK_DESC_BOB
+                + TAG_DESC_FRIEND, new AddQuickCommand(expectedPerson));
 
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withBirthday(VALID_BIRTHDAY_BOB)
-                .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
+                .withRemark(VALID_REMARK_BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
         assertParseSuccess(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                        + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                        + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + REMARK_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 new AddQuickCommand(expectedPersonMultipleTags));
     }
 
@@ -97,7 +106,7 @@ public class AddQuickCommandParserTest {
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY)
                 .withTags().build();
         assertParseSuccess(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY, new AddQuickCommand(expectedPerson));
+                + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY + REMARK_DESC_AMY, new AddQuickCommand(expectedPerson));
     }
 
     //@@author aver0214
@@ -128,13 +137,11 @@ public class AddQuickCommandParserTest {
                 + TAG_DESC_FRIEND, Name.MESSAGE_NAME_CONSTRAINTS);
 
         // invalid phone
-
         assertParseFailure(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_BOB + INVALID_PHONE_DESC
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_HUSBAND
                 + TAG_DESC_FRIEND, Phone.MESSAGE_PHONE_CONSTRAINTS);
 
         // invalid email
-
         assertParseFailure(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
                 + INVALID_EMAIL_DESC + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_HUSBAND
                 + TAG_DESC_FRIEND, Email.MESSAGE_EMAIL_CONSTRAINTS);
