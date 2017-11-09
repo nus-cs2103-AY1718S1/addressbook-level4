@@ -26,7 +26,7 @@ public class VisualizeCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_VISUALIZE_PERSON_SUCCESS = "Visualized Person: %1$s";
+    public static final String MESSAGE_VISUALIZE_PERSON_SUCCESS = "Visualized Success! ";
 
     private final Index targetIndex;
 
@@ -42,6 +42,12 @@ public class VisualizeCommand extends Command {
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
+        String toShow = scheduleInfo();
+        return new CommandResult(String.format(MESSAGE_VISUALIZE_PERSON_SUCCESS + targetIndex.getOneBased() + toShow));
+
+    }
+
+    public String scheduleInfo() {
 
         Schedule scheduleToBeShown =
                 model.getAddressBook().getPersonList().get(targetIndex.getZeroBased()).getSchedule();
@@ -55,8 +61,7 @@ public class VisualizeCommand extends Command {
             }
             toShow += "\n";
         }
-        return new CommandResult(String.format(MESSAGE_VISUALIZE_PERSON_SUCCESS, targetIndex.getOneBased() + toShow));
-
+        return toShow;
     }
 
     @Override
