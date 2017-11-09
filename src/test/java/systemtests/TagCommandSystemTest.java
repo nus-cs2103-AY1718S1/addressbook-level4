@@ -1,28 +1,22 @@
 package systemtests;
 
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.BIRTHDAY_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_COLLEAGUE;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_BIRTHDAY_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLLEAGUE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TASK;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.persons.EditCommand;
 import seedu.address.logic.commands.persons.TagCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -47,9 +41,46 @@ public class TagCommandSystemTest extends AddressBookSystemTest {
         String command = " " + TagCommand.COMMAND_WORD + "  " + indices[0].getOneBased() + ",   " +
                 indices[1].getOneBased() + "   " + TAG_DESC_HUSBAND + "   " + TAG_DESC_COLLEAGUE + " ";
         ReadOnlyPerson personToTag = getModel().getFilteredPersonList().get(indices[0].getZeroBased());
-        Person taggedPerson = new PersonBuilder(personToTag).withTags(VALID_TAG_HUSBAND, VALID_TAG_COLLEAGUE,
-                VALID_TAG_FRIEND).build();
+        Person taggedPerson = new PersonBuilder(personToTag).addTags(VALID_TAG_HUSBAND, VALID_TAG_COLLEAGUE).build();
         assertCommandSuccess(command, indices[0], taggedPerson);
+
+                /* --------------------- Performing edit operation while a person card is selected -------------------------- */
+
+        /* Case: selects first card in the person list, tag a person -> tagged, card selection remains unchanged but
+         * browser url changes
+         */
+        showAllPersons();
+        Index index = INDEX_FIRST_PERSON;
+        selectPerson(index);
+        command = TagCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
+        Person aliceTagged = new PersonBuilder(ALICE).addTags(VALID_TAG_FRIEND).build();
+        // this can be misleading: card selection actually remains unchanged but the
+        // browser's url is updated to reflect the new person's address
+        assertCommandSuccess(command, index, aliceTagged , index);
+
+        /* --------------------------------- Performing invalid tag operation -------------------------------------- */
+
+        /* Case: single invalid index (0) -> rejected */
+        assertCommandFailure(TagCommand.COMMAND_WORD + " 0" + TAG_DESC_FRIEND,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
+
+        /* Case: single invalid index (-1) -> rejected */
+        assertCommandFailure(TagCommand.COMMAND_WORD + " -1" + TAG_DESC_COLLEAGUE,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
+
+        /* Case: single invalid index (size + 1) -> rejected */
+        int invalidIndex = getModel().getFilteredPersonList().size() + 1;
+        assertCommandFailure(TagCommand.COMMAND_WORD + " " + invalidIndex + TAG_DESC_COLLEAGUE,
+                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
+        /* Case: missing index -> rejected */
+        assertCommandFailure(TagCommand.COMMAND_WORD + TAG_DESC_COLLEAGUE,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
+
+        /* Case: invalid tag -> rejected */
+        assertCommandFailure(TagCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + ", "
+                        + INDEX_SECOND_TASK.getOneBased() + INVALID_TAG_DESC,
+                Tag.MESSAGE_TAG_CONSTRAINTS);
     }
 
     /**
@@ -79,7 +110,7 @@ public class TagCommandSystemTest extends AddressBookSystemTest {
             expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         } catch (DuplicatePersonException | PersonNotFoundException e) {
             throw new IllegalArgumentException(
-                    "editedPerson is a duplicate in expectedModel, or it isn't found in the model.");
+                    "taggedPerson is a duplicate in expectedModel, or it isn't found in the model.");
         }
 
         assertCommandSuccess(command, expectedModel,

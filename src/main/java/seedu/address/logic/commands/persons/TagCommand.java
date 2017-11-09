@@ -91,6 +91,7 @@ public class TagCommand extends UndoableCommand {
 
         //state check
         for (int i = 0; i < indices.length; i++) {
+            assert(indices.length == ((TagCommand) other).indices.length);
             if (!indices[i].equals(((TagCommand) other).indices[i])) {
                 return false;
             }

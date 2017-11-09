@@ -32,10 +32,16 @@ public class TagTaskCommandParser implements Parser<TagTaskCommand> {
 
         try {
             parsedIndices =  ParserUtil.parseIndices(argMultimap.getPreamble().split(","));
-            tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagTaskCommand.MESSAGE_USAGE));
         }
+
+        try {
+            tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage());
+        }
+
         return new TagTaskCommand(parsedIndices, tagList);
     }
 
