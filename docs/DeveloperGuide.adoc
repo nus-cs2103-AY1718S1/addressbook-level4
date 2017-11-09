@@ -657,6 +657,61 @@ public Phone(String phone) throws IllegalValueException {
 **Cons:** Inconsistent phone lengths displayed, might look very messy. +
 // end::studentparentcontact[]
 
+// tag::optionalInput[]
+=== Optional Inputs/Fields mechanism
+
+The `optional inputs/fields` mechanism is facilitated by making changes to `AddCommandParser` class in the `Logic` component.
+This feature enables several input/fields of the student to be optional.
+
+[NOTE]
+Student's phone number, email, address and postal code are optional inputs/fields.
+
+The following sequence diagram shows you how the `optional inputs/fields` operation works:
+
+image::OptionalInputsSequenceDiagram.png[width="800"]
+_Figure 4.5.1 : Sequence Diagram of Optional Inputs/Fields Operation_
+
+The optionalInput method will append messages indicating that those optional fields are not recorded if the user chooses not to include those fields.
+The method can be seen in the code section below.
+
+----
+    public static String optionalInput(String input) {
+        if (!input.contains("a/")) {
+            input = input + " a/ (Address not recorded)";
+        }
+        if (!input.contains("e/")) {
+            input = input + " e/ (Email not recorded)";
+        }
+        if (!input.contains("c/")) {
+            input = input + " c/ (Postal code not recorded)";
+        }
+        return input;
+    }
+----
+
+Prefixes of the optional fields - `PREFIX_PHONE`, `PREFIX_EMAIL`, `PREFIX_ADDRESS` and `PREFIX_POSTALCODE` are removed from
+the code segment below. The ensures that the `ParseException` will not be thrown if the user chooses not to include the
+optional fields.
+
+----
+if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_PARENTPHONE, PREFIX_FORMCLASS,
+                PREFIX_GRADES)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        }
+----
+
+==== Design Considerations
+
+Aspect: Implementation of optional fields/inputs. +
+Alternative 1 (current choice): This feature manipulates the input to include the missing optional input prefix, along with a message
+stating that the field is not recorded. +
+Pros: Simpler to understand and tweak this feature as it only manipulates the parsed input of the user. +
+Cons: Unable to implement UI features that requires the attribute to have a optional property. +
+Alternative 2: This feature will implement a optional characteristic in attributes that are optional +
+Pros: Optionality aspect of then attributes can be used by other features of cherBook. +
+Cons: Harder to understand the mechanism and implement changes to this feature. +
+// end::optionalInput[]
+
 // tag::uniquetagcolor[]
 === Unique Color Tag mechanism
 
@@ -968,7 +1023,10 @@ The following sequence diagram shows how the FindTags operation works:
 image::FindTagsSequenceDiagramForLogic.png[width="800"]
 _Figure 4.10.1 : Sequence Diagram of `FindTags` Operation_
 
-==== Design Considerations.
+After the addressBook's `filteredPersonsList` has been updated, the `Model` Component posts an `AddressBookChangedEvent`
+to indicate the model has changed and a `FilteredPersonListChangedEvent` to update the `StatisticsPanel` of the UI to reflect the new Statistical values.
+
+==== Design Considerations
 
 **Aspect:** Have a separate predicate class to support `findtags` +
 **Alternative 1 (current choice):** Have a `TagsContainsKeywordsPredicate` to facilitate search. +
@@ -978,6 +1036,97 @@ _Figure 4.10.1 : Sequence Diagram of `FindTags` Operation_
 **Pros:** It makes the codebase less complex as there are less classes. +
 **Cons:** It adds complexity to the `FindTagsCommand` source file and reduces reusability of the `Predicate` outside of the `FindTagsCommand` +
 // end::findtags[]
+
+// tag::statisticspanel[]
+=== Statistics Panel mechanism
+
+The `Statistics Panel` is implemented using the `Statistics` class.
+It supports the calculating of statistics for the current list of students in the `PersonListPanel`.
+
+When the user enters any `Command` that modifies the currentFilteredPersonList or modifies the addressBook data, the `Model` Component posts
+a `FilteredPersonListChangedEvent` containing the`filteredPersonsList` to the `EventsCenter`.
+
+The `FilteredPersonListChangedEvent` is implemented this way:
+
+```
+public class FilteredPersonListChangedEvent extends BaseEvent {
+
+    private final ObservableList<ReadOnlyPerson> currentFilteredList;
+
+    public FilteredPersonListChangedEvent(ObservableList<ReadOnlyPerson> currentFilteredList) {
+        this.currentFilteredList = currentFilteredList;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public ObservableList<ReadOnlyPerson> getCurrentFilteredPersonList() {
+        return currentFilteredList;
+    }
+}
+```
+
+Meanwhile in the `StatisticsPanel` class, the `handleFilteredPersonListChangedEvent` event handler which is subscribed to `EventsCenter` handles the `FilteredPersonListChangedEvent` event.
+
+The `handleFilteredPersonListChangedEvent` event handler is implemented this way:
+
+```
+    @FXML
+    @Subscribe
+    private void handleFilteredPersonListChangedEvent(FilteredPersonListChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        statistics.initScore(event.getCurrentFilteredPersonList()); // Update currentList data
+        loadListStatistics();
+    }
+```
+
+In the `handleFilteredPersonListChangedEvent` event handler, the `Statistics` instance in `StatisticsPanel` has its values updated by the `initScore()` method.
+This results in the statistical values returned from the `Statistics` class' methods tp be updated to those of the current `filteredPersonList` to change when called.
+
+The `loadListStatistics()` of the `StatisticsPanel` class is then called. This updates and shows the statistic values of the current `filteredPersonList` on the `StatisticsPanel` in the User Interface.
+
+The `loadListStatistics()` is implemented this way:
+
+```
+/**
+     * Updates list Statistics in the Statistics panel
+     */
+    protected void loadListStatistics() {
+        mean.setText(statistics.getMeanString());
+        median.setText(statistics.getMedianString());
+        mode.setText(statistics.getModeString());
+        variance.setText(statistics.getVarianceString());
+        standardDeviation.setText(statistics.getStdDevString());
+        quartile1.setText(statistics.getQuartile1String());
+        quartile3.setText(statistics.getQuartile3String());
+        interquartileRange.setText(statistics.getInterquartileRangeString());
+    }
+```
+
+The `Labels` (texts) in the User Interface are set to their corresponding values calculated from the `Statistics` instance's getter methods.
+
+//The following sequence diagram shows how the StatisticsPanel mechanism works:
+
+
+//The following activity diagram shows how the StatisticsPanel mechanism works:
+
+
+==== Design Considerations
+**Aspect:** Create a new `FilteredPersonListChangedEvent` event to handle the change in persons' data in the `filteredPersonList` +
+**Alternative 1 (current choice):** Have a `TagsContainsKeywordsPredicate` to facilitate search. +
+**Pros:** This adheres to the Single Responsibility Principle (SRP), making the class more robust +
+**Cons:** Makes the application more complex to understand according to the More Is More Complex (MIMC) principle. +
+**Alternative 2:** Build on the existing `AddressBookChangedEvent` event to handle the change +
+**Pros:** It is easier to implement as the `AddressBookChangedEvent` class already exists. +
+          It makes the codebase less complex as there are less classes. +
+          There  is less duplication of code with similar functions. +
+**Cons:** The data in the `AddressBookChangedEvent` is a `ReadOnlyAddressBook` and the `ReadOnlyAddressBook` interface does not have a `getFilteredPersonsList` method.
+Hence it is difficult to separate the data of persons in the `filteredPersonList` and those not in the `filteredPersonList` for processing +
+
+
+// end::statisticspanel[]
 
 === Logging
 
