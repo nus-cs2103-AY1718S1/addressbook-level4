@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: OurAb
 This is a CLI(Command Line Interface)-based desktop Address Book application written in Java, targeted at university students.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/test[Test code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/collated/main/fongwz.md[Functional code]] [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/collated/test/fongwz.md[Test code]]
 
 === Enhancement Added: Command Box Helper
 
@@ -164,6 +164,9 @@ The meeting information is retrieved from a ReadOnlyMeetingList converted into a
 
 === Enhancement Proposed:
 
+* Making theme switcher real-time (implemented)
+
 === Other contributions
 
-* Updated the GUI color scheme (Alternating tag colours and different command line colour)
+* Updated the GUI color scheme (Alternating tag colours and different command line and result display colours)
+* Added a splash screen while the application is starting up
