@@ -723,11 +723,11 @@ The reason for the use of ListByBloodtypeCommandParser is to filter out extra sp
 
 MedNus is designed for power users. Thus, batch deletions are a welcome addition since they make it less tedious to perform deletions on multiple patients, and instead delete batches as identified by a tag. +
 *Format:* `batch TAG` +
-*Shorthand format:* `b TAG`
+*Shorthand format:* `b TAG` +
 
 Since v1.5rc, batch deletion now accepts multiple arguments. In other words, the format is now: +
 *Format:* `batch TAG TAG TAG...` +
-*Shorthand format:* `b TAG TAG...`
+*Shorthand format:* `b TAG TAG...` +
 
 *How it is implemented* +
 
@@ -775,7 +775,9 @@ A general function call between the logic and model components ought to be creat
 // tag::dups[]
 === *Enhancement: Display potential duplicate contacts* +
 
-The user can occasionally clean up their contacts in case duplicates have accumulated over time. The `duplicates` command compiles a list of potential duplicate contacts for the user to review.
+Doctors can occasionally clean up their contacts in case duplicates have accumulated over time. The `duplicates` command compiles a list of potential duplicate contacts for the user to review.
+*Format:* `duplicates` +
+*Shorthand format:* `dups` +
 
 *How it is implemented* +
 
@@ -801,8 +803,8 @@ As you've noticed in the diagram, a new `Predicate` is defined as
 
  HasPotentialDuplicatesPredicate(ArrayList<Name> duplicateNames)
 
-This predicate is compared against persons in the address book, so as to generate a list of potential duplicate persons.
-At the moment, persons are considered potential duplicates if they share the same name (case-sensitive) with any other person in the address book.
+This predicate is compared against contacts in the address book, so as to generate a list of potential duplicate contacts.
+At the moment, contacts are considered potential duplicates if they share the same name (case-insensitive) with any other contact in the address book.
 
 *Future enhancements*
 
