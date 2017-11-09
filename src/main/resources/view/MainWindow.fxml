@@ -31,7 +31,7 @@
         </items>
       </Menu>
   </MenuBar>
-  <!--@@author-->
+
   <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
     <padding>
       <Insets bottom="5" left="10" right="10" top="5" />
@@ -44,14 +44,26 @@
     </padding>
   </StackPane>
 
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" VBox.vgrow="ALWAYS">
+    <VBox fx:id="personList" minWidth="250" maxWidth="300" prefWidth="250" SplitPane.resizableWithParent="false">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
 
+    <!--@@author jacoblipech-->
+      <SplitPane orientation="VERTICAL" prefHeight="200.0" prefWidth="80.0">
+        <items>
+            <StackPane fx:id="extendedPersonDisplayPlaceholder" prefHeight="150.0" prefWidth="50.0">
+              <padding>
+                <Insets bottom="10" left="0" right="0" top="10" />
+              </padding>
+            </StackPane>
+        </items>
+      </SplitPane>
+
+    <!--@@author -->
     <StackPane fx:id="browserPlaceholder" prefWidth="340">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />

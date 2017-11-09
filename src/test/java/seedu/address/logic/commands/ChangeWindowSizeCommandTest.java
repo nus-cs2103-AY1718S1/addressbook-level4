@@ -15,6 +15,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.windowsize.WindowSize;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author vivekscl
@@ -31,11 +32,11 @@ public class ChangeWindowSizeCommandTest {
     @Test
     public void executeChangeWindowSizeSuccess() throws Exception {
         ChangeWindowSizeCommand changeWindowSizeCommand =
-                prepareCommand(ChangeWindowSizeCommand.SMALL_WINDOW_SIZE_PARAM);
+                prepareCommand(WindowSize.SMALL_WINDOW_SIZE_INPUT);
         CommandResult commandResult = changeWindowSizeCommand.execute();
 
-        String expectedMessage = ChangeWindowSizeCommand.MESSAGE_SUCCESS + ChangeWindowSizeCommand.SMALL_WIDTH
-                + " x " + ChangeWindowSizeCommand.SMALL_HEIGHT;
+        String expectedMessage = ChangeWindowSizeCommand.MESSAGE_SUCCESS + WindowSize.SMALL_WIDTH
+                + " x " + WindowSize.SMALL_HEIGHT;
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ChangeWindowSizeRequestEvent);
@@ -44,9 +45,9 @@ public class ChangeWindowSizeCommandTest {
     @Test
     public void executeInvalidChangeWindowSizeFailure() throws Exception {
         ChangeWindowSizeCommand changeWindowSizeCommand =
-                prepareCommand(ChangeWindowSizeCommand.INVALID_WINDOW_SIZE_PARAM);
+                prepareCommand(CommandTestUtil.INVALID_WINDOW_SIZE_INPUT);
 
-        String expectedMessage = ChangeWindowSizeCommand.MESSAGE_WINDOW_SIZE_CONSTRAINTS;
+        String expectedMessage = WindowSize.MESSAGE_WINDOW_SIZE_CONSTRAINTS;
 
         assertCommandFailure(changeWindowSizeCommand, model, expectedMessage);
     }
@@ -54,11 +55,11 @@ public class ChangeWindowSizeCommandTest {
     @Test
     public void equals() {
         ChangeWindowSizeCommand changeWindowSizeToSmall =
-                new ChangeWindowSizeCommand(ChangeWindowSizeCommand.SMALL_WINDOW_SIZE_PARAM);
+                new ChangeWindowSizeCommand(WindowSize.SMALL_WINDOW_SIZE_INPUT);
         ChangeWindowSizeCommand changeWindowSizeToMedium =
-                new ChangeWindowSizeCommand(ChangeWindowSizeCommand.MEDIUM_WINDOW_SIZE_PARAM);
+                new ChangeWindowSizeCommand(WindowSize.MEDIUM_WINDOW_SIZE_INPUT);
         ChangeWindowSizeCommand changeWindowSizeToBig =
-                new ChangeWindowSizeCommand(ChangeWindowSizeCommand.BIG_WINDOW_SIZE_PARAM);
+                new ChangeWindowSizeCommand(WindowSize.BIG_WINDOW_SIZE_INPUT);
 
         // same object -> returns true
         assertTrue(changeWindowSizeToSmall.equals(changeWindowSizeToSmall));

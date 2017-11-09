@@ -23,8 +23,8 @@ import seedu.address.commons.events.ui.ShowFacebookRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
-import seedu.address.logic.commands.ChangeWindowSizeCommand;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.windowsize.WindowSize;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -45,6 +45,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private ExtendedPersonDisplay extendedPersonDisplay;
     private Config config;
     private UserPrefs prefs;
 
@@ -60,6 +61,10 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane personListPanelPlaceholder;
 
+    //author @JacobLipech
+    @FXML
+    private StackPane extendedPersonDisplayPlaceholder;
+    //author
     @FXML
     private StackPane resultDisplayPlaceholder;
 
@@ -134,6 +139,9 @@ public class MainWindow extends UiPart<Region> {
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        extendedPersonDisplay = new ExtendedPersonDisplay();
+        extendedPersonDisplayPlaceholder.getChildren().add(extendedPersonDisplay.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -234,8 +242,8 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleSmallWindowSize() {
-        raise(new ChangeWindowSizeRequestEvent(ChangeWindowSizeCommand.SMALL_WIDTH,
-                ChangeWindowSizeCommand.SMALL_HEIGHT));
+        raise(new ChangeWindowSizeRequestEvent(WindowSize.SMALL_WIDTH,
+                WindowSize.SMALL_HEIGHT));
     }
 
     /**
@@ -243,8 +251,8 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleMediumWindowSize() {
-        raise(new ChangeWindowSizeRequestEvent(ChangeWindowSizeCommand.MEDIUM_WIDTH,
-                ChangeWindowSizeCommand.MEDIUM_HEIGHT));
+        raise(new ChangeWindowSizeRequestEvent(WindowSize.MEDIUM_WIDTH,
+                WindowSize.MEDIUM_HEIGHT));
     }
 
     /**
@@ -252,8 +260,8 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleBigWindowSize() {
-        raise(new ChangeWindowSizeRequestEvent(ChangeWindowSizeCommand.BIG_WIDTH,
-                ChangeWindowSizeCommand.BIG_HEIGHT));
+        raise(new ChangeWindowSizeRequestEvent(WindowSize.BIG_WIDTH,
+                WindowSize.BIG_HEIGHT));
     }
 
     /**
@@ -270,6 +278,12 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
+    //@@author jacoblipech
+    public ExtendedPersonDisplay getExtendedPersonDisplay() {
+        return this.extendedPersonDisplay;
+    }
+
+    //@@author
     void releaseResources() {
         browserPanel.freeResources();
     }
