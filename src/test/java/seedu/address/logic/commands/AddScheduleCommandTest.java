@@ -22,9 +22,7 @@ import seedu.address.model.schedule.Day;
 import seedu.address.model.schedule.Slot;
 import seedu.address.model.schedule.Time;
 
-/**
- * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
- */
+//@@author YuchenHe98
 public class AddScheduleCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());

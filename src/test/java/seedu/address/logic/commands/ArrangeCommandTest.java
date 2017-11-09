@@ -17,6 +17,7 @@ import seedu.address.model.schedule.Day;
 import seedu.address.model.schedule.Slot;
 import seedu.address.model.schedule.Time;
 
+//@@author YuchenHe98
 /**
  * Arrange a meeting test. As all the tests for date and time classes are added independently, this test only includes
  * the command test with valid time and date form.

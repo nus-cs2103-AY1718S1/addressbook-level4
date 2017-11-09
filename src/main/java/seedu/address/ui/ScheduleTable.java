@@ -11,6 +11,7 @@ import seedu.address.commons.core.PossibleTimes;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.Time;
 
+//@@author YuchenHe98
 /**
  * A ui used in ArrangeCommand and VisualizeCommand to show the schedule available.
  */
