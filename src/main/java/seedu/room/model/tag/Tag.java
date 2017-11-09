@@ -14,6 +14,7 @@ public class Tag {
     public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
     public final String tagName;
+    public String tagColor;
 
     /**
      * Validates given tag name.
@@ -27,6 +28,7 @@ public class Tag {
             throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
         }
         this.tagName = trimmedName;
+        this.tagColor = "black";
     }
 
     /**
@@ -47,6 +49,18 @@ public class Tag {
     public int hashCode() {
         return tagName.hashCode();
     }
+
+    //@@author shitian007
+    // Getter for tagColor
+    public String getTagColor() {
+        return this.tagColor;
+    }
+
+    // Setter for tagColor
+    public void setTagColor(String color) {
+        this.tagColor = color;
+    }
+    //@@author
 
     /**
      * Format state as text for viewing.

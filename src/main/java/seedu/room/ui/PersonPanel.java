@@ -35,9 +35,6 @@ import seedu.room.model.person.ReadOnlyPerson;
 public class PersonPanel extends UiPart<Region> {
 
     private static final String FXML = "PersonPanel.fxml";
-    private static String[] colors = {"red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey"};
-    private static HashMap<String, String> tagColors = new HashMap<String, String>();
-    private static Random random = new Random();
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private final Logic logic;
@@ -66,14 +63,6 @@ public class PersonPanel extends UiPart<Region> {
         this.logic = logic;
         loadDefaultScreen();
         registerAsAnEventHandler(this);
-    }
-
-    private static String getColorForTag(String tagValue) {
-        if (!tagColors.containsKey(tagValue)) {
-            tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
-        }
-
-        return tagColors.get(tagValue);
     }
 
     /**
@@ -116,13 +105,12 @@ public class PersonPanel extends UiPart<Region> {
 
     /**
      * Sets a background color for each tag.
-     * @param
      */
     private void initTags() {
         tags.getChildren().clear();
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            tagLabel.setStyle("-fx-background-color: " + tag.getTagColor());
             tags.getChildren().add(tagLabel);
         });
     }
@@ -207,7 +195,6 @@ public class PersonPanel extends UiPart<Region> {
         try {
             person.getPicture().resetPictureUrl();
             if (person.getPicture().checkJarResourcePath()) {
-                System.out.println(person.getPicture().getJarPictureUrl());
                 InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
                 person.getPicture().setJarResourcePath();
                 Image personPicture = new Image(in);
