@@ -34,6 +34,9 @@ public class ViewCommand extends Command {
     public static final String MESSAGE_VIEW_LESSON_SUCCESS = "Viewing lesson: %1$s";
     public static final String MESSAGE_VIEW_LOCATION_SUCCESS = "lessons(s) founded with location %1$s";
     public static final String MESSAGE_VIEW_MODULE_SUCCESS = "lessons(s) founded with module code %1$s";
+    public static final String VIEWING_ATTRIBUTE_MODULE = "module";
+    public static final String VIEWING_ATTRIBUTE_DEFAULT = "default";
+    public static final String VIEWING_ATTRIBUTE_LOCATION = "location";
     private final Index targetIndex;
 
     public ViewCommand(Index targetIndex) {
@@ -97,13 +100,13 @@ public class ViewCommand extends Command {
     public void setViewingPanelAttribute() {
         switch (getCurrentListingUnit()) {
         case MODULE:
-            model.setViewingPanelAttribute("module");
+            model.setViewingPanelAttribute(VIEWING_ATTRIBUTE_MODULE);
             break;
         case LOCATION:
-            model.setViewingPanelAttribute("location");
+            model.setViewingPanelAttribute(VIEWING_ATTRIBUTE_LOCATION);
             break;
         default:
-            model.setViewingPanelAttribute("default");
+            model.setViewingPanelAttribute(VIEWING_ATTRIBUTE_DEFAULT);
             break;
         }
     }
