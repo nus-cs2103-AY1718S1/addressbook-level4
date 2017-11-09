@@ -5,19 +5,32 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :collatedDir: ../../collated
 
 == Project: MedNus
-MedNus is a desktop address book application used by Medical Professionals. +
-The user interacts with it using a CLI, and it has a GUI created with JavaFX. +
-It is written in Java, and has about 10 kLoC.
+MedNus is a desktop contacts application targeted at medical professionals.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 10 kLoC. +
 
 *Code contributed*: +
 link:{collatedDir}/main/rushan-khor.md[Functional code] +
 link:{collatedDir}/test/rushan-khor.md[Test code]
 
+---
+
+=== Portfolio purpose (for CS2101)
+This portfolio was made to document the features I contributed to this project.
+For each feature, it details:
+
+* The external behaviour of each feature, extracted from the User Guide
+* Justifications for why it was built in that manner
+* Internal implementations, extracted from the Developer Guide
+
+---
+
 === Enhancement Added: Batch deletion of contacts by tag
+
+---
 
 ==== External behaviour
 
----
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=batch]
@@ -34,7 +47,6 @@ Batch deletions make it less tedious to perform deletions on multiple contacts.
 
 ==== Implementation
 
----
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=batch]
@@ -45,9 +57,10 @@ include::../DeveloperGuide.adoc[tag=batch]
 
 === Enhancement Added: Display potential duplicate contacts
 
+---
+
 ==== External behavior
 
----
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=dups]
@@ -60,9 +73,10 @@ include::../UserGuide.adoc[tag=dups]
 
 Duplicate contacts can accumulate over time. The `duplicates` command compiles a list of potential duplicate contacts for the user to review.
 
+---
+
 ==== Implementation
 
----
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=dups]
@@ -73,7 +87,6 @@ include::../DeveloperGuide.adoc[tag=dups]
 
 === Enhancement Added: Copy contact email address to clipboard
 
----
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=copy]
@@ -90,7 +103,6 @@ Embracing the keyboard-centric interaction of MedNus, even copying data into the
 
 ==== Implementation
 
----
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=copy]
@@ -99,13 +111,15 @@ include::../DeveloperGuide.adoc[tag=copy]
 
 ---
 
-=== Enhancement Proposed
+=== Enhancement Proposed for V2.0
 
 * Skype username field and ability to pull contacts from Skype
 ** This is useful for telemedicine / telehealth which is essentially remote doctor consulting facilitated by video-calls
 ** This would further solidify MedNus's relevance as a forward-looking product for medical professionals
 * Command that maps (patient contacts) with (doctor contacts specialising in their illness) and drafts referral letters for them
 ** This is useful for private doctors in particular, for whom networks of referrals are poorly documented, yet crucial to their business
+
+---
 
 === Other contributions
 
