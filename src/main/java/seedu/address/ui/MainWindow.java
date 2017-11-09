@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -20,8 +21,10 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.PrefDefaultProfilePhotoChangedEvent;
 import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ProfilePhotoChangedEvent;
 import seedu.address.commons.events.ui.ShowBrowserEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowMeetingEvent;
@@ -182,9 +185,7 @@ public class MainWindow extends UiPart<Region> {
         settingsSelectorPlaceholder.getChildren().add(settingsSelector.getRoot());
         //@@author
 
-        ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
-        personListPanel = new PersonListPanel(persons);
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        setPersonListPanel();
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -269,6 +270,19 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
+    //@@author liuhang0213
+    private void setPersonListPanel() {
+        try {
+            ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
+            personListPanel = new PersonListPanel(persons);
+            personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        } catch (IllegalStateException e) {
+            logger.info("Cannot update profile photo on a non-main thread. "
+                    + "Type 'list' to see the new profile photos. '¯\\_(ツ)_/¯");
+        }
+    }
+
+    //@@author
     void releaseResources() {
         browserPanel.freeResources();
     }
@@ -320,5 +334,26 @@ public class MainWindow extends UiPart<Region> {
         }
         scene.getStylesheets().add(cssPath);
     }
-    //@@author
+
+    //@@author liuhang0213
+    @Subscribe
+    private void handleDefaultProfilePhotoChangedEvent(PrefDefaultProfilePhotoChangedEvent event) {
+        ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
+        Task<Void> task = new Task<Void>() {
+            @Override public Void call() {
+                for (ReadOnlyPerson person : persons) {
+                    storage.downloadProfilePhoto(person, prefs.getDefaultProfilePhoto());
+                }
+                return null;
+            }
+        };
+        Thread th = new Thread(task);
+        th.setDaemon(true);
+        th.start();
+    }
+
+    @Subscribe
+    private void handleProfilePhotoChangedEvent(ProfilePhotoChangedEvent event) {
+        setPersonListPanel();
+    }
 }

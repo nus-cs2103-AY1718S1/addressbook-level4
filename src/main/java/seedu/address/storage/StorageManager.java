@@ -22,10 +22,12 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.PersonChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.ui.ProfilePhotoChangedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -138,7 +140,7 @@ public class StorageManager extends ComponentManager implements Storage {
     @Subscribe
     public void handlePersonChangedEvent(PersonChangedEvent event) {
         if (event.type == PersonChangedEvent.ChangeType.ADD
-                || event.type == PersonChangedEvent.ChangeType.EDIT) {
+                            || event.type == PersonChangedEvent.ChangeType.EDIT) {
             downloadProfilePhoto(event.person, event.prefs.getDefaultProfilePhoto());
         }
     }
@@ -230,15 +232,15 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     // Gravatar
-
     @Override
     public void downloadProfilePhoto(ReadOnlyPerson person, String def) {
         try {
-            String gravatarUrl = StringUtil.generateGravatarUrl(person.getEmail().value,
-                    def);
-            String filename = String.format(PersonCard.PROFILE_PHOTO_FILENAME_FORMAT, person.getInternalId().value);
+            String gravatarUrl = StringUtil.generateGravatarUrl(person.getEmail().value, def);
+            String filename = String.format(PersonCard.PROFILE_PHOTO_FILENAME_FORMAT,
+                    person.getInternalId().value);
             saveFileFromUrl(gravatarUrl, filename);
             logger.info("Downloaded " + gravatarUrl + " to " + filename);
+            EventsCenter.getInstance().post(new ProfilePhotoChangedEvent(person));
         } catch (IOException e) {
             logger.warning(String.format("Gravatar not downloaded for %1$s.", person.getName()));
         }
