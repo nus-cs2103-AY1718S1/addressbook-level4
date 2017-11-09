@@ -51,6 +51,8 @@ opposed to scanning through the entire list for their desired information. The c
 only supports sorting by name, but further enhancements will allow it to sort in ascending and descending orders
 by name, email, address, phone numbers, etc.
 
+Further enhancements to be implemented: Sort by tag and weblink
+
 === Enhancement Added: UserPerson/User Profile
 
 ---
@@ -108,12 +110,14 @@ The User Profile was set up as a means of sharing the user's contact easily, by 
 details and share it with others so that they would not have to repeat the information each time. The share command
 generates an add command that will be copied to the clipboard and thus can be copied and sent to another person immediately.
 
+Further enhancements to be implemented: Share other contacts in the addressbook as well.
+
 ---
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Minor changes to improve readability of code, as per Codacy's recommendations.
+* Fixed typecasting errors that were causing -Xlint warnings to appear upon compilation.
 
 == Project: PowerPointLabs
 
