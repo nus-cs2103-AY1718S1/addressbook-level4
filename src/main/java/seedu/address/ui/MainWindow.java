@@ -56,6 +56,8 @@ public class MainWindow extends UiPart<Region> {
     private Config config;
     private UserPrefs prefs;
 
+    private CommandBox commandBox = null;
+
     @FXML
     private StackPane infoPanelPlaceholder;
 
@@ -147,6 +149,7 @@ public class MainWindow extends UiPart<Region> {
         infoPanel = new InfoPanel(logic);
         infoPanelPlaceholder.getChildren().clear();
         infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
+        fillInnerPartsForCommandBox();
     }
 
     //@@author jelneo
@@ -167,10 +170,27 @@ public class MainWindow extends UiPart<Region> {
             ResultDisplay resultDisplay = new ResultDisplay();
             resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-            CommandBox commandBox = new CommandBox(logic);
+            commandBox = new CommandBox(logic);
             commandBoxPlaceholder.getChildren().clear();
             commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
         });
+    }
+
+    /**
+     * Fills up all the placeholders command box.
+     */
+    void fillInnerPartsForCommandBox() {
+        commandBoxPlaceholder.getChildren().clear();
+        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+    }
+
+    /**
+     * Changes from command box to login view with text fields for username and password
+     */
+    public void fillCommandBoxWithLoginFields() {
+        LoginView loginView = new LoginView(logic);
+        commandBoxPlaceholder.getChildren().clear();
+        commandBoxPlaceholder.getChildren().add(loginView.getRoot());
     }
 
     //@@author jaivigneshvenugopal
