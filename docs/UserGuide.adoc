@@ -199,7 +199,7 @@ This makes it convenient for finding and resolving duplicate contacts. +
 *Example:*
 
 image::dupsexample.png[width="800"]
-    Figure 5: Duplicates Command Usage Example
+    Figure 6: Duplicates Command Usage Example
 
 [NOTE]
 The results are from case-insensitive comparisons.
@@ -226,7 +226,7 @@ You can edit the information of a person you have added in the address book. +
 *Example:*
 
 image::editexample.png[width="800"]
-    Figure 6: Edit Command Usage Diagram
+    Figure 7: Edit Command Usage Diagram
 
 [WARNING]
 At least one of the optional fields must be provided. +
@@ -263,7 +263,7 @@ You can find people whose names contain any of the given keywords. +
 *Example:*
 
 image::findexample.png[width="800"]
-    Figure 7: Find Command Usage Diagram
+    Figure 8: Find Command Usage Diagram
 
 === Deleting a person : `delete`
 
@@ -274,7 +274,7 @@ You can delete a specific person from the address book at a specified `INDEX`. +
 *Example:*
 
 image::deleteexample.png[width="800"]
-    Figure 8: Delete Command Usage Diagram
+    Figure 9: Delete Command Usage Diagram
 
 [WARNING]
 The index *must be a positive integer* `1, 2, 3, ...`
@@ -307,7 +307,7 @@ Undoable commands: those commands that modify the address book's content (`add`,
 *Example:*
 
 image::undoexample.png[width="800"]
-    Figure 9: Undo Command Usage Diagram
+    Figure 10: Undo Command Usage Diagram
 
 === Redoing the previously undone command : `redo`
 
@@ -318,7 +318,7 @@ You can reverse the most recent `undo` command. +
 *Example:*
 
 image::redoexample.png[width="800"]
-    Figure 10: Redo Command Usage Diagram
+    Figure 11: Redo Command Usage Diagram
 
 // end::undoredo[]
 
@@ -386,12 +386,12 @@ You can only set dates that are after current time. (i.e. You cannot set a time 
 Adding appointment +
 
 image::aptexample.png[width="800"]
-    Figure 11: Appointment Command Usage Diagram for Adding
+    Figure 12: Appointment Command Usage Diagram for Adding
 
 Canceling appointments +
 
 image::aptexamplecancel.png[width="800"]
-    Figure 11: Appointment Command Usage Diagram for Cancelling
+    Figure 13: Appointment Command Usage Diagram for Cancelling
 
 [NOTE]
 If the appointment does not show on the daily view, it may be too far ahead
@@ -424,22 +424,22 @@ according to appointment
 Day View +
 
 image::calendardexample.PNG[width="800"]
-    Figure 12: Appointment Calendar Day View
+    Figure 14: Appointment Calendar Day View
 
 Week View +
 
 image::calendarwexample.PNG[width="800"]
-    Figure 13: Appointment Calendar Week View
+    Figure 15: Appointment Calendar Week View
 
 Month View +
 
 image::calendarmexample.PNG[width="800"]
-    Figure 14: Appointment Calendar Month View
+    Figure 16: Appointment Calendar Month View
 
 Year View +
 
 image::calendaryexample.PNG[width="800"]
-    Figure 15: Appointment Calendar Year View
+    Figure 17: Appointment Calendar Year View
 
 // tag::remark[]
 === Adding/Removing Remarks to a person : `remark`
@@ -455,7 +455,7 @@ Removing a Remark: You can remove a remark by typing 'r/' without specifying any
 *Examples:*
 
 image::remarkexample.png[width="800"]
-    Figure 12: Remark Command Usage Diagram
+    Figure 18: Remark Command Usage Diagram
 
 [WARNING]
 Existing remarks of the person will be removed
@@ -476,7 +476,7 @@ You can delete a batch of patients who share a single tag. Or, you may specify m
 *Example:*
 
 image::batchexample.png[width="800"]
-    Figure 5: Batch Command Usage Example
+    Figure 19: Batch Command Usage Example
 
 [NOTE]
 If one or more of the specified tags does not exist in MedNus, the command will not be executed.
@@ -492,7 +492,7 @@ You can copy a patient's email address to your clipboard +
 *Example:*
 
 image::copyexample.png[width="800"]
-    Figure 5: Copy Command Usage Example
+    Figure 20: Copy Command Usage Example
 
 // end::copy[]
 
@@ -528,7 +528,7 @@ You can also exit MedNus by clicking on `File` in the top left corner +
 and clicking on `Exit`.
 
 image::exitUI.png[width="800"]
-    Figure 13: Methods to access `exit` command
+    Figure 21: Methods to access `exit` command
 
 === Adding/Deleting a Tag to a Person : [Coming in v2.0]
 ****

@@ -427,7 +427,7 @@ In the UI component, the tag is set by using the css attribute of the tag label.
 
 
 image::SDforTagColor.png[width="800"]
-    Figure 18: Sequence diagram for `random tag color` Model Component
+    Figure 19: Sequence diagram for `random tag color` Model Component
 
 The sequence diagram is given if the command requests the model to set all the tags to a random color. As seen from
 above diagram, each tag is updated to a certain color and does not need to know which tag belongs to which person.
@@ -473,14 +473,14 @@ Scenarios include - +
 
 
 image::ListPackageActivityDiagram.png[width="800"]
-    Figure 19: List Package Activity Diagram
+    Figure 20: List Package Activity Diagram
 
 The diagram above shows the activity diagram for the list package. +
 Implementation passes through two main segments: Logic and Model. +
  +
 
 image::ListByTagSD.png[width="800"]
-    Figure 20: ListByTag Command Sequence Diagram
+    Figure 21: ListByTag Command Sequence Diagram
 
 An explanation will be provided using ListByTag Command as an example. +
 The sequence diagram of the ListByTag Command can be seen in the figure above. +
@@ -640,7 +640,7 @@ user field for the additonal information.
 Implementation passes through two main segments: Logic and Model. +
 
 image::RemarkSD.png[width="800"]
-    Figure 21: Remark Command Sequence Diagram
+    Figure 22: Remark Command Sequence Diagram
 
 The sequence diagram of the Remark Command can be seen in the figure above. +
 The explanation for the above diagram is as follows: +
@@ -694,7 +694,7 @@ in these types of emergencies.
 
 
 image::SDforListByBloodtypeCommandLogic.png[width="800"]
-    Figure 22: ListByBloodyTypeCommand Sequence Diagram
+    Figure 23: ListByBloodyTypeCommand Sequence Diagram
 
 The sequence diagram for ListByBloodtypeCommand class within the Logic Component is as shown above.
 
@@ -744,7 +744,7 @@ The sequence diagram for using this Command class within the Logic Component is 
 
 
 image::SDforBatchDeleteLogic.png[width="800"]
-    Figure 23: Sequence diagram for a batch myTags command in the Logic component
+    Figure 24: Sequence diagram for a batch myTags command in the Logic component
 
 The model component will handle the actual deletion operations. To support this, an additional method is defined in the Model interface for implementation by the ModelManager class. +
 
@@ -753,7 +753,7 @@ The model component will handle the actual deletion operations. To support this,
 See the sequence diagram below to better understand the full range of interactions involved. +
 
 image::SDforBatchDeleteModel.png[width="800"]
-    Figure 24: Sequence diagram for a batch myTag command in the Model component
+    Figure 25: Sequence diagram for a batch myTag command in the Model component
 
 *Reasons for how it is implemented*
 
@@ -800,12 +800,12 @@ Its constructor is given as +
 See the sequence diagram below to better understand the interactions within the Logic component. +
 
 image::SDforDuplicatesLogic.png[width="800"]
-    Figure 23: Sequence diagram for a duplicates command in the Logic component
+    Figure 26: Sequence diagram for a duplicates command in the Logic component
 
 See the sequence diagram below to better understand the interactions it triggers within the Model component. +
 
 image::SDforDuplicatesModel.png[width="800"]
-    Figure 24: Sequence diagram within the Model component resulting from a duplicates command
+    Figure 27: Sequence diagram within the Model component resulting from a duplicates command
 
 As you've noticed in the diagram, a new `Predicate` is defined as
 
@@ -843,7 +843,7 @@ Its constructor is given as +
 See the sequence diagram below to better understand the interactions within the Logic component. +
 
 image::SDCopyCommandLogic.png[width="800"]
-    Figure 23: Sequence diagram for a Copy command in the Logic component
+    Figure 28: Sequence diagram for a Copy command in the Logic component
 
 As you've might have noticed in the diagram, two foreign-looking classes are used – namely, `Clipboard` and `ClipboardContent`.
 These classes represent how MedNus interacts with the actual system clipboard. Check out the
