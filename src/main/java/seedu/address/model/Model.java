@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.NoSuchTagException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -64,10 +65,10 @@ public interface Model {
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
     /** Removes a tag from every person in the list.*/
-    void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
+    void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, NoSuchTagException;
 
     /** Removes a tag from the specified Index on the list.*/
-    void removeTag(Index index, Tag tag) throws PersonNotFoundException, DuplicatePersonException;
+    void removeTag(Index index, Tag tag) throws PersonNotFoundException, DuplicatePersonException, NoSuchTagException;
 
     /** Removes a tag from a specified person.*/
     void removeTagFromPerson(Tag tag, ReadOnlyPerson person) throws DuplicatePersonException, PersonNotFoundException;

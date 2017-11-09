@@ -22,6 +22,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.NoSuchTagException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -146,21 +147,30 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author freesoup
     @Override
-    public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+    public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException,
+            NoSuchTagException {
+        if (!addressBook.getTagList().contains(tag)) {
+            throw new NoSuchTagException();
+        }
         ObservableList<ReadOnlyPerson> list = addressBook.getPersonList();
-
         for (int i = 0; i < list.size(); i++) {
             ReadOnlyPerson person = list.get(i);
             removeTagFromPerson(tag, person);
         }
+        addressBook.removeTagFromUniqueList(tag);
         indicateAddressBookChanged();
     }
 
     @Override
-    public void removeTag(Index index, Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+    public void removeTag(Index index, Tag tag) throws PersonNotFoundException, DuplicatePersonException,
+            NoSuchTagException {
         List<ReadOnlyPerson> list = getFilteredPersonList();
         ReadOnlyPerson person = list.get(index.getZeroBased());
+        if (!person.getTags().contains(tag)) {
+            throw new NoSuchTagException();
+        }
         removeTagFromPerson(tag, person);
+        addressBook.removeTagFromUniqueList(tag);
         indicateAddressBookChanged();
     }
 
