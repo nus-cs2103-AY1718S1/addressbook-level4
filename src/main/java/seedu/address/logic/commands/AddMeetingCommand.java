@@ -3,15 +3,15 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.exceptions.DuplicateMeetingException;
-import seedu.address.model.exceptions.IllegalIdException;
 import seedu.address.model.Meeting;
 import seedu.address.model.ReadOnlyMeeting;
+import seedu.address.model.exceptions.DuplicateMeetingException;
+import seedu.address.model.exceptions.IllegalIdException;
 
 //@@author Sri-vatsa
 /**
@@ -52,7 +52,9 @@ public class AddMeetingCommand extends UndoableCommand {
 
     private final Meeting toAdd;
 
-    public AddMeetingCommand(ReadOnlyMeeting meeting) { toAdd = new Meeting(meeting); }
+    public AddMeetingCommand(ReadOnlyMeeting meeting) {
+        toAdd = new Meeting(meeting);
+    }
 
 
     @Override

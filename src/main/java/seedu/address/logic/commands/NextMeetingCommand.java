@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Meeting;
 import seedu.address.model.ReadOnlyMeeting;
 import seedu.address.model.person.InternalId;
 import seedu.address.model.person.exceptions.PersonNotFoundException;

@@ -61,7 +61,7 @@ public class BrowserPanel extends UiPart<Region> {
      */
     private void loadPersonPage(ReadOnlyPerson person) {
         personSelected = person;
-        if(hasLinkedinBeenChosen) {
+        if (hasLinkedinBeenChosen) {
             try {
                 loadLinkedIn();
             } catch (CommandException e) {

@@ -1,13 +1,14 @@
 package seedu.address.logic.parser;
 
-import java.time.LocalDateTime;
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
+
+import java.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.stream.Stream;
