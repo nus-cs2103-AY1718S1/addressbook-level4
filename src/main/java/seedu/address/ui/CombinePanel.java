@@ -161,7 +161,7 @@ public class CombinePanel extends UiPart<Region> {
 
     public void generateWeekDay() {
         for (int i = 1; i < ROW; i++) {
-            String dayOfWeek = DayOfWeek.of(i).toString().substring(0,3);
+            String dayOfWeek = DayOfWeek.of(i).toString().substring(0, 3);
             Label label = new Label(dayOfWeek);
             label.setId(HEADER);
             timetableGrid.setValignment(label, VPos.CENTER);
@@ -190,7 +190,7 @@ public class CombinePanel extends UiPart<Region> {
             int startHourCol = getTime(timeText.substring(4, 6));
             int endHourSpan = getTime(timeText.substring(9, 11)) - startHourCol;
             boolean isAvailable = false;
-            if(isOccupy(weekDayRow,startHourCol,endHourSpan) == false) {
+            if (isOccupy(weekDayRow, startHourCol, endHourSpan) == false) {
                 isAvailable = true;
             }
 
@@ -198,10 +198,11 @@ public class CombinePanel extends UiPart<Region> {
                 gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol, endHourSpan, 1);
             } else {
                 int count = gridData[weekDayRow][startHourCol].getCount();
-                gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol, endHourSpan, count + 2);
+                gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol,
+                        endHourSpan, count + 2);
             }
 
-            for(int j = 0; j < endHourSpan; j++){
+            for (int j = 0; j < endHourSpan; j++) {
                 gridDataCheckTable[weekDayRow][startHourCol + j] = 1;
             }
         }
@@ -211,9 +212,8 @@ public class CombinePanel extends UiPart<Region> {
      * Check for timetable grid.
      */
     public boolean isOccupy(int row, int col, int span) {
-        System.out.println(row + " " + col + " " + span);
-        for(int i = 0; i < span; i++){
-            if(gridDataCheckTable[row][col + i] == 1) {
+        for (int i = 0; i < span; i++) {
+            if (gridDataCheckTable[row][col + i] == 1) {
                 return true;
             }
         }
