@@ -1,16 +1,98 @@
 # fongwz
-###### /java/seedu/address/Launcher.java
+###### \java\seedu\address\commons\events\ui\BrowserPanelSelectionChangedEvent.java
 ``` java
 /**
- * Launches the splash screen before mainapp is started
+ * Represents a selection change in the Browser List Panel
  */
-public class Launcher {
-    public static void main(String[] args) {
-        LauncherImpl.launchApplication(MainApp.class, FirstPreloader.class, args);
+public class BrowserPanelSelectionChangedEvent extends BaseEvent {
+
+    private final String browserSelection;
+
+    public BrowserPanelSelectionChangedEvent(String browserSelection) {
+        this.browserSelection = browserSelection;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public String getBrowserSelection() {
+        return this.browserSelection;
     }
 }
 ```
-###### /java/seedu/address/FirstPreloader.java
+###### \java\seedu\address\commons\events\ui\ChangeThemeEvent.java
+``` java
+/**
+ * Indicates a request to jump to the list of browser panels
+ */
+public class ChangeThemeEvent extends BaseEvent {
+
+    public final String theme;
+
+    public ChangeThemeEvent(String theme) {
+        this.theme = theme;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\JumpToBrowserListRequestEvent.java
+``` java
+/**
+ * Indicates a request to jump to the list of browser panels
+ */
+public class JumpToBrowserListRequestEvent extends BaseEvent {
+
+    public final String browserItem;
+
+    public JumpToBrowserListRequestEvent(String item) {
+        this.browserItem = item;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\ShowBrowserEvent.java
+``` java
+/**
+ * Indicates a request show the browser panel
+ */
+public class ShowBrowserEvent extends BaseEvent {
+
+    public ShowBrowserEvent() {
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\ShowMeetingEvent.java
+``` java
+/**
+ * Indicates a request show the meeting panel
+ */
+public class ShowMeetingEvent extends BaseEvent {
+
+    public ShowMeetingEvent() {
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\FirstPreloader.java
 ``` java
 /**
  * Preloader class
@@ -64,320 +146,229 @@ public class FirstPreloader extends Preloader {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/ChangeThemeEvent.java
+###### \java\seedu\address\Launcher.java
 ``` java
 /**
- * Indicates a request to jump to the list of browser panels
+ * Launches the splash screen before mainapp is started
  */
-public class ChangeThemeEvent extends BaseEvent {
+public class Launcher {
+    public static void main(String[] args) {
+        LauncherImpl.launchApplication(MainApp.class, FirstPreloader.class, args);
+    }
+}
+```
+###### \java\seedu\address\logic\commands\ChooseCommand.java
+``` java
+/**
+ * Chooses the display screen mode
+ */
+public class ChooseCommand extends Command {
 
-    public final String theme;
+    public static final String COMMAND_WORD = "choose";
 
-    public ChangeThemeEvent(String theme) {
-        this.theme = theme;
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + " : selects the type of display in the main browser window.\n"
+            + "Parameters: <TYPE>\n"
+            + "Example: choose linkedin";
+
+
+    public static final String MESSAGE_SUCCESS = "Selected type ";
+    public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " TYPE";
+
+    private final String targetDisplay;
+
+    public ChooseCommand(String targetDisplay) {
+        this.targetDisplay = targetDisplay;
     }
 
     @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-}
-```
-###### /java/seedu/address/commons/events/ui/JumpToBrowserListRequestEvent.java
-``` java
-/**
- * Indicates a request to jump to the list of browser panels
- */
-public class JumpToBrowserListRequestEvent extends BaseEvent {
+    public CommandResult execute() throws CommandException {
 
-    public final String browserItem;
-
-    public JumpToBrowserListRequestEvent(String item) {
-        this.browserItem = item;
-    }
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-}
-```
-###### /java/seedu/address/commons/events/ui/ShowBrowserEvent.java
-``` java
-/**
- * Indicates a request show the browser panel
- */
-public class ShowBrowserEvent extends BaseEvent {
-
-    public ShowBrowserEvent() {
-    }
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-}
-```
-###### /java/seedu/address/commons/events/ui/ShowMeetingEvent.java
-``` java
-/**
- * Indicates a request show the meeting panel
- */
-public class ShowMeetingEvent extends BaseEvent {
-
-    public ShowMeetingEvent() {
-    }
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-}
-```
-###### /java/seedu/address/commons/events/ui/BrowserPanelSelectionChangedEvent.java
-``` java
-/**
- * Represents a selection change in the Browser List Panel
- */
-public class BrowserPanelSelectionChangedEvent extends BaseEvent {
-
-    private final String browserSelection;
-
-    public BrowserPanelSelectionChangedEvent(String browserSelection) {
-        this.browserSelection = browserSelection;
-    }
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-
-    public String getBrowserSelection() {
-        return this.browserSelection;
-    }
-}
-```
-###### /java/seedu/address/ui/SplashScreen.java
-``` java
-/**
- * UI component to load splash screen and animate it
- */
-public class SplashScreen extends UiPart<Region> {
-
-    private static final String FXML = "SplashScreen.fxml";
-
-    private Timeline timeline;
-
-    @FXML
-    private ImageView splashImage;
-
-    @FXML
-    private ImageView splashLoadingImage;
-
-
-    public SplashScreen() {
-        super(FXML);
-        splashImage.setImage(new Image("/images/SplashScreen.png"));
-        splashLoadingImage.setImage(new Image("/images/SplashScreenLoading.png"));
-        setAnimation();
-    }
-
-    private void setAnimation() {
-        KeyValue moveRight = new KeyValue(splashLoadingImage.translateXProperty(), 460);
-
-        EventHandler<ActionEvent> onFinished = new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                splashLoadingImage.setTranslateX(-92);
-            }
-        };
-
-        KeyFrame kf = new KeyFrame(Duration.millis(2000), onFinished, moveRight);
-
-        timeline = new Timeline();
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.setAutoReverse(false);
-        timeline.getKeyFrames().addAll(kf);
-        timeline.play();
-    }
-}
-```
-###### /java/seedu/address/ui/ThemeSelectorCard.java
-``` java
-/**
- * A UI component that displays information on which theme is currently selected
- */
-public class ThemeSelectorCard extends UiPart<Region> {
-
-    private static final String FXML = "ThemeSelectorCard.fxml";
-
-    @FXML
-    private Circle themeCircle;
-
-    @FXML
-    private Label themeLabel;
-
-    public ThemeSelectorCard(String themeName) {
-        super(FXML);
-        if (themeName.equals("blue")) {
-            themeLabel.textProperty().setValue("Blue");
-            themeCircle.setFill(Paint.valueOf("#616fd4"));
-        } else if (themeName.equals("dark")) {
-            themeLabel.textProperty().setValue("Dark");
-            themeCircle.setFill(Paint.valueOf("#494b5c"));
-        } else if (themeName.equals("light")) {
-            themeLabel.textProperty().setValue("Light");
-            themeCircle.setFill(Paint.valueOf("#dddff0"));
+        if (targetDisplay.equals("meeting")) {
+            EventsCenter.getInstance().post(new ShowMeetingEvent());
+            EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
+        } else if (targetDisplay.equals("linkedin") || targetDisplay.equals("google") || targetDisplay.equals("maps")) {
+            EventsCenter.getInstance().post(new ShowBrowserEvent());
+            EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
+        } else {
+            throw new CommandException(Messages.MESSAGE_INVALID_BROWSER_INDEX);
         }
-    }
 
-    public String getThemeName() {
-        return themeLabel.textProperty().getValue();
+        return new CommandResult(MESSAGE_SUCCESS + targetDisplay);
     }
 }
 ```
-###### /java/seedu/address/ui/SettingsSelector.java
+###### \java\seedu\address\logic\Logic.java
 ``` java
-/**
- * Panel containing the list of settings
- */
-public class SettingsSelector extends UiPart<Region> {
+    /** Returns an unmodifiable view of the list of commands */
+    ObservableList<String> getCommandList();
 
-    private static final String FXML = "SettingsSelector.fxml";
-    private final Logger logger = LogsCenter.getLogger(SettingsSelector.class);
+    /** Returns the list of command templates */
+    List<String> getCommandTemplateList();
 
-    @FXML
-    private ListView<BrowserSelectorCard> browserSelectorList;
-
-    @FXML
-    private ListView<ThemeSelectorCard> themeSelectorList;
-
-    @FXML
-    private Label browserSelectorTitle;
-
-    @FXML
-    private Label themeSelectorTitle;
-
-    public SettingsSelector() {
-        super(FXML);
-        setConnections();
-        registerAsAnEventHandler(this);
-        browserSelectorTitle.textProperty().setValue("Display Mode :");
-        browserSelectorTitle.getStyleClass().add("label-bright-underline");
-        themeSelectorTitle.textProperty().setValue("Theme :");
-        themeSelectorTitle.getStyleClass().add("label-bright-underline");
-    }
-
-    private void setConnections() {
-        //Setting connections for browser list
-        ObservableList<String> browserItems = FXCollections.observableArrayList(
-                "linkedin", "google", "meeting", "maps"
+    /** Returns the list of meetings */
+    ObservableList<ReadOnlyMeeting> getMeetingList();
+```
+###### \java\seedu\address\logic\LogicManager.java
+``` java
+    @Override
+    public ObservableList<String> getCommandList() {
+        List<String> commandList = Arrays.asList(
+                AddCommand.COMMAND_WORD,
+                AddMeetingCommand.COMMAND_WORD,
+                ClearCommand.COMMAND_WORD,
+                DeleteCommand.COMMAND_WORD,
+                DeleteTagCommand.COMMAND_WORD,
+                EditCommand.COMMAND_WORD,
+                ExitCommand.COMMAND_WORD,
+                FindCommand.COMMAND_WORD,
+                HelpCommand.COMMAND_WORD,
+                HistoryCommand.COMMAND_WORD,
+                ListCommand.COMMAND_WORD,
+                ListByMostSearchedCommand.COMMAND_WORD,
+                RedoCommand.COMMAND_WORD,
+                SelectCommand.COMMAND_WORD,
+                UndoCommand.COMMAND_WORD,
+                PrefCommand.COMMAND_WORD,
+                ChooseCommand.COMMAND_WORD,
+                NextMeetingCommand.COMMAND_WORD,
+                SearchCommand.COMMAND_WORD,
+                MapCommand.COMMAND_WORD
         );
-        ObservableList<BrowserSelectorCard> mappedBrowserList = EasyBind.map(
-                browserItems, (item) -> new BrowserSelectorCard(item));
-        browserSelectorList.setItems(mappedBrowserList);
-        browserSelectorList.setCellFactory(listView -> new BrowserListViewCell());
+        return FXCollections.observableList(commandList);
+    }
 
-        //Setting connections for theme list
-        ObservableList<String> themeItems = FXCollections.observableArrayList(
-                "blue", "dark", "light"
+    @Override
+    public List<String> getCommandTemplateList() {
+        List<String> templateList = Arrays.asList(
+                AddCommand.MESSAGE_TEMPLATE,
+                ClearCommand.MESSAGE_TEMPLATE,
+                DeleteCommand.MESSAGE_TEMPLATE,
+                DeleteTagCommand.MESSAGE_TEMPLATE,
+                EditCommand.MESSAGE_TEMPLATE,
+                ExitCommand.MESSAGE_TEMPLATE,
+                FindCommand.MESSAGE_TEMPLATE,
+                HelpCommand.MESSAGE_TEMPLATE,
+                HistoryCommand.MESSAGE_TEMPLATE,
+                ListCommand.MESSAGE_TEMPLATE,
+                ListByMostSearchedCommand.MESSAGE_TEMPLATE,
+                RedoCommand.MESSAGE_TEMPLATE,
+                SelectCommand.MESSAGE_TEMPLATE,
+                UndoCommand.MESSAGE_TEMPLATE,
+                PrefCommand.MESSAGE_TEMPLATE,
+                ChooseCommand.MESSAGE_TEMPLATE,
+                NextMeetingCommand.MESSAGE_TEMPLATE,
+                SearchCommand.MESSAGE_TEMPLATE,
+                MapCommand.MESSAGE_TEMPLATE
         );
-        ObservableList<ThemeSelectorCard> mappedThemeList = EasyBind.map(
-                themeItems, (item) -> new ThemeSelectorCard(item));
-        themeSelectorList.setItems(mappedThemeList);
-        themeSelectorList.setCellFactory(listView -> new SettingsSelector.ThemeListViewCell());
-
-        setEventHandlerSelectionChange();
+        return templateList;
     }
 
-    private void setEventHandlerSelectionChange() {
-        browserSelectorList.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.fine("Selection in browser list panel changed to : '" + newValue + "'");
-                        if (newValue.getImageString().equals("meeting")) {
-                            raise(new ShowMeetingEvent());
-                        } else {
-                            raise(new ShowBrowserEvent());
-                            raise(new BrowserPanelSelectionChangedEvent(newValue.getImageString()));
-                        }
-                    }
-                });
+    @Override
+    public ObservableList<ReadOnlyMeeting> getMeetingList() {
+        return model.getMeetingList().getMeetingList();
     }
 
-    /**
-     * Raise an event to select the browser list items
-     */
-    private void selectBrowser(String browserSelection) {
-        for (int i = 0; i <= browserSelectorList.getItems().size(); i++) {
-            if (browserSelectorList.getItems().get(i).getImageString().equals(browserSelection)) {
-                browserSelectorList.getSelectionModel().clearAndSelect(i);
-                raise(new BrowserPanelSelectionChangedEvent(browserSelection));
-                return;
+    @Override
+    public ArrayList<String> getMeetingNames(ReadOnlyMeeting meeting) {
+        ArrayList<String> nameList = new ArrayList<>();
+        try {
+            for (InternalId id : meeting.getListOfPersonsId()) {
+                nameList.add(model.getAddressBook().getPersonByInternalIndex(id.getId()).getName().fullName);
             }
+            return nameList;
+        } catch (PersonNotFoundException e) {
+            logger.info(e.getMessage());
+            return nameList;
         }
     }
+```
+###### \java\seedu\address\logic\parser\ChooseCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a ChooseCommand Object
+ */
+public class ChooseCommandParser implements Parser<ChooseCommand> {
 
     /**
-     * Selects the theme on the theme ListView
-     * @param theme
+     * Parses the given {@code String} of arguments in the context of the ChooseCommand
+     * and returns a ChooseCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
      */
-    public void selectTheme(String theme) {
-        for (int i = 0; i < themeSelectorList.getItems().size(); i++) {
-            if (themeSelectorList.getItems().get(i).getThemeName().equals(theme)) {
-                themeSelectorList.getSelectionModel().clearAndSelect(i);
-            }
-        }
-    }
-
-    @Subscribe
-    private void handleJumpToBrowserListRequestEvent(JumpToBrowserListRequestEvent event) {
-        selectBrowser(event.browserItem);
-    }
-
-    @Subscribe
-    private void handleChangeThemeEvent(ChangeThemeEvent event) {
-        selectTheme(event.theme);
-    }
-
-    /**
-     * Custom {@code ListCell} that displays the graphics of a {@code BrowserSelectorCard}.
-     */
-    class BrowserListViewCell extends ListCell<BrowserSelectorCard> {
-
-        @Override
-        protected void updateItem(BrowserSelectorCard item, boolean empty) {
-            super.updateItem(item, empty);
-
-            if (empty || item == null) {
-                setGraphic(null);
-                setText(null);
-            } else {
-                setGraphic(item.getRoot());
-            }
-        }
-    }
-
-    /**
-     * Custom {@code ListCell} that displays the graphics of a {@code ThemeSelectorCard}.
-     */
-    class ThemeListViewCell extends ListCell<ThemeSelectorCard> {
-
-        @Override
-        protected void updateItem(ThemeSelectorCard item, boolean empty) {
-            super.updateItem(item, empty);
-
-            if (empty || item == null) {
-                setGraphic(null);
-                setText(null);
-            } else {
-                setGraphic(item.getRoot());
-            }
+    public ChooseCommand parse(String args) throws ParseException {
+        try {
+            String browserType = ParserUtil.parseArgument(args.trim());
+            return new ChooseCommand(browserType);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChooseCommand.MESSAGE_USAGE));
         }
     }
 }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
+``` java
+    /**
+     * Parses {@code args} into a trimmed argument and returns it.
+     * @throws IllegalValueException if the argument provided is invalid (contains special characters).
+     */
+    public static String parseArgument(String args) throws IllegalValueException {
+        String parsedArgs = args.trim();
+        Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(parsedArgs);
+        boolean b = m.find();
+
+        if (b) {
+            throw new IllegalValueException(MESSAGE_INVALID_ARGUMENT);
+        }
+        return parsedArgs;
+    }
+```
+###### \java\seedu\address\ui\BrowserSelectorCard.java
+``` java
+/**
+ * A UI component that displays information on the browser display type
+ */
+public class BrowserSelectorCard extends UiPart<Region> {
+
+    private static final String FXML = "BrowserSelectorCard.fxml";
+
+    private final String imageString;
+
+    @FXML
+    private ImageView browserCardImage;
+
+    @FXML
+    private Label browserCardText;
+
+    public BrowserSelectorCard(String imageName) {
+        super(FXML);
+        this.imageString = imageName;
+        browserCardText.textProperty().setValue(imageName);
+        fillImage(imageName);
+    }
+
+    /**
+     * Fills the image on the browser card
+     */
+    private void fillImage(String imageName) {
+        if (imageName.equals("linkedin")) {
+            browserCardImage.setImage(new Image("/images/linkedin.png"));
+        } else if (imageName.equals("google")) {
+            browserCardImage.setImage(new Image("/images/google.png"));
+        } else if (imageName.equals("meeting")) {
+            browserCardImage.setImage(new Image("/images/meeting.png"));
+        } else if (imageName.equals("maps")) {
+            browserCardImage.setImage(new Image("/images/maps.png"));
+        }
+    }
+
+    public String getImageString() {
+        return imageString;
+    }
+}
+```
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     public CommandBox(Logic logic, StackPane commandBoxHelp, SplitPane settingsPane) {
         super(FXML);
@@ -410,7 +401,7 @@ public class SettingsSelector extends UiPart<Region> {
         historySnapshot = logic.getHistorySnapshot();
     }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     /**
      * Shows the command helper
@@ -469,7 +460,7 @@ public class SettingsSelector extends UiPart<Region> {
         timelineRight.play();
     }
 ```
-###### /java/seedu/address/ui/CommandBoxHelper.java
+###### \java\seedu\address\ui\CommandBoxHelper.java
 ``` java
 /**
  * The UI component that is responsible for listing out possible commands based on user input in CLI
@@ -637,41 +628,94 @@ public class CommandBoxHelper extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/MeetingPanelCard.java
+###### \java\seedu\address\ui\HelperCard.java
 ``` java
 /**
- *  UI component that displays information about upcoming meetings
+ * A ui component that displays commands in the command helper box
  */
-public class MeetingPanelCard extends UiPart<Region> {
+public class HelperCard extends UiPart<Region> {
 
-    private static final String FXML = "MeetingPanelCard.fxml";
+    private static final String FXML = "HelperCard.fxml";
 
-    @FXML
-    private Label meetingDateLabel;
-
-    @FXML
-    private Label meetingPersonLabel;
+    public final String commandString;
 
     @FXML
-    private Label meetingLocationLabel;
+    private HBox commandCardPane;
 
     @FXML
-    private Label meetingTimeLabel;
+    private Label command;
 
-    @FXML
-    private Label meetingNotesLabel;
-
-    public MeetingPanelCard(ReadOnlyMeeting meeting, ArrayList<String> names) {
+    public HelperCard(String commandString) {
         super(FXML);
-        meetingDateLabel.textProperty().setValue(meeting.getDate());
-        meetingPersonLabel.textProperty().setValue(names.toString());
-        meetingLocationLabel.textProperty().setValue(meeting.getLocation().toString());
-        meetingTimeLabel.textProperty().setValue(meeting.getTime());
-        meetingNotesLabel.textProperty().setValue(meeting.getNotes());
+        this.commandString = commandString;
+        command.textProperty().setValue(commandString);
     }
+
+    public String getText() {
+        return this.commandString;
+    }
+
 }
 ```
-###### /java/seedu/address/ui/MeetingPanel.java
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+        SettingsSelector settingsSelector = new SettingsSelector();
+        settingsSelector.selectTheme(style);
+        settingsSelectorPlaceholder.getChildren().add(settingsSelector.getRoot());
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+        //Setting initial position of settings panel
+        settingsPane.setTranslateX(160);
+
+        CommandBox commandBox = new CommandBox(logic, commandBoxHelperPlaceholder, settingsPane);
+        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    @Subscribe
+    private void handleShowBrowserEvent(ShowBrowserEvent event) {
+        browserPlaceholder.getChildren().remove(meetingPanel.getRoot());
+        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+    }
+
+    @Subscribe
+    private void handleShowMeetingEvent(ShowMeetingEvent event) {
+        try {
+            browserPlaceholder.getChildren().remove(browserPanel.getRoot());
+        } catch (IllegalArgumentException e) {
+            logger.info("Error removing browser panel : " + e.getMessage());
+        }
+
+        try {
+            browserPlaceholder.getChildren().add(meetingPanel.getRoot());
+        } catch (IllegalArgumentException e) {
+            logger.info("Meeting panel is already displayed!");
+        }
+    }
+
+    @Subscribe
+    private void handleChangeThemeEvent(ChangeThemeEvent event) {
+        scene.getStylesheets().remove(cssPath);
+        cssPath = "";
+        cssPath = "view/";
+
+        switch (event.theme) {
+        case "Light":
+            cssPath += "LightTheme.css";
+            break;
+        case "Blue":
+            cssPath += "BlueTheme.css";
+            break;
+        default:
+            cssPath += "DarkTheme.css";
+            break;
+        }
+        scene.getStylesheets().add(cssPath);
+    }
+
+```
+###### \java\seedu\address\ui\MeetingPanel.java
 ``` java
 /**
  *  UI component containing a listview to show list of meetings
@@ -717,333 +761,261 @@ public class MeetingPanel extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/BrowserSelectorCard.java
+###### \java\seedu\address\ui\MeetingPanelCard.java
 ``` java
 /**
- * A UI component that displays information on the browser display type
+ *  UI component that displays information about upcoming meetings
  */
-public class BrowserSelectorCard extends UiPart<Region> {
+public class MeetingPanelCard extends UiPart<Region> {
 
-    private static final String FXML = "BrowserSelectorCard.fxml";
-
-    private final String imageString;
+    private static final String FXML = "MeetingPanelCard.fxml";
 
     @FXML
-    private ImageView browserCardImage;
+    private Label meetingDateLabel;
 
     @FXML
-    private Label browserCardText;
+    private Label meetingPersonLabel;
 
-    public BrowserSelectorCard(String imageName) {
+    @FXML
+    private Label meetingLocationLabel;
+
+    @FXML
+    private Label meetingTimeLabel;
+
+    @FXML
+    private Label meetingNotesLabel;
+
+    public MeetingPanelCard(ReadOnlyMeeting meeting, ArrayList<String> names) {
         super(FXML);
-        this.imageString = imageName;
-        browserCardText.textProperty().setValue(imageName);
-        fillImage(imageName);
+        meetingDateLabel.textProperty().setValue(meeting.getDate());
+        meetingPersonLabel.textProperty().setValue(names.toString());
+        meetingLocationLabel.textProperty().setValue(meeting.getLocation().toString());
+        meetingTimeLabel.textProperty().setValue(meeting.getTime());
+        meetingNotesLabel.textProperty().setValue(meeting.getNotes());
+    }
+}
+```
+###### \java\seedu\address\ui\SettingsSelector.java
+``` java
+/**
+ * Panel containing the list of settings
+ */
+public class SettingsSelector extends UiPart<Region> {
+
+    private static final String FXML = "SettingsSelector.fxml";
+    private final Logger logger = LogsCenter.getLogger(SettingsSelector.class);
+
+    @FXML
+    private ListView<BrowserSelectorCard> browserSelectorList;
+
+    @FXML
+    private ListView<ThemeSelectorCard> themeSelectorList;
+
+    @FXML
+    private Label browserSelectorTitle;
+
+    @FXML
+    private Label themeSelectorTitle;
+
+    public SettingsSelector() {
+        super(FXML);
+        setConnections();
+        registerAsAnEventHandler(this);
+        browserSelectorTitle.textProperty().setValue("Display Mode :");
+        browserSelectorTitle.getStyleClass().add("label-bright-underline");
+        themeSelectorTitle.textProperty().setValue("Theme :");
+        themeSelectorTitle.getStyleClass().add("label-bright-underline");
+    }
+
+    private void setConnections() {
+        //Setting connections for browser list
+        ObservableList<String> browserItems = FXCollections.observableArrayList(
+                "linkedin", "google", "meeting", "maps"
+        );
+        ObservableList<BrowserSelectorCard> mappedBrowserList = EasyBind.map(
+                browserItems, (item) -> new BrowserSelectorCard(item));
+        browserSelectorList.setItems(mappedBrowserList);
+        browserSelectorList.setCellFactory(listView -> new BrowserListViewCell());
+
+        //Setting connections for theme list
+        ObservableList<String> themeItems = FXCollections.observableArrayList(
+                "blue", "dark", "light"
+        );
+        ObservableList<ThemeSelectorCard> mappedThemeList = EasyBind.map(
+                themeItems, (item) -> new ThemeSelectorCard(item));
+        themeSelectorList.setItems(mappedThemeList);
+        themeSelectorList.setCellFactory(listView -> new SettingsSelector.ThemeListViewCell());
+
+        setEventHandlerSelectionChange();
+    }
+
+    private void setEventHandlerSelectionChange() {
+        browserSelectorList.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in browser list panel changed to : '" + newValue + "'");
+                        if (newValue.getImageString().equals("meeting")) {
+                            raise(new ShowMeetingEvent());
+                        } else {
+                            raise(new ShowBrowserEvent());
+                            raise(new BrowserPanelSelectionChangedEvent(newValue.getImageString()));
+                        }
+                    }
+                });
     }
 
     /**
-     * Fills the image on the browser card
+     * Raise an event to select the browser list items
      */
-    private void fillImage(String imageName) {
-        if (imageName.equals("linkedin")) {
-            browserCardImage.setImage(new Image("/images/linkedin.png"));
-        } else if (imageName.equals("google")) {
-            browserCardImage.setImage(new Image("/images/google.png"));
-        } else if (imageName.equals("meeting")) {
-            browserCardImage.setImage(new Image("/images/meeting.png"));
-        } else if (imageName.equals("maps")) {
-            browserCardImage.setImage(new Image("/images/maps.png"));
+    private void selectBrowser(String browserSelection) {
+        for (int i = 0; i <= browserSelectorList.getItems().size(); i++) {
+            if (browserSelectorList.getItems().get(i).getImageString().equals(browserSelection)) {
+                browserSelectorList.getSelectionModel().clearAndSelect(i);
+                raise(new BrowserPanelSelectionChangedEvent(browserSelection));
+                return;
+            }
         }
     }
 
-    public String getImageString() {
-        return imageString;
-    }
-}
-```
-###### /java/seedu/address/ui/HelperCard.java
-``` java
-/**
- * A ui component that displays commands in the command helper box
- */
-public class HelperCard extends UiPart<Region> {
-
-    private static final String FXML = "HelperCard.fxml";
-
-    public final String commandString;
-
-    @FXML
-    private HBox commandCardPane;
-
-    @FXML
-    private Label command;
-
-    public HelperCard(String commandString) {
-        super(FXML);
-        this.commandString = commandString;
-        command.textProperty().setValue(commandString);
-    }
-
-    public String getText() {
-        return this.commandString;
-    }
-
-}
-```
-###### /java/seedu/address/ui/MainWindow.java
-``` java
-        SettingsSelector settingsSelector = new SettingsSelector();
-        settingsSelector.selectTheme(style);
-        settingsSelectorPlaceholder.getChildren().add(settingsSelector.getRoot());
-```
-###### /java/seedu/address/ui/MainWindow.java
-``` java
-        //Setting initial position of settings panel
-        settingsPane.setTranslateX(160);
-
-        CommandBox commandBox = new CommandBox(logic, commandBoxHelperPlaceholder, settingsPane);
-        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
-```
-###### /java/seedu/address/ui/MainWindow.java
-``` java
-    @Subscribe
-    private void handleShowBrowserEvent(ShowBrowserEvent event) {
-        browserPlaceholder.getChildren().remove(meetingPanel.getRoot());
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+    /**
+     * Selects the theme on the theme ListView
+     * @param theme
+     */
+    public void selectTheme(String theme) {
+        for (int i = 0; i < themeSelectorList.getItems().size(); i++) {
+            if (themeSelectorList.getItems().get(i).getThemeName().equals(theme)) {
+                themeSelectorList.getSelectionModel().clearAndSelect(i);
+            }
+        }
     }
 
     @Subscribe
-    private void handleShowMeetingEvent(ShowMeetingEvent event) {
-        try {
-            browserPlaceholder.getChildren().remove(browserPanel.getRoot());
-        } catch (IllegalArgumentException e) {
-            logger.info("Error removing browser panel : " + e.getMessage());
-        }
-
-        try {
-            browserPlaceholder.getChildren().add(meetingPanel.getRoot());
-        } catch (IllegalArgumentException e) {
-            logger.info("Meeting panel is already displayed!");
-        }
+    private void handleJumpToBrowserListRequestEvent(JumpToBrowserListRequestEvent event) {
+        selectBrowser(event.browserItem);
     }
 
     @Subscribe
     private void handleChangeThemeEvent(ChangeThemeEvent event) {
-        scene.getStylesheets().remove(cssPath);
-        cssPath = "";
-        cssPath = "view/";
-
-        switch (event.theme) {
-        case "Light":
-            cssPath += "LightTheme.css";
-            break;
-        case "Blue":
-            cssPath += "BlueTheme.css";
-            break;
-        default:
-            cssPath += "DarkTheme.css";
-            break;
-        }
-        scene.getStylesheets().add(cssPath);
+        selectTheme(event.theme);
     }
 
-```
-###### /java/seedu/address/logic/Logic.java
-``` java
-    /** Returns an unmodifiable view of the list of commands */
-    ObservableList<String> getCommandList();
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code BrowserSelectorCard}.
+     */
+    class BrowserListViewCell extends ListCell<BrowserSelectorCard> {
 
-    /** Returns the list of command templates */
-    List<String> getCommandTemplateList();
+        @Override
+        protected void updateItem(BrowserSelectorCard item, boolean empty) {
+            super.updateItem(item, empty);
 
-    /** Returns the list of meetings */
-    ObservableList<ReadOnlyMeeting> getMeetingList();
-```
-###### /java/seedu/address/logic/LogicManager.java
-``` java
-    @Override
-    public ObservableList<String> getCommandList() {
-        List<String> commandList = Arrays.asList(
-                AddCommand.COMMAND_WORD,
-                AddMeetingCommand.COMMAND_WORD,
-                ClearCommand.COMMAND_WORD,
-                DeleteCommand.COMMAND_WORD,
-                DeleteTagCommand.COMMAND_WORD,
-                EditCommand.COMMAND_WORD,
-                ExitCommand.COMMAND_WORD,
-                FindCommand.COMMAND_WORD,
-                HelpCommand.COMMAND_WORD,
-                HistoryCommand.COMMAND_WORD,
-                ListCommand.COMMAND_WORD,
-                ListByMostSearchedCommand.COMMAND_WORD,
-                RedoCommand.COMMAND_WORD,
-                SelectCommand.COMMAND_WORD,
-                UndoCommand.COMMAND_WORD,
-                PrefCommand.COMMAND_WORD,
-                ChooseCommand.COMMAND_WORD,
-                NextMeetingCommand.COMMAND_WORD,
-                SearchCommand.COMMAND_WORD,
-                MapCommand.COMMAND_WORD
-        );
-        return FXCollections.observableList(commandList);
-    }
-
-    @Override
-    public List<String> getCommandTemplateList() {
-        List<String> templateList = Arrays.asList(
-                AddCommand.MESSAGE_TEMPLATE,
-                ClearCommand.MESSAGE_TEMPLATE,
-                DeleteCommand.MESSAGE_TEMPLATE,
-                DeleteTagCommand.MESSAGE_TEMPLATE,
-                EditCommand.MESSAGE_TEMPLATE,
-                ExitCommand.MESSAGE_TEMPLATE,
-                FindCommand.MESSAGE_TEMPLATE,
-                HelpCommand.MESSAGE_TEMPLATE,
-                HistoryCommand.MESSAGE_TEMPLATE,
-                ListCommand.MESSAGE_TEMPLATE,
-                ListByMostSearchedCommand.MESSAGE_TEMPLATE,
-                RedoCommand.MESSAGE_TEMPLATE,
-                SelectCommand.MESSAGE_TEMPLATE,
-                UndoCommand.MESSAGE_TEMPLATE,
-                PrefCommand.MESSAGE_TEMPLATE,
-                ChooseCommand.MESSAGE_TEMPLATE,
-                NextMeetingCommand.MESSAGE_TEMPLATE,
-                SearchCommand.MESSAGE_TEMPLATE,
-                MapCommand.MESSAGE_TEMPLATE
-        );
-        return templateList;
-    }
-
-    @Override
-    public ObservableList<ReadOnlyMeeting> getMeetingList() {
-        return model.getMeetingList().getMeetingList();
-    }
-
-    @Override
-    public ArrayList<String> getMeetingNames(ReadOnlyMeeting meeting) {
-        ArrayList<String> nameList = new ArrayList<>();
-        try {
-            for (InternalId id : meeting.getListOfPersonsId()) {
-                nameList.add(model.getAddressBook().getPersonByInternalIndex(id.getId()).getName().fullName);
+            if (empty || item == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(item.getRoot());
             }
-            return nameList;
-        } catch (PersonNotFoundException e) {
-            logger.info(e.getMessage());
-            return nameList;
         }
     }
-```
-###### /java/seedu/address/logic/parser/ChooseCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a ChooseCommand Object
- */
-public class ChooseCommandParser implements Parser<ChooseCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the ChooseCommand
-     * and returns a ChooseCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * Custom {@code ListCell} that displays the graphics of a {@code ThemeSelectorCard}.
      */
-    public ChooseCommand parse(String args) throws ParseException {
-        try {
-            String browserType = ParserUtil.parseArgument(args.trim());
-            return new ChooseCommand(browserType);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChooseCommand.MESSAGE_USAGE));
+    class ThemeListViewCell extends ListCell<ThemeSelectorCard> {
+
+        @Override
+        protected void updateItem(ThemeSelectorCard item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (empty || item == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(item.getRoot());
+            }
         }
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
-``` java
-    /**
-     * Parses {@code args} into a trimmed argument and returns it.
-     * @throws IllegalValueException if the argument provided is invalid (contains special characters).
-     */
-    public static String parseArgument(String args) throws IllegalValueException {
-        String parsedArgs = args.trim();
-        Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
-        Matcher m = p.matcher(parsedArgs);
-        boolean b = m.find();
-
-        if (b) {
-            throw new IllegalValueException(MESSAGE_INVALID_ARGUMENT);
-        }
-        return parsedArgs;
-    }
-```
-###### /java/seedu/address/logic/commands/ChooseCommand.java
+###### \java\seedu\address\ui\SplashScreen.java
 ``` java
 /**
- * Chooses the display screen mode
+ * UI component to load splash screen and animate it
  */
-public class ChooseCommand extends Command {
+public class SplashScreen extends UiPart<Region> {
 
-    public static final String COMMAND_WORD = "choose";
+    private static final String FXML = "SplashScreen.fxml";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + " : selects the type of display in the main browser window.\n"
-            + "Parameters: <TYPE>\n"
-            + "Example: choose linkedin";
+    private Timeline timeline;
+
+    @FXML
+    private ImageView splashImage;
+
+    @FXML
+    private ImageView splashLoadingImage;
 
 
-    public static final String MESSAGE_SUCCESS = "Selected type ";
-    public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " TYPE";
-
-    private final String targetDisplay;
-
-    public ChooseCommand(String targetDisplay) {
-        this.targetDisplay = targetDisplay;
+    public SplashScreen() {
+        super(FXML);
+        splashImage.setImage(new Image("/images/SplashScreen.png"));
+        splashLoadingImage.setImage(new Image("/images/SplashScreenLoading.png"));
+        setAnimation();
     }
 
-    @Override
-    public CommandResult execute() throws CommandException {
+    private void setAnimation() {
+        KeyValue moveRight = new KeyValue(splashLoadingImage.translateXProperty(), 460);
 
-        if (targetDisplay.equals("meeting")) {
-            EventsCenter.getInstance().post(new ShowMeetingEvent());
-            EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
-        } else if (targetDisplay.equals("linkedin") || targetDisplay.equals("facebook")) {
-            EventsCenter.getInstance().post(new ShowBrowserEvent());
-            EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
-        } else {
-            throw new CommandException(Messages.MESSAGE_INVALID_BROWSER_INDEX);
-        }
+        EventHandler<ActionEvent> onFinished = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                splashLoadingImage.setTranslateX(-92);
+            }
+        };
 
-        return new CommandResult(MESSAGE_SUCCESS + targetDisplay);
+        KeyFrame kf = new KeyFrame(Duration.millis(2000), onFinished, moveRight);
+
+        timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setAutoReverse(false);
+        timeline.getKeyFrames().addAll(kf);
+        timeline.play();
     }
 }
 ```
-###### /resources/view/ThemeSelectorCard.fxml
-``` fxml
+###### \java\seedu\address\ui\ThemeSelectorCard.java
+``` java
+/**
+ * A UI component that displays information on which theme is currently selected
+ */
+public class ThemeSelectorCard extends UiPart<Region> {
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Circle?>
+    private static final String FXML = "ThemeSelectorCard.fxml";
 
-<HBox fx:id="themeCardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="130.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <GridPane>
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Circle fx:id="themeCircle" fill="DODGERBLUE" radius="11.0" stroke="BLACK" strokeType="INSIDE" GridPane.halignment="CENTER" />
-            <Label fx:id="themeLabel" text="Label" GridPane.columnIndex="1" />
-         </children>
-      </GridPane>
-   </children>
-</HBox>
+    @FXML
+    private Circle themeCircle;
+
+    @FXML
+    private Label themeLabel;
+
+    public ThemeSelectorCard(String themeName) {
+        super(FXML);
+        if (themeName.equals("blue")) {
+            themeLabel.textProperty().setValue("Blue");
+            themeCircle.setFill(Paint.valueOf("#616fd4"));
+        } else if (themeName.equals("dark")) {
+            themeLabel.textProperty().setValue("Dark");
+            themeCircle.setFill(Paint.valueOf("#494b5c"));
+        } else if (themeName.equals("light")) {
+            themeLabel.textProperty().setValue("Light");
+            themeCircle.setFill(Paint.valueOf("#dddff0"));
+        }
+    }
+
+    public String getThemeName() {
+        return themeLabel.textProperty().getValue();
+    }
+}
 ```
-###### /resources/view/BrowserSelectorCard.fxml
+###### \resources\view\BrowserSelectorCard.fxml
 ``` fxml
 
 <?import javafx.scene.control.Label?>
@@ -1071,7 +1043,87 @@ public class ChooseCommand extends Command {
    </children>
 </HBox>
 ```
-###### /resources/view/MeetingPanel.fxml
+###### \resources\view\CommandBoxHelper.fxml
+``` fxml
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="commandhelperVbox" styleClass="vbox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ListView fx:id="commandBoxHelperList" styleClass="list-vew" />
+   </children>
+</VBox>
+```
+###### \resources\view\HelperCard.fxml
+``` fxml
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox id="commandCardPane" fx:id="commandCardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <GridPane HBox.hgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+        </columnConstraints>
+        <VBox alignment="CENTER_LEFT" minHeight="15" GridPane.columnIndex="0">
+            <padding>
+                <Insets bottom="5" left="15" right="5" top="5" />
+            </padding>
+            <Label fx:id="command" styleClass="cell_small_label" text="\$command" />
+        </VBox>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
+    </GridPane>
+</HBox>
+```
+###### \resources\view\MainWindow.fxml
+``` fxml
+    <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
+        <padding>
+            <Insets bottom="5" left="10" right="10" top="5" />
+        </padding>
+    </StackPane>
+```
+###### \resources\view\MainWindow.fxml
+``` fxml
+          <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
+        <VBox fx:id="personList" minWidth="340.0" prefWidth="340.0" SplitPane.resizableWithParent="false">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <StackPane fx:id="personListPanelPlaceholder" alignment="TOP_LEFT" VBox.vgrow="ALWAYS" />
+        </VBox>
+      <StackPane fx:id="mainDisplayContainer" prefWidth="340.0">
+         <children>
+                          <StackPane fx:id="browserPlaceholder" prefWidth="340.0" StackPane.alignment="CENTER">
+                  <padding>
+                      <Insets bottom="10" left="10" right="10" top="10" />
+                  </padding>
+              </StackPane>
+            <SplitPane fx:id="settingsPane" maxWidth="150.0" minWidth="150.0" orientation="VERTICAL" prefWidth="150.0" StackPane.alignment="CENTER_RIGHT">
+               <items>
+                  <VBox maxWidth="150.0" minWidth="150.0" prefWidth="150.0" SplitPane.resizableWithParent="false">
+                     <children>
+                        <StackPane fx:id="settingsSelectorPlaceholder" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+                     </children>
+                  </VBox>
+               </items>
+            </SplitPane>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </StackPane>
+    </SplitPane>
+```
+###### \resources\view\MeetingPanel.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
@@ -1176,7 +1228,7 @@ public class ChooseCommand extends Command {
    </children>
 </StackPane>
 ```
-###### /resources/view/MeetingPanelCard.fxml
+###### \resources\view\MeetingPanelCard.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
@@ -1225,59 +1277,7 @@ public class ChooseCommand extends Command {
    </children>
 </HBox>
 ```
-###### /resources/view/MainWindow.fxml
-``` fxml
-    <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
-        <padding>
-            <Insets bottom="5" left="10" right="10" top="5" />
-        </padding>
-    </StackPane>
-```
-###### /resources/view/MainWindow.fxml
-``` fxml
-          <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-        <VBox fx:id="personList" minWidth="340.0" prefWidth="340.0" SplitPane.resizableWithParent="false">
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
-            <StackPane fx:id="personListPanelPlaceholder" alignment="TOP_LEFT" VBox.vgrow="ALWAYS" />
-        </VBox>
-      <StackPane fx:id="mainDisplayContainer" prefWidth="340.0">
-         <children>
-                          <StackPane fx:id="browserPlaceholder" prefWidth="340.0" StackPane.alignment="CENTER">
-                  <padding>
-                      <Insets bottom="10" left="10" right="10" top="10" />
-                  </padding>
-              </StackPane>
-            <SplitPane fx:id="settingsPane" maxWidth="150.0" minWidth="150.0" orientation="VERTICAL" prefWidth="150.0" StackPane.alignment="CENTER_RIGHT">
-               <items>
-                  <VBox maxWidth="150.0" minWidth="150.0" prefWidth="150.0" SplitPane.resizableWithParent="false">
-                     <children>
-                        <StackPane fx:id="settingsSelectorPlaceholder" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
-                     </children>
-                  </VBox>
-               </items>
-            </SplitPane>
-         </children>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-      </StackPane>
-    </SplitPane>
-```
-###### /resources/view/CommandBoxHelper.fxml
-``` fxml
-
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.VBox?>
-
-<VBox fx:id="commandhelperVbox" styleClass="vbox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ListView fx:id="commandBoxHelperList" styleClass="list-vew" />
-   </children>
-</VBox>
-```
-###### /resources/view/SettingsSelector.fxml
+###### \resources\view\SettingsSelector.fxml
 ``` fxml
 
 <?import javafx.scene.control.Label?>
@@ -1310,31 +1310,31 @@ public class ChooseCommand extends Command {
    </children>
 </VBox>
 ```
-###### /resources/view/HelperCard.fxml
+###### \resources\view\ThemeSelectorCard.fxml
 ``` fxml
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 
-<HBox id="commandCardPane" fx:id="commandCardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-    <GridPane HBox.hgrow="ALWAYS">
+<HBox fx:id="themeCardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="130.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane>
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
-        <VBox alignment="CENTER_LEFT" minHeight="15" GridPane.columnIndex="0">
-            <padding>
-                <Insets bottom="5" left="15" right="5" top="5" />
-            </padding>
-            <Label fx:id="command" styleClass="cell_small_label" text="\$command" />
-        </VBox>
-      <rowConstraints>
-         <RowConstraints />
-      </rowConstraints>
-    </GridPane>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Circle fx:id="themeCircle" fill="DODGERBLUE" radius="11.0" stroke="BLACK" strokeType="INSIDE" GridPane.halignment="CENTER" />
+            <Label fx:id="themeLabel" text="Label" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+   </children>
 </HBox>
 ```

@@ -141,7 +141,6 @@ people is then continually updated, before it is finally returned to the user
 ---
 
 #End of Extract#
----
 
 === Enhancement Added: Map Command
 
