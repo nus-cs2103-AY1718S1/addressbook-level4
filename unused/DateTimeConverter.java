@@ -1,8 +1,7 @@
 package seedu.address.logic.parser;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.IllegalDateException;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.exceptions.IllegalTimeException;
 
 import static java.time.LocalTime.of;
@@ -15,7 +14,7 @@ import java.time.format.DateTimeParseException;
 import java.util.logging.Logger;
 
 //@@author Sri-vatsa
-
+//this code is no longer used because it has been condensed into parseUtil & revised to use java lcoaldatetime class
 /**
  * converts date and time in string into datetime
  */
@@ -55,11 +54,11 @@ public class DateTimeConverter{
      * @param date
      * @return LocalDate date in the right format
      */
-    private LocalDate dateConverter (String date) throws IllegalDateException {
+    private LocalDate dateConverter (String date) throws IllegalValueException {
         String [] dateArray = date.split("/", 3);
 
         if(dateArray.length != 3) {
-            throw new IllegalDateException("Date should be in format: DD/MM/YYYY");
+            throw new IllegalValueException("Date should be in format: DD/MM/YYYY");
         }
 
         int day = Integer.parseInt(dateArray[0]);
@@ -67,11 +66,11 @@ public class DateTimeConverter{
         int year = Integer.parseInt(dateArray[2]);
 
         if(day < 0 || day > 31) {
-            throw new IllegalDateException("Invalid day");
+            throw new IllegalValueException("Invalid day");
         } else if (month < 0 || month > 12) {
-            throw new IllegalDateException("Invalid month");
+            throw new IllegalValueException("Invalid month");
         } else if ( year < LocalDateTime.now().getYear() || year > LocalDateTime.now().getYear() + 100) {
-            throw new IllegalDateException("Invalid year");
+            throw new IllegalValueException("Invalid year");
         }
 
         return  LocalDate.of(year, month, day);
