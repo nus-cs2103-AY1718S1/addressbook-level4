@@ -371,3 +371,19 @@
 	-fx-background-insets: 1, 0, 0;
 	-fx-background-radius: 1em;
 }
+
+
+/*CARD PANE STYLING*/
+#cardPane {
+    -fx-background-color: #232A34;
+    -fx-border-width: 0;
+}
+
+.highlightedCardPane {
+    -fx-background-color: #CA9733;
+    -fx-border-width: 0;
+    -fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-insets: 5;
+    -fx-border-radius: 5;
+}
