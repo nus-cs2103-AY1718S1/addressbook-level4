@@ -113,6 +113,7 @@ Upon start up of the application, meetings which have already passed the current
 longer be shown
 // end::autodelete[]
 
+// tag::googlemaps[]
 === Loading of Meeting Location in Google Maps
 
 Upon selecting a meeting, the location of meeting will be automatically entered as the destination in Google Maps. The detailed navigational route and directions can be obtained thereafter.
@@ -120,6 +121,8 @@ The screenshot below shows the loaded Google Maps upon entering the `selectmeeti
 
 image::googlemaps.png[width="800"]
 _Figure 5: GoogleMaps_
+
+// end::googlemaps[]
 
 == Commands
 
@@ -235,6 +238,9 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+
+// tag::addmeeting[]
+
 === Adding a meeting: `addmeeting`
 
 If you need to schedule a meeting with the one of your contact in your contact list, you can add meeting with him so that the meeting will be shown at the meeting list panel and when the deadline of the meeting approaches, you will be reminded!
@@ -244,6 +250,8 @@ Format: `(am)addmeeting INDEX [n/NAME] [d/DATE_TIME] [l/LOCATION] [t/IMPORTANCE]
 
 [NOTE]
 Input format for Date and Time is "DD-MM-YYYY HH:MM"
+
+// end::addmeeting[]
 
 [NOTE]
 Input format for `IMPORTANCE` is 0-2.
@@ -296,6 +304,8 @@ Examples:
 * `deletemeeting 1`
 * `deletemeeting 2`
 
+// tag::selectmeeting[]
+
 === Selecting a meeting : `selectmeeting`
 
 Selects the meeting identified by the index number used in the last meeting listing. +
@@ -315,6 +325,8 @@ Selects the 5th meeting in the address book.
 * `findmeeting Alex` +
 `selectmeeting 1` +
 Selects the 1st meeting in the results of the `findmeeting` command.
+
+// end::selectmeeting[]
 
 === Listing all meetings : `listmeeting`
 
