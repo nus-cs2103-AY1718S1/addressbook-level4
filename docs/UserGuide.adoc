@@ -434,7 +434,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-==== Enabling and disabling the welcome screen: `welcome`
+==== Enabling and disabling the welcome screen: `welcome` [Since v1.5]
 
 => Alias: `w` <=
 
