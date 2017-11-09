@@ -82,3 +82,78 @@ public class RemoveTagParserTest {
     }
 }
 ```
+###### \java\seedu\room\storage\StorageManagerTest.java
+``` java
+    private void setupTempPictureFile() throws IOException {
+        File source = new File(storageManager.getDirAbsolutePath()
+                + File.separator + Picture.FOLDER_NAME);
+        File dest = new File(storageManager.getDirAbsolutePath()
+                + File.separator + Picture.FOLDER_NAME + "_backup");
+
+        source.mkdirs();
+        dest.mkdirs();
+        source.deleteOnExit();
+        dest.deleteOnExit();
+    }
+
+
+```
+###### \java\seedu\room\storage\StorageManagerTest.java
+``` java
+    @Test
+    public void eventsBookReadSave() throws Exception {
+        EventBook original = getTypicalEventBook();
+        storageManager.saveEventBook(original);
+        ReadOnlyEventBook retrieved = storageManager.readEventBook().get();
+        assertEquals(original, new EventBook(retrieved));
+    }
+
+    @Test
+    public void handleBackupResidentBook() throws Exception {
+        ResidentBook original = getTypicalResidentBook();
+        storageManager.saveResidentBook(original);
+        ReadOnlyResidentBook retrieved = storageManager.readResidentBook().get();
+
+        storageManager.backupResidentBook(retrieved);
+        ReadOnlyResidentBook backup = storageManager.readBackupResidentBook().get();
+
+        assertEquals(new ResidentBook(retrieved), new ResidentBook(backup));
+    }
+
+    @Test
+    public void handleBackupEventBook() throws Exception {
+        EventBook original = getTypicalEventBook();
+        storageManager.saveEventBook(original);
+        ReadOnlyEventBook retrieved = storageManager.readEventBook().get();
+
+        storageManager.backupEventBook(retrieved);
+        ReadOnlyEventBook backup = storageManager.readBackupEventBook().get();
+
+        assertEquals(new EventBook(retrieved), new EventBook(backup));
+    }
+
+    @Test
+    public void handleNoBackupImages() throws Exception {
+        storageManager.backupImages();
+
+        assertTrue(!new File(storageManager.getDirAbsolutePath()
+                + File.separator + Picture.FOLDER_NAME).exists());
+
+        assertTrue(!new File(storageManager.getDirAbsolutePath()
+                + File.separator + Picture.FOLDER_NAME + "_backup").exists());
+
+    }
+
+    @Test
+    public void handleBackupImagesValid() throws Exception {
+        setupTempPictureFile();
+
+        assertTrue(new File(storageManager.getDirAbsolutePath()
+                + File.separator + Picture.FOLDER_NAME).exists());
+        assertTrue(new File(storageManager.getDirAbsolutePath()
+                + File.separator + Picture.FOLDER_NAME + "_backup").exists());
+    }
+
+
+}
+```
