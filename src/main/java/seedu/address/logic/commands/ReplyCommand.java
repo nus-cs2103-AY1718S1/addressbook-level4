@@ -45,39 +45,11 @@ public class ReplyCommand extends Command {
         if (UndoableCommand.isWaitingforReply) {
             if (AddCommand.requiresHandling()) {
                 return handleAddCommand();
-            } else if (EditCommand.requiresHandling()) {
-                return handleEditCommand();
             } else {
                 return new CommandResult(MESSAGE_COMMAND_MISHANDLED);
             }
         } else {
             return new CommandResult(MESSAGE_COMMAND_INVALID);
-        }
-    }
-
-    /**
-     * Handle replies to EditCommand prompts
-     */
-    private CommandResult handleEditCommand() throws CommandException {
-
-        if (toReply.equalsIgnoreCase(COMMAND_WORDVAR_YES)) {
-
-            UndoableCommand.reply();
-            EditCommand.setHandlingFalse();
-            try {
-                model.updatePerson(personToEdit, storedPerson);
-            } catch (DuplicatePersonException dpe) {
-                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-            } catch (PersonNotFoundException pnfe) {
-                throw new AssertionError("The target person cannot be missing");
-            }
-            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, storedPerson));
-
-        } else {
-            UndoableCommand.reply();
-            EditCommand.setHandlingFalse();
-            return new CommandResult(MESSAGE_COMMAND_ROLLBACK);
         }
     }
 
