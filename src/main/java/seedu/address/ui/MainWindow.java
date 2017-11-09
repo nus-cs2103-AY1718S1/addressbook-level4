@@ -85,7 +85,7 @@ public class MainWindow extends UiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
-        setSplitPaneDividerProperty();
+        setSplitPaneDividerPosition();
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
 
@@ -194,9 +194,9 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
-     * Proportions the split pane divider position according to window size
+     * Proportions the split pane divider position according to window size.
      */
-    private void setSplitPaneDividerProperty() {
+    private void setSplitPaneDividerPosition() {
 
         primaryStage.showingProperty().addListener((observable, oldValue, newValue) ->
                 splitPane.setDividerPositions(SPLIT_PANE_DIVIDER_POSITION));
