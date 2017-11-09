@@ -37,10 +37,6 @@ public class GraphDisplay extends UiPart<Region> {
                     "node {" +
                         "fill-color: black;" +
                         "shape: rounded-box;" +
-                        "shadow-mode: plain;" +
-                        "shadow-color: #C8C8C8;" +
-                        "shadow-width: 4;" +
-                        "shadow-offset: 4, -4;" +
                         "text-background-mode: rounded-box;" +
                         "text-padding: 5;" +
                         "text-background-color: black;" +

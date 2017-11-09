@@ -17,7 +17,7 @@ public class UserPrefs {
     private String addressBookName = "MyAddressBook";
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0, SampleDataUtil.getSampleTagColours());
+        this.setGuiSettings(350, 600, 0, 0, SampleDataUtil.getSampleTagColours());
     }
 
     public GuiSettings getGuiSettings() {
