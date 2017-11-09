@@ -47,7 +47,6 @@ public class DetailsPanel extends UiPart<Region> {
 
     private Logic logic;
 
-    private ObservableList<ReadOnlyPerson> personList;
 
     @FXML
     private Pane pane;
@@ -83,8 +82,6 @@ public class DetailsPanel extends UiPart<Region> {
     private Label homePhone;
     @FXML
     private FlowPane tags;
-
-    private ListView<PersonCard> personListView;
 
     public DetailsPanel() {
         super(FXML);
