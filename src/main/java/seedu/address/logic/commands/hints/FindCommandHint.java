@@ -49,7 +49,7 @@ public class FindCommandHint extends ArgumentsHint {
 
         // can we tab through prefixes
         // case: find n/|
-        Optional<Prefix> endPrefix = HintUtil.findEndPrefix(arguments, PREFIXES);
+        Optional<Prefix> endPrefix = HintUtil.findEndPrefix(userInput, PREFIXES);
         if (endPrefix.isPresent()) {
 
             //we can offer duplicates, so offer every other prefix

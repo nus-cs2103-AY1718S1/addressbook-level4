@@ -67,7 +67,7 @@ public class EditCommandHint extends ArgumentsHint {
 
         // can we tab through prefixes
         // case: edit 1 n/|
-        Optional<Prefix> endPrefix = HintUtil.findEndPrefix(arguments, PREFIXES);
+        Optional<Prefix> endPrefix = HintUtil.findEndPrefix(userInput, PREFIXES);
         if (endPrefix.isPresent()) {
             handlePrefixTabbing(endPrefix.get(), PREFIXES, possiblePrefixesToComplete);
             return;

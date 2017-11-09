@@ -73,15 +73,15 @@ public class HintUtil {
     }
 
     /**
-     * returns prefix if the given {@code arguments}
+     * returns prefix if the given {@code userInput}
      * ends with the full prefix that's inside the list of {@code prefixes} provided.
      *
      * If no prefix is present, we return an empty optional.
      */
-    public static Optional<Prefix> findEndPrefix(String arguments, List<Prefix> prefixes) {
+    public static Optional<Prefix> findEndPrefix(String userInput, List<Prefix> prefixes) {
 
         for (Prefix p : prefixes) {
-            if (arguments.endsWith(p.toString())) {
+            if (userInput.endsWith(p.toString())) {
                 return Optional.of(p);
             }
         }
