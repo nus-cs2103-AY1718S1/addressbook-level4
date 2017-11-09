@@ -139,14 +139,26 @@ Returns any person having tags `cs2103`
 * `find e/example.com` +
 Returns any person having email containing `example.com`
 
+// tag::listalp[]
 === Searching all persons whose name starts with a certain alphabet: `listalp`
 
 Finds persons whose names start with the given alphabet. +
-Format: 'listalp ALPHABET'
+Format: `listalp ALPHABET`
 
 ****
 * The search is case sensitive.
 ****
+// end::listalp[]
+
+=== Finding the route from the specified address to a person in the addressbook: `locate`
+
+Finds the route from the given address to the address of the specified contact. +
+Format: `locate INDEX a/ADDRESS`
+
+Example:
+
+* `locate 1 a/clementi` +
+Displays the route from `clementi` to the address of the first person in the current list.
 
 === Creating a group: `createGroup`
 

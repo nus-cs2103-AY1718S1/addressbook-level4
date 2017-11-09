@@ -6,7 +6,10 @@ import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.BrowserPanel.FACEBOOK_PREFIX;
+import static seedu.address.ui.BrowserPanel.GOOGLE_MAP_DIR_URL_PREFIX;
+import static seedu.address.ui.BrowserPanel.GOOGLE_MAP_URL_END;
 import static seedu.address.ui.BrowserPanel.GOOGLE_MAP_URL_PREFIX;
+import static seedu.address.ui.BrowserPanel.GOOGLE_MAP_URL_SUFFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
 
 import java.net.URL;
@@ -15,6 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.BrowserPanelHandle;
+import seedu.address.commons.events.ui.BrowserPanelLocateEvent;
 import seedu.address.commons.events.ui.PersonFacebookOpenEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.util.StringUtil;
@@ -23,11 +27,15 @@ import seedu.address.model.person.Person;
 
 public class BrowserPanelTest extends GuiUnitTest {
     private PersonPanelSelectionChangedEvent selectionChangedEventStub;
+    private BrowserPanelLocateEvent locateEventStub;
     private PersonFacebookOpenEvent facebookOpenEventStub;
     private Person dummy;
 
     private BrowserPanel browserPanel;
     private BrowserPanelHandle browserPanelHandle;
+
+    private String startAddress = "Clementi";
+    private String endAddress = "NUS";
 
     @Before
     public void setUp() {
@@ -35,6 +43,7 @@ public class BrowserPanelTest extends GuiUnitTest {
         dummy.setFacebook(new Facebook("zuck"));
 
         selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
+        locateEventStub = new BrowserPanelLocateEvent(startAddress, endAddress);
         facebookOpenEventStub = new PersonFacebookOpenEvent(dummy);
 
 
@@ -66,4 +75,22 @@ public class BrowserPanelTest extends GuiUnitTest {
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
     }
+
+    //@@author majunting
+    @Test
+    public void displayLocate() throws Exception {
+        // default web page
+        URL expectedDefaultPageUrl = new URL(DEFAULT_PAGE);
+        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+
+        postNow(locateEventStub);
+        URL expectedLocateUrl = new URL(GOOGLE_MAP_DIR_URL_PREFIX
+                + StringUtil.partiallyEncode(startAddress) + GOOGLE_MAP_URL_SUFFIX
+                + StringUtil.partiallyEncode(endAddress) + GOOGLE_MAP_URL_SUFFIX
+                + GOOGLE_MAP_URL_END);
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertEquals(expectedLocateUrl, browserPanelHandle.getLoadedUrl());
+    }
+    //@@author
 }

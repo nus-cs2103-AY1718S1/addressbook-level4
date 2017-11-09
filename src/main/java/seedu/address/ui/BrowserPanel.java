@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.BrowserPanelLocateEvent;
 import seedu.address.commons.events.ui.PersonFacebookOpenEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.util.StringUtil;
@@ -23,6 +24,9 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h&dg=dbrw&newdg=1";
     public static final String GOOGLE_MAP_URL_PREFIX = "https://www.google.com/maps/search/?api=1&query=";
+    public static final String GOOGLE_MAP_DIR_URL_PREFIX = "https://www.google.com.sg/maps/dir/";
+    public static final String GOOGLE_MAP_URL_SUFFIX = "/";
+    public static final String GOOGLE_MAP_URL_END = "?dg=dbrw&newdg=1";
     public static final String FACEBOOK_PREFIX = "https://m.facebook.com/";
     public static final String DEFAULT_PAGE = "http://www.nus.edu.sg/";
     private static final String FXML = "BrowserPanel.fxml";
@@ -48,6 +52,19 @@ public class BrowserPanel extends UiPart<Region> {
                     + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
+    //@@author majunting
+    /**
+     * Loads google map url with a search of direction from start address to end address
+     * @param start start address
+     * @param end end address
+     */
+    private void loadLocatePage(String start, String end) {
+        loadPage(GOOGLE_MAP_DIR_URL_PREFIX
+                + StringUtil.partiallyEncode(start) + GOOGLE_MAP_URL_SUFFIX
+                + StringUtil.partiallyEncode(end) + GOOGLE_MAP_URL_SUFFIX
+                + GOOGLE_MAP_URL_END);
+    }
+    //@@author
     private void loadFacebookPage(ReadOnlyPerson person) {
         loadPage(FACEBOOK_PREFIX + person.getFacebook().value);
     }
@@ -76,6 +93,13 @@ public class BrowserPanel extends UiPart<Region> {
         loadPersonPage(event.getNewSelection().person);
     }
 
+    //@@author majunting
+    @Subscribe
+    private void handleBrowserPanelLocateEvent(BrowserPanelLocateEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadLocatePage(event.getStartAddress(), event.getEndAddress());
+    }
+    //@@author
     @Subscribe
     private void handlePersonFacebookOpenEvent(PersonFacebookOpenEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
