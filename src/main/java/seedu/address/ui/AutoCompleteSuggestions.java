@@ -39,7 +39,7 @@ public class AutoCompleteSuggestions {
 
         @Override
         protected boolean isMatch(String suggestion, AutoCompletionBinding.ISuggestionRequest request) {
-            return suggestion.startsWith(request.getUserText());
+            return (suggestion.startsWith(request.getUserText()) && !suggestion.equals(request.getUserText()));
         }
     };
 
