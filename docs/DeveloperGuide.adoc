@@ -1001,7 +1001,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
         try
     {
         Set<Index> indices = new HashSet<>();
-        // adding of indics to Set    
+        // adding of indics to Set 
     } catch(
     IllegalValueException ive)
     {
@@ -1019,7 +1019,7 @@ A `Command` object will be executed by `Logic Manger`.During command excution, a
 public class EmailCommand extends Command {
 
     List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-// ... adding of contact's email 
+// ... adding of contact's email
 
     String recipientList = String.join(",", recipientSet);
 //email logic
