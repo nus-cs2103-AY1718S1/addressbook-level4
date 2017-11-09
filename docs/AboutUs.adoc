@@ -48,7 +48,7 @@ Responsibilities: Logic
 
 === Lawrence Koh Yong Hong
 image::lawwman.jpg[width="150", align="left"]
-{empty}[http://github.com/lawwman[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/lawwman[github]] [<<lawrence#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Model
