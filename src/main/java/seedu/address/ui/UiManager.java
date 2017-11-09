@@ -81,7 +81,7 @@ public class UiManager extends ComponentManager implements Ui {
 
         // if there are overdue parcels
         for (int i = 0; i < uncompletedParcelList.size(); i++) {
-            if (uncompletedParcelList.get(i).getStatus().equals(Status.OVERDUE)){
+            if (uncompletedParcelList.get(i).getStatus().equals(Status.OVERDUE)) {
                 return true;
             }
         }

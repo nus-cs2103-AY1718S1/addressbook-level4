@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.logging.Logger;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -9,8 +11,6 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.Status;
-
-import java.util.logging.Logger;
 
 /**
  * New window telling users of overdue parcels
