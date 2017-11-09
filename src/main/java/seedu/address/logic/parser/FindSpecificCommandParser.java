@@ -36,10 +36,11 @@ public class FindSpecificCommandParser implements Parser<FindSpecificCommand> {
 
         final Matcher matcher = prefixFormat.matcher(trimmedArgs);
 
-		/**
-		 * Return true if {@code trimmedArgs} has the format of {@code prefixFormat)
-		 */
-		if (!matcher.matches()) {
+        /**
+        * Return trues if {@code trimmedArgs} has the format of {@code prefixFormat}
+        */
+
+        if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindSpecificCommand.MESSAGE_USAGE));
         }
 
