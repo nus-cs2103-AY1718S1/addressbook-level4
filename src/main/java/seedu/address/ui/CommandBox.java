@@ -270,7 +270,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
 
-    private ArrayList<Integer> getTagIndexList(String allTextInput) {
+    public ArrayList<Integer> getTagIndexList(String allTextInput) {
         ArrayList<Integer> tagList = new ArrayList<>();
         int index = 0;
         while (index < allTextInput.length()) {
@@ -475,7 +475,7 @@ public class CommandBox extends UiPart<Region> {
      * @param str the text used to compute the width
      * @return
      */
-    private double computeMargin(int index, String str) {
+    public double computeMargin(int index, String str) {
         Text text = new Text(str);
         text.getStyleClass().clear();
         switch (index) {
