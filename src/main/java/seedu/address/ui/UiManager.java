@@ -13,6 +13,7 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.PrefDefaultProfilePhotoChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
@@ -73,6 +74,10 @@ public class UiManager extends ComponentManager implements Ui {
         mainWindow.releaseResources();
     }
 
+    public void refresh() {
+        this.mainWindow.setPersonListPanel(true);
+    }
+
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {
         final String content = details + ":\n" + cause.toString();
         showAlertDialogAndWait(AlertType.ERROR, FILE_OPS_ERROR_DIALOG_STAGE_TITLE, description, content);
@@ -120,5 +125,10 @@ public class UiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showFileOperationAlertAndWait(FILE_OPS_ERROR_DIALOG_HEADER_MESSAGE, FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE,
                 event.exception);
+    }
+
+    @Subscribe
+    private void handleDefaultProfilePhotoChangedEvent(PrefDefaultProfilePhotoChangedEvent event) {
+        refresh();
     }
 }

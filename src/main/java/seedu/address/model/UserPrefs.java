@@ -5,8 +5,8 @@ import java.util.Objects;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.commons.events.model.DefaultProfilePhotoChangedEvent;
 
+import seedu.address.commons.events.model.PrefDefaultProfilePhotoChangedEvent;
 import seedu.address.commons.events.ui.ChangeThemeEvent;
 
 /**
@@ -77,7 +77,7 @@ public class UserPrefs {
     public void setDefaultProfilePhoto(String defaultProfilePhoto) {
         String oldValue = getDefaultProfilePhoto();
         this.defaultProfilePhoto = defaultProfilePhoto;
-        raise(new DefaultProfilePhotoChangedEvent(oldValue, defaultProfilePhoto));
+        raise(new PrefDefaultProfilePhotoChangedEvent(oldValue, defaultProfilePhoto));
 
     }
 

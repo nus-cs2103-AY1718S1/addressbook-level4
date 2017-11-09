@@ -21,7 +21,6 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.concurrent.Task;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
@@ -231,25 +230,16 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     // Gravatar
-
     @Override
     public void downloadProfilePhoto(ReadOnlyPerson person, String def) {
-        Task<Void> downloadTask = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                logger.warning("I'm supposed to be at BG?!?!>!?!?!");
-                try {
-                    String gravatarUrl = StringUtil.generateGravatarUrl(person.getEmail().value, def);
-                    String filename = String.format(PersonCard.PROFILE_PHOTO_FILENAME_FORMAT,
-                            person.getInternalId().value);
-                    saveFileFromUrl(gravatarUrl, filename);
-                    logger.info("Downloaded " + gravatarUrl + " to " + filename);
-                } catch (IOException e) {
-                    logger.warning(String.format("Gravatar not downloaded for %1$s.", person.getName()));
-                }
-                return null;
-            }
-        };
-        new Thread(downloadTask).start();
+        try {
+            String gravatarUrl = StringUtil.generateGravatarUrl(person.getEmail().value, def);
+            String filename = String.format(PersonCard.PROFILE_PHOTO_FILENAME_FORMAT,
+                    person.getInternalId().value);
+            saveFileFromUrl(gravatarUrl, filename);
+            logger.info("Downloaded " + gravatarUrl + " to " + filename);
+        } catch (IOException e) {
+            logger.warning(String.format("Gravatar not downloaded for %1$s.", person.getName()));
+        }
     }
 }

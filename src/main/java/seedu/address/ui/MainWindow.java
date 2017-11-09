@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -20,7 +21,6 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.DefaultProfilePhotoChangedEvent;
 import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowBrowserEvent;
@@ -183,9 +183,7 @@ public class MainWindow extends UiPart<Region> {
         settingsSelectorPlaceholder.getChildren().add(settingsSelector.getRoot());
         //@@author
 
-        ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
-        personListPanel = new PersonListPanel(persons);
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        setPersonListPanel(true);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -201,6 +199,25 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic, commandBoxHelperPlaceholder, settingsPane);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
         //@@author
+    }
+
+    //@@author liuhang0213
+    public void setPersonListPanel(Boolean isRedownloading) {
+        ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
+        if (isRedownloading) {
+            for (ReadOnlyPerson person : persons) {
+                Task<Void> downloadTask = new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        storage.downloadProfilePhoto(person, prefs.getDefaultProfilePhoto());
+                        return null;
+                    }
+                };
+                new Thread(downloadTask).start();
+            }
+        }
+        personListPanel = new PersonListPanel(persons);
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
     }
 
     //@@author
@@ -320,17 +337,5 @@ public class MainWindow extends UiPart<Region> {
             break;
         }
         scene.getStylesheets().add(cssPath);
-    }
-
-    //@@author liuhang0213
-    @Subscribe
-    private void handleDefaultProfilePhotoChangedEvent(DefaultProfilePhotoChangedEvent event) {
-        ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
-        for (ReadOnlyPerson person : persons) {
-            storage.downloadProfilePhoto(person, prefs.getDefaultProfilePhoto());
-        }
-
-        personListPanel = new PersonListPanel(persons);
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
     }
 }
