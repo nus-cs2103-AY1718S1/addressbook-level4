@@ -104,7 +104,7 @@ Here’s how you can use them:
 ====
 
 === Viewing help : `help` `Since v1.0`
-
+//TODO: add before and after screenshots for features
 Format: `help`
 
 === Adding a person: `add` `Since v1.0`
@@ -550,7 +550,7 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 // end::commandshortcuts[]
 
 == FAQ
-
+//TODO: Update and Populate FAQ
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
@@ -623,7 +623,7 @@ In version v1.3, you are be able to:
 In version v1.4, you are be able to:
 
 * View statistics of the current list of students from the `Statistics Panel`
-* Use the `ScheduleComand` to add a schedule into your schedule list
+* Use the `ScheduleCommand` to add a schedule into your schedule list
 * Have automated assignment of different colours to different tags according to suitable RGB values
 
 === Features added in v1.5
