@@ -975,7 +975,7 @@ In this section, we explain how users can generation Quick Response(QR) Code for
 
 To make user experience more convenience, QR Code can make calling easy through the use of Smartphone with QR Scanner application installed.
 
-This function has been mapped to `QrButton` and 'qrcall' 'qc' for commandline.
+This function has been mapped to `QrButton` and `qrcall` `qc` for commandline.
 
 The following sequence diagram describes how 'QrCall' Generates QR Code using commandline.
 
