@@ -36,7 +36,7 @@ public class UniqueMeetingListTest {
 
     @Test
     public void setMeetings_withDuplicateMeetings_throwsAssertionError() {
-        List<Meeting> newMeetings = Arrays.asList(new Meeting(M1), new Meeting(M1));
+        List<ReadOnlyMeeting> newMeetings = Arrays.asList(new Meeting(M1), new Meeting(M1));
         MeetingListStub newData = new MeetingListStub(newMeetings);
 
         thrown.expect(AssertionError.class);
@@ -47,19 +47,19 @@ public class UniqueMeetingListTest {
      * A stub UniqueMeetingList which meetings can violate interface constraints.
      */
     private static class MeetingListStub implements ReadOnlyMeetingList {
-        private final ObservableList<Meeting> meetings = FXCollections.observableArrayList();
+        private final ObservableList<ReadOnlyMeeting> meetings = FXCollections.observableArrayList();
 
-        MeetingListStub (Collection<Meeting> meetings) {
+        MeetingListStub (Collection<ReadOnlyMeeting> meetings) {
             this.meetings.setAll(meetings);
         }
 
         @Override
-        public ObservableList<Meeting> getMeetingList() {
+        public ObservableList<ReadOnlyMeeting> getMeetingList() {
             return meetings;
         }
 
         @Override
-        public Meeting getUpcomingMeeting() {
+        public ReadOnlyMeeting getUpcomingMeeting() {
             return meetings.sorted().get(0);
         }
     }

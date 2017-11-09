@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.address.model.Exceptions.DuplicateMeetingException;
 import seedu.address.model.Meeting;
 import seedu.address.model.UniqueMeetingList;
+import seedu.address.model.exceptions.DuplicateMeetingException;
+
 //@@author liuhang0213
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
