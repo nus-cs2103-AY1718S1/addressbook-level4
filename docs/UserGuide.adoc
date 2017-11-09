@@ -172,6 +172,7 @@ You can use `list descending` to show a list of contacts sorted by name in desce
 *Shorthand Format:* `l dsc`
 // end::list[]
 
+// tag::bloodtype[]
 === Listing persons by blood type : `bloodtype` [Since v1.2]
 
 You can use `bloodtype` to show a list of people with that specific blood type. +
@@ -185,6 +186,7 @@ image::btexample.png[width="500"]
 
 [NOTE]
 BLOODTYPE is case insensitive.
+// end::bloodtype[]
 
 // tag::dups[]
 === Showing duplicate persons: `duplicates` [Since v1.3]

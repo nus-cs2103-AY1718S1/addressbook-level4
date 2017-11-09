@@ -45,9 +45,19 @@ Bloodtype will all be capitalized.
 
 ---
 
-=== Enhancement Proposed: Add class Bloodtype
+=== Enhancement Added: Add class Bloodtype
 
-{Explain similar to the Undo/Redo feature above.}
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=bloodtype]
+
+#End of Extract#
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=bloodtype]
+
+#End of Extract#
 
 === Other contributions
 
