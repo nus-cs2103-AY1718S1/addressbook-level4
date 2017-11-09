@@ -7,6 +7,6 @@
       "y" : 100
     }
   },
-  "addressBookFilePath" : "addressbook.xml",
-  "addressBookName" : "TypicalAddressBookName"
+  "residentBookFilePath" : "residentbook.xml",
+  "residentBookName" : "TypicalResidentBookName"
 }
