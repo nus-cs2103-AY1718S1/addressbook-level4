@@ -435,6 +435,7 @@ private void initHighlightStatus() {
 }
 ----
 
+// tag::temporaryperson[]
 === Temporary Contact mechanism
 
 Temporary contacts is implemented using the java LocalDateTime class to keep track of the time that the temporary contact
@@ -465,7 +466,7 @@ The temporary contact is implemented this way:
 As we can see, the time that this contact will expire is to the nearest hour, done by ignoring nanosecond, second, and
 minute
 
-// tag::import[]
+// end::temporaryperson[]
 === Import mechanism
 
 The import mechanism is essentially adding multiple contacts to the resident book automatically by referencing a xml file. It is implemented by calling add function repeatedly till all the new contacts have been added to the current contact list.
