@@ -2,8 +2,6 @@ package seedu.address.commons.events.ui;
 
 import java.io.File;
 
-import org.apache.commons.io.FilenameUtils;
-
 import seedu.address.commons.events.BaseEvent;
 
 //@@author chrisboo

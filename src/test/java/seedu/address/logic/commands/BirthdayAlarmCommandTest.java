@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.BirthdayAlarmCommand.SHOWING_REMINDERS_MESSAGE;
 
 import org.junit.Rule;
-
 import org.junit.Test;
 
 import seedu.address.commons.events.ui.ShowBirthdayAlarmRequestEvent;
