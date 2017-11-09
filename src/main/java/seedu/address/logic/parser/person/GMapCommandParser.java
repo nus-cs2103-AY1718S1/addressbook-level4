@@ -1,20 +1,12 @@
 package seedu.address.logic.parser.person;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.util.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.util.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.util.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.util.CliSyntax.PREFIX_PHONE;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.person.AddCommand;
 import seedu.address.logic.commands.person.GMapCommand;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.parser.util.ArgumentMultimap;
-import seedu.address.logic.parser.util.ArgumentTokenizer;
 import seedu.address.logic.parser.util.ParserUtil;
 
 //@@author dennaloh
