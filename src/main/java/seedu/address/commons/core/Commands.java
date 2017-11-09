@@ -2,26 +2,7 @@ package seedu.address.commons.core;
 
 import java.util.HashMap;
 
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.AddRelationshipCommand;
-import seedu.address.logic.commands.BackupCommand;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.ClearHistoryCommand;
-import seedu.address.logic.commands.ColourTagCommand;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.RelPathCommand;
-import seedu.address.logic.commands.RemarkCommand;
-import seedu.address.logic.commands.RemoveTagCommand;
-import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.SortCommand;
-import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.*;
 
 //@@author joanneong
 /**
@@ -36,6 +17,7 @@ public class Commands {
         ClearHistoryCommand.COMMAND_WORD,
         ColourTagCommand.COMMAND_WORD,
         DeleteCommand.COMMAND_WORD,
+        DeleteRelationshipCommand.COMMAND_WORD,
         EditCommand.COMMAND_WORD,
         ExitCommand.COMMAND_WORD,
         FindCommand.COMMAND_WORD,
@@ -59,6 +41,7 @@ public class Commands {
         ClearHistoryCommand.COMMAND_ALIAS,
         ColourTagCommand.COMMAND_ALIAS,
         DeleteCommand.COMMAND_ALIAS,
+        DeleteRelationshipCommand.COMMAND_ALIAS,
         EditCommand.COMMAND_ALIAS,
         ExitCommand.COMMAND_ALIAS,
         FindCommand.COMMAND_ALIAS,
@@ -81,6 +64,7 @@ public class Commands {
         ClearHistoryCommand.SHORT_MESSAGE_USAGE,
         ColourTagCommand.SHORT_MESSAGE_USAGE,
         DeleteCommand.SHORT_MESSAGE_USAGE,
+        DeleteRelationshipCommand.SHORT_MESSAGE_USAGE,
         EditCommand.SHORT_MESSAGE_USAGE,
         ExitCommand.SHORT_MESSAGE_USAGE,
         FindCommand.SHORT_MESSAGE_USAGE,
