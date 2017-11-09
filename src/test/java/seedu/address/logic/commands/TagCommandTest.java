@@ -32,6 +32,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.PersonBuilder;
 
+//@@author raisa2010
 public class TagCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
