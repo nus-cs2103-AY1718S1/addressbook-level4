@@ -156,16 +156,30 @@ include::../DeveloperGuide.adoc[tag= statisticspanel ]
 === Enhancement Proposed: Add command `compare`
 
 ==== External behavior
+Enter the `compare` command followed by 2 `Tags` or `FormClassNames` to compare statistics of different groups with the compare command.
+The Statistics Panel will have a second set of values for the second group of students.
+
+To make the difference more noticeable, the difference in the 2 sets of values will be displayed on the right-hand side.
+The difference will be colored red if the difference is negative and green if the difference is positive to to make it more visually appealing.
+
 
 ==== Justification
+Teachers often have to compare the grades of students or groups of students to analyse their academic progress.
+As the simple statistics can only tell you so much about your data, there is a need for more powerful data analytics.
+The `comapre` command gives teachers a more powerful tool to analyse data by allowing them to compare different sets of data .
+The color coded difference values also improve the readability of the statistics so that teachers can get a good idea of the relative performance of two groups of students at a glance.
 
 ==== Implementation
 
 === Enhancement Proposed: Add command `SendEmail`
 
 ==== External behavior
+Enter the `sendemail` command followed by the index of the intended recepient and an external email application with the FROM and TO fields already populated.
+This streamlines the process of teachers sending emails to students and parents and allows them to do it directly from  within cherBook
 
 ==== Justification
+It is troublesome for teachers to manually and repeatedly open up their browsers to send emails to students of their parents.
+The `sendemail` command removes this process and streamlines the process by bringing the teacher straight to the compose email page with the relevant fields already filled, removing the trouble of going through a browser.
 
 ==== Implementation
 
