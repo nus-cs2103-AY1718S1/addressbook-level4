@@ -1,5 +1,6 @@
 package seedu.address.model.util;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -131,17 +132,44 @@ public class SampleDataUtil {
         }
     }
 
+    /**
+     * Returns a tag set containing the list of strings given.
+     */
+    public static ArrayList<InternalId> getParticipantList(Integer... ids) throws IllegalValueException {
+        ArrayList<InternalId> sampleParticipantsList = new ArrayList<>();
+        for (Integer id : ids) {
+            sampleParticipantsList.add(new InternalId(id));
+        }
+
+        return sampleParticipantsList;
+    }
+
     public static Meeting[] getSampleMeetings() {
         try {
-            ArrayList<InternalId> sampleParticipantsList = new ArrayList<>();
-            sampleParticipantsList.add(new InternalId(1));
-            sampleParticipantsList.add(new InternalId(2));
             LocalDateTime now = LocalDateTime.now();
             return new Meeting[] {
                 new Meeting(LocalDateTime.of(now.getYear() + 1, 1, 1, 0, 0),
-                        "Home", "New Year Celebration", sampleParticipantsList),
-                new Meeting(LocalDateTime.of(now.getYear() + 1, 2, 1, 14, 0),
-                        "COM1-02-10", "Project Meeting", sampleParticipantsList),
+                        "Home", "New Year Celebration", getParticipantList(1, 2, 3)),
+                new Meeting(LocalDateTime.of(now.getYear() + 1, 1, 15, 14, 0),
+                        "COM1-02-10", "Project Meeting", getParticipantList(4, 5)),
+                new Meeting(LocalDateTime.of(now.getYear() + 1, 2, 1, 10, 0),
+                        "Grandparent's place", "Chinese New Year Visitation", getParticipantList(1, 3, 5)),
+                new Meeting(LocalDateTime.of(now.getYear() + 1, 2, 13, 19, 30),
+                        "Home", "Birthday Celebration", getParticipantList(1, 2, 4)),
+                new Meeting(LocalDateTime.of(now.getYear() + 1, 3, 1, 12, 0),
+                        "City Hall", "Classmate Gathering", getParticipantList(1, 3, 4)),
+                new Meeting(LocalDateTime.of(now.getYear() + 1, 3, 15, 14, 0),
+                        "Home", "Project Meeting", getParticipantList(4, 5)),
+                new Meeting(LocalDateTime.of(now.getYear() + 1, 3, 30, 15, 30),
+                        "Clementi", "Dental Appointment", getParticipantList(7)),
+                new Meeting(LocalDateTime.of(now.getYear() + 1, 4, 1, 13, 0),
+                        "UTown Starbucks", "Project Meeting", getParticipantList(4, 5)),
+                new Meeting(LocalDateTime.of(now.getYear() + 1, 4, 10, 14, 0),
+                        "Clementi", "Dental Appointment", getParticipantList(7)),
+                new Meeting(LocalDateTime.of(now.getYear() + 1, 4, 15, 14, 0),
+                        "COM1-02-10", "Project Meeting", getParticipantList(4, 5)),
+                new Meeting(LocalDateTime.of(now.getYear() + 1, 4, 16, 19, 30),
+                        "COM1-02-01", "Project Presentation", getParticipantList(4, 5)),
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
