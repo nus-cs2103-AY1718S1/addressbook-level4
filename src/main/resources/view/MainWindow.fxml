@@ -33,7 +33,7 @@
         </padding>
     </StackPane>
 
-    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="120" minHeight="120" prefHeight="120" styleClass="pane-with-border" VBox.vgrow="NEVER">
+    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="120" styleClass="pane-with-border" VBox.vgrow="NEVER">
         <padding>
             <Insets bottom="5" left="10" right="10" top="5" />
         </padding>
@@ -58,7 +58,7 @@
             </items>
         </SplitPane>
 
-        <StackPane fx:id="graphPanelPlaceholder">
+        <StackPane fx:id="graphPanelPlaceholder" minWidth="300.0">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
