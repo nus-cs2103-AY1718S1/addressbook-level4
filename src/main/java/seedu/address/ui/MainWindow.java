@@ -19,6 +19,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.DeselectionEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
@@ -298,5 +299,21 @@ public class MainWindow extends UiPart<Region> {
         infoPanel = new InfoPanel(logic);
         infoPanelPlaceholder.getChildren().clear();
         infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
+    }
+
+    /**
+     * Changes theme.
+     */
+    @Subscribe
+    private void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) {
+        for (String stylesheet : getRoot().getStylesheets()) {
+            if (stylesheet.endsWith("DarkTheme.css")) {
+                getRoot().getStylesheets().remove(stylesheet);
+                getRoot().getStylesheets().add("/view/BrightTheme.css");
+            } else if (stylesheet.endsWith("BrightTheme.css")) {
+                getRoot().getStylesheets().remove(stylesheet);
+                getRoot().getStylesheets().add("/view/DarkTheme.css");
+            }
+        }
     }
 }
