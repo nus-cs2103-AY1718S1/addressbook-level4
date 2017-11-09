@@ -27,7 +27,7 @@ Most enhancements added by me in the NUS Contact are on the UI side
 
 ==== External behaviour
 
-The Person Information Panel is a section of the GUI where it displays the selected contact's detailed information in a more presentable way. 
+The Person Information Panel is a section of the GUI where it displays the selected contact's detailed information in a more presentable way.
 
 The Person Information Panel displays the specific class of the information before the value of the information. (e.g. Nickname: Ah Chuang)
 
