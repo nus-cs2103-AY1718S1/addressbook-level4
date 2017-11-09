@@ -19,6 +19,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
+import seedu.address.model.module.exceptions.NotRemarkedLessonException;
 import seedu.address.model.module.predicates.FixedCodePredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
@@ -28,7 +29,7 @@ public class UnmarkCommandTest {
     private Model model;
 
     @Test
-    public void execute_validIndexUnfilteredList_success() throws DuplicateLessonException {
+    public void execute_validIndexUnfilteredList_success() throws DuplicateLessonException, NotRemarkedLessonException {
         model = prepareModel();
         ListingUnit.setCurrentListingUnit(LESSON);
         ReadOnlyLesson lessonToUnmark = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
@@ -43,7 +44,7 @@ public class UnmarkCommandTest {
     }
 
     @Test
-    public void execute_validIndexFilteredList_success() throws DuplicateLessonException {
+    public void execute_validIndexFilteredList_success() throws DuplicateLessonException, NotRemarkedLessonException {
         model = prepareModel();
         model.updateFilteredLessonList(
                 new FixedCodePredicate(model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()).getCode()));

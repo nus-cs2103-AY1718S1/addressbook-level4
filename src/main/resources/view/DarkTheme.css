@@ -430,7 +430,7 @@
 
 #lessonNode {
     -fx-font-family: monospace;
-    -fx-font-size: x-large;
+    -fx-font-size: large;
     -fx-font-weight: bolder;
     -fx-control-inner-background: #6B4A40;
     -fx-text-fill: derive(#d4cbb3, 50%);
