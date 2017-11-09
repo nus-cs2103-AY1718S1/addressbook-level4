@@ -338,6 +338,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
     }
 ----
 
+tag::tag[]
 === Tag mechanism
 
 The Tag mechanism is a specialised form of the edit feature that allows users to tag multiple contacts with multiple tags.
@@ -358,6 +359,9 @@ The `ModelManager` class in the `Model` component is then called to update all t
 
 The Storage and UI are subsequently updated with the new information.
 
+end::tag[]
+
+tag::addtask[]
 === AddTask mechanism
 
 The Add Task mechanism is facilitated by the `AddTaskCommand` class which inherits from the `UndoableCommand` class. It allows for the addition of new tasks to the application with a starting date and a deadline. Both dates are optional and may be omitted.
@@ -421,6 +425,8 @@ there are only two types of task dates. +
 **Pros** Faster to type. +
 **Cons** Description might contain slashes. t/ (to) would clash with t/ prefix for tags so to/ would have to be used.
 Limits possibilities of adding new prefixes and making the format more flexible in the future. +
+
+end::addtask[]
 
 === DeleteTask mechanism
 
