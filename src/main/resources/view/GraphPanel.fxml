@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <!-- @@author nahtanojmil -->
+
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
@@ -14,7 +14,7 @@
    <children>
       <TabPane fx:id="tabPaneGraphs" layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
-            <Tab closable="false" text="Line Chart">
+            <Tab closable="false" text="1. Line Chart">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -30,7 +30,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab closable="false" text="Bar Chart">
+            <Tab closable="false" text="2. Bar Chart">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
