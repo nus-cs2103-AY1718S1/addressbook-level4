@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddMeetingCommand;
 import seedu.address.logic.commands.ChooseCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
@@ -23,6 +24,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListByMostSearchedCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.MapCommand;
 import seedu.address.logic.commands.NextMeetingCommand;
 import seedu.address.logic.commands.PrefCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -32,8 +34,8 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.Meeting;
 import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyMeeting;
 import seedu.address.model.person.InternalId;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -80,6 +82,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public ObservableList<String> getCommandList() {
         List<String> commandList = Arrays.asList(
                 AddCommand.COMMAND_WORD,
+                AddMeetingCommand.COMMAND_WORD,
                 ClearCommand.COMMAND_WORD,
                 DeleteCommand.COMMAND_WORD,
                 DeleteTagCommand.COMMAND_WORD,
@@ -96,7 +99,8 @@ public class LogicManager extends ComponentManager implements Logic {
                 PrefCommand.COMMAND_WORD,
                 ChooseCommand.COMMAND_WORD,
                 NextMeetingCommand.COMMAND_WORD,
-                SearchCommand.COMMAND_WORD
+                SearchCommand.COMMAND_WORD,
+                MapCommand.COMMAND_WORD
         );
         return FXCollections.observableList(commandList);
     }
@@ -121,18 +125,19 @@ public class LogicManager extends ComponentManager implements Logic {
                 PrefCommand.MESSAGE_TEMPLATE,
                 ChooseCommand.MESSAGE_TEMPLATE,
                 NextMeetingCommand.MESSAGE_TEMPLATE,
-                SearchCommand.MESSAGE_TEMPLATE
+                SearchCommand.MESSAGE_TEMPLATE,
+                MapCommand.MESSAGE_TEMPLATE
         );
         return templateList;
     }
 
     @Override
-    public ObservableList<Meeting> getMeetingList() {
+    public ObservableList<ReadOnlyMeeting> getMeetingList() {
         return model.getMeetingList().getMeetingList();
     }
 
     @Override
-    public ArrayList<String> getMeetingNames(Meeting meeting) {
+    public ArrayList<String> getMeetingNames(ReadOnlyMeeting meeting) {
         ArrayList<String> nameList = new ArrayList<>();
         try {
             for (InternalId id : meeting.getListOfPersonsId()) {

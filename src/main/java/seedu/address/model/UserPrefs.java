@@ -2,7 +2,12 @@ package seedu.address.model;
 
 import java.util.Objects;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.events.BaseEvent;
+
+import seedu.address.commons.events.model.PrefDefaultProfilePhotoChangedEvent;
+import seedu.address.commons.events.ui.ChangeThemeEvent;
 
 /**
  * Represents User's preferences.
@@ -62,6 +67,7 @@ public class UserPrefs {
 
     public void setTheme(String theme) {
         this.theme = theme;
+        raise(new ChangeThemeEvent(theme));
     }
 
     public String getDefaultProfilePhoto() {
@@ -69,7 +75,14 @@ public class UserPrefs {
     }
 
     public void setDefaultProfilePhoto(String defaultProfilePhoto) {
+        String oldValue = getDefaultProfilePhoto();
         this.defaultProfilePhoto = defaultProfilePhoto;
+        raise(new PrefDefaultProfilePhotoChangedEvent(oldValue, defaultProfilePhoto));
+
+    }
+
+    private static void raise(BaseEvent e) {
+        EventsCenter.getInstance().post(e);
     }
 
     @Override

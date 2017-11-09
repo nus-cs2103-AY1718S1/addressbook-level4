@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.storage.StorageManager;
 
@@ -86,7 +87,7 @@ public class PersonCard extends UiPart<Region> {
                         + " -fx-font-size: 15px;"
                         + " -fx-text-fill: black");
             } else {
-                tagLabel.setStyle("-fx-background-color: snow;"
+                tagLabel.setStyle("-fx-background-color: #adcbe3;"
                         + " -fx-font-size: 15px;"
                         + " -fx-text-fill: black");
             }
@@ -114,7 +115,7 @@ public class PersonCard extends UiPart<Region> {
                 gravatar.setImage(image);
             } catch (IOException e1) {
                 // Shouldn't happen unless the default profile photo is missing
-                e.printStackTrace();
+                LogsCenter.getLogger("").warning("Missing default profile photo.");
             }
         }
     }

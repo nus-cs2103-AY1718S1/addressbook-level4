@@ -146,7 +146,8 @@ public class ChooseCommand extends Command {
                 PrefCommand.COMMAND_WORD,
                 ChooseCommand.COMMAND_WORD,
                 NextMeetingCommand.COMMAND_WORD,
-                SearchCommand.COMMAND_WORD
+                SearchCommand.COMMAND_WORD,
+                MapCommand.COMMAND_WORD
         );
         return FXCollections.observableList(commandList);
     }
@@ -171,7 +172,8 @@ public class ChooseCommand extends Command {
                 PrefCommand.MESSAGE_TEMPLATE,
                 ChooseCommand.MESSAGE_TEMPLATE,
                 NextMeetingCommand.MESSAGE_TEMPLATE,
-                SearchCommand.MESSAGE_TEMPLATE
+                SearchCommand.MESSAGE_TEMPLATE,
+                MapCommand.MESSAGE_TEMPLATE
         );
         return templateList;
     }
@@ -230,8 +232,16 @@ public class ChooseCommandParser implements Parser<ChooseCommand> {
 ``` java
     @Subscribe
     private void handleBrowserPanelSelectionChangedEvent(BrowserPanelSelectionChangedEvent event) {
-        loadOtherPage(event.getBrowserSelection());
+        loadOtherPages(event.getBrowserSelection());
     }
+
+    //@author martyn-wong
+    @Subscribe
+    private void handleMapPanelEvent(MapPersonEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonMap(event.getPerson());
+    }
+}
 ```
 ###### \java\seedu\address\ui\BrowserSelectorCard.java
 ``` java
@@ -267,6 +277,8 @@ public class BrowserSelectorCard extends UiPart<Region> {
             browserCardImage.setImage(new Image("/images/facebook.png"));
         } else if (imageName.equals("meeting")) {
             browserCardImage.setImage(new Image("/images/meeting.png"));
+        } else if (imageName.equals("maps")) {
+            browserCardImage.setImage(new Image("/images/maps.png"));
         }
     }
 
@@ -717,7 +729,7 @@ public class SettingsSelector extends UiPart<Region> {
     private void setConnections() {
         //Setting connections for browser list
         ObservableList<String> browserItems = FXCollections.observableArrayList(
-                "linkedin", "facebook", "meeting"
+                "linkedin", "facebook", "meeting", "maps"
         );
         ObservableList<BrowserSelectorCard> mappedBrowserList = EasyBind.map(
                 browserItems, (item) -> new BrowserSelectorCard(item));
@@ -1092,7 +1104,7 @@ public class ThemeSelectorCard extends UiPart<Region> {
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="150.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="150.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane prefWidth="150.0">
         <columnConstraints>
@@ -1100,8 +1112,8 @@ public class ThemeSelectorCard extends UiPart<Region> {
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
         </rowConstraints>

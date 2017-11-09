@@ -11,6 +11,7 @@ import seedu.address.model.Meeting;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyMeetingList;
 import seedu.address.model.UniqueMeetingList;
+import seedu.address.model.exceptions.DuplicateMeetingException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.InternalId;
@@ -83,7 +84,7 @@ public class SampleDataUtil {
                 meetings.add(sampleMeeting);
             }
             return meetings;
-        } catch (UniqueMeetingList.DuplicateMeetingException e) {
+        } catch (DuplicateMeetingException e) {
             throw new AssertionError("sample data cannot contain duplicate meetings", e);
         }
     }

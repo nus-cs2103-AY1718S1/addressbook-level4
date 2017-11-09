@@ -675,6 +675,28 @@ people is then continually updated, before it is finally returned to the user
 
 ---
 
+=== Command: `Map`
+
+Displays the google maps location of a person's address
+
+==== Implementation
+
+When 'map' command is executed, it retrieves the current list of people,
+and selects the person's address based on the index given.
+
+The address is then passed into a url template for a page loader to display
+the google maps on the browser panel
+
+==== Design Considerations
+
+**Aspect:** Passing URL directly +
+**Alternative 1:** Use google maps API +
+**Pros:** More powerful and secure search +
+**Cons:** Unnecessary imports of dpeendencies, slows the program +
+=======
+
+---
+
 === Profile Photo
 
 A profile photo is displayed for each person in the addressbook.

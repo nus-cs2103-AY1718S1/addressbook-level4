@@ -13,7 +13,9 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BrowserPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.MapPersonEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -30,12 +32,15 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String LINKEDIN_URL_SUFFIX = "&origin=FACETED_SEARCH";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+    public static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
     //@@author
     private static final String FXML = "BrowserPanel.fxml";
 
-    private ReadOnlyPerson personSelected;
+    private static ReadOnlyPerson personSelected;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    private boolean hasLinkedinBeenChosen = false;
 
     @FXML
     private WebView browser;
@@ -49,37 +54,53 @@ public class BrowserPanel extends UiPart<Region> {
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
-
+    //@@author Sri-vatsa
     /***
      * Loads person page
      * @param person
      */
     private void loadPersonPage(ReadOnlyPerson person) {
         personSelected = person;
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
+        if (hasLinkedinBeenChosen) {
+            try {
+                loadLinkedIn();
+            } catch (CommandException e) {
+                e.printStackTrace();
+            }
+        } else {
+
+            loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
+                    + GOOGLE_SEARCH_URL_SUFFIX);
+        }
     }
 
-    public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
+    //@@author martyn-wong
+    private void loadPersonMap(ReadOnlyPerson person) {
+        loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
+                + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
     //@@author Sri-vatsa
 
     /***
      * Loads pages based on choose command selection
-     * @param page
      */
-    private void loadOtherPages(String page) {
-        if (page == "linkedin") {
-            String[] name = personSelected.getName().fullName.split(" ");
-
-            loadPage(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
-                    + LINKEDIN_SEARCH_PARAM_FIRST_NAME + name[0] + LINKEDIN_SEARCH_PARAM_LAST_NAME + name[1]
-                    + LINKEDIN_URL_SUFFIX);
+    private void loadLinkedIn() throws CommandException {
+        if (personSelected == null) {
+            throw new CommandException("Please select a person");
         }
+        hasLinkedinBeenChosen = true;
+        String[] name = personSelected.getName().fullName.split(" ");
+
+        loadPage(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
+                + LINKEDIN_SEARCH_PARAM_FIRST_NAME + name[0] + LINKEDIN_SEARCH_PARAM_LAST_NAME + name[1]
+                + LINKEDIN_URL_SUFFIX);
     }
     //@@author
+
+    public void loadPage(String url) {
+        Platform.runLater(() -> browser.getEngine().load(url));
+    }
     /**
      * Loads a default HTML file with a background that matches the general theme.
      */
@@ -87,6 +108,19 @@ public class BrowserPanel extends UiPart<Region> {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         loadPage(defaultPage.toExternalForm());
     }
+    //@@author Sri-vatsa
+
+    /**
+     * Setter method to set the Boolean value of hasLinkedinBeenChosen
+     */
+    public void setLinkedinChosenTrue () {
+        hasLinkedinBeenChosen = true;
+    }
+
+    public void setLinkedinChosenFalse () {
+        hasLinkedinBeenChosen = false;
+    }
+    //@@author
 
     /**
      * Frees resources allocated to the browser.
@@ -101,10 +135,23 @@ public class BrowserPanel extends UiPart<Region> {
         loadPersonPage(event.getNewSelection().person);
     }
 
-    //@@author fongwz
+    //@@author Sri-vatsa
     @Subscribe
-    private void handleBrowserPanelSelectionChangedEvent(BrowserPanelSelectionChangedEvent event) {
-        loadOtherPages(event.getBrowserSelection());
+    private void handleBrowserPanelSelectionChangedEvent(BrowserPanelSelectionChangedEvent event)
+            throws CommandException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (event.getBrowserSelection().equals("linkedin")) {
+            loadLinkedIn();
+        } else if (event.getBrowserSelection().equals("google")) {
+            hasLinkedinBeenChosen = false;
+            loadPersonPage(personSelected);
+        }
     }
-    //@@author
+
+    //@author martyn-wong
+    @Subscribe
+    private void handleMapPanelEvent(MapPersonEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonMap(event.getPerson());
+    }
 }

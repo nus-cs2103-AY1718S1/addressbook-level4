@@ -137,7 +137,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Search for persons by parameter: 'Search'
+=== Search for persons by parameter: 'Search' 'Since v1.3'
 
 Finds persons whose details match the given keywords. +
 Format: 'search KEYWORD [MORE KEYWORD]'
@@ -293,6 +293,12 @@ Format: `clear`
 Edits the user preference. +
 Format: `pref [KEY] [NEW_VALUE]` +
 If  `NEW_VALUE` is blank, the current preference will be displayed. +
+
+[NOTE]
+====
+Preference changes will take effect after restarting the address book.
+====
+
 [NOTE]
 ====
 See <<#pref-list, Appendix>> for the list of editable preferences.
@@ -322,6 +328,17 @@ Examples:
 
 * `choose linkedin` +
 Displays the linkedin results page of profiles that match user selected.
+
+=== Searching for a person's address by google maps : 'map' 'Since v1.4'
+
+Displays a google map search based of the person's address of the given index in the browser panel. +
+Format: 'map [INDEX]'
+
+****
+* Selects the person and loads the Google maps page of the person's address at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
 
 === Exiting the program : `exit`
 
@@ -360,6 +377,9 @@ Can also use shortcut 'f'
 Can also use shortcut 'lms'
 * *List* : `list`
 Can also use shortcut 'l'
+* *Map* : `map INDEX' +
+e.g.'map 3'
+Can also use shortcut 'm'
 * *Help* : `help`
 * *Search* : `search KEYWORD [KEYWORD]`
 Can also use shortcut 'se'
@@ -389,7 +409,7 @@ Can also use shortcut 'p'
 [#pref-list]
 * `AddressBookName`
 * `AddressBookFilePath` : indicates where the address book is stored in local storage
-* `Display Modes: linkedin, facebook, meetings`
+* `Display Modes: linkedin, facebook, meetings, maps`
 * `Theme`: Customizes the appearance of the application. Possible values are `Light`, `Blue` and `Dark`
 * `DefaultProfilePhoto`: The default photo used if the person does not have a personal Gravatar. Possible values are
 `person`, `geometric`, `monster`, `face`, `retro`, `robot` and `blank`. +

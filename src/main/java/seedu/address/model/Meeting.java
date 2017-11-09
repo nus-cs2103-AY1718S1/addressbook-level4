@@ -14,7 +14,7 @@ import seedu.address.model.person.InternalId;
  * Represents a Meeting
  * Guarantees: immutable; meeting time is in the future
  */
-public class Meeting implements Comparable<Meeting> {
+public class Meeting implements ReadOnlyMeeting {
 
     public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -41,7 +41,7 @@ public class Meeting implements Comparable<Meeting> {
         }
 
         this.dateTime = dateTime;
-        this.location = location.trim();
+        this.location = location;
         this.notes = notes.trim();
         this.listOfPersonsId = listOfPersonsId;
     }
@@ -49,8 +49,8 @@ public class Meeting implements Comparable<Meeting> {
     /**
      * Creates a copy of the given meeting
      */
-    public Meeting(Meeting source) {
-        this(source.dateTime, source.location, source.notes, source.listOfPersonsId);
+    public Meeting(ReadOnlyMeeting source) {
+        this(source.getDateTime(), source.getLocation(), source.getNotes(), source.getListOfPersonsId());
     }
 
     // Get methods
@@ -62,8 +62,12 @@ public class Meeting implements Comparable<Meeting> {
         return dateTime.format(TIME_FORMATTER);
     }
 
-    public String getDateTime() {
+    public String getDateTimeStr() {
         return dateTime.toString();
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
     public String getLocation() {
@@ -101,9 +105,10 @@ public class Meeting implements Comparable<Meeting> {
                 + "Location: " + location + '\n'
                 + "Notes: " + notes;
     }
-
+    /*
     @Override
     public int compareTo(Meeting other) {
         return dateTime.compareTo(other.dateTime);
     }
+    */
 }

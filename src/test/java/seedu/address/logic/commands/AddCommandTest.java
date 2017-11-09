@@ -20,8 +20,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyMeeting;
 import seedu.address.model.ReadOnlyMeetingList;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.exceptions.DuplicateMeetingException;
+import seedu.address.model.exceptions.IllegalIdException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -131,7 +134,12 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return false;
         }
-
+        //@@author Srivatsa
+        @Override
+        public void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException {
+            fail("This method should not be called.");
+        }
+        //@author
         @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
@@ -164,7 +172,7 @@ public class AddCommandTest {
         public void recordSearchHistory() throws CommandException {
             fail("This method should not be called.");
         }
-
+        //@@author Srivatsa
         @Override
         public void sortPersonListBySearchCount() {
             fail("This method should not be called.");
@@ -173,6 +181,11 @@ public class AddCommandTest {
         @Override
         public void sortPersonListLexicographically() {
             fail("This method should not be called.");
+        }
+        //@@author
+        @Override
+        public void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+
         }
     }
 
