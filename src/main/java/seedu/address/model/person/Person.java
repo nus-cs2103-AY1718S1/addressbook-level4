@@ -71,7 +71,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     public void setPhone(Phone phone) {
-        this.phone.set(requireNonNull(phone));
+        this.phone.set(phone);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     public void setAddress(Address address) {
-        this.address.set(requireNonNull(address));
+        this.address.set(address);
     }
 
     @Override

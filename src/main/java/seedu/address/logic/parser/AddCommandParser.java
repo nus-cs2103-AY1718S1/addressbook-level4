@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEB_LINK;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -37,19 +38,37 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
 
     public AddCommand parse(String args) throws ParseException {
+        Phone phone;
+        //ArrayList<Email> email;
+        Address address;
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE,
                         PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_WEB_LINK);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_EMAIL)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
+            Optional<Phone> checkPhone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE));
+            if (!checkPhone.isPresent()) {
+                phone = new Phone(null);
+            } else {
+                phone = checkPhone.get();
+            }
             ArrayList<Email> email = ParserUtil.parseEmail(argMultimap.getAllValues(PREFIX_EMAIL));
-            Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+            //if(checkEmail.isEmpty()) {
+            //    email = new ArrayList<>();
+            //} else {
+            //    email = checkEmail;
+            //}
+            Optional<Address> checkAddress = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS));
+            if (!checkAddress.isPresent()) {
+                address = new Address(null);
+            } else {
+                address = checkAddress.get();
+            }
             Remark remark = new Remark(""); // Add command does not allow adding remarks right away
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Set<WebLink> webLinkList = ParserUtil.parseWebLink(argMultimap.getAllValues(PREFIX_WEB_LINK));

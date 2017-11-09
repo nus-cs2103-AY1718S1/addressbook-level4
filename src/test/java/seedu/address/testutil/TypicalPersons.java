@@ -65,12 +65,10 @@ public class TypicalPersons {
             .withEmail("stefan@example.com").withAddress("little india").build();
     public static final ReadOnlyPerson IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
             .withEmail("hans@example.com").withAddress("chicago ave").build();
-    public static final ReadOnlyPerson JULIAN = new PersonBuilder().withName("Julian Kaiser")
+    public static final ReadOnlyPerson JULIAN_NO_PHONE = new PersonBuilder().withName("Julian Kaiser")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("julian@example.com")
-            .withPhone("85325555")
             .withTags("friend").build();
-    public static final ReadOnlyPerson KENDRICK = new PersonBuilder().withName("Kendrick Lopez")
-            .withAddress("311, Jurong Ave 2, #02-25")
+    public static final ReadOnlyPerson KENDRICK_NO_ADDRESS = new PersonBuilder().withName("Kendrick Lopez")
             .withEmail("kendrick@example.com").withPhone("86324716")
             .withTags("friend").build();
 
