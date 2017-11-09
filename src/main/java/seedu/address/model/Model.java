@@ -64,9 +64,14 @@ public interface Model {
     void deletePersonsByTags(Set<Tag> tags) throws PersonNotFoundException;
 
     /**
-     * Adds appoints to a person
+     * Adds appointment to a person
      */
     void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException;
+
+    /**
+     * Removes appointment from a person
+     */
+    void removeAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException;
 
     /**
      * Returns a list of ReadOnlyPerson that is ordered chronologically in terms of appointment time

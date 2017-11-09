@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BatchCommand;
+import seedu.address.logic.commands.CalendarViewCommand;
+import seedu.address.logic.commands.CancelAppointmentCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CopyCommand;
@@ -26,6 +28,7 @@ import seedu.address.logic.commands.ListDescendingNameCommand;
 import seedu.address.logic.commands.ListFailureCommand;
 import seedu.address.logic.commands.ListReverseCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RelationshipCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.ToggleTagColorCommand;
@@ -123,9 +126,20 @@ public class AddressBookParser {
         case RemarkCommand.COMMAND_WORD:
             return new RemarkCommandParser().parse(arguments);
 
+        case RelationshipCommand.COMMAND_WORD:
+        case RelationshipCommand.COMMAND_ALIAS:
+            return new RelationshipCommandParser().parse(arguments);
+
         case AddAppointmentCommand.COMMAND_WORD:
         case AddAppointmentCommand.COMMAND_ALIAS:
             return new AddAppointmentParser().parse(arguments);
+
+        case CancelAppointmentCommand.COMMAND_WORD:
+            return new CancelAppointmentParser().parse(arguments);
+
+        case CalendarViewCommand.COMMAND_WORD:
+        case CalendarViewCommand.COMMAND_ALIAS:
+            return new CalendarViewParser().parse(arguments);
 
         case ListByBloodtypeCommand.COMMAND_WORD:
         case ListByBloodtypeCommand.COMMAND_ALIAS:

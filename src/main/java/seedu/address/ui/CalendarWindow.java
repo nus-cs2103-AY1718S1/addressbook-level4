@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -20,6 +21,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.CalendarViewEvent;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -46,7 +48,6 @@ public class CalendarWindow extends UiPart<Region> {
         calendarView.setToday(LocalDate.now());
         calendarView.setTime(LocalTime.now());
         updateCalendar();
-        setKeyBindings();
         disableViews();
         registerAsAnEventHandler(this);
     }
@@ -59,35 +60,29 @@ public class CalendarWindow extends UiPart<Region> {
         calendarView.setShowSearchField(false);
         calendarView.setShowSearchResultsTray(false);
         calendarView.setShowPrintButton(false);
-        calendarView.showWeekPage();
-    }
-
-    private void setKeyBindings() {
-
-        calendarView.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
-            case C:
-                event.consume();
-                showNextPage();
-                break;
-            default:
-            }
-        });
+        calendarView.showDayPage();
     }
 
     /**
-     * When user press c, the calendar will shift to the next view
-     * Order of shifting: day -> week -> month -> year
+     * Changes calendar view accordingly
      */
-    public void showNextPage() {
-        if (calendarView.getSelectedPage() == calendarView.getMonthPage()) {
-            calendarView.showYearPage();
-        } else if (calendarView.getSelectedPage() == calendarView.getDayPage()) {
-            calendarView.showWeekPage();
-        } else if (calendarView.getSelectedPage() == calendarView.getYearPage()) {
+    private void showPage(Character c) {
+        switch(c) {
+        case ('d'):
             calendarView.showDayPage();
-        } else {
+            return;
+        case ('w'):
+            calendarView.showWeekPage();
+            return;
+        case ('m'):
             calendarView.showMonthPage();
+            return;
+        case ('y'):
+            calendarView.showYearPage();
+            return;
+        default:
+            //should not reach here
+            assert (false);
         }
     }
 
@@ -104,6 +99,12 @@ public class CalendarWindow extends UiPart<Region> {
 
     }
 
+    @Subscribe
+    private void handleCalendarViewEvent(CalendarViewEvent event) {
+        Character c = event.c;
+        Platform.runLater(() -> showPage(c));
+    }
+
     /**
      * Creates a new a calendar with the update information
      */
@@ -118,6 +119,7 @@ public class CalendarWindow extends UiPart<Region> {
             calendar.setStyle(Calendar.Style.getStyle(styleNum));
             styleNum++;
             styleNum = styleNum % 5;
+            calendar.setLookAheadDuration(Duration.ofDays(365));
             calendarSource.getCalendars().add(calendar);
             ArrayList<Entry> entries = getEntries(person);
 

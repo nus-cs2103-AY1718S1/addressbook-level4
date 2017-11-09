@@ -63,14 +63,18 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags, tagString, color);
     }
 
-    //@@author
+
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
 
-    //@@author Eric
+
     public void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
         persons.addAppointment(target, appointment);
+    }
+
+    public void removeAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
+        persons.removeAppointment(target, appointment);
     }
     //@@author
 

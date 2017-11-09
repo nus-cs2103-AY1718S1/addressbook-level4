@@ -27,6 +27,8 @@ public interface ReadOnlyPerson {
     Set<Tag> getTags();
     ObjectProperty<Remark> remarkProperty();
     Remark getRemark();
+    ObjectProperty<Relationship> relationshipProperty();
+    Relationship getRelationship();
     ObjectProperty<AppointmentList> appointmentProperty();
     List<Appointment> getAppointments();
     /**
@@ -56,9 +58,11 @@ public interface ReadOnlyPerson {
                 .append(getAddress())
                 .append(" BloodType: ")
                 .append(getBloodType())
-                .append(" Tags: ")
+                .append(" Remark: ")
                 .append(getRemark())
-                .append(" Remark: ");
+                .append(" Relationship: ")
+                .append(getRelationship())
+                .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

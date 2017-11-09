@@ -49,6 +49,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label remark;
     @FXML
+    private Label relation;
+    @FXML
     private Label appointment;
 
 
@@ -81,6 +83,7 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         bloodType.textProperty().bind(Bindings.convert(person.bloodTypeProperty()));
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
+        relation.textProperty().bind(Bindings.convert(person.relationshipProperty()));
         appointment.textProperty().bind(Bindings.convert(person.appointmentProperty()));
     }
 

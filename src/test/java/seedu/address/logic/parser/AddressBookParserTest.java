@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -40,6 +41,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListByBloodtypeCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RelationshipCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.ToggleTagColorCommand;
@@ -49,6 +51,7 @@ import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodtypeContainsKeywordPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Relationship;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -216,6 +219,14 @@ public class AddressBookParserTest {
         assertNotEquals(new RemarkCommand(index, new Remark("")), testRemarkCommand);
     }
     //@@author
+
+    @Test
+    public void parseCommandRelationship() throws Exception {
+        final Relationship relation = new Relationship("Some relation.");
+        RelationshipCommand command = (RelationshipCommand) parser.parseCommand(RelationshipCommand.COMMAND_WORD
+                + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_RELATIONSHIP + " " + relation.value);
+        assertEquals(new RelationshipCommand(INDEX_FIRST_PERSON, relation), command);
+    }
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {

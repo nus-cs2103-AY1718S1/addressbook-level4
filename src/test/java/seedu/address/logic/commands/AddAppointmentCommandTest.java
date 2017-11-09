@@ -95,8 +95,4 @@ public class AddAppointmentCommandTest {
         return AddAppointmentParser.getAppointmentFromString(str);
     }
 
-
-
-
-
 }

@@ -349,6 +349,8 @@ You can add, sort and remove appointments from a specific contact at a given ind
 Appointment can be set using natural language. +
 You can refer to the following http://natty.joestelmach.com/doc.jsp[link] for the supported formats. +
 
+You can add multiple appointments to the same contact.
+
 [NOTE]
 If no end time is specified, default appointment time is 1 hour. +
 However, please include at least the hour and a day that can be specified. +
@@ -360,15 +362,13 @@ You can only set dates that are after current time. (i.e. You cannot set a time 
 |=======================================================================
 |Purpose |Format |Example
 
-|Add an appointment to the contact |`appointment INDEX d/TIME to TIME` |`appointment 1 d/tomorrow 5pm`
+|Add an appointment to the contact |`appointment INDEX d/Description, TIME` |`appointment 1 d/Lunch, tomorrow 5pm to 7pm`
 
-|Shorthand for adding appointment  |`appt INDEX d/TIME to TIME` |`appt 1 d/tomorrow 5pm`
+|Shorthand for adding appointment  |`appt INDEX d/Description, TIME` |`appt 1 d/Lunch, tomorrow 5pm to 7pm`
 
-|Remove an appointment from the contact |`appointment INDEX d/off`| `appointment 1 d/off`
+|Remove an appointment from the contact |`cancel Description with person`| `cancel lunch with James`
 
-|Shorthand for removing appointment |`appt INDEX d/off`| `appt 1 d/off`
-
-|Sort list by appointment dates |`appointment` |`appointment`
+|Sort contacts by appointment dates |`appointment` |`appointment`
 
 |Shorthand for appointment sorting |`appt` |`appt`
 
@@ -376,10 +376,63 @@ You can only set dates that are after current time. (i.e. You cannot set a time 
 
 *Example:*
 
+Adding appointment +
+
 image::aptexample.png[width="500"]
-    Figure 11: Appointment Command Usage Diagram
+    Figure 11: Appointment Command Usage Diagram for Adding
+
+Canceling appointments +
+
+image::aptexamplecancel.png[width="800"]
+    Figure 11: Appointment Command Usage Diagram for Cancelling
+
+[NOTE]
+If the appointment does not show on the daily view, it may be too far ahead
 
 // end::appointment[]
+
+=== Changing Calendar View: `calendar`
+
+You can change the calendar view to daily, monthly, weekly, or yearly mode.
+
+Changing view: Change the calendar view +
+
+*Format:* `calendar LETTER` +
+*Shorthand format:* : `cal LETTER`
+
+[width="59%",cols="<20%,20%,50%",options="header",]
+|=======================================================================
+|`LETTER`| Corresponding view|Description
+
+|`d`| Day view | Shows your appointments for the day. Also shows a list of appointments for the month that is sorted
+according to appointment
+|`w`| Week view| Shows your appointments for the week.
+|`m`| Month view| Shows your appointments for the month.
+|`y`| Year view| Shows your appointments for the year.
+
+|=======================================================================
+
+*Examples:* +
+
+Day View +
+
+image::calendardexample.PNG[width="500"]
+    Figure 12: Appointment Calendar Day View
+
+Week View +
+
+image::calendarwexample.PNG[width="500"]
+    Figure 13: Appointment Calendar Week View
+
+Month View +
+
+image::calendarmexample.PNG[width="500"]
+    Figure 14: Appointment Calendar Month View
+
+Year View +
+
+image::calendaryexample.PNG[width="500"]
+    Figure 15: Appointment Calendar Year View
 
 // tag::remark[]
 === Adding/Removing Remarks to a person : `remark`
@@ -424,6 +477,26 @@ You can copy a person's email address to your clipboard +
 *Format:* `copy INDEX` +
 *Shorthand format:* `c INDEX`
 // end::batch[]
+
+=== Adding a person's relationships: `relation` [Since v1.5]
+
+You can add relationships to a person's details +
+*Format:* `relation INDEX rel/RELATIONSHIP` +
+*Shorthand Format:* `rel INDEX rel/RELATIONSHIP` +
+*Example:* `rel 1 rel/Husband: John Doe` +
+The person at the top of the list has a relationship +
+of "Husband: John Doe" added. +
++
+You can remove a relationship by adding nothing after rel/ +
+*Format:* `relation INDEX rel/` +
+*Shorthand Format:* `rel INDEX rel/` +
+
+[WARNING]
+Existing relationships of the person will be removed
+
+[NOTE]
+The index refers to the index number shown in the last person listing +
+The index *must be a positive integer* `1, 2, 3, ...`
 
 === KeyBoard Shortcuts [Since v1.2]
 
