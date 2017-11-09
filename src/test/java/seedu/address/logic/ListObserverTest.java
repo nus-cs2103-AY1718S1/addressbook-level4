@@ -71,7 +71,7 @@ public class ListObserverTest {
 
         model.setCurrentListName("whitelist");
         // typical addressbook has whitelisted person
-        personToFind = (Person) model.getFilteredBlacklistedPersonList().get(0);
+        personToFind = (Person) model.getFilteredWhitelistedPersonList().get(0);
         nameToFind = personToFind.getName().fullName;
         keywords = nameToFind.split("\\s+");
         findPredicate = new NameContainsKeywordsPredicate(Arrays.asList(keywords));
@@ -81,7 +81,7 @@ public class ListObserverTest {
 
         model.setCurrentListName("overduelist");
         // typical addressbook has overdue debt person
-        personToFind = (Person) model.getFilteredBlacklistedPersonList().get(0);
+        personToFind = (Person) model.getFilteredOverduePersonList().get(0);
         nameToFind = personToFind.getName().fullName;
         keywords = nameToFind.split("\\s+");
         findPredicate = new NameContainsKeywordsPredicate(Arrays.asList(keywords));
