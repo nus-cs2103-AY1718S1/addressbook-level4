@@ -14,7 +14,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
-        <URL value="@DarkTheme.css" />
+        <URL value="@WhiteTheme.css" />
         <URL value="@Extensions.css" />
     </stylesheets>
 
@@ -45,7 +45,7 @@
          <items>
             <Pane maxHeight="30.0" minHeight="30.0" prefHeight="30.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="76.0" layoutY="2.0" styleClass="label-bright" stylesheets="@DarkTheme.css" text="Groups" textAlignment="CENTER" textFill="azure" underline="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="76.0" layoutY="2.0" styleClass="label-dark" stylesheets="@DarkTheme.css" text="Groups" textAlignment="CENTER" underline="true">
                      <padding>
                         <Insets bottom="2.0" top="2.0" />
                      </padding>
@@ -67,7 +67,7 @@
          <items>
             <Pane maxHeight="30.0" minHeight="30.0" prefHeight="30.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="131.0" layoutY="2.0" styleClass="label-bright" text="Contacts" textAlignment="CENTER" textFill="cyan" underline="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="131.0" layoutY="2.0" styleClass="label-dark" text="Contacts" textAlignment="CENTER" underline="true">
                      <padding>
                         <Insets bottom="2.0" top="2.0" />
                      </padding>
