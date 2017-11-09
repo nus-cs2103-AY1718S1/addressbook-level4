@@ -94,6 +94,8 @@ public class AddMeetingCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_MEETING_CLASH);
         }
     }
+
+
     //@@author nelsonqyj
     @Override
     public boolean equals(Object other) {
@@ -101,7 +103,5 @@ public class AddMeetingCommand extends UndoableCommand {
                 || (other instanceof AddMeetingCommand // instanceof handles nulls
                 && toAdd.equals(((AddMeetingCommand) other).toAdd));
     }
-
-
 
 }
