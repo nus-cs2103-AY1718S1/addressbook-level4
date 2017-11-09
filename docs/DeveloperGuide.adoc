@@ -1081,7 +1081,13 @@ shows the key implementation of how an Event object is added to the addressbook.
 
 ==== Design Considerations
 
-To be included.
+**Aspect:** UI of `Calendar` +
+**Alternative 1 (current choice):** Showing the calendar on a GridPane +
+**Pros:** A customizable calendar for the user and easy access to add an event on the calendar  +
+**Cons:** Some users might want to have better user interface experience +
+**Alternative 2:** Google calendar implementation +
+**Pros:** Ready made calendar for developers to implement +
+**Cons:** Difficult to apply changes and suit the calendar to be as what user wants. +
 
 //end::calendar[]
 
