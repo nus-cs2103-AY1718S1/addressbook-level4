@@ -52,6 +52,13 @@ import seedu.address.testutil.EditLessonDescriptorBuilder;
 //@@author junming403
 public class EditCommandParserTest {
 
+    private static final String TAG_EMPTY = " " + PREFIX_LECTURER;
+
+    private static final String MESSAGE_INVALID_FORMAT =
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE_LESSON);
+
+    private EditCommandParser parser = new EditCommandParser();
+
     @Before
     public void setUp() {
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
@@ -62,12 +69,6 @@ public class EditCommandParserTest {
         ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
     }
 
-    private static final String TAG_EMPTY = " " + PREFIX_LECTURER;
-
-    private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE_LESSON);
-
-    private EditCommandParser parser = new EditCommandParser();
 
     @Test
     public void parse_missingParts_failure() {
