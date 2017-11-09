@@ -334,7 +334,7 @@ the `EmptyFieldException` is no longer unique to the empty prefix and thus, ther
 which is removed from the constructor of the exception.
 // end::autofill[]
 // tag::add[]
-=== Making Name as the only compulsory field in Add Command
+=== Making NAME the only compulsory field in Add Command
 
 The `add` command follows the format below:
 
@@ -342,7 +342,7 @@ The `add` command follows the format below:
 
 This means when adding a new person in LISA, the user only needs to provide value for the compulsory `NAME` field. Every other field is optional.
 
-Every field has one corresponding class. Inside each class, there exists a `final String FIELD_VALIDATION_REGEX` used for validation during construction.
+Every field in a person corresponds to one class type. Inside each class, there exists a `final String FIELD_VALIDATION_REGEX` used for validation during construction.
 For instance, the `PHONE` field has `Phone` class containing a `PHONE_VALIDATION_REGEX` which only accepts numbers that are at least three digits long:
 [source,java]
 ----
@@ -387,7 +387,7 @@ If a field is not provided during input, an object with the value of an empty st
 
 
 An alternative implementation would be "Do not create the field object at all if it is not specified in the user input".
-This approach is more flexible, but may require resolving `null` value problems when adding and editing a person.
+This approach is more flexible, but may require resolving " value equals to `null` " and `NullPointerException` when adding and editing a person.
 // end::add[]
 
 // tag::dob[]
@@ -709,25 +709,17 @@ The rest of the execution then, follows closely to the case where the command is
 // end::searchbox[]
 
 // tag::li[]
-=== Addition of Life Insurances
+=== Reading and Storing Life Insurances:
+`since v1.3`
 
-// end::addli[]
+TBA
+// end::li[]
 
 // tag::addli[]
-=== Adding a Life Insurance: `addli`
+=== Add Life Insurance Command:
 `since v1.4`
 
-Adds a life insurance in Lisa +
-
-Format: `add n/NAME o/OWNER i/INSURED b/BENEFICIARY pr/PREMIUM c/CONTRACT_FILE_PATH sd/SIGNING_DATE ed/EXPIRY_DATE`
-
-Examples:
-
-* `addli n/Term Life o/Alex Yeoh i/John Doe b/Mary Jane c/TermLife.pdf
-         pr/600 sd/01 11 2017 ed/01 11 2037`
-* `addli n/Whole Life o/Bernice Yu i/David Li b/Roy Balakrishnan c/WholeLife.pdf
-            pr/8500 sd/01 11 2017 ed/01 11 2117`
-
+TBA
 // end::addli[]
 
 // tag::print[]

@@ -104,24 +104,26 @@ public interface ThrowingConsumer<T> extends Consumer<T> {
  * Creates an insurance in Lisa
  */
 public class AddLifeInsuranceCommand extends UndoableCommand {
-    public static final String[] COMMAND_WORDS = {"addli", "ali", "+"};
+    public static final String[] COMMAND_WORDS = {"addli", "ali", "+li"};
     public static final String COMMAND_WORD = "addli";
 
     public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)
             + ": Adds an insurance to Lisa. "
             + "Parameters: "
+            + PREFIX_NAME + "INSURANCE_NAME "
             + PREFIX_OWNER + "OWNER "
             + PREFIX_INSURED + "INSURED "
             + PREFIX_BENEFICIARY + "BENEFICIARY "
-            + PREFIX_CONTRACT + "CONTRACT"
+            + PREFIX_CONTRACT + "CONTRACT "
             + PREFIX_PREMIUM + "PREMIUM "
             + PREFIX_SIGNING_DATE + "SIGNING_DATE "
             + PREFIX_EXPIRY_DATE + "EXPIRY_DATE\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_OWNER + "Alex Yeoh"
+            + PREFIX_NAME + "Life Insurance "
+            + PREFIX_OWNER + "Alex Yeoh "
             + PREFIX_INSURED + "John Doe "
             + PREFIX_BENEFICIARY + "Mary Jane "
-            + PREFIX_CONTRACT + "normal_plan.pdf"
+            + PREFIX_CONTRACT + "normal_plan.pdf "
             + PREFIX_PREMIUM + "500 "
             + PREFIX_SIGNING_DATE + "01 11 2017 "
             + PREFIX_EXPIRY_DATE + "01 11 2018 ";
@@ -155,25 +157,23 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
         //TODO: need to compare every nonstatic class member.
     }
 
-    /**
-     * Check if all the Person parameters required to create an insurance are inside the list
-     */
-    public void isAnyPersonInList(List<ReadOnlyPerson> list, LifeInsurance lifeInsurance) {
-        String ownerName = lifeInsurance.getOwner().getName();
-        String insuredName = lifeInsurance.getInsured().getName();
-        String beneficiaryName = lifeInsurance.getBeneficiary().getName();
-        for (ReadOnlyPerson person: list) {
-            String lowerCaseName = person.getName().toString().toLowerCase();
-            if (lowerCaseName.equals(ownerName)) {
-                lifeInsurance.getOwner().setPerson(person);
-            }
-            if (lowerCaseName.equals(insuredName)) {
-                lifeInsurance.getInsured().setPerson(person);
-            }
-            if (lowerCaseName.equals(beneficiaryName)) {
-                lifeInsurance.getBeneficiary().setPerson(person);
-            }
-        }
+```
+###### /java/seedu/address/logic/Logic.java
+``` java
+    /** Returns an unmodifiable view of the list of insurances */
+    ObservableList<ReadOnlyInsurance> getFilteredInsuranceList();
+```
+###### /java/seedu/address/logic/LogicManager.java
+``` java
+    @Override
+    public ObservableList<ReadOnlyInsurance> getFilteredInsuranceList() {
+        return model.getFilteredInsuranceList();
+    }
+    //
+
+    @Override
+    public ListElementPointer getHistorySnapshot() {
+        return new ListElementPointer(history.getHistory());
     }
 }
 ```
@@ -206,12 +206,17 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
                 .ifPresent(addPersonOptionalFieldDescriptor::setEmail);
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS))
                 .ifPresent(addPersonOptionalFieldDescriptor::setAddress);
-```
-###### \java\seedu\address\logic\parser\AddCommandParser.java
-``` java
+            ParserUtil.parseDateOfBirth(argMultimap.getValue(PREFIX_DOB))
+                    .ifPresent(addPersonOptionalFieldDescriptor::setDateOfBirth);
+            ParserUtil.parseGender(argMultimap.getValue(PREFIX_GENDER))
+                    .ifPresent(addPersonOptionalFieldDescriptor::setGender);
+
             Phone phone = addPersonOptionalFieldDescriptor.getPhone();
             Email email = addPersonOptionalFieldDescriptor.getEmail();
             Address address = addPersonOptionalFieldDescriptor.getAddress();
+            DateOfBirth dob = addPersonOptionalFieldDescriptor.getDateOfBirth();
+            Gender gender = addPersonOptionalFieldDescriptor.getGender();
+
             ReadOnlyPerson person = new Person(name, phone, email, address, dob, gender, tagList);
 
             return new AddCommand(person);
@@ -285,7 +290,8 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> owner} into an {@code Optional<String>} if {@code owner} is present.
@@ -311,8 +317,9 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
         requireNonNull(contract);
         return contract.isPresent() ? Optional.of(contract.get()) : Optional.empty();
     }
+
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     private final UniqueLifeInsuranceMap lifeInsuranceMap;
 ```
@@ -350,11 +357,11 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
      */
     public void syncMasterLifeInsuranceMap() {
         lifeInsuranceMap.forEach((id, insurance) -> {
+            insurance.resetAllInsurancePerson();
             String owner = insurance.getOwner().getName();
             String insured = insurance.getInsured().getName();
             String beneficiary = insurance.getBeneficiary().getName();
             persons.forEach(person -> {
-                //person.clearLifeInsuranceIds();
                 if (person.getName().fullName.equals(owner)) {
                     insurance.setOwner(person);
                     person.addLifeInsuranceIds(id);
@@ -369,6 +376,7 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
                 }
             });
         });
+        lifeInsuranceMap.syncMappedListWithInternalMap();
     }
 
     /**
@@ -547,7 +555,8 @@ public class UniqueLifeInsuranceList implements Iterable<LifeInsurance> {
  */
 public class UniqueLifeInsuranceMap {
 
-    private final HashMap<UUID, LifeInsurance> internalMap = new HashMap<>();
+    private final ObservableMap<UUID, LifeInsurance> internalMap = FXCollections.observableHashMap();
+    private final ObservableList<ReadOnlyInsurance> internalList = FXCollections.observableArrayList();
 
     /**
      * Returns true if the map contains an equivalent UUID as the given argument.
@@ -600,6 +609,7 @@ public class UniqueLifeInsuranceMap {
     public void setInsurances(UniqueLifeInsuranceMap replacement) {
         this.internalMap.clear();
         this.internalMap.putAll(replacement.internalMap);
+        syncMappedListWithInternalMap();
     }
 
     public void setInsurances(Map<UUID, ? extends ReadOnlyInsurance> insurances) throws DuplicateInsuranceException {
@@ -610,6 +620,41 @@ public class UniqueLifeInsuranceMap {
         setInsurances(replacement);
     }
 
+    /**
+     * Ensures that every insurance in the internalList:
+     * contains the same exact same collections of insurances as that of the insuranceMap.
+     */
+    public void syncMappedListWithInternalMap() {
+        this.internalList.clear();
+        this.internalList.setAll(this.internalMap.values());
+    }
+```
+###### /java/seedu/address/model/insurance/UniqueLifeInsuranceMap.java
+``` java
+    /**
+     * Returns the backing map as an unmodifiable {@code ObservableList}.
+     */
+    public Map<UUID, ReadOnlyInsurance> asMap() {
+        assert CollectionUtil.elementsAreUnique(internalMap.values());
+        return Collections.unmodifiableMap(internalMap);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UniqueLifeInsuranceMap// instanceof handles nulls
+                && this.internalMap.equals(((UniqueLifeInsuranceMap) other).internalMap));
+    }
+
+    @Override
+    public int hashCode() {
+        return internalMap.hashCode();
+    }
+```
+###### /java/seedu/address/model/Model.java
+``` java
+    /** Returns an unmodifiable view of the filtered insurance list */
+    ObservableList<ReadOnlyInsurance> getFilteredInsuranceList();
 ```
 ###### \java\seedu\address\model\person\Address.java
 ``` java
@@ -826,9 +871,8 @@ public class XmlAdaptedLifeInsurance {
         final Phone phone = this.phone.equals("") ? new Phone() : new Phone(this.phone);
         final Email email = this.email.equals("") ? new Email() : new Email(this.email);
         final Address address = this.address.equals("") ? new Address() : new Address(this.address);
-```
-###### \java\seedu\address\storage\XmlAdaptedPerson.java
-``` java
+        final DateOfBirth dob = this.dob.equals("") ? new DateOfBirth() : new DateOfBirth(this.dob);
+        final Gender gender = this.gender.equals("") ? new Gender() : new Gender(this.gender);
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, dob, gender, tags, personLifeInsuranceIds);
     }
@@ -859,11 +903,6 @@ public class XmlAdaptedLifeInsurance {
 ```
 ###### \java\seedu\address\ui\InsuranceListPanel.java
 ``` java
-/**
- * The Insurance Panel of the App.
- */
-public class InsuranceListPanel extends UiPart<Region> {
-
     private static final String FXML = "InsuranceListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -900,7 +939,6 @@ public class InsuranceListPanel extends UiPart<Region> {
         setEventHandlerForSelectionChangeEvent();
 
     }
-
 ```
 ###### \java\seedu\address\ui\InsuranceProfile.java
 ``` java

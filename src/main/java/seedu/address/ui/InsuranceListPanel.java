@@ -20,12 +20,12 @@ import seedu.address.commons.events.ui.SwitchToProfilePanelRequestEvent;
 import seedu.address.logic.commands.SelectCommand.PanelChoice;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 
-//@@author OscarWang114
 /**
  * The Insurance Panel of the App.
  */
 public class InsuranceListPanel extends UiPart<Region> {
 
+    //@@author OscarWang114
     private static final String FXML = "InsuranceListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -62,6 +62,7 @@ public class InsuranceListPanel extends UiPart<Region> {
         setEventHandlerForSelectionChangeEvent();
 
     }
+    //@@author
 
     //@@author RSJunior37
     private void setEventHandlerForSelectionChangeEvent() {

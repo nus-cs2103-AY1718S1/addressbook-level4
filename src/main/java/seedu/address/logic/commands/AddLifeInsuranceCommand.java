@@ -22,7 +22,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  * Creates an insurance in Lisa
  */
 public class AddLifeInsuranceCommand extends UndoableCommand {
-    public static final String[] COMMAND_WORDS = {"addli", "ali", "+"};
+    public static final String[] COMMAND_WORDS = {"addli", "ali", "+li"};
     public static final String COMMAND_WORD = "addli";
 
     public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)
