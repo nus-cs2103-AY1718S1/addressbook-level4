@@ -3,12 +3,12 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
+== Project: PEERSONAL
 PEERSONAL is a desktop address book application. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T10-B2/main/blob/master/collated/main/zengfengw.md[Functional code]] [https://github.com/CS2103AUG2017-T10-B2/main/blob/master/collated/test/zengfengw.md[Test code]]
 
-=== Enhancement Added: Birthday
+=== Enhancement Added: BirthdayCommand
 
 ==== External behavior
 
@@ -37,7 +37,7 @@ include::../DeveloperGuide.adoc[tag=birthday]
 
 ---
 
-=== Enhancement Added: upcomingbirthday
+=== Enhancement Added: UpcomingBirthdayCommand
 
 ==== External behavior
 
@@ -69,6 +69,12 @@ include::../DeveloperGuide.adoc[tag=upbirthday]
 
 Displays birthdays of contacts according to months in a calendar GUI. +
 Format: `calendar`
+
+=== Justification
+
+Allows the user to better visualise the birthdays compared to when it is in a list form.
+
+---
 
 === Other contributions
 
