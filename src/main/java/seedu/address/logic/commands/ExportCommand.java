@@ -1,5 +1,3 @@
-
-//@@author aali195
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -7,18 +5,20 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.util.CompressUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author aali195
 /**
  * This command is used to export a compressed version of the working addressbook and the images saved
  */
 
-public class ExportCommand extends UndoableCommand {
+public class ExportCommand extends Command {
 
     public static final String COMMAND_WORD = "export";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports a compressed copy of the working addressbook  "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports a compressed copy of the working addressbook. "
             + "Existing files will be replaced.\n"
             + "Parameters: [FILEPATH] \n"
-            + "Example: " + COMMAND_WORD + " C:\\Users\\Admin\\Desktop\\.";
+            + "Example: " + COMMAND_WORD + " C:\\Users\\Admin\\Desktop\\NameOfFile\n"
+            + "[FILEPATH] can be omitted to export to the application directory as \"AddressbookData\".";
 
     public static final String MESSAGE_EXPORT_PATH_FAIL =
             "This specified path cannot be read.";
@@ -26,7 +26,7 @@ public class ExportCommand extends UndoableCommand {
     public static final String MESSAGE_EXPORT_SUCCESS = "Addressbook has been exported.";
 
     private String path;
-    private String source = "data";
+    private String source = "data/";
 
     public ExportCommand(String path) {
         requireNonNull(path);
@@ -39,7 +39,7 @@ public class ExportCommand extends UndoableCommand {
      * @return a success message
      * @throws CommandException
      */
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         try {
             CompressUtil.run(source, path);
         } catch (Exception e) {
@@ -81,6 +81,5 @@ public class ExportCommand extends UndoableCommand {
         return path.equals(e.path);
     }
 }
-
 //@@author
 

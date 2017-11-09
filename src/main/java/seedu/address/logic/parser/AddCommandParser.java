@@ -50,7 +50,12 @@ public class AddCommandParser implements Parser<AddCommand> {
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            ExpiryDate expiryDate = ParserUtil.parseExpiryDate(argMultimap.getValue(PREFIX_EXPIRE)).get();
+            ExpiryDate expiryDate;
+            if (arePrefixesPresent(argMultimap, PREFIX_EXPIRE)) {
+                expiryDate = ParserUtil.parseExpiryDate(argMultimap.getValue(PREFIX_EXPIRE)).get();
+            } else {
+                expiryDate = new ExpiryDate("");
+            }
             Remark remark = new Remark("");
             Image image = new Image("");
             ReadOnlyPerson person = new Person(name, phone, email, address, tagList, expiryDate, remark, image);

@@ -1,7 +1,6 @@
 Data.zip
 Collate-TUI.jar
 Collate-GUI.jar
-.gitignore
 test.txt
 build/
 .gradle/
@@ -27,3 +26,4 @@ classes/
 src/main/resources/docs/
 out/
 images/
+AddressbookData.zip

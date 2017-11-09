@@ -1,4 +1,3 @@
-//@@author aali195
 package seedu.address.commons.util;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_IMAGE;
@@ -6,12 +5,16 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_IMAGE;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
+import seedu.address.commons.exceptions.ImageException;
 import seedu.address.logic.commands.ImageCommand;
-import seedu.address.logic.parser.exceptions.ImageException;
 
+//@@author aali195
 /**
  * Handles the IO for editing persons images
  */
@@ -24,6 +27,9 @@ public class ImageUtil {
      * @throws IOException if the path is missing
      */
     public String run(String path, int newPath) throws IOException, ImageException {
+        String imageDirectory = "data/";
+        checkDirectory(imageDirectory);
+
         File fileToRead;
         BufferedImage image;
 
@@ -37,7 +43,7 @@ public class ImageUtil {
 
             uniquePath = Integer.toString(newPath);
 
-            fileToWrite = new File("data/" + uniquePath + ".png");
+            fileToWrite = new File(imageDirectory + uniquePath + ".png");
             ImageIO.write(image, "png", fileToWrite);
 
         } catch (IOException e) {
@@ -45,6 +51,17 @@ public class ImageUtil {
         }
 
         return uniquePath;
+    }
+
+    /**
+     * Creates a directory if it does not exist
+     * @param imageDirectory to be checked and created
+     */
+    private void checkDirectory(String imageDirectory) throws IOException {
+        Path path = Paths.get(imageDirectory);
+        if (!Files.exists(path)) {
+            Files.createDirectories(Paths.get(imageDirectory));
+        }
     }
 
 }
