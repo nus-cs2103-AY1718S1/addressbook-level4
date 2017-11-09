@@ -13,20 +13,6 @@ public class ShowCalendarRequestEvent extends BaseEvent {
 
 }
 ```
-###### \java\seedu\address\commons\events\ui\ShowEmailRequestEvent.java
-``` java
-/**
- * An event requesting to view the help page.
- */
-public class ShowEmailRequestEvent extends BaseEvent {
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-
-}
-```
 ###### \java\seedu\address\commons\util\PredicateUtil.java
 ``` java
 /**
@@ -246,26 +232,69 @@ public class CalendarCommand extends Command {
 ```
 ###### \java\seedu\address\logic\commands\EmailCommand.java
 ``` java
+
 /**
- * Locates a person's address by showing its location on Google Maps.
+ * Opening email application to send email to contatcs.
  */
 public class EmailCommand extends Command {
 
     public static final String COMMAND_WORD = "email";
     public static final String COMMAND_ALIAS = "m";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
-            + ":Opening up email webpage)\n"
+            + ": Opening up email platform to send email to person(s)\n"
+            + "Parameters: INDEX\n"
             + MESSAGE_GET_MORE_HELP;
 
-    public static final String MESSAGE_DISPLAY_EMAIL_SUCCESS = "Opening up email webpage";
+    public static final String MESSAGE_DISPLAY_EMAIL_SUCCESS = "Sending email to %1$s";
 
+    private Set<String> recipientSet = new HashSet<>();
+
+    private final Set<Index> targetIndices;
+
+    public EmailCommand(Set<Index> targetIndices) {
+        requireNonNull(targetIndices);
+        this.targetIndices = targetIndices;
+    }
 
     @Override
     public CommandResult execute() throws CommandException {
 
-        EventsCenter.getInstance().post(new ShowEmailRequestEvent());
-        return new CommandResult(MESSAGE_DISPLAY_EMAIL_SUCCESS);
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
+        for (Index targetIndex : targetIndices) {
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+
+            ReadOnlyPerson targetRecipient = lastShownList.get(targetIndex.getZeroBased());
+            for (Email email : targetRecipient.getEmails()) {
+                recipientSet.add(email.toString());
+            }
+        }
+
+        String recipientList = String.join(",", recipientSet);
+        if (Desktop.isDesktopSupported()) {
+            Desktop desktop = Desktop.getDesktop();
+            if (desktop.isSupported(Desktop.Action.MAIL)) {
+                try {
+                    URI mailto = new URI("mailto:" + recipientList + "?subject=Hello%20World");
+                    desktop.mail(mailto);
+                } catch (URISyntaxException | IOException e) {
+                    e.printStackTrace();
+
+                }
+            }
+
+        }
+
+        return new CommandResult(String.format(MESSAGE_DISPLAY_EMAIL_SUCCESS, recipientList));
+
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof EmailCommand); // instanceof handles nulls
     }
 
 }
@@ -298,6 +327,42 @@ public class FindCommand extends Command {
         this.predicate = predicate;
 
     }
+```
+###### \java\seedu\address\logic\parser\EmailCommandParser.java
+``` java
+
+/**
+ * Parses input arguments and creates a new HelpCommand object
+ */
+public class EmailCommandParser implements Parser<EmailCommand> {
+
+    /**
+     * Parses the given {@code String} of input arguments
+     * and returns a new EmailCommand object
+     * /@throws ParseException if the user input does not conform the expected format
+     */
+
+    public EmailCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        String trimmedArgs = args.trim();
+        String[] indicesInString = trimmedArgs.split("\\s+");
+
+
+        try {
+            Set<Index> indices = new HashSet<>();
+            for (String indexString : indicesInString) {
+                Index index = ParserUtil.parseIndex(indexString);
+                indices.add(index);
+            }
+
+            return new EmailCommand(indices);
+
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
 ```
 ###### \java\seedu\address\logic\parser\FindCommandParser.java
 ``` java
@@ -562,13 +627,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Opens the email window in the browser panel.
-     */
-    public void loadEmail() {
-        loadPage("https://www.google.com/gmail/");
-    }
-
-    /**
      * Frees resources allocated to the browser.
      */
     public void freeResources() {
@@ -582,15 +640,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private void handleCalendarRequestEvent(ShowCalendarRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadCalendar();
-    }
-
-```
-###### \java\seedu\address\ui\BrowserPanel.java
-``` java
-    @Subscribe
-    private void handleEmailRequestEvent(ShowEmailRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadEmail();
     }
 }
 ```
