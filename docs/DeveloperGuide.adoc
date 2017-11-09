@@ -922,17 +922,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |update a person's details |update a person's details without having to create a new contact
 
-|`*` |user |update the link:#confidence-estimate[confidence estimate] on a person's attributes |update confidence in pieces of information
-
-<<<<<<< HEAD
 |`* *` |user |update link:#name[name of the relationship] of a relationship |show that two persons know each other via a specific method
 
 |`* *` |user |update link:#confidence-estimate[confidence estimate] of a relationship |differentiate between verified and unverified pieces of information
 
-|`* *` |user |change the colour of the network |personalise my address book
-=======
 |`*` |user |change the colour of the network |personalise my address book
->>>>>>> master
 
 4+| Delete operations
 
