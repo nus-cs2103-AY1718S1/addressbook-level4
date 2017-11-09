@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Contags - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,38 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T16-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG17-T16-B4`      Since: `Sep 2017`      Licence: `MIT`
+
+== Cover Page
+
+image::cove_page.jpg[width="790"]
+
+== Introduction
+
+Contags is an enhanced version of the conventional AddressBook application.
+The name "Contags" was chosen as an inspiration to our commitment towards maintaining contacts in the application, with an
+inherent focus on ensuring ease of use for consumers as they increase and improve the relationships that they have.
+
+Our target consumer group is business executives. Our application was designed to provide superior aesthetic design, efficiency, as well as ease of use all in
+an attempt to synchronize communication. Ultimately, we hope this brings people together and solidifies both
+professional and personal relationships.
+
+This is why our motto "your digital secretary" was chosen, in order to cater to high-profile executives and their need
+to maintain personal and professional relationships, done through the use of our application.
+
+The contact particulars that we have chosen to include in this application were selected based upon their relevancy in a
+professional setting. Namely, these particulars are: Name, Phone Number, Email, Address, Birthday, Remark, and Tags.
+
+== About
+
+This document is intended to assist you with setting up Contags, as well as introducing you to the functionality of the application. After reading this document,you should be able to utilise the application with minimal difficulty.
+
+Contags was developed by the CS2103 T16-B4 Team. +
+The contact details of the team can be found <<ContactUs#, here>>.
+
+As development of Contags is continuously ongoing, we recommend checking for new updates every 2 weeks link:{https://github.com/CS2103AUG2017-T16-B4/main}/releases[here], to ensure that your version of Contags is up to date with the latest and most exciting new features.
 
 == Quick Start
 
@@ -22,135 +51,185 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `Contags.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for Contags.
+.  Double-click the file to start Contags. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+* e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
+.  Below are some examples of the commands that you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+* *`list`* : lists all contacts.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named
+`John Doe` to Contags.
+* **`delete`**`3` : deletes the 3rd contact shown in the current list.
+* *`exit`* : exits the app.
 
-.  Refer to the link:#features[Features] section below for details of each command.
+. You can refer to the link:#features[Features] section below for more details of the commands available in Contags.
 
 == Features
 
-====
-*Command Format*
+This section details the full list of commands that Contags currently supports, and walks you through using each of the commands, with examples provided too.
+Do take a look to understand how to use all the features that Contags provides you with to get the full use out of Contags! +
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
+The Command Format Summary _(Figure 5.0.1)_ given below, guides you through how the commands are to be used and gives a brief explanation on how we describe the use of the commands.
 
-=== Viewing help : `help`
+*Command Format Summary*
+****
+ * Words in `UPPER_CASE` are the parameters to be supplied by you, the user. +
+ ** e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+ * Items in square brackets are optional.
+ ** e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+ * Items with `…`​ after them can be used multiple times including zero times.
+ ** e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+ * Parameters can be in any order.
+ ** e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+ * Commands with an alias indicates that the command word can be substituted with that letter instead when typing in the command. +
+ ** e.g. in `add n/NAME`, `a n/NAME` will also work.
+****
 
-Format: `help`
+_Figure 5.0.1 : Command Format Summary_
 
-=== Adding a person: `add`
+=== Features not requiring commands
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+The features in this subsection do not require any commands to execute and are already working automatically in Contags. They are documented here for your reference.
 
-[TIP]
-A person can have any number of tags (including 0)
+==== Coloured tags
+
+Each unique tag currently has a colour that is set to that tag name, for you to easily identify different groups of tags that you have added. +
+
+You cannot individually set the colour you want for each tag, but this feature will be added in a future update to Contags.
+
+==== Saving the data
+
+Contags data are saved in the hard disk automatically after any command that changes the data. +
+There is no need for you to save manually.
+
+=== Adding a contact: `add` `a`
+
+Adds a contact to Contags. +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [s/SOCIAL_MEDIA_URL] [t/TAG]...` +
+Alias: `a`
+
+****
+* A person can have any number of tags (including 0). +
+* Social Media Url is an optional field.
+****
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Listing all persons : `list`
+=== Clearing all entries : `clear` `c`
 
-Shows a list of all persons in the address book. +
-Format: `list`
+Clears all entries from Contags. +
+Format: `clear` +
+Alias: `c` +
 
-=== Editing a person : `edit`
+=== Deleting a contact : `delete`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
-
-Examples:
-
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-=== Locating persons by name: `find`
-
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-=== Deleting a person : `delete`
-
-Deletes the specified person from the address book. +
+Deletes the specified contact from Contags. +
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the contact at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer*. e.g. `1`, `2`, `3`, `...`.
 ****
 
 Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd contact in Contags.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st contact in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Directions to address : `direct` `Coming in v2.0`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Provides directions to the address of the selected contact. +
+Format: `direct`
 
+=== Editing a contact : `edit` `e`
+
+Edits an existing contact in Contags. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [s/SOCIAL_MEDIA_URL] [t/TAG]...` +
+Alias: `e`
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* Edits the contact at the specified `INDEX`. The index refers to the index number shown in the last contact listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the contact will be removed i.e adding of tags is not cumulative.
+* You can remove all the contact's tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+* `edit 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st contact to be `91234567` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crower t/` +
+Edits the name of the 2nd contact to be `Betsy Crower` and clears all existing tags.
+
+=== Exiting the program : `exit` `e`
+
+Exits the program. +
+Format: `exit`
+
+// tag::findCommand[]
+
+=== Locating Contacts by any field: `find` `f`
+
+Finds contacts whose names, and any other information particular fields contain any of the given keywords. +
+Format: `find KEYWORD [MORE_KEYWORDS]` +
+Alias: `f`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
+* All fields (including name) are searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`.
+* Contacts matching at least one keyword will be returned. e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
+****
+
+Examples:
+
+* `find Clementi` +
+Returns `Clementi Street 123`, and contact with this Address: `John Doe`.
+* `find Clementi Bugis Tuas` +
+Returns any contacts having addresses `Clementi`, `Bugis`, or `Tuas`.
+
+// end::findCommand[]
+
+=== Sorting Contacts based on Frequency `frequent` `Coming in v2.0`
+
+Displays a list of sorted contacts in Contags based upon the frequency of communication between user and
+contact. +
+Format: `frequent`
+
+****
+* Sorts all contacts based upon frequency of communication.
+* Contacts that have been communicated with most frequently will appear at the top of the list.
+* Application determines frequency by keeping a counter of contact particulars that have been accessed since the contact
+has been added.
+* All contact particulars that have been accessed add an equal count of 1 to this counter.
+****
+
+Examples:
+
+* `frequent` +
+Displays a list of sorted contacts based upon the frequency of communication.
+
+=== Viewing help : `help`
+Require assistance or some guide? `help` opens the help window within Contags. +
+Format: `help`
+
+=== Deleting a contact : `delete` `d`
+[TIP]
+Pressing kbd:[F1] will also open the help window. Try it out if you are unsure of what to do and need some help.
 
 === Listing entered commands : `history`
 
@@ -161,33 +240,30 @@ Format: `history`
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+=== Listing all contacts : `list` `l`
 
-// tag::undoredo[]
-=== Undoing previous command : `undo`
+To view a list of all your contacts, you can enter `list`. +
+Format: `list` +
+Alias: `l`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+=== Viewing contacts whose birthdays fall on the current date: `listbirthday`
 
-[NOTE]
-====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
-====
+Lists the contacts whose birthdays matches the current date. +
+Format: `listbirthday`
 
+****
+* Lists the contacts in order of the most updated list.
+****
+
+=== Mailing a contact: `mail` `m`
+
+Mails a contact in Contags. +
+Format: `mail to/[EMAIL] title/[SUBJECT] message/[MESSAGE]` +
+Alias: `m` +
 Examples:
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+* `mail to/john@gmail.com title/hi message/hello` +
+Opens up mail application and to, title and message fields of the mail will be automatically filled in.
 
 === Redoing the previously undone command : `redo`
 
@@ -197,8 +273,10 @@ Format: `redo`
 Examples:
 
 * `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+`undo` +
+The `delete 1` command has been undone. +
+`redo` +
+The `delete 1` command has been reapplied. +
 
 * `delete 1` +
 `redo` +
@@ -206,47 +284,331 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 * `delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
+`undo` +
+The `clear` command has been undone. +
+`undo` +
+The `delete 1` command has been undone. +
+`redo` +
+The `delete 1` command has been reapplied. +
+`redo` +
+ The `clear` command has been reapplied. +
 
-=== Clearing all entries : `clear`
+// tag::remark[]
+=== Adding remarks: `remark` `Since v1.1`
 
-Clears all entries from the address book. +
-Format: `clear`
+Edits the remark for a contact specified in the INDEX.
 
-=== Exiting the program : `exit`
+Format: `remark INDEX r/[REMARK]`
 
-Exits the program. +
-Format: `exit`
+Examples:
 
-=== Saving the data
+* `remark 1 r/Likes to drink coffee.` +
+Edits the remark for the first contact to `Likes to drink coffee.`
+* `remark 1 r/` +
+Removes the remark for the first contact.
+// end::remark[]
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+// tag::removeTag[]
+
+=== Removing a Tag from all contacts in Contags : `removeTag`
+
+Removes the Tag specified by the tag name. +
+Format: `removeTag TAG`
+
+****
+* The search is case sensitive. e.g `friends` will NOT match with `Friends`.
+* All instances of the tag will be removed from the Contags.
+****
+
+Examples:
+
+* `removeTag friends` +
+Searches through all contacts in the Contags and deletes all instances of the Tag `friends`.
+
+// end::removeTag[]
+
+// tag::social[]
+=== Selecting a contact : `select` `s`
+
+Selects the contact identified by the index number used in the last contact listing. +
+Format: `select INDEX` +
+Alias: `s`
+****
+* Selects the contact and loads either a Google Maps search of the person's specified address, or the person's specified social media link
+ at the specified `INDEX`.
+* The function is toggled using the `toggle` command.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer*. e.g. `1`, `2`, `3`, `...`.
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd contact in Contags.
+* `find Betsy` +
+`select 1` +
+Selects the 1st contact in the results of the `find` command.
+// end::social[]
+
+=== Sorting the list of contacts: `sort`
+
+Sorts the list of contacts saved in Contags according to: +
+Name, Phone number, Email, Address, Tag. +
+Format: `sort KEYWORD`
+
+****
+* Sorts the list of contacts saved in Contags and then displays the sorted list. +
+* Sorting is done in alphanumerical ascending order. +
+* Keywords for sorting: `name`, `phone`, `email`, `address`, `tag`. +
+* Keywords are *case-insensitive*. e.g. `sort name` and `sort NAME` both sorts the list . +
+****
+
+Examples:
+
+* `sort name` +
+List is sorted according to name in ascending order.
+* `sort EMAIL` +
+List is sorted according to email addresses in ascending order.
+* `sort Address` +
+List is sorted according to addresses in ascending order.
+
+// tag::listBirthday[]
+
+=== Viewing contacts whose birthdays fall on the current date: `listbirthday`
+
+Lists the contacts whose birthdays matches the current date. +
+Format: `listbirthday`
+
+****
+* Lists the contacts in order of the most updated list.
+****
+
+// end::listBirthday[]
+
+=== Sending a SMS Message to the telephone number of the contact indicated bby the given index: `select INDEX`
+
+// tag::smsContact[]
+
+=== Sending a SMS Message to the telephone number of the contact indicated by the given index: `sms`
+
+Sends a SMS message from the user's phone number (to be configured) to the phone number indicated by the contact
+particulars of the index given. +
+Format: `sms INDEX text/MESSAGE`
+
+****
+* Message is sent directly to the Singapore extension of the phone number indicated
+* Twilio Account must be set up properly, with correct authentication token. Currently synced to developer's account.
+****
+
+Examples:
+
+* `sms 1 text/hello there!` +
+Sends an sms message to the number of the contact indicated by the index, with the message "hello there!"
+
+// end::smsContact[]
+// tag::mailContact[]
+
+=== Mailing contacts: `mail`
+
+Format: `mail INDEX`
+*`mail 1`
+Opens up mail application and to field of the mail will be automatically filled in with the email address of the contact at index 1.
+
+// end::mailContact[]
+
+Want to change the way your list of contacts is displayed? `sort` sorts the list of contacts saved in Contags according to: +
+`Name`, `Phone`, `Email`, `Address`, `Tag`. +
+Format: `sort KEYWORD`
+
+
+As an alternative, you can use the UI dropdown box _(Figure 5.21.1)_ located near the top-right hand corner of Contags to select how you want the list to be sorted.
+
+image::sort_ui.png[width="200"]
+_Figure 5.21.1 : Sort UI Dropdown Box_
+
+****
+* Sorts the list of contacts saved in Contags and then displays the sorted list. +
+* Sorting is done in alphanumerical ascending order. +
+* Keywords for sorting: `name`, `phone`, `email`, `address`, `tag`. +
+* Keywords are *case-insensitive*. e.g. `sort name` and `sort NAME` both sorts the list . +
+****
+
+Examples:
+
+* `sort name` +
+
+image::sortname.png[width="200"]
+_Figure 5.21.2 : Sorting by name_ +
+List is sorted according to name in ascending order _(Figure 5.21.3)_.
+
+image::sortnameresult.png[width="700"]
+_Figure 5.21.3 : Result after sorting by name_ +
+
+* `sort EMAIL` +
+
+image::sortemail.png[width="200"]
+_Figure 5.21.4 : Sorting by email address_ +
+List is sorted according to email addresses in ascending order _(Figure 5.21.5)_.
+
+image::sortemailresult.png[width="700"]
+_Figure 5.21.5 : Result after sorting by email address__
+// end::sort[]
+
+// tag::social[]
+=== Toggling `select` command function : `toggle` `Since v1.3`
+
+When used, toggles the function of the `select` command between displaying a Google Maps search and the specified social media page. +
+Refreshes the currently displayed contact to show the other mode as well. +
+Format: `toggle`
+// end::social[]
+
+=== Undoing previous command : `undo` `u`
+
+Restores Contags to the state before the previous _undoable_ command was executed. +
+Format: `undo` +
+Alias: `u`
+
+[NOTE]
+====
+Undoable commands: those commands that modify Contags's content (`add`, `delete`, `edit` and `clear`).
+====
+
+Examples:
+
+* `delete 1` +
+`list` +
+`undo` +
+The `delete 1` command has been undone.
+
+* `select 1` +
+`list` +
+`undo` +
+The `undo` command fails as there are no undoable commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` +
+The `clear` command has been undone. +
+`undo` +
+The `delete 1` command has been undone. +
 
 == FAQ
+This section contains some frequently asked questions and the relevant answers.
+These should answer some of the doubts or questions that you may have while using Contags. +
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the
+data of your previous Contags folder.
 
-== Command Summary
+*Q*: Does Contags work without an internet connection? +
+*A*: The primary features of Contags do not require an internet connection, but specific features of Contags such as the Google Maps search, social media integration, and email functionality cannot function as intended without an active internet connection on your computer.
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+*Q*: What if I want to add 2 different contacts of the same name? Does Contags allow that? +
+*A*: Currently, Contags does not allow you to add 2 contacts of the exact same name, and as such we recommend that you append an identifier to the person's name to allow you to save the contact and distinguish between the 2 contacts. We are, however, planning on updating the add command to allow 2 contacts of the same name, as well as assisting you to distinguish between them.
+
+*Q*: Can I use my mouse to access Contags' features? +
+*A*: It depends on the specific feature that you wish to access. Some of Contags' features, e.g. `sort`, `select`, `find`, can be used by either clicking on the the UI elements in Contags or by typing in the commands in the command box. However, most of Contags' features are designed and built to rely primarily on the Command-Line Interface to minimise the amount of interactions with other forms of input apart from the keyboard.
+
+*Q*: How does Contags work? +
+*A*: Those interested in the mechanisms of Contags may reference the Developer Guide located <<DeveloperGuide#, here>>.
+
+*Q*: How can I request new features for Contags? +
+*A*: Suggestions are always welcome and you can provide us with the details of your ideas at devteam@contags.com.sg.
+
+*Q*: How do I report any bugs to the developers? +
+*A*: You can send a screenshot with the details regarding the bugs to help@contags.com.sg and we will get back to you as soon as possible.
+
+== Compact Summary
+
+This section provides a compact, executive summary of the entire User Guide of Contags. +
+*Read this section first* if you want a quick overview of how to use Contags!
+
+=== Introduction & Cover Page
+
+* Contags is an enhanced version of the conventional AddressBook application, with a focus
+on convenience as well as ease of use for professional executives in the business
+workforce.
+* Our slogan "Your Digital Secretary" encompasses this definition, as well as encapsulates our goal to digitize
+ the job scope of a secretary with our development and efforts in Contags.
+
+
+=== Quick Start
+
+* You will need Java version `1.8.0_60` or later installed on your computer for Contags to work.
+* To execute a command, type in the appropriate command word in the correct command format, then hit
+the `enter` key on the computer.
+
+=== Feature Summary
+
+Here is a quick list of all the commands that Contags can execute:
+
+[width="90%",cols="20%,<60%,<37%",options="header",]
+|=======================================================================
+|Type... |For... |Example
+|``add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [s/SOCIAL_MEDIA_URL] [t/TAG]...`` |adding a new contact | `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/01/01/1990 s/www.facebook.com/jamesho1990 t/friends`
+
+|`clear` |deleting all contacts |`clear`
+
+|`delete INDEX` |deleting a contact |`delete 3`
+
+|`direct` |providing directions to the address of the selected contact |`direct`
+
+|`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [s/SOCIAL_MEDIA_URL] [t/TAG]...`` |editing details of a contact | `edit 2 p/28283912 e/happyboy99@example.com`
+
+|`exit` |exiting Contags|`exit`
+
+|`find KEYWORD [MORE_KEYWORDS]` |finding all contacts with that particular field |`find alex clementi james`
+
+|`frequent`|displaying a list of the most frequent contacts contacted |`frequent`
+
+|`help` |opening the help window |`help`
+
+|`history` |displaying a list of previously entered commands |`history`
+
+|`list` |displaying a list of all contacts |`list`
+
+|`listbirthday`|displaying a list of contacts whose birthday matches the current date |`listbirthday`
+
+|`mail INDEX` |sending an email to a contact through an external mail application |`mail 3`
+
+|`redo` |redoing the last command (after undoing) |`redo`
+
+|`remark INDEX r/[REMARK]` |adding a remark to a contact |`remark 2 r/likes coffee`
+
+|`removeTag TAG` |removing a tag from all contacts |`removeTag friends`
+
+|`select INDEX` |selecting a particular contact |`select 4`
+
+|`sms INDEX` |sending an SMS to a contact |`sms 3`
+
+|`social INDEX` |providing possible links to social media pages of the contact to add to the contact |`social 2`
+
+|`sort KEYWORD` |displaying a sorted list of contacts based on the keyword provided |`sort phone`
+
+|`toggle` |changing the display panel from the Google Maps search to the social media page |`toggle`
+
+|`undo` |undoing the last command (if undoable) |`undo`
+|=======================================================================
+
+== Coming in v2.0
+
+* Auto-login for mail and auto-sending of mail without needing to click send on the mail application.
+
+* A reminder list that will pop up on the screen every time you open Contags.
+
+* A meeting scheduler, where you can link to your calender application when you first install Contags. +
+Subsequently, when you type in the command `free` followed by the contact's name or index, you will get a list of common
+free timings with that contact.
+
+* Contacts can be starred in Contags based on your preference to give priority in the list of
+contacts.
+
+* Social Media links displayed in the list of contacts will be divided into 2 parts, the first displaying which social media platform, and the second displaying the profile url.
+
+* Multiple social media pages can be added to a single contact.
+
+* Tag colors can be changed according to your preference by typing in the command `change` followed by the tag's name and the preferred color. +
+** e.g. `change` `friends` `yellow` +
+The color of the `friends` tag changes to `yellow`. +
+** For a complete list of color names that you can use, you can refer to this color guide link:{https://www.quackit.com/css/css_color_codes.cfm[here].

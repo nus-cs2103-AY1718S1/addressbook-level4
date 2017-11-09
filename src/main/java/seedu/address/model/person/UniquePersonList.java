@@ -47,7 +47,32 @@ public class UniquePersonList implements Iterable<Person> {
         }
         internalList.add(new Person(toAdd));
     }
-
+    //@@author mzxc152
+    /**
+     * Sorts the list in alphabetical order.
+     */
+    public void sort(String toSort) {
+        switch (toSort) {
+        case "name":
+            internalList.sort((p1, p2) -> p1.getName().toString().compareToIgnoreCase(p2.getName().toString()));
+            break;
+        case "phone":
+            internalList.sort((p1, p2) -> p1.getPhone().toString().compareToIgnoreCase(p2.getPhone().toString()));
+            break;
+        case "email":
+            internalList.sort((p1, p2) -> p1.getEmail().toString().compareToIgnoreCase(p2.getEmail().toString()));
+            break;
+        case "address":
+            internalList.sort((p1, p2) -> p1.getAddress().toString().compareToIgnoreCase(p2.getAddress().toString()));
+            break;
+        case "tag":
+            internalList.sort((p1, p2) -> p1.getTags().toString().compareToIgnoreCase(p2.getTags().toString()));
+            break;
+        default:
+            break;
+        }
+    }
+    //@@author
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *

@@ -1,9 +1,18 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Side;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.CustomMenuItem;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
@@ -22,10 +31,15 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-
+    private static final String[] allSuggestions = {"add", "a n/ p/ e/ a/ b/ s/ r/ t/", "clear", "delete",
+        "edit", "e n/ p/ e/ a/ b/ s/ r/ t/", "exit", "x", "find", "f", "help", "sort name", "history",
+        "list", "removeTag", "select", "undo", "redo", "sort email", "sort phone", "sort address", "sort tag",
+        "listBirthday", "sms", "text/", "mail", "remark", "toggle", "reauthenticate"};
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private List<String> listedSuggestions = new ArrayList<>(Arrays.asList(allSuggestions));
+    private ContextMenu suggestionsMenu = new ContextMenu();
 
     @FXML
     private TextField commandTextField;
@@ -33,6 +47,7 @@ public class CommandBox extends UiPart<Region> {
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
+        createSuggestions();
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
@@ -54,6 +69,11 @@ public class CommandBox extends UiPart<Region> {
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
+            break;
+
+        case ESCAPE:
+            keyEvent.consume();
+            suggestionsMenu.hide();
             break;
         default:
             // let JavaFx handle the keypress
@@ -148,4 +168,50 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    // @@author justuswah
+    /**
+     * Creates a list of Matched Suggestions based on User Input
+     */
+
+    public void createSuggestions() {
+        commandTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            String userInput = commandTextField.getText();
+            List<String> matchedSuggestions = listedSuggestions.stream()
+                .filter(i-> i.toLowerCase().startsWith(userInput.toLowerCase()))
+                .collect(Collectors.toList());
+
+            if (matchedSuggestions.contains(userInput) || userInput.isEmpty() || matchedSuggestions.isEmpty()) {
+                suggestionsMenu.hide();
+            } else {
+                createPopupWindow(matchedSuggestions);
+                if (!suggestionsMenu.isShowing()) {
+                    suggestionsMenu.show(this.commandTextField, Side.TOP, 200, 0); // Popup position.
+                }
+            }
+        });
+    }
+
+    /**
+    * Instantiates the Suggestions Popup Window based on the list {@code listedSuggestions}.
+    *
+    */
+
+    private void createPopupWindow(List<String> matchedSuggestions) {
+        List<CustomMenuItem> popupMenu = new ArrayList<>();
+        suggestionsMenu.getItems().clear();
+        for (int i = 0; i < matchedSuggestions.size(); i++) {
+            Label suggestion = new Label(matchedSuggestions.get(i));
+            suggestion.setPrefHeight(30);
+            CustomMenuItem item = new CustomMenuItem(suggestion, true);
+            popupMenu.add(item);
+
+            item.setOnAction(actionEvent -> {
+                logger.log(Level.INFO, suggestion.getText());
+                suggestionsMenu.hide();
+                commandTextField.setText(suggestion.getText());
+                commandTextField.positionCaret(suggestion.getText().length());
+            });
+        }
+        suggestionsMenu.getItems().addAll(popupMenu);
+    }
 }

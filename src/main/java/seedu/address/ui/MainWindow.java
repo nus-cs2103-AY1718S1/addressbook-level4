@@ -7,7 +7,9 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -21,6 +23,8 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -29,7 +33,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/main_icon.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -48,6 +52,14 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane browserPlaceholder;
 
+    //@@author mzxc152
+    @FXML
+    private TextField findField;
+
+    @FXML
+    private ComboBox comboBox;
+
+    //@@author
     @FXML
     private StackPane commandBoxPlaceholder;
 
@@ -63,7 +75,11 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane statusbarPlaceholder;
 
-    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
+
+    //@@author mzxc152
+    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic)
+            throws CommandException, ParseException {
+        //@@author
         super(FXML);
 
         // Set dependencies
@@ -79,11 +95,51 @@ public class MainWindow extends UiPart<Region> {
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
+        initFindField(logic);
+        initSortBox();
 
         setAccelerators();
         registerAsAnEventHandler(this);
     }
+    //@@author mzxc152
+    /**
+     * Initializes the find field.
+     *
+     * @param logic
+     */
+    private void initFindField(Logic logic) {
+        findField.setOnKeyReleased(e -> {
+            try {
+                if (findField.getText().isEmpty()) {
+                    logic.execute("list");
+                }
+                logic.execute("find " + findField.getText());
+            } catch (CommandException e1) {
+                e1.printStackTrace();
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+        });
+    }
 
+    /**
+     * Initializes the sort box.
+     */
+    private void initSortBox() throws CommandException, ParseException {
+        comboBox.getItems().addAll("Name", "Phone", "Email", "Address", "Tag");
+        comboBox.getSelectionModel().select(0);
+        logic.execute("sort name");
+        comboBox.setOnAction(e -> {
+            try {
+                logic.execute("sort " + comboBox.getValue().toString());
+            } catch (CommandException e1) {
+                e1.printStackTrace();
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+        });
+    }
+    //@@author
     public Stage getPrimaryStage() {
         return primaryStage;
     }
@@ -140,6 +196,7 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
     }
 
     void hide() {
@@ -217,4 +274,5 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
 }

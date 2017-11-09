@@ -1,0 +1,85 @@
+= Tiyyagura Hyma - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Contags
+Contags, is a desktop address book application that is a development of AddressBook - Level 4, used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Mail Command
+
+==== External behavior
+
+include::../UserGuide.adoc[tag=mailContact]
+
+---
+
+==== Justification
+Mail is the most used application by working professionals and therefore a mail command is apt and necessary in an address book specifically targeted at working professionals.
+
+==== Implementation
+
+include::../DeveloperGuide.adoc[tag=mailContact]
+include::../DeveloperGuide.adoc[tag=mailcommand]
+
+---
+
+=== Enhancement Added: Birthday Field
+
+==== Justification
+
+Birthday field is an important field as users would find it useful to keep track of their contacts' birthdays to wish them and maintain business relationships on top of friendships and family relationships.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=birthdayfield]
+
+---
+
+=== Enhancement Added: ListBirthday Command
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=listBirthday]
+
+---
+
+==== Justification
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=listBirthday]
+
+---
+
+=== Developer Guide Glossary
+
+---
+
+include::../DeveloperGuide.adoc[tag=glossary]
+
+---
+
+=== Enhancement Proposed: Add command `schedule`
+
+A schedule feature would allow users to create events such as meetings or dinner with other contacts.
+
+=== Other contributions
+
+* Added alias for commands (Pull request https://github.com[#22])
+* Added a backup to store contents of addressbook (Pull request https://github.com[#23])
+* Added birthday field (Pull request https://github.com[#37])
+* Updated UI to include a separate browser panel displaying the address of a contact when contact is selected (Pull request https://github.com[#107]])
+* Enhanced find command to find by tags (Pull request https://github.com[#111])
+
+== Project:
+
+{Optionally (not graded), you may include other projects in your portfolio.}

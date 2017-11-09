@@ -3,6 +3,9 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -15,6 +18,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -25,6 +29,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyPerson> filteredMails;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +42,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredMails = new FilteredList<>(this.addressBook.getPersonList());
     }
 
     public ModelManager() {
@@ -49,12 +55,34 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    /**
+     * Removes tag from all persons.
+     * @return
+     */
+
+    @Override
+    public void removeTag(Tag toRemove) {
+        addressBook.deleteTag(toRemove);
+    }
+    //@@author mzxc152
+    /**
+     * Sorts the list in alphabetical order.
+     * @param toSort
+     */
+    @Override
+    public void sortList(String toSort) {
+        addressBook.sortList(toSort);
+        indicateAddressBookChanged();
+    }
+    //@@author
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed.
+     */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }
@@ -96,6 +124,20 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public String updateMailRecipientList(Predicate<ReadOnlyPerson> predicate) {
+        requireNonNull(predicate);
+        filteredMails.setPredicate(predicate);
+        List<String> validPeopleList = new ArrayList<>();
+        for (ReadOnlyPerson person : filteredPersons) {
+            if (person.getEmail() != null && !person.getEmail().value.equalsIgnoreCase("INVALID_EMAIL@EXAMPLE.COM")
+                 && !validPeopleList.contains(person.getEmail().value)) {
+                validPeopleList.add(person.getEmail().value);
+            }
+        }
+        return String.join(",", validPeopleList);
     }
 
     @Override

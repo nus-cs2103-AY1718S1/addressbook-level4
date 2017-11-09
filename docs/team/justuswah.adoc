@@ -1,0 +1,69 @@
+= Justus Wah - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Contags
+"Contags" is a desktop address book application used for organizing, storing, and easily accessing contact information for Business Executives. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 8 kLoC.
+
+*Code contributed*:  See "collated/Main/justuswah.md" & "collated/test/justuswah.md"
+
+//to be changed and updated
+
+=== Enhancement Added: Undo/Redo
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=removeTag]
+
+include::../UserGuide.adoc[tag=smsContact]
+
+include::../UserGuide.adoc[tag=findCommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+
+1. RemoveTag Method added such that tags which are no longer applicable to the user can be removed and deleted.
+This provides the most relevant and updated AddressBook for the user.
+
+2. assignTagColor is a feature implemented directly into the UI.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=removeTag]
+
+include::../DeveloperGuide.adoc[tag=smsContact]
+
+include::../DeveloperGuide.adoc[tag=findCommand]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Expand command `find`
+
+Searches the AddressBook for the string of characters that will be inputted after this function. This will be especially useful for an AddressBook with a large number of contacts. Expands on the current `find` function by searching the phone numbers, addresses, tags, and emails for any instance of the string.
+
+
+=== Enhancement Proposed: Add command `last command`
+
+Implements a stack to keep track of the last 10 commands that have been utilized by the user. Can use the existing undo/redo stack to construct this function.
+
+=== Other contributions
+
+//to be added at a later time.
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}

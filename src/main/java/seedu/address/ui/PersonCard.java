@@ -1,5 +1,9 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -14,6 +18,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    //@@author mzxc152
+    private static ArrayList<String> colors = new
+            ArrayList<String>(Arrays.asList("salmon", "mediumspringgreen", "tan", "royalblue",
+            "maroon", "seagreen", "rosybrown", "pink", "black", "red", "beige"));
+    private static HashMap<String, String> tagColors = new HashMap<String, String>();
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -38,6 +47,12 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label birthday;
+    @FXML
+    private Label remark;
+    @FXML
+    private Label social;
+    @FXML
     private FlowPane tags;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
@@ -46,6 +61,16 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
+    }
+
+    private static String getColorForTag(String tagName) {
+        if (!tagColors.containsKey(tagName) && !colors.isEmpty()) {
+            String color = colors.get(0);
+            tagColors.put(tagName, color);
+            colors.add(color);
+            colors.remove(0);
+        }
+        return tagColors.get(tagName);
     }
 
     /**
@@ -57,15 +82,28 @@ public class PersonCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
+        remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
+        social.textProperty().bind(Bindings.convert(person.socialProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            initTags(person);
         });
     }
 
+    /**
+     * Initialize tag colour for each tag
+     * @param person
+     */
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
     }
+
+
 
     @Override
     public boolean equals(Object other) {

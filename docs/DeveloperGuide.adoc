@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Contags - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,22 +10,38 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T16-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG17-T16-B4`      Since: `Sep 2017`      Licence: `MIT`
+
+== Introduction
+
+Welcome fellow developer! We hope that you have as much fun developing Contags as we did. Good luck!
+
+Contags is a platform for storing and managing contacts and their associated particulars and other information. This developer guide provides you with a set of core APIs which you can use to concentrate on the production, editing and publishing of enhancements, new features and documentation.
+
+In order to be a successful Contags developer, you will need a general understanding of: +
+
+• Contags's architecture and object model. +
+
+• How features are implemented using the UI, Logic, Model and Storage components.
+
+The sections below give a more detailed overview and implementation of the design of Contags. Do take a look before getting started on using Contags! +
 
 == Setting up
 
+Before you can start working on the code, you have to ensure that your system is configured correctly. This section provides the necessary information and resources to help you get started.
+
 === Prerequisites
 
-. *JDK `1.8.0_60`* or later
+. *JDK `1.8.0_60`* or later.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 
-. *IntelliJ* IDE
+. *IntelliJ* IDE.
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
@@ -34,21 +50,21 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+. Firstly, fork this repo, and clone the fork to your computer.
+. Next, open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
+. Set up the correct JDK version for Gradle.
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file and select it. Click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+. Run the `seedu.address.MainApp` and try a few commands.
 . link:#testing[Run the tests] to ensure they all pass.
 
 === Configurations to do before writing code
@@ -57,18 +73,18 @@ This will generate all resources required by the application and tests.
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
+. Select `Editor` > `Code Style` > `Java`.
+. Click on the `Imports` tab to set the order.
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103AUG2017-T16-B4/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to `CS2103AUG2017-T16-B4/main`), you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -77,99 +93,106 @@ Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingT
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based).
 
 ==== Getting started with coding
 
-When you are ready to start coding,
-
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
+Once you've completed the steps above and are ready to start coding, get some sense of the overall design by reading the link:#architecture[Architecture] section.
 
 == Design
 
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 3.1.1 : Architecture Diagram_
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+The Architecture Diagram _(Figure 3.1.1)_ given above explains the high-level design of the App. Given below is a quick overview of each component.
 
 [TIP]
-The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
+You can find the `.pptx` files used to create diagrams in this document in the link:{repoURL}/docs/diagrams/[diagrams] folder. +
+If you would like to update a diagram: +
+1. Modify the diagram in the `.pptx` file as desired. +
+2. Select the objects of the diagram. +
+3. Choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* At app launch: Initializing the components in the correct sequence, and connecting them with each other.
+* At shut down: Shutting down the components and invoking cleanup method where necessary.
 
-link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+link:#common-classes[*`Commons`*] represents a collection of classes used by multiple components. Two of these classes play important roles at the architecture level, namely:
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
+* `EventsCenter` : Used by components to communicate with other components using events (class written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) (i.e. a form of _Event Driven_ design).
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
 The rest of the App consists of four components.
 
-* link:#ui-component[*`UI`*] : The UI of the App.
-* link:#logic-component[*`Logic`*] : The command executor.
+* link:#ui-component[*`UI`*] : Acts as the interaction link (user interface) between the user and application.
+* link:#logic-component[*`Logic`*] : Executes Commands.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
 
-Each of the four components
+Each of the four components:
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component ( _Class Diagram (Figure 3.1.2)_ given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 3.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram (Figure 3.1.3a)_ below shows how the components interact in a scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `AddressBookChangedEvent` when the data in Contags are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+The _Sequence Diagram (Figure 3.1.3b)_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
-Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us to reduce direct coupling between components.
 
-The sections below give more details of each component.
+You can look at the sections below for more details of each component.
 
 === UI component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 3.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component,
+The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. +
 
-* Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-* Responds to events raised from various parts of the App and updates the UI accordingly.
+For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
+
+The `UI` component can do the following:
+
+* Execute user commands using the `Logic` component.
+* Bind itself to some data in the `Model` so that the UI can auto-update when data in the `Model` changes.
+* Respond to events raised from various parts of Contags and updates the UI accordingly.
 
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 3.3.2 : Structure of Commands in the Logic Component_
+
+This diagram shows finer details concerning `XYZCommand` and `Command` in _Figure 3.3.1_.
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -177,42 +200,42 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+.  The result of the command execution is encapsulated in a `CommandResult` object which is passed back to the `UI`.
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.3.3 : Interactions inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`,
+The `Model`:
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* Stores a `UserPref` object that represents the user's preferences.
+* Stores the data of Contags.
+* Exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list changes.
+* Does not depend on any of the other three components.
 
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 3.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The `Storage` component,
+The `Storage` component:
 
-* can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* Can save the `UserPref` object in json format and read it back.
+* Can save the data of Contags in xml format and read it back.
 
 === Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Classes used by multiple components are in the `seedu.address.commons` package.
 
 == Implementation
 
@@ -221,13 +244,14 @@ This section describes some noteworthy details on how certain features are imple
 // tag::undoredo[]
 === Undo/Redo mechanism
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modify the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+`UndoRedoStack` only deals with `UndoableCommand`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.1.1 : Logic Command Class Diagram_
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the _Class Diagram (Figure 4.1.1)_ above, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -262,13 +286,15 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command is executed. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 4.1.2 : Diagram of UndoRedoStack after executing DeleteCommand_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 4.1.3 : Diagram of UndoRedoStack after executing AddCommand_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -278,31 +304,35 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 4.1.4 : Diagram of UndoRedoStack after undoing AddCommand_
 
 [NOTE]
-If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
+If the `undoStack` is empty, there are no other commands left to be undone and an `Exception` will be thrown when popping the `undoStack`.
 
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 4.1.5 : Sequence Diagram of Undo Operation_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
 [NOTE]
-If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
+If the `redoStack` is empty, there are no other commands left to be redone and an `Exception` will be thrown when popping the `redoStack`.
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 4.1.6 : Diagram of UndoRedoStack after executing Clear Command_
 
-Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
+Commands that cannot be undone are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 4.1.7 : Diagram of UndoRedoStack after executing List Command_
 
-The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
+The following activity diagram summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
-
+_Figure 4.1.8 : Activity Diagram of UndoRedoStack_
 ==== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
@@ -332,7 +362,6 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Alternative 2:** Include all commands. +
 **Pros:** Might be more intuitive for the user. +
 **Cons:** User have no way of skipping such commands if he or she just want to reset the state of the address book and not the view. +
-**Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 ---
 
@@ -344,6 +373,223 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+// tag::remark[]
+=== Remark mechanism
+
+`Remark` functions as an additional Optional field for a `Person`. It exists separately from tags, and does not interfere with its function.
+
+During initialising of a new `Person`, the `Remark` field is not able to be filled, and it generates an empty `Remark` instead. Both the `add` and `edit` commands are unable to modify the `Remark` field of any given `Person`.
+
+The following sequence diagram shows the execution of the RemarkCommand.
+
+image::RemarkCommandSequenceDiagram.png[width="800"]
+_Figure 3.5.1 : Remark Command sequence diagram_
+
+[NOTE]
+The `index` field of the `RemarkCommand` uses the indexing of the filtered list that is currently being shown, not the list of all persons.
+
+The implementation of `RemarkCommand` is similar to that of the `EditCommand`. As such, the `updatePerson()` method found in the `ModelManager` is utilised.
+
+Since `Remark` is an optional field, the value of `remarkText` may be null. In this case, the `Remark` field of the person at `index` will be cleared.
+
+To create a difference between the updating and clearing of the `Remark` field, the `CommandResult` of `RemarkCommand` will differ based on the new contents of the `Remark`. This will also provide some additional clarity to users when using the command.
+
+==== Design Considerations
+
+**Aspect:** How `RemarkCommand` executes +
+**Alternative 1 (current choice):** Follow logic of `edit` command, to generate a new person with an updated `Remark` field and write over the existing `Person` +
+**Pros:** Follows an existing style, making it easier to implement and troubleshoot. +
+**Cons:** Seems unintuitive to create a new `Person` to edit a field that cannot be modified by the `edit` command. +
+**Alternative 2:** Create a `setRemark()` method to modify the `Remark` field of the existing selected `Person` +
+**Pros:** Would be very simple to implement. +
+**Cons:** As the `RemarkCommand` requires the input of an `index`, we require to interface with the list of persons already existing in the Contags. These methods however, return lists of `ReadOnlyPerson`, which do not allow the inclusion of a `setReamrk()` method. This would require changes elsewhere in the project that would affect other aspects.
+
+---
+
+**Aspect:** Separation of `Remark` from `add` and `edit` commands +
+**Alternative 1 (current choice):** Do not allow `add` and `edit` to add a `Remark` +
+**Pros:** The desired outcome was to experience the development of an entirely new infrastructure for a new command, and to modify 2 existing commands would not have the same educational effect. +
+**Cons:** Unintuitive to have a separate command simply for 1 field. +
+**Alternative 2:** Allow `add` and `edit` to add a `Remark` +
+**Pros:** Is more intuitive for the user, and is simpler to implement the logic of the command. +
+**Cons:** Is not as challenging to implement and does not possess the same educational value.
+
+---
+
+**Aspect:** Source of `index` +
+**Alternative 1 (current choice):** Use the current filtered list that is displayed +
+**Pros:** It is intuitive to use the index that is currently being displayed in the ui. +
+**Cons:** It does not allow any `Person` that is not currently in the filtered list to have their `Remark` edited. +
+**Alternative 2:** Use the list of all persons +
+**Pros** It allows all persons, even those not currently being shown, to have their `Remark` edited. +
+**Cons** The user will find it difficult to know the `index` of the `Person` he would like to edit, particularly if it is not currently in the filtered list. It is not intuitive and difficult for the user to utilise.
+// end::remark[]
+
+// tag::birthdayfield[]
+=== Birthday Field
+
+The person class consists of five compulsory attributes, `Name` `Phone` `Email` `Address` `Birthday` and optional `Remark` and `Tag`. The implementation of the birthday attribute is similar to that of the other compulsory attributes. It is a compulsory field and cannot be left blank. The constructor takes in the birthday value in a String format and a new instance of the birthday field is initialised.
+
+The birthday value is validated before being accepted as a parameter in the constructor for the person class. A valid birthday value has to be in the form `DD/MM/YYYY` or `DD/MM/YY`. Only digits and forward slashes are permitted. The birthday value is also checked to ensure that the date actually exists. The different number of days in the month February in leap years are accounted for and the different days in various months are also taken into account. This check minimises the chances of the user making a typo in entering the birthday and also ensures that the user does not accidentally input a wrong field in place of the birthday field (i.e. input an address in the birthday field).
+
+==== Design Considerations
+
+**Aspect:** Implementation of birthday field +
+**Alternative 1 (current choice):** Add a new birthday field to all files containing the other fields (name, phone, address, email). +
+**Pros:** We will not lose any other functionality as it is now just an additional part of the default behaviour. Existing classes and commands do not have to know that the birthday field exists, barring Add and Edit command. It is also easy for new developers to understand. +
+**Cons:** Design is not modular and has high dependency. +
+**Alternative 2:** Create a new class completely for optional fields such as birthday field +
+**Pros:** Does not involve the existing template pattern, easier for new developers to understand. +
+**Cons:** Methods of the birthday field that are inherited from the other fields must remember to call the super methods, or lose the ability to perform like the other fields.
+
+---
+
+**Aspect:** Whether it should be an optional field (can be left blank) +
+**Alternative 1 (current choice):** Birthday field currently cannot be an empty field. +
+**Pros:** Easy to implement and easy for new developers to understand the implementation and work on it. +
+**Cons:** Not very user-friendly as not all users would want to add birthdays for all their contacts. +
+**Alternative 2:** Make the birthday field optional. +
+**Pros:** More user-friendly. +
+**Cons: ** Implementation is slightly more tedious and new developers might need more time to understand the implementation.
+
+// end::birthdayfield[]
+// tag::listbirthday[]
+
+=== ListBirthday Mechanism
+
+The listbirthday command displays the list of contacts in Contags whose birthdays fall on the current date. The list is sorted in order of the list according to the `updateFilteredPersonsList`.
+
+The lisbirthday command is facilitated by the `BirthdayChecker` class in the person class. Take note that the listbirthday command is not an undoable command and hence inherits from `Command` rather than `UndoableCommand` (see design considerations below).
+
+The BirthdayChecker class checks if a contact's birthday falls on the current date by checking if the month and day of the contact's birthday and current date are equal. This is done so by converting the month and day first to a string, which is then converted to a date object and finally a calendar object.
+
+==== Design Considerations
+
+**Aspect:** Whether the listbirthday should be an executable command that requires manual typing of the command each time. +
+**Alternative 1 (current choice):** listbirthday is a command and users would have to type that every time they want to find out if a contact's birthday falls on that day. +
+**Pros:** Easy to implement and easy for new developers to understand and work on it. +
+**Cons:** Not as user friendly as users would have to manually key in the command every time. +
+**Alternative 2:** List of contacts whose birthdays falls on the current day appear as a popup every time the app is started. +
+**Pros:** More user friendly as users would not have to type the command every day. Users might forget to type the command everyday to check if any of their contact's birthday is on the current date. +
+**Cons:** Implementation is more tedious. +
+**Alternative 3:** List the contacts whose birthdays fall within a week from the current date. +
+**Pros:** More user friendly as users might want to know whose birthday is nearing. +
+**Cons:** More tedious to implement.
+
+// tag::social[]
+
+=== Social Media
+
+The Social Media display consists of several parts. Firstly, there is the social media url field contained within the `Person` class. +
+This field is an optional one that does not have to be included in the `add` command when adding new a new contact.
+
+The second part is the `toggle` command, which modifies a class-level variable within the `BrowserPanel` class.
+[source,java]
+----
+public class BrowserPanel extends UiPart<Region> {
+    private static Boolean browserMode = true;
+}
+----
+
+The mechanism of `SelectCommand` remains intact. However, there are changes in the handling of the `PersonPanelSelectionChangedEvent` raised by the `SelectCommand` within BrowserPanel based on the state of the boolean variable.
+
+By default, the variable is true, and it will cause the `select` command to display the contact's address. +
+When it is toggled, the `select` command will cause the `select` command to follow the url specified in the social media url field instead. The `toggle` command will itself refresh the `BrowserPanel` and cause it to display the opposite of what is currently being shown.
+
+The following sequence diagram shows the execution of the ToggleCommand.
+
+image::ToggleCommandSequenceDiagram.png[width="800"]
+_Figure 4.4a : ToggleCommand sequence diagram_
+
+The `ToggleCommand` is able to refresh the `BrowserPanel` through the use of a new `ToggleChangedEvent`. This is an event that is handled by the `BrowserPanel`, and relies on 2 private variables within `BrowserPanel`.
+
+When `BrowserPanel` handles a `PersonPanelSelectionChangedEvent`, it stores both the `Address` and `Social Media` fields. The handler of `ToggleChangedEvent` is thus able to cause the browser to load the url linked to the other mode.
+
+==== Design Considerations
+
+**Aspect:** Implementation of social media display in BrowserPanel +
+**Alternative 1 (current choice):** Create a new command to toggle the function of select, and display only either the address or social media page at one one +
+**Pros:** The windows will be less cramped and we do not need to have double the resources used to open 2 BrowserPanels simultaneously +
+**Cons:** We have to implement 2 separate sets of logic, and link it to a variable that determines the current behaviour +
+**Alternative 2:** Open 2 BrowserPanels side by side when select is called, one displaying address and the other displaying the social media page +
+**Pros:** It allows the user to utilise both functions simultaneously +
+**Cons:** It consumes a large amount of resources and the resulting panels will both be small, reducing the functionality of the 2 panels.
+
+---
+
+**Aspect:** Method of selecting which display to be shown +
+**Alternative 1 (current choice):** Toggled via independent command +
+**Pros:** The option is saved, so when users want to view multiple contacts consecutively, they can minimise the number of commands they use or the amount of input keyed in. +
+**Cons:** A separate command needs to be implemented and linked to both the BrowserPanel and Select Command +
+**Alternative 2:** Enter choice in the select command +
+**Pros:** When users want to alternate between functions, it will be easier and require fewer commands. +
+**Cons:** Complicates the Select Command.
+// end::social[]
+
+//tag::sort[]
+=== Sort Mechanism
+
+`SortCommand` sorts the `person` in Contags based on their `Name`, `Phone`, `Email`, `Address` or `Tag`. The implementation of `SortCommand` inherits from `Command`. Sorting currently works in ascending order only. +
+
+There is also the use of the `SortCommandParser` class, which implements the `Parser` interface, that parses out the keywords to be used with the `sort` command. The `SortCommandParser` checks for the correct keywords used and also allows the keywords to be case-insensitive.  +
+
+[NOTE]
+If you entered arguments that do not follow the required format, `ParseException` will be thrown. +
+
+==== Design Considerations
+
+**Aspect:** Attributes to sort +
+**Alternative 1 (current choice):** List of contacts can be sorted by `Name`, `Phone`, `Email`, `Address` or `Tag`. +
+**Pros:** Gives users the ability to change the sorting of the list by different attributes. +
+**Cons:** Most of the attributes are unique and thus sorting by phone or email or address may not be very useful. +
+**Alternative 2:** List of contacts can be sorted by `Name` only. +
+**Pros:** Useful for most users who may want to view a sorted list of contacts. +
+**Cons:** Not useful for users who may want to sort based on other attributes such as phone or address.
+
+---
+
+**Aspect:** How the sort command works +
+**Alternative 1 (current choice):** List of contacts is sorted in alphabetical order in ascending order. +
+**Pros:** Easier to implement than including descending order. +
+**Cons:** Sort command has less functionality, some users may want a descending order for some use cases. +
+**Alternative 2:** List of contacts is sorted in alphabetical order, and can be in either ascending or descending order as decided by user. +
+**Pros:** Has more functionality, more user-friendly. +
+**Cons:** Harder to implement and develop. +
+// end::sort[]
+
+// tag::mailcommand[]
+
+=== Mail Command
+
+The mail command mails a `person` in `Contags` based on their `Index` in the most updated list. The implementation of `MailCommand` inherits from `Command`. +
+
+There is also the use of the `MailCommandParser`, which implements the `Parser` interface, that parses out the index to be used with the `sort` command. The `MailCommandParser` validates the input index.  +
+
+[NOTE]
+If the index entered by the user do not comply is out of range, ParseException will be thrown before execution of the method. +
+
+==== Design Considerations
+
+**Aspect:** Attributes to mail command +
+**Alternative 1 (current choice):** Only takes in to (email address) field. +
+**Pros:** Allows users to type in their title and message on the mail application itself. It would be more user friendly if the message is long or requires formatting such as new lines or separating the message into paragraphs. +
+**Cons:** Does not take in title and message fields, user would still have to type the subject and message when the mail application opens. +
+**Alternative 2:** Take in to, title and message fields. +
+**Pros:** Useful for most users who want to send a short message quickly without having to type in the mail application when it opens. +
+**Cons:** Not useful for users who want to send long messages with paragraphs.
+
+---
+
+**Aspect:** Whether mail command should automatically send the mail without opening up the mail application +
+**Alternative 1 (current choice):** Mail command opens up the default desktop mail application. +
+**Pros:** User can decide on the preferred mail server and there would not be security issues with the log in since it is done externally. +
+**Cons:** Less user friendly as there is a need to open an extra application. +
+**Alternative 2:** Implement GMail API. +
+**Pros:** There is no need to open up the desktop mail application and users can easily send a mail using just the CLI. +
+**Cons:** There might be security issues pertaining to the log in. Furthermore, not all users would want to use Gmail. This alternative would not account for users having different preferences on which email server they would like to use. Interface for GMail is not optimal in `JavaFX WebView`.
+
+// end::mailcommand[]
 
 === Logging
 
@@ -392,7 +638,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 5.3.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -405,8 +651,8 @@ The most reliable way to run tests is the 3rd one. The first two methods might f
 
 *Method 1: Using IntelliJ JUnit test runner*
 
-* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`.
+* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`.
 
 *Method 2: Using Gradle*
 
@@ -419,7 +665,7 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 
 Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`).
 
 === Types of tests
 
@@ -451,7 +697,7 @@ See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build auto
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+We use https://travis-ci.org/[Travis CI] to perform _Continuous Integration_ on our project. See <<UsingTravis#, UsingTravis.adoc>> for more details.
 
 === Making a Release
 
@@ -464,294 +710,213 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
-a. Include those libraries in the repo (this bloats the repo size) +
-b. Require developers to download those libraries manually (this creates extra work for developers)
+A project often depends on third-party libraries. Contags depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing.
 
-[appendix]
-== Suggested Programming Tasks to Get Started
+Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than the following alternatives:
 
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
-
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-[TIP]
-Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-[TIP]
-Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Ui` component
-
-[TIP]
-Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-[TIP]
-Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
-
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Main:**
-
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Tests:**
-
-. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
+* Include those libraries in the repo (this bloats the repo size). +
+* Require developers to download those libraries manually (this creates extra work for developers).
 
 [appendix]
 == User Stories
 
-Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
+The user stories here depict the various types of features and considerations that you, as a developer, may have for the users of Contags. These user stories serve as a guide towards the features that you should create for users. +
+
+Priorities: +
+            `* * \*` - High (must have), +
+            `* \*` - Medium (nice to have), +
+            `*` - Low (Not very important to have).
 
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |new user |see usage instructions through a help window or command|refer to instructions on how to use Contags
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person |to store information in Contags
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |find a person by name |get details of that person quickly
+
+|`* * *` |user |find all my contacts that have the same tag |search for groups of people easily
+
+|`* * *` |user |search all my contacts by any keyword, name, email address, or address |search for people by other means than names
+
+|`* * *` |user |send an email to any contact in Contags |so that I can conveniently send an email
+
+|`* * *` |user |send an SMS message to any contact in the Contags Application |so that I can conveniently send a SMS
+
+|`* * *` |user |find a person with an incomplete name |to find a person even if I cannot remember or spell the person's name correctly
+
+|`* * *` |user |see all tags for a contact |to organise contacts easily
+
+|`* * *` |user |edit all details for my contacts |to keep details of my contacts up to date without having to recreate the contact
+
+|`* * *` |user |create a new contact with a name that already exists in Contags |have multiple contacts with the same name if I know people with the same name
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user |add contacts with missing fields |include a contact even if I do not know some of the information fields
+
+|`* *` |user |attribute multiple phone numbers to a contact |have a contact's mobile and home numbers in the same contact
+
+|`* *` |user |delete certain fields for my contacts |
+
+|`* *` |user |know if any of my contact information clashes with another one |organise contacts easily |
+
+|`* *` |user |delete all tags for a contact |
+
+|`* *` |user |undo previous commands |revert mistakes made
+
+|`* *` |user |add tags to a contact while editing without removing them all |simplify the editing of tags
+
+|`* *` |user |attribute multiple addresses to a contact |have a contact's work and home addresses in the same contact
+
+|`* *` |user |sort the list of contacts in alphabetical order |organise the list
+
+|`* *` |user |sort the list of contacts in the list based on phone number |organise the list
+
+|`* *` |user |view a list of contacts whose birthdays fall on the current date |remember their birthdays and wish them
+
+|`* *` |user |have tags of different colours |easily identify different tags
+
+|`*` |user| change colors of the tags |customise the tags to my own color groupings
+
+|`*` |user with many persons in Contags |sort persons by name |locate a person easily
+
+|`*` |user |see which contacts have recently been changed or updated |locate changes easily
+
+|`*` |user |attribute multiple email addresses to a contact |
+
+|`*` |user |add nicknames to a contact |to identify contacts easily
+
+|`*` |user |view the last 10 commands I typed |track my usage of Contags
+
+|`*` |user |add a priority number to each contact |
+
+|`*` |user |list contacts in priority order |have faster access to the contacts that are most important
+
+|`*` |forgetful user |be reminded of meetings and important events |
+
+|`*` |forgetful user |link appointments with specific contacts |
 |=======================================================================
 
 {More to be added}
 
 [appendix]
 == Use Cases
+The use cases here are for you (and other developers) to understand the flow in which a user may follow in using a particular feature implemented in Contags. +
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Contags` and the *Actor* is the `user`, unless specified otherwise).
 
 [discrete]
 === Use case: Delete person
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list persons.
+2.  Contags displays a list of persons.
+3.  User requests to delete a specific person in the list.
+4.  Contags deletes the person.
+5.  Use case ends.
+
+*Extensions*
+
+* 2a. The list is empty.
 +
 Use case ends.
+
+* 3a. The given index is invalid.
++
+
+[none]
+** 3a1. Contags shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Delete certain fields
+
+*MSS*
+
+1. User requests list of persons with particular name.
+2. Contags displays a list of persons.
+3. User requests to select specific contact.
+4. Contags selects contact.
+5. User requests to delete particular field(s).
+6. Contags clears the listed field(s).
+7. Use case ends.
+
+*Extensions*
+
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+
+[none]
+** 3a1. Contags shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add person in the specified format.
+2.  Contags adds person in the specified format to the list.
+3.  Contags acknowledges that the person has been added to the list.
+4.  Use case ends.
+
+*Extensions*
+
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Contags displays an error message.
++
+Use case resumes at step 2.
+
+* 5a. The given field is blank.
++
+[none]
+** 5a1. Contags displays an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Creating contact with same name
+
+*MSS*
+
+1. User adds contact with the duplicated name.
+2. Contags displays list of existing contacts of same name.
+3. Contags asks if user wants to continue, update existing contact, or end use case.
+4. User requests to continue.
+5. Contags creates new contact.
+6. Use case ends.
+
+*Extensions*
+
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: List Contact
+
+*MSS*
+
+1.  User requests to list persons
+2.  Contags displays a list of persons
+3.  Use case ends.
 
 *Extensions*
 
@@ -760,14 +925,203 @@ Use case ends.
 +
 Use case ends.
 
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
+[discrete]
+=== Use case: Sort list of contacts
 
-{More to be added}
+*MSS*
+
+1. User requests to sort list of contacts based on Name, Phone, Email or Address.
+2. Contags sorts the list of contacts and displays the list based on user selection.
+3. Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit Contact
+
+*MSS*
+
+1.  User requests to edit person (index) and specific particular
+2.  Contags edits the contact particular and displays latest change
+3.  Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The given index is invalid.
+
++
+Use case ends.
+
+
+[discrete]
+=== Use case: Clear
+
+*MSS*
+
+1. User requests to clear list.
+2. Contags clears list.
+3. Use case ends.
+
+[discrete]
+=== Use case: Exit
+
+*MSS*
+
+1. User requests to exit the program.
+2. Contags closes the program.
+3. Use case ends.
+
+// tag::removeTag[]
+[discrete]
+=== Use case: Remove Tag from all Contacts
+
+*MSS*
+
+ 1.  User requests to removeTag from all contacts, and includes tag label name.
+ 2.  Contags searches through all contacts that have been tagged with the same tag, removes the tags from all these contacts and displays latest change
+ 3.  Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Tag cannot be found.
++
+Contags informs user that the tag does not exist. Use case ends.
+
+// end::removeTag[]
+// tag::smsContact[]
+[discrete]
+=== Use case: Send an SMS Message to Contacts
+
+*MSS*
+
+ 1.  User requests to send an sms message to the number of the contact given by the index, followed by the message that is to be sent.
+ 2.  Contags uses the Twilio API to create a message, and send to the contact
+ 3.  Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Number not yet authorized on Twilio.
++
+Contags informs user that the number is not yet authorized on Twilio. Use case ends.
+
+* 1b. Index given is invalid.
++
+Contags informs user that the index given is invalid. Use case ends.
+// end::smsContact[]
+
+[discrete]
+=== Use case: History
+
+*MSS*
+
+1. User requests history of commands issued.
+2. Contags shows list of commands in reverse chronological order.
+3. Use case ends.
+
+*Extensions*
+
+* 1a. Person Index is invalid.
++
+Contags informs user that Person Index is invalid. Use case ends.
+
+* 1b. User requests to edit information in an invalid format.
++
+Contags informs user that the format is invalid, providing the correct format. Use case ends.
+
+// tag::findCommand[]
+
+[discrete]
+=== Use case: Find Contact
+
+*MSS*
+
+ 1.  User requests to find person by entering full word inside contact name, or any other particular.
+ 2.  AddressBook finds contact with keyword included in particular, and displays latest change.
+ 3.  Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Contact cannot be found.
++
+Contags informs user that the contact cannot be found. Use case ends.
+
+// end::findCommand[]
+// tag::mailContact[]
+[discrete]
+=== Use case: Mail Contact
+
+*MSS*
+
+1. User requests to mail a contact by typing in mail command, followed by the mail, title and message.
+2. Contags opens up desktop mail application and user clicks send.
+3. Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Index is invalid.
++
+** 1a1. Contags informs user that index is not valid.
+
+// end::mailContact[]
+// tag::listBirthday[]
+[discrete]
+=== Use case: List contacts whose birthdays fall on current date
+
+*MSS*
+
+1. User requests to see the list of contacts whose birthdays fall on the current date.
+2. Contags shows the list of filtered contacts.
++
+Use case ends.
+
+// end::listBirthday[]
+[discrete]
+=== Use case: Select Contact
+
+*MSS*
+
+1.  User requests to see entire list of contacts.
+2.  Based on list, user selects contact by providing contact index.
+3.  Contags selects contact with index given.
+4.  Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
+
+* 2a. User inputs invalid contact index.
++
+Contags informs user that the input is not a valid contact index. Use case ends.
+
+[discrete]
+=== Use case: Remove Tag from all Contacts
+
+*MSS*
+
+1.  User requests to removeTag from all contacts, and includes tag label name.
+2.  Contags searches through all contacts that have been tagged with the same tag, removes the tags from all these contacts and displays latest change.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Tag cannot be found.
++
+Contags informs user that the tag does not exist. Use case ends.
 
 [appendix]
 == Non Functional Requirements
@@ -775,17 +1129,129 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Data stored in Contags should not be corrupted in the event of an unexpected error leading to application crashing unexpectedly.
+.  System should be usable by users who are new to entering commands via Command Line Interface (CLI).
+.  Should work even after multiple entries of invalid commands.
+.  Source code should be open source to allow other developers to improve the application.
+.  Should be a free application for all.
+.  App should be updated regularly for bug fixes or implementing new features.
 
 {More to be added}
 
+// tag::glossary[]
 [appendix]
 == Glossary
+
+[[acsiidoc]]
+acsiidoc
+
+....
+Asciidoc is a human-readable document format which uses plain-text mark-up conventions. It is a markup language, which is a system for annotating a document in a way that is syntactically distinguishable from text.
+....
+
+[[api]]
+API
+
+....
+Application Programming Interface.
+....
+
+[[ci]]
+CI
+
+....
+Continuous Integration, CI, is an extreme application of build automation in which integration, building and testing happens automatically after each code change.
+....
+
+[[clean-up]]
+Clean up
+
+....
+Releases the references to objects.
+....
+
+[[event]]
+Event
+
+....
+Event is a significant change in state.
+....
+
+[[event-driven-design]]
+Event-driven design
+
+....
+Promotes the production, detection, consumption of and reaction to events.
+....
+
+[[gui]]
+GUI
+
+....
+Graphical User Interface, GUI, allows users to interact with the software using graphical and visual icons instead of text.
+....
+
+[[high-level-design]]
+High-level design
+
+....
+High-level design is the overall system design, including the database design and system architecture.
+....
+
+[[ide]]
+IDE
+
+....
+Integrated Development Environment, IDE, is a software application that provides comprehensive facilities to computer programmers for software development.
+....
+
+[[index]]
+Index
+
+....
+The specific numbering of contacts in the list. For example, index 1 refers to the first person in the list.
+....
+
+[[jar]]
+JAR
+
+....
+Java ARchive, JAR, is a package file format typically used to aggregate many Java class files and associated metadata and resources (text, images, etc.) into one file for distribution.
+....
+
+[[jdk]]
+JDK
+
+....
+Java Development Kit.
+....
 
 [[mainstream-os]]
 Mainstream OS
 
 ....
 Windows, Linux, Unix, OS-X
+....
+
+[[mss]]
+MSS
+
+....
+Main Success Scenario, MSS, describes the most basic and straightforward implementation of a use case, disregarding the possibility of errors.
+....
+
+[[oop]]
+OOP
+
+....
+Object-orientated programming, OOP, is a programming language that is modelled based on objects and date as opposed to actions and logic.
+....
+
+[[pr]]
+PR
+
+....
+Pull Request, PR, is made to submit commits to Github.
 ....
 
 [[private-contact-detail]]
@@ -795,19 +1261,73 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[ui]]
+UI
+
+....
+User-interface, UI, focuses on maximising usability and optimal user experience.
+....
+
+[[separation-of-concerns]]
+Separation of Concerns
+
+....
+Separating a computer program into distinct sections such that each section addresses a single and unique concern.
+....
+
+[[single-responsibility-principle]]
+Single Responsibility Principle
+
+....
+Every module/class has responsibility (encapsulated in a single class) over a single part of functionality only.
+....
+
+[[tag]]
+Tag
+
+....
+A tag is a label that users can assign to their contacts to easily remember whether a contact is a family, friend, colleague, etc.
+....
+
+[[xml]]
+XML
+
+....
+XML is a metalanguage which allows users to define their own customized markup languages, especially in order to display documents on the Internet.
+....
+
+// end::glossary[]
+
 [appendix]
 == Product Survey
 
-*Product Name*
+*Mac Contacts*
 
-Author: ...
+Author: Apple Inc.
 
 Pros:
 
-* ...
-* ...
+* Allows users to call, email and FaceTime contacts easily by clicking on the contact's respective field.
+* Includes various useful features such as importing and exporting contacts and creating groups, adding notes and reminders, etc.
 
 Cons:
 
-* ...
-* ...
+* Has no command-line interface.
+* Only available on Mac OS.
+
+---
+
+*Microsoft People*
+
+Author: Microsoft Corporation.
+
+Pros:
+
+* Allows users to send messages through email or Skype and also start a Skype call with the selected contact through the App. +
+* Includes features such as syncing with email accounts, sharing contact details, including profile pictures. +
+
+Cons:
+
+* Only available on Windows.
+* No command-line interface, requires use of mouse and keyboard.
+* Does not support tags.

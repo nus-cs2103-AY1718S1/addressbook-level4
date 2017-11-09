@@ -22,28 +22,62 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-
+    private ObjectProperty<Birthday> birthday;
+    private ObjectProperty<Remark> remark;
+    private ObjectProperty<String> social;
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday,
+                  Remark remark, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, birthday, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.birthday = new SimpleObjectProperty<>(birthday);
+        this.remark = new SimpleObjectProperty<>(remark);
+        this.social = new SimpleObjectProperty<>(new String(""));
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
 
+    //@@author seankwekjk
+    /**
+     * Only url is allowed to be null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday,
+                  Remark remark, String url, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, birthday, url, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.birthday = new SimpleObjectProperty<>(birthday);
+        this.remark = new SimpleObjectProperty<>(remark);
+        this.social = new SimpleObjectProperty<>(url);
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
+
+    //@@author
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+                source.getBirthday(), source.getRemark(), source.getSocialMedia(), source.getTags());
+    }
+
+    /**
+     * Removes tag from this person
+     * @param toRemove
+     */
+
+    public void remove(Tag toRemove) {
+        tags.getValue().removeTag(toRemove);
     }
 
     public void setName(Name name) {
@@ -102,6 +136,46 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    public void setBirthday(Birthday birthday) {
+        this.birthday.set(requireNonNull(birthday));
+    }
+
+    @Override
+    public ObjectProperty<Birthday> birthdayProperty() {
+        return birthday;
+    }
+
+    @Override
+    public Birthday getBirthday() {
+        return birthday.get();
+    }
+
+    //@@author seankwekjk
+    public Remark getRemark() {
+        return remark.get();
+    }
+
+    public ObjectProperty<Remark> remarkProperty() {
+        return remark;
+    }
+
+    public void setRemark(Remark remark) {
+        this.remark.set(requireNonNull(remark));
+    }
+
+    public String getSocialMedia() {
+        return social.get();
+    }
+
+    public ObjectProperty<String> socialProperty() {
+        return social;
+    }
+
+    public void setSocialMedia(String social) {
+        this.social.set(requireNonNull(social));
+    }
+
+    //@@author
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -132,7 +206,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, birthday, tags);
     }
 
     @Override
