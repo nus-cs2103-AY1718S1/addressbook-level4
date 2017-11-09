@@ -42,9 +42,15 @@ public class TypicalPersons {
             .withEmail("lydia@example.com").withRoom("15-117").build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withRoom("16-150K").build();
+
+    //@@author Haozhe321
     public static final ReadOnlyPerson TEMPORARY_JOE = new PersonBuilder().withName("Temporary Joe")
-            .withPhone("9482442").withEmail("anna@example.com").withRoom("17-210").withTemporary(0)
+            .withPhone("9482442").withEmail("joe@example.com").withRoom("17-210").withTemporary(0)
             .withTags("friend").build();
+    public static final ReadOnlyPerson TEMPORARY_DOE = new PersonBuilder().withName("Temporary Doe")
+            .withPhone("9482442").withEmail("doe@example.com").withRoom("11-210").withTemporary(1000)
+            .withTags("friend").build();
+    //@@author
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")

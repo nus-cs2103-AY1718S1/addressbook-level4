@@ -1,4 +1,18 @@
 # Haozhe321
+###### /resources/view/CalendarBox.fxml
+``` fxml
+<Pane fx:id="calendarPane"
+      maxHeight="-Infinity"
+      maxWidth="-Infinity"
+      minHeight="-Infinity"
+      minWidth="-Infinity"
+      prefHeight="447.0"
+      prefWidth="600.0"
+      xmlns="http://javafx.com/javafx/8.0.60"
+      xmlns:fx="http://javafx.com/fxml/1"
+/>
+
+```
 ###### /java/seedu/room/ui/CalendarBoxPanel.java
 ``` java
 
@@ -14,11 +28,13 @@ public class CalendarBoxPanel extends UiPart<Region> {
     public CalendarBoxPanel() {
         super(FXML);
         calendarPane.getChildren().add(new CalendarBox(YearMonth.now()).getView());
+
     }
 
     public void freeResources() {
         calendarPane = null;
     }
+
 }
 ```
 ###### /java/seedu/room/ui/AnchorPaneNode.java
@@ -89,6 +105,7 @@ public class AnchorPaneNode extends AnchorPane {
     public void revertBackground() {
         this.backgroundProperty().unbind();
         this.backgroundProperty().setValue(unfocusBackground);
+
     }
 
     /**
@@ -134,13 +151,13 @@ public class AnchorPaneNode extends AnchorPane {
 ###### /java/seedu/room/logic/parser/DeleteByTagCommandParser.java
 ``` java
 /**
- * Parses input arguments and creates a new DeleteCommand object
+ * Parses input arguments and creates a new DeleteByTagCommand object
  */
 public class DeleteByTagCommandParser implements Parser<DeleteByTagCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the DeleteCommand
-     * and returns an DeleteCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the DeleteByTagCommand
+     * and returns an DeleteByTagCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public DeleteByTagCommand parse(String args) throws ParseException {
@@ -192,7 +209,8 @@ public class DeleteByTagCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the persons identified by the tag supplied in this argument\n"
             + "Parameters: TAG\n"
-            + "Example: " + COMMAND_WORD + "friends";
+            + "Example: " + COMMAND_WORD + " friends";
+
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Persons with the following tag: %1$s";
 
@@ -312,17 +330,12 @@ public class Timestamp {
 ```
 ###### /java/seedu/room/model/ResidentBook.java
 ``` java
-    public void removeByTag(Tag tag) throws IllegalValueException, CommandException {
-        persons.removeByTag(tag);
-    }
-```
-###### /java/seedu/room/model/ModelManager.java
-``` java
     /**
      * delete temporary persons on start up of the app
      */
-    public synchronized void deleteTemporary(ResidentBook residentBook) throws PersonNotFoundException {
-        UniquePersonList personsList = residentBook.getUniquePersonList();
+    public void deleteTemporary() {
+        UniquePersonList personsList = this.getUniquePersonList();
+
         Iterator<Person> itr = personsList.iterator(); //iterator to iterate through the persons list
         while (itr.hasNext()) {
             Person person = itr.next();
@@ -335,6 +348,13 @@ public class Timestamp {
             }
         }
     }
+```
+###### /java/seedu/room/model/ResidentBook.java
+``` java
+    public void removeByTag(Tag tag) throws IllegalValueException, CommandException {
+        persons.removeByTag(tag);
+    }
+
 ```
 ###### /java/seedu/room/model/ModelManager.java
 ``` java

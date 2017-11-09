@@ -8,13 +8,13 @@ import seedu.room.logic.parser.exceptions.ParseException;
 
 //@@author Haozhe321
 /**
- * Parses input arguments and creates a new DeleteCommand object
+ * Parses input arguments and creates a new DeleteByTagCommand object
  */
 public class DeleteByTagCommandParser implements Parser<DeleteByTagCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the DeleteCommand
-     * and returns an DeleteCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the DeleteByTagCommand
+     * and returns an DeleteByTagCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public DeleteByTagCommand parse(String args) throws ParseException {

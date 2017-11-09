@@ -31,23 +31,6 @@ public class ModelManagerTest {
         modelManager.getFilteredPersonList().remove(0);
     }
 
-    //@@author Haozhe321
-    @Test
-    public void deleteTemporaryTest() throws IllegalValueException, PersonNotFoundException {
-        ResidentBook residentBook = new ResidentBookBuilder().withPerson(TEMPORARY_JOE).build();
-        UserPrefs userPrefs = new UserPrefs();
-
-        ModelManager modelManager = new ModelManager(residentBook, userPrefs);
-
-        //modelManager has one temporary person inside -> returns false
-        assertFalse(modelManager.equals(null));
-
-        modelManager.deleteTemporary(residentBook);
-        //added temporary has argument of 0, so it stays permanently -> returns false
-        assertFalse(modelManager.getResidentBook().getPersonList().size() == 0);
-
-    }
-    //@@author
 
     //@@author shitian007
     @Test
