@@ -17,6 +17,7 @@ import static seedu.address.logic.parser.ModelParserUtil.parseMandatoryPhone;
 import static seedu.address.logic.parser.ModelParserUtil.parsePossibleTagWords;
 import static seedu.address.logic.parser.ParserUtil.isParsableIndex;
 import static seedu.address.logic.parser.ParserUtil.parseFirstIndex;
+import static seedu.address.model.ModelManager.getLastKnownRolodexSize;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -106,10 +107,10 @@ public class EditCommandParser implements Parser<EditCommand> {
         String remaining = rawArgs;
 
         String index = "";
-        if (isParsableIndex(rawArgs)) {
-            index = Integer.toString(parseFirstIndex(rawArgs));
-        } else if (isParsableIndex(commandWord)) {
-            index = Integer.toString(parseFirstIndex(commandWord));
+        if (isParsableIndex(rawArgs, getLastKnownRolodexSize())) {
+            index = Integer.toString(parseFirstIndex(rawArgs, getLastKnownRolodexSize()));
+        } else if (isParsableIndex(commandWord, getLastKnownRolodexSize())) {
+            index = Integer.toString(parseFirstIndex(commandWord, getLastKnownRolodexSize()));
         }
 
         // Check for Optional Phone

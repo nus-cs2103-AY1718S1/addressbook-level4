@@ -5,7 +5,6 @@ import static seedu.address.commons.core.index.Index.INDEX_VALIDATION_REGEX;
 import static seedu.address.commons.util.StringUtil.replaceBackslashes;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.model.ModelManager.getLastKnownRolodexSize;
 import static seedu.address.model.person.Address.ADDRESS_BLOCK_NUMBER_MATCHING_REGEX;
 import static seedu.address.model.person.Address.ADDRESS_BLOCK_WORD_MATCHING_REGEX;
 import static seedu.address.model.person.Email.EMAIL_VALIDATION_REGEX;
@@ -133,9 +132,9 @@ public class ParserUtil {
      * @return {@code true} if successfully parsed,
      * {@code false} otherwise.
      */
-    public static boolean isParsableIndex(String value) {
+    public static boolean isParsableIndex(String value, int rolodexSize) {
         try {
-            parseFirstIndex(value);
+            parseFirstIndex(value, rolodexSize);
             return true;
         } catch (NumberFormatException e) {
             return false;
@@ -148,12 +147,12 @@ public class ParserUtil {
      * @return {@code int} positive, non-zero value of the integer.
      * @throws NumberFormatException if no integer was found.
      */
-    public static int parseFirstIndex(String value) throws NumberFormatException {
+    public static int parseFirstIndex(String value, int rolodexSize) throws NumberFormatException {
         Pattern numbers = Pattern.compile(INDEX_VALIDATION_REGEX);
         Matcher m = numbers.matcher(value);
         while (m.find()) {
             int firstIndex = Math.abs(Integer.parseInt(m.group()));
-            if (firstIndex > 0 && firstIndex <= getLastKnownRolodexSize()) {
+            if (firstIndex > 0 && firstIndex <= rolodexSize) {
                 return firstIndex;
             }
         }
@@ -165,10 +164,10 @@ public class ParserUtil {
      * @param value to be parsed.
      * @return a {@code String} without the first integer.
      */
-    public static String parseRemoveFirstIndex(String value) {
+    public static String parseRemoveFirstIndex(String value, int rolodexSize) {
         String firstIndex;
         try {
-            firstIndex = Integer.toString(parseFirstIndex(value));
+            firstIndex = Integer.toString(parseFirstIndex(value, rolodexSize));
         } catch (NumberFormatException e) {
             firstIndex = "";
         }
