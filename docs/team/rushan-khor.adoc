@@ -15,11 +15,14 @@ link:{collatedDir}/test/rushan-khor.md[Test code]
 
 === Enhancement Added: Batch deletion of contacts by tag
 
----
+==== External behaviour
 
-==== External behavior
+---
+#Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=batch]
+
+#End of Extract#
 
 ---
 
@@ -31,17 +34,25 @@ Batch deletions make it less tedious to perform deletions on multiple contacts.
 
 ==== Implementation
 
+---
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=batch]
+
+#End of Extract#
 
 ---
 
 === Enhancement Added: Display potential duplicate contacts
 
----
-
 ==== External behavior
 
+---
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=dups]
+
+#End of Extract#
 
 ---
 
@@ -49,21 +60,25 @@ include::../UserGuide.adoc[tag=dups]
 
 Duplicate contacts can accumulate over time. The `duplicates` command compiles a list of potential duplicate contacts for the user to review.
 
----
-
 ==== Implementation
 
+---
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=dups]
+
+#End of Extract#
 
 ---
 
 === Enhancement Added: Copy contact email address to clipboard
 
 ---
-
-==== External behavior
+#Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=copy]
+
+#End of Extract#
 
 ---
 
@@ -75,7 +90,12 @@ Embracing the keyboard-centric interaction of MedNus, even copying data into the
 
 ==== Implementation
 
+---
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=copy]
+
+#End of Extract#
 
 ---
 
