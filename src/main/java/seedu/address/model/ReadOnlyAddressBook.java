@@ -44,7 +44,7 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<Relationship> getRelList();
     //@@author
-    //@@author shuangyang
+    //@@author shuang-yang
     /**
      * Returns the last changed event.
      */

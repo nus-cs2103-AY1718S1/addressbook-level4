@@ -16,7 +16,7 @@ import seedu.address.model.event.EventList;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.timeslot.Date;
 
-//@@author a0107442n
+//@@author shuang-yang
 
 public class EventListTest {
 

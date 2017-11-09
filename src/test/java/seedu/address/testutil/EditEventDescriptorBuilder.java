@@ -70,7 +70,7 @@ public class EditEventDescriptorBuilder {
         return this;
     }
 
-    //@@author shuangyang
+    //@@author shuang-yang
     /**
      * Sets the {@code Period} of the {@code EditEventDescriptor} that we are building.
      */

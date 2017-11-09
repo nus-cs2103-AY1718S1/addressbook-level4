@@ -1,4 +1,4 @@
-//@@author shuangyang
+//@@author shuang-yang
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
