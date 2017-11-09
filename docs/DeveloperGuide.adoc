@@ -1,4 +1,4 @@
-﻿= H.M.U v1.3 - Developer Guide
+﻿= H.M.U v1.4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -801,6 +801,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new person |
 
+|`* * *` |user |set a schedule for my contacts |see when they are free
+
+|`* * *` |user |find the nearest common meeting point |decide on where to meet my contacts
+
+|`* * *` |user who does not need added security |be able to remove login requirements |access H.M.U without logging in
+
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
@@ -818,6 +824,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |list my contacts |see all my entries
 
 |`* * *` |user |edit my contacts |update any changes to my contacts
+
+|`* *` |user |find my contacts by MRT |find who stays at a particular location
+
+|`* *` |user |find my contacts location on Google Maps |know how to get to the location easily
 
 |`* *` |user |double-confirm the delete command and clear command|avoid accidental commands
 

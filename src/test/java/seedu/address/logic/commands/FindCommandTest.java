@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
-import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -21,62 +20,77 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Contains integration tests (interaction with the Model) for {@code FindCommand}.
+ * Contains integration tests (interaction with the Model) for {@code FindByEmailCommand}.
  */
 public class FindCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void equals() {
-        NameContainsKeywordsPredicate firstPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("first"));
-        NameContainsKeywordsPredicate secondPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("second"));
+        FindPersonDescriptor first = new FindPersonDescriptor();
+        FindPersonDescriptor second = new FindPersonDescriptor();
+        second.setName("Kruz Bob");
+        second.setAddress("10th");
+        second.setEmail("anna@example.com");
 
-        FindCommand findFirstCommand = new FindCommand(firstPredicate);
-        FindCommand findSecondCommand = new FindCommand(secondPredicate);
+        //find with empty descriptor
+        FindCommand findFirstCommandTrue = new FindCommand(true, first);
+        FindCommand findFirstCommandFalse = new FindCommand(false, first);
+
+        //find with non-empty descriptor
+        FindCommand findSecondCommandTrue = new FindCommand(true, second);
+        FindCommand findSecondCommandFalse = new FindCommand(false, second);
+
+        //empty descriptor not the same type will not return same find
+        assertFalse(findFirstCommandTrue.equals(findFirstCommandFalse));
+        assertFalse(findSecondCommandTrue.equals(findSecondCommandFalse));
 
         // same object -> returns true
-        assertTrue(findFirstCommand.equals(findFirstCommand));
+        assertTrue(findFirstCommandTrue.equals(findFirstCommandTrue));
 
         // same values -> returns true
-        FindCommand findFirstCommandCopy = new FindCommand(firstPredicate);
-        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+        FindCommand findSecondCommandCopy = new FindCommand(true, second);
+        assertTrue(findSecondCommandTrue.equals(findSecondCommandCopy));
 
         // different types -> returns false
-        assertFalse(findFirstCommand.equals(1));
+        assertFalse(findFirstCommandTrue.equals(1));
 
         // null -> returns false
-        assertFalse(findFirstCommand.equals(null));
+        assertFalse(findFirstCommandTrue.equals(null));
 
         // different person -> returns false
-        assertFalse(findFirstCommand.equals(findSecondCommand));
+        assertFalse(findFirstCommandTrue.equals(findSecondCommandTrue));
+        assertFalse(findFirstCommandFalse.equals(findSecondCommandFalse));
     }
 
     @Test
     public void execute_zeroKeywords_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        FindCommand command = prepareCommand(" ");
+        String[] userInput = {"OR", "  ", " "};
+        FindCommand command = prepareCommand(userInput);
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
-        FindCommand command = prepareCommand("Kurz Elle Kunz");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+        String[] userInput = {"OR", "ali", "heinz@example.com werner@example.com"};
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
+        FindCommand command = prepareCommand(userInput);
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE));
     }
 
     /**
-     * Parses {@code userInput} into a {@code FindCommand}.
+     * Parses {@code userInput} into a {@code FindByEmailCommand}.
      */
-    private FindCommand prepareCommand(String userInput) {
-        FindCommand command =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+    private FindCommand prepareCommand(String[] userInput) {
+        FindPersonDescriptor personDescriptor = new FindPersonDescriptor();
+        personDescriptor.setName(userInput[1]);
+        personDescriptor.setEmail(userInput[2]);
+        boolean type = (userInput[0].equals("AND")) ? true : userInput[0].equals("OR") ? false : null;
+        FindCommand command = new FindCommand(type, personDescriptor);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

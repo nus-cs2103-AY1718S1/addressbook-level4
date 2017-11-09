@@ -1,5 +1,5 @@
 # derickjw
-###### \java\seedu\address\commons\events\ui\NewResultAvailableEvent.java
+###### /java/seedu/address/commons/events/ui/NewResultAvailableEvent.java
 ``` java
     public final boolean isInvalid;
 
@@ -8,7 +8,7 @@
         this.isInvalid = isInvalid;
     }
 ```
-###### \java\seedu\address\logic\commands\ChangePasswordCommand.java
+###### /java/seedu/address/logic/commands/ChangePasswordCommand.java
 ``` java
 /**
  * Changes a user's password
@@ -42,7 +42,7 @@ public class ChangePasswordCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ChangeUsernameCommand.java
+###### /java/seedu/address/logic/commands/ChangeUsernameCommand.java
 ``` java
 /**
  * Changes a user's username
@@ -76,7 +76,7 @@ public class ChangeUsernameCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\CreateDefaultAccountCommand.java
+###### /java/seedu/address/logic/commands/CreateDefaultAccountCommand.java
 ``` java
 /**
  * Changes a user's password
@@ -102,7 +102,7 @@ public class CreateDefaultAccountCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\RemoveAccountCommand.java
+###### /java/seedu/address/logic/commands/RemoveAccountCommand.java
 ``` java
 /**
  * Remove the need to log in
@@ -138,17 +138,17 @@ public class RemoveAccountCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\LogicManager.java
+###### /java/seedu/address/logic/LogicManager.java
 ``` java
     private boolean isLoggedInUsername = false;
     private boolean isLoggedInPassword = false;
 ```
-###### \java\seedu\address\logic\LogicManager.java
+###### /java/seedu/address/logic/LogicManager.java
 ``` java
         isCorrectPassword("");
         isCorrectUsername("");
 ```
-###### \java\seedu\address\logic\LogicManager.java
+###### /java/seedu/address/logic/LogicManager.java
 ``` java
         if (!isLoggedInUsername) {
             if (isCorrectUsername(commandText)) {
@@ -169,7 +169,7 @@ public class RemoveAccountCommand extends Command {
                 return result;
             }
 ```
-###### \java\seedu\address\logic\LogicManager.java
+###### /java/seedu/address/logic/LogicManager.java
 ``` java
     /**
      *
@@ -218,7 +218,7 @@ public class RemoveAccountCommand extends Command {
     }
 
 ```
-###### \java\seedu\address\logic\parser\RemoveAccountCommandParser.java
+###### /java/seedu/address/logic/parser/RemoveAccountCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ChangePasswordCommand object
@@ -248,32 +248,32 @@ public class RemoveAccountCommandParser implements Parser<RemoveAccountCommand> 
     }
 }
 ```
-###### \java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /** Returns the User Preferences */
     UserPrefs getUserPrefs();
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     private final UserPrefs userPrefs;
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
         this.userPrefs = userPrefs;
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public UserPrefs getUserPrefs() {
         return userPrefs;
     }
 ```
-###### \java\seedu\address\model\UserPrefs.java
+###### /java/seedu/address/model/UserPrefs.java
 ``` java
     private String password = "";
     private String username = "";
 ```
-###### \java\seedu\address\model\UserPrefs.java
+###### /java/seedu/address/model/UserPrefs.java
 ``` java
     /**
      *
@@ -348,21 +348,21 @@ public class RemoveAccountCommandParser implements Parser<RemoveAccountCommand> 
     }
 }
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
             raise(new NewResultAvailableEvent(e.getMessage(), true));
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     private static String[] colors = {"red", "blue", "orange", "green", "black", "grey" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     private static String getColorForTag(String tagValue) {
         if (!tagColors.containsKey(tagValue)) {
@@ -371,7 +371,7 @@ public class RemoveAccountCommandParser implements Parser<RemoveAccountCommand> 
         return tagColors.get(tagValue);
     }
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
@@ -381,11 +381,11 @@ public class RemoveAccountCommandParser implements Parser<RemoveAccountCommand> 
         });
     }
 ```
-###### \java\seedu\address\ui\ResultDisplay.java
+###### /java/seedu/address/ui/ResultDisplay.java
 ``` java
     public static final String ERROR_STYLE_CLASS = "error";
 ```
-###### \java\seedu\address\ui\ResultDisplay.java
+###### /java/seedu/address/ui/ResultDisplay.java
 ``` java
         if (event.isInvalid) {
             setStyleToIndicateCommandFailure();
@@ -411,7 +411,7 @@ public class RemoveAccountCommandParser implements Parser<RemoveAccountCommand> 
 }
 
 ```
-###### \resources\view\BlueTheme.css
+###### /resources/view/BlueTheme.css
 ``` css
 */
 
@@ -766,7 +766,7 @@ public class RemoveAccountCommandParser implements Parser<RemoveAccountCommand> 
     -fx-font-size: 11;
 }
 ```
-###### \resources\view\LoginWindow.fxml
+###### /resources/view/LoginWindow.fxml
 ``` fxml
 <?xml version="1.0" encoding="UTF-8"?>
 

@@ -65,8 +65,26 @@ Option 1: Format: `help` +
 Option 2.1: Menu -> File -> Help +
 Option 2.2: Menu -> File -> `F1`
 
+=== Creating Default Account : `createDefaultAcc`
+Creates a default login account for a new user
+Format: `createDefaultAcc` +
+
+Username: `Admin` +
+Password: `Admin`
+
+=== Removing Login Account : `removeLogin`
+Removes the login account. +
+This is for users who does not want the need to login to access H.M.U v1.4 +
+Format: `removeLogin username password` +
+
+Examples:
+
+* `removeLogin admin admin`
+* `removeLogin tom123 1642522`
+
+
 === Changing password : `changepw`
-Changes a user's password needed to access H.M.U v1.2 +
+Changes a user's password needed to access H.M.U v1.4 +
 Format: `changepw username old_password new_password` +
 
 Examples:
@@ -182,10 +200,34 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Searching for persons: `find`
+
+Finds persons whose fields contain any of the given keywords. +
+Format: `find TYPE [PREFIX/KEYWORD] [PREFIX/MORE_KEYWORDS]`
+
+****
+* Two types of searches can be conducted: 'AND' and 'OR' searches
+* The order of the keywords does not matter.
+* Relevant fields as denoted by the prefix are searched
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. treated as having passed a field)
+** e.g. 'find AND n/Hans Han e/hans@me han@example' will return both Hans and Han
+** e.g. 'find AND n/Hans e/hans@me han@example' will only return Hans
+** however, 'find OR n/Hans e/han@example' will return both Hans and Han
+****
+
+Examples:
+
+* `findByName John` +
+Returns `john` and `John Doe`
+* `findByName Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+
+
+=== Locating persons by name: `findByName`
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `findByName KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -197,9 +239,9 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 
-* `find John` +
+* `findByName John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `findByName Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Locating persons by address: `findByAddress`
@@ -450,8 +492,13 @@ Contact's photo support +
 Search by Address (Available in v1.2) +
 Add Closest MRT Station to Contacts (Available in v1.2) +
 Search Contacts by Phone Number(Available in v1.2) +
-Scheduling (Available in v1.3) +
+Scheduling (Available in v1.4) +
 Closest Meet-up Point +
 Search by Email (Available in v1.3) +
 Search by Phone Number (Available in v1.3) +
+Search Contact's Location on Google Maps (Available in v1.4) +
+Create Default Account for new users (Available in v1.4) +
+Remove Login Account (Available in v1.4) +
+Arrange Schedule (Available in v1.4) +
+Visualize Schedule (Available in v1.4)
 

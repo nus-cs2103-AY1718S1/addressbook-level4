@@ -30,4 +30,9 @@ public class AddScheduleCommandParserTest {
         assertParseSuccess(parser, input, new AddScheduleCommand(exampleIndex,
                 exampleDay, exampleStartTime, exampleEndTime));
     }
+
+    @Test
+    public void parseInvalidTimeFailure() {
+
+    }
 }
