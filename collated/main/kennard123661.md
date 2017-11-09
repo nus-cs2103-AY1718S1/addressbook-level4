@@ -245,23 +245,6 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 ###### \java\seedu\address\model\Model.java
 ``` java
     /**
-     * Updates {@code filteredUncompletedParcels} and {@code filteredCompletedParcels} list and updates the
-     * {@code activeFilteredList} to either of the previous sub lists based on its current reference.
-     */
-    void updateSubLists();
-
-    /**
-     * Sets the active list in the model.
-     *
-     * @param isCompleted if true, the active list will be set to the list of {@link Parcel}s with {@link Status} that
-     *                    is COMPLETED. Otherwise, it will be set the list of parcels with {@link Status} that is not
-     *                    COMPLETED.
-     */
-    void setActiveList(boolean isCompleted);
-```
-###### \java\seedu\address\model\Model.java
-``` java
-    /**
      * Adds all unique {@link Parcel}s stored in {@code parcels} to the {@link AddressBook}
      *
      * @param parcels the list of parcels to add into the {@link AddressBook}.
@@ -295,18 +278,6 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
-    public void updateSubLists() {
-        // checks reference equality
-        boolean isActiveDelivered = activeParcels == completedParcels;
-
-        // filter sub lists
-        completedParcels = filteredParcels.filtered(deliveredPredicate);
-        uncompletedParcels = filteredParcels.filtered(deliveredPredicate.negate());
-
-        setActiveList(isActiveDelivered);
-    }
-
-    @Override
     public void setActiveList(boolean isCompleted) {
         activeParcels = isCompleted ? completedParcels : uncompletedParcels;
     }
@@ -328,7 +299,6 @@ public class ImportCommandParser implements Parser<ImportCommand> {
         }
 
         updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
-        updateSubLists();
         indicateAddressBookChanged();
     }
 ```
@@ -440,7 +410,7 @@ public enum Status {
             "Status can only be PENDING, DELIVERING, COMPLETED or OVERDUE";
 
     /**
-     * Returns a static instance of Status based on the {@param status}.
+     * Returns a static instance of Status based on the {@code status} parameter.
      *
      * @param status can be case-insensitive {@code String} of PENDING, DELIVERING, COMPLETED or OVERDUE.
      * @return one of four possible {@code Status} values.
@@ -457,6 +427,42 @@ public enum Status {
         }
 
         throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
+    }
+
+    /**
+     * Returns an updated Status based on the delivery date of the parcel relative to the today's date.
+     *
+     * @param status the {@code Status} to be updated.
+     * @param date the {@link DeliveryDate} of a parcel.
+     * @return an updated {@code Status}. If {@code Status} is {@code PENDING} or {@code OVERDUE},
+     *         returns {@code PENDING Status} if {@code date} is not after the present date or {@code OVERDUE Status}
+     *         if {@code date} is after the present date. If {@code status} is not {@code OVERDUE} or {@code PENDING},
+     *         returns {@code status}
+     */
+    public static Status getUpdatedInstance(Status status, DeliveryDate date) {
+        switch (status.toString()) {
+        case "PENDING": // fallthrough
+        case "OVERDUE":
+            return getUpdatedInstance(date);
+
+        default:
+            return status;
+        }
+    }
+
+    /**
+     * Returns an updated Status based on the delivery date of the parcel relative to the today's date.
+     *
+     * @param date the {@link DeliveryDate} of a parcel.
+     * @return an updated {@code Status} based on the {@code date}. returns {@code PENDING Status} if {@code date} is
+     * not after the present date and returns {@code OVERDUE Status} if {@code date} is after the present date.
+     */
+    private static Status getUpdatedInstance(DeliveryDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate delivery = LocalDate.parse(date.toString(), formatter);
+        LocalDate present = LocalDate.now();
+
+        return present.isAfter(delivery) ? Status.OVERDUE : Status.PENDING;
     }
 }
 ```
@@ -510,6 +516,10 @@ public class TrackingNumber {
     @Override
     public int hashCode() {
         return value.hashCode();
+    }
+
+    public int compareTo(TrackingNumber other) {
+        return this.toString().compareTo(other.toString());
     }
 
 }

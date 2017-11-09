@@ -60,7 +60,7 @@ public class XmlAdaptedParcel {
         email = source.getEmail().value;
         address = source.getAddress().toString();
         deliveryDate = source.getDeliveryDate().toString();
-        status = source.getStatus().toString();
+        status = Status.getUpdatedInstance(source.getStatus(), source.getDeliveryDate()).toString();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));

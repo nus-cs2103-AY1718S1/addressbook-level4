@@ -128,6 +128,13 @@ public class MainApp extends Application {
             initialData = new AddressBook();
         }
 
+        logger.info("Updating and saving Status field of parcels in the storage based on today's date.");
+        try {
+            storage.saveAddressBook(initialData);
+        } catch (IOException e) {
+            logger.warning("Problem while saving to file. Updating of status is skipped");
+        }
+
         return new ModelManager(initialData, userPrefs);
     }
 

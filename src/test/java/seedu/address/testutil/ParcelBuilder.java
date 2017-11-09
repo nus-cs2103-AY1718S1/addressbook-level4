@@ -161,7 +161,12 @@ public class ParcelBuilder {
         return this;
     }
 
+    /**
+     * Updates the status of the {@code parcel} using {@link Status#getUpdatedInstance(Status, DeliveryDate)}
+     * and returns the parcel.
+     */
     public Parcel build() {
+        this.parcel.setStatus(Status.getUpdatedInstance(parcel.getStatus(), parcel.getDeliveryDate()));
         return this.parcel;
     }
 

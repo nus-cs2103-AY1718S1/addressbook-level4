@@ -548,11 +548,6 @@ public class ImportCommandParserTest {
 ###### \java\seedu\address\model\ModelStub.java
 ``` java
     @Override
-    public void updateSubLists() {
-        fail("This method should not be called");
-    }
-
-    @Override
     public void setActiveList(boolean isCompleted) {
         fail("This method should not be called.");
     }
@@ -823,6 +818,31 @@ public class StatusTest {
         Status.getInstance("asd1237fa&(&"); // weird characters
         Status.getInstance("JUMPING"); // not one of the possible values
     }
+
+    @Test
+    public void getUpdatedInstanceTest() throws IllegalValueException {
+        DeliveryDate tomorrow = new DeliveryDate(DATE_TOMORROW);
+        DeliveryDate today = new DeliveryDate(DATE_TODAY);
+        DeliveryDate yesterday = new DeliveryDate(DATE_YESTERDAY);
+
+        // Ensure that Status is not updated for COMPLETED and DELIVERING even if date changes.
+        assertEquals(Status.COMPLETED, Status.getUpdatedInstance(Status.COMPLETED, yesterday));
+        assertEquals(Status.COMPLETED, Status.getUpdatedInstance(Status.COMPLETED, today));
+        assertEquals(Status.COMPLETED, Status.getUpdatedInstance(Status.COMPLETED, tomorrow));
+        assertEquals(Status.DELIVERING, Status.getUpdatedInstance(Status.DELIVERING, yesterday));
+        assertEquals(Status.DELIVERING, Status.getUpdatedInstance(Status.DELIVERING, today));
+        assertEquals(Status.DELIVERING, Status.getUpdatedInstance(Status.DELIVERING, tomorrow));
+
+        // PENDING/OVERDUE status becomes OVERDUE status if delivery date was yesterday
+        assertEquals(Status.OVERDUE, Status.getUpdatedInstance(Status.PENDING, yesterday));
+        assertEquals(Status.OVERDUE, Status.getUpdatedInstance(Status.OVERDUE, yesterday));
+
+        // PENDING/OVERDUE status becomes PENDING status if delivery date is today or tomorrow
+        assertEquals(Status.PENDING, Status.getUpdatedInstance(Status.PENDING, today));
+        assertEquals(Status.PENDING, Status.getUpdatedInstance(Status.PENDING, tomorrow));
+        assertEquals(Status.PENDING, Status.getUpdatedInstance(Status.OVERDUE, today));
+        assertEquals(Status.PENDING, Status.getUpdatedInstance(Status.OVERDUE, tomorrow));
+    }
 }
 ```
 ###### \java\seedu\address\model\parcel\TrackingNumberTest.java
@@ -972,14 +992,14 @@ public class TrackingNumberTest {
     public static final String VALID_PHONE_ALICE = "85355255";
     public static final String VALID_EMAIL_ALICE = "alice@example.com";
     public static final String VALID_ADDRESS_ALICE = "6, Jurong West Ave 1, #08-111 S649520";
-    public static final String VALID_DELIVERY_DATE_ALICE = "01-02-2000";
+    public static final String VALID_DELIVERY_DATE_ALICE = "05-05-2018";
 
     public static final String VALID_TRACKING_NUMBER_BENSON = "RR111000111SG";
     public static final String VALID_NAME_BENSON = "Benson Meier";
     public static final String VALID_PHONE_BENSON = "98765432";
     public static final String VALID_EMAIL_BENSON = "johnd@example.com";
     public static final String VALID_ADDRESS_BENSON = "336, Clementi Ave 2, #02-25 s120336";
-    public static final String VALID_DELIVERY_DATE_BENSON = "02-02-2000";
+    public static final String VALID_DELIVERY_DATE_BENSON = DATE_TOMORROW;
     public static final String TRACKING_NUMBER_DESC_BENSON = " " + PREFIX_TRACKING_NUMBER
             + VALID_TRACKING_NUMBER_BENSON;
     public static final String NAME_DESC_BENSON = " " + PREFIX_NAME + VALID_NAME_BENSON;
@@ -994,14 +1014,14 @@ public class TrackingNumberTest {
     public static final String VALID_PHONE_CARL = "95352563";
     public static final String VALID_EMAIL_CARL = "heinz@example.com";
     public static final String VALID_ADDRESS_CARL = "18 Marina Blvd, S018980";
-    public static final String VALID_DELIVERY_DATE_CARL = "03-02-2000";
+    public static final String VALID_DELIVERY_DATE_CARL = DATE_YESTERDAY;
 
     public static final String VALID_TRACKING_NUMBER_DANIEL = "RR111321123SG";
     public static final String VALID_NAME_DANIEL = "Daniel Meier";
     public static final String VALID_PHONE_DANIEL = "87652533";
     public static final String VALID_EMAIL_DANIEL = "cornelia@example.com";
     public static final String VALID_ADDRESS_DANIEL = "59 Namly Garden S267387";
-    public static final String VALID_DELIVERY_DATE_DANIEL = "04-02-2000";
+    public static final String VALID_DELIVERY_DATE_DANIEL = DATE_YESTERDAY;
 
     // parcels that are DELIVERING
     public static final String VALID_TRACKING_NUMBER_ELLE = "RR111321124SG";
@@ -1009,14 +1029,14 @@ public class TrackingNumberTest {
     public static final String VALID_PHONE_ELLE = "9482224";
     public static final String VALID_EMAIL_ELLE = "werner@example.com";
     public static final String VALID_ADDRESS_ELLE = "2 Finlayson Green, S049247";
-    public static final String VALID_DELIVERY_DATE_ELLE = "05-02-2000";
+    public static final String VALID_DELIVERY_DATE_ELLE = DATE_TODAY;
 
     public static final String VALID_TRACKING_NUMBER_FIONA = "RR999123555SG";
     public static final String VALID_NAME_FIONA = "Fiona Kunz";
     public static final String VALID_PHONE_FIONA = "9482427";
     public static final String VALID_EMAIL_FIONA = "lydia@example.com";
     public static final String VALID_ADDRESS_FIONA = "48 Upper Dickson Rd S207502";
-    public static final String VALID_DELIVERY_DATE_FIONA = "06-02-2000";
+    public static final String VALID_DELIVERY_DATE_FIONA = DATE_TODAY;
 
     // Parcels that are COMPLETED
     public static final String VALID_TRACKING_NUMBER_GEORGE = "RR696969696SG";
@@ -1024,14 +1044,14 @@ public class TrackingNumberTest {
     public static final String VALID_PHONE_GEORGE = "9482442";
     public static final String VALID_EMAIL_GEORGE = "anna@example.com";
     public static final String VALID_ADDRESS_GEORGE = "Block 532 HDB Upper Cross Street s050532";
-    public static final String VALID_DELIVERY_DATE_GEORGE = "07-02-2007";
+    public static final String VALID_DELIVERY_DATE_GEORGE = DATE_YESTERDAY;
 
     public static final String VALID_TRACKING_NUMBER_HOON = "RR121212124SG";
     public static final String VALID_NAME_HOON = "Hoon Meier";
     public static final String VALID_PHONE_HOON = "8482424";
     public static final String VALID_EMAIL_HOON = "stefan@example.com";
     public static final String VALID_ADDRESS_HOON = "522 Hougang Ave 6 s530522";
-    public static final String VALID_DELIVERY_DATE_HOON = "10-10-2010";
+    public static final String VALID_DELIVERY_DATE_HOON = DATE_YESTERDAY;
 
     // Parcels to be manually added
     public static final String VALID_TRACKING_NUMBER_IDA = "RR111333888SG";
@@ -1039,14 +1059,14 @@ public class TrackingNumberTest {
     public static final String VALID_PHONE_IDA = "8482131";
     public static final String VALID_EMAIL_IDA = "hans@example.com";
     public static final String VALID_ADDRESS_IDA = "3 River Valley Rd, S179024";
-    public static final String VALID_DELIVERY_DATE_IDA = "09-09-2009";
+    public static final String VALID_DELIVERY_DATE_IDA = DATE_TODAY;
 
     public static final String VALID_TRACKING_NUMBER_JOHN = "RR998877665SG";
     public static final String VALID_NAME_JOHN = "John Doe";
     public static final String VALID_PHONE_JOHN = "99999991";
     public static final String VALID_EMAIL_JOHN = "jd@example.com";
     public static final String VALID_ADDRESS_JOHN = "3 River Valley Rd, S179024";
-    public static final String VALID_DELIVERY_DATE_JOHN = "09-12-2030";
+    public static final String VALID_DELIVERY_DATE_JOHN = DATE_TOMORROW;
 
     public static final ReadOnlyParcel ALICE = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_ALICE)
             .withName(VALID_NAME_ALICE).withAddress(VALID_ADDRESS_ALICE)
@@ -1173,13 +1193,11 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
         /* Case: undo importing testAddressBookForImportSystem.xml data to the list -> Amy and Bob deleted */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        model.maintainSorted();
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: redo adding Amy to the list -> Amy added again */
         command = RedoCommand.COMMAND_WORD;
         model.addAllParcels(parcels, new ArrayList<>(), new ArrayList<>());
-        model.maintainSorted();
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
