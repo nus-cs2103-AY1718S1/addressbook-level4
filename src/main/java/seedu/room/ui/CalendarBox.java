@@ -3,7 +3,9 @@ package seedu.room.ui;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,8 +14,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import seedu.room.logic.Logic;
+import seedu.room.model.event.ReadOnlyEvent;
 
-//@@author Haozhe321-reused
+//@@author Haozhe321
 
 /**
  * Create a CalendarBox Object to pass to the CalendarBoxPanel to be displayed
@@ -24,12 +28,15 @@ public class CalendarBox {
     private VBox view;
     private Text calendarTitle;
     private YearMonth currentYearMonth;
+    private Logic logic;
+
 
     /**
      * Create a calendar view
      * @param yearMonth year month to create the calendar of
      */
-    public CalendarBox(YearMonth yearMonth) {
+    public CalendarBox(YearMonth yearMonth, Logic logic) {
+        this.logic = logic;
         currentYearMonth = yearMonth;
         // Create the calendar grid pane
         GridPane calendar = new GridPane();
@@ -69,17 +76,23 @@ public class CalendarBox {
         HBox.setMargin(nextMonth, new Insets(0, 5, 0, 5));
         titleBar.setAlignment(Pos.BASELINE_CENTER);
         // Populate calendar with the appropriate day numbers
-        populateCalendar(yearMonth);
+        logic.getFilteredEventList();
+        populateCalendar(yearMonth, logic.getFilteredEventList());
         // Create the calendar view
         view = new VBox(titleBar, dayLabels, calendar);
         VBox.setMargin(titleBar, new Insets(0, 0, 10, 0));
     }
 
+
     /**
-     * Set the days of the calendar to correspond to the appropriate date
+     * Set the days of the calendar to correspond to the appropriate date, with the events populated
      * @param yearMonth year and month of month to render
+     * @param eventList list of events to populate
      */
-    public void populateCalendar(YearMonth yearMonth) {
+    public void populateCalendar(YearMonth yearMonth, ObservableList<ReadOnlyEvent> eventList) {
+        HashMap<LocalDate, ArrayList<ReadOnlyEvent>> hashEvents = new HashMap<LocalDate, ArrayList<ReadOnlyEvent>>();
+        hashEvents = eventsHashMap(eventList);
+
         // Get the date we want to start with on the calendar
         LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
         // Dial back the day until it is SUNDAY (unless the month starts on a sunday)
@@ -87,25 +100,46 @@ public class CalendarBox {
             calendarDate = calendarDate.minusDays(1);
         }
 
-
         // Populate the calendar with day numbers
         for (AnchorPaneNode ap : allCalendarDays) {
             if (ap.getChildren().size() != 0) {
                 ap.getChildren().remove(0);
             }
 
+            ap.getChildren().clear();
             //make today's date light up
             if (calendarDate.equals(LocalDate.now())) {
                 ap.lightUpToday();
+            } else {
+                ap.revertBackground();
             }
+            addDates(calendarDate, ap);
 
-            Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
-            ap.setDate(calendarDate);
-            ap.setTopAnchor(txt, 5.0);
-            ap.setLeftAnchor(txt, 5.0);
-            ap.getChildren().add(txt);
+            if (hashEvents.containsKey(calendarDate)) {
+                ArrayList<ReadOnlyEvent> eventInADay = hashEvents.get(calendarDate);
+
+                int numEvents = 0;
+                String allEventTitle = "";
+                //go through the list of events and add them to the grid
+                for (ReadOnlyEvent actualEvent: eventInADay) {
+
+                    //if number of events is already more than 2, populate only 2 and tell users there are more events
+                    if (numEvents == 2) {
+                        allEventTitle = allEventTitle + "and more...";
+                        break;
+                    }
+                    String eventTitle = actualEvent.getTitle().toString();
+                    if (eventTitle.length() > 8) {
+                        eventTitle = eventTitle.substring(0, 8) + "...";
+                    }
+                    allEventTitle = allEventTitle + eventTitle + "\n";
+                    numEvents++;
+                }
+                Text eventText = new Text(allEventTitle);
+                addEventName(ap, eventText);
+
+            }
             calendarDate = calendarDate.plusDays(1);
-
 
         }
         // Change the title of the calendar
@@ -113,11 +147,54 @@ public class CalendarBox {
     }
 
     /**
+     * Create a HashMap of LocalDate and Arraylist of ReadOnlyEvent to use for populating events on calendar
+     * @param eventList
+     * @return HashMap of LocalDate and Arraylist of ReadOnlyEvent
+     */
+    public HashMap<LocalDate, ArrayList<ReadOnlyEvent>> eventsHashMap(ObservableList<ReadOnlyEvent> eventList) {
+        HashMap<LocalDate, ArrayList<ReadOnlyEvent>> hashEvents = new HashMap<LocalDate, ArrayList<ReadOnlyEvent>>();
+        for (ReadOnlyEvent event: eventList) {
+            if (hashEvents.containsKey(event.getDatetime().getLocalDateTime().toLocalDate())) {
+                hashEvents.get(event.getDatetime().getLocalDateTime().toLocalDate()).add(event);
+            } else {
+                ArrayList<ReadOnlyEvent> newEventList = new ArrayList<ReadOnlyEvent>();
+                newEventList.add(event);
+                hashEvents.put(event.getDatetime().getLocalDateTime().toLocalDate(), newEventList);
+            }
+        }
+
+        return hashEvents;
+    }
+
+    /**
+     * Add the event's name on the calendar grid
+     * @param ap AnchorPaneNode that we are adding the event to
+     * @param eventText Text for the event(s)
+     */
+    public void addEventName(AnchorPaneNode ap, Text eventText) {
+        ap.setBottomAnchor(eventText, 5.0);
+        ap.setLeftAnchor(eventText, 5.0);
+        ap.getChildren().add(eventText);
+    }
+
+    /**
+     * add the date number to the grids
+     */
+    public void addDates(LocalDate calendarDate, AnchorPaneNode ap) {
+        Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
+        ap.setDate(calendarDate);
+        ap.setTopAnchor(txt, 10.0);
+        ap.setLeftAnchor(txt, 5.0);
+        ap.getChildren().add(txt);
+    }
+
+
+    /**
      * Move the month back by one. Repopulate the calendar with the correct dates.
      */
     private void previousMonth() {
         currentYearMonth = currentYearMonth.minusMonths(1);
-        populateCalendar(currentYearMonth);
+        populateCalendar(currentYearMonth, logic.getFilteredEventList());
     }
 
     /**
@@ -125,7 +202,7 @@ public class CalendarBox {
      */
     private void nextMonth() {
         currentYearMonth = currentYearMonth.plusMonths(1);
-        populateCalendar(currentYearMonth);
+        populateCalendar(currentYearMonth, logic.getFilteredEventList());
     }
 
 

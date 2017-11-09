@@ -1,6 +1,7 @@
 package seedu.room.ui;
 
 import java.io.File;
+import java.time.YearMonth;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
 import seedu.room.commons.core.Config;
 import seedu.room.commons.core.GuiSettings;
 import seedu.room.commons.core.LogsCenter;
+import seedu.room.commons.events.model.EventBookChangedEvent;
 import seedu.room.commons.events.ui.ExitAppRequestEvent;
 import seedu.room.commons.events.ui.NewResultAvailableEvent;
 import seedu.room.commons.events.ui.ShowHelpRequestEvent;
@@ -147,7 +149,7 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerParts() {
 
         //@@author Haozhe321
-        calandarBoxPanel = new CalendarBoxPanel();
+        calandarBoxPanel = new CalendarBoxPanel(this.logic);
         calendarPlaceholder.getChildren().add(calandarBoxPanel.getRoot());
         //@@author
 
@@ -273,5 +275,11 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    public void handleCalenderBoxPanelChange(EventBookChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        calandarBoxPanel.getCalendarBox().populateCalendar(YearMonth.now(), this.logic.getFilteredEventList());
     }
 }

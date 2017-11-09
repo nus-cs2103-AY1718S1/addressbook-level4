@@ -1,4 +1,4 @@
-= ResidentBook Level 4 - Developer Guide
+= ResidentBook - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -519,6 +519,7 @@ The highlight command also allows removal of highlighting through input of "-" a
     }
 ----
 
+// tag::temporaryperson[]
 === Temporary Contact mechanism
 
 Temporary contacts is implemented using the java LocalDateTime class to keep track of the time that the temporary contact
@@ -535,21 +536,24 @@ When creating a temporary contact, users should input temp/ followed by the numb
 Earlier implementation: A temporary contact that expires when the application boots up the next time. This implementation
  does not give much flexibility to the users in terms of how long they want the temporary contact to remain.
 
-The temporary contact is implemented this way:
+The temporary contact is implemented using the Timestamp class in this way:
 [source,java]
 ----
-    public Timestamp(long day) {
-        creationTime = LocalDateTime.now().withNano(0).withSecond(0).withMinute(0);
-        if (day > 0) {
-            expiryTime = creationTime.plusDays(day).withNano(0).withSecond(0).withMinute(0);
+        public Timestamp(long day) throws IllegalValueException {
+            creationTime = LocalDateTime.now().withNano(0).withSecond(0).withMinute(0);
+            if (!isValidTimestamp(day)) {
+                throw new IllegalValueException(MESSAGE_TIMESTAMP_CONSTRAINTS);
+            }
+            if (day > 0) {
+                expiryTime = creationTime.plusDays(day).withNano(0).withSecond(0).withMinute(0);
+            }
+            daysToLive = day;
         }
-        daysToLive = day;
-    }
 ----
 As we can see, the time that this contact will expire is to the nearest hour, done by ignoring nanosecond, second, and
 minute
 
-// tag::import[]
+// end::temporaryperson[]
 === Import mechanism
 
 The import mechanism is essentially adding multiple contacts to the resident book automatically by referencing a xml file. It is implemented by calling add function repeatedly till all the new contacts have been added to the current contact list.
