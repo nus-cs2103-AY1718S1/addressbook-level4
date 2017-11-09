@@ -41,6 +41,7 @@ import seedu.address.logic.commands.RepaidCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetPathCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UnbanCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.WhitelistCommand;
@@ -249,6 +250,12 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(SetPathCommand.COMMAND_WORD) instanceof SetPathCommand);
         assertTrue(parser.parseCommand("setpath" + " "
                 + "C:/Users/acer/Desktop/SE/profilepic/") instanceof SetPathCommand);
+    }
+
+    @Test
+    public void perseCommand_themeCommandWord_returnsThemeCommand() throws Exception {
+        assertTrue(parser.parseCommand(ThemeCommand.COMMAND_WORD) instanceof ThemeCommand);
+        assertTrue(parser.parseCommand("theme 3") instanceof ThemeCommand);
     }
 
     @Test
