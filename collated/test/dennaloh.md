@@ -1,5 +1,5 @@
 # dennaloh
-###### \java\seedu\address\logic\commands\person\EmailCommandTest.java
+###### /java/seedu/address/logic/commands/person/EmailCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code EmailCommand}.
@@ -23,20 +23,20 @@ public class EmailCommandTest {
 
     @Test
     public void equals() {
-        EmailCommand deleteFirstCommand = new EmailCommand(INDEX_FIRST_PERSON);
-        EmailCommand deleteSecondCommand = new EmailCommand(INDEX_SECOND_PERSON);
+        EmailCommand emailFirstCommand = new EmailCommand(INDEX_FIRST_PERSON);
+        EmailCommand emailSecondCommand = new EmailCommand(INDEX_SECOND_PERSON);
 
         // same object -> returns true
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
+        assertTrue(emailFirstCommand.equals(emailFirstCommand));
 
         // different types -> returns false
-        assertFalse(deleteFirstCommand.equals(1));
+        assertFalse(emailFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(deleteFirstCommand.equals(null));
+        assertFalse(emailFirstCommand.equals(null));
 
         // different person -> returns false
-        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+        assertFalse(emailFirstCommand.equals(emailSecondCommand));
     }
 
     /**
@@ -49,7 +49,7 @@ public class EmailCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\person\FindCommandTest.java
+###### /java/seedu/address/logic/commands/person/FindCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -124,93 +124,43 @@ public class FindCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\stub\ModelStub.java
+###### /java/seedu/address/logic/commands/person/GMapCommandTest.java
 ``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code GMapCommand}.
+ */
+public class GMapCommandTest {
 
-    @Override
-    public boolean haveDuplicate(String name, ObservableList<ReadOnlyPerson> list) {
-        return false;
-    }
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-    @Override
-    public void addData(ReadOnlyAddressBook newData) {
-        fail("This method should not be called.");
-    }
+    @Test
+    public void equals() {
+        GMapCommand gMapFirstCommand = new GMapCommand(INDEX_FIRST_PERSON);
+        GMapCommand gMapSecondCommand = new GMapCommand(INDEX_SECOND_PERSON);
 
-    @Override
-    public void resetData(ReadOnlyAddressBook newData) {
-        fail("This method should not be called.");
-    }
+        // same object -> returns true
+        assertTrue(gMapFirstCommand.equals(gMapFirstCommand));
 
-    @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        fail("This method should not be called.");
-        return null;
-    }
+        // same values -> returns true
+        GMapCommand gMapFirstCommandCopy = new GMapCommand(INDEX_FIRST_PERSON);
+        assertTrue(gMapFirstCommand.equals(gMapFirstCommandCopy));
 
-    @Override
-    public void addProperty(String shortName, String fullName, String message, String regex)
-            throws DuplicatePropertyException, PatternSyntaxException {
-        fail("This method should not be called.");
-    }
+        // different types -> returns false
+        assertFalse(gMapFirstCommand.equals(1));
 
-    @Override
-    public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        fail("This method should not be called.");
-    }
+        // null -> returns false
+        assertFalse(gMapFirstCommand.equals(null));
 
-    @Override
-    public void setPersonAvatar(ReadOnlyPerson target, Avatar avatar) {
-        fail("This method should not be called.");
-    }
-
-    @Override
-    public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-            throws DuplicatePersonException {
-        fail("This method should not be called.");
-    }
-    @Override
-    public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
-        throws DuplicateEventException {
-        fail("This method should not be called.");
-    }
-
-    @Override
-    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        fail("This method should not be called.");
-        return null;
-    }
-
-    @Override
-    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-        fail("This method should not be called.");
-    }
-
-    @Override
-    public ObservableList<ReadOnlyEvent> getFilteredEventList() {
-        fail("This method should not be called.");
-        return null;
-    }
-
-    @Override
-    public void updateFilteredEventsList(Predicate<ReadOnlyEvent> predicate) {
-        fail("This method should not be called.");
-    }
-
-    @Override
-    public void removeTag(Tag tags) throws DuplicatePersonException, PersonNotFoundException {
-        fail("This method should not be called.");
-    }
-
-    @Override
-    public boolean hasTag(Tag tag) {
-        fail("This method should not be called.");
-        return false;
-    }
-
-    @Override
-    public void setTagColor(Tag tag, String color) {
-        fail("This method should not be called.");
+        // different person -> returns false
+        assertFalse(gMapFirstCommand.equals(gMapSecondCommand));
     }
 }
+```
+###### /java/seedu/address/logic/commands/stub/ModelStub.java
+``` java
+    @Override
+    public String getGMapUrl(ReadOnlyPerson target)  {
+        fail("This method should not be called.");
+        return null;
+    }
 ```
