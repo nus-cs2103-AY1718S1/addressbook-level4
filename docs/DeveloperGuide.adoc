@@ -925,30 +925,45 @@ This is how you can use the LoggingCommand method in your code.
 ----
 Where "information" indicate the data that the user are editing with while "type of action" indicate the action taken by the user.
 
-=== Email Function
-(added in v1.2)
+=== ClearLog Function
+(added in v1.3)
 
-The email function allows a user to email the selected person by opening an email client on the user's
-PC with the 'to:' field filled with the receiver's email.
+In this section, we will explain how users can clear their log for ConnectUsLog.txt file.
 
-This function has been mapped to `EmailButton`
+In cases, where you want to keep your logfile organised by clearing logfile such as after checks or confirmation of log details. The logfile information is no longer useful to the user and this method allow that action.
 
-Once a `PersonPanelSelectionChangedEvent` is raised, `EmailButton` will save the currently selected
-email under the "email" attribute.
+This function has been mapped to `ClearLogButton` and 'clearlog' 'cl' for commandline.
+
+The following sequence diagram describes how 'ClearLogCommand' delete ConnectUsLog.txt file when method is called.
+
+image::ClearLogSeq.png[]
+_Figure 4.14.1 : Sequence Diagram of the ClearLogCommand_
+
+The ClearLog Method is implemented in the 'ClearLogButton' with the following codes.
 [source,java]
 ----
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        this.selectedEmail = event.getNewSelection().person.emailProperty().getValue().toString();
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-    }
+       @FXML
+       private void handleClearLogButtonPressed() throws CommandException, ParseException, IOException {
+           Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want clear the log?",
+                   ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+           alert.showAndWait();
+           if (alert.getResult() == ButtonType.YES) {
+               ClearLogCommand clearLogCommand = new ClearLogCommand();
+               clearLogCommand.execute();
+               logger.info("Log has been cleared.");
+           }
+       }
 ----
 
-
-The following sequence diagram describes how `OpenEmailClient` passes in the "email" attribute to `Desktop`
-
-image::OpenEmailClientSequenceDiagram.png[width="800"]
-_Figure 4.1.1 : Sequence Diagram of the Email function_
+The ClearLog Method implementation for commandline with the following codes.
+[source,java]
+----
+    public CommandResult execute() throws CommandException, IOException {
+        File file = new File("ConnectUsLog.txt");
+        file.delete();
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+----
 
 == Documentation
 
