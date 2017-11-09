@@ -660,33 +660,34 @@ The component diagram in _Figure 4.4.3_ below shows the interactions within the 
 image::LogicComponentSequenceDiagramFind.PNG[width="800"]
 _Figure 4.4.4 : Find component diagram_
 
-Upon any successful match, the particulars of the contact will be displayed in `CommandBox`. _Figures 4.4.4a to 4.4.4g_ below indicate the various outcomes of search function by  using `FindCommand`.
-
-image::FindCommand_Name.PNG[width="400"]
-_Figure 4.4.4a : Find by name [n/NAME]_
-
-image::FindCommand_Phone.PNG[width="400"]
-_Figure 4.4.4b : Find by phone [p/PHONE]_
-
-image::FindCommand_Email.PNG[width="400"]
-_Figure 4.4.4c : Find by email [e/EMAIL]_
-
-image::FindCommand_Address.PNG[width="400"]
-_Figure 4.4.4d : Find by address [a/ADDRESS]_
-
-image::FindCommand_Activity.PNG[width="400"]
-_Figure 4.4.4e : Find by activity [act/ACTIVITY]_
-
-image::FindCommand_Tag.PNG[width="400"]
-_Figure 4.4.4f : Find by tag [t/TAG]_
-
-image::FindCommand_Country.PNG[width="400"]
-_Figure 4.4.4g : Find by country [c/COUNTRY]_
-
-The sequence diagram in _Figure 4.4.5_ below shows how the find function works:
+The sequence diagram in _Figure 4.4.4_ below shows how the find function works:
 
 image::SequenceDiagramFind.PNG[width="800"]
-_Figure 4.4.5 : Find sequence diagram_
+_Figure 4.4.4 : Find sequence diagram_
+
+
+Upon any successful match, the particulars of the contact will be displayed in `CommandBox`. _Figures 4.4.5a to 4.4.5g_ below indicate the various outcomes of search function by  using `FindCommand`.
+
+image::FindCommand_Name.PNG[width="400"]
+_Figure 4.4.5a : Find by name [n/NAME]_
+
+image::FindCommand_Phone.PNG[width="400"]
+_Figure 4.4.5b : Find by phone [p/PHONE]_
+
+image::FindCommand_Email.PNG[width="400"]
+_Figure 4.4.5c : Find by email [e/EMAIL]_
+
+image::FindCommand_Address.PNG[width="400"]
+_Figure 4.4.5d : Find by address [a/ADDRESS]_
+
+image::FindCommand_Activity.PNG[width="400"]
+_Figure 4.4.5e : Find by activity [act/ACTIVITY]_
+
+image::FindCommand_Tag.PNG[width="400"]
+_Figure 4.4.5f : Find by tag [t/TAG]_
+
+image::FindCommand_Country.PNG[width="400"]
+_Figure 4.4.5g : Find by country [c/COUNTRY]_
 
 ==== Design Considerations for `FindCommand`
 
@@ -767,12 +768,12 @@ Alternatively, it may also be possible to permanently display all fields in each
 
 `CalendarCommand` which reside in `Logic` will  open up a new browser webpage in the `BrowserPanel` that shows calendar for the entire year. The webpage will display the calendar from January to December, inclusive of public holidays.User are also able to navigate to other website that show useful information such as weather, time zone and more.
 
-The sequence diagram of `CalendarCommand` in _Figure 4.4.1_ below indicates the sequence diagram of the calendar function.
+The sequence diagram of `CalendarCommand` in _Figure 4.6.1_ below indicates the sequence diagram of the calendar function.
 
 image::SequenceDiagramCalendar.PNG[width="800"]
-_Figure 4.4.1 : Clenader sequence diagram_
+_Figure 4.6.1 : Clenader sequence diagram_
 
-Upon taking in `CalendarCommand`  in the command line, a new `ShowCalendarRequestEvent` is posted by the `EventsCenter` class to its `EventBus`, as shown in _Figure 4.4.2_.  In addition , user are able  bypass `CalendarCommand` by pressing on `F2` key to post `ShowCalendarRequestEvent` thus allow user to launch calendar webpage via command line or via accelerators.
+Upon taking in `CalendarCommand`  in the command line, a new `ShowCalendarRequestEvent` is posted by the `EventsCenter` class to its `EventBus`, as shown in _Figure 4.6.2_.  In addition , user are able  bypass `CalendarCommand` by pressing on `F2` key to post `ShowCalendarRequestEvent` thus allow user to launch calendar webpage via command line or via accelerators.
 
 [source,java]
 ----
@@ -786,17 +787,17 @@ public class CalendarCommand extends Command {
 }
 
 ----
-_Figure 4.4.2: Code section in CalendarCommand.java_
+_Figure 4.6.2: Code section in CalendarCommand.java_
 
-The component diagram in _Figure 4.4.3_ below indicates the interactions within the Logic component for the execution of calendar command.
+The component diagram in _Figure 4.6.3_ below indicates the interactions within the Logic component for the execution of calendar command.
 
 image::CalendarCommandComponentDiagram.PNG[width="800"]
-_Figure 4.4.3 : Clenader sequence diagram_
+_Figure 4.6.3 : Clenader sequence diagram_
 
 
 
 The  `BrowserPanel`  which reside in `UI` will handle the event of `ShowCalendarRequestEvent`
-as shown in _Figure 4.4.4_:
+as shown in _Figure 4.6.4_:
 [source,java]
 ----
 public class BrowserPanel extends UiPart<Region> {
@@ -807,13 +808,13 @@ public class BrowserPanel extends UiPart<Region> {
    }
 }
 ----
-_Figure 4.4.4: Code section in BrowserPanel.java_
+_Figure 4.6.4: Code section in BrowserPanel.java_
 
-The method `loadCalendar` will pass the calendar url to `BrowserPanel` to open up calendar website in `BrowserPanel`. The outcome of successful launching of calendar webpage in browser is shown in _Figure 4.4.5_:
+The method `loadCalendar` will pass the calendar url to `BrowserPanel` to open up calendar website in `BrowserPanel`. The outcome of successful launching of calendar webpage in browser is shown in _Figure 4.6.5_:
 
 image::CalendarCommand.png[width="800"]
 
-_Figure 4.4.5: Output of `CalendarCommand.java` execution_
+_Figure 4.6.5: Output of `CalendarCommand.java` execution_
 
 ==== Design Considerations for `CalendarCommand`
 
@@ -1012,6 +1013,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
 }
 
 ----
+_Figure 4.9.2: Code section in EmailCommandParser.java_
 
 A `Command` object will be executed by `Logic Manger`.During command excution, a filtered person list will be extracted from `Model`. The emails extracted from the filtered person list will be stored in a `recipientList` as shown in Figure 4.9.3_ .`Desktop` class will be used to send email using `Desktop.Action.Mail` baed on recipientList.
 
@@ -1047,10 +1049,10 @@ _Figure 4.9.5: Output of `EmailCommand.java` execution_
 **Aspect:** Data structure to support `EmailCommand` +
 **Alternative 1 (current choice)**: Use Set for storing of user's input of indices  +
 **Pros:** Prevent duplication of indices to speed up execution of `EmailCommand` +
-**Cons:** User might bypass the `CalendarCommand` and rely on desktop calendar +
-**Alternative 2:** Opening up of google calendar +
-**Pros:** User are able to store the events in the google calendar. +
-**Cons:** Unable to view public holidays.User also have to go through the hassle of logging in just to view the calendar. +
+**Cons:** Set provides random access.Two objects might be considred equal if they have the same hascode even though they are different.  +
+**Alternative 2:** Using ArrayList +
+**Pros:** List implementations are ordered as List stores element in the order they were added +
+**Cons:** Unable to detect duplicate indicies +
 
 ---
 
