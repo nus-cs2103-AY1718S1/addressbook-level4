@@ -165,10 +165,7 @@ public class XmlAddressBookStorageTest {
      * Checks if the expectedSchedule is equals to the schedule in the storage
      */
     private boolean assertTrue(Schedule expectedSchedule, Schedule schedule) {
-        if (expectedSchedule.equals(schedule)) {
-            return true;
-        }
-        return false;
+        return expectedSchedule.equals(schedule);
     }
     //@@author
 

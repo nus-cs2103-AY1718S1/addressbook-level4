@@ -82,7 +82,7 @@ public class ScheduleCommandTest {
         newList.add(newSchedule);
 
         String expectedPersonName = "Alice Pauline";
-        String personName = newSchedule.getPersonName().toString();
+        String personName = newSchedule.getPersonName();
         assertEquals(expectedPersonName, personName);
 
         String expectedDate = date.getTime().toString();

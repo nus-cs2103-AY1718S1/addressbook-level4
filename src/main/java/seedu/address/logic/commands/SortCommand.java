@@ -2,10 +2,6 @@ package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.ArrayList;
-
-import seedu.address.model.person.ReadOnlyPerson;
-
 //@@author limcel
 /**
  * Sorts all contacts in alphabetical order by their names from the address book.
@@ -22,10 +18,7 @@ public class SortCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "All contacts are sorted alphabetically by name.";
 
-    private ArrayList<ReadOnlyPerson> contactList;
-
     public SortCommand() {
-        contactList = new ArrayList<>();
     }
 
     @Override
