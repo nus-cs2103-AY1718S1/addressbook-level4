@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.scene.control.Label;
 import org.fxmisc.easybind.EasyBind;
 
 import com.google.common.eventbus.Subscribe;
@@ -31,6 +32,7 @@ public class PersonListPanel extends UiPart<Region> {
         super(FXML);
         setConnections(personList);
         registerAsAnEventHandler(this);
+        personListView.setPlaceholder(new Label("No Persons Available!"));
     }
 
     /**

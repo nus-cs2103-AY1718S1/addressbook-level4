@@ -91,7 +91,7 @@ If everything goes well, it should finish with the `BUILD SUCCESSFUL` message. T
 
 === Verifying the Setup
 
-To make sure that the application runs as expected after the initial set up setting up, do the following: 
+To make sure that the application runs as expected after the initial set up setting up, do the following:
 
 . Run the `seedu.address.MainApp` and try a few commands
 . link:#testing[Run the tests] to ensure they all pass.
@@ -869,7 +869,7 @@ _Figure 4.7.4: UI display for user's agenda_
 // end::agenda[]
 
 // tag::reminder[]
-=== Pop-up reminder window [Since v1.4]
+=== Pop-up reminder window [Since v1.5]
 
 The `AddressBook` consists of 2 schedule lists: one contains all the scheduled activities by the user, while the other contains the scheduled activities that the user need to be reminded of. +
 If there exists any activities that the user need to be reminded of, a `ReminderWindow` will open after the `MainWindow`, as shown in _Figure 4.8.1_ below.

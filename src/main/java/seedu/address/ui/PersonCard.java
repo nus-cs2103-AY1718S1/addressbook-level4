@@ -27,8 +27,8 @@ public class PersonCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
-    private static String[] colors = {"red", "blue", "orange", "brown", "green", "pink",
-        "black", "oldlace", "royalblue", "salmon", "tomato", "teal",
+    private static String[] colors = {"blue", "orange", "brown", "green", "pink",
+        "black", "royalblue", "salmon", "tomato", "teal",
         "darkseagreen", "cornflowerblue", "hotpink", "yellowgreen", "palevioletred", "lightsteelblue", "lightcyan"};
     private static HashMap<String, String> tagColors = new HashMap<>();
     private static Random random = new Random();
@@ -59,12 +59,25 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
+        setStylesToNameAndId();
         initEmails(person);
         initTags(person);
         initSchedules(person);
         bindListeners(person);
     }
 
+    //@@author 17navasaw
+    /**
+     * Sets the styles for id and name in the PersonCard.
+     */
+    private void setStylesToNameAndId() {
+        id.getStyleClass().removeAll();
+        id.getStyleClass().add("headers");
+        name.getStyleClass().removeAll();
+        name.getStyleClass().add("headers");
+    }
+
+    //@@author jin-ting
     private static String getColorForTag(String tagValue) {
         if (!tagColors.containsKey(tagValue)) {
             tagColors.put(tagValue, colors[random.nextInt(colors.length)]);

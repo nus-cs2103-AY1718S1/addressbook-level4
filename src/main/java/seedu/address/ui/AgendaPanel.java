@@ -3,6 +3,7 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.scene.control.Label;
 import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.ObservableList;
@@ -21,10 +22,13 @@ public class AgendaPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(AgendaPanel.class);
 
     @FXML
+    private Label agendaHeader;
+    @FXML
     private ListView<ScheduleCard> scheduleCardListView;
 
     public AgendaPanel(ObservableList<Schedule> scheduleList) {
         super(FXML);
+        agendaHeader.getStyleClass().remove("label");
         setConnections(scheduleList);
     }
 

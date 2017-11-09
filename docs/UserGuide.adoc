@@ -300,6 +300,26 @@ Associates the specified schedule with the 1st and 3rd persons in the address bo
 `schedule 1 d/25-12-2017 act/Christmas dinner` +
 Associates the specified schedule with the 1st person in the results of the `find` command.
 
+// tag::agenda[]
+===== Viewing of user's agenda [Since v1.4]
+
+A list of all scheduled activities by the user is displayed in the 'My Agenda' section of the application, as shown below in _Figure 3.4.3.1_.
+
+image::AgendaPanelUI.png[width="400"]
+_Figure 3.4.3.1: UI display for user's agenda_
+
+When an activity is scheduled, the agenda list will be immediately updated, with the list being arranged from earliest to latest date with the earliest being at the top.
+// end::agenda[]
+
+// tag::reminder[]
+===== Pop-up reminder window on startup [Since v1.5]
+
+A pop-up reminder will be appear after the main application window has opened, if there exists scheduled activities by the user which are due the day after the current date. The display of the reminder window can be seen in _Figure 3.4.3.2_ below:
+
+image::ReminderWindowUI.png[width="400"]
+_Figure 3.4.3.2: UI display for pop-up reminder window_
+// end::reminder[]
+
 // tag::copy[]
 ==== Getting email addresses : `copy` [Since v1.3]
 

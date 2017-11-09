@@ -134,6 +134,7 @@ include::../DeveloperGuide.adoc[tag=addaddressrestriction]
 === Other contributions
 
 * Set up TravisCI and Coveralls for the team repo
-* Set and created the stylesheet for the user agenda and reminder window.
+* Set the styles for the user agenda and reminder window.
+* Provided support for scheduling an activity for multiple contacts to appear as one schedule in user agenda. (Pull request https://github.com/CS2103AUG2017-T15-B2/main/pull/123[#123])
 * Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
