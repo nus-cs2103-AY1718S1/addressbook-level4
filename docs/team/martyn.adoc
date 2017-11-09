@@ -12,8 +12,6 @@ OurAb is a CLI(Command Line Interface)-based desktop Address Book application wr
 
 ==== External behavior
 
-#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: command-summary]]#
-
 Users can type a shortcut command for 16 commands, where entering the first letter(s) of the command also returns the same functionality:
 1) Add
 2) Delete
@@ -34,14 +32,14 @@ Users can type a shortcut command for 16 commands, where entering the first lett
 
 e.g. entering "l" will also return a list of persons in the address book
 
-#End of Extract#
-
 ---
 
 ==== Justification
 
 To make it more convenient for experienced users, who will be able to use the address book more efficiently once they are familiar with
 the shortcuts. Users can refer to the user guide for the list of the command shortcuts.
+
+[https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: command-summary]]#
 
 ---
 
@@ -85,9 +83,18 @@ e.g. Both "add" and "a" can be used to execute the AddCommand function
 
 === External Behavior
 
-#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: search-for-persons-by-parameter-code-search-code-code-since-v1-3-code]#
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: search-for-persons-by-parameter-code-search-code-code-since-v1-3-code]]#
 
-* Users can search for contacts using the Search command and keywords. The search method will check the parameters of the user such as the name, address and telephone number.
+Displays a google map search based of the person's address of the given index in the browser panel. +
+Format: 'map [INDEX]'
+
+****
+* Selects the person and loads the Google maps page of the person's address at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+#End of Extract#
 
 +
 image::search-command-before.png[width="790"]
@@ -101,8 +108,6 @@ After: Search command using the 'Serangoon' keyword
 
 From this example, it can be understood that by searching Serangoon, we can see that it has listed all the people living in Serangoon, namely 'Bernice' and 'David'
 
-#End of Extract#
-
 ---
 
 ==== Justification
@@ -113,7 +118,7 @@ Allows users to have a more powerful search function, which will become more use
 
 ==== Implementation
 
-#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: command-code-search-code]]#
 
 The keywords are generated as list of strings, which is then checked against the details of the persons
 in address book.
@@ -132,7 +137,58 @@ people is then continually updated, before it is finally returned to the user
 #End of Extract#
 ---
 
-=== Enhancement Proposed: Find Nearest Meeting Location
+=== Enhancement Added: Map Command
+
+=== External Behavior
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: searching-for-a-person-s-address-by-google-maps-code-map-code-code-since-v1-4-code]]#
+
+Displays a google map search based of the person's address of the given index in the browser panel. +
+Format: 'map [INDEX]'
+
+****
+* Selects the person and loads the Google maps page of the person's address at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
++
+image::google-map-example.png[width="790"]
++
+
+Example of a MapCommand search of Alex Yeoh, index 1 of the list.
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows users to use google maps as a way to visualise the person's address, and potentially find nearby meeting spots
+
+---
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: command-code-map-code]]#
+
+==== Implementation
+
+When 'map' command is executed, it retrieves the current list of people,
+and selects the person's address based on the index given.
+
+The address is then passed into a url template for a page loader to display
+the google maps on the browser panel
+
+==== Design Considerations
+
+**Aspect:** Passing URL directly +
+**Alternative 1:** Use google maps API +
+**Pros:** More powerful and secure search +
+**Cons:** Unnecessary imports of dependencies, slows the program +
+
+---
+
+#End of Extract#
+---
 
 === Other contributions
 
