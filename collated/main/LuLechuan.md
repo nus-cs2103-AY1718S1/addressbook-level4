@@ -775,3 +775,19 @@ public class XmlAdaptedPhone {
         photoContainer.setClip(clip);
     }
 ```
+###### \java\seedu\address\ui\PersonInformationPanel.java
+``` java
+    /**
+     *  Initialise optional phone display list
+    public void initOptionalPhone(ReadOnlyPerson person) {
+        final int[] index = {1};
+        person.getPhoneList().forEach(optionalPhone -> {
+            optionalPhoneDisplayList.add("Other phone " + index[0] + " : " + optionalPhone.value);
+            index[0]++;
+        });
+
+        //optionalPhoneList.itemsProperty().bind(listProperty);
+
+        listProperty.set(FXCollections.observableArrayList(optionalPhoneDisplayList));
+    }
+```

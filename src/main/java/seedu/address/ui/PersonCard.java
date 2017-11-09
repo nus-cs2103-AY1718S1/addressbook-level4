@@ -72,6 +72,7 @@ public class PersonCard extends UiPart<Region> {
         return tagColors.get(tagValue);
     }
 
+    //@@author ngzuyao
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
@@ -88,6 +89,7 @@ public class PersonCard extends UiPart<Region> {
         });*/
         initPhoto(person);
     }
+    //@@author
 
     /**
      * Sets a background color for each tag.
