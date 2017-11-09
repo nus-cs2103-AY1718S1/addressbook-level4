@@ -60,18 +60,19 @@ public class UiManager extends ComponentManager implements Ui {
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
             mainWindow.initSplitPanePlaceholder();
-
+            //@@author vicisapotato
             if(overDueParcels(logic.getUncompletedParcelList())) {
                 PopupOverdueParcelsWindow popupOverdueParcelsWindow = new PopupOverdueParcelsWindow(logic.getUncompletedParcelList());
                 popupOverdueParcelsWindow.show();
             }
+            //@@author
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
         }
     }
-
+    //@@author vicisapotato
     public boolean overDueParcels(ObservableList<ReadOnlyParcel> uncompletedParcelList){
 
         // if there are overdue parcels
@@ -83,6 +84,7 @@ public class UiManager extends ComponentManager implements Ui {
 
         return false;
     }
+    //@@author
 
     @Override
     public void stop() {
