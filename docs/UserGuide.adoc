@@ -44,9 +44,10 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. You will see the GUI as seen in the diagram below.
+.  Double-click the file to start the app. You will see the GUI as seen in `Figure 3.1`.
 +
 image::Ui.png[width="790"]
+Figure 3.1 Starting page of The Myth's Book
 +
 .  You can type a command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.

@@ -22,16 +22,18 @@ public class Birthday {
 
     public final String value;
 
-    //@@author DarrenCzen
+    //@@author archthegit
     /**
-     * Validates given address.
+     * Validates given birthday.
      *
-     * @throws IllegalValueException if given address string is invalid.
+     * @throws IllegalValueException if given birthday string is invalid.
      */
     public Birthday(String birthday) throws IllegalValueException {
+        //@@author DarrenCzen
         if (birthday == null) {
             this.value = BIRTHDAY_TEMPORARY;
         } else {
+            //@@author archthegit
             String trimmedBirthday = birthday.trim();
             if (!isValidBirthday(trimmedBirthday)) {
                 throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
@@ -40,7 +42,7 @@ public class Birthday {
         }
     }
 
-
+    //@@author DarrenCzen
     /**
      * Returns true if a given string is a valid person birthday.
      */

@@ -441,7 +441,7 @@ The switch theme mechanism is facilitated by a `ThemesList`, which resides insid
 
 image::SwitchThemeCommandDiagram1.png[width="800"]
 
-As seen from the diagram above, `SwitchThemeCommand` inherits `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
+As seen in the diagram above, `SwitchThemeCommand` inherits `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
 
 Suppose that the user has just launched the application. The `ThemesList` will be initialised based on the current existing colour themes.
 
@@ -492,11 +492,11 @@ The following sequence diagram shows how the switch theme operation works:
 
 image::SwitchThemeCommandDiagram2.png[width="800"]
 
-As seen from the diagram above, when `switch 1` is typed into the command line input, a new `SwitchThemeCommand` is created.
+As seen in the diagram above, when `switch 1` is typed into the command line input, a new `SwitchThemeCommand` is created.
 
 image::SwitchThemeCommandDiagram3.png[width="800"]
 
-As seen from the diagram above, when `switch 1` is executed in `SwitchThemeCommand`, it will post `ChangeThemeRequestEvent` to the `EventsCenter`.
+As seen in the diagram above, when `switch 1` is executed in `SwitchThemeCommand`, it will post `ChangeThemeRequestEvent` to the `EventsCenter`.
 
 Upon detecting `ChangeThemeRequestEvent`, `Ui` will call `handleChangeTheme` to handle the event, update the `MainWindow` accordingly and update its status bar.
 
@@ -581,7 +581,7 @@ public void sort() {
 
 ----
 The following sequence diagram shows how the sort operation works:
-As seen from the figure [Figure 5.2.2] below, when sort is typed into command line input, new `SortCommand` is created.
+As seen in the figure [Figure 5.2.2] below, when sort is typed into command line input, new `SortCommand` is created.
 
 image::SortCommandLogicSequenceDiagram.PNG[width="800"]
 Figure 5.2.2 SortCommand Logic Sequence Diagram
@@ -1309,7 +1309,7 @@ Use case ends.
 +
 Use case ends.
 
-=== Use case: Birthdays Command
+=== Use case: List Birthdays
 
 *MSS*
 
