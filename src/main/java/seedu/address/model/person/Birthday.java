@@ -21,17 +21,19 @@ public class Birthday {
     public static final String BIRTHDAY_TEMPORARY = "NIL";
     public final String value;
 
+    //@@author archthegit
 
-    //@@author DarrenCzen
     /**
-     * Validates given address.
+     * Validates given birthday.
      *
-     * @throws IllegalValueException if given address string is invalid.
+     * @throws IllegalValueException if given birthday string is invalid.
      */
     public Birthday(String birthday) throws IllegalValueException {
+        //@@author DarrenCzen
         if (birthday == null) {
             this.value = BIRTHDAY_TEMPORARY;
         } else {
+            //@@author archthegit
             String trimmedBirthday = birthday.trim();
             if (!isValidBirthday(trimmedBirthday)) {
                 throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
@@ -40,7 +42,6 @@ public class Birthday {
         }
     }
 
-
     /**
      * Returns true if a given string is a valid person birthday.
      */
@@ -48,7 +49,6 @@ public class Birthday {
         return test.matches(BIRTHDAY_VALIDATION_REGEX)
                 || test.matches(BIRTHDAY_TEMPORARY);
     }
-    //@@author archthegit
     @Override
     public String toString() {
         return value;
