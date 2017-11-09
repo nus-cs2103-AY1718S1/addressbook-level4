@@ -24,7 +24,6 @@ import seedu.address.commons.util.DateUtil;
 
 public class UniqueScheduleList implements Iterable<Schedule> {
 
-    private static final boolean SCHEDULE_ALREADY_EXISTS = true;
     private final ObservableList<Schedule> internalList = FXCollections.observableArrayList();
 
     /**
@@ -70,14 +69,14 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         final Set<Schedule> alreadyInside = this.toSet();
 
         for (Schedule scheduleFrom : from.internalList) {
-            boolean flag = !SCHEDULE_ALREADY_EXISTS;
+            boolean doesScheduleAlreadyExist = false;
             for (Schedule scheduleInside : alreadyInside) {
                 if (scheduleFrom.equals(scheduleInside)) {
-                    flag = SCHEDULE_ALREADY_EXISTS;
+                    doesScheduleAlreadyExist = true;
                     break;
                 }
             }
-            if (flag == !SCHEDULE_ALREADY_EXISTS) {
+            if (!doesScheduleAlreadyExist) {
                 this.internalList.add(scheduleFrom);
             }
         }

@@ -498,7 +498,12 @@ _Figure 4.2.5 : Output of `HelpCommand` execution_
 
 This function is mainly facilitated by two events: `JumpToListRequestEvent` and `PersonPanelSelectionChangedEvent`.
 
-When the LocateCommand is being executed, after checking that the target index is valid, a new `JumpToListRequestEvent` is posted by the `EventsCenter` class to its `EventBus`, as shown in _Figure 4.3.1_:
+The sequence diagram in _Figure 4.3.1_ below shows how the locate command is executed in the logic component:
+
+image::LogicComponentSequenceDiagramLocate.PNG[width="800"]
+_Figure 4.3.1 : Sequence Diagram for locating address in logic component_
+
+Notice when the `LocateCommand` is being executed, after checking that the target index is valid, a new `JumpToListRequestEvent` is posted by the `EventsCenter` class to its `EventBus`, as shown in _Figure 4.3.2_:
 [source,java]
 ----
 public class LocateCommand extends Command {
@@ -513,9 +518,9 @@ public class LocateCommand extends Command {
     }
 }
 ----
-_Figure 4.3.1: Code section in LocateCommand.java_
+_Figure 4.3.2: Code section in LocateCommand.java_
 
-The UI part `PersonListPanel` is in charge of handling this event (i.e.`JumpToListRequestEvent`) , and does so by scrolling to the contact of the corresponding index and selecting it, as shown in _Figure 4.3.2_:
+The UI part `PersonListPanel` is in charge of handling this event (i.e.`JumpToListRequestEvent`) , and does so by scrolling to the contact of the corresponding index and selecting it, as shown in _Figure 4.3.3_:
 [source,java]
 ----
 public class PersonListPanel extends UiPart<Region> {
@@ -537,14 +542,14 @@ public class PersonListPanel extends UiPart<Region> {
     }
 }
 ----
-_Figure 4.3.2: Code section in PersonListPanel.java_
+_Figure 4.3.3: Code section in PersonListPanel.java_
 
-The UI outcome of scrolling and selecting a `PersonCard` in the `PersonListPanel` is shown in Figure 4.3.3 below:
+The UI outcome of scrolling and selecting a `PersonCard` in the `PersonListPanel` is shown in Figure 4.3.4 below:
 
 image::PersonListPanelSelect.png[width="400"]
-_Figure 4.3.3 : UI outcome of scrolling and selecting a `PersonCard`_
+_Figure 4.3.4 : UI outcome of scrolling and selecting a `PersonCard`_
 
-When the constructor of `PersonListPanel` class is called, it will add a listener to the personListView which consists of a list view of each `PersonCard`. This listener ensures that a new `PersonPanelSelectionChangedEvent` will be raised when a new item in the list view is being selected. This can be shown below in _Figure 4.3.4_:
+When the constructor of `PersonListPanel` class is called, it will add a listener to the personListView which consists of a list view of each `PersonCard`. This listener ensures that a new `PersonPanelSelectionChangedEvent` will be raised when a new item in the list view is being selected. This can be shown below in _Figure 4.3.5_:
 [source,java]
 ----
 public class PersonListPanel extends UiPart<Region> {
@@ -579,9 +584,9 @@ public class PersonListPanel extends UiPart<Region> {
     }
 }
 ----
-_Figure 4.3.4: Code section 2 in PersonListPanel.java_
+_Figure 4.3.5: Code section 2 in PersonListPanel.java_
 
-The `BrowserPanel` contains a `WebView` which displays a web page of the google map location of the selected person's address. It is able to do so as it is an event subscriber for the `PersonPanelSelectionChangedEvent` as shown below in _Figure 4.3.5_:
+The `BrowserPanel` contains a `WebView` which displays a web page of the google map location of the selected person's address. It is able to do so as it is an event subscriber for the `PersonPanelSelectionChangedEvent` as shown below in _Figure 4.3.6_:
 [source,java]
 ----
 public class BrowserPanel extends UiPart<Region> {
@@ -593,13 +598,13 @@ public class BrowserPanel extends UiPart<Region> {
     }
 }
 ----
-_Figure 4.3.5: Code section in BrowserPanel.java_
+_Figure 4.3.6: Code section in BrowserPanel.java_
 
 By being a subscriber to this event, the `WebView` in `BrowserPanel` will load the corresponding web page whenever a new
-`PersonPanelSelectionChangedEvent` is posted to the `EventBus`. _Figure 4.3.6_ below shows the full UI outcome of selecting a selecting a `PersonCard` in the `PersonListPanel`, as well as displaying the corresponding address location in `BrowserPanel`.
+`PersonPanelSelectionChangedEvent` is posted to the `EventBus`. _Figure 4.3.7_ below shows the full UI outcome of selecting a selecting a `PersonCard` in the `PersonListPanel`, as well as displaying the corresponding address location in `BrowserPanel`.
 
 image::Full UI outcome for LocateCommand.png[width="800"]
-_Figure 4.3.6 : Full UI outcome of locate implementation_
+_Figure 4.3.7 : Full UI outcome of locate implementation_
 
 ==== Design Considerations for `LocateCommand`
 
