@@ -3,8 +3,7 @@ package seedu.address.ui;
 import static seedu.address.model.person.Deadline.NO_DEADLINE_SET;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
+import java.time.Period;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
@@ -23,8 +22,10 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class DebtRepaymentProgressBar extends UiPart<Region> {
     private static final String FXML = "DebtRepaymentProgressBar.fxml";
     private static final String COMPLETED_REPAYMENT_MESSAGE = "Completed";
+    private static final String OVERDUE_REPAYMENT_MESSAGE = "Overdue";
     private static final String NO_DEADLINE_REPAYMENT_MESSAGE = "No deadline set";
-    public static final String DAYS_LEFT_TO_REPAY_DEBT_MESSAGE = " day(s) left to repay debt";
+    public static final String DURATION_LEFT_TO_REPAY_DEBT_MESSAGE = "%1$s years(s) %2$s month(s) and "
+            + "%3$s day(s) left to repay debt";
     private Double totalDebt;
     private Double repaid;
     private Double ratio;
@@ -87,18 +88,21 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
         Deadline deadline = person.getDeadline();
         if (person.getDebt().toNumber() == 0) {
             return new SimpleObjectProperty<>(COMPLETED_REPAYMENT_MESSAGE);
-        } else if (!deadline.toString().equals(NO_DEADLINE_SET)) {
-            String day = deadline.getDay();
-            String month = deadline.getMonth();
-            String year = deadline.getYear();
-            String deadlineFormatted = year + month + day;
-
-            LocalDate deadlineDate = LocalDate.parse(deadlineFormatted, DateTimeFormatter.BASIC_ISO_DATE);
-            LocalDate today = LocalDate.now();
-            return new SimpleObjectProperty<>(Long.toString(
-                    ChronoUnit.DAYS.between(today, deadlineDate)) + DAYS_LEFT_TO_REPAY_DEBT_MESSAGE);
-        } else {
+        } else if (deadline.toString().equals(NO_DEADLINE_SET)) {
             return new SimpleObjectProperty<>(NO_DEADLINE_REPAYMENT_MESSAGE);
+        } else {
+            LocalDate deadlineDate = deadline.getDeadlineAsLocalDate();
+            LocalDate today = LocalDate.now();
+
+            if (Period.between(today, deadlineDate).isNegative()) {
+                return new SimpleObjectProperty<>(OVERDUE_REPAYMENT_MESSAGE);
+            } else {
+                Period timeInterval = Period.between(today, deadlineDate);
+                String repaymentInfo = String.format(DURATION_LEFT_TO_REPAY_DEBT_MESSAGE, timeInterval.getYears(),
+                        timeInterval.getMonths(), timeInterval.getDays());
+
+                return new SimpleObjectProperty<>(repaymentInfo);
+            }
         }
     }
 }
