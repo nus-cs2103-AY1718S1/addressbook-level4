@@ -15,6 +15,9 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<ReadOnlyInsurance> PREDICATE_SHOW_ALL_INSURANCES = unused -> true;
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
@@ -43,11 +46,9 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
-    //@@author RSJunior37
-    /**
-     * Returns an unmodifiable view of the insurances list
-     */
-    ObservableList<ReadOnlyInsurance> getInsuranceList();
+    //@@author OscarWang114
+    /** Returns an unmodifiable view of the filtered insurance list */
+    ObservableList<ReadOnlyInsurance> getFilteredInsuranceList();
     //@@author
 
     /**
@@ -56,5 +57,9 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
-    void updateInsuranceList(Predicate<ReadOnlyInsurance> predicate);
+    /**
+     * Updates the filter of the filtered insurance list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredInsuranceList(Predicate<ReadOnlyInsurance> predicate);
 }

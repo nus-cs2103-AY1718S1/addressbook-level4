@@ -1,4 +1,41 @@
 # arnollim
+###### /java/seedu/address/logic/commands/RedoCommandTest.java
+``` java
+        // multiple commands in redoStack
+        deleteFirstPerson(expectedModel);
+        String lastCommand = undoRedoStack.peekRedo().toString();
+        Command previousCommand = addressBookParser.parseCommand(lastCommand);
+        String previousCommandString = previousCommand.toString();
+        String expectedResultMessage = RedoCommand.parseCommand(previousCommandString);
+        assertCommandSuccess(redoCommand, model, expectedResultMessage, expectedModel);
+
+        // single command in redoStack
+        deleteFirstPerson(expectedModel);
+        lastCommand = undoRedoStack.peekRedo().toString();
+        previousCommand = addressBookParser.parseCommand(lastCommand);
+        previousCommandString = previousCommand.toString();
+        expectedResultMessage = RedoCommand.parseCommand(previousCommandString);
+        assertCommandSuccess(redoCommand, model, expectedResultMessage, expectedModel);
+```
+###### /java/seedu/address/logic/commands/UndoCommandTest.java
+``` java
+        // multiple commands in undoStack
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        deleteFirstPerson(expectedModel);
+        String lastCommand = undoRedoStack.peekUndo().toString();
+        Command previousCommand = addressBookParser.parseCommand(lastCommand);
+        String previousCommandString = previousCommand.toString();
+        String expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
+        assertCommandSuccess(undoCommand, model, expectedResultMessage, expectedModel);
+
+        // single command in undoStack
+        expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        lastCommand = undoRedoStack.peekUndo().toString();
+        previousCommand = addressBookParser.parseCommand(lastCommand);
+        previousCommandString = previousCommand.toString();
+        expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
+        assertCommandSuccess(undoCommand, model, expectedResultMessage, expectedModel);
+```
 ###### /java/seedu/address/logic/commands/WhyCommandTest.java
 ``` java
 package seedu.address.logic.commands;
@@ -42,4 +79,43 @@ public class WhyCommandTest {
     }
 
 }
+```
+###### /java/systemtests/AddCommandSystemTest.java
+``` java
+        /* Case: undo adding Amy to the list -> Amy deleted */
+        Command previousCommand = addressBookParser.parseCommand(command);
+        String previousCommandString = previousCommand.toString();
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
+        assertCommandSuccess(command, model, expectedResultMessage);
+```
+###### /java/systemtests/ClearCommandSystemTest.java
+``` java
+        /* Case: undo clearing address book -> original address book restored */
+        String lastCommand = "   " + ClearCommand.COMMAND_WORD + " ab12   ";
+        Command previousCommand = addressBookParser.parseCommand(lastCommand);
+        String previousCommandString = previousCommand.toString();
+        String command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
+        assertCommandSuccess(command,  expectedResultMessage, defaultModel);
+        assertSelectedCardUnchanged();
+```
+###### /java/systemtests/DeleteCommandSystemTest.java
+``` java
+        /* Case: undo deleting the last person in the list -> last person restored */
+        String lastCommand = DeleteCommand.COMMAND_WORD + " " + lastPersonIndex.getOneBased();
+        Command previousCommand = addressBookParser.parseCommand(lastCommand);
+        String previousCommandString = previousCommand.toString();
+        command = UndoCommand.COMMAND_WORD;
+        expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
+        assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
+```
+###### /java/systemtests/EditCommandSystemTest.java
+``` java
+        /* Case: undo editing the last person in the list -> last person restored */
+        Command previousCommand = addressBookParser.parseCommand(command);
+        String previousCommandString = previousCommand.toString();
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
+        assertCommandSuccess(command, model, expectedResultMessage);
 ```

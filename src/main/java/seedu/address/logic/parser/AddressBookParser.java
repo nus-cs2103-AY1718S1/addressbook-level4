@@ -106,7 +106,7 @@ public class AddressBookParser {
             return new RedoCommand();
 
         case PRINT:
-            return new PrintCommand(arguments);
+            return new PrintCommandParser().parse(arguments);
 
         case WHY:
             return new WhyCommandParser().parse(arguments);

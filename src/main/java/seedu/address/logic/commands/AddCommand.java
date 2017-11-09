@@ -80,6 +80,31 @@ public class AddCommand extends UndoableCommand {
                 && toAdd.equals(((AddCommand) other).toAdd));
     }
 
+    //@@author arnollim
+    /**
+     * Returns the Command String of that added this person into the addressbook
+     */
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(toAdd.getName())
+                .append(" Phone: ")
+                .append(toAdd.getPhone())
+                .append("Email: ")
+                .append(toAdd.getEmail())
+                .append("Address: ")
+                .append(toAdd.getAddress())
+                .append("DateOfBirth: ")
+                .append(toAdd.getDateOfBirth())
+                .append("Gender: ")
+                .append(toAdd.getGender())
+                .append(" Tags: ");
+        toAdd.getTags().forEach(builder::append);
+        String person = builder.toString();
+        return COMMAND_WORD + " " + person;
+    }
+    //@@author
+
     //@@author OscarWang114
     /**
      * Stores the optional details to add the person with. By default each field is an object
@@ -123,7 +148,7 @@ public class AddCommand extends UndoableCommand {
         public Address getAddress() {
             return address;
         }
-
+        //@@author Pujitha97
         public void setDateOfBirth(DateOfBirth dateofbirth) {
             this.dateofbirth = dateofbirth;
         }
@@ -139,7 +164,7 @@ public class AddCommand extends UndoableCommand {
         public Gender getGender() {
             return gender;
         }
-
+        //@@author
         @Override
         public boolean equals(Object other) {
             // short circuit if same object

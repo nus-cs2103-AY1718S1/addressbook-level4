@@ -52,10 +52,12 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.DateParser;
 import seedu.address.model.Model;
 import seedu.address.model.person.Email;
@@ -70,6 +72,8 @@ import seedu.address.testutil.PersonUtil;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
 
+    private AddressBookParser addressBookParser = new AddressBookParser();
+
     @Test
     public void add() throws Exception {
         Model model = getModel();
@@ -82,15 +86,19 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + "   " + GENDER_DESC_AMY + "   " + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
 
+        //@@author arnollim
         /* Case: undo adding Amy to the list -> Amy deleted */
+        Command previousCommand = addressBookParser.parseCommand(command);
+        String previousCommandString = previousCommand.toString();
         command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        String expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
         assertCommandSuccess(command, model, expectedResultMessage);
+        //@@author
 
         /* Case: redo adding Amy to the list -> Amy added again */
         command = RedoCommand.COMMAND_WORD;
         model.addPerson(toAdd);
-        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
+        expectedResultMessage = RedoCommand.parseCommand(previousCommandString);
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a duplicate person -> rejected */
@@ -136,7 +144,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_BOB
                 + DOB_DESC_AMY + GENDER_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
-
+        //@@author Pujitha97
         /* Case: add a person with all fields same as another person in the address book except dob -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withDateOfBirth(VALID_DOB_BOB)
@@ -152,7 +160,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + DOB_DESC_AMY + GENDER_DESC_BOB + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
-
+        //@@author
         /* Case: filters the person list before adding -> added */
         executeCommand(FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER);
         assert getModel().getFilteredPersonList().size()
@@ -198,13 +206,13 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + GENDER_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, AMY_NO_ADDRESS);
         //@@author
-
+        //@@author Pujitha97
         /* Case: missing dob -> added */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + GENDER_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, AMY_NO_DOB);
-
+        //@@author
         //@@author OscarWang114
         /* Case: missing name -> rejected */
         command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY
@@ -227,16 +235,16 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + INVALID_EMAIL_DESC
                 + GENDER_DESC_AMY + ADDRESS_DESC_AMY + DOB_DESC_AMY;
         assertCommandFailure(command, Email.MESSAGE_EMAIL_CONSTRAINTS);
+        //@@author Pujitha97
         /* Case: invalid dob -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + GENDER_DESC_AMY + ADDRESS_DESC_AMY + INVALID_DOB_DESC;
         assertCommandFailure(command, DateParser.MESSAGE_INVALID_MONTH);
-        //@@author Pujitha97
         /* Case: invalid gender -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + INVALID_GENDER_DESC + ADDRESS_DESC_AMY + DOB_DESC_AMY;
         assertCommandFailure(command, Gender.MESSAGE_GENDER_CONSTRAINTS);
-        //@@author Pujitha97
+        //@@author
         /* Case: invalid tag -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + GENDER_DESC_AMY + DOB_DESC_AMY + INVALID_TAG_DESC;

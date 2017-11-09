@@ -32,8 +32,10 @@ public class PersonUtil {
         sb.append(PREFIX_PHONE + person.getPhone().value + " ");
         sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
+        //@@author Pujitha97
         sb.append(PREFIX_GENDER + person.getGender().toString() + " ");
         sb.append(PREFIX_DOB + person.getDateOfBirth().toString() + " ");
+        //@@author
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );

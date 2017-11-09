@@ -32,7 +32,25 @@ public class UniqueLifeInsuranceList implements Iterable<LifeInsurance> {
     public void add(ReadOnlyInsurance toAdd) {
         requireNonNull(toAdd);
         internalList.add(new LifeInsurance(toAdd));
+        sortInsurances();
     }
+
+    //@@author Juxarius
+
+    /**
+     * sort insurance in descending order according to premium,
+     * change the sign in the return statement to make it ascending
+     */
+    public void sortInsurances() {
+        internalList.sort((insurance1, insurance2) -> {
+            if (insurance1.getPremium().equals(insurance2.getPremium())) {
+                return 0;
+            } else {
+                return insurance1.getPremium() < insurance2.getPremium() ? 1 : -1;
+            }
+        });
+    }
+    //@@author
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.

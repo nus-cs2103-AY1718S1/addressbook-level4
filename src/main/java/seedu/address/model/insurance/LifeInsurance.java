@@ -111,6 +111,20 @@ public class LifeInsurance implements ReadOnlyInsurance {
         this.expiryDateString = new SimpleStringProperty(source.getExpiryDateString());
     }
 
+    /**
+     * Resets the value of the owner, insured, beneficiary of this insurance. Every new {@code InsurancePerson}
+     * object is constructed with the {@code name} field assigned and the {@code person} field unassigned.
+     */
+    public void resetAllInsurancePerson() {
+        String ownerName = this.roleToPersonNameMap.get(Roles.OWNER);
+        String insuredName = this.roleToPersonNameMap.get(Roles.INSURED);
+        String beneficiaryName = this.roleToPersonNameMap.get(Roles.BENEFICIARY);
+        this.owner = new SimpleObjectProperty<>(new InsurancePerson(ownerName));
+        this.insured = new SimpleObjectProperty<>(new InsurancePerson(insuredName));
+        this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(beneficiaryName));
+
+    }
+
     @Override
     public ObjectProperty<UUID> idProperty() {
         return id;
@@ -222,7 +236,8 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return contractPath.get();
     }
 
-    public void setSigningDateString(String signingDateString) {
+    public void setSigningDateString(String signingDateString) throws IllegalValueException {
+        this.signingDate = new DateParser().parse(signingDateString);
         this.signingDateString.set(requireNonNull(signingDateString));
     }
 
@@ -236,7 +251,8 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return signingDateString.get();
     }
 
-    public void setExpiryDateString(String expiryDateString) {
+    public void setExpiryDateString(String expiryDateString) throws IllegalValueException {
+        this.expiryDate = new DateParser().parse(expiryDateString);
         this.expiryDateString.set(requireNonNull(expiryDateString));
     }
 
@@ -255,9 +271,10 @@ public class LifeInsurance implements ReadOnlyInsurance {
         //TODO: Increase the validity of equals
         return other == this // short circuit if same object
                 || (other instanceof LifeInsurance // instanceof handles nulls
+                && ((LifeInsurance) other).getInsuranceName().equals(this.insuranceName)
                 && ((LifeInsurance) other).premiumString.equals(this.premiumString)
-                && ((LifeInsurance) other).signingDate.isEqual(this.signingDate)
-                && ((LifeInsurance) other).expiryDate.isEqual(this.expiryDate)); // state check
+                && ((LifeInsurance) other).signingDate.equals(this.signingDate)
+                && ((LifeInsurance) other).expiryDate.equals(this.expiryDate)); // state check
     }
 }
 

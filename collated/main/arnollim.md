@@ -1,4 +1,61 @@
 # arnollim
+###### /java/seedu/address/logic/commands/AddCommand.java
+``` java
+    /**
+     * Returns the Command String of that added this person into the addressbook
+     */
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(toAdd.getName())
+                .append(" Phone: ")
+                .append(toAdd.getPhone())
+                .append("Email: ")
+                .append(toAdd.getEmail())
+                .append("Address: ")
+                .append(toAdd.getAddress())
+                .append("DateOfBirth: ")
+                .append(toAdd.getDateOfBirth())
+                .append("Gender: ")
+                .append(toAdd.getGender())
+                .append(" Tags: ");
+        toAdd.getTags().forEach(builder::append);
+        String person = builder.toString();
+        return COMMAND_WORD + " " + person;
+    }
+```
+###### /java/seedu/address/logic/commands/AddLifeInsuranceCommand.java
+``` java
+    @Override
+    public String toString() {
+        return COMMAND_WORD;
+    }
+```
+###### /java/seedu/address/logic/commands/ClearCommand.java
+``` java
+    @Override
+    public String toString() {
+        return COMMAND_WORD;
+    }
+```
+###### /java/seedu/address/logic/commands/DeleteCommand.java
+``` java
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(COMMAND_WORD + " ")
+                .append(this.targetIndex.getOneBased());
+        String command = builder.toString();
+        return command;
+    }
+```
+###### /java/seedu/address/logic/commands/EditCommand.java
+``` java
+    @Override
+    public String toString() {
+        return COMMAND_WORD + " " + index.getOneBased();
+    }
+```
 ###### /java/seedu/address/logic/commands/PrintCommand.java
 ``` java
 package seedu.address.logic.commands;
@@ -32,10 +89,10 @@ public class PrintCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Saves the addressbook into a .txt file named by you for your viewing.\n"
             + "Example: " + COMMAND_WORD + " filename\n"
-            + "file can then be found in the in doc/books folder as filename.txt";
+            + "file can then be found in the in data/ folder as data/filename.txt";
 
     public static final String MESSAGE_SUCCESS = "Address Book has been saved!\n"
-            + "Find your Address Book in the %1$s.txt file you created in the doc/books folder.";
+            + "Find your Address Book in the %1$s.txt file you created in data/%1$s.txt.";
 
     private final String fileName;
 
@@ -53,16 +110,21 @@ public class PrintCommand extends Command {
 
         List<String> lines = new ArrayList<>();
         String timeStamp = new SimpleDateFormat("dd/MM/YYYY" + " " + "HH:mm:ss").format(new Date());
-        lines.add("Addressbook was last updated on: " + timeStamp + "\n");
+        lines.add("LISA was last updated on: " + timeStamp + "\n\n");
+
+        lines.add("There are " + lastShownList.size() + " contacts in LISA\n\n");
 
         int personIndex = 1;
         for (ReadOnlyPerson person: lastShownList) {
-            String entry = personIndex + ". " + person.getAsText();
+            String entry = personIndex + ". " + person.getAsParagraph();
             lines.add(entry);
+            lines.add("\n" + person.getName().fullName +
+                    " is a personnel involved in the following insurance policies:\n");
 
             UniqueLifeInsuranceList insurances = person.getLifeInsurances();
+            int insuranceIndex = 1;
             for (ReadOnlyInsurance insurance: insurances) {
-                lines.add("Insurance Policy: =========");
+                lines.add("Insurance Policy " + insuranceIndex + ": =========");
                 String owner = insurance.getOwner().getName();
                 String insured = insurance.getInsured().getName();
                 String beneficiary = insurance.getBeneficiary().getName();
@@ -74,14 +136,17 @@ public class PrintCommand extends Command {
                         + "Beneficiary: " + beneficiary + "\n"
                         + "Premium: " + premium + "\n"
                         + "Signing Date: " + signingDate + "\n"
-                        + "Expiry Date: " + expiryDate + "\n"
+                        + "Expiry Date: " + expiryDate
                 );
-                lines.add("============");
+                lines.add("===========================\n");
+                insuranceIndex++;
             }
+            lines.add("--------End of " + person.getName().fullName + "'s profile");
+            lines.add("\n");
             personIndex++;
         }
 
-        Path file = Paths.get("docs/books/" + fileName + ".txt");
+        Path file = Paths.get("data/" + fileName + ".txt");
         try {
             Files.write(file, lines, Charset.forName("UTF-8"));
         } catch (IOException ioe) {
@@ -92,6 +157,23 @@ public class PrintCommand extends Command {
     }
 
 }
+```
+###### /java/seedu/address/logic/commands/UndoCommand.java
+``` java
+        String commandString = undoRedoStack.peekUndo().toString();
+        String feedbackToUser = parseCommand(commandString);
+        undoRedoStack.popUndo().undo();
+        return new CommandResult(feedbackToUser);
+```
+###### /java/seedu/address/logic/commands/UndoCommand.java
+``` java
+    /**
+     * Parses the output command to display the previously undone command
+     */
+    public static String parseCommand(String commandString) {
+        String output = String.format(FULL_MESSAGE_SUCCESS, commandString);
+        return output;
+    }
 ```
 ###### /java/seedu/address/logic/commands/WhyCommand.java
 ``` java
@@ -217,6 +299,23 @@ public class WhyCommandParser implements Parser<WhyCommand> {
 
 }
 ```
+###### /java/seedu/address/logic/UndoRedoStack.java
+``` java
+    /**
+     * Peeks and returns the Command at the top of the Undo Stack.
+     */
+    public UndoableCommand peekUndo() {
+        UndoableCommand toUndo = undoStack.peek();
+        return toUndo;
+    }
+    /**
+     * Peeks and returns the command at the top of the Redo Stack.
+     */
+    public UndoableCommand peekRedo() {
+        UndoableCommand toRedo = redoStack.peek();
+        return toRedo;
+    }
+```
 ###### /java/seedu/address/model/person/Person.java
 ``` java
     @Override
@@ -235,6 +334,26 @@ public class WhyCommandParser implements Parser<WhyCommand> {
             this.reason = String.format(SHOWING_WHY_MESSAGE_3, name, email);
         }
         return reason;
+    }
+```
+###### /java/seedu/address/model/person/ReadOnlyPerson.java
+``` java
+    default String getAsParagraph() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName() + "\n")
+                .append("\nPhone: ")
+                .append(getPhone())
+                .append("\nEmail: ")
+                .append(getEmail())
+                .append("\nAddress: ")
+                .append(getAddress())
+                .append("\nDateOfBirth: ")
+                .append(getDateOfBirth())
+                .append("\nGender: ")
+                .append(getGender())
+                .append("\nTags: ");
+        getTags().forEach(builder::append);
+        return builder.toString();
     }
 ```
 ###### /java/seedu/address/model/person/Reason.java

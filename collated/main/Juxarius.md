@@ -1,4 +1,44 @@
 # Juxarius
+###### \java\seedu\address\commons\events\ui\InsuranceClickedEvent.java
+``` java
+/**
+ * Represents a click on one of the names in Insurance Profile
+ */
+public class InsuranceClickedEvent extends BaseEvent {
+
+
+    private final ReadOnlyInsurance insurance;
+
+    public InsuranceClickedEvent(ReadOnlyInsurance insurance) {
+        this.insurance = insurance;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+
+    public ReadOnlyInsurance getInsurance() {
+        return insurance;
+    }
+}
+
+```
+###### \java\seedu\address\commons\events\ui\JumpToListRequestEvent.java
+``` java
+    public final PanelChoice panelChoice;
+
+    public JumpToListRequestEvent(Index targetIndex) {
+        this.targetIndex = targetIndex.getZeroBased();
+        this.panelChoice = PanelChoice.PERSON;
+    }
+
+    public JumpToListRequestEvent(Index targetIndex, PanelChoice panelChoice) {
+        this.targetIndex = targetIndex.getZeroBased();
+        this.panelChoice = panelChoice;
+    }
+```
 ###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
     /**
@@ -14,6 +54,7 @@
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         DateOfBirth updatedDateOfBirth = editPersonDescriptor.getDateOfBirth().orElse(personToEdit.getDateOfBirth());
+        Gender updatedGender = editPersonDescriptor.getGender().orElse(personToEdit.getGender());
 
         Set<Tag> updatedTags = personToEdit.getTags();
 
@@ -29,8 +70,8 @@
         if (editPersonDescriptor.getTags().isPresent()) {
             updatedTags.addAll(editPersonDescriptor.getTags().get());
         }
-
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedDateOfBirth, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
+                updatedDateOfBirth, updatedGender, updatedTags);
     }
 ```
 ###### \java\seedu\address\logic\commands\EditCommand.java
@@ -42,6 +83,37 @@
         public Optional<Set<Tag>> getTagsToDel() {
             return Optional.ofNullable(tagsToDel);
         }
+```
+###### \java\seedu\address\logic\commands\SelectCommand.java
+``` java
+    public SelectCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+        this.panelChoice = PanelChoice.PERSON;
+    }
+
+    public SelectCommand(Index targetIndex, PanelChoice panelChoice) {
+        this.targetIndex = targetIndex;
+        this.panelChoice = panelChoice;
+    }
+
+
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyInsurance> insuranceList = model.getInsuranceList();
+
+        if (panelChoice == PanelChoice.PERSON && targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        } else if (panelChoice == PanelChoice.INSURANCE && targetIndex.getZeroBased() >= insuranceList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_INSURANCE_DISPLAYED_INDEX);
+        }
+
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex, panelChoice));
+        return new CommandResult(String.format(
+                panelChoice == PanelChoice.PERSON ? MESSAGE_SELECT_PERSON_SUCCESS : MESSAGE_SELECT_INSURANCE_SUCCESS,
+                targetIndex.getOneBased()));
+    }
 ```
 ###### \java\seedu\address\logic\LogicManager.java
 ``` java
@@ -97,6 +169,186 @@
         return commandText.trim();
     }
 ```
+###### \java\seedu\address\logic\parser\AddressBookParser.java
+``` java
+    /**
+     * Enumerator list to define the types of commands.
+     */
+    private enum CommandType {
+        ADD, ADDLI, CLEAR, DEL, EDIT, EXIT, FIND, PFIND, HELP, HISTORY, LIST, PRINT, REDO, UNDO, SELECT, WHY, NONE
+    }
+
+    /**
+     * Used for initial separation of command word and args.
+     */
+    private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
+    /**
+     * Parses user input into command for execution.
+     *
+     * @param userInput full user input string
+     * @return the command based on the user input
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public Command parseCommand(String userInput) throws ParseException {
+        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        }
+
+        final String commandWord = matcher.group("commandWord");
+        final String arguments = matcher.group("arguments");
+
+        CommandType commandType = getCommandType(commandWord.toLowerCase());
+
+        switch (commandType) {
+
+        case ADD:
+            return new AddCommandParser().parse(arguments);
+
+        case ADDLI:
+            return new AddLifeInsuranceCommandParser().parse(arguments);
+
+        case EDIT:
+            return new EditCommandParser().parse(arguments);
+
+        case SELECT:
+            return new SelectCommandParser().parse(arguments);
+
+        case DEL:
+            return new DeleteCommandParser().parse(arguments);
+
+        case CLEAR:
+            return new ClearCommand();
+
+        case FIND:
+            return new FindCommandParser().parse(arguments);
+
+        case PFIND:
+            return new PartialFindCommandParser().parse(arguments);
+
+        case LIST:
+            return new ListCommand();
+
+        case HISTORY:
+            return new HistoryCommand();
+
+        case EXIT:
+            return new ExitCommand();
+
+        case HELP:
+            return new HelpCommand();
+
+        case UNDO:
+            return new UndoCommand();
+
+        case REDO:
+            return new RedoCommand();
+
+        case PRINT:
+            return new PrintCommand(arguments);
+
+        case WHY:
+            return new WhyCommandParser().parse(arguments);
+
+        default:
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        }
+    }
+
+
+    /**
+     * Searches the entire list of acceptable command words in each command and returns the enumerated value type.
+     * @param commandWord
+     * @return enumerated value for the switch statement to process
+     */
+
+    private CommandType getCommandType(String commandWord) {
+        for (String word : AddCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.ADD;
+            }
+        }
+        for (String word : AddLifeInsuranceCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.ADDLI;
+            }
+        }
+        for (String word : ClearCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.CLEAR;
+            }
+        }
+        for (String word : DeleteCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.DEL;
+            }
+        }
+        for (String word : EditCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.EDIT;
+            }
+        }
+        for (String word : ExitCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.EXIT;
+            }
+        }
+        for (String word : FindCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.FIND;
+            }
+        }
+        for (String word : PartialFindCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.PFIND;
+            }
+        }
+        for (String word : HelpCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.HELP;
+            }
+        }
+        for (String word : HistoryCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.HISTORY;
+            }
+        }
+        for (String word : ListCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.LIST;
+            }
+        }
+        for (String word : RedoCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.REDO;
+            }
+        }
+        for (String word : SelectCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.SELECT;
+            }
+        }
+        for (String word : UndoCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.UNDO;
+            }
+        }
+
+        for (String word : WhyCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.WHY;
+            }
+        }
+        for (String word : PrintCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.PRINT;
+            }
+        }
+
+        return CommandType.NONE;
+    }
+```
 ###### \java\seedu\address\logic\parser\DateParser.java
 ``` java
 /**
@@ -142,7 +394,7 @@ public class DateParser {
      * @return
      * @throws IllegalValueException
      */
-    private String getValidYear(String year) throws IllegalValueException {
+    public String getValidYear(String year) throws IllegalValueException {
         int currYear = LocalDate.now().getYear();
         if (year.length() > 4) {
             year = year.substring(0, 4);
@@ -151,6 +403,7 @@ public class DateParser {
             throw new IllegalValueException(MESSAGE_INVALID_YEAR);
         } else if (year.length() == 2) {
             int iYear = Integer.parseInt(year);
+            // Change this if condition to edit your auto-correcting range for 2-digit year inputs
             if (iYear > currYear % 100) {
                 return Integer.toString(iYear + (currYear / 100 - 1) * 100);
             } else {
@@ -161,7 +414,7 @@ public class DateParser {
         }
     }
 
-    private String getValidDay(String day) throws IllegalValueException {
+    public String getValidDay(String day) throws IllegalValueException {
         if (Integer.parseInt(day) > 31) {
             throw new IllegalValueException(MESSAGE_INVALID_DAY);
         }
@@ -174,7 +427,7 @@ public class DateParser {
         }
     }
 
-    private String getValidMonth(String month) throws IllegalValueException {
+    public String getValidMonth(String month) throws IllegalValueException {
         int iMonth;
         if (month.matches("\\p{Alpha}+")) {
             iMonth = getMonth(month);
@@ -191,7 +444,7 @@ public class DateParser {
     /**
      * finds int month from string month name
      */
-    private int getMonth(String monthName) throws IllegalValueException {
+    public int getMonth(String monthName) throws IllegalValueException {
         for (int i = 0; i < MONTH_NAME_LONG.length; i++) {
             if (monthName.toLowerCase().equals(MONTH_NAME_LONG[i].toLowerCase())
                     || monthName.toLowerCase().equals(MONTH_NAME_SHORT[i].toLowerCase())) {
@@ -199,6 +452,15 @@ public class DateParser {
             }
         }
         throw new IllegalValueException(MESSAGE_INVALID_MONTH);
+    }
+
+    /**
+     * Takes a LocalDate and produces it in a nice format
+     * @param date
+     * @return
+     */
+    public static String dateString(LocalDate date) {
+        return date.format(DATE_FORMAT);
     }
 }
 ```
@@ -214,7 +476,7 @@ public class DateParser {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(
                         args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_DOB, PREFIX_TAG, PREFIX_DELTAG);
+                        PREFIX_DOB, PREFIX_GENDER, PREFIX_TAG, PREFIX_DELTAG);
 
         Index index;
 
@@ -230,8 +492,9 @@ public class DateParser {
             ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
             ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
-            ParserUtil.parseDateOfBirth(argMultimap.getValue(PREFIX_DOB))
-                    .ifPresent(editPersonDescriptor::setDateOfBirth);
+```
+###### \java\seedu\address\logic\parser\EditCommandParser.java
+``` java
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
             parseDetagsForEdit(argMultimap.getAllValues(PREFIX_DELTAG)).ifPresent(editPersonDescriptor::setTagsToDel);
         } catch (EmptyFieldException efe) {
@@ -310,10 +573,91 @@ public class EmptyFieldException extends ParseException {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\ParserUtil.java
+``` java
+
+    /**
+     * @param input String which indicates the user's choice of panel
+     * @return PanelChoice enumerator to indicate to the program the user's choice
+     * @throws IllegalValueException
+     */
+    public static PanelChoice parsePanelChoice(String input) throws IllegalValueException {
+        if (Arrays.stream(SELECT_ARGS_INSURANCE).anyMatch(key -> key.equals(input))) {
+            return PanelChoice.INSURANCE;
+        } else if (Arrays.stream(SELECT_ARGS_PERSON).anyMatch(key -> key.equals(input))) {
+            return PanelChoice.PERSON;
+        } else {
+            throw new IllegalValueException("Invalid panel choice");
+        }
+    }
+```
+###### \java\seedu\address\logic\parser\SelectCommandParser.java
+``` java
+    /**
+     * Parses the given {@code String} of arguments in the context of the SelectCommand
+     * and returns an SelectCommand object for execution.
+     * Complicated code is due to the intention of giving the user the freedom to place arguments in any format
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public SelectCommand parse(String args) throws ParseException {
+        try {
+            String[] inputs = args.split("\\s");
+            String indexString = Arrays.stream(inputs).filter(s -> s.matches("\\d+"))
+                    .findFirst().orElseThrow(() -> new IllegalValueException("No index found!"));
+            Optional<String> panelString = Arrays.stream(inputs).filter(s -> s.matches("\\p{Alpha}+")).findFirst();
+            SelectCommand.PanelChoice panelChoice;
+            if (inputs.length < 2) {
+                throw new IllegalValueException("Too little input arguments!");
+            } else if (inputs.length > 2 && panelString.isPresent()) {
+                panelChoice = ParserUtil.parsePanelChoice(panelString.get().toLowerCase());
+            } else {
+                panelChoice = SelectCommand.PanelChoice.PERSON;
+            }
+            Index index = ParserUtil.parseIndex(indexString);
+            return new SelectCommand(index, panelChoice);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    /**
+     * Function to update the overall links between insurances and persons after a change in LISA
+     */
+    private void syncWithUpdate() {
+        syncMasterLifeInsuranceMap();
+        try {
+            syncMasterPersonList();
+        } catch (InsuranceNotFoundException infe) {
+            assert false : "AddressBooks should not have duplicate insurances";
+        }
+    }
+```
 ###### \java\seedu\address\model\insurance\LifeInsurance.java
 ``` java
+    private StringProperty insuranceName;
     private LocalDate signingDate;
     private LocalDate expiryDate;
+```
+###### \java\seedu\address\model\insurance\UniqueLifeInsuranceList.java
+``` java
+
+    /**
+     * sort insurance in descending order according to premium,
+     * change the sign in the return statement to make it ascending
+     */
+    public void sortInsurances() {
+        internalList.sort((insurance1, insurance2) -> {
+            if (insurance1.getPremium().equals(insurance2.getPremium())) {
+                return 0;
+            } else {
+                return insurance1.getPremium() < insurance2.getPremium() ? 1 : -1;
+            }
+        });
+    }
 ```
 ###### \java\seedu\address\model\person\Address.java
 ``` java
@@ -323,10 +667,6 @@ public class EmptyFieldException extends ParseException {
 ```
 ###### \java\seedu\address\model\person\DateOfBirth.java
 ``` java
-    public static final String MESSAGE_DOB_CONSTRAINTS =
-            "Please enter in Day Month Year format where the month can be a number or the name"
-                    + " and the year can be input in 2-digit or 4-digit format.";
-
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
@@ -343,34 +683,6 @@ public class EmptyFieldException extends ParseException {
     public DateOfBirth() {
         this.dateOfBirth = LocalDate.now();
         this.dateSet = false;
-    }
-
-    /**
-     * Validates given Date of Birth.
-     *
-     * @throws IllegalValueException if given date of birth string is invalid.
-     */
-    public DateOfBirth(String dob) throws IllegalValueException {
-        requireNonNull(dob);
-        if (dob.isEmpty()) {
-            throw new EmptyFieldException(PREFIX_DOB);
-        }
-        if (!isValidDateOfBirth(dob)) {
-            throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
-        }
-        this.dateOfBirth = new DateParser().parse(dob);
-        this.dateSet = true;
-    }
-
-    /**
-     * Returns true if a given string is a valid person date of birth.
-     */
-    public static boolean isValidDateOfBirth(String test) {
-        return test.matches(DOB_VALIDATION_REGEX);
-    }
-    @Override
-    public String toString() {
-        return dateSet ? dateOfBirth.format(DateParser.DATE_FORMAT) : "";
     }
 ```
 ###### \java\seedu\address\ui\CommandBox.java
@@ -406,9 +718,316 @@ public class EmptyFieldException extends ParseException {
         }
     }
 ```
+###### \java\seedu\address\ui\InsuranceIdLabel.java
+``` java
+    private void setPremiumLevel(Double premium) {
+        if (premium > 500.0) {
+            insuranceId.getStyleClass().add("gold-insurance-header");
+        } else if (premium > 100.0) {
+            insuranceId.getStyleClass().add("silver-insurance-header");
+        } else {
+            insuranceId.getStyleClass().add("normal-insurance-header");
+        }
+    }
+```
+###### \java\seedu\address\ui\InsuranceListPanel.java
+``` java
+    @Subscribe
+    private void handleSwitchToProfilePanelRequestEvent(SwitchToProfilePanelRequestEvent event) {
+        insuranceListView.getSelectionModel().clearSelection();
+    }
+
+    /**
+     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+     */
+    private void scrollTo(int index) {
+        Platform.runLater(() -> {
+            insuranceListView.scrollTo(index);
+            insuranceListView.getSelectionModel().clearAndSelect(index);
+        });
+    }
+
+    @Subscribe
+    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+        if (event.panelChoice == PanelChoice.INSURANCE) {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            scrollTo(event.targetIndex);
+        }
+    }
+    @Subscribe
+    private void handleInsuranceClickedEvent(InsuranceClickedEvent event) {
+        ObservableList<InsuranceProfile> insurances = insuranceListView.getItems();
+        for (int i = 0; i < insurances.size(); i++) {
+            if (insurances.get(i).getInsurance().getInsuranceName().equals(event.getInsurance().getInsuranceName())) {
+                insuranceListView.scrollTo(i);
+                insuranceListView.getSelectionModel().select(i);
+                break;
+            }
+        }
+    }
+    // weird phenomenon that a filteredList does not contain elements in the original list and cannot be used
+    // in the select command
+```
+###### \java\seedu\address\ui\InsuranceProfile.java
+``` java
+    private void setPremiumLevel(Double premium) {
+        if (premium > 500.0) {
+            insuranceName.getStyleClass().add("gold-insurance-header");
+            index.getStyleClass().add("gold-insurance-header");
+        } else if (premium > 100.0) {
+            insuranceName.getStyleClass().add("silver-insurance-header");
+            index.getStyleClass().add("silver-insurance-header");
+        } else {
+            insuranceName.getStyleClass().add("normal-insurance-header");
+            index.getStyleClass().add("normal-insurance-header");
+        }
+    }
+```
+###### \java\seedu\address\ui\InsuranceProfilePanel.java
+``` java
+
+/**
+ * Profile panel for insurance when the respective insurance is selected
+ */
+public class InsuranceProfilePanel extends UiPart<Region> {
+    private static final String FXML = "InsuranceProfilePanel.fxml";
+    private static final String PDFFOLDERPATH = "data/";
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    private File insuranceFile;
+    private ReadOnlyInsurance insurance;
+
+    @FXML
+    private ScrollPane insuranceScrollPane;
+    @FXML
+    private AnchorPane insuranceProfilePanel;
+    @FXML
+    private Label insuranceName;
+    @FXML
+    private Label owner;
+    @FXML
+    private Label insured;
+    @FXML
+    private Label beneficiary;
+    @FXML
+    private Label premium;
+    @FXML
+    private Label signingDate;
+    @FXML
+    private Label expiryDate;
+    @FXML
+    private Label contractPath;
+
+    public InsuranceProfilePanel() {
+        super(FXML);
+        insuranceScrollPane.setFitToWidth(true);
+        insuranceProfilePanel.prefWidthProperty().bind(insuranceScrollPane.widthProperty());
+        insuranceProfilePanel.prefHeightProperty().bind(insuranceScrollPane.heightProperty());
+        enableNameToProfileLink(insurance);
+        registerAsAnEventHandler(this);
+    }
+
+```
+###### \java\seedu\address\ui\InsuranceProfilePanel.java
+``` java
+    private void setPremiumLevel(Double premium) {
+        insuranceName.getStyleClass().clear();
+        insuranceName.getStyleClass().add("insurance-profile-header");
+        if (premium > 500.0) {
+            insuranceName.getStyleClass().add("gold-insurance-header");
+        } else if (premium > 100.0) {
+            insuranceName.getStyleClass().add("silver-insurance-header");
+        } else {
+            insuranceName.getStyleClass().add("normal-insurance-header");
+        }
+    }
+
+    @Subscribe
+    private void handleSwitchToInsurancePanelRequestEvent(InsurancePanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        enableNameToProfileLink(event.getInsurance());
+        initializeContractFile(event.getInsurance());
+        bindListeners(event.getInsurance());
+        setPremiumLevel(event.getInsurance().getPremium());
+        raise(new SwitchToInsurancePanelRequestEvent());
+    }
+```
+###### \java\seedu\address\ui\PersonListPanel.java
+``` java
+    @Subscribe
+    private void handleInsurancePanelSelectionChangedEvent(InsurancePanelSelectionChangedEvent event) {
+        personListView.getSelectionModel().clearSelection();
+    }
+
+    @Subscribe
+    private void handlePersonNameClickedEvent(PersonNameClickedEvent event) {
+        FilteredList<PersonCard> filtered = personListView.getItems().filtered(p ->
+                p.person.getName().toString().equals(event.getName())
+        );
+        if (filtered.size() < 1) {
+            return;
+        } else {
+            personListView.scrollTo(filtered.get(0));
+            personListView.getSelectionModel().select(filtered.get(0));
+        }
+    }
+```
+###### \resources\view\DarkTheme.css
+``` css
+.profile-header {
+    -fx-font-size: 35pt;
+    -fx-font-weight: bolder;
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.profile-field {
+    -fx-font-size: 15pt;
+    -fx-font-family: "Segoe UI SemiLight";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+#insuranceProfilePanel .static-labels {
+    -fx-font-size: 15pt;
+    -fx-font-family: "Segoe UI SemiBold";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+#insuranceProfilePanel .dynamic-labels {
+    -fx-font-size: 15pt;
+    -fx-font-family: "Segoe UI SemiLight";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.static-insurance-labels {
+    -fx-font-size: 13pt;
+    -fx-font-family: "Segoe UI Bold";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+#insuranceListView #owner:hover, #insured:hover, #beneficiary:hover {
+    -fx-font-size: 13pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: #ff4500;
+    -fx-opacity: 1;
+}
+
+#insuranceProfilePanel #owner:hover, #insuranceProfilePanel #insured:hover, #insuranceProfilePanel #beneficiary:hover {
+    -fx-text-fill: #ff4500;
+}
+
+.insurance-profile-header {
+    -fx-font-size: 30pt;
+    -fx-font-family: "Impact";
+    -fx-opacity: 1;
+}
+
+#insuranceProfilePanel .gold-insurance-header {
+    -fx-text-fill: #daa520;
+}
+
+#insuranceProfilePanel .silver-insurance-header {
+    -fx-text-fill: #a9a9a9;
+}
+
+#insuranceProfilePanel .normal-insurance-header {
+    -fx-text-fill: white;
+}
+
+#insuranceListView .insurance-header {
+    -fx-font-size: 17pt;
+    -fx-font-family: "Impact";
+    -fx-opacity: 1;
+}
+
+#insuranceListView .gold-insurance-header {
+    -fx-text-fill: #daa520;
+}
+
+#insuranceListView .silver-insurance-header {
+    -fx-text-fill: #a9a9a9;
+}
+
+#insuranceListView .normal-insurance-header {
+    -fx-text-fill: white;
+}
+```
 ###### \resources\view\DarkTheme.css
 ``` css
 #insuranceListView {
     -fx-background-color: derive(#1d1d1d, 20%);
 }
+```
+###### \resources\view\InsuranceProfile.fxml
+``` fxml
+         <VBox alignment="CENTER_LEFT" GridPane.columnIndex="1">
+            <children>
+               <HBox>
+                  <children>
+                     <Label fx:id="owner" styleClass="particular-link" text="\$owner" />
+                  </children>
+               </HBox>
+               <HBox>
+                  <children>
+                     <Label fx:id="insured" styleClass="particular-link" text="\$insured" />
+                  </children>
+               </HBox>
+               <HBox>
+                  <children>
+                     <Label fx:id="beneficiary" styleClass="particular-link" text="\$beneficiary" />
+                  </children>
+               </HBox>
+               <HBox>
+                  <children>
+                     <Label fx:id="premium" styleClass="particular-link" text="\$premium" />
+                  </children>
+               </HBox>
+            </children>
+         </VBox>
+```
+###### \resources\view\InsuranceProfilePanel.fxml
+``` fxml
+<StackPane prefHeight="439.0" prefWidth="556.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ScrollPane fx:id="insuranceScrollPane" styleClass="anchor-pane">
+        <content>
+            <AnchorPane fx:id="insuranceProfilePanel" styleClass="anchor-pane">
+               <children>
+                  <Label fx:id="insuranceName" layoutX="5.0" layoutY="5.0" styleClass="insurance-profile-header" text="\$insuranceName" />
+                  <HBox layoutX="28.0" layoutY="63.0" prefHeight="342.0" prefWidth="500.0" spacing="10.0">
+                     <children>
+                        <VBox prefHeight="201.0" prefWidth="131.0">
+                           <children>
+                              <Label styleClass="static-labels" text="Owner" />
+                              <Label styleClass="static-labels" text="Insured" />
+                              <Label styleClass="static-labels" text="Beneficiary" />
+                              <Label styleClass="static-labels" text="Contract File" />
+                              <Label styleClass="static-labels" text="Premium" />
+                              <Label styleClass="static-labels" text="Signing Date" />
+                              <Label styleClass="static-labels" text="Expiry Date" />
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="201.0" prefWidth="250.0">
+                           <children>
+                              <Label fx:id="owner" styleClass="dynamic-labels" text="\$owner" />
+                              <Label fx:id="insured" styleClass="dynamic-labels" text="\$insured" />
+                              <Label fx:id="beneficiary" styleClass="dynamic-labels" text="\$beneficiary" />
+                              <Label fx:id="contractPath" styleClass="dynamic-labels" text="\$contractPath" />
+                              <Label fx:id="premium" styleClass="dynamic-labels" text="\$premium" />
+                              <Label fx:id="signingDate" styleClass="dynamic-labels" text="\$signingDate" />
+                              <Label fx:id="expiryDate" styleClass="dynamic-labels" text="\$expiryDate" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </children>
+</StackPane>
 ```

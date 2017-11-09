@@ -54,10 +54,13 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
             ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
+            //@@author Pujitha97
             ParserUtil.parseDateOfBirth(argMultimap.getValue(PREFIX_DOB))
                     .ifPresent(editPersonDescriptor::setDateOfBirth);
             ParserUtil.parseGender(argMultimap.getValue(PREFIX_GENDER))
                     .ifPresent(editPersonDescriptor::setGender);
+            //@@author
+            //@@author Juxarius
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
             parseDetagsForEdit(argMultimap.getAllValues(PREFIX_DELTAG)).ifPresent(editPersonDescriptor::setTagsToDel);
         } catch (EmptyFieldException efe) {

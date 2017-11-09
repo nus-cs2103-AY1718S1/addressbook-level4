@@ -3,6 +3,8 @@
     background-color: #383838; /* Used in the default.html file */
 }
 
+
+
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -39,15 +41,30 @@
     -fx-opacity: 1;
 }
 
+/*@@author*/
 /*@@author Juxarius*/
-#scrollPane .profile-header {
+.profile-header {
     -fx-font-size: 35pt;
     -fx-font-weight: bolder;
     -fx-text-fill: white;
     -fx-opacity: 1;
 }
 
-#profilePanel .profile-field {
+.profile-field {
+    -fx-font-size: 15pt;
+    -fx-font-family: "Segoe UI SemiLight";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+#insuranceProfilePanel .static-labels {
+    -fx-font-size: 15pt;
+    -fx-font-family: "Segoe UI SemiBold";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+#insuranceProfilePanel .dynamic-labels, .valid-file, .missing-file {
     -fx-font-size: 15pt;
     -fx-font-family: "Segoe UI SemiLight";
     -fx-text-fill: white;
@@ -56,7 +73,7 @@
 
 .static-insurance-labels {
     -fx-font-size: 13pt;
-    -fx-font-family: "Segoe UI SemiBold";
+    -fx-font-family: "Segoe UI Bold";
     -fx-text-fill: white;
     -fx-opacity: 1;
 }
@@ -66,6 +83,28 @@
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: #ff4500;
     -fx-opacity: 1;
+}
+
+#insuranceProfilePanel #owner:hover, #insuranceProfilePanel #insured:hover, #insuranceProfilePanel #beneficiary:hover, .valid-file:hover {
+    -fx-text-fill: #ff4500;
+}
+
+.insurance-profile-header {
+    -fx-font-size: 30pt;
+    -fx-font-family: "Impact";
+    -fx-opacity: 1;
+}
+
+#insuranceProfilePanel .gold-insurance-header {
+    -fx-text-fill: #daa520;
+}
+
+#insuranceProfilePanel .silver-insurance-header {
+    -fx-text-fill: #a9a9a9;
+}
+
+#insuranceProfilePanel .normal-insurance-header {
+    -fx-text-fill: white;
 }
 
 #insuranceListView .insurance-header {
@@ -87,6 +126,11 @@
 }
 /*@@author*/
 
+/*@@author RSJunior37*/
+.missing-file:hover {
+    -fx-text-fill: #696969
+}
+/*@@author*/
 .text-field {
     -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -120,10 +164,10 @@
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
     -fx-border-color:
-        transparent
-        transparent
-        derive(-fx-base, 80%)
-        transparent;
+            transparent
+            transparent
+            derive(-fx-base, 80%)
+            transparent;
     -fx-border-insets: 0 10 1 0;
 }
 
@@ -211,13 +255,13 @@
 }
 
 .anchor-pane {
-     -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 .pane-with-border {
-     -fx-background-color: derive(#1d1d1d, 20%);
-     -fx-border-color: derive(#1d1d1d, 10%);
-     -fx-border-top-width: 1px;
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-border-color: derive(#1d1d1d, 10%);
+    -fx-border-top-width: 1px;
 }
 
 .status-bar {
@@ -312,8 +356,8 @@
 }
 
 .button:pressed, .button:default:hover:pressed {
-  -fx-background-color: white;
-  -fx-text-fill: #1d1d1d;
+    -fx-background-color: white;
+    -fx-text-fill: #1d1d1d;
 }
 
 .button:focused {

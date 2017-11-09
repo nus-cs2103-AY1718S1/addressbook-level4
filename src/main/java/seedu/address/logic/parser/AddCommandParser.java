@@ -58,17 +58,19 @@ public class AddCommandParser implements Parser<AddCommand> {
                 .ifPresent(addPersonOptionalFieldDescriptor::setEmail);
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS))
                 .ifPresent(addPersonOptionalFieldDescriptor::setAddress);
+            //@@author Pujitha97
             ParserUtil.parseDateOfBirth(argMultimap.getValue(PREFIX_DOB))
                     .ifPresent(addPersonOptionalFieldDescriptor::setDateOfBirth);
             ParserUtil.parseGender(argMultimap.getValue(PREFIX_GENDER))
                     .ifPresent(addPersonOptionalFieldDescriptor::setGender);
 
+            DateOfBirth dob = addPersonOptionalFieldDescriptor.getDateOfBirth();
+            Gender gender = addPersonOptionalFieldDescriptor.getGender();
+            //@@author
+            //@@author OscarWang114
             Phone phone = addPersonOptionalFieldDescriptor.getPhone();
             Email email = addPersonOptionalFieldDescriptor.getEmail();
             Address address = addPersonOptionalFieldDescriptor.getAddress();
-            DateOfBirth dob = addPersonOptionalFieldDescriptor.getDateOfBirth();
-            Gender gender = addPersonOptionalFieldDescriptor.getGender();
-
             ReadOnlyPerson person = new Person(name, phone, email, address, dob, gender, tagList);
 
             return new AddCommand(person);

@@ -25,6 +25,10 @@ public class PersonNameClickedEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 
+    public String getName() {
+        return target.getName();
+    }
+
     //@@author OscarWang114
     public Optional<ReadOnlyPerson> getPerson() {
         return target.getOptionalPerson();
