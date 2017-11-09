@@ -166,10 +166,6 @@ public abstract class AddressBookSystemTest {
         assertFalse(getPersonListPanel().isAnyCardSelected());
     }
 
-    protected void assertSelectedCardNotSelected(){
-        assertFalse(getPersonListPanel().isAnyCardSelected());
-    }
-
     /**
      * Asserts that the info panel is changed to display the details of the person in the person list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
