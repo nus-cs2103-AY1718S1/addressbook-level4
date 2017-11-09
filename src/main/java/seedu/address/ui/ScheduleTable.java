@@ -1,11 +1,11 @@
 package seedu.address.ui;
 
+import java.util.TreeSet;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
-import java.util.TreeSet;
 
 import seedu.address.commons.core.PossibleTimes;
 import seedu.address.model.schedule.Schedule;
@@ -51,12 +51,10 @@ public class ScheduleTable extends JFrame {
         }
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
-        JTable table = new JTable(model)
-        {
+        JTable table = new JTable(model) {
             //  Returning the Class of each column will allow different
             //  renderers to be used based on Class
-            public Class getColumnClass(int column)
-            {
+            public Class getColumnClass(int column) {
                 return getValueAt(0, column).getClass();
             }
         };
@@ -74,7 +72,7 @@ public class ScheduleTable extends JFrame {
     public static void generates(Schedule schedule) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         ScheduleTable frame = new ScheduleTable(schedule);
@@ -89,7 +87,7 @@ public class ScheduleTable extends JFrame {
     public static void generates(TreeSet[] timeSetArray) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         ScheduleTable frame = new ScheduleTable(timeSetArray);

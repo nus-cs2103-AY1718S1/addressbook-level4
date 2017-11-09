@@ -125,7 +125,7 @@ public class Schedule {
         } else {
             timeString = timeInDay + "";
         }
-        if (Time.isValidTime(timeString )) {
+        if (Time.isValidTime(timeString)) {
             return true;
         } else {
             return false;

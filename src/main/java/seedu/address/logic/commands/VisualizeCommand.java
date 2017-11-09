@@ -50,7 +50,9 @@ public class VisualizeCommand extends Command {
         return new CommandResult(String.format(MESSAGE_VISUALIZE_PERSON_SUCCESS + targetIndex.getOneBased() + toShow));
 
     }
-
+    /**
+     * Show schedule info as a message.
+     */
     public String scheduleInfo() {
 
         Schedule scheduleToBeShown =
