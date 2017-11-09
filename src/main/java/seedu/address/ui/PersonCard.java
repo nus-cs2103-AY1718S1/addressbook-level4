@@ -16,7 +16,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
-
+import seedu.address.MainApp;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.DisplayGmapEvent;
 import seedu.address.commons.events.ui.PersonPanelDeleteEvent;
@@ -115,7 +115,6 @@ public class PersonCard extends UiPart<Region> {
     public void handleDelete() throws CommandException, ParseException {
         raise(new PersonPanelDeleteEvent(Index.fromOneBased(this.displayedIndex)));
     }
-    //@@author
 
     /**
      * Menu list option: GoogleMap
@@ -126,6 +125,7 @@ public class PersonCard extends UiPart<Region> {
     public void handleGoogleMap() {
         raise(new DisplayGmapEvent(Index.fromOneBased(this.displayedIndex)));
     }
+    //@@author
 
     /**
      * Menu list option: add image
@@ -140,7 +140,8 @@ public class PersonCard extends UiPart<Region> {
             try {
                 person.getPicture().setPictureUrl(person.getName().toString() + person.getPhone().toString() + ".jpg");
                 ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
-                FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
+                String fileUrl = MainApp.class.getResource(person.getPicture().getPictureUrl()).getPath();
+                FileInputStream fileStream = new FileInputStream(fileUrl);
                 Image newPicture = new Image(fileStream);
                 picture.setImage(newPicture);
             } catch (Exception e) {
