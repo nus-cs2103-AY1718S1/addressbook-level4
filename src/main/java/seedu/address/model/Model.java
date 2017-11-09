@@ -4,7 +4,9 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -63,4 +65,11 @@ public interface Model {
     //@@author namvd2709
     /** Returns list of all appointments */
     Set<Appointment> getAllAppointments();
+
+    /** Add appointments */
+    void addAppointment(Appointment appointment) throws IllegalValueException,
+            UniqueAppointmentList.ClashAppointmentException;
+
+    /** Removes appointment */
+    void deleteAppointment(Appointment target);
 }

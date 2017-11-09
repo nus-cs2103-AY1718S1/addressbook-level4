@@ -123,6 +123,15 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.hashCode();
     }
+    /**
+     * Removes the equivalent person from the list.
+
+     */
+    public boolean remove(Appointment toRemove) {
+        requireNonNull(toRemove);
+        final boolean appointmentFound = internalList.remove(toRemove);
+        return appointmentFound;
+    }
 
     /**
      * Signals that an operation would have violated the 'no duplicates' property of the list.

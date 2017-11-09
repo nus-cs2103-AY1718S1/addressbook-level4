@@ -59,7 +59,7 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        appointment = source.getAppointment().value;
+        appointment = Appointment.getOriginalAppointment(source.getAppointment().value);
         profilePicturePath = source.getProfilePicture().value;
         grouped = new ArrayList<>();
         for (Group group : source.getGroups()) {

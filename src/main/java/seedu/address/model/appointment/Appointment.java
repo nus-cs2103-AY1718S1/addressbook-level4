@@ -1,12 +1,16 @@
 //@@author namvd2709
 package seedu.address.model.appointment;
 
+import static java.time.temporal.ChronoUnit.MINUTES;
 import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Represents a Person's appointment created in the address book.
@@ -15,13 +19,15 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Appointment {
     public static final String MESSAGE_APPOINTMENT_CONSTRAINTS =
             "Appointment must be in exact format dd/MM/yyyy hh:mm duration, the date must be older than today";
-    public static final String DATETIME_PATTERN = "dd/MM/yyyy HH:mm";
-    private static final String MESSAGE_DURATION_CONSTRAINT = "Duration must be a positive integer in minutes";
-    private static final String MESSAGE_DATETIME_CONSTRAINT = "Date time cannot be in the past";
+    public static final String DATETIME_PATTERN = "dd/MM/uuuu HH:mm";
+    public static final String MESSAGE_DURATION_CONSTRAINT = "Duration must be a positive integer in minutes";
+    public static final String MESSAGE_DATETIME_CONSTRAINT = "Date time cannot be in the past";
+    public static final String MESSAGE_INVALID_DATETIME = "Date or time is invalid";
 
     public final String value;
     public final LocalDateTime start;
     public final LocalDateTime end;
+    private ReadOnlyPerson person;
 
     /**
      * Validates given appointment.
@@ -43,14 +49,14 @@ public class Appointment {
                 }
                 LocalDateTime startDateTime = getDateTime(date + " " + time);
                 LocalDateTime endDateTime = getEndDateTime(startDateTime, duration);
-                if (!isAfterToday(startDateTime) || !isAfterToday(endDateTime)) {
-                    throw new IllegalValueException(MESSAGE_DATETIME_CONSTRAINT);
-                }
-                this.value = appointment;
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN);
+                this.value = startDateTime.format(formatter) + " to " + endDateTime.format(formatter);
                 this.start = startDateTime;
                 this.end = endDateTime;
             } catch (ArrayIndexOutOfBoundsException iob) {
                 throw new IllegalValueException(MESSAGE_APPOINTMENT_CONSTRAINTS);
+            } catch (DateTimeParseException dtpe) {
+                throw new IllegalValueException(MESSAGE_INVALID_DATETIME);
             }
         }
     }
@@ -60,9 +66,18 @@ public class Appointment {
         return value;
     }
 
-    public static LocalDateTime getDateTime(String datetime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN);
+    public static LocalDateTime getDateTime(String datetime) throws DateTimeParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN)
+                .withResolverStyle(ResolverStyle.STRICT);
         return LocalDateTime.parse(datetime, formatter);
+    }
+
+    public void setPerson(ReadOnlyPerson person) {
+        this.person = person;
+    }
+
+    public ReadOnlyPerson getPerson() {
+        return person;
     }
 
     /**
@@ -89,6 +104,22 @@ public class Appointment {
      */
     private static LocalDateTime getEndDateTime(LocalDateTime startDateTime, String duration) {
         return startDateTime.plusMinutes(Integer.parseInt(duration));
+    }
+
+    /**
+     * Method to help get back original appointment, for passing back to constructor
+     */
+    public static String getOriginalAppointment(String formattedAppointment) {
+        if (!formattedAppointment.equals("")) {
+            int splitter = formattedAppointment.indexOf("to");
+            String start = formattedAppointment.substring(0, splitter - 1);
+            String end = formattedAppointment.substring(splitter + 3);
+            LocalDateTime startDateTime = Appointment.getDateTime(start);
+            LocalDateTime endDateTime = Appointment.getDateTime(end);
+            long duration = startDateTime.until(endDateTime, MINUTES);
+            return start + " " + String.valueOf(duration);
+        }
+        return formattedAppointment;
     }
 
     public LocalDateTime getStart() {

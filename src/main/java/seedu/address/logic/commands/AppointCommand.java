@@ -3,6 +3,8 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.appointment.Appointment.MESSAGE_DATETIME_CONSTRAINT;
+import static seedu.address.model.appointment.Appointment.isAfterToday;
 
 import java.util.List;
 import java.util.Set;
@@ -25,7 +27,7 @@ public class AppointCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "appoint";
     public static final String MESSAGE_APPOINT_SUCCESS = "New appointment added: %1$s";
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Appointment removed for person: %1$s";
-    public static final String MESSAGE_APPOINTMENT_CLASH = "Appointment clash";
+    public static final String MESSAGE_APPOINTMENT_CLASH = "Appointment clash with another in address book";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add an appointment to a person to the address book "
             + "by the index number in the last person listing.\n"
@@ -52,20 +54,28 @@ public class AppointCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         Set<Appointment> appointments = model.getAllAppointments();
         UniqueAppointmentList uniqueAppointmentList = new UniqueAppointmentList();
-        uniqueAppointmentList.setAppointments(appointments);
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        if (uniqueAppointmentList.hasClash(appointment)) {
-            throw new CommandException("Appointment clash with another in address book");
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), appointment, personToEdit.getProfilePicture(),
                 personToEdit.getGroups(), personToEdit.getTags());
+
+        if (!personToEdit.getAppointment().value.equals("")) {
+            appointments.remove(personToEdit.getAppointment());
+        }
+        uniqueAppointmentList.setAppointments(appointments);
+
+        if (uniqueAppointmentList.hasClash(appointment)) {
+            throw new CommandException(MESSAGE_APPOINTMENT_CLASH);
+        }
+
+        if (!appointment.value.equals("") && !isAfterToday(appointment.getStart())) {
+            throw new CommandException(MESSAGE_DATETIME_CONSTRAINT);
+        }
 
         try {
             model.updatePerson(personToEdit, editedPerson);
