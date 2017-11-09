@@ -1,0 +1,60 @@
+= Xu Yiqing - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+Our addressbook is an addressbook that strives to serve all the NUS students body.
+Other than some standard operations, it also support some operations that going to be handy for NUS students.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T14-B1/main/blob/master/collated/main/eeching.md[Functional code]]
+ [https://github.com/CS2103AUG2017-T14-B1/main/blob/master/collated/test/eeching.md[Test code]]
+ [https://github.com/CS2103AUG2017-T14-B1/main/blob/master/collated/unused/eeching.md[Unused code]]
+
+=== Enhancement Added: Additional phone list
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=additionalPhoneList]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+NUS has a large proportion of international students and they may have to save multiple phone numbers.
+This additional phone list allows them to save all the contact numbers, local or overseas.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=additionalPhoneList]
+
+#End of Extract#
+
+---
+
+=== Enhancement added: weather forecast window
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=weatherWindow]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Updated the GUI and change the layout(Pull requests https://github.com/CS2103AUG2017-T14-B1/main/pull/61[#61])
+* Wrote additional tests for phone command
+[https://github.com/CS2103AUG2017-T14-B1/main/blob/master/collated/test/eeching.md[PhoneCommandTest]]
+
+
