@@ -21,8 +21,10 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.PrefDefaultProfilePhotoChangedEvent;
 import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ProfilePhotoChangedEvent;
 import seedu.address.commons.events.ui.ShowBrowserEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowMeetingEvent;
@@ -183,7 +185,7 @@ public class MainWindow extends UiPart<Region> {
         settingsSelectorPlaceholder.getChildren().add(settingsSelector.getRoot());
         //@@author
 
-        setPersonListPanel(true);
+        setPersonListPanel();
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -199,25 +201,6 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic, commandBoxHelperPlaceholder, settingsPane);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
         //@@author
-    }
-
-    //@@author liuhang0213
-    public void setPersonListPanel(Boolean isRedownloading) {
-        ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
-        if (isRedownloading) {
-            for (ReadOnlyPerson person : persons) {
-                Task<Void> downloadTask = new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        storage.downloadProfilePhoto(person, prefs.getDefaultProfilePhoto());
-                        return null;
-                    }
-                };
-                new Thread(downloadTask).start();
-            }
-        }
-        personListPanel = new PersonListPanel(persons);
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
     }
 
     //@@author
@@ -287,6 +270,19 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
+    //@@author liuhang0213
+    private void setPersonListPanel() {
+        try {
+            ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
+            personListPanel = new PersonListPanel(persons);
+            personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        } catch (IllegalStateException e){
+            logger.info("Cannot update profile photo on a non-main thread. " +
+                    "Type 'list' to see the new profile photos. '¯\\_(ツ)_/¯");
+        }
+    }
+
+    //@@author
     void releaseResources() {
         browserPanel.freeResources();
     }
@@ -337,5 +333,27 @@ public class MainWindow extends UiPart<Region> {
             break;
         }
         scene.getStylesheets().add(cssPath);
+    }
+
+    //@@author liuhang0213
+    @Subscribe
+    private void handleDefaultProfilePhotoChangedEvent(PrefDefaultProfilePhotoChangedEvent event) {
+        ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
+        Task<Void> task = new Task<Void>() {
+            @Override public Void call() {
+                for (ReadOnlyPerson person : persons) {
+                    storage.downloadProfilePhoto(person, prefs.getDefaultProfilePhoto());
+                }
+                return null;
+            }
+        };
+        Thread th = new Thread(task);
+        th.setDaemon(true);
+        th.start();
+    }
+
+    @Subscribe
+    private void handleProfilePhotoChangedEvent(ProfilePhotoChangedEvent event) {
+        setPersonListPanel();
     }
 }
