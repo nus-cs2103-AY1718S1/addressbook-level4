@@ -85,6 +85,11 @@ Examples:
 
 * `login userAcc_123 pa$$_Word!@#&`
 * `login batMan_111 (Batcave.327+-)`
+
+Sample account to log into address book: +
+Username: loanShark97 +
+Password: hitMeUp123 +
+
 // end::login[]
 
 // tag::logout[]
