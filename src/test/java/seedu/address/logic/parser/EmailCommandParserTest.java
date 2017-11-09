@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 
+import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -35,5 +37,23 @@ public class EmailCommandParserTest {
     @Test
     public void parseInvalidPersonIndexThrowsParseException() {
         assertParseFailure(parser, "0", String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parseArgumentsNoIndexFailueThrowsParseException() throws Exception {
+        assertTrue(null == EmailCommandParser.parseArguments("mailto", "no index here!"));
+        assertTrue(null == EmailCommandParser.parseArguments("send", "none here either!"));
+    }
+
+    @Test
+    public void parseArgumentsIndexInArgumentsReturnsArguments() throws Exception {
+        assertEquals(" 1 s/some String V4lue", EmailCommandParser.parseArguments("email", "1some String V4lue"));
+        assertEquals(" 8 s/someStringV4lue", EmailCommandParser.parseArguments("mail", "8someStringV4lue"));
+    }
+
+    @Test
+    public void parseArgumentsIndexInCommandWordReturnsArguments() throws Exception {
+        assertEquals(" 1 s/", EmailCommandParser.parseArguments("mail1", ""));
+        assertEquals(" 7 s/", EmailCommandParser.parseArguments("send7", ""));
     }
 }
