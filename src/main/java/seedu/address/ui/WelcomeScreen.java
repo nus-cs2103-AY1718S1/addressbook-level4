@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.Random;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -13,8 +14,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
@@ -26,6 +28,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.schedule.Schedule;
 
 //@@author CT15
+
 /**
  * The Welcome Screen is opened when the application is run. Main Window will be
  * loaded when the welcome screen is closed.
@@ -34,6 +37,29 @@ public class WelcomeScreen extends UiPart<Region> {
     private static final String ICON = "/images/contag_logo.png";
     private static final String LOGO = "/images/contag_logo_high_res.png";
     private static final String FXML = "WelcomeScreen.fxml";
+
+    private static String[] quotes = {
+        "The perfect is the enemy of the good. — Voltaire",
+        "There is no substitute for hard work. — Thomas A. Edison",
+        "If you spend too much time thinking about a thing, you’ll never get it done. — Bruce Lee",
+        "Nothing is less productive than to make more efficient what should not be done at all. — Peter Drucker",
+        "Amateurs sit and wait for inspiration, the rest of us just get up and go to work. — Stephen King",
+        "My goal is no longer to get more done, but rather to have less to do. — Francine Jay",
+        "The simple act of paying positive attention to people has a great deal to do with productivity."
+                + " — Tom Peters",
+        "It is not enough to be industrious; so are the ants. What are you industrious about? — Henry David Thoreau",
+        "We need space to be productive, we need places to go to be free. — Laure Lacornette",
+        "The society based on production is only productive, not creative. — Albert Camus",
+        "Improved productivity means less human sweat, not more. — Henry Ford",
+        "It’s not always that we need to do more but rather that we need to focus on less. — Nathan W. Morris",
+        "No matter how great the talent or efforts, some things just take time. You can’t produce a baby "
+                + "in one month by getting nine women pregnant. — Warren Buffett",
+        "If you commit to giving more time than you have to spend, you will constantly be running from "
+                + "time debt collectors. — Elizabeth Grace Saunders",
+        "There is no waste in the world that equals the waste from needless, ill-directed, and ineffective "
+                + "motions. — Frank Bunker Gilbreth, Sr."
+    };
+
     private static final int FIXED_HEIGHT = 450;
     private static final int FIXED_WIDTH = 450;
 
@@ -89,11 +115,14 @@ public class WelcomeScreen extends UiPart<Region> {
      */
     void fillInnerParts() {
         logo = new ImageView(new Image(LOGO));
-        logo.setFitHeight(170);
-        logo.setFitWidth(170);
+        logo.setFitHeight(190);
+        logo.setFitWidth(190);
         logoPlaceHolder.getChildren().add(logo);
 
-        Text text = new Text("Hello World!");
+        Text text = new Text(quotes[generateQuoteNumber()]);
+        text.wrappingWidthProperty().set(345);
+        text.setTextAlignment(TextAlignment.CENTER);
+        text.setFill(Color.valueOf("#551a8b"));
         textPlaceHolder.getChildren().add(text);
 
         continueButton = new Button("Continue");
@@ -105,6 +134,17 @@ public class WelcomeScreen extends UiPart<Region> {
             }
         });
         buttonPlaceHolder.getChildren().add(continueButton);
+    }
+
+    /**
+     * Generates random quote number to display a random quote every time the welcome screen is displayed.
+     */
+    private int generateQuoteNumber() {
+        Random random = new Random();
+
+        int randomInteger = random.nextInt(quotes.length);
+
+        return randomInteger;
     }
 
     /**
@@ -146,6 +186,7 @@ public class WelcomeScreen extends UiPart<Region> {
     }
 
     //@@author 17navasaw
+
     /**
      * Shows reminder pop-up if there exists upcoming activities the next day.
      */

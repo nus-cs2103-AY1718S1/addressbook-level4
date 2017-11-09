@@ -16,10 +16,10 @@
 }
 
 #welcomeWindow {
-    -fx-background-color: #c18eda;
+    -fx-background-color: #b19cd9;
 }
 
 #textPlaceHolder {
-     -fx-font-family: "Helvetica";
+     -fx-font-family: "sans-serif";
      -fx-font-size: 20px;
 }
