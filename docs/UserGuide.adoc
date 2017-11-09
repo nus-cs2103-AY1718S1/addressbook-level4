@@ -300,6 +300,26 @@ Displays all your schedules in the command box.
 Displays all your schedules in the command box.
 // end::viewschedule[]
 
+=== Deleting a schedule : `deleteschedule` `Since v1.5`
+
+Deletes the specified schedule from cherBook. +
+Format: `deleteschedule INDEX` +
+Shorthand: `dsch INDEX`
+
+****
+* Deletes the schedule at the specified `INDEX`.
+* The index refers to the schedule shown in schedules list.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `viewschedule` +
+`deleteschedule 2` +
+Deletes the 2nd schedule in the results of the `viewschedule` command which returns a list of schedules.
+* `viewsch` +
+`dsch 1` +
+Deletes the 1st schedule in the results of the `viewsch` command which returns a list of schedules.
 
 === Selecting a person : `select` `Since v1.0`
 
@@ -512,6 +532,7 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 | add | `a` +| `a n/NAME student/STUDENT_NUMBER parent/PARENT_NUMBER e/EMAIL a/ADDRESS c/POSTALCODE [t/TAG]...` +
 | clear | `c` + | `c` +
 | delete | `d`  | `d 3` +
+| deleteschedule | `dsch`  | `dsch 1` +
 | edit | `e` + | `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...` +
 | find | `f` + | `f KEYWORD [MORE_KEYWORDS]` +
 | findtags | `ft` + | `ft KEYWORD [MORE_KEYWORDS]` +
@@ -524,6 +545,7 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 | undo | `u` + | `u` +
 | redo | `r` + | `r` +
 | remark | `rm` + | `rm Index [rm/REMARK]` +
+| viewschedule | `viewsch` + | `viewsch` +
 |=======================================================================
 // end::commandshortcuts[]
 
@@ -609,6 +631,7 @@ In version v1.5, you are be able to:
 
 * Use the `TabCommand` to display different graph types (Line/Bar Chart) of the selected student's academic grades
 * Use the `ViewScheduleCommand` to view all your schedules in a list sorted by date and time
+* Use the `DeleteScheduleCommand` to delete schedules that are overdue
 
 === Features Coming in v2.0
 In version v2.0, users will be able to:
