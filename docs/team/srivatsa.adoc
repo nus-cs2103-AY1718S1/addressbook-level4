@@ -210,7 +210,7 @@ Otherwise, users will be notified that specified tags are not used in address bo
 #Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
 
 * When any of the contacts in the addressbook is selected, a list of closest LinkedIn Profiles are displayed.
-* e.g When `Alex Yeoh` is selected in the panel the display to the right will show his Linkedin profile/ list +
+* e.g When `Alex Yeoh` is selected in the panel the display to the right will show a list +
 of profiles that match his details.
 
 +
@@ -246,20 +246,104 @@ Note: Cookies are stored to maintain login session for the length of the address
 
 ==== Design considerations
 
-**Aspect:** Implementation of display linked in authorisation
-**Alternative 1 (current option):** Manual key in of user-id and password into browser
-**Pros:** More details of user profile is viewable
-**Pros:** More secure
-**Cons:** Tedious to type login credentials into browser
-**Alternative 2:** Use OAuth 2.0 with LinkedIn Api
-**Pros:** More convenient as login credentials are required only once
-**Cons:** LinkedIn API available does not allow for viewing of full profile
+**Aspect:** Implementation of display linked in authorisation +
+**Alternative 1 (current option):** Manual key in of user-id and password into browser +
+**Pros:** More details of user profile is viewable +
+**Pros:** More secure +
+**Cons:** Tedious to type login credentials into browser +
+**Alternative 2:** Use OAuth 2.0 with LinkedIn Api +
+**Pros:** More convenient as login credentials are required only once +
+**Cons:** LinkedIn API available does not allow for viewing of full profile +
 
 #End of Extract#
 ---
 
 === Enhancement Proposed: Add meeting
 
+==== External behavior
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: 2.12. Adding a new meeting command : AddMeeting]]#
+
+Adds a new meeting to the addressbook +
+Format: `addMeeting on DATE from TIME at LOCATION about NOTES [with PERSON]...`
+
+Furthermore, every meeting added is saved locally and online on https://www.asana.com[Asana]. +
+Each meeting is saved as a separate task under `Meetings` project in `Personal Projects` workspace.
+
+[TIP]
+A meeting can have more than 1 (at least 1) person associated with the meeting.
+
+Examples:
+
+* `add on 24/11/2017 from 1400 at Tea Party Cafe about Meetup with 1`
+* `add on 12/11/2017 from 1000 at University Town about Dialogue with 2 with 3`
+
+[NOTE]
+For Asana Integration to be fully functional, make sure you have: +
+* An account with Asana (Free or Premium) +
+* A Workspace called `Personal Projects` (This is usually generated automatically)
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows users to conveniently connect with contacts in addressbook & get to know more about these contacts.
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+When the `choose` command is activated with the argument `linkedin`, the `BrowserPanel` handles by calling:
+[source, java]
+----
+private void loadOtherPages(String page);
+----
+
+image::LinkedInProfile.png[width="200"]
+
+LinkedIn results page with parameters, such as `Name`, passed in from the selected `Person` class.
+
+Note: Cookies are stored to maintain login session for the length of the addressbook session.
+
+---
+
+==== Design considerations
+
+**Aspect:** Implementation of display linked in authorisation +
+**Alternative 1 (current option):** Manual key in of user-id and password into browser +
+**Pros:** More details of user profile is viewable +
+**Pros:** More secure +
+**Cons:** Tedious to type login credentials into browser +
+**Alternative 2:** Use OAuth 2.0 with LinkedIn Api +
+**Pros:** More convenient as login credentials are required only once +
+**Cons:** LinkedIn API available does not allow for viewing of full profile +
+
+#End of Extract#
+---
+
 === Other contributions
+
+==== Implemented ReadOnlyMeeting class
+
+In an effort to be more defensive while programming, the addressbook application uses `ReadOnlyMeeting` instead of the +
+easily modifiable `Meeting` class. This is similar to the idea of using `ReadOnlyPerson` class whenever possible in +
+place of the `Person` class directly. This ensures fewer errors by restricting unnecessary modifications to the `Meeting` +
+class.
+
+==== Added SearchCount parameter to Person Class
+
+Each person has now an associated `searchCount` variable that keeps track of the number each person is searched for.
+
+==== Project Management
+
+* Assigned issues to teammates
+* Monitored progress and created milestones of the team
+* Constantly reviewed if users' needs were considered
+
+
 
 

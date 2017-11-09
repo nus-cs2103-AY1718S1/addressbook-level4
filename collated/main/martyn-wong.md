@@ -1,5 +1,5 @@
 # martyn-wong
-###### \java\seedu\address\commons\events\ui\MapPersonEvent.java
+###### /java/seedu/address/commons/events/ui/MapPersonEvent.java
 ``` java
 /**
  * Represents a mapping function call by user
@@ -22,7 +22,7 @@ public class MapPersonEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\MapCommand.java
+###### /java/seedu/address/logic/commands/MapCommand.java
 ``` java
 /**
  *  Returns selected person's address in google map search in browser panel
@@ -72,7 +72,7 @@ public class MapCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\MapCommandParser.java
+###### /java/seedu/address/logic/parser/MapCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new MapCommand object
@@ -95,7 +95,7 @@ public class MapCommandParser implements Parser<MapCommand> {
     }
 }
 ```
-###### \java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /**
      * Shows the google map for the selected person in the browser panel
@@ -103,7 +103,7 @@ public class MapCommandParser implements Parser<MapCommand> {
     void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException {
@@ -112,7 +112,7 @@ public class MapCommandParser implements Parser<MapCommand> {
 
 }
 ```
-###### \java\seedu\address\model\person\PersonContainsKeywordsPredicate.java
+###### /java/seedu/address/model/person/PersonContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Parameters} matches any of the keywords given.
@@ -139,15 +139,11 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
 
 }
 ```
-###### \java\seedu\address\ui\BrowserPanel.java
+###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
     private void loadPersonMap(ReadOnlyPerson person) {
         loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
-    }
-
-    public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
     }
 
 ```

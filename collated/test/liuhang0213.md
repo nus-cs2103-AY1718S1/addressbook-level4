@@ -1,5 +1,5 @@
 # liuhang0213
-###### \java\seedu\address\logic\commands\NextMeetingCommandTest.java
+###### /java/seedu/address/logic/commands/NextMeetingCommandTest.java
 ``` java
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalMeetings.getTypicalMeetingList;
@@ -10,9 +10,9 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.Meeting;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.ReadOnlyMeeting;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.InternalId;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -24,7 +24,7 @@ public class NextMeetingCommandTest {
 
     private Model model;
     private NextMeetingCommand nextMeetingCommand;
-    private Meeting meeting;
+    private ReadOnlyMeeting meeting;
 
     @Before
     public void setUp() {
@@ -53,7 +53,7 @@ public class NextMeetingCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\PrefCommandTest.java
+###### /java/seedu/address/logic/commands/PrefCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code PrefCommand}.
@@ -132,7 +132,7 @@ public class PrefCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\PrefCommandParserTest.java
+###### /java/seedu/address/logic/parser/PrefCommandParserTest.java
 ``` java
 public class PrefCommandParserTest {
 
@@ -163,7 +163,7 @@ public class PrefCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\model\UniqueMeetingListTest.java
+###### /java/seedu/address/model/UniqueMeetingListTest.java
 ``` java
 public class UniqueMeetingListTest {
 
@@ -185,7 +185,7 @@ public class UniqueMeetingListTest {
 
     @Test
     public void setMeetings_withDuplicateMeetings_throwsAssertionError() {
-        List<Meeting> newMeetings = Arrays.asList(new Meeting(M1), new Meeting(M1));
+        List<ReadOnlyMeeting> newMeetings = Arrays.asList(new Meeting(M1), new Meeting(M1));
         MeetingListStub newData = new MeetingListStub(newMeetings);
 
         thrown.expect(AssertionError.class);
@@ -196,25 +196,25 @@ public class UniqueMeetingListTest {
      * A stub UniqueMeetingList which meetings can violate interface constraints.
      */
     private static class MeetingListStub implements ReadOnlyMeetingList {
-        private final ObservableList<Meeting> meetings = FXCollections.observableArrayList();
+        private final ObservableList<ReadOnlyMeeting> meetings = FXCollections.observableArrayList();
 
-        MeetingListStub (Collection<Meeting> meetings) {
+        MeetingListStub (Collection<ReadOnlyMeeting> meetings) {
             this.meetings.setAll(meetings);
         }
 
         @Override
-        public ObservableList<Meeting> getMeetingList() {
+        public ObservableList<ReadOnlyMeeting> getMeetingList() {
             return meetings;
         }
 
         @Override
-        public Meeting getUpcomingMeeting() {
+        public ReadOnlyMeeting getUpcomingMeeting() {
             return meetings.sorted().get(0);
         }
     }
 }
 ```
-###### \java\seedu\address\storage\XmlMeetingListStorageTest.java
+###### /java/seedu/address/storage/XmlMeetingListStorageTest.java
 ``` java
 
 public class XmlMeetingListStorageTest {
@@ -318,7 +318,7 @@ public class XmlMeetingListStorageTest {
 
 }
 ```
-###### \java\seedu\address\testutil\MeetingBuilder.java
+###### /java/seedu/address/testutil/MeetingBuilder.java
 ``` java
 /**
  * A utility class to help with building Meeting objects.
@@ -348,7 +348,7 @@ public class MeetingBuilder {
 
 }
 ```
-###### \java\seedu\address\testutil\TypicalMeetings.java
+###### /java/seedu/address/testutil/TypicalMeetings.java
 ``` java
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -370,7 +370,7 @@ public class TypicalMeetings {
                 meetings.add(m);
             }
             return meetings;
-        } catch (UniqueMeetingList.DuplicateMeetingException e) {
+        } catch (DuplicateMeetingException e) {
             throw new AssertionError("sample data cannot contain duplicate meetings", e);
         }
     }
