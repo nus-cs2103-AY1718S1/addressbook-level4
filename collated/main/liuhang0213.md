@@ -801,7 +801,7 @@ public interface MeetingListStorage {
     @Subscribe
     public void handlePersonChangedEvent(PersonChangedEvent event) {
         if (event.type == PersonChangedEvent.ChangeType.ADD
-                || event.type == PersonChangedEvent.ChangeType.EDIT) {
+                            || event.type == PersonChangedEvent.ChangeType.EDIT) {
             downloadProfilePhoto(event.person, event.prefs.getDefaultProfilePhoto());
         }
     }
@@ -840,17 +840,25 @@ public interface MeetingListStorage {
             URL url = new URL(urlString);
             InputStream in = new BufferedInputStream(url.openStream());
             String filePath = CACHE_DIR + filename;
+            String tempFilePath = filePath + INCOMPLETE_DOWNLOAD_SUFFIX;
 
-            File file = new File(filePath);
+            File file = new File(tempFilePath);
             file.createNewFile();
 
-            OutputStream out = new BufferedOutputStream(new FileOutputStream(filePath));
+            // Download the file
+            OutputStream out = new BufferedOutputStream(new FileOutputStream(tempFilePath));
 
             for (int i; (i = in.read()) != -1; ) {
                 out.write(i);
             }
+
             in.close();
             out.close();
+
+            // Rename the file
+            Path tempPath = Paths.get(tempFilePath);
+            Path path = Paths.get(filePath);
+            Files.move(tempPath, path, REPLACE_EXISTING);
         } catch (MalformedURLException e) {
             logger.warning(String.format("URL %1$s is not valid. File not downloaded.", urlString));
         }
@@ -885,15 +893,15 @@ public interface MeetingListStorage {
     }
 
     // Gravatar
-
     @Override
     public void downloadProfilePhoto(ReadOnlyPerson person, String def) {
         try {
-            String gravatarUrl = StringUtil.generateGravatarUrl(person.getEmail().value,
-                    def);
-            String filename = String.format(PersonCard.PROFILE_PHOTO_FILENAME_FORMAT, person.getInternalId().value);
+            String gravatarUrl = StringUtil.generateGravatarUrl(person.getEmail().value, def);
+            String filename = String.format(PersonCard.PROFILE_PHOTO_FILENAME_FORMAT,
+                    person.getInternalId().value);
             saveFileFromUrl(gravatarUrl, filename);
             logger.info("Downloaded " + gravatarUrl + " to " + filename);
+            EventsCenter.getInstance().post(new ProfilePhotoChangedEvent(person));
         } catch (IOException e) {
             logger.warning(String.format("Gravatar not downloaded for %1$s.", person.getName()));
         }
@@ -1156,6 +1164,44 @@ public class XmlSerializableMeetingList extends XmlSerializableData implements R
     }
 }
 ```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    private void setPersonListPanel() {
+        try {
+            ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
+            personListPanel = new PersonListPanel(persons);
+            personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        } catch (IllegalStateException e) {
+            logger.info("Cannot update profile photo on a non-main thread. "
+                    + "Type 'list' to see the new profile photos. '¯\\_(ツ)_/¯");
+        }
+    }
+
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    @Subscribe
+    private void handleDefaultProfilePhotoChangedEvent(PrefDefaultProfilePhotoChangedEvent event) {
+        ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
+        Task<Void> task = new Task<Void>() {
+            @Override public Void call() {
+                for (ReadOnlyPerson person : persons) {
+                    storage.downloadProfilePhoto(person, prefs.getDefaultProfilePhoto());
+                }
+                return null;
+            }
+        };
+        Thread th = new Thread(task);
+        th.setDaemon(true);
+        th.start();
+    }
+
+    @Subscribe
+    private void handleProfilePhotoChangedEvent(ProfilePhotoChangedEvent event) {
+        setPersonListPanel();
+    }
+}
+```
 ###### \java\seedu\address\ui\PersonCard.java
 ``` java
     /**
@@ -1177,7 +1223,7 @@ public class XmlSerializableMeetingList extends XmlSerializableData implements R
                 gravatar.setImage(image);
             } catch (IOException e1) {
                 // Shouldn't happen unless the default profile photo is missing
-                e.printStackTrace();
+                LogsCenter.getLogger("").warning("Missing default profile photo.");
             }
         }
     }

@@ -116,8 +116,7 @@ public class SelectCommandTest {
     }
 
     /**
-     * Executes a {@code SelectCommand} with the given {@code index}, and checks that a {@code CommandException}
-     * is thrown with the {@code expectedMessage}.
+     *java -jar Collate-TUI.jar collate from src to collated
      */
     private void assertExecutionFailure(Index index, String expectedMessage) {
         SelectCommand selectCommand = prepareCommand(index);
