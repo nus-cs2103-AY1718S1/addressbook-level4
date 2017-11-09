@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -229,6 +230,16 @@ public class AddressBookParserTest {
         LoginCommand command = (LoginCommand) parser.parseCommand(
                 LoginCommand.COMMAND_WORD + " " + "JohnDoe" + " " + "hiIAmJohnDoe123");
         assertEquals(new LoginCommand(new Username("JohnDoe"), new Password("hiIAmJohnDoe123")), command);
+
+        command = (LoginCommand) parser.parseCommand(LoginCommand.COMMAND_WORD);
+        assertNull(command);
+    }
+
+    @Test
+    public void parseCommand_invalidLogin() throws Exception {
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
+        parser.parseCommand(LoginCommand.COMMAND_WORD + " jjj");
     }
 
     @Test
@@ -272,11 +283,4 @@ public class AddressBookParserTest {
         parser.parseCommand("unknownCommand");
     }
 
-    //@@author jelneo
-    @Test
-    public void parseCommand_invalidLogin() throws Exception {
-        thrown.expect(ParseException.class);
-        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
-        parser.parseCommand(LoginCommand.COMMAND_WORD);
-    }
 }

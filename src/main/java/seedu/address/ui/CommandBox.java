@@ -2,13 +2,13 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeToLoginViewEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
@@ -39,10 +39,8 @@ public class CommandBox extends UiPart<Region> {
     private int indexOfFirstWhitespace = 0;
     private int currentMaskFromIndex = 0;
 
-
     @FXML
     private TextField commandTextField;
-
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -51,7 +49,7 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> {
             setStyleToDefault();
             if (commandTextField.getText().contains(LoginCommand.COMMAND_WORD)) {
-                Platform.runLater(() -> handlePasswordMasking());
+                handlePasswordMasking();
             }
         });
         historySnapshot = logic.getHistorySnapshot();
@@ -123,9 +121,10 @@ public class CommandBox extends UiPart<Region> {
         String currentInput = commandTextField.getText();
         numOfSpaces = getNumOfSpaces(currentInput);
         prevInputLength = inputLength;
-        inputLength = currentInput.length();
+        inputLength = commandTextField.getLength();
         indexOfFirstWhitespace = currentInput.indexOf(" ");
         currentMaskFromIndex = currentInput.indexOf(" ", indexOfFirstWhitespace + 1) + 1;
+
         // update index indicating where to start masking from if user deletes and re-enters password
         if (maskFromIndex == 0) {
             maskFromIndex = currentMaskFromIndex;
@@ -165,7 +164,7 @@ public class CommandBox extends UiPart<Region> {
      */
     private void maskPasswordInput(String currentInput) {
         // if user enters a new character, mask it with an asterisk
-        if (currentMaskFromIndex <= maskFromIndex) {
+        if (currentMaskFromIndex <= maskFromIndex && maskFromIndex <= inputLength) {
             passwordFromInput += commandTextField.getText(maskFromIndex, inputLength);
             commandTextField.replaceText(maskFromIndex, currentInput.length(), Character.toString(BLACK_CIRCLE));
             maskFromIndex++;
@@ -176,8 +175,12 @@ public class CommandBox extends UiPart<Region> {
      * Updates {@code passwordFromInput} field appropriately when user backspaces
      */
     private void handleBackspaceEvent() {
-        passwordFromInput = passwordFromInput.substring(0, inputLength - currentMaskFromIndex);
-        maskFromIndex--;
+        if (getNumOfSpaces(commandTextField.getText()) < 2) {
+            initialiseVariablesUsedInMasking();
+        } else {
+            passwordFromInput = passwordFromInput.substring(0, inputLength - currentMaskFromIndex);
+            maskFromIndex--;
+        }
     }
 
     /**
@@ -199,40 +202,51 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleCommandInputChanged() {
-        try {
-            String commandText = commandTextField.getText();
-            boolean isCommandExecutableBeforeLogin = commandText.contains(LoginCommand.COMMAND_WORD)
-                    || commandText.contains(ExitCommand.COMMAND_WORD)
-                    || commandText.contains(HelpCommand.COMMAND_WORD);
-            // allows only help, exit and login commands to execute before login
-            // and all the other commands to execute after login
-            if (isCommandExecutableBeforeLogin || LoginCommand.isLoggedIn()) {
-                String currCommandInput = commandTextField.getText();
-                CommandResult commandResult;
-                if (currCommandInput.contains(LoginCommand.COMMAND_WORD)) {
-                    commandResult = logic.execute(currCommandInput.substring(0,
-                            currentMaskFromIndex) + passwordFromInput);
+        String commandText = commandTextField.getText();
+        if (commandText.trim().equals(LoginCommand.COMMAND_WORD) && !LoginCommand.isLoggedIn()) {
+            commandTextField.setText("");
+            raise(new ChangeToLoginViewEvent());
+        } else {
+            try {
+                if (LoginCommand.isLoggedIn() && commandText.contains(LoginCommand.COMMAND_WORD)) {
+                    raise(new NewResultAvailableEvent("Already logged in.", true));
                 } else {
-                    commandResult = logic.execute(currCommandInput);
+
+                    boolean isCommandExecutableBeforeLogin = commandText.contains(LoginCommand.COMMAND_WORD)
+                            || commandText.contains(ExitCommand.COMMAND_WORD)
+                            || commandText.contains(HelpCommand.COMMAND_WORD);
+                    // allows only help, exit and login commands to execute before login
+                    // and all the other commands to execute after login
+
+                    if (isCommandExecutableBeforeLogin || LoginCommand.isLoggedIn()) {
+                        String currCommandInput = commandTextField.getText();
+                        CommandResult commandResult;
+                        if (currCommandInput.contains(LoginCommand.COMMAND_WORD)) {
+                            commandResult = logic.execute(currCommandInput.substring(0,
+                                    currentMaskFromIndex) + passwordFromInput);
+                        } else {
+                            commandResult = logic.execute(currCommandInput);
+                        }
+                        initHistory();
+                        historySnapshot.next();
+                        // process result of the command
+                        commandTextField.setText("");
+                        logger.info("Result: " + commandResult.feedbackToUser);
+                        raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+                    } else {
+                        // commands that are not permitted before login
+                        // this includes unknown commands
+                        setStyleToIndicateCommandFailure();
+                        raise(new NewResultAvailableEvent(LoginCommand.MESSAGE_LOGIN_REQUEST, true));
+                    }
                 }
+            } catch (CommandException | ParseException e) {
                 initHistory();
-                historySnapshot.next();
-                // process result of the command
-                commandTextField.setText("");
-                logger.info("Result: " + commandResult.feedbackToUser);
-                raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
-            } else {
-                // commands that are not permitted before login
-                // this includes unknown commands
+                // handle command failure
                 setStyleToIndicateCommandFailure();
-                raise(new NewResultAvailableEvent(LoginCommand.MESSAGE_LOGIN_REQUEST, true));
+                logger.info("Invalid command: " + commandTextField.getText());
+                raise(new NewResultAvailableEvent(e.getMessage(), true));
             }
-        } catch (CommandException | ParseException e) {
-            initHistory();
-            // handle command failure
-            setStyleToIndicateCommandFailure();
-            logger.info("Invalid command: " + commandTextField.getText());
-            raise(new NewResultAvailableEvent(e.getMessage(), true));
         }
     }
 
