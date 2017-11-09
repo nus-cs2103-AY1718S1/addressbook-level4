@@ -335,13 +335,6 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
-    /**
-     * Logs user out
-     */
-    public void logout() {
-        raise(new LoginAppRequestEvent(false));
-    }
-
     public String getUsernameFromUserPref() {
         return userPrefs.getAdminUsername();
     }
@@ -639,5 +632,12 @@ public class ModelManager extends ComponentManager implements Model {
                 }
             }
         }
+    }
+
+    //@@author jelneo
+    @Subscribe
+    public void handleLoginAppRequestEvent(LoginAppRequestEvent event) {
+        setCurrentListName("list");
+        filteredPersons.setPredicate(PREDICATE_SHOW_ALL_PERSONS);
     }
 }
