@@ -2,8 +2,8 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.commands.CommandTestUtil.DAY_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.END_TIME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ST_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ET_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_ST_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.START_TIME_DESC_AMY;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;

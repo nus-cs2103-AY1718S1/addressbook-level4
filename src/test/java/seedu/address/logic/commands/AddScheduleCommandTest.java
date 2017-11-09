@@ -57,7 +57,7 @@ public class AddScheduleCommandTest {
     }
 
     private AddScheduleCommand prepareCommand(Index index, Day day, Time startTime, Time endTime)
-            throws IllegalValueException{
+            throws IllegalValueException {
         AddScheduleCommand addScheduleCommand = new AddScheduleCommand(index, day, startTime, endTime);
         addScheduleCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return addScheduleCommand;

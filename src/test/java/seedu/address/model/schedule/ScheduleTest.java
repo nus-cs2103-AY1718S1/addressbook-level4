@@ -3,10 +3,11 @@ package seedu.address.model.schedule;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-import seedu.address.commons.exceptions.IllegalValueException;
-
 import java.util.TreeSet;
+
+import org.junit.Test;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 public class ScheduleTest {
 
