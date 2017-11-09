@@ -24,7 +24,7 @@ public class Suggestion {
 
     public static final String COMMAND_WORD = "y";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
-            new HashSet<>(Arrays.asList(COMMAND_WORD, "yes", "ok", "yea", "yeah"));
+            new HashSet<>(Arrays.asList(COMMAND_WORD, "yes", "k", "ok", "yea", "yeah"));
 
     private static final int COMMAND_TYPO_TOLERANCE = 3;
 
