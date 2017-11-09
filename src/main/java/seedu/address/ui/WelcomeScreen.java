@@ -10,9 +10,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
@@ -49,10 +51,13 @@ public class WelcomeScreen extends UiPart<Region> {
     private Button continueButton;
 
     @FXML
-    private VBox welcomeWindow;
+    private BorderPane welcomeWindow;
 
     @FXML
     private StackPane logoPlaceHolder;
+
+    @FXML
+    private StackPane textPlaceHolder;
 
     @FXML
     private StackPane buttonPlaceHolder;
@@ -84,9 +89,12 @@ public class WelcomeScreen extends UiPart<Region> {
      */
     void fillInnerParts() {
         logo = new ImageView(new Image(LOGO));
-        logo.setFitHeight(250);
-        logo.setFitWidth(250);
+        logo.setFitHeight(170);
+        logo.setFitWidth(170);
         logoPlaceHolder.getChildren().add(logo);
+
+        Text text = new Text("Hello World!");
+        textPlaceHolder.getChildren().add(text);
 
         continueButton = new Button("Continue");
         continueButton.setOnAction(new EventHandler<ActionEvent>() {
