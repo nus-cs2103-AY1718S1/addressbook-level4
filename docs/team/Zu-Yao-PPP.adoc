@@ -51,7 +51,7 @@ Splitting up the panel into two sides makes for easier identification of essenti
 
 #Start of Extract [from: Developer Guide]#
 
-include::
+include::../DeveloperGuide.adoc[tag=personinformationpanel]
 
 #End of Extract#
 
