@@ -49,7 +49,7 @@ public class ShareCommand extends Command {
                 .append(src.getPhone())
                 .append(" ")
                 .append(PREFIX_ADDRESS)
-                .append(src.getPhone());
+                .append(src.getAddress());
         for (Email email : src.getEmail()) {
             builder.append(" ")
                     .append(PREFIX_EMAIL)

@@ -12,10 +12,10 @@ public class FilterCommand extends Command {
     public static final String COMMAND_WORD = "filter";
     public static final String COMMAND_ALIAS = "ft";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons who are tagged with "
-            + "the specified tag (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: TAG [MORE_TAGS]...\n"
-            + "Example: " + COMMAND_WORD + " neighbours friends";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons with any attributes that "
+            + "matches all the keywords entered by user and displays them as a list with index numbers.\n"
+            + "Parameters: [keyword]...\n"
+            + "Example: " + COMMAND_WORD + " neighbours friends John";
 
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {keyword}";
 

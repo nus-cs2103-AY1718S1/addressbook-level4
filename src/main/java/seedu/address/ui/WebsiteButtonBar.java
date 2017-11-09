@@ -1,14 +1,18 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import javafx.event.Event;
+import com.google.common.eventbus.Subscribe;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.WebsiteSelectionRequestEvent;
+import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author hansiang93
 /**
@@ -31,11 +35,9 @@ public class WebsiteButtonBar extends UiPart<Region> {
 
     public WebsiteButtonBar() {
         super(FXML);
-
-        // To prevent triggering events for typing inside the loaded Web page.
-        getRoot().setOnKeyPressed(Event::consume);
         registerAsAnEventHandler(this);
         setEventHandlerForButtonClick();
+        buttonBar.getButtons().setAll();
     }
 
     private void setEventHandlerForButtonClick() {
@@ -49,5 +51,21 @@ public class WebsiteButtonBar extends UiPart<Region> {
         });
     }
 
-    // To add dynamically added buttons in the future
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ReadOnlyPerson selectedPerson = event.getNewSelection().person;
+        ArrayList<Button> buttonList = new ArrayList<>();
+        selectedPerson.getWebLinks().forEach(webLink -> {
+            Button newbutton = new Button(webLink.toStringWebLinkTag());
+            newbutton.setOnMouseClicked(e -> {
+                logger.info(webLink.toStringWebLinkTag() + " button clicked");
+                raise(new WebsiteSelectionRequestEvent(webLink.toStringWebLinkTag()));
+            });
+            buttonList.add(newbutton);
+        });
+        buttonList.add(searchButton);
+        buttonList.add(mapsButton);
+        buttonBar.getButtons().setAll(buttonList);
+    }
 }

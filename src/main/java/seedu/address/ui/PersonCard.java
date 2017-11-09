@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.Random;
 
 import javafx.beans.binding.Bindings;
@@ -142,15 +143,15 @@ public class PersonCard extends UiPart<Region> {
      */
     private void initWebLinks(ReadOnlyPerson person) {
         person.getWebLinks().forEach(webLink -> {
-            Label webLinkLabel = new Label(webLink.webLinkTag);
+            Label webLinkLabel = new Label(webLink.toStringWebLinkTag());
             webLinkLabel.setStyle("-fx-background-color: transparent");
             webLinkLabel.setStyle("-fx-border-color: " + getColorForWeblinks(webLink.toStringWebLinkTag()));
             webLinks.getChildren().add(webLinkLabel);
         });
     }
 
-    public static HashMap<String, String> getTagColors() {
-        return tagColors;
+    public static Optional<HashMap<String, String>> getTagColors() {
+        return Optional.of(tagColors);
     }
 
     public static HashMap<String, String> getWebLinkColors() {
