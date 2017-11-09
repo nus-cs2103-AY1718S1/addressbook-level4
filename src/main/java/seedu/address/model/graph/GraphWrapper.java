@@ -8,6 +8,11 @@ import java.util.Set;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.graph.implementations.SingleNode;
+import org.graphstream.ui.graphicGraph.stylesheet.StyleConstants;
+import org.graphstream.ui.layout.Layout;
+import org.graphstream.ui.layout.Layouts;
+import org.graphstream.ui.spriteManager.Sprite;
+import org.graphstream.ui.spriteManager.SpriteManager;
 import org.graphstream.ui.view.View;
 import org.graphstream.ui.view.Viewer;
 
@@ -17,6 +22,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.RelationshipDirection;
+import seedu.address.ui.GraphDisplay;
 
 //@@author wenmogu
 /**
@@ -30,7 +36,9 @@ public class GraphWrapper {
 
     private SingleGraph graph;
     private Viewer viewer;
+    private Layout layoutAlgorithm;
     private View view;
+    private SpriteManager spriteManager;
     private Model model;
     private ObservableList<ReadOnlyPerson> filteredPersons;
 
@@ -39,10 +47,69 @@ public class GraphWrapper {
 
     public GraphWrapper() {
         this.graph = new SingleGraph(graphId);
+        initialiseRenderer();
+        initialiseViewer();
+        initialiseSpriteManager();
+    }
+
+    /**
+     * Produce a graph based on model given
+     */
+    public SingleGraph buildGraph(Model model) {
+        requireNonNull(model);
+        this.clear();
+        this.setData(model);
+        this.initiateGraphNodes();
+        this.initiateGraphEdges();
+
+        graph.setAttribute("ui.stylesheet", GraphDisplay.getGraphDisplayStylesheet());
+
+        return graph;
+    }
+
+    /**
+     * Returns the view attached to the viewer for the graph.
+     */
+    public View getView() {
+        return this.view;
+    }
+
+    /**
+     * add an edge between two persons with direction specified
+     */
+    public Edge addEdge(ReadOnlyPerson firstPerson, ReadOnlyPerson secondPerson, RelationshipDirection direction) {
+        requireAllNonNull(firstPerson, secondPerson, direction);
+        if (direction.isDirected()) {
+            return addDirectedEdge(firstPerson, secondPerson);
+        } else {
+            return addUndirectedEdge(firstPerson, secondPerson);
+        }
+    }
+
+    /**
+     * Initialise advanced renderer for integrated graph display.
+     */
+    private void initialiseRenderer() {
+        System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+        graph.addAttribute("ui.quality");
+    }
+
+    /**
+     * Initialise custom viewer for integrated graph display.
+     */
+    private void initialiseViewer() {
         this.viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-        viewer.enableAutoLayout();
+        layoutAlgorithm = Layouts.newLayoutAlgorithm();
+        viewer.enableAutoLayout(layoutAlgorithm);
         viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.EXIT);
         this.view = viewer.addDefaultView(false);
+    }
+
+    /**
+     * Initialise sprite manager for integrated graph display.
+     */
+    private void initialiseSpriteManager() {
+        this.spriteManager = new SpriteManager(graph);
     }
 
     private void setData(Model model) {
@@ -53,6 +120,8 @@ public class GraphWrapper {
     /**
      * Add all the persons in the last displayed list into graph
      * the ID of the node formed for a person is the person's index in the last displayed list
+     *
+     * Note that the graph only displays first name so that the layout is more aesthetically pleasing.
      * @return graph
      */
     private SingleGraph initiateGraphNodes() {
@@ -60,15 +129,70 @@ public class GraphWrapper {
             for (ReadOnlyPerson person : filteredPersons) {
                 String personIndexInFilteredPersons = getNodeIdFromPerson(person);
                 SingleNode node = graph.addNode(personIndexInFilteredPersons);
-                String personLabel = (Integer.parseInt(personIndexInFilteredPersons) + 1) + ". "
-                        + person.getName().toString();
-                node.addAttribute(nodeAttributeNodeLabel, personLabel);
+                String shortenedPersonLabel = (Integer.parseInt(personIndexInFilteredPersons) + 1) + ". "
+                        + person.getName().toString().split(" ")[0];
+                styleGraphNode(node, shortenedPersonLabel);
             }
         } catch (IllegalValueException ive) {
             assert false : "it should not happen.";
         }
 
         return graph;
+    }
+
+    /**
+     * Style each node in the integrated graph display
+     */
+    private void styleGraphNode(SingleNode node, String nodeLabel) {
+        node.addAttribute(nodeAttributeNodeLabel, nodeLabel);
+        node.addAttribute("layout.weight", 3);
+        layoutAlgorithm.setStabilizationLimit(0.95);
+    }
+
+    /**
+     * Read all the edges from model and store into graph
+     * @return
+     */
+    private SingleGraph initiateGraphEdges() {
+        for (ReadOnlyPerson person: filteredPersons) {
+            Set<Relationship> relationshipSet = person.getRelationships();
+            for (Relationship relationship: relationshipSet) {
+                Edge edge = addEdge(relationship.getFromPerson(), relationship.getToPerson(),
+                        relationship.getDirection());
+                labelGraphEdge(relationship, edge);
+            }
+        }
+
+        return graph;
+    }
+
+    /**
+     * Label edges in the integrated graph display
+     */
+    private void labelGraphEdge(Relationship relationship, Edge edge) {
+        StringBuilder edgeLabel = new StringBuilder();
+
+        String shortRelationshipName = relationship.getName().toString();
+        if (relationship.getName().toString().length() > 10) {
+            shortRelationshipName = relationship.getName().toString().substring(0, 6) + "...";
+        }
+        String confidenceEstimate = relationship.getConfidenceEstimate().toString();
+
+        if (shortRelationshipName.length() != 0 || !confidenceEstimate.equals("0.0")) {
+            if (!confidenceEstimate.equals("0.0")) {
+                edgeLabel.append("(" + confidenceEstimate + ")");
+            }
+
+            if (shortRelationshipName.length() != 0) {
+                if (!confidenceEstimate.equals("0.0")) {
+                    edgeLabel.append(" ");
+                }
+                edgeLabel.append(shortRelationshipName);
+            }
+
+            edge.addAttribute(nodeAttributeNodeLabel, edgeLabel.toString());
+        }
+        edge.addAttribute("layout.weight", 5);
     }
 
     private String getNodeIdFromPerson(ReadOnlyPerson person) throws IllegalValueException {
@@ -82,45 +206,11 @@ public class GraphWrapper {
     }
 
     /**
-     * standardize the format of edge ID
+     * Standardize the format of edge ID
      */
     private String computeEdgeId(ReadOnlyPerson person1, ReadOnlyPerson person2) {
         return  Integer.toString(filteredPersons.indexOf(person1)) + "_"
                 + Integer.toString(filteredPersons.indexOf(person2));
-    }
-
-    /**
-     * removes the previous edge (if exists) with a different RelationshipDirection from
-     * the edge to be added.
-     * @param fromPerson
-     * @param toPerson
-     * @param intendedDirectionOfRedundantEdge
-     * @return String
-     */
-    private String checkForRedundantEdgeAndRemove(ReadOnlyPerson fromPerson, ReadOnlyPerson toPerson,
-                                                RelationshipDirection intendedDirectionOfRedundantEdge) {
-        requireAllNonNull(fromPerson, toPerson, intendedDirectionOfRedundantEdge);
-        String redundantEdgeId1 = computeEdgeId(fromPerson, toPerson);
-        String redundantEdgeId2 = computeEdgeId(toPerson, fromPerson);
-        Edge redundantEdge1 = graph.getEdge(redundantEdgeId1);
-        Edge redundantEdge2 = graph.getEdge(redundantEdgeId2);
-
-        if (intendedDirectionOfRedundantEdge.isDirected()) {
-            if (redundantEdge1 != null) {
-                graph.removeEdge(redundantEdge1);
-            }
-            if (redundantEdge2 != null && !redundantEdge2.isDirected()) {
-                graph.removeEdge(redundantEdge2);
-            }
-        } else {
-            if (redundantEdge1 != null) {
-                graph.removeEdge(redundantEdge1);
-            }
-            if (redundantEdge2 != null) {
-                graph.removeEdge(redundantEdge2);
-            }
-        }
-        return redundantEdgeId1;
     }
 
     /**
@@ -164,59 +254,42 @@ public class GraphWrapper {
     }
 
     /**
-     * add an edge between two persons with direction specified
+     * Remove the previous edge (if exists) with a different RelationshipDirection from
+     * the edge to be added.
+     * @param fromPerson
+     * @param toPerson
+     * @param intendedDirectionOfRedundantEdge
+     * @return String
      */
-    public Edge addEdge(ReadOnlyPerson firstPerson, ReadOnlyPerson secondPerson, RelationshipDirection direction) {
-        requireAllNonNull(firstPerson, secondPerson, direction);
-        if (direction.isDirected()) {
-            return addDirectedEdge(firstPerson, secondPerson);
+    private String checkForRedundantEdgeAndRemove(ReadOnlyPerson fromPerson, ReadOnlyPerson toPerson,
+                                                  RelationshipDirection intendedDirectionOfRedundantEdge) {
+        requireAllNonNull(fromPerson, toPerson, intendedDirectionOfRedundantEdge);
+        String redundantEdgeId1 = computeEdgeId(fromPerson, toPerson);
+        String redundantEdgeId2 = computeEdgeId(toPerson, fromPerson);
+        Edge redundantEdge1 = graph.getEdge(redundantEdgeId1);
+        Edge redundantEdge2 = graph.getEdge(redundantEdgeId2);
+
+        if (intendedDirectionOfRedundantEdge.isDirected()) {
+            if (redundantEdge1 != null) {
+                graph.removeEdge(redundantEdge1);
+            }
+            if (redundantEdge2 != null && !redundantEdge2.isDirected()) {
+                graph.removeEdge(redundantEdge2);
+            }
         } else {
-            return addUndirectedEdge(firstPerson, secondPerson);
+            if (redundantEdge1 != null) {
+                graph.removeEdge(redundantEdge1);
+            }
+            if (redundantEdge2 != null) {
+                graph.removeEdge(redundantEdge2);
+            }
         }
+        return redundantEdgeId1;
     }
 
     private void clear() {
         graph.clear();
         this.model = null;
         this.filteredPersons = null;
-    }
-
-    /**
-     * Read all the edges from model and store into graph
-     * @return
-     */
-    private SingleGraph initiateGraphEdges() {
-        for (ReadOnlyPerson person: filteredPersons) {
-            Set<Relationship> relationshipSet = person.getRelationships();
-            for (Relationship relationship: relationshipSet) {
-                Edge edge = addEdge(relationship.getFromPerson(), relationship.getToPerson(),
-                        relationship.getDirection());
-                String edgeLabel = relationship.getName().toString() + " "
-                        + relationship.getConfidenceEstimate().toString();
-                edge.addAttribute(nodeAttributeNodeLabel, edgeLabel);
-            }
-        }
-
-        return graph;
-    }
-
-    /**
-     * Produce a graph based on model given
-     */
-    public SingleGraph buildGraph(Model model) {
-        requireNonNull(model);
-        this.clear();
-        this.setData(model);
-        this.initiateGraphNodes();
-        this.initiateGraphEdges();
-
-        return graph;
-    }
-
-    /**
-     * Returns the view attached to the viewer for the graph.
-     */
-    public View getView() {
-        return this.view;
     }
 }
