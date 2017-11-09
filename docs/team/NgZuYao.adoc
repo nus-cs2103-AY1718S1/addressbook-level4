@@ -1,8 +1,7 @@
 = Ng Zu Yao - Project Portfolio
-:imagesDir: images
-:stylesDir: stylesheets
-ifdef::env-github[]
-endif::[]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
 
 == Project: NUS Contact
 
