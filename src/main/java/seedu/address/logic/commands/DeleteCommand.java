@@ -43,8 +43,8 @@ public class DeleteCommand extends UndoableCommand {
         Index deleteIndex;
 
         if (targetIndex == null) {
-            deleteIndex = Index.fromOneBased((listObserver.getCurrentFilteredList()
-                    .indexOf(model.getSelectedPerson()) + 1));
+            deleteIndex = Index.fromZeroBased((listObserver.getCurrentFilteredList()
+                    .indexOf(model.getSelectedPerson())));
         } else {
             deleteIndex = targetIndex;
         }
@@ -56,11 +56,18 @@ public class DeleteCommand extends UndoableCommand {
         }
         listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
 
-        if (listObserver.getCurrentFilteredList().size() == 0) {
+        if (targetIndex == null) {
+            if (deleteIndex.getOneBased() <= listObserver.getCurrentFilteredList().size()) {
+                EventsCenter.getInstance().post(
+                        new JumpToListRequestEvent(Index.fromOneBased(deleteIndex.getOneBased())));
+            } else {
+                model.deselectPerson();
+            }
+        } else if (listObserver.getCurrentFilteredList().size() == 0) {
             model.deselectPerson();
-        } else if (targetIndex == null && listObserver.getCurrentFilteredList().size() < deleteIndex.getOneBased()) {
-            EventsCenter.getInstance().post(
-                    new JumpToListRequestEvent(Index.fromOneBased(deleteIndex.getOneBased() - 1)));
+        } else if (model.getSelectedPerson() != null
+                && deleteIndex.getOneBased() <= listObserver.getIndexofSelectedPersonInCurrentList().getZeroBased()) {
+            model.deselectPerson();
         }
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete.getName()));
