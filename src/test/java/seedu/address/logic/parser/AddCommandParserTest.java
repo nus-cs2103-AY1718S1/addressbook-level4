@@ -81,7 +81,19 @@ public class AddCommandParserTest {
                 + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB
                 + DOB_DESC_BOB + GENDER_DESC_BOB
                 + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+        //@@author Pujitha97
+        // multiple dobs - last DOB accepted
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB
+                + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + DOB_DESC_AMY
+                + DOB_DESC_BOB + GENDER_DESC_BOB
+                + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
+        // multiple genders - last gender accepted
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB
+                + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + GENDER_DESC_AMY
+                + DOB_DESC_BOB + GENDER_DESC_BOB
+                + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+        //@@author
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withDateOfBirth(VALID_DOB_BOB)
@@ -125,7 +137,8 @@ public class AddCommandParserTest {
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + DOB_DESC_AMY
                 + GENDER_DESC_AMY, new AddCommand(expectedPerson));
-
+        //@@author
+        //@@author Pujitha97
         // missing date of birth prefix
         expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
@@ -187,7 +200,7 @@ public class AddCommandParserTest {
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + ADDRESS_DESC_BOB + DOB_DESC_BOB + INVALID_GENDER_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 Gender.MESSAGE_GENDER_CONSTRAINTS);
-        //@@author Pujitha97
+        //@@author
         // invalid tag
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + ADDRESS_DESC_BOB + DOB_DESC_BOB + GENDER_DESC_BOB + INVALID_TAG_DESC

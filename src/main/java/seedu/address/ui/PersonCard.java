@@ -41,12 +41,14 @@ public class PersonCard extends UiPart<Region> {
     private Label phone;
     @FXML
     private Label address;
+    //@@author Pujitha97
     @FXML
     private Label dob;
     @FXML
-    private Label email;
-    @FXML
     private Label gender;
+    //@@author
+    @FXML
+    private Label email;
     @FXML
     private FlowPane tags;
 
@@ -96,9 +98,11 @@ public class PersonCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        //@@author Pujitha97
         dob.textProperty().bind(Bindings.convert(person.dobProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
         gender.textProperty().bind(Bindings.convert(person.genderProperty()));
+        //@@author
+        email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);

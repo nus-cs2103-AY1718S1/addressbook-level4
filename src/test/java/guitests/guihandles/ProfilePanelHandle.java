@@ -42,7 +42,7 @@ public class ProfilePanelHandle extends NodeHandle<Node> {
     public String getAddress() {
         return addressLabel.getText();
     }
-
+    //@@author Pujitha97
     public String getDateOfBirth() {
         return dobLabel.getText();
     }
@@ -50,7 +50,7 @@ public class ProfilePanelHandle extends NodeHandle<Node> {
     public String getGender() {
         return genderLabel.getText();
     }
-
+    //@@author
     public String getPhone() {
         return phoneLabel.getText();
     }

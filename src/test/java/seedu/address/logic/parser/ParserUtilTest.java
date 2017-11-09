@@ -19,7 +19,9 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Gender;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -29,8 +31,12 @@ public class ParserUtilTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_DOB = "example.com";
+    private static final String INVALID_GENDER = "example.com";
     private static final String INVALID_TAG = "#friend";
 
+    private static final String VALID_DateOfBirth = "27 01 1997";
+    private static final String VALID_GENDER = "FEMALE";
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
@@ -162,7 +168,56 @@ public class ParserUtilTest {
 
         assertEquals(expectedEmail, actualEmail.get());
     }
+    //@@author Pujitha97
+    @Test
+    public void parseDateOfBirth_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseDateOfBirth(null);
+    }
 
+    @Test
+    public void parseDateOfBirth_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseDateOfBirth(Optional.of(INVALID_DOB));
+    }
+
+    @Test
+    public void parseDateOfBirth_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDateOfBirth(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseDateOfBirth_validValue_returnsDateOfBirth() throws Exception {
+        DateOfBirth expectedDateOfBirth = new DateOfBirth(VALID_DateOfBirth);
+        Optional<DateOfBirth> actualDateOfBirth = ParserUtil.parseDateOfBirth(Optional.of(VALID_DateOfBirth));
+
+        assertEquals(expectedDateOfBirth, actualDateOfBirth.get());
+    }
+    @Test
+    public void parseGender_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseGender(null);
+    }
+
+    @Test
+    public void parseGender_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseGender(Optional.of(INVALID_GENDER));
+    }
+
+    @Test
+    public void parseGender_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseGender(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseGender_validValue_returnsGender() throws Exception {
+        Gender expectedGender = new Gender(VALID_GENDER);
+        Optional<Gender> actualGender = ParserUtil.parseGender(Optional.of(VALID_GENDER));
+
+        assertEquals(expectedGender, actualGender.get());
+    }
+    //@@author
     @Test
     public void parseTags_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);

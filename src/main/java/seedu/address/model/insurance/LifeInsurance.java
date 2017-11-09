@@ -236,7 +236,8 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return contractPath.get();
     }
 
-    public void setSigningDateString(String signingDateString) {
+    public void setSigningDateString(String signingDateString) throws IllegalValueException {
+        this.signingDate = new DateParser().parse(signingDateString);
         this.signingDateString.set(requireNonNull(signingDateString));
     }
 
@@ -250,7 +251,8 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return signingDateString.get();
     }
 
-    public void setExpiryDateString(String expiryDateString) {
+    public void setExpiryDateString(String expiryDateString) throws IllegalValueException {
+        this.expiryDate = new DateParser().parse(expiryDateString);
         this.expiryDateString.set(requireNonNull(expiryDateString));
     }
 

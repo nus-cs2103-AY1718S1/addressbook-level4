@@ -50,10 +50,12 @@ public class ProfilePanel extends UiPart<Region> {
     private Label phone;
     @FXML
     private Label address;
+    //@@author Pujitha97
     @FXML
     private Label dob;
     @FXML
     private Label gender;
+    //@@author
     @FXML
     private Label email;
     @FXML

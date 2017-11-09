@@ -51,8 +51,9 @@ public class ProfilePanelTest extends GuiUnitTest {
         assertEquals(expectedSelectedPerson.getName().toString(), profilePanelHandle.getName());
         assertEquals(expectedSelectedPerson.getEmail().toString(), profilePanelHandle.getEmail());
         assertEquals(expectedSelectedPerson.getPhone().toString(), profilePanelHandle.getPhone());
+        //@@author Pujitha97
         assertEquals(expectedSelectedPerson.getDateOfBirth().toString(), profilePanelHandle.getDateOfBirth());
         assertEquals(expectedSelectedPerson.getAddress().toString(), profilePanelHandle.getAddress());
-
+        //@@author
     }
 }

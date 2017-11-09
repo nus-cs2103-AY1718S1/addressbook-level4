@@ -1,5 +1,5 @@
 # OscarWang114
-###### /java/seedu/address/commons/events/ui/PersonNameClickedEvent.java
+###### \java\seedu\address\commons\events\ui\PersonNameClickedEvent.java
 ``` java
     public Optional<ReadOnlyPerson> getPerson() {
         return target.getOptionalPerson();
@@ -9,7 +9,7 @@
         return target.nameProperty();
     }
 ```
-###### /java/seedu/address/commons/function/ThrowingConsumer.java
+###### \java\seedu\address\commons\function\ThrowingConsumer.java
 ``` java
 /**
  * A Consumer that allows lambda expressions to throw exception.
@@ -31,7 +31,7 @@ public interface ThrowingConsumer<T> extends Consumer<T> {
 
 }
 ```
-###### /java/seedu/address/logic/commands/AddCommand.java
+###### \java\seedu\address\logic\commands\AddCommand.java
 ``` java
     public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)
             + ": Adds a person to Lisa. "
@@ -53,7 +53,7 @@ public interface ThrowingConsumer<T> extends Consumer<T> {
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 ```
-###### /java/seedu/address/logic/commands/AddCommand.java
+###### \java\seedu\address\logic\commands\AddCommand.java
 ``` java
     /**
      * Stores the optional details to add the person with. By default each field is an object
@@ -97,49 +97,8 @@ public interface ThrowingConsumer<T> extends Consumer<T> {
         public Address getAddress() {
             return address;
         }
-
-        public void setDateOfBirth(DateOfBirth dateofbirth) {
-            this.dateofbirth = dateofbirth;
-        }
-
-        public DateOfBirth getDateOfBirth() {
-            return dateofbirth;
-        }
-
-        public void setGender(Gender gender) {
-            this.gender = gender;
-        }
-
-        public Gender getGender() {
-            return gender;
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            // short circuit if same object
-            if (other == this) {
-                return true;
-            }
-
-            // instanceof handles nulls
-            if (!(other instanceof AddCommand.AddPersonOptionalFieldDescriptor)) {
-                return false;
-            }
-
-            // state check
-            AddCommand.AddPersonOptionalFieldDescriptor a =
-                    (AddCommand.AddPersonOptionalFieldDescriptor) other;
-
-            return getPhone().equals(a.getPhone())
-                    && getEmail().equals(a.getEmail())
-                    && getAddress().equals(a.getAddress())
-                    && getDateOfBirth().equals(a.getDateOfBirth())
-                    && getGender().equals(a.getGender());
-        }
-    }
-}
 ```
-###### /java/seedu/address/logic/commands/AddLifeInsuranceCommand.java
+###### \java\seedu\address\logic\commands\AddLifeInsuranceCommand.java
 ``` java
 /**
  * Creates an insurance in Lisa
@@ -218,7 +177,7 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddCommandParser.java
+###### \java\seedu\address\logic\parser\AddCommandParser.java
 ``` java
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
@@ -274,7 +233,7 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
         return argumentMultimap.getValue(namePrefix).isPresent();
     }
 ```
-###### /java/seedu/address/logic/parser/AddLifeInsuranceCommandParser.java
+###### \java\seedu\address\logic\parser\AddLifeInsuranceCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddLifeInsuranceCommand object
@@ -331,6 +290,7 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
     }
 }
 ```
+
 ###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
@@ -363,17 +323,17 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
 ``` java
     private final UniqueLifeInsuranceMap lifeInsuranceMap;
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
         lifeInsuranceMap = new UniqueLifeInsuranceMap();
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     public void setLifeInsurances(Map<UUID, ReadOnlyInsurance> insurances) throws DuplicateInsuranceException {
         this.lifeInsuranceMap.setInsurances(insurances);
     }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
      *Adds an insurance to the address book.
@@ -389,7 +349,7 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
         syncWithUpdate();
     }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
      * Ensures that every insurance in the master map:
@@ -436,14 +396,14 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
         });
     }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     @Override
     public Map<UUID, ReadOnlyInsurance> getLifeInsuranceMap() {
         return lifeInsuranceMap.asMap();
     }
 ```
-###### /java/seedu/address/model/insurance/exceptions/DuplicateInsuranceException.java
+###### \java\seedu\address\model\insurance\exceptions\DuplicateInsuranceException.java
 ``` java
 /**
  * Signals that the operation will result in duplicate Insurance objects.
@@ -454,14 +414,14 @@ public class DuplicateInsuranceException extends DuplicateDataException {
     }
 }
 ```
-###### /java/seedu/address/model/insurance/exceptions/InsuranceNotFoundException.java
+###### \java\seedu\address\model\insurance\exceptions\InsuranceNotFoundException.java
 ``` java
 /**
  * Signals that the operation is unable to find the specified insurance.
  */
 public class InsuranceNotFoundException extends Exception {}
 ```
-###### /java/seedu/address/model/insurance/InsurancePerson.java
+###### \java\seedu\address\model\insurance\InsurancePerson.java
 ``` java
 /**
  * Represents a person and his/her name in an insurance in LISA.
@@ -502,7 +462,7 @@ public class InsurancePerson {
     }
 }
 ```
-###### /java/seedu/address/model/insurance/LifeInsurance.java
+###### \java\seedu\address\model\insurance\LifeInsurance.java
 ``` java
 /**
  * Represents a life insurance in LISA.
@@ -526,7 +486,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
     private StringProperty expiryDateString;
 
 ```
-###### /java/seedu/address/model/insurance/ReadOnlyInsurance.java
+###### \java\seedu\address\model\insurance\ReadOnlyInsurance.java
 ``` java
 /**
  * Represents an insurance.
@@ -556,7 +516,7 @@ public interface ReadOnlyInsurance {
     String getExpiryDateString();
 }
 ```
-###### /java/seedu/address/model/insurance/UniqueLifeInsuranceList.java
+###### \java\seedu\address\model\insurance\UniqueLifeInsuranceList.java
 ``` java
 /**
  * A list of insurances that enforces uniqueness between its elements and does not allow nulls.
@@ -583,7 +543,7 @@ public class UniqueLifeInsuranceList implements Iterable<LifeInsurance> {
     }
 
 ```
-###### /java/seedu/address/model/insurance/UniqueLifeInsuranceMap.java
+###### \java\seedu\address\model\insurance\UniqueLifeInsuranceMap.java
 ``` java
 /**
  * A map of life insurances that enforces uniqueness between its elements and does not allow nulls.
@@ -696,7 +656,7 @@ public class UniqueLifeInsuranceMap {
     /** Returns an unmodifiable view of the filtered insurance list */
     ObservableList<ReadOnlyInsurance> getFilteredInsuranceList();
 ```
-###### /java/seedu/address/model/person/Address.java
+###### \java\seedu\address\model\person\Address.java
 ``` java
     /**
      * Initialize a Address object with value of empty String. This can ONLY be used in the default field of
@@ -706,7 +666,7 @@ public class UniqueLifeInsuranceMap {
         this.value = "";
     }
 ```
-###### /java/seedu/address/model/person/Email.java
+###### \java\seedu\address\model\person\Email.java
 ``` java
     /**
      * Initialize a Email object with value of empty String. This can ONLY be used in the default field of
@@ -716,17 +676,17 @@ public class UniqueLifeInsuranceMap {
         this.value = "";
     }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     private ObjectProperty<List<UUID>> lifeInsuranceIds;
     private ObjectProperty<UniqueLifeInsuranceList> lifeInsurances;
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
         this.lifeInsuranceIds = new SimpleObjectProperty<>(lifeInsuranceIds);
         this.lifeInsurances = new SimpleObjectProperty<>(new UniqueLifeInsuranceList());
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     /**
      * Creates a copy of the given ReadOnlyPerson.
@@ -743,7 +703,7 @@ public class UniqueLifeInsuranceMap {
 
     }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     public Person(ReadOnlyPerson source, LifeInsurance lifeInsurance) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
@@ -755,7 +715,7 @@ public class UniqueLifeInsuranceMap {
 
     }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
 
     /**
@@ -803,7 +763,7 @@ public class UniqueLifeInsuranceMap {
         return this.lifeInsurances.get();
     }
 ```
-###### /java/seedu/address/model/person/Phone.java
+###### \java\seedu\address\model\person\Phone.java
 ``` java
     /**
      * Initialize a Phone object with value of empty String. This can ONLY be used in the default field of
@@ -813,14 +773,14 @@ public class UniqueLifeInsuranceMap {
         this.value = "";
     }
 ```
-###### /java/seedu/address/model/person/ReadOnlyPerson.java
+###### \java\seedu\address\model\person\ReadOnlyPerson.java
 ``` java
     ObjectProperty<List<UUID>> lifeInsuranceIdProperty();
     List<UUID> getLifeInsuranceIds();
     ObjectProperty<UniqueLifeInsuranceList> lifeInsuranceProperty();
     UniqueLifeInsuranceList getLifeInsurances();
 ```
-###### /java/seedu/address/model/ReadOnlyAddressBook.java
+###### \java\seedu\address\model\ReadOnlyAddressBook.java
 ``` java
     /**
      * Returns an unmodifiable view of the life insurances map.
@@ -828,7 +788,7 @@ public class UniqueLifeInsuranceMap {
      */
     Map<UUID, ReadOnlyInsurance> getLifeInsuranceMap();
 ```
-###### /java/seedu/address/storage/XmlAdaptedLifeInsurance.java
+###### \java\seedu\address\storage\XmlAdaptedLifeInsurance.java
 ``` java
 /**
  * JAXB-friendly version of the LifeInsurance.
@@ -886,12 +846,12 @@ public class XmlAdaptedLifeInsurance {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlAdaptedPerson.java
+###### \java\seedu\address\storage\XmlAdaptedPerson.java
 ``` java
     @XmlElement(name = "lifeInsuranceId")
     private List<String> lifeInsuranceIds = new ArrayList<>();
 ```
-###### /java/seedu/address/storage/XmlAdaptedPerson.java
+###### \java\seedu\address\storage\XmlAdaptedPerson.java
 ``` java
     /**
      * Converts this jaxb-friendly adapted person object into the model's Person object.
@@ -917,12 +877,12 @@ public class XmlAdaptedLifeInsurance {
         return new Person(name, phone, email, address, dob, gender, tags, personLifeInsuranceIds);
     }
 ```
-###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
 ``` java
     @XmlElement(name = "lifeInsuranceMap")
     private Map<String, XmlAdaptedLifeInsurance> lifeInsuranceMap;
 ```
-###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
 ``` java
     @Override
     public Map<UUID, ReadOnlyInsurance> getLifeInsuranceMap() {
@@ -941,7 +901,7 @@ public class XmlAdaptedLifeInsurance {
         return lifeInsurances;
     }
 ```
-###### /java/seedu/address/ui/InsuranceListPanel.java
+###### \java\seedu\address\ui\InsuranceListPanel.java
 ``` java
     private static final String FXML = "InsuranceListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -980,7 +940,7 @@ public class XmlAdaptedLifeInsurance {
 
     }
 ```
-###### /java/seedu/address/ui/InsuranceProfile.java
+###### \java\seedu\address\ui\InsuranceProfile.java
 ``` java
     private static final String FXML = "InsuranceProfile.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -1008,7 +968,7 @@ public class XmlAdaptedLifeInsurance {
 
     }
 ```
-###### /java/seedu/address/ui/ProfilePanel.java
+###### \java\seedu\address\ui\ProfilePanel.java
 ``` java
     /**
      * Load person page with only his/her name with person does not exist in Lisa message
@@ -1019,7 +979,7 @@ public class XmlAdaptedLifeInsurance {
         this.address.setText(PERSON_DOES_NOT_EXIST_IN_LISA_MESSAGE);
     }
 ```
-###### /java/seedu/address/ui/ProfilePanel.java
+###### \java\seedu\address\ui\ProfilePanel.java
 ``` java
     /**
      * Unbind all listeners and reset the text values to {@code null}
@@ -1040,7 +1000,7 @@ public class XmlAdaptedLifeInsurance {
         insuranceHeader.setText(null);
     }
 ```
-###### /java/seedu/address/ui/ProfilePanel.java
+###### \java\seedu\address\ui\ProfilePanel.java
 ``` java
     @Subscribe
     private void handlePersonNameClickedEvent(PersonNameClickedEvent event) {
@@ -1055,26 +1015,26 @@ public class XmlAdaptedLifeInsurance {
         raise(new SwitchToProfilePanelRequestEvent());
     }
 ```
-###### /resources/view/DarkTheme.css
+###### \resources\view\DarkTheme.css
 ``` css
 .list-cell:filled:selected #insuranceCardPane {
     -fx-border-color: #3e7b91;
     -fx-border-width: 1;
 }
 ```
-###### /resources/view/DarkTheme.css
+###### \resources\view\DarkTheme.css
 ``` css
 #personListView {
     -fx-background-color: transparent #383838 transparent #383838;
 }
 ```
-###### /resources/view/InsuranceListPanel.fxml
+###### \resources\view\InsuranceListPanel.fxml
 ``` fxml
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <ListView fx:id="insuranceListView" VBox.vgrow="ALWAYS" />
 </VBox>
 ```
-###### /resources/view/InsuranceProfile.fxml
+###### \resources\view\InsuranceProfile.fxml
 ``` fxml
          <VBox alignment="CENTER_LEFT" GridPane.columnIndex="0">
             <padding>
