@@ -11,7 +11,7 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 === Enhancement Added: Making fields optional
 
 ==== Justification
-User should be able to add contact with contact name only. 
+User should be able to add contact with contact name only.
 *currently email is compulsory field as well.
 
 === Enhancement Added: Edit individual fields [for now: tag only]
