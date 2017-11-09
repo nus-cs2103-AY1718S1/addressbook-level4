@@ -401,7 +401,33 @@ public class Node {
 }
 
 ----
-Upon the pressing of the tab key, the command box calls attemptAutoComplete, in the commandTrie class. This method will traverse the trie using the content of the command box. If the input has a character not present in the trie, then the attempt fails. If the trie parses through the input but reaches a node with a next option, it also fails. If the trie parses the input and reaches a node with only children, it will autocomplete the input to a valid command. If the autocomplete fails, the text is turned red.
+Upon the pressing of the tab key, the command box calls attemptAutoComplete, in the commandTrie class. This method will traverse the trie using the content of the command box. If the input has a character not present in the trie, then the attempt fails. If the trie parses through the input but reaches a node with a next option, it will attempt to provide the user with possible commands for a given input. In this case, a dropdown box will appear in the UI that lists the possible commands for the user. This is accomplished using a recursive searching of the trie that follows each possible path and returns a set of possible commands.
+----
+ private List<String> recursiveGetOptions(Node start, String stub) {
+        List<String> options = new ArrayList<>();
+        StringBuilder output = new StringBuilder();
+        output.append(stub);
+
+        while (!isLeaf(start)) {
+            if (start.hasNext()) {
+                options.addAll(recursiveGetOptions(start.getNext(), output.toString()));
+                if (start.hasChild()) {
+                    output.append(start.getKey());
+                    options.addAll(recursiveGetOptions(start.getChild(), output.toString()));
+                }
+                return options;
+            } else {
+                output.append(start.getKey());
+                start = start.getChild();
+            }
+        }
+        output.append(start.getKey());
+        options.add(output.toString());
+        return options;
+}
+----
+
+If the trie parses the input and reaches a node with only children, it will autocomplete the input to a valid command. If the autocomplete fails, the text is turned red.
 
 An added functionality is that if the user presses tab again, the command will add a usage framework for the command, i.e. find will be autocompleted to find [names]. This helps the user to understand command usage. If tab is pressed again, the input simply reverts back to the command.
 
