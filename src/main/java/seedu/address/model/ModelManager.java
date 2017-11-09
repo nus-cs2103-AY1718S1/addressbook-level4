@@ -28,6 +28,7 @@ import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.DuplicateRemarkException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.exceptions.NotRemarkedLessonException;
 import seedu.address.model.module.exceptions.RemarkNotFoundException;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
@@ -149,7 +150,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void unBookmarkLesson(ReadOnlyLesson target) {
+    public void unBookmarkLesson(ReadOnlyLesson target) throws NotRemarkedLessonException {
         addressBook.unBookmarkLesson(target);
         indicateAddressBookChanged();
     }

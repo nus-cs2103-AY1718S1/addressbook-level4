@@ -33,7 +33,7 @@ public class DeleteCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the lesson(s) by module(if current listing element is module).\n"
+            + "\n: Deletes the lesson(s) by module(if current listing element is module).\n"
             + ": Deletes the lesson(s) by location(if current listing element is location).\n"
             + ": Deletes the lesson(s) identified by the index (if current listing element is lesson).\n"
             + "Parameters: INDEX (must be a positive integer)\n"

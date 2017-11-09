@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import com.sun.tools.corba.se.idl.constExpr.Not;
 import javafx.collections.ObservableList;
 
 import seedu.address.model.lecturer.Lecturer;
@@ -21,6 +22,7 @@ import seedu.address.model.module.UniqueRemarkList;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.DuplicateRemarkException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.exceptions.NotRemarkedLessonException;
 import seedu.address.model.module.exceptions.RemarkNotFoundException;
 
 //@@author caoliangnus
@@ -130,8 +132,12 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Removes a lesson from the marked list.
      * Only person exists in the marked List can be unbookmarked from the marked list.
      */
-    public void unBookmarkLesson(ReadOnlyLesson m) {
-        m.setAsUnmarked();
+    public void unBookmarkLesson(ReadOnlyLesson m) throws NotRemarkedLessonException {
+        if (m.isMarked()) {
+            m.setAsUnmarked();
+        } else {
+            throw new NotRemarkedLessonException();
+        }
     }
     //@@author
 

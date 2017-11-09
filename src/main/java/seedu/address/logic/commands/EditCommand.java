@@ -57,12 +57,12 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_TIME_SLOT + "TIME SLOT] "
             + "[" + PREFIX_LECTURER + "LECTURER]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_GROUP + "SL2 "
+            + PREFIX_GROUP + "2 "
             + PREFIX_VENUE + "LT25";
 
     public static final String MESSAGE_EDIT_LESSON_SUCCESS = "Edited Lesson: %1$s";
     public static final String MESSAGE_EDIT_LOCATION_SUCCESS = "Edited Location: %1$s";
-    public static final String MESSAGE_EDIT_MODULE_SUCCESS = "Edited Location: %1$s";
+    public static final String MESSAGE_EDIT_MODULE_SUCCESS = "Edited Module: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_LESSON = "This lesson already exists in the address book.";
     public static final String MESSAGE_DUPLICATE_BOOKEDSLOT = "This time slot have already "
