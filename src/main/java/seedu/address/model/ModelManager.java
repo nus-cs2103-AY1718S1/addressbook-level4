@@ -122,12 +122,14 @@ public class ModelManager extends ComponentManager implements Model {
     public void addSchedule(Schedule schedule) {
         addressBook.addSchedule(schedule);
         addressBook.sortSchedules();
+        indicateAddressBookChanged();
         indicateScheduleListChanged();
     }
 
     @Override
     public void removeSchedule(Schedule schedule) throws ScheduleNotFoundException {
         addressBook.removeSchedule(schedule);
+        indicateAddressBookChanged();
         indicateScheduleListChanged();
     }
 
