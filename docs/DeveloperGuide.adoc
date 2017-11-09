@@ -354,9 +354,6 @@ The mechanism and data structure of meetings are similar to that of the address 
 `data/meetinglist.xml` by default. For each meeting, the date, time location and participants are recorded. The participants
 must be from the address book.
 
-[NOTE]
-The meeting functionality is not fully implemented yet. There is currently no command to add or edit meetings.
-
 ==== Design Considerations
 
 **Aspect:** Local storage of the meeting list +
@@ -692,8 +689,7 @@ the google maps on the browser panel
 **Aspect:** Passing URL directly +
 **Alternative 1:** Use google maps API +
 **Pros:** More powerful and secure search +
-**Cons:** Unnecessary imports of dpeendencies, slows the program +
-=======
+**Cons:** Unnecessary imports of dependencies, slows the program +
 
 ---
 
@@ -704,6 +700,9 @@ A profile photo is displayed for each person in the addressbook.
 ==== Implementation
 
 During startup, the application uses a person's email address to download his/her profile photo from link:https://en.gravatar.com/site/implement/[Gravatar] `cache/`. The photo will then be displayed on the person card.
+When a new person is added or a person's email address is changed, the new profile photo will be downloaded. +
+For contacts who have not set a Gravatar photo before, user also has the option to choose what type of default photo to
+display.
 
 ==== Design Considerations
 
@@ -713,10 +712,21 @@ During startup, the application uses a person's email address to download his/he
 **Cons:** less customizable +
 **Alternative 2:** from other social network websites (Instagram, Facebook, etc.) +
 **Pros:** OurAb's target demographics usually update their profile photos on SNS more frequently +
-**Cons:** Authentication might be required; User need to input contacts' user id for different websites +
+**Cons:** authentication might be required; User need to input contacts' user id for different websites +
 **Alternative 3:** user uploads profile photo for each person +
-**Pros:** User has most freedom to customize their addressbook +
-**Cons:** Upload photo would be too complicated for a CLI application +
+**Pros:** user has most freedom to customize their addressbook +
+**Cons:** upload photo would be too complicated for a CLI application +
+
+**Aspect:** download photos in foreground or background+
+**Alternative 1 (current choice):** only download in background when the `DefaultProfilePhoto` preference is changed +
+**Pros:** the solution is balanced between program response time and update time (see below for explanation on the trade-off) +
+**Cons:** user might not see the change immediately after changing the preference +
+**Alternative 2:** always download in foreground +
+**Pros:** profile photos will be updated as soon as they are available +
+**Cons:** the application will freeze during the download; if `DefaultProfilePhoto` preference is changed, the application will appear unresponsive +
+**Alternative 3:** always download in background +
+**Pros:** user will not notice any unresponsiveness when using the application +
+**Cons:** it is technically challenging to update the photo in UI timely (concurrency is difficult)
 
 ---
 

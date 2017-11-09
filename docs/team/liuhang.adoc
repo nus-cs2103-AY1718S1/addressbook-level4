@@ -6,11 +6,17 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: OurAb
 OurAb is a CLI(Command Line Interface)-based desktop Address Book application written in Java, targeted at university students.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/test[Test code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/collated/main/liuhang0213.md[Functional code]] [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/collated/test/liuhang0213.md[Test code]]
 
 === Enhancement Added: Display Profile Photo from Gravatar
 
 ==== External Behaviour
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc#profile-photo[from: Developer Guide]]#
+
+A profile photo is displayed for each person in the addressbook.
+
+#End of Extract#
 
 image::liuhang-profile-photo.png[width="800]
 ==== Justification
@@ -23,7 +29,7 @@ To make the addressbook look more personal and customizable.
 
 ==== External Behaviour
 
-#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc#listing-next-upcoming-meeting-code-nextmeeting-code-code-since-v1-3-code[from: User Guide]]#
 
 Displays information about the next upcoming meeting. +
 
@@ -41,7 +47,7 @@ To allow users to view the next meeting conveniently.
 
 ==== External behavior
 
-* Provides storage for meetings managment, which will be implemented in future verions (> v1.3).
+* Provides storage for meetings management, which will be implemented in future versions (> v1.3).
 
 ==== Justification
 
@@ -51,9 +57,11 @@ To provide functionality for storing meeting data
 
 ==== Implementation
 
-#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc#25-storage-component[from: Developer Guide]]#
 
 image::StorageClassDiagram.png[width="800"]
+
+The Storage component can save the Address Book and Meeting List data in xml format and read it back.
 
 #End of Extract#
 
@@ -62,9 +70,11 @@ image::StorageClassDiagram.png[width="800"]
 
 ==== External behavior
 
-#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc#preferences[from: Developer Guide]]#
 
-* Edits the user preference. +
+In addition to configuration, user can customize the address book application by editing preferences. The difference between
+configurations and preferences is that configuration stores basic information requried to start the application, while
+preferences determine high level functionalities and UI styles.
 
 #End of Extract#
 
@@ -86,7 +96,7 @@ To allow users to customize the address book application conveniently.
 
 ==== Implementation
 
-#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc#361-implementation[from: Developer Guide]]#
 
 When a `pref` command is entered, the `PrefCommand` will attempt to find and execute `get<PreferenceKey>`
 method in the `UserPrefs` class using Java Reflection API. If an exception is encountered, it is assumed that the method
@@ -100,7 +110,7 @@ will again try to find and execute `set<PreferenceKey>` method.
 
 ==== External behavior
 
-* When the addressbook is loaded when the application starts, a backup copy will be saved in another folder.
+* Provides functionality for saving a backup copy of the address book in different folder.
 
 ---
 
@@ -112,7 +122,7 @@ To ensure safety of data in case of runtime exceptions or crashes
 
 ==== Implementation
 
-#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc#25-storage-component[from: Developer Guide]]#
 
 image::StorageClassDiagram.png[width="800"]
 
