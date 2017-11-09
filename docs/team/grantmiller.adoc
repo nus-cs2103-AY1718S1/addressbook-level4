@@ -15,7 +15,7 @@ Tour Guide Addressbook is an addressbook with added features to make it easier f
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=autocomplete]
 
 #End of Extract#
 
