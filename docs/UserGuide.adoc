@@ -1,4 +1,4 @@
-= ResidentBook Level 4 - User Guide
+= ResidentBook - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -408,7 +408,7 @@ Clicking on a person now displays additional information in the side pane
 === Calendar Interface (Since v1.4)
 
 Calendar has been introduced to allow the hostel administrator to view events.
-Events can be seen on calendar interface for clearer view.
+Events can be seen on calendar interface for clearer view since v1.5
 
 === Events (Since v1.4)
 
