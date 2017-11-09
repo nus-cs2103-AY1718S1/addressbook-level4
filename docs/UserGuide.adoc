@@ -119,18 +119,42 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 temp/2 t/criminal`
 // end::temporaryperson[]
 
+=== Adding a picture: addImage
+
+Adds an image to a resident in the resident book as specified by the current index +
+Format: `addImage INDEX IMAGE_URL`
+
+[TIP]
+The url to the image must start from the root folder
+
+Examples:
+
+* `addImage 1 /Users/username/Downloads/placeholder.jpg`
+
+=== Deleting a picture: deleteImage
+
+Deletes an image to a resident in the resident book as specified by the current index +
+Format: `deleteImage INDEX`
+
+[TIP]
+Deletes the Image of the resident in the current list of displayed residents
+
+Examples:
+
+* `deleteImage 1`
+
 === Adding a picture: `GUI image`
 
 Adds a picture of a person to the resident book +
 Format: `click on the placeholder image after adding the person into the addressbook`
 
-Adds a person to the resident book +
-Format: `click on '+' button after adding the person into the residentbook`
+Adds a person to the resident book
+Format: `click on 'Add Image' button after adding the person into the residentbook`
 
 [TIP]
 One person can only have 1 picture, adding additional images replaces the current one
 
-Examples:
+Example:
 
 image::add_person.png[width="400"]
 
@@ -139,22 +163,19 @@ image::add_person.png[width="400"]
 Deletes a person's picture from the address book +
 Format: `click on the placeholder image after adding the person into the addressbook`
 
-Examples:
+Example:
 
 image::delete_person.png[width="400"]
 
 === Highlighting by tag : `highlight`
 
-Highlights all persons with specified tag
-Format: `highlight `tag``
-
-[TIP]
-Specifying a tag which does not exist on any person clears the current highlighted persons
+Highlights all residents with specified tag / Removes highlighting when residents highlighted
+Format: `highlight TAG_NAME` / `highlight '-'"
 
 Examples:
 * `highlight colleague`
 * `highlight owes money`
-* `highlight nonExistentTag` - Clears current highlighting
+* `highlight -` - Clears current highlighting
 
 // tag::swaproom[]
 === Swap Rooms: `swaproom`

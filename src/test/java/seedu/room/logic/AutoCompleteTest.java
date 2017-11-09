@@ -26,15 +26,17 @@ public class AutoCompleteTest {
     }
 
     @Test
-    public void getBaseCommands() {
-        String[] actualBaseCommands = { "add", "edit", "select", "delete", "clear",
-            "backup", "find", "list", "history", "exit", "help", "undo", "redo" };
+    public void assert_baseCommandsMatchUponCreation_success() {
+        String[] actualBaseCommands = { "add", "addEvent", "addImage", "backup", "edit", "select", "delete",
+            "deleteByTag", "deleteEvent", "deleteImage", "deleteTag", "clear", "find", "list", "highlight", "history",
+            "import", "exit", "help", "undo", "redo", "sort", "swaproom"
+        };
         String[] baseCommands = autoComplete.getAutoCompleteList();
         assertTrue(Arrays.equals(actualBaseCommands, baseCommands));
     }
 
     @Test
-    public void updateAutoCompleteList() {
+    public void assert_autoCompleteListUpdate_success() {
         List<ReadOnlyPerson> persons = model.getFilteredPersonList();
         autoComplete.updateAutoCompleteList("find");
         String[] updatedList = autoComplete.getAutoCompleteList();
@@ -45,9 +47,11 @@ public class AutoCompleteTest {
     }
 
     @Test
-    public void resetAutoCompleteList() {
-        String[] actualBaseCommands = { "add", "edit", "select", "delete", "clear",
-            "backup", "find", "list", "history", "exit", "help", "undo", "redo" };
+    public void assert_resetAutoCompleteListMatchBaseCommands_success() {
+        String[] actualBaseCommands = { "add", "addEvent", "addImage", "backup", "edit", "select", "delete",
+            "deleteByTag", "deleteEvent", "deleteImage", "deleteTag", "clear", "find", "list", "highlight", "history",
+            "import", "exit", "help", "undo", "redo", "sort", "swaproom"
+        };
         autoComplete.updateAutoCompleteList("");
         String[] baseCommands = autoComplete.getAutoCompleteList();
         assertTrue(Arrays.equals(actualBaseCommands, baseCommands));
