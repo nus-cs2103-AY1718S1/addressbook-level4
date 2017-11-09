@@ -48,6 +48,8 @@ public interface Model {
                          Name name, ConfidenceEstimate confidenceEstimate)
         throws IllegalValueException, DuplicateRelationshipException;
 
+    void deleteRelationship(Index indexFromPerson, Index indexToPerson) throws IllegalValueException;
+
     //@@author
     /** Sorts the persons object alphanumerically by name. */
     void sortPersons();

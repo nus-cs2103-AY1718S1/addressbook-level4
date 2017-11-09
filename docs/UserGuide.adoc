@@ -252,6 +252,24 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+=== Deleting a relationship between two persons : `deleteRelationship`
+
+Deletes the relationship between two persons from the address book. +
+Format: `delete INDEX_FROM_PERSON INDEX_TO_PERSON`
+
+****
+* Deletes the relationship between two persons as specified using the indexes.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`deleteRelationship 1 2` +
+Deletes the relationship between the first and the 2nd person in the address book.
+
+
 === Removing a tag: `removeTag`
 
 Removes the specific tag from the address book. +
@@ -530,17 +548,21 @@ To set a new password, a user must first be logged into Intelli with the previou
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *AddRelationship* : `addRelationship INDEX_FROM_PERSON INDEX_TO_PERSON DIRECTION [n/NAME] [ce/CONFIDENCE_ESTIMATE}` +
 e.g. `addRelationship 2 3 directed ce/1212312.2 n/is cousin of`
 * *Back up* : `backup`
+* *AddRelationship* : `addRelationship INDEX_FROM_PERSON INDEX_TO_PERSON DIRECTION [n/NAME] [ce/CONFIDENCE_ESTIMATE}` +
+e.g. `addRelationship 2 3 directed ce/1212312.2 n/is cousin of`
 * *Colour tags* : `colourTag TAG COLOUR` +
 e.g. `colourTag friend red`
 * *Clear* : `clear`
 * *Clear history* : `clearHistory`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *DeleteRelationship* : `deleteRelationship FROM_PERSON_INDEX TO_PERSON_INDEX` +
+e.g. `deleteRelationship 2 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Exit* : `exit`
