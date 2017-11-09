@@ -40,7 +40,7 @@ public class Parcel implements ReadOnlyParcel {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.deliveryDate = new SimpleObjectProperty<>(deliveryDate);
-        this.status = new SimpleObjectProperty<>(status);
+        this.status = new SimpleObjectProperty<>(Status.getUpdatedInstance(status, deliveryDate));
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -50,7 +50,8 @@ public class Parcel implements ReadOnlyParcel {
      */
     public Parcel(ReadOnlyParcel source) {
         this(source.getTrackingNumber(), source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getDeliveryDate(), source.getStatus(), source.getTags());
+                source.getDeliveryDate(), Status.getUpdatedInstance(source.getStatus(), source.getDeliveryDate()),
+                source.getTags());
     }
 
     public void setTrackingNumber(TrackingNumber trackingNumber) {
