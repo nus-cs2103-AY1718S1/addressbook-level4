@@ -93,6 +93,7 @@ Once you have familiarized yourself with the application, try typing a command's
 
 === Quick Help
 
+// tag::help[]
 ==== Viewing help : `help`
 
 => Alias: `h` <=
@@ -111,6 +112,7 @@ Examples:
 * `help` (without command identifier)
 * `help add` (using command word)
 * `help a` (using alias)
+// end::help[]
 
 === Modifying contacts
 
