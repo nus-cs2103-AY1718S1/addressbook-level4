@@ -343,7 +343,10 @@ The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+[NOTE]
+The user can also choose to undo multiple commands at the same time. Sequence of commands to be undone for `undo 5` is the same as typing `undo` 5 times.
+
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed). Similar to `undo`, user can also choose to redo multiple undo commands at the same time (`redo 5`).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
@@ -447,6 +450,8 @@ Sort command takes in command `OPTIONS` to perform sorting by five fields of a p
 **Pros:** No inheritance required, minimise error. +
 **Cons:** 'SortCommand' class specific, cannot be reused by other commands.
 
+---
+
 **Aspect:** Implementation of sort +
 **Alternative 1 (current choice):** Lambda expression +
 **Pros:** Short and concise. +
@@ -504,10 +509,13 @@ image::LockSequenceDiagram.png[width="800"]
 
 The favourite mechanism is very similar to the one used in edit command. The feature follows the sequence of steps:
 
-. `FavouriteCommandParser` calls upon `FavouriteCommand` and parses the argument as an index.
-. It replaces the person identified in `AddressBook` with a new person that has its `favourite` instance inverted to either `true` or `false`.
+. `AddressBookParser` calls upon `FavouriteCommandParser`, which in turn calls upon `FavouriteCommand` and parses the argument as an index.
+. The person identified by the index in `AddressBook` is replaced with a new person that has its `favourite` instance inverted to either `true` or `false`.
 . The `favouritePerson` method in AddressBook then creates two `UniquePersonList` to implement the sorting. Persons with `favourite` = `true` will be sorted into the `favouriteList`. Persons with `favourite` = `false` will be sorted into the `notFavouriteList`.
 . The two lists will then be merged into the `persons` list in `AddressBook`, with `favouriteList` being at the top.
+
+The following sequence diagram shows how FavouriteCommand works: +
+![](src/Main/resources/imagesFavouriteCommandSequenceDiagram.png)
 
 The code below shows how FavouriteCommand is implemented:
 
@@ -540,9 +548,7 @@ public class FavouriteCommand extends UndoableCommand {
 **Cons:** Does not preserve the original order of the contact list. +
 **Alternative 2:** Save the favourite contacts in a separate list without overwriting the original contact list +
 **Pros:** Does not mess up the original order. +
-**Cons:** Will use more memory (significant if favourite list is large).
-
----
+**Cons:** Will use more memory (significant if favourite/contact list is large).
 
 // tag::tdo[]
 === Todo mechanism
@@ -585,6 +591,92 @@ private void switchPlaceholderDisplay(int mode) {
 
 Select command also has options. After parsed by `AddressBookParser` and `CommandOptionUtil`, select mechanism sends `ChangeSearchEvent` to `BrowserPanel` in order to change search url. Then, it sends `JumpToListRequestEvent` to change selection in `PersonListPanel` and `PersonListPanel` will send `PersonPanelSelectionChangedEvent` to `BrowserPanel` to indicate which person is selected.
 // end::select[]
+
+// tag::deletebyname[]
+=== Delete by name mechanism
+
+It is an undoable delete command that offers an alternative to the existing delete command.
+
+It takes in the `String` user input name and compare it with all persons' name field. As the iterator traverse through the contact list, the first person with the occurrence of the specified `String` name will be removed from the list.
+
+As the command will always call the entire list for comparison, there is no need to modify list for the command to e executed.
+// end::deletebyname[]
+
+// tag::export[]
+=== Export mechanism
+
+It first creates a `File` object with the user specified file path.
+
+The command then returns the current address book as a `ReadOnlyAddressBook` object and then serialize it using `XmlSerializableAddressBook` class constructor.
+
+Saving of data is achieved with `XmlFileStorage#saveDataToFile` method which saves the above mentioned serialized address book into the newly created file.
+
+Code fragments to show above mentioned export mechanism:
+[source,java]
+----
+ReadOnlyAddressBook localAddressBook = model.getAddressBook();
+
+File file = new File(userPrefsFilePath);
+
+try {
+    FileUtil.createIfMissing(file);
+} catch (IOException e) {
+    return new CommandResult(MESSAGE_STORAGE_ERROR);
+}
+
+try {
+    XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(localAddressBook));
+} catch (FileNotFoundException e) {
+    return new CommandResult(MESSAGE_STORAGE_ERROR);
+}
+----
+// end::export[]
+
+=== Enhance Add command
+
+The add command is enhanced to allow empty fields for phone, address and email. Mechanism of the command is exactly the same as previous, with the addition of a `initialiseEmptyFields` method in `AddCommandParser`. The `initialiseEmptyFields` method appends the prefix of each empty field followed by a '-' instead of throwing a `ParseException` if fields are empty.
+
+The code below shows how the `initiliseEmptyFields` method is implemented:
+
+[source,java]
+----
+private static String initialiseEmptyFields(String args) {
+    if (!args.contains("a/")) {
+        args = args + " a/ -";
+    }
+    if (!args.contains("e/")) {
+        args = args + " e/ -";
+    }
+    if (!args.contains("p/")) {
+        args = args + " p/ -";
+    }
+    return args;
+}
+----
+
+=== Enhance Undo/Redo command
+
+The new `undo` and `redo` commands allows the user to specify how many commands to undo or redo (eg. `undo 5`, `redo 5`).
+The sequence of commands to be undone for `undo 5` is exactly the same as executing `undo` 5 times. Similarly for `redo`, the number specified simply runs the `redo` command the same number of times. `UndoCommandParser` and `RedoCommandParser` have been added in order to take in the index and `AddressBookParser` now calls upon `UndoCommandParser` and `RedoCommandParser` instead.
+
+The code below shows how the a command parser differentiate the index:
+
+[source,java]
+----
+public RedoCommand parse(String args) throws ParseException {
+    if (!args.isEmpty()) {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new RedoCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE));
+        }
+    } else {
+        return new RedoCommand();
+    }
+}
+----
 
 === Logging
 
@@ -956,6 +1048,36 @@ Use case ends.
 +
 [none]
 ** 1a1. AddressBook displays message “Empty list.”.
++
+Use case ends.
+
+=== Use case: Undo/Redo multiple commands
+
+*MSS*
+
+1.  User keys in 4 undoable commands.
+2.  Addressbook updates and displays updated data.
+3.  User requests to undo 4 commands.
+4.  Addressbook reverse the 4 most recent commands.
+5.  User requests to redo 4 commands.
+6.  Addressbook reverses the 4 most recent undo commands.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. No undoable commands in stack.
++
+[none]
+** 1a1. AddressBook displays message “No more commands to undo!”.
++
+[none]
+* 5a. No undo commands in stack.
++
+[none]
+** 5a1. AddressBook displays message “No more commands to redo!”.
 +
 Use case ends.
 

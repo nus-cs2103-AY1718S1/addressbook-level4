@@ -153,9 +153,7 @@ Returns `john` and `John Doe`
 Returns any person whose phone number contains number `999` and email address contains `nus`
 // end::find[]
 
-=== Deleting a person : `delete`
-
-==== Option1
+=== Deleting a person by index: `delete`
 
 Deletes the specified person from the address book using his/her corresponding index. +
 Format: `delete INDEX`
@@ -173,25 +171,6 @@ Examples:
 Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
-==== Option2
-
-Deletes the specified person from the address book using his/her name. +
-Format: `del NAME`
-
-****
-* Deletes the person with the first occurrence of the specified `NAME`.
-* The name refers to the name shown in the contact list (case sensitive temporarily).
-* The name *must be a alphabets* john, Jane, Bob ...
-****
-
-Examples:
-
-* `del Alex` +
-Deletes the first person named Alex in the address book contact list.
-* `find Betsy` +
-`del Betsy` +
 Deletes the 1st person in the results of the `find` command.
 
 // tag::select[]
@@ -240,8 +219,10 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Restores the address book to the state before the previous specified number of _undoable_ commands +
+were executed. If the number of stated is more than the available commands to undo, all the +
+_undoable_ commands will be undone. If no number is specified, only the most recent command will be undone. +
+Format: `undo 1` or `undo`
 
 [NOTE]
 ====
@@ -250,9 +231,14 @@ Undoable commands: those commands that modify the address book's content (`add`,
 
 Examples:
 
-* `delete 1` +
+* `fav 3` +
+`delete 1` +
 `list` +
 `undo` (reverses the `delete 1` command) +
+
+* `delete 1` +
+`list` +
+`undo 1` (reverses the `delete 1` command) +
 
 * `select 1` +
 `list` +
@@ -261,19 +247,27 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo 2` (reverses the `clear` command, followed by `delete 1` command) +
 
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+Reverses the N most recent `undo` commands, where N refers to the number entered. If the number entered is greater than +
+the number of `undo` commands, all the `undo` commands will be reversed. If no number is given, only the most recent `undo` +
+command will be reversed.
+
+Format: `redo 2`
 
 Examples:
 
-* `delete 1` +
+* `favourite 3` +
+`delete 1` +
 `undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+`undo` (reverses the `favourite 3` command) +
+`redo` (reapplies the `favourite 3` command) +
+
+* `delete 1` +
+`undo 1` +
+`redo 1` (reapplies the `delete 1` command) +
 
 * `delete 1` +
 `redo` +
@@ -281,10 +275,9 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 * `delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+`undo 2` (reverses the `clear` command, followed by the `delete 1` command) +
+`redo 2` (reapplies the `delete 1` command, followed by `clear` command) +
+
 // end::undoredo[]
 
 === Clearing all entries : `clear`
@@ -303,6 +296,27 @@ Address book data are saved in the hard disk automatically after any command tha
 There is no need to save manually.
 
 == Since v1.2
+
+// tag::deletebyname[]
+=== Deleting a person by name: `del`
+
+Deletes the specified person from the address book using his/her name. +
+Format: `del NAME`
+
+****
+* Deletes the person with the first occurrence of the specified `NAME`.
+* The name refers to the name shown in the contact list (case insensitive).
+* The name *must be more than 3 characters*: john, James, William ...
+****
+
+Examples:
+
+* `del Alex` +
+Deletes the first person named Alex in the address book contact list.
+* `find Betsy` +
+`del Betsy` +
+Deletes the 1st person in the results of the `find` command.
+// end::deletebyname[]
 
 // tag::sort[]
 === Sorting all persons : `sort`
@@ -375,6 +389,7 @@ Favourites the 1st person in the address book. +
 `favourite 1` +
 Unfavourite the 1st person in the address book.
 
+// tag::export[]
 === Exporting address book : `export`
 
 Exports a copy of the address book. +
@@ -383,14 +398,15 @@ Format: `export FILEPATH`
 ****
 * Exports the address book into specified `FILEPATH`.
 * The filepath refers to a local directory in the computer.
-* The filepath *must be suffixed with .xml* e.g. 'C:\', 'docs/', ...
+* The filepath *must be suffixed with .xml* e.g. 'D:\', 'docs/', ...
 * If specified directory is missing, it will be automatically created when exporting.
 ****
 
 Examples:
 
-* `export C:\exported\AcquaiNote.xml` +
-Exports the address book into exported folder in C drive in xml file format.
+* `export D:\exported\AcquaiNote.xml` +
+Exports the address book into exported folder in D drive in xml file format.
+// end::export[]
 
 // tag::tdo[]
 === To-do list: `todo`

@@ -1,0 +1,113 @@
+= Wu Qihao - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AcquaiNote
+AcquaiNote is a desktop address book application which helps to manage personal contacts easily and safely, with scheduling functionality. The user interacts with it using a command line interface (CLI), and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T10-B1/main/blob/master/collated/main/qihao27.md[Functional code]] [https://github.com/CS2103AUG2017-T10-B1/main/blob/master/collated/test/qihao27.md[Test code]]
+
+=== Enhancement Added: Delete by name
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deletebyname]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+It is troublesome for users to refer to the list constantly, trying to find the corresponding index of the person in order to delete him/her from the list. +
+Users are able to delete anyone from the list as long as he/she could remember the name, even a part fo the name.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deletebyname]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Sort
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users with a large number of contacts in the list will often have trouble organising them. +
+Sort command allows users to organise contacts easily, contacts are more accessible, and hence increase productivity.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Export
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+There is no way for users to backup address book before export command is implemented. +
+It is a solution to potential data losses and lays a foundation for my proposed import command.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Export to cloud storage
+
+With an initial modification of the current `export` command which increases the number of supporting file type, an integration with cloud storage service would be beneficial for users. +
+It further decreases the risk of data loses and provides the possibility of cross-platform integration.
+
+=== Enhancement Proposed: Add command `import`
+
+A command that allows users to import address book with all `export` command's supporting file format. +
+Both local and cloud import makes AcquaiNote more user friendly and would greatly increase users' productivity.
+
+=== Other contributions
+
+* Updated the GUI color scheme (Pull requests https://github.com/CS2103AUG2017-T10-B1/main/pull/53[#53], https://github.com/CS2103AUG2017-T10-B1/main/pull/55[#55])
+* Changed favourite contact display and todo-item count display on contact cards (Pull requests https://github.com/CS2103AUG2017-T10-B1/main/pull/69[#69], https://github.com/CS2103AUG2017-T10-B1/main/pull/78[#78 ])
+* Wrote additional tests to increase coverage (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/78[#78])
+* Updated documents constantly (Pull requests https://github.com/CS2103AUG2017-T10-B1/main/pull/11[#11], https://github.com/CS2103AUG2017-T10-B1/main/pull/21[#21], https://github.com/CS2103AUG2017-T10-B1/main/pull/28[#28], https://github.com/CS2103AUG2017-T10-B1/main/pull/46[#46], https://github.com/CS2103AUG2017-T10-B1/main/pull/59[#59])
