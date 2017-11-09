@@ -472,13 +472,13 @@ You can delete multiple contacts by tags +
 Command can only delete one tag at a time
 // end::batch[]
 
-// tag::batch[]
+// tag::copy[]
 === Copy a person's email address to your clipboard : `copy` [Since v1.4]
 
 You can copy a person's email address to your clipboard +
 *Format:* `copy INDEX` +
 *Shorthand format:* `c INDEX`
-// end::batch[]
+// end::copy[]
 
 === Adding a person's relationships: `relation` [Since v1.5]
 
