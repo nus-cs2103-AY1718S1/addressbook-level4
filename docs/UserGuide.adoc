@@ -605,38 +605,48 @@ There is no need to save manually.
 ===== Exporting contact data: `export`
 
 Exports all contact data to an external file. +
-Format: `export FILE_PATH`
+Command format: `[red]#export# [green]#FILE_PATH#` +
 
 ****
-* Exports contact data to the location specified by `FILE_PATH`.
-* You must have *write access* to the specified file path.
-* The input `FILE_PATH` must be an absolute file path.
+* `[green]#FILE_PATH#` is the location where the contact data is to be exported to.
+* The input `[green]#FILE_PATH#` must be an absolute file path.
 ** `/Users/seedu/Documents/exportData.xml` for macOS and Linux
 ** `c:\Users\seedu\Documents\exportData.xml` for Windows
+* You must have *write access* to the specified `[green]#FILE_PATH#`.
 ****
+
+You should see the confirmation message in the result display. +
+
+.Confirmation message after exporting contacts
+image::export-contacts.png[width="790"]
 
 Examples:
 
-* `export /Users/seedu/Documents/exportData.xml` +
+* `[red]#export# [green]#/Users/seedu/Documents/exportData.xml#` +
 Exports contact data to the location `/Users/seedu/Documents/exportData.xml`
 
 [[import-command]]
 ===== Importing contact data: `import`
 
 Imports contact data from an external file. +
-Format: `import FILE_PATH`
+Command format: `[red]#import# [green]#FILE_PATH#`
 
 ****
-* Imports contact data from data file at the location specified by `FILE_PATH`.
-* You must have *read access* to the specified file path.
-* The input `FILE_PATH` must be an absolute file path, e.g.
+* `[green]#FILE_PATH#` is the location of the data file from which contact data is to be imported.
+* The input `[green]#FILE_PATH#` must be an absolute file path, e.g.
 ** `/Users/seedu/Documents/exportData.xml` for macOS and Linux
 ** `c:\Users\seedu\Documents\exportData.xml` for Windows
+* You must have *read access* to the specified `[green]#FILE_PATH#`.
 ****
+
+You should see the confirmation message in the result display. +
+
+.Confirmation message after importing contacts
+image::import-contacts.png[width="790"]
 
 Examples:
 
-* `import /Users/seedu/Documents/exportData.xml` +
+* `[red]#import# [green]#/Users/seedu/Documents/exportData.xml#` +
 Imports contact data to the location `/Users/seedu/Documents/exportData.xml`
 
 
@@ -645,7 +655,7 @@ Imports contact data to the location `/Users/seedu/Documents/exportData.xml`
 ===== Configuring your cloud account: `sync`
 
 Configures the addressbook to synchronize with the cloud using the given user credentials. +
-Format: `sync u/USERNAME p/PASSWORD`
+Command format: `[red]#sync# [green]#u/USERNAME p/PASSWORD#`
 
 ===== Synchronizing with the cloud
 
@@ -655,7 +665,7 @@ There is no need to synchronize manually.
 ===== Removing your cloud account: `unsync`
 
 Stops synchronizing of contact information with any previously configured cloud accounts. +
-Format: `unsync`
+Command format: `[red]#unsync#`
 
 === Miscellaneous
 
