@@ -48,11 +48,15 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    /**
+     * Parse {@code address} into a {@code File} and returns it. Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the file does not exist
+     */
     static File parseFile(String address) throws IllegalValueException {
         requireNonNull(address);
         String trimmedAddress = address.trim();
         File file = new File(trimmedAddress);
-
         if (file.exists() && !file.isDirectory()) {
             return file;
         } else {
