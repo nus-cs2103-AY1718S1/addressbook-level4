@@ -480,6 +480,17 @@ Examples:
 Clears all entries from the address book. +
 Format: `clear`
 
+=== Changing themes: `theme`
+
+Changes between the two available themes. +
+Format: `theme`
+
+image::UI.png[width="790"]
+_Figure 4.25.1 : Dark theme (default)_
+
+image::BrightTheme.png[width="790"]
+_Figure 4.25.2 : Bright theme_
+
 === Exiting the program : `exit`
 
 Exits the program. +
@@ -583,6 +594,7 @@ e.g. `setpath C:/Users/acer/Desktop/SE/profilepic/`
 e.g `filter friendly cooperative`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Theme* : `theme`
 
 == Current features
 
@@ -623,10 +635,11 @@ e.g `filter friendly cooperative`
 * List of people who have overdue debts. (since v1.4)
 * A progress bar to indicate how much of the person's debt has been paid off. (since v1.4)
 
+* Different appearance themes (since v1.5)
+
 == Features to be included by `V2.0`
 
 //[V1.5]
-* Different appearance themes.
 * A feature to export a person's contact in another format.
 * `Help` command that displays screenshots of positive examples.
 * Able to view the last login time.
