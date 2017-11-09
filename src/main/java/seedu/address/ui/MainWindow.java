@@ -25,6 +25,7 @@ import seedu.address.commons.events.ui.NewAddressBookRequestEvent;
 import seedu.address.commons.events.ui.OpenAddressBookRequestEvent;
 import seedu.address.commons.events.ui.ShowBirthdayAlarmRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -217,15 +218,7 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleOpen() {
-        FileChooser fileChooser = new FileChooser();
-
-        // Set extension filter
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-            "XML files (*.xml)", "*.xml");
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        // Show open file dialog
-        File file = fileChooser.showOpenDialog(new Stage());
+        File file = FileUtil.getFileFromChooser();
 
         raise(new OpenAddressBookRequestEvent(file));
     }

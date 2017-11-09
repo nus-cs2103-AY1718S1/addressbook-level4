@@ -6,8 +6,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
 /**
- * Writes and reads files
+ * Handle files
  */
 public class FileUtil {
 
@@ -16,6 +19,20 @@ public class FileUtil {
     public static boolean isFileExists(File file) {
         return file.exists() && file.isFile();
     }
+
+    //@@author chrisboo
+    public static File getFileFromChooser() {
+        FileChooser fileChooser = new FileChooser();
+
+        // Set and add extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+            "XML files (*.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show open file dialog and return selected file
+        return fileChooser.showOpenDialog(new Stage());
+    }
+    //@@author
 
     /**
      * Creates a file if it does not exist along with its missing parent directories.

@@ -1,4 +1,3 @@
-//@@author chrisboo
 package seedu.address.commons.events.ui;
 
 import java.io.File;
@@ -7,6 +6,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author chrisboo
 /**
  * Indicates a request to open a new AddressBook
  */
@@ -15,13 +15,9 @@ public class OpenAddressBookRequestEvent extends BaseEvent {
     private String fileName;
     private String filePath;
 
-    /**
-     *
-     * @param file that contains the addressbook xml
-     */
     public OpenAddressBookRequestEvent(File file) {
-        this.fileName = FilenameUtils.removeExtension(file.getName());
-        this.filePath = file.getPath();
+        fileName = file.getName();
+        filePath = file.getPath();
     }
 
     public String getFilePath() {
@@ -37,3 +33,4 @@ public class OpenAddressBookRequestEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 }
+//@@author

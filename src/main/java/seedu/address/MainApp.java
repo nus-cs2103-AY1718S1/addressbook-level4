@@ -187,6 +187,11 @@ public class MainApp extends Application {
         EventsCenter.getInstance().registerHandler(this);
     }
 
+    private void restart() throws Exception {
+        init();
+        start(this.primaryStage);
+    }
+
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -214,12 +219,11 @@ public class MainApp extends Application {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
         try {
-            // change addressbook file path
+            // change AddressBook file path
             setAddressBookFilePath(event.getFilePath());
             setAddressBookAppName(event.getFileName());
 
-            init();
-            start(this.primaryStage);
+            restart();
         } catch (Exception e) {
             e.printStackTrace();
         }

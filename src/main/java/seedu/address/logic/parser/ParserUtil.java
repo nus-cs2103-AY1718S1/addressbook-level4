@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -45,6 +46,18 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    static File parseFile(String address) throws IllegalValueException {
+        requireNonNull(address);
+        String trimmedAddress = address.trim();
+        File file = new File(trimmedAddress);
+
+        if (file.exists() && !file.isDirectory()) {
+            return file;
+        } else {
+            throw new IllegalValueException("Invalid file!");
+        }
     }
 
     /**
