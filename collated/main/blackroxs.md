@@ -1,77 +1,5 @@
 # blackroxs
-###### /java/seedu/room/ui/MainWindow.java
-``` java
-    /**
-     * Handles import and allows user to choose file
-     */
-    @FXML
-    public void handleImport() {
-        FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showOpenDialog(null);
-        String filePath = file.getAbsolutePath();
-        System.out.println(filePath);
-
-        if (file != null) {
-            try {
-                CommandResult commandResult = logic.execute(ImportCommand.COMMAND_WORD + " " + filePath);
-                logger.info("Result: " + commandResult.feedbackToUser);
-                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
-            } catch (CommandException e) {
-                logger.info("Invalid command: " + ImportCommand.MESSAGE_ERROR);
-                raise(new NewResultAvailableEvent(e.getMessage()));
-            } catch (ParseException e) {
-                logger.info("Invalid command: " + ImportCommand.MESSAGE_ERROR);
-                raise(new NewResultAvailableEvent(e.getMessage()));
-            }
-        }
-    }
-
-```
-###### /java/seedu/room/logic/parser/ImportCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new ImportCommand object
- */
-public class ImportCommandParser implements Parser<ImportCommand> {
-    /**
-     * Parses the given {@code String} of arguments in the context of the ImportCommand
-     * and returns an ImportCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-
-    public ImportCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
-        }
-        return new ImportCommand(trimmedArgs);
-    }
-}
-```
-###### /java/seedu/room/logic/parser/RemoveTagParser.java
-``` java
-/**
- * Parses input arguments and creates a new RemoveTagCommand object
- */
-public class RemoveTagParser implements Parser<RemoveTagCommand> {
-    /**
-     * Parses the given {@code String} of arguments in the context of the RemoveTagCommand
-     * and returns an RemoveTagCommand object for execution.
-     *
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public RemoveTagCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
-        }
-        return new RemoveTagCommand(trimmedArgs);
-    }
-}
-```
-###### /java/seedu/room/logic/commands/BackupCommand.java
+###### \java\seedu\room\logic\commands\BackupCommand.java
 ``` java
 /**
  * Create backup copy of resident book.
@@ -98,7 +26,7 @@ public class BackupCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/room/logic/commands/ImportCommand.java
+###### \java\seedu\room\logic\commands\ImportCommand.java
 ``` java
 /**
  * Import contacts from xml file.
@@ -165,7 +93,7 @@ public class ImportCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/room/logic/commands/RemoveTagCommand.java
+###### \java\seedu\room\logic\commands\RemoveTagCommand.java
 ``` java
 /**
  * Removes a tag that is shared by a group of contacts.
@@ -267,69 +195,154 @@ public class RemoveTagCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/room/storage/StorageManager.java
+###### \java\seedu\room\logic\parser\ImportCommandParser.java
 ``` java
-    @Override
-    public void backupResidentBook(ReadOnlyResidentBook residentBook) throws IOException {
-        saveResidentBook(residentBook, residentBookStorage.getResidentBookFilePath() + "-backup.xml");
-    }
+/**
+ * Parses input arguments and creates a new ImportCommand object
+ */
+public class ImportCommandParser implements Parser<ImportCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the ImportCommand
+     * and returns an ImportCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
 
-    public Optional<ReadOnlyResidentBook> readBackupResidentBook() throws DataConversionException, IOException {
-        return readResidentBook(residentBookStorage.getResidentBookFilePath() + "-backup.xml");
-    }
-
-
-    // ================ EventBook methods ==============================
-
-    @Override
-    public String getEventBookFilePath() {
-        return eventBookStorage.getEventBookFilePath();
-    }
-
-    @Override
-    public Optional<ReadOnlyEventBook> readEventBook() throws DataConversionException, IOException {
-        return readEventBook(eventBookStorage.getEventBookFilePath());
-    }
-
-    @Override
-    public Optional<ReadOnlyEventBook> readEventBook(String filePath)
-            throws DataConversionException, IOException {
-        logger.fine("Attempting to read data from file: " + filePath);
-        return eventBookStorage.readEventBook(filePath);
-    }
-
-    @Override
-    public void saveEventBook(ReadOnlyEventBook residentBook) throws IOException {
-        saveEventBook(residentBook, eventBookStorage.getEventBookFilePath());
-    }
-
-    @Override
-    public void saveEventBook(ReadOnlyEventBook residentBook, String filePath) throws IOException {
-        logger.fine("Attempting to write to data file: " + filePath);
-        eventBookStorage.saveEventBook(residentBook, filePath);
-    }
-
-    @Override
-    @Subscribe
-    public void handleEventBookChangedEvent(EventBookChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
-        try {
-            saveEventBook(event.data);
-        } catch (IOException e) {
-            raise(new DataSavingExceptionEvent(e));
+    public ImportCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
         }
-    }
-    @Override
-    public void backupEventBook(ReadOnlyEventBook residentBook) throws IOException {
-        saveEventBook(residentBook, eventBookStorage.getEventBookFilePath() + "-backup.xml");
-    }
-
-    public Optional<ReadOnlyEventBook> readBackupEventBook() throws DataConversionException, IOException {
-        return readEventBook(eventBookStorage.getEventBookFilePath() + "-backup.xml");
+        return new ImportCommand(trimmedArgs);
     }
 }
 ```
-###### /java/seedu/room/storage/XmlResidentBookStorage.java
+###### \java\seedu\room\logic\parser\RemoveTagParser.java
+``` java
+/**
+ * Parses input arguments and creates a new RemoveTagCommand object
+ */
+public class RemoveTagParser implements Parser<RemoveTagCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the RemoveTagCommand
+     * and returns an RemoveTagCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public RemoveTagCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+        }
+        return new RemoveTagCommand(trimmedArgs);
+    }
+}
+```
+###### \java\seedu\room\MainApp.java
+``` java
+    public static Storage getBackup() {
+        return backup;
+    }
+```
+###### \java\seedu\room\storage\StorageManager.java
+``` java
+    @Override
+    public void backupResidentBook(ReadOnlyResidentBook residentBook) throws IOException {
+        saveResidentBook(residentBook, getDirAbsolutePath() + "/backup.xml");
+        backupImages();
+    }
+
+    public Optional<ReadOnlyResidentBook> readBackupResidentBook() throws DataConversionException, IOException {
+        return readResidentBook(getDirAbsolutePath() + "/backup.xml");
+    }
+
+    /**
+     * Get the absolute parent path of residentbook.xml
+     *
+     * @return absolute path of the residentbook.xml directory
+     */
+    private String getDirAbsolutePath() {
+        File file = new File(residentBookStorage.getResidentBookFilePath());
+        String absPath = file.getParent();
+
+        return absPath;
+    }
+
+    /**
+     * Stores the contact images into a backup folder
+     *
+     * @throws IOException if unable to read or write in the folder
+     */
+    private void backupImages() throws IOException {
+        String backupFolder = getDirAbsolutePath() + File.separator + Picture.FOLDER_NAME + "_backup";
+        String originalFolder = getDirAbsolutePath() + File.separator + Picture.FOLDER_NAME;
+
+        handleImageBackupFolder(backupFolder);
+        handleImagesBackupFiles(backupFolder, originalFolder);
+
+    }
+
+    /**
+     * Copies each file from source to destination backup folder
+     *
+     * @param backupFolder cannot be null
+     * @param originalFolder cannot be null
+     * @throws IOException if there is any problem writing to the file
+     */
+    private void handleImagesBackupFiles(String backupFolder, String originalFolder) throws IOException {
+        File source = new File(originalFolder);
+        File[] listOfImages = source.listFiles();
+
+        for (int i = 0; i < listOfImages.length; i++) {
+            File dest = new File(backupFolder + File.separator + listOfImages[i].getName());
+            copy(listOfImages[i], dest);
+        }
+    }
+
+    /**
+     * Creates the image backup folder if it does not exist
+     *
+     * @param backupFolder cannot be empty or null
+     * @throws IOException if folder cannot be created due to read or write access
+     */
+    private void handleImageBackupFolder(String backupFolder) throws IOException {
+        boolean backupExist = new File(backupFolder).exists();
+
+        if (!backupExist) {
+            boolean isSuccess = (new File(backupFolder)).mkdirs();
+            if (!isSuccess) {
+                throw new IOException();
+            }
+        }
+    }
+
+    /**
+     * Copies the file from source to destination
+     *
+     * @param source cannot be null
+     * @param dest   cannot be null
+     * @throws IOException if there is any problem writing to the file
+     */
+    public static void copy(File source, File dest) throws IOException {
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            is = new FileInputStream(source);
+            os = new FileOutputStream(dest);
+            byte[] buf = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = is.read(buf)) > 0) {
+                os.write(buf, 0, bytesRead);
+            }
+        } finally {
+            is.close();
+            os.close();
+        }
+    }
+
+```
+###### \java\seedu\room\storage\XmlResidentBookStorage.java
 ``` java
     @Override
     public void backupResidentBook(ReadOnlyResidentBook residentBook) throws IOException {
@@ -338,9 +351,31 @@ public class RemoveTagCommand extends UndoableCommand {
 
 }
 ```
-###### /java/seedu/room/MainApp.java
+###### \java\seedu\room\ui\MainWindow.java
 ``` java
-    public static Storage getBackup() {
-        return backup;
+    /**
+     * Handles import and allows user to choose file
+     */
+    @FXML
+    public void handleImport() {
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(null);
+        String filePath = file.getAbsolutePath();
+        System.out.println(filePath);
+
+        if (file != null) {
+            try {
+                CommandResult commandResult = logic.execute(ImportCommand.COMMAND_WORD + " " + filePath);
+                logger.info("Result: " + commandResult.feedbackToUser);
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            } catch (CommandException e) {
+                logger.info("Invalid command: " + ImportCommand.MESSAGE_ERROR);
+                raise(new NewResultAvailableEvent(e.getMessage()));
+            } catch (ParseException e) {
+                logger.info("Invalid command: " + ImportCommand.MESSAGE_ERROR);
+                raise(new NewResultAvailableEvent(e.getMessage()));
+            }
+        }
     }
+
 ```
