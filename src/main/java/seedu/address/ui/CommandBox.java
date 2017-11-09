@@ -33,6 +33,9 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private TextField commandTextField;
 
+    private ArrayList<String> prevText = new ArrayList<String>();
+
+
     //@@author hansiang93
     public CommandBox(Logic logic) {
         super(FXML);
@@ -40,8 +43,9 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
-        ArrayList<String> suggestions = AutoCompleteSuggestions.getSuggestionList();
-        TextFields.bindAutoCompletion(commandTextField, suggestions);
+        TextFields.bindAutoCompletion(commandTextField,
+                AutoCompleteSuggestions.getSuggestionList())
+                .setMinWidth(450);
     }
     //@@author
 
@@ -55,12 +59,23 @@ public class CommandBox extends UiPart<Region> {
             // As up and down buttons will alter the position of the caret,
             // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
-
             navigateToPreviousInput();
             break;
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
+            break;
+        case LEFT:
+            keyEvent.consume();
+            prevText.add(commandTextField.getText());
+            commandTextField.setText("");
+            break;
+        case RIGHT:
+            keyEvent.consume();
+            if (!prevText.isEmpty()) {
+                int lastIndex = prevText.size() - 1;
+                commandTextField.setText(prevText.remove(lastIndex));
+            }
             break;
         default:
             // let JavaFx handle the keypress
