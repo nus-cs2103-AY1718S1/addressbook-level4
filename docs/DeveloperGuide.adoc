@@ -752,7 +752,6 @@ The model component will handle the actual deletion operations. To support this,
 
 See the sequence diagram below to better understand the full range of interactions involved. +
 
-
 image::SDforBatchDeleteModel.png[width="800"]
     Figure 24: Sequence diagram for a batch myTag command in the Model component
 
@@ -770,7 +769,14 @@ This is justification for the "bureaucracy" between objects in the components.
 *Future enhancements*
 
 We would like to include more batch operations beyond deletion. For example, editing tags, remarks, and other contact attributes by batch.
-A general function call between the logic and model components ought to be created. This could serve all batch operations (e.g. batch edit, batch tagging, etc.), depending on its arguments.
+A general function call between the logic and model components ought to be created. This could serve all batch operations (e.g. batch edit, batch tagging, etc.), depending on its arguments. +
+
+If you would like to implement such a feature, please do so by adding additional paramters to the BatchCommand as such: +
+
+ BatchCommand(TypeOfBatchCommand type, Set<Tag> tagsToDelete)
+
+This is for reasons of structural elegance - we would like the "type of batch command" to be easily extendable. +
+
 // end::batch[]
 
 // tag::dups[]
@@ -810,6 +816,8 @@ At the moment, persons are considered potential duplicates if they share the sam
 *Future enhancements*
 
 We would like to include a sync feature with a user's online accounts (e.g. Facebook, iCloud) that could increase the ability of MedNus to resolve duplicates on the user's behalf.
+If you would like to implement such a feature, please contact the core team before starting out. We would like to know in advance how such an enhancement would impact the architecture of MedNus. +
+
 // end::dups[]
 
 // tag::copy[]
