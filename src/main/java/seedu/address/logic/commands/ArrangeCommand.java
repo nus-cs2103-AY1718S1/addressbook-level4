@@ -47,6 +47,21 @@ public class ArrangeCommand extends Command {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
         }
+        String toShow = scheduleInfo();
+        return new CommandResult(String.format(MESSAGE_ARRANGE_PERSON_SUCCESS) + toShow);
+
+    }
+
+    public int[] getSortedZeroBasedIndex() {
+        int[] thisIndexList = new int[listOfIndex.length];
+        for (int i = 0; i < listOfIndex.length; i++) {
+            thisIndexList[i] = listOfIndex[i].getZeroBased();
+        }
+        Arrays.sort(thisIndexList);
+        return thisIndexList;
+    }
+
+    public String scheduleInfo() {
         TreeSet<Integer>[] timeSetArray = Schedule.splitScheduleToDays(model.generateMeetingTime(listOfIndex));
         String toShow = "\nAll common free time: \n";
         for (int i = 0; i < timeSetArray.length; i++) {
@@ -57,21 +72,8 @@ public class ArrangeCommand extends Command {
             }
             toShow += "\n";
         }
-        return new CommandResult(String.format(MESSAGE_ARRANGE_PERSON_SUCCESS) + toShow);
-
+        return toShow;
     }
-
-    public int[] getSortedZeroBasedIndex(){
-        int[] thisIndexList = new int[listOfIndex.length];
-        for (int i = 0; i < listOfIndex.length; i++) {
-            thisIndexList[i] = listOfIndex[i].getZeroBased();
-        }
-        Arrays.sort(thisIndexList);
-        int[] a = {1,2};
-        int[] b = {1,2};
-        return thisIndexList;
-    }
-
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
