@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -21,6 +22,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ShareCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UpdateUserCommand;
@@ -65,7 +67,11 @@ public class AddressBookParser {
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
             return new SelectCommandParser().parse(arguments);
-
+        //@@author zhoukai07
+        case ChangeThemeCommand.COMMAND_WORD:
+        case ChangeThemeCommand.COMMAND_ALIAS:
+            return new ChangeThemeCommandParser().parse(arguments);
+        //@@author
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
@@ -124,6 +130,10 @@ public class AddressBookParser {
         case UpdateUserCommand.COMMAND_WORD:
         case UpdateUserCommand.COMMAND_ALIAS:
             return new UpdateUserCommandParser().parse(arguments);
+
+        case ShareCommand.COMMAND_WORD:
+        case ShareCommand.COMMAND_ALIAS:
+            return new ShareCommand();
 
         //@@author hansiang93
         case WebCommand.COMMAND_WORD:

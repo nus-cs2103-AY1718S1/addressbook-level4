@@ -9,11 +9,13 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.input.Clipboard;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
+import seedu.address.commons.events.ui.CopyToClipboardRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
@@ -53,6 +55,9 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
+    //@@author bladerail
+    protected Clipboard clipboard;
+    //@@author
 
 
     @Override
@@ -241,6 +246,10 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
+
+        //@@author bladerail
+        this.clipboard = Clipboard.getSystemClipboard();
+        //@@author
         ui.start(primaryStage);
     }
 
@@ -265,6 +274,14 @@ public class MainApp extends Application {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.stop();
     }
+
+    //@@author bladerail
+    @Subscribe
+    public void handleCopyToClipboardRequestEvent (CopyToClipboardRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        clipboard.setContent(event.getToCopy());
+    }
+    //@@author
 
     public static void main(String[] args) {
         launch(args);

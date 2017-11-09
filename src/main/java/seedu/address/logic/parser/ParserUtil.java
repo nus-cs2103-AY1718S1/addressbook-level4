@@ -48,6 +48,19 @@ public class ParserUtil {
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
+    /**
+     * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     *
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static int parseTheme(String oneBasedIndex) throws IllegalValueException {
+        String trimmedIndex = oneBasedIndex.trim();
+        if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+        }
+        return Integer.parseInt(trimmedIndex);
+    }
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
@@ -115,12 +128,12 @@ public class ParserUtil {
     public static Set<WebLink> parseWebLink(Collection<String> webLinks) throws IllegalValueException {
         requireNonNull(webLinks);
         final Set<WebLink> webLinkSet = new HashSet<>();
-        for (String webLinkName : webLinks) {
-            if (checkRepeatedWebLinkInCategory(webLinkSet, webLinkName)) {
-                webLinkSet.add(new WebLink(webLinkName));
+        for (String inputWebLinkString : webLinks) {
+            if (checkRepeatedWebLinkInCategory(webLinkSet, inputWebLinkString)) {
+                webLinkSet.add(new WebLink(inputWebLinkString));
             } else {
                 throw new IllegalValueException("Only one link per category: facebook ,"
-                        + "instagram, twitter or linkedin.");
+                        + "instagram or twitter");
             }
         }
         return webLinkSet;
@@ -129,17 +142,19 @@ public class ParserUtil {
     /**
      * Checks whether webLinkSet to be passed contains weblinks from the same category.
      */
-    public static boolean checkRepeatedWebLinkInCategory (Set<WebLink> webLinkSet, String inputWebLink)
+    public static boolean checkRepeatedWebLinkInCategory (Set<WebLink> webLinkSet, String inputWebLinkString)
             throws IllegalValueException {
         boolean duplicateCheck = TRUE;
+        WebLink inputWebLink = new WebLink(inputWebLinkString);
+        String inputWebLinkTag = inputWebLink.toStringWebLinkTag();
         if (webLinkSet.isEmpty()) {
             return duplicateCheck;
         } else {
 
             for (Iterator<WebLink> iterateInternalList = webLinkSet.iterator(); iterateInternalList.hasNext(); ) {
-                WebLink checkWebLink = iterateInternalList.next();
-                String checkWebLinkTag = checkWebLink.toStringWebLinkTag();
-                if (inputWebLink.contains(checkWebLinkTag)) {
+                WebLink webLinkForChecking = iterateInternalList.next();
+                String webLinkTagForChecking = webLinkForChecking.toStringWebLinkTag();
+                if (inputWebLinkTag.equals(webLinkTagForChecking)) {
                     duplicateCheck = FALSE;
                     break;
                 }

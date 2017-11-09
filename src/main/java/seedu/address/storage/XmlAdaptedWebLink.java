@@ -26,7 +26,7 @@ public class XmlAdaptedWebLink {
      * @param source future changes to this will not affect the created
      */
     public XmlAdaptedWebLink(WebLink source) {
-        webLinkInput = source.webLinkInput;
+        webLinkInput = source.toStringWebLink();
     }
 
     /**
