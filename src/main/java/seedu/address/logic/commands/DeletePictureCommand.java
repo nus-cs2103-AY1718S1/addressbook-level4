@@ -46,4 +46,13 @@ public class DeletePictureCommand extends UndoableCommand {
 
         return new CommandResult(currentList + String.format(messageToDisplay, personToUpdate.getName()));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DeletePictureCommand // instanceof handles nulls
+                && ((this.targetIndex == null
+                && ((DeletePictureCommand) other).targetIndex == null) // both targetIndex null
+                || this.targetIndex.equals(((DeletePictureCommand) other).targetIndex))); // state check
+    }
 }
