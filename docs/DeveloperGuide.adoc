@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -488,6 +488,7 @@ Alternative considered is to allow user input multiple details in each search. I
 * There will be no results returned in this scenario as input phone number does not match the phone number in the `Contact 1` although the name matches exactly.
 
 From the two scenarios, we know that unless the user knows the exact details (i.e. full name, exact phone number, exact email and etc) otherwise `finds` command with multiple details input is practically not useful as no results will be returned.
+//end::finds[]
 
 // tag::gmap[]
 === Google Map Mechanism
