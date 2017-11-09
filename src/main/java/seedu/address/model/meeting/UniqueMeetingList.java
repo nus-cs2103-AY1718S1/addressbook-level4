@@ -17,6 +17,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
 import seedu.address.model.meeting.exceptions.MeetingClashException;
 import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
+import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author nelsonqyj
 /**
@@ -154,6 +155,22 @@ public class UniqueMeetingList implements Iterable<Meeting> {
 
         internalMeetingList.set(index, new Meeting(editedMeeting));
         sort(internalMeetingList);
+    }
+
+
+    /**
+     * To remove pre-edited person and add in the newly edited person
+     * @param target
+     * @param toAdd
+     */
+    public void editPerson(ReadOnlyPerson target, ReadOnlyPerson toAdd) {
+        requireNonNull(toAdd);
+        internalMeetingList.forEach(meeting -> {
+            if (meeting.getPersonsMeet().contains(target)) {
+                meeting.getPersonsMeet().remove(target);
+                meeting.getPersonsMeet().add(toAdd);
+            }
+        });
     }
 
     //@@author nelsonqyj

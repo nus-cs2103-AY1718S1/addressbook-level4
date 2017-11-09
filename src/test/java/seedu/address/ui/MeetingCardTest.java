@@ -15,6 +15,7 @@ import seedu.address.testutil.MeetingBuilder;
 //@@author Melvin-leo
 public class MeetingCardTest extends GuiUnitTest {
 
+
     @Test
     public void display() {
         // no tags

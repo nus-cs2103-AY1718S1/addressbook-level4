@@ -158,6 +158,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, editedPerson);
+        editPersonOfMeeting(target, editedPerson);
+    }
+    public void editPersonOfMeeting(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson) {
+        meetings.editPerson(target, editedReadOnlyPerson);
     }
 
     /**

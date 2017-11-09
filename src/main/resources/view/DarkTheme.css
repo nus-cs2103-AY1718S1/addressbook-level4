@@ -102,12 +102,17 @@
     -fx-padding: 0;
     -fx-background-color: derive(#3d4691, 20%);
 }
+#listViewCard, #listViewCard .list-cell{
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+}
 
 .list-cell {
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap : 0;
     -fx-padding: 0 0 0 0;
-    -fx-background-color: derive(#3d4691, 20%)
+    -fx-background-color: derive(#3d4691, 20%);
 }
 
 .list-cell:filled:even {
