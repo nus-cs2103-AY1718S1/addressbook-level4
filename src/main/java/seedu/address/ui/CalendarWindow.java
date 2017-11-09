@@ -16,7 +16,6 @@ import com.calendarfx.view.CalendarView;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
-import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 
 import javafx.fxml.FXML;
