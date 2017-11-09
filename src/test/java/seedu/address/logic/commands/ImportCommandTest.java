@@ -5,7 +5,6 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -31,6 +30,9 @@ public class ImportCommandTest {
         storage = new TypicalStorage().setUp();
     }
 
+    /**
+     * test if corrupted file will fail import
+     */
     @Ignore
     public void execute_importCorruptedFile_fails() {
         importCommand = new ImportCommand("src\\test\\resources\\data\\testCorruptedFile.xml");
