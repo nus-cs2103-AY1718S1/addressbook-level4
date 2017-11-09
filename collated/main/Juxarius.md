@@ -25,6 +25,20 @@ public class InsuranceClickedEvent extends BaseEvent {
 }
 
 ```
+###### \java\seedu\address\commons\events\ui\JumpToListRequestEvent.java
+``` java
+    public final PanelChoice panelChoice;
+
+    public JumpToListRequestEvent(Index targetIndex) {
+        this.targetIndex = targetIndex.getZeroBased();
+        this.panelChoice = PanelChoice.PERSON;
+    }
+
+    public JumpToListRequestEvent(Index targetIndex, PanelChoice panelChoice) {
+        this.targetIndex = targetIndex.getZeroBased();
+        this.panelChoice = panelChoice;
+    }
+```
 ###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
     /**
@@ -69,6 +83,37 @@ public class InsuranceClickedEvent extends BaseEvent {
         public Optional<Set<Tag>> getTagsToDel() {
             return Optional.ofNullable(tagsToDel);
         }
+```
+###### \java\seedu\address\logic\commands\SelectCommand.java
+``` java
+    public SelectCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+        this.panelChoice = PanelChoice.PERSON;
+    }
+
+    public SelectCommand(Index targetIndex, PanelChoice panelChoice) {
+        this.targetIndex = targetIndex;
+        this.panelChoice = panelChoice;
+    }
+
+
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyInsurance> insuranceList = model.getInsuranceList();
+
+        if (panelChoice == PanelChoice.PERSON && targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        } else if (panelChoice == PanelChoice.INSURANCE && targetIndex.getZeroBased() >= insuranceList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_INSURANCE_DISPLAYED_INDEX);
+        }
+
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex, panelChoice));
+        return new CommandResult(String.format(
+                panelChoice == PanelChoice.PERSON ? MESSAGE_SELECT_PERSON_SUCCESS : MESSAGE_SELECT_INSURANCE_SUCCESS,
+                targetIndex.getOneBased()));
+    }
 ```
 ###### \java\seedu\address\logic\LogicManager.java
 ``` java
@@ -528,6 +573,55 @@ public class EmptyFieldException extends ParseException {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\ParserUtil.java
+``` java
+
+    /**
+     * @param input String which indicates the user's choice of panel
+     * @return PanelChoice enumerator to indicate to the program the user's choice
+     * @throws IllegalValueException
+     */
+    public static PanelChoice parsePanelChoice(String input) throws IllegalValueException {
+        if (Arrays.stream(SELECT_ARGS_INSURANCE).anyMatch(key -> key.equals(input))) {
+            return PanelChoice.INSURANCE;
+        } else if (Arrays.stream(SELECT_ARGS_PERSON).anyMatch(key -> key.equals(input))) {
+            return PanelChoice.PERSON;
+        } else {
+            throw new IllegalValueException("Invalid panel choice");
+        }
+    }
+```
+###### \java\seedu\address\logic\parser\SelectCommandParser.java
+``` java
+    /**
+     * Parses the given {@code String} of arguments in the context of the SelectCommand
+     * and returns an SelectCommand object for execution.
+     * Complicated code is due to the intention of giving the user the freedom to place arguments in any format
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public SelectCommand parse(String args) throws ParseException {
+        try {
+            String[] inputs = args.split("\\s");
+            String indexString = Arrays.stream(inputs).filter(s -> s.matches("\\d+"))
+                    .findFirst().orElseThrow(() -> new IllegalValueException("No index found!"));
+            Optional<String> panelString = Arrays.stream(inputs).filter(s -> s.matches("\\p{Alpha}+")).findFirst();
+            SelectCommand.PanelChoice panelChoice;
+            if (inputs.length < 2) {
+                throw new IllegalValueException("Too little input arguments!");
+            } else if (inputs.length > 2 && panelString.isPresent()) {
+                panelChoice = ParserUtil.parsePanelChoice(panelString.get().toLowerCase());
+            } else {
+                panelChoice = SelectCommand.PanelChoice.PERSON;
+            }
+            Index index = ParserUtil.parseIndex(indexString);
+            return new SelectCommand(index, panelChoice);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
@@ -643,11 +737,29 @@ public class EmptyFieldException extends ParseException {
         insuranceListView.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+     */
+    private void scrollTo(int index) {
+        Platform.runLater(() -> {
+            insuranceListView.scrollTo(index);
+            insuranceListView.getSelectionModel().clearAndSelect(index);
+        });
+    }
+
+    @Subscribe
+    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+        if (event.panelChoice == PanelChoice.INSURANCE) {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            scrollTo(event.targetIndex);
+        }
+    }
     @Subscribe
     private void handleInsuranceClickedEvent(InsuranceClickedEvent event) {
         ObservableList<InsuranceProfile> insurances = insuranceListView.getItems();
         for (int i = 0; i < insurances.size(); i++) {
             if (insurances.get(i).getInsurance().getInsuranceName().equals(event.getInsurance().getInsuranceName())) {
+                insuranceListView.scrollTo(i);
                 insuranceListView.getSelectionModel().select(i);
                 break;
             }
@@ -755,6 +867,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         if (filtered.size() < 1) {
             return;
         } else {
+            personListView.scrollTo(filtered.get(0));
             personListView.getSelectionModel().select(filtered.get(0));
         }
     }
