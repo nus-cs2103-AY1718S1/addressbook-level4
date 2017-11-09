@@ -808,7 +808,7 @@ At the moment, persons are considered potential duplicates if they share the sam
 
 *Future enhancements*
 
-We would like to include a sync feature with a user's online accounts (e.g. Facebook, iCloud) that would increase the ability of MedNus to resolve duplicates on the user's behalf.
+We would like to include a sync feature with a user's online accounts (e.g. Facebook, iCloud) that could increase the ability of MedNus to resolve duplicates on the user's behalf.
 // end::dups[]
 
 == Documentation
