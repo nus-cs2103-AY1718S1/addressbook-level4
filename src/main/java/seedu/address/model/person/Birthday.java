@@ -21,7 +21,6 @@ public class Birthday {
 
     /**
      * Validates given birthday.
-     *
      * @throws IllegalValueException if given birthday string is invalid.
      */
     public Birthday(String birthday) throws IllegalValueException {
