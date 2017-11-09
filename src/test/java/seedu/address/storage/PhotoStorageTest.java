@@ -60,8 +60,8 @@ public class PhotoStorageTest {
     @Test
     public void checkExtension() {
         String filePathJpg = "C:/Users/pigir/Desktop/images/saltbae.jpg";
-        String extJPG = ExtensionCheckerUtil.getExtension(filePathJpg);
-        assertTrue(ExtensionCheckerUtil.isOfType(extJPG, allowedExt));
+        String extJpg = ExtensionCheckerUtil.getExtension(filePathJpg);
+        assertTrue(ExtensionCheckerUtil.isOfType(extJpg, allowedExt));
 
         String filePathGif = "C:/Users/pigir/Desktop/images/saltbae.gif";
         String extGif = ExtensionCheckerUtil.getExtension(filePathGif);
