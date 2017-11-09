@@ -3,12 +3,16 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.Exceptions.DuplicateMeetingException;
+import seedu.address.model.exceptions.DuplicateMeetingException;
 //@@author liuhang0213
 /**
  * A list of meetings that enforces no nulls and uniqueness between its elements.
@@ -109,13 +113,13 @@ public class UniqueMeetingList implements Iterable<ReadOnlyMeeting>, ReadOnlyMee
      * Sorts the meeting by date. For retrieving earliest meeting in the list
      */
     public void sortByDate() {
-        internalList.sort(new dateTimeComparator());
+        internalList.sort(new DateTimeComparator());
     }
 
     /**
      * Comparator that compares date time to sort meetings
      */
-    public class dateTimeComparator implements Comparator<ReadOnlyMeeting> {
+    public class DateTimeComparator implements Comparator<ReadOnlyMeeting> {
         /**
          * Custom comparator to compare meetings based on chronological order
          * @param rom1 ReadOnlyMeeting 1

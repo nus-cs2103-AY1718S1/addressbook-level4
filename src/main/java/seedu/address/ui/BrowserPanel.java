@@ -86,7 +86,7 @@ public class BrowserPanel extends UiPart<Region> {
      * Loads pages based on choose command selection
      */
     private void loadLinkedIn() throws CommandException {
-        if(personSelected == null) {
+        if (personSelected == null) {
             throw new CommandException("Please select a person");
         }
         hasLinkedinBeenChosen = true;
@@ -113,9 +113,13 @@ public class BrowserPanel extends UiPart<Region> {
     /**
      * Setter method to set the Boolean value of hasLinkedinBeenChosen
      */
-    public void setLinkedinChosenTrue () { hasLinkedinBeenChosen = true; }
+    public void setLinkedinChosenTrue () {
+        hasLinkedinBeenChosen = true;
+    }
 
-    public void setLinkedinChosenFalse () { hasLinkedinBeenChosen = false; }
+    public void setLinkedinChosenFalse () {
+        hasLinkedinBeenChosen = false;
+    }
     //@@author
 
     /**
@@ -136,9 +140,9 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleBrowserPanelSelectionChangedEvent(BrowserPanelSelectionChangedEvent event)
             throws CommandException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if(event.getBrowserSelection().equals("linkedin"))
+        if (event.getBrowserSelection().equals("linkedin")) {
             loadLinkedIn();
-        else if(event.getBrowserSelection().equals("google")) {
+        } else if (event.getBrowserSelection().equals("google")) {
             hasLinkedinBeenChosen = false;
             loadPersonPage(personSelected);
         }

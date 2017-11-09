@@ -66,7 +66,9 @@ public class Meeting implements ReadOnlyMeeting {
         return dateTime.toString();
     }
 
-    public LocalDateTime getDateTime() {return dateTime;}
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
 
     public String getLocation() {
         return location;

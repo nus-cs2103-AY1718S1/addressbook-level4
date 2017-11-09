@@ -1,17 +1,18 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.exceptions.IllegalValueException;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
+
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Exceptions.DuplicateMeetingException;
-import seedu.address.model.Exceptions.IllegalIdException;
+import seedu.address.model.exceptions.DuplicateMeetingException;
+import seedu.address.model.exceptions.IllegalIdException;
 import seedu.address.model.Meeting;
 import seedu.address.model.ReadOnlyMeeting;
-import seedu.address.model.UniqueMeetingList;
 
-import java.time.format.DateTimeParseException;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.*;
 //@@author Sri-vatsa
 /**
  * Adds a new meeting to the address book.
@@ -51,7 +52,7 @@ public class AddMeetingCommand extends UndoableCommand {
 
     private final Meeting toAdd;
 
-    public AddMeetingCommand(ReadOnlyMeeting meeting) {toAdd = new Meeting(meeting);}
+    public AddMeetingCommand(ReadOnlyMeeting meeting) { toAdd = new Meeting(meeting); }
 
 
     @Override

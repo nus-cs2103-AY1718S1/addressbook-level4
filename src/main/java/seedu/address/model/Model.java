@@ -4,8 +4,8 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Exceptions.DuplicateMeetingException;
-import seedu.address.model.Exceptions.IllegalIdException;
+import seedu.address.model.exceptions.DuplicateMeetingException;
+import seedu.address.model.exceptions.IllegalIdException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;

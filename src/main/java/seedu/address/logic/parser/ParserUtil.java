@@ -5,13 +5,20 @@ import static java.util.Objects.requireNonNull;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.logic.parser.exceptions.IllegalDateTimeException;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.InternalId;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -134,7 +141,7 @@ public class ParserUtil {
             LocalDateTime localDateTime = LocalDateTime.parse(dateTime, formatter);
             return localDateTime;
         } catch (DateTimeParseException dtpe) {
-           throw new IllegalValueException("Please enter a date & time in the format dd/mm/yyyy & hhmm respectively!");
+            throw new IllegalValueException("Please enter a date & time in the format dd/mm/yyyy & hhmm respectively!");
         }
     }
 

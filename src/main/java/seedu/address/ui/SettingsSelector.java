@@ -16,7 +16,6 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BrowserPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToBrowserListRequestEvent;
-import seedu.address.ui.BrowserPanel;
 
 //@@author fongwz
 /**

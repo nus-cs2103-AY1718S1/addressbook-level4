@@ -1,18 +1,23 @@
 package seedu.address.logic.parser;
 
+import java.time.LocalDateTime;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
+
+import java.util.ArrayList;
+import java.util.stream.Stream;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddMeetingCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Meeting;
 import seedu.address.model.ReadOnlyMeeting;
-import seedu.address.model.person.*;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.stream.Stream;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
+import seedu.address.model.person.InternalId;
 
 //@@author Sri-vatsa
 /**
@@ -45,7 +50,7 @@ public class AddMeetingCommandParser implements Parser<AddMeetingCommand>  {
 
             ReadOnlyMeeting meeting = new Meeting(localDateTime, location, notes, idList);
 
-           return new AddMeetingCommand(meeting);
+            return new AddMeetingCommand(meeting);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

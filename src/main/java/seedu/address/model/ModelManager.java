@@ -19,8 +19,8 @@ import seedu.address.commons.events.model.MeetingListChangedEvent;
 import seedu.address.commons.events.model.PersonChangedEvent;
 import seedu.address.commons.events.ui.MapPersonEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Exceptions.DuplicateMeetingException;
-import seedu.address.model.Exceptions.IllegalIdException;
+import seedu.address.model.exceptions.DuplicateMeetingException;
+import seedu.address.model.exceptions.IllegalIdException;
 import seedu.address.model.person.InternalId;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -138,6 +138,13 @@ public class ModelManager extends ComponentManager implements Model {
         return hasOneOrMoreDeletion;
     }
     //@@author Sri-vatsa
+
+    /***
+     * Adds a meeting to the Unique meeting list
+     * @param meeting
+     * @throws DuplicateMeetingException
+     * @throws IllegalIdException
+     */
     public synchronized void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException {
         boolean isIdValid;
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -146,11 +153,11 @@ public class ModelManager extends ComponentManager implements Model {
         for (InternalId id: meeting.getListOfPersonsId()) {
             isIdValid = false;
             for (ReadOnlyPerson person:filteredPersons) {
-                if(person.getInternalId().equals(id)){
+                if (person.getInternalId().equals(id)) {
                     isIdValid = true;
                 }
             }
-            if(!isIdValid) {
+            if (!isIdValid) {
                 throw new IllegalIdException("Please input a valid person id");
             }
         }

@@ -1,10 +1,9 @@
 package seedu.address.model;
 
-import seedu.address.model.person.InternalId;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import seedu.address.model.person.InternalId;
 
 /**
  * A read-only immutable interface for a Meeting in the addressbook.
