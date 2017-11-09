@@ -68,7 +68,8 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/08/08/2008 pt/BetsyC.png t/criminal`
 * `add n/Test Name t/colleague e/testname@example.com a/Test road p/323234 b/12/09/2010`
 
-=== Listing all persons : `list`
+// tag::list[]
+=== Listing persons : `list`
 
 Shows a list of all persons in the address book. +
 If tags are supplied, then shows the list of all persons with that tag in the address book. The tags are case-sensitive. +
@@ -80,7 +81,7 @@ Examples:
 Shows the list of all persons in the address book
 * `list t/friends` +
 Shows the list of only those persons in the address book that are tagged as `friends`
-
+// end::list[]
 
 === Sorting all persons : `sort`
 
@@ -254,7 +255,7 @@ contact or loading new contacts from a pre-existing address book, +
 the user would be informed if some of the new contacts were having a birthday.
 // end::informBirthday[]
 
-// tag::lockaddressbook[]
+// tag::lockAddressbook[]
 === Setting password for the address book: `password`
 
 `Coming in v2.0` +
@@ -268,7 +269,7 @@ Example :
 * `password` +
 `mypassword` (sets the password to mypassword) +
 `mypassword` (you are also asked to confirm the password)
-//end::lockaddressbook[]
+// end::lockAddressbook[]
 
 === Clearing all entries : `clear`
 
