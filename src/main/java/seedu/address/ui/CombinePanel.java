@@ -190,7 +190,7 @@ public class CombinePanel extends UiPart<Region> {
             int startHourCol = getTime(timeText.substring(4, 6));
             int endHourSpan = getTime(timeText.substring(9, 11)) - startHourCol;
             boolean isAvailable = false;
-            if (isOccupy(weekDayRow, startHourCol, endHourSpan) == false) {
+            if (!isOccupy(weekDayRow, startHourCol, endHourSpan)) {
                 isAvailable = true;
             }
 

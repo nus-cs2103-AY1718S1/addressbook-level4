@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class ThemeUnitTest {
     @Test
-    public void test_setListingUnit() {
+    public void test_setThemeUnit() {
 
         // set current Theme unit to be Dark
         ThemeUnit.setCurrentThemeUnit(ThemeUnit.THEME_DARK_UNIT);
