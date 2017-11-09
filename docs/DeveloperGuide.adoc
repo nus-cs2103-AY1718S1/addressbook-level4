@@ -803,8 +803,8 @@ As you've noticed in the diagram, a new `Predicate` is defined as
 
  HasPotentialDuplicatesPredicate(ArrayList<Name> duplicateNames)
 
-This predicate is compared against contacts in the address book, so as to generate a list of potential duplicate contacts.
-At the moment, contacts are considered potential duplicates if they share the same name (case-insensitive) with any other contact in the address book.
+This predicate is compared against persons in the address book, so as to generate a list of potential duplicate persons.
+At the moment, persons are considered potential duplicates if they share the same name (case-insensitive) with any other person in the address book.
 
 *Future enhancements*
 
