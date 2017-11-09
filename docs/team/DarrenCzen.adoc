@@ -1,21 +1,39 @@
-= John Doe - Project Portfolio
+= Darren Chin Jhun Pyng - Project Portfolio
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Purpose
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+This project portfolio displays the contributions and enhancements made to the software, The Myth's Book,
+along with its justifications. The portfolio will first introduce The Myth's Book and subsequently talk
+about the enhancements and contributions made by Darren Chin.
 
-=== Enhancement Added: Undo/Redo
+== Project: The Myth's Book
+The Myth's Book is an address book dedicated for university students to store useful information such
+as websites, phone numbers and emails of the people around them for personal usage. The application helps students
+to keep track of birthday dates and upcoming events through a calendar and facilitate convenient access to their friend's website
+and even Google Maps location through the in-built browser panel in the application. Furthermore, there are many
+useful tools such as finding group tags (e.g. friends, neighbours) and switching themes for better user preference and usability.
+
+The Myth's Book is a `Command Line Input` based software which helps caters to students who are efficient and comfortable
+in typing out command line inputs to manipulate with information of their contacts in the address book.
+The Myth's Book is a software application that is coded in `Java` programming language.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/main/DarrenCzen.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/test/DarrenCzen.md[Test code]]
+
+---
+=== Enhancement Added: Sort Command, Sort Names Alphabetically
+
+Code on GitHub: +
+Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/46[#46]
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=sort]
 
 #End of Extract#
 
@@ -23,28 +41,199 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+The `Sort Command` enhances the organization of contact/person list of The Myth's Book by sorting the contacts based
+on their names alphabetically. Therefore, this allows users to be able to view and look through the overall contacts list in
+an orderly manner whenever needed which attributes to the factor of user-friendliness and user-readability.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=sort]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Added: Access Command, Accessing a website of a contact
 
-{Explain similar to the Undo/Redo feature above.}
+Code on GitHub: +
+Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/77[#77]
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=access]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The `Access Command` allows users to be able to access the website of a contact through the in-built browser panel which
+helps to facilitate ease of access for users. The command also helps users to avoid opening other programs and avoid switching
+between programs so as to facilitate user-friendliness and create an `all-in-one` platform in The Myth's Book.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=access]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Location Command, Locate an address of a user
+
+Code on GitHub: +
+Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/79[#79]
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=locate]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The `Location Command` allows users to be able to access the address of a contact through the in-built browser panel
+using Google Maps Search which helps to facilitate ease of access for users.
+The command also helps users to avoid opening other programs and avoid switching between programs so as to facilitate
+user-friendliness and create an `all-in-one` platform in The Myth's Book.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=locate]
+
+#End of Extract#
+
+---
+
+
+=== Enhancement: Add Command, Optional fields
+
+Code on GitHub: +
+Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/99[#99], https://github.com/CS2103AUG2017-T15-B3/main/pull/96[#96]
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The implementation of optional fields when adding a contact allows users to be able to add contacts with ease
+as it is not realistically possible for users to attain every information of a contact when adding a contact.
+The enhancement also helps to facilitate user-friendliness in using The Myth's Book.
+
+---
+
+=== Enhancement: Website field for Person Class
+
+Code on GitHub: +
+Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/57[#57]
+
+==== External behavior
+
+---
+
+---
+
+==== Justification
+
+The implementation of website field for a contact allows users to carry out activities
+of university students such as browsing a person's social network website in The Myth's Book.
+
+---
+
+=== Enhancement: Allow inputted names to become capitalized fully
+
+Code on GitHub: +
+Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/123/commits/cf57e5e78374ec3ee69125e8342ed27c9efa06da[#123]
+
+==== External behavior
+
+---
+
+---
+==== Justification
+
+The implementation of capitalizing names fully for a contact being added allows users to
+be able to view a sorted person list in a more orderly manner(alphabetically and lexicographically)
+in The Myth's Book.
+
+---
+
+=== Enhancement: Alias for basic commands
+
+Code on GitHub: +
+Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/34[#34]
+
+==== External behavior
+
+---
+
+---
+
+==== Justification
+
+The implementation of website field for a contact allows users to carry out activities
+of university students such as browsing a person's social network website in The Myth's Book.
+
+---
+
+=== Enhancement proposed: Toggling of Person List and Events List
+
+==== External behavior
+
+---
+
+---
+
+==== Justification
+
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Wrote introduction and about of The Myth's Book for User Guide and Developer Guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/91[#91])
+* Change structure of software's user guide and updated preface of most sections in user guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/123[#123])
+* Added prefix table for Add Command in user guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/123[#123])
+* Updated software's user guide to be more user friendly and user focused. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/134[#134])
+* Updated software's developer guide to showcase more user stories. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/35[#35], https://github.com/CS2103AUG2017-T15-B3/main/pull/53[#53])
+* Wrote additional tests to test hashcode of person's attributes to increase test coverage (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/96[#96])
 
-== Project: PowerPointLabs
+==== Contribution to Acceptance Testing: HitMeUp (CS2103AUG2017-W14-B3)
 
-{Optionally (not graded), you may include other projects in your portfolio.}
+*Suggestion/Bug Finding contributed*:
+
+1. Provided suggestion for sort command to be non case-sensitive.
+(Issue #114 - https://github.com/CS2103AUG2017-W14-B3/main/issues/114[Suggestion - sort])
+
+2. Provided suggestion for select command to show a user's twitter/instagram instead of google search.
+(Issue #109 - https://github.com/CS2103AUG2017-W14-B3/main/issues/109[Suggestion for select function])
+
+3. Provided suggestion for user guide to show better user guidance for email command.
+(Issue #106 - https://github.com/CS2103AUG2017-W14-B3/main/issues/106[Suggestion - user guide for email function ])
+
+4. Provided suggestion/bug fix for birthday inputted to account for leap year so that all contacts can have their birthday properly accounted for.
+(Issue #105 - https://github.com/CS2103AUG2017-W14-B3/main/issues/105[Bug for Birthday])

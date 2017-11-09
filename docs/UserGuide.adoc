@@ -86,6 +86,7 @@ This command helps to display the user guide in pop-up window format inside the 
 
 Format: `help` +
 
+// tag::add[]
 === Adding a person: `add`
 
 The `add` command helps you to add a person to The Myth's Book. +
@@ -129,16 +130,21 @@ Website should follow this format `https://www.anyName.com/anyContent` where bot
 You must have `https://www.` and a domain name like `.com` or `.net` in the inputted website or it will result in inputted format error. +
 Birthday should be in proper format of "dd/mm/yyyy" where all numbers inputted for birthday are integers.
 
+//end::add[]
+
 === Listing all persons : `list`
 
 This command lists all the contacts stored in The Myth's Book. +
 
 Format: `list`
 
+// tag::sort[]
 === Sorting all persons : `sort`
 
 This command sorts all contacts stored in The Myth's Book by their names alphabetically. +
 Format: `sort`
+
+//end::sort[]
 
 === Editing a person : `edit`
 
@@ -368,6 +374,7 @@ link:#the-myths-book---user-guide[Back To Top]
 
 == Advanced Command Features
 
+// tag::access[]
 === Accessing a person's website : `access`
 
 This command helps you to access a person's website in The Myth's Book. +
@@ -401,6 +408,8 @@ You should see the displayed result of `access 6` as seen in Figure 6.1.1 below.
 image::AccessCommandFinalResult.PNG[width="790"]
 
 Figure 6.1.1 `Access 6` Result for Access Command
+
+// end::access[]
 
 // tag::addevent[]
 === Adding an event : `addevent`
@@ -483,6 +492,8 @@ By typing `unfavourite 1`, you will be able to unfavourite the 1st person in the
 `unfavourite 1` +
 By typing `unfavourite 1`, you will be able to unfavourite the 1st person in the results of the `find` command.
 
+
+// tag::locate[]
 === Accessing a person's location : `locate`
 
 This command helps you to access a person's address on Google Maps Search in The Myth's Book +
@@ -515,6 +526,8 @@ the generated list which is then loaded into the browser with a Google Maps Sear
 image::LocationCommandFinalResult.PNG[width="790"]
 
 Figure 6.6.1 Location Command Result
+
+// end::locate[]
 
 link:#the-myths-book---user-guide[Back To Top]
 
