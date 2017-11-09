@@ -1,25 +1,37 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MRT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
+import seedu.address.model.person.PersonContainsKeywordsPredicate;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Finds and lists all persons in address book whose fields contains any of the argument keywords.
  */
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
     public static final String COMMAND_ALIAS = "f";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose fields contain any of "
+            + "the specified keywords (tags are case sensitive) and displays them as a list with index numbers.\n"
+            + "Type refers to the kind of search: 'AND', 'OR'. \n"
+            + "Parameters: TYPE [PREFIX/KEYWORD] [PREFIX/MORE_KEYWORDS]...\n"
+            + "Example: " + COMMAND_WORD + " AND "
+            + PREFIX_PHONE + "91234567 "
+            + "[" + PREFIX_EMAIL + "johndoe@example.com" + "]"
+            + "[" + PREFIX_NAME + "alice bob charlie" + "]"
+            + "[" + PREFIX_MRT + "Serangoon" + "]"
+            + "[" + PREFIX_TAG + "owesMoney" + "]";
 
-    private final NameContainsKeywordsPredicate predicate;
+    private final PersonContainsKeywordsPredicate predicate;
 
-    public FindCommand(NameContainsKeywordsPredicate predicate) {
-        this.predicate = predicate;
+
+    public FindCommand(boolean isInclusive, FindPersonDescriptor personDescriptor) {
+        this.predicate = new PersonContainsKeywordsPredicate(isInclusive, personDescriptor);
     }
 
     @Override

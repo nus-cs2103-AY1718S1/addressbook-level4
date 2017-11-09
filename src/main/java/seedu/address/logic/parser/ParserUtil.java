@@ -32,6 +32,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_INVALID_TYPE = "Type of finds should be 'AND' or 'OR'";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -121,5 +122,21 @@ public class ParserUtil {
     public static Optional<Time> parseTime(Optional<String> time) throws IllegalValueException {
         requireNonNull(time);
         return time.isPresent() ? Optional.of(new Time(time.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses {@code type} into an boolean value and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified keyword is invalid.
+     */
+    public static boolean parseType(String type) throws IllegalValueException {
+        String trimmedType = type.trim();
+        if (trimmedType.equals("AND")) {
+            return true;
+        } else if (trimmedType.equals("OR")) {
+            return false;
+        } else {
+            throw new IllegalValueException(MESSAGE_INVALID_TYPE);
+        }
     }
 }
