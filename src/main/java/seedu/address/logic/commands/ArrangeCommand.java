@@ -64,6 +64,9 @@ public class ArrangeCommand extends Command {
         return thisIndexList;
     }
 
+    /**
+     * Returns the info of schedule to be shown to the user later.
+     */
     public String scheduleInfo() {
         TreeSet<Integer>[] timeSetArray = Schedule.splitScheduleToDays(model.generateMeetingTime(listOfIndex));
         String toShow = "\nAll common free time: \n";
@@ -82,8 +85,7 @@ public class ArrangeCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ArrangeCommand // instanceof handles nulls
-                && Arrays.equals(this.getSortedZeroBasedIndex(),
-                (((ArrangeCommand) other).getSortedZeroBasedIndex())));
+                && Arrays.equals(this.getSortedZeroBasedIndex(), ((ArrangeCommand) other).getSortedZeroBasedIndex()));
         // state check
     }
 }
