@@ -586,16 +586,7 @@ public class AppointmentList {
         if (!isValidTagName(trimmedName)) {
             throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
         }
-
-        // To make the first letter of each word capital letter and the rest lower case
-        String[] arr = trimmedName.toLowerCase().split(" ");
-        StringBuffer sb = new StringBuffer();
-
-        for (int i = 0; i < arr.length; i++) {
-            sb.append(Character.toUpperCase(arr[i].charAt(0)))
-                    .append(arr[i].substring(1)).append(" ");
-        }
-        this.tagName = sb.toString().trim();
+        this.tagName = trimmedName;
         this.tagColor = tagColor;
     }
 
