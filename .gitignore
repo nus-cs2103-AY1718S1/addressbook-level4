@@ -15,6 +15,7 @@ preferences.json
 ./screenshot*.png
 classes/
 /data/
+/cache/
 /backup/
 /bin/
 src/main/resources/docs/
