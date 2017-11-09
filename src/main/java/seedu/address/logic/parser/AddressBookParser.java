@@ -150,7 +150,7 @@ public class AddressBookParser {
             return new SortCommand();
 
         } else if (commandWord.equalsIgnoreCase(ChangeWindowSizeCommand.COMMAND_WORD)) {
-            return new ChangeWindowSizeCommand(arguments.trim());
+            return new ChangeWindowSizeCommandParser().parse(arguments);
 
         } else {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
