@@ -511,15 +511,10 @@ inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
 === Multiple phone numbers supported
 (launched in V1.3)
 
- ====Description
-
-Since our target audience are the NUS students, which include a large proportion of international students, our addressBook will support the users to add multiple phone numbers.
-=======
-
-
- ====Description
+==== Description
 
 Since our target audience are the NUS students, which include a large propotion of international students, our addressBook will support the users to add multiple phone numbers, emails addresses and home addresses.
+
 ==== Model
 
 UniquePhoneList Classes are created for each person to store the person's multiple phone numbers.
@@ -545,7 +540,6 @@ The 3 parameters represents the index of the person in the AddressBook, action t
 For add, we will add the phone to the uniquePhoneList and check for duplicate. Example call of add is illustrated as below.
 image::add.png[width="200"]
 
-
 For remove, we will loop through the uniquePhoneList and remove this phone and check for NoPhoneFoundException. The illustration is below.
 image::remove.png[width="200']
 
@@ -557,6 +551,7 @@ image::showAllPhones.png[width="200']
 
 ==== Storage
 New XML element for UniquePhoneList and new XmlAdaptedPhone class with XML value Phone are created to allow the storage for unique phone list and optional phones.
+
 ==== Ui
 A new label will be displaced for each person for each instance of the same fields.
 
