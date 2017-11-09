@@ -87,8 +87,8 @@ public class BrowserPanel extends UiPart<Region> {
      */
     private void loadLinkedIn() throws CommandException {
         if(personSelected == null) {
-                throw new CommandException("Please select a person");
-            }
+            throw new CommandException("Please select a person");
+        }
         hasLinkedinBeenChosen = true;
         String[] name = personSelected.getName().fullName.split(" ");
 

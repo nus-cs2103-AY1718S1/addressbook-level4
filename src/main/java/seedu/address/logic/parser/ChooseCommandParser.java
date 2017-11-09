@@ -19,7 +19,7 @@ public class ChooseCommandParser implements Parser<ChooseCommand> {
     public ChooseCommand parse(String args) throws ParseException {
         String browsertype = args.trim();
 
-        if (browsertype.equals("linkedin") || browsertype.equals("facebook") || browsertype.equals("meeting")) {
+        if (browsertype.equals("linkedin") || browsertype.equals("google") || browsertype.equals("meeting")) {
             return new ChooseCommand(args.trim());
         } else {
             throw new ParseException(
