@@ -1,6 +1,11 @@
 package seedu.room.storage;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -15,6 +20,7 @@ import seedu.room.commons.exceptions.DataConversionException;
 import seedu.room.model.ReadOnlyEventBook;
 import seedu.room.model.ReadOnlyResidentBook;
 import seedu.room.model.UserPrefs;
+import seedu.room.model.person.Picture;
 
 /**
  * Manages storage of ResidentBook data in local storage.
@@ -28,7 +34,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
 
     public StorageManager(ResidentBookStorage residentBookStorage, EventBookStorage eventBookStorage,
-                                                                                UserPrefsStorage userPrefsStorage) {
+                          UserPrefsStorage userPrefsStorage) {
         super();
         this.residentBookStorage = residentBookStorage;
         this.eventBookStorage = eventBookStorage;
@@ -82,6 +88,7 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.fine("Attempting to write to data file: " + filePath);
         residentBookStorage.saveResidentBook(residentBook, filePath);
     }
+
     @Override
     @Subscribe
     public void handleResidentBookChangedEvent(ResidentBookChangedEvent event) {
@@ -96,14 +103,99 @@ public class StorageManager extends ComponentManager implements Storage {
     //@@author blackroxs
     @Override
     public void backupResidentBook(ReadOnlyResidentBook residentBook) throws IOException {
-        saveResidentBook(residentBook, residentBookStorage.getResidentBookFilePath() + "-backup.xml");
+        saveResidentBook(residentBook, getDirAbsolutePath() + "/backup.xml");
+        backupImages();
     }
 
     public Optional<ReadOnlyResidentBook> readBackupResidentBook() throws DataConversionException, IOException {
-        return readResidentBook(residentBookStorage.getResidentBookFilePath() + "-backup.xml");
+        return readResidentBook(getDirAbsolutePath() + "/backup.xml");
     }
 
+    /**
+     * Get the absolute parent path of residentbook.xml
+     *
+     * @return absolute path of the residentbook.xml directory
+     */
+    private String getDirAbsolutePath() {
+        File file = new File(residentBookStorage.getResidentBookFilePath());
+        String absPath = file.getParent();
 
+        return absPath;
+    }
+
+    /**
+     * Stores the contact images into a backup folder
+     *
+     * @throws IOException if unable to read or write in the folder
+     */
+    private void backupImages() throws IOException {
+        String backupFolder = getDirAbsolutePath() + File.separator + Picture.FOLDER_NAME + "_backup";
+        String originalFolder = getDirAbsolutePath() + File.separator + Picture.FOLDER_NAME;
+
+        handleImageBackupFolder(backupFolder);
+        handleImagesBackupFiles(backupFolder, originalFolder);
+
+    }
+
+    /**
+     * Copies each file from source to destination backup folder
+     *
+     * @param backupFolder cannot be null
+     * @param originalFolder cannot be null
+     * @throws IOException if there is any problem writing to the file
+     */
+    private void handleImagesBackupFiles(String backupFolder, String originalFolder) throws IOException {
+        File source = new File(originalFolder);
+        File[] listOfImages = source.listFiles();
+
+        for (int i = 0; i < listOfImages.length; i++) {
+            File dest = new File(backupFolder + File.separator + listOfImages[i].getName());
+            copy(listOfImages[i], dest);
+        }
+    }
+
+    /**
+     * Creates the image backup folder if it does not exist
+     *
+     * @param backupFolder cannot be empty or null
+     * @throws IOException if folder cannot be created due to read or write access
+     */
+    private void handleImageBackupFolder(String backupFolder) throws IOException {
+        boolean backupExist = new File(backupFolder).exists();
+
+        if (!backupExist) {
+            boolean isSuccess = (new File(backupFolder)).mkdirs();
+            if (!isSuccess) {
+                throw new IOException();
+            }
+        }
+    }
+
+    /**
+     * Copies the file from source to destination
+     *
+     * @param source cannot be null
+     * @param dest   cannot be null
+     * @throws IOException if there is any problem writing to the file
+     */
+    public static void copy(File source, File dest) throws IOException {
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            is = new FileInputStream(source);
+            os = new FileOutputStream(dest);
+            byte[] buf = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = is.read(buf)) > 0) {
+                os.write(buf, 0, bytesRead);
+            }
+        } finally {
+            is.close();
+            os.close();
+        }
+    }
+
+    //@@author
     // ================ EventBook methods ==============================
 
     @Override
@@ -144,6 +236,7 @@ public class StorageManager extends ComponentManager implements Storage {
             raise(new DataSavingExceptionEvent(e));
         }
     }
+
     @Override
     public void backupEventBook(ReadOnlyEventBook residentBook) throws IOException {
         saveEventBook(residentBook, eventBookStorage.getEventBookFilePath() + "-backup.xml");
