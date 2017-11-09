@@ -20,7 +20,6 @@ public class Radio extends Thread {
     private String radioStreamUrl;
     private Player player;
     private final Logger logger = LogsCenter.getLogger(Radio.class);
-    private volatile boolean shutdown = false;
 
     public Radio(String genre) {
         this.genre = genre;

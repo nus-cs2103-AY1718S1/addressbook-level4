@@ -21,11 +21,11 @@ public class MusicCommand extends Command {
             + "GENRE (must be either pop, dance or classic) \n"
             + "Example: " + COMMAND_WORD + " play classic ";
 
+    public static final String MESSAGE_NO_MUSIC_PLAYING = "There is no music currently playing.";
+
     private static final String MESSAGE_STOP = "Music Stopped";
 
     private static String messagePause = "Music Paused";
-
-    private static String messageNoMusicPlaying = "There is no music currently playing.";
 
     private static String messageSuccess = "Music Playing";
 
@@ -97,13 +97,13 @@ public class MusicCommand extends Command {
             }
         case "stop":
             if (!isMusicPlaying()) {
-                return new CommandResult(messageNoMusicPlaying);
+                return new CommandResult(MESSAGE_NO_MUSIC_PLAYING);
             }
             stopMusicPlayer();
             return new CommandResult(MESSAGE_STOP);
         case "pause":
             if (!isMusicPlaying()) {
-                return new CommandResult(messageNoMusicPlaying);
+                return new CommandResult(MESSAGE_NO_MUSIC_PLAYING);
             }
             mediaPlayer.pause();
             messagePause = genre.toUpperCase() + " Music Paused";
@@ -112,5 +112,13 @@ public class MusicCommand extends Command {
         default:
             return new CommandResult(MESSAGE_USAGE);
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof MusicCommand // instanceof handles nulls
+                && (this.genre == null || this.genre.equals(((MusicCommand) other).genre)) // state check
+                && (this.command == null || this.command.equals(((MusicCommand) other).command))); // state check
     }
 }

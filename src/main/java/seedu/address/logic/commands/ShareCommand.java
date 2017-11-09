@@ -39,8 +39,6 @@ public class ShareCommand extends Command {
     private static SendEmail sendEmail;
 
     private Index targetIndex;
-    private Index recipientIndexEmail;
-    private String recipientEmail;
     private String[] shareEmailArray;
 
     public ShareCommand(Index targetIndex, String[] shareEmailArray) {
