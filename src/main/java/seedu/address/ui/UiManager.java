@@ -149,7 +149,7 @@ public class UiManager extends ComponentManager implements Ui {
     public void handleChangeToLoginViewEvent(ChangeToLoginViewEvent event) {
         // user wants to login
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(() -> mainWindow.fillCommandBoxWithLoginFields());
+        mainWindow.fillCommandBoxWithLoginFields();
     }
 
     /**

@@ -29,11 +29,11 @@ public class FilterCommand extends Command {
         requireNonNull(model);
 
         model.deselectPerson();
-        model.updateFilteredPersonList(new PersonContainsTagPredicate(tags));
+        listObserver.updateCurrentFilteredList(new PersonContainsTagPredicate(tags));
 
         String allTagKeywords = tags.toString();
         return new CommandResult(String.format(MESSAGE_FILTER_ACKNOWLEDGEMENT, allTagKeywords,
-                getMessageForPersonListShownSummary(model.getFilteredPersonList().size())));
+                getMessageForPersonListShownSummary(listObserver.getCurrentFilteredList().size())));
     }
 
     @Override
