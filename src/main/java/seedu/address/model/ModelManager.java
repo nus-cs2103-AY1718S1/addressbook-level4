@@ -190,7 +190,7 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author Choony93
     @Override
     public List<ReadOnlyPerson> getPersonListByPredicate(Predicate<ReadOnlyPerson> predicate) {
-        FilteredList<ReadOnlyPerson> filteredList = new FilteredList<ReadOnlyPerson>(filteredPersons);
+        FilteredList<ReadOnlyPerson> filteredList = new FilteredList<>(filteredPersons);
         filteredList.setPredicate(predicate);
         return FXCollections.unmodifiableObservableList(filteredList);
     }

@@ -1,5 +1,5 @@
 # renkai91
-###### /java/seedu/address/logic/commands/EditCommand.java
+###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
         public void setBirthday(Birthday birthday) {
             this.birthday = birthday;
@@ -9,7 +9,7 @@
             return Optional.ofNullable(birthday);
         }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code Birthday} is present.
@@ -20,7 +20,7 @@
         return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
 ```
-###### /java/seedu/address/model/person/Birthday.java
+###### \java\seedu\address\model\person\Birthday.java
 ``` java
 /**
  * Represents a Person's birthday in the address book.
@@ -100,7 +100,7 @@ public class Birthday {
 
 }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     @Override
     public Address getAddress() {
@@ -121,7 +121,7 @@ public class Birthday {
         return birthday.get();
     }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     @Override
     public ObjectProperty<Picture> pictureProperty() {
@@ -132,7 +132,7 @@ public class Birthday {
         return picture.get();
     }
 ```
-###### /java/seedu/address/model/person/Picture.java
+###### \java\seedu\address\model\person\Picture.java
 ``` java
 public class Picture {
 
@@ -178,7 +178,7 @@ public class Picture {
     }
 }
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
     /**
      * Menu list option: add image
@@ -211,7 +211,7 @@ public class Picture {
         }
     }
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
     /**
      * Initialize image for ever person
