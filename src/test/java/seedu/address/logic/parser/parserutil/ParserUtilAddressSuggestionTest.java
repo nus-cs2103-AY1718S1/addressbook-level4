@@ -3,7 +3,7 @@ package seedu.address.logic.parser.parserutil;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.parser.ParserUtil.isParseableAddressTillEnd;
+import static seedu.address.logic.parser.ParserUtil.isParsableAddressTillEnd;
 import static seedu.address.logic.parser.ParserUtil.parseAddress;
 import static seedu.address.logic.parser.ParserUtil.parseAddressTillEnd;
 import static seedu.address.logic.parser.ParserUtil.parseRemoveAddressTillEnd;
@@ -24,30 +24,30 @@ public class ParserUtilAddressSuggestionTest {
 
     @Test
     public void isParsableAddressTillEndAssertFalse() {
-        assertFalse(isParseableAddressTillEnd("one two three")); // No block or characters
-        assertFalse(isParseableAddressTillEnd("~!@# $%^&*()_+ ")); // symbols
-        assertFalse(isParseableAddressTillEnd("0")); // zero
-        assertFalse(isParseableAddressTillEnd("00")); // zero
-        assertFalse(isParseableAddressTillEnd("2147483649")); // large numbers
-        assertFalse(isParseableAddressTillEnd("PeterJack_1190@example.com ")); // emails with numbers
-        assertFalse(isParseableAddressTillEnd("123@456.789 ")); // emails with numbers only
+        assertFalse(isParsableAddressTillEnd("one two three")); // No block or characters
+        assertFalse(isParsableAddressTillEnd("~!@# $%^&*()_+ ")); // symbols
+        assertFalse(isParsableAddressTillEnd("0")); // zero
+        assertFalse(isParsableAddressTillEnd("00")); // zero
+        assertFalse(isParsableAddressTillEnd("2147483649")); // large numbers
+        assertFalse(isParsableAddressTillEnd("PeterJack_1190@example.com ")); // emails with numbers
+        assertFalse(isParsableAddressTillEnd("123@456.789 ")); // emails with numbers only
     }
 
     @Test
     public void isParsableAddressTillEndAssertTrue() {
         // add command
-        assertTrue(isParseableAddressTillEnd(
+        assertTrue(isParsableAddressTillEnd(
                 "add Adam Brown classmates 11111111 adam@gmail.com 972, Pansy Street, #08-12, 093173"));
         // edit command
-        assertTrue(isParseableAddressTillEnd(
+        assertTrue(isParsableAddressTillEnd(
                 "edit Bernice Yu 99272758 Blk 30 Lorong 3 Serangoon Gardens, #07-18"));
         // remark command
-        assertTrue(isParseableAddressTillEnd(
+        assertTrue(isParsableAddressTillEnd(
                 "rmk Davis lives at a/Blk 436 Serangoon Gardens Street 26, #16-43 p/12358576 this is a utility"));
         // mixed data
-        assertTrue(isParseableAddressTillEnd("8314568937234 Welcome to Rolodex 45 Aljunied Street 85, #11-31"));
+        assertTrue(isParsableAddressTillEnd("8314568937234 Welcome to Rolodex 45 Aljunied Street 85, #11-31"));
         // mixed data with name in front
-        assertTrue(isParseableAddressTillEnd("Lecter Goh 8314568937234 45 Aljunied Street 85, #11-31"));
+        assertTrue(isParsableAddressTillEnd("Lecter Goh 8314568937234 45 Aljunied Street 85, #11-31"));
     }
 
     @Test
