@@ -15,7 +15,7 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[https://github.com/CS2103AUG2017-F10-B4/main/blob/master/docs/UserGuide.adoc#locating-persons-by-names-or-phone-numbers-or-emails-or-tags-code-finds-code-v1-1]
+include::../UserGuide.adoc[tag=finds]
 
 #End of Extract#
 
@@ -30,7 +30,7 @@ To provide additional options for user to search for person(s) .
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[https://github.com/CS2103AUG2017-F10-B4/main/blob/master/docs/UserGuide.adoc#locating-persons-by-names-or-phone-numbers-or-emails-or-tags-code-finds-code-v1-1]
+include::../DeveloperGuide.adoc[tag=finds]
 
 #End of Extract#
 
@@ -43,7 +43,7 @@ include::../DeveloperGuide.adoc[https://github.com/CS2103AUG2017-F10-B4/main/blo
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[https://github.com/CS2103AUG2017-F10-B4/main/blob/master/docs/UserGuide.adoc#code-important-code-or-code-important-code-tag-v1-2]
+include::../UserGuide.adoc[tag=important]
 
 #End of Extract#
 
