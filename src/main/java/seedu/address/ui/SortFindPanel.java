@@ -12,6 +12,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ToggleSearchBoxStyle;
+import seedu.address.commons.events.ui.ToggleToAliasViewEvent;
 import seedu.address.commons.events.ui.ToggleToAllPersonViewEvent;
 import seedu.address.commons.events.ui.ToggleToTaskViewEvent;
 import seedu.address.logic.Logic;
@@ -154,6 +155,15 @@ public class SortFindPanel extends UiPart<Region> {
     }
 
     /**
+     * Handles switch to alias view event
+     */
+    @Subscribe
+    private void handleToggleToAllPersonViewEvent(ToggleToAliasViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switchToAliasView();
+    }
+
+    /**
      * Handles switch to pinned person view event
      */
     @Subscribe
@@ -172,6 +182,15 @@ public class SortFindPanel extends UiPart<Region> {
     private void switchToPersonView() {
         searchBox.setPromptText("Search Person...");
         sortMenu.setVisible(true);
+        searchBox.setVisible(true);
+    }
+
+    /**
+     * Switches style to alias view.
+     */
+    private void switchToAliasView() {
+        searchBox.setVisible(false);
+        sortMenu.setVisible(false);
     }
 
     /**
@@ -194,6 +213,7 @@ public class SortFindPanel extends UiPart<Region> {
     private void switchToTaskView() {
         searchBox.setPromptText("Search Task...");
         sortMenu.setVisible(false);
+        searchBox.setVisible(true);
     }
 
     public MenuButton getSortMenu() {

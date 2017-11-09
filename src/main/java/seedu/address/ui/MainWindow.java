@@ -29,6 +29,7 @@ import seedu.address.commons.events.ui.ToggleListAllStyleEvent;
 import seedu.address.commons.events.ui.ToggleListPinStyleEvent;
 import seedu.address.commons.events.ui.ToggleParentChildModeEvent;
 import seedu.address.commons.events.ui.ToggleSortByLabelEvent;
+import seedu.address.commons.events.ui.ToggleToAliasViewEvent;
 import seedu.address.commons.events.ui.ToggleToAllPersonViewEvent;
 import seedu.address.commons.events.ui.ToggleToTaskViewEvent;
 import seedu.address.commons.events.ui.UpdatePinnedPanelEvent;
@@ -63,7 +64,7 @@ public class MainWindow extends UiPart<Region> {
     private ResultDisplay resultDisplay;
     private CommandBox commandBox;
     private SortFindPanel sortFindPanel;
-
+    private AliasListPanel aliasListPanel;
     private TaskListPanel taskListPanel;
     private Config config;
     private UserPrefs prefs;
@@ -82,6 +83,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private Label taskViewLabel;
+
+    @FXML
+    private Label aliasViewLabel;
 
     @FXML
     private Label pinLabel;
@@ -195,6 +199,7 @@ public class MainWindow extends UiPart<Region> {
 
         taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        aliasListPanel = new AliasListPanel(logic.getFilteredAliasTokenList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
@@ -347,6 +352,18 @@ public class MainWindow extends UiPart<Region> {
             logger.warning("Failed to toggle to person view using label");
         }
     }
+
+    /**
+     * Toggles to alias view.
+     */
+    @FXML
+    private void handleAliasViewClicked() {
+        try {
+            logic.execute("listalias");
+        } catch (CommandException | ParseException e) {
+            logger.warning("Failed to toggle to alias view using label");
+        }
+    }
     //@@author
 
     public PersonListPanel getPersonListPanel() {
@@ -389,17 +406,23 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @Subscribe
+    private void handleToggleParentChildModeEvent(ToggleParentChildModeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        helpMenu.setVisible(event.isSetToParentMode);
+        aliasViewLabel.setVisible(event.isSetToParentMode);
+    }
+
+    @Subscribe
     private void handleToggleToTaskViewEvent(ToggleToTaskViewEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchToTaskView();
     }
 
     @Subscribe
-    private void handleToggleParentChildModeEvent(ToggleParentChildModeEvent event) {
+    private void handleToggleToAliasViewEvent(ToggleToAliasViewEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        helpMenu.setVisible(event.isSetToParentMode);
+        switchToAliasView();
     }
-
 
     @Subscribe
     private void handleToggleToAllPersonViewEvent(ToggleToAllPersonViewEvent event) {
@@ -423,29 +446,61 @@ public class MainWindow extends UiPart<Region> {
      * Switches style to person view.
      */
     private void switchToPersonView() {
-        personListPanelPlaceholder.getChildren().removeAll(taskListPanel.getRoot());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-        allLabel.setVisible(true);
-        pinLabel.setVisible(true);
-        organizerLabel.setText("Sorted By:");
+        addSelectedPanel(personListPanel.getRoot());
+        setMiddleLabelsVisible(true);
+        dimAllViewLabels();
         personViewLabel.setStyle(BRIGHT_LABEL);
-        taskViewLabel.setStyle(DIM_LABEL);
+        organizerLabel.setText("Sorted By:");
         sortedByLabel.setText(lastSorted);
+        lastSorted = sortedByLabel.getText();
+        setRightLabelsVisible(true);
     }
 
     /**
      * Switches style to task view.
      */
     private void switchToTaskView() {
-        personListPanelPlaceholder.getChildren().removeAll(personListPanel.getRoot());
-        personListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
-        allLabel.setVisible(false);
-        pinLabel.setVisible(false);
-        organizerLabel.setText("Showing:");
-        personViewLabel.setStyle(DIM_LABEL);
+        addSelectedPanel(taskListPanel.getRoot());
+        setMiddleLabelsVisible(false);
+        dimAllViewLabels();
         taskViewLabel.setStyle(BRIGHT_LABEL);
-        lastSorted = sortedByLabel.getText();
+        organizerLabel.setText("Showing:");
         sortedByLabel.setText("All");
+        setRightLabelsVisible(true);
+    }
+
+    /**
+     * Switches style to alias view.
+     */
+    private void switchToAliasView() {
+        addSelectedPanel(aliasListPanel.getRoot());
+        setMiddleLabelsVisible(false);
+        dimAllViewLabels();
+        aliasViewLabel.setStyle(BRIGHT_LABEL);
+        setRightLabelsVisible(false);
+    }
+
+    private void setRightLabelsVisible(boolean isVisible) {
+        organizerLabel.setVisible(isVisible);
+        sortedByLabel.setVisible(isVisible);
+    }
+
+    private void setMiddleLabelsVisible(boolean isVisible) {
+        allLabel.setVisible(isVisible);
+        pinLabel.setVisible(isVisible);
+    }
+
+
+    private void dimAllViewLabels() {
+        personViewLabel.setStyle(DIM_LABEL);
+        aliasViewLabel.setStyle(DIM_LABEL);
+        taskViewLabel.setStyle(DIM_LABEL);
+    }
+
+    private void addSelectedPanel(Region toAdd) {
+        personListPanelPlaceholder.getChildren()
+                .removeAll(personListPanel.getRoot(), aliasListPanel.getRoot(), taskListPanel.getRoot());
+        personListPanelPlaceholder.getChildren().add(toAdd);
     }
 
     private void switchToBrowser() {
