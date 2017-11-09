@@ -33,7 +33,7 @@ include::../UserGuide.adoc[tag=whitelist]
 
 As a debt collector, there is an important requirement to categorize debtors into different categories. One of these categories include debtors who have been blacklisted. This branding could have been given by the client banks or the debt collection agencies themselves. Nonetheless, the message is clear; these blacklisted debtors must be handled with caution.
 
-Thus, it is a requirement to have access to a list of blacklisted people. That is essentially what the `blacklist` command does. Moreover, working in the blacklist gives exclusive and focused control over the debtors in this list alone. Meaning, when working in the blacklist, users will not be able to access non-blacklisted persons. This is because, the commands work exclusively on blacklisted debtors alone.
+Thus, it is a requirement to have access to a list of blacklisted people. That is essentially what the `blacklist` command does. Moreover, working in the blacklist gives exclusive and focused control over the debtors in this list alone. Meaning, when working in the blacklist, users will not be able to access non-blacklisted persons. This is because the commands work exclusively on blacklisted debtors alone.
 
 To access other lists, specific commands have to be used to toggle.
 
@@ -41,7 +41,7 @@ To access other lists, specific commands have to be used to toggle.
 
 As a debt collector, it is also important to identify and categorize debtors who have repaid all their debts. Ultimately, that is the purpose of the `whitelist` command. Debt collection agencies regularly need to liase with client banks to submit reports on debtors' activities and repayment amounts. Thus, having a list of debtors who have repaid their debts, along with the date that they repaid the full amount, essentially helps to track debtors' activities.
 
-If the debt collection agency happen to be a subsidiary institution to a bank, this whitelist feature will also aid in allowing the voice-call sectors to contact people for additional loan-signups.
+If the debt collection agency happens to be a subsidiary institution to a bank, this whitelist feature will also aid in allowing the voice-call sectors to contact people for additional loan-signups.
 
 As aforementioned, to access other lists, specific commands have to be used to toggle.
 
@@ -71,9 +71,9 @@ include::../UserGuide.adoc[tag=repaid]
 
 ==== Justification
 
-A debt collector will have the job to record down the collections for the day from each debtor. He has to do so for each debtor. If a debtor has paid off his/her total debt, there should be an easy way for the debt collector to update this amount, date repaid and the debt flag of the debtor easily. That is the purpose of the Repaid Command.
+A debt collector will have the job to record down the collections for the day from each debtor. If a debtor has paid off his/her total debt, there should be an easy way for the debt collector to update`debt`, `totalDebt`, `dateRepaid` and `isWhitelisted` fields of the debtor. That is the purpose of the `Repaid` command.
 
-This is very similar to the Payback command, however, Repaid command excels in automating three different tasks so that life is indeed simpler for debt collectors to key in information in the system.
+This is very similar to the `Payback` command, however, `Repaid` command excels in automating three different tasks so that life is indeed simpler for debt collectors to key in information in the system.
 
 === Enhancement Added: Add/Remove Profile Picture
 
@@ -90,7 +90,7 @@ include::../UserGuide.adoc[tag=profilepic(soon to appear)]
 
 ==== Justification
 
-A debt collector might need to conduct house visits to collect debts from people. Thus, having commands that allow the user to add/remove pictures for each individual debtors helps him/her identify and mentally register a specific debtor.
+A debt collector might need to conduct house visits to collect debts from people. Thus, having commands that allow the user to add/remove pictures for each individual debtors helps him/her quickly identify a specific debtor during official house visits.
 
 === Other contributions
 
