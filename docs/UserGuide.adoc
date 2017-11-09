@@ -469,7 +469,7 @@ The index *must be a positive integer* `1, 2, 3, ...`
 // tag::batch[]
 === Delete all patients with any of the following tags : `batch` [Since v1.2]
 
-You can delete a group of patients who share a single tag that you specify. Or, you may specify multiple tags and MedNus will perform this same batch deletion operation for each of these tags. +
+You can delete a batch of patients who share a single tag. Or, you may specify multiple tags and MedNus will perform this same batch deletion operation for each of these tags. +
 *Format:* `batch TAG TAG TAG...` +
 *Shorthand format:* `b TAG TAG...`
 
