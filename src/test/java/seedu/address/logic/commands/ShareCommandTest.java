@@ -29,9 +29,9 @@ public class ShareCommandTest {
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        ShareCommand ShareCommand = prepareCommand(outOfBoundIndex);
+        ShareCommand shareCommand = prepareCommand(outOfBoundIndex);
 
-        assertCommandFailure(ShareCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(shareCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test

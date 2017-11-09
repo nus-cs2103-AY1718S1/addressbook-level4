@@ -13,7 +13,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new ShareCommand object
  */
-public class ShareCommandParser {
+public class ShareCommandParser implements Parser<ShareCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the ShareCommand
      * and returns an ShareCommand object for execution.

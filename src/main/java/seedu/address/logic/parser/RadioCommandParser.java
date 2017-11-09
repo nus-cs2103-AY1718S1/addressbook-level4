@@ -9,7 +9,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new RadioCommand object
  */
-public class RadioCommandParser {
+public class RadioCommandParser implements Parser<RadioCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the String of words
      * and returns an RadioCommand object for execution.
@@ -17,7 +17,9 @@ public class RadioCommandParser {
      */
     public RadioCommand parse(String arguments) throws ParseException {
         String[] args = arguments.trim().split("\\s+");
-        if (args.length == 1) {
+        if (args.length != 1 || args[0].equals("")) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RadioCommand.MESSAGE_USAGE));
+        } else if (args.length == 1) {
             return new RadioCommand(args[0]);
         } else if (args.length == 2) {
             return new RadioCommand(args[0], args[1]);
