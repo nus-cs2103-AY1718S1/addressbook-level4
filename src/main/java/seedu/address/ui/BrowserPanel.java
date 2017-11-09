@@ -180,6 +180,8 @@ public class BrowserPanel extends UiPart<Region> {
 
     /**
      * Loads the social page in a new window.
+     * There is no controller file for the social media window fxml
+     * as it is essentially only a WebView.
      */
     private void openSocialIconPage(ReadOnlyPerson person) {
         try {
@@ -189,7 +191,8 @@ public class BrowserPanel extends UiPart<Region> {
             AnchorPane parent = fxmlLoader.load();
             //Get the webview from the loaded component then put URL
             WebView socialPageView = (WebView) parent.getChildren().get(0);
-            socialPageView.getEngine().load("https://twitter.com/");
+            //Replace the following line with an actual URL once Person has actual social URLs
+            socialPageView.getEngine().load(person.getPhone().toString());
             //Create the scene and stage
             Scene scene = new Scene(parent);
             Stage stage = new Stage();
