@@ -14,6 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.ScheduleListChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -67,6 +68,11 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    /** Raises an event to update the ResultDisplay */
+    private void indicateScheduleListChanged() {
+        raise(new ScheduleListChangedEvent(getScheduleList()));
+    }
+
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
@@ -117,12 +123,14 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addSchedule(schedule);
         addressBook.sortSchedules();
         indicateAddressBookChanged();
+        indicateScheduleListChanged();
     }
 
     @Override
     public void removeSchedule(Schedule schedule) throws ScheduleNotFoundException {
         addressBook.removeSchedule(schedule);
         indicateAddressBookChanged();
+        indicateScheduleListChanged();
     }
 
     /**
