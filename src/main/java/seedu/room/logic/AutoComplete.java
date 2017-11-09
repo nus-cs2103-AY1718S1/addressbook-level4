@@ -12,8 +12,9 @@ import seedu.room.model.person.ReadOnlyPerson;
  */
 public class AutoComplete {
 
-    private final String[] baseCommands = { "add", "edit", "select", "delete", "clear",
-        "backup", "find", "list", "history", "exit", "help", "undo", "redo"
+    private final String[] baseCommands = { "add", "addEvent", "addImage", "backup", "edit", "select", "delete",
+            "deleteByTag", "deleteEvent", "deleteImage", "deleteTag", "clear", "find", "list", "highlight", "history",
+            "import", "exit", "help", "undo", "redo", "sort", "swaproom"
     };
     private ArrayList<String> personsStringArray;
     private String[] autoCompleteList;
