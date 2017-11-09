@@ -136,7 +136,8 @@ public class ModelManager extends ComponentManager implements Model {
     public void sortFilteredPersonList(String filterType) {
         addressBook.sortPersons(filterType);
         ObservableList<ReadOnlyPerson> sortedList = this.addressBook.getPersonList();
-        filteredPersons = new FilteredList<>(sortedList);
+        this.filteredPersons = new FilteredList<>(sortedList);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
 
@@ -155,13 +156,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateUserPersonChanged();
     }
 
-    //@@author
     /** Raises an event to indicate the model has changed */
     public void indicateUserPersonChanged() {
         raise(new UserPersonChangedEvent(userPerson));
         logger.info("Updated User Person: " + userPerson);
     }
 
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
