@@ -54,7 +54,7 @@
                                   </padding>
                                   <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
                               </VBox>
-      
+
                               <TabPane fx:id="infoDisplayPlaceholder" prefHeight="200.0" prefWidth="340.0">
                                   <tabs>
                                       <Tab closable="false" text="Contact Details">
