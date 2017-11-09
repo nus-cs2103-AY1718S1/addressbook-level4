@@ -17,7 +17,7 @@ public class ThemeCommandTest extends AddressBookGuiTest {
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     @Test
-    public void execute_theme_change() {
+    public void executethemechange() {
         CommandResult result = new ThemeCommand("light").executeUndoableCommand();
         assertEquals(ThemeCommand.MESSAGE_SUCCESS, result.feedbackToUser);
         CommandResult result2 = new ThemeCommand("dark").executeUndoableCommand();
