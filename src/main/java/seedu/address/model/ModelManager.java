@@ -68,7 +68,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
-    /** Raises an event to indicate the schedule list has changed */
+    /** Raises an event to update the ResultDisplay */
     private void indicateScheduleListChanged() {
         raise(new ScheduleListChangedEvent(getScheduleList()));
     }
