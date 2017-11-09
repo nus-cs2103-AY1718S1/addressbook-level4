@@ -12,7 +12,7 @@ import seedu.address.storage.Storage;
  */
 public class ClearHistoryCommand extends Command {
 
-    public static final String COMMAND_WORD = "clearhistory";
+    public static final String COMMAND_WORD = "clearHistory";
     public static final String COMMAND_ALIAS = "ch";
     public static final String MESSAGE_SUCCESS = "Command history cleared.";
     public static final String SHORT_MESSAGE_USAGE = COMMAND_WORD;
