@@ -146,6 +146,26 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the given person {@code target} in the list with {@code editedFavouritePerson}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedFavouritePerson}.
+     *
+     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
+     *      another existing person in the list.
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     *
+     * @see #syncMasterTagListWith(Person)
+     */
+    public void updateFavouriteStatus(ReadOnlyPerson target, ReadOnlyPerson editedFavouritePerson)
+            throws DuplicatePersonException, PersonNotFoundException {
+        requireNonNull(editedFavouritePerson);
+        Person editedPerson = new Person(editedFavouritePerson);
+        syncMasterTagListWith(editedPerson);
+        syncMasterGroupListWith(editedPerson);
+        persons.setFavourite(target, editedPerson);
+    }
+
+
+    /**
      * Sorts persons in address book.
      */
 

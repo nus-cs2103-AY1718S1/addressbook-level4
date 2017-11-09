@@ -107,6 +107,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void updateFavouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritePerson)
+            throws DuplicatePersonException, PersonNotFoundException {
+        requireAllNonNull(target, favouritePerson);
+        addressBook.updateFavouriteStatus(target, favouritePerson);
+        indicateAddressBookChanged();
+    }
+
+
+    @Override
     public void sortPerson(Comparator<ReadOnlyPerson> sortComparator, boolean isReverseOrder)
             throws NoPersonsException {
         addressBook.sortPerson(sortComparator, isReverseOrder);

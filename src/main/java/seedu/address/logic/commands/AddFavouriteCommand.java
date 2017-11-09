@@ -9,6 +9,7 @@ import java.util.Set;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Favourite;
@@ -19,6 +20,7 @@ import seedu.address.model.person.ProfPic;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -61,7 +63,7 @@ public class AddFavouriteCommand extends UndoableCommand {
         Person editedPerson = createFavePerson(personToEdit);
 
         try {
-            model.updatePerson(personToEdit, editedPerson);
+            model.updateFavouritePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
@@ -83,8 +85,10 @@ public class AddFavouriteCommand extends UndoableCommand {
         ProfPic updatedProfPic = personToEdit.getProfPic();
         Favourite updatedFavourite = new Favourite(true);
         Set<Tag> updatedTags = personToEdit.getTags();
+        Set<Group> updatedGroups = personToEdit.getGroups();
+        Set<Schedule> updatedSchedule = personToEdit.getSchedule();
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavourite,
-                updatedProfPic, updatedTags);
+                updatedProfPic, updatedTags, updatedGroups, updatedSchedule);
     }
 }

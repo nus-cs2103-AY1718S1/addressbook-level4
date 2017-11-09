@@ -15,6 +15,7 @@ import java.util.Set;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Favourite;
@@ -25,6 +26,7 @@ import seedu.address.model.person.ProfPic;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
 
 //@@author nassy93
@@ -113,8 +115,10 @@ public class SetPictureCommand extends UndoableCommand {
         ProfPic updatedProfPic = new ProfPic(updatedName + ".png");
         Favourite updatedFavourite = personToEdit.getFavourite();
         Set<Tag> updatedTags = personToEdit.getTags();
+        Set<Group> updatedGroups = personToEdit.getGroups();
+        Set<Schedule> updatedSchedule = personToEdit.getSchedule();
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavourite,
-                updatedProfPic, updatedTags);
+                updatedProfPic, updatedTags, updatedGroups, updatedSchedule);
     }
 }
