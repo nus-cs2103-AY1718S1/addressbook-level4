@@ -1,0 +1,148 @@
+= Tan Zhen Yong - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Intelli
+Intelli is a desktop relationship tracker used by private investigators (PI) to manage their information and leads. The PI interacts with it using a CLI, and it has a GUI created with JavaFX and GraphStream. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F10-B1/main/blob/master/collated/main/Xenonym.md[Functional code]] [https://github.com/CS2103AUG2017-F10-B1/main/blob/master/collated/test/Xenonym.md[Test code]]
+
+=== Enhancement Added: Backup
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=backup]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This is a simple way of backing up the current state of the address book before the user performs a complex series of commands that may not be undoable.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=backup]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Clear command history
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=clearHistory]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+If information was added that may be too sensitive to be in the address book, clearing the command history ensures that the information is permanently removed.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=clearHistory]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Custom tag colours
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=colourTag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+A custom tag colour that is saved reduces confusion for the user and allows them to quickly identify people with the same tag quickly, especially if the address book is large.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=colourTag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Shortest relationship path
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=relPath]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This allows PIs to find the most confident way in which two people are related in a relationship path. For example, a PI may use someone they know very well to contact someone they don't via the least amount of people possible.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=relPath]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `listrelated`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=listRelated]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This allows PIs to quickly see who is related to a specific person, and filter out extraneous information.
+
+
+=== Other contributions
+
+* Added relationships to XML storage (Pull requests https://github.com/CS2103AUG2017-F10-B1/main/pull/106[#106], https://github.com/CS2103AUG2017-F10-B1/main/pull/126[#126])
+* Restrict range of confidence estimates from 0 to 100 and added tests (Pull request https://github.com/CS2103AUG2017-F10-B1/main/pull/131[#131])
+* Created sample testing data (Pull request https://github.com/CS2103AUG2017-F10-B1/main/pull/134[#134])
+* Converted GraphWrapper class to use Singleton pattern (Commit https://github.com/CS2103AUG2017-F10-B1/main/commit/174f9ac3f520c0b26856ce00e9d5b4404d074c54[174f9ac])
+* Set up project and CI (Commit https://github.com/CS2103AUG2017-F10-B1/main/commit/332bb643930c5058aeef0e442ab0b0177d540416[332bb64])
+* Contributed to forum discussions on HashSets (https://github.com/nus-cs2103-AY1718S1/forum/issues/12[#12]) and exceptions (https://github.com/nus-cs2103-AY1718S1/forum/issues/34[#34])
