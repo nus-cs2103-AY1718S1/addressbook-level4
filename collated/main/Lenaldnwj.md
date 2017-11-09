@@ -1,54 +1,9 @@
 # Lenaldnwj
-###### /java/seedu/address/logic/parser/AddCommandParser.java
+###### \java\seedu\address\logic\parser\AddCommandParser.java
 ``` java
     /**
-     * Parses the given {@code String} of arguments in the context of the AddCommand
-     * and returns an AddCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public AddCommand parse(String args) throws ParseException {
-
-        args = optionalInput(args);
-
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_FORMCLASS, PREFIX_GRADES, PREFIX_POSTALCODE, PREFIX_REMARK, PREFIX_TAG);
-
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_FORMCLASS,
-                PREFIX_GRADES)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-        }
-        if (arePrefixesPresent(argMultimap, PREFIX_REMARK)) {
-            throw new ParseException(String.format(MESSAGE_ADDEDITCOMMANDREMARK_INVALID, AddCommand.MESSAGE_USAGE));
-        }
-
-        try {
-            Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
-            Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
-            Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
-            Remark remark = new Remark(""); //add command does not allow adding remarks right away
-            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            FormClass formClass = ParserUtil.parseFormClass(argMultimap.getValue(PREFIX_FORMCLASS)).get();
-            Grades grades = ParserUtil.parseGrades(argMultimap.getValue(PREFIX_GRADES)).get();
-            PostalCode postalCode = ParserUtil.parsePostalCode(argMultimap.getValue(PREFIX_POSTALCODE)).get();
-            ReadOnlyPerson person = new Person(name, phone, email, address, formClass,
-                    grades, postalCode, remark, tagList);
-            return new AddCommand(person);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        }
-    }
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-    /**
-     * Returns a appended string stating that specific optional inputs are not recorded if user decides to not enter
-     * any of the optional inputs.
+     * Returns a appended String message stating that specific optional inputs are not recorded if user decides
+     * to not enter any of the optional inputs.
      */
     public static String optionalInput(String input) {
         if (!input.contains("a/")) {
@@ -60,11 +15,26 @@
         if (!input.contains("c/")) {
             input = input + " c/ (Postal code not recorded)";
         }
+        if (!input.contains(" p/")) {
+            input = input + " p/ (Student phone not recorded)";
+        }
         return input;
     }
 }
 ```
-###### /java/seedu/address/model/person/Email.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
+``` java
+    /**
+     * Parses a {@code Optional<String> parentPhone} into an {@code Optional<ParentPhone>} if {@code parentPhone}
+     * is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ParentPhone> parseParentPhone(Optional<String> parentPhone) throws IllegalValueException {
+        requireNonNull(parentPhone);
+        return parentPhone.isPresent() ? Optional.of(new ParentPhone(parentPhone.get())) : Optional.empty();
+    }
+```
+###### \java\seedu\address\model\person\Email.java
 ``` java
 
     public static final String MESSAGE_EMAIL_CONSTRAINTS =
@@ -93,7 +63,83 @@
         return test.matches(EMAIL_VALIDATION_REGEX);
     }
 ```
-###### /java/seedu/address/model/person/Phone.java
+###### \java\seedu\address\model\person\ParentPhone.java
+``` java
+package seedu.address.model.person;
+
+import static java.util.Objects.requireNonNull;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
+/**
+ * Represents a Person's ParentPhone number in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidParentPhone(String)}
+ */
+public class ParentPhone {
+
+    public static final String MESSAGE_PARENTPHONE_CONSTRAINTS = "Parent numbers should be exactly 8 digits long";
+
+    public static final String PARENTPHONE_VALIDATION_REGEX = "(\\d\\d\\d\\d\\d\\d\\d\\d)";
+
+    public final String value;
+
+    /**
+     * Validates given ParentPhone.
+     *
+     * @throws IllegalValueException if given ParentPhone string is invalid.
+     */
+    public ParentPhone(String parentPhone) throws IllegalValueException {
+        requireNonNull(parentPhone);
+        String trimmedParentPhone = parentPhone.trim();
+        if (!isValidParentPhone(trimmedParentPhone)) {
+            throw new IllegalValueException(MESSAGE_PARENTPHONE_CONSTRAINTS);
+        }
+        this.value = trimmedParentPhone;
+    }
+
+    /**
+     * Returns true if a given string is a valid parentPhone name.
+     */
+    public static boolean isValidParentPhone(String test) {
+        return test.matches(PARENTPHONE_VALIDATION_REGEX);
+    }
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ParentPhone // instanceof handles nulls
+                && this.value.equals(((ParentPhone) other).value)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+
+}
+```
+###### \java\seedu\address\model\person\Person.java
+``` java
+    public void setParentPhone(ParentPhone parentPhone) {
+        this.parentPhone.set(requireNonNull(parentPhone));
+    }
+
+    @Override
+    public ObjectProperty<ParentPhone> parentPhoneProperty() {
+        return parentPhone;
+    }
+
+    @Override
+    public ParentPhone getParentPhone() {
+        return parentPhone.get();
+    }
+```
+###### \java\seedu\address\model\person\Phone.java
 ``` java
 package seedu.address.model.person;
 
@@ -108,22 +154,20 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Phone {
 
     public static final String MESSAGE_PHONE_CONSTRAINTS =
-            "Users are to enter their numbers in this format, p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)\n"
-                    + "For example, p/ student/97271111 parent/97979797\n"
-                    + "Phone numbers can only contain numbers, and should be exactly 8 digits";
-    public static final String PHONE_VALIDATION_REGEX = "((Student: )(\\d\\d\\d\\d\\d\\d\\d\\d)"
-            + "( Parent: )(\\d\\d\\d\\d\\d\\d\\d\\d))|((Parent: )(\\d\\d\\d\\d\\d\\d\\d\\d))";
+            "Phone numbers can only contain numbers, and should be exactly 8 digits";
+    public static final String PHONE_VALIDATION_REGEX = "(\\d\\d\\d\\d\\d\\d\\d\\d)"
+            + "|(\\(Student phone not recorded\\))";
+
     public final String value;
 
     /**
-     * Validates the UI formatting phone number.
+     * Validates the student phone number.
      *
-     * @throws IllegalValueException if phone UI string is of invalid format.
+     * @throws IllegalValueException if student phone string is of invalid format.
      */
     public Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
-        trimmedPhone = changeToAppropriateUiFormat(trimmedPhone);
         if (!isValidPhone(trimmedPhone)) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }
@@ -131,22 +175,10 @@ public class Phone {
     }
 
     /**
-     * Returns true if a given string is a valid person phone number for display in UI.
+     * Returns true if a given string is a valid student phone number.
      */
     public static boolean isValidPhone(String test) {
         return test.matches(PHONE_VALIDATION_REGEX);
-    }
-
-    /**
-     * Converts user phone number input into an appropriate UI format by
-     * replacing all occurrence of "/" with ": " and capitalising first letter of student and parent.
-     */
-    public static String changeToAppropriateUiFormat(String value) {
-
-        value = value.replace("/", ": ");
-        value = value.replace("s", "S");
-        value = value.replace("p", "P");
-        return value;
     }
 
     @Override
@@ -168,7 +200,7 @@ public class Phone {
 
 }
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
     private static final String FXML = "PersonListCard.fxml";
 
@@ -196,6 +228,8 @@ public class Phone {
     private Label id;
     @FXML
     private Label phone;
+    @FXML
+    private Label parentPhone;
     @FXML
     private Label formClass;
     @FXML
@@ -262,6 +296,7 @@ public class Phone {
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        parentPhone.textProperty().bind(Bindings.convert(person.parentPhoneProperty()));
         formClass.textProperty().bind(Bindings.convert(person.formClassProperty()));
         tags.getChildren().clear();
         initialiseTags(person);

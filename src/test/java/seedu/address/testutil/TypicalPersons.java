@@ -33,48 +33,48 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 public class TypicalPersons {
 
     public static final ReadOnlyPerson ALICE = new PersonBuilder().withName("Alice Pauline")
-            .withPhone("97979797").withParentPhone("96753511").withAddress("123, Jurong West Ave 6, #08-111")
+            .withPhone("91119222").withParentPhone("96753511").withAddress("123, Jurong West Ave 6, #08-111")
             .withEmail("alice@example.com").withFormClass("12S23").withGrades("125.0").withPostalCode("279392")
             .withTags("friends")
             .build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder().withName("Benson Meier")
-            .withPhone("97979797").withParentPhone("96753511").withAddress("311, Clementi Ave 2, #02-25")
+            .withPhone("97979797").withParentPhone("91113321").withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withFormClass("12S23").withGrades("125.0").withPostalCode("279392")
             .withTags("owesMoney", "friends")
             .build();
     public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz")
-            .withPhone("97979797").withParentPhone("96753511").withEmail("heinz@example.com").withAddress("wall street")
+            .withPhone("97978989").withParentPhone("96753031").withEmail("heinz@example.com").withAddress("wall street")
             .withFormClass("12S23").withGrades("165.0").withPostalCode("279392")
             .build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier")
-            .withPhone("97979797").withParentPhone("96753511").withEmail("cornelia@example.com")
+            .withPhone("97972020").withParentPhone("97978181").withEmail("cornelia@example.com")
             .withAddress("10th street")
             .withFormClass("12S23").withGrades("100.0").withPostalCode("279392")
             .build();
     public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer")
-            .withPhone("97979797").withParentPhone("96753511").withEmail("werner@example.com")
+            .withPhone("97971231").withParentPhone("96722718").withEmail("werner@example.com")
             .withAddress("michegan ave")
             .withFormClass("12S23").withGrades("150.0").withPostalCode("279392")
             .build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz")
-            .withPhone("97979797").withParentPhone("96753511").withEmail("lydia@example.com")
+            .withPhone("97202010").withParentPhone("96712345").withEmail("lydia@example.com")
             .withAddress("little tokyo")
             .withFormClass("12S23").withGrades("75.0").withPostalCode("279392")
             .build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best")
-            .withPhone("97979797").withParentPhone("96753511").withEmail("anna@example.com").withAddress("4th street")
+            .withPhone("91122001").withParentPhone("96750000").withEmail("anna@example.com").withAddress("4th street")
             .withFormClass("12S23").withGrades("50.0").withPostalCode("279392").withRemark("Likes to swim")
             .build();
 
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier")
-            .withPhone("97979797").withParentPhone("96753511").withEmail("stefan@example.com")
+            .withPhone("97972222").withParentPhone("96751010").withEmail("stefan@example.com")
             .withAddress("little india")
             .withFormClass("12S23").withGrades("125.0").withPostalCode("987527")
             .build();
     public static final ReadOnlyPerson IDA = new PersonBuilder().withName("Ida Mueller")
-            .withPhone("97979797").withParentPhone("96753511").withEmail("hans@example.com").withAddress("chicago ave")
+            .withPhone("97908012").withParentPhone("96751010").withEmail("hans@example.com").withAddress("chicago ave")
             .withFormClass("12S23").withGrades("125.0").withPostalCode("123456")
             .build();
     // Manually added - Person's details found in {@code CommandTestUtil}

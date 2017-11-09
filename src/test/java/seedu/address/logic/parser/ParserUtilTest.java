@@ -22,6 +22,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Grades;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.ParentPhone;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
@@ -33,9 +34,12 @@ public class ParserUtilTest {
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_GRADES = "-123";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_PARENTPHONE = "9872111b";
     private static final String INVALID_REMARK = null;
 
+
     private static final String VALID_NAME = "Rachel Walker";
+    private static final String VALID_PARENTPHONE = "97272011";
     private static final String VALID_PHONE = "97979797";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
@@ -43,7 +47,6 @@ public class ParserUtilTest {
     private static final String VALID_REMARK = "Top 25 percentile";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
-
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
@@ -168,6 +171,34 @@ public class ParserUtilTest {
 
         assertEquals(expectedEmail, actualEmail.get());
     }
+
+    //@@author Lenaldnwj
+    @Test
+    public void parseParentPhone_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseParentPhone(null);
+    }
+
+    @Test
+    public void parseParentPhone_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseParentPhone(Optional.of(INVALID_PARENTPHONE));
+    }
+
+    @Test
+    public void parseParentPhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseParentPhone(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseParentPhone_validValue_returnsParentPhone() throws Exception {
+        ParentPhone expectedParentPhone = new ParentPhone(VALID_PARENTPHONE);
+        Optional<ParentPhone> actualGrades = ParserUtil.parseParentPhone(Optional.of(VALID_PARENTPHONE));
+
+        assertEquals(expectedParentPhone, actualGrades.get());
+    }
+
+    //@@author
 
     //@@author lincredibleJC
     @Test

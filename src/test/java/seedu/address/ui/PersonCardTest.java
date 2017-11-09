@@ -115,6 +115,7 @@ public class PersonCardTest extends GuiUnitTest {
         assertTrue(lennyPersonCard.getUsedColor().contains(lennyPersonCard.getAssignedTagColor()));
 
     }
+    //@@author Lenaldnwj
 
     @Test
     public void equals() {

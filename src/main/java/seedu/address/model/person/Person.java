@@ -125,9 +125,9 @@ public class Person implements ReadOnlyPerson {
 
     @Override
     public FormClass getFormClass() {
-        return formClass.get();
-    }
+        return formClass.get(); }
 
+    //@@author Lenaldnwj
     public void setParentPhone(ParentPhone parentPhone) {
         this.parentPhone.set(requireNonNull(parentPhone));
     }
@@ -141,6 +141,7 @@ public class Person implements ReadOnlyPerson {
     public ParentPhone getParentPhone() {
         return parentPhone.get();
     }
+    //@@author
 
     public void setGrades(Grades grades) {
         this.grades.set(requireNonNull(grades));
