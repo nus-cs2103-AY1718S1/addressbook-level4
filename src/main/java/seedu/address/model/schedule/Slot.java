@@ -35,6 +35,12 @@ public class Slot {
         }
     }
 
+    public static boolean isValidSlot (Day day, Time startTime, Time endTime) {
+        if (startTime.getTime() >= endTime.getTime()){
+            return false;
+        }
+        return true;
+    }
     public TreeSet<Integer> getBusyTime() {
         return busyTime;
     }
