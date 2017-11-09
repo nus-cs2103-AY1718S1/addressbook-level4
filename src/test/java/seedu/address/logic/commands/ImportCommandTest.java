@@ -23,7 +23,7 @@ public class ImportCommandTest {
     private static final String TEST_VALID_BOOK = "validAddressBook.xml";
     private static final String TEST_INVALID_BOOK = "empty.xml";
 
-    private static final String PATH_VALID_ABSOLUTE = System.getProperty("user.dir")
+    private static final String PATH_VALID_ABSOLUTE = FileUtil.getPath(System.getProperty("user.dir"))
         + TEST_DATA_FOLDER + TEST_VALID_BOOK;
     private static final String PATH_VALID_RELATIVE = TEST_DATA_FOLDER + TEST_VALID_BOOK;
     private static final String PATH_INVALID_MISSING = TEST_DATA_FOLDER;
@@ -40,11 +40,10 @@ public class ImportCommandTest {
         String expectedFirstMessage = String.format(MESSAGE_IMPORT_SUCCESS, PATH_VALID_ABSOLUTE);
         ImportCommand importFirstCommand = new ImportCommand(PATH_VALID_ABSOLUTE);
         assertCommandSuccess(importFirstCommand, expectedFirstMessage);
-        /*
+
         String expectedSecondMessage = String.format(MESSAGE_IMPORT_SUCCESS, PATH_VALID_RELATIVE);
         ImportCommand importSecondCommand = new ImportCommand(PATH_VALID_RELATIVE);
         assertCommandSuccess(importSecondCommand, expectedSecondMessage);
-        */
     }
 
     @Test
