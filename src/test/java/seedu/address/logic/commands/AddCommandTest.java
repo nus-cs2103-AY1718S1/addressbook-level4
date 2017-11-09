@@ -214,6 +214,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
     }
+    //@@author
 
     /**
      * A Model stub that always throw a DuplicatePersonException when trying to add a person.

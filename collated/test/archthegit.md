@@ -182,6 +182,61 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
 }
 
 ```
+###### /java/seedu/address/logic/commands/AddCommandTest.java
+``` java
+
+        @Override
+        public void unselectPerson() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public boolean ifSelectedPerson() {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public ReadOnlyPerson getSelectedPerson() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateSelectedPerson(ReadOnlyPerson person) {
+            fail("This method should not be called.");
+        }
+    }
+```
+###### /java/seedu/address/logic/parser/ParserUtilTest.java
+``` java
+
+    @Test
+    public void parseBirthday_validValue_returnsBirthday() throws Exception {
+        Birthday expectedBirthday = new Birthday(VALID_BIRTHDAY);
+        Optional<Birthday> actualBirthday = ParserUtil.parseBirthday(Optional.of(VALID_BIRTHDAY));
+
+        assertEquals(expectedBirthday, actualBirthday.get());
+    }
+
+    @Test
+    public void parseBirthday_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseBirthday(null);
+    }
+
+    @Test
+    public void parseBirthday_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseBirthday(Optional.of(INVALID_BIRTHDAY));
+    }
+
+    @Test
+    public void parseSchEmail_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseSchEmail(null);
+    }
+```
 ###### /java/seedu/address/model/person/BirthdayTest.java
 ``` java
 
@@ -205,17 +260,36 @@ public class BirthdayTest {
         assertTrue(Birthday.isValidBirthday(Birthday.BIRTHDAY_TEMPORARY));
     }
 
-    @Test
-    public void testSymmetricHashCode() throws IllegalValueException {
-        // equals and hashCode check birthday field value
-        Birthday birthdayX = new Birthday("14/01/1986");
-        Birthday birthdayY = new Birthday("14/01/1986");
-        assertTrue(birthdayX.equals(birthdayY) && birthdayY.equals(birthdayX));
-        assertTrue(birthdayX.hashCode() == birthdayY.hashCode());
+```
+###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
+``` java
+
+    /**
+     * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withBirthday(String birthday) {
+        try {
+            ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("address is expected to be unique.");
+        }
+        return this;
     }
-}
 
-
+```
+###### /java/seedu/address/testutil/PersonBuilder.java
+``` java
+    /**
+     * Sets the {@code Birthday} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withBirthday(String birthday) {
+        try {
+            this.person.setBirthday(new Birthday(birthday));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("birthday is expected to be unique.");
+        }
+        return this;
+    }
 
 ```
 ###### /java/seedu/address/ui/DetailsPanelTest.java

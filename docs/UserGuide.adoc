@@ -44,9 +44,10 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. You will see the GUI as seen in the diagram below.
+.  Double-click the file to start the app. You will see the GUI as seen in `Figure 3.1`.
 +
 image::Ui.png[width="790"]
+Figure 3.1 Starting page of The Myth's Book
 +
 .  You can type a command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -167,6 +168,7 @@ By typing this command, you will be able to edit the phone number and email addr
 * `edit 2 n/Betsy Crower t/` +
 By typing this command, you will be able to edit the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::find[]
 === Locating persons by name: `find`
 
 This command helps you to find persons whose names contain any of the given keywords. +
@@ -191,6 +193,7 @@ by typing this command, you will be able to find both `john` and `John Doe`.
 * `find Betsy Tim John` +
 By typing this command, you will be able to find any person having names `Betsy`, `Tim`, or `John`
 
+// end::find[]
 === Finding a person's tag : `findtag`
 
 This command will help you find contacts whose tags contain any of the given keywords. +
@@ -353,12 +356,14 @@ Examples:
 You should be able to see the result of using `switch INDEX`
 as seen in the figure below.
 
-
+// tag::reminder[]
 === Checking for birthdays : `birthdays`
 
 This command shows you a list of all the contacts who have their birthdays today.
 
 Format: `birthdays`
+
+// end::reminder[]
 
 === Clearing all entries : `clear`
 
@@ -533,9 +538,11 @@ link:#the-myths-book---user-guide[Back To Top]
 
 == UI features
 
+// tag::details[]
 === Details Panel
 
 This `Details Panel` is a graphical user interface that shows you all the `hidden` details of a person that is not shown in the person list.
+// end::details[]
 
 // tag::calendar[]
 === Calendar
