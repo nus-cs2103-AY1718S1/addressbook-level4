@@ -721,7 +721,7 @@ The reason for the use of ListByBloodtypeCommandParser is to filter out extra sp
 // tag::batch[]
 === *Enhancement: Batch delete all persons who share a particular tag* +
 
-MedNus is designed for power users. Thus, batch deletions are a welcome addition since they make it less tedious to perform deletions on multiple patients, and instead delete batches as identified by a tag.
+MedNus is designed for power users. Thus, batch deletions are a welcome addition since they make it less tedious to perform deletions on multiple patients, and instead delete batches as identified by a tag. +
 *Format:* `batch TAG` +
 *Shorthand format:* `b TAG`
 
