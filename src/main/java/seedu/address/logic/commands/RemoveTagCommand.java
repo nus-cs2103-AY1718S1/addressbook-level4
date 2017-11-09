@@ -52,7 +52,7 @@ public class RemoveTagCommand extends UndoableCommand {
         if (index.orElse(null) == null) {
             removeAllTag(toRemove);
         } else {
-            remvoeOneTag(index.get(), toRemove);
+            removeOneTag(index.get(), toRemove);
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS));
     }
@@ -76,7 +76,7 @@ public class RemoveTagCommand extends UndoableCommand {
      * @param toRemove is the tag to be removed from the person
      * @throws CommandException if the tag to be removed does not exist in the person.
      */
-    private void remvoeOneTag(Index index, Tag toRemove) throws CommandException {
+    private void removeOneTag(Index index, Tag toRemove) throws CommandException {
         requireIndexValid(index);
         try {
             model.removeTag(index, toRemove);
