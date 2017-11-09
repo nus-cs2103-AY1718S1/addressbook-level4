@@ -364,6 +364,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::colortag[]
 === Persisting coloured tags
 
 Enhanced feature to allow unique coloured tags to persist after the program exits without having to save color data on external files.
@@ -448,7 +449,10 @@ Finally, we format the RBG values into hexadecimal format with a hex symbol in f
 **Pros:** Hard for new developers to understand how colors are retained. +
 **Cons:** Must create additional file and include additional unnecessary codes for read/write.
 
+// end::colortag[]
+
 ---
+
 
 === Find person(s) using different details
 
@@ -484,6 +488,69 @@ Alternative considered is to allow user input multiple details in each search. I
 * There will be no results returned in this scenario as input phone number does not match the phone number in the `Contact 1` although the name matches exactly.
 
 From the two scenarios, we know that unless the user knows the exact details (i.e. full name, exact phone number, exact email and etc) otherwise `finds` command with multiple details input is practically not useful as no results will be returned.
+
+// tag::gmap[]
+=== Google Map Mechanism
+
+The Google map mechanism resides in a `GmapCommand` which also inherits from the `Command` object.
+
+image::GmapClassDiagram.png[width:100]
+
+There are two ways the user can utilize the Google map feature, first by entering the command into CommandBox or selecting the **Google Map** option from the dropdown menu on each `PersonCard` panel.
+
+The sequence diagram can be seen below:
+
+image::GmapSequenceDiagram.png[width="800"]
+
+
+
+The first way as you can see from the diagram, the user can input the command of `gmap` into `CommandBox` which will then have to go through command parser in the logic component before being raised in the events center. Doing so allows us to validate the requested index from user input before initializing a `GmapCommand` object.
+
+`GmapCommand` object has double constructor that takes in either index-based or a predicate containing names to be searched.
+
+[source,java]
+----
+public GmapCommand(Index targetIndex) {
+        this.usingIndex = true;
+        this.targetIndex = targetIndex;
+    }
+
+public GmapCommand(NameConsistsKeywordsPredicate predicate) {
+    this.usingIndex = false;
+    this.predicate = predicate;
+}
+----
+
+Command execution residing in **execute()** will then attempt to validate the given index if it exists or returning the first index of a list of persons that matches all the predicate that the user has indicated.
+
+Finally, **DisplayGmapEvent** will be raised with this index in its parameter.
+
+[source,java]
+----
+EventsCenter.getInstance().post(new DisplayGmapEvent(targetIndex));
+----
+
+The second way is to select the Google Map option under the dropdown list on the GUI. Each `PersonCard` has its own handler which will automatically raise a DisplayGmapEvent with the `PersonCard` index as parameter.
+
+[source,java]
+----
+public void handleGoogleMap() {
+    raise(new DisplayGmapEvent(Index.fromOneBased(this.displayedIndex)));
+}
+----
+
+Event object will then be handled by the UI Component's `BrowserPanel` and attempt to load the Google Map address with a custom url crafted with the person's address using the provided index.
+
+==== Design Considerations
+
+**Aspect:** Loading of Google Map data`. +
+**Alternative 1 (current choice):** Loading a modified URL into Webview. +
+**Pros:** Much lesser codes needed, very easy for new developers to understand. +
+**Cons:** Lacks flexibility in utilizing Google's map feature. +
+**Alternative 2:** Use Google's Java client libraries. +
+**Pros:** Allows much more flexibility and use directions, places and distance features. +
+**Cons:** Currently do not need all these extra features. Integrating external libraries induces unnecessary overhead and is hard for new developers to understand the code.
+// end::gmap[]
 
 == Documentation
 

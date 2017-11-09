@@ -1,5 +1,5 @@
 # renkai91
-###### /java/seedu/address/logic/commands/EditCommand.java
+###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
         public void setBirthday(Birthday birthday) {
             this.birthday = birthday;
@@ -9,7 +9,7 @@
             return Optional.ofNullable(birthday);
         }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code Birthday} is present.
@@ -20,33 +20,61 @@
         return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
 ```
-###### /java/seedu/address/model/person/Birthday.java
+###### \java\seedu\address\model\person\Birthday.java
 ``` java
+/**
+ * Represents a Person's birthday in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidBirthday(String)}
+ */
 public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS = "Person's birthday should be in format: DD/MM/YYYY";
+    public static final String MESSAGE_BIRTHDAY2_CONSTRAINTS = "day or month more the 31 or 12";
+    public static final String MESSAGE_BIRTHDAY3_CONSTRAINTS = "1,3,5,7,8,10,12 only have 31days";
+    public static final String MESSAGE_BIRTHDAY4_CONSTRAINTS = "Feb don't have 30 or 31 days";
+    public static final String MESSAGE_BIRTHDAY5_CONSTRAINTS = "Not leap year, got Feb no 29,31 or 31 days";
 
     public static final String BIRTHDAY_VALIDATION_REGEX = "\\d\\d/\\d\\d/\\d\\d\\d\\d";
-
     public final String value;
-
-    /**
- * Validates given birthday.
- *
- * @throws IllegalValueException if given birthday address string is invalid.
- */
+    /*** * Validates given birthday.
+    * *
+    *
+    * @throws IllegalValueException if given birthday address string is invalid.
+    */
 
     public Birthday(String birthday) throws IllegalValueException {
         String trimmedBirthday = (birthday != null) ? birthday : "01/01/2001";
-
         if (birthday != null && !isValidBirthday(trimmedBirthday)) {
             throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
         }
+        if (isValidBirthday(trimmedBirthday)) {
+            String yes2 = trimmedBirthday.replaceAll("[/]", "");
+            int result = Integer.parseInt(yes2);
+            int year = result % 10000;
+            int month = ((result % 1000000) - year) / 10000;
+            int day = result / 1000000;
+            if (month > 13 || day > 32) {
+                throw new IllegalValueException(MESSAGE_BIRTHDAY2_CONSTRAINTS);
+            }
+            if ((day == 31) && ((month == 4) || (month == 6) || (month == 9) || (month == 11))) {
+                throw new IllegalValueException(MESSAGE_BIRTHDAY3_CONSTRAINTS);
+            } else if (month == 2) {
+                //leap year
+                if (year % 4 == 0) {
+                    if ((day == 30) || (day == 31)) {
+                        throw new IllegalValueException(MESSAGE_BIRTHDAY4_CONSTRAINTS);
+                    }
+                } else {
+                    if ((day == 29) || (day == 30) || (day == 31)) {
+                        throw new IllegalValueException(MESSAGE_BIRTHDAY5_CONSTRAINTS);
+                    }
+                }
+            }
+        }
         this.value = trimmedBirthday;
     }
-
     /**
-     * Returns if a given string is a valid person birthday.
+     * * Returns if a given string is a valid person birthday.
      */
     public static boolean isValidBirthday(String test) {
         return test.matches(BIRTHDAY_VALIDATION_REGEX);
@@ -72,7 +100,7 @@ public class Birthday {
 
 }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     @Override
     public Address getAddress() {
@@ -93,7 +121,7 @@ public class Birthday {
         return birthday.get();
     }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     @Override
     public ObjectProperty<Picture> pictureProperty() {
@@ -102,34 +130,55 @@ public class Birthday {
     @Override
     public Picture getPicture() {
         return picture.get();
+    }
 ```
-###### /java/seedu/address/model/person/Picture.java
+###### \java\seedu\address\model\person\Picture.java
 ``` java
 public class Picture {
 
     public static final int PIC_WIDTH = 100;
     public static final int PIC_HEIGHT = 100;
 
-    public static final String BASE_URL = System.getProperty("user.dir") + "/src/main/resources/contact_images/";
+    public static final String BASE_URL = System.getProperty("user.dir") + "/data/contact_images/";
 
-    public static final String PLACEHOLDER_IMAG = "test1.png";
+    public static final String PLACEHOLDER_IMAGE = System.getProperty("user.dir") + "/src/main/resources/test1.png";
+
+    public static final String BASE_JAR_URL = System.getProperty("user.dir");
+
+    public static final String PLACEHOLDER_JAR_URL = "/images/test1.png";
 
     private String pictureUrl;
+    private String jarPictureUrl;
+    private boolean jarResourcePath;
 
     public Picture() {
-        this.pictureUrl = BASE_URL + PLACEHOLDER_IMAG;
+        this.pictureUrl = PLACEHOLDER_IMAGE;
+        this.jarPictureUrl = PLACEHOLDER_JAR_URL;
+        this.jarResourcePath = false;
+
     }
 
     public String getPictureUrl() {
         return pictureUrl;
     }
 
+    public String getJarPictureUrl() {
+        return jarPictureUrl;
+    }
+    public void setJarResourcePath() {
+        this.jarResourcePath = true;
+    }
+    public boolean checkJarResourcePath() {
+        return this.jarResourcePath;
+    }
+
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = BASE_URL + pictureUrl;
+        this.jarPictureUrl = BASE_JAR_URL + pictureUrl;
     }
 }
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
     /**
      * Menu list option: add image
@@ -143,10 +192,17 @@ public class Picture {
         if (selectedPic != null) {
             try {
                 person.getPicture().setPictureUrl(person.getName().toString() + person.getPhone().toString() + ".jpg");
-                ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
-                FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
-                Image newPicture = new Image(fileStream);
-                picture.setImage(newPicture);
+                if (person.getPicture().checkJarResourcePath()) {
+                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getJarPictureUrl()));
+                    FileInputStream fileStream = new FileInputStream(person.getPicture().getJarPictureUrl());
+                    Image newPicture = new Image(fileStream);
+                    picture.setImage(newPicture);
+                } else {
+                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
+                    FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
+                    Image newPicture = new Image(fileStream);
+                    picture.setImage(newPicture);
+                }
             } catch (Exception e) {
                 System.out.println(e + "Invalid File");
             }
@@ -155,19 +211,27 @@ public class Picture {
         }
     }
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
     /**
      * Initialize image for ever person
      */
     private void initImage() {
         try {
-            File picFile = new File(person.getPicture().getPictureUrl());
-            FileInputStream fileStream = new FileInputStream(picFile);
-            Image personPicture = new Image(fileStream);
+            try {
+                InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
+                person.getPicture().setJarResourcePath();
+                Image personPicture = new Image(in);
+                picture.setImage(personPicture);
+            } catch (Exception e) {
+                File picFile = new File(person.getPicture().getPictureUrl());
+                FileInputStream fileStream = new FileInputStream(picFile);
+                Image personPicture = new Image(fileStream);
+                picture.setImage(personPicture);
+            }
             picture.setFitHeight(person.getPicture().PIC_HEIGHT);
             picture.setFitWidth(person.getPicture().PIC_WIDTH);
-            picture.setImage(personPicture);
+
             cardPane.getChildren().add(picture);
         } catch (Exception e) {
             System.out.println("Image not found");

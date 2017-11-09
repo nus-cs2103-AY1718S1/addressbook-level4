@@ -250,12 +250,14 @@ There is no need to save manually.
 
 == New Features
 
-=== Static `coloured` tags (v1.0)
+// tag::colortag[]
+=== Static `colored` tags (v1.0)
 
 *Author*: Ng Choon Heng
 
 Tags generated will automatically be assigned a unique color.+
-Similar tags will also be assigned the same colour as long as tags have the same spelling.
+Similar tags will also be assigned the same color as long as tags have the same spelling.
+// end::colortag[]
 
 === Display of `total person` (v1.0)
 
@@ -300,12 +302,14 @@ Returns any person having tag `[friends]` exactly
 * `finds t/[friends] [colleagues]` +
 Returns any person having tags `[friends]` or `[colleagues]` exactly
 
+// tag::optionmenu[]
 === Extra `Options` menu (v1.1)
 
 *Author*: Ng Choon Heng
 
 Each user will have an extra list of options to choose from beside their name. +
 Icon is similar to a down arrow.
+// end::optionmenu[]
 
 === Option Menu `Delete` (v1.1)
 
@@ -314,6 +318,7 @@ Icon is similar to a down arrow.
 This feature can be found under the new `options` menu
 Deletes the user according to the selected option's parent person.
 
+// tag::gmap[]
 === Displaying google map : `gmap` (v1.2)
 
 *Author*: Ng Choon Heng
@@ -342,6 +347,7 @@ Display google map the 1st person in the results of the `find` command.
 
 This feature can be found under the new `options` menu. +
 Display the google map data into browser panel based on person's address.
+// end::gmap[]
 
 === Themes selection from `File` toolbar (v1.2)
 
@@ -375,7 +381,8 @@ All persons displayed will be sorted in ascending alphabetical order based on th
 Using `List` command will always display all persons in sorted ascedning alphabetical order. +
 Persons with `Important` or `important` tag will be at the top in ascending alphabetical order then follow by other persons.
 
-=== Gmap command accepts uperson name (v1.3)
+// tag::gmap2[]
+=== Gmap command accepts person name (v1.3)
 
 *Author*: Ng Choon Heng
 
@@ -398,6 +405,7 @@ Display google map of the person with name *Bernice* in the address book.
 * `find Yu` +
 `gmap Yu` +
 Display google map of the person in the results of the `find` command with *Yu* surname.
+// end::gmap2[]
 
 === Changing theme with CLI command (v1.3)
 
