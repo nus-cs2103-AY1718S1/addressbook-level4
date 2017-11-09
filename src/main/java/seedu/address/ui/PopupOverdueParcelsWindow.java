@@ -45,7 +45,7 @@ public class PopupOverdueParcelsWindow extends UiPart<Region> {
     private int getNumOverdueParcels (ObservableList<ReadOnlyParcel> uncompletedParcels) {
         int numOverdueParcels = 0;
 
-        for (int i = 0 ; i < uncompletedParcels.size() ; i++) {
+        for (int i = 0; i < uncompletedParcels.size(); i++) {
             if (uncompletedParcels.get(i).getStatus().equals(Status.OVERDUE)) {
                 numOverdueParcels++;
             }
