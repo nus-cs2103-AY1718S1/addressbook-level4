@@ -1,5 +1,109 @@
 # liuhang0213
-###### \java\seedu\address\logic\commands\NextMeetingCommand.java
+###### /java/seedu/address/ui/PersonCard.java
+``` java
+    /**
+     * Initializes the profile picture using Gravatar
+     */
+    private void initPicture(ReadOnlyPerson person) {
+
+        Image image;
+
+        try {
+            FileInputStream imageFile = StorageManager.loadCacheFile(String.format(PROFILE_PHOTO_FILENAME_FORMAT,
+                    person.getInternalId().value));
+            image = new Image(imageFile);
+            gravatar.setImage(image);
+        } catch (IOException e) {
+            try {
+                FileInputStream defImageFile = StorageManager.loadResourceImage(DEFAULT_PROFILE_PHOTO_FILENAME);
+                image =  new Image(defImageFile);
+                gravatar.setImage(image);
+            } catch (IOException e1) {
+                // Shouldn't happen unless the default profile photo is missing
+                LogsCenter.getLogger("").warning("Missing default profile photo.");
+            }
+        }
+    }
+
+```
+###### /java/seedu/address/ui/MainWindow.java
+``` java
+    private void setPersonListPanel() {
+        try {
+            ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
+            personListPanel = new PersonListPanel(persons);
+            personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        } catch (IllegalStateException e) {
+            logger.info("Cannot update profile photo on a non-main thread. "
+                    + "Type 'list' to see the new profile photos. '¯\\_(ツ)_/¯");
+        }
+    }
+
+```
+###### /java/seedu/address/ui/MainWindow.java
+``` java
+    @Subscribe
+    private void handleDefaultProfilePhotoChangedEvent(PrefDefaultProfilePhotoChangedEvent event) {
+        ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
+        Task<Void> task = new Task<Void>() {
+            @Override public Void call() {
+                for (ReadOnlyPerson person : persons) {
+                    storage.downloadProfilePhoto(person, prefs.getDefaultProfilePhoto());
+                }
+                return null;
+            }
+        };
+        Thread th = new Thread(task);
+        th.setDaemon(true);
+        th.start();
+    }
+
+    @Subscribe
+    private void handleProfilePhotoChangedEvent(ProfilePhotoChangedEvent event) {
+        setPersonListPanel();
+    }
+}
+```
+###### /java/seedu/address/logic/parser/PrefCommandParser.java
+``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import java.util.Objects;
+
+import seedu.address.logic.commands.PrefCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new PrefCommand object
+ */
+public class PrefCommandParser implements Parser<PrefCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the PrefCommand
+     * and returns an PrefCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public PrefCommand parse(String args) throws ParseException {
+        String[] splitArgs = args.trim().split("\\s+");
+        String prefKey;
+        String newPrefValue;
+        newPrefValue = "";
+
+        if (splitArgs.length > 2 || (splitArgs.length == 1 && Objects.equals(splitArgs[0], ""))) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, PrefCommand.MESSAGE_USAGE));
+        } else if (splitArgs.length == 2) {
+            // The second argument is optional
+            newPrefValue = splitArgs[1].trim();
+        }
+
+        prefKey = splitArgs[0].trim();
+
+        return new PrefCommand(prefKey, newPrefValue);
+    }
+}
+```
+###### /java/seedu/address/logic/commands/NextMeetingCommand.java
 ``` java
 /**
  * Lists all upcoming meetings to the user.
@@ -17,7 +121,7 @@ public class NextMeetingCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        Meeting nextMeeting = model.getMeetingList().getUpcomingMeeting();
+        ReadOnlyMeeting nextMeeting = model.getMeetingList().getUpcomingMeeting();
         if (nextMeeting == null) {
             return new CommandResult(MESSAGE_NO_UPCOMING_MEETINGS);
         }
@@ -42,7 +146,7 @@ public class NextMeetingCommand extends Command {
 
 
 ```
-###### \java\seedu\address\logic\commands\PrefCommand.java
+###### /java/seedu/address/logic/commands/PrefCommand.java
 ``` java
 /**
  * Edits the details of an existing person in the address book.
@@ -148,262 +252,124 @@ public class PrefCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\parser\PrefCommandParser.java
+###### /java/seedu/address/model/UniqueMeetingList.java
 ``` java
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import java.util.Objects;
-
-import seedu.address.logic.commands.PrefCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-
 /**
- * Parses input arguments and creates a new PrefCommand object
+ * A list of meetings that enforces no nulls and uniqueness between its elements.
+ *
+ * Supports minimal set of list operations for the app's features.
+ *
+ * @see Meeting#equals(Object)
  */
-public class PrefCommandParser implements Parser<PrefCommand> {
+public class UniqueMeetingList implements Iterable<ReadOnlyMeeting>, ReadOnlyMeetingList {
+
+    private final ObservableList<ReadOnlyMeeting> internalList = FXCollections.observableArrayList();
 
     /**
-     * Parses the given {@code String} of arguments in the context of the PrefCommand
-     * and returns an PrefCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * Constructs empty MeetingList.
      */
-    public PrefCommand parse(String args) throws ParseException {
-        String[] splitArgs = args.trim().split("\\s+");
-        String prefKey;
-        String newPrefValue;
-        newPrefValue = "";
+    public UniqueMeetingList() {}
 
-        if (splitArgs.length > 2 || (splitArgs.length == 1 && Objects.equals(splitArgs[0], ""))) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, PrefCommand.MESSAGE_USAGE));
-        } else if (splitArgs.length == 2) {
-            // The second argument is optional
-            newPrefValue = splitArgs[1].trim();
-        }
+    /**
+     * Creates a UniqueMeetingList using given meetings.
+     * Enforces no nulls.
+     */
+    public UniqueMeetingList(List<Meeting> meetings) {
+        requireAllNonNull(meetings);
+        internalList.addAll(meetings);
 
-        prefKey = splitArgs[0].trim();
-
-        return new PrefCommand(prefKey, newPrefValue);
+        assert CollectionUtil.elementsAreUnique(internalList);
     }
-}
-```
-###### \java\seedu\address\model\AddressBook.java
-``` java
+
     /**
-     * Returns the maximum internal index in the unique person list
+     * Creates a copy of an existing meeting list
      */
-    public int getMaxInternalIndex() {
-        return persons.getMaxInternalIndex();
+    public UniqueMeetingList(ReadOnlyMeetingList newData) {
+        requireNonNull(newData);
+        this.internalList.setAll(newData.getMeetingList());
     }
 
     @Override
-    public ReadOnlyPerson getPersonByInternalIndex(int index) throws PersonNotFoundException {
-        return persons.getPersonByInternalIndex(index);
+    public ObservableList<ReadOnlyMeeting> getMeetingList() {
+        return internalList;
     }
 
-```
-###### \java\seedu\address\model\Meeting.java
-``` java
-/**
- * Represents a Meeting
- * Guarantees: immutable; meeting time is in the future
- */
-public class Meeting implements Comparable<Meeting> {
-
-    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-    public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
-    public static final String MESSAGE_INVALID_DATE = "The meeting must be in the future.";
-    private LocalDateTime dateTime;
-    private String location;
-    private String notes;
-    private ArrayList<InternalId> listOfPersonsId;
-    private Boolean isMeetingInFuture;
+    /**
+     * Returns all meetings in this list as a Set.
+     * This set is mutable and change-insulated against the internal list.
+     */
+    public Set<ReadOnlyMeeting> toSet() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return new HashSet<>(internalList);
+    }
 
     /**
-     * Validates params given for meeting
+     * Replaces the Meetings in this list with those in the argument meeting list.
+     * @param meetings
+     */
+    public void setMeetings(ObservableList<ReadOnlyMeeting> meetings) {
+        requireAllNonNull(meetings);
+        internalList.setAll(meetings);
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
+     * Ensures every meeting in the argument list exists in this object.
+     */
+    public void mergeFrom(UniqueMeetingList from) {
+        final Set<ReadOnlyMeeting> alreadyInside = this.toSet();
+        from.internalList.stream()
+                .filter(meeting -> !alreadyInside.contains(meeting))
+                .forEach(internalList::add);
+
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
+     * Returns true if the list contains an equivalent Meeting as the given argument.
+     */
+    public boolean contains(ReadOnlyMeeting toCheck) {
+        requireNonNull(toCheck);
+        return internalList.contains(toCheck);
+    }
+
+    /**
+     * Adds a Meeting to the list.
      *
-     * @throws IllegalValueException if the given meeting time is not in the future
+     * @throws DuplicateMeetingException if the Meeting to add is a duplicate of an existing Meeting in the list.
      */
-    public Meeting(LocalDateTime dateTime, String location, String notes, ArrayList<InternalId> listOfPersonsId) {
-        requireNonNull(dateTime);
-        requireNonNull(location);
-        requireNonNull(listOfPersonsId);
-        if (dateTime.isBefore(LocalDateTime.now())) {
-            isMeetingInFuture = false;
-        } else {
-            isMeetingInFuture = true;
+    public void add(ReadOnlyMeeting toAdd) throws DuplicateMeetingException {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicateMeetingException();
         }
+        internalList.add(toAdd);
 
-        this.dateTime = dateTime;
-        this.location = location.trim();
-        this.notes = notes.trim();
-        this.listOfPersonsId = listOfPersonsId;
+        assert CollectionUtil.elementsAreUnique(internalList);
     }
 
-    /**
-     * Creates a copy of the given meeting
-     */
-    public Meeting(Meeting source) {
-        this(source.dateTime, source.location, source.notes, source.listOfPersonsId);
-    }
-
-    // Get methods
-    public String getDate() {
-        return dateTime.format(DATE_FORMATTER);
-    }
-
-    public String getTime() {
-        return dateTime.format(TIME_FORMATTER);
-    }
-
-    public String getDateTime() {
-        return dateTime.toString();
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public ArrayList<InternalId> getListOfPersonsId() {
-        return listOfPersonsId;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Meeting // instanceof handles nulls
-                && this.dateTime.equals(((Meeting) other).dateTime)
-                && this.location.equals(((Meeting) other).location)
-                && this.notes.equals(((Meeting) other).notes)
-                && this.listOfPersonsId.equals(((Meeting) other).listOfPersonsId)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(dateTime, location, notes, listOfPersonsId);
-    }
+```
+###### /java/seedu/address/model/ReadOnlyMeetingList.java
+``` java
+/**
+ * Unmodifiable view of a meeting list
+ */
+public interface ReadOnlyMeetingList {
 
     /**
-     * Format state as text for viewing.
+     * Returns an unmodifiable view of the meetings list.
+     * This list will not contain any duplicate meetings.
      */
-    public String toString() {
-        return "Date: " + dateTime.format(DATE_FORMATTER) + "  Time: " + dateTime.format(TIME_FORMATTER) + '\n'
-                + "Location: " + location + '\n'
-                + "Notes: " + notes;
-    }
+    ObservableList<ReadOnlyMeeting> getMeetingList();
 
-    @Override
-    public int compareTo(Meeting other) {
-        return dateTime.compareTo(other.dateTime);
-    }
+    /**
+     * Returns the next upcoming meeting
+     * This is required for nextMeeting command
+     */
+    ReadOnlyMeeting getUpcomingMeeting();
 }
 ```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    /** Raises an event to indicate a person been added */
-    private void indicatePersonAdded(ReadOnlyPerson person) {
-        raise(new PersonChangedEvent(person, PersonChangedEvent.ChangeType.ADD, userPrefs));
-    }
-
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    /** Raises an event to indicate a person been edited */
-    private void indicatePersonEdited(ReadOnlyPerson person) {
-        raise(new PersonChangedEvent(person, PersonChangedEvent.ChangeType.EDIT, userPrefs));
-    }
-
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    /** Raises an event to indicate a person been deleted */
-    private void indicatePersonDeleted(ReadOnlyPerson person) {
-        raise(new PersonChangedEvent(person, PersonChangedEvent.ChangeType.DELETE, userPrefs));
-    }
-
-    @Override
-    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        addressBook.removePerson(target);
-        indicateAddressBookChanged();
-        indicatePersonDeleted(target);
-    }
-
-    @Override
-    public boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException {
-        boolean isTagRemoved;
-        boolean hasOneOrMoreDeletion = false;
-        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
-
-            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
-            //creates a new person without each of the tags
-            Person newPerson = new Person(oldPerson);
-            Set<Tag> newTags = new HashSet<>(newPerson.getTags());
-
-            for (Tag tag : tags) {
-                isTagRemoved = newTags.remove(tag);
-                if (isTagRemoved) {
-                    hasOneOrMoreDeletion = isTagRemoved;
-                }
-            }
-            newPerson.setTags(newTags);
-
-            addressBook.updatePerson(oldPerson, newPerson);
-        }
-        return hasOneOrMoreDeletion;
-    }
-
-    @Override
-    public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-        addressBook.addPerson(person);
-
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
-        indicatePersonAdded(person);
-    }
-
-    @Override
-    public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireAllNonNull(target, editedPerson);
-
-        addressBook.updatePerson(target, editedPerson);
-        indicateAddressBookChanged();
-        indicatePersonEdited(editedPerson);
-    }
-
-    //=========== Filtered Person List Accessors =============================================================
-
-    /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
-     * {@code addressBook}
-     */
-    @Override
-    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
-    }
-
-    @Override
-    public void updateFilteredPersonList() {
-        updateFilteredPersonList();
-    }
-
-    @Override
-    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-        requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
-    }
-
-    @Override
-    public UserPrefs getUserPrefs() {
-        return this.userPrefs;
-    }
-
-```
-###### \java\seedu\address\model\person\InternalId.java
+###### /java/seedu/address/model/person/InternalId.java
 ``` java
 import seedu.address.commons.exceptions.IllegalValueException;
 
@@ -451,7 +417,7 @@ public class InternalId {
 
 }
 ```
-###### \java\seedu\address\model\person\UniquePersonList.java
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
     /**
      * Returns the maximum internal index among all persons in the address book
@@ -470,7 +436,7 @@ public class InternalId {
     }
 
 ```
-###### \java\seedu\address\model\person\UniquePersonList.java
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
     /**
      * Updates the maximum internal index among all persons in the person list
@@ -489,7 +455,52 @@ public class InternalId {
     }
 
 ```
-###### \java\seedu\address\model\ReadOnlyAddressBook.java
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /** Raises an event to indicate a person been added */
+    private void indicatePersonAdded(ReadOnlyPerson person) {
+        raise(new PersonChangedEvent(person, PersonChangedEvent.ChangeType.ADD, userPrefs));
+    }
+
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /** Raises an event to indicate a person been edited */
+    private void indicatePersonEdited(ReadOnlyPerson person) {
+        raise(new PersonChangedEvent(person, PersonChangedEvent.ChangeType.EDIT, userPrefs));
+    }
+
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /** Raises an event to indicate a person been deleted */
+    private void indicatePersonDeleted(ReadOnlyPerson person) {
+        raise(new PersonChangedEvent(person, PersonChangedEvent.ChangeType.DELETE, userPrefs));
+    }
+
+    @Override
+    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.removePerson(target);
+        indicateAddressBookChanged();
+        indicatePersonDeleted(target);
+    }
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    /**
+     * Returns the maximum internal index in the unique person list
+     */
+    public int getMaxInternalIndex() {
+        return persons.getMaxInternalIndex();
+    }
+
+    @Override
+    public ReadOnlyPerson getPersonByInternalIndex(int index) throws PersonNotFoundException {
+        return persons.getPersonByInternalIndex(index);
+    }
+
+```
+###### /java/seedu/address/model/ReadOnlyAddressBook.java
 ``` java
     /**
      * Returns an unmodifiable view of a person by the given internal index
@@ -506,284 +517,112 @@ public class InternalId {
 
 }
 ```
-###### \java\seedu\address\model\ReadOnlyMeetingList.java
+###### /java/seedu/address/model/Meeting.java
 ``` java
 /**
- * Unmodifiable view of a meeting list
+ * Represents a Meeting
+ * Guarantees: immutable; meeting time is in the future
  */
-public interface ReadOnlyMeetingList {
+public class Meeting implements ReadOnlyMeeting {
+
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+    public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
+    public static final String MESSAGE_INVALID_DATE = "The meeting must be in the future.";
+    private LocalDateTime dateTime;
+    private String location;
+    private String notes;
+    private ArrayList<InternalId> listOfPersonsId;
+    private Boolean isMeetingInFuture;
 
     /**
-     * Returns an unmodifiable view of the meetings list.
-     * This list will not contain any duplicate meetings.
-     */
-    ObservableList<Meeting> getMeetingList();
-
-    /**
-     * Returns the next upcoming meeting
-     * This is required for nextMeeting command
-     */
-    Meeting getUpcomingMeeting();
-}
-```
-###### \java\seedu\address\model\UniqueMeetingList.java
-``` java
-/**
- * A list of meetings that enforces no nulls and uniqueness between its elements.
- *
- * Supports minimal set of list operations for the app's features.
- *
- * @see Meeting#equals(Object)
- */
-public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList {
-
-    private final ObservableList<Meeting> internalList = FXCollections.observableArrayList();
-
-    /**
-     * Constructs empty MeetingList.
-     */
-    public UniqueMeetingList() {}
-
-    /**
-     * Creates a UniqueMeetingList using given meetings.
-     * Enforces no nulls.
-     */
-    public UniqueMeetingList(List<Meeting> meetings) {
-        requireAllNonNull(meetings);
-        internalList.addAll(meetings);
-
-        assert CollectionUtil.elementsAreUnique(internalList);
-    }
-
-    /**
-     * Creates a copy of an existing meeting list
-     */
-    public UniqueMeetingList(ReadOnlyMeetingList newData) {
-        requireNonNull(newData);
-        this.internalList.setAll(newData.getMeetingList());
-    }
-
-    @Override
-    public ObservableList<Meeting> getMeetingList() {
-        return internalList;
-    }
-
-    /**
-     * Returns all meetings in this list as a Set.
-     * This set is mutable and change-insulated against the internal list.
-     */
-    public Set<Meeting> toSet() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return new HashSet<>(internalList);
-    }
-
-    /**
-     * Replaces the Meetings in this list with those in the argument meeting list.
-     */
-    public void setMeetings(List<Meeting> meetings) {
-        requireAllNonNull(meetings);
-        internalList.setAll(meetings);
-        assert CollectionUtil.elementsAreUnique(internalList);
-    }
-
-    /**
-     * Ensures every meeting in the argument list exists in this object.
-     */
-    public void mergeFrom(UniqueMeetingList from) {
-        final Set<Meeting> alreadyInside = this.toSet();
-        from.internalList.stream()
-                .filter(meeting -> !alreadyInside.contains(meeting))
-                .forEach(internalList::add);
-
-        assert CollectionUtil.elementsAreUnique(internalList);
-    }
-
-    /**
-     * Returns true if the list contains an equivalent Meeting as the given argument.
-     */
-    public boolean contains(Meeting toCheck) {
-        requireNonNull(toCheck);
-        return internalList.contains(toCheck);
-    }
-
-    /**
-     * Adds a Meeting to the list.
+     * Validates params given for meeting
      *
-     * @throws DuplicateMeetingException if the Meeting to add is a duplicate of an existing Meeting in the list.
+     * @throws IllegalValueException if the given meeting time is not in the future
      */
-    public void add(Meeting toAdd) throws DuplicateMeetingException {
-        requireNonNull(toAdd);
-        if (contains(toAdd)) {
-            throw new DuplicateMeetingException();
+    public Meeting(LocalDateTime dateTime, String location, String notes, ArrayList<InternalId> listOfPersonsId) {
+        requireNonNull(dateTime);
+        requireNonNull(location);
+        requireNonNull(listOfPersonsId);
+        if (dateTime.isBefore(LocalDateTime.now())) {
+            isMeetingInFuture = false;
+        } else {
+            isMeetingInFuture = true;
         }
-        internalList.add(toAdd);
 
-        assert CollectionUtil.elementsAreUnique(internalList);
+        this.dateTime = dateTime;
+        this.location = location;
+        this.notes = notes.trim();
+        this.listOfPersonsId = listOfPersonsId;
     }
 
     /**
-     * Sorts the meeting by date. For retrieving earliest meeting in the list
+     * Creates a copy of the given meeting
      */
-    public void sortByDate() {
-        Collections.sort(internalList);
+    public Meeting(ReadOnlyMeeting source) {
+        this(source.getDateTime(), source.getLocation(), source.getNotes(), source.getListOfPersonsId());
     }
 
-    /**
-     * Returns the meeting with earliest date in the internal list
-     * Currently not checking if it is happening in the future
-     */
-    @Override
-    public Meeting getUpcomingMeeting() {
-        this.sortByDate();
-        return internalList.get(0);
+    // Get methods
+    public String getDate() {
+        return dateTime.format(DATE_FORMATTER);
     }
 
-    public ObservableList<Meeting> getInternalList() {
-        return internalList;
+    public String getTime() {
+        return dateTime.format(TIME_FORMATTER);
     }
 
-    @Override
-    public Iterator<Meeting> iterator() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return internalList.iterator();
+    public String getDateTimeStr() {
+        return dateTime.toString();
     }
 
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
-     */
-    public ObservableList<Meeting> asObservableList() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return FXCollections.unmodifiableObservableList(internalList);
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public ArrayList<InternalId> getListOfPersonsId() {
+        return listOfPersonsId;
     }
 
     @Override
     public boolean equals(Object other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
         return other == this // short circuit if same object
-                || (other instanceof UniqueMeetingList // instanceof handles nulls
-                        && this.internalList.equals(((UniqueMeetingList) other).internalList));
-    }
-
-    /**
-     * Returns true if the element in this list is equal to the elements in {@code other}.
-     * The elements do not have to be in the same order.
-     */
-    public boolean equalsOrderInsensitive(UniqueMeetingList other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        assert CollectionUtil.elementsAreUnique(other.internalList);
-        return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
+                || (other instanceof Meeting // instanceof handles nulls
+                && this.dateTime.equals(((Meeting) other).dateTime)
+                && this.location.equals(((Meeting) other).location)
+                && this.notes.equals(((Meeting) other).notes)
+                && this.listOfPersonsId.equals(((Meeting) other).listOfPersonsId)); // state check
     }
 
     @Override
     public int hashCode() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return internalList.hashCode();
+        return Objects.hash(dateTime, location, notes, listOfPersonsId);
     }
 
     /**
-     * Signals that an operation would have violated the 'no duplicates' property of the list.
+     * Format state as text for viewing.
      */
-    public static class DuplicateMeetingException extends DuplicateDataException {
-        protected DuplicateMeetingException() {
-            super("Operation would result in duplicate meetings");
-        }
+    public String toString() {
+        return "Date: " + dateTime.format(DATE_FORMATTER) + "  Time: " + dateTime.format(TIME_FORMATTER) + '\n'
+                + "Location: " + location + '\n'
+                + "Notes: " + notes;
     }
-}
-```
-###### \java\seedu\address\storage\AddressBookStorage.java
-``` java
-    /**
-     * Backs up the current state of addressbook to local storage
-     */
-    void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
-
-    /**
-     * Restores an earlier version of address book from local storage
-     * @throws IOException if there was any problem reading the file
-     * @throws DataConversionException if the data in storage is not in the expected format.
-     */
-    Optional<ReadOnlyAddressBook> restoreAddressBook() throws IOException, DataConversionException;
-
-}
-```
-###### \java\seedu\address\storage\MeetingListStorage.java
-``` java
-/**
- * Represents a storage for meetings
- */
-public interface MeetingListStorage {
-
-    /**
-     * Returns the file path of the data file.
-     */
-    String getMeetingsFilePath();
-
-    /**
-     * Returns Meetings data
-     *   Returns {@code Optional.empty()} if storage file is not found.
-     * @throws DataConversionException if the data in storage is not in the expected format.
-     * @throws IOException if there was any problem when reading from the storage.
-     */
-    Optional<ReadOnlyMeetingList> readMeetingList() throws DataConversionException, IOException;
-
-    /**
-     * @see #getMeetingsFilePath()
-     */
-    Optional<ReadOnlyMeetingList> readMeetingList(String filePath) throws DataConversionException, IOException;
-
-    /**
-     * Saves the given {@link ReadOnlyMeetingList} to the storage.
-     * @param meetingList cannot be null.
-     * @throws IOException if there was any problem writing to the file.
-     */
-    void saveMeetingList(ReadOnlyMeetingList meetingList) throws IOException;
-
-    /**
-     * @see #saveMeetingList(ReadOnlyMeetingList)
-     */
-    void saveMeetingList(ReadOnlyMeetingList meetingList, String filePath) throws IOException;
-
     /*
-    /**
-     * Backs up the current state of addressbook to local storage
-     */
-    //void backupMeetingList(ReadOnlyMeetingList meetingList) throws IOException;
-
-    /*
-    /**
-     * Restores an earlier version of address book from local storage
-     * @throws IOException if there was any problem reading the file
-     * @throws DataConversionException if the data in storage is not in the expected format.
-     */
-    //Optional<ReadOnlyMeetingList> restoreMeetingList() throws IOException, DataConversionException;
-
+    @Override
+    public int compareTo(Meeting other) {
+        return dateTime.compareTo(other.dateTime);
+    }
+    */
 }
 ```
-###### \java\seedu\address\storage\Storage.java
-``` java
-    @Subscribe
-    void handlePersonChangedEvent(PersonChangedEvent event);
-
-    @Override
-    Optional<ReadOnlyMeetingList> readMeetingList() throws IOException, DataConversionException;
-
-    @Override
-    void saveMeetingList(ReadOnlyMeetingList meetingList) throws IOException;
-
-    void saveFileFromUrl(String urlString, String filePath) throws IOException;
-
-```
-###### \java\seedu\address\storage\Storage.java
-``` java
-    /**
-     * Downloads gravatar image and save in local storage using each person's email address
-     * @param person The person whose profile photo is requried
-     * @param def The default style of profile photo
-     */
-    void downloadProfilePhoto(ReadOnlyPerson person, String def);
-}
-```
-###### \java\seedu\address\storage\StorageManager.java
+###### /java/seedu/address/storage/StorageManager.java
 ``` java
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
@@ -795,7 +634,7 @@ public interface MeetingListStorage {
     }
 
 ```
-###### \java\seedu\address\storage\StorageManager.java
+###### /java/seedu/address/storage/StorageManager.java
 ``` java
     @Override
     @Subscribe
@@ -908,7 +747,7 @@ public interface MeetingListStorage {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlAdaptedMeeting.java
+###### /java/seedu/address/storage/XmlAdaptedMeeting.java
 ``` java
 /**
  * JAXB-friendly version of the Person.
@@ -937,8 +776,8 @@ public class XmlAdaptedMeeting {
      *
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
-    public XmlAdaptedMeeting(Meeting source) {
-        dateTime = source.getDateTime();
+    public XmlAdaptedMeeting(ReadOnlyMeeting source) {
+        dateTime = source.getDateTimeStr();
         location = source.getLocation();
         notes = source.getNotes();
         listOfPersonsId = new ArrayList<Integer>();
@@ -963,7 +802,58 @@ public class XmlAdaptedMeeting {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlAdaptedPerson.java
+###### /java/seedu/address/storage/XmlSerializableMeetingList.java
+``` java
+/**
+ * An Immutable MeetingList that is serializable to XML format
+ */
+@XmlRootElement(name = "meetingList")
+public class XmlSerializableMeetingList extends XmlSerializableData implements ReadOnlyMeetingList {
+
+    @XmlElement
+    private List<XmlAdaptedMeeting> meetings;
+
+    /**
+     * Creates an empty XmlSerializableMeetingList
+     * This empty constructor is required for marshalling.
+     */
+    public XmlSerializableMeetingList() {
+        meetings = new ArrayList<>();
+    }
+
+    /**
+     * Conversion
+     */
+    public XmlSerializableMeetingList(ReadOnlyMeetingList src) {
+        this();
+        meetings.addAll(src.getMeetingList().stream().map(XmlAdaptedMeeting::new).collect(Collectors.toList()));
+    }
+
+    @Override
+    public ObservableList<ReadOnlyMeeting> getMeetingList() {
+        final ObservableList<ReadOnlyMeeting> meetings = this.meetings.stream().map(m -> {
+            try {
+                return m.toModelType();
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+                //TODO: better error handling
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(meetings);
+    }
+
+    /**
+     * Should not be reached since the list should be immutable and cannot be sorted
+     * @return
+     */
+    @Override
+    public ReadOnlyMeeting getUpcomingMeeting() {
+        return null;
+    }
+}
+```
+###### /java/seedu/address/storage/XmlAdaptedPerson.java
 ``` java
     /**
      * Returns the internal id of the person as read from the xml file
@@ -974,7 +864,93 @@ public class XmlAdaptedMeeting {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlAddressBookStorage.java
+###### /java/seedu/address/storage/MeetingListStorage.java
+``` java
+/**
+ * Represents a storage for meetings
+ */
+public interface MeetingListStorage {
+
+    /**
+     * Returns the file path of the data file.
+     */
+    String getMeetingsFilePath();
+
+    /**
+     * Returns Meetings data
+     *   Returns {@code Optional.empty()} if storage file is not found.
+     * @throws DataConversionException if the data in storage is not in the expected format.
+     * @throws IOException if there was any problem when reading from the storage.
+     */
+    Optional<ReadOnlyMeetingList> readMeetingList() throws DataConversionException, IOException;
+
+    /**
+     * @see #getMeetingsFilePath()
+     */
+    Optional<ReadOnlyMeetingList> readMeetingList(String filePath) throws DataConversionException, IOException;
+
+    /**
+     * Saves the given {@link ReadOnlyMeetingList} to the storage.
+     * @param meetingList cannot be null.
+     * @throws IOException if there was any problem writing to the file.
+     */
+    void saveMeetingList(ReadOnlyMeetingList meetingList) throws IOException;
+
+    /**
+     * @see #saveMeetingList(ReadOnlyMeetingList)
+     */
+    void saveMeetingList(ReadOnlyMeetingList meetingList, String filePath) throws IOException;
+
+    /*
+    /**
+     * Backs up the current state of addressbook to local storage
+     */
+    //void backupMeetingList(ReadOnlyMeetingList meetingList) throws IOException;
+
+    /*
+    /**
+     * Restores an earlier version of address book from local storage
+     * @throws IOException if there was any problem reading the file
+     * @throws DataConversionException if the data in storage is not in the expected format.
+     */
+    //Optional<ReadOnlyMeetingList> restoreMeetingList() throws IOException, DataConversionException;
+
+}
+```
+###### /java/seedu/address/storage/Storage.java
+``` java
+    @Subscribe
+    void handlePersonChangedEvent(PersonChangedEvent event);
+
+    @Override
+    Optional<ReadOnlyMeetingList> readMeetingList() throws IOException, DataConversionException;
+
+    @Override
+    void saveMeetingList(ReadOnlyMeetingList meetingList) throws IOException;
+
+    void saveFileFromUrl(String urlString, String filePath) throws IOException;
+
+```
+###### /java/seedu/address/storage/Storage.java
+``` java
+    /**
+     * Downloads gravatar image and save in local storage using each person's email address
+     * @param person The person whose profile photo is requried
+     * @param def The default style of profile photo
+     */
+    void downloadProfilePhoto(ReadOnlyPerson person, String def);
+}
+```
+###### /java/seedu/address/storage/XmlSerializableData.java
+``` java
+/**
+ * An abstract class for address book and meeting list
+ * Used for storage utils for xml format data
+ */
+public abstract class XmlSerializableData {
+}
+```
+###### /java/seedu/address/storage/XmlAddressBookStorage.java
 ``` java
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
@@ -988,7 +964,7 @@ public class XmlAdaptedMeeting {
 
 }
 ```
-###### \java\seedu\address\storage\XmlMeetingListStorage.java
+###### /java/seedu/address/storage/XmlMeetingListStorage.java
 ``` java
 /**
  * A class to access Meeting data stored as an xml file on the hard disk.
@@ -1075,7 +1051,7 @@ public class XmlMeetingListStorage implements MeetingListStorage {
 
 }
 ```
-###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+###### /java/seedu/address/storage/XmlSerializableAddressBook.java
 ``` java
     @Override
     public ReadOnlyPerson getPersonByInternalIndex(int index) throws PersonNotFoundException {
@@ -1104,128 +1080,19 @@ public class XmlMeetingListStorage implements MeetingListStorage {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlSerializableData.java
+###### /java/seedu/address/storage/AddressBookStorage.java
 ``` java
-/**
- * An abstract class for address book and meeting list
- * Used for storage utils for xml format data
- */
-public abstract class XmlSerializableData {
+    /**
+     * Backs up the current state of addressbook to local storage
+     */
+    void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+
+    /**
+     * Restores an earlier version of address book from local storage
+     * @throws IOException if there was any problem reading the file
+     * @throws DataConversionException if the data in storage is not in the expected format.
+     */
+    Optional<ReadOnlyAddressBook> restoreAddressBook() throws IOException, DataConversionException;
+
 }
-```
-###### \java\seedu\address\storage\XmlSerializableMeetingList.java
-``` java
-/**
- * An Immutable MeetingList that is serializable to XML format
- */
-@XmlRootElement(name = "meetingList")
-public class XmlSerializableMeetingList extends XmlSerializableData implements ReadOnlyMeetingList {
-
-    @XmlElement
-    private List<XmlAdaptedMeeting> meetings;
-
-    /**
-     * Creates an empty XmlSerializableMeetingList
-     * This empty constructor is required for marshalling.
-     */
-    public XmlSerializableMeetingList() {
-        meetings = new ArrayList<>();
-    }
-
-    /**
-     * Conversion
-     */
-    public XmlSerializableMeetingList(ReadOnlyMeetingList src) {
-        this();
-        meetings.addAll(src.getMeetingList().stream().map(XmlAdaptedMeeting::new).collect(Collectors.toList()));
-    }
-
-    @Override
-    public ObservableList<Meeting> getMeetingList() {
-        final ObservableList<Meeting> meetings = this.meetings.stream().map(m -> {
-            try {
-                return m.toModelType();
-            } catch (IllegalValueException e) {
-                e.printStackTrace();
-                //TODO: better error handling
-                return null;
-            }
-        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
-        return FXCollections.unmodifiableObservableList(meetings);
-    }
-
-    /**
-     * Should not be reached since the list should be immutable and cannot be sorted
-     * @return
-     */
-    @Override
-    public Meeting getUpcomingMeeting() {
-        return null;
-    }
-}
-```
-###### \java\seedu\address\ui\MainWindow.java
-``` java
-    private void setPersonListPanel() {
-        try {
-            ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
-            personListPanel = new PersonListPanel(persons);
-            personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-        } catch (IllegalStateException e) {
-            logger.info("Cannot update profile photo on a non-main thread. "
-                    + "Type 'list' to see the new profile photos. '¯\\_(ツ)_/¯");
-        }
-    }
-
-```
-###### \java\seedu\address\ui\MainWindow.java
-``` java
-    @Subscribe
-    private void handleDefaultProfilePhotoChangedEvent(PrefDefaultProfilePhotoChangedEvent event) {
-        ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
-        Task<Void> task = new Task<Void>() {
-            @Override public Void call() {
-                for (ReadOnlyPerson person : persons) {
-                    storage.downloadProfilePhoto(person, prefs.getDefaultProfilePhoto());
-                }
-                return null;
-            }
-        };
-        Thread th = new Thread(task);
-        th.setDaemon(true);
-        th.start();
-    }
-
-    @Subscribe
-    private void handleProfilePhotoChangedEvent(ProfilePhotoChangedEvent event) {
-        setPersonListPanel();
-    }
-}
-```
-###### \java\seedu\address\ui\PersonCard.java
-``` java
-    /**
-     * Initializes the profile picture using Gravatar
-     */
-    private void initPicture(ReadOnlyPerson person) {
-
-        Image image;
-
-        try {
-            FileInputStream imageFile = StorageManager.loadCacheFile(String.format(PROFILE_PHOTO_FILENAME_FORMAT,
-                    person.getInternalId().value));
-            image = new Image(imageFile);
-            gravatar.setImage(image);
-        } catch (IOException e) {
-            try {
-                FileInputStream defImageFile = StorageManager.loadResourceImage(DEFAULT_PROFILE_PHOTO_FILENAME);
-                image =  new Image(defImageFile);
-                gravatar.setImage(image);
-            } catch (IOException e1) {
-                // Shouldn't happen unless the default profile photo is missing
-                LogsCenter.getLogger("").warning("Missing default profile photo.");
-            }
-        }
-    }
-
 ```
