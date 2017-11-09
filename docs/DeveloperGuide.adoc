@@ -911,15 +911,18 @@ A result of using this color generator can be seen from the following screenshot
 image::avatars.png[width="300"]
 
 The generation of avatar colors involves two steps: +
+
 1. Randomly pick a default color from `ColorsUtil`, which contains a list of selected colors chosen from
-link:https://www.materialui.co/blog/what-is-material-ui/[Google's material ui color palette].
+link:https://www.materialui.co/blog/what-is-material-ui/[Google's material ui color palette]. +
 2. Generate a randomized offset value to create a new color which values differ from the default color by this offset.
 
-The code snippet below shows color generator
+The code snippet below shows the details of how the color values are manipulated in the color generator.
 [source, java]
 ----
 /**
 * Generates a new color with a random offset from {@code defaultColor}.
+*
+* @return The new color in hex string format
 */
 private static String generateNewColor(Color defaultColor) {
     int r = defaultColor.getRed();
@@ -943,8 +946,35 @@ A keyboard icon is added in the command box to provide visual feedback for certa
 ** image:keyboardTyping.png[width="30"] : User is typing
 ** image:keyboardError.png[width="30"] : User entered an invalid command
 
-The icon is changed by setting the `ImageView`
+The keyboard icon is updated by setting `ImageView` of the icon to one of the three variations as shown above, whichever is appropriate
+for the current state of the user.
 
+In particular, to check that the user is idle, we measure the time elapsed since any changes made to the
+`CommandBox`. This is done with the `PauseTransition` class from JavaFX, which allows us to execute an event after a set duration.
+For better illustration, below is a simplified code snippet of the implementation.
+
+[source, java]
+----
+private void updateKeyboardIcon() {
+
+    // set icon to typing keyboard
+
+    pause.setOnFinished(event -> {
+        // set icon to idle keyboard
+    });
+    pause.playFromStart(); // reset timer
+}
+----
+`pause` is a `PauseTransition` object, and `setOnFinished` takes in an event handler as its parameter.
+
+
+==== Autoselection for Newly Added/Edited Person
+
+A newly added, or edited person will be automatically selected in the `PersonListPanel`. This makes it easier for the user to take note
+of changes made to their contacts.
+
+This implementation is done by raising an event whenever the add and edit command respectively is executed.
+The `personListView` in `PersonListPanel` will subsequently scroll to the person that is newly modified.
 
 ==== Responsive Split Pane
 
