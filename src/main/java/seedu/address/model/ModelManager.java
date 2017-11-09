@@ -13,6 +13,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.CommandModeChangedEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -193,12 +194,17 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void changeCommandMode(String mode) throws IllegalValueException {
         addressBook.changeCommandMode(mode);
+        indicateCommandModeChanged();
         indicateAddressBookChanged();
     }
 
     @Override
-    public String getCommandMode() {
+    public CommandMode getCommandMode() {
         return addressBook.getCommandMode();
+    }
+
+    private void indicateCommandModeChanged() {
+        raise(new CommandModeChangedEvent(addressBook.getCommandMode()));
     }
     //@@author
     @Override

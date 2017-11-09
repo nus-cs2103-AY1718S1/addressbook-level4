@@ -57,7 +57,7 @@ public class EditTaskCommandSystemTest extends AddressBookSystemTest {
     public void edit() throws Exception {
         Model expectedModel = getModel();
         String commandMode = ChangeModeCommand.COMMAND_WORD + " tm";
-        String expectedResultMessage = String.format(MESSAGE_CHANGE_MODE_SUCCESS, "taskmanager");
+        String expectedResultMessage = String.format(MESSAGE_CHANGE_MODE_SUCCESS, "TaskManager");
         assertCommandSuccess(commandMode, expectedModel, expectedResultMessage);
 
         /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */

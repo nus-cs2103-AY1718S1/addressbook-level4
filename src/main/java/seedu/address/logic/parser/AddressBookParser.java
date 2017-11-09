@@ -39,8 +39,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class AddressBookParser {
 
 
-    private static final String MODE_ADDRESS_BOOK = "addressbook ab";
-    private static final String MODE_TASK_MANAGER = "taskmanager tm";
+    private static final String MODE_ADDRESS_BOOK = "addressbook";
+    private static final String MODE_TASK_MANAGER = "taskmanager";
 
     /**
      * Used for initial separation of command word and args.
