@@ -1,8 +1,10 @@
 package seedu.address.logic.commands.tags;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -23,7 +25,14 @@ import seedu.address.model.tag.Tag;
 public class DetagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "detag";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Remove tags from multiple people.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Remove tags from multiple people. "
+            + "Parameter: "
+            + "INDEX, [INDEX]... "
+            + PREFIX_TAG + "TAG\n"
+            + "Example: " + COMMAND_WORD + " "
+            + "1, 2 "
+            + PREFIX_TAG + "friends";
+
     public static final String MESSAGE_DETAG_PERSONS_SUCCESS = "Removed tag: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_MISSING_TAG = "One or more person(s) don't has this tag";
@@ -46,6 +55,7 @@ public class DetagCommand extends UndoableCommand {
     protected CommandResult executeUndoableCommand() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyPerson> indexToRemove = new ArrayList();
 
         for (Index targetIndex: indices) {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -54,8 +64,18 @@ public class DetagCommand extends UndoableCommand {
 
             ReadOnlyPerson personToEdit = lastShownList.get(targetIndex.getZeroBased());
 
+            // Check whether person contains tag
+            if (!personToEdit.getTags().contains(tag)) {
+                throw new CommandException(MESSAGE_MISSING_TAG);
+            }
+
+            // Save the valid persons to list
+            indexToRemove.add(personToEdit);
+        }
+
+        for (ReadOnlyPerson targetPerson: indexToRemove) {
             try {
-                model.deleteTag(personToEdit, tag);
+                model.deleteTag(targetPerson, tag);
             } catch (TagNotFoundException dsd) {
                 throw new CommandException(MESSAGE_MISSING_TAG);
             } catch (DuplicatePersonException dpe) {
@@ -64,6 +84,7 @@ public class DetagCommand extends UndoableCommand {
                 throw new AssertionError("The target person cannot be missing");
             }
         }
+
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_DETAG_PERSONS_SUCCESS, tag.toString()));
     }
