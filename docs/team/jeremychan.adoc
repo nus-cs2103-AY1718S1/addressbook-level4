@@ -1,6 +1,11 @@
 = Chan Liang Fei Jeremy - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
 :toc:
 :toc-title:
+:sect-num:
+:sectnums:
 :toc-section:
 
 == Project: DeathNote
@@ -80,7 +85,7 @@ Having a website so that we can see our contact's website if he or she is a prof
 === Implementation
 
 ---
-#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]#
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide] written by Jeremy Chan#
 
 include::../DeveloperGuide.adoc[tag=website]
 
@@ -107,7 +112,7 @@ We have colors for tags so it is easier to distinguish different tags.
 === Implementation
 
 ---
-#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]#
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide] written by Jeremy Chan#
 
 include::../DeveloperGuide.adoc[tag=tagcolor]
 
@@ -130,7 +135,7 @@ It is easier to look for contacts when the contacts are sorted.
 === Implementation
 
 ---
-#Start of Extract https://github.com/CS2103AUg2017-W10-B3/DeathNote/blob/master/docs/Developerguide.adoc[from: Developer Guide]#
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide] written by Jeremy Chan#
 
 include::../Developerguide.adoc[tag=sortlist]
 
@@ -138,4 +143,6 @@ include::../Developerguide.adoc[tag=sortlist]
 
 == Other contributions
 
+. Added travis to group repo
 . Increased test coverage from 87% to 88% (Pull request: https://github.com/CS2103AUG2017-W10-B3/main/pull/83[#86])
+. Reported bug on (Pull request: https://github.com/CS2103AUG2017-T15-B4/main/issues/234[T15-B4 #234])
