@@ -7,7 +7,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: MedNus
 MedNus is a desktop address book application used by Medical Professionals. +
 The user interacts with it using a CLI, and it has a GUI created with JavaFX. +
-It is written in Java, and has about 6 kLoC.
+It is written in Java, and has about 10 kLoC.
 
 *Code contributed*: +
 link:{collatedDir}/main/rushan-khor.md[Functional code] +
@@ -101,7 +101,11 @@ include::../DeveloperGuide.adoc[tag=copy]
 
 === Enhancement Proposed
 
-* Command that maps (patient contacts) with (doctor contacts specialising in their illness) and drafts referral letters for them.
+* Skype username field and ability to pull contacts from Skype
+** This is useful for telemedicine / telehealth which is essentially remote doctor consulting facilitated by video-calls
+** This would further solidify MedNus's relevance as a forward-looking product for medical professionals
+* Command that maps (patient contacts) with (doctor contacts specialising in their illness) and drafts referral letters for them
+** This is useful for private doctors in particular, for whom networks of referrals are poorly documented, yet crucial to their business
 
 === Other contributions
 
