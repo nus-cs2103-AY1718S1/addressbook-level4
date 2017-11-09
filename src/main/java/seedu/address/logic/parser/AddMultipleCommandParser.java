@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVATAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -20,6 +21,7 @@ import seedu.address.logic.commands.AddMultipleCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appoint;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -69,7 +71,7 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
             String toAdd = " " + eachLine;
             ArgumentMultimap argMultimap =
                     ArgumentTokenizer.tokenize(toAdd, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                            PREFIX_TAG);
+                            PREFIX_TAG, PREFIX_AVATAR);
             if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
                 throw new ParseException(String.format(MESSAGE_INVALID_PERSON_FORMAT,
                         AddMultipleCommand.MESSAGE_PERSON_FORMAT));
@@ -80,9 +82,10 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
                 Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
                 Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
                 Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+                Avatar avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR)).get();
                 Comment comment = new Comment(""); // add command does not allow adding comments straight away
                 Appoint appoint = new Appoint("");
-                ReadOnlyPerson person = new Person(name, phone, email, address, comment, appoint, tagList);
+                ReadOnlyPerson person = new Person(name, phone, email, address, comment, appoint, avatar, tagList);
 
                 personsList.add(person);
             } catch (IllegalValueException ive) {
