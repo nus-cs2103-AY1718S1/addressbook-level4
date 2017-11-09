@@ -59,14 +59,11 @@
     public synchronized void removeTag(ArrayList<Index> targetIndexes, Tag toRemove) throws PersonNotFoundException,
             DuplicatePersonException {
 
-        for (int i = 0; i < targetIndexes.size(); i++) {
-            int targetIndex = targetIndexes.get(i).getZeroBased();
+        for (Index index : targetIndexes) {
+            int targetIndex = index.getZeroBased();
             ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex);
 
-            Person newPerson = new Person(oldPerson);
-            Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
-            newTags.remove(toRemove);
-            newPerson.setTags(newTags);
+            Person newPerson = setTagsForNewPerson(oldPerson, toRemove, false);
 
             addressBook.updatePerson(oldPerson, newPerson);
             indicateAddressBookChanged();
@@ -80,18 +77,29 @@
     public synchronized void addTag(ArrayList<Index> targetIndexes, Tag toAdd) throws PersonNotFoundException,
             DuplicatePersonException {
 
-        for (int i = 0; i < targetIndexes.size(); i++) {
-            int targetIndex = targetIndexes.get(i).getZeroBased();
+        for (Index index : targetIndexes) {
+            int targetIndex = index.getZeroBased();
             ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex);
 
-            Person newPerson = new Person(oldPerson);
-            Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
-            newTags.add(toAdd);
-            newPerson.setTags(newTags);
+            Person newPerson = setTagsForNewPerson(oldPerson, toAdd, true);
 
             addressBook.updatePerson(oldPerson, newPerson);
             indicateAddressBookChanged();
         }
+    }
+
+    private Person setTagsForNewPerson(ReadOnlyPerson oldPerson, Tag tagToAddOrRemove, boolean isAdd) {
+        Person newPerson = new Person(oldPerson);
+        Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
+        if (isAdd) {
+            newTags.add(tagToAddOrRemove);
+        } else if (!isAdd) {
+            newTags.remove(tagToAddOrRemove);
+        } else {
+            assert false : "Tag should either be removed or added only.";
+        }
+        newPerson.setTags(newTags);
+        return newPerson;
     }
 
 ```
@@ -164,6 +172,168 @@
     }
 
 ```
+###### /java/seedu/address/model/windowsize/WindowSize.java
+``` java
+/**
+ * Represents the window size.
+ * Since all methods and attributes are static, an instance of this class will not be made.
+ * Hence, the class is set to final with a default private constructor to prevent accidental creation of this class.
+ * Guarantees: immutable; window size is valid as declared in {@link #isValidWindowSize(String)}
+ */
+public final class WindowSize {
+
+    public static final String MESSAGE_WINDOW_SIZE_CONSTRAINTS = "The only allowed sizes are small, med and big";
+
+    // Commonly used sizes
+    public static final double DEFAULT_HEIGHT = 600;
+    public static final double DEFAULT_WIDTH = 740;
+    public static final double SMALL_HEIGHT = 600;
+    public static final double SMALL_WIDTH = 800;
+    public static final double MEDIUM_HEIGHT = 720;
+    public static final double MEDIUM_WIDTH = 1024;
+    public static final double BIG_HEIGHT = 1024;
+    public static final double BIG_WIDTH = 1600;
+
+    public static final String SMALL_WINDOW_SIZE_INPUT = "small";
+    public static final String MEDIUM_WINDOW_SIZE_INPUT = "med";
+    public static final String BIG_WINDOW_SIZE_INPUT = "big";
+
+    private WindowSize() {}
+
+    /*
+     * Returns the appropriate width according to the given windowSize.
+     */
+    public static double getUserDefinedWindowWidth(String windowSize) {
+        double width = DEFAULT_WIDTH;
+
+        switch (windowSize.toLowerCase()) {
+        case SMALL_WINDOW_SIZE_INPUT:
+            width = SMALL_WIDTH;
+            break;
+        case MEDIUM_WINDOW_SIZE_INPUT:
+            width = MEDIUM_WIDTH;
+            break;
+        case BIG_WINDOW_SIZE_INPUT:
+            width = BIG_WIDTH;
+            break;
+        default:
+            assert false : "Window size must be specified correctly";
+            break;
+        }
+
+        return width;
+    }
+
+    /*
+     * Returns the appropriate height according to the given windowSize.
+     */
+    public static double getUserDefinedWindowHeight(String windowSize) {
+        double height = DEFAULT_HEIGHT;
+
+        switch (windowSize.toLowerCase()) {
+        case SMALL_WINDOW_SIZE_INPUT:
+            height = SMALL_HEIGHT;
+            break;
+        case MEDIUM_WINDOW_SIZE_INPUT:
+            height = MEDIUM_HEIGHT;
+            break;
+        case BIG_WINDOW_SIZE_INPUT:
+            height = BIG_HEIGHT;
+            break;
+        default:
+            assert false : "Window size must be specified correctly";
+            break;
+        }
+
+        return height;
+    }
+
+    /**
+     * Returns true if given windowSize is a valid window size.
+     */
+    public static boolean isValidWindowSize(String windowSize) {
+        boolean isSmallWindowSize = windowSize.equalsIgnoreCase(SMALL_WINDOW_SIZE_INPUT);
+        boolean isMediumWindowSize = windowSize.equalsIgnoreCase(MEDIUM_WINDOW_SIZE_INPUT);
+        boolean isBigWindowSize = windowSize.equalsIgnoreCase(BIG_WINDOW_SIZE_INPUT);
+        return isSmallWindowSize || isMediumWindowSize || isBigWindowSize;
+    }
+
+
+}
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    /**
+     * Adds a person to the address book.
+     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     *
+     * @throws DuplicatePersonException if an equivalent person already exists.
+     */
+    public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
+        Person newPerson = new Person(p);
+        try {
+            persons.add(newPerson);
+            syncMasterTagListWith(newPerson);
+        } catch (DuplicatePersonException e) {
+            throw new DuplicatePersonException();
+        }
+    }
+
+    /**
+     * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
+     *
+     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
+     *      another existing person in the list.
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     *
+     * @see #syncMasterTagListWith(Person)
+     */
+    public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson)
+            throws DuplicatePersonException, PersonNotFoundException {
+        requireNonNull(editedReadOnlyPerson);
+
+        Person editedPerson = new Person(editedReadOnlyPerson);
+        try {
+            persons.setPerson(target, editedPerson);
+            syncMasterTagListWith(editedPerson);
+        } catch (DuplicatePersonException e) {
+            throw new DuplicatePersonException();
+        } catch (PersonNotFoundException e) {
+            throw new PersonNotFoundException();
+        }
+
+    }
+
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    @Override
+    public String toString() {
+        Iterator<Person> personIterator = persons.iterator();
+        Iterator<Tag> tagIterator = tags.iterator();
+        String allPersonsString = "Persons: ";
+        String allTagsString = "Tags: ";
+
+        if (personIterator.hasNext()) {
+            allPersonsString += "\n" + personIterator.next() + "\n";
+        }
+        if (tagIterator.hasNext()) {
+            allTagsString += "\n" + tagIterator.next();
+        }
+
+        while (personIterator.hasNext()) {
+            allPersonsString = allPersonsString.concat(personIterator.next() + "\n");
+        }
+        while (tagIterator.hasNext()) {
+            allTagsString = allTagsString.concat(", " + tagIterator.next());
+        }
+
+        return allPersonsString + allTagsString;
+    }
+
+```
 ###### /java/seedu/address/model/person/NameContainsKeywordsPredicate.java
 ``` java
     public List<String> getKeywords() {
@@ -217,30 +387,15 @@
  */
 public class ChangeWindowSizeCommand extends Command {
 
-    // These are commonly used sizes
-    public static final double DEFAULT_HEIGHT = 600;
-    public static final double DEFAULT_WIDTH = 740;
-    public static final double SMALL_HEIGHT = 600;
-    public static final double SMALL_WIDTH = 800;
-    public static final double MEDIUM_HEIGHT = 720;
-    public static final double MEDIUM_WIDTH = 1024;
-    public static final double BIG_HEIGHT = 1024;
-    public static final double BIG_WIDTH = 1600;
-
-    public static final String SMALL_WINDOW_SIZE_PARAM = "small";
-    public static final String MEDIUM_WINDOW_SIZE_PARAM = "med";
-    public static final String BIG_WINDOW_SIZE_PARAM = "big";
-    public static final String INVALID_WINDOW_SIZE_PARAM = "invalid window size";
 
     public static final String COMMAND_WORD = "ws";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Modifies window windowSize"
+            + ": Changes window size. Command is case insensitive. "
             + "Parameters: WINDOWSIZE (Allowed sizes are small, med, big)\n"
             + "Example 1: " + COMMAND_WORD + " small\n"
             + "Example 2: " + COMMAND_WORD + " big";
 
     public static final String MESSAGE_SUCCESS = "Window sized has been changed to: ";
-    public static final String MESSAGE_WINDOW_SIZE_CONSTRAINTS = "The only allowed sizes are small, med and big";
 
     private final String windowSize;
 
@@ -250,72 +405,15 @@ public class ChangeWindowSizeCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        if (isValidWindowSize(windowSize)) {
-            double newWindowWidth = getUserDefinedWindowWidth(windowSize);
-            double newWindowHeight = getUserDefinedWindowHeight(windowSize);
+        if (WindowSize.isValidWindowSize(windowSize)) {
+            double newWindowWidth = WindowSize.getUserDefinedWindowWidth(windowSize);
+            double newWindowHeight = WindowSize.getUserDefinedWindowHeight(windowSize);
             EventsCenter.getInstance().post(new ChangeWindowSizeRequestEvent(newWindowWidth, newWindowHeight));
             return new CommandResult(MESSAGE_SUCCESS + newWindowWidth + " x " + newWindowHeight);
         } else {
-            throw new CommandException(MESSAGE_WINDOW_SIZE_CONSTRAINTS);
+            throw new CommandException(WindowSize.MESSAGE_WINDOW_SIZE_CONSTRAINTS);
         }
 
-    }
-
-    /*
-     * Returns the appropriate width according to the given windowSize.
-     */
-    private double getUserDefinedWindowWidth(String windowSize) {
-        double width = DEFAULT_WIDTH;
-
-        switch (windowSize) {
-        case SMALL_WINDOW_SIZE_PARAM:
-            width = SMALL_WIDTH;
-            break;
-        case MEDIUM_WINDOW_SIZE_PARAM:
-            width = MEDIUM_WIDTH;
-            break;
-        case BIG_WINDOW_SIZE_PARAM:
-            width = BIG_WIDTH;
-            break;
-        default:
-            assert false : "Window size must be specified";
-            break;
-        }
-
-        return width;
-    }
-
-    /*
-     * Returns the appropriate height according to the given windowSize.
-     */
-    private double getUserDefinedWindowHeight(String windowSize) {
-        double height = DEFAULT_HEIGHT;
-
-        switch (windowSize) {
-        case SMALL_WINDOW_SIZE_PARAM:
-            height = SMALL_HEIGHT;
-            break;
-        case MEDIUM_WINDOW_SIZE_PARAM:
-            height = MEDIUM_HEIGHT;
-            break;
-        case BIG_WINDOW_SIZE_PARAM:
-            height = BIG_HEIGHT;
-            break;
-        default:
-            assert false : "Window size must be specified";
-            break;
-        }
-
-        return height;
-    }
-
-    /*
-     * Checks if the given windowSize is allowed.
-     */
-    private boolean isValidWindowSize(String windowSize) {
-        return (windowSize.equalsIgnoreCase(SMALL_WINDOW_SIZE_PARAM)
-                || windowSize.equalsIgnoreCase(MEDIUM_WINDOW_SIZE_PARAM)
-                || windowSize.equalsIgnoreCase(BIG_WINDOW_SIZE_PARAM));
     }
 
     @Override
@@ -387,58 +485,66 @@ public class RemoveTagCommand extends UndoableCommand {
     public static final String MESSAGE_NO_SUCH_TAG = "This tag does not exist in any of the given persons.";
 
     private final ArrayList<Index> targetIndexes;
-    private final Tag toRemove;
+    private final Tag tagToRemove;
 
     /**
      * @param targetIndexes of the persons in the filtered person list to edit
-     * @param toRemove tag to remove from given target indexes
+     * @param tagToRemove tag to remove from given target indexes
      */
-    public RemoveTagCommand(ArrayList<Index> targetIndexes, Tag toRemove) {
+    public RemoveTagCommand(ArrayList<Index> targetIndexes, Tag tagToRemove) {
 
         requireNonNull(targetIndexes);
-        requireNonNull(toRemove);
+        requireNonNull(tagToRemove);
 
         this.targetIndexes = targetIndexes;
-        this.toRemove = toRemove;
+        this.tagToRemove = tagToRemove;
     }
 
     /**
-     * First checks if all target indexes are not out of bounds and then checks if the tag exists among
-     * the given target indexes of person and then removes tag from each target person that has the given tag.
+     * Removes tag to remove from each target person that has the given tag.
      */
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        boolean noPersonContainsTagToRemove = true;
 
-        for (Index targetIndex : targetIndexes) {
-            if (targetIndex.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
-        }
-
-        for (int i = 0; i < targetIndexes.size(); i++) {
-            int targetIndex = targetIndexes.get(i).getZeroBased();
-            ReadOnlyPerson readOnlyPerson = lastShownList.get(targetIndex);
-            if (readOnlyPerson.getTags().contains(toRemove)) {
-                noPersonContainsTagToRemove = false;
-            }
-        }
-
-        if (noPersonContainsTagToRemove) {
-            throw  new CommandException(MESSAGE_NO_SUCH_TAG);
-        }
+        targetIndexesOutOfBoundsChecker(lastShownList);
+        tagInTargetIndexesChecker(lastShownList);
 
         try {
-            model.removeTag(this.targetIndexes, this.toRemove);
+            model.removeTag(this.targetIndexes, this.tagToRemove);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
 
-        return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS, toRemove));
+        return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS, tagToRemove));
+    }
+
+    /**
+     * Checks if all target indexes are not out of bounds.
+     */
+    private void targetIndexesOutOfBoundsChecker(List<ReadOnlyPerson> lastShownList) throws CommandException {
+        for (Index index : targetIndexes) {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+        }
+    }
+
+    /**
+     * Checks if the tag exists among the given target indexes.
+     */
+    private void tagInTargetIndexesChecker(List<ReadOnlyPerson> lastShownList) throws CommandException {
+        for (Index index : targetIndexes) {
+            int targetIndex = index.getZeroBased();
+            ReadOnlyPerson readOnlyPerson = lastShownList.get(targetIndex);
+            if (readOnlyPerson.getTags().contains(tagToRemove)) {
+                return;
+            }
+        }
+        throw new CommandException(MESSAGE_NO_SUCH_TAG);
     }
 
     @Override
@@ -456,7 +562,7 @@ public class RemoveTagCommand extends UndoableCommand {
         // state check
         RemoveTagCommand e = (RemoveTagCommand) other;
         return targetIndexes.equals(e.targetIndexes)
-                && toRemove.equals(e.toRemove);
+                && tagToRemove.equals(e.tagToRemove);
     }
 }
 ```
@@ -466,21 +572,23 @@ public class RemoveTagCommand extends UndoableCommand {
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
         int numberOfPersonsShown = model.getFilteredPersonList().size();
+        boolean isPersonsNotFoundForGivenKeyword = numberOfPersonsShown == 0 && !predicate.getKeywords().isEmpty();
 
-        if (numberOfPersonsShown == 0 && !predicate.getKeywords().isEmpty()) {
+        if (isPersonsNotFoundForGivenKeyword) {
             String targets = model.getClosestMatchingName(predicate);
             List<String> targetsAsList = Arrays.asList(targets.split("\\s+"));
+
             if (targetsAsList.equals(predicate.getKeywords())) {
                 model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
                 return new CommandResult(String.format(Messages.MESSAGE_NO_MATCHING_NAME_FOUND, predicate));
             }
-            model.updateFilteredPersonList(new NameContainsKeywordsPredicate(targetsAsList));
 
+            model.updateFilteredPersonList(new NameContainsKeywordsPredicate(targetsAsList));
             return new CommandResult(String.format(Messages.MESSAGE_NO_PERSON_FOUND, predicate,
                     String.join(", ", targetsAsList)));
         }
 
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        return new CommandResult(getMessageForPersonListShownSummary(numberOfPersonsShown));
     }
 
 ```
@@ -511,58 +619,66 @@ public class AddTagCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_TAG = "This tag already exists in all of the given persons.";
 
     private final ArrayList<Index> targetIndexes;
-    private final Tag toAdd;
+    private final Tag tagToAdd;
 
     /**
      * @param targetIndexes of the persons in the filtered person list to edit
-     * @param toAdd tag to add to given target indexes
+     * @param tagToAdd tag to add to given target indexes
      */
-    public AddTagCommand(ArrayList<Index> targetIndexes, Tag toAdd) {
+    public AddTagCommand(ArrayList<Index> targetIndexes, Tag tagToAdd) {
 
         requireNonNull(targetIndexes);
-        requireNonNull(toAdd);
+        requireNonNull(tagToAdd);
 
         this.targetIndexes = targetIndexes;
-        this.toAdd = toAdd;
+        this.tagToAdd = tagToAdd;
     }
 
     /**
-     * First checks if all target indexes are not out of bounds and then checks if the tag exists in all of
-     * the given target indexes of person. If not, add the tag to each target person that doesn't have the given tag.
+     * Adds the tag to add to each target person that doesn't have the given tag.
      */
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        boolean allPersonsContainsTagToAdd = true;
 
-        for (Index targetIndex : targetIndexes) {
-            if (targetIndex.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
-        }
-
-        for (int i = 0; i < targetIndexes.size(); i++) {
-            int targetIndex = targetIndexes.get(i).getZeroBased();
-            ReadOnlyPerson readOnlyPerson = lastShownList.get(targetIndex);
-            if (!readOnlyPerson.getTags().contains(toAdd)) {
-                allPersonsContainsTagToAdd = false;
-            }
-        }
-
-        if (allPersonsContainsTagToAdd) {
-            throw  new CommandException(MESSAGE_DUPLICATE_TAG);
-        }
+        targetIndexesOutOfBoundsChecker(lastShownList);
+        tagInAllTargetIndexesChecker(lastShownList);
 
         try {
-            model.addTag(this.targetIndexes, this.toAdd);
+            model.addTag(this.targetIndexes, this.tagToAdd);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
 
-        return new CommandResult(String.format(MESSAGE_ADD_TAG_SUCCESS, toAdd));
+        return new CommandResult(String.format(MESSAGE_ADD_TAG_SUCCESS, tagToAdd));
+    }
+
+    /**
+     * Checks if all target indexes are not out of bounds.
+     */
+    private void targetIndexesOutOfBoundsChecker(List<ReadOnlyPerson> lastShownList) throws CommandException {
+        for (Index index : targetIndexes) {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+        }
+    }
+
+    /**
+     * Checks if the tag exists in all of the given target indexes.
+     */
+    private void tagInAllTargetIndexesChecker(List<ReadOnlyPerson> lastShownList) throws CommandException {
+        for (Index index : targetIndexes) {
+            int targetIndex = index.getZeroBased();
+            ReadOnlyPerson readOnlyPerson = lastShownList.get(targetIndex);
+            if (!readOnlyPerson.getTags().contains(tagToAdd)) {
+                return;
+            }
+        }
+        throw new CommandException(MESSAGE_DUPLICATE_TAG);
     }
 
     @Override
@@ -580,7 +696,30 @@ public class AddTagCommand extends UndoableCommand {
         // state check
         AddTagCommand e = (AddTagCommand) other;
         return targetIndexes.equals(e.targetIndexes)
-                && toAdd.equals(e.toAdd);
+                && tagToAdd.equals(e.tagToAdd);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/ChangeWindowSizeCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ChangeWindowSizeCommand object
+ */
+public class ChangeWindowSizeCommandParser implements Parser<ChangeWindowSizeCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ChangeWindowSizeCommand
+     * and returns an ChangeWindowSizeCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ChangeWindowSizeCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (!WindowSize.isValidWindowSize(trimmedArgs)) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeWindowSizeCommand.MESSAGE_USAGE));
+        }
+
+        return new ChangeWindowSizeCommand(args.trim());
     }
 }
 ```
@@ -739,6 +878,35 @@ public class RedoCommandParser implements Parser<RedoCommand> {
     }
 }
 ```
+###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+``` java
+    @Override
+    public ObservableList<ReadOnlyPerson> getPersonList() {
+        final ObservableList<ReadOnlyPerson> persons = this.persons.stream().map(p -> {
+            try {
+                return p.toModelType();
+            } catch (IllegalValueException e) {
+                throw new RuntimeException("Data constraints violated in the adapted person: \n" + e);
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(persons);
+    }
+
+    @Override
+    public ObservableList<Tag> getTagList() {
+        final ObservableList<Tag> tags = this.tags.stream().map(t -> {
+            try {
+                return t.toModelType();
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Data constraints violated in the adapted person: \n" + e);
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(tags);
+    }
+
+}
+```
 ###### /java/seedu/address/commons/events/ui/ChangeWindowSizeRequestEvent.java
 ``` java
 /**
@@ -786,8 +954,8 @@ public class ChangeWindowSizeRequestEvent extends BaseEvent {
      */
     @FXML
     private void handleSmallWindowSize() {
-        raise(new ChangeWindowSizeRequestEvent(ChangeWindowSizeCommand.SMALL_WIDTH,
-                ChangeWindowSizeCommand.SMALL_HEIGHT));
+        raise(new ChangeWindowSizeRequestEvent(WindowSize.SMALL_WIDTH,
+                WindowSize.SMALL_HEIGHT));
     }
 
     /**
@@ -795,8 +963,8 @@ public class ChangeWindowSizeRequestEvent extends BaseEvent {
      */
     @FXML
     private void handleMediumWindowSize() {
-        raise(new ChangeWindowSizeRequestEvent(ChangeWindowSizeCommand.MEDIUM_WIDTH,
-                ChangeWindowSizeCommand.MEDIUM_HEIGHT));
+        raise(new ChangeWindowSizeRequestEvent(WindowSize.MEDIUM_WIDTH,
+                WindowSize.MEDIUM_HEIGHT));
     }
 
     /**
@@ -804,8 +972,8 @@ public class ChangeWindowSizeRequestEvent extends BaseEvent {
      */
     @FXML
     private void handleBigWindowSize() {
-        raise(new ChangeWindowSizeRequestEvent(ChangeWindowSizeCommand.BIG_WIDTH,
-                ChangeWindowSizeCommand.BIG_HEIGHT));
+        raise(new ChangeWindowSizeRequestEvent(WindowSize.BIG_WIDTH,
+                WindowSize.BIG_HEIGHT));
     }
 
     /**
