@@ -112,8 +112,12 @@ public class ResultDisplay extends UiPart<Region> {
             listSizeDisplay.setVisible(false);
             imageDisplay.setImage(new Image(UNDO_ICON));
             break;
-        default:
+        case "sort":
             listSizeDisplay.setVisible(true);
+            imageDisplay.setImage(new Image(SUCCESS_ICON));
+            break;
+        default:
+            listSizeDisplay.setVisible(false);
             imageDisplay.setImage(new Image(SUCCESS_ICON));
         }
     }
