@@ -15,7 +15,7 @@ import seedu.address.model.lecturer.Lecturer;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.Remark;
 
-
+//@@author angtianlannus
 /**
  * An Immutable AddressBook that is serializable to XML format
  */
@@ -59,7 +59,6 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
                 return p.toModelType();
             } catch (IllegalValueException e) {
                 e.printStackTrace();
-                //TODO: better error handling
                 return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
@@ -73,13 +72,13 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
                 return p.toModelType();
             } catch (IllegalValueException e) {
                 e.printStackTrace();
-                //TODO: better error handling
                 return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(lecturers);
     }
 
+    //@@author junming403
     @Override
     public ObservableList<Remark> getRemarkList() {
         final ObservableList<Remark> remarks = this.remarks.stream().map(p -> {
@@ -87,7 +86,6 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
                 return p.toModelType();
             } catch (IllegalValueException e) {
                 e.printStackTrace();
-                //TODO: better error handling
                 return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
