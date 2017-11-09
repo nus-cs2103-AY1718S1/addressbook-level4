@@ -92,17 +92,17 @@ public class TaskCard extends UiPart<Region> {
             LocalDate deaddate = LocalDate.parse(taskDate, formatter);
             int range = deaddate.getDayOfYear() - date.getDayOfYear();
             if (range >= GREEN_RANGE) {
-                bkgndColour = "#00c300";
+                bkgndColour = "#6A8A82";
             } else if (range >= YELLOW_RANGE) {
-                bkgndColour = "#d1d14f";
+                bkgndColour = "#A37C27";
             } else if (range >= RED_RANGE) {
-                bkgndColour = "#ff444d";
+                bkgndColour = "#A7414A";
             } else {
                 bkgndColour = "#878787";
             }
         } else {
             // for task with no deadline
-            bkgndColour = "#ffd0d0";
+            bkgndColour = "#563838";
         }
         gridPane.setStyle("-fx-background-color: " + bkgndColour + ";"
                 + "-fx-border-style: solid inside;"
