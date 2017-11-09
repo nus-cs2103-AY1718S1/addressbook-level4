@@ -7,12 +7,12 @@
 
 <StackPane fx:id="startUpPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="welcome" fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="welcome" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/welcome.png" />
          </image>
          <viewport>
-            <Rectangle2D minX="-2.0" minY="-2.0" width="800.0" />
+            <Rectangle2D />
          </viewport></ImageView>
    </children>
 </StackPane>

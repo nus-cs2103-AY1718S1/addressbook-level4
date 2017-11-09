@@ -24,7 +24,7 @@ public class StartUpPanel extends UiPart<Region> {
     public StartUpPanel(Stage stage) {
         super(FXML);
         logger.info("Loading welcome page...");
-        welcome.fitWidthProperty().bind(stage.widthProperty());
+        welcome.fitHeightProperty().bind(stage.heightProperty());
     }
 
 }
