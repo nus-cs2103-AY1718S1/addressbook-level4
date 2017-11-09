@@ -12,7 +12,7 @@ AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.ht
 
 === Liu Rexing
 image::hthjthtrh.jpeg[width="150", align="left"]
-{empty}[http://github.com/hthjthtrh[github]] [<<Rexing#, portfolio>>]
+{empty}[http://github.com/hthjthtrh[github]] [<<hthjthtrh#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Storage
@@ -21,7 +21,7 @@ Responsibilities: Storage
 
 === Melanie Ng Suli
 image::NgSuli.jpeg[width="150", align="left"]
-{empty}[http://github.com/NgSuli[github]] [<<Melanie#, portfolio>>]
+{empty}[http://github.com/NgSuli[github]] [<<NgSuli#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Logic
@@ -30,7 +30,7 @@ Responsibilities: Logic
 
 === Ma Junting
 image::majunting.jpeg[width="150", align="left"]
-{empty}[http://github.com/majunting[github]] [<<Junting#, portfolio>>]
+{empty}[http://github.com/majunting[github]] [<<majunting#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Model
