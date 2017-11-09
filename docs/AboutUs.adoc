@@ -16,8 +16,8 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::hansiang.jpg[width="150", align="left"]
 {empty}[http://hansphua.com[homepage]] [https://github.com/hansiang93[github]] [https://www.linkedin.com/in/phsiang/[linkedin]] [<<hansiang#, portfolio>>]
 
-Role: Team Member +
-Responsibilities: Project
+Role: Team Leader +
+Responsibilities: Project Management, Deployment, Ui development
 
 '''
 
@@ -26,7 +26,7 @@ image::joshua.jpg[width="150", align="left"]
 {empty}[https://github.com/bladerail[github]] [<<joshua#, portfolio>>]
 
 Role: Team Member +
-Responsibilities: Project
+Responsibilities: Project Development
 
 
 '''
@@ -36,7 +36,7 @@ image::zhoukai.jpg[width="150", align="left"]
 {empty}[http://github.com/zhoukai07[github]] [<<zhoukai#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Project
+Responsibilities: Project Development
 
 '''
 
@@ -45,6 +45,6 @@ image::jiasheng.jpg[width="150", align="left"]
 {empty}[http://github.com/AngularJiaSheng[github]] [<<jiasheng#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Project
+Responsibilities: Project Development
 
 '''

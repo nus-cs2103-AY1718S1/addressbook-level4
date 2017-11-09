@@ -60,10 +60,10 @@ public class FilterCommand extends Command {
     public static final String COMMAND_WORD = "filter";
     public static final String COMMAND_ALIAS = "ft";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons who are tagged with "
-            + "the specified tag (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: TAG [MORE_TAGS]...\n"
-            + "Example: " + COMMAND_WORD + " neighbours friends";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons with any attributes that "
+            + "matches all the keywords entered by user and displays them as a list with index numbers.\n"
+            + "Parameters: [keyword]...\n"
+            + "Example: " + COMMAND_WORD + " neighbours friends John";
 
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {keyword}";
 
@@ -104,7 +104,7 @@ public class FilterCommand extends Command {
 ```
 ###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
-    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {[name/email/phone/address/tag]}";
+    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {[name/email/phone/address]}";
 
 ```
 ###### \java\seedu\address\logic\commands\UpdateUserCommand.java
@@ -224,45 +224,57 @@ public class WebCommandParser implements Parser<WebCommand> {
 ```
 ###### \java\seedu\address\ui\AutoCompleteSuggestions.java
 ``` java
+
 /**
  * Handles all command suggestions and their usage examples.
  */
 public class AutoCompleteSuggestions {
-    private static ArrayList<String> suggestionList = new ArrayList<>();
+
+    private static SuggestionProvider<String> suggestionList = new SuggestionProvider<String>() {
+        @Override
+        protected Comparator<String> getComparator() {
+            return null;
+        }
+
+        @Override
+        protected boolean isMatch(String suggestion, AutoCompletionBinding.ISuggestionRequest request) {
+            return (suggestion.startsWith(request.getUserText()) && !suggestion.equals(request.getUserText()));
+        }
+    };
 
     static {
-        suggestionList.add(AddCommand.COMMAND_WORD);
-        suggestionList.add(AddCommand.MESSAGE_USAGE_EXAMPLE);
-        suggestionList.add(EditCommand.COMMAND_WORD);
-        suggestionList.add(EditCommand.MESSAGE_USAGE_EXAMPLE);
-        suggestionList.add(SelectCommand.COMMAND_WORD);
-        suggestionList.add(SelectCommand.MESSAGE_USAGE_EXAMPLE);
-        suggestionList.add(DeleteCommand.COMMAND_WORD);
-        suggestionList.add(DeleteCommand.MESSAGE_USAGE_EXAMPLE);
-        suggestionList.add(ClearCommand.COMMAND_WORD);
-        suggestionList.add(FindCommand.COMMAND_WORD);
-        suggestionList.add(FindCommand.MESSAGE_USAGE_EXAMPLE);
-        suggestionList.add(FilterCommand.COMMAND_WORD);
-        suggestionList.add(FilterCommand.MESSAGE_USAGE_EXAMPLE);
-        suggestionList.add(ListCommand.COMMAND_WORD);
-        suggestionList.add(SortCommand.COMMAND_WORD);
-        suggestionList.add(SortCommand.MESSAGE_USAGE_EXAMPLE);
-        suggestionList.add(HistoryCommand.COMMAND_WORD);
-        suggestionList.add(ExitCommand.COMMAND_WORD);
-        suggestionList.add(HelpCommand.COMMAND_WORD);
-        suggestionList.add(UndoCommand.COMMAND_WORD);
-        suggestionList.add(RedoCommand.COMMAND_WORD);
-        suggestionList.add(DeleteTagCommand.COMMAND_WORD);
-        suggestionList.add(DeleteTagCommand.MESSAGE_USAGE_EXAMPLE);
-        suggestionList.add(RemarkCommand.COMMAND_WORD);
-        suggestionList.add(RemarkCommand.MESSAGE_USAGE_EXAMPLE);
-        suggestionList.add(UpdateUserCommand.COMMAND_WORD);
-        suggestionList.add(UpdateUserCommand.MESSAGE_USAGE_EXAMPLE);
-        suggestionList.add(WebCommand.COMMAND_WORD);
-        suggestionList.add(WebCommand.MESSAGE_USAGE_EXAMPLE);
+        suggestionList.addPossibleSuggestions(AddCommand.COMMAND_WORD);
+        //suggestionList.addPossibleSuggestions(AddCommand.MESSAGE_USAGE_EXAMPLE);
+        suggestionList.addPossibleSuggestions(EditCommand.COMMAND_WORD);
+        //suggestionList.addPossibleSuggestions(EditCommand.MESSAGE_USAGE_EXAMPLE);
+        suggestionList.addPossibleSuggestions(SelectCommand.COMMAND_WORD);
+        //suggestionList.addPossibleSuggestions(SelectCommand.MESSAGE_USAGE_EXAMPLE);
+        suggestionList.addPossibleSuggestions(DeleteCommand.COMMAND_WORD);
+        //suggestionList.addPossibleSuggestions(DeleteCommand.MESSAGE_USAGE_EXAMPLE);
+        suggestionList.addPossibleSuggestions(ClearCommand.COMMAND_WORD);
+        suggestionList.addPossibleSuggestions(FindCommand.COMMAND_WORD);
+        //suggestionList.addPossibleSuggestions(FindCommand.MESSAGE_USAGE_EXAMPLE);
+        suggestionList.addPossibleSuggestions(FilterCommand.COMMAND_WORD);
+        //suggestionList.addPossibleSuggestions(FilterCommand.MESSAGE_USAGE_EXAMPLE);
+        suggestionList.addPossibleSuggestions(ListCommand.COMMAND_WORD);
+        suggestionList.addPossibleSuggestions(SortCommand.COMMAND_WORD);
+        //suggestionList.addPossibleSuggestions(SortCommand.MESSAGE_USAGE_EXAMPLE);
+        suggestionList.addPossibleSuggestions(HistoryCommand.COMMAND_WORD);
+        suggestionList.addPossibleSuggestions(ExitCommand.COMMAND_WORD);
+        suggestionList.addPossibleSuggestions(HelpCommand.COMMAND_WORD);
+        suggestionList.addPossibleSuggestions(UndoCommand.COMMAND_WORD);
+        suggestionList.addPossibleSuggestions(RedoCommand.COMMAND_WORD);
+        suggestionList.addPossibleSuggestions(DeleteTagCommand.COMMAND_WORD);
+        //suggestionList.addPossibleSuggestions(DeleteTagCommand.MESSAGE_USAGE_EXAMPLE);
+        suggestionList.addPossibleSuggestions(RemarkCommand.COMMAND_WORD);
+        //suggestionList.addPossibleSuggestions(RemarkCommand.MESSAGE_USAGE_EXAMPLE);
+        suggestionList.addPossibleSuggestions(UpdateUserCommand.COMMAND_WORD);
+        //suggestionList.addPossibleSuggestions(UpdateUserCommand.MESSAGE_USAGE_EXAMPLE);
+        suggestionList.addPossibleSuggestions(WebCommand.COMMAND_WORD);
+        //suggestionList.addPossibleSuggestions(WebCommand.MESSAGE_USAGE_EXAMPLE);
     }
 
-    public static ArrayList<String> getSuggestionList() {
+    public static SuggestionProvider<String> getSuggestionList() {
         return suggestionList;
     }
 }
@@ -314,8 +326,8 @@ public class BrowserPanel extends UiPart<Region> {
      */
     private void loadPersonPersonal(ReadOnlyPerson selectedPerson) {
         selectedPerson.getWebLinks().forEach(webLink -> {
-            if (webLink.webLinkTag.equals("others")) {
-                loadPage(webLink.webLinkInput);
+            if (webLink.toStringWebLinkTag().equals("others")) {
+                loadPage(webLink.toStringWebLink());
                 return;
             }
         });
@@ -327,8 +339,8 @@ public class BrowserPanel extends UiPart<Region> {
      */
     private void loadPersonSocial(ReadOnlyPerson selectedPerson, String websiteRequested) {
         selectedPerson.getWebLinks().forEach(webLink -> {
-            if (websiteRequested.toLowerCase() == webLink.webLinkTag.trim().toLowerCase()) {
-                loadPage(webLink.webLinkInput);
+            if (websiteRequested.toLowerCase() == webLink.toStringWebLinkTag().trim().toLowerCase()) {
+                loadPage(webLink.toStringWebLink());
                 return;
             }
         });
@@ -392,12 +404,11 @@ public class BrowserPanel extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
-        ArrayList<String> suggestions = AutoCompleteSuggestions.getSuggestionList();
-        TextFields.bindAutoCompletion(commandTextField, suggestions);
     }
 ```
 ###### \java\seedu\address\ui\DetailedPersonCard.java
 ``` java
+
 /**
  * An UI component that displays information of a {@code Person}.
  */
@@ -436,11 +447,19 @@ public class DetailedPersonCard extends UiPart<Region> {
     private Label remark;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView phoneicon;
+    @FXML
+    private ImageView addressicon;
+    @FXML
+    private ImageView emailicon;
 
-    public DetailedPersonCard(HashMap<String, String> tagColors) {
+    public DetailedPersonCard(Optional<HashMap<String, String>> tagColors) {
         super(FXML);
         registerAsAnEventHandler(this);
-        this.tagColors = tagColors;
+        if (tagColors.isPresent()) {
+            this.tagColors = tagColors.get();
+        }
     }
 
     private static String getColorForTag(String tagValue) {
@@ -461,8 +480,23 @@ public class DetailedPersonCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        if (person.phoneProperty().isNotNull().get()) {
+            phoneicon.setVisible(true);
+        } else {
+            phoneicon.setVisible(false);
+        }
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        if (person.addressProperty().isNotNull().get()) {
+            addressicon.setVisible(true);
+        } else {
+            addressicon.setVisible(false);
+        }
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        if (person.emailProperty().isNotNull().get()) {
+            emailicon.setVisible(true);
+        } else {
+            emailicon.setVisible(false);
+        }
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
@@ -496,7 +530,7 @@ public class DetailedPersonCard extends UiPart<Region> {
     private void initWebLinks(ReadOnlyPerson person) {
         webLinks.getChildren().clear();
         person.getWebLinks().forEach(webLink -> {
-            Label webLinkLabel = new Label(webLink.webLinkInput);
+            Label webLinkLabel = new Label(webLink.toStringWebLink());
             webLinkLabel.setStyle("-fx-background-color: " + getColorForWeblinks(webLink.toStringWebLinkTag()));
             webLinks.getChildren().add(webLinkLabel);
         });
@@ -532,6 +566,7 @@ public class DetailedPersonCard extends UiPart<Region> {
 ```
 ###### \java\seedu\address\ui\PersonCard.java
 ``` java
+
 /**
  * An UI component that displays information of a {@code Person}.
  */
@@ -548,28 +583,6 @@ public class PersonCard extends UiPart<Region> {
         webLinkColors.put("linkedin", "#0077b5");
         webLinkColors.put("instagram", "#8a3ab9");
         webLinkColors.put("others", "grey");
-    }
-```
-###### \java\seedu\address\ui\PersonCard.java
-``` java
-    public PersonCard(ReadOnlyPerson person, int displayedIndex) {
-        super(FXML);
-        this.person = person;
-        id.setText(displayedIndex + ". ");
-        initTags(person);
-        initWebLinks(person);
-        bindListeners(person);
-    }
-
-    private static String getColorForTag(String tagValue) {
-        if (!tagColors.containsKey(tagValue)) {
-            tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
-        }
-        return tagColors.get(tagValue);
-    }
-
-    private static String getColorForWeblinks(String webLinkTag) {
-        return webLinkColors.get(webLinkTag);
     }
 ```
 ###### \java\seedu\address\ui\WebsiteButtonBar.java
@@ -594,11 +607,9 @@ public class WebsiteButtonBar extends UiPart<Region> {
 
     public WebsiteButtonBar() {
         super(FXML);
-
-        // To prevent triggering events for typing inside the loaded Web page.
-        getRoot().setOnKeyPressed(Event::consume);
         registerAsAnEventHandler(this);
         setEventHandlerForButtonClick();
+        buttonBar.getButtons().setAll();
     }
 
     private void setEventHandlerForButtonClick() {
@@ -612,7 +623,23 @@ public class WebsiteButtonBar extends UiPart<Region> {
         });
     }
 
-    // To add dynamically added buttons in the future
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ReadOnlyPerson selectedPerson = event.getNewSelection().person;
+        ArrayList<Button> buttonList = new ArrayList<>();
+        selectedPerson.getWebLinks().forEach(webLink -> {
+            Button newbutton = new Button(webLink.toStringWebLinkTag());
+            newbutton.setOnMouseClicked(e -> {
+                logger.info(webLink.toStringWebLinkTag() + " button clicked");
+                raise(new WebsiteSelectionRequestEvent(webLink.toStringWebLinkTag()));
+            });
+            buttonList.add(newbutton);
+        });
+        buttonList.add(searchButton);
+        buttonList.add(mapsButton);
+        buttonBar.getButtons().setAll(buttonList);
+    }
 }
 ```
 ###### \resources\view\DarkTheme.css
@@ -630,6 +657,7 @@ public class WebsiteButtonBar extends UiPart<Region> {
     -fx-list-cell-selected-border: #3e7b91;
     -fx-list-cell-empty: #383838;
 }
+
 ```
 ###### \resources\view\DarkTheme2.css
 ``` css
@@ -950,6 +978,61 @@ public class WebsiteButtonBar extends UiPart<Region> {
     -fx-padding: 8 1 8 1;
 }
 
+.auto-complete-popup {
+    -fx-translate-y: -100;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0.0px;
+    -fx-background-radius: 0.0px;
+    -fx-border-width: 0.0px;
+    -fx-border-color: transparent;
+    -fx-border-radius: 0.0px;
+}
+
+.auto-complete-popup > .list-view {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0.0px;
+    -fx-background-radius: 0.0px;
+    -fx-border-color: transparent;
+    -fx-border-width: 0.0px;
+    -fx-border-radius: 0.0px;
+    -fx-padding: 0.0px;
+}
+
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0.0px;
+    -fx-alignment: CENTER-LEFT;
+    -fx-text-fill: #65728B;
+    -fx-font-size: 1.0em;
+    -fx-font-weight: normal;
+    -fx-padding: 8.0px;
+    -fx-cursor: hand;
+}
+
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled {
+}
+
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:hover,
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:focused {
+    -fx-background-color: #0078ce;
+    -fx-text-fill: black;
+}
+
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected {
+    -fx-background-color: #0078ce;
+    -fx-text-fill: black;
+    -fx-cursor: default;
+}
+
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected:hover {
+    -fx-background-color: #0078ce;
+    -fx-cursor: default;
+}
+
+.auto-complete-popup > .list-view > .placeholder > .label {
+    -fx-text-fill: #65728B;
+}
+
 #cardPane {
     -fx-background-color: transparent;
     -fx-border-width: 0;
@@ -977,6 +1060,18 @@ public class WebsiteButtonBar extends UiPart<Region> {
 
 #filterField, #personListPanel, #personWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+}
+
+#phoneicon {
+    -fx-image: url("../images/ic_phone_white_24dp.png");
+}
+
+#addressicon {
+    -fx-image: url("../images/ic_home_white_24dp.png");
+}
+
+#emailicon {
+    -fx-image: url("../images/ic_email_white_24dp.png");
 }
 
 #resultDisplay .content {
@@ -1019,13 +1114,14 @@ public class WebsiteButtonBar extends UiPart<Region> {
 ```
 ###### \resources\view\DetailedPersonListCard.fxml
 ``` fxml
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
@@ -1041,10 +1137,39 @@ public class WebsiteButtonBar extends UiPart<Region> {
       <Label fx:id="name" styleClass="cell_big_label" text="Select a Person" />
       <FlowPane fx:id="tags" />
       <FlowPane fx:id="webLinks" />
-      <Label fx:id="phone" styleClass="cell_small_label" />
-      <Label fx:id="address" styleClass="cell_small_label" />
-      <Label fx:id="email" styleClass="cell_small_label" />
-      <Label fx:id="remark" styleClass="cell_small_label" />
+         <FlowPane>
+            <children>
+               <ImageView id="phoneicon" fx:id="phoneicon" fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <FlowPane.margin>
+                     <Insets bottom="1.0" left="5.0" right="5.0" top="1.0" />
+                  </FlowPane.margin>
+               </ImageView>
+            <Label fx:id="phone" styleClass="cell_small_label" />
+            </children>
+         </FlowPane>
+         <FlowPane>
+            <children>
+               <ImageView id="addressicon" fx:id="addressicon" fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <FlowPane.margin>
+                     <Insets bottom="1.0" left="5.0" right="5.0" top="1.0" />
+                  </FlowPane.margin></ImageView>
+            <Label fx:id="address" styleClass="cell_small_label" />
+            </children>
+         </FlowPane>
+         <FlowPane>
+            <children>
+               <ImageView id="emailicon" fx:id="emailicon" fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <FlowPane.margin>
+                     <Insets bottom="1.0" left="5.0" right="5.0" top="1.0" />
+                  </FlowPane.margin></ImageView>
+            <Label fx:id="email" styleClass="cell_small_label" />
+            </children>
+         </FlowPane>
+         <FlowPane>
+            <children>
+            <Label fx:id="remark" styleClass="cell_small_label" />
+            </children>
+         </FlowPane>
     </VBox>
       <rowConstraints>
          <RowConstraints />
@@ -1067,49 +1192,87 @@ public class WebsiteButtonBar extends UiPart<Region> {
     -fx-list-cell-selected-border: #3e7b91;
     -fx-list-cell-empty: #E0E4CC;
 }
+
 ```
 ###### \resources\view\MainWindow.fxml
 ``` fxml
     <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-        <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+        <VBox fx:id="personList" maxWidth="400.0" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
             <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
+                <Insets bottom="10" left="10" right="10" top="10"/>
             </padding>
-            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
         </VBox>
-        <SplitPane fx:id="rightViewSplitPane" dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+        <SplitPane fx:id="rightViewSplitPane" dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0"
+                   prefWidth="160.0">
             <items>
                 <AnchorPane maxHeight="150.0" minHeight="150.0" minWidth="0.0" prefHeight="150.0" prefWidth="160.0">
-               <SplitPane dividerPositions="0.5" layoutX="5.0" layoutY="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                  <items>
-                     <StackPane fx:id="detailedPersonCardPlaceholder">
-                        <padding>
-                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                        </padding>
-                     </StackPane>
-                          <StackPane fx:id="websiteButtonbarPlaceholder">
-                              <padding>
-                                  <Insets bottom="10" left="10" right="10" top="10" />
-                              </padding>
-                          </StackPane>
-                  </items>
-               </SplitPane>
+                    <SplitPane dividerPositions="0.5" layoutX="5.0" layoutY="5.0" AnchorPane.bottomAnchor="5.0"
+                               AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                        <items>
+                            <StackPane fx:id="detailedPersonCardPlaceholder">
+                                <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                </padding>
+                            </StackPane>
+                            <StackPane fx:id="websiteButtonbarPlaceholder">
+                                <padding>
+                                    <Insets bottom="10" left="10" right="10" top="10"/>
+                                </padding>
+                            </StackPane>
+                        </items>
+                    </SplitPane>
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                    <children>
+                <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="160.0">
+                            <children>
 
-                        <StackPane fx:id="browserPlaceholder" prefHeight="163.0" prefWidth="199.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                            <padding>
-                                <Insets bottom="10" left="10" right="10" top="10" />
-                            </padding>
-                        </StackPane>
-                    </children>
-                </AnchorPane>
+                                <StackPane fx:id="browserPlaceholder" prefHeight="163.0" prefWidth="199.0"
+                                           AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
+                                           AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                                    <padding>
+                                        <Insets bottom="10" left="10" right="10" top="10"/>
+                                    </padding>
+                                </StackPane>
+                            </children>
+                        </AnchorPane>
+                        <SplitPane dividerPositions="0.5" maxHeight="170.0" orientation="VERTICAL">
+                            <items>
+                                <AnchorPane maxHeight="100.0">
+                                    <children>
+
+                                        <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100"
+                                                   prefHeight="100" styleClass="pane-with-border"
+                                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <padding>
+                                                <Insets bottom="5" left="10" right="10" top="5"/>
+                                            </padding>
+                                        </StackPane>
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane maxHeight="70.0">
+                                    <children>
+
+                                        <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border"
+                                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <padding>
+                                                <Insets bottom="5" left="10" right="10" top="5"/>
+                                            </padding>
+                                        </StackPane>
+                                    </children>
+                                </AnchorPane>
+                            </items>
+                        </SplitPane>
+                    </items>
+                </SplitPane>
             </items>
         </SplitPane>
     </SplitPane>
 
-    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER"/>
 </VBox>
 ```
 ###### \resources\view\WebsiteButtonbar.fxml

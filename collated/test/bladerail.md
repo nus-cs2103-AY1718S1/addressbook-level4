@@ -1,4 +1,282 @@
 # bladerail
+###### \java\guitests\guihandles\MainMenuHandle.java
+``` java
+    /**
+     * Opens the {@code UserprofileWindow} using the menu bar in {@code MainWindow}.
+     */
+    public void openUserProfileWindowUsingMenu() {
+        clickOnMenuItemsSequentially("File", "UserProfile");
+    }
+
+```
+###### \java\guitests\guihandles\MainMenuHandle.java
+``` java
+    /**
+     * Opens the {@code UserProfileWindow} by pressing the shortcut key associated
+     * with the menu bar in {@code MainWindow}.
+     */
+    public void openUserProfileWindowUsingAccelerator() {
+        guiRobot.push(KeyCode.F2);
+    }
+
+```
+###### \java\guitests\guihandles\UserProfileWindowHandle.java
+``` java
+/**
+ * Provides a handle for the UserProfileWindow
+ */
+public class UserProfileWindowHandle extends StageHandle {
+    public static final String USERPROFILE_WINDOW_TITLE = "User Profile";
+
+    private static final String NAME_FIELD_ID = "#nameTextField";
+    private static final String PHONE_FIELD_ID = "#phoneTextField";
+    private static final String ADDRESS_FIELD_ID = "#addressTextField";
+    private static final String EMAIL_FIELD_ID = "#emailTextField";
+    private static final String WEBLINK_FIELD_ID = "#webLinkTextField";
+    private static final String okButton_ID = "#okButton";
+    private static final String cancelButton_ID = "#cancelButton";
+
+
+    private final TextField nameTextField;
+    private final TextField phoneTextField;
+    private final TextField addressTextField;
+    private final TextField emailTextField;
+    private final TextField webLinkTextField;
+    private final Button okButton;
+    private final Button cancelButton;
+
+    public UserProfileWindowHandle(Stage userProfileWindowStage) {
+        super(userProfileWindowStage);
+
+        this.nameTextField = getChildNode(NAME_FIELD_ID);
+        this.phoneTextField = getChildNode(PHONE_FIELD_ID);
+        this.addressTextField = getChildNode(ADDRESS_FIELD_ID);
+        this.emailTextField = getChildNode(EMAIL_FIELD_ID);
+        this.webLinkTextField = getChildNode(WEBLINK_FIELD_ID);
+        this.okButton = getChildNode(okButton_ID);
+        this.cancelButton = getChildNode(cancelButton_ID);
+    }
+
+    /**
+     * Returns true if the UserProfile window is currently present in the application.
+     */
+    public static boolean isWindowPresent() {
+        return new GuiRobot().isWindowShown(USERPROFILE_WINDOW_TITLE);
+    }
+
+    /**
+     * Opens the {@code UserProfileWindow} by pressing the shortcut key associated
+     * with the menu bar in {@code UserProfileWindow}.
+     */
+    public void closeUserProfileWindowUsingAccelerator() {
+        guiRobot.push(KeyCode.ENTER);
+    }
+
+    public String getName() {
+        return nameTextField.getText();
+    }
+
+    public String getPhone() {
+        return phoneTextField.getText();
+    }
+
+    public String getAddress() {
+        return addressTextField.getText();
+    }
+
+    public String getEmail() {
+        return emailTextField.getText();
+    }
+
+    public String getWebLink() {
+        return webLinkTextField.getText();
+    }
+
+    public TextField getAddressTextField() {
+        return addressTextField;
+    }
+
+    public TextField getEmailTextField() {
+        return emailTextField;
+    }
+
+    public TextField getNameTextField() {
+        return nameTextField;
+    }
+
+    public TextField getPhoneTextField() {
+        return phoneTextField;
+    }
+
+    public TextField getWebLinkTextField() {
+        return webLinkTextField;
+    }
+
+    public Button getOkButton() {
+        return okButton;
+    }
+
+    public Button getCancelButton() {
+        return cancelButton;
+    }
+
+    /**
+     * Click the ok button
+     */
+    public void clickOk() {
+        Platform.runLater(() -> {
+            //okButton.arm();
+            okButton.fire();
+        });
+    }
+
+    /**
+     * Click the cancel button
+     */
+    public void clickCancel() {
+        Platform.runLater(() -> cancelButton.fire());
+    }
+}
+```
+###### \java\guitests\UserProfileWindowTest.java
+``` java
+public class UserProfileWindowTest extends AddressBookGuiTest {
+
+    private static final String ERROR_MESSAGE = "ATTENTION!!!! : On some computers, this test may fail when run on "
+            + "non-headless mode as FxRobot#clickOn(Node, MouseButton...) clicks on the wrong location. We suspect "
+            + "that this is a bug with TestFX library that we are using. If this test fails, you have to run your "
+            + "tests on headless mode. See UsingGradle.adoc on how to do so.";
+
+    @Test
+    public void openUserProfileWindow() {
+        //use accelerator to open and close as per normal
+        getCommandBox().click();
+        getMainMenu().openUserProfileWindowUsingAccelerator();
+        assertUserProfileWindowOpenThenCloseDefault();
+
+        getResultDisplay().click();
+        getMainMenu().openUserProfileWindowUsingAccelerator();
+        assertUserProfileWindowOpenThenCloseDefault();
+
+        getPersonListPanel().click();
+        getMainMenu().openUserProfileWindowUsingAccelerator();
+        assertUserProfileWindowOpenThenCloseDefault();
+
+        getBrowserPanel().click();
+        getMainMenu().openUserProfileWindowUsingAccelerator();
+        assertUserProfileWindowNotOpen();
+
+        //use menu button
+        getMainMenu().openUserProfileWindowUsingMenu();
+        assertUserProfileWindowOpenThenCloseDefault();
+    }
+
+    @Test
+    public void closeUserProfileWindow() {
+        //use accelerator to open and close with accelerator
+        getCommandBox().click();
+        getMainMenu().openUserProfileWindowUsingAccelerator();
+        assertUserProfileWindowOpenThenCloseAccelerator();
+
+        getResultDisplay().click();
+        getMainMenu().openUserProfileWindowUsingAccelerator();
+        assertUserProfileWindowOpenThenCloseAccelerator();
+
+        getPersonListPanel().click();
+        getMainMenu().openUserProfileWindowUsingAccelerator();
+        assertUserProfileWindowOpenThenCloseAccelerator();
+
+        getBrowserPanel().click();
+        getMainMenu().openUserProfileWindowUsingAccelerator();
+        assertUserProfileWindowNotOpen();
+
+        //use menu button to open, close with accelerator
+        getMainMenu().openUserProfileWindowUsingMenu();
+        assertUserProfileWindowOpenThenCloseAccelerator();
+    }
+
+    @Test
+    public void closeUserProfileWindowByClickingOk() {
+        getMainMenu().openUserProfileWindowUsingMenu();
+        assertUserProfileWindowOpenThenCloseOk();
+        assertUserProfileWindowNotOpen();
+
+        getMainMenu().openUserProfileWindowUsingAccelerator();
+        assertUserProfileWindowOpenThenCloseOk();
+        assertUserProfileWindowNotOpen();
+    }
+
+    @Test
+    public void closeUserProfileWindowByClickingCancel() {
+        getMainMenu().openUserProfileWindowUsingMenu();
+        assertUserProfileWindowOpenThenCloseCancel();
+        assertUserProfileWindowNotOpen();
+
+        getMainMenu().openUserProfileWindowUsingAccelerator();
+        assertUserProfileWindowOpenThenCloseCancel();
+        assertUserProfileWindowNotOpen();
+    }
+
+    /**
+     * Asserts that the help window is open, then closes it using the default close method
+     */
+    private void assertUserProfileWindowOpenThenCloseDefault() {
+        assertTrue(ERROR_MESSAGE, UserProfileWindowHandle.isWindowPresent());
+        guiRobot.pauseForHuman();
+
+        new UserProfileWindowHandle(
+                guiRobot.getStage(UserProfileWindowHandle.USERPROFILE_WINDOW_TITLE)
+        ).close();
+        mainWindowHandle.focus();
+    }
+
+    /**
+     * Asserts that the UserProfile window is open, then closes it using the accelerator
+     */
+    private void assertUserProfileWindowOpenThenCloseAccelerator() {
+        assertTrue(ERROR_MESSAGE, UserProfileWindowHandle.isWindowPresent());
+
+        new UserProfileWindowHandle(
+                guiRobot.getStage(UserProfileWindowHandle.USERPROFILE_WINDOW_TITLE)
+        ).closeUserProfileWindowUsingAccelerator();
+        mainWindowHandle.focus();
+    }
+
+    /**
+     * Asserts that the help window is open, then closes it using the ok button
+     */
+    private void assertUserProfileWindowOpenThenCloseOk() {
+        assertTrue(ERROR_MESSAGE, UserProfileWindowHandle.isWindowPresent());
+        guiRobot.pauseForHuman();
+
+        new UserProfileWindowHandle(
+                guiRobot.getStage(UserProfileWindowHandle.USERPROFILE_WINDOW_TITLE)
+        ).clickOk();
+        mainWindowHandle.focus();
+    }
+
+
+    /**
+     * Asserts that the help window is open, then closes it using the ok button
+     */
+    private void assertUserProfileWindowOpenThenCloseCancel() {
+        assertTrue(ERROR_MESSAGE, UserProfileWindowHandle.isWindowPresent());
+        guiRobot.pauseForHuman();
+
+        new UserProfileWindowHandle(
+                guiRobot.getStage(UserProfileWindowHandle.USERPROFILE_WINDOW_TITLE)
+        ).clickCancel();
+        mainWindowHandle.focus();
+    }
+
+    /**
+     * Asserts that the UserProfile window isn't open.
+     */
+    private void assertUserProfileWindowNotOpen() {
+        assertFalse(ERROR_MESSAGE, UserProfileWindowHandle.isWindowPresent());
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\RemarkCommandTest.java
 ``` java
 /**
@@ -115,6 +393,47 @@ public class RemarkCommandTest {
         return remarkCommand;
     }
 }
+```
+###### \java\seedu\address\logic\commands\ShareCommandTest.java
+``` java
+public class ShareCommandTest {
+
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    private Model model;
+    private ShareCommand shareCommand;
+
+    @Test
+    public void execute_showsAddCommandCorrectly() {
+        model = new ModelManager(new AddressBook(), new UserPrefs(), new UserPerson());
+
+        shareCommand = new ShareCommand();
+        shareCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+
+        String expectedResult = String.format(ShareCommand.MESSAGE_SUCCESS,
+                ShareCommand.addCommandBuilder(
+                        SampleUserPersonUtil.getDefaultSamplePerson()));
+
+        assertCommandSuccess(shareCommand, model, expectedResult, model);
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof CopyToClipboardRequestEvent);
+    }
+
+    @Test
+    public void execute_addsCorrectUserPerson() {
+        model = new ModelManager(new AddressBook(), new UserPrefs(), new UserPerson());
+        model.updateUserPerson(WILLIAM);
+
+        shareCommand = new ShareCommand();
+        shareCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+
+        String addCommandWilliam = ShareCommand.addCommandBuilder(WILLIAM);
+        String expectedResult = String.format(ShareCommand.MESSAGE_SUCCESS, addCommandWilliam);
+        assertCommandSuccess(shareCommand, model, expectedResult, model);
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof CopyToClipboardRequestEvent);
+    }
+}
+
 ```
 ###### \java\seedu\address\logic\commands\SortCommandTest.java
 ``` java
@@ -290,16 +609,12 @@ public class UpdateUserCommandTest {
     }
 
     @Test
-    public void execute_noFieldSpecified_success() {
+    public void execute_noFieldSpecified_failure() {
         UpdateUserCommand updateUserCommand = prepareCommand(new EditPersonDescriptor());
-        ReadOnlyPerson editedPerson = model.getUserPerson();
 
-        String expectedMessage = String.format(UpdateUserCommand.MESSAGE_UPDATE_USER_SUCCESS, editedPerson);
+        String expectedMessage = String.format(UpdateUserCommand.MESSAGE_NOT_UPDATED);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs(),
-                new UserPerson(editedPerson));
-
-        assertCommandSuccess(updateUserCommand, model, expectedMessage, expectedModel);
+        assertCommandFailure(updateUserCommand, model, expectedMessage);
     }
 
     @Test
@@ -427,7 +742,139 @@ public class UpdateUserCommandParserTest {
         descriptor = new EditPersonDescriptorBuilder().withAddress(VALID_ADDRESS_AMY).build();
         expectedCommand = new UpdateUserCommand(descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
+
+        // weblink
+        userInput = WEB_LINK_DESC_AMY;
+        descriptor = new EditPersonDescriptorBuilder().withWebLinks(VALID_WEB_LINK_AMY).build();
+        expectedCommand = new UpdateUserCommand(descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
     }
+}
+```
+###### \java\seedu\address\model\person\UserPersonTest.java
+``` java
+public class UserPersonTest {
+
+
+    private UserPerson userPerson;
+
+    @Test
+    public void modifyUserPerson_returnsCorrectUserPerson() {
+        Model model = new ModelManager(new AddressBook(), new UserPrefs(), new UserPerson());
+        userPerson = model.getUserPerson();
+        model.updateUserPerson(JAMES);
+
+        Model expectedModel = new ModelManager(new AddressBook(), new UserPrefs(),
+                getTypicalUserPerson());
+        assertEquals(model, expectedModel);
+    }
+
+    @Test
+    public void equals() {
+        userPerson = new UserPerson();
+        UserPerson expectedUserPerson = getTypicalUserPerson();
+        assertFalse(userPerson.equals(expectedUserPerson));
+
+        userPerson = new UserPerson(JAMES);
+        assertTrue(userPerson.equals(expectedUserPerson));
+
+        userPerson = new UserPerson(WILLIAM);
+        assertFalse(userPerson.equals(expectedUserPerson));
+    }
+}
+```
+###### \java\seedu\address\storage\XmlUserProfileStorageTest.java
+``` java
+public class XmlUserProfileStorageTest {
+    private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlUserProfileStorageTest/");
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Rule
+    public TemporaryFolder testFolder = new TemporaryFolder();
+
+    @Test
+    public void readUserProfile_nullFilePath_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        readUserProfile(null);
+    }
+
+    private java.util.Optional<UserPerson> readUserProfile(String filePath) throws Exception {
+        return new XmlUserProfileStorage(filePath).readUserProfile(addToTestDataPathIfNotNull(filePath));
+    }
+
+    private String addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
+        return prefsFileInTestDataFolder != null
+                ? TEST_DATA_FOLDER + prefsFileInTestDataFolder
+                : null;
+    }
+
+    @Test
+    public void read_missingFile_emptyResult() throws Exception {
+        assertFalse(readUserProfile("NonExistentFile.xml").isPresent());
+    }
+
+    @Test
+    public void read_notXmlFormat_exceptionThrown() throws Exception {
+
+        thrown.expect(DataConversionException.class);
+        readUserProfile("NotXmlFormatUserProfile.xml");
+
+        /* IMPORTANT: Any code below an exception-throwing line (like the one above) will be ignored.
+         * That means you should not have more than one exception test in one method
+         */
+    }
+
+    @Test
+    public void readAndSaveUserProfile_allInOrder_success() throws Exception {
+        String filePath = testFolder.getRoot().getPath() + "TempUserProfile.xml";
+        UserPerson original = getTypicalUserPerson();
+        XmlUserProfileStorage xmlUserProfileStorage = new XmlUserProfileStorage(filePath);
+
+        //Save in new file and read back
+        xmlUserProfileStorage.saveUserPerson(original, filePath);
+        UserPerson readBack = xmlUserProfileStorage.readUserProfile(filePath).get();
+        assertEquals(original, new UserPerson(readBack));
+
+        //Modify data, overwrite exiting file, and read back
+        original.update(new Person(HOON));
+        xmlUserProfileStorage.saveUserPerson(original, filePath);
+        readBack = xmlUserProfileStorage.readUserProfile(filePath).get();
+        assertEquals(original, new UserPerson(readBack));
+
+        //Save and read without specifying file path
+        original.update(new Person(IDA));
+        xmlUserProfileStorage.saveUserPerson(original); //file path not specified
+        readBack = xmlUserProfileStorage.readUserProfile().get(); //file path not specified
+        assertEquals(original, new UserPerson(readBack));
+
+    }
+
+    @Test
+    public void saveUserProfile_nullUserProfile_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        saveUserPerson(null, "SomeFile.xml");
+    }
+
+    /**
+     * Saves {@code UserProfile} at the specified {@code filePath}.
+     */
+    private void saveUserPerson(UserPerson userPerson, String filePath) {
+        try {
+            new XmlUserProfileStorage(filePath).saveUserPerson(userPerson, addToTestDataPathIfNotNull(filePath));
+        } catch (IOException ioe) {
+            throw new AssertionError("There should not be an error writing to the file.", ioe);
+        }
+    }
+
+    @Test
+    public void saveUserPerson_nullFilePath_throwsNullPointerException() throws IOException {
+        thrown.expect(NullPointerException.class);
+        saveUserPerson(new UserPerson(), null);
+    }
+
+
 }
 ```
 ###### \java\seedu\address\testutil\TypicalPersons.java
@@ -473,20 +920,123 @@ public class UpdateUserCommandParserTest {
 ###### \java\seedu\address\testutil\TypicalUserPerson.java
 ``` java
 /**
- * A utility class containing a list of {@code Person} objects to be used in tests.
+ * A utility class containing a list of {@code UserPerson} objects to be used in tests.
  */
 public class TypicalUserPerson {
 
-    public static final ReadOnlyPerson BOB = new PersonBuilder().withName("Bob the Builder")
-            .withAddress("456 Rochor Ave 3").withEmail("bob@builder.com")
+    public static final EditCommand.EditPersonDescriptor DESC_JAMES;
+    public static final EditCommand.EditPersonDescriptor DESC_WILLIAM;
+
+    public static final ReadOnlyPerson JAMES = new PersonBuilder().withName("James Wong")
+            .withAddress("456 Rochor Ave 3").withEmail("james@gmail.com")
             .withPhone("84712836")
-            .withTags("").build();
+            .withWebLinks("jameswong@facebook.com").build();
+
+    public static final ReadOnlyPerson WILLIAM = new PersonBuilder().withName("William Sim")
+            .withAddress("112 Clementi Ave 4").withEmail("william@hotmail.com")
+            .withPhone("91332588")
+            .withWebLinks("williamsim@facebook.com").build();
 
     private TypicalUserPerson() {} // prevents instantiation
 
-    public static ReadOnlyPerson getTypicalUserPerson() {
-        return BOB;
+    public static UserPerson getTypicalUserPerson() {
+        return new UserPerson(JAMES);
     }
+
+    static {
+        DESC_JAMES = new EditPersonDescriptorBuilder(JAMES).build();
+        DESC_WILLIAM = new EditPersonDescriptorBuilder(WILLIAM).build();
+    }
+}
+```
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
+``` java
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertUserProfileWindowEquals(UserProfileWindowHandle userProfileWindowHandle,
+                                                     UserPerson userPerson) {
+        assertEquals(userProfileWindowHandle.getName(), userPerson.getName().toString());
+        assertEquals(userProfileWindowHandle.getPhone(), userPerson.getPhone().toString());
+        assertEquals(userProfileWindowHandle.getAddress(), userPerson.getAddress().toString());
+        assertEquals(userProfileWindowHandle.getEmail(), userPerson.getEmailAsText());
+        assertEquals(userProfileWindowHandle.getWebLink(), userPerson.getWebLinksAsText());
+    }
+```
+###### \java\seedu\address\ui\UserProfileWindowTest.java
+``` java
+public class UserProfileWindowTest extends GuiUnitTest {
+
+    private Model model = new ModelManager();
+
+    private UserProfileWindow userProfileWindow;
+    private UserProfileWindowHandle userProfileWindowHandle;
+
+    private UserPerson userPerson = model.getUserPerson();
+
+    @Before
+    public void setUp() throws Exception {
+        guiRobot.interact(() -> userProfileWindow = new UserProfileWindow(model.getUserPerson()));
+        Stage userProfileWindowStage = FxToolkit.setupStage((stage) -> stage.setScene(
+                userProfileWindow.getRoot().getScene()));
+        FxToolkit.showStage();
+        userProfileWindowHandle = new UserProfileWindowHandle(userProfileWindowStage);
+    }
+
+    @Test
+    public void display() {
+        assertUserProfileWindowEquals(userProfileWindowHandle, userPerson);
+    }
+
+    @Test
+    public void updatedDisplayIsCorrect() throws Exception {
+        userProfileWindowHandle.clickOk();
+        userPerson.update(WILLIAM);
+        setUp();
+
+        assertUserProfileWindowEquals(userProfileWindowHandle, userPerson);
+    }
+
+    @Test
+    public void updateUserPersonSuccess() throws Exception {
+        userPerson = new UserPerson();
+        UserPerson james = getTypicalUserPerson();
+        userProfileWindowHandle.getNameTextField().setText(james.getName().toString());
+        userProfileWindowHandle.getAddressTextField().setText(james.getAddress().toString());
+        userProfileWindowHandle.getPhoneTextField().setText(james.getPhone().toString());
+        userProfileWindowHandle.getEmailTextField().setText(james.getEmailAsText());
+        userProfileWindowHandle.getWebLinkTextField().setText(james.getWebLinksAsText());
+
+        userProfileWindowHandle.clickOk();
+        setUp();
+
+        assertUserProfileWindowEquals(userProfileWindowHandle, james);
+    }
+
+    @Test
+    public void cancelButtonDoesNotUpdate() throws Exception {
+        userPerson = new UserPerson();
+        UserPerson william = new UserPerson(WILLIAM);
+        userProfileWindowHandle.getNameTextField().setText(william.getName().toString());
+        userProfileWindowHandle.getAddressTextField().setText(william.getAddress().toString());
+        userProfileWindowHandle.getPhoneTextField().setText(william.getPhone().toString());
+        userProfileWindowHandle.getEmailTextField().setText(william.getEmailAsText());
+        userProfileWindowHandle.getWebLinkTextField().setText(william.getWebLinksAsText());
+
+        userProfileWindowHandle.clickCancel();
+        setUp();
+
+        assertUserProfileWindowEquals(userProfileWindowHandle, userPerson);
+    }
+
+    /**
+     * Asserts that the UserProfile window isn't open.
+     */
+    private void assertUserProfileWindowNotOpen() {
+        assertFalse("Window still open", userProfileWindowHandle.isWindowPresent());
+    }
+
+
 
 }
 ```
