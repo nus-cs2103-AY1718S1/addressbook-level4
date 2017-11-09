@@ -429,3 +429,28 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+
+/*PERSON PANEL STYLING*/
+#personPanel {
+    -fx-background-color: #232A34;
+    -fx-padding: 61 35 50 35;
+}
+
+#personDetailsBox {
+    -fx-padding: 20 20 20 20;
+    -fx-background-color: #404040;
+    -fx-text-color: white !important;
+}
+
+#personDetailsBox #name {
+    -fx-padding: 7, 0, 0, 0;
+}
+
+#name, #phone, #address, #email {
+    -fx-text-fill: white !important;
+}
+
+.label {
+    -fx-text-fill: #C99733;
+}
