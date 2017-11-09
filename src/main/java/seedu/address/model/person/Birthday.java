@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import java.time.LocalDate;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author archthegit
