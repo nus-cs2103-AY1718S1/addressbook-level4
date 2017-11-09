@@ -209,12 +209,21 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Check if tag {@code t} in tag list is not used by any person in person list.
      */
     public boolean isUnusedTag(Tag t) {
+        boolean notUsedInPersonList = true;
+        boolean notUsedInReminderList = true;
         for (ReadOnlyPerson person : getPersonList()) {
             if (person.getTags().contains(t)) {
-                return false;
+                notUsedInPersonList = false;
+                break;
             }
         }
-        return true;
+        for (ReadOnlyReminder reminder : getReminderList()) {
+            if (reminder.getTags().contains(t)) {
+                notUsedInReminderList = false;
+                break;
+            }
+        }
+        return notUsedInPersonList && notUsedInReminderList;
     }
 
     //// sync master tag list
