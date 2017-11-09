@@ -46,7 +46,7 @@ public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the lesson identified "
+    public static final String MESSAGE_USAGE_LESSON = COMMAND_WORD + ": Edits the details of the lesson identified "
             + "by the index number used in the last lesson listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
@@ -59,6 +59,18 @@ public class EditCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_GROUP + "2 "
             + PREFIX_VENUE + "LT25";
+
+    public static final String MESSAGE_USAGE_MODULE = COMMAND_WORD + ": Edits the module code identified "
+            + "by the index number used in the last module listing. \n"
+            + "ALl existing lessons with the module code will be overwritten by the input module code values.\n"
+            + "Parameters: INDEX (must be a positive integer)  CODE\n"
+            + "Example: " + COMMAND_WORD + " 1  CS1102";
+
+    public static final String MESSAGE_USAGE_LOCATION = COMMAND_WORD + ": Edits the location identified "
+            + "by the index number used in the last location listing.\n "
+            + "ALl existing lessons with the location will be overwritten by the input location values.\n"
+            + "Parameters: INDEX (must be a positive integer)  LOCATION\n"
+            + "Example: " + COMMAND_WORD + " 1  LT31";
 
     public static final String MESSAGE_EDIT_LESSON_SUCCESS = "Edited Lesson: %1$s";
     public static final String MESSAGE_EDIT_LOCATION_SUCCESS = "Edited Location: %1$s";
