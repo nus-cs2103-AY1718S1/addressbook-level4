@@ -41,32 +41,11 @@ include::../DeveloperGuide.adoc[leveloffset=2, tag=shortcut]
 
 ---
 
-=== Enhancement Added: Renovate UI Color Scheme and Layout
-
-The user interface of the application has been revamped to take on a clean design, which aims to improve
-the user's experience with Rolodex.
-
-==== External Behavior
+=== Enhancement Added: UI Improvements
 
 ---
 
-image::Ui2.png[width="800"]
-
-Some features of the UI:
-
-* A keyboard icon in the command box provides visual feedback for certain user events:
-
-** image:keyboard.png[width="30"] : User is idle
-** image:keyboardTyping.png[width="30"] : User is typing
-** image:keyboardError.png[width="30"] : User entered an invalid command
-
-* Split pane which separates the contact list from the other UI components is responsive;
-the divider is automatically maintained at the optimal position
-when window size changes
-* Avatar colors are randomized and generated over a color range so that no two adjacent persons share the same avatar color.
-A result of using this color generator can be seen from the following screenshot.
-
-image::avatars.png[width="300"]
+include::../DeveloperGuide.adoc[leveloffset=2, tag=uiImprovements]
 
 ---
 

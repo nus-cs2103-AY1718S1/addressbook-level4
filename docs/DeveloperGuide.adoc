@@ -892,6 +892,68 @@ difficult to enforce custom panel behaviour for specific user actions.
 
 // end::detailPanelImp[]
 
+=== UI Improvements
+
+// tag::uiImprovements[]
+
+The user interface of the application has been revamped to take on a clean design, which aims to improve
+the user's experience with Rolodex.
+
+image::Ui2.png[width="800"]
+
+Other improvements made to the UI include the following features:
+
+==== Randomized Avatars Colors
+
+Avatar colors are randomized and generated over a color range to reduce the chance of two adjacent persons sharing the same avatar color.
+A result of using this color generator can be seen from the following screenshot.
+
+image::avatars.png[width="300"]
+
+The generation of avatar colors involves two steps: +
+1. Randomly pick a default color from `ColorsUtil`, which contains a list of selected colors chosen from
+link:https://www.materialui.co/blog/what-is-material-ui/[Google's material ui color palette].
+2. Generate a randomized offset value to create a new color which values differ from the default color by this offset.
+
+The code snippet below shows color generator
+[source, java]
+----
+/**
+* Generates a new color with a random offset from {@code defaultColor}.
+*/
+private static String generateNewColor(Color defaultColor) {
+    int r = defaultColor.getRed();
+    int g = defaultColor.getGreen();
+    int b = defaultColor.getBlue();
+    int newR = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (r + generateOffset())));
+    int newG = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (g + generateOffset())));
+    int newB = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (b + generateOffset())));
+
+    return String.format("#%02x%02x%02x", newR, newG, newB);
+}
+----
+
+An upper bound is applied to the offset to ensure that the new color does not deviate too far from the default color.
+
+==== Keyboard Icon
+
+A keyboard icon is added in the command box to provide visual feedback for certain user events:
+
+** image:keyboard.png[width="30"] : User is idle
+** image:keyboardTyping.png[width="30"] : User is typing
+** image:keyboardError.png[width="30"] : User entered an invalid command
+
+The icon is changed by setting the `ImageView`
+
+
+==== Responsive Split Pane
+
+The split pane which separates the contact list from the other UI components is responsive;
+its divider is automatically maintained at the optimal position when window size changes.
+
+// end::uiImprovements[]
+
+
 // tag::helpWindowHighlight[]
 === Help Window Highlighting
 Rolodex uses link:#java-fx[JavaFx] version http://javafx.com/javafx/8.0.111[8.0.111], where WebView does not support
