@@ -51,7 +51,7 @@ public class FindCommandParser implements Parser<FindCommand> {
             List<String> tagKeywords = parseWhitespaceSeparatedStrings(filteredArgs);
             TagsContainKeywordsPredicate predicate = new TagsContainKeywordsPredicate(tagKeywords);
             return new FindByTagsCommand(predicate);
-        } else if (opArgs.getOptions().isEmpty()){
+        } else if (opArgs.getOptions().isEmpty()) {
             checkArgsNotEmpty(opArgs.getFilteredArgs());
             List<String> nameKeywords = parseWhitespaceSeparatedStrings(filteredArgs);
             NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(nameKeywords);

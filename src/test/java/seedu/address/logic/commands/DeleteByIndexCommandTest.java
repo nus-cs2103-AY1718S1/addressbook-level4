@@ -34,19 +34,19 @@ public class DeleteByIndexCommandTest {
     public void execute_validIndexUnfilteredList_success() throws Exception {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         String people = personToDelete.toString();
-        DeleteByIndexCommand DeleteByIndexCommand = prepareCommand(INDEX_FIRST_PERSON);
-        String expectedMessage = String.format(DeleteByIndexCommand.MESSAGE_DELETE_PERSON_SUCCESS, "\n" + people);
+        DeleteByIndexCommand deleteByIndexCommand = prepareCommand(INDEX_FIRST_PERSON);
+        String expectedMessage = String.format(deleteByIndexCommand.MESSAGE_DELETE_PERSON_SUCCESS, "\n" + people);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
-        assertCommandSuccess(DeleteByIndexCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(deleteByIndexCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        DeleteByIndexCommand DeleteByIndexCommand = prepareCommand(outOfBoundIndex);
-        assertCommandFailure(DeleteByIndexCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        DeleteByIndexCommand deleteByIndexCommand = prepareCommand(outOfBoundIndex);
+        assertCommandFailure(deleteByIndexCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
@@ -55,14 +55,14 @@ public class DeleteByIndexCommandTest {
 
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         String people = personToDelete.toString();
-        DeleteByIndexCommand DeleteByIndexCommand = prepareCommand(INDEX_FIRST_PERSON);
-        String expectedMessage = String.format(DeleteByIndexCommand.MESSAGE_DELETE_PERSON_SUCCESS, "\n" + people);
+        DeleteByIndexCommand deleteByIndexCommand = prepareCommand(INDEX_FIRST_PERSON);
+        String expectedMessage = String.format(deleteByIndexCommand.MESSAGE_DELETE_PERSON_SUCCESS, "\n" + people);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
         showNoPerson(expectedModel);
 
-        assertCommandSuccess(DeleteByIndexCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(deleteByIndexCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -73,9 +73,9 @@ public class DeleteByIndexCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        DeleteByIndexCommand DeleteByIndexCommand = prepareCommand(outOfBoundIndex);
+        DeleteByIndexCommand deleteByIndexCommand = prepareCommand(outOfBoundIndex);
 
-        assertCommandFailure(DeleteByIndexCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(deleteByIndexCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
@@ -104,9 +104,9 @@ public class DeleteByIndexCommandTest {
      * Returns a {@code DeleteByIndexCommand} with the parameter {@code index}.
      */
     private DeleteByIndexCommand prepareCommand(Index index) {
-        DeleteByIndexCommand DeleteByIndexCommand = new DeleteByIndexCommand(Arrays.asList(index));
-        DeleteByIndexCommand.setData(model, getDummyStorage(), new CommandHistory(), new UndoRedoStack());
-        return DeleteByIndexCommand;
+        DeleteByIndexCommand deleteByIndexCommand = new DeleteByIndexCommand(Arrays.asList(index));
+        deleteByIndexCommand.setData(model, getDummyStorage(), new CommandHistory(), new UndoRedoStack());
+        return deleteByIndexCommand;
     }
 
     /**
