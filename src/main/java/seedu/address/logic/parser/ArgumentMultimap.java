@@ -50,11 +50,16 @@ public class ArgumentMultimap {
         }
         return new ArrayList<>(argMultimap.get(prefix));
     }
+    public boolean containsPrefix(Prefix prefix) {
+        return argMultimap.containsKey(prefix);
+    }
 
     /**
      * Returns the preamble (text before the first valid prefix). Trims any leading/trailing spaces.
      */
+    //@@author zhoukai07
     public String getPreamble() {
         return getValue(new Prefix("")).orElse("");
     }
+    //@@author
 }

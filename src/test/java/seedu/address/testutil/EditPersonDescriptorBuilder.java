@@ -32,7 +32,8 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
-        descriptor.setTags(person.getTags());
+        descriptor.setToAdd(person.getTags());
+        descriptor.setWebLinks(person.getWebLinks());
     }
 
     /**
@@ -62,9 +63,9 @@ public class EditPersonDescriptorBuilder {
     /**
      * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withEmail(String email) {
+    public EditPersonDescriptorBuilder withEmail(String... email) {
         try {
-            ParserUtil.parseEmail(Optional.of(email)).ifPresent(descriptor::setEmail);
+            descriptor.setEmail(ParserUtil.parseEmail(Arrays.asList(email)));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
         }
@@ -87,11 +88,45 @@ public class EditPersonDescriptorBuilder {
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
      * that we are building.
      */
-    public EditPersonDescriptorBuilder withTags(String... tags) {
+    public EditPersonDescriptorBuilder withToAddTags(String... tags) {
         try {
-            descriptor.setTags(ParserUtil.parseTags(Arrays.asList(tags)));
+            descriptor.setToAdd(ParserUtil.parseTags(Arrays.asList(tags)));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Parse the {@code tags}, to be removed, into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withToRemoveTags(String... tags) {
+        try {
+            descriptor.setToRemove(ParserUtil.parseTags(Arrays.asList(tags)));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Set if the tags should be cleared.
+     */
+    public EditPersonDescriptorBuilder clearTags(boolean shouldClear) {
+        descriptor.setClearTags(shouldClear);
+        return this;
+    }
+
+    /**
+     * Parses the {@code webLinks} into a {@code Set<weblink>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withWebLinks(String... webLinks) {
+        try {
+            descriptor.setWebLinks(ParserUtil.parseWebLink(Arrays.asList(webLinks)));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("webLinks are expected to be unique.");
         }
         return this;
     }

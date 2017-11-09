@@ -30,6 +30,11 @@ public class Email {
         this.value = trimmedEmail;
     }
 
+    public Email() {
+        super();
+        this.value = "";
+    }
+
     /**
      * Returns if a given string is a valid person email.
      */

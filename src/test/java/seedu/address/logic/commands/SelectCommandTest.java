@@ -8,7 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getSortedTypicalAddressBook;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -23,6 +23,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.UserPerson;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
@@ -36,7 +37,7 @@ public class SelectCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getSortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
     }
 
     @Test
