@@ -80,6 +80,10 @@ public class AnchorPaneNode extends AnchorPane {
         this.backgroundProperty().setValue(unfocusBackground);
     }
 
+    public void unlightGrid() {
+        this.backgroundProperty().setValue(unfocusBackground);
+    }
+
     /**
      *Make the Anchorpane that represents today's date light up
      */
