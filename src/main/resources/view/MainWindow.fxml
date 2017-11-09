@@ -39,7 +39,7 @@
   </StackPane>
 
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" minHeight="-Infinity" minWidth="-Infinity" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="320.0" SplitPane.resizableWithParent="false">
+    <VBox fx:id="personList" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="320.0" SplitPane.resizableWithParent="false">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
@@ -51,12 +51,12 @@
                <Insets top="20.0" />
             </VBox.margin>
          </Text>
-      <StackPane fx:id="personListPanelPlaceholder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="315.0" VBox.vgrow="ALWAYS" />
+      <StackPane fx:id="personListPanelPlaceholder" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="315.0" VBox.vgrow="ALWAYS" />
     </VBox>
       <StackPane fx:id="personInfoPlaceholder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="700.0" />
       <SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="420.0" prefWidth="320.0">
          <items>
-            <VBox fx:id="groupList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="320.0">
+            <VBox fx:id="groupList" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="320.0">
                <children>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Groups">
                      <font>
@@ -64,8 +64,9 @@
                      </font>
                   </Text>
                   <StackPane fx:id="groupListPanelPlaceholder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" />
-               </children></VBox>
-            <StackPane fx:id="browserPlaceholder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="320.0" />
+               </children>
+            </VBox>
+            <StackPane fx:id="browserPlaceholder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="320.0" />
          </items>
       </SplitPane>
   </SplitPane>

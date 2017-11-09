@@ -30,12 +30,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EmptyAddressBookException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -146,10 +145,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author eldonng
     @Override
-    public void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
+    public void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException,
+            EmptyAddressBookException {
         try {
-            Person addPin = addPinTag(person);
-            updatePerson(person, addPin);
+            person.setPin();
             sort(SortCommand.ARGUMENT_NAME);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
@@ -157,10 +156,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
+    public void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException,
+            EmptyAddressBookException {
         try {
-            Person removePin = removePinTag(person);
-            updatePerson(person, removePin);
+            person.setUnpin();
             sort(SortCommand.ARGUMENT_NAME);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
@@ -191,41 +190,6 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author LimeFallacie
     private void updateAllPersons(HashMap<Tag, String> allTagColours) {
         colourPrefs.updateColorMap(allTagColours);
-    }
-
-    //@@author eldonng
-    /**
-     * @param personToPin
-     * @return updated Person with added pin to be added to the address book
-     * @throws CommandException
-     */
-    private Person addPinTag(ReadOnlyPerson personToPin) throws CommandException {
-        /**
-         * Create a new UniqueTagList to add pin tag into the list.
-         */
-        UniqueTagList updatedTags = new UniqueTagList(personToPin.getTags());
-        updatedTags.addPinTag();
-
-        return new Person(personToPin.getName(), personToPin.getPhone(), personToPin.getBirthday(),
-                personToPin.getEmail(), personToPin.getAddress(), updatedTags.toSet());
-    }
-
-    //@@author eldonng
-    /**
-     * @param personToUnpin
-     * @return updated Person with removed pin to be added to the address book
-     * @throws CommandException
-     */
-    private Person removePinTag(ReadOnlyPerson personToUnpin) throws CommandException {
-        try {
-            UniqueTagList updatedTags = new UniqueTagList(personToUnpin.getTags());
-            updatedTags.removePinTag();
-            return new Person(personToUnpin.getName(), personToUnpin.getPhone(),
-                    personToUnpin.getBirthday(), personToUnpin.getEmail(), personToUnpin.getAddress(),
-                    updatedTags.toSet());
-        } catch (IllegalValueException ive) {
-            throw new CommandException(Tag.MESSAGE_TAG_CONSTRAINTS);
-        }
     }
 
     //@@author eldonng
@@ -291,7 +255,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author LimeFallacie
     @Override
-    public void sort(String sortType) throws DuplicatePersonException {
+    public void sort(String sortType) throws DuplicatePersonException, EmptyAddressBookException {
         switch (sortType) {
         case SortCommand.ARGUMENT_NAME:
             addressBook.setPersons(sortBy(COMPARATOR_SORT_BY_NAME));
@@ -316,7 +280,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Sort the addressbook by the comparator given
      * @return ArrayList<ReadOnlyPerson> sorted list</ReadOnlyPerson>
      */
-    private ArrayList<ReadOnlyPerson> sortBy(Comparator<ReadOnlyPerson> comparator) {
+    private ArrayList<ReadOnlyPerson> sortBy(Comparator<ReadOnlyPerson> comparator) throws EmptyAddressBookException {
         ArrayList<ReadOnlyPerson> newList = new ArrayList<>();
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         SortedList<ReadOnlyPerson> sortedList =
@@ -324,6 +288,10 @@ public class ModelManager extends ComponentManager implements Model {
         newList.addAll(sortedList);
         sortedList = getFilteredPersonList().filtered(PREDICATE_SHOW_UNPINNED_PERSONS).sorted(comparator);
         newList.addAll(sortedList);
+
+        if (newList.isEmpty()) {
+            throw new EmptyAddressBookException();
+        }
 
         return newList;
     }

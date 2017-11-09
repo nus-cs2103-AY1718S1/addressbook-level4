@@ -13,9 +13,9 @@ import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EmptyAddressBookException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
 
 /**
  * The API of the Model component.
@@ -35,8 +35,8 @@ public interface Model {
      * {@code Predicate} that always evaluate to true
      */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
-    Predicate<ReadOnlyPerson> PREDICATE_SHOW_PINNED_PERSONS = p -> UniqueTagList.containsPinTag(p);
-    Predicate<ReadOnlyPerson> PREDICATE_SHOW_UNPINNED_PERSONS = p -> !UniqueTagList.containsPinTag(p);
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_PINNED_PERSONS = p -> p.isPinned();
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_UNPINNED_PERSONS = p -> !p.isPinned();
     Predicate<ReadOnlyGroup> PREDICATE_SHOW_ALL_GROUPS = unused -> true;
 
 
@@ -75,12 +75,12 @@ public interface Model {
     /**
      * Pins the given person
      */
-    void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException;
+    void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException, EmptyAddressBookException;
 
     /**
      * Unpins the given person
      */
-    void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException;
+    void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException, EmptyAddressBookException;
 
     /**
      * Set the colour for the specific tag
@@ -121,7 +121,7 @@ public interface Model {
 
     void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate);
 
-    void sort(String sortType) throws DuplicatePersonException;
+    void sort(String sortType) throws DuplicatePersonException, EmptyAddressBookException;
 
     Predicate<ReadOnlyPerson> getPredicateForTags(String tag) throws IllegalValueException;
 }
