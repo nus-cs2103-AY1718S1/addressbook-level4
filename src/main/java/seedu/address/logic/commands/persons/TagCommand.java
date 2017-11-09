@@ -18,6 +18,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author raisa2010
 /**
  * Tags multiple people in the address book.
  */
