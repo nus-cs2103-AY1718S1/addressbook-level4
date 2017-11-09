@@ -473,8 +473,13 @@ You can delete multiple contacts by tags +
 *Format:* `batch TAG` +
 *Shorthand format:* `b TAG`
 
-[WARNING]
-Command can only delete one tag at a time
+*Example:*
+
+image::batchexample.png[width="800"]
+    Figure 5: Batch Command Usage Example
+
+[NOTE]
+You can give MedNus multiple tags for batch deletion to be performed on.
 // end::batch[]
 
 // tag::batch[]
