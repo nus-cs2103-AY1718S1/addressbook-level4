@@ -66,15 +66,19 @@ image::Ui_short_error.PNG[width="790"]
 
 Format: `help`
 
+// tag::addevent[]
 === Adding a event: `addEvent`
 
 Adds a event to the event book +
-Format: `addEvent ti/TITLE des/DESCRIPTION l/LOCATION tme/DATETIME`
+Format: `addEvent ti/TITLE des/DESCRIPTION loc/LOCATION time/DATETIME`
 
 Examples:
 
-* addevent ti/End of Sem Dinner des/Organised by USC l/Cinnamon College tme/25/11/17 2030
+* addevent ti/End of Sem Dinner des/Organised by USC loc/Cinnamon College time/25/11/2017 2030 2
+* addevent ti/USPolymath des/Intellectual Talks loc/Chatterbox time/25/11/17 2030 to 2230
+* ae ti/End of Sem Dinner des/Organised by USC loc/Cinnamon College time/25/11/17 2030 2
 
+// tag::deleteevent[]
 === Deleting a event: `deleteEvent`
 
 Deletes an event from the event book +
@@ -152,6 +156,7 @@ Examples:
 * `highlight owes money`
 * `highlight nonExistentTag` - Clears current highlighting
 
+// tag::swaproom[]
 === Swap Rooms: `swaproom`
 
 Swaps the rooms of two residents in the residentbook. The indexes are based on the last list displayed to the user.
@@ -169,6 +174,7 @@ Examples:
 Shows a list of all persons in the resident book. +
 Format: `list`
 
+// tag::sort[]
 === Sorting the Resident Book: `sort`
 
 Sorts the resident book +
