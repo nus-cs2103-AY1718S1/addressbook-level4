@@ -52,12 +52,14 @@ the shortcuts. Users can refer to the user guide for the list of the command sho
 Alternatively to COMMAND_WORD, commands also have COMMAND_ALIAS which AddressBookParser will also accept as a valid input to execute the
 desired command
 
-+
 [source,java]
 ----
      public static final String COMMAND_WORD = "add";
      public static final String COMMAND_ALIAS = "a";
+----
 
+[source,java]
+----
         case AddCommand.COMMAND_WORD:
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
