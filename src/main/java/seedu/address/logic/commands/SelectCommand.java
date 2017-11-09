@@ -54,7 +54,7 @@ public class SelectCommand extends Command {
     public CommandResult execute() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        List<ReadOnlyInsurance> insuranceList = model.getInsuranceList();
+        List<ReadOnlyInsurance> insuranceList = model.getFilteredInsuranceList();
 
         if (panelChoice == PanelChoice.PERSON && targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);

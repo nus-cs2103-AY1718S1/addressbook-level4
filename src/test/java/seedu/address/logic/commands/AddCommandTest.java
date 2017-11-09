@@ -137,7 +137,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public ObservableList<ReadOnlyInsurance> getInsuranceList() {
+        public ObservableList<ReadOnlyInsurance> getFilteredInsuranceList() {
             fail("This method should not be called.");
             return null;
         }
@@ -147,7 +147,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
-        public void updateInsuranceList(Predicate<ReadOnlyInsurance> predicate) {
+        public void updateFilteredInsuranceList(Predicate<ReadOnlyInsurance> predicate) {
             fail("This method should not be called.");
         }
     }

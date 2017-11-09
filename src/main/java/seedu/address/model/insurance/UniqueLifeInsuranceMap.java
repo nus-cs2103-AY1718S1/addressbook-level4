@@ -4,13 +4,13 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.insurance.exceptions.DuplicateInsuranceException;
 import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
@@ -26,7 +26,8 @@ import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
  */
 public class UniqueLifeInsuranceMap {
 
-    private final HashMap<UUID, LifeInsurance> internalMap = new HashMap<>();
+    private final ObservableMap<UUID, LifeInsurance> internalMap = FXCollections.observableHashMap();
+    private final ObservableList<ReadOnlyInsurance> internalList = FXCollections.observableArrayList();
 
     /**
      * Returns true if the map contains an equivalent UUID as the given argument.
@@ -79,6 +80,7 @@ public class UniqueLifeInsuranceMap {
     public void setInsurances(UniqueLifeInsuranceMap replacement) {
         this.internalMap.clear();
         this.internalMap.putAll(replacement.internalMap);
+        syncMappedListWithInternalMap();
     }
 
     public void setInsurances(Map<UUID, ? extends ReadOnlyInsurance> insurances) throws DuplicateInsuranceException {
@@ -89,6 +91,16 @@ public class UniqueLifeInsuranceMap {
         setInsurances(replacement);
     }
 
+    /**
+     * Ensures that every insurance in the internalList:
+     * contains the same exact same collections of insurances as that of the insuranceMap.
+     */
+    public void syncMappedListWithInternalMap() {
+        this.internalList.clear();
+        this.internalList.setAll(this.internalMap.values());
+    }
+    //author
+
     //@@author RSJunior37
     /**
      * Accessor to insurance list
@@ -96,7 +108,7 @@ public class UniqueLifeInsuranceMap {
      */
     public ObservableList<ReadOnlyInsurance> asObservableList() {
         assert CollectionUtil.elementsAreUnique(internalMap.values());
-        return FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(internalMap.values()));
+        return FXCollections.unmodifiableObservableList(internalList);
     }
     //@@author
 

@@ -23,9 +23,9 @@ public interface Logic {
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
-    //@@author RSJunior37
+    //@@author OscarWang114
     /** Returns an unmodifiable view of the list of insurances */
-    ObservableList<ReadOnlyInsurance> getInsuranceList();
+    ObservableList<ReadOnlyInsurance> getFilteredInsuranceList();
     //@@author
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */

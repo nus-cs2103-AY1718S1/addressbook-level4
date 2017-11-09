@@ -122,6 +122,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
+        // TODO: consider reverse the order?
         persons.add(newPerson);
         persons.sortPersons();
         syncWithUpdate();
@@ -203,6 +204,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
         if (persons.remove(key)) {
+
             syncWithUpdate();
             return true;
         } else {
@@ -231,11 +233,11 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void syncMasterLifeInsuranceMap() {
         lifeInsuranceMap.forEach((id, insurance) -> {
+            insurance.resetAllInsurancePerson();
             String owner = insurance.getOwner().getName();
             String insured = insurance.getInsured().getName();
             String beneficiary = insurance.getBeneficiary().getName();
             persons.forEach(person -> {
-                //person.clearLifeInsuranceIds();
                 if (person.getName().fullName.equals(owner)) {
                     insurance.setOwner(person);
                     person.addLifeInsuranceIds(id);
@@ -250,6 +252,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 }
             });
         });
+        lifeInsuranceMap.syncMappedListWithInternalMap();
     }
 
     /**
