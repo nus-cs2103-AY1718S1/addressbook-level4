@@ -453,7 +453,7 @@ Finally, we format the RBG values into hexadecimal format with a hex symbol in f
 
 ---
 
-
+// tag::finds[]
 === Find person(s) using different details
 
 The `finds` command is an improved version from `find` command. It allows user to search using other details such as phone number, email or tag instead of just name.
