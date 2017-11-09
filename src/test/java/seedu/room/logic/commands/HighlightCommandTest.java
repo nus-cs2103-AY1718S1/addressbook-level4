@@ -1,4 +1,3 @@
-//@@author shitian007
 package seedu.room.logic.commands;
 
 import static org.junit.Assert.assertFalse;
@@ -19,6 +18,7 @@ import seedu.room.model.ModelManager;
 import seedu.room.model.UserPrefs;
 import seedu.room.model.tag.Tag;
 
+//@@author shitian007
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code SwaproomCommand}.
  */
@@ -27,9 +27,6 @@ public class HighlightCommandTest {
     private Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
 
     @Test
-    /**
-     * Successful operation of highlight tag
-     */
     public void execute_validTag_success() throws Exception {
         List<Tag> listOfTags = model.getResidentBook().getTagList();
         String highlightTag = listOfTags.get(0).getTagName();
@@ -44,9 +41,6 @@ public class HighlightCommandTest {
     }
 
     @Test
-    /**
-     * Non-existent Tag should throw TagNotFoundException
-     */
     public void execute_invalidTag_throwsCommandException() throws Exception {
         String nonExistentTag = getNonExistentTag();
         HighlightCommand highlightCommand = prepareCommand(nonExistentTag);
@@ -54,9 +48,6 @@ public class HighlightCommandTest {
         assertCommandFailure(highlightCommand, model, HighlightCommand.MESSAGE_TAG_NOT_FOUND + nonExistentTag);
     }
 
-    /**
-     * Empty tag parameter should throw TagNotFoundException
-     */
     @Test
     public void execute_noTag_throwsCommandException() {
         String emptyTag = "";
@@ -65,9 +56,32 @@ public class HighlightCommandTest {
         assertCommandFailure(highlightCommand, model, HighlightCommand.MESSAGE_TAG_NOT_FOUND + emptyTag);
     }
 
-    /**
-     * Get non-existent tag to test TagNotFoundException
-     */
+    @Test
+    public void execute_removeHighlight_success() {
+        String removeHighlight = "-";
+        HighlightCommand highlightCommand = prepareCommand(removeHighlight);
+
+        String expectedMessage = HighlightCommand.MESSAGE_PERSONS_HIGHLIGHTED_SUCCESS;
+
+        List<Tag> listOfTags = model.getResidentBook().getTagList();
+        String highlightTag = listOfTags.get(0).getTagName();
+        ModelManager expectedModel = new ModelManager(model.getResidentBook(), new UserPrefs());
+        expectedModel.updateHighlightStatus(highlightTag);
+        expectedModel.resetHighlightStatus();
+
+        assertCommandSuccess(highlightCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_removeHighlightNoneHighlighted_throwsNoneHighlightedException() {
+        String removeHighlight = "-";
+        HighlightCommand highlightCommand = prepareCommand(removeHighlight);
+
+        String expectedMessage = HighlightCommand.MESSAGE_NONE_HIGHLIGHTED;
+
+        assertCommandFailure(highlightCommand, model, expectedMessage);
+    }
+
     public String getNonExistentTag() {
         String nonExistentTag = "No such tag exists";
         try {
@@ -104,7 +118,7 @@ public class HighlightCommandTest {
     }
 
     /**
-     * Returns a {@code SwaproomCommand} with the parameter {@code index}.
+     * Returns a {@code HighlightCommand} with the parameter {@code highlightTag}.
      */
     private HighlightCommand prepareCommand(String highlightTag) {
         HighlightCommand highlightCommand = new HighlightCommand(highlightTag);

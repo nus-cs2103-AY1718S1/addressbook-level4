@@ -170,10 +170,18 @@ public class AddCommandTest {
         }
 
         //@@author
+
+        //@@author shitian007
         @Override
         public void updateHighlightStatus(String highlightTag) {
-
+            fail("This method should not be called.");
         }
+
+        @Override
+        public void resetHighlightStatus() {
+            fail("This method should not be called.");
+        }
+        //@@author
 
         //@@author sushinoya
         public void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2) throws PersonNotFoundException {
