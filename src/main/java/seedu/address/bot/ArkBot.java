@@ -29,7 +29,7 @@ import javafx.collections.ObservableList;
 
 import seedu.address.bot.parcel.DisplayParcel;
 import seedu.address.bot.parcel.ParcelParser;
-import seedu.address.bot.qrcode.QRCodeAnalyser;
+import seedu.address.bot.qrcode.QRcodeAnalyser;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddCommand;
@@ -269,6 +269,9 @@ public class ArkBot extends AbilityBot {
                 .build();
     }
 
+    /**
+     * Command to cancel waiting for a QR to mark as completed.
+     */
     public Ability cancelCommand() {
         return Ability
                 .builder()
@@ -395,7 +398,7 @@ public class ArkBot extends AbilityBot {
                     Update update = ctx.update();
                     if (update.hasMessage() && update.getMessage().hasPhoto()) {
                         java.io.File picture = downloadPhotoByFilePath(getFilePath(getPhoto(update)));
-                        QRCodeAnalyser qrca = new QRCodeAnalyser(picture);
+                        QRcodeAnalyser qrca = new QRcodeAnalyser(picture);
                         ParcelParser pp = new ParcelParser();
                         try {
                             System.out.println(qrca.getDecodedText());
@@ -419,8 +422,8 @@ public class ArkBot extends AbilityBot {
                                                     .setMessageId(lastKnownMessage.get().getMessageId())
                                                     .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
                                     sender.editMessageText(editedText);
-                                    sender.send("Here are the details of the parcel you just completed: \n" +
-                                        retrievedParcel.toString(), ctx.chatId());
+                                    sender.send("Here are the details of the parcel you just completed: \n"
+                                        + retrievedParcel.toString(), ctx.chatId());
                                     this.waitingForImage = false;
                                 }
                             } else {
@@ -440,7 +443,11 @@ public class ArkBot extends AbilityBot {
 
 
     /* The following three methods are from https://github.com/rubenlagus/TelegramBots/wiki/FAQ#how_to_get_picture */
-    public PhotoSize getPhoto(Update update) {
+
+    /**
+     * Retrieving photo from update
+     */
+    private PhotoSize getPhoto(Update update) {
         // Check that the update contains a message and the message has a photo
         if (update.hasMessage() && update.getMessage().hasPhoto()) {
             // When receiving a photo, you usually get different sizes of it
@@ -457,7 +464,10 @@ public class ArkBot extends AbilityBot {
         return null;
     }
 
-    public String getFilePath(PhotoSize photo) {
+    /**
+     * Retrieving filepath from photo
+     */
+    private String getFilePath(PhotoSize photo) {
         Objects.requireNonNull(photo);
 
         if (photo.hasFilePath()) { // If the file_path is already present, we are done!
@@ -479,7 +489,10 @@ public class ArkBot extends AbilityBot {
         return null; // Just in case
     }
 
-    public java.io.File downloadPhotoByFilePath(String filePath) {
+    /**
+     * Downloading the photo from telegram.
+     */
+    private java.io.File downloadPhotoByFilePath(String filePath) {
         try {
             // Download the file calling AbsSender::downloadFile method
             return downloadFile(filePath);

@@ -37,13 +37,20 @@ import seedu.address.model.tag.Tag;
  */
 public class ParcelParser {
 
+    /**
+     * Parse ia a method to parse a String containing the details of a parcel into a ReadOnlyParcel
+     * @param args represent the details of the parcels with the prefixes.
+     * @return a ReadOnlyParcel that has the details corresponding to the arguments
+     * @throws ParseException if we are unable to understand the parcel information
+     */
     public ReadOnlyParcel parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(" " + args, PREFIX_TRACKING_NUMBER, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_DELIVERY_DATE, PREFIX_STATUS, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(" " + args, PREFIX_TRACKING_NUMBER, PREFIX_NAME, PREFIX_PHONE,
+                        PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_DELIVERY_DATE, PREFIX_STATUS, PREFIX_TAG);
         if (!arePrefixesPresent(argMultimap, PREFIX_TRACKING_NUMBER, PREFIX_NAME, PREFIX_ADDRESS,
                 PREFIX_DELIVERY_DATE)) {
-            throw new seedu.address.logic.parser.exceptions.ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            throw new seedu.address.logic.parser.exceptions.ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
         try {

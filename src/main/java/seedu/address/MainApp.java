@@ -48,6 +48,8 @@ public class MainApp extends Application {
 
     public static final Version VERSION = new Version(0, 6, 0, true);
 
+    protected static boolean botStarted = false;
+
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
     protected Ui ui;
@@ -58,7 +60,6 @@ public class MainApp extends Application {
     protected UserPrefs userPrefs;
     protected BotSettings botSettings;
 
-    static boolean botStarted = false;
 
 
     @Override
