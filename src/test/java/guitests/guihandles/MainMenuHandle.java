@@ -5,7 +5,7 @@ import java.util.Arrays;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 
-import seedu.address.logic.commands.ChangeWindowSizeCommand;
+import seedu.address.model.windowsize.WindowSize;
 
 /**
  * Provides a handle to the main menu of the app.
@@ -30,13 +30,13 @@ public class MainMenuHandle extends NodeHandle<Node> {
      */
     public void clickOnWindowSizesUsingMenu(String windowSize) {
         switch(windowSize) {
-        case ChangeWindowSizeCommand.SMALL_WINDOW_SIZE_PARAM:
+        case WindowSize.SMALL_WINDOW_SIZE_INPUT:
             clickOnMenuItemsSequentially("Window", "Small (800x600)");
             break;
-        case ChangeWindowSizeCommand.MEDIUM_WINDOW_SIZE_PARAM:
+        case WindowSize.MEDIUM_WINDOW_SIZE_INPUT:
             clickOnMenuItemsSequentially("Window", "Medium (1024x720)");
             break;
-        case ChangeWindowSizeCommand.BIG_WINDOW_SIZE_PARAM:
+        case WindowSize.BIG_WINDOW_SIZE_INPUT:
             clickOnMenuItemsSequentially("Window", "Big (1600x1024)");
             break;
         default:

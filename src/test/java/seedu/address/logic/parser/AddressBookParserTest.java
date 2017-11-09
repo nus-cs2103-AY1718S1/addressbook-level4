@@ -49,6 +49,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagContainsKeywordsPredicate;
+import seedu.address.model.windowsize.WindowSize;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -221,13 +222,6 @@ public class AddressBookParserTest {
         assertEquals(new AddTagCommand(indexes, toAdd), command);
     }
 
-    @Test
-    public void parseCommand_changeWindowSizeCommand() throws Exception {
-        assertTrue(parser.parseCommand(ChangeWindowSizeCommand.COMMAND_WORD) instanceof ChangeWindowSizeCommand);
-        assertTrue(parser.parseCommand(ChangeWindowSizeCommand.COMMAND_WORD + " "
-            + ChangeWindowSizeCommand.BIG_WINDOW_SIZE_PARAM) instanceof ChangeWindowSizeCommand);
-    }
-
     //@@author taojiashu
     @Test
     public void parseCommand_showFavourite() throws Exception {
@@ -247,6 +241,12 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORDVAR_1) instanceof UndoCommand);
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORDVAR_2 + " 2") instanceof UndoCommand);
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORDVAR_3 + " 3") instanceof UndoCommand);
+    }
+
+    @Test
+    public void parseCommand_changeWindowSizeCommand() throws Exception {
+        assertTrue(parser.parseCommand(ChangeWindowSizeCommand.COMMAND_WORD + " "
+                + WindowSize.BIG_WINDOW_SIZE_INPUT) instanceof ChangeWindowSizeCommand);
     }
 
     //@@author
