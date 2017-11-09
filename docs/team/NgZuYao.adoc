@@ -1,16 +1,8 @@
 = Ng Zu Yao - Project Portfolio
-:toc:
-:toc-title:
-:toc-placement: preamble
-:sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
-:experimental:
 ifdef::env-github[]
-:tip-caption: :bulb:
-:note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
 
 == Project: NUS Contact
 
