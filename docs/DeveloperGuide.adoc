@@ -974,7 +974,7 @@ A newly added, or edited person will be automatically selected in the `PersonLis
 of changes made to their contacts.
 
 This implementation is done by raising an event whenever the add and edit command respectively is executed.
-The `personListView` in `PersonListPanel` will subsequently scroll to the person that is newly modified.
+The `PersonListPanel` is registered as an event handler and will subsequently scroll to the person that is newly modified.
 
 ==== Responsive Split Pane
 
