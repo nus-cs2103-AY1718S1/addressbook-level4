@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,8 +12,6 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 public class BirthdaysCommandTest {
 
@@ -30,7 +30,7 @@ public class BirthdaysCommandTest {
     }
 
     @Test
-    public void noBirthdaysToday(){
+    public void noBirthdaysToday() {
         CommandResult result = birthdaysCommand.execute();
         assertEquals(result.feedbackToUser, "Wish these 0 people a Happy Birthday!");
         assertEquals(model.getFilteredPersonList(), emptyModel.getFilteredPersonList());
