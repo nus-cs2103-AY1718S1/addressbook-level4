@@ -41,7 +41,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
      * or a {@code null} {@code String} if not formattable.
      */
     public static String parseArguments(String commandWord, String rawArgs) {
-        // Check if index (number) exists, removes Remark prefix (if it exists) and re-adds it before returning.
+        // Check if index (number) exists, removes Email prefix (if it exists) and re-adds it before returning.
         if (isParsableInt(rawArgs)) {
             String indexString = Integer.toString(parseFirstInt(rawArgs));
             String subject = parseRemoveFirstInt(rawArgs).trim().replace(PREFIX_SUBJECT.toString(), "");

@@ -91,7 +91,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     public static String parseArguments(String rawArgs) {
         String remaining = rawArgs;
 
-        // Check for Mandatory Phone & Email
+        // Check for Mandatory Phone
         String phone;
         Optional<Pair<String, String>> mandatoryPhone = parseMandatoryPhone(remaining);
         if (mandatoryPhone.isPresent()) {
