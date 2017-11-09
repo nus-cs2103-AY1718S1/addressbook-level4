@@ -482,13 +482,18 @@ image::batchexample.png[width="800"]
 You can give MedNus multiple tags for batch deletion to be performed on.
 // end::batch[]
 
-// tag::batch[]
+// tag::copy[]
 === Copy a person's email address to your clipboard : `copy` [Since v1.4]
 
-You can copy a person's email address to your clipboard +
+You can copy a patient's email address to your clipboard +
 *Format:* `copy INDEX` +
 *Shorthand format:* `c INDEX`
-// end::batch[]
+
+*Example:*
+
+image::copyexample.png[width="800"]
+    Figure 5: Copy Command Usage Example
+// end::copy[]
 
 === Adding a person's relationships: `relation` [Since v1.5]
 
