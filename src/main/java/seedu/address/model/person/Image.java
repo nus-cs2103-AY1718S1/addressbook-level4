@@ -1,8 +1,8 @@
-//@@author aali195
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+//@@author aali195
 /**
  * Represents the path of an image for a Person in the address book
  */

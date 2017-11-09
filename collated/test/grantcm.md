@@ -1,37 +1,19 @@
 # grantcm
-###### /java/seedu/address/logic/AutoCompleteTest.java
+###### /java/seedu/address/model/person/GroupTest.java
 ``` java
-    @Before
-    public void setup() {
-        commandTrie = new CommandTrie();
-    }
-
     @Test
-    public void testAutoComplete() {
-        assert commandTrie.attemptAutoComplete("a").equals("add");
-        assert commandTrie.attemptAutoComplete("e").equals("e");
-        assert commandTrie.attemptAutoComplete("ed").equals("edit");
-        assert commandTrie.attemptAutoComplete("ex").equals("exit");
-        assert commandTrie.attemptAutoComplete("H").equals("H");
-        assert commandTrie.attemptAutoComplete("He").equals("help");
-        assert commandTrie.attemptAutoComplete("Hi").equals("history");
-        assert commandTrie.attemptAutoComplete("l").equals("list");
-        assert commandTrie.attemptAutoComplete("red").equals("redo");
-        assert commandTrie.attemptAutoComplete("rem").equals("remark");
-        assert commandTrie.attemptAutoComplete("s").equals("select");
-        assert commandTrie.attemptAutoComplete("u").equals("undo");
-        assert commandTrie.attemptAutoComplete("fil").equals("filter");
-        assert commandTrie.attemptAutoComplete("fin").equals("find");
-        assert commandTrie.attemptAutoComplete("g").equals("group");
-    }
+    public void isValidGroup () {
+        //invalid groupName
+        assertFalse(Group.isValidGroup("ab as"));
+        assertFalse(Group.isValidGroup(" ab"));
+        assertFalse(Group.isValidGroup(" ab ab"));
+        assertFalse(Group.isValidGroup("ab ab ab "));
+        assertFalse(Group.isValidGroup(" ab  "));
 
-    @Test
-    public void testExtendedAutoComplete() {
-        assert commandTrie.attemptAutoComplete("add").equals(" n/NAME p/PHONE e/EMAIL a/ADDRESS"
-                + " [t/TAG] [d/EXPIRY DATE]\n");
-        assert commandTrie.attemptAutoComplete("delete").equals(" INDEX\n");
-        assert commandTrie.attemptAutoComplete("edit").equals(" INDEX [n/NAME] [p/PHONE] [e/EMAIL] "
-                + "[a/ADDRESS] [t/TAG]\n");
+        //valid groupName
+        assertTrue(Group.isValidGroup("ab"));
+        assertTrue(Group.isValidGroup("Trip"));
+
     }
 ```
 ###### /java/seedu/address/logic/commands/FilterCommandTest.java
@@ -107,20 +89,38 @@
         assertFalse(model.groupExists(trip));
     }
 ```
-###### /java/seedu/address/model/person/GroupTest.java
+###### /java/seedu/address/logic/AutoCompleteTest.java
 ``` java
+    @Before
+    public void setup() {
+        commandTrie = new CommandTrie();
+    }
+
     @Test
-    public void isValidGroup () {
-        //invalid groupName
-        assertFalse(Group.isValidGroup("ab as"));
-        assertFalse(Group.isValidGroup(" ab"));
-        assertFalse(Group.isValidGroup(" ab ab"));
-        assertFalse(Group.isValidGroup("ab ab ab "));
-        assertFalse(Group.isValidGroup(" ab  "));
+    public void testAutoComplete() {
+        assert commandTrie.attemptAutoComplete("a").equals("add");
+        assert commandTrie.attemptAutoComplete("e").equals("e");
+        assert commandTrie.attemptAutoComplete("ed").equals("edit");
+        assert commandTrie.attemptAutoComplete("exi").equals("exit");
+        assert commandTrie.attemptAutoComplete("H").equals("H");
+        assert commandTrie.attemptAutoComplete("He").equals("help");
+        assert commandTrie.attemptAutoComplete("Hi").equals("history");
+        assert commandTrie.attemptAutoComplete("l").equals("list");
+        assert commandTrie.attemptAutoComplete("red").equals("redo");
+        assert commandTrie.attemptAutoComplete("rem").equals("remark");
+        assert commandTrie.attemptAutoComplete("s").equals("select");
+        assert commandTrie.attemptAutoComplete("u").equals("undo");
+        assert commandTrie.attemptAutoComplete("fil").equals("filter");
+        assert commandTrie.attemptAutoComplete("fin").equals("find");
+        assert commandTrie.attemptAutoComplete("g").equals("group");
+    }
 
-        //valid groupName
-        assertTrue(Group.isValidGroup("ab"));
-        assertTrue(Group.isValidGroup("Trip"));
-
+    @Test
+    public void testExtendedAutoComplete() {
+        assert commandTrie.attemptAutoComplete("add").equals(" n/NAME p/PHONE e/EMAIL a/ADDRESS"
+                + " [t/TAG] [d/EXPIRY DATE]\n");
+        assert commandTrie.attemptAutoComplete("delete").equals(" INDEX\n");
+        assert commandTrie.attemptAutoComplete("edit").equals(" INDEX [n/NAME] [p/PHONE] [e/EMAIL] "
+                + "[a/ADDRESS] [t/TAG]\n");
     }
 ```

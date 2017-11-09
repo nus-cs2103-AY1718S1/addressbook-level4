@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= TouristBook - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -494,7 +494,7 @@ In UI, there's now a list view that in a split panel that shows the menu on the 
 // end::groups[]
 
 === Person Image
-
+// tag::image[]
 A feature that allows the user to add an image to a person in the addressbook via the command line. A basic default image is used if a person does not have an image associated to them. The feature uses the command `image` followed by the index of the person to be selected and then the local URL of the image file.
 
 The command works as following:
@@ -548,9 +548,9 @@ The current implementation of this feature is based on https://github.com/nus-cs
 **Alternative 2:** Each image is named after each person's names/other property +
 **Pros:** Readable by humans and easy to associate with a person in the addressbook +
 **Cons:** Causes conflicts when different contacts have the same properties (email addresses have to be unique)
-
+// end::image[]
 === Export
-
+// tag::export[]
 A feature that allows the user to export the addressbook and images saved to a compressed file.
 
 The command works as following:
@@ -602,7 +602,7 @@ Adding each file into the target zip is done by the following code using ZipEntr
 **Alternative 3:** Use a proprietary file type +
 **Pros:** Will be the hardest for the average and intermediate users to tamper with and best for the future import feature +
 **Cons:** Much more complex to implement
-
+// end::export[]
 == Testing
 
 Tests can be found in the `./src/test/java` folder.

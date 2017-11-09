@@ -1,5 +1,3 @@
-
-//@@author aali195
 package seedu.address.commons.util;
 
 import java.io.File;
@@ -8,6 +6,7 @@ import java.io.FileOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+//@@author aali195
 /**
  * Handles the compression of directories
  */

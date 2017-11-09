@@ -1,6 +1,6 @@
-//@@author aali195
 package seedu.address.commons.exceptions;
 
+//@@author aali195
 /**
  * Represents an image error encountered by a parser.
  */
