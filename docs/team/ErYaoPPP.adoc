@@ -110,4 +110,4 @@ Hence, if there is a pop up, it could remind users of their tasks and allow user
 
 === Other Contributions
 
-* updated and standardized the format and structure for user guide and developer guide.
+* Updated and standardized the format and structure for user guide and developer guide.
