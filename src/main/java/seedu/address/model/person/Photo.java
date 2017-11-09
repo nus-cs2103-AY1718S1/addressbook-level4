@@ -23,7 +23,8 @@ public class Photo {
      *  Constructs a default photo.
      */
     public Photo() {
-        pathName = "..\\addressbook-level4\\docs\\images\\default_photo.png";
+        pathName = System.getProperty("user.dir")
+                + "/docs/images/default_photo.png";
     }
 
     /**

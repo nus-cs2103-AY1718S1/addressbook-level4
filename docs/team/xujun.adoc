@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: Contact Book
 Contact Book is a desktop address book application used for students in NUS to better store their contacts. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-T14-B1/main/blob/master/collated/main/willxujun.md[Functional code]] [https://github.com/CS2103AUG2017-T14-B1/main/blob/master/collated/test/willxujun.md[Test code]] {give links to collated code files}
 
 === Enhancement Added: Search Box
 

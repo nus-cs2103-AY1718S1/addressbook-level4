@@ -35,7 +35,8 @@ public class PhoneCommand extends UndoableCommand {
     /**
      * Adds or Updates a Person's phoneNumber list
      */
-    private Person updatePersonPhoneList(ReadOnlyPerson personToUpdatePhoneList, String action, Phone phone) {
+    private Person updatePersonPhoneList(ReadOnlyPerson personToUpdatePhoneList, String action, Phone phone)
+            throws PhoneNotFoundException, DuplicatePhoneException {
         Name name = personToUpdatePhoneList.getName();
         Phone primaryPhone = personToUpdatePhoneList.getPhone();
         UniquePhoneList uniquePhoneList = personToUpdatePhoneList.getPhoneList();
@@ -46,19 +47,9 @@ public class PhoneCommand extends UndoableCommand {
         UniqueCustomFieldList customFields = personToUpdatePhoneList.getCustomFieldList();
 
         if (action.equals("remove")) {
-            try {
-                uniquePhoneList.remove(phone);
-            } catch (PhoneNotFoundException e) {
-                throw new AssertionError("phone number cannot be found");
-            }
+            uniquePhoneList.remove(phone);
         } else if (action.equals("add")) {
-            try {
-                uniquePhoneList.add(phone);
-            } catch (DuplicatePhoneException e) {
-                throw new AssertionError("number adding already in the list");
-            }
-        } else if (action.equals("showAllPhones")) {
-
+            uniquePhoneList.add(phone);
         }
 
         Person personUpdated = new Person(name, primaryPhone, email, address,
@@ -76,31 +67,39 @@ public class PhoneCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToUpdatePhoneList = lastShownList.get(targetIndex.getZeroBased());
-        Person personUpdated = updatePersonPhoneList(personToUpdatePhoneList, action, phone);
-        UniquePhoneList uniquePhoneList = personUpdated.getPhoneList();
-        Phone primaryPhone = personUpdated.getPhone();
         try {
-            model.updatePerson(personToUpdatePhoneList, personUpdated);
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
-        }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            Person personUpdated = updatePersonPhoneList(personToUpdatePhoneList, action, phone);
+            UniquePhoneList uniquePhoneList = personUpdated.getPhoneList();
+            Phone primaryPhone = personUpdated.getPhone();
+            try {
+                model.updatePerson(personToUpdatePhoneList, personUpdated);
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing");
+            }
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        if (action.equals("showAllPhones")) {
-            String str = "The primary number is " + primaryPhone + "\n";
-            return new CommandResult(str + uniquePhoneList.getAllPhone());
-        } else if (action.equals("add")) {
-            String successMessage = "Phone number " + phone.number + " has been added, ";
-            String info = "the updated phone list now has " + (uniquePhoneList.getSize() + 1)
-                    + " phone numbers, and the primary phone number is " + primaryPhone;
-            return new CommandResult(successMessage + info);
-        } else {
-            String successMessage = "Phone number " + phone.number + " has been removed, ";
-            String info = "the updated phone list now has " + (uniquePhoneList.getSize() + 1)
-                    + " phone numbers, and the primary phone number is " + primaryPhone;
-            return new CommandResult(successMessage + info);
+            if (action.equals("showAllPhones")) {
+                String str = "The primary number is " + primaryPhone + "\n";
+                return new CommandResult(str + uniquePhoneList.getAllPhone());
+            } else if (action.equals("add")) {
+                String successMessage = "Phone number " + phone.number + " has been added, ";
+                String info = "the updated phone list now has " + (uniquePhoneList.getSize() + 1)
+                        + " phone numbers, and the primary phone number is " + primaryPhone;
+                return new CommandResult(successMessage + info);
+            } else if (action.equals("remove")) {
+                String successMessage = "Phone number " + phone.number + " has been removed, ";
+                String info = "the updated phone list now has " + (uniquePhoneList.getSize() + 1)
+                        + " phone numbers, and the primary phone number is " + primaryPhone;
+                return new CommandResult(successMessage + info);
+            } else {
+                return new CommandResult("command is invalid, please check again");
+            }
+        } catch (PhoneNotFoundException e) {
+            return new CommandResult("Phone number to be removed is not found in the list");
+        } catch (DuplicatePhoneException e) {
+            return new CommandResult("Phone number to be added already exists in the list");
         }
     }
 }
@@ -347,6 +346,106 @@ public class UniquePhoneList implements Iterable<Phone> {
         return internalList.hashCode();
     }
 
+}
+```
+###### \java\seedu\address\ui\WeatherWindow.java
+``` java
+public class WeatherWindow extends UiPart<Region> {
+
+    public static final String USERGUIDE_FILE_PATH = "https://www.yahoo.com/news/weather";
+
+    private static final Logger logger = LogsCenter.getLogger(WeatherWindow.class);
+    private static final String FXML = "HelpWindow.fxml";
+    private static final String TITLE = "Weather";
+
+    @FXML
+    private WebView browser;
+
+    private final Stage dialogStage;
+
+    public WeatherWindow() throws JAXBException, IOException {
+        super(FXML);
+        Scene scene = new Scene(getRoot());
+        //Null passed as the parent stage to make it non-modal.
+        dialogStage = createDialogStage(TITLE, null, scene);
+        dialogStage.setMaximized(true); //TODO: set a more appropriate initial size
+
+        browser.getEngine().load(USERGUIDE_FILE_PATH);
+    }
+
+    /**
+     * Shows the Yahoo weather window.
+     * @throws IllegalStateException
+     * <ul>
+     *     <li>
+     *         if this method is called on a thread other than the JavaFX Application Thread.
+     *     </li>
+     *     <li>
+     *         if this method is called during animation or layout processing.
+     *     </li>
+     *     <li>
+     *         if this method is called on the primary stage.
+     *     </li>
+     *     <li>
+     *         if {@code dialogStage} is already showing.
+     *     </li>
+     * </ul>
+     */
+    public void show() {
+        logger.fine("Showing Yahoo weather window.");
+        dialogStage.showAndWait();
+    }
+
+
+}
+```
+###### \java\seedu\address\ui\YahooWeatherRequest.java
+``` java
+public class YahooWeatherRequest {
+    private final String woeid = "1062617";
+
+    public String getYahooWeatherConditionSg() throws JAXBException, IOException {
+
+        YahooWeatherService service = new YahooWeatherService();
+        Channel channel = service.getForecast(woeid, DegreeUnit.CELSIUS);
+
+        return conditionStringParser(channel.getItem().getCondition().toString());
+    }
+
+    /**
+     * Format the string returned from Yahoo Weather
+     */
+    private String conditionStringParser (String rawString) {
+        int startIndex = 0;
+        int endIndex = 0;
+        final int unusedTermIndex = 1;
+        final String degree  = "\u00b0";
+
+        for (int i = 0; i < rawString.length(); i++) {
+            if (rawString.charAt(i) == '[') {
+                startIndex = i;
+            }
+
+            if (rawString.charAt(i) == ']') {
+                endIndex = i;
+            }
+        }
+
+        String removedOverHeadString = rawString.substring(startIndex, endIndex);
+        ArrayList<String> splitStrings = new ArrayList<String>();
+        for (String piece : removedOverHeadString.split(",")) {
+            splitStrings.add(piece);
+        }
+        splitStrings.remove(unusedTermIndex);
+        splitStrings.set(1, splitStrings.get(1) + degree);
+
+        StringBuilder builder = new StringBuilder();
+        splitStrings.stream().forEach(e -> builder
+                .append(Arrays.stream(e.split("="))
+                        .reduce((first, second) -> second).get() + " "));
+
+        return builder.toString();
+    }
 }
 ```
 ###### \resources\view\LightTheme.css

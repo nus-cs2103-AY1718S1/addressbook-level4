@@ -116,4 +116,5 @@ This command would allow users to customise their Contact Book to have an appear
 
 * Allow Storage for all new fields for the team (Pull requests https://github.com/CS2103AUG2017-T14-B1/main/pull/59)
 * Add a default background image for the Contact Book (Pull requests https://github.com/CS2103AUG2017-T14-B1/main/pull/79)
+* Add acceptance test for other groups (Issues https://github.com/CS2103AUG2017-F10-B1/main/issues/119)
 
