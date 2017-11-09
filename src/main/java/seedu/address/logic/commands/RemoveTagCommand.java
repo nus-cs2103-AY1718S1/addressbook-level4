@@ -34,11 +34,6 @@ public class RemoveTagCommand extends UndoableCommand {
     public static final String MESSAGE_TAG_NOT_FOUND = "Tag given does not exist in address book";
     public static final String MESSAGE_TAG_NOT_FOUND_IN = "Index %s does not have the given tag.";
 
-    public static final int RANGE = 0;
-    public static final int TAG = 1;
-    public static final String WHOLEAB = "all";
-
-
     private final Tag toRemove;
     private final Optional<Index> index;
 
@@ -62,7 +57,7 @@ public class RemoveTagCommand extends UndoableCommand {
             if (index.orElse(null) == null) {
                 removeAllTag(toRemove);
             } else {
-                remvoveOneTag(index.get(), toRemove);
+                remvoeOneTag(index.get(), toRemove);
             }
             return new CommandResult(String.format(MESSAGE_SUCCESS));
         } catch (DuplicatePersonException dpe) {
@@ -91,7 +86,7 @@ public class RemoveTagCommand extends UndoableCommand {
      * @param toRemove is the tag to be removed from the person
      * @throws CommandException if the tag to be removed does not exist in the person.
      */
-    private void remvoveOneTag(Index index, Tag toRemove) throws PersonNotFoundException, DuplicatePersonException,
+    private void remvoeOneTag(Index index, Tag toRemove) throws PersonNotFoundException, DuplicatePersonException,
             CommandException {
         requireIndexValid(index);
         try {

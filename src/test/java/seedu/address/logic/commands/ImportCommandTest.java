@@ -27,8 +27,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 //@@author freesoup
 public class ImportCommandTest {
     private Model model;
-    List<ReadOnlyPerson> list1;
-    List<ReadOnlyPerson> list2;
+    private List<ReadOnlyPerson> list1;
+    private List<ReadOnlyPerson> list2;
 
     @Before
     public void setUp() {
@@ -64,15 +64,17 @@ public class ImportCommandTest {
     public void import_toEmptyAddressBook_success() throws DuplicatePersonException {
 
         Model testModel = new ModelManager(new AddressBook(), new UserPrefs());
-        AddressBook testAB = new AddressBook();
-        testAB.setPersons(list2);
-        Model testModelWithABC = new ModelManager(testAB, new UserPrefs());
+        AddressBook testAddressBook = new AddressBook();
+        testAddressBook.setPersons(list2);
+        Model testModelAliceBensonCarl = new ModelManager(testAddressBook, new UserPrefs());
 
+        //Import list of 3 people into empty addressbook
         assertCommandSuccess(prepareCommand(list2, testModel), testModel,
-                String.format(ImportCommand.MESSAGE_SUCCESS,0), testModelWithABC);
+                String.format(ImportCommand.MESSAGE_SUCCESS, 0), testModelAliceBensonCarl);
 
+        //Import list of 7 people into addressbook with 3 people inside.
         assertCommandSuccess(prepareCommand(list1, testModel), testModel,
-                String.format(ImportCommand.MESSAGE_SUCCESS,3), model);
+                String.format(ImportCommand.MESSAGE_SUCCESS, 3), model);
 
     }
 

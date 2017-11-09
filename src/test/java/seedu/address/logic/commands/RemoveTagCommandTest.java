@@ -50,7 +50,8 @@ public class RemoveTagCommandTest {
     }
 
     @Test
-    public void execute_removeSingleTag_success() throws IllegalValueException, PersonNotFoundException, NoSuchTagException {
+    public void execute_removeSingleTag_success() throws IllegalValueException, PersonNotFoundException,
+            NoSuchTagException {
         String expectedMessage = MESSAGE_TAG_REMOVED;
 
         RemoveTagCommand command = prepareCommand(4, "family");

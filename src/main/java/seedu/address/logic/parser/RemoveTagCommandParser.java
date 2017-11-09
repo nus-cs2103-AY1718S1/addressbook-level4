@@ -16,6 +16,10 @@ import seedu.address.model.tag.Tag;
  */
 public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
 
+    public static final int RANGE = 0;
+    public static final int TAG = 1;
+    public static final String WHOLEAB = "all";
+
     /**
      * Parses the given {@code String} of arguments in the context of the RemoveTagCommand
      * and returns an RemoveTagCommand object for execution.
@@ -41,11 +45,11 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
         }
 
         try {
-            toRemove =  new Tag(fields[RemoveTagCommand.TAG]);
-            if (fields[RemoveTagCommand.RANGE].equals(RemoveTagCommand.WHOLEAB)) {
+            toRemove =  new Tag(fields[TAG]);
+            if (fields[RANGE].equals(WHOLEAB)) {
                 return new RemoveTagCommand(toRemove);
-            } else if (StringUtil.isNonZeroUnsignedInteger(fields[RemoveTagCommand.RANGE])) {
-                index = ParserUtil.parseIndex(fields[RemoveTagCommand.RANGE]);
+            } else if (StringUtil.isNonZeroUnsignedInteger(fields[RANGE])) {
+                index = ParserUtil.parseIndex(fields[RANGE]);
                 return new RemoveTagCommand(index, toRemove);
             } else {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
