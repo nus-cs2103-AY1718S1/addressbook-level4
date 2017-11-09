@@ -382,5 +382,4 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }
-    
 }
