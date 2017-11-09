@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -64,10 +65,12 @@ public class DetailedPersonCard extends UiPart<Region> {
     @FXML
     private ImageView emailicon;
 
-    public DetailedPersonCard(HashMap<String, String> tagColors) {
+    public DetailedPersonCard(Optional<HashMap<String, String>> tagColors) {
         super(FXML);
         registerAsAnEventHandler(this);
-        this.tagColors = tagColors;
+        if (tagColors.isPresent()) {
+            this.tagColors = tagColors.get();
+        }
     }
 
     private static String getColorForTag(String tagValue) {

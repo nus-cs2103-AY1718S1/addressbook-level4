@@ -1,9 +1,6 @@
 package seedu.address.ui;
 
-import java.util.ArrayList;
 import java.util.logging.Logger;
-
-import org.controlsfx.control.textfield.TextFields;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -33,6 +30,7 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private TextField commandTextField;
 
+
     //@@author hansiang93
     public CommandBox(Logic logic) {
         super(FXML);
@@ -40,8 +38,6 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
-        ArrayList<String> suggestions = AutoCompleteSuggestions.getSuggestionList();
-        TextFields.bindAutoCompletion(commandTextField, suggestions);
     }
     //@@author
 
@@ -55,7 +51,6 @@ public class CommandBox extends UiPart<Region> {
             // As up and down buttons will alter the position of the caret,
             // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
-
             navigateToPreviousInput();
             break;
         case DOWN:

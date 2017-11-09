@@ -12,6 +12,7 @@
     -fx-list-cell-selected-border: #3e7b91;
     -fx-list-cell-empty: #E0E4CC;
 }
+
 /*@@author*/
 
 .background {
@@ -315,6 +316,61 @@
 
 .scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
     -fx-padding: 8 1 8 1;
+}
+
+.auto-complete-popup {
+    -fx-translate-y: -100;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0.0px;
+    -fx-background-radius: 0.0px;
+    -fx-border-width: 0.0px;
+    -fx-border-color: transparent;
+    -fx-border-radius: 0.0px;
+}
+
+.auto-complete-popup > .list-view {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0.0px;
+    -fx-background-radius: 0.0px;
+    -fx-border-color: transparent;
+    -fx-border-width: 0.0px;
+    -fx-border-radius: 0.0px;
+    -fx-padding: 0.0px;
+}
+
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0.0px;
+    -fx-alignment: CENTER-LEFT;
+    -fx-text-fill: #65728B;
+    -fx-font-size: 1.0em;
+    -fx-font-weight: normal;
+    -fx-padding: 8.0px;
+    -fx-cursor: hand;
+}
+
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled {
+}
+
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:hover,
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:focused {
+    -fx-background-color: #0078ce;
+    -fx-text-fill: black;
+}
+
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected {
+    -fx-background-color: #0078ce;
+    -fx-text-fill: black;
+    -fx-cursor: default;
+}
+
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected:hover {
+    -fx-background-color: #0078ce;
+    -fx-cursor: default;
+}
+
+.auto-complete-popup > .list-view > .placeholder > .label {
+    -fx-text-fill: #65728B;
 }
 
 #cardPane {

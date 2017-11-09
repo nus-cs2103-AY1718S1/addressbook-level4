@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
@@ -62,8 +63,11 @@ public class PersonListPanel extends UiPart<Region> {
         });
     }
 
-    public HashMap<String, String> getTagColors() {
-        return personListView.getItems().get(0).getTagColors();
+    public Optional<HashMap<String, String>> getTagColors() {
+        if (personListView.getItems().isEmpty()) {
+            return Optional.empty();
+        }
+        return personListView.getItems().get(1).getTagColors();
     }
 
     @Subscribe

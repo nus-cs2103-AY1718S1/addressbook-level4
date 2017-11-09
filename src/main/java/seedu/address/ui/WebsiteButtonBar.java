@@ -57,10 +57,10 @@ public class WebsiteButtonBar extends UiPart<Region> {
         ReadOnlyPerson selectedPerson = event.getNewSelection().person;
         ArrayList<Button> buttonList = new ArrayList<>();
         selectedPerson.getWebLinks().forEach(webLink -> {
-            Button newbutton = new Button(webLink.webLinkTag);
+            Button newbutton = new Button(webLink.toStringWebLinkTag());
             newbutton.setOnMouseClicked(e -> {
-                logger.info(webLink.webLinkTag + " button clicked");
-                raise(new WebsiteSelectionRequestEvent(webLink.webLinkTag));
+                logger.info(webLink.toStringWebLinkTag() + " button clicked");
+                raise(new WebsiteSelectionRequestEvent(webLink.toStringWebLinkTag()));
             });
             buttonList.add(newbutton);
         });
