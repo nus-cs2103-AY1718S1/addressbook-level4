@@ -24,7 +24,7 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
     private static final String COMPLETED_REPAYMENT_MESSAGE = "Completed";
     private static final String OVERDUE_REPAYMENT_MESSAGE = "Overdue";
     private static final String NO_DEADLINE_REPAYMENT_MESSAGE = "No deadline set";
-    public static final String DURATION_LEFT_TO_REPAY_DEBT_MESSAGE = "%1$s years(s) %2$s month(s) and "
+    private static final String DURATION_LEFT_TO_REPAY_DEBT_MESSAGE = "%1$s years(s) %2$s month(s) and "
             + "%3$s day(s) left to repay debt";
     private Double totalDebt;
     private Double repaid;
