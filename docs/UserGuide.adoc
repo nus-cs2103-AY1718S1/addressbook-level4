@@ -427,6 +427,43 @@ Examples:
 Emails the 2nd person in the address book.
 // end::emailCommand[]
 
+// tag::gmCommand[]
+=== Directions to a person's address : `(gm)gmap`
+
+Opens Google Maps in default browser with a person's (identified by the index number used in the last
+listing) address in the Destination. +
+Format: `(gm)gmap INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* like `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`gmap 2` +
+The address of the 2nd person in the address book will be in the Destination field in Google Maps.
+// end::gmCommand[]
+
+// tag::fbCommand[]
+=== Finding a contact on Facebook : `(fb)facebook`
+
+Searches for a person's (identified by the index number used in the last listing) name on Facebook. +
+Format: `(fb)facebook INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* like `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`facebook 2` +
+The name of the 2nd person in the address book will be searched on Facebook.
+// end::fbCommand[]
+
 === Adding avatar to a person : `(avr)avatar`
 
 Adds avatar to a person (identified by the index number used in the last listing). +
