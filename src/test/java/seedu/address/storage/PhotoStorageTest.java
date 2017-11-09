@@ -45,17 +45,17 @@ public class PhotoStorageTest {
     }
     @Test
     public void getExtensionSuccess() {
-        String filePathJPG = "C:/Users/pigir/Desktop/images/saltbae.jpg";
-        String extJPG = ExtensionCheckerUtil.getExtension(filePathJPG);
-        assertEquals(extJPG,"jpg");
+        String filePathJpg = "C:/Users/pigir/Desktop/images/saltbae.jpg";
+        String extJpg = ExtensionCheckerUtil.getExtension(filePathJpg);
+        assertEquals(extJpg, "jpg");
 
-        String filePathPNG = "C:/Users/pigir/Desktop/images/saltbae.png";
-        String extPNG = ExtensionCheckerUtil.getExtension(filePathPNG);
-        assertEquals(extPNG,"png");
+        String filePathPng = "C:/Users/pigir/Desktop/images/saltbae.png";
+        String extPng = ExtensionCheckerUtil.getExtension(filePathPng);
+        assertEquals(extPng, "png");
 
-        String filePathJPEG = "C:/Users/pigir/Desktop/images/saltbae.JPEG";
-        String extJPEG = ExtensionCheckerUtil.getExtension(filePathJPEG);
-        assertEquals(extJPEG,"JPEG");
+        String filePathJpeg = "C:/Users/pigir/Desktop/images/saltbae.JPEG";
+        String extJpeg = ExtensionCheckerUtil.getExtension(filePathJpeg);
+        assertEquals(extJpeg, "JPEG");
     }
     @Test
     public void checkExtension() {
