@@ -91,7 +91,7 @@ If everything goes well, it should finish with the `BUILD SUCCESSFUL` message. T
 
 === Verifying the Setup
 
-To make sure that the application runs as expected after the initial set up setting up, do the following: *(DO WE NEED THIS LINE? OR HOW CAN WE IMPROVE IT?)*
+To make sure that the application runs as expected after the initial set up setting up, do the following: 
 
 . Run the `seedu.address.MainApp` and try a few commands
 . link:#testing[Run the tests] to ensure they all pass.
@@ -228,12 +228,12 @@ _Figure 2.3.1_ below shows the structure of the `Logic` component.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 2.3.1_ : Structure of the Logic Component
 
 _Figure 2.3.2_ shows finer details concerning `XYZCommand` and `Command` in _Figure 2.3.1_.
 
 image::NewCommandClassDiagram.PNG[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component.
+_Figure 2.3.2_ : Structure of Commands in the Logic Component.
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -637,7 +637,7 @@ _Figure 4.4.1: Code section in FindCommandParser.java_
 [NOTE]
 A valid find command can only search for keywords based on specific prefix  [n/NAME] or [p/PHONE] or [e/EMAIL] or [a/ADDRESS] or [t/TAG] or [c/COUNTRY] or [act/ACTIVITY].
 
-Any other prefix as input will be considered as invalid input.In absence of valid prefix ,an exception will be thrown, as shown in _Figure 4.4.2_.
+Any other prefix as input will be considered as invalid input.In absence of valid prefix ,an exception will be thrown, as shown in Figure 4.4.2_.
 [source,java]
 ----
          default:
