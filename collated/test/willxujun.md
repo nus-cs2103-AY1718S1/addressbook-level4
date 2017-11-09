@@ -1,5 +1,5 @@
 # willxujun
-###### /java/seedu/address/logic/parser/AddCommandParserTest.java
+###### \java\seedu\address\logic\parser\AddCommandParserTest.java
 ``` java
         //empty (unknown) email value
         expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
@@ -13,7 +13,7 @@
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + UNKNOWN_ADDRESS_DESC, new AddCommand(expectedPerson));
 ```
-###### /java/systemtests/FindCommandSystemTest.java
+###### \java\systemtests\FindCommandSystemTest.java
 ``` java
         /* Case: find multiple persons in address book, 2 keywords -> 0 persons found because of new AND search*/
         command = FindCommand.COMMAND_WORD + " Benson Daniel";

@@ -3,10 +3,11 @@ package seedu.address.logic.parser;
 import java.util.Arrays;
 
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.NamePhoneTagContainsKeywordsPredicate;
+
 //@@author willxujun
 /**
  * Represents a parser that parses input from the search bar
@@ -27,7 +28,7 @@ public class SearchParser {
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
-        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        return new SearchCommand(new NamePhoneTagContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 
 }

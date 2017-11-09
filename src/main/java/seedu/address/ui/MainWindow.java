@@ -8,6 +8,8 @@ import javax.xml.bind.JAXBException;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -164,12 +166,30 @@ public class MainWindow extends UiPart<Region> {
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
-        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
-
+        //@@author willxujun
         SearchBox searchBox = new SearchBox(logic);
         searchBoxPlaceholder.getChildren().add(searchBox.getRoot());
 
+        CommandBox commandBox = new CommandBox(logic);
+        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+        commandBox.getCommandTextField().requestFocus();
+
+        /*
+        ChangeListener for caret focus.
+        Switches focus to searchBox upon switching out of commandBox.
+         */
+        commandBox.getCommandTextField().focusedProperty().addListener(
+                new ChangeListener<Boolean>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+                                        Boolean newValue) {
+                        if (oldValue == true) {
+                            searchBox.getTextField().requestFocus();
+                        }
+                    }
+                }
+        );
+        //@@author
     }
 
     void hide() {
