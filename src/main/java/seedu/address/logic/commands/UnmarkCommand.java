@@ -8,9 +8,11 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.RefreshPanelEvent;
+import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.exceptions.NotRemarkedLessonException;
 import seedu.address.model.module.predicates.MarkedListPredicate;
 
 //@@author junming403
@@ -48,12 +50,18 @@ public class UnmarkCommand extends UndoableCommand {
         ReadOnlyLesson lessonToCollect = lastShownList.get(targetIndex.getZeroBased());
 
         if (ListingUnit.getCurrentListingUnit().equals(LESSON)) {
-            model.unBookmarkLesson(lessonToCollect);
-            if (ListingUnit.getCurrentPredicate() instanceof MarkedListPredicate) {
-                model.updateFilteredLessonList(new MarkedListPredicate());
+            try {
+                model.unBookmarkLesson(lessonToCollect);
+                if (ListingUnit.getCurrentPredicate() instanceof MarkedListPredicate) {
+                    model.updateFilteredLessonList(new MarkedListPredicate());
+                }
+                EventsCenter.getInstance().post(new RefreshPanelEvent());
+                EventsCenter.getInstance().post(new ViewedLessonEvent());
+                return new CommandResult(String.format(MESSAGE_UNBOOKMARK_LESSON_SUCCESS, lessonToCollect));
+
+            } catch (NotRemarkedLessonException e) {
+                throw new CommandException(e.getMessage());
             }
-            EventsCenter.getInstance().post(new RefreshPanelEvent());
-            return new CommandResult(String.format(MESSAGE_UNBOOKMARK_LESSON_SUCCESS, lessonToCollect));
         } else {
             throw new CommandException(MESSAGE_WRONG_LISTING_UNIT_FAILURE);
         }

@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MODULE_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_SLOT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
+import static seedu.address.model.ListingUnit.LESSON;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -40,7 +41,7 @@ public class EditCommandParser implements Parser<EditCommand> {
     @Override
     public EditCommand parse(String args) throws ParseException {
 
-        if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.LESSON)) {
+        if (ListingUnit.getCurrentListingUnit().equals(LESSON)) {
             return parseEditLesson(args);
         } else {
             return parseEditAttribute(args);
@@ -61,7 +62,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, getEditCommandUsage()));
         }
 
         EditLessonDescriptor editLessonDescriptor = new EditLessonDescriptor();
@@ -111,13 +112,13 @@ public class EditCommandParser implements Parser<EditCommand> {
             if (matcher.find()) {
                 index = ParserUtil.parseIndex(matcher.group(0));
             } else {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, getEditCommandUsage()));
             }
 
             attributeValue = trimmedArgs.substring(matcher.group(0).length()).trim();
 
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, getEditCommandUsage()));
         }
 
         return new EditCommand(index, attributeValue);
@@ -140,4 +141,17 @@ public class EditCommandParser implements Parser<EditCommand> {
         return Optional.of(ParserUtil.parseLecturer(lecturersSet));
     }
 
+    /**
+     * Get usage for edit command for current listing panel.
+     */
+    private String getEditCommandUsage() {
+        switch (ListingUnit.getCurrentListingUnit()) {
+        case LESSON:
+            return EditCommand.MESSAGE_USAGE_LESSON;
+        case LOCATION:
+            return EditCommand.MESSAGE_USAGE_LOCATION;
+        default:
+            return EditCommand.MESSAGE_USAGE_MODULE;
+        }
+    }
 }

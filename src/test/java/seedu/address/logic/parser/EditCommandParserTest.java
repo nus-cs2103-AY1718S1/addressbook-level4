@@ -33,6 +33,8 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_LESSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_LESSON;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -53,9 +55,20 @@ public class EditCommandParserTest {
     private static final String TAG_EMPTY = " " + PREFIX_LECTURER;
 
     private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE_LESSON);
 
     private EditCommandParser parser = new EditCommandParser();
+
+    @Before
+    public void setUp() {
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
+    }
+
+    @After
+    public void clearUp() {
+        ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
+    }
+
 
     @Test
     public void parse_missingParts_failure() {

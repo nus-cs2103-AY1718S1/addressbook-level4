@@ -14,6 +14,7 @@ import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.DuplicateRemarkException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.exceptions.NotRemarkedLessonException;
 import seedu.address.model.module.exceptions.RemarkNotFoundException;
 
 //@@author caoliangnus
@@ -76,7 +77,7 @@ public interface Model {
     /**
      * Unbookmarks the given lesson from favourite list
      */
-    void unBookmarkLesson(ReadOnlyLesson lesson);
+    void unBookmarkLesson(ReadOnlyLesson lesson) throws NotRemarkedLessonException;
 
     //@@author angtianlannus
     /**
