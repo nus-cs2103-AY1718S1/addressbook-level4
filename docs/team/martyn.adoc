@@ -14,7 +14,7 @@ OurAb is a CLI(Command Line Interface)-based desktop Address Book application wr
 
 #Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
 
-Users can type a shortcut command for 9 commands, where entering the first letter of the command also returns the same functionality:
+Users can type a shortcut command for 16 commands, where entering the first letter(s) of the command also returns the same functionality:
 1) Add
 2) Delete
 3) Edit
@@ -24,6 +24,13 @@ Users can type a shortcut command for 9 commands, where entering the first lette
 7) Redo
 8) Select
 9) Undo
+10) AddMeeting
+11) DeleteTag
+12) ListByMostSearched
+13) Pref
+14) NextMeeting
+15) Map
+16) Search
 
 e.g. entering "l" will also return a list of persons in the address book
 
@@ -33,7 +40,8 @@ e.g. entering "l" will also return a list of persons in the address book
 
 ==== Justification
 
-To make it more convenient for experienced users
+To make it more convenient for experienced users, who will be able to use the address book more efficiently once they are familiar with
+the shortcuts. Users can refer to the user guide for the list of the command shortcuts.
 
 ---
 
@@ -41,9 +49,19 @@ To make it more convenient for experienced users
 
 #Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
 
-Majority of commands have an alias, which is shorter and can also execute the command
+Alternatively to COMMAND_WORD, commands also have COMMAND_ALIAS which AddressBookParser will also accept as a valid input to execute the
+desired command
 
-image::shortcut-example.png[width="800"]
++
+[source,java]
+----
+     public static final String COMMAND_WORD = "add";
+     public static final String COMMAND_ALIAS = "a";
+
+        case AddCommand.COMMAND_WORD:
+        case AddCommand.COMMAND_ALIAS:
+            return new AddCommandParser().parse(arguments);
+----
 
 #End of Extract#
 
