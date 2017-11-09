@@ -386,6 +386,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::customField[]
 === Custom Field
 ==== Model
 A UniqueCustomFieldList Class is created which will be used to store a person's Custom Fields.
@@ -417,7 +418,9 @@ A new label will be displaced for each person for each custom field.
 ==== Sequence Diagram
 image::CustomCommandSequenceDiagram.png[width="800"]
 image::CustomCommandSequenceDiagramForStorage[width="800"]
+// end:: customField[]
 
+// tag::photo[]
 === Upload photo
 ==== Model
 A Photo class is created and added as an attribute to the Person class to store the icon photo of each person.
@@ -446,6 +449,17 @@ Image of the icon photo will be displayed after uploaded.
 
 ==== Sequence Diagram
 image::UploadPhotoCommandSequenceDiagram.png[width="800"]
+// end:: photo[]
+
+// tag::deleteByName[]
+=== DeleteByName
+==== Logic
+A Command - `DeleteByName` Command is created to serve the purpose of deleting an contact from the `Contact book` via its name.
+The Command takes into a String as the parameter which represents the `Name` of the person that is intended to delete.
+When the command is called, the `Contact Book` will get the internal list of all persons and check through the `Name` attribute of each person.
+If there is a person with name equals to the parameter input, the person will be removed from the `Contact Book`.
+If the input name does not match any `Name` in the internal list of all `Person` objects, the internal list will not be modified but the `Result Box` will feedback to users that the person name is not found.
+// end:: deleteByName[]
 
 // tag::search[]
 === The search box
@@ -507,6 +521,8 @@ inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
 **Cons:** modularity compromised, can envision the method getting larger as more features are integrated as flags.
 // end::search[]
 
+//tag::additionalPhoneList[]
+
 === Multiple phone numbers supported
 (launched in V1.3)
 
@@ -514,8 +530,7 @@ inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
 
 Since our target audience are the NUS students, which include a large proportion of international students, our addressBook will support the users to add multiple phone numbers.
 =======
-=== More than one instance for each field
- (Coming in V1.3)
+
 
  ====Description
 
@@ -562,6 +577,39 @@ A new label will be displaced for each person for each instance of the same fiel
 
 == Documentation
 We use asciidoc for writing documentation.
+
+//end::additionalPhoneList[]
+
+//tag::weatherWindow[]
+
+=== Yahoo Weather Display Mechanism
+The Yahoo weather information display is aided by the external library "yahoo-weather-java-api:2.0.2". This library queries data from Yahoo Weather API, and the application display the information returned by calling the library functions with
+a simple string parser method to format the data return. The formatted data is displayed on the `StatusFooterBar`. +
+
+The query of weather information is closely related to the location. The location is specified by WOEID, so in this application we take the link:#WOEID[WOEID] of Singapore by default. +
+
+[source,java]
+----
+private final String woeid = "1062617";
+----
+
+The API method is called, and data returned as follows:
+
+[source,java]
+----
+YahooWeatherService service = new YahooWeatherService();
+Channel channel = service.getForecast(woeid, DegreeUnit.CELSIUS);
+
+return conditionStringParser(channel.getItem().getCondition().toString());
+----
+
+==== Prerequisites/Dependencies
+
+* This feature has a strong dependency on Yahoo Weather Server. Some exceptions or assertions should be implemented to prevent the failure of the application
+due to the failure of Yahoo Weather Server. +
+
+//end::weatherWindow[]
+
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 === Editing Documentation
