@@ -1,5 +1,5 @@
 # cctdaniel
-###### \java\seedu\address\logic\commands\CustomiseCommandTest.java
+###### /java/seedu/address/logic/commands/CustomiseCommandTest.java
 ``` java
 public class CustomiseCommandTest {
 
@@ -90,7 +90,7 @@ public class CustomiseCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\ThemeCommandTest.java
+###### /java/seedu/address/logic/commands/ThemeCommandTest.java
 ``` java
 public class ThemeCommandTest {
 
@@ -117,7 +117,7 @@ public class ThemeCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\CustomiseCommandParserTest.java
+###### /java/seedu/address/logic/parser/CustomiseCommandParserTest.java
 ``` java
 public class CustomiseCommandParserTest {
 
@@ -154,7 +154,7 @@ public class CustomiseCommandParserTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\ThemeCommandParserTest.java
+###### /java/seedu/address/logic/parser/ThemeCommandParserTest.java
 ``` java
 public class ThemeCommandParserTest {
     private ThemeCommandParser parser = new ThemeCommandParser();
@@ -174,7 +174,7 @@ public class ThemeCommandParserTest {
 
 }
 ```
-###### \java\seedu\address\ui\BrowserPanelTest.java
+###### /java/seedu/address/ui/BrowserPanelTest.java
 ``` java
 public class BrowserPanelTest extends GuiUnitTest {
     private LessonPanelSelectionChangedEvent selectionChangedEventStub;
@@ -208,7 +208,7 @@ public class BrowserPanelTest extends GuiUnitTest {
     }
 }
 ```
-###### \java\seedu\address\ui\LessonListPanelTest.java
+###### /java/seedu/address/ui/LessonListPanelTest.java
 ``` java
 public class LessonListPanelTest extends GuiUnitTest {
     private static final ObservableList<ReadOnlyLesson> TYPICAL_LESSONS =
@@ -251,7 +251,7 @@ public class LessonListPanelTest extends GuiUnitTest {
     }
 }
 ```
-###### \java\seedu\address\ui\testutil\GuiTestAssert.java
+###### /java/seedu/address/ui/testutil/GuiTestAssert.java
 ``` java
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -317,7 +317,7 @@ public class GuiTestAssert {
     }
 }
 ```
-###### \java\seedu\address\ui\testutil\StageRule.java
+###### /java/seedu/address/ui/testutil/StageRule.java
 ``` java
 /**
  * Properly sets up and tears down a JavaFx stage for our testing purposes.
@@ -347,7 +347,7 @@ public class StageRule implements TestRule {
     }
 }
 ```
-###### \java\systemtests\CustomiseCommandSystemTest.java
+###### /java/systemtests/CustomiseCommandSystemTest.java
 ``` java
 public class CustomiseCommandSystemTest extends AddressBookSystemTest {
     @Test
@@ -428,7 +428,7 @@ public class CustomiseCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### \java\systemtests\SelectCommandSystemTest.java
+###### /java/systemtests/SelectCommandSystemTest.java
 ``` java
 public class SelectCommandSystemTest extends AddressBookSystemTest {
     @Test
@@ -561,7 +561,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
 
 }
 ```
-###### \java\systemtests\ThemeCommandSystemTest.java
+###### /java/systemtests/ThemeCommandSystemTest.java
 ``` java
 public class ThemeCommandSystemTest extends AddressBookSystemTest {
     @Test

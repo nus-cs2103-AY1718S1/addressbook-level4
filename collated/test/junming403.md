@@ -1,5 +1,5 @@
 # junming403
-###### \java\seedu\address\logic\commands\AddCommandTest.java
+###### /java/seedu/address/logic/commands/AddCommandTest.java
 ``` java
 public class AddCommandTest {
 
@@ -291,7 +291,7 @@ public class AddCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\DeleteCommandTest.java
+###### /java/seedu/address/logic/commands/DeleteCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -497,7 +497,7 @@ public class DeleteCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\DeleteRemarkCommandTest.java
+###### /java/seedu/address/logic/commands/DeleteRemarkCommandTest.java
 ``` java
 public class DeleteRemarkCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -541,7 +541,7 @@ public class DeleteRemarkCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\EditCommandTest.java
+###### /java/seedu/address/logic/commands/EditCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
@@ -830,7 +830,7 @@ public class EditCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ListCommandTest.java
+###### /java/seedu/address/logic/commands/ListCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -882,7 +882,7 @@ public class ListCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\MarkCommandTest.java
+###### /java/seedu/address/logic/commands/MarkCommandTest.java
 ``` java
 public class MarkCommandTest {
 
@@ -963,7 +963,7 @@ public class MarkCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\RemarkCommandTest.java
+###### /java/seedu/address/logic/commands/RemarkCommandTest.java
 ``` java
 public class RemarkCommandTest {
 
@@ -1065,14 +1065,14 @@ public class RemarkCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\UnmarkCommandTest.java
+###### /java/seedu/address/logic/commands/UnmarkCommandTest.java
 ``` java
 public class UnmarkCommandTest {
 
     private Model model;
 
     @Test
-    public void execute_validIndexUnfilteredList_success() throws DuplicateLessonException {
+    public void execute_validIndexUnfilteredList_success() throws DuplicateLessonException, NotRemarkedLessonException {
         model = prepareModel();
         ListingUnit.setCurrentListingUnit(LESSON);
         ReadOnlyLesson lessonToUnmark = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
@@ -1087,7 +1087,7 @@ public class UnmarkCommandTest {
     }
 
     @Test
-    public void execute_validIndexFilteredList_success() throws DuplicateLessonException {
+    public void execute_validIndexFilteredList_success() throws DuplicateLessonException, NotRemarkedLessonException {
         model = prepareModel();
         model.updateFilteredLessonList(
                 new FixedCodePredicate(model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()).getCode()));
@@ -1159,7 +1159,7 @@ public class UnmarkCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ViewCommandTest.java
+###### /java/seedu/address/logic/commands/ViewCommandTest.java
 ``` java
 public class ViewCommandTest {
 
@@ -1225,16 +1225,27 @@ public class ViewCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\EditCommandParserTest.java
+###### /java/seedu/address/logic/parser/EditCommandParserTest.java
 ``` java
 public class EditCommandParserTest {
 
     private static final String TAG_EMPTY = " " + PREFIX_LECTURER;
 
     private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE_LESSON);
 
     private EditCommandParser parser = new EditCommandParser();
+
+    @Before
+    public void setUp() {
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
+    }
+
+    @After
+    public void clearUp() {
+        ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
+    }
+
 
     @Test
     public void parse_missingParts_failure() {
@@ -1450,7 +1461,7 @@ public class EditCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ListCommandParserTest.java
+###### /java/seedu/address/logic/parser/ListCommandParserTest.java
 ``` java
 public class ListCommandParserTest {
 
@@ -1478,7 +1489,7 @@ public class ListCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\MarkCommandParserTest.java
+###### /java/seedu/address/logic/parser/MarkCommandParserTest.java
 ``` java
 public class MarkCommandParserTest {
     private MarkCommandParser parser = new MarkCommandParser();
@@ -1495,7 +1506,7 @@ public class MarkCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\RemarkCommandParserTest.java
+###### /java/seedu/address/logic/parser/RemarkCommandParserTest.java
 ``` java
 public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
@@ -1519,7 +1530,7 @@ public class RemarkCommandParserTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\UnmarkCommandParserTest.java
+###### /java/seedu/address/logic/parser/UnmarkCommandParserTest.java
 ``` java
 public class UnmarkCommandParserTest {
     private UnmarkCommandParser parser = new UnmarkCommandParser();
@@ -1536,7 +1547,7 @@ public class UnmarkCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ViewCommandParserTest.java
+###### /java/seedu/address/logic/parser/ViewCommandParserTest.java
 ``` java
 public class ViewCommandParserTest {
 
@@ -1553,7 +1564,7 @@ public class ViewCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\predicate\FixedCodePredicateTest.java
+###### /java/seedu/address/model/lesson/predicate/FixedCodePredicateTest.java
 ``` java
 public class FixedCodePredicateTest {
     @Test
@@ -1618,7 +1629,7 @@ public class FixedCodePredicateTest {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\predicate\FixedLocationPredicateTest.java
+###### /java/seedu/address/model/lesson/predicate/FixedLocationPredicateTest.java
 ``` java
 public class FixedLocationPredicateTest {
 
@@ -1684,7 +1695,7 @@ public class FixedLocationPredicateTest {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\predicate\SelectedStickyNotePredicateTest.java
+###### /java/seedu/address/model/lesson/predicate/SelectedStickyNotePredicateTest.java
 ``` java
 public class SelectedStickyNotePredicateTest {
 
@@ -1752,7 +1763,7 @@ public class SelectedStickyNotePredicateTest {
 
 }
 ```
-###### \java\seedu\address\model\lesson\predicate\ShowSpecifiedLessonPredicateTest.java
+###### /java/seedu/address/model/lesson/predicate/ShowSpecifiedLessonPredicateTest.java
 ``` java
 public class ShowSpecifiedLessonPredicateTest {
 
@@ -1796,7 +1807,7 @@ public class ShowSpecifiedLessonPredicateTest {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\predicate\UniqueLocationPredicateTest.java
+###### /java/seedu/address/model/lesson/predicate/UniqueLocationPredicateTest.java
 ``` java
 public class UniqueLocationPredicateTest {
 
@@ -1836,7 +1847,7 @@ public class UniqueLocationPredicateTest {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\predicate\UniqueModuleCodePredicateTest.java
+###### /java/seedu/address/model/lesson/predicate/UniqueModuleCodePredicateTest.java
 ``` java
 public class UniqueModuleCodePredicateTest {
 
@@ -1876,7 +1887,7 @@ public class UniqueModuleCodePredicateTest {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\RemarkTest.java
+###### /java/seedu/address/model/lesson/RemarkTest.java
 ``` java
 public class RemarkTest {
 
@@ -1903,7 +1914,7 @@ public class RemarkTest {
 
 }
 ```
-###### \java\seedu\address\model\ListingUnitTest.java
+###### /java/seedu/address/model/ListingUnitTest.java
 ``` java
 public class ListingUnitTest {
 
@@ -1930,7 +1941,7 @@ public class ListingUnitTest {
     }
 }
 ```
-###### \java\seedu\address\model\UniqueRemarkListTest.java
+###### /java/seedu/address/model/UniqueRemarkListTest.java
 ``` java
 public class UniqueRemarkListTest {
     @Rule
@@ -1942,9 +1953,27 @@ public class UniqueRemarkListTest {
         thrown.expect(UnsupportedOperationException.class);
         uniqueLessonList.asObservableList().remove(0);
     }
+
+    @Test
+    public void equals() throws IllegalValueException, RemarkNotFoundException {
+        UniqueRemarkList firstList = new UniqueRemarkList();
+        Remark firstRemark = new Remark("Sample remark", new Code(VALID_CODE_MA1101R));
+        Remark secondRemark = new Remark("another remark", new Code(VALID_CODE_MA1101R));
+        Remark updatedRemark = new Remark("updated", new Code(VALID_CODE_MA1101R));
+
+        firstList.add(firstRemark);
+        firstList.add(secondRemark);
+        UniqueRemarkList secondList = new UniqueRemarkList(firstList.toSet());
+
+        assertTrue(secondList.equals(firstList));
+        firstList.setRemark(firstRemark, updatedRemark);
+        secondList.setRemark(firstRemark, updatedRemark);
+        assertTrue(secondList.equals(firstList));
+        assertTrue(secondList.equalsOrderInsensitive(firstList));
+    }
 }
 ```
-###### \java\systemtests\AddCommandSystemTest.java
+###### /java/systemtests/AddCommandSystemTest.java
 ``` java
 public class AddCommandSystemTest extends AddressBookSystemTest {
 
@@ -2148,7 +2177,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### \java\systemtests\DeleteCommandSystemTest.java
+###### /java/systemtests/DeleteCommandSystemTest.java
 ``` java
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
@@ -2430,7 +2459,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### \java\systemtests\EditCommandSystemTest.java
+###### /java/systemtests/EditCommandSystemTest.java
 ``` java
 public class EditCommandSystemTest extends AddressBookSystemTest {
 
@@ -2487,11 +2516,11 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid index (0) -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + CODE_DESC_MA1101R,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE_LESSON));
 
         /* Case: invalid index (-1) -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " -1" + CODE_DESC_MA1101R,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE_LESSON));
 
         /* Case: invalid index (size + 1) -> rejected */
         int invalidIndex = getModel().getFilteredLessonList().size() + 1;
@@ -2500,7 +2529,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: missing index -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + CODE_DESC_MA1101R,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE_LESSON));
 
         /* Case: missing all fields -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased(),
@@ -2565,11 +2594,11 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid index (0) -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + VALID_CODE_MA1101R,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE_MODULE));
 
         /* Case: invalid index (-1) -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " -1 " + VALID_CODE_MA1101R,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE_MODULE));
 
         /* Case: invalid index (size + 1) -> rejected */
         int invalidIndex = getModel().getFilteredLessonList().size() + 1;
@@ -2604,11 +2633,11 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid index (0) -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + VALID_VENUE_MA1101R,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE_LOCATION));
 
         /* Case: invalid index (-1) -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " -1 " + VALID_VENUE_MA1101R,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE_LOCATION));
 
         /* Case: invalid index (size + 1) -> rejected */
         int invalidIndex = getModel().getFilteredLessonList().size() + 1;
@@ -2806,7 +2835,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### \java\systemtests\MarkCommandSystemTest.java
+###### /java/systemtests/MarkCommandSystemTest.java
 ``` java
 public class MarkCommandSystemTest extends AddressBookSystemTest {
 
@@ -2940,7 +2969,7 @@ public class MarkCommandSystemTest extends AddressBookSystemTest {
 
 }
 ```
-###### \java\systemtests\RemarkCommandSystemTest.java
+###### /java/systemtests/RemarkCommandSystemTest.java
 ``` java
 public class RemarkCommandSystemTest extends AddressBookSystemTest {
 
