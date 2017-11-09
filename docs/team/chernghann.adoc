@@ -77,6 +77,34 @@ include::../DeveloperGuide.adoc[tag=calendar]
 
 ---
 
+=== Enhancement Added: School Email and Home Number Field
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc
+
+#End of Extract#
+
+---
+
+==== Justification
+
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc
+
+#End of Extract#
+
+---
+
 === Enhancement Proposed: Sending of Text Messages
 
 
@@ -86,3 +114,7 @@ include::../DeveloperGuide.adoc[tag=calendar]
 * Acceptance Testing
 - Provide suggestions for improvement (Pull request https://github.com/CS2103AUG2017-W09-B1/main/issues/121#event-1330982844[#121])
 - Found a bug in implementation (Pull request https://github.com/CS2103AUG2017-W09-B1/main/issues/113[#113])
+
+
+== Project: Ping!
+
