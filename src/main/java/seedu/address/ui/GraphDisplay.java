@@ -33,27 +33,27 @@ public class GraphDisplay extends UiPart<Region> {
      * but this is the most fail-safe method at the current moment.
      */
     private static final String GRAPH_DISPLAY_STYLESHEET =
-            "graph { fill-color: white; }" +
-                    "node {" +
-                        "fill-color: black;" +
-                        "shape: rounded-box;" +
-                        "text-background-mode: rounded-box;" +
-                        "text-padding: 5;" +
-                        "text-background-color: black;" +
-                        "text-color: white;" +
-                        "text-size: 15;" +
-                        "size-mode: fit;" +
-                        "z-index: 3;}" +
-                    "edge { " +
-                        "size: 3;" +
-                        "fill-color: black; " +
-                        "arrow-size: 20, 10;" +
-                        "text-alignment: along;" +
-                        "text-background-color: white;" +
-                        "text-background-mode: rounded-box;" +
-                        "text-size: 10;" +
-                        "text-padding: 5;" +
-                        "z-index: 1;}";
+            "graph { fill-color: white; }"
+                    + "node {"
+                    + "fill-color: black;"
+                    + "shape: rounded-box;"
+                    + "text-background-mode: rounded-box;"
+                    + "text-padding: 5;"
+                    + "text-background-color: black;"
+                    + "text-color: white;"
+                    + "text-size: 15;"
+                    + "size-mode: fit;"
+                    + "z-index: 3;}"
+                    + "edge { "
+                    + "size: 3;"
+                    + "fill-color: black; "
+                    + "arrow-size: 20, 10;"
+                    + "text-alignment: along;"
+                    + "text-background-color: white;"
+                    + "text-background-mode: rounded-box;"
+                    + "text-size: 10;"
+                    + "text-padding: 5;"
+                    + "z-index: 1;}";
 
     private final Logic logic;
 
