@@ -1,4 +1,3 @@
-//@@author aaronyhsoh
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -21,6 +20,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author aaronyhsoh
 /**
  * Favourites an existing contact
  */
@@ -71,7 +71,7 @@ public class FavouriteCommand extends UndoableCommand {
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        if (personToFavourite.getFavourite()) {
+        if (!favouritedPerson.getFavourite()) {
             return new CommandResult(String.format(MESSAGE_UNFAVOURITE_PERSON_SUCCESS, favouritedPerson));
         } else {
             return new CommandResult(String.format(MESSAGE_FAVOURITE_PERSON_SUCCESS, favouritedPerson));

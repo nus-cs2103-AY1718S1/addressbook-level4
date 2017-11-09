@@ -70,7 +70,8 @@ public class CommandTestUtil {
      * - the result message matches {@code expectedMessage} <br>
      * - the {@code actualModel} matches {@code expectedModel}
      */
-    public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
+    public static void
+        assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
             Model expectedModel) {
         try {
             CommandResult result = command.execute();
