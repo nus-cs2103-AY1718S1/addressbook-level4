@@ -61,6 +61,11 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    /**
+     * Parses multiple indices from {@code oneBasedIndices} into an array of {@code Index} containing indices which are
+     * non zero unsigned integers.
+     * @throws IllegalValueException if all indices given are invalid.
+     */
     public static Index[] parseIndices(String... oneBasedIndices) throws IllegalValueException {
         Index[] parsedIndices = Arrays.stream(oneBasedIndices)
                 .filter(index -> StringUtil.isNonZeroUnsignedInteger(index))
