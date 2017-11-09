@@ -15,9 +15,13 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.MeetingListChangedEvent;
 import seedu.address.commons.events.model.PersonChangedEvent;
 import seedu.address.commons.events.ui.MapPersonEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.exceptions.DuplicateMeetingException;
+import seedu.address.model.exceptions.IllegalIdException;
+import seedu.address.model.person.InternalId;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.SearchData;
@@ -79,6 +83,12 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //@@author Sri-vatsa
+    /** Raises an event to indicate the model has chnaged */
+    private void indicateMeetingListChanged() {
+        raise(new MeetingListChangedEvent(meetingList));
+    }
+
     //@@author liuhang0213
     /** Raises an event to indicate a person been added */
     private void indicatePersonAdded(ReadOnlyPerson person) {
@@ -103,7 +113,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
         indicatePersonDeleted(target);
     }
-
+    //@@author Sri-vatsa
     @Override
     public boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException {
         boolean isTagRemoved;
@@ -127,7 +137,36 @@ public class ModelManager extends ComponentManager implements Model {
         }
         return hasOneOrMoreDeletion;
     }
+    //@@author Sri-vatsa
 
+    /***
+     * Adds a meeting to the Unique meeting list
+     * @param meeting
+     * @throws DuplicateMeetingException
+     * @throws IllegalIdException
+     */
+    public synchronized void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException {
+        boolean isIdValid;
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        //search through all Internal Ids, making sure that every id provided in argument is valid.
+        for (InternalId id: meeting.getListOfPersonsId()) {
+            isIdValid = false;
+            for (ReadOnlyPerson person:filteredPersons) {
+                if (person.getInternalId().equals(id)) {
+                    isIdValid = true;
+                }
+            }
+            if (!isIdValid) {
+                throw new IllegalIdException("Please input a valid person id");
+            }
+        }
+
+        meetingList.add(meeting);
+        indicateMeetingListChanged();
+    }
+
+    //@@author
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
@@ -200,7 +239,7 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
     }
-
+    //@@author Sri-vatsa
     //=========== Sort addressBook methods =============================================================
     /***
      * Sorts persons in address book by searchCount
@@ -211,7 +250,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
-
+    //@@author Sri-vatsa
     /***
      * Sorts persons in Address book alphabetically
      */

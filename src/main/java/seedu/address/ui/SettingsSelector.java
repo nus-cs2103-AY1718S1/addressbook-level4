@@ -54,7 +54,7 @@ public class SettingsSelector extends UiPart<Region> {
     private void setConnections() {
         //Setting connections for browser list
         ObservableList<String> browserItems = FXCollections.observableArrayList(
-                "linkedin", "facebook", "meeting", "maps"
+                "linkedin", "google", "meeting", "maps"
         );
         ObservableList<BrowserSelectorCard> mappedBrowserList = EasyBind.map(
                 browserItems, (item) -> new BrowserSelectorCard(item));
