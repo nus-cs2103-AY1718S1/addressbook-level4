@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CONFIDENCE_ESTIMATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
@@ -32,7 +33,19 @@ public class AddRelationshipCommandParser implements Parser<AddRelationshipComma
                 ArgumentTokenizer.tokenize(userInput, PREFIX_NAME, PREFIX_CONFIDENCE_ESTIMATE);
 
         List<String> listOfArgs = Arrays.asList(trimmedArgs.split(" "));
+        String firstIndexString = listOfArgs.get(0);
+        String secondIndexString = listOfArgs.get(1);
 
+
+        if (firstIndexString.equals(secondIndexString)) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRelationshipCommand.MESSAGE_USAGE));
+        }
+
+        if (firstIndexString.equals("0") || secondIndexString.equals("0")) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, AddRelationshipCommand.MESSAGE_USAGE));
+        }
 
         try {
             Index firstIndex = ParserUtil.parseIndex(listOfArgs.get(0));
