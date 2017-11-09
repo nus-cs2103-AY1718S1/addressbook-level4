@@ -1,5 +1,68 @@
 # martyn-wong
-###### \java\seedu\address\logic\commands\MapCommandTest.java
+###### /java/seedu/address/logic/parser/MapCommandParserTest.java
+``` java
+
+public class MapCommandParserTest {
+
+    private MapCommandParser parser = new MapCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsMapCommand() throws Exception {
+        assertParseSuccess(parser, "1", new MapCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() throws Exception {
+        assertParseFailure(parser, "alex", String.format(MESSAGE_INVALID_COMMAND_FORMAT, MapCommand.MESSAGE_USAGE));
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/SearchCommandTest.java
+``` java
+
+/**
+ * Contains integration tests (interaction with the Model) for {@code SearchCommand}.
+ */
+public class SearchCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UniqueMeetingList(), new UserPrefs());
+
+
+    @Test
+    public void equals() {
+        PersonContainsKeywordsPredicate firstPredicate =
+                new PersonContainsKeywordsPredicate(Collections.singletonList("first"));
+        PersonContainsKeywordsPredicate secondPredicate =
+                new PersonContainsKeywordsPredicate(Collections.singletonList("second"));
+
+        SearchCommand findFirstCommand = new SearchCommand(firstPredicate);
+        SearchCommand findSecondCommand = new SearchCommand(secondPredicate);
+
+        // same object -> returns true
+        assertTrue(findFirstCommand.equals(findFirstCommand));
+
+        // same values -> returns true
+        SearchCommand findFirstCommandCopy = new SearchCommand(firstPredicate);
+        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(findFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(findFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(findFirstCommand.equals(findSecondCommand));
+    }
+
+
+}
+```
+###### /java/seedu/address/logic/commands/MapCommandTest.java
 ``` java
 
 /**
@@ -80,68 +143,5 @@ public class MapCommandTest {
         mapCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return mapCommand;
     }
-}
-```
-###### \java\seedu\address\logic\commands\SearchCommandTest.java
-``` java
-
-/**
- * Contains integration tests (interaction with the Model) for {@code SearchCommand}.
- */
-public class SearchCommandTest {
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UniqueMeetingList(), new UserPrefs());
-
-
-    @Test
-    public void equals() {
-        PersonContainsKeywordsPredicate firstPredicate =
-                new PersonContainsKeywordsPredicate(Collections.singletonList("first"));
-        PersonContainsKeywordsPredicate secondPredicate =
-                new PersonContainsKeywordsPredicate(Collections.singletonList("second"));
-
-        SearchCommand findFirstCommand = new SearchCommand(firstPredicate);
-        SearchCommand findSecondCommand = new SearchCommand(secondPredicate);
-
-        // same object -> returns true
-        assertTrue(findFirstCommand.equals(findFirstCommand));
-
-        // same values -> returns true
-        SearchCommand findFirstCommandCopy = new SearchCommand(firstPredicate);
-        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
-
-        // different types -> returns false
-        assertFalse(findFirstCommand.equals(1));
-
-        // null -> returns false
-        assertFalse(findFirstCommand.equals(null));
-
-        // different person -> returns false
-        assertFalse(findFirstCommand.equals(findSecondCommand));
-    }
-
-
-}
-```
-###### \java\seedu\address\logic\parser\MapCommandParserTest.java
-``` java
-
-public class MapCommandParserTest {
-
-    private MapCommandParser parser = new MapCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsMapCommand() throws Exception {
-        assertParseSuccess(parser, "1", new MapCommand(INDEX_FIRST_PERSON));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() throws Exception {
-        assertParseFailure(parser, "alex", String.format(MESSAGE_INVALID_COMMAND_FORMAT, MapCommand.MESSAGE_USAGE));
-    }
-
 }
 ```

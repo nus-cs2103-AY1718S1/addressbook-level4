@@ -18,7 +18,7 @@ public class UserPrefs {
     private String addressBookFilePath = "data/addressbook.xml";
     private String meetingListFilePath = "data/meetinglist.xml";
     private String addressBookName = "MyAddressBook";
-    private String theme = "dark";
+    private String theme = "Light";
     private String defaultProfilePhoto = "person";
 
     public UserPrefs() {
