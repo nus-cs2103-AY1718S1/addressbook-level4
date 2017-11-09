@@ -127,7 +127,9 @@ public class ModelManager extends ComponentManager implements Model {
         List<ReadOnlyPerson> lastShownList = getFilteredPersonList();
 
         if (indexFromPerson.getZeroBased() >= lastShownList.size()
-                || indexToPerson.getZeroBased() >= lastShownList.size()) {
+                || indexToPerson.getZeroBased() >= lastShownList.size()
+                || indexFromPerson.getZeroBased() < 0
+                || indexToPerson.getZeroBased() < 0) {
             throw new IllegalValueException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
@@ -161,6 +163,32 @@ public class ModelManager extends ComponentManager implements Model {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
+
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    }
+
+    @Override
+    public void deleteRelationship(Index indexFromPerson, Index indexToPerson) throws IllegalValueException {
+        List<ReadOnlyPerson> lastShownList = getFilteredPersonList();
+
+        if (indexFromPerson.getZeroBased() >= lastShownList.size()
+                || indexToPerson.getZeroBased() >= lastShownList.size()) {
+            throw new IllegalValueException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson fromPerson = lastShownList.get(indexFromPerson.getZeroBased());
+        ReadOnlyPerson toPerson = lastShownList.get(indexToPerson.getZeroBased());
+
+        Relationship relationshipToDelete1 = new Relationship(fromPerson, toPerson, RelationshipDirection.UNDIRECTED);
+        Relationship relationshipToDelete2 = new Relationship(fromPerson, toPerson, RelationshipDirection.DIRECTED);
+
+        Person fromPersonCasting = (Person) fromPerson;
+        Person toPersonCasting = (Person) toPerson;
+        fromPersonCasting.removeRelationship(relationshipToDelete1);
+        toPersonCasting.removeRelationship(relationshipToDelete1);
+
+        fromPersonCasting.removeRelationship(relationshipToDelete2);
+        toPersonCasting.removeRelationship(relationshipToDelete2);
 
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }

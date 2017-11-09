@@ -5,7 +5,10 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Set;
 
+import org.graphstream.algorithm.Dijkstra;
+import org.graphstream.algorithm.WidestPath;
 import org.graphstream.graph.Edge;
+import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.graph.implementations.SingleNode;
 import org.graphstream.ui.view.View;
@@ -26,6 +29,7 @@ import seedu.address.model.relationship.RelationshipDirection;
 public class GraphWrapper {
 
     public static final String MESSAGE_PERSON_DOES_NOT_EXIST = "The person does not exist in this address book.";
+    private static final GraphWrapper instance = new GraphWrapper();
     private static final String graphId = "ImARandomGraphID";
 
     private SingleGraph graph;
@@ -33,16 +37,23 @@ public class GraphWrapper {
     private View view;
     private Model model;
     private ObservableList<ReadOnlyPerson> filteredPersons;
+    private boolean rebuildNext;
 
     private final String nodeAttributeNodeLabel = "ui.label";
+    private final String nodeAttributeCe = "ce";
     private final String nodeAttributePerson = "Person";
 
-    public GraphWrapper() {
+    private GraphWrapper() {
         this.graph = new SingleGraph(graphId);
         this.viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         viewer.enableAutoLayout();
         viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.EXIT);
         this.view = viewer.addDefaultView(false);
+        rebuildNext = true;
+    }
+
+    public static GraphWrapper getInstance() {
+        return instance;
     }
 
     private void setData(Model model) {
@@ -194,6 +205,7 @@ public class GraphWrapper {
                 String edgeLabel = relationship.getName().toString() + " "
                         + relationship.getConfidenceEstimate().toString();
                 edge.addAttribute(nodeAttributeNodeLabel, edgeLabel);
+                edge.addAttribute(nodeAttributeCe, relationship.getConfidenceEstimate().value);
             }
         }
 
@@ -201,14 +213,18 @@ public class GraphWrapper {
     }
 
     /**
-     * Produce a graph based on model given
+     * Produce a graph based on model given if next rebuild was not cancelled.
      */
     public SingleGraph buildGraph(Model model) {
         requireNonNull(model);
-        this.clear();
-        this.setData(model);
-        this.initiateGraphNodes();
-        this.initiateGraphEdges();
+        if (rebuildNext) {
+            this.clear();
+            this.setData(model);
+            this.initiateGraphNodes();
+            this.initiateGraphEdges();
+        } else {
+            rebuildNext = true;
+        }
 
         return graph;
     }
@@ -218,5 +234,48 @@ public class GraphWrapper {
      */
     public View getView() {
         return this.view;
+    }
+    //@@author
+
+    //@@author Xenonym
+    /**
+     * Highlights the shortest path between two people with the highest confidence.
+     * Paths with higher minimum confidence estimates are preferred.
+     * Cancels next graph rebuild for styling to remain.
+     * @return the number of nodes in the path between the two given people.
+     */
+    public int highlightShortestPath(ReadOnlyPerson from, ReadOnlyPerson to) {
+        WidestPath widestPath = new WidestPath(Dijkstra.Element.EDGE, null, nodeAttributeCe);
+        Node fromNode;
+        Node toNode;
+
+        resetGraph(); // reset graph to clear previously highlighted path first, if any
+        try {
+            fromNode = graph.getNode(getNodeIdFromPerson(from));
+            toNode = graph.getNode(getNodeIdFromPerson(to));
+        } catch (IllegalValueException ive) {
+            throw new AssertionError("impossible to have nonexistent persons in graph");
+        }
+
+        widestPath.init(graph);
+        widestPath.setSource(fromNode);
+        widestPath.compute();
+
+        for (Node n : widestPath.getPathNodes(toNode)) {
+            n.addAttribute("ui.style", "fill-color: blue;");
+        }
+
+        for (Edge e : widestPath.getPathEdges(toNode)) {
+            e.addAttribute("ui.style", "fill-color: red;");
+        }
+
+        rebuildNext = false;
+        return widestPath.getPath(toNode).getNodeCount();
+    }
+
+    private void resetGraph() {
+        graph.clear();
+        initiateGraphNodes();
+        initiateGraphEdges();
     }
 }

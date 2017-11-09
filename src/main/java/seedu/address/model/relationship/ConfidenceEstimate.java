@@ -10,7 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class ConfidenceEstimate {
     public static final ConfidenceEstimate UNSPECIFIED = new ConfidenceEstimate();
     public static final String MESSAGE_CONFIDENCE_ESTIMATE_CONSTRAINTS =
-            "Confidence estimates should be a single number without spaces";
+            "Confidence estimates should be a single number between 0 and 100 without spaces";
 
     public final double value;
 
@@ -18,7 +18,7 @@ public class ConfidenceEstimate {
      * The default ConfidenceEstimate constructor when confidence estimate is not specified by the user
      */
     private ConfidenceEstimate() {
-        value = (double) 0;
+        value = 0;
     }
 
     /**
@@ -35,16 +35,22 @@ public class ConfidenceEstimate {
         this.value = Double.parseDouble(trimmedEstimate);
     }
 
+    public ConfidenceEstimate(double estimate) {
+        value = estimate;
+    }
+
     /**
      * Returns true if a given string is a valid confidence estimate.
      */
     public static boolean isValidConfidenceEstimate(String test) {
+        double d;
         try {
-            double d = Double.parseDouble(test);
+            d = Double.parseDouble(test);
         } catch (NumberFormatException nfe) {
             return false;
         }
-        return true;
+
+        return d >= 0 && d <= 100;
     }
 
 
