@@ -1001,7 +1001,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
         try
     {
         Set<Index> indices = new HashSet<>();
-        // adding of indics to Set 
+        // adding of indics to Set
     } catch(
     IllegalValueException ive)
     {
