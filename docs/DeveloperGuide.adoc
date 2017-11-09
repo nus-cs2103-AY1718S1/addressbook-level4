@@ -1,4 +1,4 @@
-MedNus= MedNus - Developer Guide
+= MedNus - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
