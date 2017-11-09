@@ -618,7 +618,7 @@ _Figure 4.3.6 : Full UI outcome of locate implementation_
 === FindCommand by any search field [Since v1.2 and v1.4]
 
 
-`FindCommand` which reside in `Logic` will support the search of contact by any keywords.`Logic` uses the `AddressBookParser` class to parse user command.The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone`,`Tags` , `Activity` and `Country`. Such parameters inherit from `Person` which resides inside `Model`.Also,the keywords must be a full word match in order for successful execution of find command. Figures 4.4.1_ indicates the the parsing of user command in  `FindCommandParser` once user keys in an input.
+`FindCommand` which reside in `Logic` will support the search of contact by any keywords. `Logic` uses the `AddressBookParser` class to parse user command. The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone`,`Tags` , `Activity` and `Country`. Such parameters inherit from `Person` which resides inside `Model`.Also,the keywords must be a full word match in order for successful execution of find command. _Figures 4.4.1_ indicates the the parsing of user command in  `FindCommandParser` once user keys in an input.
 
 [source,java]
 ----
@@ -653,7 +653,7 @@ public class PredicateUtil {
 }
 
 ----
-The component diagram in _Figure 4.4.3_ below shows how interactions within the Logic component for the execution of find command.
+The component diagram in _Figure 4.4.3_ below shows the interactions within the Logic component for the execution of find command.
 
 image::LogicComponentSequenceDiagramFind.PNG[width="800"]
 _Figure 4.4.4 : Find component diagram_
@@ -770,7 +770,7 @@ The sequence diagram of `CalendarCommand` in _Figure 4.6.1_ below indicates the 
 image::SequenceDiagramCalendar.PNG[width="800"]
 _Figure 4.6.1 : Clenader sequence diagram_
 
-Upon taking in `CalendarCommand`  in the command line, a new `ShowCalendarRequestEvent` is posted by the `EventsCenter` class to its `EventBus`, as shown in _Figure 4.6.2_:. In addition , user are bypass `CalendarCommand` by pressing on `F2` key to post `ShowCalendarRequestEvent` thus allow user to launch calendar webpage via command line or via accelerators.
+Upon taking in `CalendarCommand`  in the command line, a new `ShowCalendarRequestEvent` is posted by the `EventsCenter` class to its `EventBus`, as shown in _Figure 4.6.2_. In addition , user are bypass `CalendarCommand` by pressing on `F2` key to post `ShowCalendarRequestEvent` thus allow user to launch calendar webpage via command line or via accelerators.
 
 [source,java]
 ----
@@ -820,7 +820,7 @@ _Figure 4.6.5: Output of `CalendarCommand.java` execution_
 **Alternative 1 (current choice)**: Opening  `Calendar` webpage in `BrowserPanel`. +
 **Pros:** To brings about greater convenience for the user as user does not need to navigate between multple webpages to find the calendar.User are able to find out about the public holidays which are not avaliable on desktop calendar. +
 **Cons:** User might bypass the `CalendarCommand` and rely on desktop calendar +
-**Alternative 2:** Opening up of google calendar +
+**Alternative 2:** Opening up of Google calendar +
 **Pros:** User are able to store the events in the google calendar. +
 **Cons:** Unable to view public holidays.User also have to go through the hassle of logging in just to view the calendar. +
 
@@ -987,10 +987,10 @@ _Figure 4.8.3: Code section in Schedule.java_
 
 === Sending Email [Since v1.5]
 
-`EmailCommand` utilise `Desktop` to launch a email platform for users to send email to multiple contacts.The sequence diagram of `CalendarCommand` in _Figure 4.9.1_ below indicates the sequence diagram of the execution of email function.
+`EmailCommand` utilise `Desktop` to launch a email platform for users to send email to multiple contacts. _Figure 4.9.1_ below indicates the sequence diagram that illsutrate how the components interact in the scenario where the user issues the email command.
 
-image::SequenceDiagramEmail.PNG[width="400"]
-_Figure 4.9.1: Sequence diagram for email function_
+image::SequenceDiagramEmail.PNG[width="800"]
+_Figure 4.9.1: Component interactions for email function_
 
 User will first have to key in indexes of the contact. `Logic` will use `AddressBookParser` class to parse user command. `ParseException` will be thrown in `EmailCommandParser` when there is detection of illegal value.By using a `Set` to store the indices inputed by user, this will prevent duplication of indicies. Also, Figure 4.9.2_ below indicates the parsing of user input in `EmailCommandParser`.
 
@@ -1011,8 +1011,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
 
 ----
 
-A `Command` object will be executed by `Logic Manger`.During command excution, a filtered person list will be extracted from `Model`.
- The emails extracted from the filtered person list will be stored in a `recipientList` as shown in Figure 4.9.3_ .
+A `Command` object will be executed by `Logic Manger`.During command excution, a filtered person list will be extracted from `Model`. The emails extracted from the filtered person list will be stored in a `recipientList` as shown in Figure 4.9.3_ .'Desktop` class will be used to send email using `Desktop.Action.Mail` baed on recipientList.
 
 [source,java]
 ----
@@ -1028,19 +1027,25 @@ public class EmailCommand extends Command {
 _Figure 4.9.3: Code section in EmailCommand.java_
 
 
-'Desktop` class will be used to send email using `Desktop.Action.Mail` baed on recipientList.The outcome of successful launching of email platform to send email to multiple contacts is shown in _Figure 4.9.4:
+Figure 4.9.4 below shows the Sequence Diagram for interactions within the Logic component for the excution of email command.
+
+image::LogicComponentSequenceDiagramEmail.PNG[width="800"]
+_Figure 4.9.4: Component interactions inside Logic Component when user issue email command_
+
+
+
+The outcome of successful launching of email platform to send email to multiple contacts is shown in _Figure 4.9.5:
 
 image::EmailCommand.PNG[width="800"]
-
-_Figure 4.9.4: Output of `EmailCommand.java` execution_
+_Figure 4.9.5: Output of `EmailCommand.java` execution_
 
 
 ==== Design Considerations for `EmailCommand`
 
 
-**Aspect:** Implementation of `EmailCommand` +
-**Alternative 1 (current choice)**: Opening  `Calendar` webpage in `BrowserPanel`. +
-**Pros:** To brings about greater convenience for the user as user does not need to navigate between multple webpages to find the calendar.User are able to find out about the public holidays which are not avaliable on desktop calendar. +
+**Aspect:** Data structure to support `EmailCommand` +
+**Alternative 1 (current choice)**: Use Set for storing of user's input of indices  +
+**Pros:** Prevent duplication of indices to speed up execution of `EmailCommand` +
 **Cons:** User might bypass the `CalendarCommand` and rely on desktop calendar +
 **Alternative 2:** Opening up of google calendar +
 **Pros:** User are able to store the events in the google calendar. +
