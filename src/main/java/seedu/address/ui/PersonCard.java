@@ -6,12 +6,14 @@ import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author hansiang93
+
 /**
  * An UI component that displays information of a {@code Person}.
  */
@@ -61,8 +63,13 @@ public class PersonCard extends UiPart<Region> {
     private Label remark;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView phoneicon;
+    @FXML
+    private ImageView addressicon;
+    @FXML
+    private ImageView emailicon;
 
-    //@@author hansiang93
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
@@ -98,6 +105,21 @@ public class PersonCard extends UiPart<Region> {
             webLinks.getChildren().clear();
             initWebLinks(person);
         });
+        if (person.phoneProperty().isNotNull().get()) {
+            phoneicon.setVisible(true);
+        } else {
+            phoneicon.setVisible(false);
+        }
+        if (person.addressProperty().isNotNull().get()) {
+            addressicon.setVisible(true);
+        } else {
+            addressicon.setVisible(false);
+        }
+        if (person.emailProperty().isNotNull().get()) {
+            emailicon.setVisible(true);
+        } else {
+            emailicon.setVisible(false);
+        }
     }
 
     /**

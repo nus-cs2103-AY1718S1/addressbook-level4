@@ -9,6 +9,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -17,6 +18,7 @@ import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author hansiang93
+
 /**
  * An UI component that displays information of a {@code Person}.
  */
@@ -55,6 +57,12 @@ public class DetailedPersonCard extends UiPart<Region> {
     private Label remark;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView phoneicon;
+    @FXML
+    private ImageView addressicon;
+    @FXML
+    private ImageView emailicon;
 
     public DetailedPersonCard(HashMap<String, String> tagColors) {
         super(FXML);
@@ -80,8 +88,23 @@ public class DetailedPersonCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        if (person.phoneProperty().isNotNull().get()) {
+            phoneicon.setVisible(true);
+        } else {
+            phoneicon.setVisible(false);
+        }
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        if (person.addressProperty().isNotNull().get()) {
+            addressicon.setVisible(true);
+        } else {
+            addressicon.setVisible(false);
+        }
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        if (person.emailProperty().isNotNull().get()) {
+            emailicon.setVisible(true);
+        } else {
+            emailicon.setVisible(false);
+        }
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
