@@ -40,58 +40,66 @@ public class AddTagCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_TAG = "This tag already exists in all of the given persons.";
 
     private final ArrayList<Index> targetIndexes;
-    private final Tag toAdd;
+    private final Tag tagToAdd;
 
     /**
      * @param targetIndexes of the persons in the filtered person list to edit
-     * @param toAdd tag to add to given target indexes
+     * @param tagToAdd tag to add to given target indexes
      */
-    public AddTagCommand(ArrayList<Index> targetIndexes, Tag toAdd) {
+    public AddTagCommand(ArrayList<Index> targetIndexes, Tag tagToAdd) {
 
         requireNonNull(targetIndexes);
-        requireNonNull(toAdd);
+        requireNonNull(tagToAdd);
 
         this.targetIndexes = targetIndexes;
-        this.toAdd = toAdd;
+        this.tagToAdd = tagToAdd;
     }
 
     /**
-     * First checks if all target indexes are not out of bounds and then checks if the tag exists in all of
-     * the given target indexes of person. If not, add the tag to each target person that doesn't have the given tag.
+     * Adds the tag to add to each target person that doesn't have the given tag.
      */
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        boolean allPersonsContainsTagToAdd = true;
 
-        for (Index targetIndex : targetIndexes) {
-            if (targetIndex.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
-        }
-
-        for (int i = 0; i < targetIndexes.size(); i++) {
-            int targetIndex = targetIndexes.get(i).getZeroBased();
-            ReadOnlyPerson readOnlyPerson = lastShownList.get(targetIndex);
-            if (!readOnlyPerson.getTags().contains(toAdd)) {
-                allPersonsContainsTagToAdd = false;
-            }
-        }
-
-        if (allPersonsContainsTagToAdd) {
-            throw  new CommandException(MESSAGE_DUPLICATE_TAG);
-        }
+        targetIndexesOutOfBoundsChecker(lastShownList);
+        tagInAllTargetIndexesChecker(lastShownList);
 
         try {
-            model.addTag(this.targetIndexes, this.toAdd);
+            model.addTag(this.targetIndexes, this.tagToAdd);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
 
-        return new CommandResult(String.format(MESSAGE_ADD_TAG_SUCCESS, toAdd));
+        return new CommandResult(String.format(MESSAGE_ADD_TAG_SUCCESS, tagToAdd));
+    }
+
+    /**
+     * Checks if all target indexes are not out of bounds.
+     */
+    private void targetIndexesOutOfBoundsChecker(List<ReadOnlyPerson> lastShownList) throws CommandException {
+        for (Index index : targetIndexes) {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+        }
+    }
+
+    /**
+     * Checks if the tag exists in all of the given target indexes.
+     */
+    private void tagInAllTargetIndexesChecker(List<ReadOnlyPerson> lastShownList) throws CommandException {
+        for (Index index : targetIndexes) {
+            int targetIndex = index.getZeroBased();
+            ReadOnlyPerson readOnlyPerson = lastShownList.get(targetIndex);
+            if (!readOnlyPerson.getTags().contains(tagToAdd)) {
+                return;
+            }
+        }
+        throw new CommandException(MESSAGE_DUPLICATE_TAG);
     }
 
     @Override
@@ -109,6 +117,6 @@ public class AddTagCommand extends UndoableCommand {
         // state check
         AddTagCommand e = (AddTagCommand) other;
         return targetIndexes.equals(e.targetIndexes)
-                && toAdd.equals(e.toAdd);
+                && tagToAdd.equals(e.tagToAdd);
     }
 }
