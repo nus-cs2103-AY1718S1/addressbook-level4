@@ -34,7 +34,7 @@ public interface Model {
     /** Adds the given person */
     void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException;
     /** Add accessToken to meetingsList*/
-    void addAccessToken(String accessToken);
+    //void addAccessToken(String accessToken);
     //@@author
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;

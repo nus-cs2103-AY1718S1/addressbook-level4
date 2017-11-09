@@ -10,7 +10,11 @@ import java.util.List;
 
 import com.asana.Client;
 import com.asana.OAuthApp;
-import com.asana.models.*;
+import com.asana.models.Attachment;
+import com.asana.models.Project;
+import com.asana.models.Task;
+import com.asana.models.User;
+import com.asana.models.Workspace;
 import com.google.common.io.LineReader;
 
 import jdk.nashorn.internal.ir.annotations.Ignore;
@@ -80,17 +84,17 @@ public class Authorization {
 
         System.out.println("isAuthorized=" + app.isAuthorized());
         System.out.println("me=" + client.users.me().execute().name);
-        PostTask();
+        postTask();
     }
 
-/***
- * Posts a task onto users meeting project on Asana
- */
-public static void PostTask() throws Exception {
     /***
-     * Posts a task onto users meeting project on Asana
-     */
-/*
+    * Posts a task onto users meeting project on Asana
+    */
+    public static void postTask() throws Exception {
+        /***
+        * Posts a task onto users meeting project on Asana
+        */
+        /*
         OAuthApp app = new OAuthApp(
                 "474342738710406",
                 "a89bbb49213d6b58ebce25cfa0995290",

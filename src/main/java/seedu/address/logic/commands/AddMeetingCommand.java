@@ -9,14 +9,19 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Meeting;
-import seedu.address.model.ReadOnlyMeeting;
-import seedu.address.model.asana.PostTask;
-import seedu.address.model.exceptions.DuplicateMeetingException;
-import seedu.address.model.exceptions.IllegalIdException;
-
 import java.text.ParseException;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+
+import seedu.address.model.Meeting;
+
+import seedu.address.model.ReadOnlyMeeting;
+
+import seedu.address.model.asana.PostTask;
+
+import seedu.address.model.exceptions.DuplicateMeetingException;
+
+import seedu.address.model.exceptions.IllegalIdException;
 
 /**
  * Adds a new meeting to the address book.
@@ -66,7 +71,7 @@ public class AddMeetingCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addMeeting(toAdd);
-            //TODO handle exception
+            //TODO handle exception for asana & multiple Ids exceeding num of entries in AB
             //add meeting on Asana
             PostTask newAsanaTask = null;
             try {

@@ -4,7 +4,10 @@ package seedu.address.model.asana;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-public class tokenParser implements Parser<storeAccessToken> {
+/**
+ * Parse accesstoken input from user
+ */
+public class TokenParser implements Parser<storeAccessToken> {
     @Override
     public storeAccessToken parse(String userInput) throws ParseException {
         //TODO Parse userinput

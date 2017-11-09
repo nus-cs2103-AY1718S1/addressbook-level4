@@ -28,8 +28,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 @Ignore
 public class PostTask extends Command {
 
-    String notes;
-    String date;
+    private String notes;
+    private String date;
 
     public PostTask(String notes, String localDate) throws ParseException {
         this.notes = notes;
