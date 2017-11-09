@@ -3,8 +3,10 @@ package seedu.room.storage;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static seedu.room.testutil.TypicalEvents.getTypicalEventBook;
 import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.junit.Before;
@@ -14,10 +16,12 @@ import org.junit.rules.TemporaryFolder;
 
 import seedu.room.commons.events.model.ResidentBookChangedEvent;
 import seedu.room.commons.events.storage.DataSavingExceptionEvent;
+import seedu.room.model.EventBook;
 import seedu.room.model.ReadOnlyEventBook;
 import seedu.room.model.ReadOnlyResidentBook;
 import seedu.room.model.ResidentBook;
 import seedu.room.model.UserPrefs;
+import seedu.room.model.person.Picture;
 import seedu.room.ui.testutil.EventsCollectorRule;
 
 public class StorageManagerTest {
@@ -28,6 +32,7 @@ public class StorageManagerTest {
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     private StorageManager storageManager;
+    private File imageFolder;
 
     @Before
     public void setUp() {
@@ -41,7 +46,21 @@ public class StorageManagerTest {
         return testFolder.getRoot().getPath() + fileName;
     }
 
+    //@@author blackroxs
+    private void setupTempPictureFile() throws IOException {
+        File source = new File(storageManager.getDirAbsolutePath()
+                + File.separator + Picture.FOLDER_NAME);
+        File dest = new File(storageManager.getDirAbsolutePath()
+                + File.separator + Picture.FOLDER_NAME + "_backup");
 
+        source.mkdirs();
+        dest.mkdirs();
+        source.deleteOnExit();
+        dest.deleteOnExit();
+    }
+
+
+    //@@author
     @Test
     public void prefsReadSave() throws Exception {
         /*
@@ -84,19 +103,6 @@ public class StorageManagerTest {
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
-    @Test
-    public void handleBackupResidentBook() throws Exception {
-        ResidentBook original = getTypicalResidentBook();
-        storageManager.saveResidentBook(original);
-        ReadOnlyResidentBook retrieved = storageManager.readResidentBook().get();
-
-        storageManager.backupResidentBook(retrieved);
-        ReadOnlyResidentBook backup = storageManager.readBackupResidentBook().get();
-
-        assertEquals(new ResidentBook(retrieved), new ResidentBook(backup));
-    }
-
-
     /**
      * A Stub class to throw an exception when the save method is called
      */
@@ -113,6 +119,7 @@ public class StorageManagerTest {
     }
 
     //@@author sushinoya
+
     /**
      * A Stub class to throw an exception when the save method is called
      */
@@ -126,6 +133,61 @@ public class StorageManagerTest {
         public void saveEventBook(ReadOnlyEventBook residentBook, String filePath) throws IOException {
             throw new IOException("dummy exception");
         }
+    }
+
+    //@@author blackroxs
+    @Test
+    public void eventsBookReadSave() throws Exception {
+        EventBook original = getTypicalEventBook();
+        storageManager.saveEventBook(original);
+        ReadOnlyEventBook retrieved = storageManager.readEventBook().get();
+        assertEquals(original, new EventBook(retrieved));
+    }
+
+    @Test
+    public void handleBackupResidentBook() throws Exception {
+        ResidentBook original = getTypicalResidentBook();
+        storageManager.saveResidentBook(original);
+        ReadOnlyResidentBook retrieved = storageManager.readResidentBook().get();
+
+        storageManager.backupResidentBook(retrieved);
+        ReadOnlyResidentBook backup = storageManager.readBackupResidentBook().get();
+
+        assertEquals(new ResidentBook(retrieved), new ResidentBook(backup));
+    }
+
+    @Test
+    public void handleBackupEventBook() throws Exception {
+        EventBook original = getTypicalEventBook();
+        storageManager.saveEventBook(original);
+        ReadOnlyEventBook retrieved = storageManager.readEventBook().get();
+
+        storageManager.backupEventBook(retrieved);
+        ReadOnlyEventBook backup = storageManager.readBackupEventBook().get();
+
+        assertEquals(new EventBook(retrieved), new EventBook(backup));
+    }
+
+    @Test
+    public void handleNoBackupImages() throws Exception {
+        storageManager.backupImages();
+
+        assertTrue(!new File(storageManager.getDirAbsolutePath()
+                + File.separator + Picture.FOLDER_NAME).exists());
+
+        assertTrue(!new File(storageManager.getDirAbsolutePath()
+                + File.separator + Picture.FOLDER_NAME + "_backup").exists());
+
+    }
+
+    @Test
+    public void handleBackupImagesValid() throws Exception {
+        setupTempPictureFile();
+
+        assertTrue(new File(storageManager.getDirAbsolutePath()
+                + File.separator + Picture.FOLDER_NAME).exists());
+        assertTrue(new File(storageManager.getDirAbsolutePath()
+                + File.separator + Picture.FOLDER_NAME + "_backup").exists());
     }
 
 

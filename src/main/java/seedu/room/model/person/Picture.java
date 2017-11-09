@@ -11,8 +11,10 @@ public class Picture {
 
     public static final String IMAGE_URL_VALIDATION_REGEX = "[^ ]+";
 
+    public static final String FOLDER_NAME = "contact_images";
+
     public static final String BASE_URL = System.getProperty("user.dir")
-            + "/data/contact_images/";
+            + "/data/" + FOLDER_NAME + "/";
 
     public static final String PLACEHOLDER_IMAGE = System.getProperty("user.dir")
             + "/src/main/resources/images/placeholder_person.png";

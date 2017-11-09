@@ -1,51 +1,5 @@
 # blackroxs
-###### /java/seedu/room/logic/parser/ImportCommandParserTest.java
-``` java
-public class ImportCommandParserTest {
-    @Rule
-    public TemporaryFolder testFolder = new TemporaryFolder();
-
-    private ImportCommandParser parser = new ImportCommandParser();
-
-    @Test
-    public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### /java/seedu/room/logic/parser/RemoveTagParserTest.java
-``` java
-public class RemoveTagParserTest {
-
-    private static final String MESSAGE_EMPTY_TAG_INPUT = "";
-    private static final String MESSAGE_EMPTY_STRING_INPUT = "     ";
-    private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE);
-
-    private RemoveTagParser parser = new RemoveTagParser();
-
-    @Test
-    public void parse_missingParts_failure() {
-        // no tagName specified
-        assertParseFailure(parser, MESSAGE_EMPTY_TAG_INPUT, MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
-    public void parse_emptyString_failure() {
-        // only empty string
-        assertParseFailure(parser, MESSAGE_EMPTY_STRING_INPUT, MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
-    public void parse_validFields_success() {
-        String userInput = VALID_TAG_FRIEND;
-        RemoveTagCommand expectedCommand = new RemoveTagCommand(userInput);
-
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-}
-```
-###### /java/seedu/room/logic/commands/RemoveTagCommandTest.java
+###### \java\seedu\room\logic\commands\RemoveTagCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for RemoveTagCommand.
@@ -80,5 +34,126 @@ public class RemoveTagCommandTest {
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
+}
+```
+###### \java\seedu\room\logic\parser\ImportCommandParserTest.java
+``` java
+public class ImportCommandParserTest {
+    @Rule
+    public TemporaryFolder testFolder = new TemporaryFolder();
+
+    private ImportCommandParser parser = new ImportCommandParser();
+
+    @Test
+    public void parse_emptyArg_throwsParseException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\room\logic\parser\RemoveTagParserTest.java
+``` java
+public class RemoveTagParserTest {
+
+    private static final String MESSAGE_EMPTY_TAG_INPUT = "";
+    private static final String MESSAGE_EMPTY_STRING_INPUT = "     ";
+    private static final String MESSAGE_INVALID_FORMAT =
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE);
+
+    private RemoveTagParser parser = new RemoveTagParser();
+
+    @Test
+    public void parse_missingParts_failure() {
+        // no tagName specified
+        assertParseFailure(parser, MESSAGE_EMPTY_TAG_INPUT, MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_emptyString_failure() {
+        // only empty string
+        assertParseFailure(parser, MESSAGE_EMPTY_STRING_INPUT, MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_validFields_success() {
+        String userInput = VALID_TAG_FRIEND;
+        RemoveTagCommand expectedCommand = new RemoveTagCommand(userInput);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+}
+```
+###### \java\seedu\room\storage\StorageManagerTest.java
+``` java
+    private void setupTempPictureFile() throws IOException {
+        File source = new File(storageManager.getDirAbsolutePath()
+                + File.separator + Picture.FOLDER_NAME);
+        File dest = new File(storageManager.getDirAbsolutePath()
+                + File.separator + Picture.FOLDER_NAME + "_backup");
+
+        source.mkdirs();
+        dest.mkdirs();
+        source.deleteOnExit();
+        dest.deleteOnExit();
+    }
+
+
+```
+###### \java\seedu\room\storage\StorageManagerTest.java
+``` java
+    @Test
+    public void eventsBookReadSave() throws Exception {
+        EventBook original = getTypicalEventBook();
+        storageManager.saveEventBook(original);
+        ReadOnlyEventBook retrieved = storageManager.readEventBook().get();
+        assertEquals(original, new EventBook(retrieved));
+    }
+
+    @Test
+    public void handleBackupResidentBook() throws Exception {
+        ResidentBook original = getTypicalResidentBook();
+        storageManager.saveResidentBook(original);
+        ReadOnlyResidentBook retrieved = storageManager.readResidentBook().get();
+
+        storageManager.backupResidentBook(retrieved);
+        ReadOnlyResidentBook backup = storageManager.readBackupResidentBook().get();
+
+        assertEquals(new ResidentBook(retrieved), new ResidentBook(backup));
+    }
+
+    @Test
+    public void handleBackupEventBook() throws Exception {
+        EventBook original = getTypicalEventBook();
+        storageManager.saveEventBook(original);
+        ReadOnlyEventBook retrieved = storageManager.readEventBook().get();
+
+        storageManager.backupEventBook(retrieved);
+        ReadOnlyEventBook backup = storageManager.readBackupEventBook().get();
+
+        assertEquals(new EventBook(retrieved), new EventBook(backup));
+    }
+
+    @Test
+    public void handleNoBackupImages() throws Exception {
+        storageManager.backupImages();
+
+        assertTrue(!new File(storageManager.getDirAbsolutePath()
+                + File.separator + Picture.FOLDER_NAME).exists());
+
+        assertTrue(!new File(storageManager.getDirAbsolutePath()
+                + File.separator + Picture.FOLDER_NAME + "_backup").exists());
+
+    }
+
+    @Test
+    public void handleBackupImagesValid() throws Exception {
+        setupTempPictureFile();
+
+        assertTrue(new File(storageManager.getDirAbsolutePath()
+                + File.separator + Picture.FOLDER_NAME).exists());
+        assertTrue(new File(storageManager.getDirAbsolutePath()
+                + File.separator + Picture.FOLDER_NAME + "_backup").exists());
+    }
+
+
 }
 ```
