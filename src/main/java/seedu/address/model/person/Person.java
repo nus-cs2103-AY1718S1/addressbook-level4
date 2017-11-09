@@ -212,26 +212,34 @@ public class Person implements ReadOnlyPerson {
         Name name = this.getName();
         Email email = this.getEmail();
         DateOfBirth dob = this.getDateOfBirth();
+
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(3);
+
         if (randomInt == 0) {
+
             if (address.toString() == "") {
                 this.reason = String.format(SHOWING_WHY_MESSAGE_NO_ADDRESS, name);
             } else {
                 this.reason = String.format(SHOWING_WHY_MESSAGE, name, address);
             }
+
         } else if (randomInt == 1) {
+
             if (dob.toString() == "") {
                 this.reason = String.format(SHOWING_WHY_MESSAGE_NO_DOB, name);
             } else {
                 this.reason = String.format(SHOWING_WHY_MESSAGE_2, name, dob);
             }
+
         } else if (randomInt == 2) {
+
             if (email.value == "") {
                 this.reason = String.format(SHOWING_WHY_MESSAGE_NO_EMAIL, name);
             } else {
                 this.reason = String.format(SHOWING_WHY_MESSAGE_3, name, email);
             }
+
         }
         return reason;
     }
