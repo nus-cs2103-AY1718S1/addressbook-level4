@@ -21,7 +21,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author lawwman
 public class BlackListSyncTest {
-    
+
     private static final String expectedMessage = ListObserver.BLACKLIST_NAME_DISPLAY_FORMAT
             + BlacklistCommand.MESSAGE_SUCCESS;;
 
