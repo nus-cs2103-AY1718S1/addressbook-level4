@@ -20,6 +20,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.model.AddressBook;
+import seedu.address.model.CommandMode;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -181,7 +182,7 @@ public class AddTaskCommandTest {
         }
 
         @Override
-        public String getCommandMode() {
+        public CommandMode getCommandMode() {
             fail("This method should not be called ");
             return null;
         }

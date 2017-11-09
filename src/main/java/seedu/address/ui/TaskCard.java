@@ -28,7 +28,7 @@ public class TaskCard extends UiPart<Region> {
     private static final int GREEN_RANGE = 7;
     private static final int YELLOW_RANGE = 3;
     private static final int RED_RANGE = 0;
-    private static String[] colours = { "red", "orange", "cyan", "green", "blue", "purple", "pink", "grey", "black" };
+    private static String[] colours = { "orange", "cyan", "blue", "purple", "pink", "grey", "black" };
     private static HashMap<String, String> tagColours = new HashMap<String, String>();
     private static Random random = new Random();
 
