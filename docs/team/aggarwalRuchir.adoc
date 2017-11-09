@@ -1,0 +1,97 @@
+= Ruchir Aggarwal - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: People.connect - Level 4
+People.connect is a desktop address book application. This application allows users to store important information about the people they care about. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T12-B3/main/blob/master/collated/main/aggarwalRuchir.md[Functional code]] [https://github.com/CS2103AUG2017-T12-B3/main/blob/master/collated/test/aggarwalRuchir.md[Test code]]
+
+=== Enhancement Added: list by tag
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=list]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Sometimes the user may require to find people that belong to a certain category. An example can be a student trying to find fellow contacts with tag 'CS2103' in the app. +
+In this case, using a find command will not be feasible since it uses name as its arguments but students can have different names in our case. Hence, using list command +
+makes more sense. Hence, instead of listing the entire address book, I have implemented the list feature by tag.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=listcommand]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Phone attribute
+
+==== External behavior
+
+---
+When the app shows the contact details, it displays the phone in the national convention. +
+However, when you enter the contact when adding a new person, there is no need to follow +
+the convention, rather enter the phone number as a single number.
+
+Examples:
+
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/13/02/1998 pt/JohnDoe.jpg` +
+Adds new contact "John Doe" with 98765432 as its phone but displayed as 9876-5432 on the person card
+
+---
+
+==== Justification
+
+From the name of the app itself, it is evident that connections are of utmost important and phone numbers are the most +
+important of them all. Displaying phone numbers in the formats that are similar to how we see in real life will make it +
+easier for user to interpret it.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=phoneConvention]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Adding password on addressbook
+
+=== External Behaviour
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=lockaddressbook]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Since the app has a feature of hiding certain fields about a person, if the addressbook is not locked, any person can access those +
+details using 'viewall' command which would leave the point of hiding details useless. Hence, adding a level of security +
+will be a good feature to implement.
+
+=== Other contributions
+
+* Found bugs in other team's product (Issues https://github.com/CS2103AUG2017-T11-B2/main/issues/140[#140], https://github.com/CS2103AUG2017-T11-B2/main/issues/138[#138])
+* Suggested enhancement for another team's product (Issues https://github.com/CS2103AUG2017-T11-B2/main/issues/139[#139]]

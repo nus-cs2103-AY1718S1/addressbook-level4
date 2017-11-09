@@ -428,6 +428,7 @@ Examples for a valid birthday:
 The date of the birthday is validated using Java's SimpleDateFormatter class. The formatter parses user's input and if the parsing is successful, the date is valid. The parser also accounts for leap days.
 //end::birthday[]
 
+// tag::phoneConvention[]
 === Phone attribute
 
 Person class consists of five different attributes: `Name`, `Address`, `Phone`, `Email` and `Birthday`. The Phone class +
@@ -474,6 +475,7 @@ The current validation allows the user to enter as many digits as he/she wants w
 numbers must be restricted to certain number of digits based on the country. Such validation will be performed in the future +
 version of the tool. The validation for number of digits will be quite extensive since different countries have different +
 number of digits in their phone numbers, which is the reason it is noe done yet.
+//end::phoneConvention[]
 
 // tag::photo[]
 === Photo attribute
