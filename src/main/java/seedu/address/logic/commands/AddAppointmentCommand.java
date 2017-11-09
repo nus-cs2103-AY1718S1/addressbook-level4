@@ -24,13 +24,13 @@ public class AddAppointmentCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "appointment";
     public static final String COMMAND_ALIAS = "appt";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appoint to a person in address book. \n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appointment to a person in address book. \n"
             + COMMAND_ALIAS + ": Shorthand equivalent for add. \n"
             + "Parameters: " + PREFIX_NAME + "PERSON "
-            + PREFIX_DATE + "TIME" + "\n"
+            + PREFIX_DATE + "DESCRIPTION, TIME" + "\n"
             + "Example 1:" + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
-            + PREFIX_DATE + "Next Monday 3pm";
+            + PREFIX_DATE + "Lunch, Next Monday 3pm";
 
     public static final String MESSAGE_SUCCESS = "New appointment added. ";
     public static final String INVALID_PERSON = "This person is not in your address book";

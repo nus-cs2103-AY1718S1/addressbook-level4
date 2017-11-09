@@ -159,6 +159,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void removeAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
+            fail("This method should not be called");
+        }
+
+        @Override
         public ObservableList<ReadOnlyPerson> listAppointment() {
             fail("This method should not be called");
             return null;

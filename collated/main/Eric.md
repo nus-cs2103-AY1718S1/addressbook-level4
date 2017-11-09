@@ -1,4 +1,24 @@
 # Eric
+###### \java\seedu\address\commons\events\ui\CalendarViewEvent.java
+``` java
+/**
+ * Indicates a request to change calendar view
+ */
+public class CalendarViewEvent extends BaseEvent {
+
+    public final Character c;
+
+    public CalendarViewEvent(Character c) {
+        this.c = c;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
 ###### \java\seedu\address\logic\commands\AddAppointmentCommand.java
 ``` java
 /**
@@ -9,13 +29,13 @@ public class AddAppointmentCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "appointment";
     public static final String COMMAND_ALIAS = "appt";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appoint to a person in address book. \n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appointment to a person in address book. \n"
             + COMMAND_ALIAS + ": Shorthand equivalent for add. \n"
             + "Parameters: " + PREFIX_NAME + "PERSON "
-            + PREFIX_DATE + "TIME" + "\n"
+            + PREFIX_DATE + "DESCRIPTION, TIME" + "\n"
             + "Example 1:" + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
-            + PREFIX_DATE + "Next Monday 3pm";
+            + PREFIX_DATE + "Lunch, Next Monday 3pm";
 
     public static final String MESSAGE_SUCCESS = "New appointment added. ";
     public static final String INVALID_PERSON = "This person is not in your address book";
@@ -99,6 +119,124 @@ public class AddAppointmentCommand extends UndoableCommand {
         this.model = model;
     }
 
+}
+```
+###### \java\seedu\address\logic\commands\CalendarViewCommand.java
+``` java
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.CalendarViewEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
+
+/**
+ * Command to change calendar view
+ */
+public class CalendarViewCommand extends Command {
+
+    public static final String COMMAND_WORD = "calendar";
+    public static final String COMMAND_ALIAS = "cal";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes calendar view. \n"
+            + COMMAND_ALIAS + ": Short hand equivalent for calendar. \n"
+            + "Parameter: \n"
+            + "Day view: d\n"
+            + "Week view: w\n"
+            + "Month view: m\n"
+            + "Year view: y\n";
+
+    public static final String MESSAGE_SUCCESS = "View changed.";
+
+    private Character arg;
+
+    public CalendarViewCommand(Character c) {
+        this.arg = c;
+    }
+    @Override
+    public CommandResult execute() throws CommandException {
+        EventsCenter.getInstance().post(new CalendarViewEvent(arg));
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+```
+###### \java\seedu\address\logic\commands\CancelAppointmentCommand.java
+``` java
+/**
+ * Command to cancel an existing appointment
+ */
+public class CancelAppointmentCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "cancel";
+    public static final String NO_SUCH_PERSON_FOUND = "No such person found";
+    public static final String NO_SUCH_APPOINTMENT = "No such appointment found";
+    public static final String MESSAGE_SUCCESS = "Appointment canceled.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Cancels an appointment from a person. \n"
+            + "Parameters: " + "DESCRIPTION with PERSON NAME \n"
+            + "Example 1:" + COMMAND_WORD + " "
+            + "Lunch with John Doe";
+    public static final String REFER_PROMPT = "Please refer to the appointment description.";
+    private String personString;
+    private String appointmentString;
+
+    public CancelAppointmentCommand(String person, String appointment) {
+        this.personString = person;
+        this.appointmentString = appointment;
+    }
+
+    @Override
+    protected CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            ReadOnlyPerson person = getPersonFromName(personString);
+            Appointment appointment = getAppointmentFromPerson(person, appointmentString);
+            model.removeAppointment(person, appointment);
+        } catch (PersonNotFoundException e) {
+            throw new CommandException(NO_SUCH_PERSON_FOUND + "\n" + REFER_PROMPT);
+        } catch (AppointmentNotFoundException e) {
+            throw new CommandException(NO_SUCH_APPOINTMENT + "\n" + REFER_PROMPT);
+        }
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    /**
+     * Util method to search for the correct appointment from a person using only the description.
+     * May have multiple appointments if there is same description under one person, but the first one will be deleted
+     * @throws AppointmentNotFoundException if appointment not found
+     */
+    private Appointment getAppointmentFromPerson(ReadOnlyPerson person, String description)
+            throws AppointmentNotFoundException {
+
+        for (Appointment appointment : person.getAppointments()) {
+            if (appointment.getDescription().equalsIgnoreCase(description.trim())) {
+                return appointment;
+            }
+        }
+        //Show Daily page for calendar
+        EventsCenter.getInstance().post(new CalendarViewEvent('d'));
+        throw new AppointmentNotFoundException();
+    }
+
+    /**
+     * Extract person from address book using name. If there are more than one contact with the same name,
+     * the first one will be extracted
+     * @throws PersonNotFoundException if no such person is in the address book
+     */
+    private ReadOnlyPerson getPersonFromName(String personName) throws PersonNotFoundException {
+
+        for (ReadOnlyPerson person : model.getAddressBook().getPersonList()) {
+            if (person.getName().toString().equalsIgnoreCase(personName.trim())) {
+                return person;
+            }
+        }
+
+        throw new PersonNotFoundException();
+    }
+
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CancelAppointmentCommand // instanceof handles nulls
+                && (this.appointmentString.equals(((CancelAppointmentCommand) other).appointmentString))
+                && (this.personString.equals(((CancelAppointmentCommand) other).personString)));
+    }
 }
 ```
 ###### \java\seedu\address\logic\commands\ToggleTagColorCommand.java
@@ -255,6 +393,42 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
 
 }
 ```
+###### \java\seedu\address\logic\parser\CalendarViewParser.java
+``` java
+
+/**
+ * Parser for CalendarViewCommand
+ */
+public class CalendarViewParser implements Parser {
+
+
+    @Override
+    public Command parse(String userInput) throws ParseException {
+        userInput = userInput.trim();
+        if (userInput.length() != 1 || !isValid(userInput)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CalendarViewCommand.MESSAGE_USAGE));
+        }
+        return new CalendarViewCommand(userInput.charAt(0));
+    }
+
+    /**
+     * Util method to check if the parameters is either w,d,y or m.
+     */
+    private boolean isValid(String str) {
+
+        assert(str.length() == 1);
+        switch (str.charAt(0)) {
+        case('w'):
+        case('d'):
+        case('y'):
+        case('m'):
+            return true;
+        default:
+            return false;
+        }
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\ToggleTagColorParser.java
 ``` java
 /**
@@ -316,11 +490,18 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
         this.tags.setTags(tags, tagString, color);
     }
 
-```
-###### \java\seedu\address\model\AddressBook.java
-``` java
+
+    public void setTags(Set<Tag> tags) {
+        this.tags.setTags(tags);
+    }
+
+
     public void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
         persons.addAppointment(target, appointment);
+    }
+
+    public void removeAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
+        persons.removeAppointment(target, appointment);
     }
 ```
 ###### \java\seedu\address\model\ModelManager.java
@@ -345,6 +526,13 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
     @Override
     public void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
         addressBook.addAppointment(target, appointment);
+        indicateAddressBookChanged();
+    }
+
+
+    @Override
+    public void removeAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
+        addressBook.removeAppointment(target, appointment);
         indicateAddressBookChanged();
     }
 
@@ -515,6 +703,14 @@ public class AppointmentList {
 
 }
 ```
+###### \java\seedu\address\model\person\exceptions\AppointmentNotFoundException.java
+``` java
+/**
+ * Signals that the appointment cannot be found
+ */
+public class AppointmentNotFoundException extends Exception {
+}
+```
 ###### \java\seedu\address\model\person\Person.java
 ``` java
     @Override
@@ -562,12 +758,36 @@ public class AppointmentList {
     public void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
         requireNonNull(target);
         requireNonNull(appointment);
+        Person person = getPerson(target);
+        List<Appointment> list = target.getAppointments();
+        list.add(appointment);
+        person.setAppointment(list);
+    }
+    /**
+     * Removes an appointment from a person in the internal list
+     *
+     * @throws PersonNotFoundException if no such person exist in the internal list
+     */
+    public void removeAppointment(ReadOnlyPerson target, Appointment appointment)
+            throws PersonNotFoundException {
+        requireNonNull(target);
+        requireNonNull(appointment);
+
+        Person person = getPerson(target);
+        List<Appointment> newApptList = person.getAppointments();
+        newApptList.remove(appointment);
+        person.setAppointment(newApptList);
+
+    }
+
+    /**
+     * Util method to extract person out from a list
+     */
+    private Person getPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        requireNonNull(target);
         for (Person person : internalList) {
             if (person.equals(target)) {
-                List<Appointment> list = target.getAppointments();
-                list.add(appointment);
-                person.setAppointment(list);
-                return;
+                return person;
             }
         }
         throw new PersonNotFoundException();
@@ -748,7 +968,6 @@ public class CalendarWindow extends UiPart<Region> {
         calendarView.setToday(LocalDate.now());
         calendarView.setTime(LocalTime.now());
         updateCalendar();
-        setKeyBindings();
         disableViews();
         registerAsAnEventHandler(this);
     }
@@ -761,35 +980,29 @@ public class CalendarWindow extends UiPart<Region> {
         calendarView.setShowSearchField(false);
         calendarView.setShowSearchResultsTray(false);
         calendarView.setShowPrintButton(false);
-        calendarView.showWeekPage();
-    }
-
-    private void setKeyBindings() {
-
-        calendarView.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
-            case C:
-                event.consume();
-                showNextPage();
-                break;
-            default:
-            }
-        });
+        calendarView.showDayPage();
     }
 
     /**
-     * When user press c, the calendar will shift to the next view
-     * Order of shifting: day -> week -> month -> year
+     * Changes calendar view accordingly
      */
-    public void showNextPage() {
-        if (calendarView.getSelectedPage() == calendarView.getMonthPage()) {
-            calendarView.showYearPage();
-        } else if (calendarView.getSelectedPage() == calendarView.getDayPage()) {
-            calendarView.showWeekPage();
-        } else if (calendarView.getSelectedPage() == calendarView.getYearPage()) {
+    private void showPage(Character c) {
+        switch(c) {
+        case ('d'):
             calendarView.showDayPage();
-        } else {
+            return;
+        case ('w'):
+            calendarView.showWeekPage();
+            return;
+        case ('m'):
             calendarView.showMonthPage();
+            return;
+        case ('y'):
+            calendarView.showYearPage();
+            return;
+        default:
+            //should not reach here
+            assert (false);
         }
     }
 
@@ -804,6 +1017,12 @@ public class CalendarWindow extends UiPart<Region> {
                 this::updateCalendar
         );
 
+    }
+
+    @Subscribe
+    private void handleCalendarViewEvent(CalendarViewEvent event) {
+        Character c = event.c;
+        Platform.runLater(() -> showPage(c));
     }
 
     /**
