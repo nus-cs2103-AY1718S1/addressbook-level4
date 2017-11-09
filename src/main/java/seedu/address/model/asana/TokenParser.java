@@ -7,10 +7,10 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parse accesstoken input from user
  */
-public class TokenParser implements Parser<storeAccessToken> {
+public class TokenParser implements Parser<StoreAccessToken> {
     @Override
-    public storeAccessToken parse(String userInput) throws ParseException {
+    public StoreAccessToken parse(String userInput) throws ParseException {
         //TODO Parse userinput
-        return new storeAccessToken(userInput);
+        return new StoreAccessToken(userInput);
     }
 }

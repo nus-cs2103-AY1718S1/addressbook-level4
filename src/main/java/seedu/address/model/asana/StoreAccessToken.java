@@ -9,11 +9,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 /**
  * Stores AccessToken hashed
  */
-public class storeAccessToken extends Command {
+public class StoreAccessToken extends Command {
 
     private final String mAccessToken;
 
-    public storeAccessToken(String accessToken) {
+    public StoreAccessToken(String accessToken) {
         mAccessToken = accessToken;
     }
     @Override
