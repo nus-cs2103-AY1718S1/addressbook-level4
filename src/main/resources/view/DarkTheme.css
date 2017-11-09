@@ -291,7 +291,7 @@
 }
 
 /*BUTTON SYTLING IN PERSON PANEL*/
-#removeImageButton, #addImageButton {
+#resetImageButton, #addImageButton {
     -fx-min-width: 70;
 }
 
