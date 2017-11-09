@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_TAG_REMOVED;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -40,7 +41,7 @@ public class RemoveTagCommandTest {
     }
 
     @Test
-    public void execute_removeTag_success() throws IllegalValueException, PersonNotFoundException, NoSuchTagException {
+    public void execute_removeTag_success() throws IllegalValueException, NoSuchTagException {
         String expectedMessage = MESSAGE_TAG_REMOVED;
 
         RemoveTagCommand command = prepareCommand("friends");
@@ -50,8 +51,26 @@ public class RemoveTagCommandTest {
     }
 
     @Test
-    public void execute_removeSingleTag_success() throws IllegalValueException, PersonNotFoundException,
-            NoSuchTagException {
+    public void execute_removeNonExistantTag_sucess() throws IllegalValueException {
+        //addressbook does not contain enemy tag.
+        assertCommandFailure(prepareCommand("enemy"), model, RemoveTagCommand.MESSAGE_TAG_NOT_FOUND);
+
+        //Elle has family tag but no enemy tag
+        assertCommandFailure(prepareCommand(4, "enemy"), model,
+                String.format(RemoveTagCommand.MESSAGE_TAG_NOT_FOUND_IN, 5));
+
+        //Carl has no tags
+        assertCommandFailure(prepareCommand(2, "colleagues"), model,
+                String.format(RemoveTagCommand.MESSAGE_TAG_NOT_FOUND_IN, 3));
+
+        //Benson has two tags, owesMoney and friend but no family tag.
+        assertCommandFailure(prepareCommand(1, "family"), model,
+                String.format(RemoveTagCommand.MESSAGE_TAG_NOT_FOUND_IN, 2));
+
+    }
+
+    @Test
+    public void execute_removeSingleTag_success() throws IllegalValueException, NoSuchTagException {
         String expectedMessage = MESSAGE_TAG_REMOVED;
 
         RemoveTagCommand command = prepareCommand(4, "family");
