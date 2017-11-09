@@ -33,8 +33,6 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private TextField commandTextField;
 
-    private ArrayList<String> prevText = new ArrayList<String>();
-
 
     //@@author hansiang93
     public CommandBox(Logic logic) {
