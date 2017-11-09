@@ -14,6 +14,7 @@ import static seedu.address.storage.util.RolodexStorageUtil.isValidRolodexStorag
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -174,6 +175,30 @@ public class ParserUtil {
     }
 
     /**
+     * Attempts to parse a {@code String} to an {@code Name}.
+     * Uses the {@code parseName} method directly and assert if the {@code String} is parsable.
+     *
+     * @return {@code true} if successfully parsed,
+     * {@code false} otherwise.
+     */
+    public static boolean isParsableName(String value) {
+        try {
+            Optional possible = parseName(Optional.of(parseRemainingName(value)));
+            return possible.isPresent() && possible.get() instanceof Name;
+        } catch (NumberFormatException | IllegalValueException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns a parsed {@code String} name from
+     * the remaining {@code String} value.
+     */
+    public static String parseRemainingName(String value) {
+        return value.replaceAll("[^A-Za-z0-9 ]", "");
+    }
+
+    /**
      * Attempts to parse a {@code String} to a file path.
      * Looks for a regex given a value and parses the first instance of the file path.
      *
@@ -295,6 +320,21 @@ public class ParserUtil {
         return value.substring(0, value.indexOf(firstEmail)).trim()
                 .concat(" ")
                 .concat(value.substring(value.indexOf(firstEmail) + firstEmail.length()).trim()).trim();
+    }
+
+    /**
+     * Returns a {@code String} after the tags have been removed.
+     * @param value to be parsed.
+     * @param tags that were added.
+     * @return a {@code String} without the tags.
+     */
+    public static String parseRemoveTags(String value, List<String> tags) {
+        for (String tag : tags) {
+            value = value.substring(0, value.indexOf(tag)).trim()
+                    .concat(" ")
+                    .concat(value.substring(value.indexOf(tag) + tag.length()).trim()).trim();
+        }
+        return value;
     }
 
     /**

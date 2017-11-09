@@ -2,13 +2,17 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.util.PersonSortingUtil.generateComparator;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +22,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.RolodexChangedEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.SortArgument;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -32,6 +37,8 @@ import seedu.address.model.tag.Tag;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
+    private static ModelManager instance;
+
     private final Rolodex rolodex;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final SortedList<ReadOnlyPerson> sortedPersons;
@@ -42,6 +49,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public ModelManager(ReadOnlyRolodex rolodex, UserPrefs userPrefs) {
         super();
+        instance = this;
         requireAllNonNull(rolodex, userPrefs);
 
         logger.fine("Initializing with rolodex: " + rolodex + " and user prefs " + userPrefs);
@@ -105,6 +113,30 @@ public class ModelManager extends ComponentManager implements Model {
             newPerson.setTags(newTags);
 
             rolodex.updatePerson(person, newPerson);
+        }
+    }
+
+    /**
+     * Returns true if a given String array as equivalent to any known tags in the Rolodex.
+     */
+    public static boolean hasAnyExistingTags(String[] tags) {
+        return !Collections.disjoint(Arrays.stream(tags).map(s -> {
+            try {
+                return new Tag(s.replaceAll(PREFIX_TAG.toString(), ""));
+            } catch (IllegalValueException e) {
+                return false;
+            }
+        }).collect(Collectors.toList()), instance.rolodex.getTagList());
+    }
+
+    /**
+     * Returns true if a given String array as equivalent to any known tags in the Rolodex.
+     */
+    public static boolean isExistingTag(String tag) {
+        try {
+            return instance.rolodex.getTagList().contains(new Tag(tag));
+        } catch (IllegalValueException e) {
+            return false;
         }
     }
 

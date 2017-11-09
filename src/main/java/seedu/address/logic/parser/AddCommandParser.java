@@ -7,7 +7,24 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.ParserUtil.isParsableAddressTillEnd;
+import static seedu.address.logic.parser.ParserUtil.isParsableEmail;
+import static seedu.address.logic.parser.ParserUtil.isParsableName;
+import static seedu.address.logic.parser.ParserUtil.isParsablePhone;
+import static seedu.address.logic.parser.ParserUtil.parseAddressTillEnd;
+import static seedu.address.logic.parser.ParserUtil.parseFirstEmail;
+import static seedu.address.logic.parser.ParserUtil.parseFirstPhone;
+import static seedu.address.logic.parser.ParserUtil.parseRemainingName;
+import static seedu.address.logic.parser.ParserUtil.parseRemoveAddressTillEnd;
+import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstEmail;
+import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstPhone;
+import static seedu.address.logic.parser.ParserUtil.parseRemoveTags;
+import static seedu.address.model.ModelManager.hasAnyExistingTags;
+import static seedu.address.model.ModelManager.isExistingTag;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -64,6 +81,69 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    /**
+     * Returns a formatted argument string given unformatted {@code rawArgs}
+     * or a {@code null} {@code String} if not formattable.
+     * Uses a simple flow by checking the {@code Model}'s data in the following order:
+     * 1. {@code Phone} (mandatory)
+     * 2. {@code Email} (mandatory)
+     * 3. {@code Tags} (optional)
+     * 4. {@code Address} (mandatory)
+     * 5. {@code Name} (remaining)
+     */
+    public static String parseArguments(String rawArgs) {
+        String remaining = rawArgs;
+
+        // Check for Phone & Email
+        String phone;
+        String email;
+        if (isParsablePhone(remaining) && isParsableEmail(remaining)) {
+            phone = parseFirstPhone(remaining);
+            remaining = parseRemoveFirstPhone(remaining).trim().replaceAll(PREFIX_PHONE.toString(), "");
+            email = parseFirstEmail(remaining);
+            remaining = parseRemoveFirstEmail(remaining).trim().replaceAll(PREFIX_EMAIL.toString(), "");
+        } else {
+            return null;
+        }
+
+        // Check for Existing Tags
+        StringBuilder tags = new StringBuilder();
+        String[] words = remaining.split(" ");
+        if (hasAnyExistingTags(words)) {
+            List<String> tagsAdded = new ArrayList<>();
+            Arrays.stream(words).forEach(word -> {
+                if (isExistingTag(word) && !tagsAdded.contains(word)) {
+                    tags.append(" " + PREFIX_TAG + word);
+                    tagsAdded.add(word);
+                }
+            });
+            remaining = parseRemoveTags(remaining, tagsAdded);
+        }
+
+        // Check for Address till end of remainder string
+        String address;
+        if (isParsableAddressTillEnd(remaining)) {
+            address = parseAddressTillEnd(remaining);
+            remaining = parseRemoveAddressTillEnd(remaining).trim().replaceAll(PREFIX_ADDRESS.toString(), "");
+        } else {
+            return null;
+        }
+
+        // Check for alphanumeric Name in remainder string
+        String name;
+        if (isParsableName(remaining)) {
+            name = parseRemainingName(remaining);
+        } else {
+            return null;
+        }
+
+        return " ".concat(PREFIX_NAME.toString()).concat(name)
+                .concat(" ").concat(PREFIX_PHONE.toString()).concat(phone)
+                .concat(" ").concat(PREFIX_EMAIL.toString()).concat(email)
+                .concat(" ").concat(PREFIX_ADDRESS.toString()).concat(address)
+                .concat(tags.toString());
     }
 
 }
