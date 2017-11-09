@@ -42,22 +42,29 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
         repaid = totalDebt - person.getDebt().toNumber();
         ratio = repaid / totalDebt;
         progressBar.setProgress(ratio);
-        repaymentInfo.textProperty().bind(Bindings.convert(getRepaymentStatus(person, ratio)));
-        setRepaymentProgressInfo(person);
+        repaymentInfo.textProperty().bind(Bindings.convert(getRepaymentStatus(person)));
+        repaymentInfo.textProperty().addListener((unused1, unused2, unused3) -> {
+            // style repaymentInfo whenever its value changes
+            styleRepaymentProgressInfo();
+        });
         percentage.textProperty().bind(Bindings.convert(getPercentage(ratio)));
+        percentage.textProperty().addListener((unused1, unused2, unused3) -> {
+            getRepaymentStatus(person);
+        });
         progressBar.getStyleClass().clear();
         progressBar.getStyleClass().add("progress-bar");
+        styleRepaymentProgressInfo();
         registerAsAnEventHandler(this);
     }
 
     /**
-     * Styles repayment
+     * Styles repayment information that is located next to the debt repayment progress bar
      */
-    private void setRepaymentProgressInfo(ReadOnlyPerson person) {
-        String repaymentStatus = getRepaymentStatus(person, ratio).getValue();
-        if (ratio == 1.0) {
+    private void styleRepaymentProgressInfo() {
+        String repaymentInformation = repaymentInfo.getText();
+        if (repaymentInformation.equals(COMPLETED_REPAYMENT_MESSAGE)) {
             repaymentInfo.setId("completedText");
-        } else if (repaymentStatus.equals(NO_DEADLINE_REPAYMENT_MESSAGE)) {
+        } else if (repaymentInformation.equals(NO_DEADLINE_REPAYMENT_MESSAGE)) {
             repaymentInfo.setId("noDeadlineText");
         } else {
             repaymentInfo.setId("repaymentInfoText");
@@ -75,9 +82,11 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
     /**
      * Returns a {@code ObservableValue<String>} to bind to {@code repaymentInfo} property
      */
-    private ObservableValue<String> getRepaymentStatus(ReadOnlyPerson person, double percentage) {
+    private ObservableValue<String> getRepaymentStatus(ReadOnlyPerson person) {
         Deadline deadline = person.getDeadline();
-        if (!deadline.toString().equals(NO_DEADLINE_SET)) {
+        if (person.getDebt().toNumber() == 0) {
+            return new SimpleObjectProperty<>(COMPLETED_REPAYMENT_MESSAGE);
+        } else if (!deadline.toString().equals(NO_DEADLINE_SET)) {
             String day = deadline.getDay();
             String month = deadline.getMonth();
             String year = deadline.getYear();
@@ -87,9 +96,8 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
             LocalDate today = LocalDate.now();
             return new SimpleObjectProperty<>(Long.toString(
                     ChronoUnit.DAYS.between(today, deadlineDate)) + " days left to repay debt");
-        } else if (percentage == 1.0) {
-            return new SimpleObjectProperty<>(COMPLETED_REPAYMENT_MESSAGE);
+        } else {
+            return new SimpleObjectProperty<>(NO_DEADLINE_REPAYMENT_MESSAGE);
         }
-        return new SimpleObjectProperty<>(NO_DEADLINE_REPAYMENT_MESSAGE);
     }
 }
