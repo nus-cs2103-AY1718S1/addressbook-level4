@@ -1,0 +1,133 @@
+= Jeremy Long - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:collatedDir: ../../collated
+
+== Project: MedNus
+MedNus is a desktop address book application used by Medical Professionals. +
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. +
+It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: +
+link:{collatedDir}/main/Jeremy.md[Functional code] +
+link:{collatedDir}/test/Jeremy.md[Test code] +
+
+=== Enhancement Added: List
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=list]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=list]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=listImplementation]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: KeyBoard ShortCuts
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=shortcut]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=shortcutreason]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=shortcutimple]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Remark Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=remark]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=remarkreason]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=remarkimple]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/50/files[MedNus UI modifications] +
+(Special Thanks to https://github.com/rushan-khor[rushan] for creating the first UI +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/49/files[modification] and
+code comments to identify the respective +
+CSS parts)
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/112[Add Command - Only name input is compulsory]
+** User Guide +
+*** https://github.com/CS2103AUG2017-T17-B2/main/pull/91/files[Major Formatting]
+(In collaboration with http://github.com/ErnestOYH[Ernest]) +
+*** https://github.com/CS2103AUG2017-T17-B2/main/pull/125/files[Illustrations] +
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/61[Test Coverage]

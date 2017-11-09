@@ -8,9 +8,11 @@ import seedu.address.commons.events.BaseEvent;
 public class NewResultAvailableEvent extends BaseEvent {
 
     public final String message;
+    public final boolean hasError;
 
-    public NewResultAvailableEvent(String message) {
+    public NewResultAvailableEvent(String message, boolean hasError) {
         this.message = message;
+        this.hasError = hasError;
     }
 
     @Override

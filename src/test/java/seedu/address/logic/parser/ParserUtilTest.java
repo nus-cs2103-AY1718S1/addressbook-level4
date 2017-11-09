@@ -19,22 +19,27 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Bloodtype;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
+    private static final String INVALID_BLOODTYPE = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
+    private static final String VALID_BLOODTYPE = "O+";
     private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_REMARK = "neighbour";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -138,6 +143,33 @@ public class ParserUtilTest {
         assertEquals(expectedAddress, actualAddress.get());
     }
 
+    //@@author Ernest
+    @Test
+    public void parseBloodTypeNullThrowsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseBloodType(null);
+    }
+
+    @Test
+    public void parseBloodTypeInvalidValueThrowsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseBloodType(Optional.of(INVALID_BLOODTYPE));
+    }
+
+    @Test
+    public void parseBloodTypeOptionalEmptyReturnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseBloodType(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseBloodTypeValidValueReturnsBloodType() throws Exception {
+        Bloodtype expectedBloodType = new Bloodtype(VALID_BLOODTYPE);
+        Optional<Bloodtype> actualBloodType = ParserUtil.parseBloodType(Optional.of(VALID_BLOODTYPE));
+
+        assertEquals(expectedBloodType, actualBloodType.get());
+    }
+    //@@author
+
     @Test
     public void parseEmail_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
@@ -183,8 +215,29 @@ public class ParserUtilTest {
     @Test
     public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
         Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
-        Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
+        Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1, ""), new Tag(VALID_TAG_2, "")));
 
         assertEquals(expectedTagSet, actualTagSet);
     }
+
+    //@@author Jeremy
+    @Test
+    public void parseRemarkNullThrowsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseRemark(null);
+    }
+
+    @Test
+    public void parseRemarkOptionalEmptyReturnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseRemark(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseRemarkValidValueReturnsRemark() throws Exception {
+        Remark expectedRemark = new Remark(VALID_REMARK);
+        Optional<Remark> actualRemark = ParserUtil.parseRemark(Optional.of(VALID_REMARK));
+
+        assertEquals(expectedRemark, actualRemark.get());
+    }
+    //@@author
 }

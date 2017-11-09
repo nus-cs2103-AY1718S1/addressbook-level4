@@ -10,9 +10,11 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Email {
 
+    public static final String NON_COMPULSORY_EMAIL = "-";
     public static final String MESSAGE_EMAIL_CONSTRAINTS =
             "Person emails should be 2 alphanumeric/period strings separated by '@'";
     public static final String EMAIL_VALIDATION_REGEX = "[\\w\\.]+@[\\w\\.]+";
+    public static final String EMAIL_VALIDATION_EMPTY = "-";
 
     public final String value;
 
@@ -27,14 +29,14 @@ public class Email {
         if (!isValidEmail(trimmedEmail)) {
             throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
         }
-        this.value = trimmedEmail;
+        this.value = trimmedEmail.toLowerCase();
     }
 
     /**
      * Returns if a given string is a valid person email.
      */
     public static boolean isValidEmail(String test) {
-        return test.matches(EMAIL_VALIDATION_REGEX);
+        return test.matches(EMAIL_VALIDATION_REGEX) || test.equals(EMAIL_VALIDATION_EMPTY);
     }
 
     @Override

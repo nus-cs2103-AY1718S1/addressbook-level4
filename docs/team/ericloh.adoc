@@ -1,0 +1,74 @@
+= Eric Loh - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:collatedDir: ../../collated
+
+== Project: MedNus
+MedNus is a desktop address book application used by Medical Professionals. +
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. +
+It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: +
+link:{collatedDir}/main/Eric.md[Functional code] +
+link:{collatedDir}/test/Eric.md[Test code] +
+
+=== Enhancement Added: Setting Tag Color
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=color]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Different tags can be differentiated easily when there are different colors.
+We allow our users to assign any color they want to a tag to allow more customization.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Setting Appointment
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=appointment]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+We allow our users to set appointment timing with their contacts. The use of natural language eases the use of the
+address book.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=appointment]
+
+#End of Extract#
+
+---
+=== Other contributions
+
+* UI command output changes

@@ -81,7 +81,6 @@ public class StorageManagerTest {
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
-
     /**
      * A Stub class to throw an exception when the save method is called
      */
