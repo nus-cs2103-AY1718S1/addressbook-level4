@@ -85,7 +85,7 @@ public class PersonPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    //@@author a0107442n
+    //@@author shuang-yang
     /**
      * Register the image import button for click event.
      */
@@ -146,7 +146,7 @@ public class PersonPanel extends UiPart<Region> {
         relationshipPane.getChildren().removeAll(relationshipPane.getChildren());
         person.getRelation().forEach
             (relationship -> relationshipPane.getChildren().add(new Label(relationship.relType)));
-        //@@author a0107442n
+        //@@author shuang-yang
         //Load the photo of the contact
         String imagePath = person.getPhoto().toString();
         Image image = new Image(new File(imagePath).toURI().toString());

@@ -31,5 +31,16 @@
             </Label>
          </children>
       </StackPane>
+      <StackPane id="eventPeriod" prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <Label id="eventPeriod" fx:id="periodLabel" alignment="CENTER"
+                   prefHeight="200.0" prefWidth="800.0" textAlignment="CENTER"
+                   wrapText="true" StackPane.alignment="BOTTOM_CENTER">
+               <padding>
+                  <Insets top="50.0" />
+               </padding>
+            </Label>
+         </children>
+      </StackPane>
    </children>
 </StackPane>

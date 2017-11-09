@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.Period;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.Title;
 import seedu.address.model.event.timeslot.Timeslot;
@@ -21,6 +22,8 @@ public class XmlAdaptedEvent {
     private String timeslot;
     @XmlElement(required = true)
     private String description;
+    @XmlElement(required = true)
+    private String period;
 
     /**
      * Constructs an XmlAdaptedEvent.
@@ -39,6 +42,7 @@ public class XmlAdaptedEvent {
         title = source.getTitle().toString();
         timeslot = source.getTimeslot().toString();
         description = source.getDescription().toString();
+        period = source.getPeriod().toString();
     }
 
     /**
@@ -50,7 +54,13 @@ public class XmlAdaptedEvent {
         final Title title = new Title(this.title);
         final Timeslot timeslot = new Timeslot(this.timeslot);
         final Description description = new Description(this.description);
-        return new Event(title, timeslot, description);
+        //@@author shuang-yang
+        Period period = new Period("0"); //to handle legacy versions where the optional field is not present
+        if (this.period != null) {
+            period = new Period(this.period);
+        }
+        //@@author
+        return new Event(title, timeslot, description, period);
     }
 }
 

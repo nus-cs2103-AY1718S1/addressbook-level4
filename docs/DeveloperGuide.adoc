@@ -378,35 +378,35 @@ Additionally, an `AddressBookChangedEvent` is also raised to the `EventsCenter` 
 // tag::Scheduling[]
 === Event Scheduling
 
-Whenever an event is created, it will be added into an `ObservableTreeMap` of
-events, ranked by the scheduled date and time. This will enable us to
-implement the event scheduling feature comprised of three essential
-sub-features：
+Whenever an event is created, it will be added into an
+`ObservableTreeMap` of events, ranked by the scheduled date and time. This
+will enable us to implement the event scheduling feature comprised of two
+essential sub-features：
 
-* A GUI displaying all the events scheduled for the current week
-* A reminder feature to alert user of the upcoming events
-* A scheduling check mechanism to prevent events with time clash to be
-scheduled at the same time
+* A GUI displaying all the events scheduled
+* A drag-and-drop action listener for quick and convenient rescheduling of
+events
 
-==== Schedule for the week
+==== Event Scheduling
 
-When a `Check Schedule` command is typed into the command box, or the
+When a `CheckSchedule` command is typed into the command box, or when the
 `Calendar` button on the main window is clicked, a
-`ShowCalendarEvent` will be sent to the EventsCenter. In response, the calendar
-GUI will appear in the main window, and events with a scheduled `timing`
-within the week will be identified from the `TreeMap` of events and reflected
- in the  calendar GUI. A corresponding List of events will also appear in the
-  `EventListPanel`, just like with a `List` command for event.
+`ShowCalendarEvent` will be sent to the EventsCenter. In response, a calendar
+GUI will appear in the main window, and events with a scheduled timing
+within the current week will be extracted from the eventList and
+reflected in the corresponding time slots on the calendar GUI. Each event is
+a draggable pane with event titles indicated.
 
-==== Event Reminder
+==== Reschedule event through drag-and-drop
 
-When the Sales Nagivator app is opened, a `ShowUrgentEvents` event will
-automatically be sent, which will find all the events scheduled before the
-end of the next day. After identifying these events, a small circle will
-appear on the `notification` button on the main window to alert users of the
-number of urgent events he/she should attend to. Upon clicking the
-`notification` button, a list of urgent events will then appear in the
-`EventListPanel`.
+When the calendar view is loaded, all the time slots will be registered for
+dropping action. When the event panes are loaded, they will be registered for
+dragging action. When a user drag an event and drop to a specific time slot,
+the 'old' event will be removed and a 'new' event will be added at the
+dropped time slot, with the sames duration. If there is a time clash between
+the 'new' event and an existing event, or if the 'new' event's timing
+exceeds pre-set constraints (eg. extends out of the 24-hour period) the
+'dropping' action cannot be completed.
 
 ==== Avoid time clash
 
@@ -606,6 +606,8 @@ For every `PersonPanel`, there is an `Import Image` button which allows the
 user to select a file from the local file system to import. Similar to the
 command-line implementation, this file is then copied to the
 `/src/main/resources/images` directory and then loaded in the graphic UI.
+
+//tag::photo[]
 
 // tag::Sorting[]
 === Sorting of persons list

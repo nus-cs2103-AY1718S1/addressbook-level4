@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERIOD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHOTO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
@@ -145,6 +146,13 @@ public class CommandTestUtil {
     public static final String VALID_DESCRIPTION_MIDTERM = "MPSH-2A, Seat 727";
     public static final String VALID_DESCRIPTION_SOCCER = "Bring the ball pump and drinks";
 
+    //@@author shuang-yang
+    public static final String VALID_PERIOD_MIDTERM = "180";
+    public static final String VALID_PERIOD_SOCCER = "7";
+    public static final String PERIOD_MIDTERM = " " + PREFIX_PERIOD + VALID_PERIOD_MIDTERM;
+    public static final String PERIOD_SOCCER = " " + PREFIX_PERIOD + VALID_PERIOD_SOCCER;
+    public static final String INVALID_PERIOD = " " + PREFIX_PERIOD + " -1";
+    //@@author
 
     public static final String TITLE_MIDTERM = " " + PREFIX_NAME + VALID_TITLE_MIDTERM;
     public static final String TITLE_SOCCER = " " + PREFIX_NAME + VALID_TITLE_SOCCER;
@@ -180,10 +188,10 @@ public class CommandTestUtil {
 
         DESC_MIDTERM = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_MIDTERM)
                 .withTimeslot(VALID_TIMESLOT_MIDTERM)
-                .withDescription(VALID_DESCRIPTION_MIDTERM).build();
+                .withDescription(VALID_DESCRIPTION_MIDTERM).withPeriod(VALID_PERIOD_MIDTERM).build();
         DESC_SOCCER = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_SOCCER)
                 .withTimeslot(VALID_TIMESLOT_SOCCER)
-                .withDescription(VALID_DESCRIPTION_SOCCER).build();
+                .withDescription(VALID_DESCRIPTION_SOCCER).withPeriod(VALID_PERIOD_SOCCER).build();
         //@@author huiyiiih
         DESC_JOE = new EditPersonBuilder().withName(VALID_NAME_JOE)
             .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)

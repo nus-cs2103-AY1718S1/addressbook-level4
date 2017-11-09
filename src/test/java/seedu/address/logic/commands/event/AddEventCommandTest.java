@@ -161,6 +161,11 @@ public class AddEventCommandTest {
             fail("This method should not be called.");
             return null;
         }
+
+        @Override
+        public void scheduleRepeatedEvent(ReadOnlyEvent addedEvent) {
+            fail("This method should not be called.");
+        }
     }
 
     /**

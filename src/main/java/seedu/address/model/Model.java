@@ -106,6 +106,9 @@ public interface Model {
      */
     void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate);
 
-
-    //@@author
+    //@@author shuang-yang
+    /**
+     * Schedule a repeated event.
+     */
+    void scheduleRepeatedEvent(ReadOnlyEvent event);
 }

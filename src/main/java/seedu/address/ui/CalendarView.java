@@ -1,4 +1,4 @@
-//@@author a0107442n
+//@@author shuang-yang
 
 package seedu.address.ui;
 
@@ -243,11 +243,9 @@ public class CalendarView extends UiPart<Region> {
             pane.getChildren().add(label);
             GridPane.setHalignment(label, HPos.CENTER);
             if (headers.getChildren().remove(headerPanes[columnIndex])) {
-                logger.info("removed label " + headerPanes[columnIndex].toString());
             }
             headers.add(pane, columnIndex, 0);
             headerPanes[columnIndex] = pane;
-            logger.info("Added " + headerPanes[columnIndex]);
         }
     }
 
@@ -376,7 +374,6 @@ public class CalendarView extends UiPart<Region> {
 
     private void removeDuplicatedPane(GridPane calendarView, ReadOnlyEvent lastChangedEvent) {
         if (calendarView.getChildren().remove(addedEvents.get(lastChangedEvent))) {
-            logger.info("EventPane removed --- " + lastChangedEvent);
             addedEvents.remove(lastChangedEvent);
         }
     }
@@ -450,8 +447,6 @@ public class CalendarView extends UiPart<Region> {
 
         //Store events that have been added for future reference
         addedEvents.put(event, eventPane);
-        logger.info("EventPane added === " + event + " with pane " + addedEvents.get(event) + " with " + addedEvents
-                .size() + " panes.");
 
     }
 
