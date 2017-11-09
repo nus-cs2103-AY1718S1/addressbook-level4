@@ -67,6 +67,8 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_MRT_DESC = " " + PREFIX_MRT + "Bedk"; // mispelled Bedok
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_ST_DESC = " " + PREFIX_START_TIME + "0500";
+    public static final String INVALID_ET_DESC = " " + PREFIX_END_TIME + "2400";
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
