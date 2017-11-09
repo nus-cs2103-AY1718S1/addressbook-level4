@@ -68,6 +68,7 @@ allprojects {
         compile 'org.kordamp.ikonli:ikonli-javafx:2.0.0'
         compile 'org.kordamp.ikonli:ikonli-feather-pack:2.0.0'
         compile 'javax.mail:mail:1.4.7'
+        compile group: 'com.googlecode.soundlibs', name: 'jlayer', version: '1.0.1-1'
         compile fileTree(dir: 'externalLib', include: ['*.jar'])
 
         testCompile "junit:junit:$junitVersion"

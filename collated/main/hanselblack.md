@@ -17,12 +17,12 @@
             return Optional.ofNullable(remark);
         }
 ```
-###### \java\seedu\address\logic\commands\EmailCommand.java
+###### \java\seedu\address\logic\commands\ShareCommand.java
 ``` java
 /**
  * Emails the list of contact details to the input email address
  */
-public class EmailCommand extends Command {
+public class ShareCommand extends Command {
 
     public static final String COMMAND_WORD = "email";
 
@@ -38,7 +38,7 @@ public class EmailCommand extends Command {
     private final Index targetIndex;
     private String recipientEmail;
 
-    public EmailCommand(Index targetIndex, String recipientEmail) {
+    public ShareCommand(Index targetIndex, String recipientEmail) {
         this.targetIndex = targetIndex;
         this.recipientEmail = recipientEmail;
     }
@@ -139,8 +139,8 @@ public class EmailCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof EmailCommand // instanceof handles nulls
-                && this.targetIndex.equals(((EmailCommand) other).targetIndex)); // state check
+                || (other instanceof ShareCommand // instanceof handles nulls
+                && this.targetIndex.equals(((ShareCommand) other).targetIndex)); // state check
     }
 }
 ```
@@ -339,31 +339,31 @@ public class RemarkCommand extends UndoableCommand {
 ``` java
             ParserUtil.editParseRemark(argMultimap.getValue(PREFIX_REMARK)).ifPresent(editPersonDescriptor::setRemark);
 ```
-###### \java\seedu\address\logic\parser\EmailCommandParser.java
+###### \java\seedu\address\logic\parser\ShareCommandParser.java
 ``` java
 /**
- * Parses input arguments and creates a new EmailCommand object
+ * Parses input arguments and creates a new ShareCommand object
  */
-public class EmailCommandParser {
+public class ShareCommandParser {
     /**
-     * Parses the given {@code String} of arguments in the context of the EmailCommand
-     * and returns an EmailCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the ShareCommand
+     * and returns an ShareCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public EmailCommand parse(String arguments) throws ParseException {
+    public ShareCommand parse(String arguments) throws ParseException {
         String[] args = arguments.trim().split("\\s+");
         if (args.length == 2) {
             String email = args[1];
             try {
                 Index index = ParserUtil.parseIndex(args[0]);
-                return new EmailCommand(index, email);
+                return new ShareCommand(index, email);
             } catch (IllegalValueException ive) {
                 throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShareCommand.MESSAGE_USAGE));
             }
         } else {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShareCommand.MESSAGE_USAGE));
         }
     }
 }
