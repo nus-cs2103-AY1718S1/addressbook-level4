@@ -928,7 +928,7 @@ Where "information" indicate the data that the user are editing with while "type
 In this section, we explain how logging is done in the application whenever an important action is taken by user. +
 Whenever an action such as "Add", "Clear", "Delete", "Edit", "Email", "Import", "List", "Redo", "RemoveTag" & "Undo" is executed, the LoggingCommand method will be called and information of the action is recorded in ConnectUsLog.txt with a timestamp. +
 With slight modification to link:#fig3.1.2[Figure 3.1.2], we have the following diagram showing the Class Diagram on how LoggingCommand is implemented in the system. +
-image::LogCommandClassDia.png[width="800"]
+image::LogicClassDiagram.png[width="800"]
 _Figure 4.13.1 : Class Diagram of LoggingCommand function_
 
 This is how you can use the LoggingCommand method in your code.
