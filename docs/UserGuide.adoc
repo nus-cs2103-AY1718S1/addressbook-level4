@@ -65,12 +65,17 @@ Option 1: Format: `help` +
 Option 2.1: Menu -> File -> Help +
 Option 2.2: Menu -> File -> `F1`
 
+// tag::createDefaultAcc[]
 === Creating Default Account : `createDefaultAcc`
 Creates a default login account for a new user
 Format: `createDefaultAcc` +
 
-Username: `Admin` +
-Password: `Admin`
+Username: `admin` +
+Password: `admin`
+
+// end::createDefaultAcc[]
+
+// tag::removeLogin[]
 
 === Removing Login Account : `removeLogin`
 Removes the login account. +
@@ -82,6 +87,9 @@ Examples:
 * `removeLogin admin admin`
 * `removeLogin tom123 1642522`
 
+// end::removeLogin[]
+
+// tag::changepw[]
 
 === Changing password : `changepw`
 Changes a user's password needed to access H.M.U v1.4 +
@@ -93,6 +101,10 @@ Examples:
 * `changepw admin tom harry`
 * `changepw admin !@# !!!!`
 
+// end::changepw[]
+
+// tag::changeuser[]
+
 === Changing password : `changeuser`
 Changes a user's username needed to access H.M.U v1.2 +
 Format: `changepw old_username new_username password` +
@@ -100,6 +112,8 @@ Format: `changepw old_username new_username password` +
 Examples:
 
 * `changeuser admin user password`
+
+// end::changeuser[]
 
 === Adding a person: `add`
 
