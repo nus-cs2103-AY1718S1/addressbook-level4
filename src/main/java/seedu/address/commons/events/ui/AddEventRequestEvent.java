@@ -1,9 +1,9 @@
 package seedu.address.commons.events.ui;
 
+//@@author chernghann
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.event.ReadOnlyEvent;
 
-//@@author chernghann
 /**
  * Indicates a request to add Event.
  */

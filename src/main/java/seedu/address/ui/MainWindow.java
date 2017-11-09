@@ -350,5 +350,6 @@ public class MainWindow extends UiPart<Region> {
         // calendar.populateNewCalendar(request.event);
         calendar.populateUpdatedCalendar(request.eventList, YearMonth.now());
     }
+    //@@author
 
 }
