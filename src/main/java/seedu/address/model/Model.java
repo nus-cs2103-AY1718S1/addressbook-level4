@@ -57,6 +57,11 @@ public interface Model {
     /** Adds or updates the avatar of the selected person. */
     void setPersonAvatar(ReadOnlyPerson target, Avatar avatar);
 
+    //@@author dennaloh
+    /** Gets URL for google maps. */
+    String getGMapUrl(ReadOnlyPerson target);
+    //@@author
+
     //=========== Model support for tag component =============================================================
 
     /** Removes the specific tag (from all persons with that tag) */

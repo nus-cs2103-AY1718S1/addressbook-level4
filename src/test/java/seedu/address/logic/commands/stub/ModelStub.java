@@ -37,6 +37,14 @@ public class ModelStub implements Model {
         fail("This method should not be called.");
     }
 
+    //@@author dennaloh
+    @Override
+    public String getGMapUrl(ReadOnlyPerson target)  {
+        fail("This method should not be called.");
+        return null;
+    }
+    //@@author
+
     @Override
     public void addData(ReadOnlyAddressBook newData) {
         fail("This method should not be called.");

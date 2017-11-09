@@ -1,5 +1,5 @@
 # yunpengn
-###### \java\seedu\address\commons\events\model\TagColorChangedEventTest.java
+###### /java/seedu/address/commons/events/model/TagColorChangedEventTest.java
 ``` java
 public class TagColorChangedEventTest {
     @Test
@@ -9,7 +9,7 @@ public class TagColorChangedEventTest {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\SwitchToContactsListEventTest.java
+###### /java/seedu/address/commons/events/ui/SwitchToContactsListEventTest.java
 ``` java
 public class SwitchToContactsListEventTest {
     @Test
@@ -19,7 +19,7 @@ public class SwitchToContactsListEventTest {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\SwitchToEventsListEventTest.java
+###### /java/seedu/address/commons/events/ui/SwitchToEventsListEventTest.java
 ``` java
 public class SwitchToEventsListEventTest {
     @Test
@@ -29,7 +29,7 @@ public class SwitchToEventsListEventTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\configs\AddPropertyCommandTest.java
+###### /java/seedu/address/logic/commands/configs/AddPropertyCommandTest.java
 ``` java
 public class AddPropertyCommandTest {
     private ConfigCommand successCommand;
@@ -100,7 +100,7 @@ public class AddPropertyCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\configs\ChangeTagColorCommandTest.java
+###### /java/seedu/address/logic/commands/configs/ChangeTagColorCommandTest.java
 ``` java
 public class ChangeTagColorCommandTest {
     @Rule
@@ -175,7 +175,7 @@ public class ChangeTagColorCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\configs\ConfigCommandTest.java
+###### /java/seedu/address/logic/commands/configs/ConfigCommandTest.java
 ``` java
 public class ConfigCommandTest {
     @Test
@@ -184,7 +184,7 @@ public class ConfigCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\imports\ImportNusmodsCommandTest.java
+###### /java/seedu/address/logic/commands/imports/ImportNusmodsCommandTest.java
 ``` java
 public class ImportNusmodsCommandTest {
     private static ImportCommand validCommand;
@@ -252,7 +252,7 @@ public class ImportNusmodsCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\imports\ModuleInfoTest.java
+###### /java/seedu/address/logic/commands/imports/ModuleInfoTest.java
 ``` java
 public class ModuleInfoTest {
     private static ModuleInfo info;
@@ -297,7 +297,7 @@ public class ModuleInfoTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ConfigCommandParserTest.java
+###### /java/seedu/address/logic/parser/ConfigCommandParserTest.java
 ``` java
 public class ConfigCommandParserTest {
     private ConfigCommandParser parser = new ConfigCommandParser();
@@ -344,7 +344,7 @@ public class ConfigCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ImportCommandParserTest.java
+###### /java/seedu/address/logic/parser/ImportCommandParserTest.java
 ``` java
 public class ImportCommandParserTest {
     private ImportCommandParser parser = new ImportCommandParser();
@@ -376,7 +376,7 @@ public class ImportCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\person\EmailCommandParserTest.java
+###### /java/seedu/address/logic/parser/person/EmailCommandParserTest.java
 ``` java
 public class EmailCommandParserTest {
     private final EmailCommandParser parser = new EmailCommandParser();
@@ -395,7 +395,7 @@ public class EmailCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\person\FindTagCommandParserTest.java
+###### /java/seedu/address/logic/parser/person/FindTagCommandParserTest.java
 ``` java
 public class FindTagCommandParserTest {
     private final FindTagCommandParser parser = new FindTagCommandParser();
@@ -416,7 +416,7 @@ public class FindTagCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\util\ArgumentMultimapTest.java
+###### /java/seedu/address/logic/parser/util/ArgumentMultimapTest.java
 ``` java
 public class ArgumentMultimapTest {
     private static final String NOT_EXISTS = "not exists";
@@ -473,7 +473,7 @@ public class ArgumentMultimapTest {
     }
 }
 ```
-###### \java\seedu\address\model\ModelManagerTest.java
+###### /java/seedu/address/model/ModelManagerTest.java
 ``` java
     @Test
     public void setTagColor_validFields_success() throws Exception {
@@ -483,7 +483,7 @@ public class ArgumentMultimapTest {
         assertEquals(VALID_TAG_COLOR, TagColorManager.getColor(myTag));
     }
 ```
-###### \java\seedu\address\model\person\PersonTest.java
+###### /java/seedu/address/model/person/PersonTest.java
 ``` java
 public class PersonTest {
     private static Name name;
@@ -526,7 +526,7 @@ public class PersonTest {
     }
 }
 ```
-###### \java\seedu\address\model\property\DateTimeTest.java
+###### /java/seedu/address/model/property/DateTimeTest.java
 ``` java
     @Test
     public void create_viaDateObject_checkCorrectness() throws Exception {
@@ -545,7 +545,7 @@ public class PersonTest {
     }
 }
 ```
-###### \java\seedu\address\model\property\PropertyManagerTest.java
+###### /java/seedu/address/model/property/PropertyManagerTest.java
 ``` java
 public class PropertyManagerTest {
     @Rule
@@ -659,7 +659,7 @@ public class PropertyManagerTest {
     }
 }
 ```
-###### \java\seedu\address\model\property\PropertyTest.java
+###### /java/seedu/address/model/property/PropertyTest.java
 ``` java
 public class PropertyTest {
     @Rule
@@ -712,7 +712,7 @@ public class PropertyTest {
     }
 }
 ```
-###### \java\seedu\address\model\property\UniquePropertyMapTest.java
+###### /java/seedu/address/model/property/UniquePropertyMapTest.java
 ``` java
 public class UniquePropertyMapTest {
     private static Set<Property> mySet;
@@ -866,7 +866,7 @@ public class UniquePropertyMapTest {
     }
 }
 ```
-###### \java\seedu\address\model\tag\TagColorManagerTest.java
+###### /java/seedu/address/model/tag/TagColorManagerTest.java
 ``` java
 public class TagColorManagerTest {
     @Rule

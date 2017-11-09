@@ -136,6 +136,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author dennaloh
+    @Override
+    public synchronized String getGMapUrl(ReadOnlyPerson target) {
+        String url = addressBook.getUrl(target);
+        return url;
+    }
+    //@@author
+
     //@@author yunpengn
     @Override
     public void setPersonAvatar(ReadOnlyPerson target, Avatar avatar) {

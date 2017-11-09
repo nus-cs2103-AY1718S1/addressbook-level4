@@ -41,20 +41,20 @@ public class EmailCommandTest {
 
     @Test
     public void equals() {
-        EmailCommand deleteFirstCommand = new EmailCommand(INDEX_FIRST_PERSON);
-        EmailCommand deleteSecondCommand = new EmailCommand(INDEX_SECOND_PERSON);
+        EmailCommand emailFirstCommand = new EmailCommand(INDEX_FIRST_PERSON);
+        EmailCommand emailSecondCommand = new EmailCommand(INDEX_SECOND_PERSON);
 
         // same object -> returns true
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
+        assertTrue(emailFirstCommand.equals(emailFirstCommand));
 
         // different types -> returns false
-        assertFalse(deleteFirstCommand.equals(1));
+        assertFalse(emailFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(deleteFirstCommand.equals(null));
+        assertFalse(emailFirstCommand.equals(null));
 
         // different person -> returns false
-        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+        assertFalse(emailFirstCommand.equals(emailSecondCommand));
     }
 
     /**
