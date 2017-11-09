@@ -98,7 +98,9 @@ Here’s how you can use them:
 *Command Format*
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+// tag::optionalinputtags[]
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+// end::optionalinputtags[]
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
@@ -107,6 +109,7 @@ Here’s how you can use them:
 
 Format: `help`
 
+// tag::optionalinputtagstwo[]
 === Adding a person: `add` `Since v1.0`
 
 Adds a person to cherBook +
@@ -115,7 +118,9 @@ Shorthand: `a n/NAME p/[student/(STUDENT_NUMBER)] parent/(PARENT_NUMBER) [e/EMAI
 
 [TIP]
 A person can have any number of tags (including 0) +
+// tag::multiplenumberstags[]
 Adding of student or/and parent's number must be preceded by the phone prefix `p/`. +
+// end::multiplenumberstags[]
 Tags added must be a single word. e.g. myName instead of my name. +
 Remark cannot be add through the add command and has to be done though the remark command.
 
@@ -125,6 +130,7 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/student/97272030 parent/97979797 f/B12 g/100.0 t/criminal`
 * `a n/Jane Doe p/parent/97979791 e/janed@example.com a/Jane street, block 456, #01-01 f/6C g/98`
 * `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/student/97272231 parent/97979997 f/12A2 g/66 t/criminal`
+// end::optionalinputtagstwo[]
 
 === Listing all persons : `list` `Since v1.0`
 
