@@ -9,7 +9,7 @@ import java.util.Set;
 
 import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.commands.exceptions.CommandException;
-import seedu.room.logic.commands.exceptions.TagNotFoundException;
+import seedu.room.model.person.exceptions.TagNotFoundException;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.DuplicatePersonException;

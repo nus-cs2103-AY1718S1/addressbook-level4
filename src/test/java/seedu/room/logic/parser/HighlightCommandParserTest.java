@@ -19,6 +19,11 @@ public class HighlightCommandParserTest {
     }
 
     @Test
+    public void parse_validUnhighlight_success() {
+        assertParseSuccess(parser, " -", new HighlightCommand("-"));
+    }
+
+    @Test
     public void parse_invalidArgs_failure() {
         String emptyArg = "";
         assertParseFailure(parser, emptyArg,

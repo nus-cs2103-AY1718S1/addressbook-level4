@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.fxmisc.easybind.EasyBind;
 
@@ -14,7 +13,8 @@ import javafx.collections.ObservableList;
 import seedu.room.commons.core.Messages;
 import seedu.room.commons.util.CollectionUtil;
 import seedu.room.logic.commands.exceptions.CommandException;
-import seedu.room.logic.commands.exceptions.TagNotFoundException;
+import seedu.room.model.person.exceptions.NoneHighlightedException;
+import seedu.room.model.person.exceptions.TagNotFoundException;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
 import seedu.room.model.tag.Tag;
@@ -62,22 +62,37 @@ public class UniquePersonList implements Iterable<Person> {
      * Updates the highlight status of the persons with the specified tag
      */
     public void updateHighlightStatus(String highlightTag) throws TagNotFoundException {
-        resetHighlightStatus();
+        try {
+            resetHighlightStatus();
+        } catch (NoneHighlightedException e) {
+        }
+        boolean tagFound = false;
         for (Person person : this.internalList) {
             for (Tag t : person.getTags()) {
                 if (t.getTagName().equals(highlightTag)) {
+                    tagFound = true;
                     person.setHighlightStatus(true);
                 }
             }
+        }
+        if (!tagFound) {
+            throw new TagNotFoundException("No Such Tag Exists");
         }
     }
 
     /**
      * Removes highlighting of everyone
      */
-    public void resetHighlightStatus() {
+    public void resetHighlightStatus() throws NoneHighlightedException {
+        boolean highlightReset = false;
         for (Person person : this.internalList) {
-            person.setHighlightStatus(false);
+            if (person.getHighlightStatus()) {
+                person.setHighlightStatus(false);
+                highlightReset = true;
+            }
+        }
+        if (!highlightReset) {
+            throw new NoneHighlightedException("No Residents Highlighted");
         }
     }
     //@@author

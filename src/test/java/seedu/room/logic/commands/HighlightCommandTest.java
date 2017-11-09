@@ -35,7 +35,7 @@ public class HighlightCommandTest {
         String highlightTag = listOfTags.get(0).getTagName();
         HighlightCommand highlightCommand = prepareCommand(highlightTag);
 
-        String expectedMessage = HighlightCommand.MESSAGE_SUCCESS + highlightTag;
+        String expectedMessage = HighlightCommand.MESSAGE_PERSONS_HIGHLIGHTED_SUCCESS + highlightTag;
 
         ModelManager expectedModel = new ModelManager(model.getResidentBook(), new UserPrefs());
         expectedModel.updateHighlightStatus(highlightTag);

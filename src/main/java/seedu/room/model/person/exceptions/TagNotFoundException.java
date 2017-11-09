@@ -1,4 +1,4 @@
-package seedu.room.logic.commands.exceptions;
+package seedu.room.model.person.exceptions;
 
 //@@author shitian007
 /**
