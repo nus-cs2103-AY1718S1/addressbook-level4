@@ -34,7 +34,7 @@ import seedu.address.model.person.weblink.WebLink;
  */
 public class UserProfileWindow extends UiPart<Region> {
 
-    private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
+    private static final Logger logger = LogsCenter.getLogger(UserProfileWindow.class);
     private static final String FXML = "UserProfileWindow.fxml";
     private static final String TITLE = "User Profile";
 
@@ -104,23 +104,6 @@ public class UserProfileWindow extends UiPart<Region> {
         webLinkTextField.textProperty().bind(Bindings.convert(userPerson.webLinkProperty()));
     }
 
-    @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof DetailedPersonCard)) {
-            return false;
-        }
-
-        // state check
-        UserProfileWindow otherUserProfileWindow = (UserProfileWindow) other;
-        return userPerson.equals(otherUserProfileWindow.userPerson);
-    }
-
     /**
      *
      */
@@ -142,6 +125,7 @@ public class UserProfileWindow extends UiPart<Region> {
         try {
             updateUserPerson();
             raise(new UserPersonChangedEvent(userPerson));
+            logger.info("UserPerson updated via UserProfileWindow, saving");
             stage.close();
         } catch (Exception e) {
             logger.fine("Invalid UserPerson modification");
@@ -151,7 +135,6 @@ public class UserProfileWindow extends UiPart<Region> {
     @Subscribe
     private void handleUserPersonChangedEvent(UserPersonChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        //bindListeners(userPerson);
     }
 
     /**
@@ -207,7 +190,7 @@ public class UserProfileWindow extends UiPart<Region> {
             statusLabel.setText("Please input a valid webLink");
             throw new Exception();
         } catch (ClassCastException e) {
-            statusLabel.setText("Hey");
+            statusLabel.setText("Class cast exception");
             throw new Exception();
         }
     }

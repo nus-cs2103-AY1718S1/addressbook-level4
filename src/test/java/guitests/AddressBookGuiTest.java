@@ -103,7 +103,7 @@ public abstract class AddressBookGuiTest {
      * Override this in child classes to set the data file location.
      */
     protected String getDataFileLocation() {
-        return TestApp.SAVE_LOCATION_FOR_TESTING;
+        return TestApp.SAVE_LOCATION_FOR_TESTING_ADDRESSBOOK;
     }
 
     @After

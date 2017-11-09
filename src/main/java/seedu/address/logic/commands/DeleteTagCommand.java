@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import jdk.nashorn.internal.runtime.ParserException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -24,6 +25,7 @@ public class DeleteTagCommand extends UndoableCommand {
     //@@author
 
     public static final String MESSAGE_DELETE_ALL_TAG_SUCCESS = "Deleted tag: %1$s";
+    public static final String MESSAGE_TAG_NOT_FOUND = "The tag is not found";
 
     private final Tag targetTag;
 
@@ -40,6 +42,8 @@ public class DeleteTagCommand extends UndoableCommand {
             assert false : "The target person cannot be missing";
         } catch (DuplicatePersonException dpe) {
             assert false : "There should not be any duplicate person";
+        } catch (ParserException pe) {
+            throw new CommandException(MESSAGE_TAG_NOT_FOUND);
         }
 
         return new CommandResult(String.format(MESSAGE_DELETE_ALL_TAG_SUCCESS, targetTag));

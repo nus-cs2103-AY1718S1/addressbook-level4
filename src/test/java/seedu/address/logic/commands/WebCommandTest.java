@@ -11,6 +11,7 @@ import static seedu.address.testutil.TypicalWebLinks.WEBLINK_SEARCH;
 import org.junit.Rule;
 import org.junit.Test;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.WebsiteSelectionRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.ui.testutil.EventsCollectorRule;
@@ -30,6 +31,12 @@ public class WebCommandTest {
         assertExecutionSuccess(WEBLINK_MAPS);
     }
 
+    @Test
+    public void execute_invalidWebLink_failure() {
+        String invalidWeblink = "invalidString";
+
+        assertExecutionFailure(invalidWeblink, Messages.MESSAGE_INVALID_WEBLINK_TAG);
+    }
 
     @Test
     public void equals() {

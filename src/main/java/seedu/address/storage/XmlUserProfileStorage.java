@@ -19,7 +19,7 @@ import seedu.address.model.person.UserPerson;
 
 //@@author bladerail
 /**
- * A class to access UserProfileManager stored in the hard disk as an xml file
+ * A class to access UserProfile stored in the hard disk as an xml file
  */
 public class XmlUserProfileStorage implements UserProfileStorage {
 

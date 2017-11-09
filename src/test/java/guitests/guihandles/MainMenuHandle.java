@@ -22,6 +22,15 @@ public class MainMenuHandle extends NodeHandle<Node> {
         clickOnMenuItemsSequentially("Help", "F1");
     }
 
+    //@@author bladerail
+    /**
+     * Opens the {@code UserprofileWindow} using the menu bar in {@code MainWindow}.
+     */
+    public void openUserProfileWindowUsingMenu() {
+        clickOnMenuItemsSequentially("File", "UserProfile");
+    }
+
+    //@@author
     /**
      * Opens the {@code HelpWindow} by pressing the shortcut key associated
      * with the menu bar in {@code MainWindow}.
@@ -30,6 +39,16 @@ public class MainMenuHandle extends NodeHandle<Node> {
         guiRobot.push(KeyCode.F1);
     }
 
+    //@@author bladerail
+    /**
+     * Opens the {@code UserProfileWindow} by pressing the shortcut key associated
+     * with the menu bar in {@code MainWindow}.
+     */
+    public void openUserProfileWindowUsingAccelerator() {
+        guiRobot.push(KeyCode.F2);
+    }
+
+    //@@author
     /**
      * Clicks on {@code menuItems} in order.
      */

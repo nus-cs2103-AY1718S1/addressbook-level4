@@ -11,6 +11,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
+import jdk.nashorn.internal.runtime.ParserException;
+
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
@@ -98,14 +100,23 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+        Boolean checkTagExistence = false;
+
         for (int i = 0; i < addressBook.getPersonList().size(); i++) {
             ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
             Person newPerson = new Person(oldPerson);
             Set<Tag> newTags = newPerson.getTags();
+            if (newTags.contains(tag)) {
+                checkTagExistence = true;
+            }
             newTags.remove(tag);
             newPerson.setTags(newTags);
 
             addressBook.updatePerson(oldPerson, newPerson);
+        }
+
+        if (!checkTagExistence) {
+            throw new ParserException("Tag does not exist.");
         }
     }
 

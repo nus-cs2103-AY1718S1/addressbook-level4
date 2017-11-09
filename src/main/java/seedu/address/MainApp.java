@@ -110,6 +110,7 @@ public class MainApp extends Application {
             initialData = new AddressBook();
         }
 
+        //@@author bladerail
         try {
             userPersonOptional = storage.readUserProfile();
             if (!userPersonOptional.isPresent()) {
@@ -123,7 +124,7 @@ public class MainApp extends Application {
             logger.warning("Problem while reading from the file. Will be starting with a new User");
             initialUser = new UserPerson();
         }
-
+        //@@author
         return new ModelManager(initialData, userPrefs, initialUser);
     }
 

@@ -1,6 +1,5 @@
 package seedu.address.storage;
 
-import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -81,7 +80,8 @@ public class StorageManagerTest {
     public void handleAddressBookChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
-                                             new JsonUserPrefsStorage("dummy"), new XmlUserProfileStorage("dummy"));
+                           new JsonUserPrefsStorage("dummy"),
+                           new XmlUserProfileStorageExceptionThrowingStub("dummy"));
         storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
@@ -90,10 +90,11 @@ public class StorageManagerTest {
     public void handleUserProfileChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
-                new JsonUserPrefsStorage("dummy"), new XmlUserProfileStorage("dummy"));
+                new JsonUserPrefsStorage("dummy"),
+                new XmlUserProfileStorageExceptionThrowingStub("dummy"));
         storage.handleUserPersonChangedEvent(new UserPersonChangedEvent(
                 new UserPerson(SampleUserPersonUtil.getDummySamplePerson())));
-        assertFalse(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
 
@@ -108,7 +109,22 @@ public class StorageManagerTest {
 
         @Override
         public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
-            throw new IOException("dummy exception");
+            throw new IOException("dummy exception when saving AddressBook");
+        }
+    }
+
+    /**
+     * A Stub class to throw an exception when the save method is called
+     */
+    class XmlUserProfileStorageExceptionThrowingStub extends XmlUserProfileStorage {
+
+        public XmlUserProfileStorageExceptionThrowingStub(String filePath) {
+            super(filePath);
+        }
+
+        @Override
+        public void saveUserPerson(UserPerson userPerson, String filePath) throws IOException {
+            throw new IOException("dummy exception when saving UserProfile");
         }
     }
 

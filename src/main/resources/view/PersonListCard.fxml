@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -30,6 +31,23 @@
       </HBox>
       <FlowPane fx:id="tags" />
       <FlowPane fx:id="webLinks" />
+         <FlowPane>
+            <children>
+               <ImageView id="phoneicon" fx:id="phoneicon" fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                  <FlowPane.margin>
+                     <Insets bottom="2.0" left="3.0" right="3.0" top="2.0" />
+                  </FlowPane.margin>
+               </ImageView>
+               <ImageView id="addressicon" fx:id="addressicon" fitHeight="17.0" fitWidth="17.0" layoutX="13.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                  <FlowPane.margin>
+                     <Insets bottom="2.0" left="3.0" right="3.0" top="2.0" />
+                  </FlowPane.margin></ImageView>
+               <ImageView id="emailicon" fx:id="emailicon" fitHeight="17.0" fitWidth="17.0" layoutX="13.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                  <FlowPane.margin>
+                     <Insets bottom="2.0" left="3.0" right="3.0" top="2.0" />
+                  </FlowPane.margin></ImageView>
+            </children>
+         </FlowPane>
     </VBox>
       <rowConstraints>
          <RowConstraints />

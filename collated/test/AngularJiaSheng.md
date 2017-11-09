@@ -1,39 +1,7 @@
 # AngularJiaSheng
-###### \java\seedu\address\logic\commands\DeleteTagCommandTest.java
-``` java
-/**
- * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteTagCommand}.
- */
-public class DeleteTagCommandTest {
-    private Model model = new ModelManager(getSortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
-
-    @Test
-    public void execute_validTagUnfilteredList_success() throws Exception {
-        Tag tagForDelete = new Tag("friends");
-        DeleteTagCommand deleteTagCommand = prepareCommand(tagForDelete);
-
-        String expectedMessage = String.format(DeleteTagCommand.MESSAGE_DELETE_ALL_TAG_SUCCESS, tagForDelete);
-
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), new UserPerson());
-        expectedModel.deleteTag(tagForDelete);
-
-        assertCommandSuccess(deleteTagCommand, model, expectedMessage, expectedModel);
-    }
-
-    /**
-     * Returns a {@code DeleteTagCommand} with the parameter {@code tag}.
-     */
-    private DeleteTagCommand prepareCommand(Tag tag) {
-        DeleteTagCommand deleteTagCommand = new DeleteTagCommand(tag);
-        deleteTagCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return deleteTagCommand;
-    }
-
-}
-
-```
 ###### \java\seedu\address\model\person\ListOfWebLinkByCategoryTest.java
 ``` java
+
 /**
  * junit test for listOfWebLinkByCategoryTest. Will increase coverage in the future.
  */
@@ -62,7 +30,7 @@ public class ListOfWebLinkByCategoryTest {
         if (list1.size() != list2.size()) {
             return false;
         }
-        for (Object itemList1: list1) {
+        for (Object itemList1 : list1) {
             if (!list2.contains(itemList1)) {
                 return false;
             }
