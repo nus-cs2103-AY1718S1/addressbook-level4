@@ -285,6 +285,7 @@ Example:
 * `removeTag friend` +
 Removes the tag `friend` from all the persons in the address book.
 
+// tag::relPath[]
 === Finding shortest relationship path between two people: `relPath`
 
 Highlights the shortest relationship path between two people in the address book in the graph display, if it exists. +
@@ -301,7 +302,9 @@ Example:
 
 * `relPath 1 2` +
 Highlights the shortest path between the first and second person in the address book, if it exists.
+// end::relPath[]
 
+// tag::colourTag[]
 === Setting a tag colour: `colourTag`
 
 Sets a colour of a tag to a new colour. +
@@ -318,6 +321,7 @@ Example:
 
 * `colourTag friend red` +
 Sets the colour of the tag `friend` to red on next program start.
+// end::colourTag[]
 
 === Selecting a person : `select`
 
@@ -405,6 +409,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
+// tag::clearHistory[]
 === Clearing command history : `clearHistory`
 
 Clears the command history. +
@@ -414,6 +419,7 @@ Format: `clearHistory`
 ====
 After the command history is cleared, you will not be able to undo any previous commands.
 ====
+// end::clearHistory[]
 
 === Adding remarks to a person: `remark`
 
@@ -433,6 +439,7 @@ Examples:
 * `remark 3 r/Is the husband of Jessie`
 * `remark 2 r/Is the wife of John`
 
+// tag::backup[]
 === Backing up: `backup`
 
 Backs up the current address book to a fixed location (`addressbook.xml.bak` in current working directory).
@@ -441,6 +448,7 @@ Backs up the current address book to a fixed location (`addressbook.xml.bak` in 
 ====
 Any existing backup at the same location will be overwritten after running this command.
 ====
+// end::backup[]
 
 === Exiting the program : `exit`
 
@@ -514,10 +522,12 @@ Example:
 `deleteConfidenceEstimate 2 Address` +
 Deletes a confidence estimate from the `Address` of the 2nd person in the list.
 
+// tag::listRelated[]
 === List all related persons : `listrelated`
 
 Shows a list of all persons in the address book related to a given person. +
 Format: `listrelated INDEX`
+// end::listRelated[]
 
 === View shortest relationship path between two persons : `viewpath`
 
