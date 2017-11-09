@@ -14,7 +14,6 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.persons.TagCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.persons.AddCommand;
 import seedu.address.logic.commands.persons.DeleteCommand;
@@ -22,6 +21,7 @@ import seedu.address.logic.commands.persons.EditCommand;
 import seedu.address.logic.commands.persons.FindCommand;
 import seedu.address.logic.commands.persons.ListCommand;
 import seedu.address.logic.commands.persons.SelectCommand;
+import seedu.address.logic.commands.persons.TagCommand;
 import seedu.address.logic.commands.tags.DetagCommand;
 import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.logic.commands.tasks.DeleteTaskCommand;
@@ -29,7 +29,6 @@ import seedu.address.logic.commands.tasks.EditTaskCommand;
 import seedu.address.logic.commands.tasks.FindTaskCommand;
 import seedu.address.logic.commands.tasks.ListTasksCommand;
 import seedu.address.logic.commands.tasks.SelectTaskCommand;
-
 import seedu.address.logic.commands.tasks.TagTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 

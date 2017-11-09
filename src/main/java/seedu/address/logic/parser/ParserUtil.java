@@ -16,8 +16,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
 import org.ocpsoft.prettytime.nlp.parse.DateGroup;

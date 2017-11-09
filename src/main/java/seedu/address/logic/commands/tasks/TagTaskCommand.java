@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -14,10 +13,10 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.CommandUtil;
 import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.tag.Tag;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
-import seedu.address.model.tag.Tag;
 
 /**
  * Tags multiple people in the address book.

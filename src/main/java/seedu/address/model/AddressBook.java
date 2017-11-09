@@ -246,6 +246,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     //@@author
 
+    /**
+     * Updates the tags of an existing {@code person} in the addressbook by adding the {@code newTags}
+     * to the person's existing tags.
+     * @throws PersonNotFoundException if the person index provided is invalid.
+     */
     public void updatePersonTags(ReadOnlyPerson person, Set<Tag> newTags)
             throws PersonNotFoundException, DuplicatePersonException {
 
@@ -262,6 +267,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         updatePerson(oldPerson, newPerson);
     }
 
+    /**
+     * Updates the tags of an existing {@code task} in the task manager by adding the {@code newTags}
+     * to the task's existing tags.
+     * @throws TaskNotFoundException if the task index provided is invalid.
+     */
     public void updateTaskTags(ReadOnlyTask task, Set<Tag> newTags)
             throws TaskNotFoundException, DuplicateTaskException {
 
