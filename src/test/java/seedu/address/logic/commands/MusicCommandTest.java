@@ -1,39 +1,30 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import javafx.embed.swing.JFXPanel;
 
 //@@author hanselblack
 public class MusicCommandTest {
-    @Before
-    public void setUp() {
-        final JFXPanel fxPanel = new JFXPanel();
-    }
 
     @Test
-    public void execute_stopPauseMusicWithoutPlayer() {
-        CommandResult result = new MusicCommand("stop").execute();
-        assertEquals(MusicCommand.MESSAGE_NO_MUSIC_PLAYING, result.feedbackToUser);
+    public void equals() {
 
-        result = new MusicCommand("pause").execute();
-        assertEquals(MusicCommand.MESSAGE_NO_MUSIC_PLAYING, result.feedbackToUser);
-    }
+        MusicCommand musicFirstCommand = new MusicCommand("play");
 
-    @Test
-    public void execute_playMusic() {
-        CommandResult result = new MusicCommand("play", "pop").execute();
-        assertEquals("POP Music Playing", result.feedbackToUser);
+        // same object -> returns true
+        assertTrue(musicFirstCommand.equals(musicFirstCommand));
 
+        // same values -> returns true
+        MusicCommand emailFirstCommandCopy = new MusicCommand("play");
+        assertTrue(musicFirstCommand.equals(emailFirstCommandCopy));
 
-        result = new MusicCommand("play", "dance").execute();
-        assertEquals("DANCE Music Playing", result.feedbackToUser);
+        // different types -> returns false
+        assertFalse(musicFirstCommand.equals(1));
 
-        result = new MusicCommand("play", "classic").execute();
-        assertEquals("CLASSIC Music Playing", result.feedbackToUser);
-
+        // null -> returns false
+        assertFalse(musicFirstCommand.equals(null));
     }
 }
