@@ -1,41 +1,4 @@
 # blackroxs
-###### /java/seedu/room/logic/commands/RemoveTagCommandTest.java
-``` java
-/**
- * Contains integration tests (interaction with the Model) and unit tests for RemoveTagCommand.
- */
-public class RemoveTagCommandTest {
-    private Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
-
-    @Test
-    public void execute_tagNameValid_success() throws Exception {
-        RemoveTagCommand removeTagCommand = prepareCommand(VALID_TAG_FRIEND);
-        String expectedMessage = RemoveTagCommand.MESSAGE_REMOVE_TAG_SUCCESS;
-
-        ModelManager expectedModel = new ModelManager(model.getResidentBook(), new UserPrefs());
-        expectedModel.removeTag(new Tag(VALID_TAG_FRIEND));
-
-        assertCommandSuccess(removeTagCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_tagNameInvalid() throws Exception {
-        RemoveTagCommand removeTagCommand = prepareCommand(INVALID_TAG);
-        String expectedMessage = RemoveTagCommand.MESSAGE_REMOVE_TAG_NOT_EXIST;
-
-        assertCommandFailure(removeTagCommand, model, expectedMessage);
-    }
-
-    /**
-     * Returns an {@code RemoveTagCommand} with parameters {@code tagName}
-     */
-    private RemoveTagCommand prepareCommand(String tagName) {
-        RemoveTagCommand command = new RemoveTagCommand(tagName);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        return command;
-    }
-}
-```
 ###### /java/seedu/room/logic/parser/ImportCommandParserTest.java
 ``` java
 public class ImportCommandParserTest {
@@ -79,6 +42,43 @@ public class RemoveTagParserTest {
         RemoveTagCommand expectedCommand = new RemoveTagCommand(userInput);
 
         assertParseSuccess(parser, userInput, expectedCommand);
+    }
+}
+```
+###### /java/seedu/room/logic/commands/RemoveTagCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for RemoveTagCommand.
+ */
+public class RemoveTagCommandTest {
+    private Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
+
+    @Test
+    public void execute_tagNameValid_success() throws Exception {
+        RemoveTagCommand removeTagCommand = prepareCommand(VALID_TAG_FRIEND);
+        String expectedMessage = RemoveTagCommand.MESSAGE_REMOVE_TAG_SUCCESS;
+
+        ModelManager expectedModel = new ModelManager(model.getResidentBook(), new UserPrefs());
+        expectedModel.removeTag(new Tag(VALID_TAG_FRIEND));
+
+        assertCommandSuccess(removeTagCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_tagNameInvalid() throws Exception {
+        RemoveTagCommand removeTagCommand = prepareCommand(INVALID_TAG);
+        String expectedMessage = RemoveTagCommand.MESSAGE_REMOVE_TAG_NOT_EXIST;
+
+        assertCommandFailure(removeTagCommand, model, expectedMessage);
+    }
+
+    /**
+     * Returns an {@code RemoveTagCommand} with parameters {@code tagName}
+     */
+    private RemoveTagCommand prepareCommand(String tagName) {
+        RemoveTagCommand command = new RemoveTagCommand(tagName);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
     }
 }
 ```

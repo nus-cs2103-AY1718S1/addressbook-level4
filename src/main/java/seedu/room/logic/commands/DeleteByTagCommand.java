@@ -16,7 +16,7 @@ public class DeleteByTagCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the persons identified by the tag supplied in this argument\n"
             + "Parameters: TAG\n"
-            + "Example: " + COMMAND_WORD + "friends";
+            + "Example: " + COMMAND_WORD + " friends";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Persons with the following tag: %1$s";
 

@@ -1,33 +1,4 @@
 # Haozhe321-reused
-###### /java/seedu/room/ui/AnchorPaneNode.java
-``` java
-/**
- * Create an anchor pane that can store additional data.
- */
-public class AnchorPaneNode extends AnchorPane {
-
-    // Date associated with this pane
-    private LocalDate date;
-
-    /**
-     * Create a anchor pane node. Date is not assigned in the constructor.
-     * @param children children of the anchor pane
-     */
-    public AnchorPaneNode(Node... children) {
-        super(children);
-        // Add action handler for mouse clicked
-        this.setOnMouseClicked(e -> System.out.println("This pane's date is: " + date));
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-}
-```
 ###### /java/seedu/room/ui/CalendarBox.java
 ``` java
 
@@ -76,16 +47,19 @@ public class CalendarBox {
         }
         // Create calendarTitle and buttons to change current month
         calendarTitle = new Text();
-        Button previousMonth = new Button("<<");
+        Button previousMonth = new Button(" << ");
         previousMonth.setOnAction(e -> previousMonth());
-        Button nextMonth = new Button(">>");
+        Button nextMonth = new Button(" >> ");
         nextMonth.setOnAction(e -> nextMonth());
         HBox titleBar = new HBox(previousMonth, calendarTitle, nextMonth);
+        HBox.setMargin(previousMonth, new Insets(0, 5, 0, 0));
+        HBox.setMargin(nextMonth, new Insets(0, 5, 0, 5));
         titleBar.setAlignment(Pos.BASELINE_CENTER);
         // Populate calendar with the appropriate day numbers
         populateCalendar(yearMonth);
         // Create the calendar view
         view = new VBox(titleBar, dayLabels, calendar);
+        VBox.setMargin(titleBar, new Insets(0, 0, 10, 0));
     }
 
     /**
@@ -104,12 +78,20 @@ public class CalendarBox {
             if (ap.getChildren().size() != 0) {
                 ap.getChildren().remove(0);
             }
+
+            //make today's date light up
+            if (calendarDate.equals(LocalDate.now())) {
+                ap.lightUpToday();
+            }
+
             Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
             ap.setDate(calendarDate);
             ap.setTopAnchor(txt, 5.0);
             ap.setLeftAnchor(txt, 5.0);
             ap.getChildren().add(txt);
             calendarDate = calendarDate.plusDays(1);
+
+
         }
         // Change the title of the calendar
         calendarTitle.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
@@ -130,6 +112,8 @@ public class CalendarBox {
         currentYearMonth = currentYearMonth.plusMonths(1);
         populateCalendar(currentYearMonth);
     }
+
+
 
     public VBox getView() {
         return view;
