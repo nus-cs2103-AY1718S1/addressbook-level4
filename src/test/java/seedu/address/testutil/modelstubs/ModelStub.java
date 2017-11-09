@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -58,6 +59,11 @@ public class ModelStub implements Model {
 
     @Override
     public void selectPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public Index getPersonIndex(ReadOnlyPerson target) throws PersonNotFoundException {
         fail("This method should not be called.");
     }
 
