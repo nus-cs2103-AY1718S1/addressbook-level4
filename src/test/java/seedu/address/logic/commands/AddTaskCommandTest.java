@@ -139,13 +139,6 @@ public class AddTaskCommandTest {
         }
 
         @Override
-        /** Add tag of given person */
-        public void attachTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
-                DuplicatePersonException, UniqueTagList.DuplicateTagException {
-            fail("This method should not be called.");
-        }
-
-        @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;

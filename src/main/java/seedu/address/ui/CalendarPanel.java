@@ -269,10 +269,4 @@ public class CalendarPanel extends UiPart<Region> {
         return dayCellFactory;
     }
 
-    // TODO: 26/10/17 implement event in the calendar, such that binding of dates is possible
-    /*
-    @Subscribe
-    private void handleShowHelpEvent(ShowHelpRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-    } */
 }

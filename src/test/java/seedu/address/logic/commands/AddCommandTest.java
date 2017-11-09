@@ -135,12 +135,6 @@ public class AddCommandTest {
             throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
-
-        @Override
-        public void attachTag(ReadOnlyPerson person, Tag tag)
-                throws PersonNotFoundException, DuplicatePersonException {
-            fail("This method should not be called.");
-        }
         //@@author
 
         @Override
