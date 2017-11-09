@@ -120,3 +120,4 @@ include::../DeveloperGuide.adoc[tag=birthday]
 * Fixed bugs in the details panel ( Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/130)
 * Acceptance testing feedback given to `Team T09-B2` [https://github.com/CS2103AUG2017-T09-B2/main/issues?q=is%3Aissue+is%3Aclosed [Issues]]
 
+
