@@ -72,4 +72,3 @@ More variety of themes attract users who are interested in customization of the 
 
 * Random tags background colours (https://github.com/CS2103AUG2017-T14-B1/main/pull/7[Tags Background])
 * Documentation of README.adoc (https://github.com/CS2103AUG2017-T14-B1/main/pull/13[README])
-
