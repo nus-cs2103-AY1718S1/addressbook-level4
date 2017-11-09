@@ -1,0 +1,67 @@
+= Xu Jun - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Contact Book
+Contact Book is a desktop address book application used for students in NUS to better store their contacts. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Search Box
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=search]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+An efficient search algorithm is needed for students to locate contacts speedily and conveniently.
+The previous design of `find` command greatly reduces speed of search by requiring user to type `enter`
+with (almost) exactly matching keywords.
+
+The search box solves this issue by responding to user input in real time.
+The prefix matching rule is designed to specially suit this real time response, allowing users to find contacts
+even if they do not remember their full names.
+
+Furthermore, the search box is more powerful because it searches for name, phone and tag in one textfield. This makes
+searching integrated and thus convenient for the user.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=search]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add support for foreign languages
+
+NUS has a lot of international students. It is important to allow CRUD in languages other than English to cater to these students'
+needs. Moreover, UI should be able to display in other languages.
+
+=== Enhancement Proposed: Add support for phone country code
+
+NUS is a tertiary institution with global impact. A student in it will come across foreign numbers that needs saving.
+
+=== Enhancement Proposed: Add support for phone number tags
+
+As almost all modern address applications do, multiple phones should be able to be differentiated according to their uses,
+for example `work` phone and `home` phone.
+
+=== Other contributions
+
+* Allow for empty values in email and address (Pull request https://github.com/CS2103AUG2017-T14-B1/main/pull/20[#20])
+* Suggest the allowance for empty values in other fields implemented thereafter
+* Suggest enhancements of custom fields and multiple phone numbers which were later implemented by teammates
+* Point out an issue in the original developer guide's sample enhancement about Storage (issue https://github.com/se-edu/addressbook-level4/issues/708[#708])

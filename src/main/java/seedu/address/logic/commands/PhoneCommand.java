@@ -57,7 +57,8 @@ public class PhoneCommand extends UndoableCommand {
     /**
      * Adds or Updates a Person's phoneNumber list
      */
-    private Person updatePersonPhoneList(ReadOnlyPerson personToUpdatePhoneList, String action, Phone phone) {
+    private Person updatePersonPhoneList(ReadOnlyPerson personToUpdatePhoneList, String action, Phone phone)
+            throws PhoneNotFoundException, DuplicatePhoneException {
         Name name = personToUpdatePhoneList.getName();
         Phone primaryPhone = personToUpdatePhoneList.getPhone();
         UniquePhoneList uniquePhoneList = personToUpdatePhoneList.getPhoneList();
@@ -68,19 +69,9 @@ public class PhoneCommand extends UndoableCommand {
         UniqueCustomFieldList customFields = personToUpdatePhoneList.getCustomFieldList();
 
         if (action.equals("remove")) {
-            try {
-                uniquePhoneList.remove(phone);
-            } catch (PhoneNotFoundException e) {
-                throw new AssertionError("phone number cannot be found");
-            }
+            uniquePhoneList.remove(phone);
         } else if (action.equals("add")) {
-            try {
-                uniquePhoneList.add(phone);
-            } catch (DuplicatePhoneException e) {
-                throw new AssertionError("number adding already in the list");
-            }
-        } else if (action.equals("showAllPhones")) {
-
+            uniquePhoneList.add(phone);
         }
 
         Person personUpdated = new Person(name, primaryPhone, email, address,
@@ -98,31 +89,39 @@ public class PhoneCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToUpdatePhoneList = lastShownList.get(targetIndex.getZeroBased());
-        Person personUpdated = updatePersonPhoneList(personToUpdatePhoneList, action, phone);
-        UniquePhoneList uniquePhoneList = personUpdated.getPhoneList();
-        Phone primaryPhone = personUpdated.getPhone();
         try {
-            model.updatePerson(personToUpdatePhoneList, personUpdated);
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
-        }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            Person personUpdated = updatePersonPhoneList(personToUpdatePhoneList, action, phone);
+            UniquePhoneList uniquePhoneList = personUpdated.getPhoneList();
+            Phone primaryPhone = personUpdated.getPhone();
+            try {
+                model.updatePerson(personToUpdatePhoneList, personUpdated);
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing");
+            }
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        if (action.equals("showAllPhones")) {
-            String str = "The primary number is " + primaryPhone + "\n";
-            return new CommandResult(str + uniquePhoneList.getAllPhone());
-        } else if (action.equals("add")) {
-            String successMessage = "Phone number " + phone.number + " has been added, ";
-            String info = "the updated phone list now has " + (uniquePhoneList.getSize() + 1)
-                    + " phone numbers, and the primary phone number is " + primaryPhone;
-            return new CommandResult(successMessage + info);
-        } else {
-            String successMessage = "Phone number " + phone.number + " has been removed, ";
-            String info = "the updated phone list now has " + (uniquePhoneList.getSize() + 1)
-                    + " phone numbers, and the primary phone number is " + primaryPhone;
-            return new CommandResult(successMessage + info);
+            if (action.equals("showAllPhones")) {
+                String str = "The primary number is " + primaryPhone + "\n";
+                return new CommandResult(str + uniquePhoneList.getAllPhone());
+            } else if (action.equals("add")) {
+                String successMessage = "Phone number " + phone.number + " has been added, ";
+                String info = "the updated phone list now has " + (uniquePhoneList.getSize() + 1)
+                        + " phone numbers, and the primary phone number is " + primaryPhone;
+                return new CommandResult(successMessage + info);
+            } else if (action.equals("remove")) {
+                String successMessage = "Phone number " + phone.number + " has been removed, ";
+                String info = "the updated phone list now has " + (uniquePhoneList.getSize() + 1)
+                        + " phone numbers, and the primary phone number is " + primaryPhone;
+                return new CommandResult(successMessage + info);
+            } else {
+                return new CommandResult("command is invalid, please check again");
+            }
+        } catch (PhoneNotFoundException e) {
+            return new CommandResult("Phone number to be removed is not found in the list");
+        } catch (DuplicatePhoneException e) {
+            return new CommandResult("Phone number to be added already exists in the list");
         }
     }
 }
