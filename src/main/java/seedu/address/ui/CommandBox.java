@@ -208,31 +208,37 @@ public class CommandBox extends UiPart<Region> {
             raise(new ChangeToLoginViewEvent());
         } else {
             try {
-                boolean isCommandExecutableBeforeLogin = commandText.contains(LoginCommand.COMMAND_WORD)
-                        || commandText.contains(ExitCommand.COMMAND_WORD)
-                        || commandText.contains(HelpCommand.COMMAND_WORD);
-                // allows only help, exit and login commands to execute before login
-                // and all the other commands to execute after login
-                if (isCommandExecutableBeforeLogin || LoginCommand.isLoggedIn()) {
-                    String currCommandInput = commandTextField.getText();
-                    CommandResult commandResult;
-                    if (currCommandInput.contains(LoginCommand.COMMAND_WORD)) {
-                        commandResult = logic.execute(currCommandInput.substring(0,
-                                currentMaskFromIndex) + passwordFromInput);
-                    } else {
-                        commandResult = logic.execute(currCommandInput);
-                    }
-                    initHistory();
-                    historySnapshot.next();
-                    // process result of the command
-                    commandTextField.setText("");
-                    logger.info("Result: " + commandResult.feedbackToUser);
-                    raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+                if (LoginCommand.isLoggedIn() && commandText.contains(LoginCommand.COMMAND_WORD)) {
+                    raise(new NewResultAvailableEvent("Already logged in.", true));
                 } else {
-                    // commands that are not permitted before login
-                    // this includes unknown commands
-                    setStyleToIndicateCommandFailure();
-                    raise(new NewResultAvailableEvent(LoginCommand.MESSAGE_LOGIN_REQUEST, true));
+
+                    boolean isCommandExecutableBeforeLogin = commandText.contains(LoginCommand.COMMAND_WORD)
+                            || commandText.contains(ExitCommand.COMMAND_WORD)
+                            || commandText.contains(HelpCommand.COMMAND_WORD);
+                    // allows only help, exit and login commands to execute before login
+                    // and all the other commands to execute after login
+
+                    if (isCommandExecutableBeforeLogin || LoginCommand.isLoggedIn()) {
+                        String currCommandInput = commandTextField.getText();
+                        CommandResult commandResult;
+                        if (currCommandInput.contains(LoginCommand.COMMAND_WORD)) {
+                            commandResult = logic.execute(currCommandInput.substring(0,
+                                    currentMaskFromIndex) + passwordFromInput);
+                        } else {
+                            commandResult = logic.execute(currCommandInput);
+                        }
+                        initHistory();
+                        historySnapshot.next();
+                        // process result of the command
+                        commandTextField.setText("");
+                        logger.info("Result: " + commandResult.feedbackToUser);
+                        raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+                    } else {
+                        // commands that are not permitted before login
+                        // this includes unknown commands
+                        setStyleToIndicateCommandFailure();
+                        raise(new NewResultAvailableEvent(LoginCommand.MESSAGE_LOGIN_REQUEST, true));
+                    }
                 }
             } catch (CommandException | ParseException e) {
                 initHistory();
@@ -242,7 +248,6 @@ public class CommandBox extends UiPart<Region> {
                 raise(new NewResultAvailableEvent(e.getMessage(), true));
             }
         }
-
     }
 
     /**
