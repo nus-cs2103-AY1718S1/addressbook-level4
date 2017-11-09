@@ -992,7 +992,7 @@ _Figure 4.8.3: Code section in Schedule.java_
 
 `EmailCommand` utilise `Desktop` to launch a email platform for users to send email to multiple contacts. _Figure 4.9.1_ below indicates the sequence diagram that illsutrate how the components interact in the scenario where the user issues the email command.
 
-image::SequenceDiagramEmail.PNG[width="500"]
+image::SequenceDiagramEmail.PNG[width="700"]
 _Figure 4.9.1: Component interactions for email function_
 
 User will first have to key in indexes of the contact. `Logic` will use `AddressBookParser` class to parse user command. `ParseException` will be thrown in `EmailCommandParser` when there is detection of illegal value.By using a `Set` to store the indices inputed by user, this will prevent duplication of indicies. Also, Figure 4.9.2_ below indicates the parsing of user input in `EmailCommandParser`.
