@@ -39,7 +39,7 @@ Responsibilities: Model
 
 === Dao Truong Giang
 image::heiseish.jpeg[width="150", align="left"]
-{empty}[https://github.com/heiseish[github]] [<<giang#, portfolio>>]
+{empty}[https://github.com/heiseish[github]] [<<heiseish#, portfolio>>]
 
 Role: Developer +
 Responsibility: UI

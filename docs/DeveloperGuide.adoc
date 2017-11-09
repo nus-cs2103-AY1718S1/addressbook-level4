@@ -459,7 +459,7 @@ public CommandResult executeUndoableCommand() throws CommandException {
     ....
 }
 ----
-
+// tag::favorite[]
 === Favorite
 
 The Favorite function is created for frequent users who have have certain "close contacts" and
@@ -473,6 +473,8 @@ In order to implement such feature, two things need to be implemented:
 A favorite class is implemented and used by Person class. A person object does not construct with a favorite object but it is
 able to setFavorite a new favorite object.
 A favorite object is different from other attribute object is that it just contains a simple boolean property.
+
+image::FavoriteClassDiagram.png[width="200"]
 
 To favorite a person in the list, a favorite command is implemented. The favorite command follows the same parser logic
 as `delete` command, which is to parse the index of the person to favorite. Hence, the favoriteCommand also extends
@@ -504,6 +506,10 @@ And for UI, a simple label is created and `setVisible` to `true` for any index t
 favorited. The labels are `setGraphic` to followed image:
 
 image::heart.png[width="40"]
+
+In the contact+ pro, it looks like:
+
+image::nameWithHeart.png[width="120"]
 
 ==== Sorting
 
