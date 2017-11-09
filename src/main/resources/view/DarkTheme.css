@@ -12,6 +12,7 @@
     -fx-list-cell-selected-border: #3e7b91;
     -fx-list-cell-empty: #383838;
 }
+
 /*@@author*/
 .background {
     -fx-background-color: derive(-fx-base-background-color-0, 20%);
@@ -350,7 +351,7 @@
 .auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled {
 }
 
-.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:hover, 
+.auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:hover,
 .auto-complete-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:focused {
     -fx-background-color: #0078ce;
     -fx-text-fill: black;
