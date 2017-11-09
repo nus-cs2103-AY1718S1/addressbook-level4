@@ -837,7 +837,7 @@ image::SDforCopyLogic.png[width="800"]
     Figure 23: Sequence diagram for a Copy command in the Logic component
 
 As you've might have noticed in the diagram, a foreign-looking class is used – namely, `Clipboard` and `ClipboardContent`.
-These classes allow you to visualise how the system clipboard is used, and fed data. Check out the
+These classes allow you to intuitively visualise how MedNus interacts with the system clipboard. Check out the
 link:https://docs.oracle.com/javase/8/javafx/api/javafx/scene/input/Clipboard.html[Clipboard class API] and
 link:https://docs.oracle.com/javase/8/javafx/api/javafx/scene/input/ClipboardContent.html[ClipboardContent class API] for
 a clear idea of how they work. +
@@ -851,6 +851,7 @@ If you would like to contribute to such additional functionality, please edit th
 corresponding to the new function e.g. +
 
  CopyCommand(NewFunction newFunction Index targetIndex)
+
 // end::copy[]
 
 == Documentation
