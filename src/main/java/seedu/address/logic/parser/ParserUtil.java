@@ -4,9 +4,11 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.index.Index.INDEX_VALIDATION_REGEX;
 import static seedu.address.commons.util.StringUtil.replaceBackslashes;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.model.person.Address.ADDRESS_BLOCK_NUMBER_MATCHING_REGEX;
 import static seedu.address.model.person.Address.ADDRESS_BLOCK_WORD_MATCHING_REGEX;
 import static seedu.address.model.person.Email.EMAIL_VALIDATION_REGEX;
+import static seedu.address.model.person.Name.NAME_REPLACEMENT_REGEX;
 import static seedu.address.model.person.Phone.PHONE_VALIDATION_REGEX;
 import static seedu.address.storage.util.RolodexStorageUtil.FILEPATH_REGEX_NON_STRICT;
 import static seedu.address.storage.util.RolodexStorageUtil.ROLODEX_FILE_EXTENSION;
@@ -185,7 +187,7 @@ public class ParserUtil {
         try {
             Optional possible = parseName(Optional.of(parseRemainingName(value)));
             return possible.isPresent() && possible.get() instanceof Name;
-        } catch (NumberFormatException | IllegalValueException e) {
+        } catch (IllegalValueException | IllegalArgumentException e) {
             return false;
         }
     }
@@ -194,8 +196,17 @@ public class ParserUtil {
      * Returns a parsed {@code String} name from
      * the remaining {@code String} value.
      */
-    public static String parseRemainingName(String value) {
-        return value.replaceAll("[^A-Za-z0-9 ]", "");
+    public static String parseRemainingName(String value) throws IllegalArgumentException {
+        String test;
+        if (value.trim().startsWith(PREFIX_NAME.toString())) {
+            test = value.replace(PREFIX_NAME.toString(), "").replaceAll(NAME_REPLACEMENT_REGEX, "");
+        } else {
+            test = value.replaceAll(NAME_REPLACEMENT_REGEX, "");
+        }
+        if (!test.trim().isEmpty()) {
+            return test.trim();
+        }
+        throw new IllegalArgumentException();
     }
 
     /**
