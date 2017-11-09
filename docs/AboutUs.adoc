@@ -24,7 +24,7 @@ Responsibilities: Logic, Model
 
 === Wong Zeng Feng
 image::zfwong.jpg[width="150", align="left"]
-{empty}[https://github.com/zengfengw[github]] [<<zengfengw#, portfolio>>]
+{empty}[https://github.com/zengfengw[github]] [<<wongzengfeng#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Logic, Model
