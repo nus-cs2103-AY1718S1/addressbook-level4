@@ -49,6 +49,19 @@ public class Relationship {
         return direction;
     }
 
+    /**
+     * This is to make the relationship's person entries always point to the existing persons in the address book
+     * used when a person is updated
+     */
+    public Relationship replacePerson(ReadOnlyPerson previousPerson, ReadOnlyPerson currentPerson) {
+        if (this.fromPerson.equals(previousPerson)) {
+            this.fromPerson = currentPerson;
+        } else if (this.toPerson.equals(previousPerson)) {
+            this.toPerson = currentPerson;
+        }
+        return this;
+    }
+
     public Name getName() {
         return name;
     }

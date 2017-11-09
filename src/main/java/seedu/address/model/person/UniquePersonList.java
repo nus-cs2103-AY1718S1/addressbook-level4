@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.fxmisc.easybind.EasyBind;
 
@@ -12,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.relationship.Relationship;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -84,11 +86,28 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public boolean remove(ReadOnlyPerson toRemove) throws PersonNotFoundException {
         requireNonNull(toRemove);
+        Set<Relationship> relationshipsToRemove = toRemove.getRelationships();
+        for (Relationship relationship: relationshipsToRemove) {
+            removeRelationshipFromAddressBook(relationship);
+        }
         final boolean personFoundAndDeleted = internalList.remove(toRemove);
         if (!personFoundAndDeleted) {
             throw new PersonNotFoundException();
         }
         return personFoundAndDeleted;
+    }
+
+    /**
+     * To remove the existence of this relationship completely
+     * As a single relationship is recorded in double-entries under the two persons involved
+     */
+    public boolean removeRelationshipFromAddressBook(Relationship relationshipToRemove) {
+        ReadOnlyPerson fromPerson = relationshipToRemove.getFromPerson();
+        ReadOnlyPerson toPerson = relationshipToRemove.getToPerson();
+
+        boolean removedFromPersonRelationship = ((Person) fromPerson).removeRelationship(relationshipToRemove);
+        boolean removedToPersonRelationship = ((Person) toPerson).removeRelationship(relationshipToRemove);
+        return removedFromPersonRelationship && removedToPersonRelationship;
     }
 
     public void setPersons(UniquePersonList replacement) {
