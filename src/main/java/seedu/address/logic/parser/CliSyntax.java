@@ -10,6 +10,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -110,6 +111,7 @@ public class CliSyntax {
         .addAll(ClearCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(DeleteCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(EditCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(EmailCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(ExitCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(FindCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(HelpCommand.COMMAND_WORD_ABBREVIATIONS)
