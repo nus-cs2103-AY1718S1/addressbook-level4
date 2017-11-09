@@ -73,6 +73,7 @@ Examples:
 * `add n/Betsy Crowe a/Newgate Prison p/1234567 e/betsycrowe@example.com`
 * `add n/Betsy Crowe`
 
+// tag::addrelationship[]
 === Adding a relationship between two persons: `addRelationship`
 
 Adds a relationship between two persons in the address book +
