@@ -47,7 +47,7 @@ public class FilterCommandTest {
         groupExists.setData(model, new CommandHistory(), new UndoRedoStack());
         result = groupExists.executeUndoableCommand();
 
-        assertEquals(result.feedbackToUser, model.getFilteredPersonList().size() + " persons listed!");
+        assertEquals(result.feedbackToUser, FilterGroupCommand.MESSAGE_GROUP_IS_EMPTY);
     }
     //@@author
 }
