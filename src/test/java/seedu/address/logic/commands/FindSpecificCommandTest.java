@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
+import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
@@ -12,15 +13,11 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.parser.FindSpecificCommandParser;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -40,36 +37,126 @@ public class FindSpecificCommandTest {
 
 	@Test
 	public void equals() {
-		NameContainsKeywordsPredicate firstPredicate =
+		NameContainsKeywordsPredicate firstNamePredicate =
 			new NameContainsKeywordsPredicate(Collections.singletonList("first"));
-		NameContainsKeywordsPredicate secondPredicate =
+		NameContainsKeywordsPredicate secondNamePredicate =
 			new NameContainsKeywordsPredicate(Collections.singletonList("second"));
 
-		FindSpecificCommand findFirstCommand = new FindSpecificCommand(firstPredicate);
-		FindSpecificCommand findSecondCommand = new FindSpecificCommand(secondPredicate);
+		PhoneContainsSpecifiedKeywordsPredicate firstPhonePredicate =
+			new PhoneContainsSpecifiedKeywordsPredicate(Collections.singletonList("12345678"));
+
+		EmailContainsSpecifiedKeywordsPredicate firstEmailPredicate =
+			new EmailContainsSpecifiedKeywordsPredicate(Collections.singletonList("first@email.com"));
+
+		TagContainsSpecifiedKeywordsPredicate firstTagPredicate =
+			new TagContainsSpecifiedKeywordsPredicate(Collections.singletonList("[important]"));
+
+		FindSpecificCommand findFirstNameCommand = new FindSpecificCommand(firstNamePredicate);
+		FindSpecificCommand findSecondNameCommand = new FindSpecificCommand(secondNamePredicate);
+		FindSpecificCommand findFirstPhoneCommand = new FindSpecificCommand(firstPhonePredicate);
+		FindSpecificCommand findFirstEmailCommand = new FindSpecificCommand(firstEmailPredicate);
+		FindSpecificCommand findFirstTagCommand = new FindSpecificCommand(firstTagPredicate);
 
 		// same object -> returns true
-		assertTrue(findFirstCommand.equals(findFirstCommand));
+		assertTrue(findFirstNameCommand.equals(findFirstNameCommand));
+
+		// same object -> returns true
+		assertTrue(findFirstPhoneCommand.equals(findFirstPhoneCommand));
+
+		// same object -> returns true
+		assertTrue(findFirstEmailCommand.equals(findFirstEmailCommand));
+
+		// same object -> returns true
+		assertTrue(findFirstTagCommand.equals(findFirstTagCommand));
 
 		// same values -> returns true
-		FindSpecificCommand findFirstCommandCopy = new FindSpecificCommand(firstPredicate);
-		assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+		FindSpecificCommand findFirstCommandCopy = new FindSpecificCommand(firstNamePredicate);
+		assertTrue(findFirstNameCommand.equals(findFirstCommandCopy));
 
 		// different types -> returns false
-		assertFalse(findFirstCommand.equals(1));
+		assertFalse(findFirstNameCommand.equals(1));
 
 		// null -> returns false
-		assertFalse(findFirstCommand.equals(null));
+		assertFalse(findFirstNameCommand.equals(null));
 
 		// different person -> returns false
-		assertFalse(findFirstCommand.equals(findSecondCommand));
+		assertFalse(findFirstNameCommand.equals(findSecondNameCommand));
 	}
 
+	/**
+	 * Find person(s) by name(s).
+	 */
 	@Test
 	public void execute_zeroKeywords_InvalidCommandFormant() {
 		String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
 		FindSpecificCommand command = prepareFindByNameCommand(" ");
 		assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+	}
+
+	@Test
+	public void execute_findElleByName_onePersonFound() {
+		String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+		FindSpecificCommand command = prepareFindByNameCommand("Elle");
+		assertCommandSuccess(command, expectedMessage, Arrays.asList(ELLE));
+	}
+
+	@Test
+	public void execute_findMultipleNames_multiplePersonFound() {
+		String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+		FindSpecificCommand command = prepareFindByNameCommand("Kurz Elle Kunz");
+		assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+	}
+
+	/**
+	 * Find person(s) by phone(s).
+	 */
+	@Test
+	public void execute_findEllebyPhone_onePersonFound() {
+		String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+		FindSpecificCommand command = prepareFindByPhoneCommand("9482224");
+		assertCommandSuccess(command, expectedMessage, Arrays.asList(ELLE));
+	}
+
+	@Test
+	public void execute_findMultiplePhones_multiplePersonFound() {
+		String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+		FindSpecificCommand command = prepareFindByPhoneCommand("95352563 9482224 9482427");
+		assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+	}
+
+	/**
+	 * Find person(s) by email(s).
+	 */
+	@Test
+	public void execute_findEllebyEmail_onePersonFound() {
+		String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+		FindSpecificCommand command = prepareFindByEmailCommand("werner@example.com");
+		assertCommandSuccess(command, expectedMessage, Arrays.asList(ELLE));
+	}
+
+	@Test
+	public void execute_findMultipleEmails_multiplePersonFound() {
+		String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+		FindSpecificCommand command =
+			prepareFindByEmailCommand("heinz@example.com werner@example.com lydia@example.com");
+		assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+	}
+
+	/**
+	 * Find person(s) by Tag(s).
+	 */
+	@Test
+	public void execute_findATag_noPersonFound() {
+		String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+		FindSpecificCommand command = prepareFindByTagCommand("[BOSS]");
+		assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+	}
+
+	@Test
+	public void execute_findMultipleTags_noPersonFound() {
+		String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+		FindSpecificCommand command = prepareFindByTagCommand("[owesMoney] [friend]");
+		assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
 	}
 
 	/**
@@ -84,6 +171,45 @@ public class FindSpecificCommandTest {
 		command.setData(model, new CommandHistory(), new UndoRedoStack());
 		return command;
 	}
+
+	/**
+	 * Creates a new FindSpecificCommand using {@code PhoneContainsSpecifiedKeywordsPredicate}
+	 *
+	 * @param inputString full string of phone(s) to find
+	 * @return a new FindSpecificCommand using {@code PhoneContainsSpecifiedKeywordsPredicate}
+	 */
+	private FindSpecificCommand prepareFindByPhoneCommand (String inputString) {
+		FindSpecificCommand command = new FindSpecificCommand
+			(new PhoneContainsSpecifiedKeywordsPredicate(Arrays.asList(inputString.split("\\s+"))));
+		command.setData(model, new CommandHistory(), new UndoRedoStack());
+		return command;
+	}
+
+	/**
+	 * Creates a new FindSpecificCommand using {@code EmailContainsSpecifiedKeywordsPredicate}
+	 *
+	 * @param inputString full string of email(s) to find
+	 * @return a new FindSpecificCommand using {@code EmailContainsSpecifiedKeywordsPredicate}
+	 */
+	private FindSpecificCommand prepareFindByEmailCommand (String inputString) {
+		FindSpecificCommand command = new FindSpecificCommand
+			(new EmailContainsSpecifiedKeywordsPredicate(Arrays.asList(inputString.split("\\s+"))));
+		command.setData(model, new CommandHistory(), new UndoRedoStack());
+		return command;
+	}
+
+	/**
+	 * Creates a new FindSpecificCommand using {@code TagContainsSpecifiedKeywordsPredicate}
+	 *
+	 * @param inputString full string of tag(s) to find
+	 * @return a new FindSpecificCommand using {@code TagContainsSpecifiedKeywordsPredicate}
+	 */
+	private FindSpecificCommand prepareFindByTagCommand (String inputString) {
+		FindSpecificCommand command = new FindSpecificCommand
+			(new TagContainsSpecifiedKeywordsPredicate(Arrays.asList(inputString.split("\\s+"))));
+		command.setData(model, new CommandHistory(), new UndoRedoStack());
+		return command;
+	} //@@author
 
 	/**
 	 * Asserts that {@code command} is successfully executed, and<br>
