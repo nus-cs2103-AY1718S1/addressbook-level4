@@ -7,11 +7,11 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
-import seedu.address.model.exceptions.DuplicateMeetingException;
 import seedu.address.model.Meeting;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyMeetingList;
 import seedu.address.model.UniqueMeetingList;
+import seedu.address.model.exceptions.DuplicateMeetingException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.InternalId;
