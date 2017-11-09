@@ -31,7 +31,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Pulls Google Calendar events of a person.
  */
-public class GetCalendarCommand extends UndoableCommand {
+public class AddCalendarCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "cadd";
     public static final String COMMAND_ALT = "ca";
@@ -55,7 +55,7 @@ public class GetCalendarCommand extends UndoableCommand {
     /**
      * Creates an CreateGroupCommand to add the specified {@code ReadOnlyGroup}
      */
-    public GetCalendarCommand(Index personIndex, String calendarId) {
+    public AddCalendarCommand(Index personIndex, String calendarId) {
         this.personIndex = personIndex;
         this.calendarId = calendarId;
     }
@@ -93,7 +93,7 @@ public class GetCalendarCommand extends UndoableCommand {
     }
 
     /**
-     * Creates and returns a {@code Person} with the the Favourite attribute set to true.
+     * Creates and returns a {@code Person} with a schedule list.
      */
     private Person addCalendarToPerson(ReadOnlyPerson personToEdit) throws ParseException, CommandException {
         Name updatedName = personToEdit.getName();
@@ -113,12 +113,8 @@ public class GetCalendarCommand extends UndoableCommand {
                 } catch (DuplicateScheduleException dse) {
                     throw new CommandException(MESSAGE_DUPLICATE_SCHEDULE);
                 }
-
             }
 
-            for (Schedule s: updatedScheduleList.toSet()) {
-                System.out.println(s.getName());
-            }
         } catch (IOException e) {
             throw new CommandException(MESSAGE_INVALID_CALENDAR_ID);
         } catch (IllegalValueException e) {
@@ -132,8 +128,8 @@ public class GetCalendarCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof GetCalendarCommand // instanceof handles nulls
-                && personIndex.equals(((GetCalendarCommand) other).personIndex));
+                || (other instanceof AddCalendarCommand // instanceof handles nulls
+                && personIndex.equals(((AddCalendarCommand) other).personIndex));
 
     }
 }

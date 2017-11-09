@@ -95,7 +95,6 @@ public class UniquePersonList implements Iterable<Person> {
 
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
-     *
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
@@ -139,6 +138,7 @@ public class UniquePersonList implements Iterable<Person> {
             internalList.remove(index);
             internalList.add(targetIndex, new Person(editedPerson));
 
+
         } else {
 
             /** Main favourite (fremove) logic
@@ -164,7 +164,6 @@ public class UniquePersonList implements Iterable<Person> {
             } else {
                 internalList.set(index, new Person(editedPerson));
             }
-
         }
 
 

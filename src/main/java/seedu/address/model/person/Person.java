@@ -51,7 +51,7 @@ public class Person implements ReadOnlyPerson {
 
     /**
      * Every field must be present and not null.
-     * Stamdard Constructor
+     * Standard Constructor
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
@@ -91,7 +91,6 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.favourite = new SimpleObjectProperty<>(favourite);
-        // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.schedule = new SimpleObjectProperty<>(new UniqueScheduleList(schedule));
     }

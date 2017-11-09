@@ -33,8 +33,9 @@ public class AddFavouriteCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD;
 
-    public static final String MESSAGE_FAVE_PERSON_SUCCESS = "%1$s has been marked as a favourite contact.";
+    public static final String MESSAGE_SUCCESS = "%1$s has been marked as a favourite contact.";
     public static final String MESSAGE_ALREADY_FAVOURITE = "This person is already marked as a favourite.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index targetIndex;
 
@@ -52,17 +53,23 @@ public class AddFavouriteCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(targetIndex.getZeroBased());
+
+        if (personToEdit.getFavourite().getStatus()) {
+            throw new CommandException(MESSAGE_ALREADY_FAVOURITE);
+        }
+
         Person editedPerson = createFavePerson(personToEdit);
 
         try {
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_ALREADY_FAVOURITE);
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
+
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_FAVE_PERSON_SUCCESS, editedPerson));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, editedPerson));
     }
 
     /**

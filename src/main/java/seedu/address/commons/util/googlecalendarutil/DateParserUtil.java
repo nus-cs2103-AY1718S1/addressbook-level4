@@ -2,6 +2,7 @@ package seedu.address.commons.util.googlecalendarutil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -44,6 +45,23 @@ public class DateParserUtil {
 
         return dateTimeMap;
     }
+
+    /** Ensures event start date is before event end date */
+    public static boolean isValidEventDuration(String startDateTime, String endDateTime) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        try {
+            Date startDate = sdf.parse(startDateTime);
+            Date endDate = sdf.parse(endDateTime);
+            if (startDate.compareTo(endDate) > 0) {
+                return false;
+            }
+            return true;
+        } catch (java.text.ParseException e) {
+            throw new AssertionError("DateTime string should be valid.");
+        }
+
+    }
+
 
     /** Returns a Google Calendar-like representation of the duration of an event
      * Examples:

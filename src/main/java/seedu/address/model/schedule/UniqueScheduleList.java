@@ -94,6 +94,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         if (contains(toAdd)) {
             throw new DuplicateScheduleException();
         }
+
         internalList.add(new Schedule(toAdd));
 
         assert CollectionUtil.elementsAreUnique(internalList);
