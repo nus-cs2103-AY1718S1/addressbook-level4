@@ -53,7 +53,7 @@ public class KeyListener {
     }
 
     /**
-     * Handles key press events
+     * Handles key press events from the user.
      */
     public void handleKeyPress() {
         mainNode.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
@@ -128,7 +128,7 @@ public class KeyListener {
     }
 
     /**
-     * Handles execution of command
+     * Executes command triggered by key presses.
      */
     private void executeCommand(String command) {
         if (command.equals(OpenCommand.COMMAND_WORD) || command.equals(NewCommand.COMMAND_WORD)) {

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 /**
- * Stores the information of all person avatars
+ * Stores the information of all person avatars.
  */
 public class Avatar {
     private static HashMap<String, String> avatarColors = new HashMap<>();
