@@ -86,6 +86,9 @@ Examples:
 * `login userAcc_123 pa$$_Word!@#&`
 * `login batMan_111 (Batcave.327+-)`
 
+[NOTE]
+Password cannot be copy-pasted into command box. It has to be typed out manually.
+
 Sample account to log into address book: +
 Username: loanShark97 +
 Password: hitMeUp123 +
