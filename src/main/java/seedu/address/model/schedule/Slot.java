@@ -21,6 +21,11 @@ public class Slot {
 
         busyTime = new TreeSet<>();
         int timeNumber;
+
+        if (start.getTime() >= end.getTime()) {
+            throw new IllegalValueException("Time given is not valid!");
+        }
+
         for (timeNumber = start.getTime(); timeNumber < end.getTime(); timeNumber += 10) {
             if (timeNumber % 100 != 30 && timeNumber % 100 != 0) {
                 continue;

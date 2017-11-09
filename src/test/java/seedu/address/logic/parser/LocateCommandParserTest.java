@@ -15,7 +15,7 @@ public class LocateCommandParserTest {
     private LocateCommandParser parser = new LocateCommandParser();
 
     @Test
-    public void parseValidArgsReturnsDeleteCommand() {
+    public void parseValidArgsReturnsLocateCommand() {
         assertParseSuccess(parser, "1", new LocateCommand(INDEX_FIRST_PERSON));
     }
 

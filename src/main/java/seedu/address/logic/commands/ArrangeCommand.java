@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -58,5 +59,25 @@ public class ArrangeCommand extends Command {
         }
         return new CommandResult(String.format(MESSAGE_ARRANGE_PERSON_SUCCESS) + toShow);
 
+    }
+
+    public int[] getSortedZeroBasedIndex(){
+        int[] thisIndexList = new int[listOfIndex.length];
+        for (int i = 0; i < listOfIndex.length; i++) {
+            thisIndexList[i] = listOfIndex[i].getZeroBased();
+        }
+        Arrays.sort(thisIndexList);
+        int[] a = {1,2};
+        int[] b = {1,2};
+        return thisIndexList;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ArrangeCommand // instanceof handles nulls
+                && Arrays.equals(this.getSortedZeroBasedIndex(),
+                (((ArrangeCommand) other).getSortedZeroBasedIndex())));
+        // state check
     }
 }
