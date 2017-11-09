@@ -375,26 +375,26 @@ e.g. `find James Jake` +
 Can also use shortcut 'f'
 * *List By Most Searched* : `ListByMostSearched` +
 Can also use shortcut 'lms'
-* *List* : `list`
+* *List* : `list` +
 Can also use shortcut 'l'
 * *Map* : `map INDEX' +
-e.g.'map 3'
+e.g.'map 3' +
 Can also use shortcut 'm'
 * *Help* : `help`
-* *Search* : `search KEYWORD [KEYWORD]`
+* *Search* : `search KEYWORD [KEYWORD]` +
 Can also use shortcut 'se'
 * *Select* : `select INDEX` +
-e.g.`select 2`
+e.g.`select 2` +
 Can also use shortcut 's'
-* *History* : `history`
+* *History* : `history` +
 Can also use shortcut 'h'
-* *Next Meeting* : `nextMeeting`
+* *Next Meeting* : `nextMeeting` +
 Can also use shortcut `nm`
-* *Undo* : `undo`
+* *Undo* : `undo` +
 Can also use shortcut 'u'
-* *Redo* : `redo`
+* *Redo* : `redo` +
 Can also use shortcut 'r'
-* *Preference* : `pref KEY [NEW_VALUE]`
+* *Preference* : `pref KEY [NEW_VALUE]` +
 Can also use shortcut 'p'
 * *Display Mode* : `choose [NEW_VALUE]`
 
