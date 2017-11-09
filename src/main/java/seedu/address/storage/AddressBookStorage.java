@@ -43,7 +43,7 @@ public interface AddressBookStorage {
      */
     void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException;
 
-    //@@author yamgent-reused
+    //@@author jin-ting
     /**
      * @see #backupAddressBook
      */
