@@ -48,12 +48,15 @@ public class SelectCommandTest {
         assertExecutionSuccess(lastPersonIndex);
     }
 
+    //@@author lincredibleJC
     @Test
     public void execute_invalidIndexUnfilteredList_failure() {
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
     }
+    //@@author
 
     @Test
     public void execute_validIndexFilteredList_success() {
@@ -126,7 +129,6 @@ public class SelectCommandTest {
             fail("The expected CommandException was not thrown.");
         } catch (CommandException ce) {
             assertEquals(expectedMessage, ce.getMessage());
-            assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
         }
     }
 

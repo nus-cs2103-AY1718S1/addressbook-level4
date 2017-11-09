@@ -14,6 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.FilteredPersonListChangedEvent;
 import seedu.address.commons.events.model.ScheduleListChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -63,20 +64,32 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    //@@author lincredibleJC
+    /** Raises events to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }
+    //@@author
+
+    //@@author lincredibleJC
+
+    /** Raises an event to update the StatisticsPanel */
+    private void updateStatisticsPanel() {
+        raise(new FilteredPersonListChangedEvent(filteredPersons));
+    }
+    //@@author
 
     /** Raises an event to update the ResultDisplay */
     private void indicateScheduleListChanged() {
         raise(new ScheduleListChangedEvent(getScheduleList()));
     }
 
+
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
+        updateStatisticsPanel();
     }
 
     @Override
@@ -84,6 +97,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
+        updateStatisticsPanel();
     }
 
     @Override
@@ -93,6 +107,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+        updateStatisticsPanel();
     }
 
     //@@author limcel
@@ -154,11 +169,14 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    //@@author lincredibleJC
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+        updateStatisticsPanel();
     }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {
