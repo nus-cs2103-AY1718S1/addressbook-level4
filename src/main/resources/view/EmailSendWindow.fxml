@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="724.0" prefWidth="662.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="724.0" prefWidth="662.0" stylesheets="@CSS/EmailSendWindow.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="636.0">
         <columnConstraints>
@@ -18,39 +18,39 @@
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="522.0" minWidth="10.0" prefWidth="522.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="257.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="327.0" minHeight="10.0" prefHeight="327.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="257.0" minHeight="10.0" prefHeight="82.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="426.0" minHeight="10.0" prefHeight="388.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <StackPane prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="recipientsLabel" alignment="CENTER" prefHeight="41.0" prefWidth="108.0" text="Recipients" />
+                  <Label fx:id="recipientsLabel" alignment="CENTER" prefHeight="24.0" prefWidth="88.0" styleClass="textLabel" text="Recipients" />
                </children>
             </StackPane>
             <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <TextField fx:id="recipientsField" prefHeight="60.0" prefWidth="522.0" />
+                  <TextField fx:id="recipientsField" focusTraversable="false" promptText="Recipients here..." styleClass="textfield" />
                </children>
             </StackPane>
             <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="42.0" prefWidth="95.0" text="Title" />
+                  <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="91.0" styleClass="textLabel" text="Title" />
                </children>
             </StackPane>
             <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <TextField fx:id="titleField" />
+                  <TextField fx:id="titleField" focusTraversable="false" promptText="Title here..." styleClass="textfield" />
                </children>
             </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="2">
+            <StackPane alignment="TOP_CENTER" prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
-                  <Label fx:id="bodyLabel" alignment="CENTER" prefHeight="31.0" prefWidth="92.0" text="Body" />
+                  <Label fx:id="bodyLabel" alignment="CENTER" prefHeight="26.0" prefWidth="92.0" styleClass="textLabel" text="Body" />
                </children>
             </StackPane>
             <StackPane prefHeight="366.0" prefWidth="615.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <TextArea fx:id="bodyField" prefHeight="200.0" prefWidth="200.0" />
+                  <TextArea fx:id="bodyField" focusTraversable="false" prefHeight="390.0" prefWidth="590.0" promptText="Your message here..." styleClass="textarea" />
                </children>
             </StackPane>
          </children>
@@ -62,7 +62,7 @@
       </StackPane>
       <StackPane prefHeight="150.0" prefWidth="200.0">
          <children>
-            <Label fx:id="feedbackLabel" prefHeight="150.0" prefWidth="528.0" />
+            <TextArea fx:id="feedbackLabel" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="122.0" prefWidth="626.0" promptText="The result of your sending attempt will be displayed here." styleClass="textarea" />
          </children>
       </StackPane>
    </children>

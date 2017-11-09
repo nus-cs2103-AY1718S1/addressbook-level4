@@ -6,8 +6,8 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
@@ -48,7 +48,7 @@ public class EmailLoginWindow extends UiPart<Region> {
     private Button emailWindowLoginButton;
 
     @FXML
-    private Label feedbackLabel;
+    private TextArea feedbackLabel;
 
     public EmailLoginWindow(Logic logic, Stage parentStage, FunctionButtons functionButtonsPanel) {
         super(FXML);

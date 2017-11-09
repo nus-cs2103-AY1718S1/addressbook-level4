@@ -52,7 +52,7 @@ public class EmailSendWindow extends UiPart<Region> {
     private Button sendButton;
 
     @FXML
-    private Label feedbackLabel;
+    private TextArea feedbackLabel;
 
     public EmailSendWindow(Logic logic, Stage parentStage, String recipients, String feedback) {
         super(FXML);
