@@ -19,11 +19,11 @@ public class ChangeWindowSizeCommandParser implements Parser<ChangeWindowSizeCom
      */
     public ChangeWindowSizeCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
-        if (WindowSize.isValidWindowSize(trimmedArgs)) {
-            return new ChangeWindowSizeCommand(args.trim());
-        } else {
+        if (!WindowSize.isValidWindowSize(trimmedArgs)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeWindowSizeCommand.MESSAGE_USAGE));
         }
+
+        return new ChangeWindowSizeCommand(args.trim());
     }
 }
