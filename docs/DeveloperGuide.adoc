@@ -616,11 +616,11 @@ _Figure 4.3.6 : Full UI outcome of locate implementation_
 ---
 // end::locate[]
 
-//tag::FindCommand[]
+//tag::find[]
 === FindCommand by any search field [Since v1.2 and v1.4]
 
 
-`FindCommand` which reside in `Logic` will support the search of contact by any keywords. `Logic` uses the `AddressBookParser` class to parse user command. The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone`,`Tags` , `Activity` and `Country`. Such parameters inherit from `Person` which resides inside `Model`.Also,the keywords must be a full word match in order for successful execution of find command. _Figures 4.4.1_ indicates the the parsing of user command in  `FindCommandParser` once user keys in an input.
+`FindCommand` which reside in `Logic` will support the search of contact by any keywords. `Logic` uses the `AddressBookParser` class to parse user command. `parseCommand` in `AddressBookParser` will detect the command word `find` and the `prefix` keyed in by user which will then call `parse` method in `FindCommandParser`.`parse` method in `FindCommandParser` will check for the prefix based existing parameters `Name`, `Email`, `Address`, `Phone`,`Tags` , `Activity` and `Country`. Such parameters inherit from `Person` which resides inside `Model`._Figures 4.4.1_ indicates the the parsing of user command in  `FindCommandParser`.
 
 [source,java]
 ----
@@ -639,7 +639,7 @@ _Figure 4.4.1: Code section in FindCommandParser.java_
 [NOTE]
 A valid find command can only search for keywords based on specific prefix  [n/NAME] or [p/PHONE] or [e/EMAIL] or [a/ADDRESS] or [t/TAG] or [c/COUNTRY] or [act/ACTIVITY].
 
-Any other prefix as input will be considered as invalid input.In absence of valid prefix ,an exception will be thrown, as shown in Figure 4.4.2_.
+Any other prefix as input will be considered as invalid input.In absence of valid prefix ,an exception will be thrown in  `FindCommandParser`, as shown in Figure 4.4.2_.
 [source,java]
 ----
          default:
@@ -647,7 +647,9 @@ Any other prefix as input will be considered as invalid input.In absence of vali
 ----
 _Figure 4.4.2: Code section 2 in FindCommandParser.java_
 
-A successful match of the prefix will ensure that the keywords are  allocated to  method `containsKeyWordPredicate` under `Model`. Addressbook will then search for the keywords based on the revelvant parameters in `PredicateUtil'.
+A successful match of the prefix will create a `FindCommand` object with `containsKeyWordPredicate` that resides in `Model` to be passed as parameter.Command execution in `LogicManager` will then call `updateFilteredPersonList` method in `ModelManager`.
+Addressbook will then search for contact based on the predicate paramater passed in `PredicateUtil' as shown in Figure 4.4.3_.
+.
 [source,java]
 ----
 public class PredicateUtil {
@@ -655,39 +657,41 @@ public class PredicateUtil {
 }
 
 ----
-The component diagram in _Figure 4.4.3_ below shows the interactions within the Logic component for the execution of find command.
+_Figure 4.4.3: Code section  in PredicateUtil.java_
+
+The component diagram in _Figure 4.4.4_ below shows the interactions within the Logic component for the execution of find command.
 
 image::LogicComponentSequenceDiagramFind.PNG[width="800"]
 _Figure 4.4.4 : Find component diagram_
 
-The sequence diagram in _Figure 4.4.4_ below shows how the find function works:
+The sequence diagram in _Figure 4.4.5_ below shows how the find function works:
 
 image::SequenceDiagramFind.PNG[width="800"]
-_Figure 4.4.4 : Find sequence diagram_
+_Figure 4.4.5 : Find sequence diagram_
 
 
-Upon any successful match, the particulars of the contact will be displayed in `CommandBox`. _Figures 4.4.5a to 4.4.5g_ below indicate the various outcomes of search function by  using `FindCommand`.
+Upon any successful match, the particulars of the contact will be displayed in `CommandBox`. _Figures 4.4.6a to 4.4.6g_ below indicate the various outcomes of search function by  using `FindCommand`.
 
 image::FindCommand_Name.PNG[width="400"]
-_Figure 4.4.5a : Find by name [n/NAME]_
+_Figure 4.4.6a : Find by name [n/NAME]_
 
 image::FindCommand_Phone.PNG[width="400"]
-_Figure 4.4.5b : Find by phone [p/PHONE]_
+_Figure 4.4.6b : Find by phone [p/PHONE]_
 
 image::FindCommand_Email.PNG[width="400"]
-_Figure 4.4.5c : Find by email [e/EMAIL]_
+_Figure 4.4.6c : Find by email [e/EMAIL]_
 
 image::FindCommand_Address.PNG[width="400"]
-_Figure 4.4.5d : Find by address [a/ADDRESS]_
+_Figure 4.4.6d : Find by address [a/ADDRESS]_
 
 image::FindCommand_Activity.PNG[width="400"]
-_Figure 4.4.5e : Find by activity [act/ACTIVITY]_
+_Figure 4.4.6e : Find by activity [act/ACTIVITY]_
 
 image::FindCommand_Tag.PNG[width="400"]
-_Figure 4.4.5f : Find by tag [t/TAG]_
+_Figure 4.4.6f : Find by tag [t/TAG]_
 
 image::FindCommand_Country.PNG[width="400"]
-_Figure 4.4.5g : Find by country [c/COUNTRY]_
+_Figure 4.4.6g : Find by country [c/COUNTRY]_
 
 ==== Design Considerations for `FindCommand`
 
@@ -701,7 +705,7 @@ _Figure 4.4.5g : Find by country [c/COUNTRY]_
 **Cons:** Have to look through all the attribute of contact thus slowing down the execution of FindCommand. +
 
 ---
-//end::Find[]
+//end::find[]
 
 //tag::CopyCommand[]
 === Copy email address to clipboard [Since v1.2]
@@ -763,7 +767,7 @@ Alternatively, it may also be possible to permanently display all fields in each
 
 ---
 
-//tag::Calendar[]
+//tag::calendar[]
 === Opening Calendar [Since v1.3]
 
 `CalendarCommand` which reside in `Logic` will  open up a new browser webpage in the `BrowserPanel` that shows calendar for the entire year. The webpage will display the calendar from January to December, inclusive of public holidays.User are also able to navigate to other website that show useful information such as weather, time zone and more.
@@ -828,7 +832,7 @@ _Figure 4.6.5: Output of `CalendarCommand.java` execution_
 **Cons:** Unable to view public holidays.User also have to go through the hassle of logging in just to view the calendar. +
 
 ---
-//end::Calendar[]
+//end::calendar[]
 // tag::agenda[]
 
 === Viewing of user's agenda [Since v1.4]
@@ -986,13 +990,13 @@ _Figure 4.8.3: Code section in Schedule.java_
 **Cons:** The details of the activities due in 1 days time are not filtered out, user have to check the agenda section for more details. +
 // end::reminder[]
 
-//tag::Email[]
+//tag::email[]
 
 === Sending Email [Since v1.5]
 
-`EmailCommand` utilise `Desktop` to launch a email platform for users to send email to multiple contacts. _Figure 4.9.1_ below indicates the sequence diagram that illsutrate how the components interact in the scenario where the user issues the email command.
+`EmailCommand` utilise `Desktop` to launch a email platform for users to send email to multiple contacts. Figure 4.9.1_ below indicates the sequence diagram that illsutrate how the components interact in the scenario where the user issues the email command.
 
-image::SequenceDiagramEmail.PNG[width="700"]
+image::SequenceDiagramEmail.PNG[width="600"]
 _Figure 4.9.1: Component interactions for email function_
 
 User will first have to key in indexes of the contact. `Logic` will use `AddressBookParser` class to parse user command. `ParseException` will be thrown in `EmailCommandParser` when there is detection of illegal value.By using a `Set` to store the indices inputed by user, this will prevent duplication of indicies. Also, Figure 4.9.2_ below indicates the parsing of user input in `EmailCommandParser`.
@@ -1056,7 +1060,7 @@ _Figure 4.9.5: Output of `EmailCommand.java` execution_
 
 ---
 
-//end::Email[]
+//end::email[]
 
 === Logging
 
