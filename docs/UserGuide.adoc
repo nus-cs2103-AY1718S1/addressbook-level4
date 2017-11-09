@@ -485,6 +485,12 @@ Format: `clear`
 Changes between the two available themes. +
 Format: `theme`
 
+image::UI.png[width="790"]
+_Figure 4.25.1 : Dark theme (default)_
+
+image::BrightTheme.png[width="790"]
+_Figure 4.25.2 : Bright theme_
+
 === Exiting the program : `exit`
 
 Exits the program. +
