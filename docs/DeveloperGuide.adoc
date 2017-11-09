@@ -626,7 +626,7 @@ public Phone(String phone) throws IllegalValueException {
 === Optional Inputs/Fields mechanism
 
 The `optional inputs/fields` mechanism is facilitated by making changes to `AddCommandParser` class in the `Logic` component.
-This feature enables several fields of the student to be optional.
+This feature enables several input/fields of the student to be optional.
 
 [NOTE]
 Student's phone number, email, address and postal code are optional inputs/fields.
@@ -638,8 +638,6 @@ _Figure 4.5.1 : Sequence Diagram of Optional Inputs/Fields Operation_
 
 The optionalInput method will append messages indicating that those optional fields are not recorded if the user chooses not to include those fields.
 The method can be seen in the code section below.
-
-
 
 ----
     public static String optionalInput(String input) {
@@ -672,7 +670,7 @@ if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_PARENTPHO
 Aspect: Implementation of optional fields/inputs. +
 Alternative 1 (current choice): This feature manipulates the input to include the missing optional input prefix, along with a message
 stating that the field is not recorded. +
-Pros: Simpler to understand and tweak this feature as it only manipulates the parsed input. +
+Pros: Simpler to understand and tweak this feature as it only manipulates the parsed input of the user. +
 Cons: Unable to implement UI features that requires the attribute to have a optional property. +
 Alternative 2: This feature will implement a optional characteristic in attributes that are optional +
 Pros: Optionality aspect of then attributes can be used by other features of cherBook. +
