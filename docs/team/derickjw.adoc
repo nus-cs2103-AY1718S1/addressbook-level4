@@ -1,0 +1,120 @@
+= Deric Khoo Jia Wei - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: H.M.U
+H.M.U is a software to help people manage their contacts easily. Apart from the basic features of an address book, H.M.U specializes in scheduling. This is done by allowing the user to schedule meetings through the user of the application. Furthermore, users will be able to find the most convenient meeting spot with the help of the application, by taking into account the contact's nearest MRT station.
+
+H.M.U cares about the security of its users as well. As such, users have to login with a username or password to continue using the app.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F10-B2/main/blob/master/collated/main/derickjw.md[Functional code]] [https://github.com/CS2103AUG2017-F10-B2/main/blob/master/collated/test/derickjw.md[Test code]] [https://github.com/CS2103AUG2017-F10-B2/main/blob/master/collated/unused/derickjw.md[Unused code]]
+
+=== Enhancement Added: Change Password
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=changepw]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=pwconsideration]
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=changepw]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Change Username
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=changeuser]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=changeuserconsiderations]
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=changeuser]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Create Default Account
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=createDefaultAcc]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=createDefaultConsiderations]
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=createDefaultAcc]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Fixed Some of Team Member's bugs (Pull requests https://github.com/CS2103AUG2017-F10-B2/main/pull/8[#8])
+* Added Auto-complete feature (Pull request https://github.com/CS2103AUG2017-F10-B2/main/pull/72[#72])
+* Helped with fixing JUnit Tests for Team Member (Pull request https://github.com/CS2103AUG2017-F10-B2/main/pull/44[#44])
+* Helped to upkeep most of documentation (Pull requests https://github.com/CS2103AUG2017-F10-B2/main/pull/22[#22],
+https://github.com/CS2103AUG2017-F10-B2/main/pull/24[#24], https://github.com/CS2103AUG2017-F10-B2/main/pull/42[#42],
+https://github.com/CS2103AUG2017-F10-B2/main/pull/64[#64])
+* Helped to set up testing environments such as Codacy (Pull Request https://github.com/CS2103AUG2017-F10-B2/main/pull/22[#22])
+* Touched on documentation outside of scope (Pull request https://github.com/CS2103AUG2017-F10-B2/main/pull/9[#9])
+* Changed UI Design (Pull request https://github.com/CS2103AUG2017-F10-B2/main/pull/54[#54])
+* Enhanced UI to show contact's details when clicked on (Pull request https://github.com/CS2103AUG2017-F10-B2/main/pull/74[#74])
