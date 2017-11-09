@@ -19,7 +19,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
   */
 public class RelationshipCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "relationship";
+    public static final String COMMAND_WORD = "relation";
     public static final String COMMAND_ALIAS = "rel";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the relationship of the person identified "
@@ -27,8 +27,12 @@ public class RelationshipCommand extends UndoableCommand {
             + "Existing relationship will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_RELATIONSHIP + "[RELATIONSHIP]\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_RELATIONSHIP + "John Doe";
+            + "Example 1: " + COMMAND_WORD + " 1 "
+            + PREFIX_RELATIONSHIP + "John Doe"
+            + "Example 2: " + COMMAND_ALIAS + " 1 "
+            + PREFIX_RELATIONSHIP + "Mary Jane"
+            + "Example 3: " + COMMAND_WORD + " 1 "
+            + PREFIX_RELATIONSHIP;
 
     public static final String MESSAGE_ADD_RELATIONSHIP_SUCCESS = "Added relationship to Person: %1$s";
     public static final String MESSAGE_DELETE_RELATIONSHIP_SUCCESS = "Removed relationship from Person: %1$s";
