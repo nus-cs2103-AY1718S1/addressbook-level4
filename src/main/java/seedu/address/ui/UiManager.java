@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -17,6 +18,8 @@ import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.Status;
 
 /**
  * The manager of the UI component.
@@ -57,10 +60,28 @@ public class UiManager extends ComponentManager implements Ui {
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
             mainWindow.initSplitPanePlaceholder();
+
+            if(overDueParcels(logic.getUncompletedParcelList())) {
+                PopupOverdueParcelsWindow popupOverdueParcelsWindow = new PopupOverdueParcelsWindow(logic.getUncompletedParcelList());
+                popupOverdueParcelsWindow.show();
+            }
+
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
         }
+    }
+
+    public boolean overDueParcels(ObservableList<ReadOnlyParcel> uncompletedParcelList){
+
+        // if there are overdue parcels
+        for(int i = 0 ; i < uncompletedParcelList.size() ; i++) {
+            if(uncompletedParcelList.get(i).getStatus().equals(Status.OVERDUE)){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
