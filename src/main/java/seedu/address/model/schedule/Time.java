@@ -36,8 +36,11 @@ public class Time {
         return time;
     }
 
+    /**
+     * Returns if the time input is a valid schedule time.
+     */
     public static boolean isValidTime(String test) {
-        if(test.length() != 4) {
+        if (test.length() != 4) {
             return false;
         }
         char[] toTest = test.toCharArray();
@@ -47,10 +50,10 @@ public class Time {
             }
         }
         int timeNumber = Integer.parseInt(test);
-        if(timeNumber > 2330 || timeNumber < 600){
+        if (timeNumber > 2330 || timeNumber < 600) {
             return false;
         }
-        if(timeNumber % 100 != 0 && timeNumber % 100 != 30){
+        if (timeNumber % 100 != 0 && timeNumber % 100 != 30) {
             return false;
         }
         return true;

@@ -30,8 +30,11 @@ public class Slot {
         }
     }
 
+    /**
+     * Returns if the time input startTime is earlier than endTime.
+     */
     public static boolean isValidSlot (Day day, Time startTime, Time endTime) {
-        if (startTime.getTime() >= endTime.getTime()){
+        if (startTime.getTime() >= endTime.getTime()) {
             return false;
         }
         return true;

@@ -31,9 +31,7 @@ public class RemoveAccountCommand extends Command {
         } else {
             if (!model.getUserPrefs().checkUsername(username) || !model.getUserPrefs().checkPassword(password)) {
                 return new CommandResult(MESSAGE_INVALID_CREDENTIALS);
-            }
-
-            else if (model.getUserPrefs().checkUsername(username) && model.getUserPrefs().checkPassword(password)) {
+            } else if (model.getUserPrefs().checkUsername(username) && model.getUserPrefs().checkPassword(password)) {
                 model.getUserPrefs().setDefaultUsername("");
                 model.getUserPrefs().setDefaultPassword("");
             }

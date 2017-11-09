@@ -34,6 +34,9 @@ public class Day {
         return day >= 1 && day <= 7;
     }
 
+    /**
+     * Returns if the string represents a valid day.
+     */
     public static boolean isValidDay(String test) {
         return "Monday".equals(test)
                 || "Tuesday".equals(test)

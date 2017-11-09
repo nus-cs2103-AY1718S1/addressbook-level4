@@ -9,16 +9,16 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author YuchenHe98
 /**
- * Represents a Person's phone number in the address book.
+ * Represents a Person's schedule in the address book.
  */
 public class Schedule {
 
     private TreeSet<Integer> timeSet;
 
     /**
-     * Validates given phone number.
+     * Validates given schedule
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if given timeSet is invalid.
      */
     public Schedule() {
         timeSet = new TreeSet<Integer>();
@@ -97,8 +97,11 @@ public class Schedule {
         return timeSetArray;
     }
 
+    /**
+     * Returns if the set input containing day and time info is a valid set.
+     */
     public static boolean isValidTimeSet(TreeSet<Integer> setOfTime) {
-        for(Integer timeNumber : setOfTime){
+        for (Integer timeNumber : setOfTime) {
             if (!isValidTimeNumber(timeNumber)) {
                 return false;
             }
@@ -106,6 +109,9 @@ public class Schedule {
         return true;
     }
 
+    /**
+     * Returns if the integer input containing day and time info is a valid schedule time.
+     */
     private static boolean isValidTimeNumber(Integer timeNumber) {
         Integer temp = timeNumber;
         temp -= temp % PossibleDays.DAY_COEFFICIENT;
@@ -119,7 +125,7 @@ public class Schedule {
         } else {
             timeString = timeInDay + "";
         }
-        if (Time.isValidTime(timeString)) {
+        if (Time.isValidTime(timeString )) {
             return true;
         } else {
             return false;
