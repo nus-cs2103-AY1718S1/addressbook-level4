@@ -21,11 +21,11 @@ import seedu.address.ui.testutil.EventsCollectorRule;
 //@@author bladerail
 public class ShareCommandTest {
 
-    private Model model;
-    private ShareCommand shareCommand;
-
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    private Model model;
+    private ShareCommand shareCommand;
 
     @Test
     public void execute_showsAddCommandCorrectly() {
