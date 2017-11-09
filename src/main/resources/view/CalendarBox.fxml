@@ -4,10 +4,6 @@
 
 <!--@@author Haozhe321-->
 <Pane fx:id="calendarPane"
-      maxHeight="-Infinity"
-      maxWidth="-Infinity"
-      minHeight="-Infinity"
-      minWidth="-Infinity"
       prefHeight="447.0"
       prefWidth="600.0"
       xmlns="http://javafx.com/javafx/8.0.60"
