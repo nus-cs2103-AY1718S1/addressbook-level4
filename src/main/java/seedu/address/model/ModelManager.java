@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -91,6 +92,15 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void updatePersonTags(ReadOnlyPerson person, Set<Tag> newTags)
+            throws PersonNotFoundException, DuplicatePersonException {
+        requireAllNonNull(newTags);
+
+        addressBook.updatePersonTags(person, newTags);
+        indicateAddressBookChanged();
+    }
+
     //@@author tpq95
     @Override
     public synchronized void deleteTag(ReadOnlyPerson person, Tag oldTag) throws PersonNotFoundException,
@@ -121,6 +131,15 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedTask);
 
         addressBook.updateTask(target, editedTask);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateTaskTags(ReadOnlyTask task, Set<Tag> newTags)
+            throws TaskNotFoundException, DuplicateTaskException {
+        requireAllNonNull(newTags);
+
+        addressBook.updateTaskTags(task, newTags);
         indicateAddressBookChanged();
     }
 

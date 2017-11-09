@@ -1186,7 +1186,6 @@ Use case resumes at step 2.
 3. AddressBook shows the list of persons with the details
 +
 Use case ends.
-
 *Extensions*
 
 [none]

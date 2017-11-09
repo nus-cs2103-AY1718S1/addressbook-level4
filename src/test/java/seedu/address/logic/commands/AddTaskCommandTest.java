@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -133,6 +134,12 @@ public class AddTaskCommandTest {
         }
 
         @Override
+        public void updatePersonTags(ReadOnlyPerson target, Set<Tag> newTags)
+                throws PersonNotFoundException, DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void deleteTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
                 DuplicatePersonException, TagNotFoundException {
             fail("This method must not be called.");
@@ -161,6 +168,12 @@ public class AddTaskCommandTest {
 
         @Override
         public void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask)
+                throws DuplicateTaskException, TaskNotFoundException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void updateTaskTags(ReadOnlyTask target, Set<Tag> allTags)
                 throws DuplicateTaskException, TaskNotFoundException {
             fail("This method should not be called");
         }

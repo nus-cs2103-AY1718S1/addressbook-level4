@@ -205,10 +205,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
-    /*public void removeTag(Tag t) throws TagNotFoundException {
-        tags.remove(t);
-    }*/
-
     //@@author tpq95
     /**
      * Remove {@code oldTag} from list of person stated by {@code indices} from
@@ -232,11 +228,52 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     //@@author
 
+    /**
+     * Updates the tags of an existing {@code person} in the addressbook by adding the {@code newTags}
+     * to the person's existing tags.
+     * @throws PersonNotFoundException if the person index provided is invalid.
+     */
+    public void updatePersonTags(ReadOnlyPerson person, Set<Tag> newTags)
+            throws PersonNotFoundException, DuplicatePersonException {
+
+        ReadOnlyPerson oldPerson = getPersonList().stream()
+                .filter(personInList -> person.equals(personInList))
+                .findAny()
+                .get();
+
+        Set<Tag> allTags = new HashSet<>(person.getTags());
+        allTags.addAll(newTags);
+        Person newPerson = new Person(oldPerson);
+        newPerson.setTags(allTags);
+
+        updatePerson(oldPerson, newPerson);
+    }
+
+    /**
+     * Updates the tags of an existing {@code task} in the task manager by adding the {@code newTags}
+     * to the task's existing tags.
+     * @throws TaskNotFoundException if the task index provided is invalid.
+     */
+    public void updateTaskTags(ReadOnlyTask task, Set<Tag> newTags)
+            throws TaskNotFoundException, DuplicateTaskException {
+
+        ReadOnlyTask oldTask = getTaskList().stream()
+                .filter(taskInList -> task.equals(taskInList))
+                .findAny()
+                .get();
+
+        Set<Tag> allTags = new HashSet<>(task.getTags());
+        allTags.addAll(newTags);
+        Task newTask = new Task(oldTask);
+        newTask.setTags(allTags);
+
+        updateTask(oldTask, newTask);
+    }
+
     ////task-level operations
 
-    //@@author raisa2010
     /**
-     * Adds a task to the address book.
+     * Adds a task to the task manager.
      *
      * @throws DuplicateTaskException if an equivalent task already exists.
      */

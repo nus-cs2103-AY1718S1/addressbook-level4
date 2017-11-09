@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -41,6 +42,10 @@ public interface Model {
             DuplicatePersonException, TagNotFoundException;
     //@@author
 
+    /** Updates tags of a given person */
+    void updatePersonTags(ReadOnlyPerson person, Set<Tag> newTags)
+            throws PersonNotFoundException, DuplicatePersonException;
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -74,6 +79,9 @@ public interface Model {
      */
     void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask)
             throws DuplicateTaskException, TaskNotFoundException;
+
+    void updateTaskTags(ReadOnlyTask task, Set<Tag> newTags)
+        throws DuplicateTaskException, TaskNotFoundException;
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyTask> getFilteredTaskList();
