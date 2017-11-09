@@ -22,7 +22,8 @@ public class MeetingContainsKeywordsPredicate implements Predicate<ReadOnlyMeeti
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(meeting.getName().fullName, keyword))
                 || keywords.stream()
                         .anyMatch(keyword ->
-                                StringUtil.containsWordIgnoreCase(meeting.getPersonName().fullName, keyword)));
+                                StringUtil.containsWordIgnoreCase(meeting.getPersonsMeet()
+                                        .get(0).getName().fullName, keyword)));
     }
 
     @Override

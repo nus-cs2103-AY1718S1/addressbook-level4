@@ -59,8 +59,13 @@ public class MeetingCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(meeting.nameProperty()));
         date.textProperty().bind(Bindings.convert(meeting.dateProperty()));
         place.textProperty().bind(Bindings.convert(meeting.placeProperty()));
-        person.textProperty().bind(Bindings.convert(meeting.personMeetProperty()));
-        phoneNum.textProperty().bind(Bindings.convert(meeting.phoneMeetProperty()));
+        if (meeting.getPersonsMeet().size() == 1) {
+            person.setText(meeting.getPersonsMeet().get(0).getName().toString());
+            phoneNum.setText(meeting.getPersonsMeet().get(0).getPhone().toString());
+        } else {
+            person.setText("Group Meeting");
+            phoneNum.setText("---");
+        }
         DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         LocalDateTime meetingDate = LocalDateTime.parse(meeting.getDate().toString(), formatter);
         LocalDateTime currDate = LocalDateTime.now();
