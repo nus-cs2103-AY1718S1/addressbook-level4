@@ -166,6 +166,11 @@ public class ModelManager extends ComponentManager implements Model {
         indicateMeetingListChanged();
     }
 
+    @Override
+    public void addAccessToken(String accessToken) {
+
+    }
+
     //@@author
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
