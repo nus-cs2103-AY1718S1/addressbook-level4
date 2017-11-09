@@ -43,15 +43,14 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
     }
 
+    //@@author vivekscl
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
         final ObservableList<ReadOnlyPerson> persons = this.persons.stream().map(p -> {
             try {
                 return p.toModelType();
             } catch (IllegalValueException e) {
-                e.printStackTrace();
-                //TODO: better error handling
-                return null;
+                throw new RuntimeException("Data constraints violated in the adapted person: \n" + e);
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(persons);
@@ -64,8 +63,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
                 return t.toModelType();
             } catch (IllegalValueException e) {
                 e.printStackTrace();
-                //TODO: better error handling
-                return null;
+                throw new RuntimeException("Data constraints violated in the adapted person: \n" + e);
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(tags);
