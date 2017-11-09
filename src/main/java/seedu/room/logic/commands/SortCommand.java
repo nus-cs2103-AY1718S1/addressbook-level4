@@ -2,6 +2,8 @@ package seedu.room.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import static seedu.room.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
 import seedu.room.logic.commands.exceptions.CommandException;
 
@@ -41,8 +43,10 @@ public class SortCommand extends UndoableCommand {
         } catch (AlreadySortedException e) {
             String failureMessage = String.format(MESSAGE_FAILURE, sortCriteria);
             throw new CommandException(failureMessage);
+        } catch (IllegalArgumentException e) {
+            String failureMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE);
+            throw new CommandException(failureMessage);
         }
-
     }
 
     @Override
