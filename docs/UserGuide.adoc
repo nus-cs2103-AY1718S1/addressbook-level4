@@ -463,10 +463,10 @@ Removes the remark for the first person.
 *Author*: Soh Hong Hwee
 
 User can now add a person with just name and phone details. +
-All other details that are not provided will be filled in by default values as shown in `Figure 3.5.1.1`.
+All other details that are not provided will be filled in by default values as shown in `Figure 3.15.1`.
 
 image::Default_for_empty_fields.png[width="400"]
-_Figure 3.5.1.1 : Default values for empty fields_
+_Figure 3.15.1 : Default values for empty fields_
 
 === Option Menu `Add photo` (v1.4)
 
