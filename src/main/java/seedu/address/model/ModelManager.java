@@ -129,6 +129,11 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
 
+        /**
+         * If any tags in addressbook contains the {@code keyword}
+         * then proceed to insert the contact(s) in {@code importantPersons} to the top of the addressbook
+         */
+
         if (importantPersons.size() != 0) {
             for (int j = 0; j < notImportantPersons.size(); j++) {
                 importantPersons.add(notImportantPersons.get(j));
@@ -185,7 +190,7 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author Choony93
     @Override
     public List<ReadOnlyPerson> getPersonListByPredicate(Predicate<ReadOnlyPerson> predicate) {
-        FilteredList<ReadOnlyPerson> filteredList = new FilteredList<ReadOnlyPerson>(filteredPersons);
+        FilteredList<ReadOnlyPerson> filteredList = new FilteredList<>(filteredPersons);
         filteredList.setPredicate(predicate);
         return FXCollections.unmodifiableObservableList(filteredList);
     }

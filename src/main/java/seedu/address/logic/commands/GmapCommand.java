@@ -10,7 +10,7 @@ import seedu.address.commons.events.ui.DisplayGmapEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ParserUtil;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.NameConsistsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -30,18 +30,18 @@ public class GmapCommand extends Command {
             + "Parameters: NAME \n"
             + "Example: " + COMMAND_WORD + " Bernice";
 
-    public static final String MESSAGE_GMAP_PERSON_SUCCESS = "Displayed Google map of Person: %1$s";
+    private static final String MESSAGE_GMAP_PERSON_SUCCESS = "Displayed Google map of Person: %1$s";
 
     private final boolean usingIndex;
     private Index targetIndex = Index.fromOneBased(Integer.parseInt("1"));
-    private NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(new ArrayList<>());
+    private NameConsistsKeywordsPredicate predicate = new NameConsistsKeywordsPredicate(new ArrayList<>());
 
     public GmapCommand(Index targetIndex) {
         this.usingIndex = true;
         this.targetIndex = targetIndex;
     }
 
-    public GmapCommand(NameContainsKeywordsPredicate predicate) {
+    public GmapCommand(NameConsistsKeywordsPredicate predicate) {
         this.usingIndex = false;
         this.predicate = predicate;
     }

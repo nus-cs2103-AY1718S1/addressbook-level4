@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
@@ -16,7 +17,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.DisplayGmapEvent;
 import seedu.address.commons.events.ui.PersonPanelDeleteEvent;
@@ -115,7 +115,6 @@ public class PersonCard extends UiPart<Region> {
     public void handleDelete() throws CommandException, ParseException {
         raise(new PersonPanelDeleteEvent(Index.fromOneBased(this.displayedIndex)));
     }
-    //@@author
 
     /**
      * Menu list option: GoogleMap
@@ -126,7 +125,9 @@ public class PersonCard extends UiPart<Region> {
     public void handleGoogleMap() {
         raise(new DisplayGmapEvent(Index.fromOneBased(this.displayedIndex)));
     }
+    //@@author
 
+    //@@author renkai91
     /**
      * Menu list option: add image
      * Raises PersonPanelOptionsDelete, handled by UIManager
@@ -139,10 +140,17 @@ public class PersonCard extends UiPart<Region> {
         if (selectedPic != null) {
             try {
                 person.getPicture().setPictureUrl(person.getName().toString() + person.getPhone().toString() + ".jpg");
-                ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
-                FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
-                Image newPicture = new Image(fileStream);
-                picture.setImage(newPicture);
+                if (person.getPicture().checkJarResourcePath()) {
+                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getJarPictureUrl()));
+                    FileInputStream fileStream = new FileInputStream(person.getPicture().getJarPictureUrl());
+                    Image newPicture = new Image(fileStream);
+                    picture.setImage(newPicture);
+                } else {
+                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
+                    FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
+                    Image newPicture = new Image(fileStream);
+                    picture.setImage(newPicture);
+                }
             } catch (Exception e) {
                 System.out.println(e + "Invalid File");
             }
@@ -150,7 +158,7 @@ public class PersonCard extends UiPart<Region> {
             System.out.println("Invalid File");
         }
     }
-
+    //@@author
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
@@ -167,24 +175,32 @@ public class PersonCard extends UiPart<Region> {
             initTags(person);
         });
     }
-
+    //@@author renkai91
     /**
      * Initialize image for ever person
      */
     private void initImage() {
         try {
-            File picFile = new File(person.getPicture().getPictureUrl());
-            FileInputStream fileStream = new FileInputStream(picFile);
-            Image personPicture = new Image(fileStream);
+            try {
+                InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
+                person.getPicture().setJarResourcePath();
+                Image personPicture = new Image(in);
+                picture.setImage(personPicture);
+            } catch (Exception e) {
+                File picFile = new File(person.getPicture().getPictureUrl());
+                FileInputStream fileStream = new FileInputStream(picFile);
+                Image personPicture = new Image(fileStream);
+                picture.setImage(personPicture);
+            }
             picture.setFitHeight(person.getPicture().PIC_HEIGHT);
             picture.setFitWidth(person.getPicture().PIC_WIDTH);
-            picture.setImage(personPicture);
+
             cardPane.getChildren().add(picture);
         } catch (Exception e) {
             System.out.println("Image not found");
         }
     }
-
+    //@@author
     /**
      * Initialize respective person tag style {@code Person}
      */
