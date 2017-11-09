@@ -514,6 +514,7 @@ public class UniquePhoneList implements Iterable<Phone> {
     <MenuBar fx:id="menuBar" styleClass="menu-bar" VBox.vgrow="NEVER">
         <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#handleExit" styleClass="menu-bar-item" text="Exit" />
+            <MenuItem fx:id="weatherForecast" mnemonicParsing="false" onAction="#handleWeather" text="Weather Forecast" />
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" styleClass="menu-bar-item" text="Help" />
@@ -539,12 +540,9 @@ public class UniquePhoneList implements Iterable<Phone> {
    </SplitPane>
 
   <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
-    <padding>
-      <Insets bottom="5" left="10" right="10" top="5" />
-    </padding>
   </StackPane>
 
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.5" VBox.vgrow="ALWAYS">
     <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
@@ -552,16 +550,7 @@ public class UniquePhoneList implements Iterable<Phone> {
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
       <GridPane minWidth="1000" prefHeight="650">
-          <AnchorPane minWidth="368.0" prefHeight="383.0" prefWidth="368.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
-            <children>
-               <ImageView fitHeight="283.0" fitWidth="231.0" nodeOrientation="INHERIT" pickOnBounds="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
-                  <image>
-                     <Image url="@../docs/images/default_photo.png" />
-                  </image>
-               </ImageView>
-            </children>
-          </AnchorPane>
-      <StackPane fx:id="personInformationPanelPlaceholder" prefHeight="383.0" prefWidth="198.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+      <StackPane fx:id="personInformationPanelPlaceholder" GridPane.columnIndex="1" GridPane.rowIndex="0" />
          <columnConstraints>
             <ColumnConstraints />
             <ColumnConstraints />
@@ -579,7 +568,8 @@ public class UniquePhoneList implements Iterable<Phone> {
     </StackPane>-->
   </SplitPane>
 
-  <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+
    <stylesheets>
       <URL value="@DarkTheme.css" />
       <URL value="@Extensions.css" />
