@@ -627,12 +627,14 @@ the added tags will be deleted afterwards.
 in any part of the command and the program will be able to execute the user's intention.
 ****
 // end::tagManagement[]
-// tag::searchbox
+
+// tag::searchbox[]
 === Searchbox
 
 The additional searchbox used for quick partial search/filter is a child of `UiParts` and is based on using `Listener` to detect any changes to `TextProperty`.
 
 Upon detecting changes in observables, a handler (using Lambda Expression) then passes them to `Logic` to execute the pfind command.
+
 [source,java]
 ----
 public SearchBox (Logic logic) {
@@ -675,6 +677,37 @@ Case (1) is to restore the default list of all contacts after users have used th
 
 The rest of the execution then, follows closely to the case where the command is executed through `CommandBox`
 
+==== Design Considerations
+
+**Aspect:** Approach user should follow to input the command +
+**Alternative 1 (current choice):** Track every single changes in `SearchBox` textField. +
+**Pros:** Intuitive, need no additional step as the person card below changes real-time. +
+**Cons:** Many handler calls, duplicate execution when retyping same characters +
+**Alternative 2:** Confirmation with `Enter` key or similar feedback. +
+**Pros:** Less calls and hence more effective logging. +
+**Cons:** May not be intuitive pressing `Enter` with partially filled input.
+
+---
+
+**Aspect:** Execution of `pfind` +
+**Alternative 1 (current choice):** Through `Logic` +
+**Pros:** Reusing code. Binding it to `Logic` will automatically update any related possible changes occuring in `Logic Component`. Also easier to perform tests. +
+**Cons:** More detoured execution, going through checking of command type and parser. +
+**Alternative 2:** Directly create `PartialCommand` object with trimmed list of arguments. +
+**Pros:** Lowers coupling and dependencies, less irrelevant logs.  +
+**Cons:** Lower accountability and assumes no future changes to `Command` signature +
+
+---
+
+**Aspect:** Position and choice of FXML container  +
+**Alternative 1 (current choice):** Follows `CommandBox` styleClass` which is in turn contained by `VBox` together with and directly above `PersonListCard`. +
+**Pros:** Similar aesthetic look to `CommandBox` to promote intuition to type in command, but within immediate proximity of person cards to suggest some sort of filtering. +
+**Cons:** Looks somewhat awkward if the person list is scrolled down (slight disjoint in seperation line and card) +
+**Alternative 2:** Popup textField ui upon hover +
+**Pros:** Can save space in case this software is run on very low resolution. Also prevent confusion of which textField to type in command. +
+**Cons:** More keyboard-based user may not notice the feature and/or movement in cursor may close the popup unintentionally. +
+// end::searchbox[]
+
 // tag::li[]
 === Addition of Life Insurances
 
@@ -697,6 +730,7 @@ Examples:
 
 // end::addli[]
 
+// tag::print[]
 === Addition of Print Command
 The print command enables the user to save his/her addressbook into a printable .txt file
 
@@ -734,40 +768,39 @@ int personIndex = 1;
 Print Command iterates through each contact in the addressbook and prints out his/her basic details first.
 For each person, print command then iterates through ALL insurance policies he is involved in (whether as an
 owner/beneficiary/insured) and prints out the policy details.
+// end::print[]
 
-==== Design Considerations
+// tag::why[]
+=== Addition of Why Command
+The Why Command throws the user with random information about the indexed person upon
+asking "why".
 
-**Aspect:** Approach user should follow to input the command +
-**Alternative 1 (current choice):** Track every single changes in `SearchBox` textField. +
-**Pros:** Intuitive, need no additional step as the person card below changes real-time. +
-**Cons:** Many handler calls, duplicate execution when retyping same characters +
-**Alternative 2:** Confirmation with `Enter` key or similar feedback. +
-**Pros:** Less calls and hence more effective logging. +
-**Cons:** May not be intuitive pressing `Enter` with partially filled input.
+A fun, interesting easter egg feature for the user to play with in LISA.
+----
+    public String getReason() {
+        Address address = this.getAddress();
+        Name name = this.getName();
+        Email email = this.getEmail();
+        DateOfBirth dob = this.getDateOfBirth();
+        Random randomGenerator = new Random();
+        int randomInt = randomGenerator.nextInt(3);
+        if (randomInt == 0) {
+            this.reason = String.format(SHOWING_WHY_MESSAGE, name, address);
+        } else if (randomInt == 1) {
+            this.reason = String.format(SHOWING_WHY_MESSAGE_2, name, dob);
+        } else if (randomInt == 2) {
+            this.reason = String.format(SHOWING_WHY_MESSAGE_3, name, email);
+        }
+        return reason;
+    }
+----
+Why command takes in the index of a person, for e.g. why 1. The command parser then parses the index
+(in a similar way to edit) and runs through a random "reason" generator in getReason() in Person.java.
+For if 1, 2 or 3 is generated by randomGenerator.nextInt(3),  then the persons address, dob or email will
+be returned respectively, for example, "Because John Doe lives in Clementi Ave 2".
+//end::why[]
 
----
-
-**Aspect:** Execution of `pfind` +
-**Alternative 1 (current choice):** Through `Logic` +
-**Pros:** Reusing code. Binding it to `Logic` will automatically update any related possible changes occuring in `Logic Component`. Also easier to perform tests. +
-**Cons:** More detoured execution, going through checking of command type and parser. +
-**Alternative 2:** Directly create `PartialCommand` object with trimmed list of arguments. +
-**Pros:** Lowers coupling and dependencies, less irrelevant logs.  +
-**Cons:** Lower accountability and assumes no future changes to `Command` signature +
-
----
-
-**Aspect:** Position and choice of FXML container  +
-**Alternative 1 (current choice):** Follows `CommandBox` styleClass` which is in turn contained by `VBox` together with and directly above `PersonListCard`. +
-**Pros:** Similar aesthetic look to `CommandBox` to promote intuition to type in command, but within immediate proximity of person cards to suggest some sort of filtering. +
-**Cons:** Looks somewhat awkward if the person list is scrolled down (slight disjoint in seperation line and card) +
-**Alternative 2:** Popup textField ui upon hover +
-**Pros:** Can save space in case this software is run on very low resolution. Also prevent confusion of which textField to type in command. +
-**Cons:** More keyboard-based user may not notice the feature and/or movement in cursor may close the popup unintentionally. +
-// end::searchbox[]
-
-// tag::saveloadpdf
-
+// tag::pdfSaveLoad[]
 === Save/Load (contract) pdf file
 
 Allows for pdf file of the contract to be added to the project, and accessed by clicking on the link on insurance profile page.
@@ -780,32 +813,35 @@ In the case that the file exist in the project folder, the entry for contract fi
 
 [source,java]
 ----
- private void initializeContractFile(ReadOnlyInsurance insurance) {
-        insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractPath());
-        if (isFileExists(insuranceFile)) {
-            activateLinkToInsuranceFile();
-        } else {
-            contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    FileChooser.ExtensionFilter extFilter =
-                            new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
-                    FileChooser chooser = new FileChooser();
-                    chooser.getExtensionFilters().add(extFilter);
-                    File openedFile = chooser.showOpenDialog(null);
-                    activateLinkToInsuranceFile();
+  private void initializeContractFile(ReadOnlyInsurance insurance) {
+         insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractPath());
+         if (isFileExists(insuranceFile)) {
+             activateLinkToInsuranceFile();
+         } else {
+             contractPath.getStyleClass().clear();
+             contractPath.getStyleClass().add("missing-file");
+             contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                 @Override
+                 public void handle(MouseEvent event) {
+                     FileChooser.ExtensionFilter extFilter =
+                             new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+                     FileChooser chooser = new FileChooser();
+                     chooser.getExtensionFilters().add(extFilter);
+                     File openedFile = chooser.showOpenDialog(null);
+                     activateLinkToInsuranceFile();
 
-                    if (isFileExists(openedFile)) {
-                        try {
-                            Files.copy(openedFile.toPath(), insuranceFile.toPath());
-                        } catch (IOException ex) {
-                            logger.info("Unable to open at path: " + openedFile.getAbsolutePath());
-                        }
-                    }
-                }
-            });
+                     if (isFileExists(openedFile)) {
+                         try {
+                             Files.copy(openedFile.toPath(), insuranceFile.toPath());
+                         } catch (IOException ex) {
+                             logger.info("Unable to open at path: " + openedFile.getAbsolutePath());
+                         }
+                     }
+                 }
+             });
 
-        }
+         }
+     }
 ----
 
 As seen, the `File insuranceFile` attempts to find the file in the folder containing all save files.
@@ -817,18 +853,102 @@ Upon successful retrieval of the file, or adding of the file if it does not exis
 
 [source,java]
 ----
- private void activateLinkToInsuranceFile() {
-        contractPath.getStyleClass().add("particular-link");
-        contractPath.setOnMouseClicked(event -> {
-            try {
-                Desktop.getDesktop().open(insuranceFile);
-            } catch (IOException ee) {
-                logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
+private void activateLinkToInsuranceFile() {
+         contractPath.getStyleClass().clear();
+         contractPath.getStyleClass().add("valid-file");
+         contractPath.setOnMouseClicked(event -> {
+             try {
+                 Desktop.getDesktop().open(insuranceFile);
+             } catch (IOException ee) {
+                 logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
+             }
+         });
+     }
+----
+// end::pdfSaveLoad[]
+
+// tag::switchBetweenProfileAndInsurance[]
+=== Switching middle panel between Profile and Insurance page
+
+Implemented by raising events when one of the following events is detected
+
+1) `Person` card selected from left panel : `PersonPanelSelectionChangedEvent`
+
+2) `Insurance` card selected from right panel : `InsurancePanelSelectionChangedEvent`
+
+3) `Person` name selected from `InsuranceProfilePanel` when bound to middle panel : `PersonNameClickedEvent`
+
+4) `Insurance` selected from `ProfilePanel` when bound to middle panel : `InsuranceClickedEvent`
+
+Each of these events call their own respective event handler and raise `SwitchToProfilePanelRequestEvent` or `SwitchToInsurancePanelRequestEvent` as required.
+These 2 events are picked up by `MainWindow` which switch the middle panel placeholder binding to respective node.
+[source, java]
+----
+ @Subscribe
+    private void handleSwitchToProfilePanelRequestEvent(SwitchToProfilePanelRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        middlePanelPlaceholder.getChildren().clear();
+        middlePanelPlaceholder.getChildren().add(profilePanel.getRoot());
+    }
+
+    @Subscribe
+    private void handleSwitchToInsurancePanelRequestEvent(SwitchToInsurancePanelRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        middlePanelPlaceholder.getChildren().clear();
+        middlePanelPlaceholder.getChildren().add(insuranceProfilePanel.getRoot());
+    }
+----
+// end::switchBetweenProfileAndInsurance[]
+
+// tag::restrictTabToTextField[]
+
+=== Restrict 'Tab' key to switching only between the textfields
+
+This feature is implemented in `MainWindow` in order to circumvent direct coupling between `CommandBox` and `SearchBox` class. In order to locate the nodes for this two textfields, `lookup` function from `Scene` is utilized.
+
+[source, java]
+----
+    public void setTransversableTextFields() {
+        commandTextField = (TextField) primaryStage.getScene().lookup(COMMANDBOX_TEXTFIELD_ID);
+        searchTextField = (TextField) primaryStage.getScene().lookup(SEARCHBOX_TEXTFIELD_ID);
+    }
+----
+
+[NOTE]
+The function above must be called after the `show()` function
+
+The two static arguments are their respective `fx:id`
+
+[source, java]
+----
+ private static final String COMMANDBOX_TEXTFIELD_ID = "#commandTextField";
+     private static final String SEARCHBOX_TEXTFIELD_ID = "#searchTextField";
+----
+
+Handle for `KeyEvent` is then written in such the way that Tab will be handled by MainWindow and not its children. After setting up the nodes, all is left is to call `requestFocus()` accordingly.
+
+[source, java]
+----
+ getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode().equals(KeyCode.TAB)) {
+                if (commandTextField.isFocused()) {
+                    searchTextField.requestFocus();
+                }
+                else {
+                    commandTextField.requestFocus();
+                }
+                event.consume();
+            }
+            if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
+                menuItem.getOnAction().handle(new ActionEvent());
+                event.consume();
             }
         });
     }
 ----
-// end::saveloadpdf[]
+// end::restrictTabToTextField[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism

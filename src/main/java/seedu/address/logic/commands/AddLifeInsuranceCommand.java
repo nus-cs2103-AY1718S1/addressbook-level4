@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BENEFICIARY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTRACT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRY_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURED;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PREMIUM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SIGNING_DATE;
@@ -27,18 +28,20 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)
             + ": Adds an insurance to Lisa. "
             + "Parameters: "
+            + PREFIX_NAME + "INSURANCE_NAME "
             + PREFIX_OWNER + "OWNER "
             + PREFIX_INSURED + "INSURED "
             + PREFIX_BENEFICIARY + "BENEFICIARY "
-            + PREFIX_CONTRACT + "CONTRACT"
+            + PREFIX_CONTRACT + "CONTRACT "
             + PREFIX_PREMIUM + "PREMIUM "
             + PREFIX_SIGNING_DATE + "SIGNING_DATE "
             + PREFIX_EXPIRY_DATE + "EXPIRY_DATE\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_OWNER + "Alex Yeoh"
+            + PREFIX_NAME + "Life Insurance "
+            + PREFIX_OWNER + "Alex Yeoh "
             + PREFIX_INSURED + "John Doe "
             + PREFIX_BENEFICIARY + "Mary Jane "
-            + PREFIX_CONTRACT + "normal_plan.pdf"
+            + PREFIX_CONTRACT + "normal_plan.pdf "
             + PREFIX_PREMIUM + "500 "
             + PREFIX_SIGNING_DATE + "01 11 2017 "
             + PREFIX_EXPIRY_DATE + "01 11 2018 ";
@@ -71,6 +74,13 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
                 //&& toAdd.equals(((AddLifeInsuranceCommand) other).toAdd));
         //TODO: need to compare every nonstatic class member.
     }
+
+    //@@author arnollim
+    @Override
+    public String toString() {
+        return COMMAND_WORD;
+    }
+    //@@author
 
     /**
      * Check if all the Person parameters required to create an insurance are inside the list

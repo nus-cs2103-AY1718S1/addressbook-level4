@@ -18,6 +18,7 @@ import seedu.address.commons.events.ui.InsurancePanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonNameClickedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.commands.SelectCommand.PanelChoice;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -64,13 +65,13 @@ public class PersonListPanel extends UiPart<Region> {
         });
     }
 
-    //@@author RSJunior37
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
+        if (event.panelChoice == PanelChoice.PERSON) {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            scrollTo(event.targetIndex);
+        }
     }
-    //@@author
 
     //@@author Juxarius
     @Subscribe
@@ -86,6 +87,7 @@ public class PersonListPanel extends UiPart<Region> {
         if (filtered.size() < 1) {
             return;
         } else {
+            personListView.scrollTo(filtered.get(0));
             personListView.getSelectionModel().select(filtered.get(0));
         }
     }
