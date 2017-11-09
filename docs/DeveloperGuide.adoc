@@ -514,16 +514,21 @@ The calendar mechanism is facilitated by the `DatePickerSkin` skin instance whic
 
 Suppose the address book is modified (e.g. using `add`, `edit`, `addtask`, `deletetask`).
 
-After the modification of the address book i.e. saving of data to the `addressbook.xml` file, `ObservableList` of `Person` and `Task` classes stored in the address book are passed into the `CalendarPanel` Ui.
+After the modification of the address book i.e. saving of data to the `addressbook.xml` file, `ObservableList` of `Person` and `Task` classes stored in the address book are passed into the `CalendarPanel` Ui through `Model`.
 
 Next, `getDayCellFactory` will format the `DateCell` of the `DatePicker`. The formatting is done with `Birthday` and `Deadline` as conditions and colour and tooltip of `DateCell` as variables to be change by the formatter.
 
-[NOTE] Implementation of finding related person/task when selecting of coloured `DateCell` is still ongoing.
+By selecting the date on the calendar, the date value from the `DatePicker` will be captured and be parsed as a string. The string is then pass to `Logic` to execute the `FindCommand` which will show all persons and tasks having `Birthday` and `Deadline` on that specific date.
+
+[NOTE] Implementation of CLI for the calendar is still ongoing.
 
 The following are examples of colour and tooltip of the calendar:
 
 image::CalendarDeadlineTooltip.png[width="150", height"100"]
+Figure 4.11.a: Tooltip and colour for Deadline
+
 image::CalendarBirthdayTooltip.png[width="150", height"100"]
+Figure 4.11.b: Tooltip and colour for Birthday
 
 [discrete]
 ==== Design Considerations

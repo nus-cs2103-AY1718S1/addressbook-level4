@@ -157,7 +157,7 @@ __Constraints:__
 // end::birthday[]
 
 // tag::findtag[]
-==== Finding contacts by name: `find`
+==== Finding contacts: `find`
 
 Whether you’re a social butterfly or a networking pro, sifting through contacts can be a tedious task. +
 
@@ -189,7 +189,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 * `find friends` +
 Returns any person having tags `friends` or `Friends`
 * `find 17-07` +
-Returns any person having birthday of `17-07`
+Returns any person having birthday on `17-07`
 
 __Constraints:__
 
@@ -252,28 +252,30 @@ __Constraints__
 * Every TAG must have a prefix.
 ****
 
+// tag::detag[]
 ==== Removing tags from multiple contacts : `detag`
 
-To delete the specified tag of persons identified by the index number, use: +
+When a tag is no longer in used, you can use the detag command to remove the tag from multiple contacts. +
 
-Format: `detag [INDEX]... [t/TAG]`
+Format: `detag INDEX... [t/TAG]`
 
-For example:
+Examples:
 
 * `list` +
 `detag 2 t/friends` +
-Deletes the `friends` tag of the 2nd person in the address book.
+Deletes the [`friends`] tag of the 2nd contact in the address book.
 
 * `find Betsy` +
 `detag 1, 2, 4 t/OwesMoney` +
-Deletes the `OwesMoney` tag of the 1st, 2nd and 4th person in the results of the `find` command.
+Deletes the [`OwesMoney`] tag of the 1st, 2nd and 4th contact in the result list of the `find` command.
 
 __Constraints__
 
-****
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
+Note the following constraints when trying to remove tag: +
+* INDEX refers to the index number shown in the most recent listing. +
+* The index *must be a positive integer* 1, 2, 3, ... +
+* Every index must be separated by a comma.
+// end::detag[]
 
 ==== Editing contacts : `edit` +
 
@@ -610,6 +612,47 @@ Format: `clear`
 To exit the program, without using the pointer, use: +
 
 Format: `exit`
+
+// tag::calendar[]
+=== Using the calendar
+
+A calendar is useful for marking the important dates. When you have many deadlines and birthdays to take note, the calendar allows you to view all these important dates at a glance. +
+
+==== Marking the dates
+
+With many contacts and tasks to manage, differentiating the birthdays and deadlines on the calendar can be done with the use of colours.
+
+[NOTE]
+The marking of date is done automatically when a contact/task is added, edited or deleted.
+
+Examples:
+
+* A task has deadline on `17-07-2017`. +
+The corresponding date on the calendar is marked *red*. +
+* A contact has birthday on `09-12-2017`. +
+The corresponding date on the calendar is marked *pink*. +
+* `17-07-2017` is a date that is a task's deadline and a contact's birthday. +
+The corresponding date on the calendar is marked *yellow*. +
+
+__Constraints__
+
+The colour of the date on the calendar is *only updated* when next/previous button for month/year is clicked or when a date on the calendar is clicked.
+
+==== Clicking of date on the calendar
+
+When there is many deadlines or birthdays on the same date, instead of switching between `CommandMode` and using the `find` command, you can just click on the date itself.
+
+Examples:
+
+* `17` on the calendar that represents `17-07-2017` is being clicked. +
+Returns task list and contacts list that contains tasks with deadline on `17-07-2017` and contacts with birthday on `17-07-2017` respectively.
+
+__Constraint__
+
+When a date is clicked and it is not a deadline or not a birthday or both, an empty task list or an empty contacts list or both will be shown, which will be represented by a blank field on the application. +
+
+To return back to original task list or contacts list, you can use the `list` command.
+// end::calendar[]
 
 === Saving the data
 
