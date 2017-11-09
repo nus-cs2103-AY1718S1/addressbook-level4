@@ -6,6 +6,7 @@ import static java.util.Objects.requireNonNull;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
@@ -26,8 +27,7 @@ public class PhotoStorage {
     private File fileWriter = null;
     private BufferedImage imageReader = null;
     private String uniqueFileName;
-    public PhotoStorage(String filePath, int uniqueFileName) {
-        this.uniqueFileName = Integer.toString(uniqueFileName);
+    public PhotoStorage(String filePath) {
         this.filePath = filePath;
         imageReader = new BufferedImage(300, 400, BufferedImage.TYPE_INT_ARGB);
         allowedExt =  new String[]{"jpg", "png", "JPEG"};
@@ -39,6 +39,7 @@ public class PhotoStorage {
         if (!ExtensionCheckerUtil.isOfType(ext, allowedExt)) {
             throw new IOException(WRITE_FAILURE_MESSAGE);
         }
+        uniqueFileName = generateUniqueFileName();
         String newFilePath = "displaypictures/" + uniqueFileName + "." + ext;
         try {
             fileReader = new File(filePath);
@@ -49,5 +50,12 @@ public class PhotoStorage {
         } catch (IOException e) {
             throw new IOException(WRITE_FAILURE_MESSAGE);
         }
+    }
+
+    /** generates a unique file path that is to be saved into displaypictures */
+    private String generateUniqueFileName() {
+        UUID uuid = UUID.randomUUID();
+        String randomUUIDString = uuid.toString();
+        return randomUUIDString;
     }
 }
