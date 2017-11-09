@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import java.util.List;
 import java.util.Properties;
 
-import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.internet.AddressException;
@@ -33,7 +32,7 @@ public class ShareCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Email Sent!";
 
-    public static final String MESSAGE_EMAILNOTVALID= "Email address is not valid!";
+    public static final String MESSAGE_EMAILNOTVALID = "Email address is not valid!";
 
     private static final String MESSAGE_FAILURE = "Email was not sent!";
 
@@ -109,11 +108,9 @@ public class ShareCommand extends Command {
             if (isValidEmailAddress(to)) {
                 sendEmail = new SendEmail(to, person);
                 sendEmail.start();
-            }
-            else {
+            } else {
                 return new CommandResult(MESSAGE_EMAILNOTVALID);
             }
-
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }

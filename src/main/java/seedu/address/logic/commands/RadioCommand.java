@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import java.util.Arrays;
 
-import javafx.scene.media.MediaPlayer;
 import seedu.address.logic.Radio;
 
 //@@author hanselblack
@@ -25,10 +24,7 @@ public class RadioCommand extends Command {
 
     private static String messageSuccess = "Radio Playing";
 
-    private static MediaPlayer mediaPlayer;
     private static Radio music;
-
-    private static int trackNumber = 1;
 
     private String command;
     private String genre = "pop";
@@ -44,13 +40,12 @@ public class RadioCommand extends Command {
     }
 
     /**
-     * Returns whether music is currently playing.
+     * Stops radio playing in the player
      */
-    public static boolean isPlaying() {
-        if (mediaPlayer == null) {
-            return false;
+    public static void stopRadioPlayer() {
+        if (music != null) {
+            music.stop();
         }
-        return mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING;
     }
 
     @Override
@@ -58,23 +53,24 @@ public class RadioCommand extends Command {
 
         boolean genreExist = Arrays.asList(genreList).contains(genre);
         switch (command) {
-            case "play":
-                if (music != null) {
-                    music.stop();
-                }
-                if (genreExist) {
-                    music = new Radio(genre);
-                    music.start();
+        case "play":
+            if (MusicCommand.isMusicPlaying()) {
+                MusicCommand.stopMusicPlayer();
+            }
+            stopRadioPlayer();
+            if (genreExist) {
+                music = new Radio(genre);
+                music.start();
 
-                    messageSuccess = genre.toUpperCase() + " Radio Playing";
-                    return new CommandResult(messageSuccess);
-                }
-                return new CommandResult(MESSAGE_USAGE);
-            case "stop":
-                music.stop();
-                return new CommandResult(MESSAGE_STOP);
-            default:
-                return new CommandResult(MESSAGE_USAGE);
+                messageSuccess = genre.toUpperCase() + " Radio Playing";
+                return new CommandResult(messageSuccess);
+            }
+            return new CommandResult(MESSAGE_USAGE);
+        case "stop":
+            music.stop();
+            return new CommandResult(MESSAGE_STOP);
+        default:
+            return new CommandResult(MESSAGE_USAGE);
         }
     }
 }

@@ -15,10 +15,12 @@ import seedu.address.commons.core.LogsCenter;
  */
 public class Radio extends Thread {
 
+
     private String genre;
     private String radioStreamUrl;
     private Player player;
     private final Logger logger = LogsCenter.getLogger(Radio.class);
+    private volatile boolean shutdown = false;
 
     public Radio(String genre) {
         this.genre = genre;
@@ -57,7 +59,7 @@ public class Radio extends Thread {
             player = new Player(in);
             player.play();
         } catch (IOException e) {
-            logger.info("Invalid IO for BufferedInputStream: "+ radioStreamUrl);
+            logger.info("Invalid IO for BufferedInputStream: " + radioStreamUrl);
         } catch (JavaLayerException e) {
             logger.info("JavaLayerExeception: Invalid File Type for Radio Player");
         }

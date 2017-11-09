@@ -101,7 +101,7 @@ public class HintParser {
 
         case MusicCommand.COMMAND_WORD:
             if (arguments.isEmpty()) {
-                return commandWord + " " + (MusicCommand.isPlaying() ? "pause" : "play");
+                return commandWord + " " + (MusicCommand.isMusicPlaying() ? "pause" : "play");
             }
             hint = autocompleteFromList(arguments.trim(), new String[] {"play", "pause", "stop"});
             return commandWord + (hint != null ? " " + hint : arguments);

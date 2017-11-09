@@ -18,6 +18,10 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
+//@@author hanselblack
+/**
+ * Creates a new thread to send email, this is to prevent UI thread from freezing
+ */
 public class SendEmail extends Thread {
 
     private String recipientEmail;
@@ -107,9 +111,7 @@ public class SendEmail extends Thread {
             message.setContent(multipart);
 
             Transport.send(message);
-
-        }
-        catch (MessagingException msg) {
+        } catch (MessagingException msg) {
             msg.printStackTrace();
         }
     }
