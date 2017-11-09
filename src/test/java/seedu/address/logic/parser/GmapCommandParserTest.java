@@ -10,7 +10,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import seedu.address.logic.commands.GmapCommand;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.NameConsistsKeywordsPredicate;
 
 /**
  * Test scope: similar to {@code DeleteCommandParserTest}.
@@ -27,7 +27,7 @@ public class GmapCommandParserTest {
         assertParseSuccess(parser, "1", new GmapCommand(INDEX_FIRST_PERSON));
 
         GmapCommand expectedFindCommand =
-                new GmapCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+            new GmapCommand(new NameConsistsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
         assertParseSuccess(parser, "Alice Bob", expectedFindCommand);
     }
 
