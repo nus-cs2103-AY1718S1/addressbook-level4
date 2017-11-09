@@ -76,6 +76,147 @@ public class ListByBloodtypeCommandTest {
 
 }
 ```
+###### \java\seedu\address\logic\commands\RelationshipCommandTest.java
+``` java
+/**
+  * Contains integration tests (interaction with the Model) and unit tests for RelationshipCommand.
+  */
+public class RelationshipCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void executeAddRelationshipSuccess() throws Exception {
+        Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
+                .withRelationship("Some relationship").build();
+
+        RelationshipCommand relationshipCommand =
+                prepareCommand(INDEX_FIRST_PERSON, editedPerson.getRelationship().value);
+
+        String expectedMessage = String.format(RelationshipCommand.MESSAGE_ADD_RELATIONSHIP_SUCCESS, editedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+
+        assertCommandSuccess(relationshipCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void executeDeleteRelationshipSuccess() throws Exception {
+        Person editedPerson = new Person(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        editedPerson.setRelationship(new Relationship(""));
+
+        RelationshipCommand relationshipCommand =
+                prepareCommand(INDEX_FIRST_PERSON, editedPerson.getRelationship().toString());
+
+        String expectedMessage = String.format(RelationshipCommand.MESSAGE_DELETE_RELATIONSHIP_SUCCESS, editedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+
+        assertCommandSuccess(relationshipCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void executeValidIndexFilteredListEditRelationshipSuccess() throws Exception {
+        showFirstPersonOnly(model);
+
+        ReadOnlyPerson personWithRelation = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person editedPerson = new PersonBuilder(personWithRelation).withRelationship("Test").build();
+        RelationshipCommand relationshipCommand = prepareCommand(INDEX_FIRST_PERSON,
+                editedPerson.getRelationship().toString());
+
+        String expectedMessage = String.format(RelationshipCommand
+                .MESSAGE_ADD_RELATIONSHIP_SUCCESS, editedPerson);
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        showFirstPersonOnly(expectedModel);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), personWithRelation);
+
+        assertCommandSuccess(relationshipCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void executeValidIndexFilteredListDeleteRelationshipSuccess() throws Exception {
+        showFirstPersonOnly(model);
+
+        ReadOnlyPerson personWithRelation = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person editedPerson = new PersonBuilder(personWithRelation).withRelationship("").build();
+        RelationshipCommand relationshipCommand = prepareCommand(INDEX_FIRST_PERSON,
+                editedPerson.getRelationship().toString());
+
+        String expectedMessage = String.format(RelationshipCommand
+                .MESSAGE_DELETE_RELATIONSHIP_SUCCESS, personWithRelation);
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        showFirstPersonOnly(expectedModel);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), personWithRelation);
+
+        assertCommandSuccess(relationshipCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void executeInvalidPersonIndexUnfilteredListFailure() throws Exception {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        RelationshipCommand relationshipCommand = prepareCommand(outOfBoundIndex, VALID_RELATIONSHIP_BOB);
+
+        assertCommandFailure(relationshipCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    /**
+      * Edit filtered list where index is larger than size of filtered list,
+      * but smaller than size of address book
+      */
+    @Test
+    public void executeInvalidPersonIndexFilteredListFailure() throws Exception {
+        showFirstPersonOnly(model);
+        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        RelationshipCommand relationshipCommand = prepareCommand(outOfBoundIndex, VALID_RELATIONSHIP_BOB);
+
+        assertCommandFailure(relationshipCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+        final RelationshipCommand standardCommand =
+                new RelationshipCommand(INDEX_FIRST_PERSON, new Relationship(VALID_RELATIONSHIP_AMY));
+
+        // same values -> returns true
+        RelationshipCommand commandWithSameValues =
+                new RelationshipCommand(INDEX_FIRST_PERSON, new Relationship(VALID_RELATIONSHIP_AMY));
+        assertTrue(standardCommand.equals(commandWithSameValues));
+
+        // same object -> returns true
+        assertTrue(standardCommand.equals(standardCommand));
+
+        // different types -> returns false
+        assertFalse(standardCommand.equals(new ClearCommand()));
+
+        // different index -> returns false
+        assertFalse(standardCommand.equals(new RelationshipCommand(INDEX_SECOND_PERSON,
+                new Relationship(VALID_RELATIONSHIP_AMY))));
+
+        // different descriptor -> returns false
+        assertFalse(standardCommand.equals(new RelationshipCommand(INDEX_FIRST_PERSON,
+                new Relationship(VALID_RELATIONSHIP_BOB))));
+
+        // null
+        assertNotNull(standardCommand);
+    }
+
+    /**
+      * Returns an {@code RelationshipCommand} with parameters {@code index} and {@code relation}
+      */
+    private RelationshipCommand prepareCommand(Index index, String relation) {
+        RelationshipCommand relationshipCommand = new RelationshipCommand(index, new Relationship(relation));
+        relationshipCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return relationshipCommand;
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
@@ -113,6 +254,36 @@ public class ListByBloodtypeCommandTest {
 
         assertEquals(expectedBloodType, actualBloodType.get());
     }
+```
+###### \java\seedu\address\logic\parser\RelationshipCommandParserTest.java
+``` java
+public class RelationshipCommandParserTest {
+    private RelationshipCommandParser parser = new RelationshipCommandParser();
+
+    @Test
+    public void parseIndexSpecifiedFailure() throws Exception {
+        final Relationship relation = new Relationship("Some relation.");
+
+        // have relations
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_RELATIONSHIP.toString() + " " + relation;
+        RelationshipCommand expectedCommand = new RelationshipCommand(INDEX_FIRST_PERSON, relation);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // no relations
+        userInput = targetIndex.getOneBased() + " " + PREFIX_RELATIONSHIP.toString();
+        expectedCommand = new RelationshipCommand(INDEX_FIRST_PERSON, new Relationship(""));
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parseNoFieldSpecifiedFailure() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RelationshipCommand.MESSAGE_USAGE);
+
+        // nothing at all
+        assertParseFailure(parser, RelationshipCommand.COMMAND_WORD, expectedMessage);
+    }
+}
 ```
 ###### \java\seedu\address\model\person\BloodtypeContainsKeywordPredicateTest.java
 ``` java
@@ -215,6 +386,33 @@ public class BloodtypeTest {
         assertTrue(Bloodtype.isValidBloodType("aB+"));
 
 
+    }
+}
+```
+###### \java\seedu\address\model\person\RelationshipTest.java
+``` java
+public class RelationshipTest {
+
+    @Test
+    public void equals() {
+        Relationship relation = new Relationship("John Doe");
+
+        // same object -> returns true
+        assertTrue(relation.equals(relation));
+
+        // same values -> returns true
+        Relationship relationshipCopy = new Relationship(relation.value);
+        assertTrue(relation.equals(relationshipCopy));
+
+        // different types -> returns false
+        assertFalse(relation.equals(1));
+
+        // different person -> returns false
+        Relationship differentRelationship = new Relationship("Mary Jane");
+        assertFalse(relation.equals(differentRelationship));
+
+        // null
+        assertNotNull(relation);
     }
 }
 ```

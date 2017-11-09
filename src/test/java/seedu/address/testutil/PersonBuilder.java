@@ -14,6 +14,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Relationship;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
@@ -30,6 +31,7 @@ public class PersonBuilder {
     public static final String DEFAULT_BLOODTYPE = "O";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_REMARK = "";
+    public static final String DEFAULT_RELATIONSHIP = "";
     public static final String DEFAULT_DATE = "2018/01/01 00:00";
     private Person person;
 
@@ -42,9 +44,11 @@ public class PersonBuilder {
             Bloodtype defaultBloodType = new Bloodtype(DEFAULT_BLOODTYPE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
+            Relationship defaultRelationship = new Relationship(DEFAULT_RELATIONSHIP);
             List<Appointment> defaultAppointments = new ArrayList<>();
             this.person = new Person(defaultName, defaultPhone, defaultEmail,
-                defaultAddress, defaultBloodType, defaultTags, defaultRemark, defaultAppointments);
+                defaultAddress, defaultBloodType, defaultTags, defaultRemark,
+                    defaultRelationship, defaultAppointments);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -122,6 +126,14 @@ public class PersonBuilder {
      */
     public PersonBuilder withRemark(String remark) {
         this.person.setRemark(new Remark(remark));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Relationship} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRelationship(String relation) {
+        this.person.setRelationship(new Relationship(relation));
         return this;
     }
 

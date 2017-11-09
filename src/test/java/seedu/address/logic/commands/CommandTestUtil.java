@@ -42,6 +42,8 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_REMARK_AMY = "";
     public static final String VALID_REMARK_BOB = "loves coffee";
+    public static final String VALID_RELATIONSHIP_AMY = "Bob";
+    public static final String VALID_RELATIONSHIP_BOB = "Amy";
     public static final String VALID_APPOINTMENT_AMY = "Lunch, tomorrow 5pm";
     public static final String VALID_APPOINTMENT_BOB = "Dinner, tomorrow 5pm to 7pm";
 

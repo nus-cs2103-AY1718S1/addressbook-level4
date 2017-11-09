@@ -17,6 +17,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Relationship;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
@@ -37,6 +38,8 @@ public class XmlAdaptedPerson {
     private String remark;
     @XmlElement(required = true)
     private String bloodType;
+    @XmlElement(required = true)
+    private String relation;
     @XmlElement
     private List<XmlAdaptedAppointment> appointments = new ArrayList<>();
 
@@ -64,6 +67,7 @@ public class XmlAdaptedPerson {
         bloodType = source.getBloodType().type;
         tagged = new ArrayList<>();
         remark = source.getRemark().value;
+        relation = source.getRelationship().value;
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
@@ -90,10 +94,11 @@ public class XmlAdaptedPerson {
         final Bloodtype bloodType = new Bloodtype(this.bloodType);
         final Set<Tag> tags = new HashSet<>(personTags);
         final Remark remark = new Remark(this.remark);
+        final Relationship relation = new Relationship(this.relation);
         final List<Appointment> personAppointmentList = new ArrayList<>();
         for (XmlAdaptedAppointment appointment : appointments) {
             personAppointmentList.add(appointment.toModelType());
         }
-        return new Person(name, phone, email, address, bloodType, tags, remark, personAppointmentList);
+        return new Person(name, phone, email, address, bloodType, tags, remark, relation, personAppointmentList);
     }
 }

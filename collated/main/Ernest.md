@@ -45,6 +45,97 @@ public class ListByBloodtypeCommand extends Command {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\RelationshipCommand.java
+``` java
+/**
+  * Changes the relationship of an existing person in the address book.
+  */
+public class RelationshipCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "relation";
+    public static final String COMMAND_ALIAS = "rel";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the relationship of the person identified "
+            + "by the index number used in the last person listing. "
+            + "Existing relationship will be overwritten by the input.\n"
+            + "Parameters: INDEX (must be a positive integer) "
+            + PREFIX_RELATIONSHIP + "[RELATIONSHIP]\n"
+            + "Example 1: " + COMMAND_WORD + " 1 "
+            + PREFIX_RELATIONSHIP + "John Doe"
+            + "Example 2: " + COMMAND_ALIAS + " 1 "
+            + PREFIX_RELATIONSHIP + "Mary Jane"
+            + "Example 3: " + COMMAND_WORD + " 1 "
+            + PREFIX_RELATIONSHIP;
+
+    public static final String MESSAGE_ADD_RELATIONSHIP_SUCCESS = "Added relationship to Person: %1$s";
+    public static final String MESSAGE_DELETE_RELATIONSHIP_SUCCESS = "Removed relationship from Person: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+
+    private final Index index;
+    private final Relationship relation;
+
+    /**
+      * @param index of the person in the filtered person list to edit the relation
+      * @param relation of the person
+      */
+    public RelationshipCommand(Index index, Relationship relation) {
+        requireNonNull(index);
+        requireNonNull(relation);
+
+        this.index = index;
+        this.relation = relation;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(),
+                personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getBloodType(),
+                personToEdit.getTags(), personToEdit.getRemark(), this.relation, personToEdit.getAppointments());
+
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+        model.getFilteredPersonList();
+
+        return new CommandResult(generateSuccessMessage(editedPerson));
+    }
+
+    /**
+     * Outputs success message based on whether a relationship is added or removed
+     */
+    private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
+        if (personToEdit.getRelationship().toString().isEmpty()) {
+            return String.format(MESSAGE_DELETE_RELATIONSHIP_SUCCESS, personToEdit);
+        } else {
+            return String.format(MESSAGE_ADD_RELATIONSHIP_SUCCESS, personToEdit);
+        }
+    }
+
+    /**
+     * Checks if
+     * (a) Object is the same object
+     * (b) Object is an instance of the object and that index and relation are the same
+     */
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof RelationshipCommand // instanceof handles nulls
+                && this.index.equals(((RelationshipCommand) other).index))
+                && this.relation.equals(((RelationshipCommand) other).relation); // state check
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\ListByBloodtypeCommandParser.java
 ``` java
 /**
@@ -71,6 +162,48 @@ public class ListByBloodtypeCommandParser implements Parser<ListByBloodtypeComma
 
     }
 
+}
+```
+###### \java\seedu\address\logic\parser\RelationshipCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new RelationshipCommand object
+ */
+public class RelationshipCommandParser implements Parser<RelationshipCommand> {
+    /**
+      * Parses the given {@code String} of arguments in the context of the RelationshipCommand
+      * and returns an RelationshipCommand object for execution.
+      *
+      * @throws ParseException if the user input does not conform the expected format
+      */
+    public RelationshipCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_RELATIONSHIP);
+
+        Index index;
+
+        if (!isPrefixPresent(argMultimap, PREFIX_RELATIONSHIP)) {
+            throw new ParseException(String.format(
+                    MESSAGE_INVALID_COMMAND_FORMAT, RelationshipCommand.MESSAGE_USAGE));
+        }
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+
+        String relation = argMultimap.getValue(PREFIX_RELATIONSHIP).orElse("");
+
+        return new RelationshipCommand(index, new Relationship(relation));
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean isPrefixPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
 }
 ```
 ###### \java\seedu\address\logic\parser\ParserUtil.java
@@ -189,4 +322,37 @@ public class BloodtypeContainsKeywordPredicate implements Predicate<ReadOnlyPers
     public Bloodtype getBloodType() {
         return bloodType.get();
     }
+```
+###### \java\seedu\address\model\person\Relationship.java
+``` java
+/**
+  * Represents a Person's relationship in the address book.
+  * Guarantees: immutable; is always valid
+  */
+public class Relationship {
+
+    public final String value;
+
+    public Relationship(String value) {
+        requireNonNull(value);
+        this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Relationship // instanceof handles nulls
+                && this.value.equals(((Relationship) other).value)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+}
 ```

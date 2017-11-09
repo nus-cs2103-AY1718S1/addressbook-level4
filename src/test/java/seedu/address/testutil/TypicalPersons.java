@@ -47,10 +47,10 @@ public class TypicalPersons {
             .withBloodType("A").withTags("Test2").build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo")
-            .withBloodType("B").withTags("Test3").build();
+            .withBloodType("B").withRelationship("George Best").withTags("Test3").build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street")
-            .withBloodType("AB-").build();
+            .withBloodType("AB-").withRelationship("Fiona Kunz").build();
 
     public static final ReadOnlyPerson JON = new PersonBuilder().withName("Jon Anderson").withPhone("9482442")
             .withEmail("null@null.com").withAddress("4th street")
