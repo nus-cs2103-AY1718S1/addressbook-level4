@@ -834,6 +834,9 @@ public ReadOnlyPerson selectPerson(Index index) throws CommandException {
     }
     return selectedPerson;
 }
+----
+
+==== Design Considerations
 
 **Aspect:** Executing index-based commands without index. +
 **Alternative 1 (current choice):** Calling a constructor of the `command` without an `Index` initialises its `targetIndex`
