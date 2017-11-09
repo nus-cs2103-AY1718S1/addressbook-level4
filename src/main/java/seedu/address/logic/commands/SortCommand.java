@@ -18,11 +18,11 @@ public class SortCommand extends Command {
             + "Accepts aliases 'n', 'e', 'p', 'a' respectively."
             + "Parameters: "
             + COMMAND_WORD
-            + " [name/email/phone/address/tag]\n"
+            + " [name/email/phone/address]\n"
             + "Example: " + COMMAND_WORD + " name";
 
     //@@author hansiang93
-    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {[name/email/phone/address/tag]}";
+    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {[name/email/phone/address]}";
 
     //@@author bladerail
     public static final String MESSAGE_SUCCESS = "Sorted successfully by %1$s, Listed all persons.";
