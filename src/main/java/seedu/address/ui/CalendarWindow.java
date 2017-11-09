@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -118,6 +119,7 @@ public class CalendarWindow extends UiPart<Region> {
             calendar.setStyle(Calendar.Style.getStyle(styleNum));
             styleNum++;
             styleNum = styleNum % 5;
+            calendar.setLookAheadDuration(Duration.ofDays(365));
             calendarSource.getCalendars().add(calendar);
             ArrayList<Entry> entries = getEntries(person);
 

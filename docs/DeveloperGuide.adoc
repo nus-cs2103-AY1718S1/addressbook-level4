@@ -346,17 +346,19 @@ and three characters input, inclusive of "+" or "-", at maximum (e.g "AB-"). +
 The reason that ascii is used as the regex is to allowed "+" and "-" to be entered as inputs to take into account +
 the Rh factor of blood types.
 
-// tag::appointment[]
+
 === *Enhancement: Set Appointments* +
 
 *Reason for implementation* +
-
+// tag::appointmentjustification[]
 Our address book is designed for doctors to use. Doctors often have fixed appointments with patients and the list
 maybe very long. This implementation allows doctors to set an appointment date with a patient. +
 On top of just setting appointment time, the user can also sort the contacts by appointment timing. This is so that the
 doctor will be remind of their most upcoming appointment in the midst of their busy schedule. +
+// end::appointmentjustification[]
 
 *How it is implemented* +
+// tag::appointmentimplementation[]
 
 As of version 1.5, each person now has a class AppointmentList under himself.
 
@@ -398,17 +400,22 @@ to be made which is a copy of the original list and the addition of the new appo
 internal list is untouched.
 
 
-// end::appointment[]
+// end::appointmentimplementation[]
+
 
 === *Enhancement: Set tag color*
 
+
 *Reason for implementation* +
+// tag::colorjustification[]
 
 We would like our users to be able to set a unique tag to any color that they want either by specifying the color or
 using RBG numbers. This allows users more freedom in choice of color of tags, as they may want to make some tags more
 glaring in color.
+// end::colorjustification[]
 
 *How it is implemented* +
+// tag::colorimplementation[]
 
 Each unique tag will have its color as its attribute as a string.
 
@@ -423,7 +430,7 @@ image::SDforTagColor.png[width="800"]
 The sequence diagram is given if the command requests the model to set all the tags to a random color. As seen from
 above diagram, each tag is updated to a certain color and does not need to know which tag belongs to which person.
 
-
+// end::colorimplementation[]
 
 === *Enhancement: List Package* +
 // tag::list[]
