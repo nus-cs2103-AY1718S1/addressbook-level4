@@ -21,6 +21,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Tags multiple people in the address book.
  */
+//@@author raisa2010
 public class TagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "tag";
