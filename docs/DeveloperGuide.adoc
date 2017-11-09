@@ -618,7 +618,7 @@ _Figure 4.3.6 : Full UI outcome of locate implementation_
 === FindCommand by any search field [Since v1.2 and v1.4]
 
 
-`FindCommand` which reside in `Logic` will support the search of contact by any keywords.The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone`,`Tags` , `Activity` and `Country`. Such parameters inherit from `Person` which resides inside `Model`.Also,the keywords must be a full word match in order for successful execution of find command. _Figures 4.4.1 indicates the parsing of keywords and prefix  `FindCommandParser` once user keys in an input.
+`FindCommand` which reside in `Logic` will support the search of contact by any keywords.`Logic` uses the `AddressBookParser` class to parse user command.The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone`,`Tags` , `Activity` and `Country`. Such parameters inherit from `Person` which resides inside `Model`.Also,the keywords must be a full word match in order for successful execution of find command. Figures 4.4.1_ indicates the the parsing of user command in  `FindCommandParser` once user keys in an input.
 
 [source,java]
 ----
@@ -653,7 +653,7 @@ public class PredicateUtil {
 }
 
 ----
-The component diagram in _Figure 4.4.3_ below shows how the find function works in the various component ,mainly `Logic`:
+The component diagram in _Figure 4.4.3_ below shows how interactions within the Logic component for the execution of find command.
 
 image::LogicComponentSequenceDiagramFind.PNG[width="800"]
 _Figure 4.4.4 : Find component diagram_
@@ -786,7 +786,7 @@ public class CalendarCommand extends Command {
 ----
 _Figure 4.6.2: Code section in CalendarCommand.java_
 
-The component diagram in _Figure 4.6.3_ below indicates the compoenent diagram of the calendar function ,mainly `Logic`.
+The component diagram in _Figure 4.6.3_ below indicates the interactions within the Logic component for the execution of calendar command.
 
 image::CalendarCommandComponentDiagram[width="800"]
 _Figure 4.6.3 : Clenader sequence diagram_
@@ -984,30 +984,55 @@ _Figure 4.8.3: Code section in Schedule.java_
 // end::reminder[]
 
 //tag::Email[]
+
 === Sending Email [Since v1.5]
 
-`EmailCommand` utilise `Desktop` to launch a email platform for users to send email to multiple contacts.User will have to key in index of the contacts
+`EmailCommand` utilise `Desktop` to launch a email platform for users to send email to multiple contacts.The sequence diagram of `CalendarCommand` in _Figure 4.9.1_ below indicates the sequence diagram of the execution of email function.
+
+image::SequenceDiagramEmail.PNG[width="400"]
+_Figure 4.9.1: Sequence diagram for email function_
+
+User will first have to key in indexes of the contact. `Logic` will use `AddressBookParser` class to parse user command. `ParseException` will be thrown in `EmailCommandParser` when there is detection of illegal value.By using a `Set` to store the indices inputed by user, this will prevent duplication of indicies. Also, Figure 4.9.2_ below indicates the parsing of user input in `EmailCommandParser`.
 
 [source,java]
 ----
-public class EmailCommand extends Command {
-    @Override
-    public CommandResult execute() throws CommandException {
+public class EmailCommandParser implements Parser<EmailCommand> {
 
-        EventsCenter.getInstance().post(new ShowCalendarRequestEvent());
-      //  return new CommandResult
+        try
+    {
+        Set<Index> indices = new HashSet<>();
+        // adding of indics to Set    
+    } catch(
+    IllegalValueException ive)
+    {
+        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
     }
 }
 
 ----
-_Figure 4.6.1: Code section in EmailCommand.java_
+
+A `Command` object will be executed by `Logic Manger`.During command excution, a filtered person list will be extracted from `Model`.
+ The emails extracted from the filtered person list will be stored in a `recipientList` as shown in Figure 4.9.3_ .
+
+[source,java]
+----
+public class EmailCommand extends Command {
+
+    List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+// ... adding of contact's email 
+
+    String recipientList = String.join(",", recipientSet);
+//email logic
+}
+----
+_Figure 4.9.3: Code section in EmailCommand.java_
 
 
-The outcome of successful launching of email platform to send email to multiple contacts r is shown in _Figure 4.9.3_:
+'Desktop` class will be used to send email using `Desktop.Action.Mail` baed on recipientList.The outcome of successful launching of email platform to send email to multiple contacts is shown in _Figure 4.9.4:
 
 image::EmailCommand.PNG[width="800"]
 
-_Figure 4.9.3: Output of `EmailCommand.java` execution_
+_Figure 4.9.4: Output of `EmailCommand.java` execution_
 
 
 ==== Design Considerations for `EmailCommand`
