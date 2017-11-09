@@ -112,7 +112,7 @@ image::addexample.png[width="500"]
     Figure 3: Add Command Usage Diagram
 
 [NOTE]
-Your inputs for NAME and ADDRESS will have the +
+Your inputs for NAME, ADDRESS and TAG will have the +
 first letter of each word capitalized and the rest small letters. +
 Your inputs for EMAIL will have all words in lower case.
 

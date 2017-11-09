@@ -13,7 +13,13 @@ It is written in Java, and has about 6 kLoC.
 link:{collatedDir}/main/Ernest.md[Functional code] +
 link:{collatedDir}/test/Ernest.md[Test code] +
 
-=== Enhancement Added: Shorthand Command Alias
+=== Enhancement Added
+Shorthand Command Alias +
+Update consistency of results displayed:
+Regardless of inputs, Name, Address and Tags are stored/shown with first letter +
+of the word capitalized and the rest in small letters. +
+Email will all be in small letters. +
+Bloodtype will all be capitalized.
 
 ==== External behavior
 
