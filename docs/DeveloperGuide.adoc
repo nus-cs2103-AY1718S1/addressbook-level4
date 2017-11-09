@@ -845,8 +845,8 @@ In the future, we would like doctors to have the ability to copy other informati
 
 If you would like to contribute to such additional functionality, please edit the CopyCommand class to take in additional parameters
 corresponding to the new function e.g. +
+
  CopyCommand(NewFunction newFunction Index targetIndex)
- 
 // end::copy[]
 
 == Documentation
