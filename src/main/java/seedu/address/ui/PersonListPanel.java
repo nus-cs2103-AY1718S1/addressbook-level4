@@ -136,6 +136,7 @@ public class PersonListPanel extends UiPart<Region> {
     @Subscribe
     private void handleDeselectionEvent(DeselectionEvent event) {
         personListView.getSelectionModel().clearSelection();
+        selectionDisplay.setText(getCurrentListDisplayName());
     }
 
     @Subscribe
