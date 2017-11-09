@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -18,11 +19,13 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.Password;
 import seedu.address.logic.Username;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddPictureCommand;
 import seedu.address.logic.commands.BanCommand;
 import seedu.address.logic.commands.BlacklistCommand;
 import seedu.address.logic.commands.BorrowCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeletePictureCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
@@ -41,6 +44,7 @@ import seedu.address.logic.commands.RepaidCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetPathCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UnbanCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.WhitelistCommand;
@@ -63,6 +67,20 @@ public class AddressBookParserTest {
         Person person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddCommand(person), command);
+    }
+
+    @Test
+    public void parseCommand_addpic() throws Exception {
+        AddPictureCommand command = (AddPictureCommand) parser.parseCommand(
+                AddPictureCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new AddPictureCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_delpic() throws Exception {
+        DeletePictureCommand command = (DeletePictureCommand) parser.parseCommand(
+                DeletePictureCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new DeletePictureCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test
@@ -228,6 +246,16 @@ public class AddressBookParserTest {
         LoginCommand command = (LoginCommand) parser.parseCommand(
                 LoginCommand.COMMAND_WORD + " " + "JohnDoe" + " " + "hiIAmJohnDoe123");
         assertEquals(new LoginCommand(new Username("JohnDoe"), new Password("hiIAmJohnDoe123")), command);
+
+        command = (LoginCommand) parser.parseCommand(LoginCommand.COMMAND_WORD);
+        assertNull(command);
+    }
+
+    @Test
+    public void parseCommand_invalidLogin() throws Exception {
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
+        parser.parseCommand(LoginCommand.COMMAND_WORD + " jjj");
     }
 
     @Test
@@ -252,6 +280,12 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void perseCommand_themeCommandWord_returnsThemeCommand() throws Exception {
+        assertTrue(parser.parseCommand(ThemeCommand.COMMAND_WORD) instanceof ThemeCommand);
+        assertTrue(parser.parseCommand("theme 3") instanceof ThemeCommand);
+    }
+
+    @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);
         thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
@@ -265,11 +299,4 @@ public class AddressBookParserTest {
         parser.parseCommand("unknownCommand");
     }
 
-    //@@author jelneo
-    @Test
-    public void parseCommand_invalidLogin() throws Exception {
-        thrown.expect(ParseException.class);
-        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
-        parser.parseCommand(LoginCommand.COMMAND_WORD);
-    }
 }

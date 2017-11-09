@@ -56,7 +56,8 @@ public class NearbyCommandTest {
         model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased()));
         Index outOfBoundsIndex = Index.fromOneBased(model.getNearbyPersons().size() + 1);
 
-        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertExecutionFailure(outOfBoundsIndex, String.format(NearbyCommand.MESSAGE_INVALID_NEARBY_INDEX,
+                model.getNearbyPersons().size()));
     }
 
     @Test

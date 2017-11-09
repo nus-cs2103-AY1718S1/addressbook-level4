@@ -81,6 +81,112 @@
             return "list";
         }
 ```
+###### \java\seedu\address\logic\commands\AddPictureCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code AddPictureCommand}.
+ */
+public class AddPictureCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void execute_validIndexUnfilteredListInvalidPath_success() throws Exception {
+        ReadOnlyPerson personToUpdate = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        AddPictureCommand addPictureCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(AddPictureCommand.MESSAGE_ADDPIC_FAILURE, personToUpdate.getName());
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.addProfilePicture(personToUpdate);
+
+        assertCommandSuccess(addPictureCommand, model, expectedMessage, expectedModel);
+        assertTrue(personToUpdate.getAsText().equals(model.getFilteredPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased()).getAsText()));
+    }
+
+    @Test
+    public void execute_validIndexUnfilteredListValidPath_success() throws Exception {
+        ReadOnlyPerson personToUpdate = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        AddPictureCommand addPictureCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(AddPictureCommand.MESSAGE_ADDPIC_SUCCESS, personToUpdate.getName());
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.addProfilePicture(personToUpdate);
+        SetPathCommand setPathCommand = prepareSetPathCommand("src/test/resources/TestProfilePics/");
+        setPathCommand.execute();
+
+        assertCommandSuccess(addPictureCommand, model, expectedMessage, expectedModel);
+        assertTrue(personToUpdate.getAsText().equals(model.getFilteredPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased()).getAsText()));
+    }
+
+    @Test
+    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        AddPictureCommand addPictureCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(addPictureCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_invalidIndexFilteredList_throwsCommandException() {
+        showFirstPersonOnly(model);
+
+        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        AddPictureCommand addPictureCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(addPictureCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+        AddPictureCommand addPictureFirstCommand = new AddPictureCommand(INDEX_FIRST_PERSON);
+        AddPictureCommand addPictureSecondCommand = new AddPictureCommand(INDEX_SECOND_PERSON);
+
+        // same object -> returns true
+        assertTrue(addPictureFirstCommand.equals(addPictureFirstCommand));
+
+        // same values -> returns true
+        AddPictureCommand addPictureFirstCommandCopy = new AddPictureCommand(INDEX_FIRST_PERSON);
+        assertTrue(addPictureFirstCommand.equals(addPictureFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(addPictureFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(addPictureFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(addPictureFirstCommand.equals(addPictureSecondCommand));
+    }
+
+    /**
+     * Returns a {@code AddPictureCommand} with the parameter {@code index}.
+     */
+    private AddPictureCommand prepareCommand(Index index) {
+        AddPictureCommand addPictureCommand = new AddPictureCommand(index);
+        addPictureCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return addPictureCommand;
+    }
+
+    /**
+     * Returns a {@code SetPathCommand} with the parameter {@code path}.
+     */
+    private SetPathCommand prepareSetPathCommand(String path) {
+        SetPathCommand setPathCommand = new SetPathCommand(path);
+        setPathCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return setPathCommand;
+    }
+
+}
+```
 ###### \java\seedu\address\logic\commands\BanCommandTest.java
 ``` java
 /**
@@ -143,6 +249,9 @@ public class BanCommandTest {
         assertCommandFailure(banCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+```
+###### \java\seedu\address\logic\commands\BanCommandTest.java
+``` java
     @Test
     public void equals() {
         BanCommand banFirstCommand = new BanCommand(INDEX_FIRST_PERSON);
@@ -170,6 +279,15 @@ public class BanCommandTest {
      */
     private BanCommand prepareCommand(Index index) {
         BanCommand banCommand = new BanCommand(index);
+        banCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return banCommand;
+    }
+
+    /**
+     * Returns a {@code BanCommand} with no parameters.
+     */
+    private BanCommand prepareCommand() {
+        BanCommand banCommand = new BanCommand();
         banCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return banCommand;
     }
@@ -209,6 +327,84 @@ public class BlacklistCommandTest {
     }
 }
 
+```
+###### \java\seedu\address\logic\commands\DeletePictureCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code DeletePictureCommand}.
+ */
+public class DeletePictureCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void execute_validIndexUnfilteredList_success() throws Exception {
+        ReadOnlyPerson personToUpdate = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        DeletePictureCommand deletePictureCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(DeletePictureCommand.MESSAGE_DELPIC_SUCCESS, personToUpdate.getName());
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.removeProfilePicture(personToUpdate);
+
+        assertCommandSuccess(deletePictureCommand, model, expectedMessage, expectedModel);
+        assertTrue(personToUpdate.getAsText().equals(model.getFilteredPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased()).getAsText()));
+    }
+
+    @Test
+    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        DeletePictureCommand deletePictureCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(deletePictureCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_invalidIndexFilteredList_throwsCommandException() {
+        showFirstPersonOnly(model);
+
+        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        DeletePictureCommand deletePictureCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(deletePictureCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+        DeletePictureCommand deletePictureFirstCommand = new DeletePictureCommand(INDEX_FIRST_PERSON);
+        DeletePictureCommand deletePictureSecondCommand = new DeletePictureCommand(INDEX_SECOND_PERSON);
+
+        // same object -> returns true
+        assertTrue(deletePictureFirstCommand.equals(deletePictureFirstCommand));
+
+        // same values -> returns true
+        DeletePictureCommand deletePictureFirstCommandCopy = new DeletePictureCommand(INDEX_FIRST_PERSON);
+        assertTrue(deletePictureFirstCommandCopy.equals(deletePictureFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(deletePictureFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(deletePictureFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(deletePictureFirstCommand.equals(deletePictureSecondCommand));
+    }
+
+    /**
+     * Returns a {@code DeletePictureCommand} with the parameter {@code index}.
+     */
+    private DeletePictureCommand prepareCommand(Index index) {
+        DeletePictureCommand deletePictureCommand = new DeletePictureCommand(index);
+        deletePictureCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return deletePictureCommand;
+    }
+}
 ```
 ###### \java\seedu\address\logic\commands\RepaidCommandTest.java
 ``` java
@@ -270,6 +466,9 @@ public class RepaidCommandTest {
         assertCommandFailure(repaidCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+```
+###### \java\seedu\address\logic\commands\RepaidCommandTest.java
+``` java
     @Test
     public void equals() {
         RepaidCommand repaidFirstCommand = new RepaidCommand(INDEX_FIRST_PERSON);
@@ -301,6 +500,54 @@ public class RepaidCommandTest {
         return repaidCommand;
     }
 
+    /**
+     * Returns a {@code RepaidCommand} with no parameters.
+     */
+    private RepaidCommand prepareCommand() {
+        RepaidCommand repaidCommand = new RepaidCommand();
+        repaidCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return repaidCommand;
+    }
+
+}
+```
+###### \java\seedu\address\logic\commands\SetPathCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code SetPathCommand}.
+ */
+public class SetPathCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void execute_setPath_success() throws Exception {
+        String path = "C:/Users/acer/Desktop/SE/profilepic/";
+        SetPathCommand setPathCommand = prepareSetPathCommand(path);
+        setPathCommand.execute();
+
+        assertTrue(ProfilePicturesFolder.getPath().equals(path));
+    }
+
+    @Test
+    public void execute_setPathBackSlashReplacedToForwardSlash_success() throws Exception {
+        String path = "C:\\Users\\acer\\Desktop\\SE\\profilepic";
+        String expectedPath = "C:/Users/acer/Desktop/SE/profilepic";
+
+        SetPathCommand setPathCommand = prepareSetPathCommand(path);
+        setPathCommand.execute();
+
+        assertTrue(ProfilePicturesFolder.getPath().equals(expectedPath));
+    }
+
+    /**
+     * Returns a {@code SetPathCommand} with no parameters.
+     */
+    private SetPathCommand prepareSetPathCommand(String path) {
+        SetPathCommand setPathCommand = new SetPathCommand(path);
+        setPathCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return setPathCommand;
+    }
 }
 ```
 ###### \java\seedu\address\logic\commands\UnbanCommandTest.java
@@ -339,6 +586,9 @@ public class UnbanCommandTest {
         assertCommandSuccess(unbanCommand, model, expectedMessage, expectedModel);
     }
 
+```
+###### \java\seedu\address\logic\commands\UnbanCommandTest.java
+``` java
     @Test
     public void equals() {
         UnbanCommand unbanFirstCommand = new UnbanCommand(INDEX_FIRST_PERSON);
@@ -366,6 +616,15 @@ public class UnbanCommandTest {
      */
     private UnbanCommand prepareCommand(Index index) {
         UnbanCommand unbanCommand = new UnbanCommand(index);
+        unbanCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return unbanCommand;
+    }
+
+    /**
+     * Returns a {@code UnbanCommand} with no parameters.
+     */
+    private UnbanCommand prepareCommand() {
+        UnbanCommand unbanCommand = new UnbanCommand();
         unbanCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return unbanCommand;
     }
@@ -407,6 +666,30 @@ public class WhitelistCommandTest {
 
 }
 ```
+###### \java\seedu\address\logic\parser\AddPictureCommandParserTest.java
+``` java
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the AddPictureCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the AddPictureCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class AddPictureCommandParserTest {
+    private AddPictureCommandParser parser = new AddPictureCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsAddPictureCommand() {
+        assertParseSuccess(parser, "", new AddPictureCommand());
+        assertParseSuccess(parser, "1", new AddPictureCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPictureCommand.MESSAGE_USAGE));
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\BanCommandParserTest.java
 ``` java
 /**
@@ -421,6 +704,7 @@ public class BanCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsBanCommand() {
+        assertParseSuccess(parser, "", new BanCommand());
         assertParseSuccess(parser, "1", new BanCommand(INDEX_FIRST_PERSON));
     }
 
@@ -428,6 +712,32 @@ public class BanCommandParserTest {
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, BanCommand.MESSAGE_USAGE));
     }
+}
+```
+###### \java\seedu\address\logic\parser\DeletePictureCommandParserTest.java
+``` java
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the DeletePictureCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the DeletePictureCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class DeletePictureCommandParserTest {
+    private DeletePictureCommandParser parser = new DeletePictureCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsAddPictureCommand() {
+        assertParseSuccess(parser, "", new DeletePictureCommand());
+        assertParseSuccess(parser, "1", new DeletePictureCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                DeletePictureCommand.MESSAGE_USAGE));
+    }
+
 }
 ```
 ###### \java\seedu\address\logic\parser\RepaidCommandParserTest.java
@@ -445,6 +755,7 @@ public class RepaidCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsRepaidCommand() {
+        assertParseSuccess(parser, "", new RepaidCommand());
         assertParseSuccess(parser, "1", new RepaidCommand(INDEX_FIRST_PERSON));
     }
 
@@ -468,6 +779,7 @@ public class UnbanCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsUnBanCommand() {
+        assertParseSuccess(parser, "", new UnbanCommand());
         assertParseSuccess(parser, "1", new UnbanCommand(INDEX_FIRST_PERSON));
     }
 
@@ -941,7 +1253,7 @@ public class WhitelistSyncTest {
             .withAddress("123, Jurong West Ave 6, #08-111").withDebt("1234567").withTotalDebt("1234567")
             .withEmail("alice@example.com").withDeadline(Deadline.NO_DEADLINE_SET).withHandphone("85355255")
             .withInterest(Interest.NO_INTEREST_SET).withHomePhone("61234123")
-            .withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET).withTags("friends").withPostalCode("623123").build();
+            .withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET).withTags("friends").withPostalCode("683123").build();
     public static final ReadOnlyPerson WEIPING = new PersonBuilder().withName("Khoo Wei Ping")
             .withAddress("311, Clementi Ave 2, #02-25").withPostalCode("111111").withDebt("1234567")
             .withTotalDebt("1234567").withEmail("johnd@example.com").withInterest(Interest.NO_INTEREST_SET)

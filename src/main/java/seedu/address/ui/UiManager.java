@@ -15,6 +15,8 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.events.ui.ChangeInternalListEvent;
+import seedu.address.commons.events.ui.ChangeToCommandBoxView;
+import seedu.address.commons.events.ui.ChangeToLoginViewEvent;
 import seedu.address.commons.events.ui.LoginAppRequestEvent;
 import seedu.address.commons.events.ui.LogoutAppRequestEvent;
 import seedu.address.commons.util.StringUtil;
@@ -140,6 +142,16 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     /**
+     * Handles login event.
+     * Displays contacts in address book if login is successful
+     */
+    @Subscribe
+    public void handleChangeToLoginViewEvent(ChangeToLoginViewEvent event) {
+        // user wants to login
+        Platform.runLater(() -> mainWindow.fillCommandBoxWithLoginFields());
+    }
+
+    /**
      * Handles logout event.
      * Displays login page when user logs out
      */
@@ -150,8 +162,17 @@ public class UiManager extends ComponentManager implements Ui {
             logger.info("Logout successful");
             LoginCommand.setLoginStatus(false);
             //show login page
-            Platform.runLater(() -> mainWindow.fillInnerPartsForStartUp());
+            mainWindow.fillInnerPartsForStartUp();
         }
+    }
+
+    /**
+     * Changes from login view to command box
+     */
+    @Subscribe
+    private void handleBackToCommandViewRequest(ChangeToCommandBoxView event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.fillInnerPartsForCommandBox();
     }
 
     //@@author jaivigneshvenugopal
@@ -164,5 +185,4 @@ public class UiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.fillInnerPartsWithIndicatedList(event.getListName());
     }
-    //@@author
 }

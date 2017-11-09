@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static guitests.guihandles.MainWindowHandle.TEST_PASSWORD;
+import static guitests.guihandles.MainWindowHandle.TEST_USERNAME;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ import seedu.address.model.ModelManager;
 //@@author jelneo
 public class PreLoginCommandBoxTest extends GuiUnitTest {
 
-    private static final String COMMAND_THAT_IS_NOT_RECOGNIZED = ListCommand.COMMAND_WORD;
+    private static final String COMMAND_THAT_IS_NOT_RECOGNIZED = "sfewgrw43";
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
@@ -47,8 +49,8 @@ public class PreLoginCommandBoxTest extends GuiUnitTest {
         modelManager = new ModelManager();
 
         Logic logic = new LogicManager(model);
-        adminUsername = modelManager.getUsernameFromUserPref();
-        adminPassword = modelManager.getPasswordFromUserPref();
+        adminUsername = TEST_USERNAME;
+        adminPassword = TEST_PASSWORD;
         CommandBox commandBox = new CommandBox(logic);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
                 CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
@@ -61,29 +63,13 @@ public class PreLoginCommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void commandBox_successfulBlankingOfPassword() {
-        commandBoxHandle.run(String.format(LoginCommand.COMMAND_WORD , " ", adminUsername, " ", adminPassword));
-        String blankedPassword = maskPassword(adminPassword);
-        assertEquals(String.format(LoginCommand.COMMAND_WORD , " ", adminUsername, " ", blankedPassword),
-                commandBoxHandle.getInput());
-    }
-
-    /**
-     * Helper method to masks password for testing
-     */
-    private String maskPassword(String passwordInput) {
-        String password = "";
-        for (int i = 0; i < passwordInput.length(); i++) {
-            password += CommandBox.BLACK_CIRCLE;
-        }
-        return password;
-    }
-
-    @Test
     public void commandBox_successfulCommandInputs() {
         // permitted inputs that contain the command keywords: exit, help, login
         commandBoxHandle.run(ExitCommand.COMMAND_WORD);
         assertBehaviorForSuccessfulCommand(ExitCommand.COMMAND_WORD);
+
+        commandBoxHandle.run(LoginCommand.COMMAND_WORD);
+        assertBehaviorForSuccessfulCommand(LoginCommand.COMMAND_WORD);
 
         commandBoxHandle.run(HelpCommand.COMMAND_WORD);
         assertBehaviorForSuccessfulCommand(HelpCommand.COMMAND_WORD);
@@ -91,14 +77,6 @@ public class PreLoginCommandBoxTest extends GuiUnitTest {
 
     @Test
     public void commandBox_unsuccessfulCommandInputs() {
-        // login command word only
-        commandBoxHandle.run(LoginCommand.COMMAND_WORD);
-        assertBehaviorForFailedCommand(LoginCommand.COMMAND_WORD);
-
-        // login command with valid username and password but login is unsuccessful
-        commandBoxHandle.run(LoginCommand.COMMAND_WORD + " gdsgsdgs sddsaoo1122");
-        assertBehaviorForFailedCommand(LoginCommand.COMMAND_WORD + " gdsgsdgs sddsaoo1122");
-
         // recognised commands which are not login, help or exit
         commandBoxHandle.run(ListCommand.COMMAND_WORD);
         assertBehaviorForFailedCommand(ListCommand.COMMAND_WORD);

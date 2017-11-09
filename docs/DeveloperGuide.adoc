@@ -364,31 +364,36 @@ _Figure 3.1.2g: `UndoRedoStack` activity diagram_
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
-// tag::borrowCommand[]
-=== Borrow command mechanism
+// tag::borrowPaybackCommand[]
+=== Borrow/payback command mechanism
 
-The borrow command allows users to increase the debt of a person should he/she borrow more money. The `BorrowCommand` class, which handles the updating of the `Debt` field in a `Person` object, extends `UndoableCommand` so that this command can be undone or redone if necessary.
+The `borrow` command allows users to increase the debt of a person should he/she borrow more money. On the other hand, when a debtor repays a specified amount, the `payback` command is used to deduct that amount from his/her current debt. The `BorrowCommand` and `PaybackCommand` classes, which handle the updating of the `Debt` field in a `Person` object, extends `UndoableCommand` so that these commands can be undone or redone if necessary.
 
-The user inputs required are the index (as listed in the person list panel on the left side of the application window) of the person who borrowed money and the amount that the person borrowed. The arguments (index and amount borrowed) are separated by a whitespace instead of special prefixes (e.g. prefix `p/` used for phone number). Hence, the `String#split` method is used to tokenize the input using a single whitespace as the delimiter. As seen in Figure 3.2.1, the tokenized inputs (index and amount borrowed) are then converted to their appropriate `Object` types and supplied as arguments to the `BorrowCommand` constructor.
+These two commands require one compulsory argument which is the amount that is borrowed/paid back. Indicating the index (as listed in the person list panel on the left side of the application window) of the person who borrowed or paid back money is optional. If no index is specified, the command will be executed for the person that is currently selected in the person list.
+The arguments (index and amount borrowed/paid back) are separated by a whitespace instead of special prefixes (e.g. prefix `p/` used for phone number). Hence, the `String#split` method is used to tokenize the input using a single whitespace as the delimiter. As seen in Figure 3.2.1, the tokenized inputs (index and amount borrowed) are then converted to their appropriate `Object` types and supplied as arguments to the `BorrowCommand` constructor. Input for the `payback` command is tokenized in the same manner.
 
-When `BorrowCommand` is executed in `LogicManager`, the `Debt` attribute in the target `Person` object is updated in the `AddressBook` class in the `Model` component. A new `Person` object is created with the debt amount updated to reflect the new total debt. The target `Person` object is then replaced with this new `Person` object.
+The `BorrowCommand` and `PaybackCommand` are executed in `LogicManager`.
+`BorrowCommand` updates the `debt` and `totalDebt` attributes in the target `Person` object in the `AddressBook` class (which is in the `Model` component). A new `Person` object is created with the updated `debt` and `totalDebt` amount. The target `Person` object is then replaced with this new `Person` object.
+`PaybackCommand` updates the target person's debt in the same manner as the `BorrowCommand`. However, only the `debt` attribute is updated.
 
 [NOTE]
 `DateBorrow` field in the new `Person` object needs to be updated to match the `DateBorrow` field in the target `Person` object. This is because the date when the `Person` object was created is set as the date for the `DateBorrow` field.
 
-The following sequence diagram, Figure 3.2.1, shows further details of the interaction between the `Logic` and `Model` component when the borrow command is executed:
+The following sequence diagram, Figure 3.2.1, shows further details of the interaction between the `Logic` and `Model` component when the `borrow` command is executed:
 
 image::BorrowCommandSequenceDiagram.png[width="800"]
 _Figure 3.2.1 : Sequence diagram of how the `Borrow` command works_
 
+The `payback` command works in a similar way to the `borrow` command.
+
 ==== Design Considerations
 
-**Aspect:** Implementation of `BorrowCommandParser` +
+**Aspect:** Implementation of `BorrowCommandParser` and `PaybackCommandParser`+
 **Alternative 1 (current choice):** Tokenize arguments using `String#split` method +
 **Pros:** Easier to parse arguments using `String#split` method since there are no prefixes in the command input. It is also easier to validate the number of arguments entered by the user. This can be done through checking the length of the `String` array return by `String#split`. +
 **Cons:** User has to follow the format for entering the command strictly as an extra whitespace between the index and the amount borrowed would invoke a `ParseException`. +
 **Alternative 2:** Modify `ArgumentTokenizer#tokenize` method to tokenize arguments +
-**Pros:** Increased modularity +
+**Pros:** Better modularity +
 **Cons:** Requires modifications of `ArgumentTokenizer#tokenize` method since supplying whitespace as a prefix to the current `ArgumentTokenizer#tokenize` method incorrectly tokenizes arguments.
 
 For example:
@@ -408,7 +413,7 @@ Outcome: prefix `" "` will be mapped to `1 500` in `argMultimap`. Index and amou
 **Alternative 2:** Reusing the `updatePerson()` method in `AddressBook.java` +
 **Pros:** Do not have to code the method from scratch +
 **Cons:** A new `Person` object have to be created in order to edit the `Debt` field. Since the `updatePerson()` method only accepts `ReadOnlyPerson` objects as parameters, more code has to be written to convert the `Person` object to be a `ReadOnlyPerson` object. +
-// end::borrowCommand[]
+// end::borrowPaybackCommand[]
 
 // tag::backup[]
 === Backup storage mechanism
@@ -629,6 +634,308 @@ requires users to reset their contacts' `cluster` via deletion and addition or v
 **Pros:** Easy to implement. +
 **Cons:** Tedious for users. They also have to ensure that they do not make spelling mistakes.
 // end::cluster[]
+
+// tag::filterTags[]
+=== Filter by tags mechanism
+
+The `filter` command allows the user to filter contacts by tags. Multiple tags can be entered. The command returns a list of contacts that match *at least one* of the tags that is specified by the user.
+
+A `PersonContainsTagPredicate` is created to check if a person contains the tags of interest. The code implementation below shows how the `PersonContainsTagPredicate` is implemented to sieve out the relevant contacts. The `anyMatch` method ensures that the filtered list contains persons who have at least one tag specified by the user.
+[source,java]
+----
+@Override
+public boolean test(ReadOnlyPerson person) {
+    Set<Tag> tagList = person.getTags();
+    for (Tag tag : tagList) {
+        if (tagKeywords.stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword))) {
+            return true;
+        }
+    }
+    return false;
+}
+----
+
+The list is filtered and updated through the `updateFilteredPersonList` method in the `Model` component. Since the person list is of a `FilteredList<>` type, filtering of the list can be handled by a Java `FilteredList` class method called `setPredicate`.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `PersonContainsTagPredicate` predicate +
+**Alternative 1 (current choice):** Predicate returns true if at least one tag matches the list of tags specified by the user +
+**Pros:** User will have more contacts to work with. The additional information may help the user make better decisions. +
+**Cons:** The user may find some of the filtered contacts irrelevant. +
+**Alternative 2:** Predicate returns true only if the person contains the exact tags that are specified by the user +
+**Pros:** Shows the most relevant results if the user wants to search for an exact match. +
+**Cons:** If the user remembers one of the tags wrongly (but it is still a valid tag), there will be no contacts found.
+// end::filterTags[]
+
+// tag::loginLogout[]
+=== Login/logout mechanism
+
+After a user enters a valid `login` command, verification of the login information will take place in the `Model` component. The username and password are verified against the information stored in `preferences.json`.
+
+The password is stored as a SHA-512 hash to conceal the actual password. The salt that is used to generate the hashed password is also stored. Since the stored hash cannot be converted back to the original password, the password that is entered by the user needs to be hashed and verified against the stored hash. Thus, the same salt needs to be used to generate a hash to match with the stored hash. If a different salt is used, then the generated hash will be different from the stored hash even if the password provided is correct.
+
+After verifying that the username and password matches the information stored in `preferences.json`, an event is raised to notify the `UI` component of the user authentication results. If the user has successfully logged in, the `UI` component will display the person list, info panel and allow other commands to be executed from the command box.
+
+When a user enters the `logout` command, the `LogoutCommand` class in the `Logic` component will raise an even to notify the `UI` component to go back to the welcome page.
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of password masking +
+**Alternative 1(current choice):** Use the unicode character 'BLACK CIRCLE' (●) for password masking +
+**Pros:** Allows other characters to be detected as password input +
+**Cons:** None +
+**Alternative 2:** Use the asterisk character (*) for password masking +
+**Pros:** User may use the asterisk character when entering the password. The asterisk character will be ignored and will not show in the text field when it is entered. This is because the method that handles password masking ignores the character used to mask the password. Refer to the code below for more details: +
+[source,java]
+----
+// starts masking password after the second whitespace and prevent the reading of the BLACK_CIRCLE after
+// replacing a character in the command box text field with a BLACK_CIRCLE
+if (numOfSpaces >= 2 && currentInput.charAt(currentInput.length() - 1) != ' '
+        && currentInput.charAt(currentInput.length() - 1) != BLACK_CIRCLE) {
+    maskPasswordInput(currentInput);
+
+}
+----
+**Cons:** Although '\*' is an invalid password character, the user may still use it while entering the password. If the user types '*', the cursor will remain at its original position. The user will be under the impression that the command box is not registering what was typed.
+// end::loginLogout[]
+
+// tag::sort[]
+=== Sorting mechanism
+
+Sorting is done within the `UniquePersonList` class.
+[source, java]
+----
+public void sortBy(String order) throws IllegalArgumentException {
+    switch (order) {
+    case "name":
+        internalList.sort((Person p1, Person p2) -> p1.getName().compareTo(p2.getName()));
+        break;
+    case "debt":
+        internalList.sort((Person p1, Person p2) -> p2.getDebt().compareTo(p1.getDebt()));
+        break;
+    case "cluster":
+        internalList.sort((Person p1, Person p2) -> p1.getCluster().compareTo(p2.getCluster()));
+        break;
+    case "deadline":
+        internalList.sort((Person p1, Person p2) -> p1.getDeadline().compareTo(p2.getDeadline()));
+        internalList.sort((Person p1, Person p2) -> Boolean.compare(p1.isWhitelisted(), p2.isWhitelisted()));
+        break;
+    default:
+        throw new IllegalArgumentException("Invalid sort ordering");
+    }
+}
+----
+The `sort` command can take in a `String` that determines how the contacts should be sorted. If no ordering is
+specified, the contacts will be sorted by ascending lexicographical order by default. +
+[source, java]
+----
+public class SortCommandParser implements Parser<SortCommand> {
+    public SortCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        String trimmedArgs = args.trim().toLowerCase();
+        switch (trimmedArgs) {
+        case "":
+        case "name":
+        case "debt":
+        case "cluster":
+        case "deadline":
+            return new SortCommand(trimmedArgs);
+        default:
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        }
+    }
+}
+----
+[source, java]
+----
+public static final String DEFAULT_ORDERING = "name";
+
+public SortCommand(String order) {
+    //validity of order to sort is checked in {@code SortCommandParser}
+    if (order.equals("")) {
+        order = DEFAULT_ORDERING;
+    }
+    this.order = order;
+}
+
+public CommandResult execute() throws CommandException {
+    try {
+        model.sortBy(order);
+    } // irrelevant parts of the method omitted for brevity
+}
+----
+
+==== Design considerations
+
+**Aspect:** Default `sort` +
+**Alternative 1 (current choice):** `Sort` by `name` by default +
+**Pros:** Relatively easy to implement, extremely intuitive. +
+**Alternative 2:** `Sort` by `debt` by default +
+**Pros:** Equally easy to implement. +
+**Cons:** Slightly less intuitive as sorting by `name` is the most prevalent way of sorting contacts. +
+**Alternative 3:** No default `sort`. +
+**Pros:** Extremely easy to implement. +
+**Cons:** Not user-friendly.
+// end::sort[]
+
+// tag::optionalIndex[]
+=== Optional command indexes
+
+It is intuitive to allow commands such as `edit`, `delete`, `borrow` and others to be called on the currently selected
+person instead of always having to supply the `INDEX`. +
+Parsers of commands call a constructor of the commands without an index. Take the `RepaidCommandParser` and `RepaidCommand` for example.
+[source, java]
+----
+public RepaidCommand parse(String args) throws ParseException {
+    try {
+        if (args.trim().equals("")) {
+            return new RepaidCommand();
+        } else {
+            Index index = ParserUtil.parseIndex(args);
+            return new RepaidCommand(index);
+        }
+    } catch (IllegalValueException ive) {
+        throw new ParseException(
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RepaidCommand.MESSAGE_USAGE));
+    }
+}
+----
+[source, java]
+----
+public RepaidCommand() {
+    this.targetIndex = null;
+}
+public CommandResult executeUndoableCommand() throws CommandException {
+    ReadOnlyPerson personToWhitelist = selectPerson(targetIndex);
+    // Perform the command operation as per normal.
+}
+----
+The `selectPerson(Index)` method is placed in the `Command` class, and is used by such index-based commands to select
+the currently selected person to apply the command on if no index is provided.
+[source, java]
+----
+public ReadOnlyPerson selectPerson(Index index) throws CommandException {
+    ReadOnlyPerson selectedPerson;
+    if (index == null) {
+        if (model.getSelectedPerson() == null) {
+            throw new CommandException(Messages.MESSAGE_NO_PERSON_SELECTED);
+        } else {
+            selectedPerson = model.getSelectedPerson();
+        }
+    } else {
+        List<ReadOnlyPerson> lastShownList = listObserver.getCurrentFilteredList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+        selectedPerson = lastShownList.get(index.getZeroBased());
+    }
+    return selectedPerson;
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Executing index-based commands without index. +
+**Alternative 1 (current choice):** Calling a constructor of the `command` without an `Index` initialises its `targetIndex`
+to null, and the null index is handled as a special value during execution. +
+**Pros:** Easy to implement, easy to extend. +
+**Cons:** Although highly unlikely, it may be possible for a `command` to have an unintended null `targetIndex`, which
+will then cause it to behave as an indexless command instead of an error. +
+**Alternative 2:** Find and use the current selection index within the constructor with no parameters. +
+**Pros:** Easier to maintain and test. +
+**Cons:** Difficult to implement as the `model` of a `command` is only set during execution, so it will be hard or even
+impossible to retrieve the current selection in the constructor of a `command`.
+// end::optionalIndex[]
+
+// tag::interest[]
+=== Interest Calculator Mechanism
+
+As a debt collector, it can be troublesome to manage so many debts. The task is made more tedious when the debt collector has to
+consider all the debtor's loan's interest rates as well. Codii is able to automatically calculate a `Person` 's new debt based on his / her's
+interest rate. Whenever the user logs into Codii, the `Model` component, which handles the event `LoginAppRequestEvent` and checks every
+`Person` in the `AddressBook`.
+
+[source, java]
+----
+@Subscribe
+    public void handleLoginUpdateDebt(LoginAppRequestEvent event) {
+        // login is successful
+        if (event.getLoginStatus() == true) {
+            for (ReadOnlyPerson person : allPersons) {
+                if (!person.getInterest().value.equals("No interest set.")
+                        && (person.checkLastAccruedDate(new Date()) != 0)) {
+                    updateDebtFromInterest(person, person.checkLastAccruedDate(new Date()));
+                }
+            }
+        }
+    }
+----
+
+As seen from the above if a `Person` has his / her interest field defined,the event handler checks a `Person` 's debts last accrued date via the method:
+
+[source, java]
+----
+    /**
+     * Compares date of last accrued against current date.
+     * @return number of months the current date is ahead of last accrued date. Returns 0 if
+     * there is no need to increment debt.
+     */
+    @Override
+    public int checkLastAccruedDate(Date currentDate) {
+        if (lastAccruedDate.before(currentDate)) {
+            return DateUtil.getNumberOfMonthBetweenDates(currentDate, lastAccruedDate);
+        } else {
+            return 0;
+        }
+    }
+----
+
+The above method returns the difference in the number of months between the last accrued date and the current date to the event handler. The event
+handler than calls another method to update the `Person` 's debt by passing in the number of months as a parameter:
+
+[source, java]
+----
+    @Override
+    public void updateDebtFromInterest(ReadOnlyPerson person, int differenceInMonths) {
+        String accruedAmount = person.calcAccruedAmount(differenceInMonths);
+        try {
+            Debt amount = new Debt(accruedAmount);
+            addDebtToPerson(person, amount);
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "Should not occur as person obtained from allPersons";
+        } catch (IllegalValueException ive) {
+            assert false : Debt.MESSAGE_DEBT_CONSTRAINTS;
+        }
+    }
+----
+
+From the above code, the `Person` 's debts accrued amount would be calculated by the line:
+
+[source, java]
+----
+String accruedAmount = person.calcAccruedAmount(differenceInMonths);
+----
+
+Their respective debts would then be updated accordingly with the following line:
+
+[source, java]
+----
+addDebtToPerson(person, amount);
+----
+
+==== Design Considerations
+
+**Aspect:** When to update / check a Person's debt. +
+**Alternative 1 (Current choice):** Check through the `AddressBook` in the `Model` component every time the user logs in. +
+**Pros:** Convenient and intuitive to implement for developer. +
+**Cons:** If user never logs out, the debt would not be accrued. +
+**Alternative 2:** Create a `Refresh` command that does the checking instead of relying on the `LoginAppRequestEvent`. +
+**Pros:** User can have the most up-to-date debt as long as he / she remembers to always enter the `Refresh` command. +
+**Cons:** Not convenient for user at all. It is also unlikely that the user would remain logged in for such a long duration. +
+// end::interest[]
 
 === Logging
 

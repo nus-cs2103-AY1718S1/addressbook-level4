@@ -19,6 +19,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.DeselectionEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
@@ -55,6 +56,8 @@ public class MainWindow extends UiPart<Region> {
     private PersonListStartUpPanel personListStartUpPanel;
     private Config config;
     private UserPrefs prefs;
+    private CommandBox commandBox = null;
+    private HelpWindow helpWindow;
 
     @FXML
     private StackPane infoPanelPlaceholder;
@@ -90,6 +93,8 @@ public class MainWindow extends UiPart<Region> {
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
+
+        helpWindow = new HelpWindow();
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -147,6 +152,7 @@ public class MainWindow extends UiPart<Region> {
         infoPanel = new InfoPanel(logic);
         infoPanelPlaceholder.getChildren().clear();
         infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
+        fillInnerPartsForCommandBox();
     }
 
     //@@author jelneo
@@ -167,10 +173,27 @@ public class MainWindow extends UiPart<Region> {
             ResultDisplay resultDisplay = new ResultDisplay();
             resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-            CommandBox commandBox = new CommandBox(logic);
+            commandBox = new CommandBox(logic);
             commandBoxPlaceholder.getChildren().clear();
             commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
         });
+    }
+
+    /**
+     * Fills up all the placeholders command box.
+     */
+    void fillInnerPartsForCommandBox() {
+        commandBoxPlaceholder.getChildren().clear();
+        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+    }
+
+    /**
+     * Changes from command box to login view with text fields for username and password
+     */
+    public void fillCommandBoxWithLoginFields() {
+        LoginView loginView = new LoginView(logic);
+        commandBoxPlaceholder.getChildren().clear();
+        commandBoxPlaceholder.getChildren().add(loginView.getRoot());
     }
 
     //@@author jaivigneshvenugopal
@@ -249,7 +272,6 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
 
@@ -295,5 +317,21 @@ public class MainWindow extends UiPart<Region> {
         infoPanel = new InfoPanel(logic);
         infoPanelPlaceholder.getChildren().clear();
         infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
+    }
+
+    /**
+     * Changes theme.
+     */
+    @Subscribe
+    private void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) {
+        for (String stylesheet : getRoot().getStylesheets()) {
+            if (stylesheet.endsWith("DarkTheme.css")) {
+                getRoot().getStylesheets().remove(stylesheet);
+                getRoot().getStylesheets().add("/view/BrightTheme.css");
+            } else if (stylesheet.endsWith("BrightTheme.css")) {
+                getRoot().getStylesheets().remove(stylesheet);
+                getRoot().getStylesheets().add("/view/DarkTheme.css");
+            }
+        }
     }
 }

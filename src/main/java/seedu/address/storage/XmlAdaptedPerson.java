@@ -60,7 +60,13 @@ public class XmlAdaptedPerson {
     @XmlElement (required = true)
     private String lastAccruedDate;
     @XmlElement (required = true)
+    private String isBlacklisted;
+    @XmlElement (required = true)
+    private String isWhitelisted;
+    @XmlElement (required = true)
     private String hasOverdueDebt;
+    @XmlElement (required = true)
+    private String hasDisplayPicture;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -92,11 +98,10 @@ public class XmlAdaptedPerson {
         deadline = source.getDeadline().value;
         dateRepaid = source.getDateRepaid().value;
         lastAccruedDate = DateUtil.formatDate(source.getLastAccruedDate());
-        if (source.hasOverdueDebt()) {
-            hasOverdueDebt = "true";
-        } else {
-            hasOverdueDebt = "false";
-        }
+        isBlacklisted = String.valueOf(source.isBlacklisted());
+        isWhitelisted = String.valueOf(source.isWhitelisted());
+        hasOverdueDebt = String.valueOf(source.hasOverdueDebt());
+        hasDisplayPicture = String.valueOf(source.hasDisplayPicture());
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -135,11 +140,10 @@ public class XmlAdaptedPerson {
         adaptedPerson.setDateBorrow(dateBorrow);
         adaptedPerson.setDateRepaid(dateRepaid);
         adaptedPerson.setLastAccruedDate(lastAccruedDate);
-        if (this.hasOverdueDebt.equals("true")) {
-            adaptedPerson.setHasOverdueDebt(true);
-        } else {
-            adaptedPerson.setHasOverdueDebt(false);
-        }
+        adaptedPerson.setIsBlacklisted(Boolean.valueOf(this.isBlacklisted));
+        adaptedPerson.setIsWhitelisted(Boolean.valueOf(this.isWhitelisted));
+        adaptedPerson.setHasOverdueDebt(Boolean.valueOf(this.hasOverdueDebt));
+        adaptedPerson.setHasDisplayPicture(Boolean.valueOf(this.hasDisplayPicture));
         return adaptedPerson;
     }
 }

@@ -7,14 +7,18 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeToLoginViewEvent;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddPictureCommand;
 import seedu.address.logic.commands.BanCommand;
 import seedu.address.logic.commands.BlacklistCommand;
 import seedu.address.logic.commands.BorrowCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeletePictureCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FilterCommand;
@@ -32,6 +36,7 @@ import seedu.address.logic.commands.RepaidCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetPathCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UnbanCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.WhitelistCommand;
@@ -71,6 +76,14 @@ public class AddressBookParser {
         case AddCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new AddCommandParser().parse(arguments);
+
+        case AddPictureCommand.COMMAND_WORD:
+            logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            return new AddPictureCommandParser().parse(arguments);
+
+        case DeletePictureCommand.COMMAND_WORD:
+            logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            return new DeletePictureCommandParser().parse(arguments);
 
         case BlacklistCommand.COMMAND_WORD_ALIAS:
         case BlacklistCommand.COMMAND_WORD:
@@ -140,6 +153,10 @@ public class AddressBookParser {
 
         case LoginCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            if (arguments.isEmpty()) {
+                EventsCenter.getInstance().post(new ChangeToLoginViewEvent());
+                return null;
+            }
             return new LoginCommandParser().parse(arguments);
 
         case LogoutCommand.COMMAND_WORD:
@@ -182,6 +199,10 @@ public class AddressBookParser {
         case SetPathCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new SetPathCommandParser().parse(arguments);
+
+        case ThemeCommand.COMMAND_WORD:
+            logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            return new ThemeCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

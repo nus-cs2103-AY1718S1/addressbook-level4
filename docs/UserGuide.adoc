@@ -23,6 +23,7 @@ The terms used in this guide are as follows: +
 
 * Blacklist - List of people who are banned +
 * Whitelist - List of people who have cleared their debts +
+* Overdue list - List of people who have overdue debt +
 * Index - The ordering of a contact in the list +
 * Cluster - The general location of a person based on [https://www.ura.gov.sg/realEstateIIWeb/resources/misc/list_of_postal_districts.htm[postal districts]]
 
@@ -41,8 +42,8 @@ Codii is available for the Linux, Windows, and Mac OS operating systems.
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `codii.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your Codii.
 .  Double-click the file to start the app. The GUI, as seen in Figure 1.1 below, should appear in a few seconds.
 +
 image::UiStartUp.PNG[width="790"]
@@ -85,7 +86,30 @@ Examples:
 
 * `login userAcc_123 pa$$_Word!@#&`
 * `login batMan_111 (Batcave.327+-)`
+
+Sample account to log into address book: +
+Username: loanShark97 +
+Password: hitMeUp123 +
+
 // end::login[]
+
+// tag::loginGUI[]
+=== Logging into the address book application using Graphic User Interface (GUI): `login`
+
+Logs into the address book. +
+Format: `login`
+
+1) Type `login` in the command box. +
+2) Enter username and password in the respective fields +
+3) Press `Enter` on keyboard or click the `Log in` button +
+
+image::loginView.png[width="790"]
+
+Sample account to log into address book: +
+Username: loanShark97 +
+Password: hitMeUp123 +
+
+// end::loginGUI[]
 
 // tag::logout[]
 === Logging out of the address book application : `logout`
@@ -117,15 +141,26 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+// tag::blacklist[]
 === Listing all blacklisted persons : `blacklist`
 
 Shows a list of all blacklisted persons in the address book. +
 Format: `blacklist`
+// end::blacklist[]
 
+// tag::whitelist[]
 === Listing all whitelisted persons : `whitelist`
 
 Shows a list of all whitelisted persons in the address book. +
 Format: `whitelist`
+// end::whitelist[]
+
+// tag::overduelist[]
+=== Listing all persons with overdue debt: `overduelist`
+
+shows a list of all persons with overdue debt in the address book. +
+Format: `overduelist`
+// end::overduelist[]
 
 === Editing a person : `edit`
 
@@ -222,6 +257,7 @@ Decreases the debt of the 2nd person by $1000.10.
 Decreases the debt of the 3rd person by $234.
 // end::payback[]
 
+// tag::repaid[]
 === Resetting the debt of a person: `repaid`
 
 Resets the debt of a person to zero and sets the date repaid field of that person. +
@@ -239,6 +275,7 @@ Resets the debt of the 1st person to zero and sets the date of repayment in his/
 * `select 2` +
 `repaid` +
 Resets the debt of the 2nd person to zero and sets the date of repayment in his/her record.
+// tag::repaid[]
 
 === Deleting a person : `delete`
 
@@ -341,6 +378,12 @@ Selects the first person in the last person listing.
 Selects the person identified by the index number used in the listing of nearby contacts of currently selected person, +
 Format: `nearby [INDEX]`
 
+[NOTE]
+If you do not see a secondary person list panel labelled "All contacts in this area" at the bottom of the information
+of the currently selected contact, you might need to change your resolution settings to view it. +
+On Windows, go to Settings -> Display -> Set "Change the size of text, apps and other items" to 125%, then restart the
+app.
+
 ****
 * A person must be selected before this command is called.
 * Selects the person and loads the full information of the person at the specified `INDEX`.
@@ -353,11 +396,10 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
 * `nearby 1` +
-Selects the 1st person in the nearby contacts listing of the previously selected person.
+Selects the 1st person in the same `cluster` as the previously selected person.
 * `nearby` +
-Selects the next person in the nearby contacts listing of the previously selected person.
+Selects the next person in the same `cluster` as the previously selected person.
 // end::nearby[]
 
 === Listing entered commands : `history`
@@ -458,22 +500,87 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::addpic[]
+=== Adding a profile picture to a person : `addpic`
+
+Adds a user specified profile picture to the specified person. +
+Format: 'addpic [INDEX]'
+
+****
+* Adds a profile picture to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* If no index is specified, the command acts on the currently selected person.
+****
+
+Examples:
+
+* `list` +
+`addpic 2` +
+Adds a picture to the 2nd person in masterlist.
+* `find Betsy` +
+`addpic 1` +
+Adds a profile picture to the 1st person from the results of the `find` command.
+* `select 3` +
+`addpic`
+Adds a profile picture to the 3rd person from the masterlist in the address book.
+// end::addpic[]
+
+// tag::delpic[]
+=== Deleting the profile picture of a person : `delpic`
+
+Removes the profile picture of the specified person. +
+Format: 'delpic [INDEX]'
+
+****
+* Removes the profile picture of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* If no index is specified, the command acts on currently selected person.
+****
+
+Examples:
+
+* `list` +
+`delpic 2` +
+Deletes the picture of the 2nd person in masterlist.
+* `find Betsy` +
+`delpic 1` +
+Deletes the profile picture of the 1st person from the results of the `find` command.
+* `select 3` +
+`delpic`
+Deletes the profile picture of the 3rd person from the masterlist in the address book.
+// end::delpic[]
+
 // tag::setpath[]
 === Setting the path to local profile pictures folder : `setpath`
 
-Sets the folder location to access debtors profile pictures. +
+Sets the folder location to access and import debtors profile pictures. +
 Format: `setpath`
 
 Examples:
 
 * `setpath C:/Users/acer/Desktop/SE/profilepic/` +
+* `setpath C:\Users\acer\Desktop\SE\profilepic\` +
 * `setpath out/production/resources/images/` +
+* `setpath out\production\resources\images\` +
 // end::setpath[]
 
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
 Format: `clear`
+
+=== Changing themes: `theme`
+
+Changes between the two available themes. +
+Format: `theme`
+
+image::Ui.png[width="790"]
+_Figure 4.25.1 : Dark theme (default)_
+
+image::BrightTheme.PNG[width="790"]
+_Figure 4.25.2 : Bright theme_
 
 === Exiting the program : `exit`
 
@@ -541,6 +648,11 @@ transferred to whitelist and date repaid is set to the date the command is execu
 
 * *Login* : `login USERNAME PASSWORD` +
 e.g. `login userAcc_123 pa$$_Word!@#&`
+* *Login using GUI* : `login` +
+e.g.
+
+image::loginView.png[width="790"]
+
 * *Logout* : `logout`
 * *Add* : `add n/NAME hp/HANDPHONE_NUMBER home/HOME_PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL_CODE d/DEBT [op/OFFICE_PHONE_NUMBER] [dl/DEADLINE] [int/INTEREST] [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd pc/123466 d/123 dl/11-03-2017 t/friend t/colleague`
@@ -564,6 +676,7 @@ e.g. `find James Jake`
 * *List* : `list`
 * *Blacklist* : `blacklist`
 * *Whitelist* : `whitelist`
+* *Overduelist* : `overduelist`
 * *Help* : `help`
 * *Select* : `select [INDEX]` +
 e.g.`select 2`
@@ -572,12 +685,18 @@ e.g.`select 2`
 e.g. `nearby 2`
 * *Sort* : `sort [ORDERING]` +
 e.g. `sort debt`
+* *Add Picture*  : `addpic [INDEX]` +
+e.g. `addpic 2`
+* *Delete Picture*  : `delpic [INDEX]` +
+e.g. `delpic 2`
 * *Setpath* : `setpath`
 e.g. `setpath C:/Users/acer/Desktop/SE/profilepic/`
+e.g. `setpath C:\Users\acer\Desktop\SE\profilepic\`
 * *Filter* : `filter TAG1 TAG2 ...` +
 e.g `filter friendly cooperative`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Theme* : `theme`
 
 == Current features
 
@@ -618,15 +737,15 @@ e.g `filter friendly cooperative`
 * List of people who have overdue debts. (since v1.4)
 * A progress bar to indicate how much of the person's debt has been paid off. (since v1.4)
 
+* Specifically import and save profile pictures to existing database of the application. (since v1.5)
+* Different appearance themes (since v1.5)
+
 == Features to be included by `V2.0`
 
-//[V1.5]
-* Different appearance themes.
 * A feature to export a person's contact in another format.
 * `Help` command that displays screenshots of positive examples.
 * Able to view the last login time.
 * Able to impose different periods of ban on a specified person in the blacklist
-//[end of V1.5]
 * Two FA authentication for login and every other important actions.
 * Validity checks on client's personal information.
 * Email notifications when the user's account in logged in from an unknown device.

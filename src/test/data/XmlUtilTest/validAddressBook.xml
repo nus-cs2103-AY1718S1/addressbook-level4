@@ -12,7 +12,10 @@
         <totalDebt isPrivate="false">123</totalDebt>
         <interest isPrivate="false">1</interest>
         <lastAccruedDate isPrivate="false">Fri, 27 Oct, Year 2017</lastAccruedDate>
+        <isBlacklisted isPrivate="false">false</isBlacklisted>>
+        <isWhitelisted isPrivate="false">false</isWhitelisted>>
         <hasOverdueDebt isPrivate="false">false</hasOverdueDebt>>
+        <hasDisplayPicture isPrivate="false">false</hasDisplayPicture>>
         <deadline isPrivate="false">13-11-2017</deadline>>
     </persons>
     <persons>
@@ -27,7 +30,10 @@
         <totalDebt isPrivate="false">1234</totalDebt>
         <interest isPrivate="false">1</interest>
         <lastAccruedDate isPrivate="false">Fri, 27 Oct, Year 2017</lastAccruedDate>
+        <isBlacklisted isPrivate="false">false</isBlacklisted>>
+        <isWhitelisted isPrivate="false">false</isWhitelisted>>
         <hasOverdueDebt isPrivate="false">false</hasOverdueDebt>>
+        <hasDisplayPicture isPrivate="false">false</hasDisplayPicture>>
         <deadline isPrivate="false">12-11-2017</deadline>>
     </persons>
     <persons>
@@ -42,7 +48,10 @@
         <totalDebt isPrivate="false">12345</totalDebt>
         <interest isPrivate="false">1</interest>
         <lastAccruedDate isPrivate="false">Fri, 27 Oct, Year 2017</lastAccruedDate>
+        <isBlacklisted isPrivate="false">false</isBlacklisted>>
+        <isWhitelisted isPrivate="false">false</isWhitelisted>>
         <hasOverdueDebt isPrivate="false">false</hasOverdueDebt>>
+        <hasDisplayPicture isPrivate="false">false</hasDisplayPicture>>
         <deadline isPrivate="false">17-12-2017</deadline>>
     </persons>
     <persons>
@@ -57,7 +66,10 @@
         <totalDebt isPrivate="false">123456</totalDebt>
         <interest isPrivate="false">1</interest>
         <lastAccruedDate isPrivate="false">Fri, 27 Oct, Year 2017</lastAccruedDate>
+        <isBlacklisted isPrivate="false">false</isBlacklisted>>
+        <isWhitelisted isPrivate="false">false</isWhitelisted>>
         <hasOverdueDebt isPrivate="false">false</hasOverdueDebt>>
+        <hasDisplayPicture isPrivate="false">false</hasDisplayPicture>>
         <deadline isPrivate="false">16-12-2017</deadline>>
     </persons>
     <persons>
@@ -72,7 +84,10 @@
         <totalDebt isPrivate="false">1234567</totalDebt>
         <interest isPrivate="false">1</interest>
         <lastAccruedDate isPrivate="false">Fri, 27 Oct, Year 2017</lastAccruedDate>
+        <isBlacklisted isPrivate="false">false</isBlacklisted>>
+        <isWhitelisted isPrivate="false">false</isWhitelisted>>
         <hasOverdueDebt isPrivate="false">false</hasOverdueDebt>>
+        <hasDisplayPicture isPrivate="false">false</hasDisplayPicture>>
         <deadline isPrivate="false">15-12-2017</deadline>>
     </persons>
     <persons>
@@ -87,7 +102,10 @@
         <totalDebt isPrivate="false">12345678</totalDebt>
         <interest isPrivate="false">1</interest>
         <lastAccruedDate isPrivate="false">Fri, 27 Oct, Year 2017</lastAccruedDate>
+        <isBlacklisted isPrivate="false">false</isBlacklisted>>
+        <isWhitelisted isPrivate="false">false</isWhitelisted>>
         <hasOverdueDebt isPrivate="false">false</hasOverdueDebt>>
+        <hasDisplayPicture isPrivate="false">false</hasDisplayPicture>>
         <deadline isPrivate="false">14-12-2017</deadline>>
     </persons>
     <persons>
@@ -102,7 +120,10 @@
         <totalDebt isPrivate="false">123456789</totalDebt>
         <interest isPrivate="false">1</interest>
         <lastAccruedDate isPrivate="false">Fri, 27 Oct, Year 2017</lastAccruedDate>
+        <isBlacklisted isPrivate="false">false</isBlacklisted>>
+        <isWhitelisted isPrivate="false">false</isWhitelisted>>
         <hasOverdueDebt isPrivate="false">false</hasOverdueDebt>>
+        <hasDisplayPicture isPrivate="false">false</hasDisplayPicture>>
         <deadline isPrivate="false">13-12-2017</deadline>>
     </persons>
     <persons>
@@ -117,7 +138,10 @@
         <totalDebt isPrivate="false">321</totalDebt>
         <interest isPrivate="false">1</interest>
         <lastAccruedDate isPrivate="false">Fri, 27 Oct, Year 2017</lastAccruedDate>
+        <isBlacklisted isPrivate="false">false</isBlacklisted>>
+        <isWhitelisted isPrivate="false">false</isWhitelisted>>
         <hasOverdueDebt isPrivate="false">false</hasOverdueDebt>>
+        <hasDisplayPicture isPrivate="false">false</hasDisplayPicture>>
         <deadline isPrivate="false">12-12-2017</deadline>>
     </persons>
     <persons>
@@ -132,7 +156,10 @@
         <totalDebt isPrivate="false">4321</totalDebt>
         <interest isPrivate="false">1</interest>
         <lastAccruedDate isPrivate="false">Fri, 27 Oct, Year 2017</lastAccruedDate>
+        <isBlacklisted isPrivate="false">false</isBlacklisted>>
+        <isWhitelisted isPrivate="false">false</isWhitelisted>>
         <hasOverdueDebt isPrivate="false">false</hasOverdueDebt>>
+        <hasDisplayPicture isPrivate="false">false</hasDisplayPicture>>
         <deadline isPrivate="false">11-12-2017</deadline>>
     </persons>
 </addressbook>

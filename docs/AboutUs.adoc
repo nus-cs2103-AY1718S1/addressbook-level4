@@ -39,7 +39,7 @@ Responsibilities: UI
 
 === Jaivignesh Venugopal
 image::jaivigneshvenugopal.jpg[width="150", align="left"]
-{empty}[http://github.com/jaivigneshvenugopal[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/jaivigneshvenugopal[github]] [<<jaivigneshvenugopal#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Logic
@@ -48,7 +48,7 @@ Responsibilities: Logic
 
 === Lawrence Koh Yong Hong
 image::lawwman.jpg[width="150", align="left"]
-{empty}[http://github.com/lawwman[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/lawwman[github]] [<<lawrence#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Model

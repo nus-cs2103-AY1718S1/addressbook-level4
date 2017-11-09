@@ -74,7 +74,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private String lastRememberedPostalCode;
     private String lastRememberedCluster;
     private String lastRememberedDebt;
-    private String lastRememberedtotalDebt;
+    private String lastRememberedTotalDebt;
     private String lastRememberedInterest;
     private String lastRememberedDateBorrow;
     private String lastRememberedDeadline;
@@ -157,7 +157,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     }
 
     public String getTotalDebt() {
-        return debtLabel.getText();
+        return totalDebtLabel.getText();
     }
 
     public String getInterest() {
@@ -217,7 +217,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     }
 
     public String getTotalDebtField() {
-        return debtText.getText();
+        return totalDebtText.getText();
     }
 
     public String getInterestField() {
@@ -253,6 +253,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     public void rememberSelectedPersonDetails() {
         lastRememberedAddress = getAddress();
         lastRememberedDebt = getDebt();
+        lastRememberedTotalDebt = getTotalDebt();
         lastRememberedInterest = getInterest();
         lastRememberedEmail = getEmail();
         lastRememberedName = getName();
@@ -278,6 +279,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
                 || !getHomePhone().equals(lastRememberedHomePhone)
                 || !getOfficePhone().equals(lastRememberedOfficePhone)
                 || !getDebt().equals(lastRememberedDebt)
+                || !getTotalDebt().equals(lastRememberedTotalDebt)
                 || !getInterest().equals(lastRememberedInterest)
                 || !getEmail().equals(lastRememberedEmail)
                 || !getPostalCode().equals(lastRememberedPostalCode)
@@ -453,6 +455,31 @@ public class NearbySelectionIntegrationTest extends AddressBookGuiTest {
 
 }
 ```
+###### \java\seedu\address\logic\commands\BanCommandTest.java
+``` java
+    @Test
+    public void execute_noIndexPersonSelected_success() throws Exception {
+        model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        ReadOnlyPerson personToBan = model.getSelectedPerson();
+        BanCommand banCommand = prepareCommand();
+
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(BanCommand.MESSAGE_BAN_PERSON_SUCCESS, personToBan.getName());
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.addBlacklistedPerson(personToBan);
+
+        assertCommandSuccess(banCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_noIndexNoSelection_failure() throws Exception {
+        BanCommand banCommand = prepareCommand();
+
+        assertCommandFailure(banCommand, model, Messages.MESSAGE_NO_PERSON_SELECTED);
+    }
+
+```
 ###### \java\seedu\address\logic\commands\BorrowCommandTest.java
 ``` java
     @Test
@@ -560,23 +587,40 @@ public class NearbyCommandTest {
         model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased()));
         Index outOfBoundsIndex = Index.fromOneBased(model.getNearbyPersons().size() + 1);
 
-        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertExecutionFailure(outOfBoundsIndex, String.format(NearbyCommand.MESSAGE_INVALID_NEARBY_INDEX,
+                model.getNearbyPersons().size()));
     }
 
     @Test
     public void execute_validIndexFilteredList_success() {
+        model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased()));
+
+        assertExecutionSuccess(INDEX_SECOND_PERSON);
+    }
+
+    @Test
+    public void execute_noIndexNearbyListOnlyOnePerson_failure() {
         model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON);
+        assertExecutionFailure(null, NearbyCommand.MESSAGE_NO_NEARBY_PERSON);
+    }
+
+    @Test
+    public void execute_noIndex_success() {
+        model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased()));
+
+        assertExecutionSuccess(null);
     }
 
     @Test
     public void equals() {
         NearbyCommand nearbyFirstCommand = new NearbyCommand(INDEX_FIRST_PERSON);
         NearbyCommand nearbySecondCommand = new NearbyCommand(INDEX_SECOND_PERSON);
+        NearbyCommand nearbyThirdCommand = new NearbyCommand();
 
         // same object -> returns true
         assertTrue(nearbyFirstCommand.equals(nearbyFirstCommand));
+        assertTrue(nearbyThirdCommand.equals(nearbyThirdCommand));
 
         // same values -> returns true
         NearbyCommand nearbyFirstCommandCopy = new NearbyCommand(INDEX_FIRST_PERSON);
@@ -602,7 +646,8 @@ public class NearbyCommandTest {
         try {
             CommandResult commandResult = nearbyCommand.execute();
             assertEquals(String.format(ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
-                            + NearbyCommand.MESSAGE_NEARBY_PERSON_SUCCESS, index.getOneBased()),
+                    + NearbyCommand.MESSAGE_NEARBY_PERSON_SUCCESS,
+                    model.getNearbyPersons().indexOf(model.getSelectedPerson()) + 1),
                     commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
@@ -610,7 +655,11 @@ public class NearbyCommandTest {
 
         JumpToNearbyListRequestEvent lastEvent =
                 (JumpToNearbyListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
-        assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
+        if (index != null) {
+            assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
+        }
+        assertEquals(model.getNearbyPersons().indexOf(model.getSelectedPerson()),
+                lastEvent.targetIndex);
     }
 
     /**
@@ -633,7 +682,12 @@ public class NearbyCommandTest {
      * Returns a {@code NearbyCommand} with parameters {@code index}.
      */
     private NearbyCommand prepareCommand(Index index) {
-        NearbyCommand nearbyCommand = new NearbyCommand(index);
+        NearbyCommand nearbyCommand;
+        if (index == null) {
+            nearbyCommand = new NearbyCommand();
+        } else {
+            nearbyCommand = new NearbyCommand(index);
+        }
         nearbyCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return nearbyCommand;
     }
@@ -659,6 +713,31 @@ public class NearbyCommandTest {
         } catch (PersonNotFoundException pnfe) {
             pnfe.printStackTrace();
         }
+    }
+
+```
+###### \java\seedu\address\logic\commands\RepaidCommandTest.java
+``` java
+    @Test
+    public void execute_noIndexPersonSelected_success() throws Exception {
+        model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        ReadOnlyPerson personToRepaid = model.getSelectedPerson();
+        RepaidCommand repaidCommand = prepareCommand();
+
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(RepaidCommand.MESSAGE_REPAID_PERSON_SUCCESS, personToRepaid.getName());
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.addWhitelistedPerson(personToRepaid);
+
+        assertCommandSuccess(repaidCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_noIndexNoSelection_failure() throws Exception {
+        RepaidCommand repaidCommand = prepareCommand();
+
+        assertCommandFailure(repaidCommand, model, Messages.MESSAGE_NO_PERSON_SELECTED);
     }
 
 ```
@@ -756,6 +835,65 @@ public class SortCommandTest {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\ThemeCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) for {@code ThemeCommand}.
+ */
+public class ThemeCommandTest {
+
+    @Test
+    public void execute_changeTheme_success() {
+        String expectedMessage = ThemeCommand.MESSAGE_SUCCESS;
+        ThemeCommand themeCommand = new ThemeCommand();
+        assertCommandSuccess(themeCommand, expectedMessage);
+    }
+
+    @Test
+    public void equals() {
+        ThemeCommand themeFirstCommand = new ThemeCommand();
+        ThemeCommand themeSecondCommand = new ThemeCommand();
+
+        // same object
+        assertTrue(themeFirstCommand.equals(themeFirstCommand));
+
+        // same value
+        assertTrue(themeFirstCommand.equals(themeSecondCommand));
+    }
+
+    private void assertCommandSuccess(ThemeCommand command, String expectedMessage) {
+        // TODO: assert that the theme has actually changed
+        CommandResult commandResult = command.execute();
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+    }
+
+}
+```
+###### \java\seedu\address\logic\commands\UnbanCommandTest.java
+``` java
+    @Test
+    public void execute_noIndexPersonSelected_success() throws Exception {
+        model.updateSelectedPerson(model.getFilteredBlacklistedPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        ReadOnlyPerson personToUnban = model.getSelectedPerson();
+        UnbanCommand unbanCommand = prepareCommand();
+
+        String expectedMessage = ListObserver.BLACKLIST_NAME_DISPLAY_FORMAT
+                + String.format(UnbanCommand.MESSAGE_UNBAN_PERSON_SUCCESS, personToUnban.getName());
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.removeBlacklistedPerson(personToUnban);
+
+        assertCommandSuccess(unbanCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_noIndexNoSelection_failure() throws Exception {
+        UnbanCommand unbanCommand = prepareCommand();
+
+        assertCommandFailure(unbanCommand, model, Messages.MESSAGE_NO_PERSON_SELECTED);
+    }
+
+```
 ###### \java\seedu\address\logic\parser\NearbyCommandParserTest.java
 ``` java
 /**
@@ -768,6 +906,7 @@ public class NearbyCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsNearbyCommand() {
+        assertParseSuccess(parser, "", new NearbyCommand());
         assertParseSuccess(parser, "1", new NearbyCommand(INDEX_FIRST_PERSON));
     }
 
@@ -1241,6 +1380,7 @@ public class NearbyPersonListPanelTest extends GuiUnitTest {
         assertEquals(expectedPerson.getCluster().value, actualInfo.getCluster());
         assertEquals(expectedPerson.getInterest().value, actualInfo.getInterest());
         assertEquals(expectedPerson.getDebt().toString(), actualInfo.getDebt());
+        assertEquals(expectedPerson.getTotalDebt().toString(), actualInfo.getTotalDebt());
         assertEquals(expectedPerson.getDateBorrow().value, actualInfo.getDateBorrow());
         assertEquals(expectedPerson.getDeadline().valueToDisplay, actualInfo.getDeadline());
         assertEquals(expectedPerson.getDateRepaid().value, actualInfo.getDateRepaid());

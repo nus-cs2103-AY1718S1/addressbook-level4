@@ -25,6 +25,8 @@ public class NearbyCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_NEARBY_PERSON_SUCCESS = "Selected person in same area: %1$s";
+    public static final String MESSAGE_INVALID_NEARBY_INDEX = "The index provided is invalid. There are only %d "
+            + "contacts in this area";
     public static final String MESSAGE_NO_NEARBY_PERSON = "There is only one person in this area";
 
     private final Index targetIndex;
@@ -54,7 +56,7 @@ public class NearbyCommand extends Command {
 
         if (targetIndex != null) {
             if (targetIndex.getZeroBased() >= nearbyList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                throw new CommandException(String.format(MESSAGE_INVALID_NEARBY_INDEX, nearbyList.size()));
             }
             nearbyIndex = targetIndex;
         } else {
