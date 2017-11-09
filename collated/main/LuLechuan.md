@@ -196,10 +196,6 @@ public class UploadPhotoCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        List<ReadOnlyPerson> checkList = model.getFilteredPersonList();
-        ReadOnlyPerson personChecked = checkList.get(targetIndex.getZeroBased());
-        Photo img = personChecked.getPhoto();
-        img.showPhoto();
 
         return new CommandResult(String.format(MESSAGE_UPDATE_PERSON_PHOTO_SUCCESS, personUpdated));
     }
@@ -364,7 +360,7 @@ public class CustomField {
      * Format state as text for viewing.
      */
     public String toString() {
-        return " " + customFieldName + ": " + customFieldValue;
+        return customFieldValue;
     }
 
 }
@@ -512,6 +508,18 @@ public class UniqueCustomFieldList implements Iterable<CustomField> {
     public int hashCode() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (CustomField customField : internalList) {
+            sb.append(customField.customFieldName);
+            sb.append(": ");
+            sb.append(customField.getCustomFieldValue());
+            sb.append("\r\n");
+        }
+        return sb.toString();
     }
 
 }
@@ -727,4 +735,43 @@ public class XmlAdaptedPhone {
     }
 
 }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    /**
+     *  Sets a background image for a stack pane
+     */
+    private void setBackground(StackPane pane, String pathname, int width, int height) {
+        File file = new File(pathname);
+        try {
+            BackgroundImage backgroundImage = new BackgroundImage(
+                    new Image(file.toURI().toURL().toString(), width, height, false, true),
+                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                    BackgroundSize.DEFAULT);
+            pane.setBackground(new Background(backgroundImage));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    /**
+     *  Initialises icon photo
+     */
+    private void initPhoto(ReadOnlyPerson person) {
+        String pathName = person.getPhoto().pathName;
+
+        File photoImage = new File(pathName);
+        Image photo = null;
+        try {
+            photo = new Image(photoImage.toURI().toURL().toString(), 80, 80, false, false);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        photoContainer.setImage(photo);
+
+        Circle clip = new Circle(60, 60, 50);
+        photoContainer.setClip(clip);
+    }
 ```
