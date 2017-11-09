@@ -23,7 +23,7 @@ include::../UserGuide.adoc[tag=addrelationship]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+This feature allows the user to record information about relationships between the persons in the address book and puts all the persons into a network which can be displayed using a graph.
 
 ==== Implementation
 
@@ -51,7 +51,7 @@ include::../UserGuide.adoc[tag=deleterelationship]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+This feature allows the user to remove a redundant or wrong relationship.
 
 ==== Implementation
 
@@ -79,7 +79,7 @@ include::../UserGuide.adoc[tag=removetag]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+This feature allows the user to remove a specific tag from all persons in the address book within a single command.
 
 ==== Implementation
 
