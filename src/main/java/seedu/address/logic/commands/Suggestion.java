@@ -7,7 +7,7 @@ import static seedu.address.logic.parser.ParserUtil.isParsableFilePath;
 import static seedu.address.logic.parser.ParserUtil.isParsableIndex;
 import static seedu.address.logic.parser.ParserUtil.parseFirstFilePath;
 import static seedu.address.logic.parser.ParserUtil.parseFirstIndex;
-import static seedu.address.model.ModelManager.getLastKnownRolodexSize;
+import static seedu.address.model.ModelManager.getLastRolodexSize;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -99,10 +99,10 @@ public class Suggestion {
         // Commands with simple index-type arguments.
         } else if (SelectCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
                 || DeleteCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            if (isParsableIndex(arguments, getLastKnownRolodexSize())) {
-                return " " + Integer.toString(parseFirstIndex(arguments, getLastKnownRolodexSize()));
-            } else if (isParsableIndex(commandWord, getLastKnownRolodexSize())) {
-                return " " + Integer.toString(parseFirstIndex(commandWord, getLastKnownRolodexSize()));
+            if (isParsableIndex(arguments, getLastRolodexSize())) {
+                return " " + Integer.toString(parseFirstIndex(arguments, getLastRolodexSize()));
+            } else if (isParsableIndex(commandWord, getLastRolodexSize())) {
+                return " " + Integer.toString(parseFirstIndex(commandWord, getLastRolodexSize()));
             }
 
         // Commands with no arguments.

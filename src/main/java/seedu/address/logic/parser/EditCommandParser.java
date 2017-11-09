@@ -13,11 +13,11 @@ import static seedu.address.logic.parser.ModelParserUtil.parseExistingRemarkPref
 import static seedu.address.logic.parser.ModelParserUtil.parseExistingTagPrefixes;
 import static seedu.address.logic.parser.ModelParserUtil.parseMandatoryAddress;
 import static seedu.address.logic.parser.ModelParserUtil.parseMandatoryEmail;
+import static seedu.address.logic.parser.ModelParserUtil.parseMandatoryIndex;
+import static seedu.address.logic.parser.ModelParserUtil.parseMandatoryName;
 import static seedu.address.logic.parser.ModelParserUtil.parseMandatoryPhone;
 import static seedu.address.logic.parser.ModelParserUtil.parsePossibleTagWords;
-import static seedu.address.logic.parser.ParserUtil.isParsableIndex;
-import static seedu.address.logic.parser.ParserUtil.parseFirstIndex;
-import static seedu.address.model.ModelManager.getLastKnownRolodexSize;
+import static seedu.address.model.ModelManager.getLastRolodexSize;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -106,11 +106,18 @@ public class EditCommandParser implements Parser<EditCommand> {
     public static String parseArguments(String commandWord, String rawArgs) {
         String remaining = rawArgs;
 
+        // Check for Mandatory Index
         String index = "";
-        if (isParsableIndex(rawArgs, getLastKnownRolodexSize())) {
-            index = Integer.toString(parseFirstIndex(rawArgs, getLastKnownRolodexSize()));
-        } else if (isParsableIndex(commandWord, getLastKnownRolodexSize())) {
-            index = Integer.toString(parseFirstIndex(commandWord, getLastKnownRolodexSize()));
+        Optional<Pair<String, String>> mandatoryIndexArgs = parseMandatoryIndex(remaining, getLastRolodexSize());
+        Optional<Pair<String, String>> mandatoryIndexCommand = parseMandatoryIndex(commandWord, getLastRolodexSize());
+        if (mandatoryIndexArgs.isPresent()) {
+            index = mandatoryIndexArgs.get().getKey();
+            remaining = mandatoryIndexArgs.get().getValue();
+        } else if (mandatoryIndexCommand.isPresent()) {
+            index = mandatoryIndexCommand.get().getKey();
+            remaining = mandatoryIndexCommand.get().getValue();
+        } else {
+            return null;
         }
 
         // Check for Optional Phone
@@ -160,7 +167,14 @@ public class EditCommandParser implements Parser<EditCommand> {
             remaining = mandatoryAddress.get().getValue();
         }
 
-        return buildParsedArguments(index, "", phone, email, remark, address, tags.toString());
+        // Check for alphanumeric Name in remainder string
+        String name = "";
+        Optional<String> mandatoryName = parseMandatoryName(remaining);
+        if (mandatoryName.isPresent()) {
+            name = mandatoryName.get();
+        }
+
+        return buildParsedArguments(index, name, phone, email, remark, address, tags.toString());
     }
 
 }

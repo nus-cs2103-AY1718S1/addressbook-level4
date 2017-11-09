@@ -148,8 +148,7 @@ public class ParserUtil {
      * @throws NumberFormatException if no integer was found.
      */
     public static int parseFirstIndex(String value, int rolodexSize) throws NumberFormatException {
-        Pattern numbers = Pattern.compile(INDEX_VALIDATION_REGEX);
-        Matcher m = numbers.matcher(value);
+        Matcher m = Pattern.compile(INDEX_VALIDATION_REGEX).matcher(value);
         while (m.find()) {
             int firstIndex = Math.abs(Integer.parseInt(m.group()));
             if (firstIndex > 0 && firstIndex <= rolodexSize) {
@@ -171,9 +170,14 @@ public class ParserUtil {
         } catch (NumberFormatException e) {
             firstIndex = "";
         }
-        return value.substring(0, value.indexOf(firstIndex)).trim()
+        int startPosition = value.indexOf(firstIndex);
+        if (startPosition > 0 && value.charAt(startPosition - 1) == '-') {
+            startPosition = startPosition - 1;
+            firstIndex = "-" + firstIndex;
+        }
+        return value.substring(0, startPosition).trim()
                 .concat(" ")
-                .concat(value.substring(value.indexOf(firstIndex) + firstIndex.length()).trim()).trim();
+                .concat(value.substring(startPosition + firstIndex.length()).trim()).trim();
     }
 
     /**

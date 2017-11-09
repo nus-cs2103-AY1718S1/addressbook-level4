@@ -9,14 +9,17 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.ParserUtil.isParsableAddressTillEnd;
 import static seedu.address.logic.parser.ParserUtil.isParsableEmail;
+import static seedu.address.logic.parser.ParserUtil.isParsableIndex;
 import static seedu.address.logic.parser.ParserUtil.isParsableName;
 import static seedu.address.logic.parser.ParserUtil.isParsablePhone;
 import static seedu.address.logic.parser.ParserUtil.parseAddressTillEnd;
 import static seedu.address.logic.parser.ParserUtil.parseFirstEmail;
+import static seedu.address.logic.parser.ParserUtil.parseFirstIndex;
 import static seedu.address.logic.parser.ParserUtil.parseFirstPhone;
 import static seedu.address.logic.parser.ParserUtil.parseRemainingName;
 import static seedu.address.logic.parser.ParserUtil.parseRemoveAddressTillEnd;
 import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstEmail;
+import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstIndex;
 import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstPhone;
 import static seedu.address.logic.parser.ParserUtil.parseRemoveTags;
 import static seedu.address.model.ModelManager.hasAnyExistingTags;
@@ -34,6 +37,17 @@ import javafx.util.Pair;
  * Utility methods for parsing unformatted model data for command execution.
  */
 public class ModelParserUtil {
+
+    /**
+     * Returns an optional index string after parsing a mandatory index.
+     */
+    public static Optional<Pair<String, String>> parseMandatoryIndex(String indexString, int size) {
+        if (isParsableIndex(indexString, size)) {
+            String index = Integer.toString(parseFirstIndex(indexString, size));
+            return Optional.of(new Pair<>(index, parseRemoveFirstIndex(indexString, size).trim()));
+        }
+        return Optional.empty();
+    }
 
     /**
      * Returns an optional pair of phone string and the remaining string after parsing a mandatory phone.
@@ -141,10 +155,14 @@ public class ModelParserUtil {
     }
 
     /**
-     * Returns a parsed argument string containing pre-parsed arguments.
+     * Returns a parsed argument string containing pre-parsed arguments or null if there are no supplied values.
      */
     public static String buildParsedArguments(String index, String name, String phone, String email,
                                                String remark, String address, String tags) {
+        if (name.trim().isEmpty() && phone.trim().isEmpty() && email.trim().isEmpty()
+                && remark.trim().isEmpty() && address.trim().isEmpty() && tags.trim().isEmpty()) {
+            return null;
+        }
         StringBuilder parsedArgs = new StringBuilder();
         if (!index.trim().isEmpty()) {
             parsedArgs.append(" ".concat(index));

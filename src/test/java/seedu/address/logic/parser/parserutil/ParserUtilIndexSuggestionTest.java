@@ -76,6 +76,7 @@ public class ParserUtilIndexSuggestionTest {
     @Test
     public void parseRemoveFirstIndexRemovesFirstIndex() {
         assertEquals("delete second2", parseRemoveFirstIndex("delete1second2", 1));
+        assertEquals("delete second2", parseRemoveFirstIndex("delete1 second2", 1));
         assertEquals("de", parseRemoveFirstIndex("de2", 2));
         assertEquals("2 3 4 5 6 7", parseRemoveFirstIndex("1 2 3 4 5 6 7", 1));
         assertEquals("", parseRemoveFirstIndex("1234567", 1234567));

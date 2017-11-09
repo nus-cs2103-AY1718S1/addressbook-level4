@@ -6,7 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.ParserUtil.isParsableIndex;
 import static seedu.address.logic.parser.ParserUtil.parseFirstIndex;
 import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstIndex;
-import static seedu.address.model.ModelManager.getLastKnownRolodexSize;
+import static seedu.address.model.ModelManager.getLastRolodexSize;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -46,13 +46,13 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
      */
     public static String parseArguments(String commandWord, String rawArgs) {
         // Check if index (number) exists, removes Remark prefix (if it exists) and re-adds it before returning.
-        if (isParsableIndex(rawArgs, getLastKnownRolodexSize())) {
-            String indexString = Integer.toString(parseFirstIndex(rawArgs, getLastKnownRolodexSize()));
-            String remark = parseRemoveFirstIndex(rawArgs, getLastKnownRolodexSize())
+        if (isParsableIndex(rawArgs, getLastRolodexSize())) {
+            String indexString = Integer.toString(parseFirstIndex(rawArgs, getLastRolodexSize()));
+            String remark = parseRemoveFirstIndex(rawArgs, getLastRolodexSize())
                     .trim().replace(PREFIX_REMARK.toString(), "");
             return " " + indexString + " " + PREFIX_REMARK + remark;
-        } else if (isParsableIndex(commandWord, getLastKnownRolodexSize())) {
-            String indexString = Integer.toString(parseFirstIndex(commandWord, getLastKnownRolodexSize()));
+        } else if (isParsableIndex(commandWord, getLastRolodexSize())) {
+            String indexString = Integer.toString(parseFirstIndex(commandWord, getLastRolodexSize()));
             String remark = rawArgs.trim().replace(PREFIX_REMARK.toString(), "");
             return " " + indexString + " " + PREFIX_REMARK + remark;
         }

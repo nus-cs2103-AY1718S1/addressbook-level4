@@ -38,7 +38,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private static final Set<Tag> KNOWN_TAGS = new HashSet<>();
-    private static int lastKnownRolodexSize = 0;
+    private static int lastRolodexSize = 0;
 
     private final Rolodex rolodex;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
@@ -59,7 +59,7 @@ public class ModelManager extends ComponentManager implements Model {
         sortedPersons = new SortedList<>(filteredPersons);
         updateSortComparator(null);
         KNOWN_TAGS.addAll(this.rolodex.getTagList());
-        lastKnownRolodexSize = this.rolodex.getPersonList().size();
+        setLastRolodexSize(this.rolodex.getPersonList().size());
     }
 
     public ModelManager() {
@@ -79,7 +79,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /** Raises an event to indicate the model has changed */
     private void indicateRolodexChanged() {
-        lastKnownRolodexSize = rolodex.getPersonList().size();
+        setLastRolodexSize(rolodex.getPersonList().size());
         raise(new RolodexChangedEvent(rolodex));
     }
 
@@ -145,8 +145,12 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
-    public static int getLastKnownRolodexSize() {
-        return lastKnownRolodexSize;
+    public static int getLastRolodexSize() {
+        return lastRolodexSize;
+    }
+
+    private static void setLastRolodexSize(int size) {
+        lastRolodexSize = size;
     }
 
     //=========== Latest Person List Accessors =============================================================
