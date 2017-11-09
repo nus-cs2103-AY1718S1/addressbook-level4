@@ -124,6 +124,9 @@ public class DeliveryDate {
         return test.length() > 2;
     }
 
+    /**
+     * Returns true if a given string contains all numbers.
+     */
     public static boolean containsAllNumbers(String test) {
         String regex = "\\d+";
         return test.matches(regex);

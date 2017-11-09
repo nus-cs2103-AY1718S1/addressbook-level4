@@ -18,6 +18,7 @@ public class DeliveryDateTest {
         assertFalse(DeliveryDate.isValidDate(" ")); // spaces only
         assertFalse(DeliveryDate.isValidDate("91")); // less than 3 numbers
         assertFalse(DeliveryDate.isValidDate("9321313213213123212131")); // only numbers, can't understand
+        assertFalse(DeliveryDate.isValidDate("a") // short string
         assertFalse(DeliveryDate.isValidDate("date")); // non-numeric
         assertFalse(DeliveryDate.isValidDate("#(_!@!@(")); // special charactors
         assertFalse(DeliveryDate.isValidDate("\u200E\uD83D\uDE03\uD83D\uDC81")); // emojis
