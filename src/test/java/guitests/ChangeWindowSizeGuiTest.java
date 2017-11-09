@@ -43,21 +43,21 @@ public class ChangeWindowSizeGuiTest extends  AddressBookGuiTest {
      */
     private void assertChangeWindowSizeByClickingSuccess(String windowSize) {
         switch(windowSize) {
-            case WindowSize.SMALL_WINDOW_SIZE_INPUT:
-                assertTrue(WindowSize.SMALL_WIDTH == getCurrentWindowWidth());
-                assertTrue(WindowSize.SMALL_HEIGHT == getCurrentWindowHeight());
-                break;
-            case WindowSize.MEDIUM_WINDOW_SIZE_INPUT:
-                assertTrue(WindowSize.MEDIUM_WIDTH == getCurrentWindowWidth());
-                assertTrue(WindowSize.MEDIUM_HEIGHT == getCurrentWindowHeight());
-                break;
-            case WindowSize.BIG_WINDOW_SIZE_INPUT:
-                assertTrue(WindowSize.BIG_WIDTH == getCurrentWindowWidth());
-                assertTrue(WindowSize.BIG_HEIGHT == getCurrentWindowHeight());
-                break;
-            default:
-                assert false : "Invalid window size provided";
-                break;
+        case WindowSize.SMALL_WINDOW_SIZE_INPUT:
+            assertTrue(WindowSize.SMALL_WIDTH == getCurrentWindowWidth());
+            assertTrue(WindowSize.SMALL_HEIGHT == getCurrentWindowHeight());
+            break;
+        case WindowSize.MEDIUM_WINDOW_SIZE_INPUT:
+            assertTrue(WindowSize.MEDIUM_WIDTH == getCurrentWindowWidth());
+            assertTrue(WindowSize.MEDIUM_HEIGHT == getCurrentWindowHeight());
+            break;
+        case WindowSize.BIG_WINDOW_SIZE_INPUT:
+            assertTrue(WindowSize.BIG_WIDTH == getCurrentWindowWidth());
+            assertTrue(WindowSize.BIG_HEIGHT == getCurrentWindowHeight());
+            break;
+        default:
+            assert false : "Invalid window size provided";
+            break;
         }
 
         guiRobot.pauseForHuman();
