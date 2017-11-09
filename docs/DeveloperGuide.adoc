@@ -925,7 +925,6 @@ addDebtToPerson(person, amount);
 
 ==== Design Considerations
 
-<<<<<<< HEAD
 **Aspect:** When to update / check a Person's debt. +
 **Alternative 1 (Current choice):** Check through the `AddressBook` in the `Model` component every time the user logs in. +
 **Pros:** Convenient and intuitive to implement for developer. +
