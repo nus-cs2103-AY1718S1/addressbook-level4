@@ -54,7 +54,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         for (int i = 0; i < persons.size(); i++) {
             for (Relationship r : persons.get(i).getRelationships()) {
                 rels.add(new XmlAdaptedRelationship(persons.indexOf(r.getFromPerson()),
-                        persons.indexOf(r.getToPerson()), r.getDirection()));
+                        persons.indexOf(r.getToPerson()), r.getDirection(), r.getConfidenceEstimate(), r.getName()));
             }
         }
         relationships.addAll(rels);
