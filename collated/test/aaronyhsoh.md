@@ -1,39 +1,11 @@
 # aaronyhsoh
 ###### \java\seedu\address\logic\commands\AddCommandTest.java
 ``` java
-        @Override
-        public void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedPerson)
-                throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-```
-###### \java\seedu\address\logic\commands\FavouriteCommandTest.java
-``` java
-package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-//import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import org.junit.Test;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-//import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-//import seedu.address.model.person.Person;
-//import seedu.address.model.person.ReadOnlyPerson;
-//import seedu.address.testutil.PersonBuilder;
+    @Override
+    public void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedPerson)
+            throws DuplicatePersonException {
+        fail("This method should not be called.");
+    }
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for FavouriteCommand.
@@ -65,6 +37,38 @@ public class FavouriteCommandTest {
         FavouriteCommand favouriteCommand = prepareCommand(outOfBoundIndex);
 
         assertCommandFailure(favouriteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_favouritePersonUnfilteredList_success() throws Exception {
+        Person firstPerson = new Person(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        Person favouritedPerson = new PersonBuilder(firstPerson).build();
+        FavouriteCommand favouriteCommand = prepareCommand(INDEX_FIRST_PERSON);
+        favouritedPerson.setFavourite(true);
+
+        String expectedMessage = String.format(FavouriteCommand.MESSAGE_FAVOURITE_PERSON_SUCCESS, favouritedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.favouritePerson(model.getFilteredPersonList().get(0), favouritedPerson);
+
+        assertCommandSuccess(favouriteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_favouritePersonFilteredList_success() throws Exception {
+        showFirstPersonOnly(model);
+
+        ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person favouritedPerson = new PersonBuilder(personInFilteredList).build();
+        favouritedPerson.setFavourite(true);
+        FavouriteCommand favouriteCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = String.format(FavouriteCommand.MESSAGE_FAVOURITE_PERSON_SUCCESS, favouritedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.favouritePerson(model.getFilteredPersonList().get(0), favouritedPerson);
+
+        assertCommandSuccess(favouriteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -101,6 +105,124 @@ public class FavouriteCommandTest {
 }
 
 ```
+
+###### \java\seedu\address\logic\commands\RedoCommandTest.java
+``` java
+    @Test
+    public void executeValidIndex() throws Exception {
+        UndoRedoStack undoRedoStack = prepareStack(Collections.emptyList(),
+                Arrays.asList(deleteCommandOne, deleteCommandTwo));
+        RedoCommand redoCommand = new RedoCommand(INDEX_SECOND_COMMAND);
+        redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+        // multiple commands in redoStack
+        deleteFirstPerson(expectedModel);
+        deleteFirstPerson(expectedModel);
+        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+
+        // no command in redoStack
+        assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
+    }
+
+    @Test
+    public void executeIndexGreaterThanRedoStack_Success() throws CommandException {
+        UndoRedoStack undoRedoStack = prepareStack(Collections.emptyList(),
+                Arrays.asList(deleteCommandOne));
+        RedoCommand redoCommand = new RedoCommand(INDEX_SECOND_COMMAND);
+        redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+        // single command in redoStack
+        deleteFirstPerson(expectedModel);
+        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+
+        // no command in redoStack
+        assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
+    }
+
+    @Test
+    public void equals() {
+        RedoCommand redoFirstCommand = new RedoCommand(INDEX_FIRST_COMMAND);
+        RedoCommand redoSecondCommand = new RedoCommand(INDEX_SECOND_COMMAND);
+
+        // same object -> returns true
+        assertTrue(redoFirstCommand.equals(redoFirstCommand));
+
+        // same values -> returns true
+        RedoCommand redoFirstCommandCopy = new RedoCommand(INDEX_FIRST_COMMAND);
+        assertTrue(redoFirstCommand.equals(redoFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(redoFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(redoFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(redoFirstCommand.equals(redoSecondCommand));
+    }
+}
+```
+###### \java\seedu\address\logic\commands\UndoCommandTest.java
+``` java
+    @Test
+    public void executeValidIndex() throws Exception {
+        UndoRedoStack undoRedoStack = prepareStack(
+                Arrays.asList(deleteCommandOne, deleteCommandTwo), Collections.emptyList());
+        UndoCommand undoCommand = new UndoCommand(INDEX_SECOND_COMMAND);
+        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        deleteCommandOne.execute();
+        deleteCommandTwo.execute();
+
+        // multiple commands in undoStack
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+
+        // no command in undoStack
+        assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
+    }
+
+    @Test
+    public void executeIndexGreaterThanUndoStack_Success() throws CommandException{
+        UndoRedoStack undoRedoStack = prepareStack(
+                Arrays.asList(deleteCommandOne), Collections.emptyList());
+        UndoCommand undoCommand = new UndoCommand(INDEX_SECOND_COMMAND);
+        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        deleteCommandOne.execute();
+
+        // single command in undoStack
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+
+        // no command in undoStack
+        assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
+    }
+
+    @Test
+    public void equals() {
+        UndoCommand undoFirstCommand = new UndoCommand(INDEX_FIRST_COMMAND);
+        UndoCommand undoSecondCommand = new UndoCommand(INDEX_SECOND_COMMAND);
+
+        // same object -> returns true
+        assertTrue(undoFirstCommand.equals(undoFirstCommand));
+
+        // same values -> returns true
+        UndoCommand undoFirstCommandCopy = new UndoCommand(INDEX_FIRST_COMMAND);
+        assertTrue(undoFirstCommand.equals(undoFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(undoFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(undoFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(undoFirstCommand.equals(undoSecondCommand));
+    }
+}
+```
+
 ###### \java\seedu\address\logic\parser\AddCommandParserTest.java
 ``` java
     public static final String EMPTY_PHONE = "-";
@@ -129,16 +251,6 @@ public class FavouriteCommandTest {
 ```
 ###### \java\seedu\address\logic\parser\FavouriteCommandParserTest.java
 ``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.FavouriteCommand;
 
 public class FavouriteCommandParserTest {
 
@@ -181,4 +293,5 @@ public class FavouriteCommandParserTest {
                 .withAddress(EMPTY_ADDRESS).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
+
 ```

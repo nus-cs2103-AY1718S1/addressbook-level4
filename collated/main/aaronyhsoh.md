@@ -1,28 +1,6 @@
 # aaronyhsoh
 ###### \java\seedu\address\logic\commands\FavouriteCommand.java
 ``` java
-package seedu.address.logic.commands;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-
-import java.util.List;
-import java.util.Set;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.TodoItem;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
-
 /**
  * Favourites an exisiting contact
  */
@@ -38,7 +16,7 @@ public class FavouriteCommand extends UndoableCommand {
 
     public static final String MESSAGE_FAVOURITE_PERSON_SUCCESS = "Added person to favourites: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    public static final String MESSAGE_UNFAVOURITE_PERSON_SUCCESS = "Person removed from favourites: ";
+    public static final String MESSAGE_UNFAVOURITE_PERSON_SUCCESS = "Person removed from favourites: %1$s";
 
     private final Index index;
 
@@ -73,7 +51,7 @@ public class FavouriteCommand extends UndoableCommand {
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        if (personToFavourite.getFavourite()) {
+        if (!favouritedPerson.getFavourite()) {
             return new CommandResult(String.format(MESSAGE_UNFAVOURITE_PERSON_SUCCESS, favouritedPerson));
         } else {
             return new CommandResult(String.format(MESSAGE_FAVOURITE_PERSON_SUCCESS, favouritedPerson));
@@ -118,12 +96,114 @@ public class FavouriteCommand extends UndoableCommand {
 
 }
 ```
+###### \java\seedu\address\logic\commands\RedoCommand.java
+``` java
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Reverses the most recent N undo commands, where (N = to the INDEX entered)\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 3";
+```
+###### \java\seedu\address\logic\commands\RedoCommand.java
+``` java
+    private final Index index;
+
+    public RedoCommand() {
+        index = null;
+    }
+
+    public RedoCommand(Index index) {
+        this.index = index;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        requireAllNonNull(model, undoRedoStack);
+
+        if (!undoRedoStack.canRedo()) {
+            throw new CommandException(MESSAGE_FAILURE);
+        }
+        if (index == null) {
+            undoRedoStack.popRedo().redo();
+            return new CommandResult(MESSAGE_SUCCESS);
+        } else {
+            int commandsToRedo = index.getOneBased();
+            while (commandsToRedo != 0 && undoRedoStack.canRedo()) {
+                undoRedoStack.popRedo().redo();
+                commandsToRedo -= 1;
+            }
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
+    }
+
+```
+###### \java\seedu\address\logic\commands\RedoCommand.java
+``` java
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof RedoCommand // instanceof handles nulls
+                && this.index.equals(((RedoCommand) other).index)); // state check
+    }
+}
+```
+###### \java\seedu\address\logic\commands\UndoCommand.java
+``` java
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Reverses the most recent N commands, where (N = to the INDEX entered)\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 3";
+```
+###### \java\seedu\address\logic\commands\UndoCommand.java
+``` java
+    private final Index index;
+
+    public UndoCommand() {
+        index = null;
+    }
+
+    public UndoCommand(Index index) {
+        this.index = index;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        requireAllNonNull(model, undoRedoStack);
+
+        if (!undoRedoStack.canUndo()) {
+            throw new CommandException(MESSAGE_FAILURE);
+        }
+
+        if (index == null) {
+            undoRedoStack.popUndo().undo();
+            return new CommandResult(MESSAGE_SUCCESS);
+        } else {
+            int commandsToUndo = index.getOneBased();
+            while (commandsToUndo != 0 && undoRedoStack.canUndo()) {
+                undoRedoStack.popUndo().undo();
+                commandsToUndo -= 1;
+            }
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
+    }
+
+```
+###### \java\seedu\address\logic\commands\UndoCommand.java
+``` java
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UndoCommand // instanceof handles nulls
+                && this.index.equals(((UndoCommand) other).index)); // state check
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\AddCommandParser.java
 ``` java
-        /**
-         * Allows certain fields entered to be blank.
-         * Shows a '-' for fields not entered.
-         */
+    /**
+     * Allows certain fields entered to be blank.
+     * Shows a '-' for fields not entered.
+     */
+    private static String initialiseEmptyFields(String args) {
         if (!args.contains("a/")) {
             args = args + " a/ -";
         }
@@ -133,9 +213,20 @@ public class FavouriteCommand extends UndoableCommand {
         if (!args.contains("p/")) {
             args = args + " p/ -";
         }
+        return args;
+    }
+}
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
+        case UndoCommand.COMMAND_WORD:
+        case UndoCommand.COMMAND_ALIAS:
+            return new UndoCommandParser().parse(arguments);
+
+        case RedoCommand.COMMAND_WORD:
+        case RedoCommand.COMMAND_ALIAS:
+            return new RedoCommandParser().parse(arguments);
+
         case FavouriteCommand.COMMAND_WORD:
         case FavouriteCommand.COMMAND_ALIAS:
             return new FavouriteCommandParser().parse(arguments);
@@ -143,15 +234,6 @@ public class FavouriteCommand extends UndoableCommand {
 ```
 ###### \java\seedu\address\logic\parser\FavouriteCommandParser.java
 ``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.FavouriteCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-
 /**
  * Parses input arguments and creates a new FavouriteCommand object
  */
@@ -169,6 +251,57 @@ public class FavouriteCommandParser implements Parser<FavouriteCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FavouriteCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
+```
+###### \java\seedu\address\logic\parser\RedoCommandParser.java
+``` java
+public class RedoCommandParser implements Parser<RedoCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the RedoCommand
+     * and returns an RedoCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public RedoCommand parse(String args) throws ParseException {
+        if (!args.isEmpty()) {
+            try {
+                Index index = ParserUtil.parseIndex(args);
+                return new RedoCommand(index);
+            } catch (IllegalValueException ive) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE));
+            }
+        } else {
+            return new RedoCommand();
+        }
+    }
+
+}
+
+```
+###### \java\seedu\address\logic\parser\UndoCommandParser.java
+``` java
+public class UndoCommandParser implements Parser<UndoCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the UndoCommand
+     * and returns an UndoCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public UndoCommand parse(String args) throws ParseException {
+        if (!args.isEmpty()) {
+            try {
+                Index index = ParserUtil.parseIndex(args);
+                return new UndoCommand(index);
+            } catch (IllegalValueException ive) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
+            }
+        } else {
+            return new UndoCommand();
         }
     }
 

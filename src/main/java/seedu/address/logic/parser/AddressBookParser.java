@@ -127,14 +127,15 @@ public class AddressBookParser {
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
+        //@@author aaronyhsoh
         case UndoCommand.COMMAND_WORD:
         case UndoCommand.COMMAND_ALIAS:
-            return new UndoCommand();
+            return new UndoCommandParser().parse(arguments);
 
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:
-            return new RedoCommand();
-        //@@author aaronyhsoh
+            return new RedoCommandParser().parse(arguments);
+
         case FavouriteCommand.COMMAND_WORD:
         case FavouriteCommand.COMMAND_ALIAS:
             return new FavouriteCommandParser().parse(arguments);
