@@ -15,7 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import seedu.room.logic.Logic;
-import seedu.room.model.event.Event;
 import seedu.room.model.event.ReadOnlyEvent;
 
 //@@author Haozhe321
@@ -122,22 +121,22 @@ public class CalendarBox {
                 int numEvents = 0;
                 String allEventTitle = "";
                 //go through the list of events and add them to the grid
-                for(ReadOnlyEvent actualEvent: eventInADay) {
+                for (ReadOnlyEvent actualEvent: eventInADay) {
 
                     //if number of events is already more than 2, populate only 2 and tell users there are more events
-                    if(numEvents == 2) {
+                    if (numEvents == 2) {
                         allEventTitle = allEventTitle + "and more...";
                         break;
                     }
                     String eventTitle = actualEvent.getTitle().toString();
-                    if(eventTitle.length() > 8) {
+                    if (eventTitle.length() > 8) {
                         eventTitle = eventTitle.substring(0, 8) + "...";
                     }
                     allEventTitle = allEventTitle + eventTitle + "\n";
                     numEvents++;
                 }
                 Text eventText = new Text(allEventTitle);
-                addEventData(calendarDate, ap, eventText);
+                addEventName(ap, eventText);
 
             }
             calendarDate = calendarDate.plusDays(1);
@@ -154,8 +153,8 @@ public class CalendarBox {
      */
     public HashMap<LocalDate, ArrayList<ReadOnlyEvent>> eventsHashMap(ObservableList<ReadOnlyEvent> eventList) {
         HashMap<LocalDate, ArrayList<ReadOnlyEvent>> hashEvents = new HashMap<LocalDate, ArrayList<ReadOnlyEvent>>();
-        for(ReadOnlyEvent event: eventList) {
-            if(hashEvents.containsKey(event.getDatetime().getLocalDateTime().toLocalDate())) {
+        for (ReadOnlyEvent event: eventList) {
+            if (hashEvents.containsKey(event.getDatetime().getLocalDateTime().toLocalDate())) {
                 hashEvents.get(event.getDatetime().getLocalDateTime().toLocalDate()).add(event);
             } else {
                 ArrayList<ReadOnlyEvent> newEventList = new ArrayList<ReadOnlyEvent>();
@@ -167,7 +166,12 @@ public class CalendarBox {
         return hashEvents;
     }
 
-    public void addEventData(LocalDate calendarDate, AnchorPaneNode ap, Text eventText) {
+    /**
+     * Add the event's name on the calendar grid
+     * @param ap AnchorPaneNode that we are adding the event to
+     * @param eventText Text for the event(s)
+     */
+    public void addEventName(AnchorPaneNode ap, Text eventText) {
         ap.setBottomAnchor(eventText, 5.0);
         ap.setLeftAnchor(eventText, 5.0);
         ap.getChildren().add(eventText);
