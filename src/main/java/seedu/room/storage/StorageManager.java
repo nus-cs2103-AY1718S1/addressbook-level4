@@ -145,7 +145,7 @@ public class StorageManager extends ComponentManager implements Storage {
      */
     private void handleImagesBackupFiles(String backupFolder, String originalFolder) throws IOException {
         File source = new File(originalFolder);
-        if(source.exists()) {
+        if (source.exists()) {
             File[] listOfImages = source.listFiles();
 
             for (int i = 0; i < listOfImages.length; i++) {
