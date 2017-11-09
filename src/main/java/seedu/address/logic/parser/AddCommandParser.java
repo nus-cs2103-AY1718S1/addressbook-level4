@@ -80,7 +80,8 @@ public class AddCommandParser implements Parser<AddCommand> {
                 phone = new Phone();
             }
 
-            ReadOnlyParcel parcel = new Parcel(trackingNumber, name, phone, email, address, deliveryDate, status, tagList);
+            ReadOnlyParcel parcel = new Parcel(trackingNumber, name, phone, email, address, deliveryDate, status,
+                    tagList);
 
             return new AddCommand(parcel);
         } catch (IllegalValueException ive) {
