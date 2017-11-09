@@ -720,8 +720,14 @@ The reason for the use of ListByBloodtypeCommandParser is to filter out extra sp
 
 // tag::batch[]
 === *Enhancement: Batch delete all persons who share a particular tag* +
+*Format:* `batch TAG` +
+*Shorthand format:* `b TAG`
 
-MedNus is designed for power users. Thus, batch deletions are a welcome addition since they make it less tedious to perform deletions on multiple contacts.
+MedNus is designed for power users. Thus, batch deletions are a welcome addition since they make it less tedious to perform deletions on multiple patients, as grouped by tag.
+
+Since v1.5rc, batch deletion now accepts multiple arguments. In other words, the format is now: +
+*Format:* `batch TAG TAG TAG...` +
+*Shorthand format:* `b TAG TAG...`
 
 *How it is implemented* +
 
@@ -729,7 +735,7 @@ In view of the link:https://en.wikipedia.org/wiki/Open/closed_principle[open / c
 the Command class is open to extension but closed to modification. Its source code need not be edited for its behaviour to be extended in another object.
 Thus, to implement the batch deletion feature, a new `BatchCommand` class is extended from the Command class. +
 
-In summary, `BatchCommand` passes a set of tags to the Model Component which handles the actual deletions. Here's the constructor for the BatchCommand class. +
+In short, `BatchCommand` passes a set of tags to the Model Component which handles the actual deletions. Here's the constructor for the BatchCommand class. +
 
  BatchCommand(Set<Tag> tagsToDelete)
 
@@ -737,7 +743,7 @@ The sequence diagram for using this Command class within the Logic Component is 
 
 
 image::SDforBatchDeleteLogic.png[width="800"]
-    Figure 23: Sequence diagram for a batch myTag command in the Logic component
+    Figure 23: Sequence diagram for a batch myTags command in the Logic component
 
 The model component will handle the actual deletion operations. To support this, an additional method is defined in the Model interface for implementation by the ModelManager class. +
 
@@ -763,7 +769,7 @@ This is justification for the "bureaucracy" between objects in the components.
 *Future enhancements*
 
 We would like to include more batch operations beyond deletion. For example, editing tags, remarks, and other contact attributes by batch.
-A general function call between the logic and model components ought to be created. This could serve all batch operations, depending on its arguments.
+A general function call between the logic and model components ought to be created. This could serve all batch operations (e.g. batch edit, batch tagging, etc.), depending on its arguments.
 // end::batch[]
 
 // tag::dups[]
