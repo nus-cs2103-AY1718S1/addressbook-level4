@@ -352,9 +352,7 @@ Format: 'map [INDEX]'
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
-+
 image::google-map-example.png[width="790"]
-+
 
 Example of a MapCommand search of Alex Yeoh, index 1 of the list.
 
