@@ -21,6 +21,7 @@ import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstPhone;
 import static seedu.address.logic.parser.ParserUtil.parseRemoveTags;
 import static seedu.address.model.ModelManager.hasAnyExistingTags;
 import static seedu.address.model.ModelManager.isExistingTag;
+import static seedu.address.model.tag.Tag.TAG_REPLACEMENT_REGEX;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -89,9 +90,11 @@ public class AddCommandParser implements Parser<AddCommand> {
      * Uses a simple flow by checking the {@code Model}'s data in the following order:
      * 1. {@code Phone} (mandatory)
      * 2. {@code Email} (mandatory)
-     * 3. {@code Tags} (optional)
-     * 4. {@code Address} (mandatory)
-     * 5. {@code Name} (remaining)
+     * 3. Existing {@code Tags} (optional)
+     * 4. {@code Tags} prefixes (optional)
+     * 5. {@code Remark} prefixes (optional)
+     * 6. {@code Address} (mandatory)
+     * 7. {@code Name} (remaining)
      */
     public static String parseArguments(String rawArgs) {
         String remaining = rawArgs;
@@ -115,11 +118,31 @@ public class AddCommandParser implements Parser<AddCommand> {
             List<String> tagsAdded = new ArrayList<>();
             Arrays.stream(words).forEach(word -> {
                 if (isExistingTag(word) && !tagsAdded.contains(word)) {
-                    tags.append(" " + PREFIX_TAG + word);
+                    tags.append(" " + PREFIX_TAG + word.trim());
                     tagsAdded.add(word);
                 }
             });
             remaining = parseRemoveTags(remaining, tagsAdded);
+        }
+
+        // Check for existing tag prefix using tokenizer
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
+                rawArgs, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK, PREFIX_TAG);
+        if (arePrefixesPresent(argMultimap, PREFIX_TAG) && argMultimap.getValue(PREFIX_TAG).isPresent()) {
+            List<String> tagsAdded = new ArrayList<>();
+            argMultimap.getAllValues(PREFIX_TAG).stream().forEach(tag -> {
+                String parsedTag = tag.replaceAll(TAG_REPLACEMENT_REGEX, "");
+                tags.append(" " + PREFIX_TAG + parsedTag);
+                tagsAdded.add(PREFIX_TAG + tag);
+            });
+            remaining = parseRemoveTags(remaining, tagsAdded);
+        }
+
+        // Check for existing remark prefix using tokenizer
+        String remark = "";
+        if (arePrefixesPresent(argMultimap, PREFIX_REMARK) && argMultimap.getValue(PREFIX_REMARK).isPresent()) {
+            remark = argMultimap.getValue(PREFIX_REMARK).get();
+            remaining = remaining.replace(PREFIX_REMARK.toString().concat(remark), "").trim();
         }
 
         // Check for Address till end of remainder string
@@ -139,11 +162,28 @@ public class AddCommandParser implements Parser<AddCommand> {
             return null;
         }
 
-        return " ".concat(PREFIX_NAME.toString()).concat(name)
-                .concat(" ").concat(PREFIX_PHONE.toString()).concat(phone)
-                .concat(" ").concat(PREFIX_EMAIL.toString()).concat(email)
-                .concat(" ").concat(PREFIX_ADDRESS.toString()).concat(address)
-                .concat(tags.toString());
+        return buildParsedArguments(name, phone, email, remark, address, tags.toString());
+    }
+
+    /**
+     * Returns a parsed argument string containing pre-parsed arguments.
+     */
+    private static String buildParsedArguments(String name,
+                                        String phone,
+                                        String email,
+                                        String remark,
+                                        String address,
+                                        String tags) {
+        StringBuilder parsedArgs = new StringBuilder();
+        parsedArgs.append(" ".concat(PREFIX_NAME.toString()).concat(name));
+        parsedArgs.append(" ".concat(PREFIX_PHONE.toString()).concat(phone));
+        parsedArgs.append(" ".concat(PREFIX_EMAIL.toString()).concat(email));
+        if (!remark.isEmpty()) {
+            parsedArgs.append(" ".concat(PREFIX_REMARK.toString()).concat(remark));
+        }
+        parsedArgs.append(" ".concat(PREFIX_ADDRESS.toString()).concat(address));
+        parsedArgs.append(tags);
+        return parsedArgs.toString();
     }
 
 }
