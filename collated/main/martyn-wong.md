@@ -22,6 +22,37 @@ public class MapPersonEvent extends BaseEvent {
     }
 }
 ```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    private void loadPersonMap(ReadOnlyPerson person) {
+        loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
+                + GOOGLE_SEARCH_URL_SUFFIX);
+    }
+
+```
+###### /java/seedu/address/logic/parser/MapCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new MapCommand object
+ */
+public class MapCommandParser implements Parser<MapCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the MapCommand
+     * and returns an MapCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+
+    public MapCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new MapCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MapCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
 ###### /java/seedu/address/logic/commands/MapCommand.java
 ``` java
 /**
@@ -72,46 +103,6 @@ public class MapCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/MapCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new MapCommand object
- */
-public class MapCommandParser implements Parser<MapCommand> {
-    /**
-     * Parses the given {@code String} of arguments in the context of the MapCommand
-     * and returns an MapCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-
-    public MapCommand parse(String args) throws ParseException {
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new MapCommand(index);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MapCommand.MESSAGE_USAGE));
-        }
-    }
-}
-```
-###### /java/seedu/address/model/Model.java
-``` java
-    /**
-     * Shows the google map for the selected person in the browser panel
-     */
-    void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException;
-}
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    @Override
-    public void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        raise(new MapPersonEvent(target));
-    }
-
-}
-```
 ###### /java/seedu/address/model/person/PersonContainsKeywordsPredicate.java
 ``` java
 /**
@@ -139,11 +130,20 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
 
 }
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
-    private void loadPersonMap(ReadOnlyPerson person) {
-        loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
+    @Override
+    public void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        raise(new MapPersonEvent(target));
     }
 
+}
+```
+###### /java/seedu/address/model/Model.java
+``` java
+    /**
+     * Shows the google map for the selected person in the browser panel
+     */
+    void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+}
 ```
