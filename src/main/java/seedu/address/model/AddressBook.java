@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.person.DateRepaid.NO_DATE_REPAID;
 import static seedu.address.model.util.DateUtil.formatDate;
 
 import java.util.Date;
@@ -343,6 +344,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             Debt newTotalDebt = new Debt(target.getTotalDebt().toNumber() + amount.toNumber());
             editedPerson.setDebt(newCurrDebt);
             editedPerson.setTotalDebt(newTotalDebt);
+            editedPerson.setDateRepaid(NO_DATE_REPAID);
             persons.setPerson(target, editedPerson);
         } catch (DuplicatePersonException dpe) {
             assert false : "There should be no duplicate when updating the debt of a person";
