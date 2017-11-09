@@ -18,9 +18,7 @@ import seedu.address.commons.util.WebLinkUtil;
  */
 public class WebLink {
 
-
     private static final String MESSAGE_WEB_LINK_CONSTRAINTS = "No spaces should be allowed in the weblink inputted.";
-    private static final String WEB_LINK_VALIDATION_REGEX = "[^\\s]+";
     private static final String DEFAULT_TAG = "others";
 
     private  String webLinkInput;
@@ -35,9 +33,6 @@ public class WebLink {
 
         requireNonNull(name);
         this.webLinkInput = name.trim();
-        if (!webLinkInput.matches(WEB_LINK_VALIDATION_REGEX)) {
-            throw new IllegalValueException(MESSAGE_WEB_LINK_CONSTRAINTS);
-        }
         this.webLinkTag = DEFAULT_TAG;
 
         HashMap<String, String> webLinkTagMap = new WebLinkUtil().getMatchingWebsites();
