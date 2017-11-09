@@ -47,7 +47,12 @@ public class FindSpecificCommandParser implements Parser<FindSpecificCommand> {
         final String prefix = matcher.group("prefix");
         final String arguments = matcher.group("arguments");
 
-        String[] keyWords = arguments.split("\\s+");
+        if (arguments.equals("")) {
+            throw new ParseException(String.format
+                (MESSAGE_INVALID_COMMAND_FORMAT, FindSpecificCommand.MESSAGE_USAGE));
+        }
+
+        String[] keyWords = arguments.trim().split("\\s+");
 
         if (prefix.equals("n/")) {
             return new FindSpecificCommand(new NameContainsKeywordsPredicate(Arrays.asList(keyWords)));
