@@ -58,11 +58,11 @@ public interface ReadOnlyPerson {
                 .append(getAddress())
                 .append(" BloodType: ")
                 .append(getBloodType())
-                .append(" Remark: ")
+                .append(" Tags: ")
                 .append(getRemark())
+                .append(" Remark: ")
                 .append(" Relationship: ")
-                .append(getRelationship())
-                .append(" Tags: ");
+                .append(getRelationship());
         getTags().forEach(builder::append);
         return builder.toString();
     }

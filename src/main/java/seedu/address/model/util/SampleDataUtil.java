@@ -37,7 +37,7 @@ public class SampleDataUtil {
                 new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                         new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), new Bloodtype("B"),
                         getTagSet("colleagues", "friends"), new Remark("Owes me Money"),
-                        new Relationship("David Li"), new ArrayList<>()),
+                        new Relationship("Husband: David Li"), new ArrayList<>()),
 
                 new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"),
                         new Email("charlotte@example.com"), new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
@@ -48,7 +48,7 @@ public class SampleDataUtil {
                 new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
                         new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), new Bloodtype("O"),
                         getTagSet("family"), new Remark("My Project Partner"),
-                        new Relationship("Bernice Yu"), new ArrayList<>()),
+                        new Relationship("Wife: Bernice Yu"), new ArrayList<>()),
 
                 new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                         new Address("Blk 47 Tampines Street 20, #17-35"), new Bloodtype("A"),

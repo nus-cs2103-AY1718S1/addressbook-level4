@@ -425,6 +425,26 @@ You can copy a person's email address to your clipboard +
 *Shorthand format:* `c INDEX`
 // end::batch[]
 
+=== Adding a person's relationships: `relation` [Since v1.5]
+
+You can add relationships to a person's details +
+*Format:* `relation INDEX rel/RELATIONSHIP` +
+*Shorthand Format:* `rel INDEX rel/RELATIONSHIP` +
+*Example:* `rel 1 rel/Husband: John Doe` +
+The person at the top of the list has a relationship +
+of "Husband: John Doe" added. +
++
+You can remove a relationship by adding nothing after rel/ +
+*Format:* `relation INDEX rel/` +
+*Shorthand Format:* `rel INDEX rel/` +
+
+[WARNING]
+Existing relationships of the person will be removed
+
+[NOTE]
+The index refers to the index number shown in the last person listing +
+The index *must be a positive integer* `1, 2, 3, ...`
+
 === KeyBoard Shortcuts [Since v1.2]
 
 You can use keyboard shortcuts in the command box to use the address book more efficiently.

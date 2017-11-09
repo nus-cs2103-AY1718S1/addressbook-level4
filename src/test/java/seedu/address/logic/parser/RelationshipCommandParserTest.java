@@ -12,6 +12,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RelationshipCommand;
 import seedu.address.model.person.Relationship;
 
+//@@author Ernest
 public class RelationshipCommandParserTest {
     private RelationshipCommandParser parser = new RelationshipCommandParser();
 

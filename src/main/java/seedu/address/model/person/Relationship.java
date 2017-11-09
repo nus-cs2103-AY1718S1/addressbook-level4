@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+//@@author Ernest
 /**
   * Represents a Person's relationship in the address book.
   * Guarantees: immutable; is always valid
