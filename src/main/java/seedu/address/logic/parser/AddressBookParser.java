@@ -7,7 +7,9 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeToLoginViewEvent;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BanCommand;
 import seedu.address.logic.commands.BlacklistCommand;
@@ -140,6 +142,10 @@ public class AddressBookParser {
 
         case LoginCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            if (arguments.isEmpty()) {
+                EventsCenter.getInstance().post(new ChangeToLoginViewEvent());
+                return null;
+            }
             return new LoginCommandParser().parse(arguments);
 
         case LogoutCommand.COMMAND_WORD:
