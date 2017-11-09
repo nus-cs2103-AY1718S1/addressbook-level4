@@ -1,4 +1,3 @@
-//@@author shitian007
 package seedu.room.logic;
 
 import java.util.ArrayList;
@@ -6,7 +5,7 @@ import java.util.ArrayList;
 import seedu.room.model.Model;
 import seedu.room.model.person.ReadOnlyPerson;
 
-
+//@@author shitian007
 /**
  * AutoComplete class integrated into LogicManager to keep track of current set
  * of autocomplete suggestions

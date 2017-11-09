@@ -1,4 +1,3 @@
-//@@author shitian007
 package seedu.room.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -6,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.logic.commands.exceptions.TagNotFoundException;
 
+//@@author shitian007
 /**
  * Adds a person to the address book.
  */
