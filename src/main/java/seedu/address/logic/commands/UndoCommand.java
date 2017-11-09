@@ -22,8 +22,8 @@ public class UndoCommand extends Command {
             + COMMAND_WORDVAR_2
             + " OR "
             + COMMAND_WORDVAR_3
-            + ": Undo the number of commands identified by the given number. If no number is given, undo previous"
-            + " command only. \n"
+            + ": Undo the number of commands identified by the given number. If no number is given, only previous"
+            + " command will be undone. \n"
             + "Parameters: NUMBER (must be a positive integer) \n"
             + "Example 1: " + COMMAND_WORDVAR_1 + " \n"
             + "Example 2: " + COMMAND_WORDVAR_3 + " 2";
