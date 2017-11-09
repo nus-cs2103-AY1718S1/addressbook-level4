@@ -125,27 +125,11 @@ public class TypicalPersons {
         }
     }
 
-    /**
-     * remove the relationship added using the addRelationshipIntoCAndF() from the TypicalPersons
-     * to avoid duplicate relationships
-     */
-    public static void removeRelationshipBetweenCAndF() {
-        Relationship relationshipForTesting = new Relationship(FIONA, CARL, RelationshipDirection.UNDIRECTED);
-        Person fCast = (Person) FIONA;
-        Person cCast = (Person) CARL;
-        fCast.removeRelationship(relationshipForTesting);
-        cCast.removeRelationship(relationshipForTesting);
-    }
-
     public static List<ReadOnlyPerson> getTypicalPersons() {
-        removeRelationshipBetweenCAndF();
-        addRelationshipsIntoCAndF();
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 
     public static List<ReadOnlyPerson> getUnsortedTypicalPersons() {
-        removeRelationshipBetweenCAndF();
-        addRelationshipsIntoCAndF();
         return new ArrayList<>(Arrays.asList(DANIEL, BENSON, CARL, ALICE, ELLE, FIONA, GEORGE));
     }
 }

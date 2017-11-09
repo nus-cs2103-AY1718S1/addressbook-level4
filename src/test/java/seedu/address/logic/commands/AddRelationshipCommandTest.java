@@ -71,6 +71,10 @@ public class AddRelationshipCommandTest {
         Index carlIndex = Index.fromOneBased(indexOfCarl);
         Index fionaIndex = Index.fromOneBased(indexOfFiona);
         RelationshipDirection  direction = RelationshipDirection.DIRECTED;
+        AddRelationshipCommand priorRelationshipCommand = prepareCommand(carlIndex, fionaIndex,
+                RelationshipDirection.UNDIRECTED);
+        priorRelationshipCommand.execute();
+
         AddRelationshipCommand addRelationshipCommand = prepareCommand(carlIndex, fionaIndex, direction);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
