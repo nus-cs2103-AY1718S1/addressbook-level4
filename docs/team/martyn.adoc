@@ -83,16 +83,25 @@ e.g. Both "add" and "a" can be used to execute the AddCommand function
 
 === External Behavior
 
-#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: search-for-persons-by-parameter-code-search-code-code-since-v1-3-code]]#
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: 2.7. Search for persons by parameter: Search Since v1.3]]#
 
-Displays a google map search based of the person's address of the given index in the browser panel. +
-Format: 'map [INDEX]'
+Finds persons whose details match the given keywords. +
+Format: 'search KEYWORD [MORE KEYWORD]'
 
 ****
-* Selects the person and loads the Google maps page of the person's address at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Parameters are searched
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
+
+Examples:
+
+* `search John` +
+Returns `john` and `John Doe`
+* `search Serangoon` +
+Returns `Bernice` and `David`, who stay in Serangoon
 
 #End of Extract#
 
