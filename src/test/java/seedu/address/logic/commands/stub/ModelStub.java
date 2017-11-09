@@ -43,6 +43,17 @@ public class ModelStub implements Model {
         fail("This method should not be called.");
         return null;
     }
+
+    @Override
+    public String getFbUrl (ReadOnlyPerson target) {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
+    public void openUrl (String url) {
+        fail("This method should not be called.");
+    }
     //@@author
 
     @Override
