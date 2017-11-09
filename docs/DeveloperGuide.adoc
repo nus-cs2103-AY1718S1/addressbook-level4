@@ -898,8 +898,8 @@ Only one `remark` is saved at any one time, if the user does `Remark` on the sam
 ---
 // end::remark[]
 
-//tag::linechart[]
-=== LineChart Mechanism
+// tag::graphpanel[]
+=== GraphPanel Mechanism
 
 `LineChart` mechanism is implemented using `javaFX`. It takes in `FilteredPersonList` and plots a graph based on those who are in the same `formClass`. +
 Using `XYChart.series` to store the data of the persons name and grade, a `coordinate` is created and a `line` is drawn connecting all the `coordinates`. +
@@ -929,7 +929,7 @@ for (ReadOnlyPerson people : people) {
 **Cons:** Much harder to plot a graph based on statistics then raw data.
 
 ---
-//end::linechart[]
+// end::graphpanel[]
 
 //tag::tab[]
 === Tabs mechanism
