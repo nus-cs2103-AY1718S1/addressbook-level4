@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Albus Percival Wulfric Brian Dumbledore</name>
+        <phone>92831448</phone>
+        <email>wizards@example.com</email>
+        <address>Hogwarts</address>
+        <dob>30 Jun 1981</dob>
+        <gender>MALE</gender>
+        <tagged>weird</tagged>
+        <tagged>Headmaster</tagged>
+        <tagged>crazy</tagged>
+    </persons>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <dob>27 Jul 1986</dob>
+        <gender>MALE</gender>
+        <tagged>friends</tagged>
+        <lifeInsuranceId>c77ca792-fbe9-44bc-b43b-f0423d0e1fc8</lifeInsuranceId>
+        <lifeInsuranceId>ea91ce18-4a4f-415a-a688-62621c241108</lifeInsuranceId>
+        <lifeInsuranceId>067e6162-3b6f-4ae2-a171-2470b63dff00</lifeInsuranceId>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <dob>28 Jan 1997</dob>
+        <gender>MALE</gender>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <lifeInsuranceId>ea91ce18-4a4f-415a-a688-62621c241108</lifeInsuranceId>
+        <lifeInsuranceId>067e6162-3b6f-4ae2-a171-2470b63dff00</lifeInsuranceId>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <dob>29 Jan 1997</dob>
+        <gender>FEMALE</gender>
+        <tagged>neighbours</tagged>
+        <lifeInsuranceId>067e6162-3b6f-4ae2-a171-2470b63dff00</lifeInsuranceId>
+    </persons>
+    <persons>
+        <name>Daniel Drudley</name>
+        <phone>92141082</phone>
+        <email>dd@example.com</email>
+        <address></address>
+        <dob>02 Mar 2004</dob>
+        <gender>MALE</gender>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <dob>30 Jan 1997</dob>
+        <gender>MALE</gender>
+        <tagged>family</tagged>
+        <lifeInsuranceId>a5d63bc4-a975-4994-bb19-d73f8dfc8f97</lifeInsuranceId>
+    </persons>
+    <persons>
+        <name>Ellen Degeneres</name>
+        <phone>21091428532</phone>
+        <email>ellen@example.com</email>
+        <address></address>
+        <dob></dob>
+        <gender>FEMALE</gender>
+        <tagged>RichAF</tagged>
+        <tagged>host</tagged>
+        <lifeInsuranceId>366deead-a90f-42fa-8fb8-f9e829315fc7</lifeInsuranceId>
+    </persons>
+    <persons>
+        <name>Gordon Ramsey</name>
+        <phone>21091481009</phone>
+        <email>angrycook@example.com</email>
+        <address>Best Restaurant Ever</address>
+        <dob>09 Sep 1986</dob>
+        <gender>MALE</gender>
+        <tagged>cook</tagged>
+        <tagged>angry</tagged>
+    </persons>
+    <persons>
+        <name>Hermione</name>
+        <phone>83714202</phone>
+        <email>hgranger@example.com</email>
+        <address></address>
+        <dob></dob>
+        <gender>FEMALE</gender>
+        <lifeInsuranceId>97433ca6-ca24-4bb1-9a87-dca4c32012df</lifeInsuranceId>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <dob>31 Jan 1997</dob>
+        <gender>MALE</gender>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Jaryl Tan</name>
+        <phone>93843201</phone>
+        <email>jaryltan94@gmail.com</email>
+        <address>Blk 299 Yishun Ave 5 #08-03</address>
+        <dob>11 Oct 1994</dob>
+        <gender>MALE</gender>
+        <tagged>ChemEng</tagged>
+        <tagged>best</tagged>
+        <tagged>ComSci</tagged>
+        <lifeInsuranceId>787e27d0-3db5-430a-b9b9-0b3a61ff239e</lifeInsuranceId>
+    </persons>
+    <persons>
+        <name>Juxarius Juxcity</name>
+        <phone>82402902</phone>
+        <email>juxarius@example.com</email>
+        <address></address>
+        <dob></dob>
+        <gender>MALE</gender>
+        <tagged>weird</tagged>
+        <tagged>anonymous</tagged>
+        <lifeInsuranceId>97433ca6-ca24-4bb1-9a87-dca4c32012df</lifeInsuranceId>
+        <lifeInsuranceId>787e27d0-3db5-430a-b9b9-0b3a61ff239e</lifeInsuranceId>
+    </persons>
+    <persons>
+        <name>Mary Jane</name>
+        <phone>98765432</phone>
+        <email>maryjane@example.com</email>
+        <address>Mary street, block 123</address>
+        <dob>05 May 1990</dob>
+        <gender>FEMALE</gender>
+        <lifeInsuranceId>ce003136-c8e2-4cdd-ae2d-860d203a9aa1</lifeInsuranceId>
+        <lifeInsuranceId>366deead-a90f-42fa-8fb8-f9e829315fc7</lifeInsuranceId>
+    </persons>
+    <persons>
+        <name>Oscar Wang</name>
+        <phone>209810290</phone>
+        <email></email>
+        <address></address>
+        <dob>02 Jan 1997</dob>
+        <gender>MALE</gender>
+        <tagged>oscar</tagged>
+    </persons>
+    <persons>
+        <name>Pujitha Desiraju</name>
+        <phone>93845702</phone>
+        <email></email>
+        <address></address>
+        <dob></dob>
+        <gender>FEMALE</gender>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <dob>01 Feb 1997</dob>
+        <gender>MALE</gender>
+        <tagged>colleagues</tagged>
+        <lifeInsuranceId>ce003136-c8e2-4cdd-ae2d-860d203a9aa1</lifeInsuranceId>
+    </persons>
+    <persons>
+        <name>Veronica Bestly</name>
+        <phone>94120810</phone>
+        <email></email>
+        <address>Girl next block</address>
+        <dob></dob>
+        <gender>FEMALE</gender>
+        <tagged>angry</tagged>
+        <tagged>hot</tagged>
+    </persons>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>neighbours</tags>
+    <tags>family</tags>
+    <tags>friends</tags>
+    <tags>ChemEng</tags>
+    <tags>best</tags>
+    <tags>ComSci</tags>
+    <tags>weird</tags>
+    <tags>anonymous</tags>
+    <tags>oscar</tags>
+    <tags>cook</tags>
+    <tags>angry</tags>
+    <tags>RichAF</tags>
+    <tags>host</tags>
+    <tags>hot</tags>
+    <tags>Headmaster</tags>
+    <tags>crazy</tags>
+    <lifeInsuranceMap>
+        <entry>
+            <key>ea91ce18-4a4f-415a-a688-62621c241108</key>
+            <value>
+                <insuranceName>Cheap Contract for peasants</insuranceName>
+                <owner>Alex Yeoh</owner>
+                <insured>Another person not in Lisa</insured>
+                <beneficiary>Bernice Yu</beneficiary>
+                <premium>50.0</premium>
+                <contractPath>cheapContract.pdf</contractPath>
+                <signingDate>01 Nov 2017</signingDate>
+                <expiryDate>01 Nov 2018</expiryDate>
+            </value>
+        </entry>
+        <entry>
+            <key>067e6162-3b6f-4ae2-a171-2470b63dff00</key>
+            <value>
+                <insuranceName>Normal contract for commoners</insuranceName>
+                <owner>Alex Yeoh</owner>
+                <insured>Bernice Yu</insured>
+                <beneficiary>Charlotte Oliveiro</beneficiary>
+                <premium>100.0</premium>
+                <contractPath>contract.pdf</contractPath>
+                <signingDate>01 Nov 2017</signingDate>
+                <expiryDate>01 Nov 2018</expiryDate>
+            </value>
+        </entry>
+        <entry>
+            <key>a5d63bc4-a975-4994-bb19-d73f8dfc8f97</key>
+            <value>
+                <insuranceName>Normal contract for commoners</insuranceName>
+                <owner>Oscar</owner>
+                <insured>Oscar</insured>
+                <beneficiary>David Li</beneficiary>
+                <premium>1000.0</premium>
+                <contractPath>contract.pdf</contractPath>
+                <signingDate>01 Nov 2017</signingDate>
+                <expiryDate>01 Nov 2018</expiryDate>
+            </value>
+        </entry>
+        <entry>
+            <key>787e27d0-3db5-430a-b9b9-0b3a61ff239e</key>
+            <value>
+                <insuranceName>Current Account</insuranceName>
+                <owner>Jaryl Tan</owner>
+                <insured>Jaryl Tan</insured>
+                <beneficiary>Juxarius Juxcity</beneficiary>
+                <premium>732.0</premium>
+                <contractPath>CAccount.pdf</contractPath>
+                <signingDate>01 Nov 2017</signingDate>
+                <expiryDate>01 Nov 2037</expiryDate>
+            </value>
+        </entry>
+        <entry>
+            <key>ce003136-c8e2-4cdd-ae2d-860d203a9aa1</key>
+            <value>
+                <insuranceName>Expensive Contract for Royalties</insuranceName>
+                <owner>A person not In Lisa</owner>
+                <insured>Roy Balakrishnan</insured>
+                <beneficiary>Mary Jane</beneficiary>
+                <premium>500.0</premium>
+                <contractPath>expensiveContract.pdf</contractPath>
+                <signingDate>01 Nov 2017</signingDate>
+                <expiryDate>01 Nov 2020</expiryDate>
+            </value>
+        </entry>
+        <entry>
+            <key>366deead-a90f-42fa-8fb8-f9e829315fc7</key>
+            <value>
+                <insuranceName>Term Life AXA</insuranceName>
+                <owner>Ellen Degeneres</owner>
+                <insured>John Doe</insured>
+                <beneficiary>Mary Jane</beneficiary>
+                <premium>600.0</premium>
+                <contractPath>TermLife.pdf</contractPath>
+                <signingDate>01 Nov 2017</signingDate>
+                <expiryDate>01 Nov 2037</expiryDate>
+            </value>
+        </entry>
+        <entry>
+            <key>97433ca6-ca24-4bb1-9a87-dca4c32012df</key>
+            <value>
+                <insuranceName>Whole Life Great Eastern</insuranceName>
+                <owner>Hermione</owner>
+                <insured>Hermione</insured>
+                <beneficiary>Juxarius Juxcity</beneficiary>
+                <premium>530.0</premium>
+                <contractPath>WholeLife.pdf</contractPath>
+                <signingDate>01 Nov 2017</signingDate>
+                <expiryDate>01 Nov 2037</expiryDate>
+            </value>
+        </entry>
+        <entry>
+            <key>c77ca792-fbe9-44bc-b43b-f0423d0e1fc8</key>
+            <value>
+                <insuranceName>Prudential Savings Plan</insuranceName>
+                <owner>Alex Yeoh</owner>
+                <insured>Oscar</insured>
+                <beneficiary>Oscar</beneficiary>
+                <premium>1000.0</premium>
+                <contractPath>contract.pdf</contractPath>
+                <signingDate>01 Nov 2017</signingDate>
+                <expiryDate>01 Nov 2018</expiryDate>
+            </value>
+        </entry>
+        <entry>
+            <key>ad4dc852-e6bb-44e9-800e-fa8a8964e7f1</key>
+            <value>
+                <insuranceName>AXA Savings plan</insuranceName>
+                <owner>Oscar</owner>
+                <insured>Oscar</insured>
+                <beneficiary>Oscar</beneficiary>
+                <premium>1000.0</premium>
+                <contractPath>contract.pdf</contractPath>
+                <signingDate>01 Nov 2017</signingDate>
+                <expiryDate>01 Nov 2018</expiryDate>
+            </value>
+        </entry>
+    </lifeInsuranceMap>
+</addressbook>
