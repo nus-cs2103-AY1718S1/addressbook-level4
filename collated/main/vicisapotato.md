@@ -131,12 +131,6 @@ public class TabCommandParser implements Parser<TabCommand> {
 ```
 ###### \java\seedu\address\ui\ParcelCard.java
 ``` java
-    private static String[] colors = { "#cc4f4f", "#57b233", "#2696b5", "#5045c6", "#7739ba", "#b534a1", "black" };
-    private static HashMap<String, String> tagColors = new HashMap<String, String>();
-    private static Random random = new Random();
-```
-###### \java\seedu\address\ui\ParcelCard.java
-``` java
     /**
      * Initializes tags and sets their style based on their tag label
      */
@@ -148,16 +142,6 @@ public class TabCommandParser implements Parser<TabCommand> {
         });
     }
 
-    /**
-     * tags with value tagValue will be assigned a random color from a list colors field
-     */
-    private static String setColorForTag(String tagValue) {
-        if (!tagColors.containsKey(tagValue)) {
-            tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
-        }
-
-        return tagColors.get(tagValue);
-    }
 ```
 ###### \java\seedu\address\ui\ParcelListPanel.java
 ``` java
@@ -165,6 +149,94 @@ public class TabCommandParser implements Parser<TabCommand> {
     private void handleJumpToTabEvent(JumpToTabRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         tabPanePlaceholder.getSelectionModel().select(event.targetIndex);
+    }
+```
+###### \java\seedu\address\ui\PopupOverdueParcelsWindow.java
+``` java
+public class PopupOverdueParcelsWindow extends UiPart<Region> {
+
+    private static final Logger logger = LogsCenter.getLogger(PopupOverdueParcelsWindow.class);
+    private static final String FXML = "PopupOverdueParcelsWindow.fxml";
+    private static final String TITLE = "Important";
+    private static final String CONTENT_TEXT = "You have parcels whose status are overdue\n"
+                                                 + "Number of overdue parcels: ";
+
+    private final Stage dialogStage;
+
+    @FXML
+    private Label contentPlaceholder;
+
+    public PopupOverdueParcelsWindow (ObservableList<ReadOnlyParcel> uncompletedParcels) {
+        super(FXML);
+        Scene scene = new Scene(getRoot());
+        dialogStage = createDialogStage(TITLE, null, scene);
+        dialogStage.setResizable(false);
+        dialogStage.setAlwaysOnTop(true);
+        fillDialogPane(getNumOverdueParcels(uncompletedParcels));
+    }
+
+    private void fillDialogPane (int numOverdueParcels) {
+        contentPlaceholder.setText(CONTENT_TEXT + numOverdueParcels);
+    }
+
+    private int getNumOverdueParcels (ObservableList<ReadOnlyParcel> uncompletedParcels) {
+        int numOverdueParcels = 0;
+
+        for (int i = 0; i < uncompletedParcels.size(); i++) {
+            if (uncompletedParcels.get(i).getStatus().equals(Status.OVERDUE)) {
+                numOverdueParcels++;
+            }
+        }
+
+        return numOverdueParcels;
+    }
+
+    /**
+     * Shows the help window.
+     * @throws IllegalStateException
+     * <ul>
+     *     <li>
+     *         if this method is called on a thread other than the JavaFX Application Thread.
+     *     </li>
+     *     <li>
+     *         if this method is called during animation or layout processing.
+     *     </li>
+     *     <li>
+     *         if this method is called on the primary stage.
+     *     </li>
+     *     <li>
+     *         if {@code dialogStage} is already showing.
+     *     </li>
+     * </ul>
+     */
+    public void show () {
+        logger.fine("Showing popup window for overdue.");
+        dialogStage.show();
+    }
+```
+###### \java\seedu\address\ui\UiManager.java
+``` java
+            if (overDueParcels(logic.getUncompletedParcelList())) {
+                PopupOverdueParcelsWindow popupOverdueParcelsWindow =
+                        new PopupOverdueParcelsWindow(logic.getUncompletedParcelList());
+                popupOverdueParcelsWindow.show();
+            }
+```
+###### \java\seedu\address\ui\UiManager.java
+``` java
+    /**
+     * Checks for presence of overdue parcels in parcel list
+     */
+    public boolean overDueParcels (ObservableList<ReadOnlyParcel> uncompletedParcelList) {
+
+        // if there are overdue parcels
+        for (int i = 0; i < uncompletedParcelList.size(); i++) {
+            if (uncompletedParcelList.get(i).getStatus().equals(Status.OVERDUE)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 ```
 ###### \resources\view\DarkTheme.css
@@ -214,58 +286,131 @@ public class TabCommandParser implements Parser<TabCommand> {
           <Insets bottom="10" left="10" right="10" top="10" />
         </padding>
       </StackPane>
-     <StackPane fx:id="parcelListPanelPlaceholder" prefHeight="134.0" prefWidth="688.0" />
+     <StackPane fx:id="parcelListPanelPlaceholder" />
     </items>
   </SplitPane>
 ```
 ###### \resources\view\ParcelListCard.fxml
 ``` fxml
+      <GridPane hgap="15.0" prefWidth="1367.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.66668701171875" minWidth="10.0" prefWidth="28.33331298828125" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.33331298828125" minWidth="10.0" prefWidth="147.33331298828125" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="107.66668701171875" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="290.6666259765625" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="347.3333740234375" minWidth="10.0" prefWidth="310.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.0" minWidth="10.0" prefWidth="140.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.66650390625" minWidth="10.0" prefWidth="95.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.0" minWidth="10.0" prefWidth="89.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="296.666748046875" minWidth="10.0" prefWidth="277.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.66668701171875" minWidth="10.0" prefWidth="37.33333206176758" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.33331298828125" minWidth="10.0" prefWidth="128.66666793823242" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.0" minWidth="10.0" prefWidth="125.5" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.5" minWidth="10.0" prefWidth="129.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="342.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="334.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="111.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="109.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="386.0" minWidth="10.0" prefWidth="377.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-        <Label fx:id="id" styleClass="cell_big_label" text="\$id">
-          <minWidth>
-            <!-- Ensures that the label text is never truncated -->
-            <Region fx:constant="USE_PREF_SIZE" />
-          </minWidth>
-        </Label>
-        <Label fx:id="name" styleClass="cell_big_label" text="\$first" GridPane.columnIndex="1" />
-        <Label fx:id="status" styleClass="cell_small_label" text="\$status" GridPane.columnIndex="7" />
-        <Label fx:id="phone" styleClass="cell_big_label" text="\$phone" GridPane.columnIndex="2" />
-        <Label fx:id="address" styleClass="cell_big_label" text="\$address" GridPane.columnIndex="3" />
-        <Label fx:id="email" styleClass="cell_big_label" text="\$email" GridPane.columnIndex="4" />
-        <Label fx:id="trackingNumber" styleClass="cell_big_label" text="\$trackingNumber" GridPane.columnIndex="5" />
-        <Label fx:id="deliveryDate" styleClass="cell_big_label" text="\$deliveryDate" GridPane.columnIndex="6" />
-          <FlowPane fx:id="tags" alignment="CENTER_LEFT" GridPane.columnIndex="8" />
-         </children>
-      </GridPane>
 ```
 ###### \resources\view\ParcelListPanel.fxml
 ``` fxml
     <TabPane fx:id="tabPanePlaceholder" styleClass="tab-pane" tabClosingPolicy="UNAVAILABLE">
      <tabs>
-       <Tab fx:id="undeliveredParcelsTab" text="All Parcels">
+       <Tab fx:id="undeliveredParcelsTab" styleClass="tab-header-area" text="All Parcels">
             <content>
-              <ListView fx:id="allUncompletedParcelListView" style="-fx-background-color: #383838;" />
+               <VBox>
+                  <children>
+                     <GridPane hgap="15.0">
+                        <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.66668701171875" minWidth="10.0" prefWidth="37.33333206176758" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.33331298828125" minWidth="10.0" prefWidth="120.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.0" minWidth="10.0" prefWidth="114.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.5" minWidth="10.0" prefWidth="120.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="325.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="328.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="131.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="72.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="447.0" minWidth="10.0" prefWidth="447.0" />
+                        </columnConstraints>
+                        <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        </rowConstraints>
+                        <children>
+                           <Label styleClass="cell_big_label" text="No." />
+                           <Label styleClass="cell_big_label" text="Name" GridPane.columnIndex="1" />
+                           <Label styleClass="cell_big_label" text="Tracking No." GridPane.columnIndex="2" />
+                           <Label styleClass="cell_big_label" text="Phone No." GridPane.columnIndex="3" />
+                           <Label styleClass="cell_big_label" text="Address" GridPane.columnIndex="4" />
+                           <Label styleClass="cell_big_label" text="Email" GridPane.columnIndex="5" />
+                           <Label styleClass="cell_big_label" text="Status" GridPane.columnIndex="7" />
+                           <Label styleClass="cell_big_label" text="Tags" GridPane.columnIndex="8" />
+                           <Label styleClass="cell_big_label" text="Due Date" GridPane.columnIndex="6" />
+                        </children>
+                        <padding>
+                           <Insets bottom="5.0" left="5.0" top="5.0" />
+                        </padding>
+                     </GridPane>
+                    <ListView fx:id="allUncompletedParcelListView" prefHeight="972.0" prefWidth="1806.0" style="-fx-background-color: #383838;" />
+                  </children>
+               </VBox>
             </content>
          </Tab>
        <Tab fx:id="deliveredParcelsTab" styleClass="tab-header-area" text="Completed Parcels">
             <content>
-               <ListView fx:id="allCompletedParcelListView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #383838;" />
+               <VBox>
+                  <children>
+                     <GridPane hgap="15.0">
+                        <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.66668701171875" minWidth="10.0" prefWidth="37.33333206176758" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.33331298828125" minWidth="10.0" prefWidth="120.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.0" minWidth="10.0" prefWidth="114.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.5" minWidth="10.0" prefWidth="120.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="325.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="328.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="123.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="80.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="447.0" minWidth="10.0" prefWidth="447.0" />
+                        </columnConstraints>
+                        <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        </rowConstraints>
+                        <children>
+                           <Label styleClass="cell_big_label" text="No." />
+                           <Label styleClass="cell_big_label" text="Name" GridPane.columnIndex="1" />
+                           <Label styleClass="cell_big_label" text="Tracking No." GridPane.columnIndex="2" />
+                           <Label styleClass="cell_big_label" text="Phone No." GridPane.columnIndex="3" />
+                           <Label styleClass="cell_big_label" text="Address" GridPane.columnIndex="4" />
+                           <Label styleClass="cell_big_label" text="Email" GridPane.columnIndex="5" />
+                           <Label styleClass="cell_big_label" text="Status" GridPane.columnIndex="7" />
+                           <Label styleClass="cell_big_label" text="Tags" GridPane.columnIndex="8" />
+                           <Label styleClass="cell_big_label" text="Due Date" GridPane.columnIndex="6" />
+                        </children>
+                        <padding>
+                           <Insets bottom="5.0" left="5.0" top="5.0" />
+                        </padding>
+                     </GridPane>
+                     <ListView fx:id="allCompletedParcelListView" prefHeight="1156.0" prefWidth="1806.0" style="-fx-background-color: #383838;" />
+                  </children>
+               </VBox>
             </content>
          </Tab>
      </tabs>
    </TabPane>
+```
+###### \resources\view\PopupOverdueParcelsWindow.fxml
+``` fxml
+<StackPane styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox>
+         <children>
+            <Label alignment="CENTER" prefHeight="32.0" prefWidth="314.0" styleClass="cell_big_label" text="Overdue Parcels">
+               <font>
+                  <Font size="22.0" />
+               </font>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </Label>
+            <Label fx:id="contentPlaceholder" alignment="TOP_LEFT" prefHeight="187.0" prefWidth="312.0" styleClass="cell_small_label" text="\$Content" wrapText="true" />
+         </children>
+      </VBox>
+   </children>
+</StackPane>
 ```

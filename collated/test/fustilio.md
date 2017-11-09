@@ -7,9 +7,15 @@
     private class ModelStubAcceptingParcelAdded extends ModelStub {
         final ArrayList<Parcel> parcelsAdded = new ArrayList<>();
 
+        /*
         @Override
         public boolean hasSelected() {
             return false;
+        }
+        */
+        @Override
+        public void addParcelCommand(ReadOnlyParcel parcel) throws DuplicateParcelException {
+            addParcel(parcel);
         }
 
         @Override
@@ -18,8 +24,18 @@
         }
 
         @Override
+        public void forceSelectParcel(ReadOnlyParcel parcel) {
+            logger.info("Simulate force selection of parcel.");
+        }
+
+        @Override
         public void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
             parcelsAdded.add(new Parcel(parcel));
+        }
+
+        @Override
+        public boolean getActiveIsAllBool() {
+            return true;
         }
 
         @Override
@@ -192,6 +208,8 @@ public class DeleteTagCommandTest {
         assertFalse(DeliveryDate.isValidDate("")); // empty string
         assertFalse(DeliveryDate.isValidDate(" ")); // spaces only
         assertFalse(DeliveryDate.isValidDate("91")); // less than 3 numbers
+        assertFalse(DeliveryDate.isValidDate("9321313213213123212131")); // only numbers, can't understand
+        assertFalse(DeliveryDate.isValidDate("a")); // short string
         assertFalse(DeliveryDate.isValidDate("date")); // non-numeric
         assertFalse(DeliveryDate.isValidDate("#(_!@!@(")); // special charactors
         assertFalse(DeliveryDate.isValidDate("\u200E\uD83D\uDE03\uD83D\uDC81")); // emojis
@@ -227,7 +245,20 @@ public class DeleteTagCommandTest {
         assertEquals(new DeliveryDate("02-08-2017"), new DeliveryDate("Second day of August 2017"));
         assertEquals(new DeliveryDate("4-7-2017"), new DeliveryDate("independence day 2017"));
         assertEquals(new DeliveryDate("14-2-2017"), new DeliveryDate("Valentines day 2017"));
+        assertEquals(new DeliveryDate("24-12-2017"), new DeliveryDate("Christmas eve 2017"));
     }
+```
+###### \java\systemtests\AddCommandSystemTest.java
+``` java
+        /* Case: add Hoon's parcel (completed) and Ida's parcel (pending) and check if tab is switched back and forth*/
+        model = getModel();
+        assertTrue(model.getTabIndex().equals(TAB_ALL_PARCELS));
+        model.addParcelCommand(HOON);
+        assertTrue(model.getTabIndex().equals(TAB_COMPLETED_PARCELS));
+        model.addParcelCommand(IDA);
+        assertTrue(model.getTabIndex().equals(TAB_ALL_PARCELS));
+        model.deleteParcel(HOON);
+        model.deleteParcel(IDA);
 ```
 ###### \java\systemtests\DeleteTagCommandSystemTest.java
 ``` java
@@ -375,11 +406,29 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
 ``` java
 
 ```
+###### \java\systemtests\EditCommandSystemTest.java
+``` java
+        /* ----------------------------- Performing edit operation with tab switches -------------------------------- */
+
+        /* Case: Edit status of first parcel to completed and check if tab is switched back and forth*/
+        model = getModel();
+        assertTrue(model.getTabIndex().equals(TAB_ALL_PARCELS));
+        parcelToEdit = model.getActiveList().get(index.getZeroBased());
+        editedParcel = new ParcelBuilder(parcelToEdit).withStatus(VALID_STATUS_COMPLETED).build();
+        model.editParcelCommand(parcelToEdit, editedParcel);
+        assertTrue(model.getTabIndex().equals(TAB_COMPLETED_PARCELS));
+        parcelToEdit = editedParcel;
+        editedParcel = new ParcelBuilder(parcelToEdit).withStatus(VALID_STATUS_OVERDUE).build();
+        model.editParcelCommand(parcelToEdit, editedParcel);
+        assertTrue(model.getTabIndex().equals(TAB_ALL_PARCELS));
+```
 ###### \java\systemtests\MaintainSortedMechanismSystemTest.java
 ``` java
 package systemtests;
 
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_DELIVERING;
@@ -417,16 +466,18 @@ public class MaintainSortedMechanismSystemTest {
     @Test
     public void execute_maintainSorted_success() throws Exception {
         Index indexLastParcel = Index.fromOneBased(model.getActiveList().size());
-        ReadOnlyParcel lastParcel = model.getFilteredParcelList().get(indexLastParcel.getZeroBased());
+        ReadOnlyParcel lastParcel = model.getActiveList().get(indexLastParcel.getZeroBased());
 
         ParcelBuilder parcelInList = new ParcelBuilder(lastParcel);
         Parcel editedParcel = parcelInList.withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withTags(VALID_TAG_FLAMMABLE).withTrackingNumber(VALID_TRACKING_NUMBER_AMY)
-                .withStatus(VALID_STATUS_DELIVERING).build();
+                .withStatus(VALID_STATUS_DELIVERING).withEmail(VALID_EMAIL_AMY)
+                .withAddress(VALID_ADDRESS_AMY).build();
 
         EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withTags(VALID_TAG_FLAMMABLE).withTrackingNumber(VALID_TRACKING_NUMBER_AMY)
-                .withStatus(VALID_STATUS_DELIVERING).build();
+                .withStatus(VALID_STATUS_DELIVERING).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .build();
         EditCommand editCommand = prepareCommand(indexLastParcel, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PARCEL_SUCCESS, editedParcel);
@@ -434,6 +485,7 @@ public class MaintainSortedMechanismSystemTest {
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updateParcel(lastParcel, editedParcel);
         expectedModel.maintainSorted();
+        expectedModel.forceSelectParcel(editedParcel);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
         assertTrue(checkSortedLinear(model));
@@ -443,7 +495,7 @@ public class MaintainSortedMechanismSystemTest {
      * Method to retrieve list of parcels from input model and checks if the list is in sorted order.
      */
     private boolean checkSortedLinear(Model inputModel) {
-        ObservableList<ReadOnlyParcel> listToCheck = inputModel.getFilteredParcelList();
+        ObservableList<ReadOnlyParcel> listToCheck = inputModel.getActiveList();
         return checkSorted(listToCheck);
     }
 
@@ -467,7 +519,7 @@ public class MaintainSortedMechanismSystemTest {
      */
     private boolean compareParcels(ReadOnlyParcel parcelOne, ReadOnlyParcel parcelTwo) {
         int result = parcelOne.compareTo(parcelTwo);
-        return result < 0;
+        return result <= 0;
     }
 
     /**
