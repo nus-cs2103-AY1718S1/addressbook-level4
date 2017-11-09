@@ -385,6 +385,14 @@
     -fx-border-color: derive(#1d1d1d, 30%);
 }
 
+#eventListPanel {
+    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+}
+
+#eventListPanelPlaceholder {
+    -fx-border-color: derive(#1d1d1d, 30%);
+}
+
 #filterField, #personListPanel, #personWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }

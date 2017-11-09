@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-// @@author itsdickson
+//@@author itsdickson
 
 import seedu.address.model.person.TagContainsKeywordsPredicate;
 
@@ -37,4 +37,4 @@ public class FindTagCommand extends Command {
                 && this.predicate.equals(((FindTagCommand) other).predicate)); // state check
     }
 }
-// @@author
+//@@author

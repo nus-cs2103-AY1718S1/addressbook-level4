@@ -226,7 +226,7 @@ public class MainWindow extends UiPart<Region> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
-    // @@author itsdickson
+    //@@author itsdickson
     /**
      * Sets the default theme based on user preferences.
      */
@@ -240,7 +240,7 @@ public class MainWindow extends UiPart<Region> {
     String getCurrentTheme() {
         return getRoot().getStylesheets().get(CURRENT_THEME_INDEX);
     }
-    // @@author
+    //@@author
 
     /**
      * Opens the help window.
@@ -251,7 +251,7 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
-    // @@author itsdickson
+    //@@author itsdickson
     /**
      * Opens the theme window.
      */
@@ -270,8 +270,8 @@ public class MainWindow extends UiPart<Region> {
         }
         getRoot().getStylesheets().add(VIEW_PATH + theme);
     }
-    // @@author
 
+    //@@author itsdickson
     /**
      * Toggles the list panel based on the input panel.
      */
@@ -282,6 +282,7 @@ public class MainWindow extends UiPart<Region> {
             personListPanelPlaceholder.toFront();
         }
     }
+    //@@author
 
     void show() {
         primaryStage.show();
@@ -310,7 +311,7 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
-    // @@author itsdickson
+    //@@author itsdickson
     @Subscribe
     private void handleShowThemesEvent(ShowThemeRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -324,15 +325,17 @@ public class MainWindow extends UiPart<Region> {
         browserPanel.setDefaultPage(event.theme);
         logic.setCurrentTheme(getCurrentTheme());
     }
+    //@@author
 
+    //@@author DarrenCzen
     @Subscribe
     private void handleToggleEvent(TogglePanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleToggle(event.selectedPanel);
     }
-    // @@author
+    //@@author
 
-    // @@author archthegit
+    //@@author archthegit
     @Subscribe
     private void handleUnselectOfPersonCardEvent(PersonPanelUnselectEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -341,7 +344,7 @@ public class MainWindow extends UiPart<Region> {
         detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
 
     }
-    // @@author
+    //@@author
 
     //@@author chernghann
     @Subscribe
