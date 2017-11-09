@@ -39,12 +39,12 @@
           </HBox>
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="addImageButton" mnemonicParsing="false" onAction="#handleAddImage" text="+ IMAGE">
+                  <Button fx:id="addImageButton" mnemonicParsing="false" onAction="#handleAddImage" text="+ Image">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="removeImageButton" mnemonicParsing="false" onAction="#handleDeleteImage" text="- IMAGE" />
+                  <Button fx:id="removeImageButton" mnemonicParsing="false" onAction="#handleResetImage" text="- Image" />
                </children>
                <padding>
                   <Insets left="50.0" right="50.0" />

@@ -16,6 +16,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import seedu.room.logic.Logic;
+import seedu.room.model.event.ReadOnlyEvent;
 
 //@@author Haozhe321-reused
 
