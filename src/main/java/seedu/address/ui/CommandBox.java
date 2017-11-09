@@ -123,11 +123,11 @@ public class CommandBox extends UiPart<Region> {
             } else if (commandSet.contains(command)) {
                 //Able to autocomplete to a correct command
                 this.replaceText(command);
-                logger.info(String.format("Autocomplete successful with input: ", input, " to ", command));
+                logger.info("Autocomplete successful with input: " + input + " to " + command);
             } else if (commandSet.contains(input)) {
                 //Add parameters
                 this.replaceText(input + command);
-                logger.info(String.format("Autocomplete successful with input: ", input, " to ", input, command));
+                logger.info("Autocomplete successful with input: " + input + " to " + input + command);
             }
         } catch (NullPointerException e) {
             //No command exists in trie or no trie exists
