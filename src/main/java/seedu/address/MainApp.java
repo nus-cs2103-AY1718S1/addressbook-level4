@@ -58,7 +58,7 @@ public class MainApp extends Application {
     protected UserPrefs userPrefs;
     protected BotSettings botSettings;
 
-    private boolean botStarted = false;
+    static boolean botStarted = false;
 
 
     @Override
@@ -84,13 +84,12 @@ public class MainApp extends Application {
         initEventsCenter();
 
         // Instantiate bot here
-        botSettings = new BotSettings();
-
-        ApiContextInitializer.init();
-
-        TelegramBotsApi botsApi = new TelegramBotsApi();
-
         if (!botStarted) {
+            botSettings = new BotSettings();
+
+            ApiContextInitializer.init();
+
+            TelegramBotsApi botsApi = new TelegramBotsApi();
             try {
                 botsApi.registerBot(new ArkBot(logic, model,
                         botSettings.getBotToken(), botSettings.getBotUsername()));

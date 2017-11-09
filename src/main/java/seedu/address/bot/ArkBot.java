@@ -123,7 +123,7 @@ public class ArkBot extends AbilityBot {
                     try {
                         logic.execute(ListCommand.COMMAND_WORD + " "
                                 + combineArguments(ctx.arguments()));
-                        ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
+                        ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
                         lastKnownMessage = sender.send(parseDisplayParcels(formatParcelsForBot(parcels)),
                                 ctx.chatId());
                     } catch (CommandException | ParseException e) {
@@ -149,7 +149,7 @@ public class ArkBot extends AbilityBot {
                     try {
                         logic.execute(DeleteCommand.COMMAND_WORD + " "
                                 + combineArguments(ctx.arguments()));
-                        ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
+                        ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
                         EditMessageText editedText =
                                 new EditMessageText().setChatId(ctx.chatId())
                                                      .setMessageId(lastKnownMessage.get().getMessageId())
@@ -222,7 +222,7 @@ public class ArkBot extends AbilityBot {
                     try {
                         logic.execute(FindCommand.COMMAND_WORD + " "
                                 + combineArguments(ctx.arguments()));
-                        ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
+                        ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
                         lastKnownMessage = sender.send(parseDisplayParcels(formatParcelsForBot(parcels)),
                                 ctx.chatId());
                     } catch (CommandException | ParseException e) {
@@ -253,7 +253,7 @@ public class ArkBot extends AbilityBot {
                         } else {
                             logic.execute(EditCommand.COMMAND_WORD + " "
                                     + combineArguments(ctx.arguments()) + BOT_SET_COMPLETED);
-                            ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
+                            ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
                             EditMessageText editedText =
                                     new EditMessageText().setChatId(ctx.chatId())
                                             .setMessageId(lastKnownMessage.get().getMessageId())
@@ -405,7 +405,7 @@ public class ArkBot extends AbilityBot {
                                 sender.send("Sorry, I didn't seem to understand your image. Please try again.",
                                         ctx.chatId());
                             } else if (this.waitingForImage) {
-                                int indexZeroBased = model.getFilteredUndeliveredParcelList().indexOf(retrievedParcel);
+                                int indexZeroBased = model.getUncompletedParcelList().indexOf(retrievedParcel);
 
                                 if (indexZeroBased < 0) {
                                     sender.send("The parcel cannot be found! Please try again.",
@@ -413,7 +413,7 @@ public class ArkBot extends AbilityBot {
                                 } else {
                                     logic.execute(EditCommand.COMMAND_WORD + " "
                                             + (indexZeroBased + 1) + BOT_SET_COMPLETED);
-                                    ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
+                                    ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
                                     EditMessageText editedText =
                                             new EditMessageText().setChatId(ctx.chatId())
                                                     .setMessageId(lastKnownMessage.get().getMessageId())
