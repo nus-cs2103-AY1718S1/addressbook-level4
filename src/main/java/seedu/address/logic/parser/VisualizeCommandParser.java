@@ -24,7 +24,7 @@ public class VisualizeCommandParser implements Parser<VisualizeCommand> {
             return new VisualizeCommand(index);
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT + VisualizeCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, VisualizeCommand.MESSAGE_USAGE));
         }
     }
 }
