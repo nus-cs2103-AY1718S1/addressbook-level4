@@ -2,8 +2,10 @@ package seedu.address.ui;
 
 import java.io.File;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -15,11 +17,17 @@ import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -28,6 +36,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.web.WebView;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
@@ -71,10 +81,13 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private VBox contactDetailsVBox;
 
-    //This has a getter method as MainWindow.java needs to
-    // access this node to populate it with Logic.getFilteredScheduleList().
     @FXML
     private StackPane schedulePlaceholder;
+
+    //This is needed for setting the click listener in setIcons(), if not the
+    //circles won't be able to pass a parameter for the method it calls inside
+    //its listener.
+    private ReadOnlyPerson currentPerson;
 
     private ParallelTransition pt;
 
@@ -104,6 +117,7 @@ public class BrowserPanel extends UiPart<Region> {
         contactImageCircle.setVisible(true);
         contactImageCircle.setFill(new ImagePattern(img));
         easeIn(contactImageCircle);
+        currentPerson = person;
     }
 
     private void setupContactImageCircle() {
@@ -151,9 +165,45 @@ public class BrowserPanel extends UiPart<Region> {
                     socialIconPlaceholders[i].widthProperty().divide(3),
                     socialIconPlaceholders[i].heightProperty().divide(3))
             );
+            //Set up mouse click listeners to run method to open social pages
+            cir.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    openSocialIconPage(currentPerson);
+                }
+            });
             cir.setFill(new ImagePattern(new Image(imgUrls[i])));
             socialIconPlaceholders[i].setCenter(cir);
             easeIn(cir);
+        }
+    }
+
+    /**
+     * Loads the social page in a new window.
+     */
+    private void openSocialIconPage(ReadOnlyPerson person) {
+        try {
+            //Load the component
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/view/SocialMediaPageWindow.fxml"));
+            AnchorPane parent = fxmlLoader.load();
+            //Get the webview from the loaded component then put URL
+            WebView socialPageView = (WebView) parent.getChildren().get(0);
+            socialPageView.getEngine().load("https://twitter.com/");
+            //Create the scene and stage
+            Scene scene = new Scene(parent);
+            Stage stage = new Stage();
+            //Setup window size based on the user's screen size
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            stage.setWidth(screenBounds.getWidth() / 1.4);
+            stage.setHeight(screenBounds.getHeight() / 1.2);
+            //Set title and show the scene
+            stage.setTitle("Social Media Window");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new window for social media page.", e);
         }
     }
 
@@ -228,28 +278,27 @@ public class BrowserPanel extends UiPart<Region> {
             labels[i].setStyle("-fx-font-size: 17");
             easeIn(labels[i]);
         }
+        currentPerson = person;
     }
 
     private void setSchedule(ReadOnlyPerson person) {
         schedulePlaceholder.setVisible(true);
-
-        //scheduleListView.setStyle("-fx-alignment: center-left; -fx-padding: 0 0 0 10;");
-
         easeIn(schedulePlaceholder);
+        currentPerson = person;
     }
 
     /**
      * Animates any node passed into this method with an ease-in
      */
     private void easeIn(Node node) {
-        FadeTransition ft = new FadeTransition(Duration.millis(400), node);
+        FadeTransition ft = new FadeTransition(Duration.millis(500), node);
         ft.setFromValue(0);
         ft.setToValue(1);
         TranslateTransition tt = new TranslateTransition();
         tt.setNode(node);
-        tt.setFromX(20);
-        tt.setToX(0);
-        tt.setDuration(Duration.millis(400));
+        tt.setFromY(20);
+        tt.setToY(0);
+        tt.setDuration(Duration.millis(500));
         tt.setInterpolator(Interpolator.EASE_IN);
         ParallelTransition pt = new ParallelTransition();
         pt.getChildren().addAll(ft, tt);
