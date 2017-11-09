@@ -111,13 +111,13 @@
             </TabPane>
         </VBox>
 
-        <StackPane fx:id="browserPlaceholder" minWidth="200" prefWidth="500" styleClass="webView">
+        <StackPane fx:id="browserPlaceholder" minWidth="200.0" prefWidth="500.0" styleClass="webView">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
         </StackPane>
     </SplitPane>
-    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
+    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100.0" minHeight="100" prefHeight="100.0" styleClass="pane-with-border" VBox.vgrow="NEVER">
         <padding>
             <Insets bottom="5" left="10" right="10" top="5" />
         </padding>
