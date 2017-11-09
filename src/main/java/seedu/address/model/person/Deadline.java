@@ -6,6 +6,8 @@ import static seedu.address.model.util.DateUtil.convertStringToDate;
 import static seedu.address.model.util.DateUtil.formatDate;
 import static seedu.address.model.util.DateUtil.isValidDateFormat;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -69,6 +71,17 @@ public class Deadline {
     @Override
     public String toString() {
         return valueToDisplay;
+    }
+
+    /**
+     * Get deadline as a {@code LocalDate} object
+     */
+    public LocalDate getDeadlineAsLocalDate() {
+        String day = getDay();
+        String month = getMonth();
+        String year = getYear();
+        String deadlineFormatted = year + month + day;
+        return LocalDate.parse(deadlineFormatted, DateTimeFormatter.BASIC_ISO_DATE);
     }
 
     public String getDay() {
