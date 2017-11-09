@@ -20,6 +20,7 @@ public class PrintCommandParser implements Parser<PrintCommand> {
      * and returns a PrintCommand Object with the specified file name
      * @throws ParseException if the user input does not conform the expected format
      * which requires at a valid string
+     * @throws ParseException if the user input includes illegal filepath characters
      */
     public PrintCommand parse(String args) throws ParseException {
         try {

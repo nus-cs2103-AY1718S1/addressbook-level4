@@ -5,6 +5,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE;
 import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_2;
 import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_3;
+import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_NO_ADDRESS;
+import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_NO_DOB;
+import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_NO_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELTAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
@@ -212,11 +215,23 @@ public class Person implements ReadOnlyPerson {
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(3);
         if (randomInt == 0) {
-            this.reason = String.format(SHOWING_WHY_MESSAGE, name, address);
+            if (address.toString() == "") {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_NO_ADDRESS, name);
+            } else {
+                this.reason = String.format(SHOWING_WHY_MESSAGE, name, address);
+            }
         } else if (randomInt == 1) {
-            this.reason = String.format(SHOWING_WHY_MESSAGE_2, name, dob);
+            if (dob.toString() == "") {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_NO_DOB, name);
+            } else {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_2, name, dob);
+            }
         } else if (randomInt == 2) {
-            this.reason = String.format(SHOWING_WHY_MESSAGE_3, name, email);
+            if (email.value == "") {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_NO_EMAIL, name);
+            } else {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_3, name, email);
+            }
         }
         return reason;
     }

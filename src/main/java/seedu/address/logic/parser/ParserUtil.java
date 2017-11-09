@@ -66,6 +66,7 @@ public class ParserUtil {
      * Leading and trailing whitespaces will be trimmed.
      * @return "filename" for example.
      * @throws IllegalValueException if there is no specified filepath.
+     * @throws InvalidPathException if filepath is illegal
      */
 
     public static String parseFilePath(String args) throws IllegalValueException, InvalidPathException {

@@ -25,12 +25,14 @@ public class WhyCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Tells you why.\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_WHY_REMARK_SUCCESS = "Added remark to Person: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-
     public static final String SHOWING_WHY_MESSAGE = "Because %1$s lives in %2$s";
     public static final String SHOWING_WHY_MESSAGE_2 = "Because %1$s is born in %2$s";
     public static final String SHOWING_WHY_MESSAGE_3 = "Because %1$s's email is %2$s";
+    public static final String SHOWING_WHY_MESSAGE_NO_ADDRESS = "Because %1$s has no address";
+    public static final String SHOWING_WHY_MESSAGE_NO_DOB = "Because %1$s has no date of birth";
+    public static final String SHOWING_WHY_MESSAGE_NO_EMAIL = "Because %1$s has no email";
+
+
 
     private final Index targetIndex;
 
