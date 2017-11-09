@@ -69,7 +69,7 @@ This also helps reduce the probability of misspelling commands by users who are 
 
 ---
 #Start of Extract [from: User Guide]#
-
+//TODO: write up for user guide
 //include::../UserGuide.adoc[tag= ]
 
 #End of Extract#
@@ -132,7 +132,7 @@ include::../DeveloperGuide.adoc[tag= findtags]
 ---
 #Start of Extract [from: User Guide]#
 
-//include::../UserGuide.adoc[tag= statisticspanel ]
+include::../UserGuide.adoc[tag= statisticspanel ]
 
 #End of Extract#
 
@@ -147,7 +147,7 @@ This panel is needed to display the statistics of the students currently in the 
 ---
 #Start of Extract [from: Developer Guide]#
 
-//include::../DeveloperGuide.adoc[tag= statisticspanel ]
+include::../DeveloperGuide.adoc[tag= statisticspanel ]
 
 #End of Extract#
 
