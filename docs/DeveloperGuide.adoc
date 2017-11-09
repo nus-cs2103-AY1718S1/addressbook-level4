@@ -369,8 +369,8 @@ _Figure 3.1.1.8: undo/redo activity_
 **Aspect:** How undo & redo executes +
 **Alternative 1 (current choice):** Individual command knows how to undo/redo by itself +
 **Pros:** Will use less memory (e.g. for `delete`, just save the person being deleted). +
-**Cons:** We must ensure that the implementation of each individual command are correct.
-**Alternative 2:** Save the entire address book +
+**Cons:** We must ensure that the implementation of each individual command are correct. +
+**Alternative 2:** Save the entire address book. +
 **Pros:** Easy to implement. +
 **Cons:** May have performance issues in terms of memory usage. +
 
