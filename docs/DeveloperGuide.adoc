@@ -523,7 +523,7 @@ Therefore, in the above example, `"m"` is passed as the argument.
          default:
              this.value = GenderType.NOT_SPECIFIED;
          }
-         this.IsGenderSet = true;
+         this.genderset = true;
      }
 ----
 
@@ -531,7 +531,7 @@ Therefore, in the above example, `"m"` is passed as the argument.
 As can be seen from the above code snippet , the given argument is converted to lower case and then given a value amongst
 the available enumerated constants : FEMALE , MALE and NOT_SPECIFIED (when no gender is specified)
 
-The IsGenderSet variable is specified to know if the user has entered the gender of the entry
+The genderset variable is specified to know if the user has entered the gender of the entry
 or not. If not , instead of displaying the default enum type :NOT_SPECIFIED , we can display
 a blank string. If specified , we can display the actual gender of the entry in a string format.
 
@@ -543,10 +543,10 @@ It sets the `value` of the `Gender` object to the following :
 ----
 public Gender() {
         this.value = GenderType.NOT_SPECIFIED;
-        this.IsGenderSet = false;
+        this.genderset = false;
     }
 ----
-As the value above specified by the user is empty , we make sure to set the IsGenderSet variable
+As the value above specified by the user is empty , we make sure to set the genderset variable
 to False.
 
 When requested by the UI , to display , teh following code snippet is used to display either
@@ -556,7 +556,7 @@ an empty string or the gender:
 ----
 @Override
     public String toString() {
-        return IsGenderSet ? value.toString() : "";
+        return genderset ? value.toString() : "";
     }
 ----
 

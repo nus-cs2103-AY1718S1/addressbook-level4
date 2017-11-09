@@ -173,14 +173,14 @@ public class Gender {
             + "notspecified|not_specified|not specified)\\b";
 
     public final GenderType value;
-    private boolean IsGenderSet;
+    private boolean genderset;
 
     /**
      * Initialise a Gender object with value of empty String. This can ONLY be used in the default field of
      * {@code AddPersonOptionalFieldDescriptor}
      */
     public Gender() {
-        this.IsGenderSet = false;
+        this.genderset = false;
         this.value = GenderType.NOT_SPECIFIED;
     }
 
@@ -213,7 +213,7 @@ public class Gender {
         default:
             this.value = GenderType.NOT_SPECIFIED;
         }
-        this.IsGenderSet = true;
+        this.genderset = true;
     }
 
     /**
@@ -225,7 +225,7 @@ public class Gender {
 
     @Override
     public String toString() {
-        return IsGenderSet ? value.toString() : "";
+        return genderset ? value.toString() : "";
     }
 
     @Override
