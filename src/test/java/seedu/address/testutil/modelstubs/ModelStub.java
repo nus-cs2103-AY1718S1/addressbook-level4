@@ -65,6 +65,7 @@ public class ModelStub implements Model {
     @Override
     public Index getPersonIndex(ReadOnlyPerson target) throws PersonNotFoundException {
         fail("This method should not be called.");
+        return null;
     }
 
     //@@author keithsoc

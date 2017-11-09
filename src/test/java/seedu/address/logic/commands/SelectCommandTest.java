@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
@@ -24,6 +25,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
@@ -102,6 +104,7 @@ public class SelectCommandTest {
      */
     private void assertExecutionSuccess(Index index) {
         SelectCommand selectCommand = prepareCommand(index);
+        ReadOnlyPerson selectedPerson = getPersonAtIndex(index);
 
         try {
             CommandResult commandResult = selectCommand.execute();
@@ -112,7 +115,8 @@ public class SelectCommandTest {
         }
 
         JumpToListRequestEvent lastEvent = (JumpToListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
-        assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
+
+        assertEquals(selectedPerson, getPersonAtIndex(Index.fromZeroBased(lastEvent.targetIndex)));
     }
 
     /**
@@ -129,6 +133,11 @@ public class SelectCommandTest {
             assertEquals(expectedMessage, ce.getMessage());
             assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
         }
+    }
+
+    private ReadOnlyPerson getPersonAtIndex(Index index) {
+        ObservableList<ReadOnlyPerson> filteredPersons = model.getFilteredPersonList();
+        return filteredPersons.get(index.getZeroBased());
     }
 
     /**
