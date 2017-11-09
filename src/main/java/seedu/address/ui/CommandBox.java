@@ -1,10 +1,16 @@
 package seedu.address.ui;
 
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Side;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
@@ -29,6 +35,8 @@ public class CommandBox extends UiPart<Region> {
     private Set<String> commandSet;
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
+    private final ContextMenu autoCompleteBox;
+
     private ListElementPointer historySnapshot;
 
     @FXML
@@ -42,6 +50,8 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+        autoCompleteBox = new ContextMenu();
+        commandTextField.setContextMenu(autoCompleteBox);
     }
 
     /**
@@ -54,7 +64,6 @@ public class CommandBox extends UiPart<Region> {
             // As up and down buttons will alter the position of the caret,
             // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
-
             navigateToPreviousInput();
             break;
         case DOWN:
@@ -66,6 +75,9 @@ public class CommandBox extends UiPart<Region> {
             handleAutoComplete();
             break;
         default:
+            if (autoCompleteBox.isShowing()) {
+                autoCompleteBox.hide();
+            }
             // let JavaFx handle the keypress
         }
     }
@@ -104,26 +116,45 @@ public class CommandBox extends UiPart<Region> {
         String input = commandTextField.getText();
         try {
             String command = commandTrie.attemptAutoComplete(input);
-
             if (input.equals(command)) {
-                //No command exists in trie
+                //Multiple options for autocomplete
                 setStyleToIndicateCommandFailure();
-                logger.info("Autocomplete failed with input: " + input);
+                showAutoCompleteOptions(commandTrie.getOptions(input));
+                logger.info(String.format("Autocomplete failed with input: ", input));
             } else if (commandSet.contains(command)) {
                 //Able to autocomplete to a correct command
                 this.replaceText(command);
-                logger.info("Autocomplete successful with input: " + input + " to " + command);
+                logger.info(String.format("Autocomplete successful with input: ", input, " to ", command));
             } else if (commandSet.contains(input)) {
                 //Add parameters
                 this.replaceText(input + command);
-                logger.info("Autocomplete successful with input: " + input + " to " + input + command);
+                logger.info(String.format("Autocomplete successful with input: ", input, " to ", input, command));
             }
         } catch (NullPointerException e) {
+            //No command exists in trie or no trie exists
             setStyleToIndicateCommandFailure();
             logger.info("Autocomplete failed with input: " + input);
         }
+    }
 
+    /**
+     * Handles the construction of the ContextMenu for autocomplete failure
+     * @param options representing potential completion options
+     */
+    private void showAutoCompleteOptions(List<String> options) {
+        for (String option : options) {
+            MenuItem item = new MenuItem(option);
+            item.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    replaceText(item.getText());
+                    autoCompleteBox.getItems().clear();
+                }
+            });
+            autoCompleteBox.getItems().add(item);
+        }
 
+        autoCompleteBox.show(commandTextField, Side.BOTTOM, 0.0, 0.0);
     }
     //@@author
 

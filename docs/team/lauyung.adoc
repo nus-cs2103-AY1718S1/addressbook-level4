@@ -1,0 +1,60 @@
+= Lau Yung - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T12-B4/main/blob/master/collated/main/lauy99.md[Functional Code] [https://github.com/CS2103AUG2017-T12-B4/main/blob/master/collated/test/lauy99.md[Test Code]]
+
+=== Enhancement Added: Expiry Date
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=expire]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+---
+Since our product targets tour guides who need to deal with a lot of one-off contact information,
+expiry date can be used to keep track of when the person will become irrelevant,
+avoiding problems like duplicate names, or too many persons slowing down the application.
+Expiry date can also be utilized to implement auto-delete feature.
+By checking if the expiry date has passed,
+the application can remove expired contents for the user at startup.
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=expire]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add feature `autodelete`
+
+---
+As mentioned, it is very likely for tour guides to have a lot of persons that are no longer relevant in their addressbook,
+`autodelete` can remove expired persons from their addressbook,
+saving the time needed to delete those persons one by one with `delete`.
+
+---
+
+=== Other contributions
+* Bugs reported to Team W13-B3
+(https://github.com/CS2103AUG2017-W13-B3/main/issues/107[Issue #107],
+https://github.com/CS2103AUG2017-W13-B3/main/issues/103[Issue #103])
+* Suggested enhancement to Team W13-B3
+(https://github.com/CS2103AUG2017-W13-B3/main/issues/110[Issue #110])

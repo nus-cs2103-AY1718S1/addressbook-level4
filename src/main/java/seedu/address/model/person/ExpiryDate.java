@@ -23,6 +23,7 @@ public class ExpiryDate {
     public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat(DATE_FORMAT);
 
+
     public final Date value;
 
     /**
@@ -42,6 +43,8 @@ public class ExpiryDate {
             throw new IllegalValueException(MESSAGE_EXPIRY_DATE_CONSTRAINTS);
         }
         // catches invalid month/day combination
+        // will check for invalid date combinations
+        DATE_FORMATTER.setLenient(false);
         ParsePosition parsePos = new ParsePosition(0);
         this.value = DATE_FORMATTER.parse(date, parsePos);
 
