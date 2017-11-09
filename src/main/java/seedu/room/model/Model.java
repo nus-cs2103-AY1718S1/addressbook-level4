@@ -3,19 +3,18 @@ package seedu.room.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-
 import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
 import seedu.room.logic.commands.exceptions.CommandException;
-import seedu.room.model.person.exceptions.NoneHighlightedException;
-import seedu.room.model.person.exceptions.TagNotFoundException;
 import seedu.room.model.event.ReadOnlyEvent;
 import seedu.room.model.event.exceptions.DuplicateEventException;
 import seedu.room.model.event.exceptions.EventNotFoundException;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
+import seedu.room.model.person.exceptions.NoneHighlightedException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
+import seedu.room.model.person.exceptions.TagNotFoundException;
 import seedu.room.model.tag.Tag;
 
 
@@ -108,6 +107,7 @@ public interface Model {
      * @throws NoneHighlightedException
      */
     void resetHighlightStatus() throws NoneHighlightedException;
+
     //@@author
 
     /**

@@ -40,7 +40,7 @@ public class HighlightCommand extends UndoableCommand {
         requireNonNull(model);
         if (highlightTag.equals("-")) {
             try {
-               model.resetHighlightStatus();
+                model.resetHighlightStatus();
                 return new CommandResult(MESSAGE_RESET_HIGHLIGHT);
             } catch (NoneHighlightedException e) {
                 throw new CommandException(MESSAGE_NONE_HIGHLIGHTED);

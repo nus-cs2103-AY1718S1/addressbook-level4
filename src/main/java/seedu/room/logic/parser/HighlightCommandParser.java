@@ -11,7 +11,7 @@ import seedu.room.logic.parser.exceptions.ParseException;
  */
 public class HighlightCommandParser implements Parser<HighlightCommand> {
 
-    public final String UNHIGHLIGHT_ARG = "-";
+    public final String unhighlightArg = "-";
     /**
      * Parses the given {@code String} of arguments in the context of the HighlightCommand
      * and returns an HighlightCommand object for execution.
@@ -19,7 +19,7 @@ public class HighlightCommandParser implements Parser<HighlightCommand> {
      */
     public HighlightCommand parse(String args) throws ParseException {
         String highlightTag = args.trim();
-        if (validTag(highlightTag) || highlightTag.equals(UNHIGHLIGHT_ARG)) {
+        if (validTag(highlightTag) || highlightTag.equals(unhighlightArg)) {
             return new HighlightCommand(highlightTag);
         } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HighlightCommand.MESSAGE_USAGE));

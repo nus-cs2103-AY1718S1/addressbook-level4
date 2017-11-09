@@ -61,13 +61,12 @@ public class HighlightCommandTest {
         String removeHighlight = "-";
         HighlightCommand highlightCommand = prepareCommand(removeHighlight);
 
-        String expectedMessage = HighlightCommand.MESSAGE_PERSONS_HIGHLIGHTED_SUCCESS;
+        String expectedMessage = HighlightCommand.MESSAGE_RESET_HIGHLIGHT;
 
+        ModelManager expectedModel = new ModelManager(model.getResidentBook(), new UserPrefs());
         List<Tag> listOfTags = model.getResidentBook().getTagList();
         String highlightTag = listOfTags.get(0).getTagName();
-        ModelManager expectedModel = new ModelManager(model.getResidentBook(), new UserPrefs());
-        expectedModel.updateHighlightStatus(highlightTag);
-        expectedModel.resetHighlightStatus();
+        model.updateHighlightStatus(highlightTag);
 
         assertCommandSuccess(highlightCommand, model, expectedMessage, expectedModel);
     }

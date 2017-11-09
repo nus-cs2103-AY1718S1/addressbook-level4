@@ -9,14 +9,13 @@ import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import seedu.room.commons.core.Messages;
 import seedu.room.commons.util.CollectionUtil;
 import seedu.room.logic.commands.exceptions.CommandException;
-import seedu.room.model.person.exceptions.NoneHighlightedException;
-import seedu.room.model.person.exceptions.TagNotFoundException;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
+import seedu.room.model.person.exceptions.NoneHighlightedException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
+import seedu.room.model.person.exceptions.TagNotFoundException;
 import seedu.room.model.tag.Tag;
 
 
