@@ -17,9 +17,7 @@ public class MusicCommandParser implements Parser<MusicCommand> {
      */
     public MusicCommand parse(String arguments) throws ParseException {
         String[] args = arguments.trim().split("\\s+");
-        if (args.length != 1 || args[0].equals("")) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MusicCommand.MESSAGE_USAGE));
-        } else if (args.length == 1) {
+        if (args.length == 1) {
             return new MusicCommand(args[0]);
         } else if (args.length == 2) {
             return new MusicCommand(args[0], args[1]);

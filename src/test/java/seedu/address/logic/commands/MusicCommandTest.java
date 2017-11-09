@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.MusicCommand.MESSAGE_NO_MUSIC_PLAYING;
 import static seedu.address.logic.commands.MusicCommand.MESSAGE_USAGE;
 
 import org.junit.Before;
@@ -38,6 +39,29 @@ public class MusicCommandTest {
         CommandResult commandResult = musicCommand.execute();
         assertEquals(MESSAGE_USAGE, commandResult.feedbackToUser);
     }
+
+    @Test
+    public void execute_music_wrongCommand() {
+        MusicCommand musicCommand = new MusicCommand("wrongCommand", "nonExistedGenre");
+        CommandResult commandResult = musicCommand.execute();
+        assertEquals(MESSAGE_USAGE, commandResult.feedbackToUser);
+
+        musicCommand = new MusicCommand("wrongCommand");
+        commandResult = musicCommand.execute();
+        assertEquals(MESSAGE_USAGE, commandResult.feedbackToUser);
+    }
+
+    @Test
+    public void execute_stopPause_noExistingPlayer() {
+        MusicCommand musicCommand = new MusicCommand("stop");
+        CommandResult commandResult = musicCommand.execute();
+        assertEquals(MESSAGE_NO_MUSIC_PLAYING, commandResult.feedbackToUser);
+
+        musicCommand = new MusicCommand("pause");
+        commandResult = musicCommand.execute();
+        assertEquals(MESSAGE_NO_MUSIC_PLAYING, commandResult.feedbackToUser);
+    }
+
     @Test
     public void equals() {
 

@@ -16,11 +16,13 @@ public class RadioCommandParserTest {
     @Test
     public void parse_validArgs_returnsSelectCommand() {
         assertParseSuccess(parser, "play", new RadioCommand("play"));
+        assertParseSuccess(parser, "play", new RadioCommand("play", "pop"));
+        assertParseSuccess(parser, "play pop", new RadioCommand("play", "pop"));
         assertParseSuccess(parser, "stop", new RadioCommand("stop"));
     }
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "any argument",
+        assertParseFailure(parser, "any argument 23232",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, RadioCommand.MESSAGE_USAGE));
     }
 }
