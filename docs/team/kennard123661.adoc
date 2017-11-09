@@ -3,10 +3,23 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: Ark
+Ark is a desktop delivery management application that my team and I built for our Software Engineering module in the
+National University of Singapore. We built this application for delivery companies to manage their deliveries.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 14kLoC.
+ You may access the Ark repository link:https://github.com/CS2103AUG2017-T16-B1/main[here].
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+Ark was built on top of link::https://github.com/nus-cs2103-AY1718S1/addressbook-level4[Addressbook - Level 4], an
+addressbook application. A number of features were added and refactoring was done to develop the original codebase
+into the parcel management application, Ark.
+
+You may access the links below for a list of more significant contributions I have made to Ark. Functional code
+refers to the code that I have written to enhance the Ark application while Test code refers to the code that I have written
+to automate testing for the Ark application.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T16-B1/main/blob/master/collated/main/kennard123661.md[Functional code]][https://github.com/CS2103AUG2017-T16-B1/main/blob/master/collated/test/kennard123661.md[Test code]]
+
+The following are my contributions to the project explained in detail:
 
 === Enhancement Added: Import Feature
 
@@ -14,19 +27,37 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=import]
+
+#End of Extract#
 
 ---
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Parcel companies manage millions of deliveries on a daily basis. As such, they have to deal with large amounts of
+data and deliveries. Furthermore, adding parcels into Ark individually is time consuming. Hence, I built a
+feature that allows parcel companies to import parcels from same files, and add parcels into Ark more efficiently.
+
+Moreover, parcels are usually passed from one delivery company to another (or to another shipping company). Hence, I
+wanted to make it possible for delivery companies to be able to transfer their Ark save files to each other as they
+transfer stewardship of parcels. This would save delivery companies time since they do not need to re-enter data that
+the previous delivery company had already entered.
+
+I designed this feature to accept `.xml` only files since Ark stores its files in `.xml` format and I wanted the
+ import command to be compatible with its save files so that it can import its save files.
 
 ==== Implementation
 
 ---
 
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=import]
+
+#End of Extract#
 
 ---
 
@@ -36,19 +67,29 @@ include::../DeveloperGuide.adoc[tag=import]
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=backup]
+
+#End of Extract#
 
 ---
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Delivery information is very important to delivery companies. Since it is impossible to prevent corruption of storage files,
+I developed an alternative measure, a feature that automatically backs up a reasonable recent version of the corrupted
+save file.
 
 ==== Implementation
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../DeveloperGuide.adoc[tag=backup]
+
+#End of Extract#
 
 ---
 
@@ -58,19 +99,30 @@ include::../DeveloperGuide.adoc[tag=backup]
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=status]
+
+#End of Extract#
 
 ---
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Parcels can be in several stages of a delivery process. They can be pending delivery, or being delivered at a
+particular instance. Hence, it is imperative that delivery companies are able to assign a status to their parcels to
+have a clear idea of the stage of delivery that their parcels are at. Moreover, it allows delivery customers to be
+accountable to their clients when their clients inquire about the delivery status of their parcels.
 
 ==== Implementation
 
 ---
 
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=status]
+
+#End of Extract#
 
 ---
 
@@ -80,19 +132,27 @@ include::../DeveloperGuide.adoc[tag=status]
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=trackingNumber]
+
+#End of Extract#
 
 ---
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+{{to be added}}
 
 ==== Implementation
 
 ---
 
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=trackingNumber]
+
+#End of Extract#
 
 ---
 
@@ -102,7 +162,11 @@ include::../DeveloperGuide.adoc[tag=trackingNumber]
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=postalCode]
+
+#End of Extract#
 
 ---
 
@@ -114,19 +178,36 @@ include::../UserGuide.adoc[tag=postalCode]
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../DeveloperGuide.adoc[tag=postalCode]
+
+#End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed: Optimization of delivery scheduling based on time or distance.
 
-{Explain similar to the Undo/Redo feature above.}
+
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Made the decision for the team to model the application's GUI to be similar to that of iTunes
+* Main software developer for the team (you can view a summary of my contributions the github project page
+link:https://github.com/CS2103AUG2017-T16-B1/main/graphs/contributors[here]
+* Refactored all instance of Person to Parcel in the codebase. You can view my pull request
+here link:https://github.com/CS2103AUG2017-T16-B1/main/pull/50[here]
+* Added Tooltip on mouseover of fields in the parcel. This was a necessary change since parts of the field will be
+missing and be replaced if with ellipsis `...` if it was too long. You can view my pull-request
+link:https://github.com/CS2103AUG2017-T16-B1/main/pull/168[here]
+* Change name and icon of Ark. You can view the pull request link:https://github.com/CS2103AUG2017-T16-B1/main/pull/167[here]
+* Added Travis CI and coveralls to the Ark repository for automated deployment and testing.
+* Made Ark application open in list mode on startup. You can view the pull request link:https://github.com/CS2103AUG2017-T16-B1/main/pull/175[here]
+* Add end-to-end internal logic for parcel tab click (this change is pretty huge).
+You can view the pull request link:https://github.com/CS2103AUG2017-T16-B1/main/pull/175[here]
 
-== Project: PowerPointLabs
+== Project: NUSVisions
 
-{Optionally (not graded), you may include other projects in your portfolio.}
+NUSVisions is an application meant to help NUS students plan for the entire 4 years of their studies. It stores your
+sessions to ensure that modules saved in your plans remain after a period of time. I deployed the web application on
+a Heroku server and you can access it by clicking link:https://nusvision.herokuapp.com/[here]

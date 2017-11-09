@@ -24,13 +24,6 @@ public interface Model {
      */
     Predicate<ReadOnlyParcel> PREDICATE_SHOW_ALL_PARCELS = unused -> true;
 
-    //@@author kennard123661
-    /**
-     * Updates {@code filteredUncompletedParcels} and {@code filteredCompletedParcels} list and updates the
-     * {@code activeFilteredList} to either of the previous sub lists based on its current reference.
-     */
-    void updateSubLists();
-
     /**
      * Sets the active list in the model.
      *

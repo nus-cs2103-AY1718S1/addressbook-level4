@@ -238,7 +238,7 @@ _Figure 3.3.3 : Interactions Inside the Logic Component for the `delete 1` Comma
 
 === Model component
 
-image::ModelClassDiagram.png[width="800"]
+image::ModelClassDiagram.png[width="1000"]
 _Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
@@ -683,7 +683,7 @@ Also creates coupling between the `Autocompleter` and `CommandBox`. +
 
 //tag::trackingNumber[]
 
-=== TrackingNumber Field
+=== Tracking Number Field
 
 Parcels have tracking numbers for delivery vendors to keep track of the parcels that they send out on a daily basis.
 This feature is important because a single person can have many parcels belonging to him. Tracking numbers are used
@@ -729,7 +729,7 @@ These states have different colours codes to allow users to differentiate the `S
 
 ==== Design Considerations
 
-** `Implementation of Status`**
+**`Implementation of Status`**
 
 * **Alternative 1 (current choice):** Status is an enum class.
 ** **Pros:** `Status` should only have fixed values. The user should also not be allowed to create new `Status` objects.
@@ -763,7 +763,7 @@ requires additional care when handling.
 
 ==== Design Considerations
 
-** `Implementation of Tag`**
+**`Implementation of Tag`**
 
 * **Alternative 1 (current choice):** Tag is an enum class.
 ** **Pros:** `Tag`s should only have fixed values. The user should also not be allowed to create new `Tag` objects.

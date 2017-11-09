@@ -46,8 +46,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
 
     private final FilteredList<ReadOnlyParcel> filteredParcels;
-    private FilteredList<ReadOnlyParcel> completedParcels;
-    private FilteredList<ReadOnlyParcel> uncompletedParcels;
+    private final FilteredList<ReadOnlyParcel> completedParcels;
+    private final FilteredList<ReadOnlyParcel> uncompletedParcels;
     private FilteredList<ReadOnlyParcel> activeParcels; // references the current selected list
 
     /**
@@ -62,7 +62,8 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.tabIndex = INDEX_FIRST_TAB;
         filteredParcels = new FilteredList<>(this.addressBook.getParcelList());
-        updateSubLists();
+        completedParcels = filteredParcels.filtered(deliveredPredicate);
+        uncompletedParcels = filteredParcels.filtered(deliveredPredicate.negate());
         activeParcels = uncompletedParcels;
         ModelListener modelListener = new ModelListener(this);
     }
@@ -73,18 +74,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author kennard123661
     @Override
-    public void updateSubLists() {
-        // checks reference equality
-        boolean isActiveDelivered = activeParcels == completedParcels;
-
-        // filter sub lists
-        completedParcels = filteredParcels.filtered(deliveredPredicate);
-        uncompletedParcels = filteredParcels.filtered(deliveredPredicate.negate());
-
-        setActiveList(isActiveDelivered);
-    }
-
-    @Override
     public void setActiveList(boolean isCompleted) {
         activeParcels = isCompleted ? completedParcels : uncompletedParcels;
     }
@@ -93,7 +82,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
-        updateSubLists();
         indicateAddressBookChanged();
     }
 
@@ -149,7 +137,6 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
         addressBook.addParcel(parcel);
         updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
-        updateSubLists();
         indicateAddressBookChanged();
     }
 
@@ -169,7 +156,6 @@ public class ModelManager extends ComponentManager implements Model {
         }
 
         updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
-        updateSubLists();
         indicateAddressBookChanged();
     }
     //@@author
@@ -227,7 +213,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate) {
         requireNonNull(predicate);
         filteredParcels.setPredicate(predicate);
-        updateSubLists();
     }
 
     //@@author fustilio
