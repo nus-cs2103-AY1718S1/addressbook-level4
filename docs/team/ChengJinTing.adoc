@@ -12,9 +12,6 @@ ConTag is an efficient and feature-packed desktop address book application for t
 
 ==== External behavior
 
-Finds person based on the searched  field. +
-Format: `find KEYWORD based on [n/NAME] or  [p/PHONE]  or [c/COUNTRY] or [e/EMAIL] or [a/ADDRESS] or  [t/TAG] or [act/ACTIVTY]`
-
 ---
 #Start of Extract [from: User Guide]#
 
@@ -42,9 +39,6 @@ include::../DeveloperGuide.adoc[tag=find]
 === Enhancement Added: Opening up calendar
 
 ==== External behavior
-
-Open a calendar browser that display the current events. +
-Format: `calendar`
 
 ---
 #Start of Extract [from: User Guide]#
@@ -77,9 +71,6 @@ include::../DeveloperGuide.adoc[tag=calendar]
 
 ==== External behavior
 
-Open a email platform for sending of email. +
-Format: `email INDEX [UNIQUE INDEX]...`
-
 ---
 #Start of Extract [from: User Guide]#
 
@@ -104,9 +95,11 @@ include::../DeveloperGuide.adoc[tag=email]
 
 ---
 
-=== Enhancement Proposed: Integration with Google
+=== Enhancement Proposed: Auto suggestion of contact's attributes when using FindCommand
 
-{Explain similar to the Undo/Redo feature above.}
+==== Justification
+
+To allow a faster way for user to find their contacts without having to ensuring full word match
 
 === Other contributions
 
