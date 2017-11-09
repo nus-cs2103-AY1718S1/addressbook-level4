@@ -551,6 +551,8 @@ to be stored in an `ArrayList <Index>`.
 **Cons:** Have to be thorough and change `Index` to `ArrayList<Index>` in all occurrences within all relevant
 `DeleteCommand` classes and methods.
 
+// end::deletecommand[]
+
 // tag::birthday[]
 === BirthdayCommand mechanism
 
@@ -672,6 +674,41 @@ display of the entire list in an easier to see manner. +
 
 ---
 //end::sortcommand[]
+
+//tag::remarkcommand[]
+=== RemarkCommand mechanism
+
+`RemarkCommand` implements from `UndoableCommand` and supports undoing and redoing. It is facilitated by the `LogicManager`, where most the
+process is executed. This command allows user to input `REMARK` field to a contact using the command format `remark INDEX r/[REMARK]`. if `[REMARK]` is an
+empty string, the command removes the existing `remark` on the contact at that `INDEX` . +
+
+A `RemarkCommandParser` class is also created for user inputs. When user inputs the command for `remark`, the `AddressBookParser` would call `RemarkCommandParser` to
+create a new instance `RemarkCommand`. `RemarkCommandParser` implements the `Parser` class. The code snippet below shows the logic of `RemarkCommandParser`:
+----
+public class RemarkCommandParser implements Parser<RemarkCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the RemarkCommand
+     * and returns an RemarkCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public RemarkCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_REMARK);
+        Index index;
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
+        }
+        String remark = argMultimap.getValue(PREFIX_REMARK).orElse("");
+        return new RemarkCommand(index, new Remark(remark));
+    }
+}
+----
+
+//end::remarkcommand[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
