@@ -792,7 +792,7 @@ _Figure 4.6.2: Code section in CalendarCommand.java_
 The component diagram in _Figure 4.6.3_ below indicates the interactions within the Logic component for the execution of calendar command.
 
 image::CalendarCommandComponentDiagram.PNG[width="800"]
-_Figure 4.6.3 : Clenader sequence diagram_
+_Figure 4.6.3 : Calender sequence diagram_
 
 
 
