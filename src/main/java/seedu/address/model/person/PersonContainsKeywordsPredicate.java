@@ -28,6 +28,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
     @Override
     public boolean test(ReadOnlyPerson person) {
         boolean result = false;
+
         if (keywords.containsKey(PREFIX_NAME.toString()) && !keywords.get(PREFIX_NAME.toString()).isEmpty()) {
             result = keywords.get(PREFIX_NAME.toString()).stream()
                     .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
@@ -54,8 +55,8 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
 
         if (keywords.containsKey(PREFIX_COMMENT.toString()) && !keywords.get(PREFIX_COMMENT.toString()).isEmpty()) {
             result = result || keywords.get(PREFIX_COMMENT.toString()).stream()
-                    .anyMatch(keyword ->
-                            StringUtil.containsWordIgnoreCaseAndCharacters(person.getComment().value, keyword));
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCaseAndCharacters(
+                            person.getComment().value, keyword));
         }
 
         if (keywords.containsKey(PREFIX_APPOINT.toString()) && !keywords.get(PREFIX_APPOINT.toString()).isEmpty()) {
