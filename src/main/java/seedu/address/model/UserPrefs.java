@@ -11,6 +11,7 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
+    private String avatarFilePath = "avatars/";
     private String addressBookName = "MyAddressBook";
     private String currentUserTheme = "DarkTheme";
 
@@ -52,6 +53,14 @@ public class UserPrefs {
 
     public void setCurrentUserTheme(String currentUserTheme) {
         this.currentUserTheme = currentUserTheme;
+    }
+
+    public String getAvatarFilePath() {
+        return avatarFilePath;
+    }
+
+    public void setAvatarFilePath(String avatarFilePath) {
+        this.avatarFilePath = avatarFilePath;
     }
 
     @Override
