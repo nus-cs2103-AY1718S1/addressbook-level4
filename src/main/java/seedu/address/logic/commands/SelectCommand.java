@@ -40,7 +40,7 @@ public class SelectCommand extends Command {
             throw new CommandException(MESSAGE_EXECUTION_FAILURE, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex, false));
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
 
     }

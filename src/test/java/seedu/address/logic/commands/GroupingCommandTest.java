@@ -9,6 +9,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
@@ -29,52 +30,10 @@ public class GroupingCommandTest {
     private ArrayList<Index> testIndexes = new ArrayList<>();
 
     @Test
-    public void execute_newGroup_success() {
-        List<Index> testIndexes = new ArrayList<>();
-        testIndexes.add(Index.fromOneBased(1));
-        testIndexes.add(Index.fromOneBased(3));
-
-        GroupingCommand testCommand = prepareCommand("newGroup", testIndexes);
-
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-
-        List<ReadOnlyPerson> personList = new ArrayList<>();
-        personList.add(expectedModel.getAddressBook().getPersonList().get(0));
-        personList.add(expectedModel.getAddressBook().getPersonList().get(2));
-
-        try {
-            expectedModel.createGroup("newGroup", personList);
-        } catch (DuplicateGroupException e) {
-            e.printStackTrace();
-        }
-
-        String expectedMessage = GroupingCommand.getSb("newGroup", personList);
-
-        assertCommandSuccess(testCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_newGroupSomeIndexOutOfBound_success() {
-        List<Index> testIndexes = new ArrayList<>();
-        testIndexes.add(Index.fromOneBased(1));
-        testIndexes.add(Index.fromOneBased(20));
-
-        GroupingCommand testCommand = prepareCommand("newGroup", testIndexes);
-
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-
-        List<ReadOnlyPerson> personList = new ArrayList<>();
-        personList.add(expectedModel.getAddressBook().getPersonList().get(0));
-
-        try {
-            expectedModel.createGroup("newGroup", personList);
-        } catch (DuplicateGroupException e) {
-            e.printStackTrace();
-        }
-
-        String expectedMessage = GroupingCommand.getSb("newGroup", personList);
-
-        assertCommandSuccess(testCommand, model, expectedMessage, expectedModel);
+    public void execute_newGroup_createSuccessful() {
+        List<Index> testIdx = Arrays.asList(Index.fromOneBased(1), Index.fromOneBased(3));
+        testSuccess("newGroup", testIdx);
+        testSuccess("##wEird##", testIdx);
     }
 
     @Test
@@ -142,6 +101,31 @@ public class GroupingCommandTest {
         GroupingCommand grpCommand = new GroupingCommand(grpName, index);
         grpCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return grpCommand;
+    }
+
+    /**
+     * helper function to test correctness
+     * @param grpName
+     * @param testIndexes
+     */
+    private void testSuccess(String grpName, List<Index> testIndexes) {
+        GroupingCommand testCommand = prepareCommand(grpName, testIndexes);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        List<ReadOnlyPerson> personList = new ArrayList<>();
+        personList.add(expectedModel.getAddressBook().getPersonList().get(testIndexes.get(0).getZeroBased()));
+        personList.add(expectedModel.getAddressBook().getPersonList().get(testIndexes.get(1).getZeroBased()));
+
+        try {
+            expectedModel.createGroup(grpName, personList);
+        } catch (DuplicateGroupException e) {
+            e.printStackTrace();
+        }
+
+        String expectedMessage = GroupingCommand.getSb(grpName, personList);
+
+        assertCommandSuccess(testCommand, model, expectedMessage, expectedModel);
     }
 }
 //@@author

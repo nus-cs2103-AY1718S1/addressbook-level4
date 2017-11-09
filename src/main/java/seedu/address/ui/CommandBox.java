@@ -15,8 +15,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -190,17 +193,31 @@ public class CommandBox extends UiPart<Region> {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Warning");
         Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
-        FxViewUtil.setStageIcon(alertStage, "/images/warning_sign.png");
+        FxViewUtil.setStageIcon(alertStage, "/images/Warning-300px.png");
 
         if (e.getClass().equals(CommandException.class)) {
             alert.setHeaderText(((CommandException) e).getExceptionHeader());
         } else {
             alert.setHeaderText(((ParseException) e).getExceptionHeader());
         }
-        alert.setContentText(e.getMessage());
 
-        alert.setResizable(true);
+        TextArea txtArea = new TextArea(e.getMessage());
+        txtArea.setEditable(false);
+        txtArea.setWrapText(true);
+
+        txtArea.setMaxWidth(Double.MAX_VALUE);
+        txtArea.setMaxHeight(Double.MAX_VALUE);
+        GridPane.setVgrow(txtArea, Priority.ALWAYS);
+        GridPane.setHgrow(txtArea, Priority.ALWAYS);
+
+        GridPane expContent = new GridPane();
+        expContent.setMaxWidth(Double.MAX_VALUE);
+        expContent.add(txtArea, 0, 0);
+
+        alert.getDialogPane().setContent(expContent);
+
         alert.showAndWait();
+
     }
     //@@author
 

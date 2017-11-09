@@ -1,5 +1,6 @@
 package seedu.address.logic;
 
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -11,6 +12,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -50,8 +52,24 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getFilteredPersonList();
     }
 
+    //@@author hthjthtrh
+    @Override
+    public ObservableList<Group> getFilteredGroupList() {
+        return model.getFilteredGroupList();
+    }
+
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
     }
+
+    /**
+     * updates the filtered person list according to group
+     * @param predicate
+     */
+    @Override
+    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+        model.updateFilteredPersonList(predicate);
+    }
+    //@@author
 }

@@ -9,7 +9,6 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TestUtil.getPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
@@ -92,6 +91,7 @@ public class RemarkCommandSystemTest extends AddressBookSystemTest {
         /* Case: selects first card in the person list, remark a person -> remarked, card selection
          * remains unchanged but browser url changes
          */
+        /*
         showAllPersons();
         index = INDEX_FIRST_PERSON;
         selectPerson(index);
@@ -102,7 +102,7 @@ public class RemarkCommandSystemTest extends AddressBookSystemTest {
         newPerson = new Person(ALICE);
         newPerson.setRemark(new Remark("dev"));
         assertCommandSuccess(command, index, newPerson, index);
-
+        */
         /* -------------------------------- Performing invalid remark operation ------------------------------------ */
 
         /* Case: invalid index (0) -> rejected */

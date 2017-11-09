@@ -9,8 +9,8 @@ import org.junit.Test;
 import seedu.address.testutil.PersonBuilder;
 
 public class FavoritePersonsPredicateTest {
-    private boolean Favorite = true;
-    private boolean Unfavorite = false;
+    private boolean favorite = true;
+    private boolean unfavorite = false;
     @Test
     public void test_equal() {
         String firstPredicateKeyword = "favorite";
@@ -40,21 +40,21 @@ public class FavoritePersonsPredicateTest {
     public void test_ableToFindPersons_returnsTrue() {
         // favorite_returnsTrue
         FavoritePersonsPredicate predicate = new FavoritePersonsPredicate("favorite");
-        assertTrue(predicate.test(new PersonBuilder().withFavorite(Favorite).build()));
+        assertTrue(predicate.test(new PersonBuilder().withFavorite(favorite).build()));
 
         //unfavorite_returnsTrue
         predicate = new FavoritePersonsPredicate("unfavorite");
-        assertTrue(predicate.test(new PersonBuilder().withFavorite(Unfavorite).build()));
+        assertTrue(predicate.test(new PersonBuilder().withFavorite(unfavorite).build()));
     }
 
     @Test
     public void test_unableToFindPerson_returnsFalse() {
         // favorite_returnsFalse
         FavoritePersonsPredicate predicate = new FavoritePersonsPredicate("unfavorite");
-        assertFalse(predicate.test(new PersonBuilder().withFavorite(Favorite).build()));
+        assertFalse(predicate.test(new PersonBuilder().withFavorite(favorite).build()));
 
         // unfavorite_returnFalse
         predicate = new FavoritePersonsPredicate("favorite");
-        assertFalse(predicate.test(new PersonBuilder().withFavorite(Unfavorite).build()));
+        assertFalse(predicate.test(new PersonBuilder().withFavorite(unfavorite).build()));
     }
 }

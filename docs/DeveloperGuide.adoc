@@ -387,6 +387,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::backupstorage[]
 === Storage with back up
 
 Upon the first-time run of this application, user is provided with a sample list of people, provided by link:{repoURL}/src/main/java/seedu/address/storage/model/util/SampleDataUtil.java[`SampleDataUtil.java`]. This is to give the user an idea of how the working application should look like.
@@ -430,7 +431,9 @@ private Model initModelWithBackup(Storage storage, UserPrefs userPrefs) {
 ----
 
 Back up file is kept up-to-date by updating itself when an AddressBookChangedEvent is raised.
+// end::backupstorage[]
 
+// tag::group[]
 === Grouping
 
 The grouping function is created to allow user to better organise his contacts.
@@ -459,6 +462,10 @@ public CommandResult executeUndoableCommand() throws CommandException {
     ....
 }
 ----
+
+// end::group[]
+
+
 // tag::favorite[]
 === Favorite
 

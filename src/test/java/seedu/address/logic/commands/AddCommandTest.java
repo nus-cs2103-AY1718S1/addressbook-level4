@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -179,6 +180,29 @@ public class AddCommandTest {
         @Override
         public void removePersonFromGroup(Group targetGrp, ReadOnlyPerson targetPerson) throws PersonNotFoundException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Group> getFilteredGroupList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredGroupList(Predicate<Group> predicateShowAllGroups) {
+            fail("This method should not be called.");
+        }
+
+        /**
+         * Finds the index of a group in the group list
+         *
+         * @param groupName
+         * @return
+         */
+        @Override
+        public Index getGroupIndex(String groupName) {
+            fail("This method should not be called.");
+            return null;
         }
 
     }

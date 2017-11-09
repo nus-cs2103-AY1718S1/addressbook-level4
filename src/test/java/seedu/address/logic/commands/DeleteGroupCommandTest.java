@@ -36,7 +36,7 @@ public class DeleteGroupCommandTest {
     }
 
     private void prepareCommand(String grpName) {
-        deleteGroupCommand = new DeleteGroupCommand(grpName);
+        deleteGroupCommand = new DeleteGroupCommand(grpName, false);
         deleteGroupCommand.setData(model, new CommandHistory(), new UndoRedoStack());
     }
     @Test
@@ -64,9 +64,9 @@ public class DeleteGroupCommandTest {
 
     @Test
     public void equals() {
-        DeleteGroupCommand deleteGroupCommand1 = new DeleteGroupCommand("HOT");
-        DeleteGroupCommand deleteGroupCommand2 = new DeleteGroupCommand("HOT");
-        DeleteGroupCommand deleteGroupCommand3 = new DeleteGroupCommand("Not_So_Hot");
+        DeleteGroupCommand deleteGroupCommand1 = new DeleteGroupCommand("HOT", false);
+        DeleteGroupCommand deleteGroupCommand2 = new DeleteGroupCommand("HOT", false);
+        DeleteGroupCommand deleteGroupCommand3 = new DeleteGroupCommand("Not_So_Hot", false);
 
         // same object -> returns true
         assertTrue(deleteGroupCommand1.equals(deleteGroupCommand1));

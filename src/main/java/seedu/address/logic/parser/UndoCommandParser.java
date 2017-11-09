@@ -18,6 +18,8 @@ public class UndoCommandParser implements Parser<UndoCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public UndoCommand parse(String args) throws ParseException {
+        args = args.trim();
+
         if (args.isEmpty()) {
             return new UndoCommand();
         } else if (args.equals(" all")) {

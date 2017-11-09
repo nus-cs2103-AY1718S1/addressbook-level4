@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.group.DuplicateGroupException;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
@@ -17,6 +18,8 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+
+    Predicate<Group> PREDICATE_SHOW_ALL_GROUPS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -81,4 +84,15 @@ public interface Model {
     void addPersonToGroup(Group targetGrp, ReadOnlyPerson targetPerson) throws DuplicatePersonException;
 
     void removePersonFromGroup(Group targetGrp, ReadOnlyPerson targetPerson) throws PersonNotFoundException;
+
+    ObservableList<Group> getFilteredGroupList();
+
+    void updateFilteredGroupList(Predicate<Group> predicateShowAllGroups);
+
+    /**
+     * Finds the index of a group in the group list
+     * @param groupName
+     * @return
+     */
+    Index getGroupIndex(String groupName);
 }

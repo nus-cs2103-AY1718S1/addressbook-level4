@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.group.DuplicateGroupException;
 import seedu.address.model.group.Group;
@@ -31,6 +32,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<Group> filteredGroups;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -41,6 +43,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredGroups = new FilteredList<>(this.addressBook.getGroupList());
     }
 
     public ModelManager() {
@@ -122,6 +125,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(targetGrp, targetPerson);
 
         targetGrp.add(targetPerson);
+        targetGrp.updatePreviews();
 
         indicateAddressBookChanged();
     }
@@ -132,8 +136,33 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(targetGrp, targetPerson);
 
         targetGrp.remove(targetPerson);
+        targetGrp.updatePreviews();
 
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public ObservableList<Group> getFilteredGroupList() {
+        return FXCollections.unmodifiableObservableList(filteredGroups);
+    }
+
+    @Override
+    public void updateFilteredGroupList(Predicate<Group> predicateShowAllGroups) {
+        requireNonNull(predicateShowAllGroups);
+
+        filteredGroups.setPredicate(predicateShowAllGroups);
+    }
+
+    /**
+     * Finds the index of a group in the group list
+     * @param groupName
+     * @return
+     */
+    @Override
+    public Index getGroupIndex(String groupName) {
+        requireNonNull(groupName);
+
+        return addressBook.getGroupIndex(groupName);
     }
     //@@author
 

@@ -12,7 +12,7 @@ import seedu.address.logic.commands.ViewGroupCommand;
 
 public class ViewGroupCommandParserTest {
 
-    private static String MESSAGE_PARSE_FAILURE = MESSAGE_INVALID_COMMAND_FORMAT + ViewGroupCommand.MESSAGE_USAGE;
+    private static final String MESSAGE_PARSE_FAILURE = MESSAGE_INVALID_COMMAND_FORMAT + ViewGroupCommand.MESSAGE_USAGE;
 
     private ViewGroupCommandParser parser = new ViewGroupCommandParser();
 
@@ -20,7 +20,7 @@ public class ViewGroupCommandParserTest {
     public void parse_groupName_success() {
         assertParseSuccess(parser, "testGroupName", new ViewGroupCommand("testGroupName"));
         assertParseSuccess(parser, "     testGroupName      ", new ViewGroupCommand("testGroupName"));
-        assertParseSuccess(parser, "1GrpNameWithNumber", new ViewGroupCommand("1GrpNameWithNumber"));
+        assertParseSuccess(parser, "        1GrpNameWithNumber  ", new ViewGroupCommand("1GrpNameWithNumber"));
     }
 
     @Test
@@ -30,6 +30,12 @@ public class ViewGroupCommandParserTest {
         assertParseSuccess(parser, "  1      ", new ViewGroupCommand(testIdx));
         testIdx = Index.fromOneBased(999);
         assertParseSuccess(parser, "   999    ", new ViewGroupCommand(testIdx));
+    }
+
+    @Test
+    public void parse_invalidArgs_failure() {
+        assertParseFailure(parser, " -10  ", MESSAGE_PARSE_FAILURE);
+        assertParseFailure(parser, " 0  ", MESSAGE_PARSE_FAILURE);
     }
 
     @Test

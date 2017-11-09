@@ -1,0 +1,98 @@
+= Liu Renxing - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Contact+ Pro
+Contact+ Pro is a portable contact book designed specifically for NUS students with the aim to connect
+the students and help them keep in touch with friends and peers!
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T14-B4/main/blob/master/collated/main/hthjthtrh.md[Functional code]] [https://github.com/CS2103AUG2017-T14-B4/main/blob/master/collated/test/hthjthtrh.md[Test code]]
+
+=== Enhancement Added: Back-up storage
+
+==== Justification
+
+A user will lose his contacts' information if the data file is deleted or corrupted due to unforeseen circumstances.
+Having a back-up storage will prevent the pain of losing all those information.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=backupstorage]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Multi-step undo
+
+==== External Behavior
+
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=undo]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows user to undo multiple changes should the user only realise the mistakes steps later.
+
+==== Implementation
+
+This enhancement is built upon the original implementation of `undo redo mechanism`. No change is made to the underlying mechanism.
+The multi-step undo is done through multiple usage of the undo mechanism. +
+
+The following is the original mechanism:
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=undoredo]
+
+#End of Extract#
+
+---
+
+
+=== Enhancement Added: Group-related functionalities
+
+==== External Behavior
+
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=group]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows user to link a group of closely related contacts. Gives the user a clearer categorisation of his contacts.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=group]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* supporting UI, model and storage changes for group related commands
+* Deletion of multiple person in one command
+* alert dialogue for exception handling

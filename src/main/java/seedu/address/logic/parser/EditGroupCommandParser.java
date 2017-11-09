@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditGroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -18,7 +19,14 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class EditGroupCommandParser implements Parser<EditGroupCommand> {
 
-    private static final Set<String> validOp = new HashSet<>(Arrays.asList("grpName", "add", "delete"));
+    private static final Set<String> validOp = new HashSet<>(Arrays.asList("gn", "add", "delete"));
+    private String grpName;
+    private Index grpIndex;
+    private String operation;
+    private String newName;
+    private Index personIndex;
+    private boolean indicateByIndex;
+
 
     /**
      * Parses the given {@code String} of arguments in the context of the EditGroupCommand
@@ -29,64 +37,81 @@ public class EditGroupCommandParser implements Parser<EditGroupCommand> {
     public EditGroupCommand parse(String userInput) throws ParseException {
         requireNonNull(userInput);
         userInput = userInput.trim();
-
-        List<String> argsList = Arrays.asList(userInput.split(" "));
+        List<String> argsList = Arrays.asList(userInput.split("\\s+"));
 
         if (argsList.size() != 3 || userInput.equals("")) {
             throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, EditGroupCommand.MESSAGE_USAGE);
         }
 
-        String grpName;
-        String operation;
-        String detail;
-
-        // parseing
-        try {
-            grpName = argsList.get(0);
-            operation = argsList.get(1);
-
-            if (isInteger(grpName) || isInteger(operation)) {
-                throw new Exception();
-            }
-            if (!validOp.contains(operation)) {
-                throw new Exception();
-            }
-
-            detail = argsList.get(2);
-            // if operation is add or delete, detail should be an index
-            if (operation.equals("add") || operation.equals("delete")) {
-                if (!isInteger(detail)) {
-                    throw new Exception();
-                }
-            } else {
-                // operation is to change name, need to enforce the rule that group name is not an integer
-                if (isInteger(detail)) {
-                    throw new Exception();
-                }
-            }
-        } catch (IndexOutOfBoundsException e) {
-            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, EditGroupCommand.MESSAGE_USAGE);
-        } catch (Exception e) {
-            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, EditGroupCommand.MESSAGE_USAGE);
+        parseGroupIndicator(argsList.get(0));
+        parseOpIndicator(argsList.get(1));
+        if ("gn".equals(operation)) {
+            parseNewName(argsList.get(2));
+            return new EditGroupCommand(grpName, grpIndex, operation, newName, indicateByIndex);
+        } else {
+            parseIndex(argsList.get(2));
+            return new EditGroupCommand(grpName, grpIndex, operation, personIndex, indicateByIndex);
         }
-
-        return new EditGroupCommand(grpName, operation, detail);
     }
 
     /**
-     * trues to parse input into an integer
-     * @param input
-     * @return true if input is integer
+     * parses the indicator to either a group name or index
+     * @param grpIndicator
+     * @throws ParseException
      */
-    private boolean isInteger(String input) {
-        boolean isInt;
+    private void parseGroupIndicator(String grpIndicator) throws ParseException {
         try {
-            ParserUtil.parseInt(input);
-            isInt = true;
-        } catch (IllegalValueException e) {
-            isInt = false;
+            int index = Integer.parseInt(grpIndicator);
+            if (index <= 0) {
+                throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, EditGroupCommand.MESSAGE_USAGE);
+            }
+            grpIndex = Index.fromOneBased(index);
+            indicateByIndex = true;
+        } catch (NumberFormatException e) {
+            // non-integer, must be a group name
+            grpName = grpIndicator;
+            indicateByIndex = false;
         }
-        return isInt;
+    }
+
+    /**
+     * parses the operation indicator to existing operations
+     * @param opIndicator
+     * @throws ParseException
+     */
+    private void parseOpIndicator(String opIndicator) throws ParseException {
+        if (!validOp.contains(opIndicator)) {
+            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, EditGroupCommand.MESSAGE_USAGE);
+        } else {
+            operation = opIndicator;
+        }
+    }
+
+    /**
+     * parses the new group name
+     * @param groupName
+     * @throws ParseException if new name is an integer
+     */
+    private void parseNewName(String groupName) throws ParseException {
+        try {
+            Integer.parseInt(groupName);
+            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, EditGroupCommand.MESSAGE_USAGE);
+        } catch (NumberFormatException e) {
+            this.newName = groupName;
+        }
+    }
+
+    /**
+     * parses the index string into an Index object
+     * @param index
+     * @throws ParseException if index is of invalid value
+     */
+    private void parseIndex(String index) throws ParseException {
+        try {
+            personIndex = ParserUtil.parseIndex(index);
+        } catch (IllegalValueException e) {
+            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, EditGroupCommand.MESSAGE_USAGE);
+        }
     }
 }
 //@@author

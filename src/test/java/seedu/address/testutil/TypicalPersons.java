@@ -94,6 +94,7 @@ public class TypicalPersons {
         List<ReadOnlyPerson> testGrpPersons = new ArrayList<>();
         testGrpPersons.add(HOON);
         testGrpPersons.add(IDA);
+
         try {
             ab.addGroup("testGrp1", testGrpPersons);
         } catch (DuplicateGroupException e) {

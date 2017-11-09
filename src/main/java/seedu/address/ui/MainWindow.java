@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -17,11 +18,15 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.DeselectAllEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.predicates.GroupContainsPersonPredicate;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -42,6 +47,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private GroupListPanel groupListPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -56,6 +62,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane groupListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -131,6 +140,9 @@ public class MainWindow extends UiPart<Region> {
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        groupListPanel = new GroupListPanel(logic.getFilteredGroupList());
+        groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -218,4 +230,21 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author hthjthtrh
+    @Subscribe
+    private void handleGroupPanelSelectionChangedEvent(GroupPanelSelectionChangedEvent event) {
+        logic.updateFilteredPersonList(new GroupContainsPersonPredicate(event.getNewSelection().group));
+    }
+
+    @Subscribe
+    private void handleDeselectEvent(DeselectAllEvent event) {
+        logic.updateFilteredPersonList(new Predicate<ReadOnlyPerson>() {
+            @Override
+            public boolean test(ReadOnlyPerson readOnlyPerson) {
+                return true;
+            }
+        });
+    }
+    //@@author
 }

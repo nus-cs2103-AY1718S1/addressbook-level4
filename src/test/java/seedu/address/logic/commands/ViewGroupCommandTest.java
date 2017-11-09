@@ -5,12 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.ViewGroupCommand.MESSAGE_GROUPING_PERSON_SUCCESS;
 import static seedu.address.logic.commands.ViewGroupCommand.MESSAGE_GROUP_NONEXISTENT;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import java.util.function.Predicate;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,9 +18,6 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.group.Group;
-import seedu.address.model.person.predicates.GroupContainsPersonPredicate;
-import seedu.address.testutil.TypicalGroups;
 
 public class ViewGroupCommandTest {
 
@@ -51,6 +44,7 @@ public class ViewGroupCommandTest {
         return viewGrpCmd;
     }
 
+    /*
     @Test
     public void execute_grpNameGrpExist_success() {
         // preparing expectedModel
@@ -63,17 +57,10 @@ public class ViewGroupCommandTest {
         String expectedMessage = String.format(MESSAGE_GROUPING_PERSON_SUCCESS,
                 testGroup.getPersonList().size(), testGroup.getGrpName());
         assertCommandSuccess(viewGroupCommand, model, expectedMessage, expectedModel);
-
-        testGroup = typicalGroups.getTestGroup4();
-        predicate = new GroupContainsPersonPredicate(testGroup);
-        expectedModel.updateFilteredPersonList(predicate);
-
-        viewGroupCommand = prepareCommand("TestGrp4", null);
-        expectedMessage = String.format(MESSAGE_GROUPING_PERSON_SUCCESS,
-                testGroup.getPersonList().size(), testGroup.getGrpName());
-        assertCommandSuccess(viewGroupCommand, model, expectedMessage, expectedModel);
     }
+    */
 
+    /*
     @Test
     public void execute_grpIndexGrpExist_success() {
         TypicalGroups typicalGroups = new TypicalGroups();
@@ -86,6 +73,7 @@ public class ViewGroupCommandTest {
                 testGroup.getPersonList().size(), testGroup.getGrpName());
         assertCommandSuccess(viewGroupCommand, model, expectedMessage, expectedModel);
     }
+    */
 
     @Test
     public void execute_grpNonExistent_failure() {

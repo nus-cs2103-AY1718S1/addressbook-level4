@@ -74,8 +74,13 @@ public class UniqueGroupList implements Iterable<Group> {
         sort();
     }
 
+    /**
+     * Removes the specified group from the group list
+     * @param grpToDelete
+     */
     public void removeGroup(Group grpToDelete) {
         internalList.remove(grpToDelete);
+        sort();
     }
 
     /**
@@ -92,6 +97,17 @@ public class UniqueGroupList implements Iterable<Group> {
         }
 
         targetGrp.setGrpName(newName);
+        sort();
+    }
+
+
+    public int getGroupIndex(String groupName) {
+        for (Group grp : internalList) {
+            if (grp.getGrpName().equals(groupName)) {
+                return internalList.indexOf(grp);
+            }
+        }
+        return -1;
     }
 }
 //@@author

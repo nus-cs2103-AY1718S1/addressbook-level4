@@ -27,10 +27,11 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      */
     public DeleteCommand parse(String args) throws ParseException {
         args = args.trim();
+
         if (args.equals("")) {
             throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
         }
-        List<String> indexStrs = Arrays.asList(args.split(" "));
+        List<String> indexStrs = Arrays.asList(args.split("\\s+"));
         //eliminate duplicates
         HashSet<Integer> indexIntsSet = new HashSet<>();
 

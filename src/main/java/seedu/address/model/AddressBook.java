@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.FavoriteCommand;
 import seedu.address.model.group.DuplicateGroupException;
@@ -124,6 +125,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 throw new AssertionError("Shouldn't exist duplicate person");
             }
         });
+        newGroup.updatePreviews();
         groups.add(newGroup);
     }
 
@@ -288,6 +290,8 @@ public class AddressBook implements ReadOnlyAddressBook {
                     } catch (PersonNotFoundException pnfe) {
                         throw new AssertionError("The target person cannot be missing");
                     }
+
+                    group.updatePreviews();
                 }
             });
         } else if (commandClass.equals(DeleteCommand.class)) {
@@ -298,6 +302,8 @@ public class AddressBook implements ReadOnlyAddressBook {
                     } catch (PersonNotFoundException pnfe) {
                         throw new AssertionError("The target person cannot be missing");
                     }
+
+                    group.updatePreviews();
                 }
             });
         } else {
@@ -311,6 +317,8 @@ public class AddressBook implements ReadOnlyAddressBook {
                     } catch (PersonNotFoundException pnfe) {
                         throw new AssertionError("The target person cannot be missing");
                     }
+
+                    group.updatePreviews();
                 }
             });
         }
@@ -322,6 +330,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void setGrpName(Group targetGrp, String newName) throws DuplicateGroupException {
         this.groups.setGrpName(targetGrp, newName);
+    }
+
+    public Index getGroupIndex(String groupName) {
+        return Index.fromZeroBased(groups.getGroupIndex(groupName));
     }
     //@@author
 }

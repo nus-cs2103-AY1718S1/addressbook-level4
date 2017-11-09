@@ -169,10 +169,11 @@ Example:
 * `locate 1 a/clementi` +
 Displays the route from `clementi` to the address of the first person in the current list.
 
+// tag::group[]
 === Creating a group: `createGroup`
 
 Creates a group including a list of person from the address book. +
-Format: `createGroup GROUP_NAME INDEX [INDEX]...`
+Format: `createGroup GROUP_NAME(non-integer) INDEX [INDEX]...`
 
 ****
 * Creates the group with group name `GROUP_NAME` including the list of people specified by `INDEX` s.
@@ -199,11 +200,10 @@ Operation fails because group name is an integer
 === Deleting a group: `deleteGroup`
 
 Deletes a group from the addressbook. +
-Format: `deleteGroup GROUP_NAME`
+Format: `deleteGroup GROUP_NAME` or `deleteGroup INDEX`
 
 ****
-* Deletes the group with group name `GROUP_NAME`.
-* Group name cannot be empty.
+* Deletes the group with group name `GROUP_NAME` or index `INDEX`.
 * Group name must be a valid group name (exists in the addressbook and valid format)
 ****
 
@@ -213,11 +213,14 @@ Examples:
 `deleteGroup SoSmart` +
 Deletes the group `SoSmart` successfully
 
-* `deleteGroup 1234` +
-Operation fails because group name is an integer
+* `deleteGroup 12` +
+Deletes the 12th group in the list of groups
 
 * `deleteGroup SoSmart` +
 Operation fails because the group `SoSmart` does not exist
+
+* `deleteGroup -2` +
+Operation fails because -2 is neither a valid group name nor valid index
 
 === Listing all groups: `listGroups`
 
@@ -229,11 +232,6 @@ Format: `listGroups`
 Lists all persons in the specified group +
 Format: `viewGroup GROUP_NAME` or `viewGroup INDEX`
 
-****
-* First argument is treated as an index if it is an integer, else it is treated like a group name
-* User index in conjuncture with `listGroups`, to see the groups with corresponding index
-****
-
 Examples:
 
 * `viewGroup Hello!` +
@@ -242,34 +240,48 @@ Lists all person in the group `Hello!`.
 * `viewGroup 1` +
 Lists all person in the first group.
 
-* `viewGroup 1234` +
-Operation fails if there is not 1234 groups in the addressbook.
+* `viewGroup -1` +
+Operation fails since -1 is neither a valid group name nor a valid index
 
 === Editing a group : `editGroup`
 
 Edits the group. +
-Format: `editGroup GROUP_NAME grpName NEW_GROUP_NAME`
-or `editGroup GROUP_NAME add INDEX`
-or `editGROUP GROUP_NAME delete INDEX`
+Format: `editGroup GROUP_NAME gn NEW_GROUP_NAME` or `editGroup GROUP_INDEX gn NEW_GROUP_NAME` +
+`editGroup GROUP_NAME add INDEX` or `editGroup GROUP_INDEX add INDEX` +
+`editGROUP GROUP_NAME delete INDEX` or `editGroup GROUP_INDEX delete INDEX` +
 
 ****
 * This command supports three kinds of operations: 1. change group name 2. add a person to the group 3. delete a person from the group
 * `NEW_GROUP_NAME` must fit a valid group name format
+* person of specified index *within* the group is removed
 ****
 
 Examples:
 
-* `editGroup test grpName testing` +
-`editGroup anotherTest grpName testing` +
+* `editGroup test gn testing` +
+`editGroup anotherTest gn testing` +
 First operation succeeds if no existing group is called `testing` +
 Second operation fails if first operation goes through.
+
+* `editGroup 2 gn Sp1Cy!` +
+Second group group name is changed to Sp1Cy!.
 
 * `editGroup test add 1` +
 Adds the first person from the current view of persons to the group.
 
+* `editGroup 1 add 10` +
+Adds the tenth person into the first group.
+
 * `editGroup test delete 3` +
 Deletes the third person in the group.
 
+* `editGroup 1 delete 10` +
+Deletes the tenth person from the first group.
+
+* `editGroup test gn 12` +
+Operation fails as 12 is not a valid group name.
+
+// end::group[]
 
 === Deleting a person : `delete`
 
@@ -384,6 +396,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
+// tag::undo[]
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the _undoable_ commands were executed, specified by the the number of commands to undo +
@@ -417,6 +430,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `delete 1` +
 `delete 2` +
 `undo all` (reverses both delete commands and add command)
+// end::undo[]
 
 === Redoing the previously undone command : `redo`
 
