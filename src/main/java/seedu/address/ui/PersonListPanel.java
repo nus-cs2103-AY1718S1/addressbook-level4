@@ -15,6 +15,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
@@ -24,7 +25,6 @@ import seedu.address.commons.events.ui.DeselectionEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.NearbyPersonNotInCurrentListEvent;
 import seedu.address.commons.events.ui.NearbyPersonPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.commands.BlacklistCommand;
 import seedu.address.logic.commands.OverdueListCommand;
@@ -41,12 +41,16 @@ public class PersonListPanel extends UiPart<Region> {
     private final String currentListName;
 
     @FXML
+    private Label selectionDisplay;
+
+    @FXML
     private ListView<PersonCard> personListView;
 
     public PersonListPanel(ObservableList<ReadOnlyPerson> personList, String currentListName) {
         super(FXML);
         setConnections(personList);
         this.currentListName = currentListName;
+        selectionDisplay.setText(getCurrentListDisplayName());
         registerAsAnEventHandler(this);
     }
 
@@ -64,25 +68,29 @@ public class PersonListPanel extends UiPart<Region> {
                     if (newValue != null) {
                         logger.fine("Selection in person list panel changed to : '" + newValue + "'");
                         raise(new PersonPanelSelectionChangedEvent(newValue));
-                        raise(new NewResultAvailableEvent(getSelectionMessage(personListView.getSelectionModel()
-                                .getSelectedIndex() + 1), false));
+                        selectionDisplay.setText(getSelectionMessage(personListView.getSelectionModel()
+                                .getSelectedIndex() + 1));
                     }
                 });
     }
 
     private String getSelectionMessage(int oneBasedIndex) {
+        return getCurrentListDisplayName() + String.format(MESSAGE_SELECT_PERSON_SUCCESS, oneBasedIndex);
+    }
+
+    private String getCurrentListDisplayName() {
         switch (currentListName) {
         case BlacklistCommand.COMMAND_WORD:
-            return BLACKLIST_NAME_DISPLAY_FORMAT + String.format(MESSAGE_SELECT_PERSON_SUCCESS, oneBasedIndex);
+            return BLACKLIST_NAME_DISPLAY_FORMAT;
 
         case WhitelistCommand.COMMAND_WORD:
-            return WHITELIST_NAME_DISPLAY_FORMAT + String.format(MESSAGE_SELECT_PERSON_SUCCESS, oneBasedIndex);
+            return WHITELIST_NAME_DISPLAY_FORMAT;
 
         case OverdueListCommand.COMMAND_WORD:
-            return OVERDUELIST_NAME_DISPLAY_FORMAT + String.format(MESSAGE_SELECT_PERSON_SUCCESS, oneBasedIndex);
+            return OVERDUELIST_NAME_DISPLAY_FORMAT;
 
         default:
-            return MASTERLIST_NAME_DISPLAY_FORMAT + String.format(MESSAGE_SELECT_PERSON_SUCCESS, oneBasedIndex);
+            return MASTERLIST_NAME_DISPLAY_FORMAT;
         }
     }
 

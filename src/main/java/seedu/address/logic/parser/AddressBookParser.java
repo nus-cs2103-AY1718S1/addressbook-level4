@@ -34,6 +34,7 @@ import seedu.address.logic.commands.RepaidCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetPathCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UnbanCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.WhitelistCommand;
@@ -192,6 +193,10 @@ public class AddressBookParser {
         case SetPathCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new SetPathCommandParser().parse(arguments);
+
+        case ThemeCommand.COMMAND_WORD:
+            logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            return new ThemeCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

@@ -23,7 +23,7 @@
         <Insets bottom="5" left="15" right="5" top="5" />
       </padding>
       <HBox alignment="CENTER_LEFT" spacing="5">
-        <Label fx:id="id" styleClass="cell_big_label" textFill="#6c969d">
+        <Label fx:id="id" styleClass="cell_big_label">
           <minWidth>
             <!-- Ensures that the label text is never truncated -->
             <Region fx:constant="USE_PREF_SIZE" />
@@ -34,12 +34,12 @@
       <FlowPane fx:id="tags" />
          <TextFlow fx:id="debtFields">
             <children>
-               <Text fill="#A7B3AC" strokeType="INSIDE" strokeWidth="0.0" styleClass="cell_small_label" text="Debt: $">
+               <Text strokeType="INSIDE" strokeWidth="0.0" styleClass="cell_small_label" text="Debt: $">
                   <font>
                      <Font size="11.0" />
                   </font></Text>
             <Label fx:id="debt" styleClass="cell_small_label" text="\$debt" />
-               <Text fill="#A7B3AC" strokeType="INSIDE" strokeWidth="0.0" styleClass="cell_small_label" text=" / $">
+               <Text strokeType="INSIDE" strokeWidth="0.0" styleClass="cell_small_label" text=" / $">
                   <font>
                      <Font size="11.0" />
                   </font></Text>
@@ -48,7 +48,7 @@
          </TextFlow>
          <TextFlow>
             <children>
-               <Text fill="#A7B3AC" strokeType="INSIDE" strokeWidth="0.0" styleClass="cell_small_label" text="Deadline: ">
+               <Text strokeType="INSIDE" strokeWidth="0.0" styleClass="cell_small_label" text="Deadline: ">
                   <font>
                      <Font size="11.0" />
                   </font></Text>

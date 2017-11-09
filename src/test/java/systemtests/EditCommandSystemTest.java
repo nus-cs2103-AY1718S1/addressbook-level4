@@ -249,8 +249,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid total debt -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
-                + INVALID_TOTAL_DEBT_DESC, ParserUtil.MESSAGE_INVALID_TOTAL_DEBT
-        );
+                + INVALID_TOTAL_DEBT_DESC, ParserUtil.MESSAGE_INVALID_TOTAL_DEBT);
 
         /* Case: invalid interest -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
