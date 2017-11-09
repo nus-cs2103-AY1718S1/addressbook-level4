@@ -13,6 +13,8 @@ public class OverdueListCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        requireNonNull(model);
+        model.deselectPerson();
         model.changeListTo(COMMAND_WORD);
         model.updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS);
         String currentList = listObserver.getCurrentListName();
@@ -27,7 +29,7 @@ public class OverdueListCommand extends Command {
      * Parses a {@code Optional<String> debt} into an {@code Optional<Debt>} if {@code debt} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Debt> parseDebt(Optional<String> debt) throws IllegalValueException {
+    public static Optional<Debt> parseDebt (Optional<String> debt) throws IllegalValueException {
         requireNonNull(debt);
         return debt.isPresent() ? Optional.of(new Debt(debt.get())) : Optional.empty();
     }
@@ -286,11 +288,14 @@ public class DateBorrow {
 
 public class Deadline {
 
+    public static final String DASH_CHARACTER = "-";
     public static final String NO_DEADLINE_SET = "No deadline set.";
     public static final String MESSAGE_DEADLINE_CONSTRAINTS =
             "Deadline can only contain input of the format XX-XX-XXXX, taking X as an integer.";
+
     public final String value; // format of DD-MM-YYYY.
     public final String valueToDisplay; // format of DAY, DD MM, 'Year' YYYY.
+    private String[] valueParsed;
 
     /**
      * Validates given Deadline. If no deadline was entered by user, value will read "empty" by
@@ -308,6 +313,7 @@ public class Deadline {
                 throw new IllegalValueException(MESSAGE_DEADLINE_CONSTRAINTS);
             }
             this.value = trimmedDeadline;
+            this.valueParsed = trimmedDeadline.split(DASH_CHARACTER);
             this.valueToDisplay = formatDate(trimmedDeadline);
         }
     }
@@ -333,6 +339,18 @@ public class Deadline {
     @Override
     public String toString() {
         return valueToDisplay;
+    }
+
+    public String getDay() {
+        return valueParsed[0];
+    }
+
+    public String getMonth() {
+        return valueParsed[1];
+    }
+
+    public String getYear() {
+        return valueParsed[2];
     }
 
     @Override
@@ -381,6 +399,7 @@ public class Debt {
 
     public static final String MESSAGE_DEBT_CONSTRAINTS = "Debt must have at least 1 digit and be either "
             + "a positive integer or a positive number with two decimal places";
+    public static final String MESSAGE_DEBT_MAXIMUM = "Debt cannot exceed $" + Double.MAX_VALUE;
     // validation regex validates empty string. Check for presence of at least 1 digit is needed.
     public static final String DEBT_VALIDATION_REGEX = "^(?=.*\\d)\\d*(?:\\.\\d\\d)?$";
     public static final String DEBT_ZER0_VALUE = "0";
@@ -417,7 +436,10 @@ public class Debt {
     /**
      * Returns true if a given string is a valid person debt.
      */
-    public static boolean isValidDebt(String test) {
+    public static boolean isValidDebt(String test) throws IllegalValueException {
+        if (test.matches(DEBT_VALIDATION_REGEX) && Double.valueOf(test) > Double.MAX_VALUE) {
+            throw new IllegalValueException(MESSAGE_DEBT_MAXIMUM);
+        }
         return test.matches(DEBT_VALIDATION_REGEX) && test.length() >= 1;
     }
 

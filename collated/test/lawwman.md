@@ -1,4 +1,132 @@
 # lawwman
+###### \java\seedu\address\logic\BlackListSyncTest.java
+``` java
+public class BlackListSyncTest {
+
+    private static final String expectedMessage = ListObserver.BLACKLIST_NAME_DISPLAY_FORMAT
+            + BlacklistCommand.MESSAGE_SUCCESS;;
+
+    private Model model;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    }
+
+    @Test
+    public void execute_deleteCommandOnMasterlistDeletesPersonFromBlacklist_success() throws Exception {
+
+        ReadOnlyPerson personToBeDeleted = model.getFilteredBlacklistedPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased());
+        Index index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(personToBeDeleted));
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        // Ensure person is deleted from masterlist
+        expectedModel.deletePerson(personToBeDeleted);
+        expectedModel.updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
+        expectedModel.setCurrentListName("blacklist");
+
+        // Preparation done on actual model
+        DeleteCommand deleteCommand = prepareDeleteCommand(index);
+        deleteCommand.execute();
+
+        // Operation to be done on actual model
+        BlacklistCommand blacklistCommand = prepareBlacklistCommand();
+        model.setCurrentListName("blacklist");
+
+        assertCommandSuccess(blacklistCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_banCommandOnMasterListAddsPersonToBlacklist_success() throws Exception {
+        ReadOnlyPerson personToBan = model.getFilteredWhitelistedPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Index index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(personToBan));
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        // To make sure person does not exist in whitelist anymore
+        personToBan = expectedModel.removeWhitelistedPerson(personToBan);
+        expectedModel.addBlacklistedPerson(personToBan);
+        expectedModel.setCurrentListName("blacklist");
+
+        // Preparation done on actual model
+        BanCommand banCommand = prepareBanCommand(index);
+        banCommand.execute();
+
+        // Operation to be done on actual model
+        BlacklistCommand blacklistCommand = prepareBlacklistCommand();
+        model.setCurrentListName("blacklist");
+
+        assertCommandSuccess(blacklistCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_unbanCommandOnMasterListRemovesPersonFromBlacklist_success() throws Exception {
+        ReadOnlyPerson personToUnban = model.getFilteredBlacklistedPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Index index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(personToUnban));
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.removeBlacklistedPerson(personToUnban);
+        expectedModel.setCurrentListName("blacklist");
+
+        // Preparation done on actual model
+        UnbanCommand unbanCommand = prepareUnbanCommand(index);
+        unbanCommand.execute();
+
+        // Operation to be done on actual model
+        BlacklistCommand blacklistCommand = prepareBlacklistCommand();
+        model.setCurrentListName("blacklist");
+
+        assertCommandSuccess(blacklistCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * @return a {@code DeleteCommand} with the parameter {@code index}.
+     */
+    private DeleteCommand prepareDeleteCommand(Index index) {
+        DeleteCommand deleteCommand = new DeleteCommand(index);
+        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return deleteCommand;
+    }
+
+    /**
+     * @return a {@code EditCommand} with the parameter {@code index} & {@code EditPersonDescriptor}.
+     */
+    private EditCommand prepareEditCommand(Index index, EditCommand.EditPersonDescriptor descriptor) {
+        EditCommand editCommand = new EditCommand(index, descriptor);
+        editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return editCommand;
+    }
+
+    /**
+     *  @return a {@code BlacklistCommand}
+     */
+    private BlacklistCommand prepareBlacklistCommand() {
+        BlacklistCommand blacklistCommand = new BlacklistCommand();
+        blacklistCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return blacklistCommand;
+    }
+
+    /**
+     * @return a {@code BanCommand} with the parameter {@code index}.
+     */
+    private BanCommand prepareBanCommand(Index index) {
+        BanCommand banCommand = new BanCommand(index);
+        banCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return banCommand;
+    }
+
+    /**
+     * @return a {@code UnbanCommand} with the parameter {@code index}.
+     */
+    private UnbanCommand prepareUnbanCommand(Index index) {
+        UnbanCommand unbanCommand = new UnbanCommand(index);
+        unbanCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return unbanCommand;
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\OverdueListCommandTest.java
 ``` java
 public class OverdueListCommandTest {
@@ -88,7 +216,7 @@ public class ListObserverTest {
 
         model.setCurrentListName("whitelist");
         // typical addressbook has whitelisted person
-        personToFind = (Person) model.getFilteredBlacklistedPersonList().get(0);
+        personToFind = (Person) model.getFilteredWhitelistedPersonList().get(0);
         nameToFind = personToFind.getName().fullName;
         keywords = nameToFind.split("\\s+");
         findPredicate = new NameContainsKeywordsPredicate(Arrays.asList(keywords));
@@ -98,7 +226,7 @@ public class ListObserverTest {
 
         model.setCurrentListName("overduelist");
         // typical addressbook has overdue debt person
-        personToFind = (Person) model.getFilteredBlacklistedPersonList().get(0);
+        personToFind = (Person) model.getFilteredOverduePersonList().get(0);
         nameToFind = personToFind.getName().fullName;
         keywords = nameToFind.split("\\s+");
         findPredicate = new NameContainsKeywordsPredicate(Arrays.asList(keywords));
@@ -129,6 +257,115 @@ public class ListObserverTest {
         personToCheck = (Person) model.getFilteredOverduePersonList().get(0);
         indexOfPerson = listObserver.getIndexofPersonInCurrentList(personToCheck);
         assertEquals(0, indexOfPerson.getZeroBased());
+    }
+}
+```
+###### \java\seedu\address\logic\OverdueListSyncTest.java
+``` java
+public class OverdueListSyncTest {
+
+    private Model model;
+    private final String expectedMessage = ListObserver.OVERDUELIST_NAME_DISPLAY_FORMAT
+            + OverdueListCommand.MESSAGE_SUCCESS;
+
+    @Before
+    public void setUp() {
+        //assumes that the typicalAddressBook has at least 1 person in the overdue list.
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    }
+
+    @Test
+    public void execute_deleteCommandOnMasterListDeletesPersonFromOverdueList_success() throws Exception {
+        int numberOfOverduePersons = getSizeOfTypicalOverdueListPersons();
+        assertEquals(numberOfOverduePersons, model
+                .updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS));
+        ReadOnlyPerson personInOverdueList = model.getFilteredOverduePersonList().get(0);
+        Index personToTestIdx = Index.fromZeroBased(model.getFilteredPersonList().indexOf(personInOverdueList));
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        expectedModel.deletePerson(personInOverdueList);
+        expectedModel.updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS);
+        expectedModel.setCurrentListName("overduelist");
+
+        DeleteCommand deleteCommand = prepareDeleteCommand(personToTestIdx);
+        deleteCommand.execute();
+
+        OverdueListCommand overdueListCommand = prepareOverdueListCommand();
+        model.setCurrentListName("overduelist");
+
+        assertCommandSuccess(overdueListCommand, model, expectedMessage, expectedModel);
+        assertEquals(numberOfOverduePersons - 1,
+                model.updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS));
+    }
+
+    @Test
+    public void execute_editCommandOnMasterListRemovesPersonFromOverdueList_success() throws Exception {
+        int numberOfOverduePersons = getSizeOfTypicalOverdueListPersons();
+        assertEquals(numberOfOverduePersons, model
+                .updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS));
+
+        Person personInOverdueList = (Person) model.getFilteredOverduePersonList().get(0);
+        Index personToTestIdx = Index.fromZeroBased(model.getFilteredPersonList().indexOf(personInOverdueList));
+
+        Person editedPerson = new PersonBuilder(personInOverdueList)
+                .withDeadline(prepareFutureDeadlineInput()).build();
+
+        EditCommand.EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
+        editedPerson.setHasOverdueDebt(false);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.updatePerson(personInOverdueList, editedPerson);
+        expectedModel.setCurrentListName("overduelist");
+
+        EditCommand editCommand = prepareEditCommand(personToTestIdx, descriptor);
+        editCommand.execute();
+
+        OverdueListCommand overdueListCommand = prepareOverdueListCommand();
+        model.setCurrentListName("overduelist");
+
+        assertCommandSuccess(overdueListCommand, model, expectedMessage, expectedModel);
+        assertEquals(numberOfOverduePersons - 1,
+                model.updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS));
+    }
+
+    /**
+     * @return {@code DeleteCommand} with the parameter {@code index}.
+     */
+    private DeleteCommand prepareDeleteCommand(Index index) {
+        DeleteCommand deleteCommand = new DeleteCommand(index);
+        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return deleteCommand;
+    }
+
+    /**
+     * @return {@code OverdueListCommand}.
+     */
+    private OverdueListCommand prepareOverdueListCommand() {
+        OverdueListCommand overdueListCommand = new OverdueListCommand();
+        overdueListCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return overdueListCommand;
+    }
+
+    /**
+     * @return {@code EditCommand} with the parameter {@code index} & {@code EditPersonDescriptor}.
+     */
+    private EditCommand prepareEditCommand(Index index, EditCommand.EditPersonDescriptor descriptor) {
+        EditCommand editCommand = new EditCommand(index, descriptor);
+        editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return editCommand;
+    }
+
+    /**
+     * @return a String that represents a user's input for deadline.
+     */
+    private String prepareFutureDeadlineInput() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.MONTH, +1);
+        SimpleDateFormat ft = new SimpleDateFormat("dd'-'MM'-'yyyy");
+        String deadlineInput = ft.format(cal.getTime());
+        return deadlineInput;
     }
 }
 ```
@@ -270,7 +507,8 @@ public class InterestTest {
     @Test
     public void respondToLoginEvent() {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        Person personToTest = new PersonBuilder().withName("AA").withDebt("10000").withInterest("1").build();
+        Person personToTest = new PersonBuilder().withName("AA")
+                .withDebt("10000").withTotalDebt("10000").withInterest("1").build();
         Date lastAccruedDate = generateDateFromString(sampleDateInput2);
         personToTest.setLastAccruedDate(lastAccruedDate);
         try {
@@ -288,10 +526,16 @@ public class InterestTest {
             assert false : "User not found.";
         }
         // model should have handled login event and updated personToTest's debt
-        int personToTestIdx = model.getFilteredPersonList().size() - 1;
+        int personToTestIdx = model.getFilteredPersonList().size() - 1; // personToTest added to end of addressbook
+
         String actualDebt = model.getFilteredPersonList().get(personToTestIdx).getDebt().toString();
-        String expectedDebt = generateExpectedDebt(personToTest);
+        double additionalDebt = generateAdditionalDebt(personToTest);
+        String expectedDebt =  Double.toString(additionalDebt + personToTest.getDebt().toNumber());
         assertEquals(expectedDebt, actualDebt);
+
+        String actualTotalDebt = model.getFilteredPersonList().get(personToTestIdx).getTotalDebt().toString();
+        String expectedTotalDebt = Double.toString(additionalDebt + personToTest.getTotalDebt().toNumber());
+        assertEquals(expectedTotalDebt, actualTotalDebt);
     }
 
     @Test
@@ -379,14 +623,13 @@ public class InterestTest {
     }
 
     /**
-     * Generate expected debt for person under test.
+     * Generate additional debt for person under test.
      */
-    private String generateExpectedDebt(Person person) {
+    private double generateAdditionalDebt(Person person) {
         Person personUnderTest = person;
         int numberOfMonths = personUnderTest.checkLastAccruedDate(new Date());
         double accruedAmount = Double.parseDouble(personUnderTest.calcAccruedAmount(numberOfMonths));
-        double expectedDebt = accruedAmount + personUnderTest.getDebt().toNumber();
-        return Double.toString(expectedDebt);
+        return accruedAmount;
     }
 }
 ```
@@ -426,20 +669,59 @@ public class DeadlineTest {
 ``` java
 public class DebtTest {
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void debtMaximumValue() throws IllegalValueException {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_DEBT_MAXIMUM);
+        // value more than Double.MAX_VALUE
+        assertFalse(Debt.isValidDebt("100000000000000000000000000000000000000000000000000000000000000000000000"
+                + "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+                + "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+                + "0000000000000000000000000000000000000000000000000000000000000000000000000"));
+    }
+
+
     @Test
     public void isValidDebt() {
         // invalid debt
-        assertFalse(Debt.isValidDebt("")); // empty string
-        assertFalse(Debt.isValidDebt(" ")); // spaces only
-        assertFalse(Debt.isValidDebt("phone")); // non-numeric
-        assertFalse(Debt.isValidDebt("9011p041")); // alphabets within digits
-        assertFalse(Debt.isValidDebt("9312 1534")); // spaces within digits
-        assertFalse(Debt.isValidDebt("123.345")); // more than two decimal places
-        assertFalse(Debt.isValidDebt("123.3")); // only one decimal places
+        try {
+            assertFalse(Debt.isValidDebt("")); // empty string
+            assertFalse(Debt.isValidDebt(" ")); // spaces only
+            assertFalse(Debt.isValidDebt("phone")); // non-numeric
+            assertFalse(Debt.isValidDebt("9011p041")); // alphabets within digits
+            assertFalse(Debt.isValidDebt("9312 1534")); // spaces within digits
+            assertFalse(Debt.isValidDebt("123.345")); // more than two decimal places
+            assertFalse(Debt.isValidDebt("123.3")); // only one decimal places
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
+        }
+
         // valid debts
-        assertTrue(Debt.isValidDebt("9")); // exactly 1 number
-        assertTrue(Debt.isValidDebt("124293842033123")); // huge debts
-        assertTrue(Debt.isValidDebt("124293842033123.10")); // two decimal places
+        try {
+            assertTrue(Debt.isValidDebt("9")); // exactly 1 number
+            assertTrue(Debt.isValidDebt("124293842033123")); // huge debts
+            assertTrue(Debt.isValidDebt("124293842033123.10")); // two decimal places
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
+        }
+    }
+}
+```
+###### \java\seedu\address\testutil\TypicalPersons.java
+``` java
+    public static List<ReadOnlyPerson> getTypicalOverdueListPersons() {
+        return new ArrayList<>(Arrays.asList(KENNARD));
+    }
+
+    public static int getSizeOfTypicalPersonsList() {
+        return getTypicalPersons().size();
+    }
+
+    public static int getSizeOfTypicalOverdueListPersons() {
+        return getTypicalOverdueListPersons().size();
     }
 }
 ```
