@@ -1,6 +1,9 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_FILEPATH;
+
+import java.nio.file.InvalidPathException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.PrintCommand;
@@ -25,6 +28,9 @@ public class PrintCommandParser implements Parser<PrintCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, PrintCommand.MESSAGE_USAGE));
+        } catch (InvalidPathException ipe) {
+            throw new ParseException (
+                    String.format(MESSAGE_INVALID_FILEPATH, PrintCommand.MESSAGE_USAGE));
         }
     }
 
