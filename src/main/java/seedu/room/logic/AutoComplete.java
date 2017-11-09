@@ -13,8 +13,8 @@ import seedu.room.model.person.ReadOnlyPerson;
 public class AutoComplete {
 
     private final String[] baseCommands = { "add", "addEvent", "addImage", "backup", "edit", "select", "delete",
-            "deleteByTag", "deleteEvent", "deleteImage", "deleteTag", "clear", "find", "list", "highlight", "history",
-            "import", "exit", "help", "undo", "redo", "sort", "swaproom"
+        "deleteByTag", "deleteEvent", "deleteImage", "deleteTag", "clear", "find", "list", "highlight", "history",
+        "import", "exit", "help", "undo", "redo", "sort", "swaproom"
     };
     private ArrayList<String> personsStringArray;
     private String[] autoCompleteList;
@@ -44,6 +44,15 @@ public class AutoComplete {
             break;
         case "delete":
             this.autoCompleteList = getConcatPersonsArray("delete");
+            break;
+        case "select":
+            this.autoCompleteList = getConcatPersonsArray("select");
+            break;
+        case "addImage":
+            this.autoCompleteList = getConcatPersonsArray("addImage");
+            break;
+        case "deleteImage":
+            this.autoCompleteList = getConcatPersonsArray("deleteImage");
             break;
         default:
             return;
