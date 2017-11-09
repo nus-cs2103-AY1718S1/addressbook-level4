@@ -22,6 +22,7 @@ public interface ReadOnlyPerson {
     Phone getPhone();
     ObjectProperty<UniquePhoneList> phoneListProperty();
     UniquePhoneList getPhoneList();
+    Set<Phone> getPhones();
     ObjectProperty<Email> emailProperty();
     Email getEmail();
     ObjectProperty<Address> addressProperty();

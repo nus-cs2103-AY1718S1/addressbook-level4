@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,6 +38,18 @@ public class UniquePhoneList implements Iterable<Phone> {
         internalList.add(phone);
     }
 
+    //@@author
+    //@@author willxujun
+    /**
+     * Returns all phones in this list as a Set.
+     * This set is mutable and change-insulated against the internal list.
+     */
+    public Set<Phone> toSet() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return new HashSet<>(internalList);
+    }
+    //@@author
+    //@@author eeching
     /**
      * Returns true if the list contains an equivalent phone as the given argument.
      */
@@ -133,4 +146,4 @@ public class UniquePhoneList implements Iterable<Phone> {
     }
 
 }
-
+//@@author

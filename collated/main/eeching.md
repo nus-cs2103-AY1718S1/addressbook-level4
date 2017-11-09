@@ -1,5 +1,5 @@
 # eeching
-###### /java/seedu/address/logic/commands/PhoneCommand.java
+###### \java\seedu\address\logic\commands\PhoneCommand.java
 ``` java
 /**
  * Adds or updates a custom field of a person identified using it's last displayed index from the address book.
@@ -105,7 +105,7 @@ public class PhoneCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/PhoneCommandParser.java
+###### \java\seedu\address\logic\parser\PhoneCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new object
@@ -137,7 +137,7 @@ public class PhoneCommandParser implements Parser<PhoneCommand> {
 
 }
 ```
-###### /java/seedu/address/model/person/Birthday.java
+###### \java\seedu\address\model\person\Birthday.java
 ``` java
 /**
  * Represents a Person's address in the address book.
@@ -194,7 +194,7 @@ public class Birthday {
 
 }
 ```
-###### /java/seedu/address/model/person/exceptions/DuplicatePhoneException.java
+###### \java\seedu\address\model\person\exceptions\DuplicatePhoneException.java
 ``` java
 /**
  * Signals that the operation will result in duplicate Phone objects.
@@ -205,7 +205,7 @@ public class DuplicatePhoneException extends DuplicateDataException {
     }
 }
 ```
-###### /java/seedu/address/model/person/exceptions/NoLocalNumberException.java
+###### \java\seedu\address\model\person\exceptions\NoLocalNumberException.java
 ``` java
 /**
  * Signals that the operation will result in duplicate Phone objects.
@@ -217,14 +217,14 @@ public class NoLocalNumberException extends Exception {
     }
 }
 ```
-###### /java/seedu/address/model/person/exceptions/PhoneNotFoundException.java
+###### \java\seedu\address\model\person\exceptions\PhoneNotFoundException.java
 ``` java
 /**
  * Signals that the operation is unable to find the specified phone.
  */
 public class PhoneNotFoundException extends Exception {}
 ```
-###### /java/seedu/address/model/person/phone/UniquePhoneList.java
+###### \java\seedu\address\model\person\phone\UniquePhoneList.java
 ``` java
 /**
  * A list of phones that enforces no nulls and uniqueness between its elements.
@@ -249,6 +249,9 @@ public class UniquePhoneList implements Iterable<Phone> {
         internalList.add(phone);
     }
 
+```
+###### \java\seedu\address\model\person\phone\UniquePhoneList.java
+``` java
     /**
      * Returns true if the list contains an equivalent phone as the given argument.
      */
@@ -345,9 +348,8 @@ public class UniquePhoneList implements Iterable<Phone> {
     }
 
 }
-
 ```
-###### /resources/view/LightTheme.css
+###### \resources\view\LightTheme.css
 ``` css
 /**
  * Shared
@@ -498,9 +500,10 @@ public class UniquePhoneList implements Iterable<Phone> {
     -fx-font-weight: bold;
  }
 ```
-###### /resources/view/MainWindow.fxml
+###### \resources\view\MainWindow.fxml
 ``` fxml
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+
+<VBox xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
     <URL value="@DarkTheme.css" />
     <URL value="@Extensions.css" />
@@ -518,7 +521,7 @@ public class UniquePhoneList implements Iterable<Phone> {
     </MenuBar>
 </AnchorPane>
         <AnchorPane styleClass="searchBoxContainer">
-            <StackPane fx:id="searchBoxPlaceholder" styleClass="pane-with-border">
+            <StackPane fx:id="searchBoxPlaceholder" styleClass="pane-with-border" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                 <padding>
                     <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                 </padding>
@@ -549,7 +552,7 @@ public class UniquePhoneList implements Iterable<Phone> {
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
       <GridPane minWidth="1000" prefHeight="650">
-          <AnchorPane  minWidth="500" GridPane.columnIndex="0" GridPane.rowIndex="0">
+          <AnchorPane minWidth="368.0" prefHeight="383.0" prefWidth="368.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
             <children>
                <ImageView fitHeight="283.0" fitWidth="231.0" nodeOrientation="INHERIT" pickOnBounds="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
                   <image>
@@ -558,7 +561,14 @@ public class UniquePhoneList implements Iterable<Phone> {
                </ImageView>
             </children>
           </AnchorPane>
-      <StackPane fx:id="personInformationPanelPlaceholder" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+      <StackPane fx:id="personInformationPanelPlaceholder" prefHeight="383.0" prefWidth="198.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+         </rowConstraints>
 
       </GridPane>
 <!-- Commented out to remove browser panel

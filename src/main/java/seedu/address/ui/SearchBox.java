@@ -34,13 +34,17 @@ public class SearchBox extends UiPart<Region> {
         searchBuffer = "";
     }
 
+    public TextField getTextField() {
+        return searchTextField;
+    }
+
     /**
-     * Handles the Key typed event
+     * Captures user input in searchBox.
      */
     @FXML
     private void handleKeyTyped(KeyEvent keyEvent) {
         String s = keyEvent.getCharacter();
-        if (s.equals("\u0008") || s.equals("\u007F")) {
+        if (isDeleteOrBackspace(s)) {
             if (!searchBuffer.isEmpty()) {
                 searchBuffer = searchBuffer.substring(0, searchBuffer.length() - 1);
             } else {
@@ -58,6 +62,10 @@ public class SearchBox extends UiPart<Region> {
             logger.info("Invalid search: " + searchTextField.getText());
             raise(new NewResultAvailableEvent((e.getMessage())));
         }
+    }
+
+    private boolean isDeleteOrBackspace (String toTest) {
+        return toTest.equals("\u0008") || toTest.equals("\u007F");
     }
 
 }

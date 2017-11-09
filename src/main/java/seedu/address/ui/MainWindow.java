@@ -1,16 +1,28 @@
 package seedu.address.ui;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.logging.Logger;
+import javax.xml.bind.JAXBException;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -131,28 +143,53 @@ public class MainWindow extends UiPart<Region> {
     /**
      * Fills up all the placeholders of this window.
      */
-    void fillInnerParts() {
+    void fillInnerParts() throws JAXBException, IOException {
         //browserPanel = new BrowserPanel();
         //browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         PersonInformationPanel personInformationPanel = new PersonInformationPanel();
         personInformationPanelPlaceholder.getChildren().add(personInformationPanel.getRoot());
+        setBackground(personInformationPanelPlaceholder,
+                "../addressbook-level4/docs/images/backgroundRight.jpg", 920, 600);
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        setBackground(personListPanelPlaceholder,
+                "../addressbook-level4/docs/images/backgroundLeft.jpg", 330, 600);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+        setBackground(resultDisplayPlaceholder,
+                "../addressbook-level4/docs/images/backgroundUp.jpg", 1250, 105);
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        //StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
-        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
-
+        //@@author willxujun
         SearchBox searchBox = new SearchBox(logic);
         searchBoxPlaceholder.getChildren().add(searchBox.getRoot());
 
+        CommandBox commandBox = new CommandBox(logic);
+        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+        commandBox.getCommandTextField().requestFocus();
+
+        /*
+        ChangeListener for caret focus.
+        Switches focus to searchBox upon switching out of commandBox.
+         */
+        commandBox.getCommandTextField().focusedProperty().addListener(
+                new ChangeListener<Boolean>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+                                        Boolean newValue) {
+                        if (oldValue == true) {
+                            searchBox.getTextField().requestFocus();
+                        }
+                    }
+                }
+        );
+        //@@author
     }
 
     void hide() {
@@ -162,6 +199,24 @@ public class MainWindow extends UiPart<Region> {
     private void setTitle(String appTitle) {
         primaryStage.setTitle(appTitle);
     }
+
+    //@@author LuLechuan
+    /**
+     *  Sets a background image for a stack pane
+     */
+    private void setBackground(StackPane pane, String pathname, int width, int height) {
+        File file = new File(pathname);
+        try {
+            BackgroundImage backgroundImage = new BackgroundImage(
+                    new Image(file.toURI().toURL().toString(), width, height, false, true),
+                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                    BackgroundSize.DEFAULT);
+            pane.setBackground(new Background(backgroundImage));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+    //@@author
 
     /**
      * Sets the given image as the icon of the main window.
@@ -203,6 +258,15 @@ public class MainWindow extends UiPart<Region> {
     public void handleHelp() {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
+    }
+
+    /**
+     +     * Opens the weather forecast window.
+     +     */
+    @FXML
+    public void handleWeather() throws JAXBException, IOException {
+        WeatherWindow weatherWindow = new WeatherWindow();
+        weatherWindow.show();
     }
 
     void show() {
