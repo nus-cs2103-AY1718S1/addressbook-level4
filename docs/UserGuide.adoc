@@ -48,7 +48,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the jar file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The graphical user interface (GUI) should appear in a few seconds.
 +
-image::Ui.png[width="500"]
+image::Ui.png[width="700"]
     Figure 1: Successful start up UI Sample
 +
 .  You can type the command in the command box and press kbd:[Enter] to execute it. +
@@ -92,7 +92,7 @@ You can also click the `Help` at the top left corner of MedNus.
 
 *Example:*
 
-image::helpUI.png[width="500"]
+image::helpUI.png[width="700"]
     Figure 2: Methods to access `help` command
 
 === Adding a person: `add`
@@ -108,7 +108,7 @@ You can add appointment or none at all.
 
 *Example:*
 
-image::addexample.png[width="500"]
+image::addexample.png[width="700"]
     Figure 3: Add Command Usage Diagram
 
 [NOTE]
@@ -180,7 +180,7 @@ You can use `bloodtype` to show a list of people with that specific blood type. 
 
 *Example:*
 
-image::btexample.png[width="500"]
+image::btexample.png[width="700"]
     Figure 5: Bloodtype Command Usage Diagram
 
 [NOTE]
@@ -255,7 +255,7 @@ You can find people whose names contain any of the given keywords. +
 
 *Example:*
 
-image::findexample.png[width="500"]
+image::findexample.png[width="700"]
     Figure 7: Find Command Usage Diagram
 
 === Deleting a person : `delete`
@@ -376,7 +376,7 @@ You can only set dates that are after current time. (i.e. You cannot set a time 
 
 *Example:*
 
-image::aptexample.png[width="500"]
+image::aptexample.png[width="700"]
     Figure 11: Appointment Command Usage Diagram
 
 // end::appointment[]
@@ -436,7 +436,7 @@ You can exit MedNus by using the `exit` command. +
 You can also exit MedNus by clicking on `File` in the top left corner +
 and clicking on `Exit`.
 
-image::exitUI.png[width="500"]
+image::exitUI.png[width="700"]
     Figure 13: Methods to access `exit` command
 
 === Adding/Deleting a Tag to a Person : [Coming in v2.0]
