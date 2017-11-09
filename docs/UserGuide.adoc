@@ -152,7 +152,7 @@ Format: `delete String(the person's full name)`
 Examples:
 
 * `list` +
-`delete John Doe` +
+`deleteByName John Doe` +
 Deletes person named John Doe in the address book.
 // end:: deleteByName[]
 
