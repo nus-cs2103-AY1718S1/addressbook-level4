@@ -2,7 +2,12 @@
 
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <ListView fx:id="personListView" VBox.vgrow="ALWAYS" />
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" spacing="10">
+  <StackPane minHeight="80" styleClass="pane-with-border">
+    <Label fx:id="selectionDisplay" minWidth="280" styleClass="result-display"/>
+  </StackPane>
+  <ListView fx:id="personListView" VBox.vgrow="ALWAYS" styleClass="pane-with-border"/>
 </VBox>
