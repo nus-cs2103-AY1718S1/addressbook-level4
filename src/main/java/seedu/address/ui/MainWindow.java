@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
@@ -150,20 +151,23 @@ public class MainWindow extends UiPart<Region> {
         PersonInformationPanel personInformationPanel = new PersonInformationPanel();
         personInformationPanelPlaceholder.getChildren().add(personInformationPanel.getRoot());
         setBackground(personInformationPanelPlaceholder,
-                System.getProperty("user.dir")
-                        + "/docs/images/backgroundRight.jpg", 920, 600);
+                System.getProperty("user.dir") + "/docs/images/backgroundRight.jpg",
+                "/images/backgroundRight.jpg",
+                920, 600);
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
         setBackground(personListPanelPlaceholder,
-                System.getProperty("user.dir")
-                        + "/docs/images/backgroundLeft.jpg", 330, 600);
+                System.getProperty("user.dir") + "/docs/images/backgroundLeft.jpg",
+                "/images/backgroundLeft.jpg",
+                330, 600);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
         setBackground(resultDisplayPlaceholder,
-                System.getProperty("user.dir")
-                        + "/docs/images/backgroundUp.jpg", 1250, 105);
+                System.getProperty("user.dir") + "/docs/images/backgroundUp.jpg",
+                "/images/backgroundUp.jpg",
+                1250, 105);
 
         //StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getFilteredPersonList().size());
@@ -219,17 +223,34 @@ public class MainWindow extends UiPart<Region> {
     /**
      *  Sets a background image for a stack pane
      */
-    private void setBackground(StackPane pane, String pathname, int width, int height) {
+    private void setBackground(StackPane pane, String pathname, String jarPath, int width, int height) {
         File file = new File(pathname);
         try {
-            BackgroundImage backgroundImage = new BackgroundImage(
-                    new Image(file.toURI().toURL().toString(), width, height, false, true),
-                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                    BackgroundSize.DEFAULT);
-            pane.setBackground(new Background(backgroundImage));
+            if (file.exists()) {
+                BackgroundImage backgroundImage = new BackgroundImage(
+                        new Image(file.toURI().toURL().toString(), width, height, false, true),
+                        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        BackgroundSize.DEFAULT);
+                pane.setBackground(new Background(backgroundImage));
+            } else {
+                Image photo = createJarImage(jarPath, width, height);
+                BackgroundImage backgroundImage = new BackgroundImage(
+                        photo, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        BackgroundSize.DEFAULT);
+                pane.setBackground(new Background(backgroundImage));
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     *  Create an image that can be used by the Jar file
+     */
+    public Image createJarImage(String jarPath, int width, int height) {
+        InputStream inputStream = this.getClass().getResourceAsStream(jarPath);
+        Image photo = new Image(inputStream, width, height, false, true);
+        return photo;
     }
     //@@author
 
