@@ -922,22 +922,30 @@ This is how you can use the LoggingCommand method in your code.
 ----
 Where "information" indicate the data that the user are editing with while "type of action" indicate the action taken by the user.
 
-=== LoggingCommand Function
-(added in v1.3)
+=== Email Function
+(added in v1.2)
 
-In this section, we explain how logging is done in the application whenever an important action is taken by user. +
-Whenever an action such as "Add", "Clear", "Delete", "Edit", "Email", "Import", "List", "Redo", "RemoveTag" & "Undo" is executed, the LoggingCommand method will be called and information of the action is recorded in ConnectUsLog.txt with a timestamp. +
-With slight modification to link:#fig3.1.2[Figure 3.1.2], we have the following diagram showing the Class Diagram on how LoggingCommand is implemented in the system. +
-image::LogicClassDiagram.png[width="800"]
-_Figure 4.13.1 : Class Diagram of LoggingCommand function_
+The email function allows a user to email the selected person by opening an email client on the user's
+PC with the 'to:' field filled with the receiver's email.
 
-This is how you can use the LoggingCommand method in your code.
+This function has been mapped to `EmailButton`
+
+Once a `PersonPanelSelectionChangedEvent` is raised, `EmailButton` will save the currently selected
+email under the "email" attribute.
 [source,java]
 ----
-   LoggingCommand loggingCommand = new LoggingCommand();
-   loggingCommand.keepLog("Information", "Type of Action such as Add,Clear,etc.");
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        this.selectedEmail = event.getNewSelection().person.emailProperty().getValue().toString();
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    }
 ----
-Where "information" indicate the data that the user are editing with while "type of action" indicate the action taken by the user.
+
+
+The following sequence diagram describes how `OpenEmailClient` passes in the "email" attribute to `Desktop`
+
+image::OpenEmailClientSequenceDiagram.png[width="800"]
+_Figure 4.1.1 : Sequence Diagram of the Email function_
 
 == Documentation
 
