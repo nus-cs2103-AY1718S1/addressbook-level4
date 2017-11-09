@@ -97,3 +97,4 @@ include::../DeveloperGuide.adoc[tag=tag]
 
 * Added autocomplete feature (Pull request https://github.com/CS2103AUG2017-T11-B3/main/pull/96[#96])
 * Discovered bug during trial acceptance testing (https://github.com/CS2103AUG2017-T09-B4/main/issues/103[Issue #103])
+
