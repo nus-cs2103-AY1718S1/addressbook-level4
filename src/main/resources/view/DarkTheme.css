@@ -116,3 +116,136 @@
     -fx.border-color: transparent !important;
     -fx-text-fill: white;
 }
+
+
+/*SPLIT PANE AND LIST CSS*/
+.pane-with-border {
+     -fx-background-color: #232A34;
+     -fx-border-color: derive(#1d1d1d, 10%);
+     -fx-border-top-width: 1px;
+}
+
+#calendarDaysPane {
+    -fx-background-color: transparent;
+}
+
+.split-pane:horizontal .split-pane-divider {
+    -fx-background-color: #232A34;
+    -fx-border-width: 0;
+    -fx-border-color: transparent transparent transparent #4d4d4d;
+}
+
+.split-pane {
+    -fx-background-color: #232A34;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap : 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: #232A34;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #232A34;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #232A34;
+}
+
+.list-cell:filled:selected #cardPane {
+    -fx-background-color: #410964 !important;
+}
+
+.list-cell .label {
+    -fx-text-fill: white;
+}
+
+.cell_big_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 16px;
+    -fx-text-fill: #010504;
+}
+
+.cell_small_label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: #010504;
+}
+
+.anchor-pane {
+     -fx-background-color: #232A34;
+}
+
+.status-bar {
+    -fx-background-color: #232A34;
+    -fx-text-fill: black;
+}
+
+.result-display {
+    -fx-background-color: #232A34;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 13pt;
+    -fx-text-fill: white;
+}
+
+.result-display .label {
+    -fx-text-fill: black !important;
+}
+
+.status-bar .label {
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+}
+
+.status-bar-with-border {
+    -fx-background-color: #232A34;
+    -fx-border-color: derive(#1d1d1d, 25%);
+    -fx-border-width: 1px;
+}
+
+.status-bar-with-border .label {
+    -fx-text-fill: white;
+}
+
+.grid-pane {
+    -fx-background-color: #232A34;
+    -fx-border-color: derive(#1d1d1d, 30%);
+    -fx-border-width: 1px;
+}
+
+.grid-pane .anchor-pane {
+    -fx-background-color: #232A34;
+}
+
+.context-menu {
+    -fx-background-color: #232A34;
+}
+
+.context-menu .label {
+    -fx-text-fill: white;
+}
+
+.menu-bar {
+    -fx-background-color: #232A34;
+}
+
+.menu-bar .label {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-opacity: 0.9;
+}
+
+.menu .left-container {
+    -fx-background-color: #232A34;
+}
