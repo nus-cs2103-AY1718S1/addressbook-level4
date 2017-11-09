@@ -103,7 +103,7 @@ public class UniqueTaskList implements Iterable<Task> {
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<ReadOnlyTask> asObservableList() {
-        sortTasks(internalList);
+//        sortTasks(internalList);
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
