@@ -45,6 +45,8 @@ Key features you can expect:
 
 * Sending email to multiple contacts easily
 
+* Find contacts by any attributes
+
 === Authors and Contributors
 The initial version of the user guide was written by Team SE-EDU.
 The current releases for ConTag are currently being orchestrated by a team of four, Aw Wen Hao , Calvin Tantio, Cheng Jin Ting, Chung Tin Long.
