@@ -3,6 +3,7 @@ package seedu.room.storage;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static seedu.room.testutil.TypicalEvents.getTypicalEventBook;
 import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
 
 import java.io.File;
@@ -15,6 +16,7 @@ import org.junit.rules.TemporaryFolder;
 
 import seedu.room.commons.events.model.ResidentBookChangedEvent;
 import seedu.room.commons.events.storage.DataSavingExceptionEvent;
+import seedu.room.model.EventBook;
 import seedu.room.model.ReadOnlyEventBook;
 import seedu.room.model.ReadOnlyResidentBook;
 import seedu.room.model.ResidentBook;
@@ -135,6 +137,14 @@ public class StorageManagerTest {
 
     //@@author blackroxs
     @Test
+    public void eventsBookReadSave() throws Exception {
+        EventBook original = getTypicalEventBook();
+        storageManager.saveEventBook(original);
+        ReadOnlyEventBook retrieved = storageManager.readEventBook().get();
+        assertEquals(original, new EventBook(retrieved));
+    }
+
+    @Test
     public void handleBackupResidentBook() throws Exception {
         ResidentBook original = getTypicalResidentBook();
         storageManager.saveResidentBook(original);
@@ -144,6 +154,18 @@ public class StorageManagerTest {
         ReadOnlyResidentBook backup = storageManager.readBackupResidentBook().get();
 
         assertEquals(new ResidentBook(retrieved), new ResidentBook(backup));
+    }
+
+    @Test
+    public void handleBackupEventBook() throws Exception {
+        EventBook original = getTypicalEventBook();
+        storageManager.saveEventBook(original);
+        ReadOnlyEventBook retrieved = storageManager.readEventBook().get();
+
+        storageManager.backupEventBook(retrieved);
+        ReadOnlyEventBook backup = storageManager.readBackupEventBook().get();
+
+        assertEquals(new EventBook(retrieved), new EventBook(backup));
     }
 
     @Test
