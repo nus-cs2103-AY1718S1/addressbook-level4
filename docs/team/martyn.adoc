@@ -65,6 +65,8 @@ desired command
             return new AddCommandParser().parse(arguments);
 ----
 
+e.g. Both "add" and "a" can be used to execute the AddCommand function
+
 #End of Extract#
 
 ---
@@ -72,7 +74,7 @@ desired command
 === Design Considerations
 
 **Aspect:** Shortcut implementation +
-**Alternative 1(current choice):** Use an alias, shortened form of the command +
+**Alternative 1 (current choice):** Use an alias, shortened form of the command +
 **Pros:** Intuitive and easier to remember +
 **Cons:** Might have overlapping aliases, requiring updates +
 **Alternative 2:** Use a index for shortcuts +
