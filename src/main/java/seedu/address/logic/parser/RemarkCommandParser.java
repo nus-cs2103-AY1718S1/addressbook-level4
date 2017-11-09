@@ -3,9 +3,9 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
-import static seedu.address.logic.parser.ParserUtil.isParsableInt;
-import static seedu.address.logic.parser.ParserUtil.parseFirstInt;
-import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstInt;
+import static seedu.address.logic.parser.ParserUtil.isParsableIndex;
+import static seedu.address.logic.parser.ParserUtil.parseFirstIndex;
+import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstIndex;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -45,12 +45,12 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
      */
     public static String parseArguments(String commandWord, String rawArgs) {
         // Check if index (number) exists, removes Remark prefix (if it exists) and re-adds it before returning.
-        if (isParsableInt(rawArgs)) {
-            String indexString = Integer.toString(parseFirstInt(rawArgs));
-            String remark = parseRemoveFirstInt(rawArgs).trim().replace(PREFIX_REMARK.toString(), "");
+        if (isParsableIndex(rawArgs)) {
+            String indexString = Integer.toString(parseFirstIndex(rawArgs));
+            String remark = parseRemoveFirstIndex(rawArgs).trim().replace(PREFIX_REMARK.toString(), "");
             return " " + indexString + " " + PREFIX_REMARK + remark;
-        } else if (isParsableInt(commandWord)) {
-            String indexString = Integer.toString(parseFirstInt(commandWord));
+        } else if (isParsableIndex(commandWord)) {
+            String indexString = Integer.toString(parseFirstIndex(commandWord));
             String remark = rawArgs.trim().replace(PREFIX_REMARK.toString(), "");
             return " " + indexString + " " + PREFIX_REMARK + remark;
         }

@@ -136,8 +136,19 @@ public class ModelParserUtil {
      * Returns a parsed argument string containing pre-parsed arguments.
      */
     public static String buildParsedArguments(String name, String phone, String email,
+                                              String remark, String address, String tags) {
+        return buildParsedArguments("", name, phone, email, remark, address, tags);
+    }
+
+    /**
+     * Returns a parsed argument string containing pre-parsed arguments.
+     */
+    public static String buildParsedArguments(String index, String name, String phone, String email,
                                                String remark, String address, String tags) {
         StringBuilder parsedArgs = new StringBuilder();
+        if (!index.trim().isEmpty()) {
+            parsedArgs.append(" ".concat(index));
+        }
         if (!name.trim().isEmpty()) {
             parsedArgs.append(" ".concat(PREFIX_NAME.toString()).concat(name));
         }

@@ -4,9 +4,9 @@ import static seedu.address.commons.core.Messages.MESSAGE_PROMPT_COMMAND;
 import static seedu.address.commons.util.StringUtil.levenshteinDistance;
 import static seedu.address.logic.parser.CliSyntax.POSSIBLE_COMMAND_WORDS;
 import static seedu.address.logic.parser.ParserUtil.isParsableFilePath;
-import static seedu.address.logic.parser.ParserUtil.isParsableInt;
+import static seedu.address.logic.parser.ParserUtil.isParsableIndex;
 import static seedu.address.logic.parser.ParserUtil.parseFirstFilePath;
-import static seedu.address.logic.parser.ParserUtil.parseFirstInt;
+import static seedu.address.logic.parser.ParserUtil.parseFirstIndex;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -98,10 +98,10 @@ public class Suggestion {
         // Commands with simple index-type arguments.
         } else if (SelectCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
                 || DeleteCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            if (isParsableInt(arguments)) {
-                return " " + Integer.toString(parseFirstInt(arguments));
-            } else if (isParsableInt(commandWord)) {
-                return " " + Integer.toString(parseFirstInt(commandWord));
+            if (isParsableIndex(arguments)) {
+                return " " + Integer.toString(parseFirstIndex(arguments));
+            } else if (isParsableIndex(commandWord)) {
+                return " " + Integer.toString(parseFirstIndex(commandWord));
             }
 
         // Commands with no arguments.

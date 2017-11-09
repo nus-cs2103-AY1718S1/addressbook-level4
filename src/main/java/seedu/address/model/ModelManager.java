@@ -37,7 +37,8 @@ import seedu.address.model.tag.Tag;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private static final Set<Tag> knownTags = new HashSet<>();
+    private static final Set<Tag> KNOWN_TAGS = new HashSet<>();
+    private static int lastKnownRolodexSize = 0;
 
     private final Rolodex rolodex;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
@@ -57,7 +58,8 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.rolodex.getPersonList());
         sortedPersons = new SortedList<>(filteredPersons);
         updateSortComparator(null);
-        knownTags.addAll(rolodex.getTagList());
+        KNOWN_TAGS.addAll(this.rolodex.getTagList());
+        lastKnownRolodexSize = this.rolodex.getPersonList().size();
     }
 
     public ModelManager() {
@@ -77,6 +79,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /** Raises an event to indicate the model has changed */
     private void indicateRolodexChanged() {
+        lastKnownRolodexSize = rolodex.getPersonList().size();
         raise(new RolodexChangedEvent(rolodex));
     }
 
@@ -91,7 +94,7 @@ public class ModelManager extends ComponentManager implements Model {
         rolodex.addPerson(person);
         updateSortComparator(null);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        knownTags.addAll(person.getTags());
+        KNOWN_TAGS.addAll(person.getTags());
         indicateRolodexChanged();
     }
 
@@ -101,7 +104,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         rolodex.updatePerson(target, editedPerson);
-        knownTags.addAll(editedPerson.getTags());
+        KNOWN_TAGS.addAll(editedPerson.getTags());
         indicateRolodexChanged();
     }
 
@@ -128,7 +131,7 @@ public class ModelManager extends ComponentManager implements Model {
             } catch (IllegalValueException e) {
                 return false;
             }
-        }).collect(Collectors.toList()), knownTags);
+        }).collect(Collectors.toList()), KNOWN_TAGS);
     }
 
     /**
@@ -136,10 +139,14 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public static boolean isKnownTag(String tag) {
         try {
-            return knownTags.contains(new Tag(tag));
+            return KNOWN_TAGS.contains(new Tag(tag));
         } catch (IllegalValueException e) {
             return false;
         }
+    }
+
+    public static int getLastKnownRolodexSize() {
+        return lastKnownRolodexSize;
     }
 
     //=========== Latest Person List Accessors =============================================================

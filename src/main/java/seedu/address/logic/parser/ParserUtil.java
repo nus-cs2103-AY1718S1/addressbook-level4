@@ -5,6 +5,7 @@ import static seedu.address.commons.core.index.Index.INDEX_VALIDATION_REGEX;
 import static seedu.address.commons.util.StringUtil.replaceBackslashes;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.model.ModelManager.getLastKnownRolodexSize;
 import static seedu.address.model.person.Address.ADDRESS_BLOCK_NUMBER_MATCHING_REGEX;
 import static seedu.address.model.person.Address.ADDRESS_BLOCK_WORD_MATCHING_REGEX;
 import static seedu.address.model.person.Email.EMAIL_VALIDATION_REGEX;
@@ -132,9 +133,9 @@ public class ParserUtil {
      * @return {@code true} if successfully parsed,
      * {@code false} otherwise.
      */
-    public static boolean isParsableInt(String value) {
+    public static boolean isParsableIndex(String value) {
         try {
-            parseFirstInt(value);
+            parseFirstIndex(value);
             return true;
         } catch (NumberFormatException e) {
             return false;
@@ -147,13 +148,13 @@ public class ParserUtil {
      * @return {@code int} positive, non-zero value of the integer.
      * @throws NumberFormatException if no integer was found.
      */
-    public static int parseFirstInt(String value) throws NumberFormatException {
+    public static int parseFirstIndex(String value) throws NumberFormatException {
         Pattern numbers = Pattern.compile(INDEX_VALIDATION_REGEX);
         Matcher m = numbers.matcher(value);
-        if (m.find()) {
-            int firstInt = Integer.parseInt(m.group());
-            if (firstInt != 0) {
-                return Math.abs(firstInt);
+        while (m.find()) {
+            int firstIndex = Math.abs(Integer.parseInt(m.group()));
+            if (firstIndex > 0 && firstIndex <= getLastKnownRolodexSize()) {
+                return firstIndex;
             }
         }
         throw new NumberFormatException();
@@ -164,16 +165,16 @@ public class ParserUtil {
      * @param value to be parsed.
      * @return a {@code String} without the first integer.
      */
-    public static String parseRemoveFirstInt(String value) {
-        String firstInt;
+    public static String parseRemoveFirstIndex(String value) {
+        String firstIndex;
         try {
-            firstInt = Integer.toString(parseFirstInt(value));
+            firstIndex = Integer.toString(parseFirstIndex(value));
         } catch (NumberFormatException e) {
-            firstInt = "";
+            firstIndex = "";
         }
-        return value.substring(0, value.indexOf(firstInt)).trim()
+        return value.substring(0, value.indexOf(firstIndex)).trim()
                 .concat(" ")
-                .concat(value.substring(value.indexOf(firstInt) + firstInt.length()).trim()).trim();
+                .concat(value.substring(value.indexOf(firstIndex) + firstIndex.length()).trim()).trim();
     }
 
     /**

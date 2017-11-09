@@ -13,31 +13,13 @@ import static seedu.address.logic.parser.ModelParserUtil.parseExistingRemarkPref
 import static seedu.address.logic.parser.ModelParserUtil.parseExistingTagPrefixes;
 import static seedu.address.logic.parser.ModelParserUtil.parseMandatoryAddress;
 import static seedu.address.logic.parser.ModelParserUtil.parseMandatoryEmail;
-import static seedu.address.logic.parser.ModelParserUtil.parseMandatoryName;
 import static seedu.address.logic.parser.ModelParserUtil.parseMandatoryPhone;
 import static seedu.address.logic.parser.ModelParserUtil.parsePossibleTagWords;
-import static seedu.address.logic.parser.ParserUtil.isParsableAddressTillEnd;
-import static seedu.address.logic.parser.ParserUtil.isParsableEmail;
-import static seedu.address.logic.parser.ParserUtil.isParsableInt;
-import static seedu.address.logic.parser.ParserUtil.isParsableName;
-import static seedu.address.logic.parser.ParserUtil.isParsablePhone;
-import static seedu.address.logic.parser.ParserUtil.parseAddressTillEnd;
-import static seedu.address.logic.parser.ParserUtil.parseFirstEmail;
-import static seedu.address.logic.parser.ParserUtil.parseFirstInt;
-import static seedu.address.logic.parser.ParserUtil.parseFirstPhone;
-import static seedu.address.logic.parser.ParserUtil.parseRemainingName;
-import static seedu.address.logic.parser.ParserUtil.parseRemoveAddressTillEnd;
-import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstEmail;
-import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstPhone;
-import static seedu.address.logic.parser.ParserUtil.parseRemoveTags;
-import static seedu.address.model.ModelManager.hasAnyExistingTags;
-import static seedu.address.model.ModelManager.isKnownTag;
+import static seedu.address.logic.parser.ParserUtil.isParsableIndex;
+import static seedu.address.logic.parser.ParserUtil.parseFirstIndex;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -124,10 +106,10 @@ public class EditCommandParser implements Parser<EditCommand> {
         String remaining = rawArgs;
 
         String index = "";
-        if (isParsableInt(rawArgs)) {
-            index = Integer.toString(parseFirstInt(rawArgs));
-        } else if (isParsableInt(commandWord)) {
-            index = Integer.toString(parseFirstInt(commandWord));
+        if (isParsableIndex(rawArgs)) {
+            index = Integer.toString(parseFirstIndex(rawArgs));
+        } else if (isParsableIndex(commandWord)) {
+            index = Integer.toString(parseFirstIndex(commandWord));
         }
 
         // Check for Optional Phone
