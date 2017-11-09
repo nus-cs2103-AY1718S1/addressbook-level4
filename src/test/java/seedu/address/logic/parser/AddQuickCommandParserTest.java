@@ -29,7 +29,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -63,24 +62,25 @@ public class AddQuickCommandParserTest {
 
         // multiple phones - last phone accepted
         assertParseSuccess(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB
-                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB  + TAG_DESC_FRIEND,
+                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND,
                 new AddQuickCommand(expectedPerson));
 
         // multiple emails - last email accepted
         assertParseSuccess(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_AMY
-                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB  + TAG_DESC_FRIEND,
+                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND,
                 new AddQuickCommand(expectedPerson));
 
         // multiple addresses - last address accepted
         assertParseSuccess(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                        + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB  + TAG_DESC_FRIEND,
-                new AddQuickCommand(expectedPerson));
 
+                        + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND,
+                new AddQuickCommand(expectedPerson));
+        //@@author renkai91
         // multiple birthdays - last birthday accepted
         assertParseSuccess(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + ADDRESS_DESC_BOB + BIRTHDAY_DESC_AMY + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND,
                 new AddQuickCommand(expectedPerson));
-
+        //@@author
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withBirthday(VALID_BIRTHDAY_BOB)
@@ -128,11 +128,13 @@ public class AddQuickCommandParserTest {
                 + TAG_DESC_FRIEND, Name.MESSAGE_NAME_CONSTRAINTS);
 
         // invalid phone
+
         assertParseFailure(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_BOB + INVALID_PHONE_DESC
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_HUSBAND
                 + TAG_DESC_FRIEND, Phone.MESSAGE_PHONE_CONSTRAINTS);
 
         // invalid email
+
         assertParseFailure(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
                 + INVALID_EMAIL_DESC + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_HUSBAND
                 + TAG_DESC_FRIEND, Email.MESSAGE_EMAIL_CONSTRAINTS);
@@ -141,13 +143,13 @@ public class AddQuickCommandParserTest {
         assertParseFailure(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
                 + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC + BIRTHDAY_DESC_BOB + TAG_DESC_HUSBAND
                 + TAG_DESC_FRIEND, Address.MESSAGE_ADDRESS_CONSTRAINTS);
-
+        //@@author renkai91
         // invalid birthday
         assertParseFailure(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
                         + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + INVALID_BIRTHDAY_DESC + TAG_DESC_HUSBAND
                         + TAG_DESC_FRIEND,
                 Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
-
+        //@@author
         // invalid tag
         assertParseFailure(parser, AddQuickCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + INVALID_TAG_DESC
