@@ -32,7 +32,6 @@ public class StorageManager extends ComponentManager implements Storage {
     private EventBookStorage eventBookStorage;
     private UserPrefsStorage userPrefsStorage;
 
-
     public StorageManager(ResidentBookStorage residentBookStorage, EventBookStorage eventBookStorage,
                           UserPrefsStorage userPrefsStorage) {
         super();
@@ -116,7 +115,7 @@ public class StorageManager extends ComponentManager implements Storage {
      *
      * @return absolute path of the residentbook.xml directory
      */
-    private String getDirAbsolutePath() {
+    public String getDirAbsolutePath() {
         File file = new File(residentBookStorage.getResidentBookFilePath());
         String absPath = file.getParent();
 
@@ -128,23 +127,24 @@ public class StorageManager extends ComponentManager implements Storage {
      *
      * @throws IOException if unable to read or write in the folder
      */
-    private void backupImages() throws IOException {
+    public void backupImages() throws IOException {
         String backupFolder = getDirAbsolutePath() + File.separator + Picture.FOLDER_NAME + "_backup";
         String originalFolder = getDirAbsolutePath() + File.separator + Picture.FOLDER_NAME;
 
-        handleImageBackupFolder(backupFolder);
+        handleImageBackupFolder(backupFolder, originalFolder);
         handleImagesBackupFiles(backupFolder, originalFolder);
     }
 
     /**
      * Copies each file from source to destination backup folder
      *
-     * @param backupFolder cannot be null
+     * @param backupFolder   cannot be null
      * @param originalFolder cannot be null
      * @throws IOException if there is any problem writing to the file
      */
     private void handleImagesBackupFiles(String backupFolder, String originalFolder) throws IOException {
         File source = new File(originalFolder);
+
         if (source.exists()) {
             File[] listOfImages = source.listFiles();
 
@@ -153,6 +153,7 @@ public class StorageManager extends ComponentManager implements Storage {
                 copy(listOfImages[i], dest);
             }
         }
+
     }
 
     /**
@@ -161,13 +162,16 @@ public class StorageManager extends ComponentManager implements Storage {
      * @param backupFolder cannot be empty or null
      * @throws IOException if folder cannot be created due to read or write access
      */
-    private void handleImageBackupFolder(String backupFolder) throws IOException {
-        boolean backupExist = new File(backupFolder).exists();
+    private void handleImageBackupFolder(String backupFolder, String originalFolder) throws IOException {
+        File source = new File(originalFolder);
+        if (source.exists()) {
+            boolean backupExist = new File(backupFolder).exists();
 
-        if (!backupExist) {
-            boolean isSuccess = (new File(backupFolder)).mkdirs();
-            if (!isSuccess) {
-                throw new IOException();
+            if (!backupExist) {
+                boolean isSuccess = (new File(backupFolder)).mkdirs();
+                if (!isSuccess) {
+                    throw new IOException();
+                }
             }
         }
     }
