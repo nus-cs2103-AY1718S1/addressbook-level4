@@ -25,7 +25,7 @@ endif::[]
 ** Import and backup of data for easier maintenance
 ** Typing and GUI available for efficient and effective operations
 ** Auto-complete to increase efficiency
-** Calendar so you never lose track of the days 
+** Calendar so you never lose track of the days
 
 == Site Map
 
