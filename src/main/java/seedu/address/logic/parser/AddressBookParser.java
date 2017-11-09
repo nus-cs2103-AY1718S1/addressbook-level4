@@ -10,6 +10,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.ExportCommand;
+import seedu.address.logic.commands.FbCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -170,6 +171,10 @@ public class AddressBookParser {
         case GMapCommand.COMMAND_WORD:
         case GMapCommand.COMMAND_ALIAS:
             return new GMapCommandParser().parse(arguments);
+
+        case FbCommand.COMMAND_WORD:
+        case FbCommand.COMMAND_ALIAS:
+            return new FbCommandParser().parse(arguments);
         //@@author
 
         default:

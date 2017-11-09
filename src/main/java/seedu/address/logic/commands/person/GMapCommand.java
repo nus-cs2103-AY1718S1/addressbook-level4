@@ -1,9 +1,5 @@
 package seedu.address.logic.commands.person;
 
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -41,7 +37,6 @@ public class GMapCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        Desktop desktop = Desktop.getDesktop();
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -50,16 +45,8 @@ public class GMapCommand extends Command {
 
         ReadOnlyPerson personToGetDirectionsTo = lastShownList.get(targetIndex.getZeroBased());
 
-        String url = model.getGMapUrl(personToGetDirectionsTo);
-
-        try {
-            if (Desktop.isDesktopSupported()) {
-                URI googleMaps = new URI(url);
-                desktop.browse(googleMaps);
-            }
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-        }
+        String gmapUrl = model.getGMapUrl(personToGetDirectionsTo);
+        model.openUrl(gmapUrl);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, personToGetDirectionsTo));
     }
