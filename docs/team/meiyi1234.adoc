@@ -21,11 +21,11 @@ include::../UserGuide.adoc[remark]
 
 ---
 
-==== Justification
+=== Justification
 
 To allows others to know what are the special things that they wants to know or take note off from the person(s).
 
-==== Implementation
+=== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
