@@ -42,7 +42,7 @@ public class AutoCompleteSuggestions {
             return suggestion.startsWith(request.getUserText());
         }
     };
-    
+
     static {
         suggestionList.addPossibleSuggestions(AddCommand.COMMAND_WORD);
         suggestionList.addPossibleSuggestions(AddCommand.MESSAGE_USAGE_EXAMPLE);
