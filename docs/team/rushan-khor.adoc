@@ -57,9 +57,31 @@ include::../DeveloperGuide.adoc[tag=dups]
 
 ---
 
+=== Enhancement Added: Copy contact email address to clipboard
+
+---
+
+==== External behavior
+
+include::../UserGuide.adoc[tag=copy]
+
+---
+
+==== Justification
+
+Embracing the keyboard-centric interaction of MedNus, even copying data into the user’s clipboard is possible using purely keyboard commands. The Copy command lets users do just that.
+
+---
+
+==== Implementation
+
+include::../DeveloperGuide.adoc[tag=copy]
+
+---
+
 === Enhancement Proposed
 
-* Command that maps (patient contacts) with (doctor contacts specialising in their illness)
+* Command that maps (patient contacts) with (doctor contacts specialising in their illness) and drafts referral letters for them.
 
 === Other contributions
 
