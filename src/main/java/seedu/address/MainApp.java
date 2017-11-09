@@ -221,7 +221,7 @@ public class MainApp extends Application {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
         try {
-            updateConfig();
+            updateConfig(event.getFileName());
             // change AddressBook file path
             setAddressBookFilePath(event.getFilePath());
             setAddressBookAppName(event.getFileName());
