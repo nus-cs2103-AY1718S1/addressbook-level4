@@ -260,6 +260,7 @@ Example: `appoint 1 ap/12/12/2020 15:12 60` +
 ****
 * If the person already have an appointment, the new appointment will override the old one
 * If ap/ is left blank, the old appointment will be deleted.
+* The user will be reminded 60 minutes before an appointment, ONLY WHEN the appointment was added from another session.
 ****
 
 // end::appoint[]
@@ -357,7 +358,7 @@ Examples:
 === Sending my contact detail to someone: `sharecontact`
 
 [NOTE]
-TBI in v2.0
+TBI in v2.0: command `sharecontact`
 
 Share my contact details to someone in the address book, indicated by INDEX.
 Format: `sharecontact INDEX`
