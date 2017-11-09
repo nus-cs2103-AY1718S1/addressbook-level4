@@ -109,6 +109,7 @@ public class CommandTestUtil {
         + VALID_REL_COLLEAGUE + "]";
     public static final String REL_DESC_JANE_SIBLINGS = " " + PREFIX_ADD_RELATIONSHIP + "Jane Smith" + " ["
         + VALID_REL_COLLEAGUE + "]";
+    //@@author
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -125,12 +126,13 @@ public class CommandTestUtil {
     // string not allowed for status
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_REL_DESC = " " + PREFIX_ADD_RELATIONSHIP + "sibling*"; // '*' not allowed in
-    // relationships
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    //@@author huiyiiih
     public static final SetRelCommand.EditPerson DESC_JOE;
     public static final SetRelCommand.EditPerson DESC_JANE;
+    //@@author
 
     //====== Events =========================================================================================
 

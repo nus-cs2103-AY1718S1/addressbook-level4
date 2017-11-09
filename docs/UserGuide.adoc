@@ -269,11 +269,44 @@ In the `clients's detail` panel, user can use the `import photo` button to
 add/edit photo of the client. Upon clicking the button, a file-chooser window
  will pop up, enabling the easy choosing of image files with GUI.
 
+// tag::sort[]
+=== Sorting all entries : `sort`
+
+Synonyms/Aliases for the command: `arrange`, `organise` +
+Sorts list by different types +
+such as `name`, `tag`, `company`, `priority` or `status`. +
+
+Format: `sort [TYPE]`
+
+[NOTE]
+====
+1. Sorting by *priority* sorts the list by *_H, M and L_* repsectively. After sorting by H, M and L, they will then
+sort them
+alphabetically by their names.
+
+2. Sorting by *status* sorts the list by making all the *_NIL_* status to be at the bottom of the list. After doing
+that it will then also sort them alphabetically.
+====
+
+Examples:
+
+* `sort name`
+
+* `sort tag`
+
+* `sort company`
+
+* `sort priority`
+
+* `sort status`
+// end::sort[]
+
+// tag::setrelationship[]
 === Setting relationship between 2 persons: `set`
 
 Synonyms/Aliases for the command: `rel`, `setrel` +
 Sets the relationship between 2 person. +
-User is advised to add only one relationship between the two indexes.
+User is *ONLY ALLOWED* to add only one relationship between the two indexes.
 
 Format: `set [INDEX] [INDEX] [PREFIX]RELATIONSHIP` +
 
@@ -286,7 +319,8 @@ Format: `set [INDEX] [INDEX] [PREFIX]RELATIONSHIP` +
 * The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2,
 3, ...
 * The command will not be executed if the relationship already exist or if the relationship is not found.
-* You can remove all the person's relationships by typing `er/` without specifying any relationship after it.
+* The command will not execute if the two indexes provided already have a relationship.
+* You can remove all the person's relationships by typing `cr/` without specifying any relationship after it.
 ****
 
 Examples:
@@ -299,6 +333,7 @@ deletes the relationship between the two indexes of the last shown list if it ex
 
 * `set 1 2 cr/` +
 clears the all the relationships of the two indexes.
+// end::setrelationship[]
 
 // tag::eventcrud[]
 === Adding an event: `eventadd`
@@ -506,31 +541,6 @@ If the setting is last set to enabled/disabled:
 Synonyms/Aliases for the command: `h`, `past` +
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history` / `h` / `past
-
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
-
-=== Sorting all entries : `sort`
-
-Synonyms/Aliases for the command: `arrange`, `organise` +
-Sorts list by different types +
-such as `name`, `tag`, `company`, `priority` or `status`. +
-
-Format: `sort [TYPE]`
-
-Examples:
-
-* `sort name`
-
-* `sort tag`
-
-* `sort company`
-
-* `sort priority`
-
-* `sort status`
 
 === App opens at startup of user's OS command: `startup`
 

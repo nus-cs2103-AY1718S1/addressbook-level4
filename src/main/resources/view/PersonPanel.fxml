@@ -101,22 +101,24 @@
             <Font name="System Bold" size="21.0" />
          </font>
       </Label>
+      <!-- @@author huiyiiih -->
          <Label layoutX="14.0" layoutY="340.0" prefHeight="62.0" prefWidth="275.0" styleClass="label-header" text="Relationships" AnchorPane.leftAnchor="14.0">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
       </Label>
+         <ScrollPane fx:id="scrollPane" layoutX="332.0" layoutY="347.0" prefHeight="52.0" prefWidth="212.0">
+            <content>
+               <FlowPane fx:id="relationshipPane" prefHeight="52.0" prefWidth="181.0" />
+            </content>
+         </ScrollPane>
+      <!-- @@author -->
       <ImageView fx:id="imageView" fitHeight="200.0" fitWidth="150.0" layoutX="636.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true" />
       <Line endX="500.0" layoutX="115.0" layoutY="285.0" startX="-100.0" stroke="#d0d0d0" />
       <Line endX="500.0" layoutX="115.0" layoutY="336.0" startX="-100.0" stroke="#d0d0d0" />
          <Button fx:id="photoSelectionButton" alignment="CENTER" layoutX="428.0" layoutY="129.0" minHeight="25" prefHeight="25" prefWidth="100" styleClass="importButton" text="import photo">
 
       </Button>
-         <ScrollPane fx:id="scrollPane" layoutX="332.0" layoutY="347.0" prefHeight="52.0" prefWidth="212.0">
-            <content>
-               <FlowPane fx:id="relationshipPane" prefHeight="52.0" prefWidth="181.0" />
-            </content>
-         </ScrollPane>
    </children>
    </AnchorPane>
 </AnchorPane>

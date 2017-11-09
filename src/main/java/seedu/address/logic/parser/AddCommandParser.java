@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_ADDREL_PREFIX_NOT_ALLOWED;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_RELATIONSHIP;
@@ -41,7 +42,6 @@ import seedu.address.model.tag.Tag;
  * Parses input arguments and creates a new AddCommand object
  */
 public class AddCommandParser implements Parser<AddCommand> {
-
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
      * {@code ArgumentMultimap}.
@@ -65,6 +65,9 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        }
+        if (arePrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP)) {
+            throw new ParseException(MESSAGE_ADDREL_PREFIX_NOT_ALLOWED);
         }
 
         try {
@@ -112,13 +115,6 @@ public class AddCommandParser implements Parser<AddCommand> {
                 photo = ParserUtil.parsePhoto(argMultimap.getValue
                         (PREFIX_PHOTO)).get();
 
-            }
-            if (arePrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP)) {
-                relationList = ParserUtil.parseRel(argMultimap.getAllValues(PREFIX_ADD_RELATIONSHIP));
-            }
-
-            if (arePrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP)) {
-                relationList = ParserUtil.parseRel(argMultimap.getAllValues(PREFIX_ADD_RELATIONSHIP));
             }
 
             ReadOnlyPerson person = new Person(name, phone, email, address, company, position, status, priority,

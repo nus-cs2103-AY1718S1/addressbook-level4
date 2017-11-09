@@ -632,32 +632,35 @@ that the sorting type the user keyed in does not exist.
 [NOTE]
 Explanation of how this is achieved will be done soon. A sequence diagram will be updated here to illustrate how the
 SortCommand and SortCommandParser operates.
+// end::Sorting[]
 
-// tag::Setting relationship[]
+// tag::SettingRelationship[]
 === Setting relationship between two persons
 
 When viewing the persons list, user finds out if that a specific person has a relationship with another person. Thus,
 the user is able to set relationships between 2 persons if they are related to one another. The user can also delete
-the specific relationship that the two persons are connected and also clear all relationships in the two persons. Each
-person is able to have multiple relationships but only one relationship per person. The user will also be able to
-edit the relationship of the two persons.
+the specific relationship between the 2 persons and also clear all relationships in the two persons. Each
+person is able to have multiple relationships but only one relationship per person.
 
 This feature is achieved by first creating the Relationship and UniqueRelList class that handles the relationship
- name and the list of relationship of each person. Next, creating the command to add/edit/delete relationship between 2
- persons.
+ name and the list of relationship of each person. Next, creating the command to add, delete and clear relationship
+between 2 persons.
 
 This will be done using the command `set [INDEX] [INDEX] [PREFIX]RELATIONSHIP`. There are 3 different prefixes which
-performs different things. *ar/* add the relationship, *dr/* deletes the relationship and *cr/* clears all
+performs different tasks. *ar/* adds relationship, *dr/* deletes relationship and *cr/* clears all
 relationships between the two persons.
 
-It will set the relationship for INDEX 1
-and INDEX 2. Thus the command that executes this will perform twice.
+*SetRelCommandParser* parses the input and returns a new SetRelCommand which has the parameters of the two indexes,
+the new edited person and the boolean value of whether the add relationship prefix is present.
 
-The SetRelCommandParser parses the input and returns a new SetRelCommand which has the parameters of the two indexes
-and the new edited person.
+*SetRelCommand* executes and sets the relationship between 2 persons. It also checks if there is a mutual relationship
+present in the indexes passed in. In order to change the relationship, the user will have to delete the
+specific relationship and add the new relationship.
 
 [NOTE]
-More information on this will be done soon once this feature is almost complete.
+TO-DO: Sequence diagram will be up soon.
+
+// end::SettingRelationship[]
 
 == Documentation
 

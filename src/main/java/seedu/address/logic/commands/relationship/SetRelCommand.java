@@ -51,7 +51,7 @@ public class SetRelCommand extends UndoableCommand {
         + PREFIX_DELETE_RELATIONSHIP + "colleagues\n"
         + "Example: " + COMMAND_WORD + " 1 2 "
         + PREFIX_CLEAR_RELATIONSHIP + "\n";
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Relationship Added for Person: %1$s\n"
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Relationship Changed for Person: %1$s\n"
         + "& Person: %2$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_NO_MULTIPLE_REL = "These two persons cannot have multiple relationships"
