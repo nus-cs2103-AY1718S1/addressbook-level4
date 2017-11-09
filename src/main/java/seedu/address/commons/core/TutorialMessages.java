@@ -47,7 +47,7 @@ public class TutorialMessages {
     /* Command usage messages */
     public static final String USAGE_BEGIN = "Let's try out the different commands of Bluebird! Activate Parent Mode "
             + "by typing \"parent\" into the command box and pressing enter to enable all commands! "
-            + "Click on command box and Press Shift + F2 to view the list of commands and enter the commands "
+            + "Click on command box and Press F2 to view the list of commands and enter the commands "
             + "on the command box to execute it. A parameter in [ ] means it is optional.";
 
     /* Concluding message */
