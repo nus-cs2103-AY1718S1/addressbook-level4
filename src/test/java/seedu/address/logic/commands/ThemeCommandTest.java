@@ -6,9 +6,12 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Rule;
 import org.junit.Test;
 
+import guitests.AddressBookGuiTest;
+
 import seedu.address.ui.testutil.EventsCollectorRule;
 
-public class ThemeCommandTest {
+
+public class ThemeCommandTest extends AddressBookGuiTest {
 
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
