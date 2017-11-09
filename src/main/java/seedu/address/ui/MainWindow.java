@@ -276,9 +276,9 @@ public class MainWindow extends UiPart<Region> {
             ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
             personListPanel = new PersonListPanel(persons);
             personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-        } catch (IllegalStateException e){
-            logger.info("Cannot update profile photo on a non-main thread. " +
-                    "Type 'list' to see the new profile photos. '¯\\_(ツ)_/¯");
+        } catch (IllegalStateException e) {
+            logger.info("Cannot update profile photo on a non-main thread. "
+                    + "Type 'list' to see the new profile photos. '¯\\_(ツ)_/¯");
         }
     }
 
