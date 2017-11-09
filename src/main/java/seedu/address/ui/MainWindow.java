@@ -264,11 +264,9 @@ public class MainWindow extends UiPart<Region> {
         String themeUrl = getClass().getResource("/view/LightTheme2.css").toExternalForm();
         setTheme(themeUrl);
     }
-    
     public void setTheme(String themeUrl) {
         scene2.getStylesheets().clear();
         scene2.getStylesheets().add(themeUrl);
-        raise(new ChangeThemeRequestEvent());
         primaryStage.setScene(scene2);
     }
     //@@author
@@ -286,4 +284,11 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+    //@@author zhoukai07
+    @Subscribe
+    private void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setTheme(event.getThemeUrl());
+    }
+    //@@author
 }

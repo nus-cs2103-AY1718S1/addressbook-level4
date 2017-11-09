@@ -1,11 +1,10 @@
 package seedu.address.logic.parser;
+//@@author zhoukai07
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 /**
  * Parses input arguments and creates a new SelectCommand object
@@ -27,3 +26,4 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
         }
     }
 }
+//@@author
