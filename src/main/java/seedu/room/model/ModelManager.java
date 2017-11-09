@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-
 import seedu.room.commons.core.ComponentManager;
 import seedu.room.commons.core.LogsCenter;
 import seedu.room.commons.events.model.EventBookChangedEvent;
@@ -17,14 +16,15 @@ import seedu.room.commons.events.model.ResidentBookChangedEvent;
 import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
 import seedu.room.logic.commands.exceptions.CommandException;
-import seedu.room.logic.commands.exceptions.TagNotFoundException;
 import seedu.room.model.event.ReadOnlyEvent;
 import seedu.room.model.event.exceptions.DuplicateEventException;
 import seedu.room.model.event.exceptions.EventNotFoundException;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
+import seedu.room.model.person.exceptions.NoneHighlightedException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
+import seedu.room.model.person.exceptions.TagNotFoundException;
 import seedu.room.model.tag.Tag;
 
 
@@ -173,10 +173,19 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author shitian007
     /**
-     * Updates the highlight status of a person if tag matches input tag
+     * Updates the highlight status of a resident if tag matches input tag
      */
-    public void updateHighlightStatus(String highlightTag) throws TagNotFoundException {
-        residentBook.updateHighlight(highlightTag);
+    public void updateHighlightStatus(String highlightTag) throws TagNotFoundException  {
+        residentBook.updateHighlightStatus(highlightTag);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateResidentBookChanged();
+    }
+
+    /**
+     * Removes the highlight status of all residents
+     */
+    public void resetHighlightStatus() throws NoneHighlightedException {
+        residentBook.resetHighlightStatus();
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateResidentBookChanged();
     }

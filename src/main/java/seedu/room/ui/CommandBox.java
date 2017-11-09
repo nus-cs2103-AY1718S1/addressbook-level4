@@ -41,8 +41,7 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
-        suggestions = SuggestionProvider.create((Arrays.asList(logic.getAutoCompleteList())));
-        TextFields.bindAutoCompletion(commandTextField, suggestions);
+        initAutoComplete();
     }
 
     /**
@@ -63,12 +62,30 @@ public class CommandBox extends UiPart<Region> {
             navigateToNextInput();
             break;
         default:
-            // Update textfield autocomplete options
-            logic.updateAutoCompleteList(commandTextField.getText());
-            suggestions.clearSuggestions();
-            suggestions.addPossibleSuggestions(Arrays.asList(logic.getAutoCompleteList()));
+            // Update TextField autocomplete options
+            updateAutoCompleteList();
+            break;
         }
     }
+
+    //@@author shitian007
+    /**
+     * Initializes suggestions and binds it to TextFields
+     */
+    public void initAutoComplete() {
+        suggestions = SuggestionProvider.create((Arrays.asList(logic.getAutoCompleteList())));
+        TextFields.bindAutoCompletion(commandTextField, suggestions);
+    }
+
+    /**
+     * Updates AutoCompleteList according to current TextField input
+     */
+    public void updateAutoCompleteList() {
+        logic.updateAutoCompleteList(commandTextField.getText());
+        suggestions.clearSuggestions();
+        suggestions.addPossibleSuggestions(Arrays.asList(logic.getAutoCompleteList()));
+    }
+    //@@author
 
     /**
      * Updates the text field with the previous input in {@code historySnapshot},

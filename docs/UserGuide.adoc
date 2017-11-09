@@ -1,4 +1,4 @@
-= ResidentBook Level 4 - User Guide
+= ResidentBook - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -66,15 +66,29 @@ image::Ui_short_error.PNG[width="790"]
 
 Format: `help`
 
+// tag::autocomplete[]
+=== Autocomplete CLI
+
+Command Line Interface autocomplete feature which auto-generates list of resident names on commands such as find.
+
+Examples:
+* typing `a` returns a list of commands starting with `add`.
+* typing `find ` returns a list of resident names autocompleted.
+// end::autocomplete[]
+
+// tag::addevent[]
 === Adding a event: `addEvent`
 
 Adds a event to the event book +
-Format: `addEvent ti/TITLE des/DESCRIPTION l/LOCATION tme/DATETIME`
+Format: `addEvent ti/TITLE des/DESCRIPTION loc/LOCATION time/DATETIME`
 
 Examples:
 
-* addevent ti/End of Sem Dinner des/Organised by USC l/Cinnamon College tme/25/11/17 2030
+* addevent ti/End of Sem Dinner des/Organised by USC loc/Cinnamon College time/25/11/2017 2030 2
+* addevent ti/USPolymath des/Intellectual Talks loc/Chatterbox time/25/11/17 2030 to 2230
+* ae ti/End of Sem Dinner des/Organised by USC loc/Cinnamon College time/25/11/17 2030 2
 
+// tag::deleteevent[]
 === Deleting a event: `deleteEvent`
 
 Deletes an event from the event book +
@@ -99,34 +113,59 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+// tag::temporaryperson[]
+=== Adding a temporary resident:
 
-=== Adding a temporary person:
-
-Adds a temporary person to the resident book which will be deleted when the number of days specified has elapsed +
+Adds a temporary resident to the resident book which will be deleted when the number of days specified has elapsed +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ROOM [temp/NUMBER_OF_DAYS] [t/TAG]...`
 
 [TIP]
-Deletion of temporary person is done at the start up of the addressbook, so restarting your addressbook may help if you
-realised a certain temporary contact stills remains in your address book after its expiry date.
+Deletion of temporary resident is done at the start up of the addressbook, so restarting your addressbook may help if you
+realised a certain temporary resident stills remains in your address book after its expiry date.
 
-Deletion of temporary person is done at the start up of the residentbook.
 
 Examples:
 
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 temp/2 t/criminal`
+// end::temporaryperson[]
+
+// tag::picture[]
+=== Adding a picture: addImage
+
+Adds an image to a resident in the resident book as specified by the current index +
+Format: `addImage INDEX IMAGE_URL`
+
+[TIP]
+The url to the image must start from the root folder
+
+Examples:
+
+* `addImage 1 /Users/username/Downloads/placeholder.jpg`
+
+=== Deleting a picture: deleteImage
+
+Deletes an image to a resident in the resident book as specified by the current index +
+Format: `deleteImage INDEX`
+
+[TIP]
+Deletes the Image of the resident in the current list of displayed residents
+
+Examples:
+
+* `deleteImage 1`
 
 === Adding a picture: `GUI image`
 
 Adds a picture of a person to the resident book +
 Format: `click on the placeholder image after adding the person into the addressbook`
 
-Adds a person to the resident book +
-Format: `click on '+' button after adding the person into the residentbook`
+Adds a person to the resident book
+Format: `click on 'Add Image' button after adding the person into the residentbook`
 
 [TIP]
 One person can only have 1 picture, adding additional images replaces the current one
 
-Examples:
+Example:
 
 image::add_person.png[width="400"]
 
@@ -135,23 +174,24 @@ image::add_person.png[width="400"]
 Deletes a person's picture from the address book +
 Format: `click on the placeholder image after adding the person into the addressbook`
 
-Examples:
+Example:
 
 image::delete_person.png[width="400"]
+// end::picture[]
 
+// tag::highlight[]
 === Highlighting by tag : `highlight`
 
-Highlights all persons with specified tag
-Format: `highlight `tag``
-
-[TIP]
-Specifying a tag which does not exist on any person clears the current highlighted persons
+Highlights all residents with specified tag / Removes highlighting when residents highlighted
+Format: `highlight TAG_NAME` / `highlight '-'"
 
 Examples:
 * `highlight colleague`
 * `highlight owes money`
-* `highlight nonExistentTag` - Clears current highlighting
+* `highlight -` - Clears current highlighting
+// end::highlight[]
 
+// tag::swaproom[]
 === Swap Rooms: `swaproom`
 
 Swaps the rooms of two residents in the residentbook. The indexes are based on the last list displayed to the user.
@@ -169,6 +209,7 @@ Examples:
 Shows a list of all persons in the resident book. +
 Format: `list`
 
+// tag::sort[]
 === Sorting the Resident Book: `sort`
 
 Sorts the resident book +
@@ -242,10 +283,11 @@ Deletes the 2nd person in the resident book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+// tag::deletebytag[]
 === Deleting persons by tag: `deletebytag`
 
 Deletes all persons in the address book who has the supplied tag. +
-Format: `delete TAG`
+Format: `deletebytag TAG`
 
 
 ****
@@ -253,12 +295,16 @@ Format: `delete TAG`
 * `TAG` supplied is case-sensitive i.e. friends is different from Friends. This is to allow more freedom for users in the
 creation of tags. Please take note of this when using this command.
 * The alias for this command is dbt
-* This command will delete all persons who have the supplied `TAG`, even if they have other tags.
+* This command will delete all persons who have the supplied `TAG`, even if they contain tags other than the tag supplied (Refer to example below).
 ****
 
 Examples:
 
 * `deletebytag friend` will delete all persons who have a tag of `friend`
+
+* If Alice has tags "friends" and "bestie", `deletebytag friends` will erase Alice from the ResidentBook.
+
+// end::deletebytag[]
 
 === Selecting a person : `select`
 
@@ -403,7 +449,7 @@ Clicking on a person now displays additional information in the side pane
 === Calendar Interface (Since v1.4)
 
 Calendar has been introduced to allow the hostel administrator to view events.
-Events can be seen on calendar interface for clearer view.
+Events can be seen on calendar interface for clearer view since v1.5
 
 === Events (Since v1.4)
 

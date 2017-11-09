@@ -31,7 +31,9 @@ import seedu.room.model.event.exceptions.EventNotFoundException;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
+import seedu.room.model.person.exceptions.NoneHighlightedException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
+import seedu.room.model.person.exceptions.TagNotFoundException;
 import seedu.room.model.tag.Tag;
 import seedu.room.testutil.PersonBuilder;
 
@@ -170,10 +172,18 @@ public class AddCommandTest {
         }
 
         //@@author
-        @Override
-        public void updateHighlightStatus(String highlightTag) {
 
+        //@@author shitian007
+        @Override
+        public void updateHighlightStatus(String highlightTag) throws TagNotFoundException {
+            fail("This method should not be called.");
         }
+
+        @Override
+        public void resetHighlightStatus() throws NoneHighlightedException {
+            fail("This method should not be called.");
+        }
+        //@@author
 
         //@@author sushinoya
         public void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2) throws PersonNotFoundException {

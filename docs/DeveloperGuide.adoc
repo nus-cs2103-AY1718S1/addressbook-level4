@@ -1,4 +1,4 @@
-= ResidentBook Level 4 - Developer Guide
+= ResidentBook - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -364,20 +364,93 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-// tag::picture
+// tag::picture[]
 === Add Picture
 
-The add picture mechanism allows the adding of a picture to every individual person.
+The add picture mechanism allows the adding of a picture to every individual person. +
+Images are saved in he format `<name><contact>` to differentiate between persons with the same name +
+It is implemented as both a CLI as well as a GUI feature.
 
-Images are saved in he format `<name><contact>` to differentiate between persons with the same name
+The GUI version includes two buttons available to the user in the PersonPanel.
 
-// tag::autocomplete
+This is implemented in the PersonPanel directly using the Button object.
+
+[source,java]
+----
+    private void handleAddImage() {
+        FileChooser picChooser = new FileChooser();
+        File selectedPic = picChooser.showOpenDialog(null);
+        if (selectedPic != null) {
+            try {
+            ...
+
+
+    private void handleResetImage() {
+        try {
+            person.getPicture().resetPictureUrl();
+            if (person.getPicture().checkJarResourcePath()) {
+                InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
+                person.getPicture().setJarResourcePath();
+                Image personPicture = new Image(in);
+                ...
+----
+
+The CLI version allows the user to specify the index of the person and directly update the image url.
+
+This is implemented by updating the image field whenever the residentBook is updated.
+
+[source,java]
+----
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonInformation(event.getNewSelection().person);
+    }
+
+    /**
+     * loads the selected person's information to be displayed.
+     */
+    private void loadPersonInformation(ReadOnlyPerson person) {
+        this.person = updatePersonFromLogic(person);
+        name.textProperty().setValue(person.getName().toString());
+        phone.textProperty().setValue(person.getPhone().toString());
+        ...
+----
+// end::picture[]
+
+// tag::autocomplete[]
 === Autocomplete Feature
 
 The autocomplete mechanism implements a list of commands to be auto-completed upon user input
 
 The autocomplete list is obtained from the creation of an AutoComplete object and is automatically updated since it utilizes the model within the LogicManager
 
+[source,java]
+----
+    /**
+     * Updates AutoComplete suggestions according to user typed input
+     * @param userInput
+     */
+    public void updateAutoCompleteList(String userInput) {
+        switch (userInput) {
+        case "":
+            this.resetAutocompleteList();
+            break;
+        case "find":
+            this.autoCompleteList = getConcatPersonsArray("find");
+            break;
+        case "edit":
+            this.autoCompleteList = getConcatPersonsArray("edit");
+            break;
+        case "delete":
+            this.autoCompleteList = getConcatPersonsArray("delete");
+            break;
+        case "select":
+        ...
+----
+// end::autocomplete[]
+
+// tag::swaproom[]
 === Swap Rooms Command
 
 The swaproom command swaps the rooms of two residents specified with indexes.
@@ -400,6 +473,7 @@ In the method above is defined in `SwaproomCommand.java`. It is important to not
 
 Illegal arguments will raise a CommandException which will be displayed to the user in the command output box.
 
+// tag::highlight[]
 === Highlight Command
 
 The highlight command is implemented to highlight the contacts with the specified tag
@@ -422,8 +496,7 @@ public void updateHighlight(String highlightTag) {
 This exception is later caught higher up the execution stack and the user receives a message that the tag does not exist.
 
 To highlight the persons with the specified tags, the list of persons is indicated to be updated every time the command is run.
-This change is reflected in the UI with the refreshing of the persons list and the instantiation of the highlight styling
-in the generation of the PersonCard
+This change is reflected in the UI with the refreshing of the persons list.
 
 [source,java]
 ----
@@ -435,6 +508,23 @@ private void initHighlightStatus() {
 }
 ----
 
+The highlight command also allows removal of highlighting through input of "-" as tag name.
+
+[source, java]
+----
+    /**
+     * Removes highlighting of everyone
+     */
+    public void resetHighlightStatus() throws NoneHighlightedException {
+        boolean highlightReset = resetHighlightStatusHelper();
+        if (!highlightReset) {
+            throw new NoneHighlightedException("No Residents Highlighted");
+        }
+    }
+----
+// end::highlight[]
+
+// tag::temporaryperson[]
 === Temporary Contact mechanism
 
 Temporary contacts is implemented using the java LocalDateTime class to keep track of the time that the temporary contact
@@ -451,21 +541,24 @@ When creating a temporary contact, users should input temp/ followed by the numb
 Earlier implementation: A temporary contact that expires when the application boots up the next time. This implementation
  does not give much flexibility to the users in terms of how long they want the temporary contact to remain.
 
-The temporary contact is implemented this way:
+The temporary contact is implemented using the Timestamp class in this way:
 [source,java]
 ----
-    public Timestamp(long day) {
-        creationTime = LocalDateTime.now().withNano(0).withSecond(0).withMinute(0);
-        if (day > 0) {
-            expiryTime = creationTime.plusDays(day).withNano(0).withSecond(0).withMinute(0);
+        public Timestamp(long day) throws IllegalValueException {
+            creationTime = LocalDateTime.now().withNano(0).withSecond(0).withMinute(0);
+            if (!isValidTimestamp(day)) {
+                throw new IllegalValueException(MESSAGE_TIMESTAMP_CONSTRAINTS);
+            }
+            if (day > 0) {
+                expiryTime = creationTime.plusDays(day).withNano(0).withSecond(0).withMinute(0);
+            }
+            daysToLive = day;
         }
-        daysToLive = day;
-    }
 ----
 As we can see, the time that this contact will expire is to the nearest hour, done by ignoring nanosecond, second, and
 minute
 
-// tag::import[]
+// end::temporaryperson[]
 === Import mechanism
 
 The import mechanism is essentially adding multiple contacts to the resident book automatically by referencing a xml file. It is implemented by calling add function repeatedly till all the new contacts have been added to the current contact list.
@@ -490,6 +583,7 @@ image::ImportCommandActivityDiagram.png[width="300"]
 Future enhancements may include a selection option from the UI and allowing the users to specify if they would like to overwrite contacts with identical names.
 
 
+// tag::sort[]
 === Sort Command
 
 The sort command is implemented to sort the current Resident book according to the following possible criteria:

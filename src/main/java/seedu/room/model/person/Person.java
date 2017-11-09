@@ -28,7 +28,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Timestamp> timestamp;
     private ObjectProperty<UniqueTagList> tags;
     private String sortCriteria = "name";
-    private boolean highlight = false;
+    private boolean highlightStatus;
 
     /**
      * Every field must be present and not null.
@@ -43,6 +43,7 @@ public class Person implements ReadOnlyPerson {
         this.timestamp = new SimpleObjectProperty<>(timestamp);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.highlightStatus = false;
     }
 
     /**
@@ -109,12 +110,10 @@ public class Person implements ReadOnlyPerson {
         return room.get();
     }
 
-    //@@author shitian007
     @Override
     public ObjectProperty<Picture> pictureProperty() {
         return picture;
     }
-    //@@author
 
     @Override
     public Picture getPicture() {
@@ -153,18 +152,20 @@ public class Person implements ReadOnlyPerson {
 
     //@@author shitian007
     /**
-     * Replaces this person's tags with the tags in the argument tag set.
+     * @param replacement Set of tags to replace the person's current set of tags
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
     }
 
+    // Setter for person's highlightStatus status
     public void setHighlightStatus(boolean val) {
-        this.highlight = val;
+        this.highlightStatus = val;
     }
 
+    // Getter for person's highlightStatus status
     public boolean getHighlightStatus() {
-        return this.highlight;
+        return this.highlightStatus;
     }
     //@@author
 

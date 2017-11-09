@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
@@ -14,6 +12,7 @@ import javax.imageio.ImageIO;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,9 +34,6 @@ import seedu.room.model.person.ReadOnlyPerson;
 public class PersonPanel extends UiPart<Region> {
 
     private static final String FXML = "PersonPanel.fxml";
-    private static String[] colors = {"red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey"};
-    private static HashMap<String, String> tagColors = new HashMap<String, String>();
-    private static Random random = new Random();
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private final Logic logic;
@@ -60,20 +56,16 @@ public class PersonPanel extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Button addImageButton;
+    @FXML
+    private Button resetImageButton;
 
     public PersonPanel(Logic logic) {
         super(FXML);
         this.logic = logic;
         loadDefaultScreen();
         registerAsAnEventHandler(this);
-    }
-
-    private static String getColorForTag(String tagValue) {
-        if (!tagColors.containsKey(tagValue)) {
-            tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
-        }
-
-        return tagColors.get(tagValue);
     }
 
     /**
@@ -84,6 +76,7 @@ public class PersonPanel extends UiPart<Region> {
         phone.textProperty().setValue("-");
         address.textProperty().setValue("-");
         email.textProperty().setValue("-");
+        enableButtons(false);
     }
 
     /**
@@ -97,6 +90,15 @@ public class PersonPanel extends UiPart<Region> {
         email.textProperty().setValue(person.getEmail().toString());
         initTags();
         initImage();
+        enableButtons(true);
+    }
+
+    /**
+     * @param state Set button status
+     */
+    private void enableButtons(boolean state) {
+        this.addImageButton.setDisable(!state);
+        this.resetImageButton.setDisable(!state);
     }
 
     /**
@@ -116,13 +118,12 @@ public class PersonPanel extends UiPart<Region> {
 
     /**
      * Sets a background color for each tag.
-     * @param
      */
     private void initTags() {
         tags.getChildren().clear();
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            tagLabel.setStyle("-fx-background-color: " + tag.getTagColor());
             tags.getChildren().add(tagLabel);
         });
     }
@@ -170,7 +171,7 @@ public class PersonPanel extends UiPart<Region> {
     }
 
     /**
-     * Handler for adding image to person
+     * Button handler for adding image to person
      */
     @FXML
     private void handleAddImage() {
@@ -200,14 +201,13 @@ public class PersonPanel extends UiPart<Region> {
     }
 
     /**
-     * Handler for deleting a person's image
+     * Button handler for resetting a person's image
      */
     @FXML
-    private void handleDeleteImage() {
+    private void handleResetImage() {
         try {
             person.getPicture().resetPictureUrl();
             if (person.getPicture().checkJarResourcePath()) {
-                System.out.println(person.getPicture().getJarPictureUrl());
                 InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
                 person.getPicture().setJarResourcePath();
                 Image personPicture = new Image(in);

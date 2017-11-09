@@ -13,16 +13,16 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
-
 import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
 import seedu.room.logic.commands.exceptions.CommandException;
-import seedu.room.logic.commands.exceptions.TagNotFoundException;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.UniquePersonList;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
+import seedu.room.model.person.exceptions.NoneHighlightedException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
+import seedu.room.model.person.exceptions.TagNotFoundException;
 import seedu.room.model.tag.Tag;
 import seedu.room.model.tag.UniqueTagList;
 
@@ -220,17 +220,26 @@ public class ResidentBook implements ReadOnlyResidentBook {
     }
 
     //@@author shitian007
-    /** Updates highlight status of person with specified tag
+    /**
+     * Updates highlight status of person with specified tag
      */
-    public void updateHighlight(String highlightTag) {
+    public void updateHighlightStatus(String highlightTag) throws TagNotFoundException {
         try {
-            persons.updateHighlight(highlightTag);
             if (!this.tags.contains(new Tag(highlightTag))) {
-                throw new TagNotFoundException("Tag not found");
+                throw new TagNotFoundException("No such Tag Exists");
+            } else {
+                persons.updateHighlightStatus(highlightTag);
             }
         } catch (IllegalValueException e) {
-            throw new TagNotFoundException("Tag not found");
+            throw new TagNotFoundException("No such Tag Exists");
         }
+    }
+
+    /**
+     * Removes highlight status of all persons
+     */
+    public void resetHighlightStatus() throws NoneHighlightedException {
+        persons.resetHighlightStatus();
     }
     //@@author
 
