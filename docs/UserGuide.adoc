@@ -300,6 +300,7 @@ Associates the specified schedule with the 1st and 3rd persons in the address bo
 `schedule 1 d/25-12-2017 act/Christmas dinner` +
 Associates the specified schedule with the 1st person in the results of the `find` command.
 
+// tag::copy[]
 ==== Getting email addresses : `copy` [Since v1.3]
 
 => Alias: `y` <=
@@ -320,6 +321,7 @@ Examples:
 Outputs the 1st person's email address in console: `johndoe@example.com`
 * `copy 1 4 5` +
 Outputs email addresses of people at index 1, 4 and 5, with a semi-colon between each: `a@a.com; d@d.com; e@e.com`
+// end::copy[]
 
 ==== Opening calendar : `calendar` [Since v1.3]
 
