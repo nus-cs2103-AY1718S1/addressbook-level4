@@ -391,7 +391,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
-
+// tag::meetingClass[]
 === Implementing Meeting Class
 
 The Meeting class is a new class just like the Person class, which resides inside `model`. It features commands that modifies the state of the address book
@@ -408,6 +408,7 @@ The attributes of Meeting class include `NameMeeting`, `DateTime`, `Place`, `Per
 **Alternative 2:** Input a person class in Meeting class to retrieve their name and phone number +
 **Pros:** Allows developers to be more flexible to implement with meeting class  +
 **Cons:** It is difficult to implement.
+//end::meetingClass[]
 
 // tag::addmeeting[]
 === Add Meeting
@@ -494,7 +495,7 @@ The `KEYWORD` of meeting provides the name, date and location of the meeting whi
 
 If none of the meetings contains the `KEYWORD`, the results would show "No meetings found".
 
-
+// tag::editmeeting[]
 === Edit Meeting
 
 The edit meeting command is an undoable command which allows the user to edit the `MeetingName`, `DateTime` or `Place` of
@@ -544,7 +545,58 @@ the same as one of the preexisting Meetings in the addressbook.
 **Pros:** More direct and faster way of editing the different parameters of the `Meeting` object +
 
 ---
+// end::editmeeting[]
 
+
+=== Edit Meeting
+
+The edit meeting command is an undoable command which allows the user to edit the `MeetingName`, `DateTime` or `Place` of
+a created `Meeting` object.
+
+Implementation:
+
+When the `editmeeting` command is called with the appropriate parameters given, an instance of the `Meeting` object is created
+with the corresponding parameters. For example,
+
+[source,java]
+----
+editmeeting 2 n/Lunch l/Jurong East Mall
+----
+
+Creates an object with the following parameters
+[source,java]
+----
+MeetingName:Lunch
+DateTime: null
+Place: Jurong East Mall
+----
+
+This instance of the object `Meeting` is then compared to the preexisting `Meetings` in the addressbook corresponding
+to the index that was given in the command line which for the example above is `Index` 2. The respective parameters
+will then be replaced accordingly with the ones that were instantiated. As shown also, parameters that were not declared
+(in the case of the example, it was DateTime), are defaulted to be null and will not be changed in the actual `Meeting`
+object.
+
+When given invalid inputs, the `editmeeting` command shares some of the  exceptions
+which are also thrown by the `addmeeting` command. They are:
+
+* `DuplicateMeetingException`: Compares the edited Meeting object with the other Meeting objects in the address book
+and this exception is thrown when there is a duplicate object with the same parameters.
+* `MeetingNotFoundException` : Exception is thrown when the index provided to the `editmeeting` command
+is referring to the invalid index of a `Meeting` object in the addressbook
+* `MeetingBeforeCurrDateException` : Exception is thrown when the date of the edited
+Meeting is earlier than that of the current system time, this exception is thrown.
+* `MeetingClashException` : Exception is thrown when the DateTime of the editedmeeting is
+the same as one of the preexisting Meetings in the addressbook.
+
+==== Design Considerations
+
+**Aspect:** how `EditMeetingCommand` executes +
+**Alternative 1 :** Comparing the different parameters individually without the creation
+ of a new instance of a `Meeting` +
+**Pros:** More direct and faster way of editing the different parameters of the `Meeting` object +
+
+// tag::meetingCard[]
 === Meeting Card
 
 The implementation of meeting card starts of from creating 'Meeting' class which resides in the Model component of this application. This meeting card also requires the UI component for this cards to be properly shown to the users.
@@ -585,6 +637,52 @@ _Figure 3.9.5 : Meeting Card that due within 72 hours_
 **Cons:** Might not be as appealing to some users. +
 **Alternative 2 (future choice):** A pop-up reminder to show meeting on the current day and with the colours applied to meeting card +
 **Pros:** Will be a better reminder to users.
+// end::meetingCard[]
+
+// tag::meetingPopup[]
+=== Meeting pop up reminder
+
+To maximise the ability to remind the users of their meetings, a pop up reminder with the details of the meetings are shown to the user. The user will just have to acknowledge it. The pop up reminder activates and provides the details of the users' next meeting in 24 hours. As you can see from the Figure 5.8.1, there are sufficient details of the next meeting and the extra button is for the user to confirm the reminder.
+
+image::Reminder.png[width="600"]
+_Figure 3.9.5 : Reminder for single meeting_
+
+Implementation: +
+The creation of the pop up starts from the calling of `MeetingAlert` class during the opening of the application. The implementation of meeting pop up reminder ultilises `javafx.stage.Stage`. Before the instantiation of the `MeetingAlert` class, there will be a check if the next meeting is a group meeting or normal meeting. Subsequently, the results will be shown on the reminder itself, shown in Figure 5.8.2.
+
+image::Reminder(1).png[width="600"]
+_Figure 5.8.2 : Reminder for group meeting_
+
+==== Design Considerations
+
+**Aspect:** Ways to be implemented as a reminder of the urgency of the meeting +
+**Alternative 1 (current choice):** A pop-up reminder to show meeting on the current day, furthermore working with the colours applied to meeting card +
+**Pros:** Will be a better reminder to users and easy to implement +
+**Cons:** Might not be as appealing to some users. +
+**Alternative 2 :** Scrap the colours indicators for individual cards +
+**Pros:** Might be more appealing to some users. +
+**Cons:** Colour cards itself might not be significant enough to remind the users
+// end::meetingPopup[]
+
+// tag::autoDelete[]
+=== Automatic Deletions of Meetings
+Since, meetings that have been attended or missed are not needed in the meeting reminders anymore, we found a need for _ScheduBook_ to manage the meetings and delete them, without the need for user to manually delete them.
+
+Implementation: +
+When _ScheduBook_ is being booted up, the application loads up `addressbook`.xml file which stores the record of the saved file from the previous boot up of _ScheduBook_. Hence, using `LocalDateTime` classes and methods, any meetings that have dates before the time the user boot up _ScheduBook_ will not be added to the `filteredMeetingList` that is used to replace the pre-loaded list. Hence, the newest list will not include those meetings and further saved back to the `addressbook`.xml file when user shut down _ScheduBook_.
+
+==== Design Considerations
+
+**Aspect:** Ways to handle meetings that have passed the scheduled date and time +
+**Alternative 1 (current choice):** Application automatically deletes all meetings that have passed the scheduled time +
+**Pros:** User-friendly, past meetings will not obstruct the user's usage, hence being more organised +
+**Cons:** Some users might want to save some meetings that they missed +
+**Alternative 2 (future choice) :** Have an extra tabs that stores and saves meetings that user indicates to +
+**Pros:** Satisfy the need for some user to store 'missed' meetings +
+**Alternative 3 :** Let the users handle the meetings themselves +
+**Pros:** More freedom of choice, to manage the meetings +
+**Cons:** More troublesome for users, less user-friendly
+// end::autoDelete[]
 
 == Documentation
 

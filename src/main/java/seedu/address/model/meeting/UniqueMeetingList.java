@@ -56,6 +56,21 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         }
         return false;
     }
+    /**
+     * Returns true if the list contains a clashing meeting that has a different name of meeting as the given argument.
+     */
+    public boolean diffNameOfMeeting(ReadOnlyMeeting toCheck, ReadOnlyMeeting target) {
+        for (Meeting meeting : internalMeetingList) {
+            if (meeting != target) {
+                if (toCheck.getDate().equals(meeting.getDate())) {
+                    if (!toCheck.getName().equals(meeting.getName())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
     /**
      * Returns true if the list contains a clashing meeting that has a different meeting location as the given argument.
@@ -65,6 +80,21 @@ public class UniqueMeetingList implements Iterable<Meeting> {
             if (toCheck.getDate().equals(meeting.getDate())) {
                 if (!toCheck.getPlace().equals(meeting.getPlace())) {
                     return true;
+                }
+            }
+        }
+        return false;
+    }
+    /**
+     * Returns true if the list contains a clashing meeting that has a different meeting location as the given argument.
+     */
+    public boolean diffLocationOfMeeting(ReadOnlyMeeting toCheck, ReadOnlyMeeting target) {
+        for (Meeting meeting : internalMeetingList) {
+            if (target != meeting) {
+                if (toCheck.getDate().equals(meeting.getDate())) {
+                    if (!toCheck.getPlace().equals(meeting.getPlace())) {
+                        return true;
+                    }
                 }
             }
         }
@@ -87,10 +117,21 @@ public class UniqueMeetingList implements Iterable<Meeting> {
             throw new MeetingClashException();
         }
         internalMeetingList.add(new Meeting(toAdd));
-        internalMeetingList.sort((m1, m2) -> m1.getActualDate(m1.getDate().toString())
-                .compareTo(m2.getActualDate(m2.getDate().toString())));
+        sort(internalMeetingList);
+
     }
 
+    /**
+     *  Sorts the meeting list in chronological order
+     * @param list
+     * @return MeetingList
+     */
+    private ObservableList<Meeting> sort(ObservableList<Meeting> list) {
+        list.sort((m1, m2) -> m1.getActualDate(m1.getDate().toString())
+                .compareTo(m2.getActualDate(m2.getDate().toString())));
+
+        return list;
+    }
     /**
      * Replaces the meeting {@code target} in the list with {@code editedMeeting}.
      *
@@ -107,15 +148,12 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         }
         if (!target.equals(editedMeeting) && internalMeetingList.contains(editedMeeting)) {
             throw new DuplicateMeetingException();
-        } else if (diffNameOfMeeting(editedMeeting)) {
-            throw new MeetingClashException();
-        } else if (diffLocationOfMeeting(editedMeeting)) {
+        } else if (diffNameOfMeeting(editedMeeting, target) || diffLocationOfMeeting(editedMeeting, target)) {
             throw new MeetingClashException();
         }
 
         internalMeetingList.set(index, new Meeting(editedMeeting));
-        internalMeetingList.sort((m1, m2)-> m1.getActualDate(m1.getDate().toString())
-                .compareTo(m2.getActualDate(m2.getDate().toString())));
+        sort(internalMeetingList);
     }
 
     //@@author nelsonqyj
@@ -142,17 +180,26 @@ public class UniqueMeetingList implements Iterable<Meeting> {
                                 MeetingClashException {
         final UniqueMeetingList replacement = new UniqueMeetingList();
         for (final ReadOnlyMeeting meeting : meetings) {
-            DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-            LocalDateTime currDate = LocalDateTime.now();
-            LocalDateTime meetDate = LocalDateTime.parse(meeting.getDate().toString(), formatter);
-            if (meetDate.isAfter((currDate))) {
+            if (dateIsAfter((meeting.getDate().toString()))) { //to delete meetings that have passed automatically
                 replacement.add(new Meeting(meeting));
             }
         }
         setMeetings(replacement);
     }
+    /**
+     * To check if date is after log in (current) date and time
+     * @return true if meet date is after current date and time
+     */
+    private boolean dateIsAfter (String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        LocalDateTime currDate = LocalDateTime.now();
+        LocalDateTime meetDate = LocalDateTime.parse(date, formatter);
+        if (meetDate.isAfter((currDate))) {
+            return true;
+        }
+        return false;
+    }
     //@@author nelsonqyj
-
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */

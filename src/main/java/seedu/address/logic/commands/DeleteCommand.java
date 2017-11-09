@@ -55,7 +55,7 @@ public class DeleteCommand extends UndoableCommand {
         model.updateFilteredMeetingList(new MeetingContainsFullWordPredicate(Arrays.asList(nameArray)));
         List<ReadOnlyMeeting> lastShownMeetingList = model.getFilteredMeetingList();
 
-        while (true) {
+        while (!lastShownMeetingList.isEmpty()) {
             try {
                 Index firstIndex = ParserUtil.parseIndex("1");
                 ReadOnlyMeeting meetingToDelete = lastShownMeetingList.get(firstIndex.getZeroBased());
@@ -65,7 +65,7 @@ public class DeleteCommand extends UndoableCommand {
             } catch (MeetingNotFoundException mnfe) {
                 assert false : "The target meeting cannot be missing";
             } catch (IndexOutOfBoundsException ioobe) {
-                break;
+                assert false : "Index out of bounds";
             }
         }
 
