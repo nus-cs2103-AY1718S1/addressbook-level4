@@ -11,11 +11,15 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import com.google.common.annotations.VisibleForTesting;
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import org.telegram.abilitybots.api.bot.AbilityBot;
 import org.telegram.abilitybots.api.objects.Ability;
 import org.telegram.abilitybots.api.objects.Locality;
 import org.telegram.abilitybots.api.objects.MessageContext;
 import org.telegram.abilitybots.api.objects.Privacy;
+import org.telegram.abilitybots.api.sender.MessageSender;
 import org.telegram.telegrambots.api.methods.GetFile;
 import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.api.objects.File;
@@ -23,10 +27,6 @@ import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.PhotoSize;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
-
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
-
 import seedu.address.bot.parcel.DisplayParcel;
 import seedu.address.bot.parcel.ParcelParser;
 import seedu.address.bot.qrcode.QRcodeAnalyser;
@@ -49,9 +49,9 @@ import seedu.address.model.parcel.ReadOnlyParcel;
  */
 public class ArkBot extends AbilityBot {
 
-    private static final String BOT_MESSAGE_FAILURE = "Oh dear, something went wrong! Please try again!";
-    private static final String BOT_MESSAGE_SUCCESS = "%s command has been successfully executed!";
-    private static final String BOT_MESSAGE_HELP = "Welcome to ArkBot, your friendly companion to ArkBot on Desktop.\n"
+    public static final String BOT_MESSAGE_FAILURE = "Oh dear, something went wrong! Please try again!";
+    public static final String BOT_MESSAGE_SUCCESS = "%s command has been successfully executed!";
+    public static final String BOT_MESSAGE_HELP = "Welcome to ArkBot, your friendly companion to ArkBot on Desktop.\n"
                                                  + "Over here, you can interface with your Desktop application with "
                                                  + "the following functions /add, /list, /delete, /undo, /redo, "
                                                  + "/complete and /help.";
@@ -60,11 +60,13 @@ public class ArkBot extends AbilityBot {
             + "a/John street, block 123, #01-01 S123121 d/01-01-2001 s/DELIVERING";
     private static final String BOT_DEMO_BETSY = "add #/RR000000000SG n/Betsy Crowe t/frozen d/02-02-2002 "
             + "e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567 t/fragile";
+    private static final String DEFAULT_BOT_TOKEN = "339790464:AAGUN2BmhnU0I2B2ULenDdIudWyv1d4OTqY";
+    private static final String DEFAULT_BOT_USERNAME = "ArkBot";
+    private static final Privacy PRIVACY_SETTING = Privacy.PUBLIC;
+
     private static final Logger logger = LogsCenter.getLogger(ArkBot.class);
     private Logic logic;
     private Model model;
-    private String botToken;
-    private String botUsername;
     private Optional<Message> lastKnownMessage;
     private boolean waitingForImage;
 
@@ -72,10 +74,16 @@ public class ArkBot extends AbilityBot {
         super(botToken, botUsername);
         this.logic = logic;
         this.model = model;
-        this.botToken = botToken;
-        this.botUsername = botUsername;
         this.waitingForImage = false;
         logger.info("ArkBot successfully booted up.");
+    }
+
+    public ArkBot(Logic logic, Model model) {
+        super(DEFAULT_BOT_TOKEN, DEFAULT_BOT_USERNAME);
+        this.logic = logic;
+        this.model = model;
+        this.waitingForImage = false;
+        logger.info("Default ArkBot successfully booted up.");
     }
 
     @Override
@@ -93,13 +101,15 @@ public class ArkBot extends AbilityBot {
                 .info("adds parcel to list")
                 .input(0)
                 .locality(Locality.ALL)
-                .privacy(Privacy.ADMIN)
+                .privacy(PRIVACY_SETTING)
                 .action(ctx -> Platform.runLater(() -> {
                     try {
                         logic.execute(AddCommand.COMMAND_WORD + " "
                                 + combineArguments(ctx.arguments()));
+                        System.out.println("ADD ONE");
                         sender.send(String.format(BOT_MESSAGE_SUCCESS, AddCommand.COMMAND_WORD), ctx.chatId());
                     } catch (CommandException | ParseException e) {
+                        System.out.println("ADD TWO");
                         sender.send(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE),
                                 ctx.chatId());
                     }
@@ -118,7 +128,7 @@ public class ArkBot extends AbilityBot {
                 .info("lists all parcels")
                 .input(0)
                 .locality(Locality.ALL)
-                .privacy(Privacy.ADMIN)
+                .privacy(PRIVACY_SETTING)
                 .action(ctx -> Platform.runLater(() -> {
                     try {
                         logic.execute(ListCommand.COMMAND_WORD + " "
@@ -144,7 +154,7 @@ public class ArkBot extends AbilityBot {
                 .info("deletes parcel at selected index")
                 .input(0)
                 .locality(Locality.ALL)
-                .privacy(Privacy.ADMIN)
+                .privacy(PRIVACY_SETTING)
                 .action((MessageContext ctx) -> Platform.runLater(() -> {
                     try {
                         logic.execute(DeleteCommand.COMMAND_WORD + " "
@@ -173,7 +183,7 @@ public class ArkBot extends AbilityBot {
                 .info("deletes parcel at selected index")
                 .input(0)
                 .locality(Locality.ALL)
-                .privacy(Privacy.ADMIN)
+                .privacy(PRIVACY_SETTING)
                 .action((MessageContext ctx) -> Platform.runLater(() -> {
                     try {
                         logic.execute(RedoCommand.COMMAND_WORD);
@@ -195,7 +205,7 @@ public class ArkBot extends AbilityBot {
                 .info("deletes parcel at selected index")
                 .input(0)
                 .locality(Locality.ALL)
-                .privacy(Privacy.ADMIN)
+                .privacy(PRIVACY_SETTING)
                 .action((MessageContext ctx) -> Platform.runLater(() -> {
                     try {
                         logic.execute(UndoCommand.COMMAND_WORD);
@@ -217,7 +227,7 @@ public class ArkBot extends AbilityBot {
                 .info("adds parcel to list")
                 .input(0)
                 .locality(Locality.ALL)
-                .privacy(Privacy.ADMIN)
+                .privacy(PRIVACY_SETTING)
                 .action(ctx -> Platform.runLater(() -> {
                     try {
                         logic.execute(FindCommand.COMMAND_WORD + " "
@@ -243,7 +253,7 @@ public class ArkBot extends AbilityBot {
                 .info("completes a parcel in list")
                 .input(0)
                 .locality(Locality.ALL)
-                .privacy(Privacy.ADMIN)
+                .privacy(PRIVACY_SETTING)
                 .action(ctx -> Platform.runLater(() -> {
                     try {
                         if (combineArguments(ctx.arguments()).trim().equals("")) {
@@ -279,7 +289,7 @@ public class ArkBot extends AbilityBot {
                 .info("cancels QR code upload")
                 .input(0)
                 .locality(Locality.ALL)
-                .privacy(Privacy.ADMIN)
+                .privacy(PRIVACY_SETTING)
                 .action(ctx -> Platform.runLater(() -> {
                     this.waitingForImage = false;
                     sender.send("QR Code upload successfully cancelled!", ctx.chatId());
@@ -297,7 +307,7 @@ public class ArkBot extends AbilityBot {
                 .info("adds parcel to list")
                 .input(0)
                 .locality(Locality.ALL)
-                .privacy(Privacy.ADMIN)
+                .privacy(PRIVACY_SETTING)
                 .action(ctx -> Platform.runLater(() -> {
                     sender.send(BOT_MESSAGE_HELP, ctx.chatId());
                 }))
@@ -315,7 +325,7 @@ public class ArkBot extends AbilityBot {
                 .info("adds demo parcels to list")
                 .input(0)
                 .locality(Locality.ALL)
-                .privacy(Privacy.ADMIN)
+                .privacy(PRIVACY_SETTING)
                 .action(ctx -> Platform.runLater(() -> {
                     try {
                         logic.execute(AddCommand.COMMAND_WORD + " " + BOT_DEMO_JOHN);
@@ -393,7 +403,7 @@ public class ArkBot extends AbilityBot {
                 .info("receives Photos")
                 .input(0)
                 .locality(Locality.ALL)
-                .privacy(Privacy.ADMIN)
+                .privacy(PRIVACY_SETTING)
                 .action((MessageContext ctx) -> Platform.runLater(() -> {
                     Update update = ctx.update();
                     if (update.hasMessage() && update.getMessage().hasPhoto()) {
@@ -436,7 +446,6 @@ public class ArkBot extends AbilityBot {
                         } catch (TelegramApiException e) {
                             e.printStackTrace();
                         }
-
                     }
                 })).build();
     }
@@ -503,4 +512,37 @@ public class ArkBot extends AbilityBot {
         return null;
     }
 
+    public Ability saysHelloWorld() {
+        return Ability.builder()
+                .name("hello") // Name and command (/hello)
+                .info("Says hello world!") // Necessary if you want it to be reported via /commands
+                .privacy(PRIVACY_SETTING)  // Choose from Privacy Class (Public, Admin, Creator)
+                .locality(Locality.ALL) // Choose from Locality enum Class (User, Group, PUBLIC)
+                .input(0) // Arguments required for command (0 for ignore)
+                .action(ctx -> {
+          /*
+          ctx has the following main fields that you can utilize:
+          - ctx.update() -> the actual Telegram update from the basic API
+          - ctx.user() -> the user behind the update
+          - ctx.firstArg()/secondArg()/thirdArg() -> quick accessors for message arguments (if any)
+          - ctx.arguments() -> all arguments
+          - ctx.chatId() -> the chat where the update has emerged
+          NOTE that chat ID and user are fetched no matter what the update carries.
+          If the update does not have a message, but it has a callback query, the chatId and user will be fetched from that query.
+           */
+                    // Custom sender implementation
+                    sender.send("Hello World!", ctx.chatId());
+                })
+                .build();
+    }
+
+    @VisibleForTesting
+    void setSender(MessageSender sender) {
+        this.sender = sender;
+    }
+
+    @VisibleForTesting
+    MessageSender getSender() {
+        return this.sender;
+    }
 }

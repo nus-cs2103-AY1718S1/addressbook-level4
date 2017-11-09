@@ -5,15 +5,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.TelegramBotsApi;
-import org.telegram.telegrambots.exceptions.TelegramApiException;
-
 import com.google.common.eventbus.Subscribe;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import org.telegram.telegrambots.ApiContextInitializer;
+import org.telegram.telegrambots.TelegramBotsApi;
+import org.telegram.telegrambots.exceptions.TelegramApiException;
 import seedu.address.bot.ArkBot;
 import seedu.address.bot.BotSettings;
 import seedu.address.commons.core.Config;
@@ -59,6 +57,7 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
     protected BotSettings botSettings;
+    protected ArkBot bot;
 
 
 
@@ -92,9 +91,10 @@ public class MainApp extends Application {
 
             TelegramBotsApi botsApi = new TelegramBotsApi();
             try {
-                botsApi.registerBot(new ArkBot(logic, model,
-                        botSettings.getBotToken(), botSettings.getBotUsername()));
-                this.botStarted = true;
+                bot = new ArkBot(logic, model,
+                        botSettings.getBotToken(), botSettings.getBotUsername());
+                botsApi.registerBot(bot);
+                botStarted = true;
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
@@ -241,5 +241,19 @@ public class MainApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    /**
+     * Method to return instance of logic manager for testing.
+     */
+    public Logic getLogic() {
+        return this.logic;
+    }
+
+    /**
+     * Method to return instance of bot for testing.
+     */
+    public ArkBot getBot() {
+        return this.bot;
     }
 }
