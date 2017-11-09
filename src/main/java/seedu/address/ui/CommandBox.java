@@ -1,9 +1,6 @@
 package seedu.address.ui;
 
-import java.util.ArrayList;
 import java.util.logging.Logger;
-
-import org.controlsfx.control.textfield.TextFields;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -38,12 +35,12 @@ public class CommandBox extends UiPart<Region> {
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
-        // calls #setStyleToDefault() whenever there is a change to the text of the command box.
+        // calls #setStyleToDefault() whenever there is a change to the text of the command box.        
+        //TextFields.bindAutoCompletion(commandTextField,
+        //AutoCompleteSuggestions.getSuggestionList())
+        //        .setMinWidth(450);
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
-        TextFields.bindAutoCompletion(commandTextField,
-                AutoCompleteSuggestions.getSuggestionList())
-                .setMinWidth(450);
     }
     //@@author
 

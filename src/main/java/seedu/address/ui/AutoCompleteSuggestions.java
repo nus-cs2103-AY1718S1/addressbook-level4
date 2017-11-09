@@ -25,6 +25,7 @@ import seedu.address.logic.commands.UpdateUserCommand;
 import seedu.address.logic.commands.WebCommand;
 
 //@@author hansiang93
+
 /**
  * Handles all command suggestions and their usage examples.
  */
@@ -44,34 +45,34 @@ public class AutoCompleteSuggestions {
 
     static {
         suggestionList.addPossibleSuggestions(AddCommand.COMMAND_WORD);
-        suggestionList.addPossibleSuggestions(AddCommand.MESSAGE_USAGE_EXAMPLE);
+        //suggestionList.addPossibleSuggestions(AddCommand.MESSAGE_USAGE_EXAMPLE);
         suggestionList.addPossibleSuggestions(EditCommand.COMMAND_WORD);
-        suggestionList.addPossibleSuggestions(EditCommand.MESSAGE_USAGE_EXAMPLE);
+        //suggestionList.addPossibleSuggestions(EditCommand.MESSAGE_USAGE_EXAMPLE);
         suggestionList.addPossibleSuggestions(SelectCommand.COMMAND_WORD);
-        suggestionList.addPossibleSuggestions(SelectCommand.MESSAGE_USAGE_EXAMPLE);
+        //suggestionList.addPossibleSuggestions(SelectCommand.MESSAGE_USAGE_EXAMPLE);
         suggestionList.addPossibleSuggestions(DeleteCommand.COMMAND_WORD);
-        suggestionList.addPossibleSuggestions(DeleteCommand.MESSAGE_USAGE_EXAMPLE);
+        //suggestionList.addPossibleSuggestions(DeleteCommand.MESSAGE_USAGE_EXAMPLE);
         suggestionList.addPossibleSuggestions(ClearCommand.COMMAND_WORD);
         suggestionList.addPossibleSuggestions(FindCommand.COMMAND_WORD);
-        suggestionList.addPossibleSuggestions(FindCommand.MESSAGE_USAGE_EXAMPLE);
+        //suggestionList.addPossibleSuggestions(FindCommand.MESSAGE_USAGE_EXAMPLE);
         suggestionList.addPossibleSuggestions(FilterCommand.COMMAND_WORD);
-        suggestionList.addPossibleSuggestions(FilterCommand.MESSAGE_USAGE_EXAMPLE);
+        //suggestionList.addPossibleSuggestions(FilterCommand.MESSAGE_USAGE_EXAMPLE);
         suggestionList.addPossibleSuggestions(ListCommand.COMMAND_WORD);
         suggestionList.addPossibleSuggestions(SortCommand.COMMAND_WORD);
-        suggestionList.addPossibleSuggestions(SortCommand.MESSAGE_USAGE_EXAMPLE);
+        //suggestionList.addPossibleSuggestions(SortCommand.MESSAGE_USAGE_EXAMPLE);
         suggestionList.addPossibleSuggestions(HistoryCommand.COMMAND_WORD);
         suggestionList.addPossibleSuggestions(ExitCommand.COMMAND_WORD);
         suggestionList.addPossibleSuggestions(HelpCommand.COMMAND_WORD);
         suggestionList.addPossibleSuggestions(UndoCommand.COMMAND_WORD);
         suggestionList.addPossibleSuggestions(RedoCommand.COMMAND_WORD);
         suggestionList.addPossibleSuggestions(DeleteTagCommand.COMMAND_WORD);
-        suggestionList.addPossibleSuggestions(DeleteTagCommand.MESSAGE_USAGE_EXAMPLE);
+        //suggestionList.addPossibleSuggestions(DeleteTagCommand.MESSAGE_USAGE_EXAMPLE);
         suggestionList.addPossibleSuggestions(RemarkCommand.COMMAND_WORD);
-        suggestionList.addPossibleSuggestions(RemarkCommand.MESSAGE_USAGE_EXAMPLE);
+        //suggestionList.addPossibleSuggestions(RemarkCommand.MESSAGE_USAGE_EXAMPLE);
         suggestionList.addPossibleSuggestions(UpdateUserCommand.COMMAND_WORD);
-        suggestionList.addPossibleSuggestions(UpdateUserCommand.MESSAGE_USAGE_EXAMPLE);
+        //suggestionList.addPossibleSuggestions(UpdateUserCommand.MESSAGE_USAGE_EXAMPLE);
         suggestionList.addPossibleSuggestions(WebCommand.COMMAND_WORD);
-        suggestionList.addPossibleSuggestions(WebCommand.MESSAGE_USAGE_EXAMPLE);
+        //suggestionList.addPossibleSuggestions(WebCommand.MESSAGE_USAGE_EXAMPLE);
     }
 
     public static SuggestionProvider<String> getSuggestionList() {
