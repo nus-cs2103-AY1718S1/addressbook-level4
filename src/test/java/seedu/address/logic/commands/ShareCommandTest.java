@@ -1,10 +1,13 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalUserPerson.WILLIAM;
 
+import org.junit.Rule;
 import org.junit.Test;
 
+import seedu.address.commons.events.ui.CopyToClipboardRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
@@ -13,12 +16,16 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.UserPerson;
 import seedu.address.model.util.SampleUserPersonUtil;
+import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author bladerail
 public class ShareCommandTest {
 
     private Model model;
     private ShareCommand shareCommand;
+
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     @Test
     public void execute_showsAddCommandCorrectly() {
@@ -30,7 +37,9 @@ public class ShareCommandTest {
         String expectedResult = String.format(ShareCommand.MESSAGE_SUCCESS,
                 ShareCommand.addCommandBuilder(
                         SampleUserPersonUtil.getDefaultSamplePerson()));
+
         assertCommandSuccess(shareCommand, model, expectedResult, model);
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof CopyToClipboardRequestEvent);
     }
 
     @Test
@@ -44,6 +53,7 @@ public class ShareCommandTest {
         String addCommandWilliam = ShareCommand.addCommandBuilder(WILLIAM);
         String expectedResult = String.format(ShareCommand.MESSAGE_SUCCESS, addCommandWilliam);
         assertCommandSuccess(shareCommand, model, expectedResult, model);
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof CopyToClipboardRequestEvent);
     }
 }
 
