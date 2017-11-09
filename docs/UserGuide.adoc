@@ -376,10 +376,63 @@ You can only set dates that are after current time. (i.e. You cannot set a time 
 
 *Example:*
 
+Adding appointment +
+
 image::aptexample.png[width="500"]
-    Figure 11: Appointment Command Usage Diagram
+    Figure 11: Appointment Command Usage Diagram for Adding
+
+Canceling appointments +
+
+image::aptexamplecancel.png[width="500"]
+    Figure 11: Appointment Command Usage Diagram for Cancelling
+
+[NOTE]
+If the appointment does not show on the daily view, it may be too far ahead
 
 // end::appointment[]
+
+=== Changing Calendar View: `calendar`
+
+You can change the calendar view to daily, monthly, weekly, or yearly mode.
+
+Changing view: Change the calendar view +
+
+*Format:* `calendar LETTER` +
+*Shorthand format:* : `cal LETTER`
+
+[width="59%",cols="<20%,20%,50%",options="header",]
+|=======================================================================
+|`LETTER`| Corresponding view|Description
+
+|`d`| Day view | Shows your appointments for the day. Also shows a list of appointments for the month that is sorted
+according to appointment
+|`w`| Week view| Shows your appointments for the week.
+|`m`| Month view| Shows your appointments for the month.
+|`y`| Year view| Shows your appointments for the year.
+
+|=======================================================================
+
+*Examples:* +
+
+Day View +
+
+image::calendardexample.PNG[width="500"]
+    Figure 12: Appointment Calendar Day View
+
+Week View +
+
+image::calendarwexample.PNG[width="500"]
+    Figure 13: Appointment Calendar Week View
+
+Month View +
+
+image::calendarmexample.PNG[width="500"]
+    Figure 14: Appointment Calendar Month View
+
+Year View +
+
+image::calendaryexample.PNG[width="500"]
+    Figure 15: Appointment Calendar Year View
 
 // tag::remark[]
 === Adding/Removing Remarks to a person : `remark`

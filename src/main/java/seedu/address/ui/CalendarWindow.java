@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -15,6 +16,7 @@ import com.calendarfx.view.CalendarView;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 
 import javafx.fxml.FXML;
@@ -118,6 +120,7 @@ public class CalendarWindow extends UiPart<Region> {
             calendar.setStyle(Calendar.Style.getStyle(styleNum));
             styleNum++;
             styleNum = styleNum % 5;
+            calendar.setLookAheadDuration(Duration.ofDays(365));
             calendarSource.getCalendars().add(calendar);
             ArrayList<Entry> entries = getEntries(person);
 
