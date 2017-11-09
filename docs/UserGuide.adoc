@@ -99,7 +99,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 
 [NOTE]
 This 'find' command is obsoleted. +
-Please refer to new link:#since-code-v1-1-code[finds] command.
+Please refer to new link:#locating-persons-by-names-or-phone-numbers-or-emails-or-tags-code-finds-code-v1-1[finds] command.
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
