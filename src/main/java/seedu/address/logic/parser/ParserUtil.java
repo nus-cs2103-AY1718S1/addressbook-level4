@@ -340,12 +340,13 @@ public class ParserUtil {
      * @return a {@code String} without the tags.
      */
     public static String parseRemoveTags(String value, List<String> tags) {
+        String tagString = value;
         for (String tag : tags) {
-            value = value.substring(0, value.indexOf(tag)).trim()
+            tagString = tagString.substring(0, tagString.indexOf(tag)).trim()
                     .concat(" ")
-                    .concat(value.substring(value.indexOf(tag) + tag.length()).trim()).trim();
+                    .concat(tagString.substring(tagString.indexOf(tag) + tag.length()).trim()).trim();
         }
-        return value;
+        return tagString;
     }
 
     /**
