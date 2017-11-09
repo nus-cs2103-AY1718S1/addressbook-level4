@@ -1,5 +1,5 @@
 # LimeFallacie
-###### \java\seedu\address\logic\commands\ListCommandTest.java
+###### /java/seedu/address/logic/commands/ListCommandTest.java
 ``` java
     @Test
     public void execute_listFriends_success() {
@@ -11,7 +11,7 @@
     }
 }
 ```
-###### \java\seedu\address\logic\commands\SortCommandTest.java
+###### /java/seedu/address/logic/commands/SortCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for SortCommand.
@@ -63,7 +63,7 @@ public class SortCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ExportCommandParserTest.java
+###### /java/seedu/address/logic/parser/ExportCommandParserTest.java
 ``` java
 public class ExportCommandParserTest {
     private ExportCommandParser parser = new ExportCommandParser();
@@ -79,7 +79,7 @@ public class ExportCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ImportCommandParserTest.java
+###### /java/seedu/address/logic/parser/ImportCommandParserTest.java
 ``` java
 public class ImportCommandParserTest {
 
@@ -96,7 +96,7 @@ public class ImportCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ListCommandParserTest.java
+###### /java/seedu/address/logic/parser/ListCommandParserTest.java
 ``` java
 public class ListCommandParserTest {
     private ListCommandParser parser = new ListCommandParser();
@@ -112,7 +112,7 @@ public class ListCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\SortCommandParserTest.java
+###### /java/seedu/address/logic/parser/SortCommandParserTest.java
 ``` java
 public class SortCommandParserTest {
     private SortCommandParser parser = new SortCommandParser();
@@ -128,7 +128,7 @@ public class SortCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\testutil\TypicalSortTypes.java
+###### /java/seedu/address/testutil/TypicalSortTypes.java
 ``` java
 /**
  * A utility class containing a list of {@code sortType} Strings to be used in tests.
@@ -139,7 +139,7 @@ public class TypicalSortTypes {
     public static final String SORT_TYPE_EMAIL = "email";
 }
 ```
-###### \java\seedu\address\testutil\TypicalStorage.java
+###### /java/seedu/address/testutil/TypicalStorage.java
 ``` java
 /**
  * A utility class containing a constructor for a dummy storage object

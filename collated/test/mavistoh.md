@@ -1,5 +1,5 @@
 # mavistoh
-###### \java\seedu\address\model\person\BirthdayTest.java
+###### /java/seedu/address/model/person/BirthdayTest.java
 ``` java
 public class BirthdayTest {
 
@@ -11,14 +11,21 @@ public class BirthdayTest {
         assertFalse(Birthday.isValidBirthday("phone")); // non-numeric
         assertFalse(Birthday.isValidBirthday("9011p041")); // alphabets within digits
         assertFalse(Birthday.isValidBirthday("9312 1534")); // spaces within digits
+        assertFalse(Birthday.isValidBirthday("29-02-1995")); // not a leap year
+        assertFalse(Birthday.isValidBirthday("31-02-1995")); // feb cannot take 30/31
+        assertFalse(Birthday.isValidBirthday("29-02-1995")); // not a leap year
+        assertFalse(Birthday.isValidBirthday("31-09-1989")); // no 31st in sept
+        assertFalse(Birthday.isValidBirthday("02.09-1989")); // separators not consistent
 
         // valid birthdays
         assertTrue(Birthday.isValidBirthday("-"));
         assertTrue(Birthday.isValidBirthday("02-03-1995")); // follow regex
+        assertTrue(Birthday.isValidBirthday("02.03.1995")); // follow regex
+        assertTrue(Birthday.isValidBirthday("02/03/1995")); // follow regex
     }
 }
 ```
-###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
+###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
 ``` java
     /**
      * Sets the {@code Birthday} of the {@code EditBirthdayDescriptor} that we are building.
@@ -32,7 +39,7 @@ public class BirthdayTest {
         return this;
     }
 ```
-###### \java\seedu\address\testutil\PersonBuilder.java
+###### /java/seedu/address/testutil/PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.
@@ -46,7 +53,7 @@ public class BirthdayTest {
         return this;
     }
 ```
-###### \java\systemtests\DeleteCommandSystemTest.java
+###### /java/systemtests/DeleteCommandSystemTest.java
 ``` java
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
 

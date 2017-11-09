@@ -1,5 +1,5 @@
 # mavistoh
-###### \java\seedu\address\commons\core\index\Index.java
+###### /java/seedu/address/commons/core/index/Index.java
 ``` java
     /**
      * Creates a new {@code Index[]} using a one-based index.
@@ -20,7 +20,7 @@
     }
 }
 ```
-###### \java\seedu\address\logic\commands\DeleteCommand.java
+###### /java/seedu/address/logic/commands/DeleteCommand.java
 ``` java
 /**
  * Deletes a person identified using it's last displayed index from the address book.
@@ -94,7 +94,7 @@ public class DeleteCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\EditCommand.java
+###### /java/seedu/address/logic/commands/EditCommand.java
 ``` java
         public void setBirthday(Birthday birthday) {
             this.birthday = birthday;
@@ -104,7 +104,7 @@ public class DeleteCommand extends UndoableCommand {
             return Optional.ofNullable(birthday);
         }
 ```
-###### \java\seedu\address\logic\parser\AddCommandParser.java
+###### /java/seedu/address/logic/parser/AddCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -177,7 +177,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\DeleteCommandParser.java
+###### /java/seedu/address/logic/parser/DeleteCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new DeleteCommand object
@@ -201,7 +201,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses {@code oneBasedIndex} into an {@code Index[]} and returns it. Leading and trailing whitespaces will be
@@ -244,7 +244,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
     }
 
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
@@ -254,7 +254,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
         return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
 ```
-###### \java\seedu\address\model\person\Address.java
+###### /java/seedu/address/model/person/Address.java
 ``` java
     /**
      * Validates given address.
@@ -279,7 +279,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
         return test.matches(ADDRESS_VALIDATION_REGEX) || test.matches(ADDRESS_EMPTY);
     }
 ```
-###### \java\seedu\address\model\person\Birthday.java
+###### /java/seedu/address/model/person/Birthday.java
 ``` java
 /**
  * Represents Person's birthday in the address book.
@@ -289,8 +289,17 @@ public class Birthday {
 
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Birthday has to be in the format dd-mm-yyyy";
-    public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{2}-\\d{2}-\\d{4}";
+            "Birthday must be in the format DD.MM.YYYY, DD/MM/YYYY or DD-MM-YYYY";
+    //public static final String BIRTHDAY_VALIDATION_REGEX = "(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)
+    // (\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]
+    // \\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.
+    // )(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})";
+    //public static final String BIRTHDAY_VALIDATION_REGEX = "(^(((0[1-9]|1[0-9]|2[0-8])[\/](0[1-9]|1[012]))|((29|30|31)
+    // [\/](0[13578]|1[02]))|((29|30)[\/](0[4,6,9]|11)))[\/](19|[2-9][0-9])\d\d$)|(^29[\/]02[\/](19|[2-9][0-9])(00|04
+    // |08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)";
+    public static final String BIRTHDAY_VALIDATION_REGEX = "^(?=\\d{2}([-.,\\/])\\d{2}\\1\\d{4}$)"
+            + "(?:0[1-9]|1\\d|[2][0-8]|29(?!.02.(?!(?!(?:[02468][1-35-79]|[13579][0-13-57-9])00)\\d{2}"
+            + "(?:[02468][048]|[13579][26])))|30(?!.02)|31(?=.(?:0[13578]|10|12))).(?:0[1-9]|1[012]).\\d{4}$";
     public static final String BIRTHDAY_EMPTY = "-";
     public final String value;
 
@@ -338,7 +347,7 @@ public class Birthday {
 
 }
 ```
-###### \java\seedu\address\model\person\Email.java
+###### /java/seedu/address/model/person/Email.java
 ``` java
     /**
      * Validates given email.
@@ -367,7 +376,7 @@ public class Birthday {
         return test.matches(EMAIL_VALIDATION_REGEX) || test.matches(EMAIL_EMPTY);
     }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     @Override
     public ObjectProperty<Name> nameProperty() {
@@ -436,7 +445,7 @@ public class Birthday {
     }
 
 ```
-###### \java\seedu\address\model\person\Phone.java
+###### /java/seedu/address/model/person/Phone.java
 ``` java
     /**
      * Validates given phone number.

@@ -1,5 +1,5 @@
 # eldonng
-###### \java\seedu\address\logic\commands\PinCommandTest.java
+###### /java/seedu/address/logic/commands/PinCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code PinCommand and UnpinCommand}.
@@ -158,7 +158,7 @@ public class PinCommandTest {
     }
 }
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find phone number of person in address book -> 1 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
@@ -167,7 +167,7 @@ public class PinCommandTest {
         assertSelectedCardUnchanged();
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find address of person in address book -> 3 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
@@ -176,7 +176,7 @@ public class PinCommandTest {
         assertSelectedCardUnchanged();
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find email of person in address book -> 1 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
@@ -209,7 +209,7 @@ public class PinCommandTest {
         assertSelectedCardUnchanged();
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find tags of person in address book -> 1 persons found */
         List<Tag> tags = new ArrayList<>(BENSON.getTags());
@@ -243,7 +243,7 @@ public class PinCommandTest {
         assertSelectedCardUnchanged();
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find person in address book, keyword is username of email -> 1 person found */
         command = FindCommand.COMMAND_WORD + " johnd";
@@ -251,7 +251,7 @@ public class PinCommandTest {
         assertCommandSuccess(command, expectedModel);
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find person in address book, keyword is multiple usernames of email -> 2 persons found */
         command = FindCommand.COMMAND_WORD + " johnd" + " alice";
@@ -259,7 +259,7 @@ public class PinCommandTest {
         assertCommandSuccess(command, expectedModel);
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /*Case: find person in address book, keyword is domain names of email -> 7 persons found */
         command = FindCommand.COMMAND_WORD + " example.com";
@@ -267,7 +267,7 @@ public class PinCommandTest {
         assertCommandSuccess(command, expectedModel);
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find person in address book, keyword is invalid domain name of email -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " gmail.com";
@@ -275,14 +275,14 @@ public class PinCommandTest {
         assertCommandSuccess(command, expectedModel);
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find person in address book, keyword is invalid username of email -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " hello";
         assertCommandSuccess(command, expectedModel);
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find person in address book, keyword is substring of name -> 1 persons found */
         command = FindCommand.COMMAND_WORD + " Mei";
@@ -291,7 +291,7 @@ public class PinCommandTest {
         assertSelectedCardUnchanged();
 
 ```
-###### \java\systemtests\PinCommandSystemTest.java
+###### /java/systemtests/PinCommandSystemTest.java
 ``` java
 public class PinCommandSystemTest extends AddressBookSystemTest {
 
