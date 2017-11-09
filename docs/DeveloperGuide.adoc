@@ -91,7 +91,7 @@ If everything goes well, it should finish with the `BUILD SUCCESSFUL` message. T
 
 === Verifying the Setup
 
-To make sure that the application runs as expected after the initial set up setting up, do the following: 
+To make sure that the application runs as expected after the initial set up setting up, do the following:
 
 . Run the `seedu.address.MainApp` and try a few commands
 . link:#testing[Run the tests] to ensure they all pass.
