@@ -383,7 +383,7 @@ image::aptexample.png[width="500"]
 
 Canceling appointments +
 
-image::aptexamplecancel.png[width="500"]
+image::aptexamplecancel.png[width="800"]
     Figure 11: Appointment Command Usage Diagram for Cancelling
 
 [NOTE]
