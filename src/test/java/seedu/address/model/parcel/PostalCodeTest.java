@@ -10,7 +10,6 @@ public class PostalCodeTest {
 
     @Test
     public void isValidPostalCode() {
-
         // invalid postal code
         assertFalse(PostalCode.isValidPostalCode("")); // empty string
         assertFalse(PostalCode.isValidPostalCode(" ")); // spaces only
@@ -21,8 +20,8 @@ public class PostalCodeTest {
         assertFalse(PostalCode.isValidPostalCode("s#!@a11")); // random characters in 6 digits
 
         // valid postal code
-        assertTrue(PostalCode.isValidPostalCode("s000000"));
-        assertTrue(PostalCode.isValidPostalCode("S123456"));
+        assertTrue(PostalCode.isValidPostalCode("s000000")); // appended with 's'
+        assertTrue(PostalCode.isValidPostalCode("S123456"));  // appended with 'S'
         assertTrue(PostalCode.isValidPostalCode("s000845"));
     }
 }

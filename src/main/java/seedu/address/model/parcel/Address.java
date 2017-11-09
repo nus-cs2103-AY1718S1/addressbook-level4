@@ -11,14 +11,15 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Address {
 
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
-            "Parcel addresses can take any values, cannot be blank and must end with 'S' or 's' appended "
-                    + "with 6 digits seperated from the rest of the address by one or multiple space(s)";
+            "Parcel addresses must start with an alphanumeric character (i.e. a-z, A-Z, or 0-9), can take any values "
+                    + "thereafter. However, it cannot be blank and must end with 'S' or 's' appended with 6 digits "
+                    + "seperated from the rest of the address by one or multiple space(s)";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String ADDRESS_VALIDATION_REGEX = "[\\w].+\\s+([Ss]{1}\\d{6})$";
+    public static final String ADDRESS_VALIDATION_REGEX = "([a-z0-9A-Z].*)+\\s+([Ss]{1}\\d{6})$";
     public static final int POSTAL_CODE_STRING_LENGTH = 7;
 
     public final String value;

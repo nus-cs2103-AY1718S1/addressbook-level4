@@ -7,11 +7,13 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.logging.Logger;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -28,6 +30,8 @@ public class AddCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @Test
     public void constructor_nullParcel_throwsNullPointerException() {
@@ -100,6 +104,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addParcelCommand(ReadOnlyParcel parcel) throws DuplicateParcelException {
+            addParcel(parcel);
+        }
+
+        @Override
+        public boolean getActiveIsAllBool() {
+            return true;
+        }
+
+        @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
@@ -112,9 +126,15 @@ public class AddCommandTest {
     private class ModelStubAcceptingParcelAdded extends ModelStub {
         final ArrayList<Parcel> parcelsAdded = new ArrayList<>();
 
+        /*
         @Override
         public boolean hasSelected() {
             return false;
+        }
+        */
+        @Override
+        public void addParcelCommand(ReadOnlyParcel parcel) throws DuplicateParcelException {
+            addParcel(parcel);
         }
 
         @Override
@@ -123,8 +143,18 @@ public class AddCommandTest {
         }
 
         @Override
+        public void forceSelectParcel(ReadOnlyParcel parcel) {
+            logger.info("Simulate force selection of parcel.");
+        }
+
+        @Override
         public void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
             parcelsAdded.add(new Parcel(parcel));
+        }
+
+        @Override
+        public boolean getActiveIsAllBool() {
+            return true;
         }
 
         @Override

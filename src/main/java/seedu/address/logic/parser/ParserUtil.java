@@ -76,6 +76,7 @@ public class ParserUtil {
         }
     }
 
+    //@@author kennard123661
     /**
      * Parses a {@code Optional<String> trackingNumber} into an {@code Optional<TrackingNumber>} if
      * {@code trackingNumber} is present.
@@ -86,6 +87,7 @@ public class ParserUtil {
         requireNonNull(trackingNumber);
         return trackingNumber.isPresent() ? Optional.of(new TrackingNumber(trackingNumber.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
@@ -132,14 +134,16 @@ public class ParserUtil {
         return deliveryDate.isPresent() ? Optional.of(new DeliveryDate(deliveryDate.get())) : Optional.empty();
     }
 
+    //@@author kennard123661
     /**
-     * Parses {@code Optional<String>} into an {@code Optional<Status>} and returns it. Leading and trailing whitespaces
-     * will be trimmed.
+     * Parses {@code Optional<String>} into an {@code Optional<Status>} if {@code Status} is present.
+     * Leading and trailing whitespaces will be trimmed.
      */
     public static Optional<Status> parseStatus(Optional<String> status) throws IllegalValueException {
         requireNonNull(status);
         return status.isPresent() ? Optional.of(Status.getInstance(status.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.

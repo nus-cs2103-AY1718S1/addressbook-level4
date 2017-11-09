@@ -2,7 +2,7 @@
 ###### \java\seedu\address\logic\commands\ImportCommand.java
 ``` java
 /**
- * Imports the parcels and tags of parcelsToAdd to the current AddressBook
+ * Imports the parcels and tags stored in {@code parcels} into the current instance of Ark.
  */
 public class ImportCommand extends UndoableCommand {
 
@@ -10,47 +10,57 @@ public class ImportCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds the data of a storage file stored in "
             + "data/import/ directory into Ark.\n"
-            + "Parameters: FILE (Must be a valid addressbook file stored in xml format)\n"
-            + "Example: " + COMMAND_WORD + " addressbook.xml";
+            + "Parameters: FILE (Must be a valid addressbook file stored in xml format) i.e.\n"
+            + "Example: " + COMMAND_WORD + " ark_storage";
 
-    public static final String MESSAGE_SUCCESS = "Summary: %1$d parcels added and %2$d duplicate parcels not added.\n"
-            + "Parcels added: %3$s\nDuplicate Parcels: %4$s";
-    public static final String MESSAGE_DUPLICATE_PARCELS = "All parcels in the imported save file will create "
+    public static final String MESSAGE_SUCCESS_SUMMARY = "Summary: %1$d parcels added and %2$d duplicate "
+            + "parcels not added.\n";
+    public static final String MESSAGE_SUCCESS_BODY = "Parcels added: %3$s\nDuplicate Parcels: %4$s";
+    public static final String MESSAGE_SUCCESS = MESSAGE_SUCCESS_SUMMARY + MESSAGE_SUCCESS_BODY;
+
+    public static final String MESSAGE_FAILURE_DUPLICATE_PARCELS = "All parcels in the imported save file will create "
             + "duplicate parcels";
 
-    private final List<ReadOnlyParcel> parcelsToAdd;
+    private final List<ReadOnlyParcel> parcels;
 
     /**
-     * Creates an ImportCommand to add the parcels in parcelList {@code ReadOnlyParcel}
+     * Creates an ImportCommand to add all {@code ReadOnlyParcel}s in {@param parcelList}.
      */
     public ImportCommand(List<ReadOnlyParcel> parcelList) {
-        parcelsToAdd = parcelList;
+        parcels = parcelList;
     }
 
+    /**
+     * Adds all unique parcels in {@code parcels} to the {@link UniqueParcelList} of the {@link AddressBook}. Ignores
+     * parcels that will create duplicates in the {@link UniqueParcelList}
+     *
+     * @return {@link CommandResult} created by {@link ImportCommand#executeUndoableCommand()}
+     * @throws CommandException if {@code parcels} contain only duplicate parcels.
+     */
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
 
-        List<ReadOnlyParcel> addedParcels = new ArrayList<>(); // list of added parcels
+        List<ReadOnlyParcel> uniqueParcels = new ArrayList<>(); // list of unique parcels added to Ark.
         List<ReadOnlyParcel> duplicateParcels = new ArrayList<>(); // list of duplicate parcels that are not added
         List<ReadOnlyParcel> storedParcels = model.getAddressBook().getParcelList(); // parcels already stored in Ark
 
         // check if all parcels are duplicates
-        if (storedParcels.containsAll(parcelsToAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PARCELS);
+        if (storedParcels.containsAll(parcels)) {
+            throw new CommandException(MESSAGE_FAILURE_DUPLICATE_PARCELS);
         }
 
-        model.addAllParcels(parcelsToAdd, addedParcels, duplicateParcels);
+        model.addAllParcels(parcels, uniqueParcels, duplicateParcels);
 
-        String addedParcelsString = getImportFormattedParcelListString(addedParcels);
+        String addedParcelsString = getImportFormattedParcelListString(uniqueParcels);
         String duplicatedParcelsString = getImportFormattedParcelListString(duplicateParcels);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, addedParcels.size(), duplicateParcels.size(),
+        return new CommandResult(String.format(MESSAGE_SUCCESS, uniqueParcels.size(), duplicateParcels.size(),
                 addedParcelsString, duplicatedParcelsString));
     }
 
     /**
-     * @return formatted list of parcels added/not added for ImportCommand execution feedback
+     * @return formatted list of parcels added/not added for ImportCommand execution result.
      */
     public static String getImportFormattedParcelListString(List<ReadOnlyParcel> parcels) {
         if (parcels.size() == 0) {
@@ -70,11 +80,11 @@ public class ImportCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ImportCommand // instanceof handles nulls
-                && hasSameParcels(parcelsToAdd, ((ImportCommand) other).parcelsToAdd));
+                && hasSameParcels(parcels, ((ImportCommand) other).parcels));
     }
 
     /**
-     * check if the elements of parcels and otherParcels have the same elements, disregarding order.
+     * check if {@code parcels} and {@code otherParcels} have the same elements, disregarding order.
      */
     public boolean hasSameParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> otherParcels) {
         // check # of parcels are equal
@@ -88,83 +98,109 @@ public class ImportCommand extends UndoableCommand {
 ```
 ###### \java\seedu\address\logic\Logic.java
 ``` java
-    /** Returns an unmodifiable view of the filtered list of parcels */
-    ObservableList<ReadOnlyParcel> getFilteredParcelList();
+    /**
+     * Returns an unmodifiable view of the filtered list of {@link ReadOnlyParcel}s from the {@link Model} that have
+     * {@link Status} that is COMPLETED.
+     */
+    ObservableList<ReadOnlyParcel> getCompletedParcelList();
 
-    /** Returns an unmodifiable view of the filtered list of parcels with Status COMPLETE */
-    ObservableList<ReadOnlyParcel> getDeliveredParcelList();
+    /**
+     * Returns an unmodifiable view of the filtered list of {@link ReadOnlyParcel}s from the {@link Model} that have
+     * {@link Status} that is not COMPLETED.
+     */
+    ObservableList<ReadOnlyParcel> getUncompletedParcelList();
 
-    /** Returns an unmodifiable view of the filtered list of parcels with Status not COMPLETE */
-    ObservableList<ReadOnlyParcel> getUndeliveredParcelList();
+    /** Sets the active list of {@link Model} at the particular instance
+     *
+     * @param isCompleted if true, the active list in {@link Model} will be set to the list of {@link ReadOnlyParcel}s
+     *                    with {@link Status} that is COMPLETED. Otherwise, it will be set the list of parcels
+     *                    with {@link Status} that is not COMPLETED.
+     */
+    void setActiveList(boolean isCompleted);
 
-    /** Returns an unmodifiable view of the filtered list of parcels with Status not COMPLETE */
-    void setActiveList(boolean isDelivered);
+    /** Returns an unmodifiable view of the current active list in {@link Model} at the instance it waas called. */
+    ObservableList<ReadOnlyParcel> getActiveList();
+```
+###### \java\seedu\address\logic\Logic.java
+``` java
+
+    /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
+    ListElementPointer getHistorySnapshot();
+}
 ```
 ###### \java\seedu\address\logic\LogicManager.java
 ``` java
+    /**
+     * @see Logic#getFilteredParcelList();
+     */
     @Override
     public ObservableList<ReadOnlyParcel> getFilteredParcelList() {
         return model.getFilteredParcelList();
     }
 
+    /**
+     * @see Logic#getCompletedParcelList()
+     */
     @Override
-    public ObservableList<ReadOnlyParcel> getDeliveredParcelList() {
-        return model.getFilteredDeliveredParcelList();
+    public ObservableList<ReadOnlyParcel> getCompletedParcelList() {
+        return model.getCompletedParcelList();
     }
 
+    /**
+     * @see Logic#setActiveList(boolean)
+     */
     @Override
-    public void setActiveList(boolean isDelivered) {
-        model.setActiveList(isDelivered);
+    public void setActiveList(boolean isCompleted) {
+        model.setActiveList(isCompleted);
     }
 
+    /**
+     * @see Logic#getUncompletedParcelList()
+     */
     @Override
-    public ObservableList<ReadOnlyParcel> getUndeliveredParcelList() {
-        return model.getFilteredUndeliveredParcelList();
+    public ObservableList<ReadOnlyParcel> getUncompletedParcelList() {
+        return model.getUncompletedParcelList();
     }
-    //@@ author
 
+    /**
+     * @see Logic#getActiveList()
+     */
     @Override
     public ObservableList<ReadOnlyParcel> getActiveList() {
         return model.getActiveList();
     }
-
-    @Override
-    public ListElementPointer getHistorySnapshot() {
-        return new ListElementPointer(history.getHistory());
-    }
-}
 ```
 ###### \java\seedu\address\logic\parser\ImportCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ImportCommand object
- * @throws ParseException if its an illegal value or the file name is not an alphanumeric xml.
- * This is to prevent directory traversal attacks through the import command, by creating a whitelist of accepted
- * commands through a validation regex.
+ *
+ * @throws ParseException if its an illegal value or the file name contains non-alphanumeric or non-underscore
+ * characters.
  */
 public class ImportCommandParser implements Parser<ImportCommand> {
 
-    public static final String FILE_NAME_VALIDATION_REGEX = "^([A-z0-9])\\w+[.][x][m][l]";
+    public static final String FILE_NAME_VALIDATION_REGEX = "([a-zA-Z0-9_]+)";
     public static final String MESSAGE_FILE_NAME_INVALID = "File name should be an xml file that only contains "
-            + "alphanumeric characters";
+            + "alphanumeric or underscore characters";
 
     /**
-     * Parses the given {@code String} of arguments in the context of the ImportCommand
-     * and returns an ImportCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the {@link ImportCommand}
+     * and returns an {@link ImportCommand} object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format, or the storage file is not able to
      * be found or it is in the wrong data format.
      */
     public ImportCommand parse(String arg) throws ParseException {
         String trimmedArgument = arg.trim();
 
-        // preventing directory traversal attack
         if (!isValidFileName(trimmedArgument)) {
             throw new ParseException(MESSAGE_FILE_NAME_INVALID);
         }
 
         try {
             ReadOnlyAddressBook readOnlyAddressBook = ParserUtil.parseImportFilePath("./data/import/"
-                    + trimmedArgument);
+                    + trimmedArgument + ".xml");
             return new ImportCommand(readOnlyAddressBook.getParcelList());
         } catch (IllegalValueException ive) {
             throw new ParseException(
@@ -174,117 +210,160 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     }
 
     /**
-     * checks if the file is alphanumeric name
+     * checks if the file is a valid file name using {@code FILE_NAME_VALIDATION_REGEX}
      */
-    public boolean isValidFileName(String fileName) {
+    public static boolean isValidFileName(String fileName) {
         return fileName.matches(FILE_NAME_VALIDATION_REGEX);
     }
 
 }
 ```
-###### \java\seedu\address\model\Model.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
-    void setActiveList(boolean isDelivered);
+    /**
+     * Parses a {@code Optional<String> trackingNumber} into an {@code Optional<TrackingNumber>} if
+     * {@code trackingNumber} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<TrackingNumber> parseTrackingNumber(Optional<String> trackingNumber)
+            throws IllegalValueException {
+        requireNonNull(trackingNumber);
+        return trackingNumber.isPresent() ? Optional.of(new TrackingNumber(trackingNumber.get())) : Optional.empty();
+    }
+```
+###### \java\seedu\address\logic\parser\ParserUtil.java
+``` java
+    /**
+     * Parses {@code Optional<String>} into an {@code Optional<Status>} if {@code Status} is present.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Optional<Status> parseStatus(Optional<String> status) throws IllegalValueException {
+        requireNonNull(status);
+        return status.isPresent() ? Optional.of(Status.getInstance(status.get())) : Optional.empty();
+    }
 ```
 ###### \java\seedu\address\model\Model.java
 ``` java
     /**
-     * Adds all Parcel objects in parcels to the AddressBook
-     * @param parcels list of parcels to add
-     * @param parcelsAdded parcels that are added without causing duplicates
-     * @param duplicateParcels parcels that are not added because doing so will cause duplicates
+     * Updates {@code filteredUncompletedParcels} and {@code filteredCompletedParcels} list and updates the
+     * {@code activeFilteredList} to either of the previous sub lists based on its current reference.
      */
-    void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> parcelsAdded, List<ReadOnlyParcel>
+    void updateSubLists();
+
+    /**
+     * Sets the active list in the model.
+     *
+     * @param isCompleted if true, the active list will be set to the list of {@link Parcel}s with {@link Status} that
+     *                    is COMPLETED. Otherwise, it will be set the list of parcels with {@link Status} that is not
+     *                    COMPLETED.
+     */
+    void setActiveList(boolean isCompleted);
+```
+###### \java\seedu\address\model\Model.java
+``` java
+    /**
+     * Adds all unique {@link Parcel}s stored in {@code parcels} to the {@link AddressBook}
+     *
+     * @param parcels the list of parcels to add into the {@link AddressBook}.
+     * @param uniqueParcels the list of unique parcels stored in {@param parcels} that will not create duplicate parcels
+     *                      if added into the {@link UniqueParcelList} in the {@link AddressBook}
+     * @param duplicateParcels the list of parcels stored in {@param parcels} that will create duplicate parcels in the
+     *                         if added into the {@link UniqueParcelList} in the {@link AddressBook}
+     */
+    void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> uniqueParcels, List<ReadOnlyParcel>
             duplicateParcels);
 ```
 ###### \java\seedu\address\model\Model.java
 ``` java
     /**
-     * Returns an unmodifiable view of the filtered parcel list
+     * Returns an unmodifiable view of the filtered list of {@link Parcel} from that have {@link Status}
+     * that is COMPLETED.
      */
-    ObservableList<ReadOnlyParcel> getFilteredDeliveredParcelList();
-
-    ObservableList<ReadOnlyParcel> getActiveList();
+    ObservableList<ReadOnlyParcel> getCompletedParcelList();
 
     /**
-     * Returns an unmodifiable view of the filtered parcel list
+     * Returns an unmodifiable view of the filtered list of {@link Parcel} from that have {@link Status}
+     * that is not COMPLETED.
      */
-    ObservableList<ReadOnlyParcel> getFilteredUndeliveredParcelList();
+    ObservableList<ReadOnlyParcel> getUncompletedParcelList();
+
+    /**
+     * Returns an unmodifiable view of the current active list.
+     */
+    ObservableList<ReadOnlyParcel> getActiveList();
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
-    /**
-     * Updates Delivered and UndeliveredParcelList and resets the Active List to the correct reference
-     */
-    private void updatedDeliveredAndUndeliveredList() {
+    @Override
+    public void updateSubLists() {
         // checks reference equality
-        boolean isActiveDelivered = activeFilteredList == filteredDeliveredParcels;
+        boolean isActiveDelivered = activeParcels == completedParcels;
 
-        filteredDeliveredParcels = filteredParcels.filtered(deliveredPredicate);
-        filteredUndeliveredParcels = filteredParcels.filtered(deliveredPredicate.negate());
+        // filter sub lists
+        completedParcels = filteredParcels.filtered(deliveredPredicate);
+        uncompletedParcels = filteredParcels.filtered(deliveredPredicate.negate());
 
         setActiveList(isActiveDelivered);
     }
 
     @Override
-    public void setActiveList(boolean isDelivered) {
-        activeFilteredList = isDelivered ? filteredDeliveredParcels : filteredUndeliveredParcels;
+    public void setActiveList(boolean isCompleted) {
+        activeParcels = isCompleted ? completedParcels : uncompletedParcels;
     }
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
-    public synchronized void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> parcelsAdded,
+    public synchronized void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> uniqueParcels,
                                            List<ReadOnlyParcel> duplicateParcels) {
 
         for (ReadOnlyParcel parcel : parcels) {
             ReadOnlyParcel parcelToAdd = new Parcel(parcel);
             try {
-                addressBook.addParcel(parcelToAdd);
-                parcelsAdded.add(parcelToAdd);
+                addressBook.addParcel(parcelToAdd); // throws duplicate parcel exception if parcel is non-unique
+                uniqueParcels.add(parcelToAdd);
             } catch (DuplicateParcelException ive) {
                 duplicateParcels.add(parcelToAdd);
             }
         }
 
         updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
-        updatedDeliveredAndUndeliveredList();
+        updateSubLists();
         indicateAddressBookChanged();
     }
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyParcel} backed by the internal list of
-     * {@code addressBook}
+     * Returns an unmodifiable view of the list of {@link ReadOnlyParcel} with {@link Status} that is COMPLETED,
+     * backed by the internal list of {@code addressBook}
      */
     @Override
-    public ObservableList<ReadOnlyParcel> getFilteredDeliveredParcelList() {
-        return FXCollections.unmodifiableObservableList(filteredDeliveredParcels);
+    public ObservableList<ReadOnlyParcel> getCompletedParcelList() {
+        return FXCollections.unmodifiableObservableList(completedParcels);
     }
 
     /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyParcel} backed by the internal list of
-     * {@code addressBook}
+     * Returns an unmodifiable view of the list of {@link ReadOnlyParcel} with {@link Status} that is not COMPLETED,
+     * backed by the internal list of {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyParcel> getUncompletedParcelList() {
+        return FXCollections.unmodifiableObservableList(uncompletedParcels);
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@link ReadOnlyParcel} in the {@code activeParcels}
      */
     @Override
     public ObservableList<ReadOnlyParcel> getActiveList() {
-        return FXCollections.unmodifiableObservableList(activeFilteredList);
-    }
-
-    /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyParcel} backed by the internal list of
-     * {@code addressBook}
-     */
-    @Override
-    public ObservableList<ReadOnlyParcel> getFilteredUndeliveredParcelList() {
-        return FXCollections.unmodifiableObservableList(filteredUndeliveredParcels);
+        return FXCollections.unmodifiableObservableList(activeParcels);
     }
 ```
 ###### \java\seedu\address\model\parcel\PostalCode.java
 ``` java
 /**
- * Represents a Address' postal code in the address book.
+ * Represents a possible {@link Address} postal code in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidPostalCode(String)}
  */
 public class PostalCode {
@@ -329,7 +408,7 @@ public class PostalCode {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof PostalCode // instanceof handles nulls
+                || (other instanceof PostalCode // instanceof handles null
                 && this.value.equals(((PostalCode) other).value)); // state check
     }
 
@@ -343,56 +422,41 @@ public class PostalCode {
 ###### \java\seedu\address\model\parcel\Status.java
 ``` java
 /**
- * Status represents the delivery status of a parcel
- * It can only be one of these values: PENDING, DELIVER, COMPLETED
+ * Status represents the delivery status of a parcel.
+ * It can only be one of these values: PENDING, DELIVERING, COMPLETED and OVERDUE.
+ * Guarantees: immutable
+ *
+ * {@code Status.PENDING} means that the {@link Parcel} is pending delivery.
+ * {@code Status.DELIVERING} means that the {@link Parcel} is being delivered.
+ * {@code Status.COMPLETED} means that the {@link Parcel} has successfully been delivered.
+ * {@code Status.OVERDUE} means that the {@link Parcel} is pending delivery and the present date is past the delivery
+ * date.
  */
 public enum Status {
 
     PENDING, DELIVERING, COMPLETED, OVERDUE;
 
     public static final String MESSAGE_STATUS_CONSTRAINTS =
-            "Status can only be PENDING, COMPLETED, COMPLETED or OVERDUE";
-
-    public static Status getInstance(String status) throws IllegalValueException {
-        String trimmedAndUpperCasedStatus = status.trim().toUpperCase();
-
-        if (!isValidStatus(trimmedAndUpperCasedStatus)) {
-            throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
-        }
-
-        switch (trimmedAndUpperCasedStatus) {
-
-        case "OVERDUE":
-            return OVERDUE;
-
-        case "PENDING":
-            return PENDING;
-
-        case "DELIVERING":
-            return DELIVERING;
-
-        case "COMPLETED":
-            return COMPLETED;
-
-        default:
-            throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
-        }
-    }
+            "Status can only be PENDING, DELIVERING, COMPLETED or OVERDUE";
 
     /**
-     * @return true if status is case-insensitive equal to the value of any enum Status values.
+     * Returns a static instance of Status based on the {@param status}.
+     *
+     * @param status can be case-insensitive {@code String} of PENDING, DELIVERING, COMPLETED or OVERDUE.
+     * @return one of four possible {@code Status} values.
+     * @throws IllegalValueException if {@param status} is not a possible value of {@code Status}
      */
-    public static boolean isValidStatus(String status) {
-        switch(status) {
-        case "PENDING":  // fallthrough
-        case "DELIVERING": // fallthrough
-        case "COMPLETED": // fallthrough
-        case "OVERDUE": // fallthrough
-            return true;
+    public static Status getInstance(String status) throws IllegalValueException {
+        String trimmedStatus = status.trim().toUpperCase();
 
-        default:
-            return false;
+        // checks if trimmedStatus can be any of the possible values of Status.
+        for (Status value : Status.values()) {
+            if (value.toString().equalsIgnoreCase(trimmedStatus)) {
+                return value;
+            }
         }
+
+        throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
     }
 }
 ```
@@ -400,11 +464,12 @@ public enum Status {
 ``` java
 /**
  * Represents the tracking number of a parcel.
+ * Presently compatible with only SingPost tracking numbers.
  */
 public class TrackingNumber {
 
     public static final String MESSAGE_TRACKING_NUMBER_CONSTRAINTS =
-            "Parcel tracking number should start with 'RR', followed by 9 digits, and ends with 'SG'";
+            "Parcel tracking number should start with 'RR', followed by 9 digits, and end with 'SG'";
     public static final String TRACKING_NUMBER_VALIDATION_REGEX = "^[R]{2}[0-9]{9}[S][G]$";
 
     public final String value;
@@ -449,6 +514,51 @@ public class TrackingNumber {
 
 }
 ```
+###### \java\seedu\address\model\tag\Tag.java
+``` java
+/**
+ * Represents a Tag in the address book.
+ * It can only be one of these values: FLAMMABLE, FROZEN, HEAVY or FRAGILE
+ * Guarantees: immutable;
+ *
+ * {@code Tag.FLAMMABLE} means that the {@link Parcel} contents are highly flammable.
+ * {@code Tag.FROZEN} means that the {@link Parcel} contents are temperature sensitive and need to be kept cold.
+ * {@code Tag.HEAVY} means that the {@link Parcel} contents are heavy and require additional manpower to deliver.
+ * {@code Tag.FRAGILE} means that the {@link Parcel} contents are fragile and require additional care.
+ */
+public enum Tag {
+
+    FLAMMABLE, FROZEN, HEAVY, FRAGILE;
+
+    public static final String MESSAGE_TAG_CONSTRAINTS = "Tags can only be FLAMMABLE, FROZEN, HEAVY or FRAGILE";
+
+    /**
+     * Validates given tag.
+     *
+     * @param tag can be insensitive {@code String} of possible values of Tag.
+     * @throws IllegalValueException if the given tag tag string is invalid.
+     */
+    public static Tag getInstance(String tag) throws IllegalValueException {
+        requireNonNull(tag);
+        String trimmedTag = tag.trim();
+
+        for (Tag value : Tag.values()) {
+            if (value.toString().equalsIgnoreCase(trimmedTag)) {
+                return value;
+            }
+        }
+
+        throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
+    }
+
+    /**
+     * Format tags string as a text for viewing.
+     */
+    public String getFormattedString() {
+        return '[' + this.toString() + ']';
+    }
+}
+```
 ###### \java\seedu\address\storage\StorageManager.java
 ``` java
     public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
@@ -459,11 +569,12 @@ public class TrackingNumber {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         try {
             addressBookOptional = addressBookStorage.readAddressBook();
+
             if (addressBookOptional.isPresent()) {
                 backupAddressBook(addressBookOptional.get());
-                logger.info("AddressBook present, back up success");
+                logger.info("AddressBook present, back up success!");
             } else {
-                logger.warning("AddressBook not present, backup not possible");
+                logger.warning("AddressBook not present, backup not possible.");
             }
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. "
@@ -499,15 +610,108 @@ public class TrackingNumber {
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
+    /**
+     * Initialize the {@link MainWindow#splitPanePlaceholder} to start in list mode.
+     */
+    public void initSplitPanePlaceholder() {
+        splitPanePlaceholder.setDividerPositions(0.0);
+    }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+
+    /**
+     * Sets the active list of the model based on the current selected tab index in the Ui of Ark.
+     */
     @FXML @Subscribe
     private void handleTabEvent(JumpToTabRequestEvent event) {
         logic.setActiveList(event.targetIndex == INDEX_SECOND_TAB.getZeroBased());
+        logger.info("Active list now set to " + (event.targetIndex == INDEX_SECOND_TAB.getZeroBased()
+                ? "completed parcels list." : "uncompleted parcels list."));
     }
 ```
 ###### \java\seedu\address\ui\ParcelCard.java
 ``` java
+    @FXML
+    private Label trackingNumber;
+    @FXML
+    private Tooltip trackingNumberTooltip;
+
+    @FXML
+    private Label name;
+    @FXML
+    private Tooltip nameTooltip;
+
+    @FXML
+    private Label id;
+    @FXML
+    private Tooltip idTooltip;
+
+    @FXML
+    private Label phone;
+    @FXML
+    private Tooltip phoneTooltip;
+
+    @FXML
+    private Label address;
+    @FXML
+    private Tooltip addressTooltip;
+
+    @FXML
+    private Label email;
+    @FXML
+    private Tooltip emailTooltip;
+
+    @FXML
+    private Label deliveryDate;
+    @FXML
+    private Tooltip deliveryDateTooltip;
+
+    @FXML
+    private Label status;
+    @FXML
+    private Tooltip statusTooltip;
+```
+###### \java\seedu\address\ui\ParcelCard.java
+``` java
     /**
-     * Sets color for the status labels based on the current status.
+     * Binds the individual UI elements to observe their respective {@code Parcel} properties
+     * so that they will be notified of any changes. Tooltips will also be assigned to their respective {@code Label}
+     */
+    private void bindListeners(ReadOnlyParcel parcel) {
+        trackingNumber.textProperty().bind(Bindings.convert(parcel.trackingNumberProperty()));
+        trackingNumberTooltip.textProperty().bind(Bindings.convert(parcel.trackingNumberProperty()));
+
+        name.textProperty().bind(Bindings.convert(parcel.nameProperty()));
+        nameTooltip.textProperty().bind(Bindings.convert(parcel.nameProperty()));
+
+        phone.textProperty().bind(Bindings.convert(parcel.phoneProperty()));
+        phoneTooltip.textProperty().bind(Bindings.convert(parcel.phoneProperty()));
+
+        address.textProperty().bind(Bindings.convert(parcel.addressProperty()));
+        addressTooltip.textProperty().bind(Bindings.convert(parcel.addressProperty()));
+
+        email.textProperty().bind(Bindings.convert(parcel.emailProperty()));
+        emailTooltip.textProperty().bind(Bindings.convert(parcel.emailProperty()));
+
+        deliveryDate.textProperty().bind(Bindings.convert(parcel.deliveryDateProperty()));
+        deliveryDateTooltip.textProperty().bind(Bindings.convert(parcel.deliveryDateProperty()));
+
+        status.textProperty().bind(Bindings.convert(parcel.statusProperty()));
+        statusTooltip.textProperty().bind(Bindings.convert(parcel.statusProperty()));
+        setColorForStatus();
+
+        parcel.tagProperty().addListener((observable, oldValue, newValue) -> {
+            tags.getChildren().clear();
+            initTags(parcel);
+        });
+    }
+
+```
+###### \java\seedu\address\ui\ParcelCard.java
+``` java
+    /**
+     * Sets color for the status {@code Label}s based on the {@link ParcelCard#status} text value.
      */
     private void setColorForStatus() {
         switch (status.textProperty().get()) {
@@ -527,6 +731,29 @@ public class TrackingNumber {
         default: // fall through
             status.setStyle("-fx-background-color: " + "#00bf00");
             break;
+
+        }
+    }
+```
+###### \java\seedu\address\ui\ParcelCard.java
+``` java
+    /**
+     * Assign colour to Tag {@code Label} based on {@param tagValue}
+     */
+    private static String setColorForTag(String tagValue) {
+        switch (tagValue) {
+        case "FLAMMABLE":
+            return "#d6130a"; // Chrysler Radiant Fire Red
+
+        case "FROZEN":
+            return "#1db1b8"; // light blue
+
+        case "HEAVY":
+            return "#8b8d7a"; // Stone Gray
+
+        case "FRAGILE": //fallthrough
+        default:
+            return "#bf9900"; // gold yellow
 
         }
     }
@@ -601,4 +828,47 @@ public class TrackingNumber {
     public void handleTabSelection(Index selectedIndex) {
         EventsCenter.getInstance().post(new JumpToTabRequestEvent(selectedIndex));
     }
+```
+###### \resources\view\ParcelListCard.fxml
+``` fxml
+        <Label fx:id="id" styleClass="cell_big_label" text="\$id">
+          <minWidth>
+            <!-- Ensures that the label text is never truncated -->
+            <Region fx:constant="USE_PREF_SIZE" />
+          </minWidth>
+               <tooltip>
+                  <Tooltip fx:id="idTooltip" text="id tooltip" />
+               </tooltip>
+        </Label>
+        <Label fx:id="name" styleClass="cell_big_label" text="\$first" GridPane.columnIndex="1">
+               <tooltip>
+                  <Tooltip fx:id="nameTooltip" text="name tooltip" />
+               </tooltip></Label>
+        <Label fx:id="trackingNumber" styleClass="cell_big_label" text="\$trackingNumber" GridPane.columnIndex="2">
+               <tooltip>
+                  <Tooltip fx:id="trackingNumberTooltip" text="tracking number tooltip" />
+               </tooltip></Label>
+        <Label fx:id="phone" styleClass="cell_big_label" text="\$phone" GridPane.columnIndex="3">
+               <tooltip>
+                  <Tooltip fx:id="phoneTooltip" text="phone tooltip" />
+               </tooltip></Label>
+        <Label fx:id="address" styleClass="cell_big_label" text="\$address" GridPane.columnIndex="4">
+               <tooltip>
+                  <Tooltip fx:id="addressTooltip" text="address tooltip" />
+               </tooltip></Label>
+        <Label fx:id="email" styleClass="cell_big_label" text="\$email" GridPane.columnIndex="5">
+               <tooltip>
+                  <Tooltip fx:id="emailTooltip" text="email tooltip" />
+               </tooltip></Label>
+        <Label fx:id="deliveryDate" styleClass="cell_big_label" text="\$deliveryDate" GridPane.columnIndex="6">
+               <tooltip>
+                  <Tooltip fx:id="deliveryDateTooltip" text="delivery date tooltip" />
+               </tooltip></Label>
+        <Label fx:id="status" styleClass="cell_small_label" text="\$status" textAlignment="CENTER" GridPane.columnIndex="7">
+               <tooltip>
+                  <Tooltip fx:id="statusTooltip" text="status tooltip" />
+               </tooltip></Label>
+          <FlowPane fx:id="tags" alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="249.0" GridPane.columnIndex="8" />
+         </children>
+      </GridPane>
 ```

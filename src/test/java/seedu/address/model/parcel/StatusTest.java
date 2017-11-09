@@ -1,8 +1,6 @@
 package seedu.address.model.parcel;
 
-import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,7 +15,7 @@ public class StatusTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void testToStringTest() {
+    public void toStringTest() {
         Status completed = Status.COMPLETED;
         assertEquals("COMPLETED", completed.toString());
 
@@ -32,7 +30,7 @@ public class StatusTest {
     }
 
     @Test
-    public void getStatusInstanceTest() throws IllegalValueException {
+    public void getInstanceTest_success() throws IllegalValueException {
         // all uppercase
         Status pending = Status.getInstance("PENDING");
         assertEquals(Status.PENDING, pending);
@@ -48,32 +46,14 @@ public class StatusTest {
         // mix of uppercase and lowercase characters
         Status overdue = Status.getInstance("overDUE");
         assertEquals(Status.OVERDUE, overdue);
-
-        thrown.expect(IllegalValueException.class);
-        thrown.expectMessage(Status.MESSAGE_STATUS_CONSTRAINTS);
-        Status.getInstance("asd1237fa&(&"); // weird characters
-        Status.getInstance("JUMPING"); // not one of the possible values
     }
 
     @Test
-    public void isValidStatusTest() {
-        assertFalse(Status.isValidStatus("INVALID"));
+    public void getInstanceTest_failure() throws IllegalValueException {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(Status.MESSAGE_STATUS_CONSTRAINTS);
 
-        // uppercase letters
-        assertTrue(Status.isValidStatus("PENDING"));
-        assertTrue(Status.isValidStatus("DELIVERING"));
-        assertTrue(Status.isValidStatus("OVERDUE"));
-        assertTrue(Status.isValidStatus("COMPLETED"));
-
-        // lower case letters
-        assertFalse(Status.isValidStatus("pending"));
-        assertFalse(Status.isValidStatus("completed"));
-
-        // mix of upper and lower case
-        assertFalse(Status.isValidStatus("ComPleTed"));
-
-        // random symbols
-        assertFalse(Status.isValidStatus("$!@HBJ123"));
+        Status.getInstance("asd1237fa&(&"); // weird characters
+        Status.getInstance("JUMPING"); // not one of the possible values
     }
-
 }
