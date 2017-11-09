@@ -148,7 +148,7 @@ public class UiManager extends ComponentManager implements Ui {
     @Subscribe
     public void handleChangeToLoginViewEvent(ChangeToLoginViewEvent event) {
         // user wants to login
-        Platform.runLater(() -> mainWindow.fillCommandBoxWithLoginFields());
+        mainWindow.fillCommandBoxWithLoginFields();
     }
 
     /**
