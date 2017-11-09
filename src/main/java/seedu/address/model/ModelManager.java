@@ -117,14 +117,11 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void removeTag(ArrayList<Index> targetIndexes, Tag toRemove) throws PersonNotFoundException,
             DuplicatePersonException {
 
-        for (int i = 0; i < targetIndexes.size(); i++) {
-            int targetIndex = targetIndexes.get(i).getZeroBased();
+        for (Index index : targetIndexes) {
+            int targetIndex = index.getZeroBased();
             ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex);
 
-            Person newPerson = new Person(oldPerson);
-            Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
-            newTags.remove(toRemove);
-            newPerson.setTags(newTags);
+            Person newPerson = setTagsForNewPerson(oldPerson, toRemove, false);
 
             addressBook.updatePerson(oldPerson, newPerson);
             indicateAddressBookChanged();
@@ -138,18 +135,29 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addTag(ArrayList<Index> targetIndexes, Tag toAdd) throws PersonNotFoundException,
             DuplicatePersonException {
 
-        for (int i = 0; i < targetIndexes.size(); i++) {
-            int targetIndex = targetIndexes.get(i).getZeroBased();
+        for (Index index : targetIndexes) {
+            int targetIndex = index.getZeroBased();
             ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex);
 
-            Person newPerson = new Person(oldPerson);
-            Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
-            newTags.add(toAdd);
-            newPerson.setTags(newTags);
+            Person newPerson = setTagsForNewPerson(oldPerson, toAdd, true);
 
             addressBook.updatePerson(oldPerson, newPerson);
             indicateAddressBookChanged();
         }
+    }
+
+    private Person setTagsForNewPerson(ReadOnlyPerson oldPerson, Tag tagToAddOrRemove, boolean isAdd) {
+        Person newPerson = new Person(oldPerson);
+        Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
+        if (isAdd) {
+            newTags.add(tagToAddOrRemove);
+        } else if (!isAdd) {
+            newTags.remove(tagToAddOrRemove);
+        } else {
+            assert false : "Tag should either be removed or added only.";
+        }
+        newPerson.setTags(newTags);
+        return newPerson;
     }
 
     //@@author
