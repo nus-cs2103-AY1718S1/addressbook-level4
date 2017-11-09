@@ -9,6 +9,25 @@
     }
 }
 ```
+###### \java\seedu\address\commons\util\StringUtil.java
+``` java
+    /**
+     * Returns a {@code String} consisting of each object in a list separated by a semicolon
+     * @param list The list of objects
+     * @param <E> The data type of the object involved in the list
+     * @return The {@code String} consisting of each object in the list
+     */
+    public static <E> String convertListToString(List<E> list) {
+        StringBuilder listStringBuilder = new StringBuilder();
+
+        for (E obj: list) {
+            listStringBuilder.append(obj.toString()).append("; ");
+        }
+
+        return listStringBuilder.toString();
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\DeleteCommand.java
 ``` java
     private final ArrayList<Index> targetIndices;
@@ -72,6 +91,82 @@ public class LocateCommand extends Command {
     public static final String MESSAGE_LOCATE_PERSON_SUCCESS = "Located the Address of Person %1$s";
 
     private final Index targetIndex;
+
+```
+###### \java\seedu\address\logic\commands\ScheduleCommand.java
+``` java
+    /**
+     * Updates address book model with new schedule set for each person.
+     * @param model Model of address book.
+     * @param indices Set of indices indicating the people from last shown list.
+     * @param schedulePersonNames Set of names associated with the schedule.
+     * @param date Date of activity.
+     * @param activity Activity to be scheduled.
+     * @throws CommandException
+     */
+    private void updateModelWithUpdatedSchedules(Model model, Set<Index> indices, Set<Name> schedulePersonNames,
+                                                 ScheduleDate date, Activity activity) throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        for (Index index: indices) {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+
+            ReadOnlyPerson schedulePerson = lastShownList.get(index.getZeroBased());
+            Schedule schedule = new Schedule(date, activity, schedulePersonNames);
+
+            Set<Schedule> schedules = new HashSet<>(schedulePerson.getSchedules());
+
+            if (!schedulePerson.getSchedules().contains(schedule)) {
+                schedules.add(schedule);
+            }
+
+            Person scheduleAddedPerson = new Person(schedulePerson.getName(), schedulePerson.getPhone(),
+                    schedulePerson.getCountry(), schedulePerson.getEmails(), schedulePerson.getAddress(), schedules,
+                    schedulePerson.getTags());
+            try {
+                model.updatePerson(schedulePerson, scheduleAddedPerson);
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing");
+            }
+        }
+    }
+
+    /**
+     * Returns a set of person names involved in the scheduling of the activity.
+     * @param model Model of address book.
+     * @param indices Set of indices indicating the people from last shown list.
+     * @return {@code schedulePersonNames} which contains the set of person names involved in the scheduling.
+     * @throws CommandException
+     */
+    private Set<Name> fillSchedulePersonNamesSet(Model model, Set<Index> indices) throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        Set<Name> schedulePersonNames = new HashSet<>();
+
+        for (Index index: indices) {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+
+            ReadOnlyPerson schedulePerson = lastShownList.get(index.getZeroBased());
+            schedulePersonNames.add(schedulePerson.getName());
+        }
+
+        return schedulePersonNames;
+    }
+
+    //@@ CT15
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ScheduleCommand // instanceof handles nulls
+                && date.equals(((ScheduleCommand) other).date)
+                && activity.equals(((ScheduleCommand) other).activity));
+    }
+}
 
 ```
 ###### \java\seedu\address\logic\parser\DeleteCommandParser.java
@@ -152,6 +247,90 @@ public class LocateCommandParser implements Parser<LocateCommand> {
     }
 
 ```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    public void setSchedulesToRemind() {
+        ObservableList<Schedule> scheduleList = this.schedules.asObservableList();
+        Set<Schedule> schedulesToRemind = new HashSet<>();
+
+        for (Schedule schedule: scheduleList) {
+            if (Schedule.doesScheduleNeedReminder(schedule)) {
+                schedulesToRemind.add(schedule);
+            }
+        }
+
+        this.schedulesToRemind.setSchedules(schedulesToRemind);
+    }
+
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    @Override
+    public ObservableList<Schedule> getScheduleToRemindList() {
+        return schedulesToRemind.asObservableList();
+    }
+
+```
+###### \java\seedu\address\model\person\address\Address.java
+``` java
+    private Block block;
+    private Street street;
+    private Unit unit;
+    private PostalCode postalCode;
+
+    /**
+     * Validates given address.
+     *
+     * @throws IllegalValueException if given address string follows invalid format.
+     */
+    public Address(String address) throws IllegalValueException {
+        requireNonNull(address);
+        String trimmedAddress = address.trim();
+
+        if (!hasValidAddressFormat(trimmedAddress)) {
+            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+        }
+
+        splitAddressString(trimmedAddress);
+
+        this.value = trimmedAddress;
+    }
+
+    /**
+     * Splits Address into Block, Street, Unit[optional parameter] and PostalCode.
+     */
+    private void splitAddressString(String trimmedAddress) throws IllegalValueException {
+        String[] tokens = trimmedAddress.split(",");
+        int numTokens = tokens.length;
+
+        assert ((numTokens == ADDRESS_TOKENS_WITHOUT_UNIT)
+                || (numTokens == ADDRESS_TOKENS_WITH_UNIT)) : "The address should be split into 3 or 4 tokens.";
+
+        block = new Block(tokens[0]);
+        street = new Street(tokens[1]);
+
+        if (numTokens == ADDRESS_TOKENS_WITHOUT_UNIT) {
+
+            postalCode = new PostalCode(tokens[2]);
+
+        } else if (numTokens == ADDRESS_TOKENS_WITH_UNIT) {
+
+            unit = new Unit (tokens[2]);
+            postalCode = new PostalCode(tokens[3]);
+        }
+    }
+
+    /**
+     * Returns true if a given string follows the valid format for address.
+     */
+    public static boolean hasValidAddressFormat(String test) {
+        StringTokenizer tokenizer = new StringTokenizer(test, ADDRESS_FORMAT_DELIMITER);
+
+        return ((tokenizer.countTokens() == ADDRESS_TOKENS_WITHOUT_UNIT)
+                || (tokenizer.countTokens() == ADDRESS_TOKENS_WITH_UNIT));
+    }
+
+```
 ###### \java\seedu\address\model\person\address\Block.java
 ``` java
 package seedu.address.model.person.address;
@@ -167,8 +346,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Block {
 
     public static final String MESSAGE_BLOCK_CONSTRAINTS =
-            "Block can only contain numbers or alphabets, and should be at least 1 character long";
-    private static final String BLOCK_VALIDATION_REGEX = "\\w{1,}";
+            "Block can contain alphanumeric characters and spaces, and it should not be blank";
+    private static final String BLOCK_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
     public final String value;
 
     public Block(String block) throws IllegalValueException {
@@ -302,64 +481,6 @@ public class Unit {
     }
 }
 ```
-###### \java\seedu\address\model\person\Address.java
-``` java
-    private Block block;
-    private Street street;
-    private Unit unit;
-    private PostalCode postalCode;
-
-    /**
-     * Validates given address.
-     *
-     * @throws IllegalValueException if given address string follows invalid format.
-     */
-    public Address(String address) throws IllegalValueException {
-        requireNonNull(address);
-        String trimmedAddress = address.trim();
-
-        if (!hasValidAddressFormat(trimmedAddress)) {
-            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
-        }
-
-        splitAddressString(trimmedAddress);
-
-        this.value = trimmedAddress;
-    }
-
-    /**
-     * Splits Address into Block, Street, Unit[optional parameter] and PostalCode.
-     */
-    private void splitAddressString(String trimmedAddress) throws IllegalValueException {
-        String[] tokens = trimmedAddress.split(",");
-        int numTokens = tokens.length;
-
-        assert ((numTokens == 3) || (numTokens == 4)) : "The address should be split into 3 or 4 tokens.";
-
-        block = new Block(tokens[0]);
-        street = new Street(tokens[1]);
-
-        if (numTokens == 3) {
-
-            postalCode = new PostalCode(tokens[2]);
-
-        } else if (numTokens == 4) {
-
-            unit = new Unit (tokens[2]);
-            postalCode = new PostalCode(tokens[3]);
-        }
-    }
-
-    /**
-     * Returns true if a given string follows the valid format for address.
-     */
-    public static boolean hasValidAddressFormat(String test) {
-        StringTokenizer tokenizer = new StringTokenizer(test, ADDRESS_FORMAT_DELIMITER);
-
-        return ((tokenizer.countTokens() == 3) || (tokenizer.countTokens() == 4));
-    }
-
-```
 ###### \java\seedu\address\model\person\email\UniqueEmailList.java
 ``` java
 package seedu.address.model.person.email;
@@ -458,22 +579,115 @@ public class UniqueEmailList {
     }
 
 ```
+###### \java\seedu\address\model\person\UniquePersonNameList.java
+``` java
+package seedu.address.model.person;
+
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.commons.util.CollectionUtil;
+
+/**
+ * A list of person names that enforces no nulls and uniqueness between its elements.
+ *
+ * Supports minimal set of list operations for the app's features.
+ *
+ * @see Name#equals(Object)
+ */
+public class UniquePersonNameList {
+    private final ObservableList<Name> internalList = FXCollections.observableArrayList();
+
+    /**
+     * Creates a UniquePersonNameList using given names.
+     * Enforces no nulls.
+     */
+    public UniquePersonNameList(Set<Name> personNames) {
+        requireAllNonNull(personNames);
+        internalList.addAll(personNames);
+
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
+     * Returns all Names in this list as a Set.
+     * This set is mutable and change-insulated against the internal list.
+     */
+    public Set<Name> toSet() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return new HashSet<>(internalList);
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<Name> asObservableList() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return FXCollections.unmodifiableObservableList(internalList);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return other == this // short circuit if same object
+                || (other instanceof UniquePersonNameList // instanceof handles nulls
+                && this.internalList.equals(((UniquePersonNameList) other).internalList));
+    }
+
+    @Override
+    public int hashCode() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return internalList.hashCode();
+    }
+}
+```
 ###### \java\seedu\address\model\schedule\Schedule.java
 ``` java
     public void setActivity(Activity activity) {
         this.activity.set(activity);
     }
 
-    public Name getPersonInvolvedName() {
-        return personInvolvedName.get();
+    public Set<Name> getPersonInvolvedNames() {
+        return personInvolvedNames.get().toSet();
     }
 
-    public ObjectProperty<Name> getPersonInvolvedNameProperty() {
-        return personInvolvedName;
+    public ObjectProperty<UniquePersonNameList> getPersonInvolvedNamesProperty() {
+        return personInvolvedNames;
     }
 
-    public void setPersonInvolvedName(Name personInvolvedName) {
-        this.personInvolvedName.set(personInvolvedName);
+    public void setPersonInvolvedNames(Set<Name> personInvolvedNames) {
+        this.personInvolvedNames.set(new UniquePersonNameList(personInvolvedNames));
+    }
+
+    /**
+     * Returns true if {@code schedule} date is within 1 day from {@code currentDate}.
+     */
+    public static boolean doesScheduleNeedReminder(Schedule schedule) {
+        LocalDate currentDate = LocalDate.now();
+        logger.info("Current date: " + currentDate.toString());
+
+        String scheduleDateString = schedule.getScheduleDate().value;
+
+        LocalDate scheduleDateToAlter = currentDate;
+        LocalDate scheduleDate = scheduleDateToAlter.withDayOfMonth(DateUtil.getDay(scheduleDateString))
+                .withMonth(DateUtil.getMonth(scheduleDateString))
+                .withYear(DateUtil.getYear(scheduleDateString));
+        logger.info("Schedule date: " + scheduleDate.toString());
+
+        LocalDate dayBeforeSchedule = scheduleDate.minusDays(1);
+        final boolean isYearEqual = (dayBeforeSchedule.getYear() == currentDate.getYear());
+        final boolean isMonthEqual = (dayBeforeSchedule.getMonthValue() == currentDate.getMonthValue());
+        final boolean isDayEqual = (dayBeforeSchedule.getDayOfMonth() == currentDate.getDayOfMonth());
+
+        if (isYearEqual && isMonthEqual && isDayEqual) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 ```
@@ -529,9 +743,48 @@ public class UniqueEmailList {
         });
     }
 
+    /**
+     * Returns true if schedule list contains activity to be done within 1 day from the current date.
+     */
+    public boolean haveScheduleToRemind() {
+        LocalDate currentDate = LocalDate.now();
+
+        for (Schedule schedule : internalList) {
+            String scheduleDateString = schedule.getScheduleDate().value;
+
+            LocalDate scheduleDateToAlter = currentDate;
+            LocalDate scheduleDate = scheduleDateToAlter.withDayOfMonth(DateUtil.getDay(scheduleDateString))
+                    .withMonth(DateUtil.getMonth(scheduleDateString))
+                    .withYear(DateUtil.getYear(scheduleDateString));
+
+            LocalDate dayBeforeSchedule = scheduleDate.minusDays(1);
+            final boolean isYearEqual = (dayBeforeSchedule.getYear() == currentDate.getYear());
+            final boolean isMonthEqual = (dayBeforeSchedule.getMonthValue() == currentDate.getMonthValue());
+            final boolean isDayEqual = (dayBeforeSchedule.getDayOfMonth() == currentDate.getDayOfMonth());
+
+            if (isYearEqual && isMonthEqual && isDayEqual) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 ```
 ###### \java\seedu\address\model\util\SampleDataUtil.java
 ``` java
+    /**
+     * Returns a person names set containing the list of strings given.
+     */
+    public static Set<Name> getPersonNamesSet(String... strings) throws IllegalValueException {
+        HashSet<Name> personNames = new HashSet<>();
+        for (String s : strings) {
+            personNames.add(new Name(s));
+        }
+
+        return personNames;
+    }
+
     /**
      * Returns a tag set containing the list of strings given.
      */
@@ -586,15 +839,105 @@ public class XmlAdaptedEmail {
     }
 }
 ```
+###### \java\seedu\address\storage\XmlAdaptedPerson.java
+``` java
+    /**
+     * Converts this jaxb-friendly adapted person object into the model's Person object.
+     *
+     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     */
+    public Person toModelType() throws IllegalValueException {
+        final List<Email> personEmails = new ArrayList<>();
+        for (XmlAdaptedEmail email : emails) {
+            personEmails.add(email.toModelType());
+        }
+        final List<Tag> personTags = new ArrayList<>();
+        for (XmlAdaptedTag tag : tagged) {
+            personTags.add(tag.toModelType());
+        }
+
+        final List<Schedule> personSchedules = new ArrayList<>();
+        for (XmlAdaptedSchedule schedule : scheduled) {
+            personSchedules.add(schedule.toModelType());
+        }
+        final Name name = new Name(this.name);
+        final Phone phone = new Phone(this.phone);
+        final Country country = new Country(phone.getCountryCode());
+        final Set<Email> emails = new HashSet<>(personEmails);
+        final Address address = new Address(this.address);
+        final Set<Schedule> schedules = new HashSet<>(personSchedules);
+        final Set<Tag> tags = new HashSet<>(personTags);
+
+        logger.info("Name: " + name.toString()
+                    + " Phone: " + phone.value
+                    + " Country: " + country.toString()
+                    + " Emails: " + StringUtil.convertListToString(personEmails)
+                    + " Address: " + address.toString()
+                    + " Schedules: " + StringUtil.convertListToString(personSchedules)
+                    + " Tags: " + StringUtil.convertListToString(personTags));
+
+        return new Person(name, phone, country, emails, address, schedules, tags);
+    }
+}
+```
 ###### \java\seedu\address\storage\XmlAdaptedSchedule.java
 ``` java
     public XmlAdaptedSchedule(Schedule source) {
         ScheduleDate scheduleDate = source.getScheduleDate();
         Activity activity = source.getActivity();
-        Name personInvolvedName = source.getPersonInvolvedName();
+        Set<Name> personInvolvedNames = source.getPersonInvolvedNames();
+        List<Name> personInvolvedNamesList = new ArrayList<>(personInvolvedNames);
 
         schedule = "Date: " + scheduleDate.toString() + " Activity: " + activity.toString()
-                + " Person: " + personInvolvedName.toString();
+                + " Person(s): " + StringUtil.convertListToString(personInvolvedNamesList);
+    }
+
+    /**
+     * Converts this jaxb-friendly adapted tag object into the model's Schedule object.
+     *
+     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     */
+    public Schedule toModelType() throws IllegalValueException {
+        // extract out schedule date, activity and person involved from schedule string
+        int startingIndexOfDate = 6;
+        int endingIndexOfDate = 16;
+        int startingIndexOfActivity = schedule.indexOf("Activity: ") + 10;
+        int personHeaderIndex = schedule.indexOf("Person(s): ");
+        int startingIndexOfPerson = personHeaderIndex + 11;
+
+        String scheduleDate = schedule.substring(startingIndexOfDate, endingIndexOfDate);
+        String activity = schedule.substring(startingIndexOfActivity, personHeaderIndex - 1);
+        String personInvolvedNamesString = schedule.substring(startingIndexOfPerson);
+
+        logger.info("Date: " + scheduleDate + " Activity: " + activity + " Person(s): " + personInvolvedNamesString);
+
+        String[] personInvolvedNames = personInvolvedNamesString.split("; ");
+        Set<Name> scheduleModelNames = new HashSet<>();
+
+        //extract person names into set
+        for (int i = 0; i < personInvolvedNames.length; i++) {
+            scheduleModelNames.add(new Name(personInvolvedNames[i].trim()));
+            logger.info(personInvolvedNames[i].trim());
+        }
+
+        return new Schedule(new ScheduleDate(scheduleDate), new Activity(activity), scheduleModelNames);
+    }
+}
+```
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+``` java
+    @Override
+    public ObservableList<Schedule> getScheduleToRemindList() {
+        final ObservableList<Schedule> schedulesToRemind = this.schedulesToRemind.stream().map(schedule -> {
+            try {
+                return schedule.toModelType();
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+                //TODO: better error handling
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(schedulesToRemind);
     }
 
 ```
@@ -627,7 +970,6 @@ public class AgendaPanel extends UiPart<Region> {
     public AgendaPanel(ObservableList<Schedule> scheduleList) {
         super(FXML);
         setConnections(scheduleList);
-        registerAsAnEventHandler(this);
     }
 
     /**
@@ -680,16 +1022,129 @@ public class AgendaPanel extends UiPart<Region> {
     }
 
 ```
+###### \java\seedu\address\ui\ReminderWindow.java
+``` java
+package seedu.address.ui;
+
+import java.util.logging.Logger;
+
+import org.fxmisc.easybind.EasyBind;
+
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.util.FxViewUtil;
+import seedu.address.model.schedule.Schedule;
+
+/**
+ * Controller for a reminder pop-up
+ */
+public class ReminderWindow extends UiPart<Region> {
+
+    private static final String FXML = "ReminderWindow.fxml";
+    private static final String TITLE = "Reminder";
+    private static final String ICON = "/images/info_icon.png";
+    private static final Logger logger = LogsCenter.getLogger(ReminderWindow.class);
+
+    private final Stage dialogStage;
+
+    @FXML
+    private ListView<ScheduleCard> reminderSchedulesListView;
+    @FXML
+    private StackPane reminderWindowBottom;
+
+    public ReminderWindow(ObservableList<Schedule> reminderSchedulesList) {
+        super(FXML);
+        Scene scene = new Scene(getRoot());
+        //Null passed as the parent stage to make it non-modal.
+        dialogStage = createDialogStage(TITLE, null, scene);
+        FxViewUtil.setStageIcon(dialogStage, ICON);
+
+        //set connections
+        reminderSchedulesListView.prefWidthProperty().bind(reminderWindowBottom.prefWidthProperty());
+        setConnections(reminderSchedulesList);
+    }
+
+    /**
+     * Creates a list of {@code ScheduleCard} from {@code scheduleList}, sets them to the {@code scheduleCardListView}
+     * and adds listener to {@code scheduleCardListView} for selection change.
+     */
+    private void setConnections(ObservableList<Schedule> scheduleList) {
+        for (Schedule i : scheduleList) {
+            logger.info(i.toString() + " Index: " + scheduleList.indexOf(i));
+        }
+        ObservableList<ScheduleCard> mappedList = EasyBind.map(
+                scheduleList, (schedule) -> new ScheduleCard(schedule, scheduleList.indexOf(schedule) + 1));
+        reminderSchedulesListView.setItems(mappedList);
+        reminderSchedulesListView.setCellFactory(listView -> new ScheduleCardListViewCell());
+    }
+
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code ScheduleCard}.
+     */
+    class ScheduleCardListViewCell extends ListCell<ScheduleCard> {
+
+        @Override
+        protected void updateItem(ScheduleCard schedule, boolean empty) {
+            super.updateItem(schedule, empty);
+
+            if (empty || schedule == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(schedule.getRoot());
+            }
+        }
+    }
+
+    /**
+     * Shows the reminder window.
+     * @throws IllegalStateException
+     * <ul>
+     *     <li>
+     *         if this method is called on a thread other than the JavaFX Application Thread.
+     *     </li>
+     *     <li>
+     *         if this method is called during animation or layout processing.
+     *     </li>
+     *     <li>
+     *         if this method is called on the primary stage.
+     *     </li>
+     *     <li>
+     *         if {@code dialogStage} is already showing.
+     *     </li>
+     * </ul>
+     */
+    public void show() {
+        logger.fine("Showing help page about the application.");
+        // Set dimensions
+        dialogStage.setWidth(620);
+        dialogStage.setHeight(620);
+
+        dialogStage.showAndWait();
+    }
+}
+```
 ###### \java\seedu\address\ui\ScheduleCard.java
 ``` java
 package seedu.address.ui;
+
+import java.util.logging.Logger;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.person.Name;
 import seedu.address.model.schedule.Schedule;
 
 /**
@@ -698,6 +1153,9 @@ import seedu.address.model.schedule.Schedule;
 public class ScheduleCard extends UiPart<Region> {
     private static final String FXML = "ScheduleCard.fxml";
 
+    public final Schedule schedule;
+    private final Logger logger = LogsCenter.getLogger(ScheduleCard.class);
+
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -705,8 +1163,6 @@ public class ScheduleCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
-
-    public final Schedule schedule;
 
     @FXML
     private HBox cardPane;
@@ -717,13 +1173,30 @@ public class ScheduleCard extends UiPart<Region> {
     @FXML
     private Label date;
     @FXML
-    private Label personName;
+    private VBox personNames;
+
+    @FXML
+    private Label dateHeader;
+    @FXML
+    private Label personsInvolvedHeader;
 
     public ScheduleCard(Schedule schedule, int displayedIndex) {
         super(FXML);
         this.schedule = schedule;
         number.setText(displayedIndex + ". ");
+        setHeaderStyles();
+        initPersonNames(schedule);
         bindListeners(schedule);
+    }
+
+    /**
+     * Sets the styles for headings in the ScheduleCard.
+     */
+    private void setHeaderStyles() {
+        dateHeader.getStyleClass().remove("label");
+        dateHeader.getStyleClass().add("headers");
+        personsInvolvedHeader.getStyleClass().remove("label");
+        personsInvolvedHeader.getStyleClass().add("headers");
     }
 
     /**
@@ -731,9 +1204,27 @@ public class ScheduleCard extends UiPart<Region> {
      * so that they will be notified of any changes.
      */
     private void bindListeners(Schedule schedule) {
+        logger.fine("Binding listeners...");
+
         activity.textProperty().bind(Bindings.convert(schedule.getActivityProperty()));
         date.textProperty().bind(Bindings.convert(schedule.getScheduleDateProperty()));
-        personName.textProperty().bind(Bindings.convert(schedule.getPersonInvolvedNameProperty()));
+        schedule.getPersonInvolvedNamesProperty().addListener((observable, oldValue, newValue) -> {
+            personNames.getChildren().clear();
+            initPersonNames(schedule);
+        });
+    }
+
+    /**
+     * Sets person names involved in the scheduling to the respective UI labels upon startup.
+     */
+    private void initPersonNames(Schedule schedule) {
+        for (Name name: schedule.getPersonInvolvedNames()) {
+            logger.info(name.fullName);
+        }
+        schedule.getPersonInvolvedNames().forEach(personName -> {
+            Label personNameLabel = new Label(personName.fullName);
+            personNames.getChildren().add(personNameLabel);
+        });
     }
 
     @Override
@@ -752,6 +1243,24 @@ public class ScheduleCard extends UiPart<Region> {
         ScheduleCard card = (ScheduleCard) other;
         return number.getText().equals(card.number.getText())
                 && schedule.equals(card.schedule);
+    }
+}
+```
+###### \java\seedu\address\ui\WelcomeScreen.java
+``` java
+    /**
+     * Shows reminder pop-up if there exists upcoming activities the next day.
+     */
+    private void openReminderWindowIfRequired() {
+        ReadOnlyAddressBook addressBook = model.getAddressBook();
+        ObservableList<Schedule> schedulesToRemindList = addressBook.getScheduleToRemindList();
+        for (Schedule schedule : schedulesToRemindList) {
+            logger.info("Schedules for reminder: " + schedule);
+        }
+        if (!schedulesToRemindList.isEmpty()) {
+            ReminderWindow reminderWindow = new ReminderWindow(schedulesToRemindList);
+            reminderWindow.show();
+        }
     }
 }
 ```
@@ -788,10 +1297,22 @@ public class ScheduleCard extends UiPart<Region> {
     -fx-text-fill: #00c1a7;
     -fx-opacity: 0.9;
 }
+
+.list-cell:filled:even {
+    -fx-background-color: #025b87;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #19a1e5;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #808080;
+}
 ```
 ###### \resources\view\MainWindow.fxml
 ``` fxml
-      <VBox alignment="TOP_RIGHT" minWidth="175.0" prefHeight="20.0" prefWidth="225.0">
+      <VBox alignment="TOP_RIGHT" maxWidth="285.0" minWidth="175.0" prefHeight="20.0" prefWidth="225.0">
          <children>
             <StackPane fx:id="agendaPanelPlaceholder" />
          </children>
@@ -801,8 +1322,57 @@ public class ScheduleCard extends UiPart<Region> {
     <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
 </VBox>
 ```
+###### \resources\view\ReminderTheme.css
+``` css
+.anchor-pane {
+    -fx-background-color: derive(#e5c97e, 20%);
+    background-color: #e5c97e;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: #a04a00;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #ef9a51;
+}
+```
+###### \resources\view\ReminderWindow.fxml
+``` fxml
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" stylesheets="@ReminderTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="192.0" prefWidth="598.0" style="-fx-background-color: #e5c97e;">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="227.0" layoutY="20.0" prefHeight="23.0" prefWidth="136.0" text="REMINDER!" AnchorPane.bottomAnchor="152.0" AnchorPane.leftAnchor="227.0" AnchorPane.rightAnchor="235.0" AnchorPane.topAnchor="20.0">
+               <font>
+                  <Font name="Arial Narrow" size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="141.0" layoutY="66.0" prefHeight="29.0" prefWidth="350.0" text="1 more day to these activities: " AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="130.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <StackPane fx:id="reminderWindowBottom" prefHeight="150.0" prefWidth="200.0" stylesheets="@ReminderTheme.css">
+         <children>
+            <ListView fx:id="reminderSchedulesListView" prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </StackPane>
+  </items>
+</SplitPane>
+```
 ###### \resources\view\ScheduleCard.fxml
 ``` fxml
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -831,20 +1401,29 @@ public class ScheduleCard extends UiPart<Region> {
         </Label>
         <Label fx:id="activity" styleClass="cell_big_label" text="\\$Activity" />
       </HBox>
-      <Label styleClass="cell_small_label" text="Date:">
+      <Label fx:id="dateHeader" styleClass="cell_small_label" stylesheets="@ScheduleCardHeaders.css" text="Date:">
             <font>
                <Font name="System Bold" size="13.0" />
             </font></Label>
       <Label fx:id="date" styleClass="cell_small_label" text="\\$date" />
-         <Label text="Person(s) Involved:">
+         <Label fx:id="personsInvolvedHeader" stylesheets="@ScheduleCardHeaders.css" text="Contact(s) Involved:">
             <font>
                <Font name="System Bold" size="13.0" />
             </font></Label>
-         <Label fx:id="personName" text="\\$person" />
+         <VBox fx:id="personNames" prefWidth="100.0" />
     </VBox>
       <rowConstraints>
          <RowConstraints />
       </rowConstraints>
   </GridPane>
 </HBox>
+```
+###### \resources\view\ScheduleCardHeaders.css
+``` css
+.headers {
+    -fx-text-fill: #f7d0af;
+    -fx-font-style: italic;
+    -fx-font-size: 14pt;
+    -fx-font-family: "Comic Sans MS";
+}
 ```
