@@ -162,6 +162,7 @@ public class ParcelBuilder {
     }
 
     public Parcel build() {
+        this.parcel.setStatus(Status.getUpdatedInstance(parcel.getStatus(), parcel.getDeliveryDate()));
         return this.parcel;
     }
 
