@@ -4,9 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.ImportCommand.MESSAGE_IMPORT_SUCCESS;
 import static seedu.address.logic.commands.ImportCommand.MESSAGE_INVALID_IMPORT_FILE_ERROR;
 import static seedu.address.logic.commands.ImportCommand.MESSAGE_INVALID_XML_FORMAT_ERROR;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.io.File;
 
 import org.junit.Test;
 
@@ -22,7 +25,9 @@ public class ImportCommandTest {
     private static final String TEST_VALID_BOOK = "validAddressBook.xml";
     private static final String TEST_INVALID_BOOK = "empty.xml";
 
-    private static final String PATH_VALID_ABSOLUTE = FileUtil.getPath(System.getProperty("user.dir"))
+    private static final String PATH_CURRENT_DIR = (System.getProperty("user.dir"))
+        .replaceAll("/", File.separator);
+    private static final String PATH_VALID_ABSOLUTE = PATH_CURRENT_DIR
         + TEST_DATA_FOLDER + TEST_VALID_BOOK;
     private static final String PATH_VALID_RELATIVE = TEST_DATA_FOLDER + TEST_VALID_BOOK;
     private static final String PATH_INVALID_MISSING = TEST_DATA_FOLDER;
@@ -33,7 +38,7 @@ public class ImportCommandTest {
     /**
      * Executes the given valid paths, confirms that <br>
      * - the result message verifies path is valid. <br>
-     TODO:
+     */
     @Test
     public void execute_validAddressbook_import() {
         String expectedFirstMessage = String.format(MESSAGE_IMPORT_SUCCESS, PATH_VALID_ABSOLUTE);
@@ -44,7 +49,6 @@ public class ImportCommandTest {
         ImportCommand importSecondCommand = new ImportCommand(PATH_VALID_RELATIVE);
         assertCommandSuccess(importSecondCommand, expectedSecondMessage);
     }
-     */
 
     @Test
     public void execute_invalidAddressbook_import() {
