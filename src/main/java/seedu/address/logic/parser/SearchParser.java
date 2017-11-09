@@ -17,7 +17,7 @@ public class SearchParser implements Parser<Command> {
     /**
      * returns a Command as parsed
      * @param args
-     * @return a SearchCommand of the search word args if search bar input is not empty, a ListCommand if empty search bar
+     * @return a SearchCommand of the search word args if search bar input is not empty, a ListCommand if empty
      * @throws ParseException that should never be thrown because there is no restriction on search keywords
      */
     public Command parse(String args) throws ParseException {

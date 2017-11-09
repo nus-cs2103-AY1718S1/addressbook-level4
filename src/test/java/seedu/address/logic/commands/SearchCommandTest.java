@@ -26,7 +26,6 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.NamePhoneTagContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 //@@author willxujun
@@ -125,7 +124,8 @@ public class SearchCommandTest {
      */
     private SearchCommand prepareCommand(String userInput) {
         SearchCommand command =
-                new SearchCommand(new NamePhoneTagContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new SearchCommand(new NamePhoneTagContainsKeywordsPredicate(
+                        Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -136,7 +136,8 @@ public class SearchCommandTest {
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(SearchCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
+    private void assertCommandSuccess(SearchCommand command, String expectedMessage,
+                                      List<ReadOnlyPerson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 
