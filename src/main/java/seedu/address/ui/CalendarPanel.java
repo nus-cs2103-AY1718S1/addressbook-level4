@@ -109,6 +109,10 @@ public class CalendarPanel extends UiPart<Region> {
         });
     }
 
+    /**
+     * Perform a switch back to the original mode of Mobilize
+     * @param currentMode
+     */
     private void changeToOriginalMode(String currentMode) {
         try {
             logic.execute(ChangeModeCommand.COMMAND_WORD + " " + currentMode);
@@ -124,6 +128,10 @@ public class CalendarPanel extends UiPart<Region> {
         return datePicker.getValue().format(formatter);
     }
 
+    /**
+     * Execute FindCommand to find tasks with deadline that match selected date
+     * @param dateString
+     */
     private void findTasksWithDeadline(String dateString) {
         try {
             // Change to TaskManager mode
@@ -138,6 +146,11 @@ public class CalendarPanel extends UiPart<Region> {
 
     }
 
+    /**
+     * Edit the given date string to contain only dd-MM
+     * Execute FindCommand to find persons with birthday that match selected date
+     * @param dateString
+     */
     private void findPersonsWithBirthday(String dateString) {
         String birthdayString = dateString.substring(0, 5);
         logger.info("Date selected: " + dateString);
