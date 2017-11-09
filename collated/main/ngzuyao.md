@@ -15,20 +15,24 @@
             tags.getChildren().clear();
             initTags(person);
         });*/
-
+        initPhoto(person);
     }
 ```
 ###### \java\seedu\address\ui\PersonInformationPanel.java
 ``` java
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -44,9 +48,14 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonInformationPanel extends UiPart<Region> {
 
     private static final String FXML = "PersonInformationPanel.fxml";
-    private static String[] colors = {"red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey"};
+    private static String[] colors = {"red", "blue", "orange", "brown", "green", "black", "grey"};
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
+    private static final int MIN_HEIGHT = 40;
+    private static final int MIN_WIDTH = 160;
+
+    protected List<String> optionalPhoneDisplayList = new ArrayList<String>();
+    protected ListProperty<String> listProperty = new SimpleListProperty<>();
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -54,6 +63,8 @@ public class PersonInformationPanel extends UiPart<Region> {
 
     @FXML
     private VBox informationPane;
+    @FXML
+    private VBox optionalPhoneList;
     @FXML
     private FlowPane tags;
     @FXML
@@ -63,14 +74,27 @@ public class PersonInformationPanel extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
+    private VBox optionalPhoneLabel;
+    @FXML
+    private Label phoneLabel;
+    @FXML
     private Label address;
     @FXML
+    private Label addressLabel;
+    @FXML
     private Label email;
+    @FXML
+    private Label emailLabel;
+    @FXML
+    private Label customFields;
 
     public PersonInformationPanel() {
         super(FXML);
         loadDefaultScreen();
         registerAsAnEventHandler(this);
+
+        //Configure UI
+        setLabelIndentation();
     }
 
     private static String getColorForTag(String tagValue) {
@@ -94,15 +118,14 @@ public class PersonInformationPanel extends UiPart<Region> {
             tags.getChildren().clear();
             initTags();
         });
-
     }
 
     /**
      * loads the selected person's information to be displayed.
      * @param person
-     * @param personid
+     * @param personId
      */
-    private void loadPersonInformation(ReadOnlyPerson person, int personid) {
+    private void loadPersonInformation(ReadOnlyPerson person, int personId) {
         this.person = person;
         tags.getChildren().clear();
         initTags();
@@ -110,8 +133,10 @@ public class PersonInformationPanel extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        id.setText(Integer.toString(personid));
-
+        customFields.textProperty().bind(Bindings.convert(person.customFieldProperty()));
+        id.setText(Integer.toString(personId));
+        optionalPhoneList.getChildren().clear();
+        initOptionalPhones(person);
     }
 
     /**
@@ -126,6 +151,21 @@ public class PersonInformationPanel extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initialise optional phone display flowpane
+     */
+    public void initOptionalPhones(ReadOnlyPerson person) {
+        optionalPhoneLabel.getChildren().clear();
+        person.getPhoneList().forEach(optionalPhone -> {
+            Label additionalLabel = new Label("Other Phones: ");
+            setIndentation(additionalLabel);
+            optionalPhoneLabel.getChildren().add(additionalLabel);
+            Label otherPhone = new Label(optionalPhone.value);
+            setIndentation(otherPhone);
+            optionalPhoneList.getChildren().add(otherPhone);
+        });
+    }
+
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -133,69 +173,6 @@ public class PersonInformationPanel extends UiPart<Region> {
         bindListeners(event.getNewSelection().person, event.getNewSelection().stringid);
     }
 
-    @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof PersonInformationPanel)) {
-            return false;
-        }
-
-        // state check
-        PersonInformationPanel card = (PersonInformationPanel) other;
-        return id.getText().equals(card.id.getText())
-                && person.equals(card.person);
-    }
-}
-```
-###### \resources\view\PersonInformationPanel.fxml
-``` fxml
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <VBox>
-         <children>
-            <Label fx:id="id" styleClass="label-header" />
-            <Label fx:id="name" styleClass="label-header" />
-            <HBox>
-               <children>
-                  <Label styleClass="label-bright" text="Tags: " />
-                  <FlowPane fx:id="tags" />
-               </children>
-            </HBox>
-            <HBox>
-               <children>
-                  <Label styleClass="label-bright" text="Phone: " />
-                  <Label fx:id="phone" styleClass="label-bright" />
-               </children>
-            </HBox>
-            <HBox>
-               <children>
-                  <Label styleClass="label-bright" text="Address: " />
-                  <Label fx:id="address" styleClass="label-bright" />
-               </children>
-            </HBox>
-            <HBox>
-               <children>
-                  <Label styleClass="label-bright" text="Email: " />
-                  <Label fx:id="email" styleClass="label-bright" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-   </children>
-</AnchorPane>
 ```
 ###### \java\seedu\address\ui\PersonInformationPanel.java
 ``` java
