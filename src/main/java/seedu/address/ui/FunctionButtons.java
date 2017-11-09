@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -35,7 +35,7 @@ public class FunctionButtons extends UiPart<Region> {
     @FXML
     private Button sendButton;
     @FXML
-    private Label loginStatus;
+    private TextField loginStatus;
 
     public FunctionButtons(Logic logic, Stage stage, MainWindow mainWindow) {
         super(FXML);
