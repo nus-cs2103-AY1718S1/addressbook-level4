@@ -10,7 +10,7 @@ The Myth’s Book is a Command Line Input based software which helps caters to s
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/main/archthegit.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/test/archthegit.md[Test code]][https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/unused/archthegit.md[Unused code]]
 
-=== Enhancement Added: Modified find Command (V1.0)
+=== Enhancement Added: Modified Find Command (V1.0)
 
 ==== External behavior
 
@@ -109,5 +109,6 @@ A to-do list to remind university students when their assignment or submissions 
 
 * Fixed bugs in the details panel ( Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/130)
 * Acceptance testing feedback given to `Team T09-B2` [https://github.com/CS2103AUG2017-T09-B2/main/issues?q=is%3Aissue+is%3Aclosed[Issues]]
+* Increased test coverage by 0.6% [https://github.com/CS2103AUG2017-T15-B3/main/pull/95[pull request]]
 
 
