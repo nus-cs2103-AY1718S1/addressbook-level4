@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
@@ -14,6 +12,7 @@ import javax.imageio.ImageIO;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -57,6 +56,10 @@ public class PersonPanel extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Button addImageButton;
+    @FXML
+    private Button resetImageButton;
 
     public PersonPanel(Logic logic) {
         super(FXML);
@@ -73,6 +76,7 @@ public class PersonPanel extends UiPart<Region> {
         phone.textProperty().setValue("-");
         address.textProperty().setValue("-");
         email.textProperty().setValue("-");
+        enableButtons(false);
     }
 
     /**
@@ -86,6 +90,15 @@ public class PersonPanel extends UiPart<Region> {
         email.textProperty().setValue(person.getEmail().toString());
         initTags();
         initImage();
+        enableButtons(true);
+    }
+
+    /**
+     * @param state Set button status
+     */
+    private void enableButtons(boolean state) {
+        this.addImageButton.setDisable(!state);
+        this.resetImageButton.setDisable(!state);
     }
 
     /**
