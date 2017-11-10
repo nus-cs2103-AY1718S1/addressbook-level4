@@ -28,11 +28,13 @@ The Myth's Book is a software application that is coded in `Java` programming la
 
 == About
 
-This developer guide will teach you how to set up the application software on IntelliJ IDEA and
-allow you to understand the process, features and structure of the application software to help
-you become a more knowledgeable contributor towards debugging, updating and improving The Myth's Book.
+This developer guide will guide you on how to set up the application software on IntelliJ IDEA and
+allow you to understand more about the process, features and structure of the application software
+as you are updating, improving and debugging The Myth's Book.
 
 == Setting up
+
+This section guides you on how to set up The Myth's Book on IntelliJ IDEA.
 
 === Prerequisites
 
