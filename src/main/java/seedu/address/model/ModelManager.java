@@ -111,7 +111,7 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Latest Person List Accessors =============================================================
 
     /**
-     * Returns the index of the given person
+     * Returns the index of the given person.
      */
     public Index getIndex(ReadOnlyPerson target) {
         return Index.fromZeroBased(sortedPersons.indexOf(target));
