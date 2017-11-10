@@ -13,12 +13,11 @@ import java.util.Optional;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Logger;
 
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.mockito.Mockito;
 import org.telegram.abilitybots.api.db.DBContext;
 import org.telegram.abilitybots.api.db.MapDBContext;
@@ -27,6 +26,9 @@ import org.telegram.abilitybots.api.objects.MessageContext;
 import org.telegram.abilitybots.api.sender.MessageSender;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
+
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import seedu.address.TestApp;
 import seedu.address.bot.parcel.ParcelParser;
 import seedu.address.commons.core.LogsCenter;
@@ -43,13 +45,13 @@ import systemtests.ModelHelper;
 import systemtests.SystemTestSetupHelper;
 
 public class ArkBotTest {
+    public static final long CHAT_ID = 1337L;
+    public static final int USER_ID = 1337;
+
     private static final String BOT_DEMO_JOHN = "#/RR000000000SG n/John Doe p/98765432 e/johnd@example.com "
             + "a/John street, block 123, #01-01 S123121 d/01-01-2001 s/DELIVERING";
     private static final String SAMPLE_ADD_COMMAND = BOT_DEMO_JOHN;
     private static final Logger logger = LogsCenter.getLogger(ArkBotTest.class);
-
-    public static final int USER_ID = 1337;
-    public static final long CHAT_ID = 1337L;
 
     private ArkBot bot;
     private DBContext db;
@@ -196,8 +198,8 @@ public class ArkBotTest {
         /*================================== DELETE COMMAND FAILURE TEST ====================================*/
 
         mockedUpdate = mock(Update.class);
-        context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID,
-                (model.getUncompletedParcelList().size() + 1) + "");
+        context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID, (model.getUncompletedParcelList().size()
+                + 1) + "");
 
         bot.deleteCommand().action().accept(context);
         waitForRunLater();
@@ -231,6 +233,9 @@ public class ArkBotTest {
 
     }
 
+    /**
+     * Using semaphores to wait for task on current thread to cease before carrying on.
+     */
     public static void waitForRunLater() throws InterruptedException {
         Semaphore semaphore = new Semaphore(0);
         Platform.runLater(() -> semaphore.release());

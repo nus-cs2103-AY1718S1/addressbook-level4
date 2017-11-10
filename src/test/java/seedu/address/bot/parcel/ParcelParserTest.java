@@ -43,6 +43,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER_BOB;
 
 import org.junit.Test;
+
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.parcel.Address;
 import seedu.address.model.parcel.DeliveryDate;
@@ -117,7 +118,7 @@ public class ParcelParserTest {
                 + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + DELIVERY_DATE_DESC_BOB + TAG_DESC_FROZEN
                 + TAG_DESC_FLAMMABLE,
                 expectedParcelMultipleTags);
-}
+    }
 
     @Test
     public void parse_optionalFieldsMissing_success() {
