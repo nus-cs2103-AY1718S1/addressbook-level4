@@ -342,7 +342,7 @@ public class KeyListener {
     }
 
     /**
-     * Handles key press events.
+     * Handles key press events from the user.
      */
     public void handleKeyPress() {
         mainNode.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
@@ -415,7 +415,7 @@ public class KeyListener {
     }
 
     /**
-     * Handles execution of command
+     * Executes command triggered by key presses.
      */
     private void executeCommand(String command) {
         if (command.equals(OpenCommand.COMMAND_WORD) || command.equals(NewCommand.COMMAND_WORD)) {
@@ -439,15 +439,15 @@ public class KeyListener {
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
     /**
-     * Proportions the split pane divider position according to window size
+     * Proportions the split pane divider position according to window size.
      */
-    private void setSplitPaneDividerProperty() {
+    private void setSplitPaneDividerPosition() {
 
         primaryStage.showingProperty().addListener((observable, oldValue, newValue) ->
-                splitPane.setDividerPositions(0.35f));
+                splitPane.setDividerPositions(SPLIT_PANE_DIVIDER_POSITION));
 
         primaryStage.widthProperty().addListener((observable, oldValue, newValue) ->
-                splitPane.setDividerPositions(0.35f));
+                splitPane.setDividerPositions(SPLIT_PANE_DIVIDER_POSITION));
     }
 ```
 ###### \java\seedu\address\ui\PersonCard.java
@@ -622,7 +622,7 @@ public class PersonDetailPanel extends UiPart<Region> {
 ###### \java\seedu\address\ui\util\Avatar.java
 ``` java
 /**
- * Stores the information of all person avatars
+ * Stores the information of all person avatars.
  */
 public class Avatar {
     private static HashMap<String, String> avatarColors = new HashMap<>();
@@ -650,6 +650,8 @@ public class Avatar {
 
     /**
      * Generates a new color with a random offset from {@code defaultColor}.
+     *
+     * @return The new color in hex string format
      */
     private static String generateNewColor(Color defaultColor) {
         int r = defaultColor.getRed();
