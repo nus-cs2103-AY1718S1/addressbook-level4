@@ -18,9 +18,10 @@ the contact's number and automatically port it to your smartphone. It is written
 ---
 #Start of Extract [from: User Guide]#
 
+include::../UserGuide.adoc[tag=delete]
 include::../UserGuide.adoc[tag=email]
 include::../UserGuide.adoc[tag=googlemaps]
-include::../UserGuide.adoc[tag=mapbutton]
+include::../UserGuide.adoc[tag=edit]
 
 #End of Extract#
 
