@@ -13,6 +13,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
+import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -86,6 +87,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addInsurance(ReadOnlyInsurance insurance) {
         addressBook.addInsurance(insurance);
+        updateFilteredInsuranceList(PREDICATE_SHOW_ALL_INSURANCES);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteInsurance(ReadOnlyInsurance target) throws InsuranceNotFoundException {
+        addressBook.deleteInsurance(target);
         updateFilteredInsuranceList(PREDICATE_SHOW_ALL_INSURANCES);
         indicateAddressBookChanged();
     }

@@ -4,7 +4,10 @@ import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.AppUtil.PanelChoice;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.insurance.ReadOnlyInsurance;
+import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -22,11 +25,20 @@ public class DeleteCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_INSURANCE_SUCCESS = "Deleted Insurance %1$s";
 
     private final Index targetIndex;
+    private final PanelChoice panelChoice;
 
     public DeleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
+        this.panelChoice = PanelChoice.PERSON;
+    }
+
+    //@@author Juxarius
+    public DeleteCommand(Index targetIndex, PanelChoice panelChoice) {
+        this.targetIndex = targetIndex;
+        this.panelChoice = panelChoice;
     }
 
 
@@ -34,21 +46,34 @@ public class DeleteCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyInsurance> insuranceList = model.getFilteredInsuranceList();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        if (panelChoice == PanelChoice.PERSON && targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        } else if (panelChoice == PanelChoice.INSURANCE && targetIndex.getZeroBased() >= insuranceList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_INSURANCE_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
-
+        String commandResultMessage = "";
         try {
-            model.deletePerson(personToDelete);
+            if (panelChoice == PanelChoice.PERSON) {
+                ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
+                model.deletePerson(personToDelete);
+                commandResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+            } else if (panelChoice == PanelChoice.INSURANCE) {
+                ReadOnlyInsurance insuranceToDelete = insuranceList.get(targetIndex.getZeroBased());
+                model.deleteInsurance(insuranceToDelete);
+                commandResultMessage = String.format(MESSAGE_DELETE_INSURANCE_SUCCESS,
+                        insuranceToDelete.getInsuranceName());
+            }
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
+        } catch (InsuranceNotFoundException infe) {
+            assert false : "The target insurance cannot be missing";
         }
-
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
+        return new CommandResult(commandResultMessage);
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

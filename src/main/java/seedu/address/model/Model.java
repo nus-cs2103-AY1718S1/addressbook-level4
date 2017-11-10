@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.insurance.ReadOnlyInsurance;
+import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -62,4 +63,6 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredInsuranceList(Predicate<ReadOnlyInsurance> predicate);
+
+    void deleteInsurance(ReadOnlyInsurance insuranceToDelete) throws InsuranceNotFoundException;
 }

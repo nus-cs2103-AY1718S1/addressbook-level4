@@ -110,7 +110,16 @@ public class UniqueLifeInsuranceMap {
         assert CollectionUtil.elementsAreUnique(internalMap.values());
         return FXCollections.unmodifiableObservableList(internalList);
     }
-    //@@author
+    //@@author Juxarius
+
+    /**
+     * @param insurance insurance to be deleted
+     * @return
+     */
+    public boolean remove(ReadOnlyInsurance insurance) {
+        requireNonNull(insurance);
+        return internalMap.remove(insurance.getId(), insurance);
+    }
 
     //@@author OscarWang114
     /**

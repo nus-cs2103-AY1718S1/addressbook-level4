@@ -165,6 +165,19 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         syncWithUpdate();
     }
+    //@@author Juxarius
+
+    /**
+     * @param target insurance to be deleted
+     * @throws InsuranceNotFoundException
+     */
+    public void deleteInsurance(ReadOnlyInsurance target) throws InsuranceNotFoundException {
+        if (lifeInsuranceMap.remove(target)) {
+            syncWithUpdate();
+        } else {
+            throw new InsuranceNotFoundException();
+        }
+    }
     //@@author
 
 
