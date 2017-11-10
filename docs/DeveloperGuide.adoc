@@ -937,6 +937,68 @@ addDebtToPerson(person, amount);
 **Cons:** Not convenient for user at all. It is also unlikely that the user would remain logged in for such a long duration. +
 // end::interest[]
 
+// tag::theme[]
+=== Theme Changing Mechanism
+
+The changing of themes is done in the `MainWindow` class, which is the class that holds all the `UI` parts.
+
+[source, java]
+----
+private void changeTheme() {
+    for (String stylesheet : getRoot().getStylesheets()) {
+        if (stylesheet.endsWith("DarkTheme.css")) {
+            getRoot().getStylesheets().remove(stylesheet);
+            getRoot().getStylesheets().add("/view/BrightTheme.css");
+        } else if (stylesheet.endsWith("BrightTheme.css")) {
+            getRoot().getStylesheets().remove(stylesheet);
+            getRoot().getStylesheets().add("/view/DarkTheme.css");
+        }
+    }
+}
+----
+
+The `changeTheme` method is called when a `ChangeThemeRequestEvent` is raised from `ThemeCommand`.
+
+In `MainWindow`:
+[source, java]
+----
+@Subscribe
+private void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    changeTheme();
+}
+----
+In `ThemeCommand`:
+[source, java]
+----
+public CommandResult execute() {
+    EventsCenter.getInstance().post(new ChangeThemeRequestEvent());
+    return new CommandResult(MESSAGE_SUCCESS);
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Condition for changing themes. +
+**Alternative 1 (current choice):** Use `String#endsWith()`. +
+**Pros:** Foolproof, guaranteed to work if the theme exists. +
+**Alternative 2:** Use file paths. +
+**Pros:** Likely to work most of the time if handled well. +
+**Cons:** When debugging, it was found that the path started in the `build` folder instead of the `src` folder. Using
+this method seemed to cause inconsistencies between running the app from an IDE and from the `.jar` file.
+
+---
+
+**Aspect:** Switching of themes. +
+**Alternative 1 (current choice):** Simple toggle between two themes. +
+**Pros:** Easy to implement. +
+**Cons:** Troublesome to extend. +
+** Alternative 2:** Use an `int` to keep track of the current theme, assign each theme to a number, and use `+` and `%`
+to cycle through the themes. +
+**Pros:** Easy to extend. +
+**Cons:** Troublesome to implement considering that we intend to use only two themes.
+// end::theme[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
