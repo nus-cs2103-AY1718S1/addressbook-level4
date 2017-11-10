@@ -19,6 +19,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
+//@@author Choony93
 public class ImportCommandTest {
 
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlUtilTest/");
@@ -41,11 +42,17 @@ public class ImportCommandTest {
      */
     @Test
     public void execute_validAddressbook_import() {
+
+        /*
+        Note:
+        Absolute path testing will temporarily be disabled due to live Travis pathing restrictions.
+        Test passes on appveyor only.
+        */
         /*
         String expectedFirstMessage = String.format(MESSAGE_IMPORT_SUCCESS, PATH_VALID_ABSOLUTE);
         ImportCommand importFirstCommand = new ImportCommand(PATH_VALID_ABSOLUTE);
         assertCommandSuccess(importFirstCommand, expectedFirstMessage);
-        */
+         */
 
         String expectedSecondMessage = String.format(MESSAGE_IMPORT_SUCCESS, PATH_VALID_RELATIVE);
         ImportCommand importSecondCommand = new ImportCommand(PATH_VALID_RELATIVE);
@@ -94,3 +101,4 @@ public class ImportCommandTest {
         }
     }
 }
+//@@author
