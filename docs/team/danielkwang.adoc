@@ -9,9 +9,9 @@ The user can tag entries for more efficient search and can open up an email clie
 such as his/her address on Google Maps. The user interacts with it using a CLI, although there are additional GUI elements created in JavaFX such as a form to edit contacts, and a QR generator for you to scan
 the contact's number and automatically port it to your smartphone. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/main/danielweide.md] [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/test/danielweide.md] {give links to collated code files}
 
-=== Enhancement Added: Undo/Redo
+=== Enhancement Added: LoggingCommand/ClearLog/QR Code For Calling/QR Code for Sms/QR Code for saving of contact
 
 ==== External behavior
 
@@ -26,8 +26,8 @@ include::../UserGuide.adoc[tag=qrgeneration]
 ---
 
 ==== Justification
-
-"clearlog" feature was implemented on top of another features implement to keep track of important actions such as "Edit" , "Select" , "Add" & "Clear". This ensure the user are able to identify mistakes committed on certain period of time where undo or redo function would not be usable once the application is close. So the "ClearLog" function clears the entries in ConnectUs.txt files and keep a record on when it was cleared. This allows the user to keep neat and organised entries of action used. +
+"LoggingCommand" feature was implemented to keep track of important such as "Add" , "Clear" , "Edit" , "Select" , etc. This is to ensure that the user can still check for mistakes or accidental deletion of contact after realising mistakes was committed weeks ago. +
+"ClearLog" feature is useful for keeping ConnectUsLog.txt neat as the list of information will keep on expanding. Therefore, user can choose to clear the log file after confirming that the logs are not needed. +
 "qrcall" feature was implemented to reduce chance of human error and time when the user wants to make call to specific contact. With the help of Quick Response Code (QR Code), the user just need to use their smartphone to scan the code which will instruct the phone on what to do. This helps save time and chance for error during the time when the user needs to make a call. +
 "qrsms" feature was implemented to keep our user free from human error and help save time to compose a sms. It comes with function where there is greeting template message . The user simply need to scan the QR Code to compose their sms for the intended contact. +
 "qrsavecontact" feature was implemented to help Android users to save contact easily by simply scanning the QR Code to save contact they want from the addressbook application. This will help save a lot of time if the user needs to save multiple acount and reduce chances of human error with potential of wrong information keyed in during the process of manual saving of contact information.
@@ -37,7 +37,11 @@ include::../UserGuide.adoc[tag=qrgeneration]
 ---
 #Start of Extract [from: Developer Guide]#
 
-Ongoing.
+include::../DeveloperGuide.adoc[tag=loggingcom]
+include::../DeveloperGuide.adoc[tag=clearlog]
+include::../DeveloperGuide.adoc[tag=qrcall]
+include::../DeveloperGuide.adoc[tag=qrsms]
+include::../DeveloperGuide.adoc[tag=qrsave]
 
 #End of Extract#
 
