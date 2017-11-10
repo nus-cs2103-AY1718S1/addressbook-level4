@@ -10,8 +10,6 @@ public class Messages {
     public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The person index provided is invalid";
     //@@author qihao27
     public static final String MESSAGE_PERSON_NAME_ABSENT = "The person's name provided can not be found.";
-    public static final String MESSAGE_PERSON_NAME_INSUFFICIENT = "The person name provide is too short."
-            + "\nRequire more than 3 characters";
     //@@author
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     //@@author Hailinx

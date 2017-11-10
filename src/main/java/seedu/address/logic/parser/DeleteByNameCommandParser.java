@@ -1,13 +1,13 @@
 //@@author qihao27
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.DeleteByNameCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Arrays;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import seedu.address.logic.commands.DeleteByNameCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new DeleteByNameCommand object

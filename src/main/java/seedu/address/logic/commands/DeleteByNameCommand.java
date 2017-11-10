@@ -1,13 +1,13 @@
 //@@author qihao27
 package seedu.address.logic.commands;
 
+import java.util.List;
+import java.util.function.Predicate;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-
-import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * Deletes a person identified using its name from the address book.

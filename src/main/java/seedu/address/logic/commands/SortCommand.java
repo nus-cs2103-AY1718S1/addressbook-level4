@@ -61,9 +61,9 @@ public class SortCommand extends UndoableCommand {
             return new CommandResult(MESSAGE_SUCCESS_BY_ADDRESS);
         } else if (option.contains("-t")) {
             return new CommandResult(MESSAGE_SUCCESS_BY_TAG);
-        } else {
-            return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
+
+        return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
     }
 
     @Override

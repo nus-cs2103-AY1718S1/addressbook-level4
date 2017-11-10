@@ -29,12 +29,10 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     //@@author qihao27
-    public static final String MESSAGE_INVALID_STRING = "String does not contain alphanum only.";
     public static final String MESSAGE_INVALID_OPTION = "String does not contain hyphen and lower case alphabet only.";
     public static final String MESSAGE_INVALID_FILE_PATH =
             "String does not contain \".xml\" as suffix or contains invalid file path.";
     //@@author
-    public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
