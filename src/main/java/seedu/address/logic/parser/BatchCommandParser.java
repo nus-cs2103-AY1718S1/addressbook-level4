@@ -27,7 +27,8 @@ public class BatchCommandParser implements Parser<BatchCommand> {
         Scanner tagNameScanner = new Scanner(args);
 
         while (tagNameScanner.hasNext()) {
-            tagNames.add(tagNameScanner.next());
+            String nextTagName = tagNameScanner.next();
+            tagNames.add(nextTagName);
         }
 
         try {
