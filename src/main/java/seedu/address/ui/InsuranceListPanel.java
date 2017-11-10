@@ -104,7 +104,7 @@ public class InsuranceListPanel extends UiPart<Region> {
     private void handleInsuranceClickedEvent(InsuranceClickedEvent event) {
         ObservableList<InsuranceCard> insurances = insuranceListView.getItems();
         for (int i = 0; i < insurances.size(); i++) {
-            if (insurances.get(i).getInsurance().getInsuranceName().equals(event.getInsurance().getInsuranceName())) {
+            if (insurances.get(i).getInsurance().getId().equals(event.getInsurance().getId())) {
                 insuranceListView.scrollTo(i);
                 insuranceListView.getSelectionModel().select(i);
                 break;

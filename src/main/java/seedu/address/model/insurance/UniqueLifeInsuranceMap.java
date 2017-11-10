@@ -51,12 +51,20 @@ public class UniqueLifeInsuranceMap {
      * @throws DuplicateInsuranceException if the life insurance to add is a duplicate of an
      * existing life insurance in the map.
      */
-    public void put(UUID key, ReadOnlyInsurance toPut) throws DuplicateInsuranceException {
+    public void put(ReadOnlyInsurance toPut) throws DuplicateInsuranceException {
         requireNonNull(toPut);
         if (containsValue(toPut)) {
             throw new DuplicateInsuranceException();
         }
-        internalMap.put(key, new LifeInsurance(toPut));
+        internalMap.put(toPut.getId(), new LifeInsurance(toPut));
+    }
+
+    private void put(UUID id, ReadOnlyInsurance toPut) throws DuplicateInsuranceException {
+        requireNonNull(toPut);
+        if (containsValue(toPut)) {
+            throw new DuplicateInsuranceException();
+        }
+        internalMap.put(id, new LifeInsurance(toPut));
     }
 
     /**
@@ -132,7 +140,9 @@ public class UniqueLifeInsuranceMap {
      */
     public boolean remove(ReadOnlyInsurance insurance) {
         requireNonNull(insurance);
-        return internalMap.remove(insurance.getId(), insurance);
+        boolean removeSuccess = internalMap.remove(insurance.getId(), insurance);
+        syncMappedListWithInternalMap();
+        return removeSuccess;
     }
 
     //@@author OscarWang114
