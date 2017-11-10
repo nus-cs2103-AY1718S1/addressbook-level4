@@ -17,7 +17,7 @@ import seedu.address.commons.events.ui.InsuranceClickedEvent;
 import seedu.address.commons.events.ui.InsurancePanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.SwitchToProfilePanelRequestEvent;
-import seedu.address.logic.commands.SelectCommand.PanelChoice;
+import seedu.address.commons.util.AppUtil.PanelChoice;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 
 /**
