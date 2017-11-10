@@ -36,7 +36,6 @@ public class GraphWrapper {
     private Viewer viewer;
     private Layout layoutAlgorithm;
     private View view;
-    private SpriteManager spriteManager;
     private Model model;
     private ObservableList<ReadOnlyPerson> filteredPersons;
 
@@ -47,7 +46,6 @@ public class GraphWrapper {
         this.graph = new SingleGraph(graphId);
         initialiseRenderer();
         initialiseViewer();
-        initialiseSpriteManager();
     }
 
     /**
@@ -101,13 +99,6 @@ public class GraphWrapper {
         viewer.enableAutoLayout(layoutAlgorithm);
         viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.EXIT);
         this.view = viewer.addDefaultView(false);
-    }
-
-    /**
-     * Initialise sprite manager for integrated graph display.
-     */
-    private void initialiseSpriteManager() {
-        this.spriteManager = new SpriteManager(graph);
     }
 
     private void setData(Model model) {
