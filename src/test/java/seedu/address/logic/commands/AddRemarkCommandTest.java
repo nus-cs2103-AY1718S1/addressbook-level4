@@ -34,8 +34,9 @@ public class AddRemarkCommandTest {
 
     @Test
     public void execute_addRemark_success() throws Exception {
+        //"Some remark" added twice because the default person has one "Some remark" already.
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                .withRemark("Some remark").build();
+                .withRemark("Some remark", "Some remark").build();
 
         AddRemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, "Some remark");
 
@@ -53,7 +54,7 @@ public class AddRemarkCommandTest {
 
         ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(personInFilteredList)
-                .withRemark("Some remark").build();
+                .withRemark("Some remark", "Some remark").build();
         AddRemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, "Some remark");
 
         String expectedMessage = String.format(AddRemarkCommand.MESSAGE_ADD_REMARK_SUCCESS, "\nRemarks: "

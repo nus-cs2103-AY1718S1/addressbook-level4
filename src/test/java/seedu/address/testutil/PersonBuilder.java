@@ -25,6 +25,7 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_REMARK = "Some remark";
     public static final boolean DEFAULT_FAVOURITE_STATUS = false;
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_LINK = "";
@@ -37,7 +38,7 @@ public class PersonBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
-            ArrayList<Remark> defaultRemark = new ArrayList<>();
+            ArrayList<Remark> defaultRemark = SampleDataUtil.getRemarkArrayList(DEFAULT_REMARK);
             FavouriteStatus defaultFavouriteStatus = new FavouriteStatus(DEFAULT_FAVOURITE_STATUS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             Link defaultLink = new Link(DEFAULT_LINK);
