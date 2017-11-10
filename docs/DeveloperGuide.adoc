@@ -288,7 +288,7 @@ image::NewUML.png[width="800]
 **Cons:** Causes the file size of `displaypictures` folder to get too large too quickly if users has alot of contacts that he wishes to add a display photo to or if users add photos at a rapid rate or both. +
 **Alternative 2:** Using hashcode of the contact's email to generate the unique file path of the image that is to be written into `displaypictures`. +
 **Pros:** Overwrites the previous photo of the contact as the hashcode is the same due to having the same email. Optimal for saving memory space and preventing the file size of `displaypictures` folder to get too large. +
-**Cons:** Overwriting the previous photo of the specified contact means that `undo` command for `addphoto` will not be executed correctly, as the previous image of that contact has already been overwritten.
+**Cons:** Overwriting the previous photo of the specified contact means that `undo` command for `addphoto` will not be executed correctly, as the previous image of that contact has already been overwritten and deleted.
 // end::addphoto[]
 
 // tag::undoredo[]
