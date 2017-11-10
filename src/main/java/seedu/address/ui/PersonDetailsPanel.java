@@ -151,6 +151,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
         emailLabel.setText("");
         addressLabel.setText("");
         addressLabelContinue.setText("");
+        eventsArea.setText("");
     }
 
     @Subscribe
