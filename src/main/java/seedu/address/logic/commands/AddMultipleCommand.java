@@ -18,7 +18,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author KhorSL
 /**
- * Adds a person to the address book.
+ * Adds multiple persons to the address book.
  */
 public class AddMultipleCommand extends UndoableCommand {
 
