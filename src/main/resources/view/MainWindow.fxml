@@ -43,7 +43,6 @@
       </padding>
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
-    
     <StackPane fx:id="togglePlaceHolder" prefHeight="20.0" prefWidth="525.0" visible="true">
       <padding>
         <Insets bottom="1" left="1" right="1" top="1" />
