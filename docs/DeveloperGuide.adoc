@@ -384,6 +384,8 @@ Similiarly, the user can choose to implement the `logoutcommand` which would cal
 **Pros:** Easier to implement. Achieves the basic functions of security +
 **Cons:** Doesnt look as good.
 
+---
+
 // tag::birthday[]
 === Birthday
 
@@ -392,32 +394,21 @@ Similiarly, the user can choose to implement the `logoutcommand` which would cal
 `BirthdayCommand` : It allows the adding, editing and removing of birthday parameter to/from a person. +
 
 
-The `BirthdayCommand` lies in the `commands` of `Logic`. and does not deal with `UndoableCommands`, thus the actions cannot be reversed.  The following diagram shows the inheritance diagram for commands:
+The `BirthdayCommand` lies in the `commands` of `Logic`. and deals with `UndoableCommands`, thus the actions can
+be reversed.  The following diagram shows the inheritance diagram for commands:
 
-image::logic_birthday.png[width="700"]
-_Figure 4.3.1.1a : Structure of Commands in the Logic Component.
+image::birthdayLogic.png[width="700"]
+_Figure 4.3.1.1a : Structure of Commands in the Logic Component._
 
 The user will not be able to enter the birthday parameter when adding contacts. +
 Suppose that the user has a list of persons. The birthday parameters will be empty if the user has not modified the persons yet.
 The user then adds the birthday through the BirthdayCommand : " `birthday 2 b/20/07/1994` "  where he adds the birthday parameter of the 2nd person in the list. +
 
-After adding the birthday parameters of contacts, the user can choose to sort the contact list according to either their ages or birthdays or leave it as it is. +
 The following sequence diagram shows how the birthday operation works:
 
-image::birthday_sd.png[width="800"]
+image::birthdaySD.png[width="800"]
 _Figure 4.3.1.1b : Interactions in the Birthday Command._
 
-// end::birthday[]
-
-==== sortAgeCommand
-
-`sortAgeCommand` : Sorts the contact list in terms of their age, from the oldest to youngest. +
-
-==== sortBirthdayCommand
-
-`sortBirthdayCommand`: Sorts the contact list in from 1st January to 31st December, irregardless of their age. +
-
-// tag::birthdayDesignConsideration[]
 ==== Design Considerations
 
 **Aspect:** Adding Birthday parameter +
@@ -428,7 +419,18 @@ _Figure 4.3.1.1b : Interactions in the Birthday Command._
 **Pros:** Faster for users to add in all the parameters. +
 **Cons:** More parameters to add while creating person class and harder to implement. +
 
-// end::birthdayDesignConsideration[]
+---
+**Aspect:** More birthday commands +
+**Alternative 1 (current choice):** Only one birthday command to add / edit / delete birthday from person +
+**Pros:** Convenient, lesser commands for users to remember. +
+**Cons:** Birthday command is very general and may be confusing to the user instead +
+**Alternative 2:**  Create other commands such as editBirthday and deleteBirthday +
+**Pros:** Less convenient, many commands for users to remember. +
+**Cons:** Each command is specific and purpose of each command is clear. +
+
+---
+
+// end::birthday[]
 
 // tag::tagretrieve[]
 === Tag & Retrieve mechanism
@@ -488,38 +490,150 @@ _Figure 4.4.1.1 : Sequence Diagram for the Retrieve Command._
 
 The `Reminder` list mechanism works similar to the `Person` list. +
 It integrates the `Logic`, `Model`, `Storage`, `UI` component. +
-It consists of different commands that allow users to store reminders into the address book. +
+It consists of different commands that allow users to store reminders into the address book.
+The commands reside in the `commands` of `Logic` +
 
-==== Commands
-Resides in the `commands` of `Logic` +
+==== AddReminderCommand
+Adds information of reminders in address book. +
+e.g. `addReminder z/Proposal Submission p/Low d/12/11/2017 m/Submit to Manager t/Friends` +
 
-`AddReminderCommand`: Adds information of reminders in address book. +
- e.g. `addReminder z/Proposal Submission p/Low d/12/11/2017 m/Submit to Manager t/Friends` +
+==== EditReminderCommand
 
 `EditReminderCommand`: Edits the details of reminders in address book. +
 e.g. `editReminder 2 p/Medium m/Submit to Department Head`
 
+==== DeleteReminderCommand
+
 `DeleteReminderCommand`: Deletes the reminder of the last reminder list. +
 e.g. `deleteReminder 3`
 
+==== SortPriorityCommand
+
 `SortPriorityCommand`: Sorts the reminder list in order of `priority` . +
-(*High* -> *Medium* -> *Low*) +
-e.g. `sortPriority`
+(Will be covered more in sort Mechanism)
+
+==== FindReminderCommand and FindPriorityCommand
 
 `findReminder` : Finds the reminder that contains the keyword. +
-e.g. `findReminder Project`
-
 `findPriority` : Finds the reminders that contains the keyword. +
-e.g. `findPriority High`
+(Will be covered more in Find Mechanism)
+
+// tag::listReminder[]
+==== listReminderCommand
 
 `listReminder` : Lists all the reminders in the reminder list. +
 e.g. `listReminder`
+
+// end::listReminder[]
 
 [NOTE]
 Missing details during adding of reminders will result in Invalid Command format.
 
 [NOTE]
 If an invalid Index is given during editing and deleting reminders, an `Exception` would be thrown.
+
+// tag::find[]
+=== Find Mechanism
+
+==== findPhoneCommand
+
+Finds contact with the phone number given. +
+e.g. `findPhone 87654321`
+
+==== findEmailCommand
+
+Finds the contact with the email given. +
+e.g. `findEmail alex@example.com`
+
+==== findReminderCommand
+
+Finds reminder(s) with same task name as the keyword given. +
+e.g. `findReminder project`
+
+==== findPriorityCommand
+
+Finds reminder(s) with the priority (Low / Medium / High) given. +
+e.g. `findPriority High`
+
+The 4 advanced find commands, as well as the basic `find` oommand lies in the `commands` of `Logic`. and does not deal
+with `UndoableCommands`, thus the actions cannot be reversed. +
+The following diagram shows the inheritance diagram for `findPhone` command:
+
+image::findPhoneSD.png[width="800"]
+_Figure 4.6.1.1 Interactions in the findPhone command._
+
+Suppose the user keys in the command (e.g. `findReminder Proposal`) to search for all his reminders with the keyword
+"Proposal". The application searches through the entire reminder list and displays all reminders
+with the keyword.
+
+image::BeforeAndAfterFindReminder.png[width="600"]
+_Figure 4.6.3.1 Reminder list before and after the findReminder command_
+
+[Note]
+Only keywords are searched, incomplete keywords in command such as `findEmail alex@example` will not return contact
+with email "alex@example.com". +
+* All find commands are case insensitive (e.g. "high" will match "High").
+* Only full words will be matched (e.g. "8123" will not match "81234567").
+
+==== Design Considerations
+
+**Aspect:** Number of Find command +
+**Alternative 1 (current choice):** Different find commands for each purpose +
+**Pros:** Fast and direct, convenient for user. +
+**Cons:** Many find commands for users to remember / Users may need to check for user guide or help function very often
+ to see the types of find commands available. +
+**Alternative 2:**  Users key in the word "find", application then shows the types of find available and users selects
+the type of find command he wants +
+**Pros:** Lesser commands to remember and checks user guide less often. +
+**Cons:** Slower and less direct. +
+
+// end::find[]
+
+// tag::sort[]
+=== Sorting Mechanism
+
+==== sortCommand
+
+Sorts the contact list in alphabetical order. +
+e.g. `sort`
+
+==== sortAgeCommand
+
+Sorts the contact list in order of their age, from the oldest to youngest. +
+e.g. `sortAge`
+
+==== sortBirthdayCommand
+
+Sorts the contact list in from 1st January to 31st December, irregardless of their age. +
+e.g. `sortBirthday`
+
+==== sortPriority
+
+Sorts the reminder list in order of the task priority. (*High* -> *Medium* -> *Low*) +
+e.g. `sortPriority`
+
+The 4 sort commands support undoing and redoing of commands, similar to add, edit and delete commands.
+It inherits from `UndoableCommand` and uses the `Collection` class. +
+Given below is the Sequence Diagram for interactions within the Logic component for the execute("sort") API call.
+
+image::sortSD.png[width="800"]
+_Figure 4.7.1.1 Interactions in the sort command._
+
+==== Design Considerations
+
+**Aspect:** Number of Sort command +
+**Alternative 1 (current choice):** Different sort commands for each purpose +
+**Pros:** Fast and direct, convenient for user. +
+**Cons:** Many sort commands for users to remember / Users may need to check for user guide or help function very often
+ to see the types of sort commands available. +
+**Alternative 2:**  Users key in the word "sort", application then shows the types of sort available and users selects
+the type of sort command he wants +
+**Pros:** Lesser commands to remember and checks user guide less often. +
+**Cons:** Slower and less direct. +
+
+---
+
+// end::sort[]
 
 ==== Expansion
 Clicking on any of the `Reminder` card will expand its details. The expanded
@@ -540,6 +654,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `WARNING` : Can continue, but with caution
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
 
 === Configuration
 
@@ -573,7 +688,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 5.2.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
