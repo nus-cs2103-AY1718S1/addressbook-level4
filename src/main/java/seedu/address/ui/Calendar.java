@@ -14,7 +14,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import org.fxmisc.easybind.EasyBind;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.PopulateMonthEvent;
 import seedu.address.model.event.Event;
@@ -78,6 +77,7 @@ public class Calendar {
         HBox titleBar = new HBox(previousMonth, calendarTitle, nextMonth);
         titleBar.setSpacing(5);
         titleBar.setAlignment(Pos.BASELINE_CENTER);
+        System.out.println(eventList.toString());
         // Populate calendar with the appropriate day numbers
         populateCalendar(yearMonth, eventList);
         // Create the calendar view
@@ -110,16 +110,14 @@ public class Calendar {
             calendarDate = calendarDate.plusDays(1);
         }
 
-        for (ReadOnlyEvent event : events) {
-            for (AnchorPaneNode ap : allCalendarDays) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-                String newDate = formatter.format(ap.getDate());
-                if (newDate.equals(event.getDate().toString())) {
+        for (AnchorPaneNode ap : allCalendarDays) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+            String newDate = formatter.format(ap.getDate());
+            for (ReadOnlyEvent event : events) {
+                String date = event.getDate().toString();
+                if (newDate.equals(date)) {
                     ap.getChildren();
                     ap.setStyle("-fx-background-color: #fff8dc;");
-                } else {
-                    ap.getChildren();
-                    ap.setStyle("-fx-background-color: #e6e6fa;");
                 }
             }
         }
