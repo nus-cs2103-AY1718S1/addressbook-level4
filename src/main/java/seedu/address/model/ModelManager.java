@@ -155,6 +155,7 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
 
+        maintainSorted();
         updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
         indicateAddressBookChanged();
     }
