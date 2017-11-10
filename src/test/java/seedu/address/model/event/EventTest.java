@@ -62,6 +62,22 @@ public class EventTest {
         testOutput();
         testGetter();
         testSetter();
+        testUpdateStatus();
+    }
+
+    private void testUpdateStatus() {
+        e1.updateEventStatusSelection(e1.getEventTime().getStart().toLocalDate());
+        assertEquals(e1.getEventStatusStyle(), "-fx-background-color: #b91372");
+    }
+
+    @Test
+    public void overloadedConstructorTest() throws IllegalValueException {
+        Event e1 = new Event(new MemberList(), new EventName("Event name"),
+                new EventTime(LocalDateTime.now(), Duration.ofMinutes(5)),
+                new EventDuration(Duration.ofMinutes(5)));
+        Event e2 = new Event(e1);
+
+        assertEquals(e1, e2);
     }
 
     /**
@@ -101,6 +117,10 @@ public class EventTest {
                 e1.eventTimeProperty().toString());
         assertEquals("ObjectProperty [value: 1hr30min]",
                 e1.eventDurationProperty().toString());
+        assertEquals("ObjectProperty [value: Past]",
+                e1.eventStatusProperty().toString());
+        assertEquals("ObjectProperty [value: -fx-background-color: #a31621]",
+                e1.eventStatusStyleProperty().toString());
     }
 
     /**
@@ -111,19 +131,20 @@ public class EventTest {
         ArrayList<ReadOnlyPerson> list = new ArrayList<>();
         list.add(TypicalPersons.GEORGE);
         list.add(TypicalPersons.HOON);
-
+        LocalDateTime futureDate = LocalDateTime.now().plusDays(1);
         Event actual = e4;
         Event expected = new Event(new MemberList(list), new EventName("For testing setter"),
-                new EventTime(LocalDateTime.of(2018, 2, 7, 8, 0, 30), Duration.ofMinutes(60)),
+                new EventTime(futureDate, Duration.ofMinutes(60)),
                 new EventDuration(Duration.ofMinutes(60)));
 
         //Before setting
         assertFalse(actual.equals(expected));
 
         actual.setEventName(new EventName("For testing setter"));
-        actual.setEventTime(new EventTime(LocalDateTime.of(2018, 2, 7, 8, 0, 30), Duration.ofMinutes(60)));
+        actual.setEventTime(new EventTime(futureDate, Duration.ofMinutes(60)));
         actual.setEventDuration(new EventDuration(Duration.ofMinutes(60)));
         actual.setMemberList(new MemberList(list));
+
 
         //After setting
         assertTrue(actual.equals(expected));
