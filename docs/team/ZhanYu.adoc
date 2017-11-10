@@ -28,7 +28,7 @@ include::../../README.adoc[tag=applicationDescription]
 
 === Enhancement Added: Find by close words (fuzzy searching) and find by tags
 
-==== External behavior
+==== For the User
 
 ---
 
@@ -36,7 +36,7 @@ include::../UserGuide.adoc[leveloffset=2,tag=find]
 
 ---
 
-==== Justification
+==== Why would we need this?
 
 Users may sometimes key commands too quickly or forget the names of their contacts.
 This enhancement allows them to find contacts by close name words or by tags previously assigned to make finding contacts in the Rolodex a lot easier.
@@ -51,7 +51,7 @@ include::../DeveloperGuide.adoc[leveloffset=2,tag=findClose]
 
 === Enhancement Added: Sort
 
-==== External behavior
+==== For the User
 
 ---
 
@@ -60,7 +60,7 @@ include::../UserGuide.adoc[leveloffset=2,tag=find]
 
 ---
 
-==== Justification
+==== Why would we need this?
 
 Users may sometimes have too many contacts in a listing.
 This enhancement allows them to find contacts quickly by sorting the displayed list of persons.
@@ -76,7 +76,7 @@ include::../DeveloperGuide.adoc[leveloffset=2,tag=sorting]
 
 === Enhancement Added: Open existing file and Create new file commands
 
-==== External behavior
+==== For the User
 
 ---
 
@@ -85,7 +85,7 @@ include::../UserGuide.adoc[leveloffset=2,tag=newfile]
 
 ---
 
-==== Justification
+==== Why would we need this?
 
 Users may want to work on a different group of data for different purposes.
 Users with too many contacts can also create a separate database for dividing up the contacts into smaller,
@@ -101,7 +101,7 @@ include::../DeveloperGuide.adoc[leveloffset=2,tag=openNew]
 
 === Enhancement Improved: `java.util.Set` implementation for command abbreviations
 
-==== Justification
+==== Why would we need this?
 
 Using constants to manually check if a command word belongs to a particular command is extremely tedious for both
 developers and users. In addition, using constants forces the program to have to check through all possible command
@@ -118,7 +118,7 @@ include::../DeveloperGuide.adoc[leveloffset=2,tag=commandAbbreviations]
 
 === Enhancement Added: Search Highlighting in HelpWindow
 
-==== Justification
+==== Why would we need this?
 
 JavaFx's native WebView does not allow the user to easily search a html document, putting it on a subpar standard to modern
 web browsers. Implementing a search feature in the help window will allow the user to search for terms in the user guide with ease.
@@ -133,7 +133,7 @@ include::../DeveloperGuide.adoc[leveloffset=2,tag=helpWindowHighlight]
 
 === Enhancement Added: Suggesting Commands for Typos
 
-==== External behavior
+==== For the User
 
 ---
 
@@ -142,7 +142,7 @@ include::../UserGuide.adoc[leveloffset=2,tag=suggestion]
 
 ---
 
-==== Justification
+==== Why would we need this?
 
 Users may find it too much of a hassle to remember many of the syntaxes required by Rolodex such as `n/`, `r/`, etc.
 Suggesting commands for such occasions would give the user a shallow learning curve and improve user experience significantly.
