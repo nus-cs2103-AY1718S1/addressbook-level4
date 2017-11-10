@@ -21,9 +21,13 @@ public class SortCommand extends UndoableCommand {
     public static final String PREFIX_SORT_BY_ADDRESS = PREFIX_OPTION_INDICATOR + "a";
     public static final String PREFIX_SORT_BY_TAG = PREFIX_OPTION_INDICATOR + "t";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts all persons."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts all persons.\n"
             + "Parameters: [OPTION] (must be one of the available field and a String)\n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_NAME;
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_NAME + " (sort by name)\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_PHONE + " (sort by phone number)\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_EMAIL + " (sort by email address)\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_ADDRESS + " (sort by address)\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_TAG + " (sort by tag)\n";
 
     public static final String MESSAGE_SUCCESS_BY_NAME = "Persons sorted by name.";
     public static final String MESSAGE_SUCCESS_BY_PHONE = "Persons sorted by phone.";
@@ -57,9 +61,9 @@ public class SortCommand extends UndoableCommand {
             return new CommandResult(MESSAGE_SUCCESS_BY_ADDRESS);
         } else if (option.contains("-t")) {
             return new CommandResult(MESSAGE_SUCCESS_BY_TAG);
-        } else {
-            return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
+
+        return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
     }
 
     @Override

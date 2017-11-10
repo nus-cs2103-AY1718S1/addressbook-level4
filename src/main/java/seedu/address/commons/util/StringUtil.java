@@ -73,24 +73,6 @@ public class StringUtil {
 
     //@@author qihao27
     /**
-     * Returns true if {@code s} represents letters or numbers
-     * e.g. abc, as12, gg, ..., <br>
-     * Will return false for any other non-alnum string input
-     * e.g. empty string, " abc " (untrimmed), "1a#" (contains special character)
-     * Will return false if the input string case does not match the string stored (case sensitive)
-     * @throws NullPointerException if {@code s} is null.
-     */
-    public static boolean isAlnumOnly(String s) {
-        requireNonNull(s);
-
-        try {
-            return s.matches("[\\p{Alnum}][\\p{Alnum} ]*");
-        } catch (IllegalArgumentException iae) {
-            return false;
-        }
-    }
-
-    /**
      * Returns true if {@code s} represents lower case [OPTION] String
      * e.g. -n, -p, -t, ..., <br>
      * Will return false for any other non-OPTION string input
