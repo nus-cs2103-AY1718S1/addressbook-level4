@@ -958,13 +958,13 @@ The deletes all photos mechanism is similar to the delete photo mechanism where 
 is specifically concerned in deleting a person's photo while `DeletesAllPhotosCommand` is concerned with deleting all photos.
 
 // end::deletesallphotos[]
-=======
+
 === LoggingCommand Function
 (added in v1.2)
 
 In this section, we explain how logging is done in the application whenever an important action is taken by user.
 
-Whenever an action such as "Add", "Clear", "Delete", "Edit", "Email", "Import", "List", "Redo", "RemoveTag" & "Undo" is executed, the LoggingCommand method will be called and information of the action is recorded in ConnectUsLog.txt with a timestamp.
+Whenever an action such as "Add", "Clear", "Delete", "Edit", "Email", "Import", "List", "Redo", "RemoveTag", "Undo", "UploadPhoto", "DeletePhoto" & "DeleteAllPhotos" is executed, the LoggingCommand method will be called and information of the action is recorded in ConnectUsLog.txt with a timestamp.
 
 With slight modification to link:#fig3.1.2[Figure 3.1.2], we have the following diagram showing the Class Diagram on how LoggingCommand is implemented in the system.
 
