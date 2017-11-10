@@ -116,7 +116,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getAddressBook().getPersonList().size();
-        assertCommandFailure(EditCommand.COMMAND_WORDVAR_1 + " " + invalidIndex + NAME_DESC_BOB,
+        assertCommandFailure(EditCommand.COMMAND_WORDVAR_1 + " " + invalidIndex + NAME_DESC_BOB, getModel(),
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* --------------------- Performing edit operation while a person card is selected -------------------------- */
@@ -136,45 +136,45 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
 
         /* Case: invalid index (0) -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORDVAR_2.toUpperCase() + " 0" + NAME_DESC_BOB,
+        assertCommandFailure(EditCommand.COMMAND_WORDVAR_2.toUpperCase() + " 0" + NAME_DESC_BOB, getModel(),
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (-1) -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORDVAR_1 + " -1" + NAME_DESC_BOB,
+        assertCommandFailure(EditCommand.COMMAND_WORDVAR_1 + " -1" + NAME_DESC_BOB, getModel(),
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
         invalidIndex = getModel().getFilteredPersonList().size() + 1;
-        assertCommandFailure(EditCommand.COMMAND_WORDVAR_1 + " " + invalidIndex + NAME_DESC_BOB,
+        assertCommandFailure(EditCommand.COMMAND_WORDVAR_1 + " " + invalidIndex + NAME_DESC_BOB, getModel(),
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* Case: missing index -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORDVAR_1 + NAME_DESC_BOB,
+        assertCommandFailure(EditCommand.COMMAND_WORDVAR_1 + NAME_DESC_BOB, getModel(),
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: missing all fields -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORDVAR_2 + " " + INDEX_FIRST_PERSON.getOneBased(),
+        assertCommandFailure(EditCommand.COMMAND_WORDVAR_2 + " " + INDEX_FIRST_PERSON.getOneBased(), getModel(),
                 EditCommand.MESSAGE_NOT_EDITED);
 
         /* Case: invalid name -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORDVAR_1 + " " + INDEX_FIRST_PERSON.getOneBased()
-                + INVALID_NAME_DESC, Name.MESSAGE_NAME_CONSTRAINTS);
+                + INVALID_NAME_DESC, getModel(), Name.MESSAGE_NAME_CONSTRAINTS);
 
         /* Case: invalid phone -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORDVAR_2 + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + INVALID_PHONE_DESC, Phone.MESSAGE_PHONE_CONSTRAINTS);
+                        + INVALID_PHONE_DESC, getModel(), Phone.MESSAGE_PHONE_CONSTRAINTS);
 
         /* Case: invalid email -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORDVAR_1 + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS);
+                        + INVALID_EMAIL_DESC, getModel(), Email.MESSAGE_EMAIL_CONSTRAINTS);
 
         /* Case: invalid address -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORDVAR_2 + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + INVALID_ADDRESS_DESC, Address.MESSAGE_ADDRESS_CONSTRAINTS);
+                        + INVALID_ADDRESS_DESC, getModel(), Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORDVAR_1 + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS);
+                        + INVALID_TAG_DESC, getModel(), Tag.MESSAGE_TAG_CONSTRAINTS);
 
         /* Case: edit a person with new values same as another person's values -> rejected */
         /*executeCommand(PersonUtil.getAddCommand(BOB));
@@ -189,7 +189,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: edit a person with new values same as another person's values but with different tags -> rejected */
         command = EditCommand.COMMAND_WORDVAR_1 + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_HUSBAND;
-        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(command, getModel(), EditCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
     /**
@@ -274,8 +274,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
-    private void assertCommandFailure(String command, String expectedResultMessage) {
-        Model expectedModel = getModel();
+    private void assertCommandFailure(String command, Model expectedModel, String expectedResultMessage) {
+
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
