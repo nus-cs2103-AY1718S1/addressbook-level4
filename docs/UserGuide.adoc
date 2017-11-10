@@ -227,7 +227,7 @@ Deletes the 2nd and 3rd person in the address book
 Deletes the 1st person in the results of the `find` command
 // end::delete[]
 
-// tag::tadd[]
+// tag::tagadd[]
 === Adding a tag to a person(s) : `t-add` _[Since v1.1]_
 
 You can add a tag to specified person(s) in the address book current listing.
@@ -245,7 +245,7 @@ Examples:
 * `list` +
 `t-add 2 3 friends` +
 This command adds the tag friends to the 2nd and 3rd person in the address book
-// end::tadd[]
+// end::tagadd[]
 
 // tag::tagaddfav[]
 === Setting a person(s) as "favourite" : `t-add` _[Since v1.3]_
