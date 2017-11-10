@@ -1,381 +1,55 @@
 # Sri-vatsa
-###### /java/seedu/address/ui/BrowserPanelTest.java
+###### /java/seedu/address/logic/commands/AddCommandTest.java
 ``` java
-    @Test
-    public void display() throws Exception {
-        // default web page
-        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
-
-        // associated linkedin page of a person
-        postNow(selectionChangedEventStub);
-
-        String [] name = ALICE.getName().fullName.split(" ");
-        URL expectedPersonUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
-                + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
-
-        waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
-    }
-}
-```
-###### /java/seedu/address/logic/parser/DeleteTagCommandParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.DeleteTagCommand;
-
-/**
- * As we are only doing white-box testing, our test cases do not cover path variations
- * outside of the DeleteTagCommand code. For example, inputs "1" and "1 abc" take the
- * same path through the DeleteCommand, and therefore we test only one of them.
- * The path variation for those two cases occur inside the ParserUtil, and
- * therefore should be covered by the ParserUtilTest.
- */
-public class DeleteTagCommandParserTest {
-
-    private DeleteTagCommandParser parser = new DeleteTagCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsDeleteCommand() {
-        //single entry
-        String [] arg = new String[]{"friends"};
-        assertParseSuccess(parser, "friends", new DeleteTagCommand(arg));
-
-        //multiple entries
-        String [] args = new String[] {"friends", "colleagues"};
-        assertParseSuccess(parser, "friends colleagues", new DeleteTagCommand(args));
-
-        //entries with space
-        String [] argsWithSpace = new String[] {"friends", "colleagues"};
-        assertParseSuccess(parser, "\n friends \n \t colleagues  \t", new DeleteTagCommand(argsWithSpace));
-
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "    ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                DeleteTagCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### /java/seedu/address/logic/parser/AddMeetingCommandParserTest.java
-``` java
-import static seedu.address.logic.commands.CommandTestUtil.DATE_1;
-import static seedu.address.logic.commands.CommandTestUtil.LOCATION_1;
-import static seedu.address.logic.commands.CommandTestUtil.NOTES_1;
-import static seedu.address.logic.commands.CommandTestUtil.PERSON_1;
-import static seedu.address.logic.commands.CommandTestUtil.TIME_1;
-
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
-import org.junit.Test;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-
-import seedu.address.logic.commands.AddMeetingCommand;
-
-import seedu.address.model.Meeting;
-
-import seedu.address.model.person.InternalId;
-
-public class AddMeetingCommandParserTest {
-    private AddMeetingCommandParser parser = new AddMeetingCommandParser();
-    @Test
-    public void parse_allFieldsPresent_success() throws IllegalValueException {
-        ArrayList<InternalId> ids = new ArrayList<>();
-        ids.add(new InternalId(2));
-        LocalDateTime localDateTime = LocalDateTime.of(2020, 10, 31, 18, 00);
-        Meeting expectedMeeting = new Meeting(localDateTime, "Computing", "Project meeting", ids);
-
-        // Add meeting successfully
-        assertParseSuccess(parser, AddMeetingCommand.COMMAND_WORD + DATE_1 + TIME_1 + LOCATION_1 + NOTES_1
-                + PERSON_1, new AddMeetingCommand(expectedMeeting));
-        /*
-        // multiple phones - last phone accepted
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
-
-        // multiple emails - last email accepted
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_AMY
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
-
-        // multiple addresses - last address accepted
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
-
-        // multiple tags - all accepted
-        Person expectedPersonMultipleTags = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                new AddCommand(expectedPersonMultipleTags));
-        */
-    }
-    /*
-    @Test
-    public void parse_optionalFieldsMissing_success() {
-        // zero tags
-        Person expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags().withSearchCount().build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY, new AddCommand(expectedPerson));
-    }
-
-    @Test
-    public void parse_compulsoryFieldMissing_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
-
-        // missing name prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB, expectedMessage);
-
-        // missing phone prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + VALID_PHONE_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB, expectedMessage);
-
-        // missing email prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + VALID_EMAIL_BOB + ADDRESS_DESC_BOB, expectedMessage);
-
-        // missing address prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + VALID_ADDRESS_BOB, expectedMessage);
-
-        // all prefixes missing
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + VALID_PHONE_BOB
-                + VALID_EMAIL_BOB + VALID_ADDRESS_BOB, expectedMessage);
-    }
-
-    @Test
-    public void parse_invalidValue_failure() {
-        // invalid name
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Name.MESSAGE_NAME_CONSTRAINTS);
-
-        // invalid phone
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + INVALID_PHONE_DESC + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Phone.MESSAGE_PHONE_CONSTRAINTS);
-
-        // invalid email
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Email.MESSAGE_EMAIL_CONSTRAINTS);
-
-        // invalid address
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                        + INVALID_ADDRESS_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                Address.MESSAGE_ADDRESS_CONSTRAINTS);
-
-        // invalid tag
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + INVALID_TAG_DESC + VALID_TAG_FRIEND, Tag.MESSAGE_TAG_CONSTRAINTS);
-
-        // two invalid values, only first invalid value reported
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + INVALID_ADDRESS_DESC, Name.MESSAGE_NAME_CONSTRAINTS);
-    }*/
-}
-```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_listByMostSearched() throws Exception {
-        assertTrue(parser.parseCommand(ListByMostSearchedCommand.COMMAND_WORD) instanceof ListByMostSearchedCommand);
-        assertTrue(parser.parseCommand(ListByMostSearchedCommand.COMMAND_ALIAS) instanceof ListByMostSearchedCommand);
-        assertTrue(parser.parseCommand(ListByMostSearchedCommand.COMMAND_WORD + " 3")
-                instanceof ListByMostSearchedCommand);
-    }
-```
-###### /java/seedu/address/logic/commands/FindCommandTest.java
-``` java
-    /***
-     * Ensures that with each successful find, the search count of the contact is updated by 1
-     */
-    @Test
-    public  void execute_recordStorage() {
-
-        int carlIndex = model.getFilteredPersonList().indexOf(CARL);
-
-        int countBeforeFind = Integer.parseInt(
-                model.getFilteredPersonList().get(carlIndex).getSearchData().getSearchCount());
-
-        FindCommand findCommand = prepareCommand("Carl");
-
-        try {
-            findCommand.execute();
-        } catch (CommandException e) {
-            e.printStackTrace();
+        @Override
+        public void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException {
+            fail("This method should not be called.");
+        }
+        //@author
+        @Override
+        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
+                throws DuplicatePersonException {
+            fail("This method should not be called.");
         }
 
-        int countAfterFind = Integer.parseInt(model.getFilteredPersonList().get(0).getSearchData().getSearchCount());
-        assertEquals(countBeforeFind + 1, countAfterFind);
-    }
-```
-###### /java/seedu/address/logic/commands/DeleteTagCommandTest.java
-``` java
-package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalTags.MULTIPLE_TAG_DELETION;
-import static seedu.address.testutil.TypicalTags.SINGLE_TAG_DELETION;
-import static seedu.address.testutil.TypicalTags.SINGLE_TAG_DELETION_ALT;
-import static seedu.address.testutil.TypicalTags.TAG_DOES_NOT_EXIST;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UniqueMeetingList;
-import seedu.address.model.UserPrefs;
-
-/***
- * Focuses tests on model's deleteTag method, assumes DeleteTagCommandParser test handles tests for converting User
- * input into type suitable for deleteTag method (i.e. String Array)
- */
-
-public class DeleteTagCommandTest {
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UniqueMeetingList(), new UserPrefs());
-
-    @Test
-    public void constructor_nullArgument_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
-        new DeleteTagCommand(null);
-    }
-
-    @Test
-    public void execute_deleteSingleTagSuccessful() throws Exception {
-
-        CommandResult commandResult = getDeleteTagCommand(SINGLE_TAG_DELETION, model).executeUndoableCommand();
-
-        assertEquals(String.format(DeleteTagCommand.MESSAGE_SUCCESS), commandResult.feedbackToUser);
-    }
-
-    @Test
-    public void execute_deleteMultipleTagSuccessful() throws Exception {
-
-        CommandResult commandResult = getDeleteTagCommand(MULTIPLE_TAG_DELETION, model).executeUndoableCommand();
-
-        assertEquals(String.format(DeleteTagCommand.MESSAGE_SUCCESS), commandResult.feedbackToUser);
-    }
-
-    @Test
-    public void execute_deleteSingleTag_tagDoesNotExist() throws Exception {
-
-        CommandResult commandResult = getDeleteTagCommand(TAG_DOES_NOT_EXIST, model).executeUndoableCommand();
-
-        assertEquals(String.format(DeleteTagCommand.MESSAGE_NO_TAGS_DELETED), commandResult.feedbackToUser);
-    }
-
-    /**
-     * Generates a new DeleteTagCommand for test
-     */
-    private DeleteTagCommand getDeleteTagCommand(String [] arg, Model model) {
-        DeleteTagCommand deleteTagCommand = new DeleteTagCommand(arg);
-        deleteTagCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return deleteTagCommand;
-    }
-
-
-    @Test
-    public void equals() {
-        DeleteTagCommand deleteTagCommandOne = new DeleteTagCommand(SINGLE_TAG_DELETION);
-        DeleteTagCommand deleteTagCommandTwo = new DeleteTagCommand(SINGLE_TAG_DELETION_ALT);
-
-        // same object -> returns true
-        assertTrue(deleteTagCommandOne.equals(deleteTagCommandOne));
-
-        // same values -> returns true
-        DeleteTagCommand deleteTagCommandOneCopy = new DeleteTagCommand(SINGLE_TAG_DELETION);
-        assertTrue(deleteTagCommandOne.equals(deleteTagCommandOneCopy));
-
-        // different types -> returns false
-        assertFalse(deleteTagCommandOne.equals(1));
-
-        // null -> returns false
-        assertFalse(deleteTagCommandOne.equals(null));
-
-        // different person -> returns false
-        assertFalse(deleteTagCommandOne.equals(deleteTagCommandTwo));
-    }
-
-}
-```
-###### /java/seedu/address/logic/commands/ListByMostSearchedCommandTest.java
-``` java
-package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UniqueMeetingList;
-import seedu.address.model.UserPrefs;
-
-/***
- * Class of tests for ListByMostSearchedCommandTest
- */
-public class ListByMostSearchedCommandTest {
-    private Model model;
-    private ListByMostSearchedCommand lmsCommand;
-
-    @Before
-    public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UniqueMeetingList(), new UserPrefs());
-
-        lmsCommand = new ListByMostSearchedCommand();
-        lmsCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-
-    }
-
-    @Test
-    public void execute_listInDescendingSearchCount_verification() {
-        lmsCommand.executeUndoableCommand();
-
-        //In a list sorted in descending order of search count, SearchCountA refers to the search count A of the
-        //person higher up on the list with a supposed search Count greater or equals to the search count of person
-        //B who is lower in the list, with a lower search count
-        int searchCountA;
-        int searchCountB;
-
-        for (int i = 0; i < model.getFilteredPersonList().size(); i++) {
-            for (int j = i + 1; j < model.getFilteredPersonList().size(); j++) {
-                searchCountA = Integer.parseInt(model.getFilteredPersonList().get(j).getSearchData().getSearchCount());
-                searchCountB = Integer.parseInt(model.getFilteredPersonList().get(i).getSearchData().getSearchCount());
-                assertTrue(searchCountA <= searchCountB);
-            }
+        @Override
+        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+            fail("This method should not be called.");
+            return null;
         }
 
-    }
-}
+        @Override
+        public void updateFilteredPersonList() {
+            updateFilteredPersonList();
+        }
+
+        @Override
+        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public UserPrefs getUserPrefs() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void recordSearchHistory() throws CommandException {
+            fail("This method should not be called.");
+        }
+```
+###### /java/seedu/address/logic/commands/AddCommandTest.java
+``` java
+        @Override
+        public void sortPersonListBySearchCount() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortPersonListLexicographically() {
+            fail("This method should not be called.");
+        }
 ```
 ###### /java/seedu/address/logic/commands/AddMeetingCommandTest.java
 ``` java
@@ -569,6 +243,378 @@ public class AddMeetingCommandTest {
     */
 }
 ```
+###### /java/seedu/address/logic/commands/DeleteTagCommandTest.java
+``` java
+package seedu.address.logic.commands;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalTags.MULTIPLE_TAG_DELETION;
+import static seedu.address.testutil.TypicalTags.SINGLE_TAG_DELETION;
+import static seedu.address.testutil.TypicalTags.SINGLE_TAG_DELETION_ALT;
+import static seedu.address.testutil.TypicalTags.TAG_DOES_NOT_EXIST;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UniqueMeetingList;
+import seedu.address.model.UserPrefs;
+
+/***
+ * Focuses tests on model's deleteTag method, assumes DeleteTagCommandParser test handles tests for converting User
+ * input into type suitable for deleteTag method (i.e. String Array)
+ */
+
+public class DeleteTagCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UniqueMeetingList(), new UserPrefs());
+
+    @Test
+    public void constructor_nullArgument_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new DeleteTagCommand(null);
+    }
+
+    @Test
+    public void execute_deleteSingleTagSuccessful() throws Exception {
+
+        CommandResult commandResult = getDeleteTagCommand(SINGLE_TAG_DELETION, model).executeUndoableCommand();
+
+        assertEquals(String.format(DeleteTagCommand.MESSAGE_SUCCESS), commandResult.feedbackToUser);
+    }
+
+    @Test
+    public void execute_deleteMultipleTagSuccessful() throws Exception {
+
+        CommandResult commandResult = getDeleteTagCommand(MULTIPLE_TAG_DELETION, model).executeUndoableCommand();
+
+        assertEquals(String.format(DeleteTagCommand.MESSAGE_SUCCESS), commandResult.feedbackToUser);
+    }
+
+    @Test
+    public void execute_deleteSingleTag_tagDoesNotExist() throws Exception {
+
+        CommandResult commandResult = getDeleteTagCommand(TAG_DOES_NOT_EXIST, model).executeUndoableCommand();
+
+        assertEquals(String.format(DeleteTagCommand.MESSAGE_NO_TAGS_DELETED), commandResult.feedbackToUser);
+    }
+
+    /**
+     * Generates a new DeleteTagCommand for test
+     */
+    private DeleteTagCommand getDeleteTagCommand(String [] arg, Model model) {
+        DeleteTagCommand deleteTagCommand = new DeleteTagCommand(arg);
+        deleteTagCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return deleteTagCommand;
+    }
+
+
+    @Test
+    public void equals() {
+        DeleteTagCommand deleteTagCommandOne = new DeleteTagCommand(SINGLE_TAG_DELETION);
+        DeleteTagCommand deleteTagCommandTwo = new DeleteTagCommand(SINGLE_TAG_DELETION_ALT);
+
+        // same object -> returns true
+        assertTrue(deleteTagCommandOne.equals(deleteTagCommandOne));
+
+        // same values -> returns true
+        DeleteTagCommand deleteTagCommandOneCopy = new DeleteTagCommand(SINGLE_TAG_DELETION);
+        assertTrue(deleteTagCommandOne.equals(deleteTagCommandOneCopy));
+
+        // different types -> returns false
+        assertFalse(deleteTagCommandOne.equals(1));
+
+        // null -> returns false
+        assertFalse(deleteTagCommandOne.equals(null));
+
+        // different person -> returns false
+        assertFalse(deleteTagCommandOne.equals(deleteTagCommandTwo));
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/FindCommandTest.java
+``` java
+    /***
+     * Ensures that with each successful find, the search count of the contact is updated by 1
+     */
+    @Test
+    public  void execute_recordStorage() {
+
+        int carlIndex = model.getFilteredPersonList().indexOf(CARL);
+
+        int countBeforeFind = Integer.parseInt(
+                model.getFilteredPersonList().get(carlIndex).getSearchData().getSearchCount());
+
+        FindCommand findCommand = prepareCommand("Carl");
+
+        try {
+            findCommand.execute();
+        } catch (CommandException e) {
+            e.printStackTrace();
+        }
+
+        int countAfterFind = Integer.parseInt(model.getFilteredPersonList().get(0).getSearchData().getSearchCount());
+        assertEquals(countBeforeFind + 1, countAfterFind);
+    }
+```
+###### /java/seedu/address/logic/commands/ListByMostSearchedCommandTest.java
+``` java
+package seedu.address.logic.commands;
+
+import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UniqueMeetingList;
+import seedu.address.model.UserPrefs;
+
+/***
+ * Class of tests for ListByMostSearchedCommandTest
+ */
+public class ListByMostSearchedCommandTest {
+    private Model model;
+    private ListByMostSearchedCommand lmsCommand;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UniqueMeetingList(), new UserPrefs());
+
+        lmsCommand = new ListByMostSearchedCommand();
+        lmsCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+
+    }
+
+    @Test
+    public void execute_listInDescendingSearchCount_verification() {
+        lmsCommand.executeUndoableCommand();
+
+        //In a list sorted in descending order of search count, SearchCountA refers to the search count A of the
+        //person higher up on the list with a supposed search Count greater or equals to the search count of person
+        //B who is lower in the list, with a lower search count
+        int searchCountA;
+        int searchCountB;
+
+        for (int i = 0; i < model.getFilteredPersonList().size(); i++) {
+            for (int j = i + 1; j < model.getFilteredPersonList().size(); j++) {
+                searchCountA = Integer.parseInt(model.getFilteredPersonList().get(j).getSearchData().getSearchCount());
+                searchCountB = Integer.parseInt(model.getFilteredPersonList().get(i).getSearchData().getSearchCount());
+                assertTrue(searchCountA <= searchCountB);
+            }
+        }
+
+    }
+}
+```
+###### /java/seedu/address/logic/parser/AddMeetingCommandParserTest.java
+``` java
+import static seedu.address.logic.commands.CommandTestUtil.DATE_1;
+import static seedu.address.logic.commands.CommandTestUtil.LOCATION_1;
+import static seedu.address.logic.commands.CommandTestUtil.NOTES_1;
+import static seedu.address.logic.commands.CommandTestUtil.PERSON_1;
+import static seedu.address.logic.commands.CommandTestUtil.TIME_1;
+
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+import org.junit.Test;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
+import seedu.address.logic.commands.AddMeetingCommand;
+
+import seedu.address.model.Meeting;
+
+import seedu.address.model.person.InternalId;
+
+public class AddMeetingCommandParserTest {
+    private AddMeetingCommandParser parser = new AddMeetingCommandParser();
+    @Test
+    public void parse_allFieldsPresent_success() throws IllegalValueException {
+        ArrayList<InternalId> ids = new ArrayList<>();
+        ids.add(new InternalId(2));
+        LocalDateTime localDateTime = LocalDateTime.of(2020, 10, 31, 18, 00);
+        Meeting expectedMeeting = new Meeting(localDateTime, "Computing", "Project meeting", ids);
+
+        // Add meeting successfully
+        assertParseSuccess(parser, AddMeetingCommand.COMMAND_WORD + DATE_1 + TIME_1 + LOCATION_1 + NOTES_1
+                + PERSON_1, new AddMeetingCommand(expectedMeeting));
+        /*
+        // multiple phones - last phone accepted
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+
+        // multiple emails - last email accepted
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_AMY
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+
+        // multiple addresses - last address accepted
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+
+        // multiple tags - all accepted
+        Person expectedPersonMultipleTags = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
+                .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
+                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                new AddCommand(expectedPersonMultipleTags));
+        */
+    }
+    /*
+    @Test
+    public void parse_optionalFieldsMissing_success() {
+        // zero tags
+        Person expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags().withSearchCount().build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY, new AddCommand(expectedPerson));
+    }
+
+    @Test
+    public void parse_compulsoryFieldMissing_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
+
+        // missing name prefix
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + PHONE_DESC_BOB
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB, expectedMessage);
+
+        // missing phone prefix
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + VALID_PHONE_BOB
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB, expectedMessage);
+
+        // missing email prefix
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
+                + VALID_EMAIL_BOB + ADDRESS_DESC_BOB, expectedMessage);
+
+        // missing address prefix
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
+                + EMAIL_DESC_BOB + VALID_ADDRESS_BOB, expectedMessage);
+
+        // all prefixes missing
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + VALID_PHONE_BOB
+                + VALID_EMAIL_BOB + VALID_ADDRESS_BOB, expectedMessage);
+    }
+
+    @Test
+    public void parse_invalidValue_failure() {
+        // invalid name
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Name.MESSAGE_NAME_CONSTRAINTS);
+
+        // invalid phone
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + INVALID_PHONE_DESC + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Phone.MESSAGE_PHONE_CONSTRAINTS);
+
+        // invalid email
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC
+                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Email.MESSAGE_EMAIL_CONSTRAINTS);
+
+        // invalid address
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                        + INVALID_ADDRESS_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                Address.MESSAGE_ADDRESS_CONSTRAINTS);
+
+        // invalid tag
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB + INVALID_TAG_DESC + VALID_TAG_FRIEND, Tag.MESSAGE_TAG_CONSTRAINTS);
+
+        // two invalid values, only first invalid value reported
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + INVALID_ADDRESS_DESC, Name.MESSAGE_NAME_CONSTRAINTS);
+    }*/
+}
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_listByMostSearched() throws Exception {
+        assertTrue(parser.parseCommand(ListByMostSearchedCommand.COMMAND_WORD) instanceof ListByMostSearchedCommand);
+        assertTrue(parser.parseCommand(ListByMostSearchedCommand.COMMAND_ALIAS) instanceof ListByMostSearchedCommand);
+        assertTrue(parser.parseCommand(ListByMostSearchedCommand.COMMAND_WORD + " 3")
+                instanceof ListByMostSearchedCommand);
+    }
+```
+###### /java/seedu/address/logic/parser/DeleteTagCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.DeleteTagCommand;
+
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the DeleteTagCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the DeleteCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class DeleteTagCommandParserTest {
+
+    private DeleteTagCommandParser parser = new DeleteTagCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsDeleteCommand() {
+        //single entry
+        String [] arg = new String[]{"friends"};
+        assertParseSuccess(parser, "friends", new DeleteTagCommand(arg));
+
+        //multiple entries
+        String [] args = new String[] {"friends", "colleagues"};
+        assertParseSuccess(parser, "friends colleagues", new DeleteTagCommand(args));
+
+        //entries with space
+        String [] argsWithSpace = new String[] {"friends", "colleagues"};
+        assertParseSuccess(parser, "\n friends \n \t colleagues  \t", new DeleteTagCommand(argsWithSpace));
+
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "    ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                DeleteTagCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### /java/seedu/address/testutil/PersonBuilder.java
+``` java
+    /**
+     * Sets the {@code Name} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withSearchCount() {
+        try {
+            this.person.getSearchData().setSearchCount("0");
+        } catch (IllegalAccessError ive) {
+            throw new IllegalAccessError("Search count cannot be updated");
+        }
+        return this;
+    }
+```
 ###### /java/seedu/address/testutil/TypicalPersons.java
 ``` java
 /**
@@ -633,19 +679,25 @@ public class TypicalPersons {
     }
 }
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### /java/seedu/address/ui/BrowserPanelTest.java
 ``` java
-    /**
-     * Sets the {@code Name} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withSearchCount() {
-        try {
-            this.person.getSearchData().setSearchCount("0");
-        } catch (IllegalAccessError ive) {
-            throw new IllegalAccessError("Search count cannot be updated");
-        }
-        return this;
+    @Test
+    public void display() throws Exception {
+        // default web page
+        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+
+        // associated linkedin page of a person
+        postNow(selectionChangedEventStub);
+
+        String [] name = ALICE.getName().fullName.split(" ");
+        URL expectedPersonUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
+                + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
     }
+}
 ```
 ###### /java/systemtests/AddressBookSystemTest.java
 ``` java

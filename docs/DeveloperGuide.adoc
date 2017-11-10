@@ -350,11 +350,17 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // tag::meetings[]
 === Meetings
 
+==== Storage
+
+===== Implementation
 The mechanism and data structure of meetings are similar to that of the address book. The local storage is located at
 `data/meetinglist.xml` by default. For each meeting, the date, time location and participants are recorded. The participants
 must be from the address book.
 
-==== Design Considerations
+[NOTE]
+The meeting functionality is not fully implemented yet. There is currently no command to add or edit meetings.
+
+===== Design Considerations
 
 **Aspect:** Local storage of the meeting list +
 **Alternative 1 (current choice):** Use XML and separate from the address book storage+
@@ -363,6 +369,51 @@ must be from the address book.
 **Alternative 2:** Use XML together in the address book storage +
 **Pros:** Less extra components needed, some information shared between the two parts can be accessed more conveniently +
 **Cons:** The data structure of `addressbook.xml` would become too complicated
+
+---
+
+==== Add Meeting Command
+
+===== Implementation
+
+When the command is called, the user input is parsed as shown in the sequence diagram below.
+
+image::AddMeetingCommandLogic.png[width="800"]
+
+In the model, there are two primary methods that are called:
+
+1. To add unique meetings (ensured by `DuplicateMeetingException`) associated with valid people in +
+addressbook (ensured by `IllegalIdException`).
+
+[source, java]
+----
+    try {
+        model.addMeeting(toAdd);
+    } catch (DuplicateMeetingException e) {
+        throw new CommandException(MESSAGE_DUPLICATE_MEETING);
+    } catch (IllegalIdException ive) {
+        throw new CommandException(MESSAGE_INVALID_ID);
+    }
+----
+
+2. To post a task on Asana
+[source, java]
+----
+    newAsanaTask = new PostTask(toAdd.getNotes(), toAdd.getDate());
+    newAsanaTask.execute();
+----
+
+Create a new instance of `PostTask` and authenticate user using https://github.com/Asana/java-asana[OAuth2].
+
+===== Design Considerations
+
+**Aspect:** Post on Asana +
+**Alternative 1 (current choice):** Incorporate posting on Asana with every addCommand +
+**Pros:** Convenient for user to keep track of tasks related to meetings +
+**Cons:** Reduces control that user has in uploading tasks to Asana+
+**Alternative 2:** Create a separate command to add tasks onto Asana +
+**Pros:** More flexibility on the content that is saved onto Asana workspace +
+**Cons:** Unnecessary number of commands in the addressbook & reduce productivity of user
 
 === Logging
 

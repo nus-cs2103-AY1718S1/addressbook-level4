@@ -17,138 +17,239 @@ public class MeetingListChangedEvent extends BaseEvent {
 }
 
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### /java/seedu/address/logic/commands/AddMeetingCommand.java
 ``` java
-    public static final String DEFAULT_PAGE = "default.html";
-    public static final String LINKEDIN_SEARCH_URL_PREFIX = "https://www.linkedin.com/search/results/";
-    public static final String LINKEDIN_SEARCH_PEOPLE = "people/";
-    public static final String LINKEDIN_SEARCH_PARAM_LOCATION = "?facetGeoRegion=%5B%22sg%3A0%22%5D";
-    public static final String LINKEDIN_SEARCH_PARAM_FIRST_NAME = "&firstName=";
-    public static final String LINKEDIN_SEARCH_PARAM_LAST_NAME = "&lastName=";
-    public static final String LINKEDIN_URL_SUFFIX = "&origin=FACETED_SEARCH";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
-    public static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
-```
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    /***
-     * Loads person page
-     * @param person
-     */
-    private void loadPersonPage(ReadOnlyPerson person) {
-        personSelected = person;
-        if (hasLinkedinBeenChosen) {
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
+
+import java.text.ParseException;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+
+import seedu.address.model.Meeting;
+
+import seedu.address.model.ReadOnlyMeeting;
+
+import seedu.address.model.asana.PostTask;
+
+import seedu.address.model.exceptions.DuplicateMeetingException;
+
+import seedu.address.model.exceptions.IllegalIdException;
+
+/**
+ * Adds a new meeting to the address book.
+ */
+public class AddMeetingCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "addMeeting";
+    public static final String COMMAND_ALIAS = "am";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a meeting to the address book. "
+            + "Parameters: "
+            + PREFIX_DATE + "DATE "
+            + PREFIX_TIME + "TIME "
+            + PREFIX_LOCATION + "LOCATION "
+            + PREFIX_NOTES + "NOTES "
+            + PREFIX_PERSON + "PERSON 1 "
+            + PREFIX_PERSON + "PERSON 2 ...\n"
+            + "Example: "
+            + COMMAND_WORD + " "
+            + PREFIX_DATE + "20/11/2017 "
+            + PREFIX_TIME + "1800 "
+            + PREFIX_LOCATION + "UTown Starbucks "
+            + PREFIX_NOTES + "Project Meeting "
+            + PREFIX_PERSON + "1";
+
+
+    public static final String MESSAGE_SUCCESS = "New meeting added!";
+    public static final String MESSAGE_DUPLICATE_MEETING = "This meeting already exists in the address book";
+    public static final String MESSAGE_INVALID_ID = "Please input a valid person id!";
+    public static final String MESSAGE_TEMPLATE = COMMAND_WORD
+            + PREFIX_DATE + "DATE "
+            + PREFIX_TIME + "TIME "
+            + PREFIX_LOCATION + "LOCATION "
+            + PREFIX_NOTES + "NOTES "
+            + PREFIX_PERSON + "PERSON ...";
+
+
+    private final Meeting toAdd;
+
+    public AddMeetingCommand(ReadOnlyMeeting meeting) {
+        toAdd = new Meeting(meeting);
+    }
+
+
+    @Override
+    protected CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.addMeeting(toAdd);
+            //TODO handle exception for asana & multiple Ids exceeding num of entries in AB
+            //add meeting on Asana
+            PostTask newAsanaTask = null;
             try {
-                loadLinkedIn();
-            } catch (CommandException e) {
+                newAsanaTask = new PostTask(toAdd.getNotes(), toAdd.getDate());
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
-        } else {
+            newAsanaTask.execute();
 
-            loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                    + GOOGLE_SEARCH_URL_SUFFIX);
+        } catch (DuplicateMeetingException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_MEETING);
+        } catch (IllegalIdException ive) {
+            throw new CommandException(MESSAGE_INVALID_ID);
         }
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddMeetingCommand // instanceof handles nulls
+                && toAdd.equals(((AddMeetingCommand) other).toAdd));
+    }
+}
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### /java/seedu/address/logic/commands/DeleteTagCommand.java
 ``` java
+/**
+ *
+ * Deletes all tags identified from the address book.
+ */
+public class DeleteTagCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "deleteTag";
+    public static final String COMMAND_ALIAS = "dt";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes a particular tag from everyone.\n"
+            + "Parameters: Tag1(text) Tag2(text)\n"
+            + "Example: " + COMMAND_WORD + " friends" + " family";
+
+    public static final String MESSAGE_SUCCESS = "Tag(s) successfully deleted";
+    public static final String MESSAGE_NO_TAGS_DELETED = "Tag(s) not in address book; Nothing to delete";
+    public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " TAG 1" + " TAG2" + " ...";
+
+    private final String[] mTagsArgs;
+    private Tag[] mTagsToDelete;
+
+    public DeleteTagCommand(String[] tag) throws NullPointerException {
+        if (tag == null) {
+            throw new NullPointerException("Arguments cannot be null");
+        }
+        mTagsArgs = tag;
+    }
 
     /***
-     * Loads pages based on choose command selection
+     * Helper method that converts array of arguments (string type) to array of tags (Tag class)
+     * @param tag array of arguments in String
+     * @throws IllegalValueException
      */
-    private void loadLinkedIn() throws CommandException {
-        if (personSelected == null) {
-            throw new CommandException("Please select a person");
-        }
-        hasLinkedinBeenChosen = true;
-        String[] name = personSelected.getName().fullName.split(" ");
+    private Tag[] stringToTag (String[] tag) throws IllegalValueException {
+        int numOfArgs = tag.length;
+        Tag[] tagsToDelete = new Tag[numOfArgs];
 
-        loadPage(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
-                + LINKEDIN_SEARCH_PARAM_FIRST_NAME + name[0] + LINKEDIN_SEARCH_PARAM_LAST_NAME + name[1]
-                + LINKEDIN_URL_SUFFIX);
-    }
-```
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-
-    /**
-     * Setter method to set the Boolean value of hasLinkedinBeenChosen
-     */
-    public void setLinkedinChosenTrue () {
-        hasLinkedinBeenChosen = true;
-    }
-
-    public void setLinkedinChosenFalse () {
-        hasLinkedinBeenChosen = false;
-    }
-```
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    @Subscribe
-    private void handleBrowserPanelSelectionChangedEvent(BrowserPanelSelectionChangedEvent event)
-            throws CommandException {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if (event.getBrowserSelection().equals("linkedin")) {
-            loadLinkedIn();
-        } else if (event.getBrowserSelection().equals("google")) {
-            hasLinkedinBeenChosen = false;
-            loadPersonPage(personSelected);
-        }
-    }
-
-    //@author martyn-wong
-    @Subscribe
-    private void handleMapPanelEvent(MapPersonEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonMap(event.getPerson());
-    }
-}
-```
-###### /java/seedu/address/ui/ResultDisplay.java
-``` java
-
-    public ResultDisplay(String message) {
-        super(FXML);
-        resultDisplay.textProperty().bind(displayed);
-        registerAsAnEventHandler(this);
-
-        Platform.runLater(() -> {
-            displayed.setValue(message);
-            resultDisplay.setStyle("-fx-text-fill: white");
-        });
-    }
-
-    @Subscribe
-    private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(() -> {
-            displayed.setValue(event.message);
-            if (event.errorStatus) {
-                resultDisplay.setStyle("-fx-text-fill: #e35252");
-            } else {
-                resultDisplay.setStyle("-fx-text-fill: #70db75");
+        try {
+            for (int i = 0; i < numOfArgs; i++) {
+                tagsToDelete[i] = new Tag(tag[i]);
             }
-        });
+        } catch (IllegalValueException ive) {
+            throw new IllegalValueException("Illegal tag value.");
+        } catch (IndexOutOfBoundsException ibe) {
+            throw new IndexOutOfBoundsException("Accessing tags that do not exist.");
+        }
+        return tagsToDelete;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        boolean hasOneOrMoreDeletion = false;
+        try {
+            mTagsToDelete = stringToTag(mTagsArgs);
+            hasOneOrMoreDeletion = model.deleteTag(mTagsToDelete);
+
+        } catch (IllegalValueException ive) {
+            assert false : "The tag is not a proper value";
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "The person associated with the tag cannot be missing";
+        }
+
+        if (hasOneOrMoreDeletion) {
+            return new CommandResult(String.format(MESSAGE_SUCCESS));
+        } else {
+            return new CommandResult(String.format(MESSAGE_NO_TAGS_DELETED));
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DeleteTagCommand // instanceof handles nulls
+                && Arrays.equals(this.mTagsArgs, ((DeleteTagCommand) other).mTagsArgs)); // state check
     }
 
 }
+```
+###### /java/seedu/address/logic/commands/FindCommand.java
+``` java
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        model.updateFilteredPersonList(predicate);
+        int searchResultsCount = model.getFilteredPersonList().size();
+
+        if (searchResultsCount != NO_RESULTS) {
+            model.recordSearchHistory();
+        }
+        return new CommandResult(getMessageForPersonListShownSummary(searchResultsCount));
+    }
+```
+###### /java/seedu/address/logic/commands/ListByMostSearchedCommand.java
+``` java
+package seedu.address.logic.commands;
+
+/***
+ * Lists all users in the addressbook based on how frequently they are searched
+ * Sorts by search frequency
+ *
+ */
+
+public class ListByMostSearchedCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "listMostSearched";
+    public static final String COMMAND_ALIAS = "lms";
+    public static final String MESSAGE_TEMPLATE = COMMAND_WORD;
+
+    public static final String MESSAGE_SUCCESS = "Listed all persons sorted by frequency of search";
+
+    @Override
+    public CommandResult executeUndoableCommand() {
+        model.sortPersonListBySearchCount();
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+}
+
+```
+###### /java/seedu/address/logic/commands/ListCommand.java
+``` java
+    @Override
+    public CommandResult executeUndoableCommand() {
+        model.sortPersonListLexicographically();
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
 ```
 ###### /java/seedu/address/logic/Logic.java
 ``` java
     /** Returns the address book */
     ArrayList<String> getMeetingNames(ReadOnlyMeeting meeting);
-```
-###### /java/seedu/address/logic/parser/CliSyntax.java
-``` java
-    public static final Prefix PREFIX_DATE = new Prefix("on ");
-    public static final Prefix PREFIX_TIME = new Prefix("from ");
-    public static final Prefix PREFIX_LOCATION = new Prefix("at ");
-    public static final Prefix PREFIX_NOTES = new Prefix("about ");
-    public static final Prefix PREFIX_PERSON = new Prefix("with ");
-
-}
 ```
 ###### /java/seedu/address/logic/parser/AddMeetingCommandParser.java
 ``` java
@@ -198,17 +299,13 @@ public class AddMeetingCommandParser implements Parser<AddMeetingCommand>  {
 
 }
 ```
-###### /java/seedu/address/logic/parser/exceptions/IllegalDateTimeException.java
+###### /java/seedu/address/logic/parser/CliSyntax.java
 ``` java
-
-/**
- * Catches illegal dates and times in user inputs
- */
-public class IllegalDateTimeException extends IllegalValueException {
-
-    public IllegalDateTimeException (String message) {
-        super (message);
-    }
+    public static final Prefix PREFIX_DATE = new Prefix("on ");
+    public static final Prefix PREFIX_TIME = new Prefix("from ");
+    public static final Prefix PREFIX_LOCATION = new Prefix("at ");
+    public static final Prefix PREFIX_NOTES = new Prefix("about ");
+    public static final Prefix PREFIX_PERSON = new Prefix("with ");
 
 }
 ```
@@ -249,6 +346,20 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand>  {
 
 
 
+```
+###### /java/seedu/address/logic/parser/exceptions/IllegalDateTimeException.java
+``` java
+
+/**
+ * Catches illegal dates and times in user inputs
+ */
+public class IllegalDateTimeException extends IllegalValueException {
+
+    public IllegalDateTimeException (String message) {
+        super (message);
+    }
+
+}
 ```
 ###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
@@ -336,283 +447,407 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand>  {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AddMeetingCommand.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
-/**
- * Adds a new meeting to the address book.
- */
-public class AddMeetingCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "addMeeting";
-    public static final String COMMAND_ALIAS = "am";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a meeting to the address book. "
-            + "Parameters: "
-            + PREFIX_DATE + "DATE "
-            + PREFIX_TIME + "TIME "
-            + PREFIX_LOCATION + "LOCATION "
-            + PREFIX_NOTES + "NOTES "
-            + PREFIX_PERSON + "PERSON 1 "
-            + PREFIX_PERSON + "PERSON 2 ...\n"
-            + "Example: "
-            + COMMAND_WORD + " "
-            + PREFIX_DATE + "20/11/2017 "
-            + PREFIX_TIME + "1800 "
-            + PREFIX_LOCATION + "UTown Starbucks "
-            + PREFIX_NOTES + "Project Meeting "
-            + PREFIX_PERSON + "1";
-
-
-    public static final String MESSAGE_SUCCESS = "New meeting added!";
-    public static final String MESSAGE_DUPLICATE_MEETING = "This meeting already exists in the address book";
-    public static final String MESSAGE_INVALID_ID = "Please input a valid person id!";
-    public static final String MESSAGE_TEMPLATE = COMMAND_WORD
-            + PREFIX_DATE + "DATE "
-            + PREFIX_TIME + "TIME "
-            + PREFIX_LOCATION + "LOCATION "
-            + PREFIX_NOTES + "NOTES "
-            + PREFIX_PERSON + "PERSON ...";
-
-
-    private final Meeting toAdd;
-
-    public AddMeetingCommand(ReadOnlyMeeting meeting) {
-        toAdd = new Meeting(meeting);
+    /***
+     * sorts persons in the addressbook by number of times they were previously searched
+     */
+    public void sortBySearchCount() {
+        persons.sortBySearchCount();
     }
 
-
-    @Override
-    protected CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(model);
-        try {
-            model.addMeeting(toAdd);
-        } catch (DuplicateMeetingException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_MEETING);
-        } catch (IllegalIdException ive) {
-            throw new CommandException(MESSAGE_INVALID_ID);
-        }
-
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AddMeetingCommand // instanceof handles nulls
-                && toAdd.equals(((AddMeetingCommand) other).toAdd));
-    }
-}
-
-```
-###### /java/seedu/address/logic/commands/DeleteTagCommand.java
-``` java
-/**
- *
- * Deletes all tags identified from the address book.
- */
-public class DeleteTagCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "deleteTag";
-    public static final String COMMAND_ALIAS = "dt";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes a particular tag from everyone.\n"
-            + "Parameters: Tag1(text) Tag2(text)\n"
-            + "Example: " + COMMAND_WORD + " friends" + " family";
-
-    public static final String MESSAGE_SUCCESS = "Tag(s) successfully deleted";
-    public static final String MESSAGE_NO_TAGS_DELETED = "Tag(s) not in address book; Nothing to delete";
-    public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " TAG 1" + " TAG2" + " ...";
-
-    private final String[] mTagsArgs;
-    private Tag[] mTagsToDelete;
-
-    public DeleteTagCommand(String[] tag) throws NullPointerException {
-        if (tag == null) {
-            throw new NullPointerException("Arguments cannot be null");
-        }
-        mTagsArgs = tag;
-    }
 
     /***
-     * Helper method that converts array of arguments (string type) to array of tags (Tag class)
-     * @param tag array of arguments in String
-     * @throws IllegalValueException
+     * sorts persons in the addressbook alphabetically
      */
-    private Tag[] stringToTag (String[] tag) throws IllegalValueException {
-        int numOfArgs = tag.length;
-        Tag[] tagsToDelete = new Tag[numOfArgs];
+    public void sortLexicographically() {
+        persons.sortLexicographically();
+    }
+```
+###### /java/seedu/address/model/asana/AuthenticateAsanaUser.java
+``` java
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.UUID;
 
-        try {
-            for (int i = 0; i < numOfArgs; i++) {
-                tagsToDelete[i] = new Tag(tag[i]);
+import com.asana.Client;
+import com.asana.OAuthApp;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
+/**
+ * Authenticate & Store access token for Asana
+ */
+public class AuthenticateAsanaUser {
+
+    private static final String CLIENT_ID = "474342738710406";
+    private static final String CLIENT_SECRET = "a89bbb49213d6b58ebce25cfa0995290";
+    private static final String REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob";
+
+    private String accessToken  = "0/b62305d262c673af5c042bfad54ef834";
+
+    public AuthenticateAsanaUser() throws URISyntaxException, IOException, IllegalValueException {
+        //if accesstoken is null, get an access token from Asana
+        if (!isAuthenticated()) {
+            OAuthApp app = new OAuthApp(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
+            Client client = Client.oauth(app);
+
+            //to prevent CSRF attacks
+            String currentState = UUID.randomUUID().toString();
+            String url = app.getAuthorizationUrl(currentState);
+
+            //open browser on desktop for authentication purpose
+            Desktop.getDesktop().browse(new URI(url));
+
+            //Get the authentication code from Asana
+            //TODO: get from command line on app
+            String codeFromAsana = "0/b62305d262c673af5c042bfad54ef834";
+            //new LineReader(new InputStreamReader(System.in)).readLine();
+
+            //TODO: Hash and store access token
+            accessToken = app.fetchToken(codeFromAsana);
+
+            if (!app.isAuthorized()) {
+                throw new IllegalValueException("OurAB failed to sync with Asana");
             }
-        } catch (IllegalValueException ive) {
-            throw new IllegalValueException("Illegal tag value.");
-        } catch (IndexOutOfBoundsException ibe) {
-            throw new IndexOutOfBoundsException("Accessing tags that do not exist.");
-        }
-        return tagsToDelete;
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        boolean hasOneOrMoreDeletion = false;
-        try {
-            mTagsToDelete = stringToTag(mTagsArgs);
-            hasOneOrMoreDeletion = model.deleteTag(mTagsToDelete);
-
-        } catch (IllegalValueException ive) {
-            assert false : "The tag is not a proper value";
-        } catch (PersonNotFoundException pnfe) {
-            assert false : "The person associated with the tag cannot be missing";
-        }
-
-        if (hasOneOrMoreDeletion) {
-            return new CommandResult(String.format(MESSAGE_SUCCESS));
-        } else {
-            return new CommandResult(String.format(MESSAGE_NO_TAGS_DELETED));
         }
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof DeleteTagCommand // instanceof handles nulls
-                && Arrays.equals(this.mTagsArgs, ((DeleteTagCommand) other).mTagsArgs)); // state check
+    /**
+     * checks if user is authenticated by Asana
+     */
+    private boolean isAuthenticated() {
+        return !(accessToken == null);
     }
 
+    /**
+     * Getter method for Access token
+     */
+    public String getAccessToken() {
+        return accessToken;
+    }
 }
 ```
-###### /java/seedu/address/logic/commands/ListCommand.java
+###### /java/seedu/address/model/asana/PostTask.java
 ``` java
-    @Override
-    public CommandResult executeUndoableCommand() {
-        model.sortPersonListLexicographically();
-        return new CommandResult(MESSAGE_SUCCESS);
-    }
-```
-###### /java/seedu/address/logic/commands/ListByMostSearchedCommand.java
-``` java
-package seedu.address.logic.commands;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+import com.asana.Client;
+import com.asana.models.Project;
+import com.asana.models.User;
+import com.asana.models.Workspace;
+
+import jdk.nashorn.internal.ir.annotations.Ignore;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
 
 /***
- * Lists all users in the addressbook based on how frequently they are searched
- * Sorts by search frequency
- *
+ * Posts a task onto users meeting project on Asana
  */
+@Ignore
+public class PostTask extends Command {
 
-public class ListByMostSearchedCommand extends UndoableCommand {
+    private String notes;
+    private String date;
 
-    public static final String COMMAND_WORD = "listMostSearched";
-    public static final String COMMAND_ALIAS = "lms";
-    public static final String MESSAGE_TEMPLATE = COMMAND_WORD;
-
-    public static final String MESSAGE_SUCCESS = "Listed all persons sorted by frequency of search";
-
-    @Override
-    public CommandResult executeUndoableCommand() {
-        model.sortPersonListBySearchCount();
-        return new CommandResult(MESSAGE_SUCCESS);
+    public PostTask(String notes, String localDate) throws ParseException {
+        this.notes = notes;
+        this.date = dateFormatter(localDate);
     }
-
-}
-
-```
-###### /java/seedu/address/logic/commands/FindCommand.java
-``` java
     @Override
     public CommandResult execute() throws CommandException {
 
-        model.updateFilteredPersonList(predicate);
-        int searchResultsCount = model.getFilteredPersonList().size();
+        Client client;
+        try {
+            AuthenticateAsanaUser authenticateAsanaUser = new AuthenticateAsanaUser();
+            client = Client.accessToken(authenticateAsanaUser.getAccessToken());
+            //get user data
+            User user = client.users.me().execute();
 
-        if (searchResultsCount != NO_RESULTS) {
-            model.recordSearchHistory();
+            // find user's "Personal Projects" project //default asana personal workspace
+            Workspace meetingsWorkspace = null;
+            for (Workspace workspace : client.workspaces.findAll()) {
+                if (workspace.name.equals("Personal Projects")) {
+                    meetingsWorkspace = workspace;
+                    break;
+                }
+            }
+
+            // create a "Meetings" if it doesn't exist
+            List<Project> projects = client.projects.findByWorkspace(meetingsWorkspace.id).execute();
+            Project myMeetings = null;
+            for (Project project : projects) {
+                if (project.name.equals("Meetings")) {
+                    myMeetings = project;
+                    break;
+                }
+            }
+            if (myMeetings == null) {
+                myMeetings = client.projects.createInWorkspace(meetingsWorkspace.id)
+                        .data("name", "Meetings")
+                        .execute();
+            }
+
+            // create a task in the project
+            client.tasks.createInWorkspace(meetingsWorkspace.id)
+                    .data("name", notes)
+                    .data("projects", Arrays.asList(myMeetings.id))
+                    .data("due_on", date)
+                    .data("assignee", user)
+                    .execute();
+
+        } catch (URISyntaxException e) {
+            throw new CommandException("Invalid URL redirection");
+        } catch (IOException io) {
+            throw new CommandException("Invalid Command");
+        } catch (IllegalValueException ive) {
+            throw new CommandException("OurAB failed to sync with Asana, Please try again later!");
         }
-        return new CommandResult(getMessageForPersonListShownSummary(searchResultsCount));
-    }
-```
-###### /java/seedu/address/model/UniqueMeetingList.java
-``` java
-    /**
-     * Sorts the meeting by date. For retrieving earliest meeting in the list
-     */
-    public void sortByDate() {
-        internalList.sort(new DateTimeComparator());
+
+        return new CommandResult("");
     }
 
     /**
-     * Comparator that compares date time to sort meetings
+     * Formats date to suit input needs of Asana API
      */
-    public class DateTimeComparator implements Comparator<ReadOnlyMeeting> {
-        /**
-         * Custom comparator to compare meetings based on chronological order
-         * @param rom1 ReadOnlyMeeting 1
-         * @param rom2 ReadOnlyMeeting 2
-         * @return which meeting comes before the other
-         */
-        @Override
-        public int compare(ReadOnlyMeeting rom1, ReadOnlyMeeting rom2) {
-            return rom1.getDateTimeStr().compareTo(rom2.getDateTimeStr());
-        }
-    }
+    private String dateFormatter (String date) throws ParseException {
 
-    //@@liuhang0213
-    /**
-     * Returns the meeting with earliest date in the internal list
-     * Currently not checking if it is happening in the future
-     */
-    @Override
-    public ReadOnlyMeeting getUpcomingMeeting() {
-        this.sortByDate();
-        return internalList.get(0);
-    }
+        DateFormat dateParse = new SimpleDateFormat("yyyy/mm/dd");
 
-    public ObservableList<ReadOnlyMeeting> getInternalList() {
-        return internalList;
-    }
+        Date formattedDate = dateParse.parse(date);
 
-    @Override
-    public Iterator<ReadOnlyMeeting> iterator() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return internalList.iterator();
-    }
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
-     */
-    public ObservableList<ReadOnlyMeeting> asObservableList() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return FXCollections.unmodifiableObservableList(internalList);
-    }
+        return dateFormat.format(formattedDate);
 
-    @Override
-    public boolean equals(Object other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return other == this // short circuit if same object
-                || (other instanceof UniqueMeetingList // instanceof handles nulls
-                        && this.internalList.equals(((UniqueMeetingList) other).internalList));
-    }
-
-    /**
-     * Returns true if the element in this list is equal to the elements in {@code other}.
-     * The elements do not have to be in the same order.
-     */
-    public boolean equalsOrderInsensitive(UniqueMeetingList other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        assert CollectionUtil.elementsAreUnique(other.internalList);
-        return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
-    }
-
-    @Override
-    public int hashCode() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return internalList.hashCode();
     }
 
 }
+```
+###### /java/seedu/address/model/asana/storeAccessToken.java
+``` java
+
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
+
+/**
+ * Stores AccessToken hashed
+ */
+public class storeAccessToken extends Command {
+
+    private final String mAccessToken;
+
+    public storeAccessToken(String accessToken) {
+        mAccessToken = accessToken;
+    }
+    @Override
+    public CommandResult execute() throws CommandException {
+        return new CommandResult("");
+    }
+}
+```
+###### /java/seedu/address/model/asana/TokenParser.java
+``` java
+import seedu.address.logic.parser.Parser;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parse accesstoken input from user
+ */
+public class TokenParser implements Parser<storeAccessToken> {
+    @Override
+    public storeAccessToken parse(String userInput) throws ParseException {
+        //TODO Parse userinput
+        return new storeAccessToken(userInput);
+    }
+}
+```
+###### /java/seedu/address/model/exceptions/DuplicateMeetingException.java
+``` java
+/**
+ *Signals that an operation would have violated the 'no duplicates' property of the list.
+ */
+public class DuplicateMeetingException extends DuplicateDataException {
+    public DuplicateMeetingException() {
+        super("Operation would result in duplicate meetings");
+    }
+}
+```
+###### /java/seedu/address/model/exceptions/IllegalIdException.java
+``` java
+
+/***
+ * Signals that a particular person id does not exist in address book
+ */
+public class IllegalIdException extends IllegalValueException {
+
+    public IllegalIdException(String message) {
+        super (message);
+    }
+}
+```
+###### /java/seedu/address/model/Model.java
+``` java
+    /** Deletes given tag from everyone in the addressbook */
+    boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException;
+    /** Adds the given person */
+    void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException;
+    /** Add accessToken to meetingsList*/
+    //void addAccessToken(String accessToken);
+```
+###### /java/seedu/address/model/Model.java
+``` java
+    /**
+     * Updates search count for each person who is searched using {@code FindCommand}
+     * Assumes filtered List of persons contains search results
+     */
+    void recordSearchHistory() throws CommandException;
+
+    /**
+     * Sort everyone in addressbook by searchCount
+     */
+    void sortPersonListBySearchCount();
+
+    /**
+     * Sort everyone in addressbook lexicographically
+     */
+    void sortPersonListLexicographically();
+
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /** Raises an event to indicate the model has chnaged */
+    private void indicateMeetingListChanged() {
+        raise(new MeetingListChangedEvent(meetingList));
+    }
+
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException {
+        boolean isTagRemoved;
+        boolean hasOneOrMoreDeletion = false;
+        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
+
+            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
+            //creates a new person without each of the tags
+            Person newPerson = new Person(oldPerson);
+            Set<Tag> newTags = new HashSet<>(newPerson.getTags());
+
+            for (Tag tag : tags) {
+                isTagRemoved = newTags.remove(tag);
+                if (isTagRemoved) {
+                    hasOneOrMoreDeletion = isTagRemoved;
+                }
+            }
+            newPerson.setTags(newTags);
+
+            addressBook.updatePerson(oldPerson, newPerson);
+        }
+        return hasOneOrMoreDeletion;
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+
+    /***
+     * Adds a meeting to the Unique meeting list
+     * @param meeting
+     * @throws DuplicateMeetingException
+     * @throws IllegalIdException
+     */
+    public synchronized void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException {
+        boolean isIdValid;
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        //search through all Internal Ids, making sure that every id provided in argument is valid.
+        for (InternalId id: meeting.getListOfPersonsId()) {
+            isIdValid = false;
+            for (ReadOnlyPerson person:filteredPersons) {
+                if (person.getInternalId().equals(id)) {
+                    isIdValid = true;
+                }
+            }
+            if (!isIdValid) {
+                throw new IllegalIdException("Please input a valid person id");
+            }
+        }
+
+        meetingList.add(meeting);
+        indicateMeetingListChanged();
+    }
+    /*
+    @Override
+    public void addAccessToken(String accessToken) {
+    }*/
+
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /***
+     * Records how many times each person in addressbook is searched for
+     * @throws CommandException
+     */
+    @Override
+    public void recordSearchHistory() throws CommandException {
+
+        int searchResultsCount = filteredPersons.size();
+
+        for (int i = 0; i < searchResultsCount; i++) {
+            ReadOnlyPerson searchedPerson = filteredPersons.get(i);
+            SearchData updatedSearchData = searchedPerson.getSearchData();
+            updatedSearchData.incrementSearchCount();
+            Person modifiedPerson = new Person(searchedPerson.getInternalId(), searchedPerson.getName(),
+                    searchedPerson.getPhone(), searchedPerson.getEmail(), searchedPerson.getAddress(),
+                    searchedPerson.getTags(), updatedSearchData);
+            try {
+                updatePerson(searchedPerson, modifiedPerson);
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing");
+            }
+        }
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    //=========== Sort addressBook methods =============================================================
+    /***
+     * Sorts persons in address book by searchCount
+     */
+    @Override
+    public void sortPersonListBySearchCount() {
+        addressBook.sortBySearchCount();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /***
+     * Sorts persons in Address book alphabetically
+     */
+    @Override
+    public void sortPersonListLexicographically() {
+        addressBook.sortLexicographically();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
 ```
 ###### /java/seedu/address/model/person/Person.java
 ``` java
@@ -750,188 +985,202 @@ public class SearchData {
 
     }
 ```
-###### /java/seedu/address/model/exceptions/DuplicateMeetingException.java
+###### /java/seedu/address/model/UniqueMeetingList.java
 ``` java
-/**
- *Signals that an operation would have violated the 'no duplicates' property of the list.
- */
-public class DuplicateMeetingException extends DuplicateDataException {
-    public DuplicateMeetingException() {
-        super("Operation would result in duplicate meetings");
-    }
-}
-```
-###### /java/seedu/address/model/exceptions/IllegalIdException.java
-``` java
-
-/***
- * Signals that a particular person id does not exist in address book
- */
-public class IllegalIdException extends IllegalValueException {
-
-    public IllegalIdException(String message) {
-        super (message);
-    }
-}
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    /** Raises an event to indicate the model has chnaged */
-    private void indicateMeetingListChanged() {
-        raise(new MeetingListChangedEvent(meetingList));
-    }
-
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    @Override
-    public boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException {
-        boolean isTagRemoved;
-        boolean hasOneOrMoreDeletion = false;
-        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
-
-            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
-            //creates a new person without each of the tags
-            Person newPerson = new Person(oldPerson);
-            Set<Tag> newTags = new HashSet<>(newPerson.getTags());
-
-            for (Tag tag : tags) {
-                isTagRemoved = newTags.remove(tag);
-                if (isTagRemoved) {
-                    hasOneOrMoreDeletion = isTagRemoved;
-                }
-            }
-            newPerson.setTags(newTags);
-
-            addressBook.updatePerson(oldPerson, newPerson);
-        }
-        return hasOneOrMoreDeletion;
-    }
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-
-    /***
-     * Adds a meeting to the Unique meeting list
-     * @param meeting
-     * @throws DuplicateMeetingException
-     * @throws IllegalIdException
+    /**
+     * Sorts the meeting by date. For retrieving earliest meeting in the list
      */
-    public synchronized void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException {
-        boolean isIdValid;
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
-        //search through all Internal Ids, making sure that every id provided in argument is valid.
-        for (InternalId id: meeting.getListOfPersonsId()) {
-            isIdValid = false;
-            for (ReadOnlyPerson person:filteredPersons) {
-                if (person.getInternalId().equals(id)) {
-                    isIdValid = true;
-                }
-            }
-            if (!isIdValid) {
-                throw new IllegalIdException("Please input a valid person id");
-            }
-        }
-
-        meetingList.add(meeting);
-        indicateMeetingListChanged();
+    public void sortByDate() {
+        internalList.sort(new DateTimeComparator());
     }
 
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    /***
-     * Records how many times each person in addressbook is searched for
-     * @throws CommandException
+    /**
+     * Comparator that compares date time to sort meetings
+     */
+    public class DateTimeComparator implements Comparator<ReadOnlyMeeting> {
+        /**
+         * Custom comparator to compare meetings based on chronological order
+         * @param rom1 ReadOnlyMeeting 1
+         * @param rom2 ReadOnlyMeeting 2
+         * @return which meeting comes before the other
+         */
+        @Override
+        public int compare(ReadOnlyMeeting rom1, ReadOnlyMeeting rom2) {
+            return rom1.getDateTimeStr().compareTo(rom2.getDateTimeStr());
+        }
+    }
+
+    //@@liuhang0213
+    /**
+     * Returns the meeting with earliest date in the internal list
+     * Currently not checking if it is happening in the future
      */
     @Override
-    public void recordSearchHistory() throws CommandException {
+    public ReadOnlyMeeting getUpcomingMeeting() {
+        this.sortByDate();
+        return internalList.get(0);
+    }
 
-        int searchResultsCount = filteredPersons.size();
+    public ObservableList<ReadOnlyMeeting> getInternalList() {
+        return internalList;
+    }
 
-        for (int i = 0; i < searchResultsCount; i++) {
-            ReadOnlyPerson searchedPerson = filteredPersons.get(i);
-            SearchData updatedSearchData = searchedPerson.getSearchData();
-            updatedSearchData.incrementSearchCount();
-            Person modifiedPerson = new Person(searchedPerson.getInternalId(), searchedPerson.getName(),
-                    searchedPerson.getPhone(), searchedPerson.getEmail(), searchedPerson.getAddress(),
-                    searchedPerson.getTags(), updatedSearchData);
+    @Override
+    public Iterator<ReadOnlyMeeting> iterator() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return internalList.iterator();
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<ReadOnlyMeeting> asObservableList() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return FXCollections.unmodifiableObservableList(internalList);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return other == this // short circuit if same object
+                || (other instanceof UniqueMeetingList // instanceof handles nulls
+                        && this.internalList.equals(((UniqueMeetingList) other).internalList));
+    }
+
+    /**
+     * Returns true if the element in this list is equal to the elements in {@code other}.
+     * The elements do not have to be in the same order.
+     */
+    public boolean equalsOrderInsensitive(UniqueMeetingList other) {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        assert CollectionUtil.elementsAreUnique(other.internalList);
+        return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
+    }
+
+    @Override
+    public int hashCode() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return internalList.hashCode();
+    }
+
+
+}
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    public static final String DEFAULT_PAGE = "default.html";
+    public static final String LINKEDIN_SEARCH_URL_PREFIX = "https://www.linkedin.com/search/results/";
+    public static final String LINKEDIN_SEARCH_PEOPLE = "people/";
+    public static final String LINKEDIN_SEARCH_PARAM_LOCATION = "?facetGeoRegion=%5B%22sg%3A0%22%5D";
+    public static final String LINKEDIN_SEARCH_PARAM_FIRST_NAME = "&firstName=";
+    public static final String LINKEDIN_SEARCH_PARAM_LAST_NAME = "&lastName=";
+    public static final String LINKEDIN_URL_SUFFIX = "&origin=FACETED_SEARCH";
+    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
+    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+    public static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    /***
+     * Loads person page
+     * @param person
+     */
+    private void loadPersonPage(ReadOnlyPerson person) {
+        personSelected = person;
+        if (hasLinkedinBeenChosen) {
             try {
-                updatePerson(searchedPerson, modifiedPerson);
-            } catch (DuplicatePersonException dpe) {
-                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-            } catch (PersonNotFoundException pnfe) {
-                throw new AssertionError("The target person cannot be missing");
+                loadLinkedIn();
+            } catch (CommandException e) {
+                e.printStackTrace();
             }
+        } else {
+
+            loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
+                    + GOOGLE_SEARCH_URL_SUFFIX);
         }
     }
+
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
-    //=========== Sort addressBook methods =============================================================
+
     /***
-     * Sorts persons in address book by searchCount
+     * Loads pages based on choose command selection
      */
-    @Override
-    public void sortPersonListBySearchCount() {
-        addressBook.sortBySearchCount();
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
+    private void loadLinkedIn() throws CommandException {
+        if (personSelected == null) {
+            throw new CommandException("Please select a person");
+        }
+        hasLinkedinBeenChosen = true;
+        String[] name = personSelected.getName().fullName.split(" ");
+
+        loadPage(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
+                + LINKEDIN_SEARCH_PARAM_FIRST_NAME + name[0] + LINKEDIN_SEARCH_PARAM_LAST_NAME + name[1]
+                + LINKEDIN_URL_SUFFIX);
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
-    /***
-     * Sorts persons in Address book alphabetically
-     */
-    @Override
-    public void sortPersonListLexicographically() {
-        addressBook.sortLexicographically();
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
-    }
-```
-###### /java/seedu/address/model/Model.java
-``` java
-    /** Deletes given tag from everyone in the addressbook */
-    boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException;
-    /** Adds the given person */
-    void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException;
-```
-###### /java/seedu/address/model/Model.java
-``` java
-    /**
-     * Updates search count for each person who is searched using {@code FindCommand}
-     * Assumes filtered List of persons contains search results
-     */
-    void recordSearchHistory() throws CommandException;
 
     /**
-     * Sort everyone in addressbook by searchCount
+     * Setter method to set the Boolean value of hasLinkedinBeenChosen
      */
-    void sortPersonListBySearchCount();
+    public void setLinkedinChosenTrue () {
+        hasLinkedinBeenChosen = true;
+    }
 
-    /**
-     * Sort everyone in addressbook lexicographically
-     */
-    void sortPersonListLexicographically();
-
+    public void setLinkedinChosenFalse () {
+        hasLinkedinBeenChosen = false;
+    }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
-    /***
-     * sorts persons in the addressbook by number of times they were previously searched
-     */
-    public void sortBySearchCount() {
-        persons.sortBySearchCount();
+    @Subscribe
+    private void handleBrowserPanelSelectionChangedEvent(BrowserPanelSelectionChangedEvent event)
+            throws CommandException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (event.getBrowserSelection().equals("linkedin")) {
+            loadLinkedIn();
+        } else if (event.getBrowserSelection().equals("google")) {
+            hasLinkedinBeenChosen = false;
+            loadPersonPage(personSelected);
+        }
     }
 
-
-    /***
-     * sorts persons in the addressbook alphabetically
-     */
-    public void sortLexicographically() {
-        persons.sortLexicographically();
+    //@author martyn-wong
+    @Subscribe
+    private void handleMapPanelEvent(MapPersonEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonMap(event.getPerson());
     }
+}
+```
+###### /java/seedu/address/ui/ResultDisplay.java
+``` java
+
+    public ResultDisplay(String message) {
+        super(FXML);
+        resultDisplay.textProperty().bind(displayed);
+        registerAsAnEventHandler(this);
+
+        Platform.runLater(() -> {
+            displayed.setValue(message);
+            resultDisplay.setStyle("-fx-text-fill: white");
+        });
+    }
+
+    @Subscribe
+    private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.runLater(() -> {
+            displayed.setValue(event.message);
+            if (event.errorStatus) {
+                resultDisplay.setStyle("-fx-text-fill: #e35252");
+            } else {
+                resultDisplay.setStyle("-fx-text-fill: #70db75");
+            }
+        });
+    }
+
+}
 ```

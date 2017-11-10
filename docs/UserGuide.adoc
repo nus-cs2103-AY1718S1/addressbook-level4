@@ -226,8 +226,31 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-// tag::nextmeeting[]
+=== Adding a new meeting command: `AddMeeting` `Since v1.5`
 
+Adds a new meeting to the addressbook +
+Format: `addMeeting on DATE from TIME at LOCATION about NOTES [with PERSON]...`
+
+Furthermore, every meeting added is saved locally and online on https://www.asana.com[Asana]. +
+Each meeting is saved as a separate task under `Meetings` project in `Personal Projects` workspace.
+
+[TIP]
+A meeting can have more than 1 (at least 1) person associated with the meeting.
+
+Examples:
+
+* `add on 24/11/2017 from 1400 at Tea Party Cafe about Meetup with 1`
+* `add on 12/11/2017 from 1000 at University Town about Dialogue with 2 with 3`
+
+[NOTE]
+For Asana Integration to be fully functional, make sure you have: +
+* An account with Asana (Free or Premium) +
+* A Workspace called `Personal Projects` (This is usually generated automatically)
+
+[WARNING]
+This is NOT an undoable command.
+
+// tag::nextmeeting[]
 === Listing next upcoming meeting : `nextMeeting` `Since v1.3`
 
 Displays information about the next upcoming meeting. +
@@ -388,6 +411,8 @@ e.g.`select 2`
 Can also use shortcut 's'
 * *History* : `history`
 Can also use shortcut 'h'
+* *Add Meeting* : `addMeeting`
+Can also use shortcut `am`
 * *Next Meeting* : `nextMeeting`
 Can also use shortcut `nm`
 * *Undo* : `undo`
