@@ -1,5 +1,5 @@
 # meiyi1234
-###### \java\seedu\address\logic\parser\RemarkCommandParser.java
+###### /java/seedu/address/logic/parser/RemarkCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new RemarkCommand object
@@ -23,7 +23,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
     }
 }
 ```
-###### \java\seedu\address\model\person\Remark.java
+###### /java/seedu/address/model/person/Remark.java
 ``` java
 public class Remark {
 
