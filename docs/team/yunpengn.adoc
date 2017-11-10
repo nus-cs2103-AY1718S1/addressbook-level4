@@ -110,11 +110,18 @@ https://github.com/CS2103AUG2017-T09-B3/main/pull/124[#124])
 
 === Reuse offer
 
-- Issue https://github.com/nus-cs2103-AY1718S1/forum/issues/180[#180]
+* Generic property: Issue https://github.com/nus-cs2103-AY1718S1/forum/issues/180[#180]
+* Set customize color for tags: Issue https://github.com/nus-cs2103-AY1718S1/forum/issues/199[#199]
 
 === Helping others
 
-- Issue https://github.com/nus-cs2103-AY1718S1/forum/issues/197[#197]
+* On the forum: Issue https://github.com/nus-cs2103-AY1718S1/forum/issues/195[#195],
+https://github.com/nus-cs2103-AY1718S1/forum/issues/197[#197], https://github.com/nus-cs2103-AY1718S1/forum/issues/200[#200]
+* Report bug for https://github.com/CS2103AUG2017-T13-B2/main[UniBook]: Issue https://github.com/CS2103AUG2017-T13-B2/main/issues/72[#72]
+* Report bug for https://nus-cs2103.github.io/website/[module website]: Issue https://github.com/nus-cs2103/website/issues/18[#18],
+https://github.com/nus-cs2103/website/issues/28[#28], https://github.com/nus-cs2103/website/issues/29[#29],
+https://github.com/nus-cs2103/website/issues/34[#34], https://github.com/nus-cs2103/website/issues/39[#39],
+https://github.com/nus-cs2103/website/issues/41[#41], https://github.com/nus-cs2103/website/issues/43[#43]
 
 == Project: Lions Befrienders Management System
 
