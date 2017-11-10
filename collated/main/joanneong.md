@@ -1,11 +1,11 @@
 # joanneong
-###### /java/seedu/address/commons/core/Commands.java
+###### \java\seedu\address\commons\core\Commands.java
 ``` java
 /**
  * Container for all command words, command aliases, and shortened command usage in the application.
  */
 public class Commands {
-    private static String[] ALL_COMMAND_WORDS = {
+    private static final String[] ALL_COMMAND_WORDS = {
         AddCommand.COMMAND_WORD,
         AddRelationshipCommand.COMMAND_WORD,
         BackupCommand.COMMAND_WORD,
@@ -13,6 +13,7 @@ public class Commands {
         ClearHistoryCommand.COMMAND_WORD,
         ColourTagCommand.COMMAND_WORD,
         DeleteCommand.COMMAND_WORD,
+        DeleteRelationshipCommand.COMMAND_WORD,
         EditCommand.COMMAND_WORD,
         ExitCommand.COMMAND_WORD,
         FindCommand.COMMAND_WORD,
@@ -20,6 +21,7 @@ public class Commands {
         HistoryCommand.COMMAND_WORD,
         ListCommand.COMMAND_WORD,
         RedoCommand.COMMAND_WORD,
+        RelPathCommand.COMMAND_WORD,
         RemarkCommand.COMMAND_WORD,
         RemoveTagCommand.COMMAND_WORD,
         SelectCommand.COMMAND_WORD,
@@ -27,7 +29,7 @@ public class Commands {
         UndoCommand.COMMAND_WORD
     };
 
-    private static String[] ALL_COMMAND_ALIASES = {
+    private static final String[] ALL_COMMAND_ALIASES = {
         AddCommand.COMMAND_ALIAS,
         AddRelationshipCommand.COMMAND_ALIAS,
         BackupCommand.COMMAND_ALIAS,
@@ -35,6 +37,7 @@ public class Commands {
         ClearHistoryCommand.COMMAND_ALIAS,
         ColourTagCommand.COMMAND_ALIAS,
         DeleteCommand.COMMAND_ALIAS,
+        DeleteRelationshipCommand.COMMAND_ALIAS,
         EditCommand.COMMAND_ALIAS,
         ExitCommand.COMMAND_ALIAS,
         FindCommand.COMMAND_ALIAS,
@@ -42,13 +45,14 @@ public class Commands {
         HistoryCommand.COMMAND_ALIAS,
         ListCommand.COMMAND_ALIAS,
         RedoCommand.COMMAND_ALIAS,
+        RelPathCommand.COMMAND_ALIAS,
         RemarkCommand.COMMAND_ALIAS,
         SelectCommand.COMMAND_ALIAS,
         SortCommand.COMMAND_ALIAS,
         UndoCommand.COMMAND_ALIAS
     };
 
-    private static String[] ALL_SHORT_MESSAGE_USAGES = {
+    private static final String[] ALL_SHORT_MESSAGE_USAGES = {
         AddCommand.SHORT_MESSAGE_USAGE,
         AddRelationshipCommand.SHORT_MESSAGE_USAGE,
         BackupCommand.SHORT_MESSAGE_USAGE,
@@ -56,6 +60,7 @@ public class Commands {
         ClearHistoryCommand.SHORT_MESSAGE_USAGE,
         ColourTagCommand.SHORT_MESSAGE_USAGE,
         DeleteCommand.SHORT_MESSAGE_USAGE,
+        DeleteRelationshipCommand.SHORT_MESSAGE_USAGE,
         EditCommand.SHORT_MESSAGE_USAGE,
         ExitCommand.SHORT_MESSAGE_USAGE,
         FindCommand.SHORT_MESSAGE_USAGE,
@@ -63,6 +68,7 @@ public class Commands {
         HistoryCommand.SHORT_MESSAGE_USAGE,
         ListCommand.SHORT_MESSAGE_USAGE,
         RedoCommand.SHORT_MESSAGE_USAGE,
+        RelPathCommand.SHORT_MESSAGE_USAGE,
         RemarkCommand.SHORT_MESSAGE_USAGE,
         RemoveTagCommand.SHORT_MESSAGE_USAGE,
         SelectCommand.SHORT_MESSAGE_USAGE,
@@ -70,7 +76,7 @@ public class Commands {
         UndoCommand.SHORT_MESSAGE_USAGE
     };
 
-    private static HashMap<String, String> ALL_COMMANDS_AND_SHORT_MESSAGES;
+    private static final HashMap<String, String> ALL_COMMANDS_AND_SHORT_MESSAGES;
     static {
         ALL_COMMANDS_AND_SHORT_MESSAGES = new HashMap<>();
 
@@ -79,16 +85,46 @@ public class Commands {
         }
     }
 
-    public static String[] getAllCommandWords() { return ALL_COMMAND_WORDS; }
+    public static String[] getAllCommandWords() {
+        return ALL_COMMAND_WORDS;
+    }
 
     public static String[] getAllCommandAliases() {
         return ALL_COMMAND_ALIASES;
     }
 
-    public static HashMap<String, String> getAllCommandUsages() { return ALL_COMMANDS_AND_SHORT_MESSAGES; }
+    public static HashMap<String, String> getAllCommandUsages() {
+        return ALL_COMMANDS_AND_SHORT_MESSAGES;
+    }
 }
 ```
-###### /java/seedu/address/logic/parser/FindCommandParser.java
+###### \java\seedu\address\commons\events\ui\NewGraphDisplayEvent.java
+``` java
+/**
+ * Indicates that a new graph display is available.
+ */
+public class NewGraphDisplayEvent extends BaseEvent {
+
+    public final String message;
+    private final SingleGraph graph;
+
+    public NewGraphDisplayEvent(SingleGraph graph, String message) {
+        this.message = message;
+        this.graph = graph;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public SingleGraph getGraph() {
+        return this.graph;
+    }
+
+}
+```
+###### \java\seedu\address\logic\parser\FindCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -205,7 +241,84 @@ public class FindCommandParser implements Parser<FindCommand> {
 
 }
 ```
-###### /java/seedu/address/model/person/AddressContainsKeywordsPredicate.java
+###### \java\seedu\address\model\graph\GraphWrapper.java
+``` java
+    /**
+     * Returns the view attached to the viewer for the graph.
+     */
+    public View getView() {
+        return this.view;
+    }
+
+```
+###### \java\seedu\address\model\graph\GraphWrapper.java
+``` java
+    /**
+     * Initialise advanced renderer for integrated graph display.
+     */
+    private void initialiseRenderer() {
+        System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+        graph.addAttribute("ui.quality");
+    }
+
+    /**
+     * Initialise custom viewer for integrated graph display.
+     */
+    private void initialiseViewer() {
+        this.viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+        layoutAlgorithm = Layouts.newLayoutAlgorithm();
+        viewer.enableAutoLayout(layoutAlgorithm);
+        viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.EXIT);
+        this.view = viewer.addDefaultView(false);
+        rebuildNext = true;
+    }
+
+```
+###### \java\seedu\address\model\graph\GraphWrapper.java
+``` java
+    /**
+     * Style each node in the integrated graph display
+     */
+    private void styleGraphNode(SingleNode node, String nodeLabel) {
+        node.addAttribute(nodeAttributeNodeLabel, nodeLabel);
+        node.addAttribute("layout.weight", 3);
+        layoutAlgorithm.setStabilizationLimit(0.95);
+    }
+
+```
+###### \java\seedu\address\model\graph\GraphWrapper.java
+``` java
+    /**
+     * Label edges in the integrated graph display
+     */
+    private void labelGraphEdge(Relationship relationship, Edge edge) {
+        StringBuilder edgeLabel = new StringBuilder();
+
+        String shortRelationshipName = relationship.getName().toString();
+        if (relationship.getName().toString().length() > 10) {
+            shortRelationshipName = relationship.getName().toString().substring(0, 6) + "...";
+        }
+        String confidenceEstimate = relationship.getConfidenceEstimate().toString();
+
+        if (shortRelationshipName.length() != 0 || !confidenceEstimate.equals("0.0")) {
+            if (!confidenceEstimate.equals("0.0")) {
+                edgeLabel.append("(" + confidenceEstimate + ")");
+            }
+
+            if (shortRelationshipName.length() != 0) {
+                if (!confidenceEstimate.equals("0.0")) {
+                    edgeLabel.append(" ");
+                }
+                edgeLabel.append(shortRelationshipName);
+            }
+
+            edge.addAttribute(nodeAttributeNodeLabel, edgeLabel.toString());
+        }
+        edge.addAttribute("layout.weight", 5);
+    }
+
+```
+###### \java\seedu\address\model\person\AddressContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Address} matches any of the keywords given.
@@ -232,7 +345,7 @@ public class AddressContainsKeywordsPredicate implements Predicate<ReadOnlyPerso
 
 }
 ```
-###### /java/seedu/address/model/person/AnyContainsKeywordsPredicate.java
+###### \java\seedu\address\model\person\AnyContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s details matches any of the keywords given.
@@ -266,7 +379,7 @@ public class AnyContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 
 }
 ```
-###### /java/seedu/address/model/person/EmailContainsKeywordsPredicate.java
+###### \java\seedu\address\model\person\EmailContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Email} matches any of the keywords given.
@@ -293,7 +406,7 @@ public class EmailContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
 
 }
 ```
-###### /java/seedu/address/model/person/NameContainsKeywordsPredicate.java
+###### \java\seedu\address\model\person\NameContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
@@ -320,7 +433,7 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
 
 }
 ```
-###### /java/seedu/address/model/person/PhoneContainsKeywordsPredicate.java
+###### \java\seedu\address\model\person\PhoneContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone} matches any of the keywords given.
@@ -347,7 +460,7 @@ public class PhoneContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
 
 }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     public CommandBox(Logic logic) {
         super(FXML);
@@ -363,17 +476,96 @@ public class PhoneContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
     /**
      * Returns the {@code TextField} in the command box (i.e. the user input).
      */
-    protected TextField getCommandTextField() { return commandTextField; }
+    protected TextField getCommandTextField() {
+        return commandTextField;
+    }
 
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\GraphDisplay.java
+``` java
+/**
+ * Integrating GraphStream graph display into the application.
+ */
+public class GraphDisplay extends UiPart<Region> {
+
+    private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
+    private static final String FXML = "GraphDisplay.fxml";
+
+    /**
+     * Displays the integrated graph with the desired style.
+     *
+     * This is a 'hack' since the current GraphStream API requires an absolute file path to the css file,
+     * which is risky when the application is converted to a JAR file.
+     * Alternatively, we can consider using "ClassLoader.getSystemClassLoader().getResource(".").getPath(‌​);"
+     * but this is the most fail-safe method at the current moment.
+     */
+    private static final String GRAPH_DISPLAY_STYLESHEET =
+            "graph { fill-color: white; }"
+                    + "node {"
+                    + "fill-color: black;"
+                    + "shape: rounded-box;"
+                    + "text-background-mode: rounded-box;"
+                    + "text-padding: 5;"
+                    + "text-background-color: black;"
+                    + "text-color: white;"
+                    + "text-size: 15;"
+                    + "size-mode: fit;"
+                    + "z-index: 3;}"
+                    + "edge { "
+                    + "size: 3;"
+                    + "fill-color: black; "
+                    + "arrow-size: 20, 10;"
+                    + "text-alignment: along;"
+                    + "text-background-color: white;"
+                    + "text-background-mode: rounded-box;"
+                    + "text-size: 10;"
+                    + "text-padding: 5;"
+                    + "z-index: 1;}";
+
+    private final Logic logic;
+
+    @FXML
+    private SwingNode graphDisplay;
+    @FXML
+    private StackPane graphDisplayHolder;
+
+    public GraphDisplay(Logic logic) {
+        super(FXML);
+        this.logic = logic;
+
+        registerAsAnEventHandler(this);
+    }
+
+    public static String getGraphDisplayStylesheet() {
+        return GRAPH_DISPLAY_STYLESHEET;
+    }
+
+    /**
+     * Sets the graph stream display in the SwingNode.
+     */
+    protected void createAndSetSwingContent() {
+        SwingUtilities.invokeLater(() ->
+            graphDisplay.setContent((JComponent) GraphWrapper.getInstance().getView()));
+    }
+
+    @Subscribe
+    private void handleNewGraphIntialisedEvent(NewGraphDisplayEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.runLater(() ->
+            graphDisplay.setContent((event.getGraph().display().getDefaultView())));
+    }
+
+}
+```
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        graphDisplay = new GraphDisplay(logic);
+        graphDisplayPlaceholder.getChildren().add(graphDisplay.getRoot());
+        graphDisplay.createAndSetSwingContent();
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList(), prefs.getGuiSettings().getTagColours());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -406,21 +598,15 @@ public class PhoneContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
         FxViewUtil.setStageIcon(primaryStage, iconSource);
     }
 
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
     /**
-     * Sets the default size based on user preferences.
+     * Sets the default size based on default values.
      */
-    private void setWindowDefaultSize(UserPrefs prefs) {
-        primaryStage.setHeight(prefs.getGuiSettings().getWindowHeight());
-        primaryStage.setWidth(prefs.getGuiSettings().getWindowWidth());
-        if (prefs.getGuiSettings().getWindowCoordinates() != null) {
-            primaryStage.setX(prefs.getGuiSettings().getWindowCoordinates().getX());
-            primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
-        }
-    }
-
-    private void setWindowMinSize() {
-        primaryStage.setMinHeight(MIN_HEIGHT);
-        primaryStage.setMinWidth(MIN_WIDTH);
+    private void setWindowDefaultSize() {
+        primaryStage.setHeight(DEFAULT_HEIGHT);
+        primaryStage.setWidth(DEFAULT_WIDTH);
     }
 
     /**
@@ -456,10 +642,6 @@ public class PhoneContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
         return this.personListPanel;
     }
 
-    void releaseResources() {
-        browserPanel.freeResources();
-    }
-
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -467,7 +649,7 @@ public class PhoneContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
     }
 }
 ```
-###### /java/seedu/address/ui/ResultDisplay.java
+###### \java\seedu\address\ui\ResultDisplay.java
 ``` java
     public ResultDisplay() {
         super(FXML);
@@ -485,7 +667,6 @@ public class PhoneContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
 
     /**
      * Updates the information display according to the user input in the command box.
-     * Note that "clearhistory" has been hardcoded as a unique case.
      */
     private void updateInfoDisplay(String oldInput, String newInput) {
         if (lastFoundCommand.isEmpty()
@@ -501,7 +682,7 @@ public class PhoneContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
     }
 
 ```
-###### /resources/view/DarkTheme.css
+###### \resources\view\DarkTheme.css
 ``` css
 #tags .friends {
     -fx-background-color: red;
@@ -523,7 +704,18 @@ public class PhoneContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
 
 
 ```
-###### /resources/view/ResultDisplay.fxml
+###### \resources\view\GraphDisplay.fxml
+``` fxml
+<?import javafx.embed.swing.SwingNode?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
+   <children>
+      <SwingNode fx:id="graphDisplay" />
+   </children>
+</StackPane>
+```
+###### \resources\view\ResultDisplay.fxml
 ``` fxml
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
