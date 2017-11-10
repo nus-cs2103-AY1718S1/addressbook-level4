@@ -22,9 +22,9 @@ public class ConfigUtil {
     /**
      * Update the appTitle field in config.json
      */
-    public static void updateConfig(String addressBookFileName) throws DataConversionException, IOException {
-        Config config = readConfig("config.json").get();
+    public static void updateConfig(String configFilePath, String addressBookFileName) throws DataConversionException, IOException {
+        Config config = readConfig(configFilePath).get();
         config.setAppTitle(addressBookFileName);
-        saveConfig(config, "config.json");
+        saveConfig(config, configFilePath);
     }
 }

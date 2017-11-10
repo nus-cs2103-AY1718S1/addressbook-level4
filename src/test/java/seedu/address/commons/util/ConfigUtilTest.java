@@ -2,6 +2,7 @@ package seedu.address.commons.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static seedu.address.commons.util.ConfigUtil.updateConfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -114,6 +115,24 @@ public class ConfigUtilTest {
         readBack = ConfigUtil.readConfig(configFilePath).get();
         assertEquals(original, readBack);
     }
+
+    //@@author chrisboo
+    @Test
+    public void updateConfigTest() throws DataConversionException, IOException {
+        String configFilePath = addToTestDataPathIfNotNull("TypicalConfig.json");
+        String newAppTitle = "new Death Note";
+
+        Config oldConfig = read("TypicalConfig.json").get();
+
+        updateConfig(configFilePath, newAppTitle);
+
+        Config config = read("TypicalConfig.json").get();
+        assertEquals(config.getAppTitle(), newAppTitle);
+
+        //after
+        updateConfig(configFilePath, oldConfig.getAppTitle());
+    }
+    //@@author
 
     private void save(Config config, String configFileInTestDataFolder) throws IOException {
         String configFilePath = addToTestDataPathIfNotNull(configFileInTestDataFolder);

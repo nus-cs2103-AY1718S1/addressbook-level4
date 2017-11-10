@@ -221,7 +221,7 @@ public class MainApp extends Application {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
         try {
-            updateConfig(event.getFileName());
+            updateConfig("config.json", event.getFileName());
             updateUserPrefs(event.getFilePath(), event.getFileName());
 
             restart();
@@ -235,7 +235,7 @@ public class MainApp extends Application {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
         try {
-            updateConfig(event.getFileName());
+            updateConfig("config.json", event.getFileName());
             updateUserPrefs(event.getFilePath(), event.getFileName());
 
             init();
