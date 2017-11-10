@@ -11,9 +11,9 @@ import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ClearLogCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.DeleteAllPhotosCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeletePhotoCommand;
+import seedu.address.logic.commands.DeletesAllPhotosCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -160,9 +160,9 @@ public class AddressBookParser {
         case DeletePhotoCommand.COMMAND_ALIAS:
             return new DeletePhotoCommandParser().parse(arguments);
 
-        case DeleteAllPhotosCommand.COMMAND_WORD:
-        case DeleteAllPhotosCommand.COMMAND_ALIAS:
-            return new DeleteAllPhotosCommand();
+        case DeletesAllPhotosCommand.COMMAND_WORD:
+        case DeletesAllPhotosCommand.COMMAND_ALIAS:
+            return new DeletesAllPhotosCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
