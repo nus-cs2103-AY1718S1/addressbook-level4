@@ -13,6 +13,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
@@ -24,8 +25,10 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -57,6 +60,9 @@ public class MainWindow extends UiPart<Region> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+
+    @FXML
+    private VBox topContainer;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -150,24 +156,12 @@ public class MainWindow extends UiPart<Region> {
 
         PersonInformationPanel personInformationPanel = new PersonInformationPanel();
         personInformationPanelPlaceholder.getChildren().add(personInformationPanel.getRoot());
-        setBackground(personInformationPanelPlaceholder,
-                System.getProperty("user.dir") + "/docs/images/backgroundRight.jpg",
-                "/images/backgroundRight.jpg",
-                920, 600);
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-        setBackground(personListPanelPlaceholder,
-                System.getProperty("user.dir") + "/docs/images/backgroundLeft.jpg",
-                "/images/backgroundLeft.jpg",
-                330, 600);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
-        setBackground(resultDisplayPlaceholder,
-                System.getProperty("user.dir") + "/docs/images/backgroundUp.jpg",
-                "/images/backgroundUp.jpg",
-                1250, 105);
 
         //StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getFilteredPersonList().size());
@@ -180,6 +174,29 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
         commandBox.getCommandTextField().requestFocus();
+
+        /*
+        Sets background
+         */
+        /*
+        setBackground(personInformationPanelPlaceholder,
+                System.getProperty("user.dir") + "/docs/images/backgroundRight.jpg",
+                "/images/backgroundRight.jpg",
+                920, 600);
+        setBackground(personListPanelPlaceholder,
+                System.getProperty("user.dir") + "/docs/images/backgroundLeft.jpg",
+                "/images/backgroundLeft.jpg",
+                330, 600);
+        setBackground(resultDisplayPlaceholder,
+                System.getProperty("user.dir") + "/docs/images/backgroundUp.jpg",
+                "/images/backgroundUp.jpg",
+                1250, 105);
+        */
+
+        setBackground(topContainer,
+                "",
+                "/images/bg_01.jpg",
+                1280, 1024);
 
         /*
         ChangeListener for caret focus.
@@ -223,7 +240,7 @@ public class MainWindow extends UiPart<Region> {
     /**
      *  Sets a background image for a stack pane
      */
-    private void setBackground(StackPane pane, String pathname, String jarPath, int width, int height) {
+    private void setBackground(Pane pane, String pathname, String jarPath, int width, int height) {
         File file = new File(pathname);
         try {
             if (file.exists()) {
