@@ -19,6 +19,7 @@ Responsibilities: UI + Integration + Deliverables and Deadlines
 
 * Features Implemented : +
 ** ?
+** ?
 
 * Other Contributions : +
 ** https://github.com/CS2103AUG2017-T17-B2/main/pull/101[Revamped Developer Guide content] with Ru Shan
