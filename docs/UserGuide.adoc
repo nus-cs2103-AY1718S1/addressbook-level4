@@ -540,7 +540,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `u` (reverses the `delete 1` command) +
 
 // tag::suggestion[]
-=== `y` or `yes` or `ok` or `yea` or `yeah`: Confirming a suggested command _(Since v1.5)_
+=== `y` or `yes` or `k` or `ok` or `yea` or `yeah`: Confirming a suggested command _(Since v1.5)_
 
 Confirms a command suggested by Rolodex. +
 Format: `y` or `yes` or `ok` or `yea` or `yeah` +
