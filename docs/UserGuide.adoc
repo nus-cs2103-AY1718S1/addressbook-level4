@@ -76,7 +76,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 
 // tag::login[]
-=== Logging into the address book application : `login`
+=== Logging into the address book application using Command Line Interface (CLI) : `login`
 
 Logs into the address book. +
 Format: `login USERNAME PASSWORD`
@@ -106,7 +106,7 @@ Format: `login`
 2) Enter username and password in the respective fields +
 3) Press `Enter` on keyboard or click the `Log in` button +
 
-image::loginView.png[width="790"]
+image::loginView.PNG[width="790"]
 
 [NOTE]
 Sample account to log into address book: +
