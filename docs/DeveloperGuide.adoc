@@ -971,6 +971,10 @@ With slight modification to link:#figure3.1.2[Figure 3.1.2], we have the followi
 image::LogCommandClassDia.png[]
 _Figure 4.15.1 : Class Diagram of LoggingCommand function_
 
+The sequence diagram uses delete command as an example on how LoggingCommand is implemented.
+image::loggingcommandseq.png[]
+_Figure 4.15.2 : An example of Sequence Diagram for LoggingCommand function used for delete_
+
 This is how you can use the LoggingCommand method in your code.
 [source,java]
 ----
@@ -996,7 +1000,7 @@ This function has been mapped to `ClearLogButton` and 'clearlog' 'cl' for comman
 The following sequence diagram describes how 'ClearLogCommand' delete ConnectUsLog.txt file when method is called.
 
 image::clearlogseq.png[]
-_Figure 4.14.1 : Sequence Diagram of the ClearLogCommand_
+_Figure 4.16.1 : Sequence Diagram of the ClearLogCommand_
 
 The ClearLog Method is implemented in the 'ClearLogButton' with the following codes.
 [source,java]
@@ -1024,9 +1028,10 @@ The ClearLog Method implementation for commandline with the following codes.
     }
 ----
 // end::clearlog[]
+
 === QrCall Function
 (added in v1.4)
-
+// tag::qrcall[]
 In this section, we explain how users can generation Quick Response(QR) Code for calling with any contact number available in the addressbook.
 
 To make user experience more convenience, QR Code can make calling easy through the use of Smartphone with QR Scanner application installed.
@@ -1036,7 +1041,7 @@ This function has been mapped to `QrButton` and `qrcall` `qc` for commandline.
 The following sequence diagram describes how 'QrCall' Generates QR Code using commandline.
 
 image::QrCallCommand.png[]
-_Figure 4.15.1 : Sequence Diagram of the QrCallCommand_
+_Figure 4.17.1 : Sequence Diagram of the QrCallCommand_
 
 The QrCallCommandParser Method is implemented with the following code.
 [source,java]
@@ -1136,10 +1141,11 @@ The QrGenCallCommand to retrieve QrCode with the following codes.
               return fullQr;
           }
 ----
+// end::qrcall[]
 
 === QrSms Function
 (added in v1.4)
-
+// tag::qrsms[]
 In this section, we explain how users can generation Quick Response(QR) Code for Sms(Short Message Services) with any contact number available in the addressbook.
 
 To make user experience more convenience, QR Code can make sms easy through the use of Smartphone with QR Scanner application installed.
@@ -1149,7 +1155,7 @@ This function has been mapped to `QrSmsButton` and `qrsms` `qs` for commandline.
 The following sequence diagram describes how 'QrSms' Generates QR Code using commandline.
 
 image::QrSmsCommand.png[]
-_Figure 4.16.1 : Sequence Diagram of the QrSmsCommand_
+_Figure 4.18.1 : Sequence Diagram of the QrSmsCommand_
 
 The QrSmsCommandParser Method is implemented with the following code.
 [source,java]
@@ -1250,9 +1256,11 @@ The QrGenSmsCommand to retrieve QrCode with the following codes.
         return fullQr;
     }
 ----
+// end::qrsms[]
 
 === QrSaveContact Function
 (added in v1.4)
+// tag::qrsave[]
 [NOTE]
 Currently only available for Android Users.
 
@@ -1265,7 +1273,7 @@ This function has been mapped to `QrSaveButton` and `qrsave` `qrs` for commandli
 The following sequence diagram describes how 'QrSave' Generates QR Code using commandline.
 
 image::QrSaveContactCommand.png[]
-_Figure 4.17.1 : Sequence Diagram of the QrSaveContactCommand_
+_Figure 4.19.1 : Sequence Diagram of the QrSaveContactCommand_
 
 The QrSaveContactCommandParser Method is implemented with the following code.
 [source,java]
@@ -1376,6 +1384,7 @@ The QrGenSmsCommand to retrieve QrCode with the following codes.
         return fullQr;
     }
 ----
+// end::qrsave[]
 
 == Documentation
 

@@ -13,7 +13,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 //@@author danielweide
 public class QrCallCommandParser implements Parser<QrCallCommand> {
     /**
-     * QrCallCommand Parser for String for QrCallCommand
+     * Parses input arguments and creates a new QrCallCommand object
      */
     public QrCallCommand parse(String args) throws ParseException {
         try {
