@@ -15,9 +15,11 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.CalendarSelectionChangedEvent;
 import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
+import seedu.address.commons.util.DateTimeUtil;
 import seedu.address.model.event.Event;
 
 //@@author eldriclim
+
 /**
  * Panel containing the list of events.
  */
@@ -32,14 +34,14 @@ public class EventListPanel extends UiPart<Region> {
         super(FXML);
         this.eventList = eventList;
 
-        setConnections(eventList, LocalDate.now());
+        setConnections(eventList);
         setEventHandlerForSelectionChangeEvent();
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<Event> eventList, LocalDate selectedDate) {
+    private void setConnections(ObservableList<Event> eventList) {
         ObservableList<EventCard> mappedList = EasyBind.map(
-                eventList, (event) -> new EventCard(event, eventList.indexOf(event) + 1, selectedDate));
+                eventList, (event) -> new EventCard(event, eventList.indexOf(event) + 1));
         eventListView.setItems(mappedList);
         eventListView.setCellFactory(listView -> new EventListViewCell());
     }
@@ -73,16 +75,5 @@ public class EventListPanel extends UiPart<Region> {
         }
     }
 
-    /**
-     * Handle event when date in CalenderView is clicked.
-     * <p>
-     * Update master UniqueEventList by running a sort with the given date as reference.
-     * Comparator logic and sorting details is found in {@see UniqueEventList#sort(LocalDate)}
-     *
-     * @param event
-     */
-    @Subscribe
-    private void handleCalendarSelectionChangedEvent(CalendarSelectionChangedEvent event) {
-        setConnections(eventList, event.getSelectedDate());
-    }
+
 }

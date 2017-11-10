@@ -2,18 +2,23 @@ package seedu.address.ui;
 
 import java.time.LocalDate;
 
+import com.google.common.eventbus.Subscribe;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import seedu.address.commons.events.ui.CalendarSelectionChangedEvent;
 import seedu.address.commons.util.DateTimeUtil;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventTime;
 
 
 //@@author eldriclim
+
 /**
  * An UI component that displays information of a {@code Person}.
  */
@@ -30,7 +35,6 @@ public class EventCard extends UiPart<Region> {
      */
 
     public final Event event;
-    public final LocalDate selectedDate;
 
     @FXML
     private HBox cardPane;
@@ -48,16 +52,15 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private VBox members;
 
-    public EventCard(Event event, int displayedIndex, LocalDate selectedDate) {
+    public EventCard(Event event, int displayedIndex) {
         super(FXML);
         this.event = event;
-        this.selectedDate = selectedDate;
 
         id.setText(displayedIndex + ". ");
         initMembers(event);
         bindListeners(event);
+        registerAsAnEventHandler(this);
 
-        updateEventStatusLabel(eventStatus, event);
     }
 
     /**
@@ -73,38 +76,13 @@ public class EventCard extends UiPart<Region> {
             event.getMemberList().asReadOnlyMemberList().forEach(member -> members.getChildren().add(
                     new Label(member.getName().toString())));
         });
+        eventStatus.textProperty().bind(Bindings.convert(event.eventStatusProperty()));
+        eventStatus.styleProperty().bind(Bindings.convert(event.eventStatusStyleProperty()));
     }
 
     private void initMembers(Event event) {
         event.getMemberList().asReadOnlyMemberList().forEach(member -> members.getChildren().add(
                 new Label(member.getName().toString())));
-    }
-
-    /**
-     * Update the event status label to reflect the relevance of the event.
-     * @param eventStatusLabel
-     * @param event
-     */
-    private void updateEventStatusLabel(Label eventStatusLabel, Event event) {
-        EventTime eventTime = event.getEventTime();
-
-        if (eventTime.getStart().toLocalDate().isEqual(LocalDate.now())) {
-            eventStatusLabel.setText("Today");
-            eventStatusLabel.setStyle("-fx-background-color: #fd720f");
-
-        } else if (eventTime.isUpcoming()) {
-            eventStatusLabel.setText("Upcoming");
-            eventStatusLabel.setStyle("-fx-background-color: #009e73");
-        } else {
-            eventStatusLabel.setText("Past");
-            eventStatusLabel.setStyle("-fx-background-color: #a31621");
-        }
-
-        if (event.getEventTime().getStart().toLocalDate().isEqual(selectedDate)
-                || DateTimeUtil.containsReferenceDate(event, selectedDate)) {
-            eventStatusLabel.setText("Selected");
-            eventStatusLabel.setStyle("-fx-background-color: #b91372");
-        }
     }
 
 
@@ -126,5 +104,18 @@ public class EventCard extends UiPart<Region> {
                 && event.equals(card.event);
     }
 
+    /**
+     * Handle event when date in CalenderView is clicked.
+     * <p>
+     * Update master UniqueEventList by running a sort with the given date as reference.
+     * Comparator logic and sorting details is found in {@see UniqueEventList#sort(LocalDate)}
+     *
+     * @param event
+     */
+    @Subscribe
+    private void handleCalendarSelectionChangedEvent(CalendarSelectionChangedEvent event) {
 
+        this.event.updateEventStatusSelection(event.getSelectedDate());
+
+    }
 }
