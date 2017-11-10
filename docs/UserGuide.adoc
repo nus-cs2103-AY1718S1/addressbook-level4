@@ -166,12 +166,12 @@ image::form.png[width="150"]
 _Figure 4.4.1 : Edit Person Form_
 
 ****
-*  Select a person in the list, the textboxes fill up with the individual's particulars.
+*  Refering to _Figure 4.4.1_, select a person in the list or use the select command. The textboxes fill up with the individual's particulars.
 1. Select `Name` field and type in a new name, make sure not to enter names with numerics or leave the field empty.
 2. Select `Phone` field and type in a new phone number, make sure not to enter phone numbers with letters.
 3. Select `Email` field and type in a new email address, make sure to include a valid email address (with the @ symbol).
 4. Select `Address` field and type in a new street address.
-5. Select `Tags` field and type new tags in this format: `tag1`,`tag2`,`tag3`...
+5. Select `Tags` field and type new tags in this format: `tag1`,`tag2`,`tag3`...(Tags should contain alphanumeric characters only!)
 6. Select the `Save` button to save all changes.
 ****
 // end::edit[]

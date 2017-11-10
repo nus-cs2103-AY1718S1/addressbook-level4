@@ -54,43 +54,45 @@ public class EditButton extends UiPart<Region> {
     }
 
     /**
-     * Handles the Enter button pressed event.
+     * Handles the edit button pressed event.
      */
     @FXML
     private void handleEditButtonPressed() throws CommandException, IllegalValueException, IOException {
         StringBuilder command = new StringBuilder();
         CommandResult commandResult;
+        Alert alert;
         String checkInputResult = checkInput(nameTextField.getNameTextField(), phoneTextField.getPhoneTextField(),
                 emailTextField.getEmailTextField(), addressTextFieldTextField.getAddressTextField(),
                 tagTextField.getTagTextArea());
+
         if (checkInputResult.equals(NAME_ERROR)) {
             nameTextField.getObject().setStyle("-fx-text-inner-color: red;");
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid name!",
+            alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid name!",
                     ButtonType.OK);
             alert.showAndWait();
-            throw new IllegalValueException("Input contains illegal characters!");
+            throw new IllegalValueException("Name contains illegal characters!");
         }
         if (checkInputResult.equals(PHONE_ERROR)) {
             phoneTextField.getObject().setStyle("-fx-text-inner-color: red;");
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter phone no. without character values!",
+            alert = new Alert(Alert.AlertType.ERROR, "Please enter phone no. without character values!",
                     ButtonType.OK);
             alert.showAndWait();
-            throw new IllegalValueException("Input contains illegal characters!");
+            throw new IllegalValueException("Phone number contains illegal characters!");
         }
         if (checkInputResult.equals(EMAIL_ERROR)) {
             emailTextField.getObject().setStyle("-fx-text-inner-color: red;");
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid email address!",
+            alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid email address!",
                     ButtonType.OK);
             alert.showAndWait();
-            throw new IllegalValueException("Input contains illegal characters!");
+            throw new IllegalValueException("Email contains illegal characters!");
         }
         if (checkInputResult.equals(TAG_ERROR)) {
             tagTextField.getObject().setStyle("-fx-text-inner-color: red;");
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a tag in the"
-                    + " form: 'tag1','tag2','tag3',... ",
+            alert = new Alert(Alert.AlertType.ERROR, "Please enter a tag in the"
+                    + " form: 'tag1','tag2','tag3',... Tags should contain Alphanumeric characters only!",
                     ButtonType.OK);
             alert.showAndWait();
-            throw new IllegalValueException("Input contains illegal characters!");
+            throw new IllegalValueException("Tags contains illegal characters!");
         } else {
             nameTextField.getObject().setStyle("-fx-text-inner-color: black;");
             phoneTextField.getObject().setStyle("-fx-text-inner-color: black;");
