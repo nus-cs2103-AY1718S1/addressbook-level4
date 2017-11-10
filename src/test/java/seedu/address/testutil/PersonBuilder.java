@@ -38,8 +38,7 @@ public class PersonBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
-            ArrayList<Remark> defaultRemark = new ArrayList<>();
-            defaultRemark.add(new Remark(DEFAULT_REMARK));
+            ArrayList<Remark> defaultRemark = SampleDataUtil.getRemarkArrayList(DEFAULT_REMARK);
             FavouriteStatus defaultFavouriteStatus = new FavouriteStatus(DEFAULT_FAVOURITE_STATUS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             Link defaultLink = new Link(DEFAULT_LINK);
