@@ -45,6 +45,10 @@ public class AddressBookParser {
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
+    /**
+     * Lock mechanism.
+     */
     private static Boolean personListActivated = true;
 
     /**
