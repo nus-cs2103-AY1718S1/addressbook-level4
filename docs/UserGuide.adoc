@@ -287,6 +287,11 @@ Shorthand: `sch INDEX s/[DATE]`
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
+[NOTE]
+====
+Enter a specific date and time. Do not enter vague timings like 45pm, am or pm only without specifying the correct time.
+====
+
 Examples:
 
 * `list` +
@@ -318,6 +323,7 @@ Displays all your schedules in the command box.
 Displays all your schedules in the command box.
 // end::viewschedule[]
 
+// tag::deleteschedule[]
 === Deleting a schedule : `deleteschedule` `Since v1.5`
 
 Deletes the specified schedule from cherBook. +
@@ -330,6 +336,11 @@ Shorthand: `dsch INDEX`
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
+[NOTE]
+====
+The INDEX of the first schedule shown from the TOP of the list is 1.
+====
+
 Examples:
 
 * `viewschedule` +
@@ -338,6 +349,7 @@ Deletes the 2nd schedule in the results of the `viewschedule` command which retu
 * `viewsch` +
 `dsch 1` +
 Deletes the 1st schedule in the results of the `viewsch` command which returns a list of schedules.
+// end::deleteschedule[]
 
 === Selecting a person : `select` `Since v1.0`
 
@@ -651,8 +663,8 @@ In version v1.3, you are be able to:
 In version v1.4, you are be able to:
 
 * View statistics of the current list of students from the `Statistics Panel`
-* Use the `ScheduleCommand` to add a schedule into your schedule list
 * Have automated assignment of different colours to different tags according to suitable RGB values
+* Use the `ScheduleCommand` to add a schedule into your schedule list
 
 === Features added in v1.5
 In version v1.5, you are be able to:
