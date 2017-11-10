@@ -10,7 +10,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
@@ -41,10 +40,6 @@ public interface Model {
     /** Delete tag of given person */
     void deleteTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
             DuplicatePersonException, TagNotFoundException;
-
-    /** Add tag of given person */
-    void attachTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
-            DuplicatePersonException, UniqueTagList.DuplicateTagException;
     //@@author
 
     /** Updates tags of a given person */
@@ -73,7 +68,6 @@ public interface Model {
     /** Adds the given task */
     void addTask(ReadOnlyTask task) throws DuplicateTaskException;
     //@@author eryao95
-    /** Deletes the given task. */
     void deleteTask(ReadOnlyTask target) throws TaskNotFoundException;
     //@@author
     /**
