@@ -169,7 +169,7 @@ public abstract class AddressBookSystemTest {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
         getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
-        //statusBarFooterHandle.rememberSyncStatus();
+        statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
     }
 
