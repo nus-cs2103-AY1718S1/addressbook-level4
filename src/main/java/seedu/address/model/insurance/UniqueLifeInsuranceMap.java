@@ -51,7 +51,7 @@ public class UniqueLifeInsuranceMap {
      */
     public boolean containsContractName(String toCheck) {
         requireNonNull(toCheck);
-        return internalMap.values().stream().anyMatch( li ->
+        return internalMap.values().stream().anyMatch(li ->
             li.getContractName().equals(toCheck)
         );
     }
