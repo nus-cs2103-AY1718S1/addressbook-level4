@@ -26,7 +26,8 @@ public class MapRouteCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_ADDRESS + "Blk 30 Clementi Street 29";
 
-    public static final String MESSAGE_FIND_ROUTE_SUCCESS = "Found Route to Person: %1$s";
+    public static final String MESSAGE_FIND_ROUTE_SUCCESS = "Found Route to Person: %1$s\n"
+            + "Please click on the browser tab below to view the map.";
 
     private final Index targetIndex;
     private final String startLocation;

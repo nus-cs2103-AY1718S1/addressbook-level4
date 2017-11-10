@@ -8,6 +8,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import java.util.ArrayList;
 import java.util.List;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
@@ -89,6 +92,8 @@ public class FindCommand extends Command {
 
         NameContainsKeywordsPredicate updatedPredicate = new NameContainsKeywordsPredicate(namesToSearch);
         model.updateFilteredPersonList(updatedPredicate);
+        Index defaultIndex = new Index(0);
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(defaultIndex));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 

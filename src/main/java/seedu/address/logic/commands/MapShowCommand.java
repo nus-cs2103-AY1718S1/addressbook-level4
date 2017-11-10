@@ -22,7 +22,8 @@ public class MapShowCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_LOCATE_PERSON_SUCCESS = "Located Person: %1$s";
+    public static final String MESSAGE_LOCATE_PERSON_SUCCESS = "Located Person: %1$s\n"
+            + "Please click on the browser tab below to view the map.";
 
     private final Index targetIndex;
 

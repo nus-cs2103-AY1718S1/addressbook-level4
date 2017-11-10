@@ -5,13 +5,16 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_MEMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TIME;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventDuration;
@@ -104,6 +107,9 @@ public class ScheduleAddCommand extends UndoableCommand {
             model.addEvent(toUpdate, toReplace, event);
 
             commandResultString += String.format(MESSAGE_SUCCESS, event.toString());
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            Index defaultIndex = new Index(0);
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(defaultIndex));
 
             return new CommandResult(commandResultString);
         } catch (DuplicateEventException e) {

@@ -5,6 +5,9 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Comparator;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.EmptyListException;
@@ -69,6 +72,8 @@ public class SortCommand extends UndoableCommand {
         }
 
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        Index defaultIndex = new Index(0);
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(defaultIndex));
         return new CommandResult(String.format(MESSAGE_SORT_LIST_SUCCESS, sortTypeReadable, sortOrderReadable));
     }
 

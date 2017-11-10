@@ -11,8 +11,10 @@ import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
@@ -97,6 +99,7 @@ public class TagAddCommand extends UndoableCommand {
             }
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             editedPersonDisplay.append(String.format(MESSAGE_ADD_TAG_SUCCESS, editedPerson));
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(index.get(0)));
             if (i != index.size() - 1) {
                 editedPersonDisplay.append("\n");
             }
