@@ -136,13 +136,13 @@ public class RemoveTagCommand extends UndoableCommand {
     public static final String COMMAND_USAGE = COMMAND_WORD + " ";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes specified tag\n"
-            + "Parameters: TAG (must be a string)\n"
-            + "Paramaters: INDEX (must be a positive integer) TAG (must be a string)";
+            + "Parameters: RANGE (all OR INDEX(Index must be positive)) followed by TAG (must be a string)\n"
+            + "Example: removetag 30 prospective OR removetag all colleagues";
 
     public static final String MESSAGE_SUCCESS = "Tag removed";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
-    public static final String MESSAGE_NOT_DELETED = "Tag not deleted";
-    public static final String MESSAGE_EXCEEDTAGNUM = "Please only type one TAG to be removed";
+    public static final String MESSAGE_EXCEEDTAGNUM = "Please type one TAG to be removed";
+    public static final String MESSAGE_TAG_NOT_FOUND = "Tag given does not exist in address book";
+    public static final String MESSAGE_TAG_NOT_FOUND_IN = "Index %s does not have the given tag.";
 
     private final Tag toRemove;
     private final Optional<Index> index;
@@ -163,18 +163,52 @@ public class RemoveTagCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
+        if (index.orElse(null) == null) {
+            removeAllTag(toRemove);
+        } else {
+            removeOneTag(index.get(), toRemove);
+        }
+        return new CommandResult(String.format(MESSAGE_SUCCESS));
+    }
+
+    /**
+     * Ensures that the index given can be found within the given list.
+     * @param index of the person in the filtered person list to remove tag from.
+     * @throws CommandException if the index given is out of the bounds of the filtered list.
+     */
+    private void requireIndexValid(Index index) throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+    }
+
+    /**
+     * Removes a tag from a specified person.
+     * @param index of the person in the filtered person list to remove tag from.
+     * @param toRemove is the tag to be removed from the person
+     * @throws CommandException if the tag to be removed does not exist in the person.
+     */
+    private void removeOneTag(Index index, Tag toRemove) throws CommandException {
+        requireIndexValid(index);
         try {
-            if (index.orElse(null) == null) {
-                model.removeTag(toRemove);
-                return new CommandResult(String.format(MESSAGE_SUCCESS));
-            } else {
-                model.removeTag(index.get(), toRemove);
-                return new CommandResult(String.format(MESSAGE_SUCCESS));
-            }
-        } catch (DuplicatePersonException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException e) {
-            throw new CommandException(MESSAGE_NOT_DELETED);
+            model.removeTag(index, toRemove);
+        } catch (NoSuchTagException nste) {
+            throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND_IN, index.getOneBased()));
+        }
+    }
+
+    /**
+     * Removes a tag from the whole addressbook.
+     * @param toRemove is the tag to be removed from the addressbook.
+     * @throws CommandException if tag does not exist in the addressbook.
+     */
+    private void removeAllTag(Tag toRemove) throws CommandException {
+        try {
+            model.removeTag(toRemove);
+        } catch (NoSuchTagException nste) {
+            throw new CommandException(MESSAGE_TAG_NOT_FOUND);
         }
     }
 
@@ -297,35 +331,44 @@ public class ImportCommandParser implements Parser<ImportCommand> {
  */
 public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
 
+    public static final int RANGE = 0;
+    public static final int TAG = 1;
+    public static final String WHOLEAB = "all";
+
     /**
      * Parses the given {@code String} of arguments in the context of the RemoveTagCommand
      * and returns an RemoveTagCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public RemoveTagCommand parse(String args) throws ParseException {
-        Index index = null;
-        String trimmedArgs = args.trim();
+        requireNonNull(args);
 
-        if (trimmedArgs.isEmpty()) {
+        String trimmedArgs = args.trim();
+        String[] fields = trimmedArgs.split("\\s+");
+
+        Index index;
+        Tag toRemove;
+
+        if (trimmedArgs.isEmpty() || fields.length < 2) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
         }
 
-        if (trimmedArgs.split(" ").length >= 3) {
+        if (fields.length > 2) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_EXCEEDTAGNUM));
         }
 
         try {
-            if (trimmedArgs.contains(" ")) {
-                index = ParserUtil.parseIndex(trimmedArgs.split(" ")[0]);
-                trimmedArgs = trimmedArgs.split(" ")[1];
-            }
-            Tag toRemoved = new Tag(trimmedArgs);
-            if (index == null) {
-                return new RemoveTagCommand(toRemoved);
+            toRemove =  new Tag(fields[TAG]);
+            if (fields[RANGE].equals(WHOLEAB)) {
+                return new RemoveTagCommand(toRemove);
+            } else if (StringUtil.isNonZeroUnsignedInteger(fields[RANGE])) {
+                index = ParserUtil.parseIndex(fields[RANGE]);
+                return new RemoveTagCommand(index, toRemove);
             } else {
-                return new RemoveTagCommand(index, toRemoved);
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        RemoveTagCommand.MESSAGE_USAGE));
             }
         } catch (IllegalValueException ive) {
             throw new ParseException(
@@ -385,34 +428,47 @@ public class SortCommandParser implements Parser<SortCommand> {
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
-    public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+    public void removeTag(Tag tag) throws NoSuchTagException {
+        if (!addressBook.getTagList().contains(tag)) {
+            throw new NoSuchTagException();
+        }
         ObservableList<ReadOnlyPerson> list = addressBook.getPersonList();
-
         for (int i = 0; i < list.size(); i++) {
             ReadOnlyPerson person = list.get(i);
             removeTagFromPerson(tag, person);
         }
+        addressBook.removeTagFromUniqueList(tag);
         indicateAddressBookChanged();
     }
 
     @Override
-    public void removeTag(Index index, Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+    public void removeTag(Index index, Tag tag) throws NoSuchTagException {
         List<ReadOnlyPerson> list = getFilteredPersonList();
         ReadOnlyPerson person = list.get(index.getZeroBased());
+        if (!person.getTags().contains(tag)) {
+            throw new NoSuchTagException();
+        }
         removeTagFromPerson(tag, person);
+        addressBook.removeTagFromUniqueList(tag);
         indicateAddressBookChanged();
     }
 
     @Override
-    public void removeTagFromPerson(Tag tag, ReadOnlyPerson person) throws DuplicatePersonException,
-            PersonNotFoundException {
+    public void removeTagFromPerson(Tag tag, ReadOnlyPerson person) {
         Person newPerson = new Person(person);
         Set<Tag> tagList = newPerson.getTags();
         tagList = new HashSet<>(tagList);
         tagList.remove(tag);
 
         newPerson.setTags(tagList);
-        addressBook.updatePerson(person, newPerson);
+
+        try {
+            addressBook.updatePerson(person, newPerson);
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "Person will always be found";
+        } catch (DuplicatePersonException dpe) {
+            assert false : "There will never be duplicates";
+        }
     }
 ```
 ###### \java\seedu\address\model\ModelManager.java
