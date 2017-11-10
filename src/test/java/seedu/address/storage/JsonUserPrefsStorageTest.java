@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static seedu.address.storage.JsonUserPrefsStorage.updateUserPrefs;
 
 import java.io.File;
 import java.io.IOException;
@@ -132,4 +133,22 @@ public class JsonUserPrefsStorageTest {
         assertEquals(original, readBack);
     }
 
+    //@@author chrisboo
+    @Test
+    public void updateUserPrefsTest() throws DataConversionException, IOException {
+        UserPrefs original = getTypicalUserPrefs();
+
+        String userPrefsFilePath = testFolder.getRoot() + File.separator + "TempPrefs.json";
+        JsonUserPrefsStorage.saveUserPrefs(original, userPrefsFilePath);
+
+        String updatedAddressBookFilePath = "updatedaddressbook.xml";
+        String updatedAddressBookFileName = "updatedAddressBookName";
+        original.setAddressBookFilePath(updatedAddressBookFilePath);
+        original.setAddressBookName(updatedAddressBookFileName);
+        updateUserPrefs(userPrefsFilePath, updatedAddressBookFilePath, updatedAddressBookFileName);
+        UserPrefs readBack = JsonUserPrefsStorage.readUserPrefs(userPrefsFilePath).get();
+
+        assertEquals(readBack, original);
+    }
+    //@@author
 }

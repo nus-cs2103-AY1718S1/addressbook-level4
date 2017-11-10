@@ -1,7 +1,7 @@
 package seedu.address;
 
 import static seedu.address.commons.util.ConfigUtil.updateConfig;
-import static seedu.address.commons.util.UserPrefsUtil.updateUserPrefs;
+import static seedu.address.storage.JsonUserPrefsStorage.updateUserPrefs;
 
 import java.io.IOException;
 import java.util.Map;
@@ -55,6 +55,7 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
+    protected JsonUserPrefsStorage userPrefsStorage;
 
     protected Stage primaryStage;
 
@@ -67,7 +68,7 @@ public class MainApp extends Application {
 
         config = initConfig(getApplicationParameter("config"));
 
-        UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+        userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
@@ -222,7 +223,7 @@ public class MainApp extends Application {
 
         try {
             updateConfig("config.json", event.getFileName());
-            updateUserPrefs(event.getFilePath(), event.getFileName());
+            updateUserPrefs("preferences.json", event.getFilePath(), event.getFileName());
 
             restart();
         } catch (Exception e) {
@@ -236,7 +237,7 @@ public class MainApp extends Application {
 
         try {
             updateConfig("config.json", event.getFileName());
-            updateUserPrefs(event.getFilePath(), event.getFileName());
+            updateUserPrefs("preferences.json", event.getFilePath(), event.getFileName());
 
             init();
             start(this.primaryStage);
