@@ -171,6 +171,13 @@ public class HelpCommand extends Command {
             commandResult = UndoCommand.MESSAGE_USAGE;
             break;
 
+        case WelcomeCommand.COMMAND_ALIAS:
+            //Fallthrough
+
+        case WelcomeCommand.COMMAND_WORD:
+            commandResult = WelcomeCommand.MESSAGE_USAGE;
+            break;
+
         case Country.COMMAND_WORD:
             commandResult = Country.getCodeList();
             break;
