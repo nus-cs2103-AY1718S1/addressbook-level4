@@ -6,6 +6,7 @@ import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
+//@@author wenmogu
 /**
  * Parses input argument and creates a new RemoveTagCommand object.
  */
