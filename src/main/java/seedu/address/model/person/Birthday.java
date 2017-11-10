@@ -22,7 +22,6 @@ public class Birthday {
 
     public final String value;
 
-    //@@author archthegit
     /**
      * Validates given birthday.
      *
@@ -42,7 +41,6 @@ public class Birthday {
         }
     }
 
-    //@@author DarrenCzen
     /**
      * Returns true if a given string is a valid person birthday.
      */
@@ -50,7 +48,6 @@ public class Birthday {
         return test.matches(BIRTHDAY_VALIDATION_REGEX)
                 || test.matches(BIRTHDAY_TEMPORARY);
     }
-    //@@author archthegit
     @Override
     public String toString() {
         return value;

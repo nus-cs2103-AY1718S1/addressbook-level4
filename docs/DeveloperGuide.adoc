@@ -915,7 +915,7 @@ return (((cal.get(Calendar.MONTH)) == Calendar.getInstance().get(Calendar.MONTH)
 
 An overall view of birthdays command logic is shown in Figure 5.8.1
 
-image::BirthdaysMechanism.png[width="800"]
+image::BirthdayMechanism.png[width="800"]
 Figure 5.8.1 Birthdays Command Logic Sequence Diagram
 
 What the user finally sees is a list of people with their birthday today as shown in figure 5.8.2. This is because the `executeUndoableCommand()` which is overriden in the BirthdaysCommand class updates the `filteredPersonList`.
@@ -933,11 +933,11 @@ Figure 5.8.2 What the user sees
 
 ==== Design Considerations
 **Aspect:** UI of `BirthdaysCommand` +
-**Alternative 1 (current choice):** Showing the persons as a list +
-**Pros:** g: Voluntary action. users can check birthday if they want to and won't get confused even if there are multiple contacts with the same name as to whose birthday it is +
-**Cons:** Some users might want the birthdays to appear as a pop up +
-**Alternative 2:** Use a pop up which is triggered when the app is opened +
-**Pros:** Involuntary and less effort from the users' part +
+**Alternative 1 (current choice):** Showing the persons as a list. +
+**Pros:** g: Voluntary action. users can check birthday if they want to and won't get confused even if there are multiple contacts with the same name as to whose birthday it is. +
+**Cons:** Some users might want the birthdays to appear as a pop up. +
+**Alternative 2:** Use a pop up which is triggered when the app is opened. +
+**Pros:** Involuntary and less effort from the users' part. +
 **Cons:** If pop up only shows a list of names, users might get confused as to who the person is if there are multiple persons with the same name. +
 //end::birthday[]
 
@@ -951,6 +951,47 @@ The Calendar mechanism is facilitated by the `AnchorPaneNode` class.
 To be included.
 
 //end::calendar[]
+
+//tag::details[]
+=== Details Panel Mechanism
+The details panel is used to show all the information regarding a person as compared to the person card which shows only a person's name, tags, phone number and email id.
+
+The details panel can be accessed by using the `select` command or by directly clicking on the peron card in the ui.
+
+The details panel is directly accessed by `MainWindow` class. The `details panel` class extends from `UiPart<Region>` and calls the super class constructor to use the FXML file.
+
+The details panel also calls the `loadBlankPage()` method in its constructor so that the user does not see anything on the details panel when the application is first opened.
+
+The `loadPersonInfo()` method is called from  two event handlers `handlePersonPanelSelectionChangedEvent()` and `handlePersonSelectionChangedEvent()` as shown in the code snippet below.
+[source,java]
+----
+ @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonInfo(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handlePersonSelectionChangedEvent(PersonSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonInfo(event.getNewSelection());
+    }
+
+----
+
+The `handlePersonPanelSelectionChangedEvent` is used to load a person's details only when a person card has been selected and a personPanelSelectionChangedEvent is raised. The PersonSelectionchangedEvent is raised when the person's details are updated using the `edit` command.
+
+The `loadPersonInfo` is facilitated by the `bindListeners()` method that "listens" for a change in any of the fields of the person.
+
+==== Design Considerations
+**Aspect:** Creating the details panel when there is a person card. +
+**Alternative 1 (current choice):** details panel
+**Pros:** g: Offers more abstraction to the user as they only see necessary information on the person card and the rest is on the details panel. +
+**Cons:** Some users might find it a hassle to access the details panel to see more information. +
+**Alternative 2:** All the information on the person card. +
+**Pros:** Users will have all the information in one place. +
+**Cons:** Some fields are optional so the person card will look confusing to a new user if they see that some person cards have more information on them than the others. +
+//end::details[]
 
 === Logging
 
