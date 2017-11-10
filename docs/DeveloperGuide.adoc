@@ -908,9 +908,9 @@ Other improvements made to the UI include the following features:
 ==== Randomized Avatars Colors
 
 Avatar colors are randomized and generated over a color range to reduce the chance of two adjacent persons sharing the same avatar color.
-A result of using this color generator can be seen from the following screenshot.
+Some results from using this color generator can be seen from the following screenshots.
 
-image::avatars.png[width="300"]
+image:avatars.png[width="300"] image:avatars2.png[width="300"]
 
 The generation of avatar colors involves two steps: +
 
