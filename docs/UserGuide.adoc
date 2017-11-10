@@ -624,6 +624,8 @@ A high average implies that the class/cohort has performed above expectations.
 In version v1.0, users will be able to:
 
 * Use command shortcuts
+* Back-up Storage)
+* Have colorful tags
 
 === Features added in v1.1
 In version v1.1, you are be able to:
@@ -645,6 +647,7 @@ In version v1.3, you are be able to:
 * View graph of your student's academics grades
 * View all your student's information on the `Student Details Panel`
 * Have optional fields like (email, grades, address, postal code, remarks and tags) when adding a student
+* See student's academic progress over time from teh `GraphPanel`
 
 === Features added in v1.4
 In version v1.4, you are be able to:
@@ -652,13 +655,20 @@ In version v1.4, you are be able to:
 * View statistics of the current list of students from the `Statistics Panel`
 * Use the `ScheduleCommand` to add a schedule into your schedule list
 * Have automated assignment of different colours to different tags according to suitable RGB values
+* Add schedules into the cherBook
+* Add tab to show students in the same class and same tags respectively.
 
-=== Features added in v1.5
+=== Features added in v1.5rc
 In version v1.5, you are be able to:
 
 * Use the `TabCommand` to display different graph types (Line/Bar Chart) of the selected student's academic grades
 * Use the `ViewScheduleCommand` to view all your schedules in a list sorted by date and time
 * Use the `DeleteScheduleCommand` to delete schedules that are overdue
+
+=== Features added in v1.5
+In version v1.5, you are be able to:
+//TODO Add mroe here
+* Use the `ViewScheduleCommand` to view all your schedules in a list sorted by date and time
 
 === Features Coming in v2.0
 In version v2.0, users will be able to:
