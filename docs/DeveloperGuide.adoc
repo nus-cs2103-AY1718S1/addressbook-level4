@@ -16,9 +16,9 @@ By: `Hu Wanqing`, `Jiang Chunhui`, `Hou Denghao`, `Leon Chow WenHao`      Si
 
 == Welcome to Planno
 
-Planno is a Java application that helps users to conveniently manage contact as well as event details. To achieve this, Planno provides a large number of easy to use commands for users. +
+Planno is a Java application that helps users to conveniently manage contact as well as event details. To achieve this, Planno provides a large number of simple commands for users. +
 
-There are many ways to contribute to Planno: coding, testing, improving the build process and tools, or contributing to the documentation. This guide provides information that will not only help you get started as a Planno contributor, but that you'll find useful to refer to even if you are already an experienced contributor. +
+There are many ways to contribute to Planno: coding, testing, improving the build process and tools, or contributing to the documentation. This guide provides information that will not only help you get started as a Planno contributor, but that you'll find it useful to refer to even if you are already an experienced contributor. +
 
 This developer guide aims to give future programmers who hope to modify this application a general description of the architecture and design of the Desktop Application Planno.
 Planno provides users a platform to store and manage people's contact information, and events related to people in Planno. This developer guide consists of the following sections:
@@ -45,6 +45,8 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
+To set up the project in your computer, please follow the following steps:
+
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
 . Set up the correct JDK version for Gradle
@@ -55,7 +57,8 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 . Click `Open as Project`
 . Click `OK` to accept the default settings
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
-This will generate all resources required by the application and tests.
+
+The above steps will help you generate all resources required by the application and tests.
 
 === Verifying the setup
 
@@ -107,12 +110,12 @@ _Figure 2.1.1: Architecture Diagram_
 The *_Architecture Diagram_* _(Figure 2.1.1)_ given above explains the high-level design of the App. Given below is a quick overview of each component:
 
 [TIP]
-The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
+The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, you can modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* (At app launch) Initializes the components in the correct sequence, and connects them up with each other.
-* (At app shut down) Shuts down the components and invokes cleanup method where necessary.
+* (At app launch) Initializing the components in the correct sequence, and connects them up with each other.
+* (At app shut down) Shutting down the components and invokes cleanup method where necessary.
 
 link:#common-classes[*`Commons`*] represents a collection of classes used by other components. Among them, the following two classes play important roles at the architecture level:
 
@@ -121,8 +124,8 @@ link:#common-classes[*`Commons`*] represents a collection of classes used by oth
 
 The rest of the App consists of four major components:
 
-* link:#ui-component[*`UI`*] : The UI of the App.
-* link:#logic-component[*`Logic`*] : The command executor.
+* link:#ui-component[*`UI`*] : Displays the user interface.
+* link:#logic-component[*`Logic`*] : Executes the command.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
 
@@ -136,13 +139,13 @@ For example, the `Logic` component defines it's API in the `Logic.java` interfac
 [discrete]
 ==== Events-Driven nature of the design
 
-The *_Sequence Diagram_* _(Figure 2.1.2)_ below shows how the components interact using event center for the scenario where the user issues the command `delete 1`.
+The *_Sequence Diagram_* _(Figure 2.1.2)_ below shows how the components interact using `EventsCenter` for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
 _Figure 2.1.2: Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+The `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below _(Figure 2.1.3)_ shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -150,9 +153,9 @@ image::SDforDeletePersonEventHandling.png[width="800"]
 _Figure 2.1.3: Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
-Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+The event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 ----
-The sections below give more details of each component.
+The sections below give you more details of each component.
 ----
 
 === Four major components
@@ -170,7 +173,7 @@ The `UI` component uses JavaFx UI framework. The layout of these UI parts are de
 The `UI` component:
 
 * Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
+* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` changes.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
 ==== Logic component
@@ -188,11 +191,7 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 Figure 2.2.2.1 shows the structure of the `Logic` component. The `LogicManager` firstly calls the `AddressBookParser` to parse the user input.
 
-
-
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+This results in a `Command` object which is executed by the `LogicManager`. Then, the command execution can affect the `Model` (e.g. adding a person) and/or raise events. And the result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Given below is the *_Sequence Diagram_* _(Figure 2.2.2.3)_ for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
@@ -241,9 +240,9 @@ The `StorageManager` handles the saving and loading of data for both `AddressBoo
 
 The `Storage` component:
 
-* can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
-* can save event storage data in xml format and read it back.
+* Saves `UserPref` objects in json format and read it back.
+* Saves the Address Book data in xml format and read it back.
+* SaveS event storage data in xml format and read it back.
 
 === Common classes
 
@@ -546,50 +545,85 @@ so that the persons with tag `friends` will be displayed.
 // tag::sort[]
 === Sort mechanism
 
-The sort command is facilitated by the `LogicManager` class. It supports sorting contact list and makes it easier for users to find contacts they want according to alphabetical order.
+The sort command is facilitated by the `LogicManager` class. It supports sorting contact list and makes it easier for users to find contacts according to alphabetical order of their names. Moreover, it can also help users to sort the event list in the meantime according to their dates so that users can decide to process which event first.
 
-The following *_sequence diagram_* _(Figure 3.3)_ shows how the sort operation works:
+The following *_sequence diagram_* _(Figure 3.3)_ shows how the sort command works:
 
 image::SortSequenceDiagram.png[width="800"]
 _Figure 3.3: sequence diagram for sort command_
 
-The user enters a sort command which is received by `LogicManager`.
-`LogicManager` calls `AddressBookParser` to parse the command.
-Then `AddressBookParser` creates the sort command object and returns it.
-`LogicManager` receives the command object and executes the command.
-The sort command object calls `sortPersons()` in the `Model`.
-Then `Model` returns the sorted list.
-The sort command object receives the sorted list and creates `CommandResult` object and returns it.
-`LogicManager` receives the result and displays it through `UI`.
+When user enters a sort command, it will be received by `LogicManager`.Then, `LogicManager` calls `AddressBookParser` to parse the command. And `AddressBookParser` will create `SortCommand` command object and returns it.When `LogicManager` receives the command object, it will execute it.
+
+The `SortCommand` object calls `sortPersons()` and `sortEvents()` in the `Model`as follow:
+[source, java]
+public class SortCommand extends Command {
+    public static final String COMMAND_WORD = "sort";
+    public static final String MESSAGE_SUCCESS = "Sorted all persons and events";
+    @Override
+    public CommandResult execute() {
+        model.sortPersons();
+        model.sortEvents();
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+
+And This is how `Model` update the person list and event list using `sortPersons()` and `sortEvents()` :
+[source, java]
+    public synchronized void sortPersons() {
+        addressBook.sortPersons();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    }
+    public synchronized void sortEvents() {
+        eventList.sortEvents();
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+    }
+
+In the address book, we will sort contacts according to alphabetical order of their names:
+[source, java]
+    public void sort() {
+        Collections.sort(internalList, new Comparator<Person>() {
+            public int compare (Person p1, Person p2) {
+                return p1.getName().toString().compareToIgnoreCase(p2.getName().toString()); } });
+    }
+
+In the event list, we will sort events according to their dates;
+[source, java]
+    public void sort() {
+        Collections.sort(internalList, new Comparator<Event>() {
+            public int compare (Event p1, Event p2) {
+                return p1.getEventTime().orderForSort().compareTo(p2.getEventTime().orderForSort()); } });
+    }
+
+After sorting the person list and the event list, `SortCommand` will create `CommandResult` object and return it. And `LogicManager` receives `CommandResult` and shows related message through `UI`.
 
 [discrete]
 ==== Design considerations
 
-**Aspect:** How sort command affects the data +
-**Alternative 1 (current choice):** Sort the copy of contact list and return it. +
+**Aspect:** How sort command affects the data in the person list +
+**Alternative 1 (current choice):** Sort the copy of contact list and return it +
 **Pros:** It is more defensive and keeps the data unchanged. +
 **Cons:** Users have to sort the list every time when they open the application. +
-**Alternative 2:** Sort the actual contact list and return it. +
-**Pros:** Users do not need to type the command everytime. +
+**Alternative 2:** Sort the actual contact list and return it +
+**Pros:** Users do not need to type the command every time. +
 **Cons:** Sort command is not undoable which means that the order of list cannot change anymore after you call it. It is also less defensive because you can frequently change the original data. +
 
 ---
 
-**Aspect:** How sort command executes +
-**Alternative 1 (current choice):** Sorts the contact list according to alphabetical order (ascending order). +
-**Pros:** Easy to implement. +
-**Cons:** Less function for sort command. +
-**Alternative 2:** Sorts the contact list according to different order (ascending order or descending order). +
+**Aspect:** How sort command executes for the person list+
+**Alternative 1 (current choice):** Sort the contact list according to alphabetical order (ascending order) +
+**Pros:** It is easy to implement. +
+**Cons:** Users do not have other choices to sort the person list. +
+**Alternative 2:** Sort the contact list according to different order (ascending order or descending order) +
 **Pros:** Users will have more choices. +
 **Cons:** It will be more complex for developers to maintain and test. +
 
 ---
 
-**Aspect:** What can be sorted +
-**Alternative 1 (current choice):** According to names +
+**Aspect:** What can be sorted in the person list +
+**Alternative 1 (current choice):** Sort contacts according to their names +
 **Pros:** It is useful and necessary for general users. +
-**Cons:** It is too narrow and common. +
-**Alternative 2:** According to address/email/phone number +
+**Cons:** Users do not have other choices to sort the person list. +
+**Alternative 2:** Sort contacts according to their addresses/emails/phone numbers +
 **Pros:** It provides more choices for users. +
 **Cons:** Because address/email/phone number is unique, you can usually find them without sorting the list. +
 // end::sort[]
@@ -612,21 +646,29 @@ The user enters an addEvent command, which is received by `LogicManager`. `Logic
 // tag::listE[]
 === ListEvent mechanism
 
-The list event command is facilitated by the `LogicManager` class. It supports listing all the events for user to process.
+The list event command is facilitated by the `LogicManager` class. It supports listing all the events for users to process.
 
-The following *_sequence diagram_* _(Figure 3.5)_ shows how the list event operation works:
+The following *_sequence diagram_* _(Figure 3.5)_ shows how the list event command works:
 
 image::ListEventSequenceDiagram.png[width="800"]
 _Figure 3.5: sequence diagram for list command_
 
-The user enters a listE command which is received by `LogicManager`.
-`LogicManager` calls `AddressBookParser` to parse the command.
-Then `AddressBookParser` creates the list event command object and returns it.
-`LogicManager` receives the command object and executes the command.
-The list event command object calls `updateFilteredEventList()` in the `Model`.
-Then `Model` processes the event list.
-The list event command object creates `CommandResult` object and returns it.
-`LogicManager` receives the result and shows it through `UI`.
+When user enters a listE command, it will be received by `LogicManager`. The `LogicManager` calls `AddressBookParser` to parse the command. Then, `AddressBookParser` creates the `ListEventCommand` object and returns it. When `LogicManager` receives `ListEventCommand`, it will execute the command.
+
+When `ListEventCommand` is executed, it will call `updateFilteredEventList()` method in the `Model` as follows:
+
+[source, java]
+public class ListEventCommand extends Command {
+    public static final String COMMAND_WORD = "listE";
+    public static final String MESSAGE_SUCCESS = "Listed all events";
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+
+After `Model` updates filtered event list which will be shown in the GUI, `ListEventCommand` will create `CommandResult` object and returns it. And `LogicManager` receives `CommandResult` and shows related message through `UI`.
 
 // end::listE[]
 
@@ -675,33 +717,71 @@ The `DeleteEventCommand` then creates a `CommandResult` object and returns it to
 // tag::showP[]
 === ShowParticipants mechanism
 
-The show participants mechanism is facilitated by `PersonJoinsEventsPredicate` and `LogicManager`. This command will help users to find participants of an event. For achieving this function, `PersonJoinsEventsPredicate` will filter the person list. This command inherits from `Command`.
+The show participants mechanism is facilitated by `PersonJoinsEventsPredicate`, which resides in `model.person` package. This command will help users to find participants of an event. For achieving this function, `PersonJoinsEventsPredicate` will filter the person list. This command inherits from `Command`.
 
-The following *_sequence diagram_* _(Figure 3.7)_ below show how the show participants operation works:
+The following *_sequence diagram_* _(Figure 3.7)_ for executing a show participants command: `showP 3`. It will show all the participants of the third event in the current list.:
 
 image::ShowParticipantsSequenceDiagram.png[width="800"]
 _Figure 3.7: sequence diagram for showP INDEX command_
 
-The user enters a showP INDEX command which is received by `LogicManager`.
-`LogicManager` calls `AddressBookParser` to parse the command.
-`AddressBookParser` will call `ShowParticipantsCommandParser` to parse the INDEX.
-`ShowParticipantsCommandParser` will create `ShowParticipantsCommand` object using the INDEX.
-Then `AddressBookParser` receives the command object and returns it to `LogicManager`.
-`LogicManager` receives the command object and executes the command.
-`ShowParticipantsCommand` will create the `PersonJoinsEventsPredicate` according to the INDEX.
-Then, `ShowParticipantsCommand` calls `updateFilteredPersonList(p)` in the `Model`,  which uses the predicate created before.
-Then `Model` processes the person list.
-The show participants command object creates `CommandResult` object and returns it.
-`LogicManager` receives the result and displays it through `UI`.
+When user enters a `showP 3` command, it will be received by `LogicManager`. And `LogicManager` calls `AddressBookParser` to parse the command. Then `AddressBookParser` will create `ShowParticipantsCommandParser` to parse `3`.
+
+After `ShowParticipantsCommandParser` parses the index `3`, it will create `ShowParticipantsCommand` object with this index as follows:
+
+[source, java]
+    public ShowParticipantsCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new ShowParticipantsCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowParticipantsCommand.MESSAGE_USAGE));
+        }
+    }
+
+Then `AddressBookParser` receives the command object and returns it to `LogicManager`. When `LogicManager` receives `ShowParticipantsCommand` object, it will execute it.
+
+`ShowParticipantsCommand` will create the `PersonJoinsEventsPredicate` which is `p` in the diagram using the index given and use this predicate to update the person list as follows:
+
+[source, java]
+    @Override
+    public CommandResult execute() throws CommandException {
+        List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+        }
+        eventToShow = lastShownList.get(targetIndex.getZeroBased());
+        String name = eventToShow.getEventName().fullEventName;
+        PersonJoinsEventsPredicate predicate = new PersonJoinsEventsPredicate(name);
+        model.updateFilteredPersonList(predicate);
+        return new CommandResult(String.format(MESSAGE_SHOW_PARTICIPANTS_SUCCESS, eventToShow.getEventName()));
+    }
+
+And that is how `PersonJoinsEventsPredicate` filters the person list:
+[source, java]
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        Boolean isSelected = false;
+        if (!person.getParticipation().isEmpty()) {
+            for (ReadOnlyEvent event: person.getParticipation()) {
+                if (!isSelected) {
+                    isSelected = keywords.equals(event.getEventName().fullEventName);
+                }
+            }
+        }
+        return isSelected;
+    }
+
+After `Model` updates the person list which will be shown in the GUI, the `ShowParticipantsCommand` object will create `CommandResult` object and returns it. And `LogicManager` receives `CommandResult` and shows related message through `UI`.
 
 [discrete]
 ===== Design Considerations
 
-**Aspect:** How showP command executes +
-**Alternative 1 (current choice):** Show participants of the event at the specified index. +
-**Pros:** Easy to implement. +
+**Aspect:** How show participants command executes +
+**Alternative 1 (current choice):** Show participants of the event at the specified index +
+**Pros:** It is easy to implement. +
 **Cons:** Sometimes users have to list all the events so that they can get all the indexes. +
-**Alternative 2:** Show participants of the event with the specified name. +
+**Alternative 2:** Show participants of the event with the specified name +
 **Pros:** Users can use the command without listing events. +
 **Cons:** Users need more time to type if the event name is too long. +
 // end::showP[]
@@ -740,7 +820,6 @@ The `SelectJoinedEventsCommand` then creates a `CommandResult` object and return
 **Pros:** User can directly enter names to search for events where a person with the entered name has joined. +
 **Cons:** Users would have to type more if the name is long. User may mistype the name. +
 // end::selectE[]
-
 
 // tag::interaction[]
 === Person-Event interaction
@@ -926,6 +1005,56 @@ It does so by raising a `ToggleSelectEvent`, which the `TogglePanel` handles by 
 **Pros:** No need change the FXML file when changes are made to what is togglable. +
 **Cons:** Will have to make large changes to the actual panels themselves. +
 // end::toggle[]
+
+// tag::findE[]
+=== FindEvent mechanism
+The find event mechanism is facilitated by `EventNameContainsKeyWordPredicate` class, which resides in `model.event` package. This command
+supports users of finding a list of events by their names. Any event that has either of the entered keyword will be filtered
+into the list. This command inherits from `Command`.
+
+Below is a *_sequence diagram_* _(Figure 3.12)_ for executing a find event command: `findE first`. It will find events which contain keyword `first` in their names.
+
+image::FindEventSequenceDiagram.png[width="800"]
+_Figure 3.12: sequence diagram for find event command_
+
+When users enters a `findE first`, `LogicManager` will receive it and call `AddressBookParser` to parse command. In the `AddressBookParser`, it will create `FindEventParser` to parse `first`.
+
+Then `FindEventCommandParser` will parse argument `first` and create a new `FindEventCommand` object with `EventNameContainsKeywordPredicate` which is `p` in the diagram:
+[source, java]
+    public FindEventCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
+        }
+        String[] nameKeywords = trimmedArgs.split("\\s+");
+        return new FindEventCommand(new EventNameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+    }
+
+`FindEventCommand` will use the predicate to update the event list by calling `updateFilteredEventList(p)` method in the `Model`.
+
+And This is how `EventNameContainsPredicate` filters the event list:
+[source, java]
+    @Override
+    public boolean test(ReadOnlyEvent event) {
+        return keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(event.getEventName().fullEventName, keyword));
+    }
+
+After `Model` updates the event list which will be shown in the GUI, the `FindEventCommand` object will create `CommandResult` object and returns it. And `LogicManager` receives `CommandResult` and shows related message through `UI`.
+
+[discrete]
+==== Design considerations
+
+**Aspect:**  Implementation of find event command +
+**Alternative 1 (current choice):** Select events that have any of the keywords in their names +
+**Pros:**  It is easier for users to find events without knowing their full names. +
+**Cons:**  Users may get more unwanted results in the event list. +
+**Alternative 2:** Select events that have all the keywords in their names +
+**Pros:** Users can find the event they want accurately. +
+**Cons:** Sometimes it is hard for users to remember the full name of an event. +
+
+// end::findE[]
 
 === Logging
 
