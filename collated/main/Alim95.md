@@ -1688,6 +1688,66 @@ public class TutorialPanel extends UiPart<Region> {
     }
 }
 ```
+###### \resources\view\AliasListCard.fxml
+``` fxml
+<GridPane gridLinesVisible="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <VBox alignment="CENTER_LEFT" minHeight="27.0" prefHeight="27.0" prefWidth="150.0" GridPane.columnIndex="0">
+         <padding>
+            <Insets bottom="5" left="15" right="5" top="5" />
+         </padding>
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="5">
+               <children>
+                  <Label fx:id="id" styleClass="cell_big_label">
+                     <minWidth>
+                        <Region fx:constant="USE_PREF_SIZE" />
+                     </minWidth>
+                  </Label>
+                  <Label fx:id="representation" styleClass="cell_big_label" text="\$first" />
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+      <Label fx:id="keyword" styleClass="cell_big_label" text="\$first" GridPane.columnIndex="1">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Label>
+   </children>
+</GridPane>
+```
+###### \resources\view\AliasListPanel.fxml
+``` fxml
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane gridLinesVisible="true">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label style="-fx-text-fill: white;" text="  Representation" GridPane.columnIndex="1" />
+            <Label style="-fx-text-fill: white;" text="  Keyword" />
+         </children>
+      </GridPane>
+      <ListView fx:id="aliasListView" VBox.vgrow="ALWAYS" />
+   </children>
+</VBox>
+```
 ###### \resources\view\MainWindow.fxml
 ``` fxml
                               <GridPane cacheShape="false" centerShape="false" minHeight="-Infinity" prefWidth="601.0">
@@ -2024,6 +2084,14 @@ public class TutorialPanel extends UiPart<Region> {
             </GridPane>
          </content>
       </ScrollPane>
+```
+###### \resources\view\ResultDisplay.fxml
+``` fxml
+   <ImageView fx:id="imageDisplay" fitHeight="106.0" fitWidth="138.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+      <StackPane.margin>
+         <Insets top="5.0" />
+      </StackPane.margin>
+   </ImageView>
 ```
 ###### \resources\view\SortFindPanel.fxml
 ``` fxml
