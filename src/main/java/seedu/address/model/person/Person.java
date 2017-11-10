@@ -422,11 +422,6 @@ public class Person implements ReadOnlyPerson {
         this.dateRepaid.set(requireNonNull(dateRepaid));
     }
 
-    public void setDateRepaid(String dateRepaid) {
-        requireNonNull(dateRepaid);
-        this.dateRepaid.set(new DateRepaid(dateRepaid));
-    }
-
     @Override
     public ObjectProperty<DateRepaid> dateRepaidProperty() {
         return dateRepaid;
