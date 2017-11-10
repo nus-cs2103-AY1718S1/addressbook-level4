@@ -162,7 +162,6 @@ public abstract class AddressBookSystemTest {
      * @see DetailsPanelHandle#isSelectedPersonChanged()
      */
     protected void assertSelectedCardDeselected() {
-        assertFalse(getDetailsPanel().isSelectedPersonChanged());
         assertFalse(getPersonListPanel().isAnyCardSelected());
     }
 
@@ -172,8 +171,16 @@ public abstract class AddressBookSystemTest {
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
-        assertTrue(getDetailsPanel().isSelectedPersonChanged());
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
+    }
+
+    /**
+     * Asserts that the selected card in the person list panel is changed.
+     * @see DetailsPanelHandle#isSelectedPersonChanged()
+     * @see PersonListPanelHandle#isSelectedPersonCardChanged()
+     */
+    protected void assertSelectedCardChanged() {
+        assertTrue(getPersonListPanel().isSelectedPersonCardChanged());
     }
 
     /**
@@ -182,7 +189,6 @@ public abstract class AddressBookSystemTest {
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
-        assertFalse(getDetailsPanel().isSelectedPersonChanged());
         assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
     }
 

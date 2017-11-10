@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.AccessWebsiteRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelUnselectEvent;
 import seedu.address.commons.events.ui.TogglePanelEvent;
 
 //@@author itsdickson
@@ -19,6 +21,8 @@ public class EventsCommand extends Command {
     @Override
     public CommandResult execute() {
         EventsCenter.getInstance().post(new TogglePanelEvent(COMMAND_WORD));
+        EventsCenter.getInstance().post(new PersonPanelUnselectEvent());
+        EventsCenter.getInstance().post(new AccessWebsiteRequestEvent("https://maps.google.com/"));
         return new CommandResult(SHOWING_EVENTS_MESSAGE);
     }
 }

@@ -29,7 +29,7 @@
     </padding>
   </StackPane>
 
-  <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
+  <StackPane fx:id="resultDisplayPlaceholder" maxHeight="125.0" minHeight="125.0" prefHeight="125.0" styleClass="pane-with-border" VBox.vgrow="NEVER">
     <padding>
       <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
@@ -63,11 +63,16 @@
       <!--@@author-->
       <SplitPane dividerPositions="0.5" minWidth="150.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="250.0">
         <items>
-          <StackPane fx:id="detailsPanelPlaceholder" prefHeight="75.0" prefWidth="150.0">
-            <padding>
-              <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
-          </StackPane>
+            <StackPane fx:id="personAndEventDetailsPanelPlaceholder" prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <StackPane fx:id="detailsPanelPlaceholder" prefHeight="75.0" prefWidth="150.0">
+                     <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                     </padding>
+                  </StackPane>
+                  <StackPane fx:id="eventsDetailsPanelPlaceholder" prefHeight="150.0" prefWidth="200.0" />
+               </children>
+            </StackPane>
           <StackPane fx:id="calendarPanel" prefHeight="75.0" prefWidth="150.0">
           <padding>
             <Insets bottom="10" left="10" right="10" top="10" />

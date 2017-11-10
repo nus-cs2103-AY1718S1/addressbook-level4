@@ -39,11 +39,9 @@ public class SwitchThemeCommandTest {
 
     @Test
     public void execute_validIndexValidSwitch_success() throws Exception {
-        String themeToChange = model.getThemesList().get(INDEX_SECOND_PERSON.getZeroBased());
-
         SwitchThemeCommand switchThemeCommand = prepareCommand(INDEX_SECOND_PERSON);
 
-        String expectedMessage = String.format(SwitchThemeCommand.MESSAGE_SWITCH_THEME_SUCCESS, themeToChange);
+        String expectedMessage = SwitchThemeCommand.MESSAGE_LIGHT_THEME_SUCCESS;
         CommandResult commandResult = switchThemeCommand.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);

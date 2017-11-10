@@ -19,8 +19,10 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
+import seedu.address.commons.events.ui.EventPanelUnselectEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelUnselectEvent;
+import seedu.address.commons.events.ui.PopulateMonthEvent;
 import seedu.address.commons.events.ui.PopulateRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowThemeRequestEvent;
@@ -53,6 +55,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private DetailsPanel detailsPanel;
+    private EventsDetailsPanel eventsDetailsPanel;
     private PersonListPanel personListPanel;
     private EventListPanel eventListPanel;
     private Config config;
@@ -64,6 +67,12 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane detailsPanelPlaceholder;
+
+    @FXML
+    private StackPane eventsDetailsPanelPlaceholder;
+
+    @FXML
+    private StackPane personAndEventDetailsPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -158,8 +167,10 @@ public class MainWindow extends UiPart<Region> {
         browserPanel.setDefaultPage(prefs.getTheme());
 
         detailsPanel = new DetailsPanel();
-        detailsPanelPlaceholder.getChildren().clear();
         detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
+
+        eventsDetailsPanel = new EventsDetailsPanel();
+        eventsDetailsPanelPlaceholder.getChildren().add(eventsDetailsPanel.getRoot());
 
         eventListPanel = new EventListPanel(logic.getFilteredEventList());
         eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
@@ -346,12 +357,37 @@ public class MainWindow extends UiPart<Region> {
     }
     //@@author
 
+    //@@author DarrenCzen
+    @Subscribe
+    private void handleUnselectOfEventCardEvent(EventPanelUnselectEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        eventsDetailsPanel = new EventsDetailsPanel();
+        eventsDetailsPanelPlaceholder.getChildren().clear();
+        eventsDetailsPanelPlaceholder.getChildren().add(eventsDetailsPanel.getRoot());
+
+    }
+    //@@author
+
     //@@author chernghann
+    /**
+     * this method is to populate the calendar when there is an add event.
+     * @param request
+     */
     @Subscribe
     private void handlePopulateEvent(PopulateRequestEvent request) {
         logger.info(LogsCenter.getEventHandlingLogMessage(request));
         // calendar.populateNewCalendar(request.event);
         calendar.populateUpdatedCalendar(request.eventList, YearMonth.now());
+    }
+
+    /**
+     * For populating the calendar when starting the application and changing the months
+     * @param request
+     */
+    @Subscribe
+    private void handlePopulateMonthEvent(PopulateMonthEvent request) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(request));
+        calendar.populateCalendar(request.yearMonth, logic.getFilteredEventList());
     }
     //@@author
 
