@@ -15,6 +15,7 @@ import seedu.address.commons.function.ThrowingConsumer;
 import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.insurance.UniqueLifeInsuranceMap;
+import seedu.address.model.insurance.exceptions.DuplicateInsuranceContractNameException;
 import seedu.address.model.insurance.exceptions.DuplicateInsuranceException;
 import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
 import seedu.address.model.person.Person;
@@ -73,7 +74,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //@@author OscarWang114
-    public void setLifeInsurances(Map<UUID, ReadOnlyInsurance> insurances) throws DuplicateInsuranceException {
+    public void setLifeInsurances(Map<UUID, ReadOnlyInsurance> insurances)
+            throws DuplicateInsuranceException, DuplicateInsuranceContractNameException {
         this.lifeInsuranceMap.setInsurances(insurances);
     }
 
@@ -98,7 +100,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             setPersons(newData.getPersonList());
             persons.sortPersons();
-        } catch (DuplicatePersonException e) {
+        } catch (DuplicatePersonException dpe) {
             assert false : "AddressBooks should not have duplicate persons";
         }
 
@@ -107,14 +109,16 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         try {
             setLifeInsurances(newData.getLifeInsuranceMap());
-        } catch (DuplicateInsuranceException e) {
+        } catch (DuplicateInsuranceException die) {
             assert false : "AddressBooks should not have duplicate insurances";
+        } catch (DuplicateInsuranceContractNameException dicne) {
+            assert false : "AddressBooks should not have duplicate insurance contract names";
         }
         syncMasterLifeInsuranceMap();
 
         try {
             syncMasterPersonList();
-        } catch (InsuranceNotFoundException e) {
+        } catch (InsuranceNotFoundException infe) {
             assert false : "AddressBooks should not contain id that doesn't match to an insurance";
         }
     }
@@ -167,14 +171,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      *Adds an insurance to the address book.
      */
-    public void addInsurance(ReadOnlyInsurance i) {
+    public void addInsurance(ReadOnlyInsurance i)
+            throws DuplicateInsuranceException, DuplicateInsuranceContractNameException {
         UUID id = UUID.randomUUID();
         LifeInsurance lifeInsurance = new LifeInsurance(i);
-        try {
-            lifeInsuranceMap.put(id, lifeInsurance);
-        } catch (DuplicateInsuranceException e) {
-            assert false : "AddressBooks should not have duplicate insurances";
-        }
+        lifeInsuranceMap.put(id, lifeInsurance);
         syncWithUpdate();
     }
     //@@author
@@ -244,6 +245,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *  - links to its owner, insured, and beneficiary {@code Person} if they exist in master person list respectively
      */
     public void syncMasterLifeInsuranceMap() {
+
         lifeInsuranceMap.forEach((id, insurance) -> {
             insurance.resetAllInsurancePerson();
             String owner = insurance.getOwner().getName();
