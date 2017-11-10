@@ -97,8 +97,9 @@ include::../UserGuide.adoc[tag=colourtheme]
 
 This feature was added to allow users to personalize the application by changing to the colour theme of their preference.
 Some users may want to feel more familiar with the application or they may want a design change once in a while. This feature can help cater to these users. +
-The theme can be changed by clicking on the `File` drop down menu and selecting the theme. This is to make it user-friendly and
-easier for users to change the colour theme as the colour themes are all listed in the menu and they can directly change the colour theme by simply clicking instead of
+The theme can be changed by clicking on the `File` drop down menu and selecting the theme or through the command line interface.  +
+The purpose of including a `File` dropdown menu is because it is user-friendly and easier for users to change the colour theme as the  +
+colour themes are all listed in the menu and they can directly change the colour theme by simply clicking instead of +
 having to type in the command line and searching for what available colour themes there are.
 
 ==== Implementation
