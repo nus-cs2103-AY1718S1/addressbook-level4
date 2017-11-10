@@ -107,6 +107,7 @@ Format: `login`
 3) Press `Enter` on keyboard or click the `Log in` button +
 
 image::loginView.PNG[width="790"]
+_Figure 1.3 : How the welcome screen looks like after `login` is entered in the command box_
 
 [NOTE]
 Sample account to log into address book: +
