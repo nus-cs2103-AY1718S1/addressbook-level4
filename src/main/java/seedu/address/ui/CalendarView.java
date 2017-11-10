@@ -26,6 +26,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.event.Event;
 
 //@@author eldriclim
+
 /**
  * An UI component that displays a clickable-Calendar.
  */
@@ -97,7 +98,6 @@ public class CalendarView extends UiPart<Region> {
         };
 
 
-
         datePicker.setDayCellFactory(dayCellFactory);
 
 
@@ -122,6 +122,7 @@ public class CalendarView extends UiPart<Region> {
         datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
             LocalDate selectedDate = datePicker.getValue();
             logger.fine("Selection in calendar: '" + selectedDate + "'");
+
             raise(new CalendarSelectionChangedEvent(selectedDate));
         });
 

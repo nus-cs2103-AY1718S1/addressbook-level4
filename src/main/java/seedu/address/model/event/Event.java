@@ -2,13 +2,16 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.util.DateTimeUtil;
 import seedu.address.commons.util.EventOutputUtil;
 
 //@@author eldriclim
+
 /**
  * Represents a Event in the address book, accepts an event with no members.
  * Guarantees: validity upon creation; potential errors handled in UniqueEventList
@@ -21,6 +24,9 @@ public class Event {
     private ObjectProperty<EventName> eventName;
     private ObjectProperty<EventTime> eventTime;
     private ObjectProperty<EventDuration> eventDuration;
+    private ObjectProperty<String> eventStatus = new SimpleObjectProperty<>();
+    private ObjectProperty<String> eventStatusStyle = new SimpleObjectProperty<>();
+
 
     public Event(MemberList members, EventName eventName, EventTime eventStartTime, EventDuration eventDuration) {
         requireNonNull(members);
@@ -32,6 +38,8 @@ public class Event {
         this.eventName = new SimpleObjectProperty<>(eventName);
         this.eventTime = new SimpleObjectProperty<>(eventStartTime);
         this.eventDuration = new SimpleObjectProperty<>(eventDuration);
+
+        setEventStatusDefaultState();
 
         assert getEventTime().getStart().plus(getEventDuration().getDuration()).equals(
                 getEventTime().getEnd());
@@ -89,6 +97,59 @@ public class Event {
         return members.get();
     }
 
+
+    public void setEventStatus(String eventStatus) {
+        this.eventStatus.set(requireNonNull(eventStatus));
+    }
+
+    public ObjectProperty<String> eventStatusProperty() {
+        return eventStatus;
+    }
+
+    public String getEventStatus() {
+        return eventStatus.get();
+    }
+
+    public void setEventStatusDefaultState() {
+        if (DateTimeUtil.containsReferenceDate(this, LocalDate.now())) {
+            eventStatus.setValue("Today");
+            eventStatusStyle.setValue("-fx-background-color: #fd720f");
+        } else if (eventTime.get().isUpcoming()) {
+            eventStatus.setValue("Upcoming");
+            eventStatusStyle.setValue("-fx-background-color: #009e73");
+        } else {
+            eventStatus.setValue("Past");
+            eventStatusStyle.setValue("-fx-background-color: #a31621");
+        }
+    }
+
+    /**
+     * Reset name and style of all status label
+     *
+     * @param date
+     */
+    public void updateEventStatusSelection(LocalDate date) {
+
+        setEventStatusDefaultState();
+
+        if (DateTimeUtil.containsReferenceDate(this, date)) {
+            eventStatus.setValue("Selected");
+            eventStatusStyle.setValue("-fx-background-color: #b91372");
+        }
+    }
+
+    public void setEventStatusStyle(String eventStatusStyle) {
+        this.eventStatusStyle.set(requireNonNull(eventStatusStyle));
+    }
+
+    public ObjectProperty<String> eventStatusStyleProperty() {
+        return eventStatusStyle;
+    }
+
+    public String getEventStatusStyle() {
+        return eventStatusStyle.get();
+    }
+
     /**
      * Checks all attribute of Events
      *
@@ -115,4 +176,5 @@ public class Event {
     public String toString() {
         return EventOutputUtil.toStringEvent(getEventName(), getEventTime(), getEventDuration(), getMemberList());
     }
+
 }
