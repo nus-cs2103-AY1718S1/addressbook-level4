@@ -159,6 +159,7 @@ public class PersonCard extends UiPart<Region> {
         }
     }
     //@@author
+
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
@@ -175,6 +176,7 @@ public class PersonCard extends UiPart<Region> {
             initTags(person);
         });
     }
+
     //@@author renkai91
     /**
      * Initialize image for ever person

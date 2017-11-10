@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <birthday>20/10/1991</birthday>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <remark></remark>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <birthday>20/10/1991</birthday>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <remark></remark>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <birthday>20/10/1991</birthday>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <remark></remark>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <birthday>20/10/1991</birthday>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <remark></remark>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Derrick Rose</name>
+        <phone>93452021</phone>
+        <birthday>20/10/1991</birthday>
+        <email>rose@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <remark></remark>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Dwayne Wade</name>
+        <phone>98998858</phone>
+        <birthday>20/10/1991</birthday>
+        <email>dwaynewade@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <remark></remark>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Elaine Lim</name>
+        <phone>99272328</phone>
+        <birthday>20/10/1991</birthday>
+        <email>elainelim@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <remark></remark>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <birthday>20/10/1991</birthday>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <remark></remark>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>James Harden</name>
+        <phone>87132807</phone>
+        <birthday>20/10/1991</birthday>
+        <email>jamesharden@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <remark></remark>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Kawhi Leonard</name>
+        <phone>92612317</phone>
+        <birthday>20/10/1991</birthday>
+        <email>leonard@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark></remark>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Klay Thompson</name>
+        <phone>91031282</phone>
+        <birthday>20/10/1991</birthday>
+        <email>klaythom@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <remark></remark>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Kyrie Irving</name>
+        <phone>92492021</phone>
+        <birthday>20/10/1991</birthday>
+        <email>irving@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <remark></remark>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Lebron James</name>
+        <phone>93450283</phone>
+        <birthday>20/10/1991</birthday>
+        <email>lebronjames@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <remark></remark>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>Manu Gino</name>
+        <phone>92678417</phone>
+        <birthday>20/10/1991</birthday>
+        <email>manu@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark></remark>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <birthday>20/10/1991</birthday>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark></remark>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Russell Westbrook</name>
+        <phone>93210283</phone>
+        <birthday>20/10/1991</birthday>
+        <email>russell@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <remark></remark>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>Stephen Curry</name>
+        <phone>95871282</phone>
+        <birthday>20/10/1991</birthday>
+        <email>curry@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <remark></remark>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Tim Duncan</name>
+        <phone>92623437</phone>
+        <birthday>20/10/1991</birthday>
+        <email>timduncan@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark></remark>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Tony Parker</name>
+        <phone>9237841</phone>
+        <birthday>20/10/1991</birthday>
+        <email>tonyparker@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <remark></remark>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Zed Toh</name>
+        <phone>82315756</phone>
+        <birthday>20/10/1991</birthday>
+        <email>zedtoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <remark></remark>
+        <tagged>friends</tagged>
+    </persons>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>neighbours</tags>
+    <tags>family</tags>
+    <tags>friends</tags>
+</addressbook>
