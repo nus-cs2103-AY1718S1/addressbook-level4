@@ -55,8 +55,7 @@ public class SwitchThemeCommand extends Command {
 
         if (themeToChange.equals("DarkTheme.css")) {
             return new CommandResult(MESSAGE_DARK_THEME_SUCCESS);
-        }
-        else {
+        } else {
             return new CommandResult(MESSAGE_LIGHT_THEME_SUCCESS);
         }
     }
