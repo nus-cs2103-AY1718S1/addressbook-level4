@@ -404,7 +404,7 @@ Keyboard Shortcut: kbd:[Ctrl+O]
 
 [NOTE]
 ====
-Opening a file without a .rldx extension will not save your changes.
+Opening a file without a `.rldx` extension **will not save your changes**.
 ====
 
 [NOTE]
