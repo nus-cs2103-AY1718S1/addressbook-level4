@@ -1885,20 +1885,20 @@ Use case resumes at step 2.
 [appendix]
 == Non functional requirements
 
-.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  The application should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
+.  The application should be able to hold up to 1000 persons and events without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-.  Should be able to give feedback message within 2 seconds for every command.
-.  Should be able to use without connecting to Internet.
-.  Should be able to use without programming knowledge background.
-.  The size of this application should not be larger than 10GB.
-.  Should work on both 32-bit and 64-bit environment.
-.  The cost of this application should not be more than 10,000 dollars.
-.  Should protect users' privacy.
-.  Font size should be suitable for all people from 6 to 70 year old.
-.  Should not tolerate data loss
-.  Should be usable to a novice who has never used such type of application before
-.  Should startup within 7 seconds
+.  The application should be able to give feedback messages within 2 seconds for every command.
+.  The user should be able to use the application without connecting to Internet.
+.  The user should be able to use the application without any programming knowledge background.
+.  The size of this application should not exceed 10GB.
+.  The application should work on both 32-bit and 64-bit environments.
+.  The cost of this application should not exceed 10,000 dollars.
+.  The application should protect users' privacy.
+.  Font size should be suitable for people aged 6 to 70 years old.
+.  The application should not tolerate data loss.
+.  The application should be usable to a novice who has never used such types of application before.
+.  The application should startup within 7 seconds
 .  Background color should be appropriate to not discomfort users' eyes.
 
 {More to be added}
