@@ -21,6 +21,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelUnselectEvent;
+import seedu.address.commons.events.ui.PopulateMonthEvent;
 import seedu.address.commons.events.ui.PopulateRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowThemeRequestEvent;
@@ -347,11 +348,25 @@ public class MainWindow extends UiPart<Region> {
     //@@author
 
     //@@author chernghann
+    /**
+     * this method is to populate the calendar when there is an add event.
+     * @param request
+     */
     @Subscribe
     private void handlePopulateEvent(PopulateRequestEvent request) {
         logger.info(LogsCenter.getEventHandlingLogMessage(request));
         // calendar.populateNewCalendar(request.event);
         calendar.populateUpdatedCalendar(request.eventList, YearMonth.now());
+    }
+
+    /**
+     * For populating the calendar when starting the application and changing the months
+     * @param request
+     */
+    @Subscribe
+    private void handlePopulateMonthEvent(PopulateMonthEvent request) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(request));
+        calendar.populateCalendar(request.yearMonth, logic.getFilteredEventList());
     }
     //@@author
 
