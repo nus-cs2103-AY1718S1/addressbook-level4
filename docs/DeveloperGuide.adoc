@@ -426,6 +426,7 @@ _Figure 4.1.10 : UndoRedoStack Activity Diagram_
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 // tag::help[]
+
 === Displaying the Usage of a Specific Command [Since v1.2]
 
 This function is an enhancement of the exisitng help function, which opens the help command. The modification allows the help command to take in an optional command identifier argument. If the command identifier is specified, the result display will display the usage of the command specified. Otherwise, help window will be opened. This enhancement requires modifications in the Model and Logic components of the application.
@@ -494,6 +495,7 @@ image::HelpEnhancementScreenShot.PNG[width="800"]
 _Figure 4.2.5 : Output of `HelpCommand` execution_
 // end::help[]
 //tag::locate[]
+
 === Locating a contact's address [Since v1.2]
 
 This function is mainly facilitated by two events: `JumpToListRequestEvent` and `PersonPanelSelectionChangedEvent`.
@@ -619,11 +621,11 @@ _Figure 4.3.7 : Full UI outcome of locate implementation_
 ---
 // end::locate[]
 
-//tag::FindCommand[]
+//tag::find[]
 === FindCommand by any search field [Since v1.2 and v1.4]
 
 
-The find function `FindCommand` which reside in `Logic` will support the search of contact by any keywords.The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone`,`Tags` , `Activity` and `Country`. Such parameters inherit from `Person` which resides inside `Model`.Also,the keywords must be a full word match in order for successful execution of find command. _Figures 4.4.1 indicates the parsing of keywords and prefix  `FindCommandParser` once user keys in an input.
+`FindCommand` which reside in `Logic` will support the search of contact by any keywords. `Logic` uses the `AddressBookParser` class to parse user command. `parseCommand` in `AddressBookParser` will detect the command word `find` and the keywords keyed in by user and call `parse` method in `FindCommandParser`.`parse` method in `FindCommandParser` will check for the prefix based existing parameters `Name`, `Email`, `Address`, `Phone`,`Tags` , `Activity` and `Country`. Such parameters inherit from `Person` which resides inside `Model`. _Figures 4.4.1_ indicates the the parsing of user command in  `FindCommandParser`.
 
 [source,java]
 ----
@@ -642,7 +644,7 @@ _Figure 4.4.1: Code section in FindCommandParser.java_
 [NOTE]
 A valid find command can only search for keywords based on specific prefix  [n/NAME] or [p/PHONE] or [e/EMAIL] or [a/ADDRESS] or [t/TAG] or [c/COUNTRY] or [act/ACTIVITY].
 
-Any other prefix as input will be considered as invalid input.In absence of valid prefix ,an exception will be thrown, as shown in Figure 4.4.2_.
+Any other prefix as input will be considered as invalid input.In absence of valid prefix ,an exception will be thrown in  `FindCommandParser`, as shown in _Figure 4.4.2_.
 [source,java]
 ----
          default:
@@ -650,7 +652,8 @@ Any other prefix as input will be considered as invalid input.In absence of vali
 ----
 _Figure 4.4.2: Code section 2 in FindCommandParser.java_
 
-A successful match of the prefix will ensure that the keywords are  allocated to  method `containsKeyWordPredicate` under `Model`. Addressbook will then search for the keywords based on the revelvant parameters in `PredicateUtil'.
+A successful match of the prefix in `FindCommandParser` will create a `FindCommand` object with `containsKeyWordPredicate` that resides in `Model` to be passed as parameter.Command execution in `LogicManager` will then call `updateFilteredPersonList` method in `ModelManager`.Addressbook will then search for contact based on the predicate paramater passed in `PredicateUtil1 as shown in _Figure 4.4.3_.
+.
 [source,java]
 ----
 public class PredicateUtil {
@@ -658,24 +661,40 @@ public class PredicateUtil {
 }
 
 ----
+_Figure 4.4.3: Code section  in PredicateUtil.java_
 
-Upon any successful match, the particulars of the contact will be displayed in `CommandBox`. _Figures 4.4.3a to 4.4.3e_ below indicate the various outcomes of search function by  using `FindCommand` .
+The component diagram in _Figure 4.4.4_ below shows the interactions within the Logic component for the execution of find command.
 
+image::LogicComponentSequenceDiagramFind.PNG[width="800"]
+_Figure 4.4.4 : Find component diagram_
+
+The sequence diagram in _Figure 4.4.5_ below shows how the find function works:
+
+image::SequenceDiagramFind.PNG[width="800"]
+_Figure 4.4.5 : Find sequence diagram_
+
+Upon any successful match, the particulars of the contact will be displayed in `CommandBox`. _Figures 4.4.6a to 4.4.6g_ below indicate the various outcomes of search function by  using `FindCommand`.
 
 image::FindCommand_Name.PNG[width="400"]
-_Figure 4.4.3a : Find by name [n/NAME]_
+_Figure 4.4.6a : Find by name [n/NAME]_
 
 image::FindCommand_Phone.PNG[width="400"]
-_Figure 4.4.3b : Find by phone [p/PHONE]_
+_Figure 4.4.6b : Find by phone [p/PHONE]_
 
 image::FindCommand_Email.PNG[width="400"]
-_Figure 4.4.3c : Find by email [e/EMAIL]_
+_Figure 4.4.6c : Find by email [e/EMAIL]_
 
 image::FindCommand_Address.PNG[width="400"]
-_Figure 4.4.3d : Find by address [a/ADDRESS]_
+_Figure 4.4.6d : Find by address [a/ADDRESS]_
+
+image::FindCommand_Activity.PNG[width="400"]
+_Figure 4.4.6e : Find by activity [act/ACTIVITY]_
 
 image::FindCommand_Tag.PNG[width="400"]
-_Figure 4.4.3e : Find by tag [t/TAG]_
+_Figure 4.4.6f : Find by tag [t/TAG]_
+
+image::FindCommand_Country.PNG[width="400"]
+_Figure 4.4.6g : Find by country [c/COUNTRY]_
 
 ==== Design Considerations for `FindCommand`
 
@@ -689,6 +708,7 @@ _Figure 4.4.3e : Find by tag [t/TAG]_
 **Cons:** Have to look through all the attribute of contact thus slowing down the execution of FindCommand. +
 
 ---
+//end::find[]
 
 //tag::CopyCommand[]
 === Copy email address to clipboard [Since v1.2]
@@ -750,10 +770,17 @@ Alternatively, it may also be possible to permanently display all fields in each
 
 ---
 
-//tag::CalendarCommand[]
+//tag::calendar[]
 === Opening Calendar [Since v1.3]
 
-`CalendarCommand` which reside in `Logic` will  open up a new browser webpage in the `BrowserPanel` that shows calendar for the entire year. The webpage will display the calendar from January to December, inclusive of public holidays. Upon taking in `CalendarCommand`  in the command line, a new `ShowCalendarRequestEvent` is posted by the `EventsCenter` class to its `EventBus`, as shown in _Figure 4.6.1_:. In addition , user are bypass `CalendarCommand` by pressing on `F2` key to post `ShowCalendarRequestEvent` thus allow user to launch calendar webpage via command line or via accelerators.
+`CalendarCommand` which reside in `Logic` will  open up a new browser webpage in the `BrowserPanel` that shows calendar for the entire year. The webpage will display the calendar from January to December, inclusive of public holidays.User are also able to navigate to other website that show useful information such as weather, time zone and more.
+
+The sequence diagram of `CalendarCommand` in _Figure 4.6.1_ below indicates the sequence diagram of the calendar function.
+
+image::SequenceDiagramCalendar.PNG[width="800"]
+_Figure 4.6.1 : Calender sequence diagram_
+
+Upon taking in `CalendarCommand`  in the command line, a new `ShowCalendarRequestEvent` is posted by the `EventsCenter` class to its `EventBus`, as shown in _Figure 4.6.2_.  In addition , user are able  bypass `CalendarCommand` by pressing on `F2` key to post `ShowCalendarRequestEvent` thus allow user to launch calendar webpage via command line or via accelerators.
 
 [source,java]
 ----
@@ -767,11 +794,17 @@ public class CalendarCommand extends Command {
 }
 
 ----
-_Figure 4.6.1: Code section in CalendarCommand.java_
+_Figure 4.6.2: Code section in CalendarCommand.java_
+
+The component diagram in _Figure 4.6.3_ below indicates the interactions within the Logic component for the execution of calendar command.
+
+image::CalendarCommandComponentDiagram.PNG[width="800"]
+_Figure 4.6.3 : Calender sequence diagram_
+
 
 
 The  `BrowserPanel`  which reside in `UI` will handle the event of `ShowCalendarRequestEvent`
-as shown in _Figure 4.6.2_:
+as shown in _Figure 4.6.4_:
 [source,java]
 ----
 public class BrowserPanel extends UiPart<Region> {
@@ -782,28 +815,29 @@ public class BrowserPanel extends UiPart<Region> {
    }
 }
 ----
-_Figure 4.6.2: Code section in BrowserPanel.java_
+_Figure 4.6.4: Code section in BrowserPanel.java_
 
-The method `loadCalendar` will pass the calendar url to `BrowserPanel` to open up calendar website in `BrowserPanel`. The outcome of successful launching of calendar webpage in browser is shown in _Figure 4.6.3_:
+The method `loadCalendar` in `BrowserPanel` will load the page with the calendar url passed in as parameters to open up calendar website. The outcome of successful launching of calendar webpage is shown in _Figure 4.6.5_:
 
 image::CalendarCommand.png[width="800"]
 
-_Figure 4.6.3: Output of `CalendarCommand.java` execution_
+_Figure 4.6.5: Output of `CalendarCommand.java` execution_
 
-==== Design Considerations for `FindCommand`
+==== Design Considerations for `CalendarCommand`
 
 
 **Aspect:** Implementation of `CalendarCommand` +
 **Alternative 1 (current choice)**: Opening  `Calendar` webpage in `BrowserPanel`. +
 **Pros:** To brings about greater convenience for the user as user does not need to navigate between multple webpages to find the calendar.User are able to find out about the public holidays which are not avaliable on desktop calendar. +
 **Cons:** User might bypass the `CalendarCommand` and rely on desktop calendar +
-**Alternative 2:** Opening up of google calendar +
+**Alternative 2:** Opening up of Google calendar +
 **Pros:** User are able to store the events in the google calendar. +
 **Cons:** Unable to view public holidays.User also have to go through the hassle of logging in just to view the calendar. +
 
 ---
-
+//end::calendar[]
 // tag::agenda[]
+
 === Viewing of user's agenda [Since v1.4]
 
 All scheduled activities by the user are displayed as a list view in the `AgendaPanel`. The `AgendaPanel` is first initialised in the `MainWindow`, with the observable schedule list of the `AddressBook` being passed in as a parameter to its constructor. This can be observed in _Figure 4.7.1_ below.
@@ -872,7 +906,6 @@ _Figure 4.7.4: UI display for user's agenda_
 
 ---
 // end::agenda[]
-
 // tag::reminder[]
 === Pop-up reminder window [Since v1.5]
 
@@ -959,6 +992,78 @@ _Figure 4.8.3: Code section in Schedule.java_
 **Pros:** User will be alerted if reminder message is striking enough. Also easy to implement for the developer. +
 **Cons:** The details of the activities due in 1 days time are not filtered out, user have to check the agenda section for more details. +
 // end::reminder[]
+
+//tag::email[]
+
+=== Sending Email [Since v1.5]
+
+`EmailCommand` utilise `Desktop` to launch a email platform for users to send email to multiple contacts. _Figure 4.9.1_ below indicates the sequence diagram that illsutrate how the components interact in the scenario where the user issues the email command.
+
+image::SequenceDiagramEmail.PNG[width="600"]_
+_Figure 4.9.1: Component interactions for email function_
+
+User will first have to key in indexes of the contact. `Logic` will use `AddressBookParser` class to parse user command. `ParseException` will be thrown in `EmailCommandParser` when there is detection of illegal value.By using a `Set` to store the indices inputed by user, this will prevent duplication of indicies. _Figure 4.9.2_ below indicates the parsing of user input in `EmailCommandParser`.
+
+[source,java]
+----
+public class EmailCommandParser implements Parser<EmailCommand> {
+
+        try
+    {
+        Set<Index> indices = new HashSet<>();
+        // adding of indics to Set
+    } catch(
+    IllegalValueException ive)
+    {
+        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
+    }
+}
+
+----
+_Figure 4.9.2: Code section in EmailCommandParser.java_
+
+A `Command` object will be executed by `Logic Manger`.During command excution, a filtered person list will be extracted from `Model`. The emails extracted from the filtered person list will be stored in a `recipientList` as shown in _Figure 4.9.3_ .`Desktop` class will be used to send email using `Desktop.Action.Mail` baed on `recipientList`.
+
+[source,java]
+----
+public class EmailCommand extends Command {
+
+    List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+// ... adding of contact's email
+
+    String recipientList = String.join(",", recipientSet);
+//email logic
+}
+----
+_Figure 4.9.3: Code section in EmailCommand.java_
+
+
+Figure 4.9.4 below shows the Sequence Diagram for interactions within the Logic component for the excution of email command.
+
+image::LogicComponentSequenceDiagramEmail.PNG[width="800"]
+_Figure 4.9.4: Component interactions inside Logic Component when user issue email command_
+
+
+The outcome of successful launching of email platform to send email to multiple contacts is shown in _Figure 4.9.5_.
+
+image::EmailCommand.PNG[width="800"]
+_Figure 4.9.5: Output of `EmailCommand.java` execution_
+
+
+==== Design Considerations for `EmailCommand`
+
+
+**Aspect:** Data structure to support `EmailCommand` +
+**Alternative 1 (current choice)**: Use Set for storing of user's input of indices  +
+**Pros:** Prevent duplication of indices to speed up execution of `EmailCommand` +
+**Cons:** Set provides random access.Two objects might be considred equal if they have the same hascode even though they are different.  +
+**Alternative 2:** Using ArrayList +
+**Pros:** List implementations are ordered as List stores element in the order they were added +
+**Cons:** Unable to detect duplicate indicies +
+
+---
+
+//end::email[]
 
 === Logging
 
@@ -1597,14 +1702,14 @@ JavaFX is a software platform for creating and delivering desktop applications, 
 GUI
 
 ....
-A graphical user interface (GUI) is a human-computer interface that uses windows, icons and menus and which can be manipulated by a mouse (and often to a limited extent by a keyboard as well).
+A graphical user interface (GUI) is a human-computer interface that uses windows, icons and menus and  can be manipulated by a mouse.
 ....
 
 [[xml]]
 xml
 
 ....
-XML is a file extension for an Extensible Markup Language (XML) file format used to create common information formats and share both the format and the data on the World Wide Web, intranets, and elsewhere using standard ASCII text
+XML is a file extension for an Extensible Markup Language (XML) file format.
 ....
 
 [appendix]
