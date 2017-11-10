@@ -211,6 +211,30 @@ in The Myth's Book.
 
 ---
 
+==== Implementation
+
+---
+
+Code of `toCapitalized` method inside `Name.java`:
+[source,java]
+----
+public static String toCapitalized(String s) {
+    final String delimiters = " ";
+    StringBuilder newString = new StringBuilder();
+    boolean isCapital = true;
+
+    for (char c : s.toCharArray()) {
+        c = (isCapital) ? Character.toUpperCase(c) : Character.toLowerCase(c);
+        newString.append(c);
+
+        isCapital = (delimiters.indexOf((int) c) >= 0);
+    }
+    return newString.toString();
+}
+----
+
+---
+
 === Other contributions
 
 ==== Additional Contributions to software application
