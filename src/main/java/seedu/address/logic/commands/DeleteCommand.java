@@ -21,8 +21,6 @@ import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.Remark;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.exceptions.RemarkNotFoundException;
-import seedu.address.model.module.predicates.UniqueLocationPredicate;
-import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
 //@@author junming403
 /**
@@ -103,7 +101,7 @@ public class DeleteCommand extends UndoableCommand {
                 i--;
             }
         }
-        model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
+        model.updateLocationList();
     }
 
     /**
@@ -143,7 +141,7 @@ public class DeleteCommand extends UndoableCommand {
                 i--;
             }
         }
-        model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
+        model.updateModuleList();
     }
 
     /**

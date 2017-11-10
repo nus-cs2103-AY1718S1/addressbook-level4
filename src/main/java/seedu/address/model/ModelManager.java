@@ -30,6 +30,10 @@ import seedu.address.model.module.exceptions.DuplicateRemarkException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.exceptions.NotRemarkedLessonException;
 import seedu.address.model.module.exceptions.RemarkNotFoundException;
+import seedu.address.model.module.predicates.LessonContainsKeywordsPredicate;
+import seedu.address.model.module.predicates.LocationContainsKeywordsPredicate;
+import seedu.address.model.module.predicates.MarkedLessonContainsKeywordsPredicate;
+import seedu.address.model.module.predicates.ModuleContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
@@ -297,15 +301,61 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void updateLocationList() {
+        if (ListingUnit.getCurrentPredicate() instanceof LocationContainsKeywordsPredicate) {
+            updateFilteredLessonList(
+                    new LocationContainsKeywordsPredicate(((LocationContainsKeywordsPredicate)
+                            ListingUnit.getCurrentPredicate()).getKeywords()));
+        } else {
+            updateFilteredLessonList(new UniqueLocationPredicate(getUniqueLocationSet()));
+        }
+    }
+
+
+    @Override
+    public void updateModuleList() {
+        if (ListingUnit.getCurrentPredicate() instanceof ModuleContainsKeywordsPredicate) {
+            updateFilteredLessonList(
+                    new ModuleContainsKeywordsPredicate(((ModuleContainsKeywordsPredicate)
+                            ListingUnit.getCurrentPredicate()).getKeywords()));
+        } else {
+            updateFilteredLessonList(new UniqueModuleCodePredicate(getUniqueCodeSet()));
+        }
+    }
+
+    //@@author
+
+    @Override
     public void handleListingUnit() {
         ListingUnit unit = ListingUnit.getCurrentListingUnit();
 
         if (unit.equals(LOCATION)) {
-            UniqueLocationPredicate predicate = new UniqueLocationPredicate(getUniqueLocationSet());
-            updateFilteredLessonList(predicate);
+            if (ListingUnit.getCurrentPredicate() instanceof LocationContainsKeywordsPredicate) {
+                updateFilteredLessonList(
+                        new LocationContainsKeywordsPredicate(((LocationContainsKeywordsPredicate)
+                                ListingUnit.getCurrentPredicate()).getKeywords()));
+            } else {
+                UniqueLocationPredicate predicate = new UniqueLocationPredicate(getUniqueLocationSet());
+                updateFilteredLessonList(predicate);
+            }
         } else if (unit.equals(MODULE)) {
-            UniqueModuleCodePredicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
-            updateFilteredLessonList(predicate);
+            if (ListingUnit.getCurrentPredicate() instanceof ModuleContainsKeywordsPredicate) {
+                updateFilteredLessonList(
+                        new ModuleContainsKeywordsPredicate(((ModuleContainsKeywordsPredicate)
+                                ListingUnit.getCurrentPredicate()).getKeywords()));
+            } else {
+                UniqueModuleCodePredicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
+                updateFilteredLessonList(predicate);
+            }
+        } else if (ListingUnit.getCurrentPredicate() instanceof MarkedLessonContainsKeywordsPredicate) {
+            updateFilteredLessonList(
+                    new MarkedLessonContainsKeywordsPredicate(((MarkedLessonContainsKeywordsPredicate)
+                            ListingUnit.getCurrentPredicate()).getKeywords()));
+        } else if (ListingUnit.getCurrentPredicate() instanceof LessonContainsKeywordsPredicate) {
+            LessonContainsKeywordsPredicate predicate =
+                    (LessonContainsKeywordsPredicate) ListingUnit.getCurrentPredicate();
+            updateFilteredLessonList(new LessonContainsKeywordsPredicate(predicate.getKeywords(),
+                    predicate.getTargetLesson(), predicate.getAttribute()));
         } else {
             updateFilteredLessonList(ListingUnit.getCurrentPredicate());
 
@@ -318,7 +368,8 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
     }
-    //@@author
+
+
 
     @Override
     public boolean equals(Object obj) {

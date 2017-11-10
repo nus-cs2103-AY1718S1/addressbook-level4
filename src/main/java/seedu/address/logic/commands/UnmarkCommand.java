@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.model.ListingUnit.LESSON;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
@@ -13,7 +14,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.NotRemarkedLessonException;
+import seedu.address.model.module.predicates.MarkedLessonContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.MarkedListPredicate;
+
+
 
 //@@author junming403
 /**
@@ -52,9 +56,7 @@ public class UnmarkCommand extends UndoableCommand {
         if (ListingUnit.getCurrentListingUnit().equals(LESSON)) {
             try {
                 model.unBookmarkLesson(lessonToCollect);
-                if (ListingUnit.getCurrentPredicate() instanceof MarkedListPredicate) {
-                    model.updateFilteredLessonList(new MarkedListPredicate());
-                }
+                updateLessonList();
                 EventsCenter.getInstance().post(new RefreshPanelEvent());
                 EventsCenter.getInstance().post(new ViewedLessonEvent());
                 return new CommandResult(String.format(MESSAGE_UNBOOKMARK_LESSON_SUCCESS, lessonToCollect));
@@ -66,6 +68,20 @@ public class UnmarkCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_WRONG_LISTING_UNIT_FAILURE);
         }
     }
+
+    /**
+     * Update lesson list according to current predicate.
+     */
+    private void updateLessonList() {
+        Predicate predicate = ListingUnit.getCurrentPredicate();
+        if (ListingUnit.getCurrentPredicate() instanceof MarkedListPredicate) {
+            model.updateFilteredLessonList(new MarkedListPredicate());
+        } else if (ListingUnit.getCurrentPredicate() instanceof MarkedLessonContainsKeywordsPredicate) {
+            List<String> keywords = ((MarkedLessonContainsKeywordsPredicate) predicate).getKeywords();
+            model.updateFilteredLessonList(new MarkedLessonContainsKeywordsPredicate(keywords));
+        }
+    }
+
 
 
     @Override
