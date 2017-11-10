@@ -671,9 +671,9 @@ The sorting process is case insensitive.
 The facebook mechanism is facilitated by `FacebookCommand`, which resides inside the commands folder of the logic component.
 
 The facebook mechanism displays the Facebook login page when the `facebook` command is entered.
-
+// end::facebook[]
 image::facebook-command-ui.png[width="800"]
-
+// tag::facebookcont[]
 Upon execution, the `FacebookCommand` posts a `ShowFacebookRequestEvent` event to the `EventCenter` and the event will be dispatched to the `BrowserPanel` to load Facebook page.
 
 As part of the UI component, the `BrowserPanel` class loads the facebook page using a method called `loadFacebookPage`.
@@ -694,7 +694,7 @@ The user has to ensure that an internet connection is established to succeed in 
 **Alternative 2:** User enters the command `facebook`, followed by his username and password in the command box. He is automatically logged into Facebook and is directed to Facebook's newsfeed page.  +
 **Pros:** Saves users the trouble of navigating the facebook log in page. Adheres to the purpose of the application having a CLI. +
 **Cons:** More difficult to implement. May require the use of Facebook API which may cause unexpected regressions that developers may not know how to solve.
-// end::facebook[]
+// end::facebookcont[]
 
 // tag::addremovetag[]
 

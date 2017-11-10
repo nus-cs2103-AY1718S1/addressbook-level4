@@ -60,6 +60,7 @@ and including links to social media accounts for each contacts.
 ---
 
 include::../DeveloperGuide.adoc[tag=facebook]
+include::../DeveloperGuide.adoc[tag=facebookcont]
 
 ---
 
