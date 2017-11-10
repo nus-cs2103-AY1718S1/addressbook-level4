@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
 import static seedu.address.logic.commands.LoginCommand.isLoggedIn;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
 import java.util.logging.Logger;
 
@@ -25,11 +27,13 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Displays username and password fields
  */
 public class LoginView extends UiPart<Region> {
-    public static final String LOGIN_COMMAND_FORMAT = "login %1$s %2$s";
+    public static final String GUI_LOGIN_COMMAND_FORMAT = "login " + PREFIX_USERNAME + "%1$s"
+            + " " + PREFIX_PASSWORD + "%2$s";
 
     private static final String FXML = "LoginView.fxml";
     private static final Logger logger = LogsCenter.getLogger(LoginView.class);
 
+    private static boolean showingLoginView = false;
     private final Logic logic;
     private ObjectProperty<Username> username;
     private ObjectProperty<Password> password;
@@ -59,7 +63,7 @@ public class LoginView extends UiPart<Region> {
         // process login inputs
         try {
             CommandResult commandResult;
-            commandResult = logic.execute(String.format(LOGIN_COMMAND_FORMAT, usernameText, passwordText));
+            commandResult = logic.execute(String.format(GUI_LOGIN_COMMAND_FORMAT, usernameText, passwordText));
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
         } catch (CommandException | ParseException e) {
             raise(new NewResultAvailableEvent(e.getMessage(), true));
@@ -76,5 +80,13 @@ public class LoginView extends UiPart<Region> {
     @FXML
     private void handleBackToCommandView() {
         EventsCenter.getInstance().post(new ChangeToCommandBoxView());
+    }
+
+    public static void setShowingLoginView(boolean val) {
+        showingLoginView = val;
+    }
+
+    public static boolean isShowingLoginView() {
+        return showingLoginView;
     }
 }
