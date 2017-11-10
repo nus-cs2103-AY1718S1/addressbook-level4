@@ -1,4 +1,4 @@
-AddressBook Level 4 - Developer Guide
+= AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-F10-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F10-B4`      Since: `Aug 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -488,7 +488,21 @@ Alternative considered is to allow user input multiple details in each search. I
 * There will be no results returned in this scenario as input phone number does not match the phone number in the `Contact 1` although the name matches exactly.
 
 From the two scenarios, we know that unless the user knows the exact details (i.e. full name, exact phone number, exact email and etc) otherwise `finds` command with multiple details input is practically not useful as no results will be returned.
-//end::finds[]
+// end::finds[]
+
+// tag::birthday[]
+=== Add person(s) Birthday
+
+The `birthday` command is an improved version from `add` command. It allows user to add using with as phone number, birthday, email or tag.
+
+The user can use this command with 'b/dd/mm/yyyy'
+
+
+==== Design Considerations
+
+It is implemented to add birthday detail so that relevant to the user to identify the birthday for up coming event. i.e. if a user want to have an event they can identify who's birthday is on this month or next month.
+
+//end::birthday[]
 
 // tag::gmap[]
 === Google Map Mechanism
@@ -552,6 +566,20 @@ Event object will then be handled by the UI Component's `BrowserPanel` and attem
 **Pros:** Allows much more flexibility and use directions, places and distance features. +
 **Cons:** Currently do not need all these extra features. Integrating external libraries induces unnecessary overhead and is hard for new developers to understand the code.
 // end::gmap[]
+
+// tag::photo[]
+=== Add photo to person(s)
+
+The adding `photo` is an new version for our app. It allows user to add photos for the person list that been added to Mybook, by clicking the command box and go to add photo
+it will sent a request to open an file from the local location, and import photo to Mybook.
+
+The user can use size of 100X100 of file 'png','jpg' or 'jpeg'
+
+==== Design Considerations
+
+It is implemented to add photo detail so that relevant to the user to identify user. i.e. if both user have same/similar pronunciation of name.
+
+//end::photo[]
 
 == Documentation
 

@@ -8,7 +8,7 @@ Mybook is a desktop address book application used for students or teachers who w
 The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-F10-B4/main/blob/master/collated/main/renkai91.md[Functional code]]
-[https://github.com/CS2103AUG2017-F10-B4/main/blob/master/collated/test/renkai91.md[Test code]] {give links to collated code files}
+[https://github.com/CS2103AUG2017-F10-B4/main/blob/master/collated/test/renkai91.md[Test code]]
 
 === Enhancement Added: Add command "Birthday"
 
@@ -17,7 +17,7 @@ The user interacts with it using a CLI, and it has a GUI created with JavaFX. It
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[]
+include::../UserGuide.adoc[tag=birthday]
 
 #End of Extract#
 
@@ -32,7 +32,7 @@ Adding birthday to person list of Mybook in the command box when they are fillin
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[]
+include::../DeveloperGuide.adoc[tag=birthday]
 
 #End of Extract#
 
@@ -42,6 +42,27 @@ include::../DeveloperGuide.adoc[]
 
 Adding profile photos for each students, so that we can identify the students by photo and not getting the wrong student.
 It help the user to identify the correct person.
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=photo]
+
+#End of Extract#
+
+---
+== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=photo]
+
+#End of Extract#
+
+---
 
 === Other contributions
 

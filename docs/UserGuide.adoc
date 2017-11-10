@@ -1,4 +1,4 @@
-AddressBook Level 4 - User Guide
+= AddressBook Level 4 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -265,7 +265,7 @@ Similar tags will also be assigned the same color as long as tags have the same 
 
 Total number of person in addressbook will now be displayed at the footer bar.
 
-//tag::finds[]
+// tag::finds[]
 === Locating persons by names or phone numbers or emails or tags: `finds` (v1.1)
 
 *Author*: Soh Hong Hwee
@@ -372,6 +372,7 @@ Contacts in user myBook app that has `Important` or `important` tag will always 
 User using versions before v1.2 should add a new person with `important` tag first to enjoy this feature.
 //end::important[]
 
+//tag::birthday[]
 === Add Birthday
 
 *Author*: Wei Ren Kai
@@ -379,6 +380,7 @@ User using versions before v1.2 should add a new person with `important` tag fir
 All persons can now add in their birthday on the command line
 Format `b/dd/mm/yyyy` allow Mybook to keep track all students birthday
 Easy to identify who's birthday is coming up on that month.
+//end::birthday[]
 
 === Sorted Contacts (v1.3)
 
@@ -451,7 +453,7 @@ Changes the addressbook theme to theme `INDEX` of one, which is default *DarkThe
 
 === Remarking a person with `remark` command (v1.3)
 
-*Author*: Beh Bee Yee
+*Author*: Teh Bee Yee
 
 Edits the remark for a person specified in the INDEX. +
 Format: `remark INDEX r/[REMARK]`
@@ -480,12 +482,14 @@ All other details that are not provided will be filled in by default values as s
 image::Default_for_empty_fields.png[width="400"]
 _Figure 3.15.1 : Default values for empty fields_
 
+//tag::photo[]
 === Option Menu `Add photo` (v1.4)
 
 *Author*: Wei Ren Kai
 
 This feature is to add photo to individual. +
 Display the photo data into browser panel with a photo size of 100X100.
+//end::photo[]
 
 === Import XML addressbook command (v1.4)
 
