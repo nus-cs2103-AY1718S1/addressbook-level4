@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.AppUtil.PanelChoice;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -28,13 +29,13 @@ public class SelectCommandParser implements Parser<SelectCommand> {
             String indexString = Arrays.stream(inputs).filter(s -> s.matches("\\d+"))
                     .findFirst().orElseThrow(() -> new IllegalValueException("No index found!"));
             Optional<String> panelString = Arrays.stream(inputs).filter(s -> s.matches("\\p{Alpha}+")).findFirst();
-            SelectCommand.PanelChoice panelChoice;
+            PanelChoice panelChoice;
             if (inputs.length < 2) {
                 throw new IllegalValueException("Too little input arguments!");
             } else if (inputs.length > 2 && panelString.isPresent()) {
                 panelChoice = ParserUtil.parsePanelChoice(panelString.get().toLowerCase());
             } else {
-                panelChoice = SelectCommand.PanelChoice.PERSON;
+                panelChoice = PanelChoice.PERSON;
             }
             Index index = ParserUtil.parseIndex(indexString);
             return new SelectCommand(index, panelChoice);

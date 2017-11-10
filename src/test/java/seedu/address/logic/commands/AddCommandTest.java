@@ -130,6 +130,9 @@ public class AddCommandTest {
         }
 
         @Override
+        public void deleteInsurance(ReadOnlyInsurance insurance) { fail("This method should not be called."); }
+
+        @Override
         public void updateLifeInsurance(ReadOnlyInsurance target, ReadOnlyInsurance editedOnlyReadInsurance) {
             fail("This method should not be called.");
         }
