@@ -26,10 +26,10 @@ import seedu.address.model.person.exceptions.NoPersonFoundException;
  */
 public class SortCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute_sortListByName() throws NoPersonFoundException {
