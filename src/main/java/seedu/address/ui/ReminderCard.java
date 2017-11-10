@@ -109,6 +109,7 @@ public class ReminderCard extends UiPart<Region> {
         LocalDate currentTime = LocalDate.now();
         int daysBetween = (int) ChronoUnit.DAYS.between(currentTime, deadline);
 
+        setDaysCountdownColor(daysBetween);
         if (daysBetween == 0) {
             daysCountdown.setText("today");
         } else if (daysBetween < 0) {
@@ -130,6 +131,18 @@ public class ReminderCard extends UiPart<Region> {
             }
         };
         timer.scheduleAtFixedRate(task, 0, 3600000);
+    }
+
+    private void setDaysCountdownColor(int daysBetween) {
+        if (daysBetween >= 7) {
+            daysCountdown.setStyle("-fx-text-fill: " + "greenyellow");
+        } else if (daysBetween >= 3) {
+            daysCountdown.setStyle("-fx-text-fill: " + "yellow");
+        } else if (daysBetween >= 0) {
+            daysCountdown.setStyle("-fx-text-fill: " + "orange");
+        } else {
+            daysCountdown.setStyle("-fx-text-fill: " + "red");
+        }
     }
 
     @Override
