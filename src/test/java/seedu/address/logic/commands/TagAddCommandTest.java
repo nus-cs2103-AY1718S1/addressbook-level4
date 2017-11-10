@@ -47,7 +47,7 @@ public class TagAddCommandTest {
     public void executeTagAddSinglePerson() throws Exception {
         showFirstPersonOnly(model);
 
-        Set<Tag> singleTagSet = new HashSet<Tag>();
+        Set<Tag> singleTagSet = new HashSet<>();
         singleTagSet.add(new Tag(VALID_TAG_HUSBAND));
 
         ArrayList<Index> singlePersonIndexList = new ArrayList<>();
@@ -60,17 +60,22 @@ public class TagAddCommandTest {
         Person editedPerson = new PersonBuilder(personInFilteredList).withATags(VALID_TAG_HUSBAND).build();
         TagAddCommand tagAddCommand = prepareCommand(singlePersonIndexList, tagAddDescriptor);
 
-        String expectedMessage = String.format(TagAddCommand.MESSAGE_ADD_TAG_SUCCESS, editedPerson);
-
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new AddressBook(),
                 new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+
+        String tagChangedDisplayRaw = editedPerson.getTags().toString();
+        int tagListStringStartIndex = 1;
+        int tagListStringEndIndex = tagChangedDisplayRaw.length() - 1;
+        String tagChangedDisplay = editedPerson.getName() + " Tag List: "
+                + tagChangedDisplayRaw.substring(tagListStringStartIndex, tagListStringEndIndex);
+        String expectedMessage = String.format(TagAddCommand.MESSAGE_ADD_TAG_SUCCESS, tagChangedDisplay);
 
         assertCommandSuccess(tagAddCommand, model, expectedMessage, expectedModel);
 
         tagAddCommand = prepareCommand(singlePersonIndexList,
                 new TagAddDescriptor(new PersonBuilder().withATags(VALID_TAG_HUSBAND).build()));
-        assertCommandFailure(tagAddCommand, model, String.format(tagAddCommand.MESSAGE_TAG_ALREADY_EXISTS,
+        assertCommandFailure(tagAddCommand, model, String.format(TagAddCommand.MESSAGE_TAG_ALREADY_EXISTS,
                 "[" + VALID_TAG_HUSBAND + "]"));
     }
 
