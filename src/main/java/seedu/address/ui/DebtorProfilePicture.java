@@ -42,8 +42,8 @@ public class DebtorProfilePicture extends UiPart<Region> {
         }
 
         profilePic.setImage(image);
-        profilePic.setFitWidth(300);
-        profilePic.setFitHeight(300);
+        profilePic.setFitWidth(350);
+        profilePic.setFitHeight(350);
         registerAsAnEventHandler(this);
     }
 
