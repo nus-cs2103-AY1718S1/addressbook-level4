@@ -11,9 +11,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import com.google.common.annotations.VisibleForTesting;
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import org.telegram.abilitybots.api.bot.AbilityBot;
 import org.telegram.abilitybots.api.objects.Ability;
 import org.telegram.abilitybots.api.objects.Locality;
@@ -27,6 +24,11 @@ import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.PhotoSize;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+
+import com.google.common.annotations.VisibleForTesting;
+
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import seedu.address.bot.parcel.DisplayParcel;
 import seedu.address.bot.parcel.ParcelParser;
 import seedu.address.bot.qrcode.QRcodeAnalyser;
@@ -515,6 +517,9 @@ public class ArkBot extends AbilityBot {
         return null;
     }
 
+    /**
+     * Example method to make sure that the tests work.
+     */
     public Ability saysHelloWorld() {
         return Ability.builder()
                 .name("hello") // Name and command (/hello)
@@ -523,17 +528,6 @@ public class ArkBot extends AbilityBot {
                 .locality(Locality.ALL) // Choose from Locality enum Class (User, Group, PUBLIC)
                 .input(0) // Arguments required for command (0 for ignore)
                 .action(ctx -> {
-          /*
-          ctx has the following main fields that you can utilize:
-          - ctx.update() -> the actual Telegram update from the basic API
-          - ctx.user() -> the user behind the update
-          - ctx.firstArg()/secondArg()/thirdArg() -> quick accessors for message arguments (if any)
-          - ctx.arguments() -> all arguments
-          - ctx.chatId() -> the chat where the update has emerged
-          NOTE that chat ID and user are fetched no matter what the update carries.
-          If the update does not have a message, but it has a callback query, the chatId and user will be fetched from that query.
-           */
-                    // Custom sender implementation
                     sender.send("Hello World!", ctx.chatId());
                 })
                 .build();
