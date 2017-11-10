@@ -25,26 +25,30 @@ include::../UserGuide.adoc[tag=sort]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+The search mechanisms are important to the address book as it allows users to find their contacts easily when they have a large amount of contacts.
+Moreover, as the schedulers uses the indices to schedule, without this mechanism, the user will have to scroll through large number of the contacts to find the index of the persons they want to schedule.
+With this mechanism, the user can search the common features of the people he wants to arrange such that the filtered view consists only of the persons searched and it would be more user friendly.
+
+Sorting the address book also helps the user organise their contacts.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=]
+include::../DeveloperGuide.adoc[tag=search]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed: Add command `group`
 
-{Explain similar to the Undo/Redo feature above.}
+
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+* Added the field MRT and valid MRT stations to make finding a meeting place easier (Pull requests https://github.com[#33], https://github.com[#34])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 
 == Project: PowerPointLabs
