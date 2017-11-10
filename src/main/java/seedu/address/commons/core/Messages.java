@@ -13,4 +13,6 @@ public class Messages {
     public static final String MESSAGE_INVALID_SWITCH = "Switch is invalid! Already in theme provided.";
     public static final String MESSAGE_INVALID_LOCATION = "User accessed does not have an address!";
     public static final String MESSAGE_INVALID_WEBSITE = "User does not have website.";
+    public static final String MESSAGE_INVALID_PERSON_PLATFORM = "You are not in the person platform!";
+    public static final String MESSAGE_INVALID_EVENT_PLATFORM = "You are not in the event platform!";
 }

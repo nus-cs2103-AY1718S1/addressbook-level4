@@ -1,6 +1,8 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_EVENT_PLATFORM;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_PLATFORM;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import java.util.regex.Matcher;
@@ -43,6 +45,7 @@ public class AddressBookParser {
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+    private static Boolean personListActivated = true;
 
     /**
      * Parses user input into command for execution.
@@ -61,36 +64,67 @@ public class AddressBookParser {
         final String arguments = matcher.group("arguments");
         switch (commandWord) {
         case AddCommand.COMMAND_WORD: case AddCommand.COMMAND_ALIAS:
-            return new AddCommandParser().parse(arguments);
-
+            if(personListActivated) {
+                return new AddCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
         case AccessCommand.COMMAND_WORD:
-            return new AccessCommandParser().parse(arguments);
-
+            if(personListActivated) {
+                return new AccessCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
         case EditCommand.COMMAND_WORD: case EditCommand.COMMAND_ALIAS:
-            return new EditCommandParser().parse(arguments);
-
+            if(personListActivated) {
+                return new EditCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
         case SelectCommand.COMMAND_WORD: case SelectCommand.COMMAND_ALIAS:
-            return new SelectCommandParser().parse(arguments);
-
+            if(personListActivated) {
+                return new SelectCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
         case DeleteCommand.COMMAND_WORD: case DeleteCommand.COMMAND_ALIAS:
-            return new DeleteCommandParser().parse(arguments);
-
+            if(personListActivated) {
+                return new DeleteCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
         case ClearCommand.COMMAND_WORD: case ClearCommand.COMMAND_ALIAS:
-            return new ClearCommand();
-
+            if(personListActivated) {
+                return new ClearCommand();
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
         case FindCommand.COMMAND_WORD: case FindCommand.COMMAND_ALIAS:
-            return new FindCommandParser().parse(arguments);
-
+            if(personListActivated) {
+                return new FindCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
         case FindTagCommand.COMMAND_WORD: case FindTagCommand.COMMAND_ALIAS:
-            return new FindTagCommandParser().parse(arguments);
-
+            if(personListActivated) {
+                return new FindTagCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
         case LocationCommand.COMMAND_WORD:
-            return new LocationCommandParser().parse(arguments);
-
+            if(personListActivated) {
+                return new LocationCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
         case SortCommand.COMMAND_WORD:
-            return new SortCommand();
-
+            if(personListActivated) {
+                return new SortCommand();
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
         case ListCommand.COMMAND_WORD: case ListCommand.COMMAND_ALIAS:
+            personListActivated = true;
             return new ListCommand();
 
         case HistoryCommand.COMMAND_WORD: case HistoryCommand.COMMAND_ALIAS:
@@ -115,29 +149,43 @@ public class AddressBookParser {
             return new SwitchThemeCommandParser().parse(arguments);
 
         case AddEventCommand.COMMAND_WORD: case AddEventCommand.COMMAND_ALIAS:
-            return new AddEventCommandParser().parse(arguments);
-
+            if(!personListActivated) {
+                return new AddEventCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_EVENT_PLATFORM);
+            }
         case DeleteEventCommand.COMMAND_WORD:
-            return new DeleteEventCommandParser().parse(arguments);
-
+            if(!personListActivated) {
+                return new DeleteEventCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_EVENT_PLATFORM);
+            }
         case EventsCommand.COMMAND_WORD:
+            personListActivated = false;
             return new EventsCommand();
 
         case FavouriteCommand.COMMAND_WORD: case FavouriteCommand.COMMAND_ALIAS:
-            return new FavouriteCommandParser().parse(arguments);
-
+            if(personListActivated) {
+                return new FavouriteCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
         case UnfavouriteCommand.COMMAND_WORD: case UnfavouriteCommand.COMMAND_ALIAS:
-            return new UnfavouriteCommandParser().parse(arguments);
-
+            if(personListActivated) {
+                return new UnfavouriteCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
         case FavouriteListCommand.COMMAND_WORD: case FavouriteListCommand.COMMAND_ALIAS:
+            personListActivated = true;
             return new FavouriteListCommand();
 
         case BirthdaysCommand.COMMAND_WORD: case BirthdaysCommand.COMMAND_ALIAS:
+            personListActivated = true;
             return new BirthdaysCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
-
 }
