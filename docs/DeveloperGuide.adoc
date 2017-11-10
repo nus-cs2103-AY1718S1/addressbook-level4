@@ -14,7 +14,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `Hu Wanqing`, `Jiang Chunhui`, `Hou Denghao`, `Leon Chow WenHao`      Since: `August 2017`
 
-= Welcome to Planno
+== Welcome to Planno
 
 Planno is a Java application that helps users to conveniently manage contact as well as event details. To achieve this, Planno provides a large number of easy to use commands for users. +
 
@@ -940,7 +940,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `SEVERE` : Critical problem detected which may possibly cause the termination of the application
 * `WARNING` : Can continue, but with caution
 * `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+* `FINE` : Details that are not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
 === Configuration
 
@@ -983,12 +983,12 @@ _Figure 4.3: Saving documentation as PDF files in Chrome_
 There are three ways to run tests.
 
 [TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+The most reliable way to run tests is `Method 3`. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
 *Method 1: Using IntelliJ JUnit test runner*
 
 * To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+* To run a subset of tests, right-click on a test package, test class, or a test and choose `Run 'ABC'`
 
 *Method 2: Using Gradle*
 
@@ -1007,10 +1007,10 @@ To run tests in headless mode, open a console and run the command `gradlew clean
 
 We have two types of tests:
 
-.  *GUI Tests* - These are tests involving the GUI. They include,
-.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
-.. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
-.  *Non-GUI Tests* - These are tests not involving the GUI. They include,
+.  *GUI Tests* - These are tests involving the GUI. They include:
+.. _System Tests_ that test the entire App by simulating user actions on the GUI. They are in the `systemtests` package.
+.. _Unit tests_ that test the individual components. They are in `seedu.address.ui` package.
+.  *Non-GUI Tests* - These are tests not involving the GUI. They include:
 ..  _Unit tests_ targeting the lowest level methods/classes. +
 e.g. `seedu.address.commons.StringUtilTest`
 ..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
