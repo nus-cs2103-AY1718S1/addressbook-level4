@@ -5,7 +5,7 @@ import java.util.ArrayList;
 //@@author Alim95
 
 /**
- * Container for tutorial messages.
+ * Contains the tutorial messages.
  */
 public class TutorialMessages {
 

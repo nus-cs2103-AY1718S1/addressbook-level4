@@ -3,7 +3,7 @@
 ``` java
 
 /**
- * Container for tutorial messages.
+ * Contains the tutorial messages.
  */
 public class TutorialMessages {
 
