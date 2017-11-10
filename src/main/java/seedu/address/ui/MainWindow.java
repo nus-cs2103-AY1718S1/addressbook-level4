@@ -18,13 +18,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
-import seedu.address.commons.events.ui.ExitAppRequestEvent;
-import seedu.address.commons.events.ui.PersonPanelUnselectEvent;
-import seedu.address.commons.events.ui.PopulateRequestEvent;
-import seedu.address.commons.events.ui.ShowHelpRequestEvent;
-import seedu.address.commons.events.ui.ShowThemeRequestEvent;
-import seedu.address.commons.events.ui.TogglePanelEvent;
+import seedu.address.commons.events.ui.*;
 
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -352,6 +346,12 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(request));
         // calendar.populateNewCalendar(request.event);
         calendar.populateUpdatedCalendar(request.eventList, YearMonth.now());
+    }
+
+    @Subscribe
+    private void handlePopulateMonthEvent(PopulateMonthEvent request) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(request));
+        calendar.populateCalendar(request.yearMonth,logic.getFilteredEventList());
     }
     //@@author
 

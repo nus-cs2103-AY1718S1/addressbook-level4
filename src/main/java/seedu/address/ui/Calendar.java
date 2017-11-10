@@ -14,6 +14,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.fxmisc.easybind.EasyBind;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.PopulateMonthEvent;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.UniqueEventList;
@@ -27,7 +30,6 @@ public class Calendar {
     private VBox view;
     private Text calendarTitle;
     private YearMonth currentYearMonth;
-    private ArrayList<ReadOnlyEvent> allEvents = new ArrayList<>();
 
     /**
      * Create a calendar view
@@ -47,10 +49,6 @@ public class Calendar {
                 allCalendarDays.add(ap);
                 ap.getStyleClass().add("calendar-color");
             }
-        }
-
-        for (ReadOnlyEvent event: eventList) {
-            allEvents.add(event);
         }
 
         // Days of the week labels
@@ -81,7 +79,7 @@ public class Calendar {
         titleBar.setSpacing(5);
         titleBar.setAlignment(Pos.BASELINE_CENTER);
         // Populate calendar with the appropriate day numbers
-        populateCalendar(yearMonth, allEvents);
+        populateCalendar(yearMonth, eventList);
         // Create the calendar view
         view = new VBox(titleBar, dayLabels, calendar);
     }
@@ -90,7 +88,7 @@ public class Calendar {
      * Set the days of the calendar to correspond to the appropriate date
      * @param yearMonth year and month of month to render
      */
-    public void populateCalendar(YearMonth yearMonth, ArrayList<ReadOnlyEvent> events) {
+    public void populateCalendar(YearMonth yearMonth, ObservableList<ReadOnlyEvent> events) {
         // Get the date we want to start with on the calendar
         LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
         // Dial back the day until it is SUNDAY (unless the month starts on a sunday)
@@ -134,7 +132,8 @@ public class Calendar {
      */
     public void previousMonth() {
         currentYearMonth = currentYearMonth.minusMonths(1);
-        populateCalendar(currentYearMonth, allEvents);
+      //  populateCalendar(currentYearMonth, allEvents);
+        EventsCenter.getInstance().post(new PopulateMonthEvent(currentYearMonth));
     }
 
     /**
@@ -142,7 +141,8 @@ public class Calendar {
      */
     public void nextMonth() {
         currentYearMonth = currentYearMonth.plusMonths(1);
-        populateCalendar(currentYearMonth, allEvents);
+     //   populateCalendar(currentYearMonth, allEvents);
+        EventsCenter.getInstance().post(new PopulateMonthEvent(currentYearMonth));
     }
 
     public VBox getView() {
