@@ -27,8 +27,8 @@ public class SwitchThemeCommand extends Command {
             + "Example: " + COMMAND_WORD + " Twilight";
 
     public static final String MESSAGE_THEME_CHANGE_SUCCESS = "Theme changed to: %1$s";
-    public static final String MESSAGE_INVALID_INDEX = "The index provided is invalid.\n%1$s";
-    public static final String MESSAGE_UNKNOWN_THEME = "The theme provided is unknown.\n%1$s";
+    public static final String MESSAGE_INVALID_INDEX = "The index %1$s is invalid.\n";
+    public static final String MESSAGE_UNKNOWN_THEME = "The theme %1$s is unknown.\n";
 
     private final String userThemeInput;
     private String themeChoice;
@@ -41,14 +41,14 @@ public class SwitchThemeCommand extends Command {
     public CommandResult execute() throws CommandException {
 
         if (userThemeInput.matches("\\d+")) {
-            if (userThemeInput.equals("1")) {
+            if ("1".equals(userThemeInput)) {
                 themeChoice = DARK_THEME_WORD2;
-            } else if (userThemeInput.equals("2")) {
+            } else if ("2".equals(userThemeInput)) {
                 themeChoice = BRIGHT_THEME_WORD2;
-            } else if (userThemeInput.equals("3")) {
+            } else if ("3".equals(userThemeInput)) {
                 themeChoice = DEFAULT_THEME_WORD2;
             } else {
-                throw new CommandException(String.format(MESSAGE_INVALID_INDEX, MESSAGE_USAGE));
+                throw new CommandException(String.format(MESSAGE_INVALID_INDEX, userThemeInput));
             }
         } else {
             if (userThemeInput.toLowerCase().contains(DARK_THEME_WORD1)
@@ -67,7 +67,7 @@ public class SwitchThemeCommand extends Command {
                     || DEFAULT_THEME_WORD2.toLowerCase().contains(userThemeInput.toLowerCase())) {
                 themeChoice = DEFAULT_THEME_WORD2;
             } else {
-                throw new CommandException(String.format(MESSAGE_UNKNOWN_THEME, MESSAGE_USAGE));
+                throw new CommandException(String.format(MESSAGE_UNKNOWN_THEME, userThemeInput));
             }
         }
         if (themeChoice.equals(DARK_THEME_WORD2)) {
@@ -77,7 +77,7 @@ public class SwitchThemeCommand extends Command {
         } else {
             EventsCenter.getInstance().post(new ChangeDefaultThemeEvent());
         }
-        return new CommandResult(String.format(MESSAGE_THEME_CHANGE_SUCCESS, themeChoice));
+        return new CommandResult(String.format(MESSAGE_THEME_CHANGE_SUCCESS, userThemeInput));
     }
 
     @Override

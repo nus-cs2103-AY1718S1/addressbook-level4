@@ -51,8 +51,6 @@ public class TagAddCommand extends UndoableCommand {
             + "in some person selected.";
     private final ArrayList<Index> index;
     private final TagAddDescriptor tagAddDescriptor;
-    private int tagListStringStartIndex = 1;
-    private int tagListStringEndIndex;
 
     /**
      * @param index of the person in the filtered person list to edit
@@ -98,6 +96,8 @@ public class TagAddCommand extends UndoableCommand {
                 throw new AssertionError("The target person cannot be missing");
             }
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            int tagListStringStartIndex = 1;
+            int tagListStringEndIndex;
             String tagChangedDisplayRaw = editedPerson.getTags().toString();
             tagListStringEndIndex = tagChangedDisplayRaw.length() - 1;
             String tagChangedDisplay = editedPerson.getName() + " Tag List: "
