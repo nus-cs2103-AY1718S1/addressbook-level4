@@ -12,6 +12,7 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
@@ -65,6 +66,7 @@ public class MainApp extends Application {
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
+        initListObserver(model);
 
         storage.backupAddressBook();
 
@@ -94,6 +96,10 @@ public class MainApp extends Application {
 
     private void initLogging(Config config) {
         LogsCenter.init(config);
+    }
+
+    private void initListObserver(Model model) {
+        ListObserver.init(model);
     }
 
     /**
