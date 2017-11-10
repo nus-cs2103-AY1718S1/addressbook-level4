@@ -428,6 +428,7 @@ usernames.
 *Cons:* Might have to change a lot of components if want to allow users to have multiple accounts in
 the later part of the project.
 
+=======
 // end::pwconsideration[]
 
 
@@ -580,6 +581,35 @@ feature allows users to change their preferences to have a login at any point in
 *Cons:* Once account is created, users will not be able to disable the login feature.
 
 // end::removeLoginConsiderations[]
+
+// tag::search[]
+=== Search Mechanism
+The Search Mechanism is implemented mainly in the logic and model component. It allows for searches to be performed on different fields,
+with 2 different types of searches to be performed on multiple fields: "AND" and "OR" search.
+The command will not make any changes to the addressbook and thus does not inherit from `Undoable Command`.
+
+The variety of search mechanisms are implemented to enable users to find their contacts easily when they have a large number of contacts in their addressbook.
+This is also to get a filtered view of persons such that the command `arrange` which requires the indices of the persons is more user friendly.
+
+The commands for the search mechanisms are as follows:
+
+image::findRelationDiagram.png[width="800"]
+
+As shown, there is `findByName`, which conducts an "OR" search based on the field `name`, and the same goes for every other field.
+`find` however can conduct both "AND" and "OR" searches with multiple fields.
+
+Below is a sequence diagram for the FindCommand.
+
+image::findSeqDiagram.png[width="800"]
+
+After the user inputs the fields he wants to search in, the logic manager evokes the `AddressbookParser` and the `FindCommandParser`,
+which maps the different fields into a `FindPersonDescriptor`, which stores all the search keywords. The descriptor is passed into a `FindCommand`.
+The FindCommand initialises with its `PersonContainsKeywordsPredicates`, which gets all the keywords from the descriptor.
+The FindCommand is then returned to the logic manager which calls for `command.execute()`.
+The FindCommand uses the model to get persons in the current view and tests all persons based on the predicate.
+Accordind to the type of search and number of matches, the person(s) that fulfills the search criteria will be shown on the GUI.
+
+// end::search[]
 
 === Logging
 

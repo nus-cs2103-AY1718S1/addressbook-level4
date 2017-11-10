@@ -230,6 +230,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::find1[]
 === Searching for persons: `find`
 
 Finds persons whose fields contain any of the given keywords. +
@@ -248,10 +249,10 @@ Format: `find TYPE [PREFIX/KEYWORD] [PREFIX/MORE_KEYWORDS]`
 
 Examples:
 
-* `findByName John` +
-Returns `john` and `John Doe`
-* `findByName Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find OR n/John e/johndoe t/friend` +
+Returns `John Doe`, `john` and every entry tagged 'friend'
+* `find AND n/John e/johndoe t/friend` +
+Returns `John Doe`
 
 
 === Locating persons by name: `findByName`
@@ -274,7 +275,11 @@ Returns `john` and `John Doe`
 * `findByName Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+<<<<<<< HEAD
 // tag::findByAddress[]
+=======
+// end::find1[]
+>>>>>>> 56cf6ff83cd5ce3e2016315f65ce749fe377e916
 
 === Locating persons by address: `findByAddress`
 
@@ -309,6 +314,7 @@ Examples:
 * `findByPhone 12345678` +
 Returns `john` and `John Doe` whose phone number is '12345678'.
 
+// tag::find2[]
 === Locating persons by email: `findByEmail`
 
 Finds persons whose addresses contain any of the given keywords. +
@@ -348,6 +354,8 @@ Examples:
 Returns Persons with the tag 'friend'.
 * `findByTag owesMoney friend` +
 Returns any person having tags of `owesMoney` or `friend`
+
+// end::find2[]
 
 === Deleting a person : `delete`
 
@@ -420,10 +428,12 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+// tag::sort[]
 === Sorting entries in the addressbook : `sort`
 
 Sorts all the entries in addressbook in the alphabetical order of the names. +
 Format: `sort`
+// end::sort[]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
