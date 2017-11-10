@@ -9,11 +9,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 //@@author JasmineSee
 
 /**
- * Delete all photos from all persons.
+ * Deletes all photos from all persons.
  */
-public class DeleteAllPhotosCommand extends Command {
-    public static final String COMMAND_WORD = "dallphotos";
-    public static final String COMMAND_ALIAS = "dpall";
+public class DeletesAllPhotosCommand extends Command {
+    public static final String COMMAND_WORD = "daphotos";
+    public static final String COMMAND_ALIAS = "dap";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes all photos from all persons. "
@@ -23,7 +23,7 @@ public class DeleteAllPhotosCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        deleteAllPhotos();
+        deletesAllPhotos();
         EventsCenter.getInstance().post(new PhotoChangeEvent());
 
         LoggingCommand loggingCommand = new LoggingCommand();
@@ -34,7 +34,7 @@ public class DeleteAllPhotosCommand extends Command {
     /**
      * Deletes all photos of persons in the address book.
      */
-    public void deleteAllPhotos() {
+    public void deletesAllPhotos() {
         File dir = new File("photos/");
         for (File file : dir.listFiles()) {
             if (!(file.getName().equals("default.jpeg"))) {

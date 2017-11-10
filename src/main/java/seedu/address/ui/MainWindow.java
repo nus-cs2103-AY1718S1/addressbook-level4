@@ -347,7 +347,7 @@ public class MainWindow extends UiPart<Region> {
      * Handles event for change theme command.
      */
     @Subscribe
-    public void handleCommandTheme(ThemeChangeEvent event) {
+    public void handleThemeCommand(ThemeChangeEvent event) {
         String theme = event.getTheme();
         if (theme.equals("dark")) {
             handleBlackTheme();
