@@ -136,7 +136,7 @@
     -fx-text-fill: #010504;
 }
 .window_big_label {
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 32px;
     -fx-text-fill: #010504;
 }
@@ -150,7 +150,7 @@
 .window_small_text {
     -fx-font-family: "Segoe UI";
     -fx-font-size: 15px;
-    -fx-text-fill: gray;
+    -fx-fill: derive(#1d1d1d, 40%);
 }
 
 .anchor-pane {
