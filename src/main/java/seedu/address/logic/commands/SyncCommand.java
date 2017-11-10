@@ -302,9 +302,9 @@ public class SyncCommand extends Command {
             logger.warning("Google Contact has no retrievable name");
         } else {
             seedu.address.model.person.Name aName = new seedu.address.model.person.Name(retrieveFullGName(person));
-            Phone aPhone = (phone == null || !Phone.isValidPhone(phone.getValue()))
+            Phone aPhone = (phone == null || !Phone.isValidPhone(phone.getValue().replaceAll("\\s+","")))
                     ? new Phone(null)
-                    : new seedu.address.model.person.Phone(phone.getValue());
+                    : new seedu.address.model.person.Phone(phone.getValue().replaceAll("\\s+",""));
             seedu.address.model.person.Address aAddress = (
                     address == null || !seedu.address.model.person.Address.isValidAddress(address.getStreetAddress()))
                     ? new seedu.address.model.person.Address(null)
@@ -547,7 +547,7 @@ public class SyncCommand extends Command {
         boolean equalPhone;
 
         if (phone != null) {
-            gPhone = phone.getValue();
+            gPhone = phone.getValue().replaceAll("\\s+","");
             equalPhone = gPhone.equals(abcPhone);
         } else {
             equalPhone = abcPhone.equals("No Phone Number");

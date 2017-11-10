@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 //@@author derrickchua
-/**
+/**TODO: Throw prompt to open browser window as CommandResult
  * Adds a person to the address book.
  */
 public class LoginCommand extends Command {
