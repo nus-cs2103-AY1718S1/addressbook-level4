@@ -50,7 +50,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
-import seedu.address.testutil.PersonUtil;
 
 public class EditCommandSystemTest extends AddressBookSystemTest {
 
