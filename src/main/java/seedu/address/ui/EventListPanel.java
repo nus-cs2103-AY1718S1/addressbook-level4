@@ -1,21 +1,17 @@
 package seedu.address.ui;
 
-import java.time.LocalDate;
 import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
 
-import com.google.common.eventbus.Subscribe;
-
 import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.CalendarSelectionChangedEvent;
 import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
-import seedu.address.commons.util.DateTimeUtil;
 import seedu.address.model.event.Event;
 
 //@@author eldriclim

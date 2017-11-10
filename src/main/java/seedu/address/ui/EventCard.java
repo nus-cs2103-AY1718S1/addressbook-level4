@@ -1,20 +1,16 @@
 package seedu.address.ui;
 
-import java.time.LocalDate;
-
 import com.google.common.eventbus.Subscribe;
+
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.events.ui.CalendarSelectionChangedEvent;
-import seedu.address.commons.util.DateTimeUtil;
 import seedu.address.model.event.Event;
-import seedu.address.model.event.EventTime;
 
 
 //@@author eldriclim
