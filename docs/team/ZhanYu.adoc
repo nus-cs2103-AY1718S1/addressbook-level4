@@ -1,4 +1,8 @@
 = Zhan Yu - Project Portfolio
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
