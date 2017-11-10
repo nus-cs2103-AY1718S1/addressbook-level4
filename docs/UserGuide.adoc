@@ -143,10 +143,10 @@ The `redo` command fails as there are no `undo` commands executed previously.
 This command shows a list of all themes that is available to you in pop-up window format in The Myth's Book. +
 Format: `themeslist`
 
-You should see the result of using `themeslist` as seen in Figure 5.14.1.
+You should see the result of using `themeslist` as seen in Figure 5.5.1.
 
 image::themeslist.png[width="800"]
-Figure 5.14.1 `themeslist` Result for Themes List Command
+Figure 5.5.1 `themeslist` Result for Themes List Command
 // end::themeslist[]
 
 // tag::switch[]
@@ -171,7 +171,7 @@ Examples:
 You should see the result of using `switch 2` as seen in Figure 5.15.1.
 
 image::Switch.png[width="800"]
-Figure 5.15.1 `switch 2` Result for Switch Command
+Figure 5.6.1 `switch 2` Result for Switch Command
 // end::switch[]
 
 === Clearing all entries : `clear`
@@ -185,10 +185,6 @@ Exits the program. +
 Format: `exit`
 
 == Persons Command Features
-
-=== Basic Command Features
-
-This section teaches you the `basic` commands that are available in `The Myth's Book`.
 
 ====
 *Command Format*
@@ -242,7 +238,6 @@ Website, address, home number, school email, and birthday are optional fields.
 Website should follow this format `https://www.anyName.com/anyContent` where both `anyName` and `anyContent` can be alphanumeric. +
 You must have `https://www.` and a domain name like `.com` or `.net` in the inputted website or it will result in inputted format error. +
 Birthday should be in proper format of "dd/mm/yyyy" where all numbers inputted for birthday are integers.
-
 //end::add[]
 
 === Listing all persons : `list`
@@ -325,10 +320,10 @@ displays the information details of the 1st person in the graphical user interfa
 `select 3` +
 1. By typing `list`, you will be able to view the current listing of all contacts with updated details. +
 2. Subsequently, by typing `select 3`, you are selecting the 3rd person in the most recent listing of The Myth's Book. +
-You should see the displayed result of `select 3` as seen in Figure 5.8.1 below.
+You should see the displayed result of `select 3` as seen in Figure 6.6.1 below.
 
 image::SelectCommandFinalResult.PNG[width="790"]
-Figure 5.8.1 `Select 3` Displayed Result
+Figure 6.6.1 `Select 3` Displayed Result
 
 // tag::find[]
 === Finding persons by name: `find`
@@ -390,8 +385,6 @@ Format: `birthdays`
 
 link:#the-myths-book---user-guide[Back To Top]
 
-=== Advanced Command Features
-
 // tag::access[]
 === Accessing a person's website : `access`
 
@@ -421,10 +414,10 @@ Examples:
 2. Subsequently, by typing `select 6`, it will select and show you information details of the 6th person in the most recent listing. +
 3. Finally, by typing `access 6`, it allows you to access the website details of the 6th person which is loaded into the browser.
 
-You should see the displayed result of `access 6` as seen in Figure 6.1.1 below.
+You should see the displayed result of `access 6` as seen in Figure 6.10.1 below.
 
 image::AccessCommandFinalResult.PNG[width="790"]
-Figure 6.1.1 `Access 6` Result for Access Command
+Figure 6.10.1 `Access 6` Result for Access Command
 // end::access[]
 
 // tag::locate[]
@@ -455,10 +448,10 @@ the generated list which is then loaded into the browser with a Google Maps Sear
 1. By typing `list`, it lists down all the contacts. +
 2. Subsequently, by typing `select 6`, it will select and show you information details of the 6th person in the most recent listing. +
 3. Finally, by typing `locate 6`, it allows you to access the address details of the 6th person which is loaded into the browser. +
-4. You should see the displayed result of the person's address in a Google Maps Search as seen in Figure 6.6.1 below.
+4. You should see the displayed result of the person's address in a Google Maps Search as seen in Figure 6.11.1 below.
 
 image::LocationCommandFinalResult.PNG[width="790"]
-Figure 6.6.1 Location Command Result
+Figure 6.11.1 Location Command Result
 // end::locate[]
 
 // tag::favouriteunfavourite[]
@@ -525,10 +518,10 @@ This command replaces the list of contacts, and subsequently lists all the event
 
 Format: `events`
 
-You should see the result of using `events` as seen in Figure 5.4.1.
+You should see the result of using `events` as seen in Figure 7.1.1.
 
 image::events.png[width="800"]
-Figure 5.4.1 `events` Result for Events Command
+Figure 7.1.1 `events` Result for Events Command
 // end::events[]
 
 // tag::addevent[]
@@ -595,18 +588,18 @@ The Calendar is a graphical user interface that displays a calendar for the user
 You will be able to navigate through different months to view the events on different days and dates of different months.
 
 image::calendar.PNG[width="700"]
-Figure 7.2.1
+Figure 8.2.1
 
-Furthermore, you can add events after clicking on the specific date. A pop up window (Figure 7.2.2) will appear prompting you to fill up the details of the event.
+Furthermore, you can add events after clicking on the specific date. A pop up window (Figure 8.2.2) will appear prompting you to fill up the details of the event.
 
 image::popupwindow.PNG[width="300"]
-Figure 7.2.2
+Figure 8.2.2
 
-After adding an event, the Calendar will be populated with a colour over the chosen date of the Event. The day that has an event will be shown as seen in Figure 7.2.3 below.
+After adding an event, the Calendar will be populated with a colour over the chosen date of the Event. The day that has an event will be shown as seen in Figure 8.2.3 below.
 The calendar will also be populated after adding an event through the link:#62-adding-an-event--addevent[Add Event Command].
 
 image::populatecalendar.PNG[width="700"]
-Figure 7.2.3
+Figure 8.2.3
 
 // end::calendar[]
 
@@ -617,6 +610,7 @@ UI that is of a bright colour scheme as compared to the default `Dark Theme`. +
 You will be able to switch between `Bright Theme` and `Dark Theme` through the command `switch`.
 
 image::BrightTheme.png[width="800"]
+Figure 8.3.1 `Bright Theme`
 
 link:#the-myths-book---user-guide[Back To Top]
 // end::brighttheme[]
@@ -641,45 +635,53 @@ link:#the-myths-book---user-guide[Back To Top]
 
 =======
 
-Basic Commands
+General Commands
 
-* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL [w/WEBSITE] [a/ADDRESS] [h/HOME_NUMBER] [se/SCHOOL_EMAIL] [b/BIRTHDAY] [t/TAG]...` +
-e.g. `add n/James p/22224444 e/james@example.com w/https://www.facebook.com/james a/123, Clementi Rd, 1234665 h/65812131 se/james@u.nus.edu b/12/11/1972 t/friend`
-* *Birthday* : `birthdays`
 * *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [h/HOME_NUMBER] [e/EMAIL] [se/SCHOOL_EMAIL] [w/WEBSITE] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *FindTag* : `findtag TAG [MORE_TAGS]` +
-e.g. `findtag friends neighbours`
+* *Exit* : `exit`
 * *Help* : `help`
 * *History* : `history`
-* *List* : `list`
 * *Redo* : `redo`
-* *Select* : `select INDEX` +
-e.g. `select 2`
-* *Sort* : `sort`
 * *SwitchTheme* : `switchtheme INDEX` +
 e.g. `switchtheme 2`
 * *ThemesList* : `themeslist`
 * *Undo* : `undo`
 
-Advanced Commands
+Persons Commands
 
 * *Access* : `access INDEX` +
 e.g. `access 2`
-* *AddEvent* : `addevent n/NAME d/DATE a/ADDRESS` +
-e.g. `addevent n/IHG Floorball d/16/01/2018 a/NUS Sports Recreation Centre`
+* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL [w/WEBSITE] [a/ADDRESS] [h/HOME_NUMBER] [se/SCHOOL_EMAIL] [b/BIRTHDAY] [t/TAG]...` +
+e.g. `add n/James p/22224444 e/james@example.com w/https://www.facebook.com/james a/123, Clementi Rd, 1234665 h/65812131 se/james@u.nus.edu b/12/11/1972 t/friend`
+* *Birthday* : `birthdays`
+* *Delete* : `delete INDEX` +
+e.g. `delete 3`
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [h/HOME_NUMBER] [e/EMAIL] [se/SCHOOL_EMAIL] [w/WEBSITE] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` +
+e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Favourite* : `favourite INDEX` +
 e.g. `favourite 3`
 * *FavouriteList* : `favouritelist`
+* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+e.g. `find James Jake`
+* *FindTag* : `findtag TAG [MORE_TAGS]` +
+e.g. `findtag friends neighbours`
+* *List* : `list`
 * *Locate* : `locate INDEX` +
 e.g. `locate 2`
+* *Select* : `select INDEX` +
+e.g. `select 2`
+* *Sort* : `sort`
 * *Unfavourite* : `unfavourite INDEX` +
 e.g. `unfavourite 3`
+
+Events Commands
+
+* *AddEvent* : `addevent n/NAME d/DATE a/ADDRESS` +
+e.g. `addevent n/IHG Floorball d/16/01/2018 a/NUS Sports Recreation Centre`
+* *DeleteEvent* : `deleteevent INDEX` +
+e.g. `deleteevent 2`
+* *Events* : `events`
+
 =======
 
 link:#the-myths-book---user-guide[Back To Top]
