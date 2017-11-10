@@ -82,12 +82,12 @@ public class AddTaskCommandParserTest {
         assertParseSuccess(parser, DESCRIPTION_QUOTED_PAPER, new AddTaskCommand(expectedTask));
     }
 
-   // @Test
-   // public void parse_compulsoryFieldMissing_failure() {
-     /*   String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE);
+    @Test
+    public void parse_compulsoryFieldMissing_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE);
 
         // missing description
-        assertParseFailure(parser, STARTDATE_DESC_PAPER + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT,
+        assertParseFailure(parser, DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT,
                 expectedMessage);
 
         // all missing values

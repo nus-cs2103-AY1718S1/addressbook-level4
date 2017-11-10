@@ -20,8 +20,10 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.task.DateTimeFormatter;
 import seedu.address.model.task.DateTimeValidator;
 import seedu.address.model.task.Deadline;
+import seedu.address.model.task.EventTime;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.UniqueTaskList;
@@ -260,9 +262,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addTask(ReadOnlyTask t) throws IllegalValueException {
         Task newTask = new Task(t);
         if (t.getDeadline().isEmpty() && t.getEndTime().isPresent()) {
-            newTask.setDeadline(new Deadline(DateTimeValidator.formatDate(new Date())));
+            newTask.setDeadline(new Deadline(DateTimeFormatter.formatDate(new Date())));
         }
-        System.out.println(newTask);
+        if (t.getStartTime().isPresent() && !t.getEndTime().isPresent()) {
+            newTask.setEndTime(t.getStartTime());
+            newTask.setStartTime(new EventTime(""));
+        }
         syncMasterTagListWith(newTask);
         tasks.add(newTask);
     }

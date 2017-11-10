@@ -24,7 +24,6 @@ public class XmlAdaptedTask {
     private String description;
     @XmlElement
     private String deadline;
-    private Suffix deadlineRecurInterval;
     @XmlElement
     private String startTime;
     @XmlElement
@@ -49,7 +48,6 @@ public class XmlAdaptedTask {
     public XmlAdaptedTask(ReadOnlyTask source) {
         description = source.getDescription().taskDescription;
         deadline = source.getDeadline().date;
-        deadlineRecurInterval = source.getDeadline().recurInterval;
         startTime = source.getStartTime().time;
         endTime = source.getEndTime().time;
         tagged = new ArrayList<>();
@@ -69,7 +67,7 @@ public class XmlAdaptedTask {
             taskTags.add(tag.toModelType());
         }
         final Description description = new Description(this.description);
-        final Deadline deadline = new Deadline(this.deadline, this.deadlineRecurInterval);
+        final Deadline deadline = new Deadline(this.deadline);
         final EventTime startTime = new EventTime(this.startTime);
         final EventTime endTime = new EventTime(this.endTime);
         final Set<Tag> tags = new HashSet<>(taskTags);

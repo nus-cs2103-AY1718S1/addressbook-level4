@@ -6,15 +6,20 @@ import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_GRAD_SC
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESCRIPTION;;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_STARTTIME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_STARTTIME_VALID_ENDTIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIME_DESC_INCORRECT_ORDER;
 import static seedu.address.logic.commands.CommandTestUtil.MIXED_TIME_DESC_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.MIXED_TIME_DESC_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_URGENT;
+import static seedu.address.logic.commands.CommandTestUtil.TIME_DESC_GYM;
 import static seedu.address.logic.commands.CommandTestUtil.TIME_DESC_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.UNQUOTED_DESCRIPTION_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_GRAD_SCHOOL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_GYM;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ENDTIME_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ENDTIME_INTERNSHIP;
@@ -22,7 +27,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTTIME_GRAD_
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTTIME_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_URGENT;
 import static seedu.address.testutil.TypicalTasks.BUY_PRESENTS;
-import static seedu.address.testutil.TypicalTasks.GRAD_SCHOOL;
 import static seedu.address.testutil.TypicalTasks.GYM;
 import static seedu.address.testutil.TypicalTasks.INTERNSHIP;
 import static seedu.address.testutil.TypicalTasks.MEETUP;
@@ -42,7 +46,6 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.DateTimeValidator;
-import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.testutil.TaskBuilder;
 import seedu.address.testutil.TaskUtil;
 
@@ -118,6 +121,10 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
         assert getModel().getAddressBook().getTaskList().size() == 0;
         assertCommandSuccess(INTERNSHIP);
 
+        /* Case: add a task, missing deadline -> current day added as deadline */
+        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_GYM + TIME_DESC_GYM + TAG_DESC_URGENT;
+        assertCommandSuccess(command, GYM);
+
         /* Case: add a task, missing date and time -> added */
         assertCommandSuccess(BUY_PRESENTS);
 
@@ -125,10 +132,7 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(SUBMISSION);
 
         /* Case: add a task, missing end time -> added */
-//        assertCommandSuccess(MEETUP);
-
-        /* Case: add a task, missing deadline -> current day added */
-//        assertCommandSuccess(GYM);
+        assertCommandSuccess(MEETUP);
 
         /* Case: missing description -> rejected */
         command = AddTaskCommand.COMMAND_WORD + " " + DEADLINE_DESC_INTERNSHIP + TIME_DESC_INTERNSHIP;
@@ -148,9 +152,19 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, DateTimeValidator.MESSAGE_DATE_CONSTRAINTS);
 
         /* Case: invalid start time -> rejected */
-      /*  command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + INVALID_STARTDATE_DESC
-                + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT;
-        assertCommandFailure(command, DateTimeValidator.MESSAGE_DATE_CONSTRAINTS);*/
+        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + DEADLINE_DESC_INTERNSHIP
+                + INVALID_STARTTIME_DESC + TAG_DESC_URGENT;
+        assertCommandFailure(command, DateTimeValidator.MESSAGE_TIME_CONSTRAINTS);
+
+        /* Case: add a task with an invalid start time and a valid end time -> rejected */
+        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + DEADLINE_DESC_INTERNSHIP
+                + INVALID_STARTTIME_VALID_ENDTIME_DESC + TAG_DESC_URGENT;
+        assertCommandFailure(command, DateTimeValidator.MESSAGE_TIME_CONSTRAINTS);
+
+        /* Case: add a task with start time after end time -> rejected */
+        command = AddTaskCommand.COMMAND_WORD + " " + VALID_DESCRIPTION_INTERNSHIP + DEADLINE_DESC_INTERNSHIP
+                + INVALID_TIME_DESC_INCORRECT_ORDER;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
 
         /* Case: invalid deadline -> rejected */
         command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + TIME_DESC_INTERNSHIP

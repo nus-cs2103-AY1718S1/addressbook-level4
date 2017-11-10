@@ -12,11 +12,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_AT;
 import java.util.Optional;
 import java.util.Date;
 import java.util.Set;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTimeValidator;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.EventTime;
@@ -31,6 +34,8 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
 
     private static final int INDEX_START_TIME = 0;
     private static final int INDEX_END_TIME = 1;
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddTaskCommand
@@ -52,13 +57,18 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
             Description description = ParserUtil.parseDescription(argMultimap.getPreamble()).get();
             Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE_BY,
                     PREFIX_DEADLINE_FROM, PREFIX_DEADLINE_ON))
-                    .orElse(new Deadline());
+                    .orElse(new Deadline(""));
             EventTime[] eventTimes = ParserUtil.parseEventTimes(argMultimap.getValue(PREFIX_TIME_AT))
                     .orElse(new EventTime[]{new EventTime(""), new EventTime("")});
+            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+
+            if (!DateTimeValidator.isStartTimeBeforeEndTime(eventTimes[INDEX_START_TIME], eventTimes[INDEX_END_TIME])) {
+                throw new IllegalValueException(DateTimeValidator.MESSAGE_TIME_CONSTRAINTS);
+            }
+
             if (deadline.isEmpty() && eventTimes[INDEX_END_TIME].isPresent()) {
                 deadline = ParserUtil.parseDeadline(Optional.of(new Date().toString())).get();
             }
-            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             ReadOnlyTask task = new Task(description, deadline, eventTimes[INDEX_START_TIME],
                     eventTimes[INDEX_END_TIME], tagList);

@@ -24,7 +24,6 @@ public class TaskBuilder {
     public static final String DEFAULT_DEADLINE = "Thu, Oct 26, '17";
     public static final String DEFAULT_START_TIME = "10:00";
     public static final String DEFAULT_END_TIME = "22:00";
-    public static final Suffix DEFAULT_RECUR_INTERVAL = SUFFIX_NO_RECUR_INTERVAL;
     public static final String DEFAULT_TAG = "urgent";
 
     private Task task;
@@ -32,7 +31,7 @@ public class TaskBuilder {
     public TaskBuilder() {
         try {
             Description defaultDescription = new Description(DEFAULT_DESCRIPTION);
-            Deadline defaultDeadline = new Deadline(DEFAULT_DEADLINE, DEFAULT_RECUR_INTERVAL);
+            Deadline defaultDeadline = new Deadline(DEFAULT_DEADLINE);
             EventTime defaultStartTime = new EventTime(DEFAULT_START_TIME);
             EventTime defaultEndTime = new EventTime(DEFAULT_END_TIME);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAG);
@@ -65,7 +64,7 @@ public class TaskBuilder {
      * Sets the {@code Deadline} of the {@code Task} that is being built.
      */
     public TaskBuilder withDeadline(String deadline) {
-        this.task.setDeadline(new Deadline(deadline, DEFAULT_RECUR_INTERVAL));
+        this.task.setDeadline(new Deadline(deadline));
         return this;
     }
 

@@ -4,7 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author raisa2010
@@ -13,7 +15,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public abstract class DateTimeValidator {
 
-    public static final String DISPLAY_DATE_FORMAT = "EEE, MMM d, ''yy";
     public static final String[] DOTTED_DATE_FORMATS = new String[]{"MM.dd.yyyy", "MM.d.yyyy", "M.d.yyyy",
         "M.d.yy", "M.dd.yy", "MM.d.yy", "MM.dd.yy", "M.dd.yyyy"};
     public static final String[] VALID_DATE_FORMATS = new String[]{"MM-dd-yyyy", "M-dd-yyyy", "M-d-yyyy",
@@ -29,15 +30,7 @@ public abstract class DateTimeValidator {
     public static final String MESSAGE_TIME_CONSTRAINTS = "Time is invalid";
 
     /**
-     * Formats the last date of a given {@code Date} object into a String.
-     */
-    public static String formatDate(Date date) throws IllegalValueException {
-        SimpleDateFormat sdf = new SimpleDateFormat(DISPLAY_DATE_FORMAT);
-        return sdf.format(date);
-    }
-
-    /**
-     * Validates a given {@code String} inputDate given in an MDY format.
+     * Validates a given {@code inputDate} given in an MDY format.
      */
     public static boolean isDateValid(String inputDate) {
         String trimmedDate = inputDate.trim();
@@ -56,6 +49,19 @@ public abstract class DateTimeValidator {
             }
         }
         return true;
+    }
+
+    /**
+     * Validates a given {@code startTime} to check if it is before the {@code endTime}.
+     */
+    public static boolean isStartTimeBeforeEndTime(EventTime startTime, EventTime endTime) {
+        try {
+            Date parsedStartTime = new SimpleDateFormat("HH:mm").parse(startTime.toString());
+            Date parsedEndTime = new SimpleDateFormat("HH:mm").parse(endTime.toString());
+            return parsedStartTime.before(parsedEndTime);
+        } catch (ParseException p) {
+            return true;
+        }
     }
 
     /**

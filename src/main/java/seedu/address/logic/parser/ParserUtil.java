@@ -27,6 +27,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTimeFormatter;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.EventTime;
@@ -135,12 +136,11 @@ public class ParserUtil {
             throws IllegalValueException {
         requireNonNull(date);
         if (date.isPresent() && !DateTimeValidator.getDottedFormat(date.get()).isEmpty()) {
-            return Optional.of(new Deadline(DateTimeValidator.formatDate(parseDottedDate(date.get())),
-                    parseRecurInterval(date.get())));
+            return Optional.of(new Deadline(DateTimeFormatter.formatDate(parseDottedDate(date.get()))));
         }
         if ((date.isPresent() && !date.get().isEmpty())) {
             Date parsedDate = parseDate(date.get());
-            return Optional.of(new Deadline(DateTimeValidator.formatDate(parsedDate), SUFFIX_NO_RECUR_INTERVAL));
+            return Optional.of(new Deadline(DateTimeFormatter.formatDate(parsedDate)));
         }
             return Optional.empty();
     }
@@ -157,9 +157,9 @@ public class ParserUtil {
             }
             List<Date> dates = dateGroup.get(dateGroup.size() - 1).getDates();
 
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-            String endTime = sdf.format(dates.get(dates.size() - 1));
-            String startTime = dates.size() > 1 ? sdf.format(dates.get(dates.size() - 2)) : "";
+
+            String endTime = DateTimeFormatter.formatTime(dates.get(dates.size() - 1));
+            String startTime = dates.size() > 1 ? DateTimeFormatter.formatTime(dates.get(dates.size() - 2)) : "";
 
             return Optional.of(new EventTime[]{new EventTime(startTime), new EventTime(endTime)});
         } else {
@@ -190,15 +190,5 @@ public class ParserUtil {
         } catch (ParseException p) {
             throw new IllegalValueException(DateTimeValidator.MESSAGE_DATE_CONSTRAINTS);
         }
-    }
-
-    /**
-     * Parses the {@code String dateString} of a date into a {@code Suffix} specifying its recur interval.
-     */
-    public static Suffix parseRecurInterval(String dateString) {
-        return (dateString.contains(SUFFIX_RECURRING_DATE_WEEKLY.toString()) ? SUFFIX_RECURRING_DATE_WEEKLY
-                : (dateString.contains(SUFFIX_RECURRING_DATE_MONTHLY.toString())) ? SUFFIX_RECURRING_DATE_MONTHLY
-                : (dateString.contains(SUFFIX_RECURRING_DATE_YEARLY.toString())) ? SUFFIX_RECURRING_DATE_YEARLY
-                : SUFFIX_NO_RECUR_INTERVAL);
     }
 }

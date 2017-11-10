@@ -99,7 +99,7 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
             return Optional.empty();
         }
         return dates.size() == 1 && dates.contains("")
-                ? Optional.of(new Deadline("", SUFFIX_NO_RECUR_INTERVAL))
+                ? Optional.of(new Deadline(""))
                 : ParserUtil.parseDeadline(Optional.of(dates.get(dates.size() - 1)));
 
     }

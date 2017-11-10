@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 //@@author raisa2010
-public class TaskDatesTest {
+public class DeadlineTest {
 
     @Test
     public void isValid() {

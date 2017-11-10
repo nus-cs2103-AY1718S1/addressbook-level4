@@ -2,6 +2,7 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_TODAY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_URGENT;
@@ -25,7 +26,8 @@ public class TypicalTasks {
             .withStartTime("10:20")
             .withEndTime("11:30").build();
     public static final ReadOnlyTask GYM = new TaskBuilder().withDescription("Start going to the gym")
-            .withDeadline("").withStartTime("13:01").withEndTime("14:09").withTags(VALID_TAG_URGENT).build();
+            .withDeadline(VALID_DEADLINE_TODAY).withStartTime("13:01").withEndTime("14:09").withTags(VALID_TAG_URGENT)
+            .build();
     public static final ReadOnlyTask BUY_TICKETS = new TaskBuilder()
             .withDescription("Get tickets two weeks before flight")
             .withStartTime("15:00").withEndTime("18:00").withDeadline("Fri, Nov 20, '17").build();

@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ENDTIME_TO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_AT;
 
@@ -27,9 +28,9 @@ public class TaskUtil {
         sb.append(task.getDescription().taskDescription + " ");
         sb.append(task.getDeadline().isEmpty() ? "" : PREFIX_DEADLINE_BY + " " + task.getDeadline().date.toString()
                 + " ");
-        sb.append((task.getStartTime().isPresent() | task.getEndTime().isPresent()) ? PREFIX_TIME_AT + " " : " ");
-        sb.append(task.getStartTime().time.toString() + " ");
-        sb.append(task.getEndTime().isPresent() ? "to " + task.getEndTime() + " " : "");
+        sb.append((task.getStartTime().isPresent() | task.getEndTime().isPresent()) ? PREFIX_TIME_AT : " ");
+        sb.append(" " + task.getStartTime().time.toString() + " ");
+        sb.append(task.getEndTime().isPresent() ? " " + PREFIX_ENDTIME_TO + " " + task.getEndTime() + " " : "");
         task.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );

@@ -2,10 +2,6 @@ package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;
 
-import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
-
-import seedu.address.logic.parser.Suffix;
-
 //@@author raisa2010
 /**
  * Represents the deadline of a task in the task manager.
@@ -14,28 +10,15 @@ import seedu.address.logic.parser.Suffix;
 public class Deadline {
 
     public final String date;
-    public final Suffix recurInterval;
 
     /**
      * Creates an empty deadline with no recur interval if the deadline is not specified.
      */
-    public Deadline() {
-        this.date = "";
-        this.recurInterval = SUFFIX_NO_RECUR_INTERVAL;
-    }
-
     public Deadline(String date) {
-        this.date = date.trim();
-        this.recurInterval = SUFFIX_NO_RECUR_INTERVAL;
-    }
 
-    /**
-     * Creates a deadline using the {@code String date} and {@code Suffix recurInterval} given.
-     */
-    public Deadline(String date, Suffix recurInterval) {
         requireNonNull(date);
-        this.date = date.trim();
-        this.recurInterval = recurInterval;
+        String trimmedDate = date.trim();
+        this.date = trimmedDate;
     }
 
     /**

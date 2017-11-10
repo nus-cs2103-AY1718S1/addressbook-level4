@@ -1,10 +1,13 @@
 package seedu.address.model.task;
 
+import static java.util.Objects.requireNonNull;
+
 public class EventTime {
 
     public final String time;
 
     public EventTime(String time) {
+        requireNonNull(time);
         String trimmedTime = time.trim();
         this.time = trimmedTime;
     }
