@@ -184,11 +184,9 @@ public class ModelManager extends ComponentManager implements Model {
         for (int i = 0; i < bookedList.size(); i++) {
             if (bookedList.get(i).equals(target)) {
                 throw new DuplicateBookedSlotException();
-            } else if (i == (bookedList.size() - 1)) {
-                bookedList.add(target);
-                break;
             }
         }
+        bookedList.add(target);
     }
 
     @Override
