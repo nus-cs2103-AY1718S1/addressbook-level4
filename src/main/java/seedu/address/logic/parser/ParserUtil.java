@@ -37,12 +37,14 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
     //@@arnollim
-    public static final String MESSAGE_INVALID_FILEPATH = "Filepath cannot contain illegal characters";
+    public static final String ILLEGAL_FILENAME_CHARACTERS = "^\\\\/:*?\"<>|";
+    public static final String MESSAGE_INVALID_FILEPATH = "Filepath cannot contain illegal characters: "
+                                                + ILLEGAL_FILENAME_CHARACTERS;
 
     public static final Pattern PRINT_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
-            Pattern.compile("(?<filename>[^/]+)"); //name of .txt file to be saved as
+            Pattern.compile("(?<filename>[^/]+)"); //filename: name of .txt file to be saved as
     public static final Pattern PRINT_ARGS_ILLEGAL =
-            Pattern.compile("(?<filename>[^/#@<>.:|?*]+)");//Filepath cannot include illegal characters
+            Pattern.compile("(?<filename>[^\\\\/:*?\"<>|]+)");//Filepath cannot include illegal characters
     //@@author
     public static final String[] SELECT_ARGS_PERSON = {"p", "person", "l", "left"};
     public static final String[] SELECT_ARGS_INSURANCE = {"i", "insurance", "in", "r", "right"};
@@ -80,7 +82,6 @@ public class ParserUtil {
         }
         return matcher.group("filename");
     }
-
     //author
 
     /**
