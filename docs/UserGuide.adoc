@@ -79,7 +79,7 @@ This app will not work with earlier versions of Java 8.
 .  Double-click the file to start Bluebird. Once started, a quick start tutorial as shown in Figure 2.1 below will pop out to guide you on
    how to use BlueBird.
 +
-image::TutorialStart.png[width="790"]
+image::TutorialStart.PNG[width="790"]
 Figure 2.1: Quick start tutorial for Bluebird
 // end::tutorial[]
 
