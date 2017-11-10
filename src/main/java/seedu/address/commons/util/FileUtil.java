@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import org.apache.commons.io.FilenameUtils;
+
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -21,7 +23,6 @@ public class FileUtil {
     }
 
     //@@author chrisboo
-
     /**
      * Return a file from FileChooser.
      * If {@code isNewFile} is true, opens a FileChooser that creates/overwrite file.
@@ -115,4 +116,7 @@ public class FileUtil {
         return pathWithForwardSlash.replace("/", File.separator);
     }
 
+    public static String getExtension(File file) {
+        return FilenameUtils.getExtension(file.getPath());
+    }
 }

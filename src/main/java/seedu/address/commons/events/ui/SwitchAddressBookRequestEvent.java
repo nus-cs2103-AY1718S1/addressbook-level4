@@ -1,5 +1,8 @@
 package seedu.address.commons.events.ui;
 
+import static seedu.address.commons.util.FileUtil.getExtension;
+import static seedu.address.commons.util.FileUtil.isFileExists;
+
 import java.io.File;
 
 import seedu.address.commons.events.BaseEvent;
@@ -15,6 +18,14 @@ public class SwitchAddressBookRequestEvent extends BaseEvent {
     private boolean isNewFile;
 
     public SwitchAddressBookRequestEvent(File file, boolean isNewFile) {
+        if (getExtension(file).equals("xml")) {
+            throw new Exception("Invalid file!");
+        }
+
+        if (isNewFile && isFileExists(file)) {
+            throw new Exception("Cannot overwrite existing file!");
+        }
+
         fileName = file.getName();
         filePath = file.getPath();
         this.isNewFile = isNewFile;
