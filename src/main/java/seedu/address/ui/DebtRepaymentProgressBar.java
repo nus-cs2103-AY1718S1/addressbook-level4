@@ -24,8 +24,9 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
     private static final String COMPLETED_REPAYMENT_MESSAGE = "Completed";
     private static final String OVERDUE_REPAYMENT_MESSAGE = "Overdue";
     private static final String NO_DEADLINE_REPAYMENT_MESSAGE = "No deadline set";
-    private static final String DURATION_LEFT_TO_REPAY_DEBT_MESSAGE = "%1$s years(s) %2$s month(s) and "
-            + "%3$s day(s) left to repay debt";
+    private static final String YEARS_LEFT_TO_REPAY_DEBT_MESSAGE = "%1$s years(s)";
+    private static final String MONTHS_LEFT_TO_REPAY_DEBT_MESSAGE = " %1$s month(s)";
+    private static final String DAYS_LEFT_TO_REPAY_DEBT_MESSAGE = " %1$s day(s)";
     private Double totalDebt;
     private Double repaid;
     private Double ratio;
@@ -98,11 +99,34 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
                 return new SimpleObjectProperty<>(OVERDUE_REPAYMENT_MESSAGE);
             } else {
                 Period timeInterval = Period.between(today, deadlineDate);
-                String repaymentInfo = String.format(DURATION_LEFT_TO_REPAY_DEBT_MESSAGE, timeInterval.getYears(),
-                        timeInterval.getMonths(), timeInterval.getDays());
+                long years = timeInterval.getYears();
+                long months = timeInterval.getMonths();
+                long days = timeInterval.getDays();
 
-                return new SimpleObjectProperty<>(repaymentInfo);
+                return new SimpleObjectProperty<>(formatTimeTillDeadline(years, months, days));
             }
         }
+    }
+
+    /**
+     * Formats the difference in time from now till a deadline into a {@code String}
+     * @param years years left till deadline
+     * @param months months left till deadline
+     * @param days days left till deadline
+     * @return a formatted string that states the difference between now and the deadline
+     */
+    private String formatTimeTillDeadline(long years, long months, long days) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (years != 0 ) {
+            stringBuilder.append(String.format(YEARS_LEFT_TO_REPAY_DEBT_MESSAGE, years));
+        }
+        if (months != 0) {
+            stringBuilder.append(String.format(MONTHS_LEFT_TO_REPAY_DEBT_MESSAGE, months));
+        }
+        if (days != 0) {
+            stringBuilder.append(String.format(DAYS_LEFT_TO_REPAY_DEBT_MESSAGE, days));
+        }
+        stringBuilder.append(" till deadline");
+        return stringBuilder.toString();
     }
 }
