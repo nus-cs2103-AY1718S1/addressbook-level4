@@ -2,6 +2,9 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
+import static seedu.address.ui.LoginView.isShowingLoginView;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Password;
@@ -22,12 +25,16 @@ public class LoginCommandParser implements Parser<LoginCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the LoginCommand
      * and returns a LoginCommand object for execution.
-     * This method is used to parse arguments for CLI login.
      * @throws ParseException if the user input does not conform to the expected format
      */
     public LoginCommand parse(String args) throws ParseException {
         requireNonNull(args);
         String trimmedArgs = args.trim();
+
+        if (isShowingLoginView()) {
+            parseForGui(args);
+        }
+
         try {
             String[] argsList = trimmedArgs.split(ONE_OR_MORE_SPACES_REGEX);
 
@@ -47,23 +54,26 @@ public class LoginCommandParser implements Parser<LoginCommand> {
     }
 
     /**
-     * Parses the given {@code String} of arguments in the context of the LoginCommand
-     * and returns an LoginCommand object for execution.
      * This method is used to parse arguments for GUI login.
+     * A separate {@code parse} method is needed to check if either username or password field is empty and display
+     * the correct error message.
+     * Parses the given {@code String} of arguments obtained from login GUI in the context of the LoginCommand
+     * and returns an LoginCommand object for execution.
      * @throws ParseException if the user input does not conform to the expected format
      */
-    public LoginCommand parse(String enteredUsername, String enteredPassword) throws ParseException {
-        requireNonNull(enteredUsername);
-        requireNonNull(enteredPassword);
-        if (enteredUsername.isEmpty()) {
+    public LoginCommand parseForGui(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_USERNAME, PREFIX_PASSWORD);
+
+        if (argMultimap.getValue(PREFIX_USERNAME).get().isEmpty()) {
             throw new ParseException(EMPTY_USERNAME_MESSAGE);
         }
-        if (enteredPassword.isEmpty()) {
+        if (argMultimap.getValue(PREFIX_PASSWORD).get().isEmpty()) {
             throw new ParseException(EMPTY_PASSWORD_MESSAGE);
         }
         try {
-            Username username = new Username(enteredUsername);
-            Password password = new Password(enteredPassword);
+            Username username = ParserUtil.parseUsername(argMultimap.getValue(PREFIX_USERNAME).get());
+            Password password = ParserUtil.parsePassword(argMultimap.getValue(PREFIX_PASSWORD).get());
             return new LoginCommand(username, password);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage());
