@@ -7,6 +7,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,6 +40,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -115,6 +117,7 @@ public class AddressBookParserTest {
         SortCommand command = (SortCommand) parser.parseCommand(
                 SortCommand.COMMAND_WORD + " " + "name asc");
         assertTrue(command instanceof SortCommand);
+        assertEquals(new SortCommand(ReadOnlyPerson.NAMESORTASC), command);
     }
 
     @Test
@@ -122,6 +125,7 @@ public class AddressBookParserTest {
         ExportCommand command = (ExportCommand) parser.parseCommand(
                 ExportCommand.COMMAND_WORD + " " + "output.vcf");
         assertTrue(command instanceof ExportCommand);
+        assertEquals(new ExportCommand("output.vcf"), command);
     }
 
     @Test
@@ -129,6 +133,7 @@ public class AddressBookParserTest {
         ImportCommand command = (ImportCommand) parser.parseCommand(ImportCommand.COMMAND_WORD + " "
                         + ImportCommandParserTest.TEST_FILE_DIRECTORY + "ValidTypicalAddressBook.xml");
         assertTrue(command instanceof  ImportCommand);
+        assertEquals(new ImportCommand(getTypicalAddressBook().getPersonList()), command);
     }
     //@@author
 
