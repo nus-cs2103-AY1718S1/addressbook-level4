@@ -212,6 +212,7 @@ public class DateTimeUtil {
 ```
 ###### \java\seedu\address\commons\util\EventOutputUtil.java
 ``` java
+
 /**
  * Utility method to output Event attributes in human-readable time
  */
@@ -263,18 +264,10 @@ public class EventOutputUtil {
             return "none";
         }
 
-        StringBuilder sb = new StringBuilder();
+        ArrayList<String> memberNames = new ArrayList<>(
+                members.stream().map(p -> p.getName().toString()).collect(Collectors.toList()));
 
-        for (ReadOnlyPerson p : members) {
-            sb.append(p.getName().fullName);
-            sb.append(", ");
-        }
-
-        //Remove trailing ", "
-        sb.deleteCharAt(sb.length() - 1);
-        sb.deleteCharAt(sb.length() - 1);
-
-        return sb.toString();
+        return StringUtil.multiStringPrint(memberNames, ", ");
     }
 
     /**
@@ -288,9 +281,12 @@ public class EventOutputUtil {
      */
     public static String toStringEvent(EventName eventName, EventTime eventTime,
                                        EventDuration eventDuration, MemberList memberList) {
+
+        ArrayList<ReadOnlyPerson> members = new ArrayList<>(memberList.asReadOnlyMemberList());
+
         return "Name: " + eventName.toString() + " Time: " + eventTime.toString()
                 + " Duration: " + eventDuration.toString() + "\n"
-                + "Members: " + memberList.toString();
+                + "Members: " + toStringMembers(members);
     }
 }
 ```
@@ -321,6 +317,7 @@ public class EventOutputUtil {
 ```
 ###### \java\seedu\address\logic\commands\ScheduleAddCommand.java
 ``` java
+
 /**
  * Adds an Event to address book
  */
@@ -381,8 +378,16 @@ public class ScheduleAddCommand extends UndoableCommand {
         }
 
         try {
+            String commandResultString = "";
+            if (model.hasEvenClashes(event)) {
+                commandResultString += "Warning: An event clash has been detected.\n";
+            }
+
             model.addEvent(toUpdate, toReplace, event);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, event.toString()));
+
+            commandResultString += String.format(MESSAGE_SUCCESS, event.toString());
+
+            return new CommandResult(commandResultString);
         } catch (DuplicateEventException e) {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         } catch (DuplicatePersonException dpe) {
@@ -423,34 +428,6 @@ public class ScheduleAddCommand extends UndoableCommand {
         public Set<Event> createModifiableEventList(Set<Event> unmodifiableEventList) {
             Set<Event> modifiableEventList = new HashSet<>(unmodifiableEventList);
             return modifiableEventList;
-        }
-
-        public Name getName() {
-            return name;
-        }
-
-        public Phone getPhone() {
-            return phone;
-        }
-
-        public Email getEmail() {
-            return email;
-        }
-
-        public Address getAddress() {
-            return address;
-        }
-
-        public Set<Tag> getTags() {
-            return tags;
-        }
-
-        public Set<Event> getEvents() {
-            return events;
-        }
-
-        public DateAdded getDateAdded() {
-            return dateAdded;
         }
 
         public Person createUpdatedPerson() {
@@ -772,76 +749,6 @@ public class DateParseException extends ParseException {
 
 }
 ```
-###### \java\seedu\address\logic\parser\ScheduleAddCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new ScheduleAddCommand object
- */
-public class ScheduleAddCommandParser implements Parser<ScheduleAddCommand> {
-
-    private static final String ERROR_INVALID_DATE = "Invalid date detected.";
-    private static final String ERROR_PARSING_DURATION = "Duration has to be in the following format: #d#h#m\n"
-            + "d:day, h:hour, m:minute";
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the ScheduleAddCommand
-     * and returns an ScheduleAddCommand object for execution.
-     *
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public ScheduleAddCommand parse(String args) throws ParseException {
-        args.trim();
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_EVENT_NAME, PREFIX_EVENT_TIME,
-                        PREFIX_EVENT_DURATION, PREFIX_EVENT_MEMBER);
-
-        if (!arePrefixesPresent(argMultimap, PREFIX_EVENT_NAME, PREFIX_EVENT_TIME)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleAddCommand.MESSAGE_USAGE));
-        }
-
-
-        try {
-            String durationInput = argMultimap.getValue(PREFIX_EVENT_DURATION).isPresent()
-                    ? argMultimap.getValue(PREFIX_EVENT_DURATION).get().trim()
-                    : "";
-
-            if (!durationInput.matches("^|((?!$)(?:(\\d+)d)?(?:(\\d+)h)?(?:(\\d+)m)?)$")) {
-                throw new ParseException(ERROR_PARSING_DURATION);
-            }
-
-            EventName eventName = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_EVENT_NAME)).get();
-
-
-
-            EventTime eventTime = ParserUtil.parseEventTime(
-                    argMultimap.getValue(PREFIX_EVENT_TIME), durationInput).get();
-            EventDuration eventDuration = ParserUtil.parseEventDuration(
-                    durationInput);
-
-
-            ArrayList<Index> indexList = ParserUtil.parseIndexes(argMultimap.getValue(PREFIX_EVENT_MEMBER).get());
-
-            Set<Index> uniqueMemberIndexes = new HashSet<>(indexList);
-
-            return new ScheduleAddCommand(eventName, eventTime, eventDuration, uniqueMemberIndexes);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        } catch (DateTimeParseException dve) {
-            throw new ParseException(ERROR_INVALID_DATE, dve);
-        }
-    }
-
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-
-}
-```
 ###### \java\seedu\address\logic\parser\ScheduleRemoveCommandParser.java
 ``` java
 /**
@@ -960,6 +867,7 @@ public class SortCommandParser implements Parser<SortCommand> {
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
+
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
@@ -1016,7 +924,11 @@ public class SortCommandParser implements Parser<SortCommand> {
             throw new DuplicateEventException();
         }
 
-        updateListOfPerson(targets, editedPersons);
+        if (targets.isEmpty() && editedPersons.isEmpty()) {
+            events.add(event);
+        } else {
+            updateListOfPerson(targets, editedPersons);
+        }
         events.sort(LocalDate.now());
     }
 
@@ -1055,12 +967,35 @@ public class SortCommandParser implements Parser<SortCommand> {
 
     /**
      * Sort list of Events based on the the given date.
-     *
+     * <p>
      * Comparator logic and sorting details is found in {@code UniquePersonList#sort}
+     *
      * @param date
      */
     public void sortEvents(LocalDate date) {
         events.sort(date);
+    }
+
+    /**
+     * Check if the given event clashes with any events in the master list of events
+     *
+     * @param event
+     * @return true if a clash exist, otherwise return false
+     */
+    public boolean hasEventClashes(Event event) {
+
+        boolean hasClash = false;
+
+        for (Event e : events) {
+            hasClash = DateTimeUtil.checkEventClash(e, event);
+
+            if (hasClash) {
+                return hasClash;
+            }
+        }
+
+        return hasClash;
+
     }
 
     /**
@@ -1082,6 +1017,7 @@ public class SortCommandParser implements Parser<SortCommand> {
         personEvents.forEach(event -> correctEventReferences.add(masterEventObjects.get(event)));
         person.setEvents(correctEventReferences);
     }
+
 
     /**
      * Ensures that every event in these persons:
@@ -1130,6 +1066,7 @@ public class SortCommandParser implements Parser<SortCommand> {
 ```
 ###### \java\seedu\address\model\event\Event.java
 ``` java
+
 /**
  * Represents a Event in the address book, accepts an event with no members.
  * Guarantees: validity upon creation; potential errors handled in UniqueEventList
@@ -1142,6 +1079,9 @@ public class Event {
     private ObjectProperty<EventName> eventName;
     private ObjectProperty<EventTime> eventTime;
     private ObjectProperty<EventDuration> eventDuration;
+    private ObjectProperty<String> eventStatus = new SimpleObjectProperty<>();
+    private ObjectProperty<String> eventStatusStyle = new SimpleObjectProperty<>();
+
 
     public Event(MemberList members, EventName eventName, EventTime eventStartTime, EventDuration eventDuration) {
         requireNonNull(members);
@@ -1153,6 +1093,8 @@ public class Event {
         this.eventName = new SimpleObjectProperty<>(eventName);
         this.eventTime = new SimpleObjectProperty<>(eventStartTime);
         this.eventDuration = new SimpleObjectProperty<>(eventDuration);
+
+        setEventStatusDefaultState();
 
         assert getEventTime().getStart().plus(getEventDuration().getDuration()).equals(
                 getEventTime().getEnd());
@@ -1210,6 +1152,51 @@ public class Event {
         return members.get();
     }
 
+
+    public ObjectProperty<String> eventStatusProperty() {
+        return eventStatus;
+    }
+
+    public String getEventStatus() {
+        return eventStatus.get();
+    }
+
+    public void setEventStatusDefaultState() {
+        if (DateTimeUtil.containsReferenceDate(this, LocalDate.now())) {
+            eventStatus.setValue("Today");
+            eventStatusStyle.setValue("-fx-background-color: #fd720f");
+        } else if (eventTime.get().isUpcoming()) {
+            eventStatus.setValue("Upcoming");
+            eventStatusStyle.setValue("-fx-background-color: #009e73");
+        } else {
+            eventStatus.setValue("Past");
+            eventStatusStyle.setValue("-fx-background-color: #a31621");
+        }
+    }
+
+    /**
+     * Reset name and style of all status label
+     *
+     * @param date
+     */
+    public void updateEventStatusSelection(LocalDate date) {
+
+        setEventStatusDefaultState();
+
+        if (DateTimeUtil.containsReferenceDate(this, date)) {
+            eventStatus.setValue("Selected");
+            eventStatusStyle.setValue("-fx-background-color: #b91372");
+        }
+    }
+
+    public ObjectProperty<String> eventStatusStyleProperty() {
+        return eventStatusStyle;
+    }
+
+    public String getEventStatusStyle() {
+        return eventStatusStyle.get();
+    }
+
     /**
      * Checks all attribute of Events
      *
@@ -1236,6 +1223,7 @@ public class Event {
     public String toString() {
         return EventOutputUtil.toStringEvent(getEventName(), getEventTime(), getEventDuration(), getMemberList());
     }
+
 }
 ```
 ###### \java\seedu\address\model\event\EventDuration.java
@@ -1804,9 +1792,17 @@ public class UniqueEventList implements Iterable<Event> {
         return FXCollections.unmodifiableObservableList(filteredEvents);
 
     }
+
+    @Override
+    public boolean hasEvenClashes(Event event) {
+        requireNonNull(event);
+
+        return addressBook.hasEventClashes(event);
+    }
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
+
     /**
      * Handle event when Event in Event list is clicked.
      * <p>
@@ -1990,6 +1986,7 @@ public class XmlAdaptedEvent {
 ```
 ###### \java\seedu\address\ui\CalendarView.java
 ``` java
+
 /**
  * An UI component that displays a clickable-Calendar.
  */
@@ -2061,7 +2058,6 @@ public class CalendarView extends UiPart<Region> {
         };
 
 
-
         datePicker.setDayCellFactory(dayCellFactory);
 
 
@@ -2086,6 +2082,7 @@ public class CalendarView extends UiPart<Region> {
         datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
             LocalDate selectedDate = datePicker.getValue();
             logger.fine("Selection in calendar: '" + selectedDate + "'");
+
             raise(new CalendarSelectionChangedEvent(selectedDate));
         });
 
@@ -2103,6 +2100,7 @@ public class CalendarView extends UiPart<Region> {
 ```
 ###### \java\seedu\address\ui\EventCard.java
 ``` java
+
 /**
  * An UI component that displays information of a {@code Person}.
  */
@@ -2119,7 +2117,6 @@ public class EventCard extends UiPart<Region> {
      */
 
     public final Event event;
-    public final LocalDate selectedDate;
 
     @FXML
     private HBox cardPane;
@@ -2137,16 +2134,15 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private VBox members;
 
-    public EventCard(Event event, int displayedIndex, LocalDate selectedDate) {
+    public EventCard(Event event, int displayedIndex) {
         super(FXML);
         this.event = event;
-        this.selectedDate = selectedDate;
 
         id.setText(displayedIndex + ". ");
         initMembers(event);
         bindListeners(event);
+        registerAsAnEventHandler(this);
 
-        updateEventStatusLabel(eventStatus, event);
     }
 
     /**
@@ -2162,38 +2158,13 @@ public class EventCard extends UiPart<Region> {
             event.getMemberList().asReadOnlyMemberList().forEach(member -> members.getChildren().add(
                     new Label(member.getName().toString())));
         });
+        eventStatus.textProperty().bind(Bindings.convert(event.eventStatusProperty()));
+        eventStatus.styleProperty().bind(Bindings.convert(event.eventStatusStyleProperty()));
     }
 
     private void initMembers(Event event) {
         event.getMemberList().asReadOnlyMemberList().forEach(member -> members.getChildren().add(
                 new Label(member.getName().toString())));
-    }
-
-    /**
-     * Update the event status label to reflect the relevance of the event.
-     * @param eventStatusLabel
-     * @param event
-     */
-    private void updateEventStatusLabel(Label eventStatusLabel, Event event) {
-        EventTime eventTime = event.getEventTime();
-
-        if (eventTime.getStart().toLocalDate().isEqual(LocalDate.now())) {
-            eventStatusLabel.setText("Today");
-            eventStatusLabel.setStyle("-fx-background-color: #fd720f");
-
-        } else if (eventTime.isUpcoming()) {
-            eventStatusLabel.setText("Upcoming");
-            eventStatusLabel.setStyle("-fx-background-color: #009e73");
-        } else {
-            eventStatusLabel.setText("Past");
-            eventStatusLabel.setStyle("-fx-background-color: #a31621");
-        }
-
-        if (event.getEventTime().getStart().toLocalDate().isEqual(selectedDate)
-                || DateTimeUtil.containsReferenceDate(event, selectedDate)) {
-            eventStatusLabel.setText("Selected");
-            eventStatusLabel.setStyle("-fx-background-color: #b91372");
-        }
     }
 
 
@@ -2215,11 +2186,25 @@ public class EventCard extends UiPart<Region> {
                 && event.equals(card.event);
     }
 
+    /**
+     * Handle event when date in CalenderView is clicked.
+     * <p>
+     * Update master UniqueEventList by running a sort with the given date as reference.
+     * Comparator logic and sorting details is found in {@see UniqueEventList#sort(LocalDate)}
+     *
+     * @param event
+     */
+    @Subscribe
+    private void handleCalendarSelectionChangedEvent(CalendarSelectionChangedEvent event) {
 
+        this.event.updateEventStatusSelection(event.getSelectedDate());
+
+    }
 }
 ```
 ###### \java\seedu\address\ui\EventListPanel.java
 ``` java
+
 /**
  * Panel containing the list of events.
  */
@@ -2234,14 +2219,14 @@ public class EventListPanel extends UiPart<Region> {
         super(FXML);
         this.eventList = eventList;
 
-        setConnections(eventList, LocalDate.now());
+        setConnections(eventList);
         setEventHandlerForSelectionChangeEvent();
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<Event> eventList, LocalDate selectedDate) {
+    private void setConnections(ObservableList<Event> eventList) {
         ObservableList<EventCard> mappedList = EasyBind.map(
-                eventList, (event) -> new EventCard(event, eventList.indexOf(event) + 1, selectedDate));
+                eventList, (event) -> new EventCard(event, eventList.indexOf(event) + 1));
         eventListView.setItems(mappedList);
         eventListView.setCellFactory(listView -> new EventListViewCell());
     }
@@ -2275,17 +2260,6 @@ public class EventListPanel extends UiPart<Region> {
         }
     }
 
-    /**
-     * Handle event when date in CalenderView is clicked.
-     * <p>
-     * Update master UniqueEventList by running a sort with the given date as reference.
-     * Comparator logic and sorting details is found in {@see UniqueEventList#sort(LocalDate)}
-     *
-     * @param event
-     */
-    @Subscribe
-    private void handleCalendarSelectionChangedEvent(CalendarSelectionChangedEvent event) {
-        setConnections(eventList, event.getSelectedDate());
-    }
+
 }
 ```
