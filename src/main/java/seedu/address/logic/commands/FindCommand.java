@@ -4,6 +4,8 @@ import java.util.List;
 
 import java.util.function.Predicate;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.predicates.LessonContainsKeywordsPredicate;
@@ -40,21 +42,25 @@ public class FindCommand extends Command {
         switch (ListingUnit.getCurrentListingUnit()) {
         case LOCATION:
             this.predicate = new LocationContainsKeywordsPredicate(keywords);
-            ListingUnit.setCurrentPredicate(this.predicate);
+            ListingUnit.setCurrentPredicate(new LocationContainsKeywordsPredicate(keywords));
             break;
         case LESSON:
             if (model.getCurrentViewingAttribute().equals("marked")) {
                 this.predicate = new MarkedLessonContainsKeywordsPredicate(keywords);
-                ListingUnit.setCurrentPredicate(this.predicate);
+                ListingUnit.setCurrentPredicate(new MarkedLessonContainsKeywordsPredicate(keywords));
+                EventsCenter.getInstance().post(new ViewedLessonEvent());
                 break;
             }
             this.predicate = new LessonContainsKeywordsPredicate(keywords, model.getCurrentViewingLesson(),
                     model.getCurrentViewingAttribute());
-            ListingUnit.setCurrentPredicate(this.predicate);
+            ListingUnit.setCurrentPredicate(
+                    new LessonContainsKeywordsPredicate(keywords, model.getCurrentViewingLesson(),
+                    model.getCurrentViewingAttribute()));
+            EventsCenter.getInstance().post(new ViewedLessonEvent());
             break;
         default:
             this.predicate = new ModuleContainsKeywordsPredicate(keywords);
-            ListingUnit.setCurrentPredicate(this.predicate);
+            ListingUnit.setCurrentPredicate(new ModuleContainsKeywordsPredicate(keywords));
             break;
         }
         model.updateFilteredLessonList(predicate);

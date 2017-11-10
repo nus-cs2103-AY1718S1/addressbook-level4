@@ -264,6 +264,16 @@ public class AddCommandTest {
         public ObservableList<Remark> getFilteredRemarkList() {
             return null;
         }
+
+        @Override
+        public void updateLocationList() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateModuleList() {
+            fail("This method should not be called.");
+        }
     }
 
     /**

@@ -182,4 +182,16 @@ public interface Model {
     /** Returns an unmodifiable view of the list of remarks */
     ObservableList<Remark> getFilteredRemarkList();
 
+    /**
+     * Updates location list according to previous predicate.
+     */
+    void updateLocationList();
+
+    /**
+     * Updates module code list according to previous predicate.
+     */
+    void updateModuleList();
+
+
+
 }

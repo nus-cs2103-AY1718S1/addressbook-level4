@@ -34,8 +34,6 @@ import seedu.address.model.module.TimeSlot;
 import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
-import seedu.address.model.module.predicates.UniqueLocationPredicate;
-import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
 //@@author junming403
 
@@ -175,7 +173,7 @@ public class EditCommand extends UndoableCommand {
         } catch (DuplicateBookedSlotException s) {
             throw new CommandException(MESSAGE_DUPLICATE_BOOKEDSLOT);
         } catch (IllegalValueException ive) {
-            model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
+            model.updateLocationList();
             throw new CommandException(ive.getMessage());
         } catch (LessonNotFoundException pnfe) {
             throw new AssertionError("The target lesson cannot be missing");
@@ -203,7 +201,7 @@ public class EditCommand extends UndoableCommand {
                 model.updateLesson(p, curEditedLesson);
             }
         }
-        model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
+        model.updateLocationList();
     }
 
 
@@ -216,7 +214,7 @@ public class EditCommand extends UndoableCommand {
             updateModuleCode(codeToEdit, editedCode);
             return new CommandResult(String.format(MESSAGE_EDIT_MODULE_SUCCESS, editedCode));
         } catch (IllegalValueException ive) {
-            model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
+            model.updateModuleList();
             throw new CommandException(ive.getMessage());
         } catch (LessonNotFoundException pnfe) {
             throw new AssertionError("The target lesson cannot be missing");
@@ -242,8 +240,9 @@ public class EditCommand extends UndoableCommand {
             }
         }
 
-        model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
+        model.updateModuleList();
     }
+
 
     /**
      * Creates and returns a {@code Lesson} with the details of {@code lessonToEdit}
