@@ -44,6 +44,8 @@ include::../DeveloperGuide.adoc[tag=groupjustification]
 
 include::../DeveloperGuide.adoc[tag=group]
 
+include::../DeveloperGuide.adoc[tag=addGroup]
+
 #End of Extract#
 
 ---

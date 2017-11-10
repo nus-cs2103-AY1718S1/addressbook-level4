@@ -1,7 +1,11 @@
 //@@author arturs68
 package seedu.address.model.person;
 
+import static seedu.address.model.util.SampleDataUtil.SAMPLE_PICTURE;
+
 import java.io.File;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's profile picture in the address book.
@@ -18,8 +22,20 @@ public class ProfilePicture {
     /**
      * Assigns the path to the profile picture
      */
-    public ProfilePicture(String fileName) {
-        this.value = fileName;
+    public ProfilePicture(String fileName) throws IllegalValueException {
+        String nameToBeSet = fileName;
+        if (fileName.contains("/") || fileName.contains("\\")) {
+            File file = new File(fileName);
+            if (!file.exists()) {
+                nameToBeSet = DEFAULT_PICTURE;
+            }
+        } else {
+            if (!(fileName.equals(DEFAULT_PICTURE) || fileName.equals(SAMPLE_PICTURE))) {
+                throw new IllegalValueException(
+                        "Wrong file path specified. Perhaps you meant: " + DEFAULT_PICTURE + " ?");
+            }
+        }
+        this.value = nameToBeSet;
     }
 
     public static String getPath(String value) {

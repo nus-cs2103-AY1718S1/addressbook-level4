@@ -23,6 +23,8 @@ import seedu.address.model.tag.Tag;
  * Contains utility methods for populating {@code AddressBook} with sample data.
  */
 public class SampleDataUtil {
+    public static final String SAMPLE_PICTURE = "pic1.jpeg";
+
     public static Person[] getSamplePersons() {
         try {
             return new Person[] {
