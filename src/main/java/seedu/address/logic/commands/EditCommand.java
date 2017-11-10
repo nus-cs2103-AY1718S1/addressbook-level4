@@ -48,8 +48,10 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            //@@author Pujitha97
             + "[" + PREFIX_DOB + "DATE OF BIRTH] "
             + "[" + PREFIX_GENDER + "GENDER] "
+            //@@author
             + "[" + PREFIX_TAG + "TAG] "
             + "[" + PREFIX_DELTAG + "TAG_TO_DELETE] ...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -223,7 +225,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
         }
-
+        //@@author Pujitha97
         public void setDateOfBirth(DateOfBirth dob) {
             this.dob = dob;
         }
@@ -239,6 +241,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Gender> getGender() {
             return Optional.ofNullable(gender);
         }
+        //@@author
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
         }

@@ -308,7 +308,7 @@ public class InsuranceIdLabel extends UiPart<Region> {
         super(FXML);
         this.insurance = insurance;
 
-        initializeContractFile(insurance);
+        // initializeContractFile(insurance);
 
         enableNameToProfileLink(insurance);
 
@@ -337,7 +337,6 @@ public class InsuranceIdLabel extends UiPart<Region> {
      * Then add click event on contract field to open up the file
      * @param insurance
      */
-
     private void initializeContractFile(ReadOnlyInsurance insurance) {
         insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractPath());
         if (isFileExists(insuranceFile)) {
@@ -366,7 +365,7 @@ public class InsuranceIdLabel extends UiPart<Region> {
             });
 
         }
-    }
+    }*/
 
     /**
      *  Enable the link to open contract pdf file and adjusting the text hover highlight
@@ -381,7 +380,7 @@ public class InsuranceIdLabel extends UiPart<Region> {
                 logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
             }
         });
-    }
+    }*/
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
@@ -396,7 +395,6 @@ public class InsuranceIdLabel extends UiPart<Region> {
     @Subscribe
     private void handleSwitchToInsurancePanelRequestEvent(SwitchToInsurancePanelRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-
         middlePanelPlaceholder.getChildren().clear();
         middlePanelPlaceholder.getChildren().add(insuranceProfilePanel.getRoot());
     }
@@ -608,6 +606,7 @@ public class SearchBox extends UiPart<Region> {
 .missing-file:hover {
     -fx-text-fill: #696969
 }
+
 ```
 ###### \resources\view\DarkTheme.css
 ``` css

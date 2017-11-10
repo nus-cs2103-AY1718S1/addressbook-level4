@@ -173,6 +173,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author Pujitha97
     public void setDateOfBirth(DateOfBirth dob) {
         this.dob.set(requireNonNull(dob));
     }
@@ -200,6 +201,7 @@ public class Person implements ReadOnlyPerson {
     public Gender getGender() {
         return gender.get();
     }
+    //@@author
     //@@author arnollim
     @Override
     public String getReason() {

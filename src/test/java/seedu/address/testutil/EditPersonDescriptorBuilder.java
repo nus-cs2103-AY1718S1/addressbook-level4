@@ -84,7 +84,7 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
-
+    //@@author Pujitha97
     /**
      * Sets the {@code Date of Birth} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -108,7 +108,7 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
-
+    //@@author
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
      * that we are building.

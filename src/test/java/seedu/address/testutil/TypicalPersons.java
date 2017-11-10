@@ -88,16 +88,16 @@ public class TypicalPersons {
             .withGender(VALID_GENDER_AMY).build();
 
     //@@author
-
+    //@@author Pujitha97
     public static final ReadOnlyPerson AMY_NO_DOB = new PersonBuilder().withName(VALID_NAME_AMY)
             .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
             .withEmptyDateOfBirth().withTags(VALID_TAG_FRIEND)
             .withGender(VALID_GENDER_AMY).build();
-    //@@author Pujitha97
     public static final ReadOnlyPerson AMY_NO_GENDER = new PersonBuilder().withName(VALID_NAME_AMY)
             .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
             .withDateOfBirth(VALID_DOB_AMY).withEmptyGender().withTags(VALID_TAG_FRIEND)
             .build();
+    //@@author
     public static final ReadOnlyPerson BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withGender(VALID_GENDER_BOB)
             .withDateOfBirth(VALID_DOB_BOB).withGender(VALID_GENDER_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)

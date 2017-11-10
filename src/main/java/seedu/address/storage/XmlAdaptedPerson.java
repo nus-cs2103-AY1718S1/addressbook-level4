@@ -33,10 +33,11 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String address;
     @XmlElement(required = true)
+    //@@author Pujitha97
     private String dob;
     @XmlElement(required = true)
     private String gender;
-
+    //@@author
     @XmlElement(name = "tagged")
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
     //@@author OscarWang114
@@ -61,9 +62,10 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        //@@author Pujitha97
         gender = source.getGender().toString();
         dob = source.getDateOfBirth().toString();
-
+        //@@author
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -93,8 +95,11 @@ public class XmlAdaptedPerson {
         final Phone phone = this.phone.equals("") ? new Phone() : new Phone(this.phone);
         final Email email = this.email.equals("") ? new Email() : new Email(this.email);
         final Address address = this.address.equals("") ? new Address() : new Address(this.address);
+        //@@author Pujitha97
         final DateOfBirth dob = this.dob.equals("") ? new DateOfBirth() : new DateOfBirth(this.dob);
         final Gender gender = this.gender.equals("") ? new Gender() : new Gender(this.gender);
+        //@@author
+        //@@author OscarWang114
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, dob, gender, tags, personLifeInsuranceIds);
     }
