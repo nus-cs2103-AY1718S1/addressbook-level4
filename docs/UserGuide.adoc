@@ -84,13 +84,13 @@ Format: `addRelationship FROM_INDEX TO_INDEX DIRECTION [n/NAME] [ce/CONFIDENCE_E
 * The order of the indexes matters only when the direction is `directed`, as the relationship points from the person with FROM_INDEX to the person with TO_INDEX
 * At any point of time there will be at most 1 relationship between any two persons. If adding a different relationship from the existing one between two persons is attempted, upon the addition the previous relationship between these two persons will be removed.
 * `NAME` referring to the name of the relationship *can only be alphanumeric*.
-* `CONFIDENCE_ESTIMATE` refers to the confidence estimate the user gives to the relationship. `CONFIDENCE_ESTIMATE` *can only be numeric*.
+* `CONFIDENCE_ESTIMATE` refers to the confidence estimate the user gives to the relationship. `CONFIDENCE_ESTIMATE` *can only be numbers from 0 to 100 inclusive*.
 ****
 
 Examples:
 
 * `addRelationship 1 3 directed ce/12.32131`
-* `addRelationship 2 3 undirected n/husband and wife ce/123123`
+* `addRelationship 2 3 undirected n/husband and wife ce/12`
 
 === Listing all persons : `list`
 
@@ -565,8 +565,6 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 * *AddRelationship* : `addRelationship INDEX_FROM_PERSON INDEX_TO_PERSON DIRECTION [n/NAME] [ce/CONFIDENCE_ESTIMATE}` +
 e.g. `addRelationship 2 3 directed ce/1212312.2 n/is cousin of`
 * *Back up* : `backup`
-* *AddRelationship* : `addRelationship INDEX_FROM_PERSON INDEX_TO_PERSON DIRECTION [n/NAME] [ce/CONFIDENCE_ESTIMATE}` +
-e.g. `addRelationship 2 3 directed ce/1212312.2 n/is cousin of`
 * *Colour tags* : `colourTag TAG COLOUR` +
 e.g. `colourTag friend red`
 * *Clear* : `clear`
