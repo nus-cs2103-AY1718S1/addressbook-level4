@@ -21,6 +21,7 @@ import seedu.address.model.relationship.ConfidenceEstimate;
 import seedu.address.model.relationship.RelationshipDirection;
 import seedu.address.testutil.StorageStub;
 
+//@@author wenmogu
 public class DeleteRelationshipCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());

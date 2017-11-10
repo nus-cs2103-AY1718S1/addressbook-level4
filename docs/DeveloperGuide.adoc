@@ -1233,7 +1233,7 @@ Shorthand form of a command
 Confidence estimate
 
 ....
-A percentage that represents how confident the user is in a particular attribute being accurate
+A percentage that represents how confident the user is in the information of the relationship being accurate
 ....
 
 [[mainstream-os]]
@@ -1243,11 +1243,11 @@ Mainstream OS
 Windows, Linux, Unix, OS-X
 ....
 
-[[named-relationship]]
-Named relationship
+[[relationship-name]]
+Relationship name
 
 ....
-A relationship between two people with a specific status (eg. lecturer-student)
+A specific status for the relationship(eg. lecturer-student)
 ....
 
 [appendix]
