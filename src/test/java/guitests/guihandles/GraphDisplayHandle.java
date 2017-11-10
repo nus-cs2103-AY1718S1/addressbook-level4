@@ -5,6 +5,7 @@ import javax.swing.JComponent;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.Node;
 
+//@@author joanneong
 /**
  * A handler for the {@code GraphDisplay} of the UI.
  */
