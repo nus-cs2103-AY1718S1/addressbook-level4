@@ -109,6 +109,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public List<String> getCommandTemplateList() {
         List<String> templateList = Arrays.asList(
                 AddCommand.MESSAGE_TEMPLATE,
+                AddMeetingCommand.MESSAGE_TEMPLATE,
                 ClearCommand.MESSAGE_TEMPLATE,
                 DeleteCommand.MESSAGE_TEMPLATE,
                 DeleteTagCommand.MESSAGE_TEMPLATE,

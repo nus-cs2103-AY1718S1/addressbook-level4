@@ -51,7 +51,7 @@ public class AddMeetingCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "New meeting added!";
     public static final String MESSAGE_DUPLICATE_MEETING = "This meeting already exists in the address book";
     public static final String MESSAGE_INVALID_ID = "Please input a valid person id!";
-    public static final String MESSAGE_TEMPLATE = COMMAND_WORD
+    public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " "
             + PREFIX_DATE + "DATE "
             + PREFIX_TIME + "TIME "
             + PREFIX_LOCATION + "LOCATION "
