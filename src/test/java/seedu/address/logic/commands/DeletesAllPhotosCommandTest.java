@@ -17,31 +17,31 @@ import seedu.address.model.UserPrefs;
 //@@author JasmineSee
 
 /**
- * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteAllPhotosCommand}.
+ * Contains integration tests (interaction with the Model) and unit tests for {@code DeletesAllPhotosCommand}.
  */
-public class DeleteAllPhotosCommandTest {
+public class DeletesAllPhotosCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute_success() throws Exception {
         prepareUploadPhotos();
 
-        DeleteAllPhotosCommand deletePhotoCommand = prepareCommand();
+        DeletesAllPhotosCommand deletesPhotoCommand = prepareCommand();
 
-        String expectedMessage = String.format(DeleteAllPhotosCommand.MESSAGE_DELETE_ALL_IMAGE_SUCCESS);
+        String expectedMessage = String.format(DeletesAllPhotosCommand.MESSAGE_DELETE_ALL_IMAGE_SUCCESS);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-        assertCommandSuccess(deletePhotoCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(deletesPhotoCommand, model, expectedMessage, expectedModel);
     }
 
     /**
-     * Returns a {@code DeleteAllPhotosCommand}.
+     * Returns a {@code DeletesAllPhotosCommand}.
      */
-    private DeleteAllPhotosCommand prepareCommand() {
-        DeleteAllPhotosCommand deleteAllPhotosCommand = new DeleteAllPhotosCommand();
-        deleteAllPhotosCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return deleteAllPhotosCommand;
+    private DeletesAllPhotosCommand prepareCommand() {
+        DeletesAllPhotosCommand deletesAllPhotosCommand = new DeletesAllPhotosCommand();
+        deletesAllPhotosCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return deletesAllPhotosCommand;
     }
 
     /**
