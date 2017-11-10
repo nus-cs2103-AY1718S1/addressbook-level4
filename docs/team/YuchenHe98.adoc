@@ -1,0 +1,207 @@
+= He Yuchen - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: H.M.U
+H.M.U is a software to help people manage their contacts easily. Apart from the basic features of an address book, H.M.U specializes in scheduling. This is done by allowing the user to schedule meetings through the user of the application. Furthermore, users will be able to find the most convenient meeting spot with the help of the application, by taking into account the contact's nearest MRT station.
+
+H.M.U cares about the security of its users as well. As such, users have to login with a username or password to continue using the app.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F10-B2/main/blob/master/collated/main/derickjw.md[Functional code]] [https://github.com/CS2103AUG2017-F10-B2/main/blob/master/collated/test/derickjw.md[Test code]] [https://github.com/CS2103AUG2017-F10-B2/main/blob/master/collated/unused/derickjw.md[Unused code]]
+
+=== Enhancement Added: AddSchedule
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addSchedule]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addSchedule]
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addSchedule]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Clear Schedule
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=clearSchedule]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=clearSchedule]
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=clearSchedule]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Visualize Schedule
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=visualize]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=visualize]
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=visualize]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Arrange Meeting
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=arrange]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=arrange]
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=arrange]
+
+#End of Extract#
+
+---
+
+== Enhancement Added: Locate On Google Map
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=locate]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=locate]
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=visualize]
+
+#End of Extract#
+
+---
+
+== Enhancement Added: Find Contact By Address
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findByAddress]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findByAddress]
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findByAddress]
+
+#End of Extract#
+
+---
+
+
+=== Other contributions
+

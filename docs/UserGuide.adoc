@@ -128,6 +128,8 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 m/Kranji`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 m/Tanah Merah t/criminal`
 
+// tag::addSchedule[]
+
 === Adding a free time slot to a person: `addSchedule`
 
 Adds a busy time span to a person to the address book +
@@ -141,6 +143,10 @@ Examples:
 * `addSchedule 2 d/Monday st/0800 et/1030`
 * `addSchedule 4 d/Friday st/1300 et/1500`
 
+// end::addSchedule[]
+
+// tag::clearSchedule[]
+
 === Clear a free time slot for a person: `clearSchedule`
 
 Clear a time span for a person in the address book +
@@ -153,6 +159,10 @@ Examples:
 
 * `clearSchedule 2 d/Monday st/0800 et/1030`
 * `clearSchedule 4 d/Friday st/1300 et/1500`
+
+// end::clearSchedule[]
+
+// tag::visualize[]
 
 === View a person's schedule : `visualize`
 
@@ -174,6 +184,10 @@ Visualizes the 2nd person in the address book.
 `visualizes 1` +
 Visualizes the 1st person in the results of the `find` command.
 
+// end::visualize[]
+
+// tag::arrange[]
+
 === Arrange a meeting for a list of people : `arrange`
 
 Arrange a meeting for a list of persons in the address book. +
@@ -188,6 +202,8 @@ Examples:
 
 * `arrange 1 2 3` +
 Arranges a meeting for person 1, person 2 and person 3 based on their free time slots.
+
+// end::arrange[]
 
 === Listing all persons : `list`
 
@@ -258,6 +274,8 @@ Returns `john` and `John Doe`
 * `findByName Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::findByAddress[]
+
 === Locating persons by address: `findByAddress`
 
 Finds persons whose addresses contain any of the given keywords. +
@@ -277,6 +295,8 @@ Examples:
 Returns `john` and `John Doe` whose addresses contain the word 'stadium'.
 * `findByAddress stadium pier` +
 Returns any person having addresses containing `stadium` or `pier`
+
+// end::findByAddress[]
 
 === Locating persons by phone: `findByPhone`
 
@@ -349,6 +369,8 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+// tag::locate[]
+
 === Locating a person : `locate`
 
 Locate the specified person's address from the address book on Google Map +
@@ -365,6 +387,8 @@ Examples:
 * `list` +
 `locate 2` +
 Searches the 2nd person in the address book in Google Map.
+
+// end::locate[]
 
 === Selecting a person : `select`
 
