@@ -1,6 +1,7 @@
 package seedu.address;
 
 import static seedu.address.commons.util.ConfigUtil.updateConfig;
+import static seedu.address.commons.util.UserPrefsUtil.updateUserPrefs;
 
 import java.io.IOException;
 import java.util.Map;
@@ -21,7 +22,6 @@ import seedu.address.commons.events.ui.NewAddressBookRequestEvent;
 import seedu.address.commons.events.ui.OpenAddressBookRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
-import seedu.address.commons.util.JsonUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
@@ -222,31 +222,9 @@ public class MainApp extends Application {
 
         try {
             updateConfig(event.getFileName());
-            // change AddressBook file path
-            setAddressBookFilePath(event.getFilePath());
-            setAddressBookAppName(event.getFileName());
+            updateUserPrefs(event.getFilePath(), event.getFileName());
 
             restart();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setAddressBookFilePath(String addressBookFilePath) {
-        try {
-            userPrefs = JsonUtil.readJsonFile("preferences.json", UserPrefs.class).get();
-            userPrefs.setAddressBookFilePath(addressBookFilePath);
-            JsonUtil.saveJsonFile(userPrefs, "preferences.json");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setAddressBookAppName(String addressBookFileName) {
-        try {
-            userPrefs = JsonUtil.readJsonFile("preferences.json", UserPrefs.class).get();
-            userPrefs.setAddressBookName(addressBookFileName);
-            JsonUtil.saveJsonFile(userPrefs, "preferences.json");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -257,9 +235,8 @@ public class MainApp extends Application {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
         try {
-            // change addressbook file path
-            setAddressBookFilePath(event.getFilePath());
-            setAddressBookAppName(event.getFileName());
+            updateConfig(event.getFileName());
+            updateUserPrefs(event.getFilePath(), event.getFileName());
 
             init();
             start(this.primaryStage);
