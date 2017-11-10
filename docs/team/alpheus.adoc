@@ -76,7 +76,7 @@ include::../UserGuide.adoc[tag=find]
 ==== Justification
 
 Users may want to search for the contact not just by their names, but also by their phone number, email
-, address and also their tags as well. This enhancement gives users the choice to decide how they would want
+, address and tags as well. This enhancement gives users the choice to decide how they would want
 to search for the contact they want.
 
 ==== Implementation
@@ -98,6 +98,7 @@ include::../DeveloperGuide.adoc[tag=find]
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=pinunpin]
+include::../UserGuide.adoc[tag=listpin]
 
 #End of Extract#
 
