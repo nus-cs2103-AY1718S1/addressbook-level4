@@ -23,8 +23,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author jelneo
 public class LoginCommandParserTest {
-    public final String VALID_USERNAME = "User_1234";
-    public final String VALID_PASSWORD = "P@$$worD";
+    private static final String VALID_USERNAME = "User_1234";
+    private static final String VALID_PASSWORD = "P@$$worD";
 
     private LoginCommandParser parser = new LoginCommandParser();
 
