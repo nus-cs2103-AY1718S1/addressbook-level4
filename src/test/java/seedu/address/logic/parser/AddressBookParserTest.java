@@ -16,25 +16,31 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ImportCommand;
+import seedu.address.logic.commands.ImportCommandTest;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -95,11 +101,34 @@ public class AddressBookParserTest {
         RemoveTagCommand command = (RemoveTagCommand) parser.parseCommand(
                 RemoveTagCommand.COMMAND_WORD + " " + "all" + " " + tag);
         assertTrue(command instanceof RemoveTagCommand);
+        assertEquals(new RemoveTagCommand(new Tag(tag)), command);
 
 
         RemoveTagCommand command2 = (RemoveTagCommand) parser.parseCommand(
                 RemoveTagCommand.COMMAND_WORD + " " + "5" + " " + tag);
         assertTrue(command2 instanceof RemoveTagCommand);
+        assertEquals(new RemoveTagCommand(Index.fromOneBased(5), new Tag(tag)), command2);
+    }
+
+    @Test
+    public void parseCommand_sort() throws Exception {
+        SortCommand command = (SortCommand) parser.parseCommand(
+                SortCommand.COMMAND_WORD + " " + "name asc");
+        assertTrue(command instanceof SortCommand);
+    }
+
+    @Test
+    public void parseCommand_export() throws Exception {
+        ExportCommand command = (ExportCommand) parser.parseCommand(
+                ExportCommand.COMMAND_WORD + " " + "output.vcf");
+        assertTrue(command instanceof ExportCommand);
+    }
+
+    @Test
+    public void parseCommand_import() throws Exception {
+        ImportCommand command = (ImportCommand) parser.parseCommand(ImportCommand.COMMAND_WORD + " "
+                        + ImportCommandParserTest.TEST_FILE_DIRECTORY + "ValidTypicalAddressBook.xml");
+        assertTrue(command instanceof  ImportCommand);
     }
     //@@author
 
