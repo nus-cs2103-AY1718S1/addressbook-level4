@@ -22,7 +22,8 @@ public class UserPrefsUtil {
     /**
      * Update the addressBookFilePath and addressBookName fields in preferences.json
      */
-    public static void updateUserPrefs(String addressBookFilePath, String addressBookName) throws DataConversionException, IOException {
+    public static void updateUserPrefs(String addressBookFilePath, String addressBookName)
+        throws DataConversionException, IOException {
         UserPrefs userPrefs = readUserPrefs("preferences.json").get();
         userPrefs.setAddressBookFilePath(addressBookFilePath);
         userPrefs.setAddressBookName(addressBookName);
