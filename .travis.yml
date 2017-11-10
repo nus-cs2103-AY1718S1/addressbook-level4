@@ -8,7 +8,7 @@ script: >-
     travis_retry ./gradlew clean checkstyleMain checkstyleTest headless allTests coverage coveralls asciidoctor
 
 deploy:
-  skip_cleanup: true
+  skip_cleanup: false
   provider: script
   script: ./config/travis/deploy_github_pages.sh
   on:
