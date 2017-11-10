@@ -68,8 +68,9 @@ public class PrintCommand extends Command {
             UniqueLifeInsuranceList insurances = person.getLifeInsurances();
             int insuranceIndex = 1;
             for (ReadOnlyInsurance insurance: insurances) {
-                lines.add("Insurance Policy " + insuranceIndex
-                        + ": " + insurance.getInsuranceName());
+                String insuranceHeader = "Insurance Policy " + insuranceIndex
+                        + ": " + insurance.getInsuranceName() + " ======";
+                lines.add(insuranceHeader);
                 String owner = insurance.getOwner().getName();
                 String insured = insurance.getInsured().getName();
                 String beneficiary = insurance.getBeneficiary().getName();
@@ -83,7 +84,12 @@ public class PrintCommand extends Command {
                         + "Signing Date: " + signingDate + "\n"
                         + "Expiry Date: " + expiryDate
                 );
-                //lines.add("===========================================\n");
+                String insuranceEnd = "";
+                int headerLength = insuranceHeader.length();
+                for( int i = 1; i<= headerLength; i++) {
+                    insuranceEnd = insuranceEnd + "=";
+                }
+                lines.add(insuranceEnd);
                 lines.add("\n");
                 insuranceIndex++;
             }
