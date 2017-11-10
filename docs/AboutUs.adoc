@@ -22,7 +22,7 @@ Responsibilities: Documentation, UI
 
 === Tan Yikai
 image::TanYikai.jpg[width="150", align="left"]
-{empty}[http://github.com/TanYikai[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/TanYikai[github]] [<<TanYikai#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Deliverables and deadlines, Scheduling and tracking, Logic
