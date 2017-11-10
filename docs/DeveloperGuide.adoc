@@ -264,8 +264,8 @@ image::NewUML.png[width="800]
 
 **Aspect:** Usage of data type to represent the added contact image in `Photo` class. +
 **Alternative 1(current choice):** Using a String to represent the data or value of the image. +
-**Pros:** Works well with JavaFx SceneBuilder as `String` class can be passed into ImageView using `File` class to load the image.+
-**Cons:** Works in a very cumbersome way due to the two step conversion. +
+**Pros:** Works well with JavaFx SceneBuilder as `String` class can be passed into ImageView using `File` class to load the image. +
+**Cons:** Works in a cumbersome way due to the two step conversion. +
 **Alternative 2:** Using Image to represent the data or value of the image. +
 **Pros:** Works well with JavaFx SceneBuilder as Image class can be passed into ImageView class to load the image using only a single step conversion process. +
 **Cons:** Presents a potential problem if our team chooses to use alternative GUI generators that does not utilise Javafx scripting language. Image class might not be applicable to generate an Image.
