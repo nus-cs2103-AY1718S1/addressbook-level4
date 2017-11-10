@@ -19,7 +19,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.NewAddressBookRequestEvent;
-import seedu.address.commons.events.ui.OpenAddressBookRequestEvent;
+import seedu.address.commons.events.ui.SwitchAddressBookRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
@@ -218,7 +218,7 @@ public class MainApp extends Application {
 
     //@@author chrisboo
     @Subscribe
-    public void handleOpenAddressBookRequestEvent(OpenAddressBookRequestEvent event) {
+    public void handleSwitchAddressBookRequestEvent(SwitchAddressBookRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
         try {
