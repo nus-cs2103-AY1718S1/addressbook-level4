@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.insurance.ReadOnlyInsurance;
+import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -41,7 +42,15 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
 
     /** Adds the given insurance */
-    void addInsurance(ReadOnlyInsurance insurance);
+    void addLifeInsurance(ReadOnlyInsurance insurance);
+
+    /**
+     * Replaces the given life insurance {@code target} with {@code editedLifeInsurance}.
+     *
+     * @throws InsuranceNotFoundException if {@code target} could not be found in the map.
+     */
+    void updateLifeInsurance(ReadOnlyInsurance target, ReadOnlyInsurance editedPerson)
+            throws InsuranceNotFoundException;
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();

@@ -2,7 +2,7 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
-import seedu.address.ui.InsuranceProfile;
+import seedu.address.ui.InsuranceCard;
 
 //@@author RSJunior37
 /**
@@ -12,7 +12,7 @@ public class InsurancePanelSelectionChangedEvent extends BaseEvent {
 
     private final ReadOnlyInsurance insurance;
 
-    public InsurancePanelSelectionChangedEvent(InsuranceProfile newSelection) {
+    public InsurancePanelSelectionChangedEvent(InsuranceCard newSelection) {
         insurance = newSelection.getInsurance();
     }
 
