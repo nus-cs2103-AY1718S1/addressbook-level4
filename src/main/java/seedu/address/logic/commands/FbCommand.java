@@ -34,7 +34,6 @@ public class FbCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        System.setProperty("java.awt.headless", "false");
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
