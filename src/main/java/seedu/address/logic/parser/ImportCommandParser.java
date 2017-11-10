@@ -27,7 +27,6 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
     public static final String MESSAGE_INVALID_FILE_NAME = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
             ImportCommand.MESSAGE_USAGE) + "\nMore Info: " + FILE_NAME_CONSTRAINTS;
-    public static final String MESSAGE_FILE_EMPTY = "File to import is empty";
 
     /**
      * Parses the given {@code String} of arguments in the context of the {@link ImportCommand}
@@ -47,10 +46,6 @@ public class ImportCommandParser implements Parser<ImportCommand> {
             ReadOnlyAddressBook readOnlyAddressBook = ParserUtil.parseImportFilePath(fullPath);
 
             List<ReadOnlyParcel> parcels = readOnlyAddressBook.getParcelList();
-
-            if (parcels.isEmpty()) {
-                throw new IllegalValueException(MESSAGE_FILE_EMPTY);
-            }
 
             return new ImportCommand(parcels);
         } catch (IllegalValueException ive) {
