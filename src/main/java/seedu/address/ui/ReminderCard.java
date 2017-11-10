@@ -116,18 +116,17 @@ public class ReminderCard extends UiPart<Region> {
         LocalDate currentTime = LocalDate.now();
         int daysBetween = (int) ChronoUnit.DAYS.between(currentTime, deadline);
 
-        setDaysCountdownColor(daysBetween);
-        if (daysBetween == ORANGE_WARNING_DAYS_LEFT) {
-            daysCountdown.setText("today");
-        } else if (daysBetween < ORANGE_WARNING_DAYS_LEFT) {
-            daysCountdown.setText("overdue");
-        } else {
-            daysCountdown.setText(daysBetween + " day(s)" + " left");
-            setDaysCountdown(deadline);
+        setDaysCountdownColorBasedOnDays(daysBetween);
+        setDaysCountdownContentBasedOnDays(daysBetween);
+        if (daysBetween > ORANGE_WARNING_DAYS_LEFT) {
+            startDaysCountdown(deadline);
         }
     }
 
-    private void setDaysCountdown(LocalDate date) {
+    /**
+     * Starts the countdown.
+     */
+    private void startDaysCountdown(LocalDate date) {
         final Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
@@ -140,7 +139,17 @@ public class ReminderCard extends UiPart<Region> {
         timer.scheduleAtFixedRate(task, TIMER_DELAY, TIMER_PERIOD);
     }
 
-    private void setDaysCountdownColor(int daysBetween) {
+    private void setDaysCountdownContentBasedOnDays(int daysBetween) {
+        if (daysBetween > ORANGE_WARNING_DAYS_LEFT) {
+            daysCountdown.setText(daysBetween + " day(s)" + " left");
+        } else if (daysBetween == ORANGE_WARNING_DAYS_LEFT) {
+            daysCountdown.setText("today");
+        } else {
+            daysCountdown.setText("overdue");
+        }
+    }
+
+    private void setDaysCountdownColorBasedOnDays(int daysBetween) {
         if (daysBetween >= GREEN_WARNING_DAYS_LEFT) {
             daysCountdown.setStyle("-fx-text-fill: " + "greenyellow");
         } else if (daysBetween >= YELLOW_WARNING_DAYS_LEFT) {
