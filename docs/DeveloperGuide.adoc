@@ -1119,17 +1119,29 @@ The `Labels` (texts) in the User Interface are set to their corresponding values
 
 
 ==== Design Considerations
-**Aspect:** Create a new `FilteredPersonListChangedEvent` event to handle the change in persons' data in the `filteredPersonList` +
-**Alternative 1 (current choice):** Have a `TagsContainsKeywordsPredicate` to facilitate search. +
-**Pros:** This adheres to the Single Responsibility Principle (SRP), making the class more robust +
-**Cons:** Makes the application more complex to understand according to the More Is More Complex (MIMC) principle. +
-**Alternative 2:** Build on the existing `AddressBookChangedEvent` event to handle the change +
-**Pros:** It is easier to implement as the `AddressBookChangedEvent` class already exists. +
-          It makes the codebase less complex as there are less classes. +
-          There  is less duplication of code with similar functions. +
-**Cons:** The data in the `AddressBookChangedEvent` is a `ReadOnlyAddressBook` and the `ReadOnlyAddressBook` interface does not have a `getFilteredPersonsList` method.
-Hence it is difficult to separate the data of persons in the `filteredPersonList` and those not in the `filteredPersonList` for processing +
+**Aspect:** +
+**Alternative 1 (current choice):**  +
+**Pros:**  +
+**Cons:**  +
+**Alternative 2:** +
+**Pros:**  +
+**Cons:**  +
 
+**Aspect:** +
+**Alternative 1 (current choice):**  +
+**Pros:**  +
+**Cons:**  +
+**Alternative 2:** +
+**Pros:**  +
+**Cons:**  +
+
+**Aspect:** +
+**Alternative 1 (current choice):**  +
+**Pros:**  +
+**Cons:**  +
+**Alternative 2:** +
+**Pros:**  +
+**Cons:**  +
 
 // end::statisticspanel[]
 
