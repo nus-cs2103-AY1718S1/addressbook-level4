@@ -63,7 +63,7 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
-        schedule = source.getSchedule().getBusyTime();
+        schedule = source.getSchedule().getTimeSet();
     }
 
     /**

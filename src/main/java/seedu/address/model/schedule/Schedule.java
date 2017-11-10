@@ -9,23 +9,26 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author YuchenHe98
 /**
- * Represents a Person's phone number in the address book.
+ * Represents a Person's schedule in the address book.
  */
 public class Schedule {
 
     private TreeSet<Integer> timeSet;
 
     /**
-     * Validates given phone number.
+     * Validates given schedule
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if given timeSet is invalid.
      */
     public Schedule() {
         timeSet = new TreeSet<Integer>();
     }
-    public Schedule(TreeSet<Integer> busyTime) throws IllegalValueException {
-        requireNonNull(busyTime);
-        this.timeSet = busyTime;
+    public Schedule(TreeSet<Integer> timeSet) throws IllegalValueException {
+        requireNonNull(timeSet);
+        if (!isValidTimeSet(timeSet)) {
+            throw new IllegalValueException("Should not use this constructor as invalid values are passed. ");
+        }
+        this.timeSet = timeSet;
     }
 
     /**
@@ -51,7 +54,7 @@ public class Schedule {
         return timeSet.toString();
     }
 
-    public TreeSet<Integer> getBusyTime() {
+    public TreeSet<Integer> getTimeSet() {
         return timeSet;
     }
 
@@ -92,5 +95,40 @@ public class Schedule {
             timeSetArray[day - 1].add(time % PossibleDays.DAY_COEFFICIENT);
         }
         return timeSetArray;
+    }
+
+    /**
+     * Returns if the set input containing day and time info is a valid set.
+     */
+    public static boolean isValidTimeSet(TreeSet<Integer> setOfTime) {
+        for (Integer timeNumber : setOfTime) {
+            if (!isValidTimeNumber(timeNumber)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns if the integer input containing day and time info is a valid schedule time.
+     */
+    private static boolean isValidTimeNumber(Integer timeNumber) {
+        Integer temp = timeNumber;
+        temp -= temp % PossibleDays.DAY_COEFFICIENT;
+        if (temp < 1 * PossibleDays.DAY_COEFFICIENT || temp > 7 * PossibleDays.DAY_COEFFICIENT) {
+            return false;
+        }
+        Integer timeInDay = timeNumber % PossibleDays.DAY_COEFFICIENT;
+        String timeString;
+        if (timeInDay < 1000) {
+            timeString = "0" + timeInDay;
+        } else {
+            timeString = timeInDay + "";
+        }
+        if (Time.isValidTime(timeString)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

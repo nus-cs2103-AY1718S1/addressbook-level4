@@ -6,15 +6,12 @@
  */
 public class PossibleDays {
 
-    public static final int[] days = {
-           1, 2, 3, 4, 5, 6, 7
-    };
+    public static final int[] DAYS = { 1, 2, 3, 4, 5, 6, 7 };
 
-    public static final int dayCoefficient = 10000;
+    public static final int DAY_COEFFICIENT = 10000;
 
-    public static final String[] dayName = {
-            "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
-    };
+    public static final String[] DAY_TIME = { "Monday", "Tuesday", "Wednesday",
+        "Thursday", "Friday", "Saturday", "Sunday" };
 }
 ```
 ###### /java/seedu/address/commons/core/PossibleTimes.java
@@ -23,9 +20,9 @@ public class PossibleDays {
  * Possible time integer values..
  */
 public class PossibleTimes {
-    public final static int[] times = {
-            600, 630, 700, 730, 800, 830, 900, 930, 1000, 1030, 1100, 1130, 1200, 1230, 1300, 1330, 1400, 1430, 1500,
-            1530, 1600, 1630, 1700, 1730, 1800, 1830, 1900, 1930, 2000, 2030, 2100, 2130, 2200, 2230, 2300, 2330
+    public static final int[] TIMES = {
+        600, 630, 700, 730, 800, 830, 900, 930, 1000, 1030, 1100, 1130, 1200, 1230, 1300, 1330, 1400, 1430, 1500, 1530,
+        1600, 1630, 1700, 1730, 1800, 1830, 1900, 1930, 2000, 2030, 2100, 2130, 2200, 2230, 2300, 2330
     };
 }
 ```
@@ -143,10 +140,10 @@ public class ArrangeCommand extends Command {
 
     private final Index[] listOfIndex;
 
-    public ArrangeCommand(int[] ListOfIndex) {
-        this.listOfIndex = new Index[ListOfIndex.length];
-        for(int i = 0; i < ListOfIndex.length; i++){
-            this.listOfIndex[i] = Index.fromOneBased(ListOfIndex[i]);
+    public ArrangeCommand(int[] listOfIndex) {
+        this.listOfIndex = new Index[listOfIndex.length];
+        for (int i = 0; i < listOfIndex.length; i++) {
+            this.listOfIndex[i] = Index.fromOneBased(listOfIndex[i]);
         }
     }
 
@@ -161,17 +158,44 @@ public class ArrangeCommand extends Command {
             }
         }
         TreeSet<Integer>[] timeSetArray = Schedule.splitScheduleToDays(model.generateMeetingTime(listOfIndex));
+        ScheduleTable.generates(timeSetArray);
+        String toShow = scheduleInfo();
+        return new CommandResult(String.format(MESSAGE_ARRANGE_PERSON_SUCCESS) + toShow);
+
+    }
+
+    public int[] getSortedZeroBasedIndex() {
+        int[] thisIndexList = new int[listOfIndex.length];
+        for (int i = 0; i < listOfIndex.length; i++) {
+            thisIndexList[i] = listOfIndex[i].getZeroBased();
+        }
+        Arrays.sort(thisIndexList);
+        return thisIndexList;
+    }
+
+    /**
+     * Returns the info of schedule to be shown to the user later.
+     */
+    public String scheduleInfo() {
+        TreeSet<Integer>[] timeSetArray = Schedule.splitScheduleToDays(model.generateMeetingTime(listOfIndex));
         String toShow = "\nAll common free time: \n";
         for (int i = 0; i < timeSetArray.length; i++) {
-            toShow = toShow + PossibleDays.dayName[i] + ":\n";
+            toShow = toShow + PossibleDays.DAY_TIME[i] + ":\n";
             for (Integer time : timeSetArray[i]) {
                 toShow = toShow + Time.getTimeToString(time) + "--"
-                        + Time.getTimeToString(Time.IncreaseTimeInteger(time)) + " ";
+                        + Time.getTimeToString(Time.increaseTimeInteger(time)) + " ";
             }
             toShow += "\n";
         }
-        return new CommandResult(String.format(MESSAGE_ARRANGE_PERSON_SUCCESS) + toShow);
+        return toShow;
+    }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ArrangeCommand // instanceof handles nulls
+                && Arrays.equals(this.getSortedZeroBasedIndex(), ((ArrangeCommand) other).getSortedZeroBasedIndex()));
+        // state check
     }
 }
 ```
@@ -344,7 +368,7 @@ public class VisualizeCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_VISUALIZE_PERSON_SUCCESS = "Visualized Person: %1$s";
+    public static final String MESSAGE_VISUALIZE_PERSON_SUCCESS = "Visualized Success! ";
 
     private final Index targetIndex;
 
@@ -360,21 +384,31 @@ public class VisualizeCommand extends Command {
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-
-        Schedule ScheduleToBeShown =
+        Schedule scheduleToBeShown =
                 model.getAddressBook().getPersonList().get(targetIndex.getZeroBased()).getSchedule();
-        TreeSet<Integer>[] timeSetArray = ScheduleToBeShown.splitScheduleToDays();
+        ScheduleTable.generates(scheduleToBeShown);
+        String toShow = scheduleInfo();
+        return new CommandResult(String.format(MESSAGE_VISUALIZE_PERSON_SUCCESS + targetIndex.getOneBased() + toShow));
+
+    }
+    /**
+     * Show schedule info as a message.
+     */
+    public String scheduleInfo() {
+
+        Schedule scheduleToBeShown =
+                model.getAddressBook().getPersonList().get(targetIndex.getZeroBased()).getSchedule();
+        TreeSet<Integer>[] timeSetArray = scheduleToBeShown.splitScheduleToDays();
         String toShow = "\nAll free time: \n";
-        for(int i = 0; i < timeSetArray.length; i++) {
-            toShow = toShow + PossibleDays.dayName[i] + ":\n";
-            for(Integer time : timeSetArray[i]) {
+        for (int i = 0; i < timeSetArray.length; i++) {
+            toShow = toShow + PossibleDays.DAY_TIME[i] + ":\n";
+            for (Integer time : timeSetArray[i]) {
                 toShow = toShow + Time.getTimeToString(time) + "--"
-                        + Time.getTimeToString(Time.IncreaseTimeInteger(time)) + " ";
+                        + Time.getTimeToString(Time.increaseTimeInteger(time)) + " ";
             }
             toShow += "\n";
         }
-        return new CommandResult(String.format(MESSAGE_VISUALIZE_PERSON_SUCCESS, targetIndex.getOneBased() + toShow));
-
+        return toShow;
     }
 
     @Override
@@ -452,21 +486,23 @@ public class ArrangeCommandParser implements Parser<ArrangeCommand> {
     public ArrangeCommand parse(String args) throws ParseException {
 
         try {
-            String[] ListOfPerson = args.trim().split("\\s+");
+            String[] listOfPerson = args.trim().split("\\s+");
             // Correct Format: changepw username old_password new_password
-            int[] ListOfIndex = new int[ListOfPerson.length];
-            for(int i = 0; i < ListOfPerson.length; i++) {
+            int[] listOfIndex = new int[listOfPerson.length];
+            for (int i = 0; i < listOfPerson.length; i++) {
                 try {
-                    ListOfIndex[i] = Integer.parseInt(ListOfPerson[i]);
+                    listOfIndex[i] = Integer.parseInt(listOfPerson[i]);
+                } catch (NumberFormatException e) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT
+                            + ArrangeCommand.MESSAGE_USAGE));
                 }
-                catch (NumberFormatException e){
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                            ArrangeCommand.MESSAGE_USAGE));
+                if (listOfIndex[i] <= 0) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT
+                            + ArrangeCommand.MESSAGE_USAGE));
                 }
             }
-            return new ArrangeCommand(ListOfIndex);
-        }
-        catch (IllegalValueException ive) {
+            return new ArrangeCommand(listOfIndex);
+        } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ChangePasswordCommand.MESSAGE_USAGE));
         }
@@ -594,6 +630,22 @@ public class LocateCommandParser implements Parser<LocateCommand> {
     public static Optional<Time> parseTime(Optional<String> time) throws IllegalValueException {
         requireNonNull(time);
         return time.isPresent() ? Optional.of(new Time(time.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses {@code type} into an boolean value and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified keyword is invalid.
+     */
+    public static boolean parseType(String type) throws IllegalValueException {
+        String trimmedType = type.trim();
+        if (trimmedType.equals("AND")) {
+            return true;
+        } else if (trimmedType.equals("OR")) {
+            return false;
+        } else {
+            throw new IllegalValueException(MESSAGE_INVALID_TYPE);
+        }
     }
 }
 ```
@@ -829,6 +881,19 @@ public class Day {
         return day >= 1 && day <= 7;
     }
 
+    /**
+     * Returns if the string represents a valid day.
+     */
+    public static boolean isValidDay(String test) {
+        return "Monday".equals(test)
+                || "Tuesday".equals(test)
+                || "Wednesday".equals(test)
+                || "Thursday".equals(test)
+                || "Friday".equals(test)
+                || "Saturday".equals(test)
+                || "Sunday".equals(test);
+    }
+
     public Integer getDay() {
         return day;
     }
@@ -844,23 +909,26 @@ public class Day {
 ###### /java/seedu/address/model/schedule/Schedule.java
 ``` java
 /**
- * Represents a Person's phone number in the address book.
+ * Represents a Person's schedule in the address book.
  */
 public class Schedule {
 
     private TreeSet<Integer> timeSet;
 
     /**
-     * Validates given phone number.
+     * Validates given schedule
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if given timeSet is invalid.
      */
     public Schedule() {
         timeSet = new TreeSet<Integer>();
     }
-    public Schedule(TreeSet<Integer> busyTime) throws IllegalValueException {
-        requireNonNull(busyTime);
-        this.timeSet = busyTime;
+    public Schedule(TreeSet<Integer> timeSet) throws IllegalValueException {
+        requireNonNull(timeSet);
+        if (!isValidTimeSet(timeSet)) {
+            throw new IllegalValueException("Should not use this constructor as invalid values are passed. ");
+        }
+        this.timeSet = timeSet;
     }
 
     /**
@@ -886,11 +954,11 @@ public class Schedule {
         return timeSet.toString();
     }
 
-    public TreeSet<Integer> getBusyTime() {
+    public TreeSet<Integer> getTimeSet() {
         return timeSet;
     }
 
-    public boolean containsTimeNumber(Integer timeNumber){
+    public boolean containsTimeNumber(Integer timeNumber) {
         return timeSet.contains(timeNumber);
     }
 
@@ -899,28 +967,69 @@ public class Schedule {
         return timeSet.hashCode();
     }
 
+    /**
+     * Split the time set into seven sets according to the days.
+     */
     public TreeSet<Integer>[] splitScheduleToDays() {
         TreeSet<Integer>[] timeSetArray = new TreeSet[7];
-        for(int i = 0; i < 7; i++){
+        for (int i = 0; i < 7; i++) {
             timeSetArray[i] = new TreeSet<>();
         }
-        for(Integer time : this.timeSet) {
-            int day = (time - time % PossibleDays.dayCoefficient) / PossibleDays.dayCoefficient;
-            timeSetArray[day - 1].add(time % PossibleDays.dayCoefficient);
+        for (Integer time : this.timeSet) {
+            int day = (time - time % PossibleDays.DAY_COEFFICIENT) / PossibleDays.DAY_COEFFICIENT;
+            timeSetArray[day - 1].add(time % PossibleDays.DAY_COEFFICIENT);
         }
         return timeSetArray;
     }
 
+    /**
+     * Split the time set into seven sets according to the days given a time set.
+     */
     public static TreeSet<Integer>[] splitScheduleToDays(TreeSet<Integer> toBeSplitted) {
         TreeSet<Integer>[] timeSetArray = new TreeSet[7];
-        for(int i = 0; i < 7; i++){
+        for (int i = 0; i < 7; i++) {
             timeSetArray[i] = new TreeSet<>();
         }
-        for(Integer time : toBeSplitted) {
-            int day = (time - time % PossibleDays.dayCoefficient) / PossibleDays.dayCoefficient;
-            timeSetArray[day - 1].add(time % PossibleDays.dayCoefficient);
+        for (Integer time : toBeSplitted) {
+            int day = (time - time % PossibleDays.DAY_COEFFICIENT) / PossibleDays.DAY_COEFFICIENT;
+            timeSetArray[day - 1].add(time % PossibleDays.DAY_COEFFICIENT);
         }
         return timeSetArray;
+    }
+
+    /**
+     * Returns if the set input containing day and time info is a valid set.
+     */
+    public static boolean isValidTimeSet(TreeSet<Integer> setOfTime) {
+        for (Integer timeNumber : setOfTime) {
+            if (!isValidTimeNumber(timeNumber)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns if the integer input containing day and time info is a valid schedule time.
+     */
+    private static boolean isValidTimeNumber(Integer timeNumber) {
+        Integer temp = timeNumber;
+        temp -= temp % PossibleDays.DAY_COEFFICIENT;
+        if (temp < 1 * PossibleDays.DAY_COEFFICIENT || temp > 7 * PossibleDays.DAY_COEFFICIENT) {
+            return false;
+        }
+        Integer timeInDay = timeNumber % PossibleDays.DAY_COEFFICIENT;
+        String timeString;
+        if (timeInDay < 1000) {
+            timeString = "0" + timeInDay;
+        } else {
+            timeString = timeInDay + "";
+        }
+        if (Time.isValidTime(timeString)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 ```
@@ -951,6 +1060,15 @@ public class Slot {
         }
     }
 
+    /**
+     * Returns if the time input startTime is earlier than endTime.
+     */
+    public static boolean isValidSlot (Day day, Time startTime, Time endTime) {
+        if (startTime.getTime() >= endTime.getTime()) {
+            return false;
+        }
+        return true;
+    }
     public TreeSet<Integer> getBusyTime() {
         return busyTime;
     }
@@ -959,7 +1077,7 @@ public class Slot {
 ###### /java/seedu/address/model/schedule/Time.java
 ``` java
 /**
- * The object representing the time of the start of a 30-minute-span when a person is busy.
+ * The object representing the time of the start of a 30-minute-span when a person is free.
  */
 public class Time {
 
@@ -991,6 +1109,29 @@ public class Time {
         return time;
     }
 
+    /**
+     * Returns if the time input is a valid schedule time.
+     */
+    public static boolean isValidTime(String test) {
+        if (test.length() != 4) {
+            return false;
+        }
+        char[] toTest = test.toCharArray();
+        for (int i = 0; i < toTest.length; i++) {
+            if (!Character.isDigit(toTest[i])) {
+                return false;
+            }
+        }
+        int timeNumber = Integer.parseInt(test);
+        if (timeNumber > 2330 || timeNumber < 600) {
+            return false;
+        }
+        if (timeNumber % 100 != 0 && timeNumber % 100 != 30) {
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -1000,7 +1141,7 @@ public class Time {
 
     public static String getTimeToString(Integer time) {
         String toShow;
-        if (time < 1000){
+        if (time < 1000) {
             toShow = "0" + time;
         } else {
             toShow = "" + time;
@@ -1008,13 +1149,17 @@ public class Time {
         return toShow;
     }
 
-    public static Integer IncreaseTimeInteger(Integer time) {
-        if (time % 100 == 30) {
-            time += 70;
-            return time;
+    /**
+     * Next time integer. This method is only to be used in visualizing and arraging where exceptions are already
+     * thrown so there is no need to check the format.
+     */
+    public static Integer increaseTimeInteger(Integer timeInteger) {
+        if (timeInteger % 100 == 30) {
+            int newTime = timeInteger + 70;
+            return newTime;
         } else {
-            time += 30;
-            return time;
+            int newTime = timeInteger + 30;
+            return newTime;
         }
     }
 }
@@ -1032,4 +1177,92 @@ public class Time {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadLocationPage(event.getPerson());
     }
+```
+###### /java/seedu/address/ui/ScheduleTable.java
+``` java
+/**
+ * A ui used in ArrangeCommand and VisualizeCommand to show the schedule available.
+ */
+public class ScheduleTable extends JFrame {
+
+    public ScheduleTable(Schedule schedule) {
+        TreeSet[] timeSetArray = schedule.splitScheduleToDays();
+        construct(timeSetArray);
+    }
+
+    public ScheduleTable(TreeSet[] timeSetArray) {
+        construct(timeSetArray);
+    }
+
+    /**
+     * Constructs the timetable when given the array of timeSet representing days from Monday to Sunday.
+     */
+    private void construct(TreeSet[] timeSetArray) {
+        String[] columnNames = {"", "Monday", "Tuesday" , "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+        Object[][] data = new Object[36][8];
+        for (int s = 0; s < 36; s++) {
+            for (int t = 0; t < 8; t++) {
+                data[s][t] = "";
+            }
+        }
+        for (int i = 0; i < PossibleTimes.TIMES.length; i++) {
+            data[i][0] = Time.getTimeToString(PossibleTimes.TIMES[i])
+                    + "--" + Time.increaseTimeInteger(PossibleTimes.TIMES[i]);
+        }
+        for (int j = 1; j <= timeSetArray.length; j++) {
+            for (int k = 0; k < PossibleTimes.TIMES.length; k++) {
+                if (timeSetArray[j - 1].contains(PossibleTimes.TIMES[k])) {
+                    data[k][j] = "AVAILABLE";
+                } else {
+                    data[k][j] = "N";
+                }
+            }
+        }
+
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        JTable table = new JTable(model) {
+            //  Returning the Class of each column will allow different
+            //  renderers to be used based on Class
+            public Class getColumnClass(int column) {
+                return getValueAt(0, column).getClass();
+            }
+        };
+        table.setShowHorizontalLines(true);
+        table.setPreferredScrollableViewportSize(table.getPreferredSize());
+
+        JScrollPane scrollPane = new JScrollPane(table);
+        getContentPane().add(scrollPane);
+
+    }
+
+    /**
+     * Launch the ui based on schedule.
+     */
+    public static void generates(Schedule schedule) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ScheduleTable frame = new ScheduleTable(schedule);
+        frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    /**
+     * Launch the ui based on array of time set.
+     */
+    public static void generates(TreeSet[] timeSetArray) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ScheduleTable frame = new ScheduleTable(timeSetArray);
+        frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
+}
 ```

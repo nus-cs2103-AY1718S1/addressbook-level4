@@ -34,6 +34,19 @@ public class Day {
         return day >= 1 && day <= 7;
     }
 
+    /**
+     * Returns if the string represents a valid day.
+     */
+    public static boolean isValidDay(String test) {
+        return "Monday".equals(test)
+                || "Tuesday".equals(test)
+                || "Wednesday".equals(test)
+                || "Thursday".equals(test)
+                || "Friday".equals(test)
+                || "Saturday".equals(test)
+                || "Sunday".equals(test);
+    }
+
     public Integer getDay() {
         return day;
     }

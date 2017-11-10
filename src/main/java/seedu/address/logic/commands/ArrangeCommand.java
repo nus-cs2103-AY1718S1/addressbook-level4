@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -10,6 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.Time;
+import seedu.address.ui.ScheduleTable;
 
 //@@author YuchenHe98
 /**
@@ -47,6 +49,26 @@ public class ArrangeCommand extends Command {
             }
         }
         TreeSet<Integer>[] timeSetArray = Schedule.splitScheduleToDays(model.generateMeetingTime(listOfIndex));
+        ScheduleTable.generates(timeSetArray);
+        String toShow = scheduleInfo();
+        return new CommandResult(String.format(MESSAGE_ARRANGE_PERSON_SUCCESS) + toShow);
+
+    }
+
+    public int[] getSortedZeroBasedIndex() {
+        int[] thisIndexList = new int[listOfIndex.length];
+        for (int i = 0; i < listOfIndex.length; i++) {
+            thisIndexList[i] = listOfIndex[i].getZeroBased();
+        }
+        Arrays.sort(thisIndexList);
+        return thisIndexList;
+    }
+
+    /**
+     * Returns the info of schedule to be shown to the user later.
+     */
+    public String scheduleInfo() {
+        TreeSet<Integer>[] timeSetArray = Schedule.splitScheduleToDays(model.generateMeetingTime(listOfIndex));
         String toShow = "\nAll common free time: \n";
         for (int i = 0; i < timeSetArray.length; i++) {
             toShow = toShow + PossibleDays.DAY_TIME[i] + ":\n";
@@ -56,7 +78,14 @@ public class ArrangeCommand extends Command {
             }
             toShow += "\n";
         }
-        return new CommandResult(String.format(MESSAGE_ARRANGE_PERSON_SUCCESS) + toShow);
+        return toShow;
+    }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ArrangeCommand // instanceof handles nulls
+                && Arrays.equals(this.getSortedZeroBasedIndex(), ((ArrangeCommand) other).getSortedZeroBasedIndex()));
+        // state check
     }
 }

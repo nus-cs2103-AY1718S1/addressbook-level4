@@ -28,8 +28,12 @@ public class ArrangeCommandParser implements Parser<ArrangeCommand> {
                 try {
                     listOfIndex[i] = Integer.parseInt(listOfPerson[i]);
                 } catch (NumberFormatException e) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                            ArrangeCommand.MESSAGE_USAGE));
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT
+                            + ArrangeCommand.MESSAGE_USAGE));
+                }
+                if (listOfIndex[i] <= 0) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT
+                            + ArrangeCommand.MESSAGE_USAGE));
                 }
             }
             return new ArrangeCommand(listOfIndex);

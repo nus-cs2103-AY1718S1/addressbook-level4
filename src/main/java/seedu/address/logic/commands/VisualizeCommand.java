@@ -10,6 +10,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.Time;
+import seedu.address.ui.ScheduleTable;
 
 
 //@@author YuchenHe98
@@ -26,7 +27,7 @@ public class VisualizeCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_VISUALIZE_PERSON_SUCCESS = "Visualized Person: %1$s";
+    public static final String MESSAGE_VISUALIZE_PERSON_SUCCESS = "Visualized Success! ";
 
     private final Index targetIndex;
 
@@ -42,6 +43,17 @@ public class VisualizeCommand extends Command {
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
+        Schedule scheduleToBeShown =
+                model.getAddressBook().getPersonList().get(targetIndex.getZeroBased()).getSchedule();
+        ScheduleTable.generates(scheduleToBeShown);
+        String toShow = scheduleInfo();
+        return new CommandResult(String.format(MESSAGE_VISUALIZE_PERSON_SUCCESS + targetIndex.getOneBased() + toShow));
+
+    }
+    /**
+     * Show schedule info as a message.
+     */
+    public String scheduleInfo() {
 
         Schedule scheduleToBeShown =
                 model.getAddressBook().getPersonList().get(targetIndex.getZeroBased()).getSchedule();
@@ -55,8 +67,7 @@ public class VisualizeCommand extends Command {
             }
             toShow += "\n";
         }
-        return new CommandResult(String.format(MESSAGE_VISUALIZE_PERSON_SUCCESS, targetIndex.getOneBased() + toShow));
-
+        return toShow;
     }
 
     @Override
