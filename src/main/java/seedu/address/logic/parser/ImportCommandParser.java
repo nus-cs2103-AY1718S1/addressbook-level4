@@ -19,11 +19,15 @@ import seedu.address.model.parcel.ReadOnlyParcel;
  */
 public class ImportCommandParser implements Parser<ImportCommand> {
 
-    public static final String FILE_NAME_VALIDATION_REGEX = "([a-zA-Z0-9_]+)";
-    public static final String MESSAGE_FILE_NAME_INVALID = "File name should be an xml file that only contains "
-            + "alphanumeric or underscore characters";
-    public static final String MESSAGE_FILE_EMPTY = "File to import is empty";
     public static final String IMPORT_FILE_DIRECTORY = "./data/import/";
+
+    public static final String FILE_NAME_VALIDATION_REGEX = "([a-zA-Z0-9_]+)";
+    public static final String FILE_NAME_CONSTRAINTS = "File name should be an xml file that only contains alphanumeric"
+            + " or underscore characters";
+
+    public static final String MESSAGE_INVALID_FILE_NAME = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+            ImportCommand.MESSAGE_USAGE) + "\nMore Info: " + FILE_NAME_CONSTRAINTS;
+    public static final String MESSAGE_FILE_EMPTY = "File to import is empty";
 
     /**
      * Parses the given {@code String} of arguments in the context of the {@link ImportCommand}
@@ -35,8 +39,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     public ImportCommand parse(String arg) throws ParseException {
         String trimmedArgument = arg.trim();
         if (!isValidFileName(trimmedArgument)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE)
-                    + "\nMore Info: " + MESSAGE_FILE_NAME_INVALID);
+            throw new ParseException(MESSAGE_INVALID_FILE_NAME);
         }
 
         try {
@@ -46,7 +49,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
             List<ReadOnlyParcel> parcels = readOnlyAddressBook.getParcelList();
 
             if (parcels.isEmpty()) {
-                throw new IllegalValueException("File to import is empty");
+                throw new IllegalValueException(MESSAGE_FILE_EMPTY);
             }
 
             return new ImportCommand(parcels);
