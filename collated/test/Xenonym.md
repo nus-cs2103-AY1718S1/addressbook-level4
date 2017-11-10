@@ -1,4 +1,74 @@
 # Xenonym
+###### \java\org\graphstream\algorithm\test\WidestPathTest.java
+``` java
+    @Test
+    public void widestPathTest() {
+        Graph g = toyGraph();
+
+        WidestPath d = new WidestPath(Dijkstra.Element.EDGE, "result", "length");
+        d.init(g);
+        Node source = g.getNode("A");
+        d.setSource(source);
+
+        // check the source node
+        assertEquals(d.getSource(), source);
+
+        d.compute();
+
+        // check parent access methods
+        assertNull(d.getParent(source));
+        assertNull(d.getEdgeFromParent(source));
+        assertEquals(source, d.getParent(g.getNode("C")));
+        assertEquals(g.getEdge("CD"), d.getEdgeFromParent(g.getNode("D")));
+        assertNull(d.getParent(g.getNode("G")));
+        assertNull(d.getEdgeFromParent(g.getNode("G")));
+
+
+        // check path widths
+        assertEquals(Double.POSITIVE_INFINITY, d.getPathLength(g.getNode("A")), 0);
+        assertEquals(14, d.getPathLength(g.getNode("B")), 0);
+        assertEquals(9, d.getPathLength(g.getNode("C")), 0);
+        assertEquals(9, d.getPathLength(g.getNode("D")), 0);
+        assertEquals(9, d.getPathLength(g.getNode("E")), 0);
+        assertEquals(9, d.getPathLength(g.getNode("F")), 0);
+        assertEquals(Double.NEGATIVE_INFINITY, d.getPathLength(g.getNode("G")), 0);
+
+        // check tree length
+        assertEquals(53, d.getTreeLength(), 0);
+
+        // check nodes on path A->E
+        String[] nodesAe = {"E", "B", "A"};
+        int i = 0;
+        for (Node n : d.getPathNodes(g.getNode("E"))) {
+            assertEquals(nodesAe[i], n.getId());
+            i++;
+        }
+        assertEquals(3, i);
+
+        // check edges on path A->F
+        String[] edgesAf = {"CF", "AC"};
+        i = 0;
+        for (Edge e : d.getPathEdges(g.getNode("F"))) {
+            assertEquals(edgesAf[i], e.getId());
+            i++;
+        }
+        assertEquals(2, i);
+
+        // check if path A->E is constructed correctly
+        List<Node> ln = d.getPath(g.getNode("E")).getNodePath();
+        assertEquals(3, ln.size());
+        for (i = 0; i < 3; i++) {
+            assertEquals(nodesAe[2 - i], ln.get(i).getId());
+        }
+
+        // There is no path A->G
+        assertFalse(d.getPathNodesIterator(g.getNode("G")).hasNext());
+        assertFalse(d.getPathEdgesIterator(g.getNode("G")).hasNext());
+
+        d.clear();
+        assertFalse(source.hasAttribute("result"));
+    }
+```
 ###### \java\seedu\address\logic\CommandHistoryTest.java
 ``` java
     @Test
@@ -87,6 +157,8 @@ public class ClearHistoryCommandTest {
         public CommandResult executeUndoableCommand() {
             return new CommandResult("");
         }
+    }
+}
 ```
 ###### \java\seedu\address\logic\commands\ColourTagCommandTest.java
 ``` java
@@ -116,7 +188,9 @@ public class ColourTagCommandTest {
         assertTrue(parser.parseCommand(BackupCommand.COMMAND_WORD) instanceof BackupCommand);
         assertTrue(parser.parseCommand(BackupCommand.COMMAND_WORD + " 3") instanceof BackupCommand);
     }
-    
+```
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+``` java
     @Test
     public void parseCommand_clearhistory() throws Exception {
         assertTrue(parser.parseCommand(ClearHistoryCommand.COMMAND_WORD) instanceof ClearHistoryCommand);
@@ -132,6 +206,51 @@ public class ColourTagCommandTest {
         assertEquals(new ColourTagCommand(tag, colour), command);
     }
 ```
+###### \java\seedu\address\logic\parser\ColourTagCommandParserTest.java
+``` java
+public class ColourTagCommandParserTest {
+
+    private ColourTagCommandParser parser = new ColourTagCommandParser();
+
+    @Test
+    public void parse_emptyArg_throwsParseException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ColourTagCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "onlyonearg", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ColourTagCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "&&@&C@B invalidtag", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ColourTagCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validArgs_returnsColourTagCommand() throws Exception {
+        assertParseSuccess(parser, "friends red", new ColourTagCommand(new Tag("friends"), "red"));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\RelPathCommandParserTest.java
+``` java
+public class RelPathCommandParserTest {
+    private RelPathCommandParser parser = new RelPathCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsRelPathCommand() {
+        assertParseSuccess(parser, "1 2", new RelPathCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "1 a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                RelPathCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                RelPathCommand.MESSAGE_USAGE));
+    }
+}
+```
 ###### \java\seedu\address\logic\UndoRedoStackTest.java
 ``` java
     @Test
@@ -142,6 +261,24 @@ public class ColourTagCommandTest {
         assertFalse(undoRedoStack.canUndo());
         assertFalse(undoRedoStack.canRedo());
     }
+```
+###### \java\seedu\address\relationship\ConfidenceEstimateTest.java
+``` java
+public class ConfidenceEstimateTest {
+
+    @Test
+    public void isValidConfidenceEstimate() {
+        // non-number strings are not valid
+        assertFalse(ConfidenceEstimate.isValidConfidenceEstimate("invalid"));
+
+        // values below 0 and above 100 are not valid
+        assertFalse(ConfidenceEstimate.isValidConfidenceEstimate("-1.0"));
+        assertFalse(ConfidenceEstimate.isValidConfidenceEstimate("101.0"));
+
+        // values between 0 and 100 inclusive are valid
+        assertTrue(ConfidenceEstimate.isValidConfidenceEstimate("35.9"));
+    }
+}
 ```
 ###### \java\seedu\address\storage\JsonUserPrefsStorageTest.java
 ``` java
@@ -252,30 +389,6 @@ public class StorageStub implements Storage {
     public String getUserPrefsFilePath() {
         fail("This method should not be called.");
         return null;
-```
-###### \java\seedu\address\logic\parser\ColourTagCommandParserTest.java
-``` java
-public class ColourTagCommandParserTest {
-
-    private ColourTagCommandParser parser = new ColourTagCommandParser();
-
-    @Test
-    public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                ColourTagCommand.MESSAGE_USAGE));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "onlyonearg", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                ColourTagCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "&&@&C@B invalidtag", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                ColourTagCommand.MESSAGE_USAGE));
-    }
-
-    @Test
-    public void parse_validArgs_returnsColourTagCommand() throws Exception {
-        assertParseSuccess(parser, "friends red", new ColourTagCommand(new Tag("friends"), "red"));
     }
 }
 ```
