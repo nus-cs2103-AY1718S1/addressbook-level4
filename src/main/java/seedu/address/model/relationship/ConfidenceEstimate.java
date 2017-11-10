@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author wenmogu
 /**
  * This is a value of how confident the user is towards the information recorded.
  */
