@@ -907,7 +907,7 @@ And for each `ReadOnlyPerson` object found in the array, the required informatio
 
 === LoggingCommand Function
 (added in v1.2)
-
+// tag::loggingcom[]
 In this section, we explain how logging is done in the application whenever an important action is taken by user.
 
 Whenever an action such as "Add", "Clear", "Delete", "Edit", "Email", "Import", "List", "Redo", "RemoveTag" & "Undo" is executed, the LoggingCommand method will be called and information of the action is recorded in ConnectUsLog.txt with a timestamp.
@@ -925,9 +925,10 @@ This is how you can use the LoggingCommand method in your code.
 ----
 [NOTE]
 With reference to the code for LoggingCommand, the "information" indicate the data that the user are editing with while "type of action" indicate the action taken by the user.
-
+// end::loggingcom[]
 === ClearLog Function
 (added in v1.3)
+// tag::clearlog[]
 [NOTE]
 This action is irreversible.
 
@@ -967,7 +968,7 @@ The ClearLog Method implementation for commandline with the following codes.
         return new CommandResult(MESSAGE_SUCCESS);
     }
 ----
-
+// end::clearlog[]
 === QrCall Function
 (added in v1.4)
 
