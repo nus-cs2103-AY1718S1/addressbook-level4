@@ -26,7 +26,7 @@ public class PersonCard extends UiPart<Region> {
     * Enumerate fixed colours for tags
     * */
     private static enum Colour {
-        MAROON, DARKCYAN, FIREBRICK, LIGHTSLATEGREY, DEEPSKYBLUE, OLIVEDRAB, DARKOLIVEGREEN;
+        MAROON, DARKCYAN, FIREBRICK, MEDIUMSEAGREEN, DODGERBLUE, DEEPSKYBLUE, OLIVEDRAB;
 
         private static final List<Colour> VALUES =
                 Collections.unmodifiableList(Arrays.asList(values()));
