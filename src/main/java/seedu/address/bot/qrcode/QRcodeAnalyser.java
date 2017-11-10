@@ -14,6 +14,7 @@ import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 
+import seedu.address.bot.qrcode.exceptions.QRreadException;
 import seedu.address.commons.core.LogsCenter;
 
 /**
@@ -35,7 +36,9 @@ public class QRcodeAnalyser {
                 logger.info("Decoded text = " + decodedText);
             }
         } catch (IOException e) {
-            logger.info("Could not decode QR Code, IOException :: " + e.getMessage());
+            logger.info("Could not decode QR Code, IOException : " + e.getMessage());
+        } catch (QRreadException e) {
+            logger.info("Could not decode QR Code, QRreadException : " + e.getMessage());
         }
     }
 
@@ -46,7 +49,7 @@ public class QRcodeAnalyser {
     /**
      * Method to decode the QR code using zxing api.
      */
-    private static String decodeQRcode(File qrCodeimage) throws IOException {
+    private static String decodeQRcode(File qrCodeimage) throws IOException, QRreadException {
         BufferedImage bufferedImage = ImageIO.read(qrCodeimage);
         LuminanceSource source = new BufferedImageLuminanceSource(bufferedImage);
         BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
@@ -56,7 +59,7 @@ public class QRcodeAnalyser {
             return result.getText();
         } catch (NotFoundException e) {
             logger.info("There is no QR code in the image");
-            return null;
+            throw new QRreadException();
         }
     }
 }
