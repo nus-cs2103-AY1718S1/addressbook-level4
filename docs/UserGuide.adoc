@@ -143,8 +143,8 @@ You can find a list of optional input fields for the add command in the table be
 
 [NOTE]
 ====
-When you do not enter any of the optional fields, a message will be generated to inform you that the particular field is not recorded.
-The messages are shown in the table below.
+When you do not enter any of the optional fields,
+a message will be generated to inform you that the particular field is not recorded.
 ====
 
 [width="100%",cols="10%,<10%,<80%",options="header",]
