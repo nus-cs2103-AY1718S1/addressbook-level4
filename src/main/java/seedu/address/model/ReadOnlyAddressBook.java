@@ -3,7 +3,6 @@ package seedu.address.model;
 import javafx.collections.ObservableList;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.schedule.ReadOnlySchedule;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,10 +28,5 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<ReadOnlyGroup> getGroupList();
 
-    /**
-     * Returns an unmodifiable view of the schedules list.
-     * This list will not contain any duplicate schedules.
-     */
-    ObservableList<ReadOnlySchedule> getScheduleList();
 
 }

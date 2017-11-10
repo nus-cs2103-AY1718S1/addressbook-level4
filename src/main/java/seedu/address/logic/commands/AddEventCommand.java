@@ -54,6 +54,7 @@ public class AddEventCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_SCHEDULE = "This event already exists in %1$s's schedule.";
     public static final String MESSAGE_INVALID_DURATION = "Please ensure that event "
             + "start time is before event end time.";
+    public static final String MESSAGE_INVALID_START_TIME = "Please enter a start time after %1$s.";
 
     private final Index personIndex;
     private final ReadOnlySchedule schedule;

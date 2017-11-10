@@ -30,10 +30,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.NoPersonsException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.schedule.ReadOnlySchedule;
-import seedu.address.model.schedule.UniqueScheduleList;
-import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
-import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -128,21 +124,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addSchedule(ReadOnlySchedule schedule) throws DuplicateScheduleException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void deleteSchedule(ReadOnlySchedule schedule) throws ScheduleNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void setFilteredScheduleList(UniqueScheduleList toSet) throws DuplicateScheduleException {
-            fail("This method should not be called.");
-        }
-
-        @Override
         public void addPersonToGroup(Index targetGroup, ReadOnlyPerson toAdd)
                 throws GroupNotFoundException, PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
@@ -199,15 +180,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public ObservableList<ReadOnlySchedule> getFilteredScheduleList() {
-            return null;
-        }
-
-        public void showUnfilteredPersonList() {
-            fail("This method should not be called.");
-        }
-
-        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
@@ -217,12 +189,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
-        @Override
-        public void updateFilteredScheduleList(Predicate<ReadOnlySchedule> predicate) {
-            fail("This method should not be called.");
-        }
     }
-
     /**
      * A Model stub that always throw a DuplicatePersonException when trying to add a person.
      */

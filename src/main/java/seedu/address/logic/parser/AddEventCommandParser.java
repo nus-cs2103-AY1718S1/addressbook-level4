@@ -24,8 +24,6 @@ import seedu.address.model.schedule.ScheduleName;
  */
 public class AddEventCommandParser implements Parser<AddEventCommand> {
 
-
-
     public static final Prefix PREFIX_PERSON = new Prefix("p/");
 
     /**
@@ -50,6 +48,11 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
             ScheduleDate sDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_START_DATE)).get();
             ScheduleDate eDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_END_DATE)).get();
             scheduleDetails = ParserUtil.parseScheduleDetails(argMultimap.getValue(PREFIX_DETAILS)).get();
+
+            if (!DateParserUtil.isAfterCurrentTime(sDate.toString())) {
+                throw new ParseException(String.format(AddEventCommand.MESSAGE_INVALID_START_TIME,
+                        DateParserUtil.getCurrentTime()));
+            }
 
             if (!DateParserUtil.isValidEventDuration(sDate.toString(), eDate.toString())) {
                 throw new ParseException(AddEventCommand.MESSAGE_INVALID_DURATION);

@@ -62,6 +62,29 @@ public class DateParserUtil {
 
     }
 
+    /** Ensures event start date is after current time */
+    public static boolean isAfterCurrentTime(String dateTime) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        Date currentDateTime = new Date();
+        try {
+            Date startDateTime = df.parse(dateTime);
+            if (startDateTime.compareTo(currentDateTime) < 0) {
+                return false;
+            }
+        } catch (java.text.ParseException e) {
+            throw new AssertionError("DateTime string should be valid.");
+        }
+
+        return true;
+    }
+
+    /** Returns yyyy-MM-dd hh:mm representation of current time */
+    public static String getCurrentTime() {
+        Date currentTime = new Date();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        return df.format(currentTime).toString();
+    }
+
 
     /** Returns a Google Calendar-like representation of the duration of an event
      * Examples:

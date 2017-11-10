@@ -13,9 +13,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.NoPersonsException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.schedule.ReadOnlySchedule;
-import seedu.address.model.schedule.UniqueScheduleList;
-import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
-import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 
 /**
  * The API of the Model component.
@@ -54,16 +51,6 @@ public interface Model {
     /** Deletes the given group */
     void deleteGroup(ReadOnlyGroup group) throws GroupNotFoundException;
 
-    /** Adds the given schedule */
-    void addSchedule(ReadOnlySchedule schedule) throws DuplicateScheduleException;
-
-    /** Deletes the given schedule */
-    void deleteSchedule(ReadOnlySchedule schedule) throws ScheduleNotFoundException;
-
-    /** Replaces all of ScheduleList elements with specified ScheduleList */
-    void setFilteredScheduleList(UniqueScheduleList toSet) throws DuplicateScheduleException;
-
-    /** Adds given person to given group */
     void addPersonToGroup(Index targetGroup, ReadOnlyPerson toAdd) throws
             GroupNotFoundException, PersonNotFoundException, DuplicatePersonException;
 
@@ -91,18 +78,11 @@ public interface Model {
     void updateFavouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritePerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
-
-
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
     /** Returns an unmodifiable view of the filtered group list */
     ObservableList<ReadOnlyGroup> getFilteredGroupList();
-
-    /** Returns an unmodifiable view of the filtered schedule list */
-    ObservableList<ReadOnlySchedule> getFilteredScheduleList();
-
-    void showUnfilteredPersonList();
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
@@ -116,9 +96,5 @@ public interface Model {
      */
     void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate);
 
-    /**
-     * Updates the filter of the filtered schedule list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
-     */
-    void updateFilteredScheduleList(Predicate<ReadOnlySchedule> predicate);
+
 }
