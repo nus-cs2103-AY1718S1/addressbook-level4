@@ -4,7 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 
 /**
- * A handler for the {@code InsuranceProfile} of the UI.
+ * A handler for the {@code InsuranceCard} of the UI.
  */
 public class InsuranceProfileHandle extends NodeHandle<Node> {
 

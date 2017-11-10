@@ -30,7 +30,7 @@ public class InsuranceListPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
-    private ListView<InsuranceProfile> insuranceListView;
+    private ListView<InsuranceCard> insuranceListView;
 
     public InsuranceListPanel() {
         super(FXML);
@@ -55,8 +55,8 @@ public class InsuranceListPanel extends UiPart<Region> {
      * @param insuranceList
      */
     public void setConnections(ObservableList<ReadOnlyInsurance> insuranceList) {
-        ObservableList<InsuranceProfile> mappedList = EasyBind.map(
-                insuranceList, (insurance) -> new InsuranceProfile(insurance, insuranceList.indexOf(insurance) + 1));
+        ObservableList<InsuranceCard> mappedList = EasyBind.map(
+                insuranceList, (insurance) -> new InsuranceCard(insurance, insuranceList.indexOf(insurance) + 1));
         insuranceListView.setItems(mappedList);
         insuranceListView.setCellFactory(listView -> new InsuranceListPanel.InsuranceListViewCell());
         setEventHandlerForSelectionChangeEvent();
@@ -83,7 +83,7 @@ public class InsuranceListPanel extends UiPart<Region> {
     }
 
     /**
-     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+     * Scrolls to the {@code InsuranceCard} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
@@ -102,7 +102,7 @@ public class InsuranceListPanel extends UiPart<Region> {
 
     @Subscribe
     private void handleInsuranceClickedEvent(InsuranceClickedEvent event) {
-        ObservableList<InsuranceProfile> insurances = insuranceListView.getItems();
+        ObservableList<InsuranceCard> insurances = insuranceListView.getItems();
         for (int i = 0; i < insurances.size(); i++) {
             if (insurances.get(i).getInsurance().getInsuranceName().equals(event.getInsurance().getInsuranceName())) {
                 insuranceListView.scrollTo(i);
@@ -116,11 +116,11 @@ public class InsuranceListPanel extends UiPart<Region> {
     //@@author
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code InsuranceProfile}.
+     * Custom {@code ListCell} that displays the graphics of a {@code InsuranceCard}.
      */
-    class InsuranceListViewCell extends ListCell<InsuranceProfile> {
+    class InsuranceListViewCell extends ListCell<InsuranceCard> {
         @Override
-        protected void updateItem(InsuranceProfile insurance, boolean empty) {
+        protected void updateItem(InsuranceCard insurance, boolean empty) {
             super.updateItem(insurance, empty);
 
             if (empty || insurance == null) {

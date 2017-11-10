@@ -51,10 +51,33 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
     private final LifeInsurance lifeInsurance;
 
     /**
-     * Creates an AddLifeInsuranceCommand to add the specified Insurance
+     * Creates an {@code AddLifeInsuranceCommand} to add the specified {@code LifeInsurance}
      */
     public AddLifeInsuranceCommand(ReadOnlyInsurance toAdd) {
         lifeInsurance = new LifeInsurance(toAdd);
+    }
+
+    /**
+     * Check if any {@code ReadOnlyPerson} arguments (owner, insured, and beneficiary) required to create a
+     * life insurance are inside the person list by matching their names case-insensitively. If matches,
+     * set the person as the owner, insured, or beneficiary accordingly. Note that a person can
+     */
+    public void isAnyPersonInList(List<ReadOnlyPerson> list, LifeInsurance lifeInsurance) {
+        String ownerName = lifeInsurance.getOwner().getName();
+        String insuredName = lifeInsurance.getInsured().getName();
+        String beneficiaryName = lifeInsurance.getBeneficiary().getName();
+        for (ReadOnlyPerson person: list) {
+            String lowerCaseName = person.getName().toString().toLowerCase();
+            if (lowerCaseName.equals(ownerName)) {
+                lifeInsurance.setOwner(person);
+            }
+            if (lowerCaseName.equals(insuredName)) {
+                lifeInsurance.setInsured(person);
+            }
+            if (lowerCaseName.equals(beneficiaryName)) {
+                lifeInsurance.setBeneficiary(person);
+            }
+        }
     }
 
     @Override
@@ -62,8 +85,7 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
         requireNonNull(model);
         List<ReadOnlyPerson> personList = model.getFilteredPersonList();
         isAnyPersonInList(personList, lifeInsurance);
-        model.addInsurance(lifeInsurance);
-
+        model.addLifeInsurance(lifeInsurance);
         return new CommandResult(String.format(MESSAGE_SUCCESS, lifeInsurance));
     }
 
@@ -81,25 +103,4 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
         return COMMAND_WORD;
     }
     //@@author
-
-    /**
-     * Check if all the Person parameters required to create an insurance are inside the list
-     */
-    public void isAnyPersonInList(List<ReadOnlyPerson> list, LifeInsurance lifeInsurance) {
-        String ownerName = lifeInsurance.getOwner().getName();
-        String insuredName = lifeInsurance.getInsured().getName();
-        String beneficiaryName = lifeInsurance.getBeneficiary().getName();
-        for (ReadOnlyPerson person: list) {
-            String lowerCaseName = person.getName().toString().toLowerCase();
-            if (lowerCaseName.equals(ownerName)) {
-                lifeInsurance.getOwner().setPerson(person);
-            }
-            if (lowerCaseName.equals(insuredName)) {
-                lifeInsurance.getInsured().setPerson(person);
-            }
-            if (lowerCaseName.equals(beneficiaryName)) {
-                lifeInsurance.getBeneficiary().setPerson(person);
-            }
-        }
-    }
 }

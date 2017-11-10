@@ -49,7 +49,7 @@ public class UniqueLifeInsuranceMap {
      * Adds an life insurance to the map.
      *
      * @throws DuplicateInsuranceException if the life insurance to add is a duplicate of an
-     * existing life insurance in the list.
+     * existing life insurance in the map.
      */
     public void put(UUID key, ReadOnlyInsurance toPut) throws DuplicateInsuranceException {
         requireNonNull(toPut);
@@ -57,6 +57,20 @@ public class UniqueLifeInsuranceMap {
             throw new DuplicateInsuranceException();
         }
         internalMap.put(key, new LifeInsurance(toPut));
+    }
+
+    /**
+     * Replaces an life insurance to the map.
+     *
+     * @throws InsuranceNotFoundException if the id of the life insurance {@code toSet} can not be found
+     * in the map.
+     */
+    public void replace(UUID key, ReadOnlyInsurance toSet) throws InsuranceNotFoundException {
+        requireNonNull(toSet);
+        if (!containsKey(key)) {
+            throw new InsuranceNotFoundException();
+        }
+        internalMap.replace(key, new LifeInsurance(toSet));
     }
 
     /**
