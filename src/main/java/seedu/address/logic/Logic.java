@@ -22,6 +22,7 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
+    ObservableList<ReadOnlyPerson> getRecycleBinList();
 
     /** Returns an unmodifiable view of the upcoming events */
     ObservableList<Event> getEventList();
