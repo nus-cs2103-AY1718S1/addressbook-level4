@@ -1,4 +1,4 @@
-package seedu.address.logic.commands.person;
+package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -25,9 +25,9 @@ import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author dennaloh
 /**
- * Contains integration tests (interaction with the Model) for {@code GMapCommand}.
+ * Contains integration tests (interaction with the Model) for {@code FbCommand}.
  */
-public class GMapCommandTest {
+public class FbCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
@@ -58,35 +58,35 @@ public class GMapCommandTest {
 
     @Test
     public void equals() {
-        GMapCommand gMapFirstCommand = new GMapCommand(INDEX_FIRST_PERSON);
-        GMapCommand gmapSecondCommand = new GMapCommand(INDEX_SECOND_PERSON);
+        FbCommand fbFirstCommand = new FbCommand(INDEX_FIRST_PERSON);
+        FbCommand fbSecondCommand = new FbCommand(INDEX_SECOND_PERSON);
 
         // same object -> returns true
-        assertTrue(gMapFirstCommand.equals(gMapFirstCommand));
+        assertTrue(fbFirstCommand.equals(fbFirstCommand));
 
         // same values -> returns true
-        GMapCommand gMapFirstCommandCopy = new GMapCommand(INDEX_FIRST_PERSON);
-        assertTrue(gMapFirstCommand.equals(gMapFirstCommandCopy));
+        FbCommand fbFirstCommandCopy = new FbCommand(INDEX_FIRST_PERSON);
+        assertTrue(fbFirstCommand.equals(fbFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(gMapFirstCommand.equals(1));
+        assertFalse(fbFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(gMapFirstCommand.equals(null));
+        assertFalse(fbFirstCommand.equals(null));
 
         // different person -> returns false
-        assertFalse(gMapFirstCommand.equals(gmapSecondCommand));
+        assertFalse(fbFirstCommand.equals(fbSecondCommand));
     }
 
     /**
-     * Executes a {@code GMapCommand} with the given {@code index}, and checks that a {@code CommandException}
+     * Executes a {@code FbCommand} with the given {@code index}, and checks that a {@code CommandException}
      * is thrown with the {@code expectedMessage}.
      */
     private void assertExecutionFailure(Index index, String expectedMessage) {
-        GMapCommand gMapCommand = prepareCommand(index);
+        FbCommand fbCommand = prepareCommand(index);
 
         try {
-            gMapCommand.execute();
+            fbCommand.execute();
             fail("The expected CommandException was not thrown.");
         } catch (CommandException ce) {
             assertEquals(expectedMessage, ce.getMessage());
@@ -95,11 +95,11 @@ public class GMapCommandTest {
     }
 
     /**
-     * Returns a {@code GMapCommand} with parameters {@code index}.
+     * Returns a {@code FbCommand} with parameters {@code index}.
      */
-    private GMapCommand prepareCommand(Index index) {
-        GMapCommand gMapCommand = new GMapCommand(index);
-        gMapCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return gMapCommand;
+    private FbCommand prepareCommand(Index index) {
+        FbCommand fbCommand = new FbCommand(index);
+        fbCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return fbCommand;
     }
 }
