@@ -181,13 +181,17 @@ public class AddressBookParser {
                 throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
             }
         case FavouriteListCommand.COMMAND_WORD: case FavouriteListCommand.COMMAND_ALIAS:
-            personListActivated = true;
-            return new FavouriteListCommand();
-
+            if (personListActivated) {
+                return new FavouriteListCommand();
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
         case BirthdaysCommand.COMMAND_WORD: case BirthdaysCommand.COMMAND_ALIAS:
-            personListActivated = true;
-            return new BirthdaysCommand();
-
+            if (personListActivated) {
+                return new BirthdaysCommand();
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
