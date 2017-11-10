@@ -12,6 +12,7 @@ Gentleman's Guide is a desktop address book application modified from the Addres
 It shows how all the features implemented by the author work.
 
 === Enhancement Added : Birthday Feature, Find commands, Sort commands, listReminder command
+
 ==== External Behaviour
 
 ---
@@ -66,7 +67,11 @@ bring them back to the list of all reminders, the `listReminder` command is need
 
 include::../DeveloperGuide.adoc[tag = birthday]
 
-include::../DeveloperGuide.adoc[tag = birthdayDesignConsideration]
+include::../DeveloperGuide.adoc[tag = find]
+
+include::../DeveloperGuide.adoc[tag = sort]
+
+include::../DeveloperGuide.adoc[tag = listReminder]
 
 #End of extract [from: Developer Guide]#
 
