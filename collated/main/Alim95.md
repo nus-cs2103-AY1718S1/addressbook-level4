@@ -7,7 +7,7 @@
  */
 public class TutorialMessages {
 
-    public static final int TOTAL_NUM_STEPS = 8;
+    public static final int TOTAL_NUM_STEPS = 9;
 
     /* Introductory Messages */
     public static final String INTRO_BEGIN = "Welcome to Bluebird! Would you like to go through the tutorial?";
@@ -19,27 +19,48 @@ public class TutorialMessages {
     public static final String INTRO_FIVE = "This is the sort menu, where you can select how to sort the list.";
     public static final String INTRO_SIX = "This is the search box, where "
             + "you are able to search for the person you want.";
-    public static final String INTRO_END = "Features of Bluebird:\n"
-            + "1. Add a contact and task\n"
-            + "2. Delete a contact and task\n"
-            + "3. Edit a contact and task\n"
-            + "4. Find a contact\n"
+    public static final String INTRO_SEVEN = "Features of Bluebird:\n"
+            + "1. Add contacts/tasks\n"
+            + "2. Delete contacts/tasks\n"
+            + "3. Edit contacts/tasks\n"
+            + "4. Find contacts/tasks\n"
             + "5. Select a contact\n"
             + "6. Pin a contact\n"
             + "7. Unpin a contact\n"
             + "8. Hide a contact\n"
             + "9. Clear all contacts and tasks\n"
             + "10. List all contacts and tasks\n"
-            + "11. Sort list of contacts\n"
-            + "12. Help window\n"
-            + "13. History of command inputs\n"
-            + "14. Undo a command\n"
-            + "15. Redo a command\n";
+            + "11. List all pinned contacts\n"
+            + "12. Sort list of contacts\n"
+            + "13. Help window\n"
+            + "14. History of command inputs\n"
+            + "15. Undo a command\n"
+            + "16. Redo a command\n"
+            + "17. Toggle to person/task mode\n"
+            + "18. Toggle to parent/child mode\n";
+
+    public static final String INTRO_END = "Bluebird is set to Child Mode by default every time Bluebird "
+            + "is launched. To activate all commands, toggle to parent mode!\n"
+            + "The only commands available in Child Mode are:\n"
+            + "1. add\n"
+            + "2. find\n"
+            + "3. findpin\n"
+            + "4. list\n"
+            + "5. listpin\n"
+            + "6. remark\n"
+            + "7. sort\n"
+            + "8. history\n"
+            + "9. undo\n"
+            + "10. redo\n"
+            + "11. person\n"
+            + "12. task\n"
+            + "13. parent";
 
     /* Command usage messages */
-    public static final String USAGE_BEGIN = "Let's try out the different commands of Bluebird! Click on command box "
-            + "and Press F2 to view the list of commands and enter the commands on the command box to execute it."
-            + " A parameter in [ ] means it is optional.";
+    public static final String USAGE_BEGIN = "Let's try out the different commands of Bluebird! Activate Parent Mode "
+            + "by typing \"parent\" into the command box and pressing enter to enable all commands! "
+            + "Click on command box and Press F2 to view the list of commands and enter the commands "
+            + "on the command box to execute it. A parameter in [ ] means it is optional.";
 
     /* Concluding message */
     public static final String CONCLUSION = "That's it for the tutorial! If you still need help, you can "
@@ -53,6 +74,7 @@ public class TutorialMessages {
             add(INTRO_FOUR);
             add(INTRO_FIVE);
             add(INTRO_SIX);
+            add(INTRO_SEVEN);
             add(INTRO_END);
             add(USAGE_BEGIN);
         }
@@ -78,7 +100,7 @@ public class InvalidResultDisplayEvent extends BaseEvent {
 ``` java
 
 /**
- * An event requesting to switch to browser panel.
+ * Indicates a request to switch to browser panel.
  */
 public class SwitchToBrowserEvent extends BaseEvent {
 
@@ -93,7 +115,7 @@ public class SwitchToBrowserEvent extends BaseEvent {
 ``` java
 
 /**
- * An event requesting to toggle the style of All tab.
+ * Indicates a request to toggle the style of All tab.
  */
 public class ToggleListAllStyleEvent extends BaseEvent {
 
@@ -119,11 +141,32 @@ public class ToggleListPinStyleEvent extends BaseEvent {
 
 }
 ```
+###### \java\seedu\address\commons\events\ui\ToggleParentChildModeEvent.java
+``` java
+
+/**
+ * Indicates a request to toggle to ParentMode.
+ */
+public class ToggleParentChildModeEvent extends BaseEvent {
+
+    public final boolean isSetToParentMode;
+
+    public ToggleParentChildModeEvent(boolean isSetToParentMode) {
+        this.isSetToParentMode = isSetToParentMode;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
 ###### \java\seedu\address\commons\events\ui\ToggleSearchBoxStyle.java
 ``` java
 
 /**
- * An event requesting to toggle the view to PersonPanel.
+ * Indicates a request to toggle the view to PersonPanel.
  */
 public class ToggleSearchBoxStyle extends BaseEvent {
 
@@ -163,13 +206,13 @@ public class ToggleSortByLabelEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\ToggleToAllPersonViewEvent.java
+###### \java\seedu\address\commons\events\ui\ToggleToAliasViewEvent.java
 ``` java
 
 /**
- * An event requesting to toggle the view to PersonPanel.
+ * Indicates a request to toggle the view to AliasPanel.
  */
-public class ToggleToAllPersonViewEvent extends BaseEvent {
+public class ToggleToAliasViewEvent extends BaseEvent {
 
     @Override
     public String toString() {
@@ -178,13 +221,13 @@ public class ToggleToAllPersonViewEvent extends BaseEvent {
 
 }
 ```
-###### \java\seedu\address\commons\events\ui\ToggleToParentModeEvent.java
+###### \java\seedu\address\commons\events\ui\ToggleToAllPersonViewEvent.java
 ``` java
 
 /**
- * An event requesting to toggle the to ParentMode.
+ * Indicates a request to toggle the view to PersonPanel.
  */
-public class ToggleToParentModeEvent extends BaseEvent {
+public class ToggleToAllPersonViewEvent extends BaseEvent {
 
     @Override
     public String toString() {
@@ -197,7 +240,7 @@ public class ToggleToParentModeEvent extends BaseEvent {
 ``` java
 
 /**
- * An event requesting to toggle the view to TaskPanel.
+ * Indicates a request to toggle the view to TaskPanel.
  */
 public class ToggleToTaskViewEvent extends BaseEvent {
 
@@ -212,7 +255,7 @@ public class ToggleToTaskViewEvent extends BaseEvent {
 ``` java
 
 /**
- * An event requesting to update the pinned panel.
+ * Indicates a request to update the pinned panel.
  */
 public class UpdatePinnedPanelEvent extends BaseEvent {
 
@@ -258,7 +301,7 @@ public class ParentModeCommand extends Command {
     @Override
     public CommandResult execute() {
         EventsCenter.getInstance().post(new ModelToggleEvent(ModelToggleEvent.Toggle.parentEnabled));
-        EventsCenter.getInstance().post(new ToggleToParentModeEvent());
+        EventsCenter.getInstance().post(new ToggleParentChildModeEvent(true));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
@@ -296,6 +339,25 @@ public class FindPinnedCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof FindPinnedCommand // instanceof handles nulls
                 && this.predicate.equals(((FindPinnedCommand) other).predicate)); // state check
+    }
+}
+```
+###### \java\seedu\address\logic\commands\person\ListAliasCommand.java
+``` java
+/**
+ * Lists all aliases in the address book to the user.
+ */
+public class ListAliasCommand extends Command {
+
+    public static final String COMMAND_WORD = "listalias";
+
+    public static final String MESSAGE_SUCCESS = "Listed all alias";
+
+    @Override
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new ToggleToAliasViewEvent());
+        EventsCenter.getInstance().post(new ModelToggleEvent(ModelToggleEvent.Toggle.aliasEnabled));
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 }
 ```
@@ -401,6 +463,7 @@ public class SortCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() {
         model.sortList(toSort);
+        EventsCenter.getInstance().post(new ListSizeEvent(model.getFilteredPersonList().size()));
         EventsCenter.getInstance().post(new ToggleSortByLabelEvent(toSort));
         return new CommandResult(String.format(MESSAGE_SUCCESS, toSort));
     }
@@ -790,22 +853,27 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
 ```
 ###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
+
     /**
      * Sorts the list in order.
      */
     public void sort(String toSort) {
         switch (toSort) {
         case "name":
-            internalList.sort((p1, p2) -> p1.getName().toString().compareToIgnoreCase(p2.getName().toString()));
+            internalList.sort((p1, p2) -> p1.getName().toString()
+                    .compareToIgnoreCase(p2.getName().toString()));
             break;
         case "phone":
-            internalList.sort((p1, p2) -> p1.getPhone().toString().compareToIgnoreCase(p2.getPhone().toString()));
+            internalList.sort((p1, p2) -> p1.getPhone().toString()
+                    .compareToIgnoreCase(p2.getPhone().toString()));
             break;
         case "email":
-            internalList.sort((p1, p2) -> p1.getEmail().toString().compareToIgnoreCase(p2.getEmail().toString()));
+            internalList.sort((p1, p2) -> p1.getEmail().toString()
+                    .compareToIgnoreCase(p2.getEmail().toString()));
             break;
         case "address":
-            internalList.sort((p1, p2) -> p1.getAddress().toString().compareToIgnoreCase(p2.getAddress().toString()));
+            internalList.sort((p1, p2) -> p1.getAddress().toString()
+                    .compareToIgnoreCase(p2.getAddress().toString()));
             break;
         default:
             break;
@@ -815,6 +883,7 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
 ```
 ###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
+
     /**
      * Pins the equivalent person in the list.
      *
@@ -923,6 +992,18 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
             logger.warning("Failed to toggle to person view using label");
         }
     }
+
+    /**
+     * Toggles to alias view.
+     */
+    @FXML
+    private void handleAliasViewClicked() {
+        try {
+            logic.execute("listalias");
+        } catch (CommandException | ParseException e) {
+            logger.warning("Failed to toggle to alias view using label");
+        }
+    }
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
@@ -947,7 +1028,14 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     @Subscribe
     private void handleSortByLabelEvent(ToggleSortByLabelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        sortedByLabel.setText(event.toString());
+        organizedByLabel.setText(event.toString());
+    }
+
+    @Subscribe
+    private void handleToggleParentChildModeEvent(ToggleParentChildModeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        helpMenu.setVisible(event.isSetToParentMode);
+        aliasViewLabel.setVisible(event.isSetToParentMode);
     }
 
     @Subscribe
@@ -957,11 +1045,10 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     @Subscribe
-    private void handleToggleToParentModeEvent(ToggleToParentModeEvent event) {
+    private void handleToggleToAliasViewEvent(ToggleToAliasViewEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        helpMenu.setVisible(true);
+        switchToAliasView();
     }
-
 
     @Subscribe
     private void handleToggleToAllPersonViewEvent(ToggleToAllPersonViewEvent event) {
@@ -972,7 +1059,7 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     @Subscribe
     private void handleUpdatePinnedPanelEvent(UpdatePinnedPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if (pinLabel.getStyle().equals(BRIGHT_LABEL)) {
+        if (listPinLabel.getStyle().equals(BRIGHT_LABEL)) {
             try {
                 logic.execute("listpin");
             } catch (CommandException | ParseException e) {
@@ -985,29 +1072,63 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
      * Switches style to person view.
      */
     private void switchToPersonView() {
-        personListPanelPlaceholder.getChildren().removeAll(taskListPanel.getRoot());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-        allLabel.setVisible(true);
-        pinLabel.setVisible(true);
-        organizerLabel.setText("Sorted By:");
+        addSelectedPanel(personListPanel.getRoot());
+        setListLabelsVisible(true);
+        dimAllViewLabels();
         personViewLabel.setStyle(BRIGHT_LABEL);
-        taskViewLabel.setStyle(DIM_LABEL);
-        sortedByLabel.setText(lastSorted);
+        organizerLabel.setText("Sorted By:");
+        organizedByLabel.setText(lastSorted);
+        lastSorted = organizedByLabel.getText();
+        setOrganizerLabelsVisible(true);
     }
 
     /**
      * Switches style to task view.
      */
     private void switchToTaskView() {
-        personListPanelPlaceholder.getChildren().removeAll(personListPanel.getRoot());
-        personListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
-        allLabel.setVisible(false);
-        pinLabel.setVisible(false);
-        organizerLabel.setText("Showing:");
-        personViewLabel.setStyle(DIM_LABEL);
+        addSelectedPanel(taskListPanel.getRoot());
+        setListLabelsVisible(false);
+        dimAllViewLabels();
         taskViewLabel.setStyle(BRIGHT_LABEL);
-        lastSorted = sortedByLabel.getText();
-        sortedByLabel.setText("All");
+        organizerLabel.setText("Showing:");
+        organizedByLabel.setText("All");
+        setOrganizerLabelsVisible(true);
+    }
+
+    /**
+     * Switches style to alias view.
+     */
+    private void switchToAliasView() {
+        addSelectedPanel(aliasListPanel.getRoot());
+        setListLabelsVisible(false);
+        dimAllViewLabels();
+        aliasViewLabel.setStyle(BRIGHT_LABEL);
+        setOrganizerLabelsVisible(false);
+    }
+
+    private void setOrganizerLabelsVisible(boolean isVisible) {
+        organizerLabel.setVisible(isVisible);
+        organizedByLabel.setVisible(isVisible);
+    }
+
+    private void setListLabelsVisible(boolean isVisible) {
+        listAllLabel.setVisible(isVisible);
+        listPinLabel.setVisible(isVisible);
+    }
+
+    private void dimAllViewLabels() {
+        personViewLabel.setStyle(DIM_LABEL);
+        aliasViewLabel.setStyle(DIM_LABEL);
+        taskViewLabel.setStyle(DIM_LABEL);
+    }
+
+    /**
+     * Removes current panel in personListPanelPlaceHolder and adds {@code toAdd} into it.
+     */
+    private void addSelectedPanel(Region toAdd) {
+        personListPanelPlaceholder.getChildren()
+                .removeAll(personListPanel.getRoot(), aliasListPanel.getRoot(), taskListPanel.getRoot());
+        personListPanelPlaceholder.getChildren().add(toAdd);
     }
 
     private void switchToBrowser() {
@@ -1046,13 +1167,13 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     private void listAllToggleStyle() {
-        pinLabel.setStyle(DIM_LABEL);
-        allLabel.setStyle(BRIGHT_LABEL);
+        listPinLabel.setStyle(DIM_LABEL);
+        listAllLabel.setStyle(BRIGHT_LABEL);
     }
 
     private void listPinToggleStyle() {
-        pinLabel.setStyle(BRIGHT_LABEL);
-        allLabel.setStyle(DIM_LABEL);
+        listPinLabel.setStyle(BRIGHT_LABEL);
+        listAllLabel.setStyle(DIM_LABEL);
     }
 }
 ```
@@ -1107,24 +1228,35 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     private void displayResultIcon(ValidResultDisplayEvent event) {
         switch (event.message.trim()) {
         case "delete":
+            listSizeDisplay.setVisible(true);
             imageDisplay.setImage(new Image(DELETE_ICON));
             break;
         case "edit":
+            listSizeDisplay.setVisible(false);
             imageDisplay.setImage(new Image(EDIT_ICON));
             break;
         case "find":
+            listSizeDisplay.setVisible(true);
             imageDisplay.setImage(new Image(FIND_ICON));
             break;
         case "hide":
+            listSizeDisplay.setVisible(true);
             imageDisplay.setImage(new Image(HIDE_ICON));
             break;
         case "task":
+            listSizeDisplay.setVisible(false);
             imageDisplay.setImage(new Image(TASK_ICON));
             break;
         case "undo":
+            listSizeDisplay.setVisible(false);
             imageDisplay.setImage(new Image(UNDO_ICON));
             break;
+        case "sort":
+            listSizeDisplay.setVisible(true);
+            imageDisplay.setImage(new Image(SUCCESS_ICON));
+            break;
         default:
+            listSizeDisplay.setVisible(false);
             imageDisplay.setImage(new Image(SUCCESS_ICON));
         }
     }
@@ -1132,6 +1264,7 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     @Subscribe
     private void handleInvalidResultDisplayEvent(InvalidResultDisplayEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        listSizeDisplay.setVisible(false);
         imageDisplay.setImage(new Image(ERROR_ICON));
     }
 
@@ -1281,6 +1414,15 @@ public class SortFindPanel extends UiPart<Region> {
     }
 
     /**
+     * Handles switch to alias view event
+     */
+    @Subscribe
+    private void handleToggleToAllPersonViewEvent(ToggleToAliasViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switchToAliasView();
+    }
+
+    /**
      * Handles switch to pinned person view event
      */
     @Subscribe
@@ -1299,6 +1441,15 @@ public class SortFindPanel extends UiPart<Region> {
     private void switchToPersonView() {
         searchBox.setPromptText("Search Person...");
         sortMenu.setVisible(true);
+        searchBox.setVisible(true);
+    }
+
+    /**
+     * Switches style to alias view.
+     */
+    private void switchToAliasView() {
+        searchBox.setVisible(false);
+        sortMenu.setVisible(false);
     }
 
     /**
@@ -1321,6 +1472,7 @@ public class SortFindPanel extends UiPart<Region> {
     private void switchToTaskView() {
         searchBox.setPromptText("Search Task...");
         sortMenu.setVisible(false);
+        searchBox.setVisible(true);
     }
 
     public MenuButton getSortMenu() {
@@ -1536,9 +1688,10 @@ public class TutorialPanel extends UiPart<Region> {
 ``` fxml
                               <GridPane cacheShape="false" centerShape="false" minHeight="-Infinity" prefWidth="601.0">
                                 <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="310.0" minWidth="0.0" prefWidth="84.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="614.0" minWidth="0.0" prefWidth="256.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="339.0" minWidth="0.0" prefWidth="36.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="310.0" minWidth="0.0" prefWidth="59.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="614.0" minWidth="0.0" prefWidth="47.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="614.0" minWidth="10.0" prefWidth="230.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="339.0" minWidth="0.0" prefWidth="40.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="583.0" minWidth="10.0" prefWidth="234.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="149.0" minWidth="0.0" prefWidth="86.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="49.0" />
@@ -1552,29 +1705,34 @@ public class TutorialPanel extends UiPart<Region> {
                                           <Insets bottom="5.0" left="5.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="taskViewLabel" onMouseReleased="#handleTaskViewClicked" text="Task" GridPane.columnIndex="1">
+                                    <Label fx:id="taskViewLabel" onMouseReleased="#handleTaskViewClicked" prefWidth="30.0" text="Task" GridPane.columnIndex="1">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="allLabel" onMouseReleased="#handleListAllClicked" style="-fx-text-fill: white;" text="All" GridPane.columnIndex="2">
+                                    <Label fx:id="listAllLabel" onMouseReleased="#handleListAllClicked" style="-fx-text-fill: white;" text="All" GridPane.columnIndex="3">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="pinLabel" onMouseReleased="#handleListPinnedClicked" text="Pinned" GridPane.columnIndex="3">
+                                    <Label fx:id="listPinnedLabel" onMouseReleased="#handleListPinnedClicked" text="Pinned" GridPane.columnIndex="4">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="organizerLabel" prefHeight="21.0" prefWidth="76.0" style="-fx-text-fill: white;" text="Sorted By:" GridPane.columnIndex="4">
+                                    <Label fx:id="organizerLabel" prefHeight="21.0" prefWidth="76.0" style="-fx-text-fill: white;" text="Sorted By:" GridPane.columnIndex="5">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="sortedByLabel" prefHeight="21.0" prefWidth="149.0" style="-fx-text-fill: white;" text="Name" GridPane.columnIndex="5">
+                                    <Label fx:id="organizedByLabel" prefHeight="21.0" prefWidth="149.0" style="-fx-text-fill: white;" text="Name" GridPane.columnIndex="6">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="2.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label fx:id="aliasViewLabel" onMouseReleased="#handleAliasViewClicked" text="Alias" visible="false" GridPane.columnIndex="2">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" left="10.0" />
                                        </GridPane.margin>
                                     </Label>
                                  </children>
@@ -1583,6 +1741,9 @@ public class TutorialPanel extends UiPart<Region> {
 ###### \resources\view\MainWindow.fxml
 ``` fxml
       <ScrollPane fx:id="helpOverlay" fitToHeight="true" fitToWidth="true" opacity="0.9" pannable="true" visible="false" StackPane.alignment="TOP_CENTER">
+         <StackPane.margin>
+            <Insets bottom="310.0" left="8.0" right="8.0" top="40.0" />
+         </StackPane.margin>
          <content>
             <GridPane alignment="TOP_CENTER" blendMode="SRC_ATOP" gridLinesVisible="true" minWidth="1144.0" style="-fx-background-color: white;">
               <columnConstraints>
@@ -1595,6 +1756,11 @@ public class TutorialPanel extends UiPart<Region> {
                 <RowConstraints maxHeight="58.0" minHeight="50.0" prefHeight="58.0" vgrow="SOMETIMES" />
                 <RowConstraints vgrow="SOMETIMES" />
                 <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
                   <RowConstraints vgrow="SOMETIMES" />
                   <RowConstraints vgrow="SOMETIMES" />
                   <RowConstraints vgrow="SOMETIMES" />
@@ -1810,12 +1976,49 @@ public class TutorialPanel extends UiPart<Region> {
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
+                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Person View" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="20">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <TextField alignment="CENTER" editable="false" text="person" GridPane.columnIndex="1" GridPane.rowIndex="20">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Task View" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="21">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <TextField alignment="CENTER" editable="false" text="task" GridPane.columnIndex="1" GridPane.rowIndex="21">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Parent Mode" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="23">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <TextField alignment="CENTER" editable="false" text="parent" GridPane.columnIndex="1" GridPane.rowIndex="23">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <TextField alignment="CENTER" editable="false" text="child" GridPane.columnIndex="1" GridPane.rowIndex="24">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Child Mode" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="24">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
                </children>
             </GridPane>
          </content>
-         <StackPane.margin>
-            <Insets bottom="310.0" left="8.0" right="8.0" top="40.0" />
-         </StackPane.margin>
       </ScrollPane>
 ```
 ###### \resources\view\SortFindPanel.fxml
