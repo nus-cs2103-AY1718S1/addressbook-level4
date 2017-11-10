@@ -319,6 +319,7 @@ In order to enhance the `find` command, the `find` command is extended to suppor
 **Alternative 2:** Users can search within an arbitrary number of narrowed fields (e.g. can search for names and emails only, or search for names, emails, and addresses). +
 **Pros:** More search options available for users, more advanced search functions. +
 **Cons:** Harder to implement since the parser will have to handle more prefixes.
+//end::find[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
