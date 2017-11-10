@@ -8,6 +8,11 @@ https://cs2103aug2017-w11-b2.github.io/main/team/ZhanYu.html[Please click here t
 endif::[]
 
 ifndef::env-github[]
+This is my portfolio page primarily for showcasing my contributions to the project, Rolodex.
+Since this is a graded component for my course, I have to add some description in here that clearly states the purpose of this page.
+
+This is not my full portfolio. To view my full portfolio, visit https://zy-ang.github.io/Portfolio[https://zy-ang.github.io/Portfolio].
+
 == Project: Rolodex
 
 include::../../README.adoc[tag=applicationDescription]
