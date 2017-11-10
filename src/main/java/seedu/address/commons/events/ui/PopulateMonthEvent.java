@@ -1,18 +1,19 @@
 package seedu.address.commons.events.ui;
 
 //@@author chernghann
+import java.time.YearMonth;
+
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.model.event.ReadOnlyEvent;
 
 /**
  * Indicates a request to add Event.
  */
-public class AddEventRequestEvent extends BaseEvent {
+public class PopulateMonthEvent extends BaseEvent {
 
-    public final ReadOnlyEvent event;
+    public final YearMonth yearMonth;
 
-    public AddEventRequestEvent(ReadOnlyEvent event) {
-        this.event = event;
+    public PopulateMonthEvent(YearMonth date) {
+        this.yearMonth = date;
     }
 
     @Override

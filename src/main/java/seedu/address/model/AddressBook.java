@@ -40,7 +40,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
-     *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
      */
@@ -137,7 +136,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
-    // @@author itsdickson
+    //@@author itsdickson
     /**
      * Favourites {@code target} to this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code target} is not in this {@code AddressBook}.
@@ -153,7 +152,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         persons.unfavouritePerson(target);
     }
-    // @@author
+    //@@author
 
     /**
      * Ensures that every tag in this person:
@@ -212,6 +211,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     //@@author
 
+    //@@author itsdickson
     /**
      * Deletes an event from the address book.
      *
@@ -225,7 +225,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    // @@author itsdickson
     /**
      * Initialises the Themes ArrayList
      */
@@ -237,7 +236,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ArrayList<String> getThemesList() {
         return themes;
     }
-    // @@author
+    //@@author
 
     //@@author DarrenCzen
     /** Ensures that every person in the AddressBook

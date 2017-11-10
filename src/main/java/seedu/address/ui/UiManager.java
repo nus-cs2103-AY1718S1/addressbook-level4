@@ -111,7 +111,7 @@ public class UiManager extends ComponentManager implements Ui {
         System.exit(1);
     }
 
-    // @@author itsdickson
+    //@@author itsdickson
     /**
      * Sets the given theme as the main theme of the main window.
      * @param theme .g. {@code "DarkTheme.css"}
@@ -119,7 +119,7 @@ public class UiManager extends ComponentManager implements Ui {
     public void setTheme(String theme) {
         mainWindow.getRoot().getStylesheets().add("/view/" + theme);
     }
-    // @@author
+    //@@author
 
     //==================== Event Handling Code ===============================================================
 

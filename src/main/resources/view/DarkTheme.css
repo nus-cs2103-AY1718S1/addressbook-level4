@@ -103,6 +103,7 @@
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap : 0;
     -fx-padding: 0 0 0 0;
+    -fx-background-color: transparent;
 }
 
 .list-cell:filled {
@@ -139,7 +140,7 @@
 }
 
 .window_big_label {
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 32px;
     -fx-text-fill: #fffef7;
 }
@@ -153,7 +154,7 @@
 .window_small_text {
     -fx-font-family: "Segoe UI";
     -fx-font-size: 15px;
-    -fx-text-fill: gray;
+    -fx-fill: derive(#1d1d1d, 60%);
 }
 
 /* @@author itsdickson */
@@ -175,7 +176,7 @@
 .result-display {
     -fx-background-color: transparent;
     -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
+    -fx-font-size: 14pt;
     -fx-text-fill: white;
 }
 
@@ -211,6 +212,7 @@
 .calendar-color {
     -fx-border-color: derive(#1d1d1d, 60%);
     -fx-fill: derive(#1d1d1d, 60%);
+    -fx-background-color: transparent;
     -fx-text-fill: derive(#1d1d1d, 60%);
 }
 
@@ -382,6 +384,14 @@
 }
 
 #detailsPanelPlaceholder {
+    -fx-border-color: derive(#1d1d1d, 30%);
+}
+
+#eventListPanel {
+    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+}
+
+#eventListPanelPlaceholder {
     -fx-border-color: derive(#1d1d1d, 30%);
 }
 

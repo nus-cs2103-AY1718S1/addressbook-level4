@@ -915,7 +915,7 @@ return (((cal.get(Calendar.MONTH)) == Calendar.getInstance().get(Calendar.MONTH)
 
 An overall view of birthdays command logic is shown in Figure 5.8.1
 
-image::BirthdayMechanism.png[width="600"]
+image::BirthdayMechanism.png[width="800"]
 Figure 5.8.1 Birthdays Command Logic Sequence Diagram
 
 What the user finally sees is a list of people with their birthday today as shown in figure 5.8.2. This is because the `executeUndoableCommand()` which is overriden in the BirthdaysCommand class updates the `filteredPersonList`.
@@ -984,7 +984,7 @@ The `handlePersonPanelSelectionChangedEvent` is used to load a person's details 
 The `loadPersonInfo` is facilitated by the `bindListeners()` method that "listens" for a change in any of the fields of the person.
 
 ==== Design Considerations
-**Aspect:** Creating the details panel when there is a person card
+**Aspect:** Creating the details panel when there is a person card. +
 **Alternative 1 (current choice):** details panel
 **Pros:** g: Offers more abstraction to the user as they only see necessary information on the person card and the rest is on the details panel. +
 **Cons:** Some users might find it a hassle to access the details panel to see more information. +
@@ -1362,10 +1362,11 @@ Use case ends.
 
 *Extensions*
 
-* 2a. No birthdays today.
 [none]
+* 2a. No birthdays today.
 +
 Use case ends.
+
 === Use case: Add event
 
 *MSS*
