@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
 
-//@author martyn-wong
+//@@author martyn-wong
 /**
  * Searches the address book for any parameters that match the given keyword.
  */
@@ -37,3 +37,4 @@ public class SearchCommand extends Command {
                 && this.predicate.equals(((SearchCommand) other).predicate)); // state check
     }
 }
+//@@author
