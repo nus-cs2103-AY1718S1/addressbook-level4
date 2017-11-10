@@ -74,6 +74,7 @@ Examples:
 * `add n/Betsy Crowe a/Newgate Prison p/1234567 e/betsycrowe@example.com`
 * `add n/Betsy Crowe`
 // end::EnhancedAdd[]
+
 === Adding a relationship between two persons: `addRelationship`
 
 Adds a relationship between two persons in the address book +
@@ -102,6 +103,7 @@ Format: `list`
 Shows a list of all persons in the address book sorted alphanumerically by name. +
 Format: `sort`
 // end::sort[]
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +

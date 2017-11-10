@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: AddressBook - Level 4
 AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-F10-B1/main/tree/master/collated[Functional code]] [https://github.com/CS2103AUG2017-F10-B1/main/tree/master/collated[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-F10-B1/main/tree/master/collated/main/TanYikai.md[Functional code]] [https://github.com/CS2103AUG2017-F10-B1/main/tree/master/collated/test/TanYikai.md[Test code]] {give links to collated code files}
 
 === Enhancement Added: Alias
 
@@ -28,13 +28,6 @@ The Sort command sorts the person list alphanumerically by person's name. +
 It is useful when the addressbook has alot of entries and allows user the option to organize their addressbook for a more pleasant appearance of the addressbook data. +
 
 It is most useful in providing user with the overall content of the addressbook in an organised manner which groups those with similar names together. +
-
-==== Implementation
-
----
-#Start of Extract [from: Developer Guide]#
-
-include::../DeveloperGuide.adoc[tag=]
 
 #End of Extract#
 
