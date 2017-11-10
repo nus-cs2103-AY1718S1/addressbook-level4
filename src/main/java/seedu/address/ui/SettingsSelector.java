@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.awt.*;
 import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
@@ -9,9 +10,11 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BrowserPanelSelectionChangedEvent;
@@ -28,6 +31,9 @@ public class SettingsSelector extends UiPart<Region> {
 
     private static final String FXML = "SettingsSelector.fxml";
     private final Logger logger = LogsCenter.getLogger(SettingsSelector.class);
+
+    private ObservableList<BrowserSelectorCard> browserItems;
+    private ObservableList<ThemeSelectorCard> themeItems;
 
     @FXML
     private ListView<BrowserSelectorCard> browserSelectorList;
@@ -53,21 +59,21 @@ public class SettingsSelector extends UiPart<Region> {
 
     private void setConnections() {
         //Setting connections for browser list
-        ObservableList<String> browserItems = FXCollections.observableArrayList(
+        ObservableList<String> browserStringItems = FXCollections.observableArrayList(
                 "linkedin", "google", "meeting", "maps"
         );
-        ObservableList<BrowserSelectorCard> mappedBrowserList = EasyBind.map(
-                browserItems, (item) -> new BrowserSelectorCard(item));
-        browserSelectorList.setItems(mappedBrowserList);
+        browserItems = EasyBind.map(
+                browserStringItems, (item) -> new BrowserSelectorCard(item));
+        browserSelectorList.setItems(browserItems);
         browserSelectorList.setCellFactory(listView -> new BrowserListViewCell());
 
         //Setting connections for theme list
-        ObservableList<String> themeItems = FXCollections.observableArrayList(
+        ObservableList<String> themeStringItems = FXCollections.observableArrayList(
                 "blue", "dark", "light"
         );
-        ObservableList<ThemeSelectorCard> mappedThemeList = EasyBind.map(
-                themeItems, (item) -> new ThemeSelectorCard(item));
-        themeSelectorList.setItems(mappedThemeList);
+        themeItems = EasyBind.map(
+                themeStringItems, (item) -> new ThemeSelectorCard(item));
+        themeSelectorList.setItems(themeItems);
         themeSelectorList.setCellFactory(listView -> new SettingsSelector.ThemeListViewCell());
 
         setEventHandlerSelectionChange();
@@ -157,5 +163,19 @@ public class SettingsSelector extends UiPart<Region> {
                 setGraphic(item.getRoot());
             }
         }
+    }
+
+    /**
+     * Returns the browser List View for test cases
+     */
+    public ListView<BrowserSelectorCard> getBrowserSelectorList() {
+        return browserSelectorList;
+    }
+
+    /**
+     * Returns the observable list of browser items for test cases
+     */
+    public ObservableList<BrowserSelectorCard> getBrowserItems() {
+        return browserItems;
     }
 }

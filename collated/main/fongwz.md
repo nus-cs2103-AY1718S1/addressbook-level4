@@ -183,6 +183,7 @@ public class ChooseCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+
         if (targetDisplay.equals("meeting")) {
             EventsCenter.getInstance().post(new ShowMeetingEvent());
             EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
@@ -192,6 +193,7 @@ public class ChooseCommand extends Command {
         } else {
             throw new CommandException(Messages.MESSAGE_INVALID_BROWSER_INDEX);
         }
+
         return new CommandResult(MESSAGE_SUCCESS + targetDisplay);
     }
 }
@@ -205,10 +207,7 @@ public class ChooseCommand extends Command {
     List<String> getCommandTemplateList();
 
     /** Returns the list of meetings */
-    ObservableList<Meeting> getMeetingList();
-
-    /** Returns the address book */
-    ArrayList<String> getMeetingNames(Meeting meeting);
+    ObservableList<ReadOnlyMeeting> getMeetingList();
 ```
 ###### \java\seedu\address\logic\LogicManager.java
 ``` java
@@ -216,6 +215,7 @@ public class ChooseCommand extends Command {
     public ObservableList<String> getCommandList() {
         List<String> commandList = Arrays.asList(
                 AddCommand.COMMAND_WORD,
+                AddMeetingCommand.COMMAND_WORD,
                 ClearCommand.COMMAND_WORD,
                 DeleteCommand.COMMAND_WORD,
                 DeleteTagCommand.COMMAND_WORD,
@@ -265,12 +265,12 @@ public class ChooseCommand extends Command {
     }
 
     @Override
-    public ObservableList<Meeting> getMeetingList() {
+    public ObservableList<ReadOnlyMeeting> getMeetingList() {
         return model.getMeetingList().getMeetingList();
     }
 
     @Override
-    public ArrayList<String> getMeetingNames(Meeting meeting) {
+    public ArrayList<String> getMeetingNames(ReadOnlyMeeting meeting) {
         ArrayList<String> nameList = new ArrayList<>();
         try {
             for (InternalId id : meeting.getListOfPersonsId()) {
@@ -324,21 +324,6 @@ public class ChooseCommandParser implements Parser<ChooseCommand> {
         return parsedArgs;
     }
 ```
-###### \java\seedu\address\ui\BrowserPanel.java
-``` java
-    @Subscribe
-    private void handleBrowserPanelSelectionChangedEvent(BrowserPanelSelectionChangedEvent event) {
-        loadOtherPages(event.getBrowserSelection());
-    }
-
-    //@author martyn-wong
-    @Subscribe
-    private void handleMapPanelEvent(MapPersonEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonMap(event.getPerson());
-    }
-}
-```
 ###### \java\seedu\address\ui\BrowserSelectorCard.java
 ``` java
 /**
@@ -369,8 +354,8 @@ public class BrowserSelectorCard extends UiPart<Region> {
     private void fillImage(String imageName) {
         if (imageName.equals("linkedin")) {
             browserCardImage.setImage(new Image("/images/linkedin.png"));
-        } else if (imageName.equals("facebook")) {
-            browserCardImage.setImage(new Image("/images/facebook.png"));
+        } else if (imageName.equals("google")) {
+            browserCardImage.setImage(new Image("/images/google.png"));
         } else if (imageName.equals("meeting")) {
             browserCardImage.setImage(new Image("/images/meeting.png"));
         } else if (imageName.equals("maps")) {
@@ -800,11 +785,11 @@ public class MeetingPanelCard extends UiPart<Region> {
     @FXML
     private Label meetingNotesLabel;
 
-    public MeetingPanelCard(Meeting meeting, ArrayList<String> names) {
+    public MeetingPanelCard(ReadOnlyMeeting meeting, ArrayList<String> names) {
         super(FXML);
         meetingDateLabel.textProperty().setValue(meeting.getDate());
         meetingPersonLabel.textProperty().setValue(names.toString());
-        meetingLocationLabel.textProperty().setValue(meeting.getLocation());
+        meetingLocationLabel.textProperty().setValue(meeting.getLocation().toString());
         meetingTimeLabel.textProperty().setValue(meeting.getTime());
         meetingNotesLabel.textProperty().setValue(meeting.getNotes());
     }
@@ -819,6 +804,9 @@ public class SettingsSelector extends UiPart<Region> {
 
     private static final String FXML = "SettingsSelector.fxml";
     private final Logger logger = LogsCenter.getLogger(SettingsSelector.class);
+
+    private ObservableList<BrowserSelectorCard> browserItems;
+    private ObservableList<ThemeSelectorCard> themeItems;
 
     @FXML
     private ListView<BrowserSelectorCard> browserSelectorList;
@@ -844,21 +832,21 @@ public class SettingsSelector extends UiPart<Region> {
 
     private void setConnections() {
         //Setting connections for browser list
-        ObservableList<String> browserItems = FXCollections.observableArrayList(
-                "linkedin", "facebook", "meeting", "maps"
+        ObservableList<String> browserStringItems = FXCollections.observableArrayList(
+                "linkedin", "google", "meeting", "maps"
         );
-        ObservableList<BrowserSelectorCard> mappedBrowserList = EasyBind.map(
-                browserItems, (item) -> new BrowserSelectorCard(item));
-        browserSelectorList.setItems(mappedBrowserList);
+        browserItems = EasyBind.map(
+                browserStringItems, (item) -> new BrowserSelectorCard(item));
+        browserSelectorList.setItems(browserItems);
         browserSelectorList.setCellFactory(listView -> new BrowserListViewCell());
 
         //Setting connections for theme list
-        ObservableList<String> themeItems = FXCollections.observableArrayList(
+        ObservableList<String> themeStringItems = FXCollections.observableArrayList(
                 "blue", "dark", "light"
         );
-        ObservableList<ThemeSelectorCard> mappedThemeList = EasyBind.map(
-                themeItems, (item) -> new ThemeSelectorCard(item));
-        themeSelectorList.setItems(mappedThemeList);
+        themeItems = EasyBind.map(
+                themeStringItems, (item) -> new ThemeSelectorCard(item));
+        themeSelectorList.setItems(themeItems);
         themeSelectorList.setCellFactory(listView -> new SettingsSelector.ThemeListViewCell());
 
         setEventHandlerSelectionChange();
@@ -949,6 +937,20 @@ public class SettingsSelector extends UiPart<Region> {
             }
         }
     }
+
+    /**
+     * Returns the browser List View for test cases
+     */
+    public ListView<BrowserSelectorCard> getBrowserSelectorList() {
+        return browserSelectorList;
+    }
+
+    /**
+     * Returns the observable list of browser items for test cases
+     */
+    public ObservableList<BrowserSelectorCard> getBrowserItems() {
+        return browserItems;
+    }
 }
 ```
 ###### \java\seedu\address\ui\SplashScreen.java
@@ -1030,6 +1032,423 @@ public class ThemeSelectorCard extends UiPart<Region> {
     }
 }
 ```
+###### \resources\view\BlueTheme.css
+``` css
+.background {
+    -fx-background-color: derive(#0D47A1, 20%);
+    background-color: #283593; /* Used in the default.html file */
+}
+
+.label {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #555555;
+    -fx-opacity: 0.9;
+}
+
+.label-bright {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.label-bright-underline {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #ffe4e1;
+    -fx-opacity: 1;
+    -fx-underline: true;
+    -fx-alignment: center;
+}
+
+.label-header {
+    -fx-font-size: 32pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.text-field {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+}
+
+.tab-pane {
+    -fx-padding: 0 0 0 1;
+}
+
+.tab-pane .tab-header-area {
+    -fx-padding: 0 0 0 0;
+    -fx-min-height: 0;
+    -fx-max-height: 0;
+}
+
+.table-view {
+    -fx-base: #0D47A1;
+    -fx-control-inner-background: #0D47A1;
+    -fx-background-color: #0D47A1;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 35;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-border-color:
+        transparent
+        transparent
+        derive(-fx-base, 80%)
+        transparent;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 20pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color;
+}
+
+.split-pane:horizontal .split-pane-divider {
+    -fx-background-color: derive(#a4a5ab, 20%);
+    -fx-border-color: transparent #53587a transparent #53587a;
+    -fx-border-width: 1;
+}
+
+.split-pane {
+    -fx-border-radius: 1;
+    -fx-border-width: 1;
+    -fx-background-color: derive(#4b86b4, 60%);
+}
+
+.split-pane:vertical .split-pane-divider {
+    -fx-background-color: #a4a5ab;
+    -fx-border-width: 2;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-background-color: #e8fffc
+}
+
+.list-cell {
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap : 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: #718ea8;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #2c537a;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #3949AB;
+}
+
+.list-cell:filled:selected #cardPane {
+    -fx-border-color: #3e7b91;
+    -fx-border-width: 1;
+}
+
+.list-cell .label {
+    -fx-text-fill: white;
+}
+
+.cell_big_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 16px;
+    -fx-text-fill: #010504;
+}
+
+.cell_small_label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: #010504;
+}
+
+/*Command box inner*/
+.anchor-pane {
+     -fx-background-color: derive(#FFFFFF, 20%);
+}
+
+/*Result display outer and command box outer */
+.pane-with-border {
+     -fx-background-color: #5092a8;
+     -fx-border-color: derive(#0D47A1, 10%);
+     -fx-border-top-width: 1px;
+}
+
+.status-bar {
+    -fx-background-color: derive(#FFFFFF, 20%);
+    -fx-text-fill: black;
+}
+
+.result-display {
+    -fx-background-color: #427873;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 13pt;
+    -fx-text-fill: white;
+}
+
+.result-display .label {
+    -fx-text-fill: black !important;
+    -fx-background-color: #427873;
+}
+
+.status-bar .label {
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+}
+
+.status-bar-with-border {
+    -fx-background-color: derive(#0D47A1, 30%);
+    -fx-border-color: derive(#0D47A1, 25%);
+    -fx-border-width: 1px;
+}
+
+.status-bar-with-border .label {
+    -fx-text-fill: white;
+}
+
+.grid-pane {
+    -fx-background-color: derive(#0D47A1, 30%);
+    -fx-border-color: derive(#0D47A1, 30%);
+    -fx-border-width: 1px;
+}
+
+.grid-pane .anchor-pane {
+    -fx-background-color: derive(#0D47A1, 30%);
+}
+
+.context-menu {
+    -fx-background-color: derive(#0D47A1, 50%);
+}
+
+.context-menu .label {
+    -fx-text-fill: white;
+}
+
+/* Menu bar at top */
+.menu-bar {
+    /*-fx-background-color: derive(#1f3f5e, 20%);*/
+    -fx-background-color: linear-gradient(to right, #2c537a ,#a2d9e1);
+}
+
+.menu-bar .label {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+}
+
+.menu .left-container {
+    -fx-background-color: black;
+}
+
+/*
+ * Metro style Push Button
+ * Author: Pedro Duque Vieira
+ * http://pixelduke.wordpress.com/2012/10/23/jmetro-windows-8-controls-on-java/
+
+.button {
+    -fx-padding: 5 22 5 22;
+    -fx-border-color: #e2e2e2;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-background-color: #0D47A1;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.button:hover {
+    -fx-background-color: #3a3a3a;
+}
+
+.button:pressed, .button:default:hover:pressed {
+  -fx-background-color: white;
+  -fx-text-fill: #0D47A1;
+}
+
+.button:focused {
+    -fx-border-color: white, white;
+    -fx-border-width: 1, 1;
+    -fx-border-style: solid, segments(1, 1);
+    -fx-border-radius: 0, 0;
+    -fx-border-insets: 1 1 1 1, 0;
+}
+
+.button:disabled, .button:default:disabled {
+    -fx-opacity: 0.4;
+    -fx-background-color: #0D47A1;
+    -fx-text-fill: white;
+}
+
+.button:default {
+    -fx-background-color: -fx-focus-color;
+    -fx-text-fill: #ffffff;
+}
+
+.button:default:hover {
+    -fx-background-color: derive(-fx-focus-color, 30%);
+}
+
+.dialog-pane {
+    -fx-background-color: #0D47A1;
+}
+
+.dialog-pane > *.button-bar > *.container {
+    -fx-background-color: #0D47A1;
+}
+
+.dialog-pane > *.label.content {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.dialog-pane:header *.header-panel {
+    -fx-background-color: derive(#0D47A1, 25%);
+}
+
+.dialog-pane:header *.header-panel *.label {
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+    -fx-fill: white;
+    -fx-text-fill: white;
+}
+*/
+.scroll-bar {
+    -fx-background-color: #38647a;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: derive(#38647a, 50%);
+    -fx-background-insets: 3;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 1 8 1 8;
+}
+
+.scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
+    -fx-padding: 8 1 8 1;
+}
+
+#cardPane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+#commandTypeLabel {
+    -fx-font-size: 11px;
+    -fx-text-fill: #F70D1A;
+}
+
+#commandTextField {
+    -fx-background-color: transparent #283593 transparent #283593;
+    -fx-background-insets: 0;
+    -fx-border-color: #283593 #283593 #ffffff #283593;
+    -fx-border-insets: 0;
+    -fx-border-width: 1;
+    -fx-font-family: "Arial";
+    -fx-font-size: 13pt;
+    -fx-text-fill: black;
+}
+
+#filterField, #personListPanel, #personWebpage {
+    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+}
+/*
+#resultDisplay .content {
+    -fx-background-color: transparent, #283593, transparent, #283593;
+    -fx-background-radius: 0;
+}
+
+#tags {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#tags .label {
+    -fx-text-fill: white;
+    -fx-background-color: #3e7b91;
+    -fx-padding: 1 3 1 3;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+    -fx-font-size: 11;
+} */
+
+#browserSelectorList .list-cell:even {
+    -fx-padding: 8,0,0,8;
+    -fx-background-color: #718ea8;
+}
+
+#browserSelectorList .list-cell:odd {
+    -fx-padding: 8,0,0,8;
+    -fx-background-color: #2c537a;
+}
+
+.list-cell:filled:selected #browserCardPane {
+    -fx-border-color: palegreen;
+    -fx-border-width: 2;
+    -fx-border-radius: 7 7 7 7;
+}
+
+#themeSelectorList .list-cell:even {
+    -fx-padding: 8,0,0,8;
+    -fx-background-color: #718ea8;
+}
+
+#themeSelectorList .list-cell:odd {
+    -fx-padding: 8,0,0,8;
+    -fx-background-color: #2c537a;
+}
+
+.list-cell:filled:selected #themeCardPane {
+    -fx-border-color: palegreen;
+    -fx-border-width: 2;
+    -fx-border-radius: 7 7 7 7;
+}
+
+#browserPlaceholder {
+    -fx-background-color: derive(#718ea8,50%);
+}
+
+#browserStack {
+    -fx-background-color: #a4a5ab;
+}
+
+#browser {
+    -fx-background-color: derive(#718ea8,50%);
+}
+```
 ###### \resources\view\BrowserSelectorCard.fxml
 ``` fxml
 
@@ -1097,6 +1516,34 @@ public class ThemeSelectorCard extends UiPart<Region> {
       </rowConstraints>
     </GridPane>
 </HBox>
+```
+###### \resources\view\LightTheme.css
+``` css
+.background {
+    -fx-background-color: derive(#F57F17, 20%);
+    background-color: #F57F17; /* Used in the default.html file */
+}
+
+#tags {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap : 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:empty {
+    /* Empty cells will not have alternating colours */
+    -fx-background: #f4f4f4;
+}
 ```
 ###### \resources\view\MainWindow.fxml
 ``` fxml

@@ -146,8 +146,4 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
                 + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
-    public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
-    }
-
 ```

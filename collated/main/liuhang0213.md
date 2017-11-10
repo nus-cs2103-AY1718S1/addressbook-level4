@@ -17,7 +17,7 @@ public class NextMeetingCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        Meeting nextMeeting = model.getMeetingList().getUpcomingMeeting();
+        ReadOnlyMeeting nextMeeting = model.getMeetingList().getUpcomingMeeting();
         if (nextMeeting == null) {
             return new CommandResult(MESSAGE_NO_UPCOMING_MEETINGS);
         }
@@ -208,7 +208,7 @@ public class PrefCommandParser implements Parser<PrefCommand> {
  * Represents a Meeting
  * Guarantees: immutable; meeting time is in the future
  */
-public class Meeting implements Comparable<Meeting> {
+public class Meeting implements ReadOnlyMeeting {
 
     public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -235,7 +235,7 @@ public class Meeting implements Comparable<Meeting> {
         }
 
         this.dateTime = dateTime;
-        this.location = location.trim();
+        this.location = location;
         this.notes = notes.trim();
         this.listOfPersonsId = listOfPersonsId;
     }
@@ -243,8 +243,8 @@ public class Meeting implements Comparable<Meeting> {
     /**
      * Creates a copy of the given meeting
      */
-    public Meeting(Meeting source) {
-        this(source.dateTime, source.location, source.notes, source.listOfPersonsId);
+    public Meeting(ReadOnlyMeeting source) {
+        this(source.getDateTime(), source.getLocation(), source.getNotes(), source.getListOfPersonsId());
     }
 
     // Get methods
@@ -256,8 +256,12 @@ public class Meeting implements Comparable<Meeting> {
         return dateTime.format(TIME_FORMATTER);
     }
 
-    public String getDateTime() {
+    public String getDateTimeStr() {
         return dateTime.toString();
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
     public String getLocation() {
@@ -295,11 +299,12 @@ public class Meeting implements Comparable<Meeting> {
                 + "Location: " + location + '\n'
                 + "Notes: " + notes;
     }
-
+    /*
     @Override
     public int compareTo(Meeting other) {
         return dateTime.compareTo(other.dateTime);
     }
+    */
 }
 ```
 ###### \java\seedu\address\model\ModelManager.java
@@ -331,77 +336,6 @@ public class Meeting implements Comparable<Meeting> {
         indicateAddressBookChanged();
         indicatePersonDeleted(target);
     }
-
-    @Override
-    public boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException {
-        boolean isTagRemoved;
-        boolean hasOneOrMoreDeletion = false;
-        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
-
-            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
-            //creates a new person without each of the tags
-            Person newPerson = new Person(oldPerson);
-            Set<Tag> newTags = new HashSet<>(newPerson.getTags());
-
-            for (Tag tag : tags) {
-                isTagRemoved = newTags.remove(tag);
-                if (isTagRemoved) {
-                    hasOneOrMoreDeletion = isTagRemoved;
-                }
-            }
-            newPerson.setTags(newTags);
-
-            addressBook.updatePerson(oldPerson, newPerson);
-        }
-        return hasOneOrMoreDeletion;
-    }
-
-    @Override
-    public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-        addressBook.addPerson(person);
-
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
-        indicatePersonAdded(person);
-    }
-
-    @Override
-    public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireAllNonNull(target, editedPerson);
-
-        addressBook.updatePerson(target, editedPerson);
-        indicateAddressBookChanged();
-        indicatePersonEdited(editedPerson);
-    }
-
-    //=========== Filtered Person List Accessors =============================================================
-
-    /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
-     * {@code addressBook}
-     */
-    @Override
-    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
-    }
-
-    @Override
-    public void updateFilteredPersonList() {
-        updateFilteredPersonList();
-    }
-
-    @Override
-    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-        requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
-    }
-
-    @Override
-    public UserPrefs getUserPrefs() {
-        return this.userPrefs;
-    }
-
 ```
 ###### \java\seedu\address\model\person\InternalId.java
 ``` java
@@ -517,13 +451,13 @@ public interface ReadOnlyMeetingList {
      * Returns an unmodifiable view of the meetings list.
      * This list will not contain any duplicate meetings.
      */
-    ObservableList<Meeting> getMeetingList();
+    ObservableList<ReadOnlyMeeting> getMeetingList();
 
     /**
      * Returns the next upcoming meeting
      * This is required for nextMeeting command
      */
-    Meeting getUpcomingMeeting();
+    ReadOnlyMeeting getUpcomingMeeting();
 }
 ```
 ###### \java\seedu\address\model\UniqueMeetingList.java
@@ -535,9 +469,9 @@ public interface ReadOnlyMeetingList {
  *
  * @see Meeting#equals(Object)
  */
-public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList {
+public class UniqueMeetingList implements Iterable<ReadOnlyMeeting>, ReadOnlyMeetingList {
 
-    private final ObservableList<Meeting> internalList = FXCollections.observableArrayList();
+    private final ObservableList<ReadOnlyMeeting> internalList = FXCollections.observableArrayList();
 
     /**
      * Constructs empty MeetingList.
@@ -564,7 +498,7 @@ public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList
     }
 
     @Override
-    public ObservableList<Meeting> getMeetingList() {
+    public ObservableList<ReadOnlyMeeting> getMeetingList() {
         return internalList;
     }
 
@@ -572,15 +506,16 @@ public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList
      * Returns all meetings in this list as a Set.
      * This set is mutable and change-insulated against the internal list.
      */
-    public Set<Meeting> toSet() {
+    public Set<ReadOnlyMeeting> toSet() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return new HashSet<>(internalList);
     }
 
     /**
      * Replaces the Meetings in this list with those in the argument meeting list.
+     * @param meetings
      */
-    public void setMeetings(List<Meeting> meetings) {
+    public void setMeetings(ObservableList<ReadOnlyMeeting> meetings) {
         requireAllNonNull(meetings);
         internalList.setAll(meetings);
         assert CollectionUtil.elementsAreUnique(internalList);
@@ -590,7 +525,7 @@ public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList
      * Ensures every meeting in the argument list exists in this object.
      */
     public void mergeFrom(UniqueMeetingList from) {
-        final Set<Meeting> alreadyInside = this.toSet();
+        final Set<ReadOnlyMeeting> alreadyInside = this.toSet();
         from.internalList.stream()
                 .filter(meeting -> !alreadyInside.contains(meeting))
                 .forEach(internalList::add);
@@ -601,7 +536,7 @@ public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList
     /**
      * Returns true if the list contains an equivalent Meeting as the given argument.
      */
-    public boolean contains(Meeting toCheck) {
+    public boolean contains(ReadOnlyMeeting toCheck) {
         requireNonNull(toCheck);
         return internalList.contains(toCheck);
     }
@@ -611,7 +546,7 @@ public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList
      *
      * @throws DuplicateMeetingException if the Meeting to add is a duplicate of an existing Meeting in the list.
      */
-    public void add(Meeting toAdd) throws DuplicateMeetingException {
+    public void add(ReadOnlyMeeting toAdd) throws DuplicateMeetingException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
             throw new DuplicateMeetingException();
@@ -621,74 +556,6 @@ public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
-    /**
-     * Sorts the meeting by date. For retrieving earliest meeting in the list
-     */
-    public void sortByDate() {
-        Collections.sort(internalList);
-    }
-
-    /**
-     * Returns the meeting with earliest date in the internal list
-     * Currently not checking if it is happening in the future
-     */
-    @Override
-    public Meeting getUpcomingMeeting() {
-        this.sortByDate();
-        return internalList.get(0);
-    }
-
-    public ObservableList<Meeting> getInternalList() {
-        return internalList;
-    }
-
-    @Override
-    public Iterator<Meeting> iterator() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return internalList.iterator();
-    }
-
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
-     */
-    public ObservableList<Meeting> asObservableList() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return FXCollections.unmodifiableObservableList(internalList);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return other == this // short circuit if same object
-                || (other instanceof UniqueMeetingList // instanceof handles nulls
-                        && this.internalList.equals(((UniqueMeetingList) other).internalList));
-    }
-
-    /**
-     * Returns true if the element in this list is equal to the elements in {@code other}.
-     * The elements do not have to be in the same order.
-     */
-    public boolean equalsOrderInsensitive(UniqueMeetingList other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        assert CollectionUtil.elementsAreUnique(other.internalList);
-        return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
-    }
-
-    @Override
-    public int hashCode() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return internalList.hashCode();
-    }
-
-    /**
-     * Signals that an operation would have violated the 'no duplicates' property of the list.
-     */
-    public static class DuplicateMeetingException extends DuplicateDataException {
-        protected DuplicateMeetingException() {
-            super("Operation would result in duplicate meetings");
-        }
-    }
-}
 ```
 ###### \java\seedu\address\storage\AddressBookStorage.java
 ``` java
@@ -937,8 +804,8 @@ public class XmlAdaptedMeeting {
      *
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
-    public XmlAdaptedMeeting(Meeting source) {
-        dateTime = source.getDateTime();
+    public XmlAdaptedMeeting(ReadOnlyMeeting source) {
+        dateTime = source.getDateTimeStr();
         location = source.getLocation();
         notes = source.getNotes();
         listOfPersonsId = new ArrayList<Integer>();
@@ -1141,8 +1008,8 @@ public class XmlSerializableMeetingList extends XmlSerializableData implements R
     }
 
     @Override
-    public ObservableList<Meeting> getMeetingList() {
-        final ObservableList<Meeting> meetings = this.meetings.stream().map(m -> {
+    public ObservableList<ReadOnlyMeeting> getMeetingList() {
+        final ObservableList<ReadOnlyMeeting> meetings = this.meetings.stream().map(m -> {
             try {
                 return m.toModelType();
             } catch (IllegalValueException e) {
@@ -1159,7 +1026,7 @@ public class XmlSerializableMeetingList extends XmlSerializableData implements R
      * @return
      */
     @Override
-    public Meeting getUpcomingMeeting() {
+    public ReadOnlyMeeting getUpcomingMeeting() {
         return null;
     }
 }
