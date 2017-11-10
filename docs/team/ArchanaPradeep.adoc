@@ -107,7 +107,7 @@ A to-do list to remind university students when their assignment or submissions 
 
 === Other contributions
 
-* Fixed bugs in the details panel ( Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/130)
+* Fixed bugs in the details panel [Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/130[pull request]]
 * Acceptance testing feedback given to `Team T09-B2` [https://github.com/CS2103AUG2017-T09-B2/main/issues?q=is%3Aissue+is%3Aclosed[Issues]]
 * Increased test coverage by 0.6% [https://github.com/CS2103AUG2017-T15-B3/main/pull/95[pull request]]
 
