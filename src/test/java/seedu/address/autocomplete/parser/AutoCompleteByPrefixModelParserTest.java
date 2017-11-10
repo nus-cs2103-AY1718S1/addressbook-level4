@@ -62,97 +62,82 @@ public class AutoCompleteByPrefixModelParserTest {
     public void testParseName() {
         parser.setPrefix(PREFIX_NAME);
         //multiple possibilities matched
-        assertEquals(parser.parseForPossibilities("add n/a"),
-                Arrays.asList(new String[] {"add n/" + ALICE.getName().toString(),
-                                            "add n/" + AMY.getName().toString(),
-                                            "add n/a"}));
+        assertPossibilities("add n/a",
+                "add n/" + ALICE.getName().toString(),
+                "add n/" + AMY.getName().toString());
 
         //single possibility matched
-        assertEquals(parser.parseForPossibilities("add n/f"),
-                Arrays.asList(new String[] {"add n/" + FIONA.getName().toString(),
-                                            "add n/f"}));
+        assertPossibilities("add n/f",
+                "add n/" + FIONA.getName().toString());
 
         //no possibility matched
-        assertEquals(parser.parseForPossibilities("add n/r"),
-                Arrays.asList(new String[] {"add n/r"}));
+        assertPossibilities("add n/r");
     }
 
     @Test
     public void testParsePhone() {
         parser.setPrefix(PREFIX_PHONE);
         //multiple possibilities matched
-        assertEquals(parser.parseForPossibilities("edit 1 p/8"),
-                Arrays.asList(new String[] {"edit 1 p/" + ALICE.getPhone().toString(),
-                                            "edit 1 p/" + DANIEL.getPhone().toString(),
-                                            "edit 1 p/8"}));
+        assertPossibilities("edit 1 p/8",
+                "edit 1 p/" + ALICE.getPhone().toString(),
+                "edit 1 p/" + DANIEL.getPhone().toString());
 
         //single possibility matched
-        assertEquals(parser.parseForPossibilities("add p/111"),
-                Arrays.asList(new String[] {"add p/" + AMY.getPhone().toString(),
-                                            "add p/111"}));
+        assertPossibilities("add p/111",
+                "add p/" + AMY.getPhone().toString());
 
         //no possibility matched, even if some phone numbers contain the sequence
-        assertEquals(parser.parseForPossibilities("add p/482"),
-                Arrays.asList(new String[] {"add p/482"}));
+        assertPossibilities("add p/482");
     }
 
     @Test
     public void testParseEmail() {
         parser.setPrefix(PREFIX_EMAIL);
         //multiple possibilities matched
-        assertEquals(parser.parseForPossibilities("edit 5 e/a"),
-                Arrays.asList(new String[] {"edit 5 e/" + ALICE.getEmail().toString(),
-                                            "edit 5 e/" + AMY.getEmail().toString(),
-                                            "edit 5 e/" + GEORGE.getEmail().toString(),
-                                            "edit 5 e/a"}));
+        assertPossibilities("edit 5 e/a",
+                "edit 5 e/" + ALICE.getEmail().toString(),
+                "edit 5 e/" + AMY.getEmail().toString(),
+                "edit 5 e/" + GEORGE.getEmail().toString());
 
         //single possibility matched
-        assertEquals(parser.parseForPossibilities("edit 12 e/corn"),
-                Arrays.asList(new String[] {"edit 12 e/" + DANIEL.getEmail().toString(),
-                                            "edit 12 e/corn"}));
+        assertPossibilities("edit 12 e/corn",
+                "edit 12 e/" + DANIEL.getEmail().toString());
 
         //no possibility matched
-        assertEquals(parser.parseForPossibilities("add e/example.com"),
-                Arrays.asList(new String[] {"add e/example.com"}));
+        assertPossibilities("add e/example.com");
     }
 
     @Test
     public void testParseAddress() {
         parser.setPrefix(PREFIX_ADDRESS);
         //multiple possibilities matched
-        assertEquals(parser.parseForPossibilities("add a/1"),
-                Arrays.asList(new String[] {"add a/" + ALICE.getAddress().toString(),
-                                            "add a/" + DANIEL.getAddress().toString(),
-                                            "add a/1"}));
+        assertPossibilities("add a/1",
+                "add a/" + ALICE.getAddress().toString(),
+                "add a/" + DANIEL.getAddress().toString());
 
         //single possibility matched
-        assertEquals(parser.parseForPossibilities("edit 2 a/10"),
-                Arrays.asList(new String[] {"edit 2 a/" + DANIEL.getAddress().toString(),
-                                            "edit 2 a/10"}));
+        assertPossibilities("edit 2 a/10",
+                "edit 2 a/" + DANIEL.getAddress().toString());
 
         //no possibility matched
-        assertEquals(parser.parseForPossibilities("add a/serangoon"),
-                Arrays.asList(new String[] {"add a/serangoon"}));
+        assertPossibilities("add a/serangoon");
     }
 
     @Test
     public void testParseTags() {
         parser.setPrefix(PREFIX_TAG);
         //multiple possibilities matched
-        assertEquals(parser.parseForPossibilities("removetag t/f"),
-                Arrays.asList(new String[] {"removetag t/friends",
-                                            "removetag t/friend",
-                                            "removetag t/family",
-                                            "removetag t/f"}));
+        assertPossibilities("removetag t/f",
+                "removetag t/friends",
+                "removetag t/friend",
+                "removetag t/family");
 
         //single possibility matched
-        assertEquals(parser.parseForPossibilities("edit 1 t/fa"),
-                Arrays.asList(new String[] {"edit 1 t/family",
-                                            "edit 1 t/fa"}));
+        assertPossibilities("edit 1 t/fa",
+                "edit 1 t/family");
 
         //no possibility matched
-        assertEquals(parser.parseForPossibilities("add n/Goatman t/enemy t/to"),
-                Arrays.asList(new String[] {"add n/Goatman t/enemy t/to"}));
+        assertPossibilities("add n/Goatman t/enemy t/to");
     }
 
     @Test
@@ -160,13 +145,11 @@ public class AutoCompleteByPrefixModelParserTest {
         parser.setPrefix(PREFIX_REMARK);
 
         //single possibility matched
-        assertEquals(parser.parseForPossibilities("remark 1 r/Like"),
-                Arrays.asList(new String[] {"remark 1 r/" + GEORGE.getRemark().toString(),
-                                            "remark 1 r/Like"}));
+        assertPossibilities("remark 1 r/Like",
+                "remark 1 r/" + GEORGE.getRemark().toString());
 
         //no possibility matched
-        assertEquals(parser.parseForPossibilities("remark 1 r/Not in list"),
-                Arrays.asList(new String[] {"remark 1 r/Not in list"}));
+        assertPossibilities("remark 1 r/Not in list");
     }
 
     @Test
@@ -214,14 +197,13 @@ public class AutoCompleteByPrefixModelParserTest {
 
         String preamble = "add n/Da Mythic t/";
 
-        assertEquals(parser.parseForPossibilities(preamble),
-                Arrays.asList(preamble + "friends",
-                        preamble + "friend",
-                        preamble + "owesMoney",
-                        preamble + "husband",
-                        preamble + "colleagues",
-                        preamble + "family",
-                        preamble));
+        assertPossibilities(preamble,
+                preamble + "friends",
+                preamble + "friend",
+                preamble + "owesMoney",
+                preamble + "husband",
+                preamble + "colleagues",
+                preamble + "family");
     }
 
     @After
@@ -231,6 +213,18 @@ public class AutoCompleteByPrefixModelParserTest {
     }
 
     //@@author
+    /**
+     * Tests the possibilities generated by the stub against the list of possibilities expected
+     * @param stub test input
+     * @param possibilities expected possibilities output
+     */
+    private void assertPossibilities(String stub, String... possibilities) {
+        List<String> expected = new ArrayList<String>();
+        expected.addAll(Arrays.asList(possibilities));
+        expected.add(stub);
+        assertEquals(parser.parseForPossibilities(stub), expected);
+    }
+
     /**
      * A Model stub that allows calling of certain methods used in the test,
      * including some required accessors and addPerson

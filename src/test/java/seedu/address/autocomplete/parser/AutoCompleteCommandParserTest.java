@@ -23,15 +23,18 @@ public class AutoCompleteCommandParserTest {
     @Test
     public void parseAutoCompleteCommandAllAlphabets() throws Exception {
         // no match
-        assertEquals(parser.parseForPossibilities("b"), Arrays.asList(new String[] {"b"}));
+        assertEquals(parser.parseForPossibilities("b"),
+                Arrays.asList(new String[] {"b"}));
 
         // single match
-        assertEquals(parser.parseForPossibilities("a"), Arrays.asList(new String[] {AddCommand.COMMAND_USAGE, "a"}));
+        assertEquals(parser.parseForPossibilities("a"),
+                Arrays.asList(new String[] {AddCommand.COMMAND_USAGE, "a"}));
 
         // multiple match
         assertEquals(parser.parseForPossibilities("r"),
-                Arrays.asList(new String[] {RedoCommand.COMMAND_USAGE, RemarkCommand.COMMAND_USAGE,
-                    RemoveTagCommand.COMMAND_USAGE, "r"}));
+                Arrays.asList(new String[] {RedoCommand.COMMAND_USAGE,
+                                            RemarkCommand.COMMAND_USAGE,
+                                            RemoveTagCommand.COMMAND_USAGE, "r"}));
     }
 
 }
