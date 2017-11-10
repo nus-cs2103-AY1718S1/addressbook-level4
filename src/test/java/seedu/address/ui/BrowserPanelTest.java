@@ -7,6 +7,7 @@ import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
+import static seedu.address.ui.BrowserPanel.GOOGLE_GMAP_URL_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
@@ -69,7 +70,7 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertTrue(browserPanelHandle.getLoadedUrl().toString(), browserPanelHandle.getLoadedUrl()
-                .toString().contains("https://www.google.com/maps/search/"));
+                .toString().contains(GOOGLE_GMAP_URL_PREFIX));
         // @@author
     }
 }
