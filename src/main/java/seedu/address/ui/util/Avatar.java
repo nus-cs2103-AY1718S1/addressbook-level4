@@ -32,9 +32,9 @@ public class Avatar {
     }
 
     /**
-     * Generates a new color with a random offset from {@code defaultColor}.
+     * Generates a new color with a random offset from {@code Color defaultColor}.
      *
-     * @return The new color in hex string format
+     * @return The new color in hexadecimal {@code String} format
      */
     private static String generateNewColor(Color defaultColor) {
         int r = defaultColor.getRed();

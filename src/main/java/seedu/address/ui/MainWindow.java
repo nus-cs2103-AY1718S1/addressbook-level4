@@ -98,7 +98,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
-     * Set key listeners for handling keyboard shortcuts.
+     * Sets key listeners for handling keyboard shortcuts.
      */
     protected void setKeyListeners() {
         KeyListener keyListener = new KeyListener(getRoot(), resultDisplay, personListPanel, commandBox);
