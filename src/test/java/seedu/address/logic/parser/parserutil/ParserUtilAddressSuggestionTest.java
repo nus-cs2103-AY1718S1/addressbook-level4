@@ -147,7 +147,7 @@ public class ParserUtilAddressSuggestionTest {
                 parseRemoveAddressTillEnd(
                         "edit Bernice Yu 99272758 Blk 30 Lorong 3 Serangoon Gardens, #07-18"));
 
-        assertEquals("rmk Davis lives at a/",
+        assertEquals("rmk Davis lives at",
                 parseRemoveAddressTillEnd(
                         "rmk Davis lives at a/Blk 436 Serangoon Gardens Street 26, #16-43 p/12358576 this is a"
                                 + " utility"));

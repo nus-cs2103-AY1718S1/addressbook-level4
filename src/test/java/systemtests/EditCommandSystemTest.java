@@ -32,7 +32,10 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.EditCommand.COMMAND_WORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.person.Name.NAME_REPLACEMENT_REGEX;
@@ -50,6 +53,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
+import seedu.address.model.person.Address;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -194,31 +198,32 @@ public class EditCommandSystemTest extends RolodexSystemTest {
         assertCommandFailure(command, "", String.format(MESSAGE_PROMPT_COMMAND,
                         commandword + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_NAME_DESC_SUGGESTION));
 
-        /* Case: invalid phone -> rejected, suggested to include phone prefix without slash as name */
+        /* Case: invalid phone -> rejected, suggested to include phone as address */
         command = COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_PHONE_DESC;
         assertCommandFailure(command, "", String.format(MESSAGE_PROMPT_COMMAND,
-                COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " "
-                        + PREFIX_NAME + INVALID_PHONE_DESC.trim().replaceAll(NAME_REPLACEMENT_REGEX, "")));
+                COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_ADDRESS
+                        + INVALID_PHONE_DESC.replace(PREFIX_PHONE.toString(), "")
+                        .trim().replaceAll(NAME_REPLACEMENT_REGEX, "")));
 
-        /* Case: invalid email -> rejected, suggested to include email prefix without slash as name */
+        /* Case: invalid email -> rejected, suggested to include as name */
         commandword = EditCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next();
         command = commandword + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_EMAIL_DESC;
         assertCommandFailure(command, "", String.format(MESSAGE_PROMPT_COMMAND,
                 commandword + " " + INDEX_FIRST_PERSON.getOneBased() + " "
-                        + PREFIX_NAME + INVALID_EMAIL_DESC.trim().replaceAll(NAME_REPLACEMENT_REGEX, "")));
+                        + PREFIX_NAME + INVALID_EMAIL_DESC.replaceAll(PREFIX_EMAIL.toString(), "")
+                        .trim().replaceAll(NAME_REPLACEMENT_REGEX, "")));
 
-        /* Case: invalid address -> rejected, suggested to include address prefix without slash as name */
+        /* Case: invalid address -> rejected, address constraints shown */
         command = COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_ADDRESS_DESC;
-        assertCommandFailure(command, "", String.format(MESSAGE_PROMPT_COMMAND,
-                COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " "
-                        + PREFIX_NAME + INVALID_ADDRESS_DESC.trim().replaceAll(NAME_REPLACEMENT_REGEX, "")));
+        assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
-        /* Case: invalid tag -> rejected, suggested to include tag prefix without slash as name */
+        /* Case: invalid tag -> rejected, suggested to include tag as name */
         commandword = EditCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next();
         command = commandword + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_TAG_DESC;
         assertCommandFailure(command, "", String.format(MESSAGE_PROMPT_COMMAND,
                 commandword + " " + INDEX_FIRST_PERSON.getOneBased() + " "
-                        + PREFIX_NAME + INVALID_TAG_DESC.trim().replaceAll(NAME_REPLACEMENT_REGEX, "")));
+                        + PREFIX_NAME + INVALID_TAG_DESC.replace(PREFIX_TAG.toString(), "")
+                        .trim().replaceAll(NAME_REPLACEMENT_REGEX, "")));
 
         /* Case: edit a person with new values same as another person's values -> rejected */
         executeCommand(PersonUtil.getAddCommand(BOB));

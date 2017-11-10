@@ -126,6 +126,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (mandatoryPhone.isPresent()) {
             phone = mandatoryPhone.get().getKey();
             remaining = mandatoryPhone.get().getValue();
+        } else {
+            remaining = remaining.replaceAll(PREFIX_PHONE.toString(), "");
         }
 
         // Check for Optional Email
@@ -134,6 +136,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (mandatoryEmail.isPresent()) {
             email = mandatoryEmail.get().getKey();
             remaining = mandatoryEmail.get().getValue();
+        } else {
+            remaining = remaining.replaceAll(PREFIX_EMAIL.toString(), "");
         }
 
         // Check for possible existing Tags without prefixes
@@ -149,6 +153,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (optionalExistingTags.isPresent()) {
             tags.append(optionalExistingTags.get().getKey());
             remaining = optionalExistingTags.get().getValue();
+        } else {
+            remaining = remaining.replaceAll(PREFIX_TAG.toString(), "");
         }
 
         // Check for existing remark prefix using tokenizer
@@ -157,6 +163,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (optionalExistingRemarks.isPresent()) {
             remark = optionalExistingRemarks.get().getKey();
             remaining = optionalExistingRemarks.get().getValue();
+        } else {
+            remaining = remaining.replaceAll(PREFIX_REMARK.toString(), "");
         }
 
         // Check for Optional Address till end of remainder string
@@ -165,6 +173,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (mandatoryAddress.isPresent()) {
             address = mandatoryAddress.get().getKey();
             remaining = mandatoryAddress.get().getValue();
+        } else {
+            remaining = remaining.replaceAll(PREFIX_ADDRESS.toString(), "");
         }
 
         // Check for alphanumeric Name in remainder string

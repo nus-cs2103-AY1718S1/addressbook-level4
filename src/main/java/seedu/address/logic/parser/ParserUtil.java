@@ -4,8 +4,10 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.index.Index.INDEX_VALIDATION_REGEX;
 import static seedu.address.commons.util.StringUtil.replaceBackslashes;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.model.person.Address.ADDRESS_BLOCK_NUMBER_MATCHING_REGEX;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.model.person.Address.ADDRESS_BLOCK_MATCHING_REGEX;
 import static seedu.address.model.person.Address.ADDRESS_BLOCK_WORD_MATCHING_REGEX;
 import static seedu.address.model.person.Email.EMAIL_VALIDATION_REGEX;
 import static seedu.address.model.person.Name.NAME_REPLACEMENT_REGEX;
@@ -201,16 +203,18 @@ public class ParserUtil {
      * the remaining {@code String} value.
      */
     public static String parseRemainingName(String value) throws IllegalArgumentException {
-        String test;
-        if (value.trim().startsWith(PREFIX_NAME.toString())) {
-            test = value.replace(PREFIX_NAME.toString(), "").replaceAll(NAME_REPLACEMENT_REGEX, "");
+        Matcher m = Pattern.compile(PREFIX_NAME.toString()).matcher(value);
+        String nonEmptyName;
+        if (m.find()) {
+            nonEmptyName = value.substring(value.indexOf(m.group()) + PREFIX_NAME.toString().length())
+                    .replaceAll(NAME_REPLACEMENT_REGEX, "").trim();
         } else {
-            test = value.replaceAll(NAME_REPLACEMENT_REGEX, "");
+            nonEmptyName = value.replaceAll(NAME_REPLACEMENT_REGEX, "").trim();
         }
-        if (!test.trim().isEmpty()) {
-            return test.trim();
+        if (nonEmptyName.isEmpty()) {
+            throw new IllegalArgumentException();
         }
-        throw new IllegalArgumentException();
+        return nonEmptyName;
     }
 
     /**
@@ -285,7 +289,7 @@ public class ParserUtil {
         } catch (IllegalArgumentException e) {
             firstPhone = "";
         }
-        return value.substring(0, value.indexOf(firstPhone)).trim()
+        return value.substring(0, value.indexOf(firstPhone)).replace(PREFIX_PHONE.toString(), "").trim()
                 .concat(" ")
                 .concat(value.substring(value.indexOf(firstPhone) + firstPhone.length()).trim()).trim();
     }
@@ -332,7 +336,7 @@ public class ParserUtil {
         } catch (IllegalArgumentException e) {
             firstEmail = "";
         }
-        return value.substring(0, value.indexOf(firstEmail)).trim()
+        return value.substring(0, value.indexOf(firstEmail)).replace(PREFIX_EMAIL.toString(), "").trim()
                 .concat(" ")
                 .concat(value.substring(value.indexOf(firstEmail) + firstEmail.length()).trim()).trim();
     }
@@ -384,7 +388,7 @@ public class ParserUtil {
         if (m.find()) {
             return value.substring(value.indexOf(m.group())).trim();
         }
-        m = Pattern.compile(ADDRESS_BLOCK_NUMBER_MATCHING_REGEX).matcher(value);
+        m = Pattern.compile(ADDRESS_BLOCK_MATCHING_REGEX).matcher(value);
         if (m.find()) {
             return value.substring(value.indexOf(m.group())).trim();
         }
@@ -398,6 +402,6 @@ public class ParserUtil {
      */
     public static String parseRemoveAddressTillEnd(String value) {
         String address = parseAddressTillEnd(value);
-        return value.substring(0, value.indexOf(address)).trim();
+        return value.substring(0, value.indexOf(address)).replace(PREFIX_ADDRESS.toString(), "").trim();
     }
 }
