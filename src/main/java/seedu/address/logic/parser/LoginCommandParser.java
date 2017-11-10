@@ -32,12 +32,11 @@ public class LoginCommandParser implements Parser<LoginCommand> {
         String trimmedArgs = args.trim();
 
         if (isShowingLoginView()) {
-            parseForGui(args);
+            return parseForGui(args);
         }
 
         try {
             String[] argsList = trimmedArgs.split(ONE_OR_MORE_SPACES_REGEX);
-
             // if incorrect number of arguments are supplied, throw ArrayOutOfBoundsException
             if (argsList.length != 2) {
                 throw new ArrayIndexOutOfBoundsException();
