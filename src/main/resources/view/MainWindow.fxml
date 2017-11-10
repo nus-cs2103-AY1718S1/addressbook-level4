@@ -48,7 +48,7 @@
                <Font name="System Bold" size="18.0" />
             </font>
             <VBox.margin>
-               <Insets top="20.0" />
+               <Insets />
             </VBox.margin>
          </Text>
       <StackPane fx:id="personListPanelPlaceholder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" />
