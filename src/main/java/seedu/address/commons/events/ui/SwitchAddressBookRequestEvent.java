@@ -17,7 +17,7 @@ public class SwitchAddressBookRequestEvent extends BaseEvent {
     private String filePath;
     private boolean isNewFile;
 
-    public SwitchAddressBookRequestEvent(File file, boolean isNewFile) {
+    public SwitchAddressBookRequestEvent(File file, boolean isNewFile) throws Exception {
         if (getExtension(file).equals("xml")) {
             throw new Exception("Invalid file!");
         }
