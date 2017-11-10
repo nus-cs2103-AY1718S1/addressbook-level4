@@ -178,6 +178,8 @@ Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/142[#142]
 
 ==== Justification
 
+
+
 ---
 
 ==== Implementation
@@ -209,24 +211,6 @@ in The Myth's Book.
 
 ---
 
-=== Enhancement: Alias for basic commands
-
-Code on GitHub: +
-Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/34[#34]
-
-==== External behavior
-
----
-
----
-
-==== Justification
-
-The implementation of website field for a contact allows users to carry out activities
-of university students such as browsing a person's social network website in The Myth's Book.
-
----
-
 === Other contributions
 
 ==== Additional Contributions to software application
@@ -235,6 +219,8 @@ These are the additional contributions that I have made to the software and test
 You can click and view the attached pull request links to see some of the additional codes written by me.
 
 * Wrote additional tests to test hashcode of person's attributes to increase test coverage (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/96[#96])
+* Implemented Aliases for basic commands (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/34[#34])
+
 
 ==== Contributions to software's documentation
 
