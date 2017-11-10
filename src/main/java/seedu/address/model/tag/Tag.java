@@ -55,4 +55,11 @@ public class Tag {
         return '[' + tagName + ']';
     }
 
+    /*
+    * check if string and Tag is same
+     */
+    public boolean isSame(String str) {
+        return str.equals(tagName);
+    }
+
 }
