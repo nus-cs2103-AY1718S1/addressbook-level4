@@ -818,6 +818,7 @@ pressing the kbd:[esc] key will result in the application focusing on the person
 
 // end::shortcut[]
 
+[[detailPanel]]
 === Person Detail Panel
 
 // tag::detailPanelBehavior[]
@@ -890,11 +891,8 @@ The behavior of the panel is summarized in the table below.
 **Cons:**  Higher implementation overhead to set up the bindings properly and
 difficult to enforce custom panel behaviour for specific user actions.
 
-// end::detailPanelImp[]
-
-=== UI Improvements
-
 // tag::uiImprovements[]
+=== UI Improvements
 
 The user interface of the application has been revamped to take on a clean design, which aims to improve
 the user's experience with Rolodex.
@@ -977,16 +975,31 @@ of changes made to their contacts.
 This implementation is done by raising an event whenever the add and edit command respectively is executed.
 The `PersonListPanel` is registered as an event handler and will subsequently scroll to the person that is newly modified.
 
+This feature is integrated with the link:#detailPanel[Person Detail Panel implementation], and more details on the event handling
+can be found under the section.
+
 ==== Responsive Split Pane
 
 The split pane which separates the contact list from the other UI components is responsive.
 Its divider is automatically maintained at the optimal position when the window size changes.
 
 This is achieved by setting up listeners to the property of the window. The divider will be repositioned when the listener
-detects any changes in the window property.
+detects any changes in the window property. The code below illustrates the implementation in greater detail.
 
+[source, java]
+----
+private void setSplitPaneDividerPosition() {
+
+    // repositions divider when window is just showed
+    primaryStage.showingProperty().addListener((observable, oldValue, newValue) ->
+            splitPane.setDividerPositions(SPLIT_PANE_DIVIDER_POSITION));
+
+    // repositions divider when window width changes
+    primaryStage.widthProperty().addListener((observable, oldValue, newValue) ->
+            splitPane.setDividerPositions(SPLIT_PANE_DIVIDER_POSITION));
+}
+----
 // end::uiImprovements[]
-
 
 // tag::helpWindowHighlight[]
 === Help Window Highlighting

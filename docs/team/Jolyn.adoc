@@ -49,6 +49,7 @@ include::../DeveloperGuide.adoc[leveloffset=2, tag=uiImprovements]
 
 ---
 
+[[detailPanel]]
 === Enhancement Added: Person Detail Panel
 
 ==== External Behavior
