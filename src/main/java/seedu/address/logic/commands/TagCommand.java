@@ -3,7 +3,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,7 @@ public class TagCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1,2,3 friends";
 
     public static final String MESSAGE_SUCCESS = "%d persons successfully tagged with %s:";
-    public static final String MESSAGE_PERSONS_ALREADY_HAVE_TAG = "%d persons already have this tag:";
+    public static final String MESSAGE_PERSONS_ALREADY_HAVE_TAG = "%d person(s) already have this tag:";
 
     public static final String MESSAGE_EMPTY_INDEX_LIST = "Please provide one or more indexes! \n%1$s";
     public static final String MESSAGE_INVALID_INDEXES = "One or more person indexes provided are invalid.";
@@ -94,7 +93,6 @@ public class TagCommand extends UndoableCommand {
             }
         }
 
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         StringJoiner toBeTaggedJoiner = new StringJoiner(", ");
         for (ReadOnlyPerson person : toBeTaggedPersons) {
             toBeTaggedJoiner.add(person.getName().toString());

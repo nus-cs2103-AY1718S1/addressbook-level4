@@ -1297,6 +1297,11 @@ public class Browser extends UiPart<Region> {
      */
     private void loadPersonPage(ReadOnlyPerson person) {
         try {
+            browserPanel.getChildren().remove(personProfile.getRoot());
+        } catch (Exception e) {
+            logger.info("PersonProfilePanel does not exist");
+        }
+        try {
             browserPanel.getChildren().remove(displayPanel.getRoot());
         } catch (Exception e) {
             logger.info("DisplayPanel does not exist");
@@ -1316,6 +1321,11 @@ public class Browser extends UiPart<Region> {
      * @param reminder
      */
     private void displayReminder(ReadOnlyReminder reminder) {
+        try {
+            browserPanel.getChildren().remove(personProfile.getRoot());
+        } catch (Exception e) {
+            logger.info("PersonProfilePanel does not exist");
+        }
         try {
             browserPanel.getChildren().remove(displayPanel.getRoot());
         } catch (Exception e) {
@@ -1339,8 +1349,6 @@ public class Browser extends UiPart<Region> {
 ```
 ###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
-
-
     @Subscribe
     private void handleReminderPanelSelectionChangedEvent(ReminderPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -1746,10 +1754,8 @@ public class ReminderListPanel extends UiPart<Region> {
 <?import javafx.scene.web.WebView?>
 
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <WebView fx:id="browser" />
-   </children>
+<StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <WebView fx:id="browser" />
 </StackPane>
 ```
 ###### \resources\view\BrowserPanel.fxml

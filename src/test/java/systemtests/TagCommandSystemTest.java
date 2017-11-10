@@ -3,7 +3,6 @@ package systemtests;
 import static seedu.address.logic.commands.TagCommand.MESSAGE_INVALID_INDEXES;
 import static seedu.address.logic.commands.TagCommand.MESSAGE_PERSONS_ALREADY_HAVE_TAG;
 import static seedu.address.logic.commands.TagCommand.MESSAGE_SUCCESS;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.tag.Tag.MESSAGE_TAG_CONSTRAINTS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
@@ -167,7 +166,6 @@ public class TagCommandSystemTest extends AddressBookSystemTest {
             throw new IllegalArgumentException(
                     "taggedPerson is a duplicate in expectedModel, or it isn't found in the model.");
         }
-        expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         StringJoiner toBeTaggedJoiner = new StringJoiner(", ");
         for (ReadOnlyPerson person : toBeTaggedPersons) {
@@ -205,7 +203,6 @@ public class TagCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
-        expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
