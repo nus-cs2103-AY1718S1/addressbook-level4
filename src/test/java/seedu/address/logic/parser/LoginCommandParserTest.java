@@ -24,7 +24,7 @@ import seedu.address.logic.commands.LoginCommand;
 public class LoginCommandParserTest {
     private static final String VALID_USERNAME = "User_1234";
     private static final String VALID_PASSWORD = "P@$$worD";
-    private static final String GUI_LOGIN_ARGS = " " + PREFIX_USERNAME + "%1$s" + " " + PREFIX_PASSWORD + "%2$s";;
+    private static final String GUI_LOGIN_ARGS = " " + PREFIX_USERNAME + "%1$s" + " " + PREFIX_PASSWORD + "%2$s";
 
     private LoginCommandParser parser = new LoginCommandParser();
 
