@@ -105,7 +105,7 @@ public class Calendar {
             ap.setDate(calendarDate);
             ap.setTopAnchor(txt, 5.0);
             ap.setLeftAnchor(txt, 5.0);
-            ap.setStyle("-fx-background-color: #e6e6fa;");
+            ap.setStyle("calendar-color");
             ap.getChildren().add(txt);
             calendarDate = calendarDate.plusDays(1);
         }
@@ -117,7 +117,7 @@ public class Calendar {
                 String date = event.getDate().toString();
                 if (newDate.equals(date)) {
                     ap.getChildren();
-                    ap.setStyle("-fx-background-color: #fff8dc;");
+                    ap.setStyle("-fx-background-color: #87ceeb;");
                 }
             }
         }
@@ -186,7 +186,7 @@ public class Calendar {
                 String newDate = formatter.format(ap.getDate());
                 if (newDate.equals(event1.getDate().toString())) {
                     ap.getChildren();
-                    ap.setStyle("-fx-background-color: #fff8dc;");
+                    ap.setStyle("-fx-background-color: #87ceeb;");
                 }
             }
             // Change the title of the calendar

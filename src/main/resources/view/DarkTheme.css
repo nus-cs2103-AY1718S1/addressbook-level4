@@ -211,6 +211,7 @@
 .calendar-color {
     -fx-border-color: derive(#1d1d1d, 60%);
     -fx-fill: derive(#1d1d1d, 60%);
+    -fx-background-color: transparent;
     -fx-text-fill: derive(#1d1d1d, 60%);
 }
 

@@ -348,7 +348,6 @@ public class MainWindow extends UiPart<Region> {
     //@@author
 
     //@@author chernghann
-
     /**
      * this method is to populate the calendar when there is an add event.
      * @param request
