@@ -77,7 +77,6 @@ public class Calendar {
         HBox titleBar = new HBox(previousMonth, calendarTitle, nextMonth);
         titleBar.setSpacing(5);
         titleBar.setAlignment(Pos.BASELINE_CENTER);
-        System.out.println(eventList.toString());
         // Populate calendar with the appropriate day numbers
         populateCalendar(yearMonth, eventList);
         // Create the calendar view
@@ -117,7 +116,7 @@ public class Calendar {
                 String date = event.getDate().toString();
                 if (newDate.equals(date)) {
                     ap.getChildren();
-                    ap.setStyle("-fx-background-color: #87ceeb;");
+                    ap.setStyle("-fx-background-color: #ffebcd;");
                 }
             }
         }
@@ -186,7 +185,7 @@ public class Calendar {
                 String newDate = formatter.format(ap.getDate());
                 if (newDate.equals(event1.getDate().toString())) {
                     ap.getChildren();
-                    ap.setStyle("-fx-background-color: #87ceeb;");
+                    ap.setStyle("-fx-background-color: #ffebcd;");
                 }
             }
             // Change the title of the calendar
