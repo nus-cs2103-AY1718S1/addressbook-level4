@@ -199,8 +199,8 @@ public class GraphWrapper {
             for (Relationship relationship: relationshipSet) {
                 Edge edge = addEdge(relationship.getFromPerson(), relationship.getToPerson(),
                         relationship.getDirection());
-                 edge.addAttribute(nodeAttributeCe, relationship.getConfidenceEstimate().value);
-                 labelGraphEdge(relationship, edge);
+                edge.addAttribute(nodeAttributeCe, relationship.getConfidenceEstimate().value);
+                labelGraphEdge(relationship, edge);
             }
         }
 
