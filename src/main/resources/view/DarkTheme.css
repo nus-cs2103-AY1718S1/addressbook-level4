@@ -439,4 +439,8 @@
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 18px;
 }
+
+.reminder_big_label {
+    -fx-font-size: 15px;
+}
 /* @@author */
