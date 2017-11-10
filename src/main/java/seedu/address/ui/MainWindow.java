@@ -218,7 +218,11 @@ public class MainWindow extends UiPart<Region> {
     private void handleNew() {
         File file = FileUtil.getFileFromChooser(true);
 
-        raise(new SwitchAddressBookRequestEvent(file, true));
+        try {
+            raise(new SwitchAddressBookRequestEvent(file, true));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -228,7 +232,11 @@ public class MainWindow extends UiPart<Region> {
     private void handleOpen() {
         File file = FileUtil.getFileFromChooser(false);
 
-        raise(new SwitchAddressBookRequestEvent(file, false));
+        try {
+            raise(new SwitchAddressBookRequestEvent(file, false));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     //@@author
 

@@ -30,7 +30,12 @@ public class OpenCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        EventsCenter.getInstance().post(new SwitchAddressBookRequestEvent(file, false));
+        try {
+            EventsCenter.getInstance().post(new SwitchAddressBookRequestEvent(file, false));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return new CommandResult(String.format(MESSAGE_OPEN_PERSON_SUCCESS, file.getPath()));
     }
 
