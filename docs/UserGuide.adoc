@@ -213,21 +213,41 @@ _Figure 8: Deleting multiple people_ +
 === Selecting a person : `select`
 
 To view any contact’s information, the select command can allow you to choose a specific contact
-and look up the contact’s name on google browser. +
+and display the contact’s name on the person information panel. +
 Format: `select INDEX` +
 
 1. Enter `select` followed by the index number of the person you wish to select. +
 _E.g._ `select 1`
-2. Results will be shown in Figure 9 where the browser looks up for the contact’s name.
+2. Results will be shown in Figure 9 where the person information panel displays the contact’s name.
 
 image::Figure9.png[width="790"]
 _Figure 9: Selecting a person_ +
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and displays the contact information of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
+
+=== Selecting a group : `selectgroup`
+
+To view any group's information, the selectgroup command allows you to choose a specific group and look up
+the group's members in the contacts list.
+Format: `selectgroup INDEX` +
+
+1. Enter `selectgroup` followed by the index number of the gorup you wish to select. +
+_E.g_ `selectgroup 1`
+2. Results will be shown in Figure 10 where the contact list panel displays the member's in the group.
+
+image::Figure10.png[width="790"]
+_Figure 10: Selecting a group_ +
+
+****
+* Selects the group and displays the group members of the group at the specified `INDEX`.
+* The index refers to the index number shown in the group list.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
 
 === Listing entered commands : `history`
 If you want to retrieve a certain action you did previously or to simply view the past commands executed in

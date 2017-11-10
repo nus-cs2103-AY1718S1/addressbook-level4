@@ -16,6 +16,8 @@ import java.util.List;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.group.ReadOnlyGroup;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -135,4 +137,28 @@ public class CommandTestUtil {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
         }
     }
+
+    /**
+     * Updates {@code model}'s filtered group list to show only the first group in the {@code model}'s address book
+     */
+    public static void showFirstGroupOnly(Model model) {
+        ReadOnlyGroup group = model.getAddressBook().getGroupList().get(0);
+        model.updateFilteredGroupList(readOnlyGroup ->
+                readOnlyGroup.getGroupName().fullName.equals(group.getGroupName().fullName));
+
+        assert model.getGroupList().size() == 1;
+    }
+
+    /**
+     * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
+     */
+    public static void deleteFirstGroup(Model model) {
+        ReadOnlyGroup firstGroup = model.getGroupList().get(0);
+        try {
+            model.deleteGroup(firstGroup);
+        } catch (GroupNotFoundException gnfe) {
+            throw new AssertionError("Group in filtered list must exist in model.", gnfe);
+        }
+    }
 }
+
