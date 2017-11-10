@@ -35,9 +35,6 @@ public class ArrangeCommand extends Command {
     public ArrangeCommand(int[] listOfIndex) {
         this.listOfIndex = new Index[listOfIndex.length];
         for (int i = 0; i < listOfIndex.length; i++) {
-            if(listOfIndex[i] < 0) {
-                throw CommandException("S");
-            }
             this.listOfIndex[i] = Index.fromOneBased(listOfIndex[i]);
         }
     }
