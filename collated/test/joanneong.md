@@ -1,5 +1,5 @@
 # joanneong
-###### /java/guitests/guihandles/CommandBoxHandle.java
+###### \java\guitests\guihandles\CommandBoxHandle.java
 ``` java
     /**
      * Enters the given input in the Command Box without executing the input and
@@ -15,7 +15,105 @@
     }
 
 ```
-###### /java/seedu/address/logic/commands/FindCommandTest.java
+###### \java\guitests\guihandles\GraphDisplayHandle.java
+``` java
+/**
+ * A handler for the {@code GraphDisplay} of the UI.
+ */
+public class GraphDisplayHandle extends NodeHandle<Node> {
+
+    public static final String DISPLAY_ID = "#graphDisplay";
+    private SwingNode graphDisplayNode;
+
+    public GraphDisplayHandle(SwingNode graphDisplayNode) {
+        super(graphDisplayNode);
+
+        this.graphDisplayNode = graphDisplayNode;
+    }
+
+    /**
+     * Returns the JComponent (i.e. the viewer) embedded in the SwingNode.
+     */
+    public JComponent getContent() {
+        return graphDisplayNode.getContent();
+    }
+}
+```
+###### \java\guitests\GuiRobot.java
+``` java
+    /**
+     * Pauses execution for a given period of time to allow auto-completion popup to execute.
+     */
+    public void pauseForAutoComplete(int time) {
+        sleep(time);
+    }
+
+    /**
+     * Waits for {@code event} to be true by {@code DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS} milliseconds.
+     *
+     * @throws EventTimeoutException if the time taken exceeds {@code DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS}
+     * milliseconds.
+     */
+    public void waitForEvent(BooleanSupplier event) {
+        waitForEvent(event, DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS);
+    }
+
+    /**
+     * Waits for {@code event} to be true.
+     *
+     * @param timeOut in milliseconds
+     * @throws EventTimeoutException if the time taken exceeds {@code timeOut}.
+     */
+    public void waitForEvent(BooleanSupplier event, int timeOut) {
+        int timePassed = 0;
+        final int retryInterval = 50;
+
+        while (!event.getAsBoolean()) {
+            sleep(retryInterval);
+            timePassed += retryInterval;
+
+            if (timePassed >= timeOut) {
+                throw new EventTimeoutException();
+            }
+        }
+
+        pauseForHuman();
+    }
+
+    /**
+     * Returns true if the window with {@code stageTitle} is currently open.
+     */
+    public boolean isWindowShown(String stageTitle) {
+        return listTargetWindows().stream()
+                .filter(window -> window instanceof Stage && ((Stage) window).getTitle().equals(stageTitle))
+                .count() >= 1;
+    }
+
+    /**
+     * Returns the first stage, ordered by proximity to the current target window, with the stage title.
+     * The order that the windows are searched are as follows (proximity): current target window,
+     * children of the target window, rest of the windows.
+     *
+     * @throws StageNotFoundException if the stage is not found.
+     */
+    public Stage getStage(String stageTitle) {
+        Optional<Stage> targetStage = listTargetWindows().stream()
+                .filter(Stage.class::isInstance)    // checks that the window is of type Stage
+                .map(Stage.class::cast)
+                .filter(stage -> stage.getTitle().equals(stageTitle))
+                .findFirst();
+
+        return targetStage.orElseThrow(StageNotFoundException::new);
+    }
+
+    /**
+     * Represents an error which occurs when a timeout occurs when waiting for an event.
+     */
+    private class EventTimeoutException extends RuntimeException {
+    }
+}
+```
+###### \java\seedu\address\logic\commands\FindCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -284,7 +382,7 @@ public class FindCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_find() throws Exception {
@@ -315,7 +413,7 @@ public class FindCommandTest {
     }
 
 ```
-###### /java/seedu/address/logic/parser/FindCommandParserTest.java
+###### \java\seedu\address\logic\parser\FindCommandParserTest.java
 ``` java
 public class FindCommandParserTest {
 
@@ -365,5 +463,128 @@ public class FindCommandParserTest {
 
     }
 
+}
+```
+###### \java\seedu\address\model\TagContainsKeywordsPredicateTest.java
+``` java
+public class TagContainsKeywordsPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("first");
+        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
+
+        TagContainsKeywordsPredicate firstPredicate = new TagContainsKeywordsPredicate(firstPredicateKeywordList);
+        TagContainsKeywordsPredicate secondPredicate = new TagContainsKeywordsPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        TagContainsKeywordsPredicate firstPredicateCopy = new TagContainsKeywordsPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_tagContainsKeywords_returnsTrue() {
+        // One keyword
+        TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(Collections.singletonList("friends"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("friends").build()));
+
+        // Multiple keywords
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("friends", "family"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("friends", "family").build()));
+
+        // Only one matching keyword
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("friends", "enemy"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("friends", "family").build()));
+
+        // Mixed-case keywords
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("FRiEndS", "faMIlY"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("friends", "family").build()));
+
+        // Partial keywords
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("frie", "fami"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("friends", "family").build()));
+    }
+
+    @Test
+    public void test_tagDoesNotContainKeywords_returnsFalse() {
+        // Zero keywords
+        TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withTags("friends").build()));
+
+        // Non-matching keyword
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("enemy"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("friends", "family").build()));
+
+        // Keywords match phone, email, address and name, but does not match tag
+        predicate = new TagContainsKeywordsPredicate(
+                Arrays.asList("12345", "alice@email.com", "Alice", "Main", "Street"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
+                .withEmail("alice@email.com").withAddress("Main Street").withTags("friends").build()));
+    }
+}
+
+```
+###### \java\seedu\address\ui\GraphDisplayTest.java
+``` java
+public class GraphDisplayTest extends GuiUnitTest {
+
+    private static final SingleGraph NEW_GRAPH_STUB = new SingleGraph("");
+    private static final NewGraphDisplayEvent NEW_GRAPH_INITIALISED_STUB =
+        new NewGraphDisplayEvent(NEW_GRAPH_STUB, "Stub");
+
+    private GraphDisplayHandle graphDisplayHandle;
+
+    @Before
+    public void setUp() {
+        GraphDisplay graphDisplay = new GraphDisplay(new LogicStub());
+        uiPartRule.setUiPart(graphDisplay);
+
+        graphDisplayHandle = new GraphDisplayHandle(getChildNode(graphDisplay.getRoot(),
+            GraphDisplayHandle.DISPLAY_ID));
+    }
+
+    @Test
+    public void display() {
+        // by default, the SwingNode should be be empty
+        guiRobot.pauseForHuman();
+        assertEquals(null, graphDisplayHandle.getContent());
+
+        // TODO: add tests to check SwingNode content
+    }
+
+    /**
+     * A default logic stub that have all of the methods failing.
+     */
+    private class LogicStub implements Logic {
+        @Override
+        public CommandResult execute(String commandText) {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ListElementPointer getHistorySnapshot() {
+            fail("This method should not be called.");
+            return null;
+        }
+    }
 }
 ```
