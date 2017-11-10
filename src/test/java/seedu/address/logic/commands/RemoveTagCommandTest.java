@@ -53,7 +53,7 @@ public class RemoveTagCommandTest {
     @Test
     public void execute_removeTagInvalidIndex() throws IllegalValueException {
         //addressbook does not have specified Index.
-        assertCommandFailure(prepareCommand(10,"prospective"), model,
+        assertCommandFailure(prepareCommand(10, "prospective"), model,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
