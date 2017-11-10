@@ -21,6 +21,7 @@ import seedu.address.logic.commands.tasks.EditTaskCommand;
 import seedu.address.logic.commands.tasks.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTimeValidator;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 
@@ -65,6 +66,8 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
         if (!editTaskDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditTaskCommand.MESSAGE_NOT_EDITED);
         }
+
+        if (!DateTimeValidator.isStartTimeBeforeEndTime(editTaskDescriptor.getStartTime(), editTaskDescriptor.getEndTime()))
 
         return new EditTaskCommand(index, editTaskDescriptor);
     }
