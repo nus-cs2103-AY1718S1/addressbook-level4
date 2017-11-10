@@ -17,9 +17,9 @@ import seedu.address.model.person.NameConsistsKeywordsPredicate;
  *
  * @see DeleteCommandParserTest
  */
+// @@author Choony93
 public class GmapCommandParserTest {
 
-    // @@author Choony93
     private GmapCommandParser parser = new GmapCommandParser();
 
     @Test
@@ -35,5 +35,5 @@ public class GmapCommandParserTest {
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "0", String.format(MESSAGE_INVALID_COMMAND_FORMAT, GmapCommand.MESSAGE_USAGE));
     }
-    // @@author
 }
+// @@author

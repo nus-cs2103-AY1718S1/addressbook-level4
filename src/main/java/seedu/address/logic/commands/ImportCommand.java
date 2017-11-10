@@ -10,18 +10,19 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.storage.XmlFileStorage;
 
+//@@author Choony93
+
 /**
  * Imports addressbook based on given file path
  */
-//@@author Choony93
 public class ImportCommand extends Command {
 
     public static final String COMMAND_WORD = "import";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Imports XML file into addressbook from given filepath.\n"
-            + "Parameters: FILEPATH (must be absolute)\n"
-            + "Example: " + COMMAND_WORD + " FILEPATH";
+        + ": Imports XML file into addressbook from given filepath.\n"
+        + "Parameters: FILEPATH (must be absolute)\n"
+        + "Example: " + COMMAND_WORD + " FILEPATH";
 
     public static final String MESSAGE_IMPORT_SUCCESS = "Addressbook successfully imported from: %1$s";
     public static final String MESSAGE_INVALID_IMPORT_FILE_ERROR = "Problem reading file: %1$s";
@@ -51,7 +52,8 @@ public class ImportCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof ImportCommand // instanceof handles nulls
-                && this.filePath.equals(((ImportCommand) other).filePath)); // state check
+            || (other instanceof ImportCommand // instanceof handles nulls
+            && this.filePath.equals(((ImportCommand) other).filePath)); // state check
     }
 }
+//@@author

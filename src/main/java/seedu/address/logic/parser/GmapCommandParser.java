@@ -10,6 +10,7 @@ import seedu.address.logic.commands.GmapCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameConsistsKeywordsPredicate;
 
+//@@author Choony93
 /**
  * Parses input arguments and creates a new GmaptCommand object
  */
@@ -22,7 +23,6 @@ public class GmapCommandParser implements Parser<GmapCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public GmapCommand parse(String args) throws ParseException {
-        //@@author Choony93
         String trimmedArgs = args.trim();
 
         if (trimmedArgs.isEmpty()) {
@@ -42,6 +42,6 @@ public class GmapCommandParser implements Parser<GmapCommand> {
                 return new GmapCommand(new NameConsistsKeywordsPredicate(Arrays.asList(nameKeywords)));
             }
         }
-        //@@author
     }
 }
+//@@author

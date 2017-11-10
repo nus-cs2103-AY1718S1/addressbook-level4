@@ -1,6 +1,9 @@
 # Choony93
-###### /java/seedu/address/commons/events/model/AddressBookImportEvent.java
+###### \java\seedu\address\commons\events\model\AddressBookImportEvent.java
 ``` java
+/**
+ * Indicates the AddressBook calling for import
+ */
 public class AddressBookImportEvent extends BaseEvent {
 
     public final String filePath;
@@ -17,8 +20,11 @@ public class AddressBookImportEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/ChangeThemeEvent.java
+###### \java\seedu\address\commons\events\ui\ChangeThemeEvent.java
 ``` java
+/**
+ * Indicates a request to change theme to targeted index
+ */
 public class ChangeThemeEvent extends BaseEvent {
 
     public final int targetIndex;
@@ -31,11 +37,13 @@ public class ChangeThemeEvent extends BaseEvent {
     public String toString() {
         return this.getClass().getSimpleName();
     }
-
 }
 ```
-###### /java/seedu/address/commons/events/ui/DisplayGmapEvent.java
+###### \java\seedu\address\commons\events\ui\DisplayGmapEvent.java
 ``` java
+/**
+ * Indicates a request to display Google Map of targeted index
+ */
 public class DisplayGmapEvent extends BaseEvent {
 
     public final int targetIndex;
@@ -48,11 +56,13 @@ public class DisplayGmapEvent extends BaseEvent {
     public String toString() {
         return this.getClass().getSimpleName();
     }
-
 }
 ```
-###### /java/seedu/address/commons/events/ui/PersonPanelDeleteEvent.java
+###### \java\seedu\address\commons\events\ui\PersonPanelDeleteEvent.java
 ``` java
+/**
+ * Indicates a request to delete person of targeted index from UI menu
+ */
 public class PersonPanelDeleteEvent extends BaseEvent {
 
     public final int targetIndex;
@@ -65,11 +75,13 @@ public class PersonPanelDeleteEvent extends BaseEvent {
     public String toString() {
         return this.getClass().getSimpleName();
     }
-
 }
 ```
-###### /java/seedu/address/logic/commands/GmapCommand.java
+###### \java\seedu\address\logic\commands\GmapCommand.java
 ``` java
+/**
+ * Display google map of person identified using it's last displayed index or name from the address book.
+ */
 public class GmapCommand extends Command {
 
     public static final String COMMAND_WORD = "gmap";
@@ -130,8 +142,11 @@ public class GmapCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ImportCommand.java
+###### \java\seedu\address\logic\commands\ImportCommand.java
 ``` java
+/**
+ * Imports addressbook based on given file path
+ */
 public class ImportCommand extends Command {
 
     public static final String COMMAND_WORD = "import";
@@ -174,8 +189,11 @@ public class ImportCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ThemeCommand.java
+###### \java\seedu\address\logic\commands\ThemeCommand.java
 ``` java
+/**
+ * Set theme of current addressbook based on index listed or theme name.
+ */
 public class ThemeCommand extends Command {
 
     public static final String COMMAND_WORD = "theme";
@@ -249,7 +267,7 @@ public class ThemeCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
+###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case GmapCommand.COMMAND_WORD:
             return new GmapCommandParser().parse(arguments);
@@ -260,8 +278,20 @@ public class ThemeCommand extends Command {
         case ImportCommand.COMMAND_WORD:
             return new ImportCommandParser().parse(arguments);
 ```
-###### /java/seedu/address/logic/parser/GmapCommandParser.java
+###### \java\seedu\address\logic\parser\GmapCommandParser.java
 ``` java
+/**
+ * Parses input arguments and creates a new GmaptCommand object
+ */
+public class GmapCommandParser implements Parser<GmapCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the GmapCommand
+     * and returns an GmapCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public GmapCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
 
         if (trimmedArgs.isEmpty()) {
@@ -281,9 +311,46 @@ public class ThemeCommand extends Command {
                 return new GmapCommand(new NameConsistsKeywordsPredicate(Arrays.asList(nameKeywords)));
             }
         }
+    }
+}
 ```
-###### /java/seedu/address/logic/parser/ThemeCommandParser.java
+###### \java\seedu\address\logic\parser\ImportCommandParser.java
 ``` java
+/**
+ * Parses input arguments and creates a new ImportCommand object
+ */
+public class ImportCommandParser implements Parser<ImportCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ImportCommand
+     * and returns an ImportCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ImportCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+        }
+        return new ImportCommand(trimmedArgs);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\ThemeCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ThemeCommand object
+ */
+public class ThemeCommandParser implements Parser<ThemeCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ThemeCommand
+     * and returns an ThemeCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ThemeCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
 
         if (trimmedArgs.isEmpty()) {
@@ -300,14 +367,15 @@ public class ThemeCommand extends Command {
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
             }
         }
-
         return new ThemeCommand(trimmedArgs);
+    }
+}
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     void handleAddressBookImportEvent(AddressBookImportEvent abce);
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public List<ReadOnlyPerson> getPersonListByPredicate(Predicate<ReadOnlyPerson> predicate) {
@@ -316,7 +384,7 @@ public class ThemeCommand extends Command {
         return FXCollections.unmodifiableObservableList(filteredList);
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     @Subscribe
@@ -343,7 +411,99 @@ public class ThemeCommand extends Command {
         }
     }
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    /**
+     * Sets the current theme based on given css.
+     *
+     * @param themeUrl e.g. {@code "/darktheme/DarkTheme.css"}
+     */
+    private void setTheme(String themeUrl) {
+        this.getPrimaryStage().getScene().getStylesheets().clear();
+        this.getPrimaryStage().getScene().getStylesheets().add(MainApp.class
+                .getResource("/view/" + themeUrl).toExternalForm());
+        this.currentTheme = themeUrl;
+        browserPanel.loadDefaultPage(themeUrl);
+    }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+
+    /**
+     * Changes the current theme
+     */
+    @FXML
+    public void handleThemeBootstrap3() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_BOOTSTRAP3);
+    }
+
+    @FXML
+    public void handleThemeDark() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_DARKTHEME);
+    }
+
+    @FXML
+    public void handleThemeCaspian() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_CASPIAN);
+    }
+
+    @FXML
+    public void handleThemeModena() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_MODENA);
+    }
+
+    @FXML
+    public void handleThemeModenaBoW() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_MODENA_BLACKONWHITE);
+    }
+
+    @FXML
+    public void handleThemeModenaWoB() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_MODENA_WHITEONBLACK);
+    }
+
+    @FXML
+    public void handleThemeModenaYoB() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_MODENA_YELLOWONBLACK);
+    }
+
+    /**
+     * Displays a file chooser to extract url
+     */
+    @FXML
+    public void handleImport() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Import From...");
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("XML Files", "*.xml"));
+        File selectedFile = fileChooser.showOpenDialog(primaryStage);
+
+        ReadOnlyAddressBook addressBookOptional;
+        CommandResult cmdResult;
+        try {
+            addressBookOptional = XmlFileStorage.loadDataFromSaveFile(new File(selectedFile.getPath()));
+            raise(new AddressBookImportEvent(selectedFile.getPath(), addressBookOptional));
+
+            cmdResult = new CommandResult(String.format(MESSAGE_IMPORT_SUCCESS, selectedFile.getPath()));
+            raise(new NewResultAvailableEvent(cmdResult.feedbackToUser, true));
+        } catch (DataConversionException e) {
+            cmdResult = new CommandResult(String.format(MESSAGE_INVALID_XML_FORMAT_ERROR, selectedFile.getPath()));
+            raise(new NewResultAvailableEvent(cmdResult.feedbackToUser, true));
+        } catch (IOException e) {
+            cmdResult = new CommandResult(String.format(MESSAGE_INVALID_IMPORT_FILE_ERROR, selectedFile.getPath()));
+            raise(new NewResultAvailableEvent(cmdResult.feedbackToUser, true));
+        }
+    }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    @Subscribe
+    private void handleChangeThemeEvent(ChangeThemeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setTheme(THEME_FILE_FOLDER + THEME_LIST_DIR.get(event.targetIndex));
+    }
+```
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
     private static String getColorForTag(String tagValue) {
 
@@ -387,7 +547,7 @@ public class ThemeCommand extends Command {
         raise(new DisplayGmapEvent(Index.fromOneBased(this.displayedIndex)));
     }
 ```
-###### /java/seedu/address/ui/UiManager.java
+###### \java\seedu\address\ui\UiManager.java
 ``` java
     @Subscribe
     private void handleOptionsDeleteEvent(PersonPanelDeleteEvent event) throws CommandException, ParseException {
@@ -395,7 +555,7 @@ public class ThemeCommand extends Command {
         this.logic.execute("delete " + event.targetIndex);
     }
 ```
-###### /java/seedu/address/ui/UiPart.java
+###### \java\seedu\address\ui\UiPart.java
 ``` java
     public static final String THEME_CSS_DARKTHEME = "/darktheme/DarkTheme.css";
     public static final String THEME_CSS_BOOTSTRAP3 = "/bootstrap3/bootstrap3.css";
@@ -416,7 +576,7 @@ public class ThemeCommand extends Command {
                 add(THEME_CSS_MODENA_YELLOWONBLACK);
             }});
 ```
-###### /java/seedu/address/ui/UiPart.java
+###### \java\seedu\address\ui\UiPart.java
 ``` java
     public static String getThemeNameByIndex(int index) {
         String themeName = THEME_LIST_DIR.get(index);
@@ -430,7 +590,7 @@ public class ThemeCommand extends Command {
         return themeName;
     }
 ```
-###### /resources/view/Extensions.css
+###### \resources\view\Extensions.css
 ``` css
 .menu-personcard {
     -fx-border-color: transparent;
@@ -446,9 +606,9 @@ public class ThemeCommand extends Command {
     -fx-mark-color: #00FFFF;
 }
 ```
-###### /resources/view/MainWindow.fxml
+###### \resources\view\MainWindow.fxml
 ``` fxml
-        <MenuItem mnemonicParsing="false" text="Import Addressbook (TDB)"/>
+        <MenuItem mnemonicParsing="false" text="Import Addressbook" onAction="#handleImport"/>
         <MenuItem mnemonicParsing="false" text="Export Addressbook (TDB)"/>
         <Menu text="Themes">
             <MenuItem text="Bootstrap3" onAction="#handleThemeBootstrap3" userData="0"/>
@@ -462,7 +622,7 @@ public class ThemeCommand extends Command {
             </Menu>
         </Menu>
 ```
-###### /resources/view/PersonListCard.fxml
+###### \resources\view\PersonListCard.fxml
 ``` fxml
                 <Pane HBox.hgrow="ALWAYS"/>
                 <MenuButton fx:id="options_button" text="" alignment="CENTER_RIGHT" styleClass="menu-personcard">
