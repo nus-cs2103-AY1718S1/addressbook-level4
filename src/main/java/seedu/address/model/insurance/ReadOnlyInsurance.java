@@ -6,6 +6,7 @@ import java.util.UUID;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
+import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author OscarWang114
 /**
@@ -37,6 +38,22 @@ public interface ReadOnlyInsurance {
     String getSigningDateString();
     StringProperty expiryDateStringProperty();
     String getExpiryDateString();
+
+    /**
+     * Returns true if both have the same state. (interfaces cannot override .equals)
+     */
+    default boolean isSameStateAs(ReadOnlyInsurance other) {
+        return other == this // short circuit if same object
+                || (other != null // this is first to avoid NPE below
+                && other.getId().equals(this.getId()) // state checks here onwards
+                && other.getOwnerName().equals(this.getOwnerName())
+                && other.getInsuredName().equals(this.getInsuranceName())
+                && other.getBeneficiaryName().equals(this.getBeneficiaryName())
+                && other.getPremium().equals(this.getPremium())
+                && other.getSigningDateString().equals(this.getSigningDateString())
+                && other.getExpiryDateString().equals(this.getExpiryDateString()))
+                && other.getContractName().equals(this.getContractName());
+    }
 
     /**
      * Formats the insurance as text, showing all the details.

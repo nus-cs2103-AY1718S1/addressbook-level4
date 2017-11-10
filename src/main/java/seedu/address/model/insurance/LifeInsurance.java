@@ -239,11 +239,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
     }
     //@author
 
-    //@author OscarWang114
-    public void setContractName(String contractName) {
-        this.contractName.set(requireNonNull(contractName));
-    }
-
+    //@@author OscarWang114
     @Override
     public StringProperty contractNameProperty() {
         return contractName;
@@ -286,13 +282,9 @@ public class LifeInsurance implements ReadOnlyInsurance {
 
     @Override
     public boolean equals(Object other) {
-        //TODO: Increase the validity of equals
         return other == this // short circuit if same object
                 || (other instanceof LifeInsurance // instanceof handles nulls
-                && ((LifeInsurance) other).getInsuranceName().equals(this.insuranceName)
-                && ((LifeInsurance) other).premiumString.equals(this.premiumString)
-                && ((LifeInsurance) other).signingDate.equals(this.signingDate)
-                && ((LifeInsurance) other).expiryDate.equals(this.expiryDate)); // state check
+                && this.isSameStateAs((ReadOnlyInsurance) other));
     }
 
     @Override
