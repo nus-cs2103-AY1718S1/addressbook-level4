@@ -2,9 +2,6 @@ package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 
-import java.nio.file.Files;
-import java.util.concurrent.CompletableFuture;
-
 //@@author derrickchua
 
 /**
@@ -25,7 +22,7 @@ public class LogoutCommand extends Command {
             new java.io.File(System.getProperty("user.home"), ".store/addressbook/StoredCredential");
 
     private final java.io.File syncedIDs =
-            new java.io.File( "syncedIDs.dat");
+            new java.io.File("syncedIDs.dat");
 
     @Override
     public CommandResult execute() throws CommandException {

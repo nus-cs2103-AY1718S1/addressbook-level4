@@ -1,8 +1,6 @@
 package seedu.address.logic.commands;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 

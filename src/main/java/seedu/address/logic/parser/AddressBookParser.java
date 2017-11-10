@@ -103,7 +103,7 @@ public class AddressBookParser {
             return new LoginCommand();
 
         case LogoutCommand.COMMAND_WORD: case LogoutCommand.COMMAND_ALIAS:
-            return new LogoutCommand();   
+            return new LogoutCommand();
 
         case ListCommand.COMMAND_WORD: case ListCommand.COMMAND_ALIAS:
             return new ListCommand();

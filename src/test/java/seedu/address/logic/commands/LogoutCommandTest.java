@@ -1,17 +1,17 @@
 package seedu.address.logic.commands;
 
-import org.junit.Test;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import org.junit.Test;
+
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 
 //@@author derrickchua
 
@@ -27,7 +27,8 @@ public class LogoutCommandTest {
 
         LogoutCommand logoutCommand = prepareCommand();
 
-        java.io.File filetoDelete = new java.io.File(System.getProperty("user.home"), ".store/addressbook/StoredCredential");
+        java.io.File filetoDelete =
+                new java.io.File(System.getProperty("user.home"), ".store/addressbook/StoredCredential");
         filetoDelete.createNewFile();
         String expectedMessage = String.format(LogoutCommand.MESSAGE_SUCCESS);
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -39,7 +40,8 @@ public class LogoutCommandTest {
 
         LogoutCommand logoutCommand = prepareCommand();
 
-        java.io.File filetoDelete = new java.io.File(System.getProperty("user.home"), ".store/addressbook/StoredCredential");
+        java.io.File filetoDelete =
+                new java.io.File(System.getProperty("user.home"), ".store/addressbook/StoredCredential");
         filetoDelete.delete();
         String expectedMessage = String.format(LogoutCommand.MESSAGE_FAILURE);
         assertCommandFailure(logoutCommand, model, expectedMessage);

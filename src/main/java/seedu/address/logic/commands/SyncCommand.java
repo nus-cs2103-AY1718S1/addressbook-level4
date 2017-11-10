@@ -55,11 +55,14 @@ public class SyncCommand extends Command {
 
     private static final Logger logger = LogsCenter.getLogger(SyncCommand.class);
 
-    private HashMap<String, ReadOnlyPerson> hashId, hashName;
+    private HashMap<String, ReadOnlyPerson> hashId;
+
+    private HashMap<String, ReadOnlyPerson> hashName;
 
     private List<Person> connections;
 
-    private HashMap<String, Person> hashGoogleId, hashGoogleName;
+    private HashMap<String, Person> hashGoogleId;
+    private HashMap<String, Person> hashGoogleName;
 
 
     @Override
@@ -147,11 +150,13 @@ public class SyncCommand extends Command {
                 // We check if the person is identical, and link them if they are
                 Person gPerson = hashGoogleName.get(person.getName().fullName);
                 if (equalPerson(person, gPerson)) {
-                    seedu.address.model.person.Person updatedPerson = new seedu.address.model.person.Person(person);
+                    seedu.address.model.person.Person updatedPerson =
+                            new seedu.address.model.person.Person(person);
                     updatedPerson.setId(new Id(gPerson.getResourceName()));
 
                     // We now set last update time to the Google one
-                    updatedPerson.setLastUpdated(new LastUpdated(gPerson.getMetadata().getSources().get(0).getUpdateTime()));
+                    String updateTime = gPerson.getMetadata().getSources().get(0).getUpdateTime();
+                    updatedPerson.setLastUpdated(new LastUpdated(updateTime));
                     updatePerson(person, updatedPerson);
 
                 }
@@ -172,14 +177,16 @@ public class SyncCommand extends Command {
                 if (!syncedIDs.contains(id) && !hashName.containsKey(gName)) {
                     model.addPerson(convertedaPerson);
                     syncedIDs.add(id);
-                } else if(hashName.containsKey((gName))) {
+                } else if (hashName.containsKey((gName))) {
                     seedu.address.model.person.ReadOnlyPerson aPerson = hashName.get(gName);
                     if (equalPerson(aPerson, person)) {
-                        seedu.address.model.person.Person updatedPerson = new seedu.address.model.person.Person(aPerson);
+                        seedu.address.model.person.Person updatedPerson =
+                                new seedu.address.model.person.Person(aPerson);
                         updatedPerson.setId(new Id(person.getResourceName()));
 
                         // We now set last update time to the Google one
-                        updatedPerson.setLastUpdated(new LastUpdated(person.getMetadata().getSources().get(0).getUpdateTime()));
+                        String updateTime = person.getMetadata().getSources().get(0).getUpdateTime();
+                        updatedPerson.setLastUpdated(new LastUpdated(updateTime));
                         updatePerson(aPerson, updatedPerson);
                     }
                 }
@@ -302,9 +309,9 @@ public class SyncCommand extends Command {
             logger.warning("Google Contact has no retrievable name");
         } else {
             seedu.address.model.person.Name aName = new seedu.address.model.person.Name(retrieveFullGName(person));
-            Phone aPhone = (phone == null || !Phone.isValidPhone(phone.getValue().replaceAll("\\s+","")))
+            Phone aPhone = (phone == null || !Phone.isValidPhone(phone.getValue().replaceAll("\\s+", "")))
                     ? new Phone(null)
-                    : new seedu.address.model.person.Phone(phone.getValue().replaceAll("\\s+",""));
+                    : new seedu.address.model.person.Phone(phone.getValue().replaceAll("\\s+", ""));
             seedu.address.model.person.Address aAddress = (
                     address == null || !seedu.address.model.person.Address.isValidAddress(address.getStreetAddress()))
                     ? new seedu.address.model.person.Address(null)
@@ -513,6 +520,12 @@ public class SyncCommand extends Command {
         return result;
     }
 
+    /** Checks whether a Google Person and an ABC Person are equal
+     *
+     * @param abcPerson
+     * @param gPerson
+     * @return
+     */
     private boolean equalPerson (ReadOnlyPerson abcPerson, Person gPerson) {
         Name name = (gPerson.getNames() == null)
                 ? null
@@ -547,7 +560,7 @@ public class SyncCommand extends Command {
         boolean equalPhone;
 
         if (phone != null) {
-            gPhone = phone.getValue().replaceAll("\\s+","");
+            gPhone = phone.getValue().replaceAll("\\s+", "");
             equalPhone = gPhone.equals(abcPhone);
         } else {
             equalPhone = abcPhone.equals("No Phone Number");
