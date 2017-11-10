@@ -366,7 +366,7 @@ public class MainWindow extends UiPart<Region> {
     @Subscribe
     private void handlePopulateMonthEvent(PopulateMonthEvent request) {
         logger.info(LogsCenter.getEventHandlingLogMessage(request));
-        calendar.populateCalendar(request.yearMonth,logic.getFilteredEventList());
+        calendar.populateCalendar(request.yearMonth, logic.getFilteredEventList());
     }
     //@@author
 
