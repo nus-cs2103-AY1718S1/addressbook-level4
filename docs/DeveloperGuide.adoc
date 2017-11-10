@@ -1791,6 +1791,14 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |personalize the application |feel more familiar with the application
 
+|`* *` |user |check what command or changes was done at any point in time | can rectify mistakes committed to keep addressbook up to date
+
+|`* *` |user |avoid careless mistake when keying number for calling | be more productive and careless free
+
+|`* *` |user |avoid careless mistake when keying number for sending of sms | be more productive and careless free
+
+|`* *` |user |save user contact to my smart phone | be more productive and careless free. As well as saving time from manual input for huge number of contact information.
+
 |=======================================================================
 
 === Unlikely to have
