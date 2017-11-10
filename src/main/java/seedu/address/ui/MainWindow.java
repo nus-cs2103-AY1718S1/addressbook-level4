@@ -116,14 +116,14 @@ public class MainWindow extends UiPart<Region> {
         cssPath = "view/";
 
         switch (style) {
-        case "Light":
-            cssPath += "LightTheme.css";
+        case "Dark":
+            cssPath += "DarkTheme.css";
             break;
         case "Blue":
             cssPath += "BlueTheme.css";
             break;
         default:
-            cssPath += "DarkTheme.css";
+            cssPath += "LightTheme.css";
             break;
         }
 

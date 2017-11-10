@@ -19,6 +19,28 @@ public class MeetingListChangedEvent extends BaseEvent {
 ```
 ###### \java\seedu\address\logic\commands\AddMeetingCommand.java
 ``` java
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
+
+import java.text.ParseException;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+
+import seedu.address.model.Meeting;
+
+import seedu.address.model.ReadOnlyMeeting;
+
+import seedu.address.model.asana.PostTask;
+
+import seedu.address.model.exceptions.DuplicateMeetingException;
+
+import seedu.address.model.exceptions.IllegalIdException;
+
 /**
  * Adds a new meeting to the address book.
  */
@@ -67,6 +89,16 @@ public class AddMeetingCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addMeeting(toAdd);
+            //TODO handle exception for asana & multiple Ids exceeding num of entries in AB
+            //add meeting on Asana
+            PostTask newAsanaTask = null;
+            try {
+                newAsanaTask = new PostTask(toAdd.getNotes(), toAdd.getDate());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            newAsanaTask.execute();
+
         } catch (DuplicateMeetingException e) {
             throw new CommandException(MESSAGE_DUPLICATE_MEETING);
         } catch (IllegalIdException ive) {
@@ -84,7 +116,6 @@ public class AddMeetingCommand extends UndoableCommand {
                 && toAdd.equals(((AddMeetingCommand) other).toAdd));
     }
 }
-
 ```
 ###### \java\seedu\address\logic\commands\DeleteTagCommand.java
 ``` java
@@ -433,6 +464,217 @@ public class IllegalDateTimeException extends IllegalValueException {
         persons.sortLexicographically();
     }
 ```
+###### \java\seedu\address\model\asana\AuthenticateAsanaUser.java
+``` java
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.UUID;
+
+import com.asana.Client;
+import com.asana.OAuthApp;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
+/**
+ * Authenticate & Store access token for Asana
+ */
+public class AuthenticateAsanaUser {
+
+    private static final String CLIENT_ID = "474342738710406";
+    private static final String CLIENT_SECRET = "a89bbb49213d6b58ebce25cfa0995290";
+    private static final String REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob";
+
+    private String accessToken  = "0/b62305d262c673af5c042bfad54ef834";
+
+    public AuthenticateAsanaUser() throws URISyntaxException, IOException, IllegalValueException {
+        //if accesstoken is null, get an access token from Asana
+        if (!isAuthenticated()) {
+            OAuthApp app = new OAuthApp(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
+            Client client = Client.oauth(app);
+
+            //to prevent CSRF attacks
+            String currentState = UUID.randomUUID().toString();
+            String url = app.getAuthorizationUrl(currentState);
+
+            //open browser on desktop for authentication purpose
+            Desktop.getDesktop().browse(new URI(url));
+
+            //Get the authentication code from Asana
+            //TODO: get from command line on app
+            String codeFromAsana = "0/b62305d262c673af5c042bfad54ef834";
+            //new LineReader(new InputStreamReader(System.in)).readLine();
+
+            //TODO: Hash and store access token
+            accessToken = app.fetchToken(codeFromAsana);
+
+            if (!app.isAuthorized()) {
+                throw new IllegalValueException("OurAB failed to sync with Asana");
+            }
+        }
+    }
+
+    /**
+     * checks if user is authenticated by Asana
+     */
+    private boolean isAuthenticated() {
+        return !(accessToken == null);
+    }
+
+    /**
+     * Getter method for Access token
+     */
+    public String getAccessToken() {
+        return accessToken;
+    }
+}
+```
+###### \java\seedu\address\model\asana\PostTask.java
+``` java
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+import com.asana.Client;
+import com.asana.models.Project;
+import com.asana.models.User;
+import com.asana.models.Workspace;
+
+import jdk.nashorn.internal.ir.annotations.Ignore;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
+
+/***
+ * Posts a task onto users meeting project on Asana
+ */
+@Ignore
+public class PostTask extends Command {
+
+    private String notes;
+    private String date;
+
+    public PostTask(String notes, String localDate) throws ParseException {
+        this.notes = notes;
+        this.date = dateFormatter(localDate);
+    }
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        Client client;
+        try {
+            AuthenticateAsanaUser authenticateAsanaUser = new AuthenticateAsanaUser();
+            client = Client.accessToken(authenticateAsanaUser.getAccessToken());
+            //get user data
+            User user = client.users.me().execute();
+
+            // find user's "Personal Projects" project //default asana personal workspace
+            Workspace meetingsWorkspace = null;
+            for (Workspace workspace : client.workspaces.findAll()) {
+                if (workspace.name.equals("Personal Projects")) {
+                    meetingsWorkspace = workspace;
+                    break;
+                }
+            }
+
+            // create a "Meetings" if it doesn't exist
+            List<Project> projects = client.projects.findByWorkspace(meetingsWorkspace.id).execute();
+            Project myMeetings = null;
+            for (Project project : projects) {
+                if (project.name.equals("Meetings")) {
+                    myMeetings = project;
+                    break;
+                }
+            }
+            if (myMeetings == null) {
+                myMeetings = client.projects.createInWorkspace(meetingsWorkspace.id)
+                        .data("name", "Meetings")
+                        .execute();
+            }
+
+            // create a task in the project
+            client.tasks.createInWorkspace(meetingsWorkspace.id)
+                    .data("name", notes)
+                    .data("projects", Arrays.asList(myMeetings.id))
+                    .data("due_on", date)
+                    .data("assignee", user)
+                    .execute();
+
+        } catch (URISyntaxException e) {
+            throw new CommandException("Invalid URL redirection");
+        } catch (IOException io) {
+            throw new CommandException("Invalid Command");
+        } catch (IllegalValueException ive) {
+            throw new CommandException("OurAB failed to sync with Asana, Please try again later!");
+        }
+
+        return new CommandResult("");
+    }
+
+    /**
+     * Formats date to suit input needs of Asana API
+     */
+    private String dateFormatter (String date) throws ParseException {
+
+        DateFormat dateParse = new SimpleDateFormat("yyyy/mm/dd");
+
+        Date formattedDate = dateParse.parse(date);
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+
+        return dateFormat.format(formattedDate);
+
+    }
+
+}
+```
+###### \java\seedu\address\model\asana\StoreAccessToken.java
+``` java
+
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
+
+/**
+ * Stores AccessToken hashed
+ */
+public class StoreAccessToken extends Command {
+
+    private final String mAccessToken;
+
+    public StoreAccessToken(String accessToken) {
+        mAccessToken = accessToken;
+    }
+    @Override
+    public CommandResult execute() throws CommandException {
+        return new CommandResult("");
+    }
+}
+```
+###### \java\seedu\address\model\asana\TokenParser.java
+``` java
+import seedu.address.logic.parser.Parser;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parse accesstoken input from user
+ */
+public class TokenParser implements Parser<StoreAccessToken> {
+    @Override
+    public StoreAccessToken parse(String userInput) throws ParseException {
+        //TODO Parse userinput
+        return new StoreAccessToken(userInput);
+    }
+}
+```
 ###### \java\seedu\address\model\exceptions\DuplicateMeetingException.java
 ``` java
 /**
@@ -463,6 +705,8 @@ public class IllegalIdException extends IllegalValueException {
     boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException;
     /** Adds the given person */
     void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException;
+    /** Add accessToken to meetingsList*/
+    //void addAccessToken(String accessToken);
 ```
 ###### \java\seedu\address\model\Model.java
 ``` java
@@ -546,6 +790,10 @@ public class IllegalIdException extends IllegalValueException {
         meetingList.add(meeting);
         indicateMeetingListChanged();
     }
+    /*
+    @Override
+    public void addAccessToken(String accessToken) {
+    }*/
 
 ```
 ###### \java\seedu\address\model\ModelManager.java
@@ -815,6 +1063,7 @@ public class SearchData {
         return internalList.hashCode();
     }
 
+
 }
 ```
 ###### \java\seedu\address\ui\BrowserPanel.java
@@ -844,8 +1093,13 @@ public class SearchData {
             } catch (CommandException e) {
                 e.printStackTrace();
             }
+        } else if (hasMapsBeenChosen) {
+            try {
+                loadPersonMap(person);
+            } catch (CommandException e) {
+                e.printStackTrace();
+            }
         } else {
-
             loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
                     + GOOGLE_SEARCH_URL_SUFFIX);
         }
@@ -862,7 +1116,8 @@ public class SearchData {
         if (personSelected == null) {
             throw new CommandException("Please select a person");
         }
-        hasLinkedinBeenChosen = true;
+        setLinkedinChosenTrue();
+        setMapsChosenFalse();
         String[] name = personSelected.getName().fullName.split(" ");
 
         loadPage(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
@@ -894,13 +1149,16 @@ public class SearchData {
             loadLinkedIn();
         } else if (event.getBrowserSelection().equals("google")) {
             hasLinkedinBeenChosen = false;
+            hasMapsBeenChosen = false;
             loadPersonPage(personSelected);
+        } else if (event.getBrowserSelection().equals("maps")) {
+            loadPersonMap(personSelected);
         }
     }
 
     //@author martyn-wong
     @Subscribe
-    private void handleMapPanelEvent(MapPersonEvent event) {
+    private void handleMapPanelEvent(MapPersonEvent event) throws CommandException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonMap(event.getPerson());
     }

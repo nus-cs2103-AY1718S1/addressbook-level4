@@ -33,6 +33,8 @@ public interface Model {
     boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException;
     /** Adds the given person */
     void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException;
+    /** Add accessToken to meetingsList*/
+    //void addAccessToken(String accessToken);
     //@@author
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
@@ -50,6 +52,7 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    //@@author martyn-wong
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
@@ -57,6 +60,7 @@ public interface Model {
     default void updateFilteredPersonList() {
         updateFilteredPersonList();
     }
+    //@@author
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.

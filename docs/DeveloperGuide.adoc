@@ -350,6 +350,9 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // tag::meetings[]
 === Meetings
 
+==== Storage
+
+===== Implementation
 The mechanism and data structure of meetings are similar to that of the address book. The local storage is located at
 `data/meetinglist.xml` by default. For each meeting, the date, time location and participants are recorded. The participants
 must be from the address book.
@@ -357,7 +360,7 @@ must be from the address book.
 [NOTE]
 The meeting functionality is not fully implemented yet. There is currently no command to add or edit meetings.
 
-==== Design Considerations
+===== Design Considerations
 
 **Aspect:** Local storage of the meeting list +
 **Alternative 1 (current choice):** Use XML and separate from the address book storage+
@@ -366,6 +369,51 @@ The meeting functionality is not fully implemented yet. There is currently no co
 **Alternative 2:** Use XML together in the address book storage +
 **Pros:** Less extra components needed, some information shared between the two parts can be accessed more conveniently +
 **Cons:** The data structure of `addressbook.xml` would become too complicated
+
+---
+
+==== Add Meeting Command
+
+===== Implementation
+
+When the command is called, the user input is parsed as shown in the sequence diagram below.
+
+image::AddMeetingCommandLogic.png[width="800"]
+
+In the model, there are two primary methods that are called:
+
+1. To add unique meetings (ensured by `DuplicateMeetingException`) associated with valid people in +
+addressbook (ensured by `IllegalIdException`).
+
+[source, java]
+----
+    try {
+        model.addMeeting(toAdd);
+    } catch (DuplicateMeetingException e) {
+        throw new CommandException(MESSAGE_DUPLICATE_MEETING);
+    } catch (IllegalIdException ive) {
+        throw new CommandException(MESSAGE_INVALID_ID);
+    }
+----
+
+2. To post a task on Asana
+[source, java]
+----
+    newAsanaTask = new PostTask(toAdd.getNotes(), toAdd.getDate());
+    newAsanaTask.execute();
+----
+
+Create a new instance of `PostTask` and authenticate user using https://github.com/Asana/java-asana[OAuth2].
+
+===== Design Considerations
+
+**Aspect:** Post on Asana +
+**Alternative 1 (current choice):** Incorporate posting on Asana with every addCommand +
+**Pros:** Convenient for user to keep track of tasks related to meetings +
+**Cons:** Reduces control that user has in uploading tasks to Asana+
+**Alternative 2:** Create a separate command to add tasks onto Asana +
+**Pros:** More flexibility on the content that is saved onto Asana workspace +
+**Cons:** Unnecessary number of commands in the addressbook & reduce productivity of user
 
 === Logging
 
@@ -655,7 +703,7 @@ Otherwise, users will be notified that specified tags are not used in address bo
 
 === Command: `Search`
 
-`Search` lets users search for contacts in the address book by keywords in parameters of their details. +
+`Search` lets users search for contacts in the address book by keywords in their contact details such name, address and telephone number +
 The feature is more powerful and useful than find which only searches by name.
 
 ==== Implementation
@@ -692,8 +740,7 @@ the google maps on the browser panel
 **Aspect:** Passing URL directly +
 **Alternative 1:** Use google maps API +
 **Pros:** More powerful and secure search +
-**Cons:** Unnecessary imports of dpeendencies, slows the program +
-=======
+**Cons:** Unnecessary imports of dependencies, slows the program +
 
 ---
 
@@ -704,6 +751,9 @@ A profile photo is displayed for each person in the addressbook.
 ==== Implementation
 
 During startup, the application uses a person's email address to download his/her profile photo from link:https://en.gravatar.com/site/implement/[Gravatar] `cache/`. The photo will then be displayed on the person card.
+When a new person is added or a person's email address is changed, the new profile photo will be downloaded. +
+For contacts who have not set a Gravatar photo before, user also has the option to choose what type of default photo to
+display.
 
 ==== Design Considerations
 
@@ -713,10 +763,21 @@ During startup, the application uses a person's email address to download his/he
 **Cons:** less customizable +
 **Alternative 2:** from other social network websites (Instagram, Facebook, etc.) +
 **Pros:** OurAb's target demographics usually update their profile photos on SNS more frequently +
-**Cons:** Authentication might be required; User need to input contacts' user id for different websites +
+**Cons:** authentication might be required; User need to input contacts' user id for different websites +
 **Alternative 3:** user uploads profile photo for each person +
-**Pros:** User has most freedom to customize their addressbook +
-**Cons:** Upload photo would be too complicated for a CLI application +
+**Pros:** user has most freedom to customize their addressbook +
+**Cons:** upload photo would be too complicated for a CLI application +
+
+**Aspect:** download photos in foreground or background+
+**Alternative 1 (current choice):** only download in background when the `DefaultProfilePhoto` preference is changed +
+**Pros:** the solution is balanced between program response time and update time (see below for explanation on the trade-off) +
+**Cons:** user might not see the change immediately after changing the preference +
+**Alternative 2:** always download in foreground +
+**Pros:** profile photos will be updated as soon as they are available +
+**Cons:** the application will freeze during the download; if `DefaultProfilePhoto` preference is changed, the application will appear unresponsive +
+**Alternative 3:** always download in background +
+**Pros:** user will not notice any unresponsiveness when using the application +
+**Cons:** it is technically challenging to update the photo in UI timely (concurrency is difficult)
 
 ---
 

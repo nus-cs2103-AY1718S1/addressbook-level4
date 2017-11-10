@@ -165,6 +165,10 @@ public class ModelManager extends ComponentManager implements Model {
         meetingList.add(meeting);
         indicateMeetingListChanged();
     }
+    /*
+    @Override
+    public void addAccessToken(String accessToken) {
+    }*/
 
     //@@author
     @Override
@@ -197,10 +201,12 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    //@@author martyn-wong
     @Override
     public void updateFilteredPersonList() {
         updateFilteredPersonList();
     }
+    //@@author
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
