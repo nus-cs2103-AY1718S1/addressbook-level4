@@ -12,13 +12,12 @@ import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 
 //@@author blaqkrow
 /**
- * The UI component that is responsible for saving and displaying the currently selected contact's name.
+ * The UI component that is responsible for saving and displaying the currently selected contact's phone number.
  */
 public class PhoneTextField extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "PhoneTextField.fxml";
-
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private int selectedIndex;
 

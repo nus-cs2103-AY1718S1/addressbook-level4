@@ -14,6 +14,7 @@ public class OpenEmailClient {
 
     /**
      * Handles the opening of email client
+     * @param mailTo the receiver's email address
      */
     public OpenEmailClient(String mailTo) {
         this.mailTo = mailTo.trim();

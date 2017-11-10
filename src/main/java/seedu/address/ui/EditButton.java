@@ -112,6 +112,12 @@ public class EditButton extends UiPart<Region> {
     }
     /**
      * Handles checking of content passed into the form
+     * @param name the name entered in nameTextField
+     * @param phone the name entered in phoneTextField
+     * @param email the name entered in emailTextField
+     * @param address the name entered in addressTextField
+     * @param tag the name entered in tagTextArea
+     * @return the corresponding format error, else if no error, return success
      */
     public static String checkInput(String name, String phone, String email, String address, String tag) {
         if (name.matches(".*\\d+.*") || name.isEmpty()) {
