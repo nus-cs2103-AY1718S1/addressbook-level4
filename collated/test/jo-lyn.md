@@ -2,7 +2,7 @@
 ###### \java\guitests\guihandles\PersonDetailPanelHandle.java
 ``` java
 /**
- * A handle for the person detail panel of the App
+ * A handle for the person detail panel of the App.
  */
 public class PersonDetailPanelHandle extends NodeHandle<Node> {
     public static final String PERSON_DETAIL_ID = "#personDetailPanel";
@@ -59,7 +59,7 @@ public class PersonDetailPanelHandle extends NodeHandle<Node> {
     }
 
     /**
-     * Update tags in person detail panel
+     * Update tags in person detail panel.
      */
     public void updateTags() {
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
@@ -319,7 +319,7 @@ public class RemarkCommandTest {
 
     /**
      * Edit filtered list where index is larger than size of filtered list,
-     * but smaller than size of rolodex
+     * but smaller than size of rolodex.
      */
     @Test
     public void executeInvalidPersonIndexFilteredListFailure() throws Exception {
@@ -358,7 +358,7 @@ public class RemarkCommandTest {
     }
 
     /**
-     * Returns an {@code RemarkCommand} with parameters {@code index} and {@code remark}
+     * Returns an {@code RemarkCommand} with parameters {@code index} and {@code remark}.
      */
     private RemarkCommand prepareCommand(Index index, String remark) {
         RemarkCommand remarkCommand = new RemarkCommand(index, new Remark(remark));

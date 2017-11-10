@@ -124,7 +124,7 @@ public class RemarkCommand extends UndoableCommand {
     }
 
     /**
-     * @return the success message for the remark command
+     * @return the success message for the remark command.
      */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
         if (!remark.value.isEmpty()) {
@@ -165,7 +165,7 @@ public class RemarkCommand extends UndoableCommand {
 ###### \java\seedu\address\logic\parser\RemarkCommandParser.java
 ``` java
 /**
- * Parses input arguments and creates a new RemarkCommand object
+ * Parses input arguments and creates a new RemarkCommand object.
  */
 public class RemarkCommandParser implements Parser<RemarkCommand> {
     /**
@@ -207,7 +207,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     /**
-     * Returns the index of the given person
+     * Returns the index of the given person.
      */
     public Index getIndex(ReadOnlyPerson target) {
         return Index.fromZeroBased(sortedPersons.indexOf(target));
@@ -233,7 +233,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
 ``` java
 /**
  * Represents a Person's remark in the rolodex.
- * Guarantees: immutable, is always valid.
+ * Guarantees: immutable, is always valid
  */
 public class Remark {
     public static final String MESSAGE_REMARK_CONSTRAINTS =
@@ -512,7 +512,7 @@ public class PersonDetailPanel extends UiPart<Region> {
     }
 
     /**
-     * Displays an empty panel
+     * Displays an empty panel.
      */
     private void showEmptyPanel() {
         name.setText("");
@@ -527,7 +527,7 @@ public class PersonDetailPanel extends UiPart<Region> {
     }
 
     /**
-     * Shows the details of the person on the panel
+     * Shows the details of the person on the panel.
      */
     private void showPersonDetails(ReadOnlyPerson person) {
         setAvatar(person);
@@ -577,7 +577,7 @@ public class PersonDetailPanel extends UiPart<Region> {
     }
 
     /**
-     * Shows person details on the panel when a person is selected
+     * Shows person details on the panel when a person is selected.
      */
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
@@ -586,7 +586,7 @@ public class PersonDetailPanel extends UiPart<Region> {
     }
 
     /**
-     * Updates the panel when the details of the selected person is changed
+     * Updates the panel when the details of the selected person is changed.
      */
     @Subscribe
     private void handlePersonDetailsChangedEvent(PersonEditedEvent event) {
@@ -596,6 +596,7 @@ public class PersonDetailPanel extends UiPart<Region> {
 
     @Subscribe
     private void handlePersonListClearedEvent(ClearPersonDetailPanelRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showEmptyPanel();
     }
 }
