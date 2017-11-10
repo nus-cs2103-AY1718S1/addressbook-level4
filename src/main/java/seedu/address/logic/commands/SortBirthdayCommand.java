@@ -12,7 +12,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * Sort names of contacts by alphabetical order
  */
-public class SortBirthdayCommand extends Command {
+public class SortBirthdayCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "sortBirthday";
     public static final String COMMAND_ALIAS = "sb";
 
@@ -26,7 +26,7 @@ public class SortBirthdayCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         Boolean isEmpty = model.checkIfPersonListEmpty(contactList);
         if (!isEmpty) {
