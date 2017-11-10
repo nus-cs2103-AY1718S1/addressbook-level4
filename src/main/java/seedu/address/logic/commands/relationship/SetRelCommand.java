@@ -2,6 +2,8 @@ package seedu.address.logic.commands.relationship;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_RELATIONSHIP;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CLEAR_RELATIONSHIP;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_RELATIONSHIP;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.HashSet;
@@ -11,9 +13,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
@@ -32,42 +32,51 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
+//@@author huiyiiih
 /**
- *
+ * Sets the relationship between two persons
  */
 public class SetRelCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "set";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets the relationship between two persons."
-        + "by the index number used in the last person listing. "
-        + "Existing values will be overwritten by the input values.\n"
+        + "by the index number used in the last person listing.\n"
+        + "For adding of relationship, only one relationship is allowed. This command is able to add and delete\n "
+        + "specifc relationship between two persons and clear deletes all relationships the two persons have.\n"
         + "Parameters: INDEX (must be a positive integer) "
-        + "[" + PREFIX_ADD_RELATIONSHIP + "RELATIONSHIP]"
+        + "[" + PREFIX_ADD_RELATIONSHIP + "RELATIONSHIP]\n"
         + "Example: " + COMMAND_WORD + " 1 2 "
-        + PREFIX_ADD_RELATIONSHIP + "colleagues";
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Relationship Added for Person: %1$s\n"
+        + PREFIX_ADD_RELATIONSHIP + "colleagues\n"
+        + "Example: " + COMMAND_WORD + " 1 2 "
+        + PREFIX_DELETE_RELATIONSHIP + "colleagues\n"
+        + "Example: " + COMMAND_WORD + " 1 2 "
+        + PREFIX_CLEAR_RELATIONSHIP + "\n";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Relationship Changed for Person: %1$s\n"
         + "& Person: %2$s";
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_NO_MULTIPLE_REL = "These two persons cannot have multiple relationships"
+        + " please edit the relationship between them instead.";
 
     private final Index indexOne;
     private final Index indexTwo;
     private final EditPerson editPerson;
+    private final boolean addPrefixPresent;
 
     /**
      * @param indexOne   first index of the person in the filtered person list to add relationship
      * @param indexTwo   second index of the person in the filtered person list to add relationship
      * @param editPerson details to edit the person with
      */
-    public SetRelCommand(Index indexOne, Index indexTwo, EditPerson editPerson) {
+    public SetRelCommand(Index indexOne, Index indexTwo, EditPerson editPerson, boolean addPrefixPresent) {
         requireNonNull(indexOne);
         requireNonNull(indexTwo);
 
         this.indexOne = indexOne;
         this.indexTwo = indexTwo;
         this.editPerson = editPerson;
+        this.addPrefixPresent = addPrefixPresent;
     }
-
+    //@@author
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
@@ -99,11 +108,12 @@ public class SetRelCommand extends UndoableCommand {
         updatedPosition, updatedStatus, updatedPriority, updatedNote, updatedPhoto, updatedTags, updatedRel);
     }
 
+    //@@author huiyiiih
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if ((indexOne.getZeroBased() >= lastShownList.size()) && (indexTwo.getZeroBased() >= lastShownList.size())) {
+        if ((indexOne.getZeroBased() >= lastShownList.size()) || (indexTwo.getZeroBased() >= lastShownList.size())) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
@@ -112,6 +122,10 @@ public class SetRelCommand extends UndoableCommand {
         Person editedPersonOne = createEditedPerson(personToEditOne, editPerson, personToEditTwo);
         Person editedPersonTwo = createEditedPerson(personToEditTwo, editPerson, personToEditOne);
 
+        if (addPrefixPresent && (personToEditOne.getRelation().toString().contains(personToEditTwo.getName().toString())
+            || personToEditTwo.getRelation().toString().contains(personToEditOne.getName().toString()))) {
+            throw new CommandException(MESSAGE_NO_MULTIPLE_REL);
+        }
         try {
             model.updatePerson(personToEditOne, editedPersonOne);
             model.updatePerson(personToEditTwo, editedPersonTwo);
@@ -123,7 +137,7 @@ public class SetRelCommand extends UndoableCommand {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPersonOne, editedPersonTwo));
     }
-
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -179,14 +193,6 @@ public class SetRelCommand extends UndoableCommand {
             this.clearRels = toCopy.clearRels;
             this.addRel = toCopy.addRel;
             this.deleteRel = toCopy.deleteRel;
-        }
-
-        /**
-         * Returns true if at least one field is edited.
-         */
-        public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.company,
-            this.position, this.status, this.priority, this.note, this.tags, this.addRel, this.deleteRel) || clearRels;
         }
 
         public Optional<Name> getName() {
@@ -281,29 +287,38 @@ public class SetRelCommand extends UndoableCommand {
             this.addRel = addRel;
         }
 
-        public void setToRemove(Set<Relationship> deleteRel) {
+        public void setToDelete(Set<Relationship> deleteRel) {
             this.deleteRel = deleteRel;
         }
+
         public Optional<Set<Relationship>> getToAddRel() {
             return Optional.ofNullable(addRel);
         }
+
+        //@@author huiyiiih
         public Optional<Set<Relationship>> getToAddRel(ReadOnlyPerson person) {
             Set<Relationship> relWithName = new HashSet<>();
-            if (addRel == null) {
+            if ((addRel == null)) {
                 return Optional.ofNullable(null);
             }
             relWithName.add(new Relationship(person.getName().toString(), addRel));
 
             return Optional.of(relWithName);
         }
+        //@@author
+
         public Optional<Set<Relationship>> getToDeleteRel() {
             return Optional.ofNullable(deleteRel);
         }
+
+        //@@author huiyiiih
         public Optional<Set<Relationship>> getToDeleteRel(ReadOnlyPerson person) {
             Set<Relationship> relWithName = new HashSet<>();
             relWithName.add(new Relationship(person.getName().toString(), deleteRel));
             return Optional.of(relWithName);
         }
+        //@@author
+
         public boolean shouldClear() {
             return clearRels;
         }
@@ -318,7 +333,7 @@ public class SetRelCommand extends UndoableCommand {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof EditCommand.EditPersonDescriptor)) {
+            if (!(other instanceof EditPerson)) {
                 return false;
             }
 

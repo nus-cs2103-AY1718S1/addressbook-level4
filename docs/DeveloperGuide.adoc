@@ -1,4 +1,4 @@
-﻿= Sales Nagivator- Developer Guide
+﻿= Sales Navigator- Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -353,7 +353,7 @@ Commands are first read from `CommandBox` which then calls upon the `LogicManage
 
 The specific command type is passed through its specific parser along with its arguments (E.g. `AddEventCommand` is parsed via `AddEventCommandParser`). The specific parser creates a specific command to return to `LogicManager` (E.g. `AddEventCommandParser` returns `AddEventCommand` with the `Event` to be be added once executed). +
 
-`LogicManager` proceeds to exectute the received command. In this implementation, the Command will call upon `ModelManager` to do complete the CRUD operations onto its internal database. (E.g. `AddEventCommand` calls `model.addEvent(event)` to add the event created by `AddEventCommandParser` to the event list in `AddressBook`. +
+`LogicManager` proceeds to execute the received command. In this implementation, the Command will call upon `ModelManager` to do complete the CRUD operations onto its internal database. (E.g. `AddEventCommand` calls `model.addEvent(event)` to add the event created by `AddEventCommandParser` to the event list in `AddressBook`. +
 
 Once this is complete, an update is sent to the the `filteredEventList` which updates the `UI` Component. +
 
@@ -370,43 +370,43 @@ Additionally, an `AddressBookChangedEvent` is also raised to the `EventsCenter` 
 **Cons:** Separate files are harder to manage.
 
 ---
-
-
-
 // end::eventcrud[]
+
+// tag::timetable[]
+// end::timetable[]
 
 // tag::Scheduling[]
 === Event Scheduling
 
-Whenever an event is created, it will be added into an `ObservableTreeMap` of
-events, ranked by the scheduled date and time. This will enable us to
-implement the event scheduling feature comprised of three essential
-sub-features：
+Whenever an event is created, it will be added into an
+`ObservableTreeMap` of events, ranked by the scheduled date and time. This
+will enable us to implement the event scheduling feature comprised of two
+essential sub-features：
 
-* A GUI displaying all the events scheduled for the current week
-* A reminder feature to alert user of the upcoming events
-* A scheduling check mechanism to prevent events with time clash to be
-scheduled at the same time
+* A GUI displaying all the events scheduled
+* A drag-and-drop action listener for quick and convenient rescheduling of
+events
 
-==== Schedule for the week
+==== Event Scheduling
 
-When a `Check Schedule` command is typed into the command box, or the
+When a `CheckSchedule` command is typed into the command box, or when the
 `Calendar` button on the main window is clicked, a
-`ShowCalendarEvent` will be sent to the EventsCenter. In response, the calendar
-GUI will appear in the main window, and events with a scheduled `timing`
-within the week will be identified from the `TreeMap` of events and reflected
- in the  calendar GUI. A corresponding List of events will also appear in the
-  `EventListPanel`, just like with a `List` command for event.
+`ShowCalendarEvent` will be sent to the EventsCenter. In response, a calendar
+GUI will appear in the main window, and events with a scheduled timing
+within the current week will be extracted from the eventList and
+reflected in the corresponding time slots on the calendar GUI. Each event is
+a draggable pane with event titles indicated.
 
-==== Event Reminder
+==== Reschedule event through drag-and-drop
 
-When the Sales Nagivator app is opened, a `ShowUrgentEvents` event will
-automatically be sent, which will find all the events scheduled before the
-end of the next day. After identifying these events, a small circle will
-appear on the `notification` button on the main window to alert users of the
-number of urgent events he/she should attend to. Upon clicking the
-`notification` button, a list of urgent events will then appear in the
-`EventListPanel`.
+When the calendar view is loaded, all the time slots will be registered for
+dropping action. When the event panes are loaded, they will be registered for
+dragging action. When a user drag an event and drop to a specific time slot,
+the 'old' event will be removed and a 'new' event will be added at the
+dropped time slot, with the sames duration. If there is a time clash between
+the 'new' event and an existing event, or if the 'new' event's timing
+exceeds pre-set constraints (eg. extends out of the 24-hour period) the
+'dropping' action cannot be completed.
 
 ==== Avoid time clash
 
@@ -530,6 +530,53 @@ The 4 required fields are checked to see if they are present. If any of them are
 
 The 5 optional fields are handled differently. They are first initialized to a placeholder value ("NIL" for Company, Position, Status and Note, "L" for Priority, indicating the lowest priority). Each field is then checked to see if it has been entered in the user command through its prefix. If it has, the placeholder value is replaced by the entered string. This way, the user is able to selectively enter any of these fields (or none at all) and the `ReadOnlyPerson` object created will still have all fields initialized properly.
 
+==== Design Considerations:
+*Aspect*: Implementation of Company, Position, Status, Priority, and Note
+
+*Alternative 1*: Make these fields compulsory like Name, Address, Phone and Email
+
+*Pros*: Code and tests can be easily duplicated from existing fields.
+
+*Cons*: User may not always need to enter these fields and will become burdensome.
+
+*Alternative 2 (current choice)*: Make these fields optional
+
+*Pros*: Users have flexibility to omit any fields they do not think is necessary. Current tests do not have to be
+completely changed, instead can be extended to include additional fields.
+
+*Cons*: New logic required to handle fields that may not be input by the user.
+
+// tag::autoupdate[]
+=== Automatic update of Person card and Person panel details when edits are made
+The Person cards and Person panel are automatically updated when the user makes any edits to the fields. This is done
+by registering the PersonCard and PersonPanel classes as event handlers, and subscribing to the AddressBookChangedEvent
+that the EventsCenter sends out when the address book is altered. The Person card has an additional feature
+of changing the colour of the priority tag depending on what the priority is. The described behaviour is illustrated in
+the sequence diagram below:
+
+image::AutoUpdateSequenceDiagram.png[width=800]
+
+==== Design Considerations:
+*Aspect*: Implementation of binding card and panel fields to fields
+
+*Alternative 1*: Bind variables to listen for observables
+
+*Pros*: Person card fields already use this method, code can be easily duplicated.
+
+*Cons*: Priority field will not change colour just by changing the text value. Also, Person panel will need to
+change the person its variables are listening to every time a different selection is made.
+
+*Alternative 2 (current choice)*: Register PersonCard and PersonPanel as event handlers and subscribe to
+AddressBookChangedEvent
+
+*Pros*: Priority field can change colour this way, by setting the JavaFX id of the pane the priority label is in to
+different values and hence different CSS settings. Person panel will also be able to reuse the code for
+handlePersonPanelSelectionChangedEvent() as they both require the reloading of person details
+
+*Cons*: Computationally more expensive as the functions will be called whenever the address book is changed, even if
+the change does not affect that particular panel or card.
+// end::autoupdate[]
+
 // tag::photo[]
 === Attaching photo to a contact
 
@@ -560,6 +607,8 @@ user to select a file from the local file system to import. Similar to the
 command-line implementation, this file is then copied to the
 `/src/main/resources/images` directory and then loaded in the graphic UI.
 
+//tag::photo[]
+
 // tag::Sorting[]
 === Sorting of persons list
 
@@ -585,32 +634,35 @@ that the sorting type the user keyed in does not exist.
 [NOTE]
 Explanation of how this is achieved will be done soon. A sequence diagram will be updated here to illustrate how the
 SortCommand and SortCommandParser operates.
+// end::Sorting[]
 
-// tag::Setting relationship[]
+// tag::SettingRelationship[]
 === Setting relationship between two persons
 
 When viewing the persons list, user finds out if that a specific person has a relationship with another person. Thus,
 the user is able to set relationships between 2 persons if they are related to one another. The user can also delete
-the specific relationship that the two persons are connected and also clear all relationships in the two persons. Each
-person is able to have multiple relationships but only one relationship per person. The user will also be able to
-edit the relationship of the two persons.
+the specific relationship between the 2 persons and also clear all relationships in the two persons. Each
+person is able to have multiple relationships but only one relationship per person.
 
 This feature is achieved by first creating the Relationship and UniqueRelList class that handles the relationship
- name and the list of relationship of each person. Next, creating the command to add/edit/delete relationship between 2
- persons.
+ name and the list of relationship of each person. Next, creating the command to add, delete and clear relationship
+between 2 persons.
 
 This will be done using the command `set [INDEX] [INDEX] [PREFIX]RELATIONSHIP`. There are 3 different prefixes which
-performs different things. *ar/* add the relationship, *dr/* deletes the relationship and *cr/* clears all
+performs different tasks. *ar/* adds relationship, *dr/* deletes relationship and *cr/* clears all
 relationships between the two persons.
 
-It will set the relationship for INDEX 1
-and INDEX 2. Thus the command that executes this will perform twice.
+*SetRelCommandParser* parses the input and returns a new SetRelCommand which has the parameters of the two indexes,
+the new edited person and the boolean value of whether the add relationship prefix is present.
 
-The SetRelCommandParser parses the input and returns a new SetRelCommand which has the parameters of the two indexes
-and the new edited person.
+*SetRelCommand* executes and sets the relationship between 2 persons. It also checks if there is a mutual relationship
+present in the indexes passed in. In order to change the relationship, the user will have to delete the
+specific relationship and add the new relationship.
 
 [NOTE]
-More information on this will be done soon once this feature is almost complete.
+TO-DO: Sequence diagram will be up soon.
+
+// end::SettingRelationship[]
 
 == Documentation
 

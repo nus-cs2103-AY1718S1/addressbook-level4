@@ -1,0 +1,99 @@
+= Yang Shuang - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+Sales Navigator is a desktop application designed to help sales executives
+manage clients and events information in an efficient and effortless way. It
+has a JavaFx-enabled GUI, but most of the operations can be performed by
+typing commands into a CLI. It is written in Java and was built by modifying an
+existing project Address Book Level 4.
+
+*Code contributed*: [https://github
+.com/CS2103AUG2017-T14-B3/main/blob/master/collated/main/shuang-yang
+.md[Functional] ]
+[https://github.com/CS2103AUG2017-T14-B3/main/blob/master/collated/main
+/shuang-yang
+.md[Tests] ]
+
+=== Enhancement Added: Event Scheduling
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=schedule]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+For a sales executive, it is of utmost importance to keep all upcoming events
+ in check, to avoid missing out on client calls or important sales meetings,
+ and also to better arrange and prepare for upcoming events. A calendar would
+  come handy in the Sales Navigator app as it provides a bird-eye's view of
+  all scheduled events for a sales person, facilitates event scheduling,
+  avoids scheduling clashing events, and also allows him/her to reschedule
+  flexibly with drag-and-drop action.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=scheduling]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Update client's photo
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=photo]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+It is important for a sales person to build rapport quickly with a potential
+client right after the initial contact, and adding a photo helps the user
+familiarize with and relate to the potential client quickly, especially if
+there has been limited contact. This makes contact management more efficient
+and helps build long-lasting client relationships.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=photo]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Automatically archive events
+
+As the number of events accumulate, `eventlist` will quickly become unusable
+due to the length of the list. Therefore, an archiving mechanism should be
+implemented, which enables the app to remove old events (happening 14 days
+before the current date) from the event list and add to an archive. This
+clean-up should be run everyday and/or whenever the app starts.
+
+=== Other contributions
+
+* Created the main GUI and color scheme
+
+== Project: PowerPointLabs
+

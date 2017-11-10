@@ -164,7 +164,7 @@ public class EditEventCommandTest {
         return editCommand;
     }
 
-    //@@author a0107442n
+    //@@author shuang-yang
 
     @Test
     public void execute_eventTimeClashUnfilteredList_failure() {

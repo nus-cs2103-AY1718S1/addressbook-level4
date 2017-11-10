@@ -33,6 +33,9 @@ public class EventPanel extends UiPart<Region> {
     @FXML
     private Label descriptionLabel;
 
+    @FXML
+    private Label periodLabel;
+
     public EventPanel(Logic logic) {
         super(FXML);
         this.logic = logic;
@@ -48,6 +51,11 @@ public class EventPanel extends UiPart<Region> {
         nameLabel.setText(event.getTitle().toString());
         timeslotLabel.setText(event.getTimeslot().toString());
         descriptionLabel.setText(event.getDescription().toString());
+
+        int period = Integer.parseInt(event.getPeriod().toString());
+        if (period != 0) {
+            periodLabel.setText("Repeat: Every " + event.getPeriod().toString() + " days.");
+        }
     }
 
     /**
@@ -78,7 +86,7 @@ public class EventPanel extends UiPart<Region> {
     private void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         for (ReadOnlyEvent dataEvent : event.data.getEventList()) {
-            if (storedEvent.getTitle().equals(dataEvent.getTitle())) {
+            if (storedEvent != null && storedEvent.getTitle().equals(dataEvent.getTitle())) {
                 showEventDetails(storedEventIndex, dataEvent);
                 storedEvent = dataEvent;
                 break;

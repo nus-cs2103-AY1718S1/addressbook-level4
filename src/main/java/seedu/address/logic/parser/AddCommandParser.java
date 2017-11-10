@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_ADDREL_PREFIX_NOT_ALLOWED;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_RELATIONSHIP;
@@ -15,6 +16,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -40,7 +42,6 @@ import seedu.address.model.tag.Tag;
  * Parses input arguments and creates a new AddCommand object
  */
 public class AddCommandParser implements Parser<AddCommand> {
-
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
      * {@code ArgumentMultimap}.
@@ -65,6 +66,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
+        if (arePrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP)) {
+            throw new ParseException(MESSAGE_ADDREL_PREFIX_NOT_ALLOWED);
+        }
 
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
@@ -77,15 +81,15 @@ public class AddCommandParser implements Parser<AddCommand> {
             Status status = new Status("NIL");
             Priority priority = new Priority("L");
             Note note = new Note("NIL");
+            Set<Relationship> relationList = new HashSet<>();
             //Initialize photo to the default icon
             String s = File.separator;
             Photo photo = new Photo("src" + s + "main" + s + "resources" + s
                     + "images" + s + "default.jpg");
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            Set<Relationship> relationList = ParserUtil.parseRel(argMultimap.getAllValues(PREFIX_ADD_RELATIONSHIP));
 
-            //Since Company, Position, Status, Priority and Phot are optional
+            //Since Company, Position, Status, Priority and Photo and Relationship are optional
             // parameters, set them if they are present
             if (arePrefixesPresent(argMultimap, PREFIX_COMPANY)) {
                 company = ParserUtil.parseCompany(argMultimap.getValue(PREFIX_COMPANY)).get();

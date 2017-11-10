@@ -1,3 +1,4 @@
+//@@author huiyiiih
 package seedu.address.model.person.exceptions;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -9,8 +10,5 @@ public class InvalidSortTypeException extends IllegalValueException {
     public InvalidSortTypeException(String message) {
         super(message);
     }
-
-    public InvalidSortTypeException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }
+//@@author
