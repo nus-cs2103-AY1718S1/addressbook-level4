@@ -14,6 +14,7 @@ public class RemoveAccountCommand extends Command {
 
     public static final String MESSAGE_REMOVE_SUCCESS = "Login removed successfully";
     public static final String MESSAGE_ACCOUNT_ALREADY_REMOVED = "Account does not exist";
+    public static final String MESSAGE_INVALID_CREDENTIALS = "Invalid Credentials! Please try again.";
 
     private final String username;
     private final String password;
@@ -28,7 +29,11 @@ public class RemoveAccountCommand extends Command {
         if (model.getUserPrefs().checkUsername("") || model.getUserPrefs().checkPassword("")) {
             return new CommandResult(MESSAGE_ACCOUNT_ALREADY_REMOVED);
         } else {
-            if (model.getUserPrefs().checkUsername(username) && model.getUserPrefs().checkPassword(password)) {
+            if (!model.getUserPrefs().checkUsername(username) || !model.getUserPrefs().checkPassword(password)) {
+                return new CommandResult(MESSAGE_INVALID_CREDENTIALS);
+            }
+
+            else if (model.getUserPrefs().checkUsername(username) && model.getUserPrefs().checkPassword(password)) {
                 model.getUserPrefs().setDefaultUsername("");
                 model.getUserPrefs().setDefaultPassword("");
             }

@@ -365,6 +365,8 @@ loadLocationPage adds the person's address info after the searching URL of Googl
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+
+// tag::changepw[]
 === Change Password Mechanism
 The Change Password mechanism resides inside `LogicManager`.
 It supports the changing of password which requires the previous username
@@ -390,7 +392,12 @@ then parses the command using `AddressBookParser`. It then executes using `model
 the `UserPrefs`. It then changes the password in the `preferences.json` file after hashing it using
 SHA-256 in the `changePassword()` method.
 
+// end::changepw[]
+
+// tag::pwconsideration[]
 ==== Design Considerations
+
+
 *Aspect:* To hash or not to hash passwords
 
 *Alternative 1 (current choice):* Hash the password
@@ -418,8 +425,162 @@ usernames.
 
 *Pros:* Very straightforward (`changepw oldpassword newpassword`)
 
-*Cons:* Might have to change a lot of components if want to add a username in
+*Cons:* Might have to change a lot of components if want to allow users to have multiple accounts in
 the later part of the project.
+
+=======
+// end::pwconsideration[]
+
+
+// tag::changeuser[]
+=== Change Username Mechanism
+The Change Username mechanism resides inside `LogicManager`.
+It supports the changing of username which requires the previous username
+and password. The command will not be inherited from `UndoableCommand`. This
+is due to security reasons and users will not be able to `undo` their username
+change. Users have to change the password again through the command `changeuser`.
+
+As `ChangeUsernameCommand` does not inherit from `UndoableCommand`, it will
+inherit from `Command` instead.
+
+Firstly, the `changeuser` command is typed into the Command Line. This starts up the `LogicManager` which
+then parses the command using `AddressBookParser`. It then executes using `model`, which retrieves
+the `UserPrefs`. It then changes the username in the `preferences.json` file. Unlike ChangePasswordCommand,
+the username is not hased using SHA-256.
+
+// end::changeuser[]
+
+// tag::changeuserconsiderations[]
+
+==== Design Considerations
+
+*Aspect:* To have username or not to have username
+
+*Alternative 1 (current choice):* Have username
+
+*Pros:* In view of future developments, users will be able to use different accounts.
+More security as user needs both `username` and `password` to log in.
+
+*Cons:* Users need to remember more information (For future development: Implement a hint feature whereby it
+gives users hints in case they forget their username or password)
+
+*Alternative 2*: Don't have username
+
+*Pros:* Straightforward
+
+*Cons:* Less security
+
+// end::changeuserconsiderations[]
+
+// tag::createDefaultAcc[]
+
+=== Create Default Account Mechanism
+The Create Default Account mechanism resides inside `LogicManager`.
+It supports the creation of an account of username and password, `admin`. The command will not be inherited from
+`UndoableCommand`. This is due to security reasons and users will not be able to `undo` their account creation.
+
+
+As `CreateDefaultAccountCommand` does not inherit from `UndoableCommand`, it will
+inherit from `Command` instead.
+
+Firstly, the pre-condition to use this command is that no existing account must be in `Storage` file,
+`preferences.json`. Secondly, the user have to type `createDefaultAccount` in the command line. This starts up the `LogicManager` which
+then parses the command using `AddressBookParser`. It then executes using `model`, which retrieves
+the `UserPrefs`. It then changes the `username` and `password` in the `preferences.json` file to `admin`. Just like
+the Change Password Mechanism, the password is hashed using SHA-256.
+
+// end::createDefaultAcc[]
+
+// tag::createDefaultConsiderations[]
+
+==== Design Considerations
+
+*Aspect:* To have the feature or not
+
+*Alternative 1 (current choice):* Have Feature
+
+*Pros:* Cater to different kinds of users. Some users might not want to have the login feature as they do not
+have important information in their H.M.U contacts. However, some users might want the login feature. Thus, at
+the start, they can choose to create an account or not.
+
+*Cons:* Feature might change in the future as we allow users to create more than 1 account.
+
+*Alternative 2*: Do not have feature
+
+*Pros:* None
+
+*Cons:* Username and Password is equals to null at the start. To use the `changeuser` and `changepw` command,
+the user have to key in white spaces which might not seem intuitive to use and not user-friendly.
+
+
+*Aspect:* To create default username and password or allow users to key in desired username and password from the start
+
+*Alternative 1 (current choice):* Default username and password
+
+*Pros:* In case of the use of this command by accident, users will know the username and password as shown in
+the user guide.
+
+*Cons:* Users will have to go through 3 commands just to change the username and password. (They have to go through
+`createDefaultAcc`, `changepw`, and `changeuser`)
+
+*Alternative 2:* Allow users to create their username and password with 1 command
+
+*Pros:* More user-friendly
+
+*Cons:* Users who are experimenting with the new application might accidentally create an account without
+their knowledge and end up locking themselves out of the application.
+
+*Suggestions:* +
+Implement forget username/password feature where users can use the command to get hints of
+their username and password that they have set. +
+
+Use a double confirm message when user uses `createDefaultAcc` command.
+
+If implemented suggestion, `createDefaultAcc` will become `createAcc` where users can set their username
+and password. (v2.0)
+
+// end::createDefaultConsiderations[]
+
+// tag::removeLogin[]
+
+=== Remove Account Mechanism
+The Remove Login Mechanism resides inside `LogicManager`.
+It supports the removal of an account. The command will not be inherited from
+`UndoableCommand`. This is due to security reasons and users will not be able to `undo` their account removal.
+
+As `RemoveAccountCommand` does not inherit from `UndoableCommand`, it will
+inherit from `Command` instead.
+
+Firstly, the pre-condition to use this command is that there must be an existing account in `Storage` file,
+`preferences.json`. Secondly, the user have to type `removeLogin` in the command line followed by
+his `username` and `password`. This starts up the `LogicManager` which then parses the command
+using `AddressBookParser`. It then executes using `model`, which retrieves
+the `UserPrefs`. It then changes the `username` and `password` in the `preferences.json` file to `null`. In the LogicManager,
+when both `username` and `password` is `null`, H.M.U will work automatically without the need to login.
+
+// end::removeLogin[]
+
+// tag::removeLoginConsiderations[]
+
+==== Design Considerations
+
+*Aspect:* To have the feature or not
+
+*Alternative 1 (current choice):* Have Feature
+
+*Pros:* Cater to different kinds of users. Some users might not want to have the login feature as they do not
+have important information in their H.M.U contacts. However, some users might want the login feature. Thus, this
+feature allows users to change their preferences to have a login at any point in time.
+
+*Cons:* Feature might change in the future as we allow users to create more than 1 account.
+
+*Alternative 2*: Do not have feature
+
+*Pros:* None
+
+*Cons:* Once account is created, users will not be able to disable the login feature.
+
+// end::removeLoginConsiderations[]
 
 // tag::search[]
 === Search Mechanism
@@ -854,6 +1015,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |edit my contacts |update any changes to my contacts
 
+|`* * *` |user |see my contacts' schedule on a timetable |visualize it easily
+
+|`* *` |user |see the contact's information when clicking on them |see it more clearly
+
 |`* *` |user |find my contacts by MRT |find who stays at a particular location
 
 |`* *` |user |find my contacts location on Google Maps |know how to get to the location easily
@@ -901,7 +1066,27 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `H.M.U` and the *Actor* is the `user`, unless specified otherwise)
+
+[discrete]
+
+== User case: Add person
+
+*MSS*
+
+1. User requests to add person with the person's name, email, phone, address and mrt location
+2. H.M.U adds the person
+
+Use case ends.
+
+*Extensions*
+
+[none]
+** 1a. The user missed out a parameter
+
+** 1a1. H.M.U shows an error message. +
+
+Use case ends.
 
 [discrete]
 == Use case: Delete person
@@ -909,9 +1094,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  H.M.U shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  H.M.U deletes the person
 +
 Use case ends.
 
@@ -925,7 +1110,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. H.M.U shows an error message.
 +
 Use case resumes at step 2.
 
@@ -935,9 +1120,9 @@ Use case resumes at step 2.
 *MSS*
 
 1. User requests to list persons
-2. AddressBook shows a list of persons
+2. H.M.U shows a list of persons
 3. User requests to sort contacts by name
-4. AddressBook sorts contacts by name
+4. H.M.U sorts contacts by name
 +
 Use case ends.
 
@@ -954,7 +1139,7 @@ Use case ends.
 *MSS*
 
 1. User requests help
-2. AddressBook opens a new help window
+2. H.M.U opens a new help window
 +
 Use case ends.
 
@@ -970,7 +1155,7 @@ Use case ends.
 Use case ends.
 
 *Extensions*
-l
+
 [none]
 * 3a. The given index is invalid.
 +
@@ -979,7 +1164,128 @@ l
 +
 Use case resumes at step 2.
 
+[discrete]
+== Use case: Create Default Account
+
+*MSS*
+
+1. User requests to create default account
+2. User types in command
+3. H.M.U creates default account for user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. A user account already exists.
++
+[none]
+** 2a1. H.M.U shows an error message.
++
+Use case ends.
+
+[discrete]
+== Use case: Create Default Account
+
+*MSS*
+
+1. User requests to create default account
+2. User types in command
+3. H.M.U creates default account for user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. A user account already exists.
++
+[none]
+** 2a1. H.M.U shows an error message.
++
+Use case ends.
+
+[discrete]
+== Use case: Change Passsword
+
+*MSS*
+
+1. User requests to change password
+2. User types in username, old password and new password after command
+3. H.M.U changes password for user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User types in wrong command
++
+[none]
+** 1a1. H.M.U shows an error message
++
+Use case resumes at step 1
+
+* 1b. User does not have an account
++
+[none]
+** 1b1. H.M.U shows an error message
++
+Use case ends
+
+[none]
+* 2b. User types in invalid username
++
+[none]
+** 2b1. H.M.U shows an invalid credentials message
++
+Use case resumes at step 2
+
+[none]
+* 2c. User types in invalid password
++
+[none]
+** 2c1. H.M.U shows an invalid credentials message
++
+Use case resumes at step 2
+
+[discrete]
+== Use case: Remove Login
+
+*MSS*
+
+1. User requests to remove login account
+2. User types in username and password
+3. H.M.U removes login account
++
+Use case ends
+
+*Extensions*
+
+[none]
+
+* 1a. User does not have account set up
+** 1a1. H.M.U shows an error message
++
+Use case ends
+
+* 2a. User types in invalid username
++
+[none]
+** 2a1. H.M.U shows an invalid credentials message
++
+Use case resumes at step 2
+
+* 2b. User types in invalid password
++
+[none]
+** 2a2. H.M.U shows an invalid credentials message
++
+Use case resumes at step 2
+
 [appendix]
+
 == Non Functional Requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
