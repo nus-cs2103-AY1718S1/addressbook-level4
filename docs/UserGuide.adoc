@@ -55,6 +55,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+// tag::EnhancedAdd[]
 === Adding a person: `add`
 
 Adds a person to the address book +
@@ -72,6 +73,7 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 * `add n/Betsy Crowe a/Newgate Prison p/1234567 e/betsycrowe@example.com`
 * `add n/Betsy Crowe`
+// end::EnhancedAdd[]
 
 // tag::addrelationship[]
 === Adding a relationship between two persons: `addRelationship`
@@ -99,10 +101,12 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+// tag::sort[]
 === Sorting all persons : `sort`
 
 Shows a list of all persons in the address book sorted alphanumerically by name. +
 Format: `sort`
+// end::sort[]
 
 === Editing a person : `edit`
 
@@ -566,7 +570,8 @@ To set a new password, a user must first be logged into Intelli with the previou
 == Command Summary
 
 * *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` +
+e.g. `add n/Jane`
 * *AddRelationship* : `addRelationship INDEX_FROM_PERSON INDEX_TO_PERSON DIRECTION [n/NAME] [ce/CONFIDENCE_ESTIMATE}` +
 e.g. `addRelationship 2 3 directed ce/1212312.2 n/is cousin of`
 * *Back up* : `backup`
@@ -587,8 +592,6 @@ e.g. `find James Jake`
 * *History* : `history`
 * *List* : `list`
 * *Redo* : `redo`
-* *Remark* `remark INDEX r/REMARK` +
-e.g. `remark 2 r/The husband of Juliet Lee`
 * *Remove tag* : `removeTag TAG` +
 e.g. `removeTag friend`
 * *Find shortest relationship path* : `relPath FROM_INDEX TO_INDEX` +
