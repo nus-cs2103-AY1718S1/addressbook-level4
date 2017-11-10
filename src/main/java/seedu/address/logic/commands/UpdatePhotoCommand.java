@@ -6,6 +6,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ShowPhotoSelectionEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -23,9 +24,9 @@ public class UpdatePhotoCommand extends Command {
 
     public static final String MESSAGE_UPDATE_PHOTO_SUCCESS = "Updated photo of person: %1$s";
 
-    private final int index;
+    private final Index index;
 
-    public UpdatePhotoCommand(int index) {
+    public UpdatePhotoCommand(Index index) {
         requireNonNull(index);
         this.index = index;
     }
@@ -34,6 +35,6 @@ public class UpdatePhotoCommand extends Command {
     public CommandResult execute() {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         EventsCenter.getInstance().post(new ShowPhotoSelectionEvent(index));
-        return new CommandResult(String.format(MESSAGE_UPDATE_PHOTO_SUCCESS, lastShownList.get(index)));
+        return new CommandResult(String.format(MESSAGE_UPDATE_PHOTO_SUCCESS, lastShownList.get(index.getZeroBased())));
     }
 }

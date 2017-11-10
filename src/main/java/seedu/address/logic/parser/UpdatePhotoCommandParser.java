@@ -32,6 +32,6 @@ public class UpdatePhotoCommandParser implements Parser<UpdatePhotoCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdatePhotoCommand.MESSAGE_USAGE));
         }
 
-        return new UpdatePhotoCommand(index.getOneBased());
+        return new UpdatePhotoCommand(index);
     }
 }

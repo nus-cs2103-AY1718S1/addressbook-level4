@@ -1,6 +1,7 @@
 //@@author shuang-yang
 package seedu.address.commons.events.ui;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.BaseEvent;
 
 /**
@@ -8,9 +9,9 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class ShowPhotoSelectionEvent extends BaseEvent {
 
-    public final int index;
+    public final Index index;
 
-    public ShowPhotoSelectionEvent(int index) {
+    public ShowPhotoSelectionEvent(Index index) {
         this.index = index;
     }
 
