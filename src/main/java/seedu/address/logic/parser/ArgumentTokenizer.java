@@ -41,7 +41,7 @@ public class ArgumentTokenizer {
             return argsString;
         }
         String[] unquotedArgsString = argsString.split(QUOTE_REGEX);
-        return (unquotedArgsString.length == 2) ? "" : unquotedArgsString[2].trim();
+        return (unquotedArgsString.length == 2) ? "" : unquotedArgsString[2];
     }
 
     //@@author

@@ -31,18 +31,6 @@ public class TagCommandSystemTest extends AddressBookSystemTest {
     public void tag() throws Exception {
         Model model = getModel();
 
-        /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
-
-        /* Case: tag first and second person, command with leading spaces, trailing spaces and multiple spaces between
-         * each field -> edited
-         */
-        Index[] indices = new Index[]{INDEX_FIRST_PERSON, INDEX_SECOND_PERSON};
-        String command = " " + TagCommand.COMMAND_WORD + "  " + indices[0].getOneBased() + "  ,   " +
-                indices[1].getOneBased() + "   " + TAG_DESC_HUSBAND + "   ";
-        ReadOnlyPerson personToTag = model.getFilteredPersonList().get(indices[0].getZeroBased());
-        Person taggedPerson = new PersonBuilder(personToTag).addTags(VALID_TAG_HUSBAND).build();
-        assertCommandSuccess(command, indices[0], taggedPerson);
-
         /* --------------------- Performing tag operation while a person card is selected -------------------------- */
 
         /* Case: selects first card in the person list, tag a person -> tagged, card selection remains unchanged but
@@ -51,7 +39,7 @@ public class TagCommandSystemTest extends AddressBookSystemTest {
         showAllPersons();
         Index index = INDEX_FIRST_PERSON;
         selectPerson(index);
-        command = TagCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
+        String command = TagCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
         Person aliceTagged = new PersonBuilder(ALICE).addTags(VALID_TAG_FRIEND).build();
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new person's address
