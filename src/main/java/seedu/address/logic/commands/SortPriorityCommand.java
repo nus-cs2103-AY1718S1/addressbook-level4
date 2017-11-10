@@ -12,7 +12,7 @@ import seedu.address.model.reminder.ReadOnlyReminder;
 /**
  * Sort reminders in order or priority.
  */
-public class SortPriorityCommand extends Command {
+public class SortPriorityCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "sortPriority";
     public static final String COMMAND_ALIAS = "sp";
 
@@ -26,7 +26,7 @@ public class SortPriorityCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         model.updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
         Boolean isEmpty = model.checkIfReminderListEmpty(contactList);
         if (!isEmpty) {

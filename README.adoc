@@ -1,4 +1,4 @@
-= Gentleman's Guide (V1.3)
+= Gentleman's Guide (V1.5rc)
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
