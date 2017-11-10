@@ -832,7 +832,7 @@ _Figure 4.6.5: Output of `CalendarCommand.java` execution_
 
 
 **Aspect:** Implementation of `CalendarCommand` +
-**Alternative 1 (current choice)**: Opening  `Calendar` webpage in `BrowserPanel`. +
+**Alternative 1 (current choice)**: Opening  `Calendar` web page in `BrowserPanel`. +
 **Pros:** To brings about greater convenience for the user as user does not need to navigate between multple webpages to find the calendar.User are able to find out about the public holidays which are not avaliable on desktop calendar. +
 **Cons:** User might bypass the `CalendarCommand` and rely on desktop calendar +
 **Alternative 2:** Opening up of Google calendar +
@@ -842,11 +842,102 @@ _Figure 4.6.5: Output of `CalendarCommand.java` execution_
 ---
 //end::calendar[]
 
-// tag::addemails[]
-=== Multiple email fields when adding contact [Since v1.3]
+// tag::multipleemails[]
+=== Support for adding or editing contact with multiple emails [Since v1.3]
 
+Since version 1.3, more than one email can be saved to a `Person` and all emails can be displayed in the `PersonCard`. The `AddCommand` and `EditCommand` provides support to this enhancement.
+The method to parse all email inputs in `ParserUtil` returns a set of `Email` from a collection of user input emails, as seen in _Figure 4.7.1_ below.
 
-// end::addemails[]
+[source,java]
+----
+public class ParserUtil {
+    public static Set<Email> parseEmails(Collection<String> emails) throws IllegalValueException {
+        requireNonNull(emails);
+        final Set<Email> emailSet = new HashSet<>();
+        for (String emailName : emails) {
+            emailSet.add(new Email(emailName));
+        }
+        return emailSet;
+    }
+}
+
+----
+_Figure 4.7.1: Code section in ParserUtil.java_
+
+A set of `Email` is returned after parsing, which is stored as a `UniqueEmailList` when the `Person` is constructed. However, the `Person` class is constructed at different times for the add and edit features.
+For adding a contact, the `Person` is constructed in `AddCommandParser` as shown in _Figure 4.7.2_ below, after the email inputs have been parsed.
+
+[source,java]
+----
+public class AddCommandParser implements Parser<AddCommand> {
+    public AddCommand parse(String args) throws ParseException {
+
+        // ... Parse other fields ...
+        Set<Email> emails = ParserUtil.parseEmails(argMultimap.getAllValues(PREFIX_EMAIL));
+        // ... Parse other fields ...
+
+        ReadOnlyPerson person = new Person(name, phone, country, emails, address, schedule, tagList);
+    }
+}
+
+----
+_Figure 4.7.2: Code section in AddCommandParser.java_
+
+For editing a contact, the `Person` is constructed during the execution of the command, whereby the `Person` will be updated with the new set of `Email`, as shown below in _Figure 4.7.3_.
+
+[source,java]
+----
+public class EditCommand extends UndoableCommand {
+    public CommandResult executeUndoableCommand() throws CommandException {
+
+        // ... Get person to edit ...
+
+        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+
+        // ... Update model ...
+    }
+
+    private static Person createEditedPerson(ReadOnlyPerson personToEdit,
+                                                 EditPersonDescriptor editPersonDescriptor) {
+
+        // ... get other updated fields ...
+        Set<Email> updatedEmail = editPersonDescriptor.getEmails().orElse(personToEdit.getEmails());
+        // ... get other updated fields ...
+
+        return new Person(updatedName, updatedPhone, updatedCountry, updatedEmail, updatedAddress,
+                        updatedSchedule, updatedTags);
+    }
+}
+
+----
+_Figure 4.7.3: Code section in EditCommand.java_
+
+The `UniqueEmailList` in `Person` stores the set of emails as an observable list, as can be seen in _Figure 4.7.4_ below when the `UniqueEmailList` is initialised with the set of emails.
+
+[source,java]
+----
+public class UniqueEmailList {
+    private final ObservableList<Email> internalList = FXCollections.observableArrayList();
+
+    public UniqueEmailList(Set<Email> emails) {
+        requireAllNonNull(emails);
+        internalList.addAll(emails);
+    }
+}
+
+----
+_Figure 4.7.4: Code section in UniqueEmailList.java_
+
+==== Design Considerations for Adding or Editing contact with Multiple Emails
+
+**Aspect:** Storing of email inputs +
+**Alternative 1 (current choice)**: Agenda can be viewed in the `MainWindow`. +
+**Pros:** User is able to view the agenda immediately upon starting the application. +
+**Cons:** The `AgendaPanel` compromises the space allocated to the `BrowserPanel`. +
+**Alternative 2:** Agenda is located in a separated window, which can be opened using a command input +
+**Pros:** More space will be allocated to `BrowserPanel`, hence the user can enjoy a larger view of a contact's address location. User also has the freedom to minimise or expand agenda window. +
+**Cons:** User needs to take the extra step to view the agen
+// end::multipleemails[]
 
 // tag::agenda[]
 === Viewing of user's agenda [Since v1.4]
@@ -905,7 +996,7 @@ The UI outcome for the `AgendaPanel` consisting of a few schedules can be seen b
 image::AgendaPanelUI.png[width="400"]
 _Figure 4.7.4: UI display for user's agenda_
 
-==== Design Considerations for viewing of user's agenda
+==== Design Considerations for Viewing of User's Agenda
 
 **Aspect:** Location of agenda +
 **Alternative 1 (current choice)**: Agenda can be viewed in the `MainWindow`. +
@@ -993,7 +1084,7 @@ public static boolean doesScheduleNeedReminder(Schedule schedule) {
 _Figure 4.8.3: Code section in Schedule.java_
 
 
-==== Design Considerations for pop-up reminder window
+==== Design Considerations for Pop-up Reminder Window
 
 **Aspect:** Content of reminder window +
 **Alternative 1 (current choice)**: Show list view of schedule cards like the user agenda feature +

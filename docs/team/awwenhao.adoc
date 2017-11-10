@@ -114,7 +114,7 @@ People in the workplace usually have an email for work and another for informal 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=addemails]
+include::../DeveloperGuide.adoc[tag=multipleemails]
 
 #End of Extract#
 
@@ -135,6 +135,5 @@ include::../DeveloperGuide.adoc[tag=addaddressrestriction]
 
 * Set up TravisCI and Coveralls for the team repo
 * Set the styles for the user agenda and reminder window.
+* Impose new restriction for address field by splitting it into block, street, unit and postal code. (Pull request https://github.com/CS2103AUG2017-T15-B2/main/pull/68[#68]) This is an attempt to prevent the user from inputting characters that do not usually appear in addresses.
 * Provided support for scheduling an activity for multiple contacts to appear as one schedule in user agenda. (Pull request https://github.com/CS2103AUG2017-T15-B2/main/pull/123[#123])
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
