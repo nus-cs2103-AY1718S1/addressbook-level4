@@ -59,6 +59,12 @@ public class UniqueLifeInsuranceMap {
         internalMap.put(toPut.getId(), new LifeInsurance(toPut));
     }
 
+    /**
+     * Adds life insurance to map, private because this is only allowed when transferring data from another map
+     * @param id
+     * @param toPut
+     * @throws DuplicateInsuranceException
+     */
     private void put(UUID id, ReadOnlyInsurance toPut) throws DuplicateInsuranceException {
         requireNonNull(toPut);
         if (containsValue(toPut)) {
