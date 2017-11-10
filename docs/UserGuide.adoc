@@ -180,7 +180,9 @@ Removes the current photo from the first person of PEERSONAL.
 
 [NOTE]
 ====
-Only images in `.jpg` and `.png` are supported.
+* Only images in `.jpg` and `.png` are supported.
+
+* Do not delete files in the `displaypictures` folder!
 ====
 
 // end::addphoto[]
