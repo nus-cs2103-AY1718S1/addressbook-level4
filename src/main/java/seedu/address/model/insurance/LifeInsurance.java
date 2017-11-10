@@ -15,7 +15,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.DateParser;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author OscarWang114
@@ -50,8 +49,8 @@ public class LifeInsurance implements ReadOnlyInsurance {
     /**
      * Constructor for {@code XmlAdaptedLifeInsurance.toModelType()}
      */
-    public LifeInsurance(String id, String insuranceName, String owner, String insured, String beneficiary, Double premium,
-                         String contractPath, String signingDateInput, String expiryDateInput)
+    public LifeInsurance(String id, String insuranceName, String owner, String insured, String beneficiary,
+                         Double premium, String contractPath, String signingDateInput, String expiryDateInput)
             throws IllegalValueException {
         this.id = new SimpleObjectProperty<>(UUID.fromString(id));
         this.insuranceName = new SimpleStringProperty(insuranceName);
