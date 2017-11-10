@@ -12,17 +12,20 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.LocateCommandEvent;
+import seedu.address.commons.events.ui.LocateMrtCommandEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * The Browser Panel of the App.
+ * The Map Panel of the App.
  */
-public class BrowserPanel extends UiPart<Region> {
+public class MapPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+    public static final String FACEBOOK_SEARCH_URL_PREFIX = "https://www.facebook.com/search/people/?q=";
+    public static final String GOOGLE_MAP_URL_PREFIX = "https://www.google.com.sg/maps/search/";
+    public static final String GOOGLE_MRT_URL_SUFFIX = "+MRT";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -31,7 +34,7 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private WebView browser;
 
-    public BrowserPanel() {
+    public MapPanel() {
         super(FXML);
 
         // To prevent triggering events for typing inside the loaded Web page.
@@ -42,8 +45,18 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
+        loadPage(FACEBOOK_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+"));
+    }
+
+    //@@author YuchenHe98
+    private void loadLocationPage(ReadOnlyPerson person) {
+        loadPage(GOOGLE_MAP_URL_PREFIX + person.getAddress().value.replaceAll(" ", "+"));
+    }
+    //@@author
+
+    private void loadMrtPage(ReadOnlyPerson person) {
+        loadPage(GOOGLE_MAP_URL_PREFIX + person.getMrt().value.replaceAll("", "+")
+                + GOOGLE_MRT_URL_SUFFIX);
     }
 
     public void loadPage(String url) {
@@ -69,5 +82,19 @@ public class BrowserPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
+    }
+
+    //@@author YuchenHe98
+    @Subscribe
+    private void handleLocateCommandEvent(LocateCommandEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadLocationPage(event.getPerson());
+    }
+    //@@author
+
+    @Subscribe
+    private void handleLocateMrtCommandEvent(LocateMrtCommandEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadMrtPage(event.getPerson());
     }
 }

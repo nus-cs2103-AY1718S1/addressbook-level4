@@ -36,20 +36,24 @@
     </padding>
   </StackPane>
 
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.5, 0.5" prefHeight="22.0" prefWidth="923.0" VBox.vgrow="ALWAYS">
     <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
-
-    <StackPane fx:id="browserPlaceholder" prefWidth="340">
+       <StackPane fx:id="browserPlaceholder" prefWidth="340">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
     </StackPane>
+      <StackPane fx:id="mapPanelPlaceholder" layoutX="10.0" layoutY="10.0" prefHeight="20.0" prefWidth="347.0">
+         <padding>
+            <Insets bottom="10" left="10" right="10" top="10" />
+         </padding>
+      </StackPane>
   </SplitPane>
 
-  <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+              <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
 </VBox>
