@@ -3,7 +3,6 @@ package seedu.address.ui;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,12 +22,9 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.schedule.Schedule;
 
 //@@author CT15
-
 /**
  * The Welcome Screen is opened when the application is run. Main Window will be
  * loaded when the welcome screen is closed.
@@ -154,7 +150,7 @@ public class WelcomeScreen extends UiPart<Region> {
         mainWindow = new MainWindow(primaryStage, config, prefs, logic, model);
         mainWindow.show(); //This should be called before creating other UI parts
         mainWindow.fillInnerParts();
-        openReminderWindowIfRequired();
+        mainWindow.openReminderWindowIfRequired();
     }
 
     void show() {
@@ -182,23 +178,6 @@ public class WelcomeScreen extends UiPart<Region> {
             prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
             mainWindow.hide();
             mainWindow.releaseResources();
-        }
-    }
-
-    //@@author 17navasaw
-
-    /**
-     * Shows reminder pop-up if there exists upcoming activities the next day.
-     */
-    private void openReminderWindowIfRequired() {
-        ReadOnlyAddressBook addressBook = model.getAddressBook();
-        ObservableList<Schedule> schedulesToRemindList = addressBook.getScheduleToRemindList();
-        for (Schedule schedule : schedulesToRemindList) {
-            logger.info("Schedules for reminder: " + schedule);
-        }
-        if (!schedulesToRemindList.isEmpty()) {
-            ReminderWindow reminderWindow = new ReminderWindow(schedulesToRemindList);
-            reminderWindow.show();
         }
     }
 }
