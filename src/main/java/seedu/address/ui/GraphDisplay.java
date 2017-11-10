@@ -17,6 +17,7 @@ import seedu.address.commons.events.ui.NewGraphDisplayEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.graph.GraphWrapper;
 
+//@@author joanneong
 /**
  * Integrating GraphStream graph display into the application.
  */

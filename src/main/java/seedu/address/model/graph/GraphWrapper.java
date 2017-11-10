@@ -24,7 +24,6 @@ import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.RelationshipDirection;
 import seedu.address.ui.GraphDisplay;
 
-//@@author wenmogu
 /**
  * This class is a wrapper class of SingleGraph class in GraphStream
  * It is used when creating a new SingleGraph when changes happen in the lastShownList
@@ -47,6 +46,7 @@ public class GraphWrapper {
     private final String nodeAttributeCe = "ce";
     private final String nodeAttributePerson = "Person";
 
+    //@@author wenmogu
     private GraphWrapper() {
         this.graph = new SingleGraph(graphId);
         initialiseRenderer();
@@ -72,6 +72,7 @@ public class GraphWrapper {
         return graph;
     }
 
+    //@@author joanneong
     /**
      * Returns the view attached to the viewer for the graph.
      */
@@ -79,6 +80,7 @@ public class GraphWrapper {
         return this.view;
     }
 
+    //@@author wenmogu
     /**
      * add an edge between two persons with direction specified
      */
@@ -127,7 +129,7 @@ public class GraphWrapper {
         return widestPath.getPath(toNode).getNodeCount();
     }
 
-
+    //@@author joanneong
     /**
      * Initialise advanced renderer for integrated graph display.
      */
@@ -148,6 +150,7 @@ public class GraphWrapper {
         rebuildNext = true;
     }
 
+    //@@author wenmogu
     public static GraphWrapper getInstance() {
         return instance;
     }
@@ -180,6 +183,7 @@ public class GraphWrapper {
         return graph;
     }
 
+    //@@author joanneong
     /**
      * Style each node in the integrated graph display
      */
@@ -189,6 +193,7 @@ public class GraphWrapper {
         layoutAlgorithm.setStabilizationLimit(0.95);
     }
 
+    //@@author wenmogu
     /**
      * Read all the edges from model and store into graph
      * @return
@@ -207,6 +212,7 @@ public class GraphWrapper {
         return graph;
     }
 
+    //@@author joanneong
     /**
      * Label edges in the integrated graph display
      */
@@ -236,6 +242,7 @@ public class GraphWrapper {
         edge.addAttribute("layout.weight", 5);
     }
 
+    //@@author wenmogu
     private String getNodeIdFromPerson(ReadOnlyPerson person) throws IllegalValueException {
         requireNonNull(person);
         int indexOfThePerson = filteredPersons.indexOf(person);
@@ -334,6 +341,7 @@ public class GraphWrapper {
         this.filteredPersons = null;
     }
 
+    //@@author Xenonym
     private void resetGraph() {
         graph.clear();
         initiateGraphNodes();

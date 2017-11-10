@@ -39,6 +39,7 @@ public class GuiRobot extends FxRobot {
         sleep(PAUSE_FOR_HUMAN_DELAY_MILLISECONDS);
     }
 
+    //@@author joanneong
     /**
      * Pauses execution for a given period of time to allow auto-completion popup to execute.
      */

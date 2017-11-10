@@ -161,6 +161,7 @@ public class MainWindow extends UiPart<Region> {
         FxViewUtil.setStageIcon(primaryStage, iconSource);
     }
 
+    //@@author joanneong
     /**
      * Sets the default size based on default values.
      */
