@@ -15,6 +15,7 @@ import seedu.address.commons.events.ui.ToggleSearchBoxStyle;
 import seedu.address.commons.events.ui.ToggleToAliasViewEvent;
 import seedu.address.commons.events.ui.ToggleToAllPersonViewEvent;
 import seedu.address.commons.events.ui.ToggleToTaskViewEvent;
+import seedu.address.commons.events.ui.ValidResultDisplayEvent;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -92,6 +93,7 @@ public class SortFindPanel extends UiPart<Region> {
         try {
             CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + nameItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort name using sort menu");
         }
@@ -105,6 +107,7 @@ public class SortFindPanel extends UiPart<Region> {
         try {
             CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + phoneItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort phone using sort menu");
         }
@@ -118,6 +121,7 @@ public class SortFindPanel extends UiPart<Region> {
         try {
             CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + emailItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort email using sort menu");
         }
@@ -131,6 +135,7 @@ public class SortFindPanel extends UiPart<Region> {
         try {
             CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + addressItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort address using sort menu");
         }
