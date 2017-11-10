@@ -1,12 +1,15 @@
 package seedu.address.logic.parser;
 
-import org.junit.Test;
-import seedu.address.logic.commands.ArrangeCommand;
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
+import org.junit.Test;
+
+import seedu.address.logic.commands.ArrangeCommand;
+
+
+//@@author YuchenHe98
 public class ArrangeCommandParserTest {
     private ArrangeCommandParser parser = new ArrangeCommandParser();
 
