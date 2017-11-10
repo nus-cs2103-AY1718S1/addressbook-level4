@@ -4,7 +4,6 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_COLLEAGUE;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLLEAGUE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -38,13 +37,13 @@ public class TagCommandSystemTest extends AddressBookSystemTest {
          * each field -> edited
          */
         Index[] indices = new Index[]{INDEX_FIRST_PERSON, INDEX_SECOND_PERSON};
-        String command = " " + TagCommand.COMMAND_WORD + "  " + indices[0].getOneBased() + ",   " +
-                indices[1].getOneBased() + "   " + TAG_DESC_HUSBAND + "   " + TAG_DESC_COLLEAGUE + " ";
-        ReadOnlyPerson personToTag = getModel().getFilteredPersonList().get(indices[0].getZeroBased());
-        Person taggedPerson = new PersonBuilder(personToTag).addTags(VALID_TAG_HUSBAND, VALID_TAG_COLLEAGUE).build();
+        String command = " " + TagCommand.COMMAND_WORD + "  " + indices[0].getOneBased() + "  ,   " +
+                indices[1].getOneBased() + "   " + TAG_DESC_HUSBAND + "   ";
+        ReadOnlyPerson personToTag = model.getFilteredPersonList().get(indices[0].getZeroBased());
+        Person taggedPerson = new PersonBuilder(personToTag).addTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, indices[0], taggedPerson);
 
-                /* --------------------- Performing edit operation while a person card is selected -------------------------- */
+        /* --------------------- Performing tag operation while a person card is selected -------------------------- */
 
         /* Case: selects first card in the person list, tag a person -> tagged, card selection remains unchanged but
          * browser url changes

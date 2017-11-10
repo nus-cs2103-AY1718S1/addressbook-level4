@@ -78,12 +78,13 @@ public class PersonBuilder {
      * Parses the {@code tags} into a {@code Set<Tag>} and adds it to the {@code Person} that we are building along
      * the old tags.
      */
-    public PersonBuilder addTags(String... tags) {
+    public PersonBuilder addTags(String ... tags) {
         try {
             Set<Tag> allTags = new HashSet<>();
-            allTags.addAll(this.person.getTags());
             allTags.addAll(SampleDataUtil.getTagSet(tags));
+            allTags.addAll(this.person.getTags());
             this.person.setTags(allTags);
+           // System.out.println(this.person.getName() + " " + this.person.getTags());
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tags are expected to be unique.");
         }
