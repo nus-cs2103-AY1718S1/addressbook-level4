@@ -2,10 +2,13 @@ package seedu.address.bot;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
+import static seedu.address.bot.ArkBot.BOT_MESSAGE_FAILURE;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_SUCCESS;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.Optional;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Logger;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -19,9 +22,11 @@ import org.telegram.abilitybots.api.db.MapDBContext;
 import org.telegram.abilitybots.api.objects.EndUser;
 import org.telegram.abilitybots.api.objects.MessageContext;
 import org.telegram.abilitybots.api.sender.MessageSender;
+import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import seedu.address.TestApp;
 import seedu.address.bot.parcel.ParcelParser;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -34,6 +39,7 @@ public class ArkBotTest {
     private static final String BOT_DEMO_JOHN = "#/RR000000000SG n/John Doe p/98765432 e/johnd@example.com "
             + "a/John street, block 123, #01-01 S123121 d/01-01-2001 s/DELIVERING";
     private static final String SAMPLE_ADD_COMMAND = BOT_DEMO_JOHN;
+    private static final Logger logger = LogsCenter.getLogger(ArkBotTest.class);
 
     public static final int USER_ID = 1337;
     public static final long CHAT_ID = 1337L;
@@ -47,6 +53,7 @@ public class ArkBotTest {
     private TestApp testApp;
     private SystemTestSetupHelper setupHelper;
     private ParcelParser parcelParser;
+    private Optional<Message> lastKnownMessage;
 
     @BeforeClass
     public static void setupBeforeClass() {
@@ -107,15 +114,40 @@ public class ArkBotTest {
         /*================================== LIST COMMAND SUCCESS TEST ====================================*/
 
         mockedUpdate = mock(Update.class);
-        context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID, SAMPLE_ADD_COMMAND);
+        context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID);
 
         bot.listCommand().action().accept(context);
         ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
         String message = bot.parseDisplayParcels(bot.formatParcelsForBot(parcels));
+        logger.info("Listing parcels: \n" + message);
+        waitForRunLater();
+
+        // We verify that the sender was called only ONCE and listed parcels
+        lastKnownMessage = Mockito.verify(sender, times(1)).send(message, CHAT_ID);
+
+        /*================================== DELETE COMMAND SUCCESS TEST ====================================*/
+
+        mockedUpdate = mock(Update.class);
+        context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID, "1");
+
+        bot.deleteCommand().action().accept(context);
+        message = bot.parseDisplayParcels(bot.formatParcelsForBot(parcels));
         waitForRunLater();
 
         // We verify that the sender was called only ONCE and sent add command success.
-        Mockito.verify(sender, times(1)).send(String.format(message), CHAT_ID);
+        Mockito.verify(sender, times(1)).send(message, CHAT_ID);
+
+        /*================================== DELETE COMMAND FAILURE TEST ====================================*/
+
+        mockedUpdate = mock(Update.class);
+        context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID,
+                (model.getUncompletedParcelList().size() + 1) + "");
+
+        bot.deleteCommand().action().accept(context);
+        waitForRunLater();
+
+        // We verify that the sender was called only ONCE and sent add command success.
+        Mockito.verify(sender, times(1)).send(BOT_MESSAGE_FAILURE, CHAT_ID);
 
     }
 

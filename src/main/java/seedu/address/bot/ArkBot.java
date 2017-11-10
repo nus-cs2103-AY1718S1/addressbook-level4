@@ -158,14 +158,21 @@ public class ArkBot extends AbilityBot {
                         logic.execute(DeleteCommand.COMMAND_WORD + " "
                                 + combineArguments(ctx.arguments()));
                         ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
-                        EditMessageText editedText =
-                                new EditMessageText().setChatId(ctx.chatId())
-                                                     .setMessageId(lastKnownMessage.get().getMessageId())
-                                                     .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
-                        sender.editMessageText(editedText);
+                        if (lastKnownMessage.isPresent()) {
+                            EditMessageText editedText =
+                                    new EditMessageText().setChatId(ctx.chatId())
+                                            .setMessageId(lastKnownMessage.get().getMessageId())
+                                            .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
+                            sender.editMessageText(editedText);
+                        } else {
+                            sender.send(parseDisplayParcels(formatParcelsForBot(parcels)),
+                                    ctx.chatId());
+                        }
                     } catch (CommandException | ParseException | TelegramApiException e) {
                         sender.send(BOT_MESSAGE_FAILURE,
                                 ctx.chatId());
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
                     }
                 }))
                 .build();
