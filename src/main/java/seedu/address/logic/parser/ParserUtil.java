@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static java.util.Objects.requireNonNull;
 
 import java.nio.file.InvalidPathException;
@@ -70,11 +71,10 @@ public class ParserUtil {
      * @throws IllegalValueException if there is no specified filepath.
      * @throws InvalidPathException if filepath is illegal
      */
-
     public static String parseFilePath(String args) throws IllegalValueException, InvalidPathException {
         final Matcher matcher = PRINT_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
-            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+            throw new IllegalValueException(MESSAGE_INVALID_COMMAND_FORMAT);
         }
         final Matcher matcherFilePath = PRINT_ARGS_ILLEGAL.matcher(args.trim());
         if(!matcherFilePath.matches()) {
