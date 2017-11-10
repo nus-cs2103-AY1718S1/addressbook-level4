@@ -33,12 +33,12 @@ public class FbCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToSearchFor = lastShownList.get(targetIndex.getZeroBased());
+        ReadOnlyPerson personToSearch = lastShownList.get(targetIndex.getZeroBased());
 
-        String fbUrl = model.getFbUrl(personToSearchFor);
+        String fbUrl = model.getFbUrl(personToSearch);
         model.openUrl(fbUrl);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, personToSearchFor));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, personToSearch));
     }
 
     @Override
@@ -226,12 +226,13 @@ public class FbCommandParser implements Parser<FbCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public FbCommand parse(String args) throws ParseException {
+
         try {
             Index index = ParserUtil.parseIndex(args);
             return new FbCommand(index);
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX));
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FbCommand.MESSAGE_USAGE));
         }
     }
 }
@@ -288,22 +289,23 @@ public class FindTagCommandParser implements Parser<FindTagCommand> {
 ###### /java/seedu/address/logic/parser/person/GMapCommandParser.java
 ``` java
 /**
- * Parses input arguments and creates a new EmailCommand object
+ * Parses input arguments and creates a new GMapCommand object
  */
 public class GMapCommandParser implements Parser<GMapCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the EmailCommand
-     * and returns an EmailCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the GMapCommand
+     * and returns an GMapCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public GMapCommand parse(String args) throws ParseException {
+
         try {
             Index index = ParserUtil.parseIndex(args);
             return new GMapCommand(index);
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX));
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, GMapCommand.MESSAGE_USAGE));
         }
     }
 }
