@@ -133,10 +133,11 @@ public class AddressBookParser {
                 || commandWord.equalsIgnoreCase(ReplyCommand.COMMAND_WORDVAR_NO)) {
             return new ReplyCommand(commandWord);
 
+            //@@author taojiashu
         } else if (commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD_1)
                 || commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD_2)) {
             return new FavouriteCommandParser().parse(arguments);
-
+            //@@author taojiashu
         } else if (commandWord.equalsIgnoreCase(ShowFavouriteCommand.COMMAND_WORD_1)
                 || commandWord.equalsIgnoreCase(ShowFavouriteCommand.COMMAND_WORD_2)) {
             return new ShowFavouriteCommand();
