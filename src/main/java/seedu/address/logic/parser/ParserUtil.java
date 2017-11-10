@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.FileUtil.isFileExists;
 
 import java.io.File;
 import java.util.Collection;
@@ -48,6 +49,7 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author chrisboo
     /**
      * Parse {@code address} into a {@code File} and returns it. Leading and trailing whitespaces will be trimmed.
      *
@@ -57,12 +59,13 @@ public class ParserUtil {
         requireNonNull(address);
         String trimmedAddress = address.trim();
         File file = new File(trimmedAddress);
-        if (file.exists() && !file.isDirectory()) {
+        if (isFileExists(file)) {
             return file;
         } else {
             throw new IllegalValueException("Invalid file!");
         }
     }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
