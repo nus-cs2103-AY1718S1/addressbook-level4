@@ -1,5 +1,5 @@
 = Soh Hong Hwee - Project Portfolio
-ifdef::env-github,env-browser[:outfilesuffix: .html]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
