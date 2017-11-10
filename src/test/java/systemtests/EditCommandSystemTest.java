@@ -178,7 +178,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                         + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS);
 
         /* Case: edit a person with new values same as another person's values -> rejected */
-        //executeCommand(PersonUtil.getAddCommand(BOB));
+        /*executeCommand(PersonUtil.getAddCommand(BOB));
         getModel().addPerson(BOB);
         assertTrue(getModel().getAddressBook().getPersonList().contains(BOB));
         index = INDEX_FIRST_PERSON;
