@@ -39,7 +39,8 @@ public class AddRemarkCommandTest {
 
         AddRemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, "Some remark");
 
-        String expectedMessage = String.format(AddRemarkCommand.MESSAGE_ADD_REMARK_SUCCESS, editedPerson);
+        String expectedMessage = String.format(AddRemarkCommand.MESSAGE_ADD_REMARK_SUCCESS, "\nRemarks: "
+                + editedPerson.getRemark());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
@@ -55,7 +56,8 @@ public class AddRemarkCommandTest {
                 .withRemark("Some remark").build();
         AddRemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, "Some remark");
 
-        String expectedMessage = String.format(AddRemarkCommand.MESSAGE_ADD_REMARK_SUCCESS, editedPerson);
+        String expectedMessage = String.format(AddRemarkCommand.MESSAGE_ADD_REMARK_SUCCESS, "\nRemarks: "
+                + editedPerson.getRemark());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
