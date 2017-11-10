@@ -110,7 +110,7 @@ public class CombinePanel extends UiPart<Region> {
             noteBox.setVisible(false);
         } else if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.LOCATION)) {
             timeBox.setVisible(false);
-            browser.setVisible(true);
+            browser.setVisible(false);
             noteBox.setVisible(false);
         } else {
             timeBox.setVisible(false);
