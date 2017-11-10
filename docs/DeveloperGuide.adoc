@@ -914,9 +914,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add relationships between people |show that two persons know each other
 
-|`* *` |user |add link:#relationship-name[names to relationship] between people |show that two persons know each other via a specific method
+|`* *` |user |add link:#named-relationship[named relationships] between people |show that two persons know each other via a specific method
 
-|`* *` |user |add link:#confidence-estimate[confidence estimate] to a relationship |differentiate between verified and unverified pieces of information
+|`* *` |user |add link:#confidence-estimate[confidence estimate] to a person's attributes |differentiate between verified and unverified pieces of information
+
+|`*` |user |add remarks about a relationship between people |record detailed information about the relationship between two people
+
+|`*` |user with many persons in the address book |add profile pictures to each person |distinguish between people with the same name
 
 4+| Read operations
 
@@ -925,6 +929,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |see the network of relationships between people |visualise connections and groups in the network
 
 |`* *` |user |see the history of commands I have typed |keep track of what I have done to my address book
+
+|`*` |user |see the people a person is related to |find people related to a person
+
+|`*` |user |display relationships only above a certain link:#confidence-estimate[confidence estimate] |find a more confident way to know a person
 
 4+| Find operations
 
@@ -944,6 +952,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |update a person's details |update a person's details without having to create a new contact
 
+|`* *` |user |update link:#name[name of the relationship] of a relationship |show that two persons know each other via a specific method
+
+|`* *` |user |update link:#confidence-estimate[confidence estimate] of a relationship |differentiate between verified and unverified pieces of information
+
+|`*` |user |change the colour of the network |personalise my address book
+
 4+| Delete operations
 
 |`* * *` |user |delete a person |remove entries that I no longer need
@@ -954,6 +968,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |cautious user |clear my history |hide my previous commands from later users
 
+|`*` |user |remove link:#confidence-estimate[confidence estimate] from a person's attributes |remove unneeded confidence estimates
+
 4+| Other operations
 
 |`* * *` |careless user | undo the last command that I made | revert any mistakes
@@ -962,6 +978,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |advanced user |type shorter link:#command-alias[command aliases] |do operations faster
 
+|`*` |user |set a password for my address book |keep my address book private
+
+|`*` |user |share my address book with other people |
+
+|`*` |user |have the program autocorrect my commands |input information correctly
 |=======================================================================
 
 [appendix]
