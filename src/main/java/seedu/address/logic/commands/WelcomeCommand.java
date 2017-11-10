@@ -13,10 +13,11 @@ public class WelcomeCommand extends Command {
 
     public static final String COMMAND_ALIAS = "w";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + "(alias: " + COMMAND_ALIAS + ")"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
             + ": Enables / disables the welcome screen upon running ConTag.\n"
             + "Parameters: "
-            + "[ENABLING_KEYWORD] (enable / disable)";
+            + "[ENABLING_KEYWORD] (enable / disable)\n"
+            + MESSAGE_GET_MORE_HELP;
 
     public static final String WELCOME_SCREEN_MESSAGE = "Welcome window is now %1$s.";
 
