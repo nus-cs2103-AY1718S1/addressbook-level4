@@ -28,8 +28,6 @@ public class ClearCommand extends UndoableCommand {
         this.previousAddressBook = new AddressBook(model.getAddressBook());
         this.previousEventList = new EventList(model.getEventList());
         model.resetData(new AddressBook(), new EventList());
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
@@ -37,15 +35,11 @@ public class ClearCommand extends UndoableCommand {
     protected void undo() {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook, previousEventList);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 
     @Override
     protected void redo() {
         requireNonNull(model);
         model.resetData(new AddressBook(), new EventList());
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 }
