@@ -973,16 +973,18 @@ Figure 5.8.2 What the user sees
 === Mode Switching Mechanism
 
 There are `two` modes in The Myth's Book which is firstly, `Persons Mode` which is activated by typing `list`,
-and secondly, `Events Mode` which is activated by typing `events`. +
-The mode switching mechanism allows users to type in different specific commands based on the mode
+and secondly, `Events Mode` which is activated by typing `events`. The mode switching mechanism allows users to type in different specific commands based on the mode
 that is being used in the software.
 
 The commands are categorised into mainly three groups:
+
 * `Person Commands` such as the `AddCommand` or `EditCommand`.
 * `Event Commands` such as the `AddEventCommand` or `DeleteEventCommand`.
 * `General Commands` such as the `HelpCommand` or `SwitchThemeCommand`.
 
-The `Person Commands` and `Event Commands` commands are controlled by a boolean variable `personListActivated`. +
+The `Person Commands` and `Event Commands` commands are controlled by a boolean variable `personListActivated`
+which is initially set as true
+where system is in `Persons Mode` at the start. +
 The `General Commands` is not controlled by the boolean variable `personListActivated` and is able to be executed in both modes.
 `Person Commands` can be used when `personListActivated` is `true` while `Event Commands` can be used when `personListActivated` is `false`.
 
@@ -1008,9 +1010,9 @@ In order for user to switch back from `Events Mode` to `Persons Mode`:
 
 . User wants to add a new contact so user inputs `add n/Dion Poh p/63425234 e/dionPoh@hotmail.com`.
 . User switches to `Persons Mode` by inputting `list` which would turn `personListActivated` to `true`.
-. User is now able to use `Person Commands` such as the `AddCommand` or `EditCommand`.
+. User is now able to use `Person Commands` such as the `AddCommand`.
 . User then uses the `AddCommand` and inputs `add n/Dion Poh p/63425234 e/dionPoh@hotmail.com`.
-. Input of user is successfully parse as an argument through the `AddressBookParser` and then through the `AddEventCommandParser` and adds a new contact successfully.
+. Input of user is successfully parse as an argument through the `AddressBookParser` and then through the `AddCommandParser` and adds a new contact successfully.
 
 
 Code of `AddressBookParser` class and how it executes:
