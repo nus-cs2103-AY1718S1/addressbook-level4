@@ -2,6 +2,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_FILEPATH;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -30,10 +31,12 @@ public class PrintCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Saves the addressbook into a .txt file named by you for your viewing.\n"
             + "Example: " + COMMAND_WORD + " filename\n"
-            + "file can then be found in the in data/ folder as data/filename.txt";
+            + "file can then be found in the in data/ folder as data/filename.txt\n"
+            + MESSAGE_INVALID_FILEPATH;
 
     public static final String MESSAGE_SUCCESS = "Address Book has been saved!\n"
-            + "Find your Address Book in the %1$s.txt file you created in data/%1$s.txt.";
+            + "Find your Address Book in the %1$s.txt file you created "
+            + "in the same directory as the application file path!";
 
     private final String fileName;
 
@@ -65,7 +68,8 @@ public class PrintCommand extends Command {
             UniqueLifeInsuranceList insurances = person.getLifeInsurances();
             int insuranceIndex = 1;
             for (ReadOnlyInsurance insurance: insurances) {
-                lines.add("Insurance Policy " + insuranceIndex + ": =========");
+                lines.add("Insurance Policy " + insuranceIndex
+                        + ": " + insurance.getInsuranceName());
                 String owner = insurance.getOwner().getName();
                 String insured = insurance.getInsured().getName();
                 String beneficiary = insurance.getBeneficiary().getName();
@@ -79,7 +83,8 @@ public class PrintCommand extends Command {
                         + "Signing Date: " + signingDate + "\n"
                         + "Expiry Date: " + expiryDate
                 );
-                lines.add("===========================\n");
+                //lines.add("===========================================\n");
+                lines.add("\n");
                 insuranceIndex++;
             }
             lines.add("--------End of " + person.getName().fullName + "'s profile");
@@ -87,7 +92,7 @@ public class PrintCommand extends Command {
             personIndex++;
         }
 
-        Path file = Paths.get("data/" + fileName + ".txt");
+        Path file = Paths.get(fileName + ".txt");
         try {
             Files.write(file, lines, Charset.forName("UTF-8"));
         } catch (IOException ioe) {
