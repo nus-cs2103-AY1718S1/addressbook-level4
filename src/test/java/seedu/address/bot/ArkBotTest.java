@@ -3,7 +3,12 @@ package seedu.address.bot;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_SUCCESS;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.concurrent.Semaphore;
+
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -16,9 +21,13 @@ import org.telegram.abilitybots.api.objects.MessageContext;
 import org.telegram.abilitybots.api.sender.MessageSender;
 import org.telegram.telegrambots.api.objects.Update;
 import seedu.address.TestApp;
+import seedu.address.bot.parcel.ParcelParser;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import systemtests.SystemTestSetupHelper;
 
 public class ArkBotTest {
@@ -37,6 +46,7 @@ public class ArkBotTest {
     private Logic logic;
     private TestApp testApp;
     private SystemTestSetupHelper setupHelper;
+    private ParcelParser parcelParser;
 
     @BeforeClass
     public static void setupBeforeClass() {
@@ -55,33 +65,65 @@ public class ArkBotTest {
         sender = mock(MessageSender.class);
         endUser = EndUser.endUser(USER_ID, "Abbas", "Abou Daya", "addo37");
         bot.setSender(sender);
+        parcelParser = new ParcelParser();
+
     }
 
     @Test
-    public void canSayHelloWorld() {
+    public void canSayHelloWorld() throws InterruptedException, ParseException, DuplicateParcelException {
         Update mockedUpdate = mock(Update.class);
-        EndUser endUser = EndUser.endUser(USER_ID, "Abbas", "Abou Daya", "addo37");
         MessageContext context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID);
 
         bot.saysHelloWorld().action().accept(context);
 
         // We verify that the sender was called only ONCE and sent Hello World to CHAT_ID
         Mockito.verify(sender, times(1)).send("Hello World!", CHAT_ID);
-    }
 
+        /*================================== ADD COMMAND SUCCESS TEST ====================================*/
 
-    @Test
-    public void canAddCommand() {
-        Model model = testApp.getModel();
-        Update mockedUpdate = mock(Update.class);
-        EndUser endUser = EndUser.endUser(USER_ID, "Abbas", "Abou Daya", "addo37");
-        MessageContext context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID, SAMPLE_ADD_COMMAND);
+        mockedUpdate = mock(Update.class);
+        context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID, SAMPLE_ADD_COMMAND);
 
         bot.addCommand().action().accept(context);
+        model.addParcelCommand(parcelParser.parse(BOT_DEMO_JOHN));
+        waitForRunLater();
 
-        // We verify that the sender was called only ONCE and sent Hello World to CHAT_ID
+        // We verify that the sender was called only ONCE and sent add command success.
         Mockito.verify(sender, times(1)).send(String.format(BOT_MESSAGE_SUCCESS,
                 AddCommand.COMMAND_WORD), CHAT_ID);
+
+        /*================================== ADD COMMAND FAILURE TEST ====================================*/
+
+        mockedUpdate = mock(Update.class);
+        context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID, SAMPLE_ADD_COMMAND);
+
+        bot.addCommand().action().accept(context);
+        waitForRunLater();
+
+        // We verify that the sender was called only ONCE and sent add command failure.
+        Mockito.verify(sender, times(1)).send(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AddCommand.MESSAGE_USAGE), CHAT_ID);
+
+        /*================================== LIST COMMAND SUCCESS TEST ====================================*/
+
+        mockedUpdate = mock(Update.class);
+        context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID, SAMPLE_ADD_COMMAND);
+
+        bot.listCommand().action().accept(context);
+        ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
+        String message = bot.parseDisplayParcels(bot.formatParcelsForBot(parcels));
+        waitForRunLater();
+
+        // We verify that the sender was called only ONCE and sent add command success.
+        Mockito.verify(sender, times(1)).send(String.format(message), CHAT_ID);
+
+    }
+
+    public static void waitForRunLater() throws InterruptedException {
+        Semaphore semaphore = new Semaphore(0);
+        Platform.runLater(() -> semaphore.release());
+        semaphore.acquire();
+
     }
 
     @After

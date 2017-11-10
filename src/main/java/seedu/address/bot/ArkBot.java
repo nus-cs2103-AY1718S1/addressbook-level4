@@ -106,10 +106,8 @@ public class ArkBot extends AbilityBot {
                     try {
                         logic.execute(AddCommand.COMMAND_WORD + " "
                                 + combineArguments(ctx.arguments()));
-                        System.out.println("ADD ONE");
                         sender.send(String.format(BOT_MESSAGE_SUCCESS, AddCommand.COMMAND_WORD), ctx.chatId());
                     } catch (CommandException | ParseException e) {
-                        System.out.println("ADD TWO");
                         sender.send(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE),
                                 ctx.chatId());
                     }
@@ -356,7 +354,7 @@ public class ArkBot extends AbilityBot {
      * Filters the list of parcels to only show Name, Address and Phone number
      * attributed to each parcel.
      */
-    private ArrayList<DisplayParcel> formatParcelsForBot(ObservableList<ReadOnlyParcel> parcels) {
+    public ArrayList<DisplayParcel> formatParcelsForBot(ObservableList<ReadOnlyParcel> parcels) {
         ArrayList<DisplayParcel> toDisplay = new ArrayList<>();
 
         Iterator<ReadOnlyParcel> parcelIterator = parcels.iterator();
@@ -374,7 +372,7 @@ public class ArkBot extends AbilityBot {
     /**
      * Formats a list of Parcels to be displayed on ArkBot
      */
-    private String parseDisplayParcels(ArrayList<DisplayParcel> displayParcels) {
+    public String parseDisplayParcels(ArrayList<DisplayParcel> displayParcels) {
         if (displayParcels.size() == 0) {
             return "No parcels to be displayed.";
         } else {
