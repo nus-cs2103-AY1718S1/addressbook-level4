@@ -65,7 +65,7 @@ public class PersonDetailPanelHandle extends NodeHandle<Node> {
     }
 
     /**
-     * Update tags in person detail panel.
+     * Updates tags in person detail panel.
      */
     public void updateTags() {
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);

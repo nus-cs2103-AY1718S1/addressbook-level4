@@ -92,7 +92,7 @@ public class RemarkCommandTest {
     }
 
     /**
-     * Edit filtered list where index is larger than size of filtered list,
+     * Edits filtered list where index is larger than size of filtered list,
      * but smaller than size of rolodex.
      */
     @Test
