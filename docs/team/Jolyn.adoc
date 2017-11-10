@@ -45,7 +45,7 @@ include::../DeveloperGuide.adoc[leveloffset=2, tag=shortcut]
 
 ---
 
-include::../DeveloperGuide.adoc[leveloffset=2, tag=uiImprovements]
+include::../DeveloperGuide.adoc[leveloffset=1, tag=uiImprovements]
 
 ---
 
@@ -56,14 +56,14 @@ include::../DeveloperGuide.adoc[leveloffset=2, tag=uiImprovements]
 
 ---
 
-include::../DeveloperGuide.adoc[leveloffset=2, tag=detailPanelBehavior]
+include::../DeveloperGuide.adoc[leveloffset=1, tag=detailPanelBehavior]
 
 
 ==== Implementation
 
 ---
 
-include::../DeveloperGuide.adoc[leveloffset=2, tag=detailPanelImp]
+include::../DeveloperGuide.adoc[leveloffset=1, tag=detailPanelImp]
 
 ---
 

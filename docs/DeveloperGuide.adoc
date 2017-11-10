@@ -841,6 +841,7 @@ image::DetailPanelSequenceDiagram.png[width="800"]
 
 The information displayed on the panel is extracted from the `ReadOnlyPerson` that is returned by the `EventsCenter`.
 The details of the implementation can be seen from the following code snippets.
+
 [source, java]
 ----
 /**
@@ -852,7 +853,9 @@ private void showPersonDetails(ReadOnlyPerson person) {
     setTags(person);
 }
 ----
+
 The `showPersonDetails` method is called when a `PersonEditedEvent` is raised, which occurs when the user edits a person.
+
 [source,java]
 ----
 /**
@@ -890,6 +893,7 @@ The behavior of the panel is summarized in the table below.
 **Pros:** Less coupling. +
 **Cons:**  Higher implementation overhead to set up the bindings properly and
 difficult to enforce custom panel behaviour for specific user actions.
+// end::detailPanelImp[]
 
 // tag::uiImprovements[]
 === UI Improvements
@@ -965,7 +969,6 @@ private void updateKeyboardIcon() {
 }
 ----
 `pause` is a `PauseTransition` object, and `setOnFinished` takes in an event handler as its parameter.
-
 
 ==== Autoselection for Newly Added/Edited Person
 
