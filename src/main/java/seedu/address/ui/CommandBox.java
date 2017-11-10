@@ -144,7 +144,6 @@ public class CommandBox extends UiPart<Region> {
         if (numOfSpaces >= 2 && currentInput.charAt(currentInput.length() - 1) != ' '
                 && currentInput.charAt(currentInput.length() - 1) != BLACK_CIRCLE) {
             maskPasswordInput(currentInput);
-
         }
     }
 
@@ -166,8 +165,12 @@ public class CommandBox extends UiPart<Region> {
         // if user enters a new character, mask it with an asterisk
         if (currentMaskFromIndex <= maskFromIndex && maskFromIndex <= inputLength) {
             passwordFromInput += commandTextField.getText(maskFromIndex, inputLength);
-            commandTextField.replaceText(maskFromIndex, currentInput.length(), Character.toString(BLACK_CIRCLE));
-            maskFromIndex++;
+            StringBuilder maskedPasswordBuilder = new StringBuilder();
+            for (int i = maskFromIndex; i < currentInput.length(); i++) {
+                maskedPasswordBuilder.append(BLACK_CIRCLE);
+            }
+            commandTextField.replaceText(maskFromIndex, currentInput.length(), maskedPasswordBuilder.toString());
+            maskFromIndex = currentInput.length();
         }
     }
 
