@@ -18,6 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
+import seedu.address.model.group.ReadOnlyGroup;
+import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
@@ -76,6 +78,13 @@ public class TypicalPersons {
      */
     public static AddressBook getTypicalAddressBook() {
         AddressBook ab = new AddressBook();
+        addPersonsToAddressBook(ab);
+        TypicalGroups.addGroupsToAddressBook(ab);
+
+        return ab;
+    }
+
+    private static void addPersonsToAddressBook(AddressBook ab) {
         for (ReadOnlyPerson person : getTypicalPersons()) {
             try {
                 ab.addPerson(person);
@@ -83,7 +92,6 @@ public class TypicalPersons {
                 assert false : "not possible";
             }
         }
-        return ab;
     }
 
     public static List<ReadOnlyPerson> getTypicalPersons() {

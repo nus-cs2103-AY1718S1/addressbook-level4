@@ -36,6 +36,10 @@ public class Group implements ReadOnlyGroup {
         return groupName.get();
     }
 
+    public void setGroupName(GroupName groupName) {
+        this.groupName.set(groupName);
+    }
+
     @Override
     public ObjectProperty<List<ReadOnlyPerson>> membersProperty() {
         return groupMembers;
@@ -44,6 +48,10 @@ public class Group implements ReadOnlyGroup {
     @Override
     public List<ReadOnlyPerson> getGroupMembers() {
         return groupMembers.get();
+    }
+
+    public void setGroupMembers(List<ReadOnlyPerson> groupMembersList) {
+        this.groupMembers.set(groupMembersList);
     }
 
     @Override
