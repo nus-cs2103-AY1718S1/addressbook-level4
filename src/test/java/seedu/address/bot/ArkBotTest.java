@@ -32,6 +32,7 @@ import seedu.address.bot.parcel.ParcelParser;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -211,6 +212,17 @@ public class ArkBotTest {
         ModelHelper.setFilteredList(model, BENSON, DANIEL, HOON);
         parcels = model.getUncompletedParcelList();
         message = bot.parseDisplayParcels(bot.formatParcelsForBot(parcels));
+        bot.findCommand().action().accept(context);
+        waitForRunLater();
+
+        // We verify that the sender was called only ONCE and sent add command success.
+        Mockito.verify(sender, times(1)).send(message, CHAT_ID);
+
+        /*================================== FIND COMMAND FAILURE TEST ====================================*/
+
+        mockedUpdate = mock(Update.class);
+        context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID);
+        message = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
         bot.findCommand().action().accept(context);
         waitForRunLater();
 

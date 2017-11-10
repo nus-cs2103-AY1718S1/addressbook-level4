@@ -1,6 +1,5 @@
 package seedu.address.bot.parcel;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERY_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -15,7 +14,6 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.ParserUtil;
@@ -37,6 +35,8 @@ import seedu.address.model.tag.Tag;
  */
 public class ParcelParser {
 
+    public static final String PARCEL_PARSER_ERROR = "Invalid parcel format!";
+
     /**
      * Parse ia a method to parse a String containing the details of a parcel into a ReadOnlyParcel
      * @param args represent the details of the parcels with the prefixes.
@@ -49,8 +49,7 @@ public class ParcelParser {
                         PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_DELIVERY_DATE, PREFIX_STATUS, PREFIX_TAG);
         if (!arePrefixesPresent(argMultimap, PREFIX_TRACKING_NUMBER, PREFIX_NAME, PREFIX_ADDRESS,
                 PREFIX_DELIVERY_DATE)) {
-            throw new seedu.address.logic.parser.exceptions.ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            throw new seedu.address.logic.parser.exceptions.ParseException(PARCEL_PARSER_ERROR);
         }
 
         try {

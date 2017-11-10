@@ -416,9 +416,9 @@ public class ArkBot extends AbilityBot {
                         QRcodeAnalyser qrca = new QRcodeAnalyser(picture);
                         ParcelParser pp = new ParcelParser();
                         try {
-                            System.out.println(qrca.getDecodedText());
+                            logger.info("The decoded text is: " + qrca.getDecodedText());
                             ReadOnlyParcel retrievedParcel = pp.parse(qrca.getDecodedText());
-                            System.out.println(retrievedParcel);
+                            logger.info("The retrieved parcel is: " + retrievedParcel);
                             if (retrievedParcel.equals(null)) {
                                 sender.send("Sorry, I didn't seem to understand your image. Please try again.",
                                         ctx.chatId());
@@ -446,7 +446,6 @@ public class ArkBot extends AbilityBot {
                                         ctx.chatId());
                             }
                         } catch (ParseException | CommandException e) {
-                            e.printStackTrace();
                             sender.send(BOT_MESSAGE_FAILURE, ctx.chatId());
                         } catch (TelegramApiException e) {
                             e.printStackTrace();
@@ -454,7 +453,6 @@ public class ArkBot extends AbilityBot {
                     }
                 })).build();
     }
-
 
     /* The following three methods are from https://github.com/rubenlagus/TelegramBots/wiki/FAQ#how_to_get_picture */
 
@@ -544,10 +542,5 @@ public class ArkBot extends AbilityBot {
     @VisibleForTesting
     void setSender(MessageSender sender) {
         this.sender = sender;
-    }
-
-    @VisibleForTesting
-    MessageSender getSender() {
-        return this.sender;
     }
 }
