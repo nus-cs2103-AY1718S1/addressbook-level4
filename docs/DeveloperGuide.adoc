@@ -105,9 +105,9 @@ When you are ready to start coding,
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1: Architecture Diagram_
+_Figure 3.1.1: Architecture Diagram_
 
-The *_Architecture Diagram_* _(Figure 2.1.1)_ given above explains the high-level design of the App. Given below is a quick overview of each component:
+The *_Architecture Diagram_* _(Figure 3.1.1)_ given above explains the high-level design of the App. Given below is a quick overview of each component:
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, you can modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
@@ -139,18 +139,18 @@ For example, the `Logic` component defines it's API in the `Logic.java` interfac
 [discrete]
 ==== Events-Driven nature of the design
 
-The *_Sequence Diagram_* _(Figure 2.1.2)_ below shows how the components interact using `EventsCenter` for the scenario where the user issues the command `delete 1`.
+The *_Sequence Diagram_* _(Figure 3.1.2)_ below shows how the components interact using `EventsCenter` for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.2: Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.2: Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 The `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below _(Figure 2.1.3)_ shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+The diagram below _(Figure 3.1.3)_ shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3: Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3: Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 The event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -162,7 +162,7 @@ The sections below give you more details of each component.
 ==== UI component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1: Structure of the UI Component_
+_Figure 3.2.1: Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -178,33 +178,33 @@ The `UI` component:
 
 ==== Logic component
 
-The diagrams _(Figure 2.2.2.1 to Figure 2.2.2.3)_ given below show the structure of whole logic component, and structure of commands in details. +
+The diagrams _(Figure 3.2.2.1 to Figure 3.2.2.3)_ given below show the structure of whole logic component, and structure of commands in details. +
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.2.2.1: Structure of the Logic Component_
+_Figure 3.2.2.1: Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.2.2.2: Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 3.2.2.2: Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 3.2.2.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-Figure 2.2.2.1 shows the structure of the `Logic` component. The `LogicManager` firstly calls the `AddressBookParser` to parse the user input.
+Figure 3.2.2.1 shows the structure of the `Logic` component. The `LogicManager` firstly calls the `AddressBookParser` to parse the user input.
 
-This results in a `Command` object which is executed by the `LogicManager`. Then, the command execution can affect the `Model` (e.g. adding a person) and/or raise events. And the result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+This results in a `Command` object which is executed by the `LogicManager`. Then, the command execution can affect the `Model` (e.g. adding a person) and/or raise events. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the *_Sequence Diagram_* _(Figure 2.2.2.3)_ for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Given below is the *_Sequence Diagram_* _(Figure 3.2.2.3)_ for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.2.2.3: Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.2.2.3: Interactions Inside the Logic Component for the `delete 1` Command_
 
 // tag::model[]
 ==== Model component
 
-The following diagram _(Figure 2.2.3)_ shows the class structure of the Model component.
+The following diagram _(Figure 3.2.3)_ shows the class structure of the Model component.
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.2.3: Structure of the Model Component_
+_Figure 3.2.3: Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -230,19 +230,19 @@ In detail, the `AddressBook` and the `EventList` are respectively responsible fo
 ==== Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.2.4: Structure of the Storage Component_
+_Figure 3.2.4: Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The diagram _(Figure 2.2.4)_ above shows the structure of the `Storage` component.
+The diagram _(Figure 3.2.4)_ above shows the structure of the `Storage` component.
 The `StorageManager` handles the saving and loading of data for both `AddressBookStorage` and `EventStorage`.
 `XmlSerializableAddressBook` and `XmlSerializableEventStorage` handle the conversion from Java to Xml format using `XmlAdaptedPerson`, `XmlAdaptedEvent` and `XmlAdaptedTag`.
 
 The `Storage` component:
 
-* Saves `UserPref` objects in json format and read it back.
-* Saves the Address Book data in xml format and read it back.
-* SaveS event storage data in xml format and read it back.
+* Saves `UserPref` objects in json format and reads it back.
+* Saves the Address Book data in xml format and reads it back.
+* Saves event storage data in xml format and reads it back.
 
 === Common classes
 
@@ -262,9 +262,9 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram _(Figure 3.1.1.1)_ shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 3.1.1.1: Structure of commands_
+_Figure 4.1.1.1: Structure of commands_
 
-As you can see from the diagram _(Figure 3.1.1.1)_, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram _(Figure 4.1.1.1)_, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of Planno before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -303,33 +303,33 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command). This is shown in the image _(Figure 3.1.1.2)_ below.
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command). This is shown in the image _(Figure 4.1.1.2)_ below.
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
-_Figure 3.1.1.2: undo example part 1_
+_Figure 4.1.1.2: undo example part 1_
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person. This is show in the image _(Figure 3.1.1.3)_ below.
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person. This is show in the image _(Figure 4.1.1.3)_ below.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
-_Figure 3.1.1.3: undo example part 2_
+_Figure 4.1.1.3: undo example part 2_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed. This is shown in the image _(Figure 3.1.1.4)_ below.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed. This is shown in the image _(Figure 4.1.1.4)_ below.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
-_Figure 3.1.1.4: undo example part 3_
+_Figure 4.1.1.4: undo example part 3_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
-The following *_sequence diagram_* _(Figure 3.1.1.5)_ shows how the undo operation works:
+The following *_sequence diagram_* _(Figure 4.1.1.5)_ shows how the undo operation works:
 
 image::UndoRedoSequencediagram.png[width="800"]
-_Figure 3.1.1.5: undo sequential diagram_
+_Figure 4.1.1.5: undo sequential diagram_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -339,17 +339,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow). This is shown in the image _(Figure 3.1.1.6)_ below.
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
-_Figure 3.1.1.6: redo example part 1_
+_Figure 4.1.1.6: redo example part 1_
 
-Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution. This is shown in the image _(Figure 3.1.1.7)_ below.
+Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution. This is shown in the image _(Figure 4.1.1.7)_ below.
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
-_Figure 3.1.1.7: redo example part 2_
+_Figure 4.1.1.7: redo example part 2_
 
-The following *_activity diagram_* _(Figure 3.1.1.8)_ summarize what happens inside the `UndoRedoStack` when a user executes a new command.
+The following *_activity diagram_* _(Figure 4.1.1.8)_ summarize what happens inside the `UndoRedoStack` when a user executes a new command.
 
 image::UndoRedoActivityDiagram.png[width="200"]
-_Figure 3.1.1.8: undo/redo activity_
+_Figure 4.1.1.8: undo/redo activity_
 
 
 [discrete]
@@ -509,10 +509,10 @@ e.g. `find friends` means to find any person whose name contains the keyword `fr
 [NOTE]
 if a `tag name` is not preceded with a prefix `t/`, then the `tag name` will be identified as a `person name`. As a result, the people with their name containing the `tag name` will be displayed.
 
-Below is a *_sequence diagram_* _(Figure 3.2)_ for executing a find command: `find t/friends`. It will find persons that have the tag `friends`.
+Below is a *_sequence diagram_* _(Figure 4.2)_ for executing a find command: `find t/friends`. It will find persons that have the tag `friends`.
 
 image::findSequenceDiagram.png[width="800"]
-_Figure 3.2: sequence diagram for find command_
+_Figure 4.2: sequence diagram for find command_
 
 The command will be sent to `LogicManager` where it will call `AddressBookParser` to parse
 the command. Subsequently, `FindCommandParser` will parse argument `t/friends` and create a new `findCommand` with
@@ -547,10 +547,10 @@ so that the persons with tag `friends` will be displayed.
 
 The sort command is facilitated by the `LogicManager` class. It supports sorting contact list and makes it easier for users to find contacts according to alphabetical order of their names. Moreover, it can also help users to sort the event list in the meantime according to their dates so that users can decide to process which event first.
 
-The following *_sequence diagram_* _(Figure 3.3)_ shows how the sort command works:
+The following *_sequence diagram_* _(Figure 4.3)_ shows how the sort command works:
 
 image::SortSequenceDiagram.png[width="800"]
-_Figure 3.3: sequence diagram for sort command_
+_Figure 4.3: sequence diagram for sort command_
 
 When user enters a sort command, it will be received by `LogicManager`.Then, `LogicManager` calls `AddressBookParser` to parse the command. And `AddressBookParser` will create `SortCommand` command object and returns it.When `LogicManager` receives the command object, it will execute it.
 
@@ -632,10 +632,10 @@ After sorting the person list and the event list, `SortCommand` will create `Com
 === AddEvent mechanism
 The add event command is facilitated by `LogicManager` class. It allows user to add a new event to the event list. +
 
-The following *_sequence diagram_* _(Figure 3.4)_ shows how add event command works:
+The following *_sequence diagram_* _(Figure 4.4)_ shows how add event command works:
 
 image::AddEventCommandSequenceDiagram.png[width="800"]
-_Figure 3.4: AddEvent command sequence diagram_
+_Figure 4.4: AddEvent command sequence diagram_
 
 The user enters an addEvent command, which is received by `LogicManager`. `LogicManager` calls `AddressBookParser` to parse the command.
 `AddressBookParser` will first check the format of the parameters. If the format is valid, it calls `AddEventCommand` constructor, which returns an `AddEventCommand` object.
@@ -648,10 +648,10 @@ The user enters an addEvent command, which is received by `LogicManager`. `Logic
 
 The list event command is facilitated by the `LogicManager` class. It supports listing all the events for users to process.
 
-The following *_sequence diagram_* _(Figure 3.5)_ shows how the list event command works:
+The following *_sequence diagram_* _(Figure 4.5)_ shows how the list event command works:
 
 image::ListEventSequenceDiagram.png[width="800"]
-_Figure 3.5: sequence diagram for list command_
+_Figure 4.5: sequence diagram for list command_
 
 When user enters a listE command, it will be received by `LogicManager`. The `LogicManager` calls `AddressBookParser` to parse the command. Then, `AddressBookParser` creates the `ListEventCommand` object and returns it. When `LogicManager` receives `ListEventCommand`, it will execute the command.
 
@@ -677,10 +677,10 @@ After `Model` updates filtered event list which will be shown in the GUI, `ListE
 
 The delete event command is facilitated by the `LogicManager`. It supports `undo` and `redo` as it inherits from `UndoableCommand`. Other delete commands are implemented similarly.
 
-The following *_sequence diagram_* _(Figure 3.6)_ below shows how the delete event operation works:
+The following *_sequence diagram_* _(Figure 4.6)_ below shows how the delete event operation works:
 
 image::DeleteEventSequenceDiagram.png[width="800"]
-_Figure 3.6: sequence diagram for deleteE command_
+_Figure 4.6: sequence diagram for deleteE command_
 
 The user enters a deleteE command which is received by `LogicManger`.
 `LogicManager` calls `AddressBookParser` to parse the user command.
@@ -719,10 +719,10 @@ The `DeleteEventCommand` then creates a `CommandResult` object and returns it to
 
 The show participants mechanism is facilitated by `PersonJoinsEventsPredicate`, which resides in `model.person` package. This command will help users to find participants of an event. For achieving this function, `PersonJoinsEventsPredicate` will filter the person list. This command inherits from `Command`.
 
-The following *_sequence diagram_* _(Figure 3.7)_ for executing a show participants command: `showP 3`. It will show all the participants of the third event in the current list.:
+The following *_sequence diagram_* _(Figure 4.7)_ for executing a show participants command: `showP 3`. It will show all the participants of the third event in the current list.:
 
 image::ShowParticipantsSequenceDiagram.png[width="800"]
-_Figure 3.7: sequence diagram for showP INDEX command_
+_Figure 4.7: sequence diagram for showP INDEX command_
 
 When user enters a `showP 3` command, it will be received by `LogicManager`. And `LogicManager` calls `AddressBookParser` to parse the command. Then `AddressBookParser` will create `ShowParticipantsCommandParser` to parse `3`.
 
@@ -791,23 +791,46 @@ After `Model` updates the person list which will be shown in the GUI, the `ShowP
 
 The selectE command is facilitated by the `LogicManager`. This command inherits from `Command`.
 
-The following *_sequence diagram_* _(Figure 3.8)_ show how the show all joined events operation works:
+The following *_sequence diagram_* _(Figure 4.8)_ show how the show all joined events operation works:
 
 image::ShowAllJoinedEventsSequenceDiagram.png[width="800"]
-_Figure 3.8: sequence diagram for selectE command_
+_Figure 4.8: sequence diagram for selectE command_
 
-The user enters a SelectE command which is received by `LogicManger`.
-`LogicManager` calls `AddressBookParser` to parse the user command.
-`AddressBookParser` will call `SelectJoinedEventsCommandParser` to parse the list of INDEXES.
-`AddressBookParser` creates an `SelectJoinedEventsCommand` object and returns it.
-`LogicManager` receives the `Command` object and executes it.
-The `SelectJoinedEventsCommand` calls `getFilteredPersonList()` in the `Model` to get the person list.
-The `SelectJoinedEventsCommand` then creates a list of event names using the person list and list of INDEXES.
-The `SelectJoinedEventsCommand` then proceeds to create a `EventContainsKeywordsPredicate` with the list of event names.
-The `SelectJoinedEventsCommand` then calls `updateFilteredEventList(p)` in the `Model`.
-The `Model` processes the event list.
-The `SelectJoinedEventsCommand` then creates a `CommandResult` object and returns it to `LogicManager`.
-`LogicManager` receives the result and displays it through the `UI`.
+As seen in the *_sequence diagram_* (Figure 4.8) above, when the user enters a selectE command, the input is parsed by the `SelectJoinedEventsCommandParser`.
+A `SelectJoinedEventsCommand` is then created from the parsed user input.
+When the `LogicManager` executes the `SelectJoinedEventsCommand`, the latter calls `getFilteredPersonList()` to get the current person list.
+The `SelectJoinedEventsCommand` will then check the entered index values and get the names of the events the person/s have participated.
+This is shown in the code snippet below:
+
+[source,java]
+@Override
+public CommandResult execute() throws CommandException {
+    for (Index targetIndex: indexList) {
+                if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                    throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                }
+                personNames.append(lastShownList.get(targetIndex.getZeroBased()).getName()).append(", ");
+                for (ReadOnlyEvent event: lastShownList.get(targetIndex.getZeroBased()).getParticipation()) {
+                    eventNames.append(event.getEventName()).append("[-]");
+                }
+            }
+}
+
+As seen in the code snippet above, the `SelectJoinedEventsCommand` will throw an exception if the entered index values are invalid and will combine the participated event names into a String named "eventNames".
+The `SelectJoinedEventsCommand` will then separate the event names using the combination of symbols, "[-]", so they can be used by a predicate to find the participated events.
+This is shown in the code snippet below:
+
+[source,java]
+@Override
+public CommandResult execute() throws CommandException {
+    String[] eventNameKeywords = (eventNames.toString().trim()).split("\\[-]+");
+            EventContainsKeywordPredicate predicate = new EventContainsKeywordPredicate(Arrays.asList(eventNameKeywords));
+            // Update the UI and return result.
+}
+
+As shown in the code snippet above, the event names will be separated and stored in a String[] named "eventNameKeywords".
+A `EventContainsKeywordPredicate` will be created and will use the "eventNameKeywords" to find the events that are participated by the entered person/s.
+The UI will then be updated to display the events found.
 
 [discrete]
 ===== Design Considerations
@@ -823,17 +846,16 @@ The `SelectJoinedEventsCommand` then creates a `CommandResult` object and return
 
 // tag::interaction[]
 === Person-Event interaction
-In this application, we allow users to connect events and persons to show that some persons participate some events. +
-We will explain it in terms of Model and Storage. +
+In this application, we allow users to connect events and persons to show that some persons participate some events. We will explain it in terms of Model and Storage. +
 
 [discrete]
 ==== Model level
-For model, we simply use the "referencing model", which is shown in the diagram _(Figure 3.9.1)_ below: +
+For model, we simply use the "referencing model", which is shown in the diagram _(Figure 4.9.1)_ below: +
 
 image::DG_model_join.png[width = "800"]
-_Figure 3.9.1: interaction model_
+_Figure 4.9.1: interaction model_
 
-Referring to the diagram _(Figure 3.9.1)_ above, there is a participant list in the Event model, which stores all the persons who are involved in this event.
+Referring to the diagram _(Figure 4.9.1)_ above, there is a participant list in the Event model, which stores all the persons who are involved in this event.
 Similarly, the participation list in Person model stores all the event in which this person joins.
 
 Hence, we need to maintain both lists when operating `join` and `disjoin` commands. +
@@ -851,14 +873,14 @@ public void disjoin(Person personToRemove, Event eventToRemove) {
 For storage, since persons and events reference each other, it is easy to have an *Infinity loop of reference*, as shown in the diagram _(Figure 3.9.2)_ below:
 
 image::DG_infinity loop.png[width = "800"]
-_Figure 3.9.2: infinity loop_
+_Figure 4.9.2: infinity loop_
 
 To solve it, we create two storage entities: `XmlAdaptedEventNoParticipant` and `XmlAdaptedPersonNoParticipation`. Both of them do not have participant or participation information.
 Hence, we can avoid the infinity referencing problem. +
-The updated storage is shown in the diagram _(Figure 3.9.3)_ below:
+The updated storage is shown in the diagram _(Figure 4.9.3)_ below:
 
 image::DG_join_storage.png[width = "800"]
-_Figure 3.9.3: interaction storage_
+_Figure 4.9.3: interaction storage_
 
 [discrete]
 ===== Design Considerations
@@ -875,22 +897,22 @@ _Figure 3.9.3: interaction storage_
 // tag::portrait[]
 === Portrait Command mechanism
 The portrait command is facilitated by `LogicManager` and is extended from `UndoableCommand`. +
-The following diagram shows the structure of PortraitPath class:
+The following diagram _(Figure 4.10.1)_ shows the structure of PortraitPath class:
 
 image::DG_Portrait class.png[]
-_Figure 3.10.1 PortraitPath class structure_
+_Figure 4.10.1 PortraitPath class structure_
 
 As shown in above diagram, we only store a string value, which is the file path in this class.
 We only load the image file in the UI component.
 
-The portrait can only be changed by this command. In other words, `Add`command can only create a person without portrait. +
+The portrait can only be changed by this command. In other words, `Add`command can only create a person without a portrait. +
 
-However, users may type a wrong path, and we only load it in UI component. This makes it difficult to handle exception in UI part.
-Therefore, we apply defensive coding here. We pre-check whether the file can be loaded before modifying the person's information.
-If not, we can throw an exception in logic component rather than UI component, which is much easier. The following activity diagram shows it:
+However, users may type a wrong path. As we only load it in the UI component, we will only know if any errors occur when it reaches the UI component, which makes handling exceptions harder as they are usually handled in the Logic component.
+Therefore, we apply defensive coding here. We check whether the file can be loaded before modifying the person's information.
+If not, we can throw an exception in the Logic component rather than UI component, which is much easier to handle. The following *_activity diagram_* _(Figure 4.10.2)_ shows the flow as explained before:
 
 image::DG_preload.png[]
-_Figure 3.10.2 defensive code for loading file_
+_Figure 4.10.2 defensive code for loading file_
 
 [discrete]
 ===== Design Considerations
@@ -906,36 +928,37 @@ _Figure 3.10.2 defensive code for loading file_
 
 // tag::toggle[]
 === Toggle mechanism
-The toggle mechanism is an event-driven mechanism. The following diagram _(Figure 3.11.1)_ below shows the overview of the high-level interactions between components for the toggle mechanism:
+The toggle mechanism is an event-driven mechanism. The following diagram _(Figure 4.11.1)_ below shows the overview of the high-level interactions between components for the toggle mechanism:
 
 image::DG_ToggleComponents.png[]
-_Figure 3.11.1 Toggle mechanism component interactions_
+_Figure 4.11.1 Toggle mechanism component interactions_
 
-The following sequence diagram _(Figure 3.11.2)_ below show how the first half of the toggle mechanism works up till the posting of the event:
+The following sequence diagram _(Figure 4.11.2)_ below show how the first half of the toggle mechanism works up till the posting of the event:
 
 image::DG_Toggle1.png[]
-_Figure 3.11.2 Toggle mechanism sequence 1_
+_Figure 4.11.2 Toggle mechanism sequence 1_
 
-As seen in the sequence diagram _(Figure 3.11.2)_ above, when the user enters a toggle command, a `ToggleCommand` is created.
-When the `LogicManager` executes the `ToggleCommand`, the `EventsCenter` will post a `TogglePanelEvent` to the `EventBus`:
+As seen in the sequence diagram _(Figure 4.11.2)_ above, when the user enters a toggle command, a `ToggleCommand` is created.
+When the `LogicManager` executes the `ToggleCommand`, the `EventsCenter` will post a `TogglePanelEvent` to the `EventBus` which is shown in the code snippet below:
 
 [source,java]
 public class ToggleCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         EventsCenter.getInstance().post(new TogglePanelEvent());
-        return new CommandResult(MESSAGE_TOGGLE_SUCCESS);
+        // ... Return CommandResult ...
     }
 }
 
-The following sequence diagram _(Figure 3.11.3)_ below shows the second half of the toggle mechanism starting with the handling of the posted event:
+The following sequence diagram _(Figure 4.11.3)_ below shows the second half of the toggle mechanism starting with the handling of the posted event:
 
 image::DG_Toggle2.png[]
-_Figure 3.11.3 Toggle mechanism sequence 2_
+_Figure 4.11.3 Toggle mechanism sequence 2_
 
-As seen in the sequence diagram _(Figure 3.11.3)_ above, the event is handled by the `TogglePanel`.
+As seen in the sequence diagram _(Figure 4.11.3)_ above, the event is handled by the `TogglePanel`.
 The `TogglePanel` has a variable called `browserIsFront` which keeps track of whether the browser is currently displayed.
-`TriggerToggle` uses `browserIsFront` to toggle the correct panel to the front and updates `browserToFront` accordingly:
+`TriggerToggle` uses `browserIsFront` to toggle the correct panel to the front and updates `browserToFront` accordingly.
+This is shown in the code snippet below:
 
 [source,java]
 public class TogglePanel extends UiPart<Region> {
@@ -970,7 +993,8 @@ public class TogglePanel extends UiPart<Region> {
 As seen from the above code snippet, when `browserIsFront` is true, the place holder where the browser is at, will be sent to the back and made to be invisible. While the `toggleSplitPane`, which holds the information board and events list, is brought to the front and made visible. `BrowserIsFront` is then set to be false.
 When `browserIsFront` is false, the opposite happens. The place holder with the browser is brought to the front and made visible, while the `toggleSplitPane` is sent to the back and made to be invisible. +
 
-One thing to take note of with the select command, is that the browser will be brought to the front and displayed no matter the current status of `browserIsFront`:
+One thing to take note of with the select command, is that the browser will be brought to the front and displayed regardless of the current status of `browserIsFront`.
+This is shown in the code snippet below:
 
 [source,java]
 public class BrowserPanel extends UiPart<Region> {
@@ -1012,10 +1036,10 @@ The find event mechanism is facilitated by `EventNameContainsKeyWordPredicate` c
 supports users of finding a list of events by their names. Any event that has either of the entered keyword will be filtered
 into the list. This command inherits from `Command`.
 
-Below is a *_sequence diagram_* _(Figure 3.12)_ for executing a find event command: `findE first`. It will find events which contain keyword `first` in their names.
+Below is a *_sequence diagram_* _(Figure 4.12)_ for executing a find event command: `findE first`. It will find events which contain keyword `first` in their names.
 
 image::FindEventSequenceDiagram.png[width="800"]
-_Figure 3.12: sequence diagram for find event command_
+_Figure 4.12: sequence diagram for find event command_
 
 When users enters a `findE first`, `LogicManager` will receive it and call `AddressBookParser` to parse command. In the `AddressBookParser`, it will create `FindEventParser` to parse `first`.
 
@@ -1100,10 +1124,10 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
 .  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
 .  Within Chrome, click on the `Print` option in Chrome's menu.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot _(Figure 4.3)_ below.
+.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot _(Figure 5.3)_ below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 4.3: Saving documentation as PDF files in Chrome_
+_Figure 5.3: Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -1166,7 +1190,7 @@ We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor]
 
 === Making a release
 
-Here are the steps to create a new release.
+Here are the steps to create a new release:
 
 .  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
@@ -1175,254 +1199,9 @@ Here are the steps to create a new release.
 
 === Managing dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives: +
+A project often depends on third-party libraries. For example, Planno depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives: +
 a. Including those libraries in the repo (this bloats the repo size) +
 b. Requiring developers to download those libraries manually (this creates extra work for developers)
-
-[appendix]
-== Suggested programming tasks to get started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
-
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-[TIP]
-Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-[TIP]
-Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Ui` component
-
-[TIP]
-Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-[TIP]
-Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
-
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Main:**
-
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Tests:**
-
-. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
 [appendix]
 == User stories
@@ -1444,7 +1223,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new person |add a person's contact detail into the app
 
-|`* * *` |user |add a new event |add a event's date and information into the app
+|`* * *` |user |add a new event |add an event's date and information into the app
 
 |`* * *` |user |delete a person or event|remove entries that I no longer need
 
@@ -1460,21 +1239,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |get help information |know where is wrong when I get errors
 
-|`* * *` |user |update contact's information |correct or add their information
-
 |`* * *` |user |list contacts |view who are my contacts
 
 |`* * *` |user |list events |view what are my events
 
 |`* * *` |secretive user |hide private details  |minimise the chance of someone else seeing them by accident
 
-|`* * *` |careless user |undo decision  |revert changes in case of mistake
+|`* * *` |careless user |undo decisions  |revert changes in case of mistake
 
 |`* *` |user |toggle between the events details and browser |use a browser without having to alternate between many applications
 
 |`* *` |frequent user |change the font and background colour |use address book comfortably
 
-|`* *` |frequent user |use non-case sensitive command |type command easily
+|`* *` |frequent user |use non-case sensitive commands |type commands easily
 
 |`* *` |user |sort contacts |view my list easily
 
@@ -1483,8 +1260,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |secretive user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`* *` |forgetful user |stick some important people on the top |locate them quickly
-
-|`* *` |user |create events and assign contacts |keep track of who is involved in events
 
 |`* *` |user |create filter using multiple tags |make a specific search using tags
 
@@ -1511,19 +1286,47 @@ Use case ends.
 *Extensions*
 
 [none]
-* 2a. There is already this person
+* 2a. There is already this person.
++
+** Planno shows a person already exists message.
 +
 Use case ends.
+* 2b. User entered invalid values.
 +
-* 2b. The list is empty
+** Planno shows an invalid values message.
++
+Use case resumes at step 1.
++
+* 2b. The list is empty.
 +
 Use case ends.
 
-* 3a. The given index is invalid
+[discrete]
+=== Use case: Add an event
+*MSS*
+
+1. User enters values for a new event.
+2. Planno adds the new event into the database.
 +
-** Planno shows an error message.
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is already this event.
 +
-Use case resumes at step 2.
+** Planno shows an event already exists message.
++
+Use case ends.
+* 2b. User entered invalid values.
++
+** Planno shows an invalid values message.
++
+Use case resumes at step 1.
++
+* 2b. The list is empty.
++
+Use case ends.
 
 [discrete]
 === Use case: Delete person
@@ -1540,13 +1343,50 @@ Use case ends.
 *Extensions*
 
 [none]
-* 2a. The list is empty
+* 2a. The list is empty.
 +
 Use case ends.
 
-* 3a. The given index is invalid
+* 3a. The given index is invalid.
 +
-** Planno shows an error message
+** Planno shows an error message.
++
+Use case resumes at step 2.
+
+* 4a. The person is a participant of an event.
++
+** Planno shows a person is participating in an event message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Delete event
+
+*MSS*
+
+1.  User requests to list events.
+2.  Planno shows a list of events.
+3.  User requests to delete a specific event in the list.
+4.  Planno deletes the event.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+** Planno shows an error message.
++
+Use case resumes at step 2.
+
+* 4a. The event has a participant/s.
++
+** Planno shows an event has participants message.
 +
 Use case resumes at step 2.
 
@@ -1555,7 +1395,7 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User find target person by his name.
+1.  User finds target person by his name.
 2.  Planno shows the result of find command.
 3.  User types new information for the target person.
 4.  Planno updates the information and displays successful message.
@@ -1565,17 +1405,48 @@ Use case ends.
 *Extensions*
 
 [none]
-* 2a. The target person cannot be found
+* 2a. The target person cannot be found.
 +
 Use case ends.
 
-* 3a. User types invalid information
+* 3a. User types invalid information.
 +
 ** Planno shows an error message.
 +
 Use case resumes at step 2.
 
-* 3b. New information is the same as original
+* 3b. New information is the same as original.
++
+** Planno shows an unnecessary update message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Update event
+
+*MSS*
+
+1.  User finds target event by name.
+2.  Planno shows the result of findE command.
+3.  User types new information for the target event.
+4.  Planno updates the information and displays successful message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The target event cannot be found.
++
+Use case ends.
+
+* 3a. User types invalid information.
++
+** Planno shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. New information is the same as original.
 +
 ** Planno shows an unnecessary update message.
 +
@@ -1586,120 +1457,21 @@ Use case ends.
 
 *MSS*
 
-1. User enters values for a new person
-2. Planno add the new person into the database
+1. User enters values for a new person including tag details.
+2. Planno adds the new person into the database.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. There is already this person
+* 2a. There is already this person.
++
+** Planno shows a person already exists message.
 +
 Use case ends.
-
-[discrete]
-=== Use case: Undo a command
-
-*MSS*
-
-1. User enters "history" command to view all history commands.
-2. Planno displays all history commands.
-3. User enters "undo" to request to undo the last link:#undoable-command[undoable command].
-4. Planno undoes the last link:#undoable-command[undoable command] and displays successful message.
 +
-Use case ends.
-
-*Extensions*
-
-[none]
-* 3a. No more link:#undoable-command[undoable command] commands in the history
-+
-** Planno displays error message.
-+
-Use case ends.
-
-[discrete]
-=== Use case: Redo a command
-
-*MSS*
-
-1. User enters "history" command to view all history commands.
-2. Planno displays all history commands.
-3. User enters "redo" to request to undo the last link:#redoable-command[redoable command].
-4. Planno undoes the last link:#redoable-command[redoable command] and displays successful message.
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 3a. No more link:#redoable-command[redoable command] commands in the history
-+
-** Planno displays error message.
-+
-Use case ends.
-
-[discrete]
-=== Use case: Clear Planno
-
-*MSS*
-
-1. User enters "clear" command to delete all entries in address book.
-2. Planno deletes all data
-+
-Use case ends.
-
-[discrete]
-=== Use case: Show help window
-
-*MSS*
-
-1. User enters value for help command.
-2. Planno displays the help window.
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 1a. User presses F1 on the keyboard or clicks on help icon
-+
-Use case resumes at step 2.
-
-[discrete]
-=== Use case: Exit the app
-
-*MSS*
-
-1. User enters "exit" command for exiting the app.
-2. Planno terminates its work and exit.
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 1a. User click File -> Exit button
-+
-Use case resumes at step 2.
-
-[discrete]
-=== Use case: Sort persons
-
-*MSS*
-
-1.  User enters "sort" command.
-2.  Planno shows a list of sorted persons.
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 2a. The list is empty
-+
-** Planno shows a successful message.
+* 2b. The list is empty.
 +
 Use case ends.
 
@@ -1716,9 +1488,9 @@ Use case ends.
 *Extensions*
 
 [none]
-* 1a. There is no person in Planno
+* 1a. There is no person in Planno.
 +
-** Planno shows a no person message.
+** Planno shows a successful message.
 +
 Use case ends.
 
@@ -1734,37 +1506,30 @@ Use case ends.
 
 *Extensions*
 
-* 1a. There is no event in EventList
+* 1a. There is no event in EventList.
 +
-** Planno shows a no event message.
+** Planno shows a successful message.
 +
 Use case ends.
 
 [discrete]
-=== Use case: Show participants of an event
+=== Use case: Sort persons
 
 *MSS*
 
-1.  User requests to list events
-2.  Planno shows a list of events
-3.  User requests to show participants of a specific event in the list
-4.  Planno shows participants of the event
+1.  User enters "sort" command.
+2.  Planno shows a list of sorted persons.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty
+* 2a. The list is empty.
++
+** Planno shows a successful message.
 +
 Use case ends.
-
-* 3a. The given index is invalid
-+
-** Planno shows an error message.
-+
-Use case resumes at step 2.
-
 
 [discrete]
 === Use case: Find person/s by name
@@ -1779,9 +1544,53 @@ Use case ends.
 *Extensions*
 
 [none]
-* 1a. There is no person with a name matching any keyword
+* 1a. There is no person with a name matching any keyword.
 +
-** Planno shows a no person found message.
+** Planno shows a blank person list.
++
+Use case ends.
+
+[discrete]
+=== Use case: Find a person by tag
+
+*MSS*
+
+1. User enters tag names for a person list.
+2. Planno displays the list of persons that contains any of the tag names.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User does not enter tag names.
++
+** Planno shows an error message.
++
+Use case ends.
+
+* 1b. User does not use correct format.
++
+** Planno displays an empty list.
++
+Use case ends.
+
+[discrete]
+=== Use case: Find event/s by name
+
+*MSS*
+
+1. User enters values for find command.
+2. Planno displays events with name matching at least one keyword.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There is no event with a name matching any keyword.
++
+** Planno shows a blank event list.
 +
 Use case ends.
 
@@ -1800,70 +1609,45 @@ Use case ends.
 *Extensions*
 
 [none]
-* 1a. There is no person in Planno
+* 1a. There is no person in Planno.
 +
-** Planno shows a no person message.
+** Planno shows an error message.
 +
 Use case ends.
 
-* 1b. User enters value for find command
+* 1b. User enters value for find command.
 +
 ** Planno displays persons with name matching at least one keyword.
 +
 Use case resumes at step 3.
 
-* 3a. User enters invalid index value
+* 3a. User enters invalid index value.
 +
 ** Planno displays an invalid index message.
 +
 Use case ends.
 
 [discrete]
-=== Use case: List command history
+=== Use case: Toggle between displaying browser and information board
 
 *MSS*
 
-1. User enters value for history command.
-2. Planno displays a list of commands the User has entered from most recent to earliest.
+1. User enters value for toggle command.
+2. Planno switches the display from information board to browser if the former is currently displayed (vice versa).
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. User has not entered any previous commands
+* 1a. User enters a select command.
 +
-** Planno displays a no previous command entered message.
-+
-Use case ends.
-
-[discrete]
-=== Use case: Find a person by tag
-
-*MSS*
-
-1. User enters tag names for a person list
-2. Planno displays the list of persons that contains either of the tag names.
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 1a. User does not enter tag names
-+
-** Planno shows an error message.
-+
-Use case ends.
-
-* 1b. User does not use correct format
-+
-** Planno displays an empty list.
+** Planno displays the browser.
 +
 Use case ends.
 
 [discrete]
-=== Use case: Select all joined events
+=== Use case: Join a person to an event
 
 *MSS*
 
@@ -1871,61 +1655,274 @@ Use case ends.
 2. Planno displays list of persons.
 3. User enters value for list event command.
 4. Planno displays list of events.
-5. User enters index value/s for selectJoinedEvents command.
-6. Planno displays all events of the person/s at the entered index value/s.
+5. User enters index value/s of the person list and event list for join command.
+6. Planno adds the person as a participant of the event.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. There is no person in Planno
+* 1a. There is no person in Planno.
 +
-** Planno shows a no person message.
+** Planno shows a blank person list.
 +
 Use case ends.
 
-* 1b. User enters value for find command
+* 1b. User enters value for find command.
 +
 ** Planno displays persons with name matching at least one keyword.
 +
 Use case resumes at step 3.
 
-* 3a. There is no event in Planno
-+
-** Planno displays a blank event list.
-+
-Use case resumes at step 5.
-
-* 5a. User enters invalid index value
+* 5a. User enters invalid index value.
 +
 ** Planno displays an invalid index message.
 +
 Use case ends.
 
-* 5b. The selected person has not joined any events
+* 5b. Person has already joined the event.
++
+** Planno displays an already joined message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Disjoin a person from an event
+
+*MSS*
+
+1. User enters value for list command.
+2. Planno displays list of persons.
+3. User enters value for list event command.
+4. Planno displays list of events.
+5. User enters index value/s of the person list and event list for disjoin command.
+6. Planno removes the person as a participant of the event.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There is no person in Planno.
++
+** Planno shows a blank person list.
++
+Use case ends.
+
+* 1b. User enters value for find command.
++
+** Planno displays persons with name matching at least one keyword.
++
+Use case resumes at step 3.
+
+* 5a. User enters invalid index value.
++
+** Planno displays an invalid index message.
++
+Use case ends.
+
+* 5b. Person is not a participant of the event.
++
+** Planno displays a person does not participate in this event message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Show participants of an event
+
+*MSS*
+
+1.  User requests to list events.
+2.  Planno shows a list of events.
+3.  User requests to show participants of a specific event in the list.
+4.  Planno shows participants of the event.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+** Planno shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Show all joined events of a person/s
+
+*MSS*
+
+1. User enters value for list command.
+2. Planno displays list of persons.
+3. User enters value for list event command.
+4. Planno displays list of events.
+5. User enters index value/s of the person list for selectE command.
+6. Planno displays all participated events of the person/s at the entered index value/s.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There is no person in Planno.
++
+** Planno shows a blank person list.
++
+Use case ends.
+
+* 1b. User enters value for find command.
++
+** Planno displays persons with name matching at least one keyword.
++
+Use case resumes at step 3.
+
+* 3a. There is no event in Planno.
++
+** Planno displays a blank event list.
++
+Use case resumes at step 5.
+
+* 5a. User enters invalid index value.
++
+** Planno displays an invalid index message.
++
+Use case ends.
+
+* 5b. The selected person has not joined any events.
 +
 ** Planno displays a blank event list.
 +
 Use case ends.
 
+[discrete]
+=== Use case: Clear Planno
+
+*MSS*
+
+1. User enters "clear" command to delete all entries in Planno.
+2. Planno deletes all data.
++
+Use case ends.
+
+[discrete]
+
+[discrete]
+=== Use case: Undo a command
+
+*MSS*
+
+1. User enters "history" command to view entire history of commands used.
+2. Planno displays entire history of commands used.
+3. User enters "undo" to undo the last link:#undoable-command[undoable command].
+4. Planno undoes the last link:#undoable-command[undoable command] and displays successful message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. No more link:#undoable-command[undoable command] commands in the history.
++
+** Planno displays error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo a command
+
+*MSS*
+
+1. User enters "history" command to view entire history of commands used.
+2. Planno displays entire history of commands used.
+3. User enters "redo" to request to redo the last link:#redoable-command[redoable command].
+4. Planno redoes the last link:#redoable-command[redoable command] and displays successful message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. No more link:#redoable-command[redoable command] commands in the history.
++
+** Planno displays error message.
++
+Use case ends.
+
+=== Use case: Show help window
+
+*MSS*
+
+1. User enters value for help command.
+2. Planno displays the help window.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User presses F1 on the keyboard or clicks on help icon.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: List command history
+
+*MSS*
+
+1. User enters value for history command.
+2. Planno displays a list of commands the User has entered from the most recent to earliest.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User has not entered any previous commands.
++
+** Planno displays a no previous command entered message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Exit the app
+
+*MSS*
+
+1. User enters "exit" command for exiting the app.
+2. Planno terminates its work and exits.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User clicks on File -> Exit button.
++
+Use case resumes at step 2.
+
 [appendix]
 == Non functional requirements
 
-.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  The application should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
+.  The application should be able to hold up to 1000 persons and events without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-.  Should be able to give feedback message within 2 seconds for every command.
-.  Should be able to use without connecting to Internet.
-.  Should be able to use without programming knowledge background.
-.  The size of this application should not be larger than 10GB.
-.  Should work on both 32-bit and 64-bit environment.
-.  The cost of this application should not be more than 10,000 dollars.
-.  Should protect users' privacy.
-.  Font size should be suitable for all people from 6 to 70 year old.
-.  Should not tolerate data loss
-.  Should be usable to a novice who has never used such type of application before
-.  Should startup within 7 seconds
+.  The application should be able to give feedback messages within 2 seconds for every command.
+.  The user should be able to use the application without connecting to Internet.
+.  The user should be able to use the application without any programming knowledge background.
+.  The size of this application should not exceed 10GB.
+.  The application should work on both 32-bit and 64-bit environments.
+.  The cost of this application should not exceed 10,000 dollars.
+.  The application should protect users' privacy.
+.  Font size should be suitable for people aged 6 to 70 years old.
+.  The application should not tolerate data loss.
+.  The application should be usable to a novice who has never used such types of application before.
+.  The application should startup within 7 seconds
 .  Background color should be appropriate to not discomfort users' eyes.
 
 {More to be added}
