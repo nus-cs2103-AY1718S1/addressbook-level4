@@ -620,7 +620,7 @@ _Figure 4.3.6 : Full UI outcome of locate implementation_
 === FindCommand by any search field [Since v1.2 and v1.4]
 
 
-`FindCommand` which reside in `Logic` will support the search of contact by any keywords. `Logic` uses the `AddressBookParser` class to parse user command. `parseCommand` in `AddressBookParser` will detect the command word `find` and the `prefix` keyed in by user which will then call `parse` method in `FindCommandParser`.`parse` method in `FindCommandParser` will check for the prefix based existing parameters `Name`, `Email`, `Address`, `Phone`,`Tags` , `Activity` and `Country`. Such parameters inherit from `Person` which resides inside `Model`._Figures 4.4.1_ indicates the the parsing of user command in  `FindCommandParser`.
+`FindCommand` which reside in `Logic` will support the search of contact by any keywords. `Logic` uses the `AddressBookParser` class to parse user command. `parseCommand` in `AddressBookParser` will detect the command word `find` and the keywords keyed in by user and call `parse` method in `FindCommandParser`.`parse` method in `FindCommandParser` will check for the prefix based existing parameters `Name`, `Email`, `Address`, `Phone`,`Tags` , `Activity` and `Country`. Such parameters inherit from `Person` which resides inside `Model`._Figures 4.4.1_ indicates the the parsing of user command in  `FindCommandParser`.
 
 [source,java]
 ----
@@ -647,8 +647,7 @@ Any other prefix as input will be considered as invalid input.In absence of vali
 ----
 _Figure 4.4.2: Code section 2 in FindCommandParser.java_
 
-A successful match of the prefix will create a `FindCommand` object with `containsKeyWordPredicate` that resides in `Model` to be passed as parameter.Command execution in `LogicManager` will then call `updateFilteredPersonList` method in `ModelManager`.
-Addressbook will then search for contact based on the predicate paramater passed in `PredicateUtil' as shown in Figure 4.4.3_.
+A successful match of the prefix in `FindCommandParser` will create a `FindCommand` object with `containsKeyWordPredicate` that resides in `Model` to be passed as parameter.Command execution in `LogicManager` will then call `updateFilteredPersonList` method in `ModelManager`.Addressbook will then search for contact based on the predicate paramater passed in `PredicateUtil1 as shown in -Figure 4.4.3_.
 .
 [source,java]
 ----
@@ -668,7 +667,6 @@ The sequence diagram in _Figure 4.4.5_ below shows how the find function works:
 
 image::SequenceDiagramFind.PNG[width="800"]
 _Figure 4.4.5 : Find sequence diagram_
-
 
 Upon any successful match, the particulars of the contact will be displayed in `CommandBox`. _Figures 4.4.6a to 4.4.6g_ below indicate the various outcomes of search function by  using `FindCommand`.
 
@@ -814,7 +812,7 @@ public class BrowserPanel extends UiPart<Region> {
 ----
 _Figure 4.6.4: Code section in BrowserPanel.java_
 
-The method `loadCalendar` will pass the calendar url to `BrowserPanel` to open up calendar website in `BrowserPanel`. The outcome of successful launching of calendar webpage in browser is shown in _Figure 4.6.5_:
+The method `loadCalendar` in `BrowserPanel` will load the page with the calendar url passed in as parameters to open up calendar website. The outcome of successful launching of calendar webpage is shown in _Figure 4.6.5_:
 
 image::CalendarCommand.png[width="800"]
 
@@ -999,7 +997,7 @@ _Figure 4.8.3: Code section in Schedule.java_
 image::SequenceDiagramEmail.PNG[width="600"]
 _Figure 4.9.1: Component interactions for email function_
 
-User will first have to key in indexes of the contact. `Logic` will use `AddressBookParser` class to parse user command. `ParseException` will be thrown in `EmailCommandParser` when there is detection of illegal value.By using a `Set` to store the indices inputed by user, this will prevent duplication of indicies. Also, Figure 4.9.2_ below indicates the parsing of user input in `EmailCommandParser`.
+User will first have to key in indexes of the contact. `Logic` will use `AddressBookParser` class to parse user command. `ParseException` will be thrown in `EmailCommandParser` when there is detection of illegal value.By using a `Set` to store the indices inputed by user, this will prevent duplication of indicies. _Figure 4.9.2_ below indicates the parsing of user input in `EmailCommandParser`.
 
 [source,java]
 ----
@@ -1019,7 +1017,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
 ----
 _Figure 4.9.2: Code section in EmailCommandParser.java_
 
-A `Command` object will be executed by `Logic Manger`.During command excution, a filtered person list will be extracted from `Model`. The emails extracted from the filtered person list will be stored in a `recipientList` as shown in Figure 4.9.3_ .`Desktop` class will be used to send email using `Desktop.Action.Mail` baed on recipientList.
+A `Command` object will be executed by `Logic Manger`.During command excution, a filtered person list will be extracted from `Model`. The emails extracted from the filtered person list will be stored in a `recipientList` as shown in _Figure 4.9.3_ .`Desktop` class will be used to send email using `Desktop.Action.Mail` baed on `recipientList`.
 
 [source,java]
 ----
