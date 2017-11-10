@@ -1,8 +1,9 @@
 package seedu.address.commons.events.ui;
 
 //@@author chernghann
-import seedu.address.commons.events.BaseEvent;
 import java.time.YearMonth;
+
+import seedu.address.commons.events.BaseEvent;
 
 /**
  * Indicates a request to add Event.
