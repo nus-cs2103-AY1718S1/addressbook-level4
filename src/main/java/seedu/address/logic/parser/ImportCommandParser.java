@@ -2,10 +2,13 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.List;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.parcel.ReadOnlyParcel;
 
 //@@author kennard123661
 /**
@@ -19,6 +22,8 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     public static final String FILE_NAME_VALIDATION_REGEX = "([a-zA-Z0-9_]+)";
     public static final String MESSAGE_FILE_NAME_INVALID = "File name should be an xml file that only contains "
             + "alphanumeric or underscore characters";
+    public static final String MESSAGE_FILE_EMPTY = "File to import is empty";
+    public static final String IMPORT_FILE_DIRECTORY = "./data/import/";
 
     /**
      * Parses the given {@code String} of arguments in the context of the {@link ImportCommand}
@@ -29,19 +34,24 @@ public class ImportCommandParser implements Parser<ImportCommand> {
      */
     public ImportCommand parse(String arg) throws ParseException {
         String trimmedArgument = arg.trim();
-
         if (!isValidFileName(trimmedArgument)) {
-            throw new ParseException(MESSAGE_FILE_NAME_INVALID);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE)
+                    + "\nMore Info: " + MESSAGE_FILE_NAME_INVALID);
         }
 
         try {
-            ReadOnlyAddressBook readOnlyAddressBook = ParserUtil.parseImportFilePath("./data/import/"
-                    + trimmedArgument + ".xml");
-            return new ImportCommand(readOnlyAddressBook.getParcelList());
+            String fullPath = IMPORT_FILE_DIRECTORY + trimmedArgument + ".xml";
+            ReadOnlyAddressBook readOnlyAddressBook = ParserUtil.parseImportFilePath(fullPath);
+
+            List<ReadOnlyParcel> parcels = readOnlyAddressBook.getParcelList();
+
+            if (parcels.isEmpty()) {
+                throw new IllegalValueException("File to import is empty");
+            }
+
+            return new ImportCommand(parcels);
         } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE) + "\nMore Info: "
-                            + ive.getMessage());
+            throw new ParseException(String.format(ive.getMessage()));
         }
     }
 
