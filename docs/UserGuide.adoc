@@ -316,6 +316,32 @@ You will see the following after typing `delete 1` and `deleteE 1`:
 image::UG_delete.png[width="790"]
 _Figure 3.7: delete command result_
 
+=== Selecting a person : `select`
+
+Selects the person identified by the index number used in the last person listing. +
+Format: `select INDEX`
+
+****
+* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* The browser will be displayed when the command is used.
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd person in the Planno.
+* `find Betsy` +
+`select 1` +
+Selects the 1st person in the results of the `find` command.
+
+You will see the following after typing `select 1`:
+
+image::UG_Select.png[width="790"]
+_Figure 3.8: select command result_
+
 // tag::join[]
 === Connecting a person to an event : `join`
 You can use it to show a person is involved in an event. +
@@ -393,15 +419,15 @@ _Figure 3.10: show persons result_
 // end::showP[]
 
 // tag::selectE[]
-=== Selecting all events which a person joins : `selectE`
+=== Showing all events which a person joins : `selectE`
 
 You can use it to view all events which a certain person joins. +
 Format: `selectE PERSON_INDEX`
 
 ****
-* Shows all events which the person at the specified `PERSON_INDEX` joins.
-* The index refers to the index number shown in the most recent person listing.
-* The index *must be a positive integer* `1, 2, 3, ...`.
+* Shows all events which the person at the specified `PERSON_INDEXS` joins.
+* The index/s refers to the index number/s shown in the most recent person listing.
+* The index/s *must be a positive integer* `1, 2, 3, ...`.
 ****
 
 Examples: +
@@ -409,7 +435,7 @@ Assuming that you have typed `join p/2 e/1` before this example.
 
 * `list` +
 `selectE 2` +
-Shows all events which the 2nd person in the address book joins.
+Shows all events which the 2nd person in Planno joins.
 * `find Betsy` +
 `selectE 1` +
 Shows all events which the 1st person in the results of the `find` command joins.
@@ -694,7 +720,10 @@ e.g. `join p/3 e/1`
 
 * *Redo* : `redo`
 
-* *Selecting every event a person has joined* : `selectE p/INDEX` +
+* *Selecting a person* : `select INDEX` +
+e.g. `select 4`
+
+* *Showing every event a person has joined* : `selectE p/INDEX` +
 e.g. `selectE p/1`
 
 * *Showing every participant in an event* : `showP EVENT_INDEX` +
