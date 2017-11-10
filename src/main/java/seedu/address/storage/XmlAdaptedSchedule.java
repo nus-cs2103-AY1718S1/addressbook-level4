@@ -30,32 +30,32 @@ public class XmlAdaptedSchedule {
     /**
      * Converts a given Schedule into this class for JAXB use.
      *
-     * @param source future changes to this will not affect the created XmlAdaptedPerson
+     * @param source future changes to this will not affect the created XmlAdaptedSchedule
      */
     public XmlAdaptedSchedule(Schedule source) {
-        name = source.getPersonName().toString();
+        name = source.getPersonName();
         dateString = DATE_FORMAT.format(source.getDate());
     }
 
     /**
-     * Converts this jaxb-friendly adapted person object into the model's Schedule object.
+     * Converts this jaxb-friendly adapted schedule object into the model's Schedule object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws IllegalValueException if there were any data constraints violated in the adapted schedule
      */
     public Schedule toModelType() throws IllegalValueException {
         final String name = this.name;
         final Schedule schedule;
-        Calendar calendar = null;
+        Calendar calendar;
         calendar = Calendar.getInstance();
         if (calendar != null) {
             try {
                 calendar.setTime(DATE_FORMAT.parse(dateString));
-                return new Schedule(name.toString(), calendar);
+                return new Schedule(name, calendar);
             } catch (java.text.ParseException e) {
                 e.printStackTrace();
             }
         }
-        schedule = new Schedule(name.toString(), calendar);
-        return new Schedule(name.toString(), calendar);
+        schedule = new Schedule(name, calendar);
+        return new Schedule(name, calendar);
     }
 }

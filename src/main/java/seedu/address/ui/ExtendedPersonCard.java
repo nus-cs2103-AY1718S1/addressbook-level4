@@ -7,15 +7,15 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author limcel
 /**
- * Extended Person Card Panel that displays the details of a Person
+ * An UI component that displays all information of a {@code Person}.
  */
 public class ExtendedPersonCard extends UiPart<Region> {
 
@@ -25,7 +25,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
     private ObservableList<ReadOnlyPerson> people;
 
     @FXML
-    private VBox cardpane;
+    private GridPane gridPane;
     @FXML
     private Label name;
     @FXML
