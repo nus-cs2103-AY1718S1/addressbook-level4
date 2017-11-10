@@ -23,7 +23,8 @@
         preppedWord = preppedWord.trim();
 
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
-        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+        checkArgument(preppedWord.split("\\s+").length == 1,
+                "Word parameter should be a single word");
 
         String preppedSentence = sentence;
         preppedSentence = preppedSentence.replaceAll("[^a-zA-Z0-9\\s]", "");
@@ -63,11 +64,14 @@
 
         ArrayList<String> extractedDates = new ArrayList<>();
         String preppedSentence = sentence.trim();
+
         if (!preppedSentence.isEmpty()) {
             Pattern pattern = Pattern.compile("(\\d{2}\\/\\d{2}\\/\\d{4})");
             Matcher matcher = pattern.matcher(preppedSentence);
+
             while (matcher.find()) {
                 String validDateRegex = "^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)\\d\\d$";
+
                 if (matcher.group(1).matches(validDateRegex)) {
                     extractedDates.add(matcher.group(1));
                 }
@@ -100,11 +104,14 @@
 
         ArrayList<String> extractedTimes = new ArrayList<>();
         String preppedSentence = sentence.trim();
+
         if (!preppedSentence.isEmpty()) {
             Pattern pattern = Pattern.compile("(\\d{2}\\:\\d{2})");
             Matcher matcher = pattern.matcher(preppedSentence);
+
             while (matcher.find()) {
                 String validTimeRegex = "^(0[0-9]|[1][0-9]|[2][0-3])[:](0[0-9]|[1-5][0-9])$";
+
                 if (matcher.group(1).matches(validTimeRegex)) {
                     extractedTimes.add(matcher.group(1));
                 }
@@ -241,9 +248,11 @@ public class AddMultipleCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+
         int numberOfPersonsAdded = 0;
         StringBuilder successMessage = new StringBuilder();
-        requireNonNull(model);
+
         try {
             for (Person personToAdd : toAdd) {
                 model.addPerson(personToAdd);
@@ -258,9 +267,8 @@ public class AddMultipleCommand extends UndoableCommand {
                     model.deletePerson(readOnlyPeople.get(i));
                 }
             } catch (PersonNotFoundException pnfe) {
-                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+                assert false : "Unexpected exception " + pnfe.getMessage();
             }
-
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
@@ -319,6 +327,7 @@ public class MergeCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         XmlSerializableAddressBook newFileData;
+
         try {
             newFileData = XmlFileStorage.loadDataFromSaveFile(new File(newFilePath));
         } catch (FileNotFoundException fne) {
@@ -329,6 +338,7 @@ public class MergeCommand extends UndoableCommand {
 
         ObservableList<ReadOnlyPerson> newFilePersonList = newFileData.getPersonList();
         model.mergeAddressBook(newFilePersonList);
+
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
@@ -387,7 +397,7 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
             String toAdd = " " + eachLine;
             ArgumentMultimap argMultimap =
                     ArgumentTokenizer.tokenize(toAdd, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                            PREFIX_TAG);
+                            PREFIX_TAG, PREFIX_AVATAR);
             if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
                 throw new ParseException(String.format(MESSAGE_INVALID_PERSON_FORMAT,
                         AddMultipleCommand.MESSAGE_PERSON_FORMAT));
@@ -398,9 +408,10 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
                 Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
                 Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
                 Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+                Avatar avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR)).get();
                 Comment comment = new Comment(""); // add command does not allow adding comments straight away
                 Appoint appoint = new Appoint("");
-                ReadOnlyPerson person = new Person(name, phone, email, address, comment, appoint, tagList);
+                ReadOnlyPerson person = new Person(name, phone, email, address, comment, appoint, avatar, tagList);
 
                 personsList.add(person);
             } catch (IllegalValueException ive) {
@@ -435,12 +446,15 @@ public class FindCommandParser implements Parser<FindCommand> {
     private void parseMultiMap(ArgumentMultimap argsMap, HashMap<String, List<String>> mapKeywords, Prefix prefix)
             throws ParseException {
         String trimmedArgs;
+
         try {
             if (argsMap.getValue(prefix).isPresent()) {
                 trimmedArgs = ParserUtil.parseKeywords(argsMap.getValue(prefix)).get().trim();
+
                 if (trimmedArgs.isEmpty()) {
                     throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
                 }
+
                 String[] keywordNameList = trimmedArgs.split("\\s+");
                 mapKeywords.put(prefix.toString(), Arrays.asList(keywordNameList));
             }
@@ -457,6 +471,7 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     public FindCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
+
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
@@ -464,8 +479,6 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TAG, PREFIX_EMAIL,
                 PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_COMMENT, PREFIX_APPOINT);
-
-
 
         HashMap<String, List<String>> mapKeywords = new HashMap<>();
 
@@ -494,13 +507,13 @@ public class FindCommandParser implements Parser<FindCommand> {
 ###### /java/seedu/address/logic/parser/MergeCommandParser.java
 ``` java
 /**
- * Parses input arguments and creates a new FindCommand object
+ * Parses input arguments and creates a new MergeCommand object
  */
 public class MergeCommandParser implements Parser<MergeCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the FindCommand
-     * and returns an FindCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the MergeCommand
+     * and returns an MergeCommand object for execution.
      *
      * @throws ParseException if the user input does not conform the expected format
      */
@@ -564,48 +577,123 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
         this.keywords = keywords;
     }
 
-    @Override
-    public boolean test(ReadOnlyPerson person) {
+    /**
+     * Checks if a person contain the name predicate
+     *
+     * @param person should not be null
+     * @return result that indicates if a person contain name predicate
+     */
+    private boolean checkPersonContainsNamePredicate(ReadOnlyPerson person) {
         boolean result = false;
         if (keywords.containsKey(PREFIX_NAME.toString()) && !keywords.get(PREFIX_NAME.toString()).isEmpty()) {
             result = keywords.get(PREFIX_NAME.toString()).stream()
                     .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
         }
+        return result;
+    }
 
+    /**
+     * Checks if a person contain the tag predicate
+     *
+     * @param person should not be null
+     * @return result that indicates if a person contain tag predicate
+     */
+    private boolean checkPersonContainsTagPredicate(ReadOnlyPerson person) {
+        boolean result = false;
         if (keywords.containsKey(PREFIX_TAG.toString()) && !keywords.get(PREFIX_TAG.toString()).isEmpty()) {
-            result = result || person.containTags(keywords.get(PREFIX_TAG.toString()));
+            result = person.containTags(keywords.get(PREFIX_TAG.toString()));
         }
+        return result;
+    }
 
+    /**
+     * Checks if a person contain the email predicate
+     *
+     * @param person should not be null
+     * @return result that indicates if a person contain email predicate
+     */
+    private boolean checkPersonContainsEmailPredicate(ReadOnlyPerson person) {
+        boolean result = false;
         if (keywords.containsKey(PREFIX_EMAIL.toString()) && !keywords.get(PREFIX_EMAIL.toString()).isEmpty()) {
-            result = result || keywords.get(PREFIX_EMAIL.toString()).stream()
+            result = keywords.get(PREFIX_EMAIL.toString()).stream()
                     .anyMatch(keyword -> person.getEmail().value.contains(keyword));
         }
+        return result;
+    }
 
+    /**
+     * Checks if a person contain the phone predicate
+     *
+     * @param person should not be null
+     * @return result that indicates if a person contain phone predicate
+     */
+    private boolean checkPersonContainsPhonePredicate(ReadOnlyPerson person) {
+        boolean result = false;
         if (keywords.containsKey(PREFIX_PHONE.toString()) && !keywords.get(PREFIX_PHONE.toString()).isEmpty()) {
-            result = result || keywords.get(PREFIX_PHONE.toString()).stream()
+            result = keywords.get(PREFIX_PHONE.toString()).stream()
                     .anyMatch(keyword -> person.getPhone().value.contains(keyword));
         }
+        return result;
+    }
 
+    /**
+     * Checks if a person contain the address predicate
+     *
+     * @param person should not be null
+     * @return result that indicates if a person contain address predicate
+     */
+    private boolean checkPersonContainsAddressPredicate(ReadOnlyPerson person) {
+        boolean result = false;
         if (keywords.containsKey(PREFIX_ADDRESS.toString()) && !keywords.get(PREFIX_ADDRESS.toString()).isEmpty()) {
-            result = result || keywords.get(PREFIX_ADDRESS.toString()).stream()
+            result = keywords.get(PREFIX_ADDRESS.toString()).stream()
                     .anyMatch(keyword -> person.getAddress().value.toLowerCase().contains(keyword.toLowerCase()));
         }
+        return result;
+    }
 
+    /**
+     * Checks if a person contain the comment predicate
+     *
+     * @param person should not be null
+     * @return result that indicates if a person contain comment predicate
+     */
+    private boolean checkPersonContainsCommentPredicate(ReadOnlyPerson person) {
+        boolean result = false;
         if (keywords.containsKey(PREFIX_COMMENT.toString()) && !keywords.get(PREFIX_COMMENT.toString()).isEmpty()) {
-            result = result || keywords.get(PREFIX_COMMENT.toString()).stream()
-                    .anyMatch(keyword ->
-                            StringUtil.containsWordIgnoreCaseAndCharacters(person.getComment().value, keyword));
+            result = keywords.get(PREFIX_COMMENT.toString()).stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCaseAndCharacters(
+                            person.getComment().value, keyword));
         }
+        return result;
+    }
 
+    /**
+     * Checks if a person contain the appoint predicate
+     *
+     * @param person should not be null
+     * @return result that indicates if a person contain appoint predicate
+     */
+    private boolean checkPersonContainsAppointPredicate(ReadOnlyPerson person) {
+        boolean result = false;
         if (keywords.containsKey(PREFIX_APPOINT.toString()) && !keywords.get(PREFIX_APPOINT.toString()).isEmpty()) {
-            result = result || keywords.get(PREFIX_APPOINT.toString()).stream()
+            result = keywords.get(PREFIX_APPOINT.toString()).stream()
                     .anyMatch(keyword -> StringUtil.containsDate(person.getAppoint().value, keyword));
 
             result = result || keywords.get(PREFIX_APPOINT.toString()).stream()
                     .anyMatch(keyword -> StringUtil.containsTime(person.getAppoint().value, keyword));
         }
-
         return result;
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return checkPersonContainsNamePredicate(person)
+                || checkPersonContainsPhonePredicate(person)
+                || checkPersonContainsAddressPredicate(person)
+                || checkPersonContainsAppointPredicate(person)
+                || checkPersonContainsEmailPredicate(person)
+                || checkPersonContainsTagPredicate(person)
+                || checkPersonContainsCommentPredicate(person);
     }
 
     @Override
