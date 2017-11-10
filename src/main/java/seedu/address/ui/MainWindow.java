@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -22,7 +23,9 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.schedule.Schedule;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -202,6 +205,22 @@ public class MainWindow extends UiPart<Region> {
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
+    }
+
+    //@@author 17navasaw
+    /**
+     * Shows reminder pop-up if there exists upcoming activities the next day.
+     */
+    public void openReminderWindowIfRequired() {
+        ReadOnlyAddressBook addressBook = model.getAddressBook();
+        ObservableList<Schedule> schedulesToRemindList = addressBook.getScheduleToRemindList();
+        for (Schedule schedule : schedulesToRemindList) {
+            logger.info("Schedules for reminder: " + schedule);
+        }
+        if (!schedulesToRemindList.isEmpty()) {
+            ReminderWindow reminderWindow = new ReminderWindow(schedulesToRemindList);
+            reminderWindow.show();
+        }
     }
 
     /**
