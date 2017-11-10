@@ -5,6 +5,9 @@ import static org.mockito.Mockito.times;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_FAILURE;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_SUCCESS;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.testutil.TypicalParcels.BENSON;
+import static seedu.address.testutil.TypicalParcels.DANIEL;
+import static seedu.address.testutil.TypicalParcels.HOON;
 
 import java.util.Optional;
 import java.util.concurrent.Semaphore;
@@ -29,10 +32,13 @@ import seedu.address.bot.parcel.ParcelParser;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
+import systemtests.ModelHelper;
 import systemtests.SystemTestSetupHelper;
 
 public class ArkBotTest {
@@ -54,6 +60,7 @@ public class ArkBotTest {
     private SystemTestSetupHelper setupHelper;
     private ParcelParser parcelParser;
     private Optional<Message> lastKnownMessage;
+    private int numberOfFailures = 0;
 
     @BeforeClass
     public static void setupBeforeClass() {
@@ -86,18 +93,42 @@ public class ArkBotTest {
         // We verify that the sender was called only ONCE and sent Hello World to CHAT_ID
         Mockito.verify(sender, times(1)).send("Hello World!", CHAT_ID);
 
+        /*================================== UNDO COMMAND FAILURE TEST ====================================*/
+
+        mockedUpdate = mock(Update.class);
+        context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID);
+
+        bot.undoCommand().action().accept(context);
+        String message = BOT_MESSAGE_FAILURE;
+        waitForRunLater();
+
+        // We verify that the sender was called only ONCE and sent add command success.
+        Mockito.verify(sender, times(++numberOfFailures)).send(message, CHAT_ID);
+
+        /*================================== REDO COMMAND FAILURE TEST ====================================*/
+
+        mockedUpdate = mock(Update.class);
+        context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID);
+
+        bot.redoCommand().action().accept(context);
+        message = BOT_MESSAGE_FAILURE;
+        waitForRunLater();
+
+        // We verify that the sender was called only ONCE and sent add command success.
+        Mockito.verify(sender, times(++numberOfFailures)).send(message, CHAT_ID);
+
         /*================================== ADD COMMAND SUCCESS TEST ====================================*/
 
         mockedUpdate = mock(Update.class);
         context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID, SAMPLE_ADD_COMMAND);
 
         bot.addCommand().action().accept(context);
+        message = String.format(BOT_MESSAGE_SUCCESS, AddCommand.COMMAND_WORD);
         model.addParcelCommand(parcelParser.parse(BOT_DEMO_JOHN));
         waitForRunLater();
 
         // We verify that the sender was called only ONCE and sent add command success.
-        Mockito.verify(sender, times(1)).send(String.format(BOT_MESSAGE_SUCCESS,
-                AddCommand.COMMAND_WORD), CHAT_ID);
+        Mockito.verify(sender, times(1)).send(message, CHAT_ID);
 
         /*================================== ADD COMMAND FAILURE TEST ====================================*/
 
@@ -105,11 +136,11 @@ public class ArkBotTest {
         context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID, SAMPLE_ADD_COMMAND);
 
         bot.addCommand().action().accept(context);
+        message = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
         waitForRunLater();
 
         // We verify that the sender was called only ONCE and sent add command failure.
-        Mockito.verify(sender, times(1)).send(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                AddCommand.MESSAGE_USAGE), CHAT_ID);
+        Mockito.verify(sender, times(1)).send(message, CHAT_ID);
 
         /*================================== LIST COMMAND SUCCESS TEST ====================================*/
 
@@ -118,7 +149,7 @@ public class ArkBotTest {
 
         bot.listCommand().action().accept(context);
         ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
-        String message = bot.parseDisplayParcels(bot.formatParcelsForBot(parcels));
+        message = bot.parseDisplayParcels(bot.formatParcelsForBot(parcels));
         logger.info("Listing parcels: \n" + message);
         waitForRunLater();
 
@@ -137,6 +168,30 @@ public class ArkBotTest {
         // We verify that the sender was called only ONCE and sent add command success.
         Mockito.verify(sender, times(1)).send(message, CHAT_ID);
 
+        /*================================== UNDO COMMAND SUCCESS TEST ====================================*/
+
+        mockedUpdate = mock(Update.class);
+        context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID);
+
+        bot.undoCommand().action().accept(context);
+        message = String.format(BOT_MESSAGE_SUCCESS, UndoCommand.COMMAND_WORD);
+        waitForRunLater();
+
+        // We verify that the sender was called only ONCE and sent add command success.
+        Mockito.verify(sender, times(1)).send(message, CHAT_ID);
+
+        /*================================== REDO COMMAND SUCCESS TEST ====================================*/
+
+        mockedUpdate = mock(Update.class);
+        context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID);
+
+        bot.redoCommand().action().accept(context);
+        message = String.format(BOT_MESSAGE_SUCCESS, RedoCommand.COMMAND_WORD);
+        waitForRunLater();
+
+        // We verify that the sender was called only ONCE and sent add command success.
+        Mockito.verify(sender, times(1)).send(message, CHAT_ID);
+
         /*================================== DELETE COMMAND FAILURE TEST ====================================*/
 
         mockedUpdate = mock(Update.class);
@@ -147,7 +202,20 @@ public class ArkBotTest {
         waitForRunLater();
 
         // We verify that the sender was called only ONCE and sent add command success.
-        Mockito.verify(sender, times(1)).send(BOT_MESSAGE_FAILURE, CHAT_ID);
+        Mockito.verify(sender, times(++numberOfFailures)).send(BOT_MESSAGE_FAILURE, CHAT_ID);
+
+        /*================================== FIND COMMAND SUCCESS TEST ====================================*/
+
+        mockedUpdate = mock(Update.class);
+        context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID, "Meier");
+        ModelHelper.setFilteredList(model, BENSON, DANIEL, HOON);
+        parcels = model.getUncompletedParcelList();
+        message = bot.parseDisplayParcels(bot.formatParcelsForBot(parcels));
+        bot.findCommand().action().accept(context);
+        waitForRunLater();
+
+        // We verify that the sender was called only ONCE and sent add command success.
+        Mockito.verify(sender, times(1)).send(message, CHAT_ID);
 
     }
 
