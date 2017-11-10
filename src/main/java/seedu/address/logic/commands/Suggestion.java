@@ -90,8 +90,8 @@ public class Suggestion {
             return FindCommandParser.parseArguments(arguments);
 
         // Commands with directory-type arguments.
-        } else if (OpenCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
-                || NewCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
+        } else if (OpenRolodexCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
+                || NewRolodexCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
             if (isParsableFilePath(arguments)) {
                 return " " + parseFirstFilePath(arguments);
             }

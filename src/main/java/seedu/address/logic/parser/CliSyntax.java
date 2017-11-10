@@ -16,8 +16,8 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.NewCommand;
-import seedu.address.logic.commands.OpenCommand;
+import seedu.address.logic.commands.NewRolodexCommand;
+import seedu.address.logic.commands.OpenRolodexCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -117,8 +117,8 @@ public class CliSyntax {
         .addAll(HelpCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(HistoryCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(ListCommand.COMMAND_WORD_ABBREVIATIONS)
-        .addAll(NewCommand.COMMAND_WORD_ABBREVIATIONS)
-        .addAll(OpenCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(NewRolodexCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(OpenRolodexCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(RedoCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(RemarkCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(SelectCommand.COMMAND_WORD_ABBREVIATIONS)

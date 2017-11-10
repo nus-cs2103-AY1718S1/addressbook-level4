@@ -12,8 +12,8 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.NewCommand;
-import seedu.address.logic.commands.OpenCommand;
+import seedu.address.logic.commands.NewRolodexCommand;
+import seedu.address.logic.commands.OpenRolodexCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -33,8 +33,10 @@ public class KeyListenerUtil {
     public static final KeyCombination KEY_COMBINATION_UNDO = KeyCombination.valueOf(UndoCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_REDO = KeyCombination.valueOf(RedoCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_LIST = KeyCombination.valueOf(ListCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_OPEN_FILE = KeyCombination.valueOf(OpenCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_NEW_FILE = KeyCombination.valueOf(NewCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_OPEN_FILE = KeyCombination
+            .valueOf(OpenRolodexCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_NEW_FILE = KeyCombination
+            .valueOf(NewRolodexCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_ADD = KeyCombination.valueOf(AddCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_EDIT = KeyCombination.valueOf(EditCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_FIND = KeyCombination.valueOf(FindCommand.COMMAND_HOTKEY);

@@ -16,8 +16,8 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.NewCommand;
-import seedu.address.logic.commands.OpenCommand;
+import seedu.address.logic.commands.NewRolodexCommand;
+import seedu.address.logic.commands.OpenRolodexCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -70,7 +70,7 @@ public class KeyListenerTest extends RolodexGuiTest {
         KeyCodeCombination openKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+O");
 
         guiRobot.push(openKeyCode);
-        assertEquals(OpenCommand.COMMAND_WORD + " ", getCommandBox().getInput());
+        assertEquals(OpenRolodexCommand.COMMAND_WORD + " ", getCommandBox().getInput());
     }
 
     @Test
@@ -78,7 +78,7 @@ public class KeyListenerTest extends RolodexGuiTest {
         KeyCodeCombination newKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+N");
 
         guiRobot.push(newKeyCode);
-        assertEquals(NewCommand.COMMAND_WORD + " ", getCommandBox().getInput());
+        assertEquals(NewRolodexCommand.COMMAND_WORD + " ", getCommandBox().getInput());
     }
 
     @Test

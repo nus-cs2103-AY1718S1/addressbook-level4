@@ -18,8 +18,8 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.NewCommand;
-import seedu.address.logic.commands.OpenCommand;
+import seedu.address.logic.commands.NewRolodexCommand;
+import seedu.address.logic.commands.OpenRolodexCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -90,10 +90,10 @@ public class RolodexParser {
                 return new UndoCommand();
             } else if (RedoCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
                 return new RedoCommand();
-            } else if (OpenCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-                return new OpenCommandParser().parse(arguments);
-            } else if (NewCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-                return new NewCommandParser().parse(arguments);
+            } else if (OpenRolodexCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new OpenRolodexCommandParser().parse(arguments);
+            } else if (NewRolodexCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new NewRolodexCommandParser().parse(arguments);
             } else if (RemarkCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
                 return new RemarkCommandParser().parse(arguments);
             }  else if (StarWarsCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
