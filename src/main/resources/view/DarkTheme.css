@@ -53,7 +53,7 @@
 }
 
 .table-view .column-header, .table-view .filler {
-    -fx-size: 35;
+    -fx-size: 35px;
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
     -fx-border-color:
@@ -273,7 +273,7 @@
 .button:focused {
     -fx-border-color: white, white;
     -fx-border-width: 1, 1;
-    -fx-border-style: solid, segments(1, 1);
+    -fx-border-style: solid;
     -fx-border-radius: 0, 0;
     -fx-border-insets: 1 1 1 1, 0;
 }

@@ -34,7 +34,7 @@ public class PersonCardTest extends GuiUnitTest {
     @Test
     public void displayPerson() {
         // no tags
-        Person personWithNoTags = new PersonBuilder().withTags(new String[0]).build();
+        Person personWithNoTags = new PersonBuilder().withTags().build();
         PersonCard personCard = new PersonCard(personWithNoTags, 1);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithNoTags, 1);

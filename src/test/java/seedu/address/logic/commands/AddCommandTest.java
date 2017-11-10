@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -48,7 +48,7 @@ public class AddCommandTest {
         CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
 
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(Collections.singletonList(validPerson), modelStub.personsAdded);
     }
 
     @Test
