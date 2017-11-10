@@ -125,6 +125,10 @@ public class AddCommandTest {
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
+        @Override
+        public void deleteRelationship(Index indexFromPerson, Index indexToPerson) {
+            fail("This method should not be called.");
+        }
 
         @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)

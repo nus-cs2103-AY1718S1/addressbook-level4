@@ -13,7 +13,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Joanne Ong Cui Fang
 image::joanneong.jpg[width="150", align="left"]
-{empty}[https://github.com/joanneong[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/joanneong[github]] [<<joanneong#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Documentation, UI
@@ -31,7 +31,7 @@ Responsibilities: Deliverables and deadlines, Scheduling and tracking, Logic
 
 === Tan Zhen Yong
 image::xenonym.jpg[width="150", align="left"]
-{empty}[http://github.com/Xenonym[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/Xenonym[github]] [<<Xenonym#, portfolio>>]
 
 Role: Team Lead +
 Responsibilities: Storage, Code Quality

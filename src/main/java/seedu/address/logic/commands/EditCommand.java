@@ -26,6 +26,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -109,8 +110,15 @@ public class EditCommand extends UndoableCommand {
         Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark,
-                updatedTags);
+        Set<Relationship> remainRelationship = personToEdit.getRelationships(); // relationships are edited elsewhere
+        Person newPerson = new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark,
+                updatedTags, remainRelationship);
+
+        Set<Relationship> newPersonRelationship = newPerson.getRelationships();
+        for (Relationship relationship: newPersonRelationship) {
+            relationship.replacePerson(personToEdit, newPerson);
+        }
+        return newPerson;
     }
 
     @Override
@@ -142,6 +150,7 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private Remark remark;
         private Set<Tag> tags;
+        private Set<Relationship> relationships;
 
         public EditPersonDescriptor() {}
 

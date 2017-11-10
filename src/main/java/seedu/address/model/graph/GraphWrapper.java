@@ -5,12 +5,14 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Set;
 
+import org.graphstream.algorithm.Dijkstra;
+import org.graphstream.algorithm.WidestPath;
 import org.graphstream.graph.Edge;
+import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.graph.implementations.SingleNode;
 import org.graphstream.ui.layout.Layout;
 import org.graphstream.ui.layout.Layouts;
-import org.graphstream.ui.spriteManager.SpriteManager;
 import org.graphstream.ui.view.View;
 import org.graphstream.ui.view.Viewer;
 
@@ -30,6 +32,7 @@ import seedu.address.ui.GraphDisplay;
 public class GraphWrapper {
 
     public static final String MESSAGE_PERSON_DOES_NOT_EXIST = "The person does not exist in this address book.";
+    private static final GraphWrapper instance = new GraphWrapper();
     private static final String graphId = "ImARandomGraphID";
 
     private SingleGraph graph;
@@ -38,11 +41,13 @@ public class GraphWrapper {
     private View view;
     private Model model;
     private ObservableList<ReadOnlyPerson> filteredPersons;
+    private boolean rebuildNext;
 
     private final String nodeAttributeNodeLabel = "ui.label";
+    private final String nodeAttributeCe = "ce";
     private final String nodeAttributePerson = "Person";
 
-    public GraphWrapper() {
+    private GraphWrapper() {
         this.graph = new SingleGraph(graphId);
         initialiseRenderer();
         initialiseViewer();
@@ -53,10 +58,14 @@ public class GraphWrapper {
      */
     public SingleGraph buildGraph(Model model) {
         requireNonNull(model);
-        this.clear();
-        this.setData(model);
-        this.initiateGraphNodes();
-        this.initiateGraphEdges();
+        if (rebuildNext) {
+            this.clear();
+            this.setData(model);
+            this.initiateGraphNodes();
+            this.initiateGraphEdges();
+        } else {
+            rebuildNext = true;
+        }
 
         graph.setAttribute("ui.stylesheet", GraphDisplay.getGraphDisplayStylesheet());
 
@@ -82,6 +91,43 @@ public class GraphWrapper {
         }
     }
 
+    //@@author Xenonym
+    /**
+     * Highlights the shortest path between two people with the highest confidence.
+     * Paths with higher minimum confidence estimates are preferred.
+     * Cancels next graph rebuild for styling to remain.
+     * @return the number of nodes in the path between the two given people.
+     */
+    public int highlightShortestPath(ReadOnlyPerson from, ReadOnlyPerson to) {
+        WidestPath widestPath = new WidestPath(Dijkstra.Element.EDGE, null, nodeAttributeCe);
+        Node fromNode;
+        Node toNode;
+
+        resetGraph(); // reset graph to clear previously highlighted path first, if any
+        try {
+            fromNode = graph.getNode(getNodeIdFromPerson(from));
+            toNode = graph.getNode(getNodeIdFromPerson(to));
+        } catch (IllegalValueException ive) {
+            throw new AssertionError("impossible to have nonexistent persons in graph");
+        }
+
+        widestPath.init(graph);
+        widestPath.setSource(fromNode);
+        widestPath.compute();
+
+        for (Node n : widestPath.getPathNodes(toNode)) {
+            n.addAttribute("ui.style", "fill-color: blue;");
+        }
+
+        for (Edge e : widestPath.getPathEdges(toNode)) {
+            e.addAttribute("ui.style", "fill-color: red;");
+        }
+
+        rebuildNext = false;
+        return widestPath.getPath(toNode).getNodeCount();
+    }
+
+
     /**
      * Initialise advanced renderer for integrated graph display.
      */
@@ -99,6 +145,11 @@ public class GraphWrapper {
         viewer.enableAutoLayout(layoutAlgorithm);
         viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.EXIT);
         this.view = viewer.addDefaultView(false);
+        rebuildNext = true;
+    }
+
+    public static GraphWrapper getInstance() {
+        return instance;
     }
 
     private void setData(Model model) {
@@ -148,7 +199,8 @@ public class GraphWrapper {
             for (Relationship relationship: relationshipSet) {
                 Edge edge = addEdge(relationship.getFromPerson(), relationship.getToPerson(),
                         relationship.getDirection());
-                labelGraphEdge(relationship, edge);
+                 edge.addAttribute(nodeAttributeCe, relationship.getConfidenceEstimate().value);
+                 labelGraphEdge(relationship, edge);
             }
         }
 
@@ -280,5 +332,11 @@ public class GraphWrapper {
         graph.clear();
         this.model = null;
         this.filteredPersons = null;
+    }
+
+    private void resetGraph() {
+        graph.clear();
+        initiateGraphNodes();
+        initiateGraphEdges();
     }
 }

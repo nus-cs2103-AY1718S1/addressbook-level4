@@ -223,6 +223,7 @@ This section describes some noteworthy details on how certain features are imple
 === addRelationship command
 
 The addRelationship command adds a directed or undirected relationship between two persons in the address book.
+Name and confidence estimate are the optional fields in this command.
 The user is able to view the changes in the relationships in the graph window.
 
 ==== Design Considerations
@@ -318,6 +319,7 @@ In order to enhance the `find` command, the `find` command is extended to suppor
 **Alternative 2:** Users can search within an arbitrary number of narrowed fields (e.g. can search for names and emails only, or search for names, emails, and addresses). +
 **Pros:** More search options available for users, more advanced search functions. +
 **Cons:** Harder to implement since the parser will have to handle more prefixes.
+//end::find[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -473,31 +475,31 @@ A separate parser for phone, email, address and remark are used to accommodate t
 **Cons:** The Tag may be more difficult to find and more work is needed to change the find tag command. Additionally, the user interface of tag command also needs to be changed to accommodate long tags. +
 // end::EnhancedAddCommand[]
 
-// tag::clearhistory[]
-=== `clearhistory` command
+// tag::clearHistory[]
+=== `clearHistory` command
 
-The `clearhistory` command is implemented as a regular command that calls `.clear()` methods added to `CommandHistory` and `UndoRedoStack`, which clears the command history and the undo/redo stack respectively.
+The `clearHistory` command is implemented as a regular command that calls `.clear()` methods added to `CommandHistory` and `UndoRedoStack`, which clears the command history and the undo/redo stack respectively.
 
 ==== Design Considerations
 
-**Aspect:** Type of `clearhistory` command +
+**Aspect:** Type of `clearHistory` command +
 **Alternative 1 (current choice):** `Command` +
 **Pros:** History is permanently cleared. +
 **Cons:** Impossible to undo accidental clearing of history, meaning all undoable changes become permanent. +
 **Alternative 2:** `UndoableCommand` +
 **Pros:** Possible to undo accidental clearing of history. +
-**Cons:** Since the most likely use for `clearhistory` is for it to be permanent, having it be undoable is counterintuitive to user expectations.
+**Cons:** Since the most likely use for `clearHistory` is for it to be permanent, having it be undoable is counterintuitive to user expectations.
 
 ---
 
-**Aspect:** Behaviour of `clearhistory` command on empty history +
+**Aspect:** Behaviour of `clearHistory` command on empty history +
 **Alternative 1 (current choice):** Clear anyway and indicate success +
 **Pros:** Simple to implement, no additional cases to take care of. +
 **Cons:** May be confusing to declare an empty history cleared. +
 **Alternative 2:** Indicate that history is empty. +
 **Pros:** Clearer messages about the state of the command history. +
 **Cons:** More complex to implement, and the end result of clearing an empty history also results in a cleared history, meaning the user intention of clearing their history is fufilled regardless of which alternative is chosen.
-// end::clearhistory[]
+// end::clearHistory[]
 
 === Logging
 
@@ -921,7 +923,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |update a person's details |update a person's details without having to create a new contact
 
-|`*` |user |update the link:#confidence-estimate[confidence estimate] on a person's attributes |update confidence in pieces of information
+|`* *` |user |update link:#name[name of the relationship] of a relationship |show that two persons know each other via a specific method
+
+|`* *` |user |update link:#confidence-estimate[confidence estimate] of a relationship |differentiate between verified and unverified pieces of information
 
 |`*` |user |change the colour of the network |personalise my address book
 
@@ -1090,18 +1094,14 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Add a named relationship between two persons
+=== Use case: Delete a relationship between two persons
 
 *MSS*
 
 1.  User requests to list persons
 2.  AddressBook shows a list of persons
-3.  User requests to add an relationship between two specific persons
-4.  AddressBook adds an relationship between those two persons
-5.  User requests to show a list of relationships
-6.  AddressBook shows a list of relationships
-7.  User requests to add a name to that relationship
-8.  AddressBook adds a name to that relationship
+3.  User requests to delete a relationship between two specific persons
+4.  AddressBook deletes the relationship between those two persons
 +
 Use case ends.
 
@@ -1118,13 +1118,6 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
-
-* 7a. The index of relationship given to be added name on is invalid.
-+
-[none]
-** 7a1. AddressBook shows an error message.
-+
-Use case resumes at step 6.
 
 [discrete]
 === Use case: Add a remark

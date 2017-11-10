@@ -13,7 +13,7 @@ import seedu.address.model.tag.Tag;
  */
 public class ColourTagCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "colourtag";
+    public static final String COMMAND_WORD = "colourTag";
     public static final String COMMAND_ALIAS = "ct";
 
     public static final String COMMAND_PARAMETERS = "TAG (must be alphanumeric) COLOUR";

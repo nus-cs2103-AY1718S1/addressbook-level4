@@ -9,6 +9,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ClearHistoryCommand;
 import seedu.address.logic.commands.ColourTagCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteRelationshipCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -16,6 +17,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RelPathCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -35,6 +37,7 @@ public class Commands {
         ClearHistoryCommand.COMMAND_WORD,
         ColourTagCommand.COMMAND_WORD,
         DeleteCommand.COMMAND_WORD,
+        DeleteRelationshipCommand.COMMAND_WORD,
         EditCommand.COMMAND_WORD,
         ExitCommand.COMMAND_WORD,
         FindCommand.COMMAND_WORD,
@@ -42,6 +45,7 @@ public class Commands {
         HistoryCommand.COMMAND_WORD,
         ListCommand.COMMAND_WORD,
         RedoCommand.COMMAND_WORD,
+        RelPathCommand.COMMAND_WORD,
         RemarkCommand.COMMAND_WORD,
         RemoveTagCommand.COMMAND_WORD,
         SelectCommand.COMMAND_WORD,
@@ -57,6 +61,7 @@ public class Commands {
         ClearHistoryCommand.COMMAND_ALIAS,
         ColourTagCommand.COMMAND_ALIAS,
         DeleteCommand.COMMAND_ALIAS,
+        DeleteRelationshipCommand.COMMAND_ALIAS,
         EditCommand.COMMAND_ALIAS,
         ExitCommand.COMMAND_ALIAS,
         FindCommand.COMMAND_ALIAS,
@@ -64,6 +69,7 @@ public class Commands {
         HistoryCommand.COMMAND_ALIAS,
         ListCommand.COMMAND_ALIAS,
         RedoCommand.COMMAND_ALIAS,
+        RelPathCommand.COMMAND_ALIAS,
         RemarkCommand.COMMAND_ALIAS,
         SelectCommand.COMMAND_ALIAS,
         SortCommand.COMMAND_ALIAS,
@@ -78,6 +84,7 @@ public class Commands {
         ClearHistoryCommand.SHORT_MESSAGE_USAGE,
         ColourTagCommand.SHORT_MESSAGE_USAGE,
         DeleteCommand.SHORT_MESSAGE_USAGE,
+        DeleteRelationshipCommand.SHORT_MESSAGE_USAGE,
         EditCommand.SHORT_MESSAGE_USAGE,
         ExitCommand.SHORT_MESSAGE_USAGE,
         FindCommand.SHORT_MESSAGE_USAGE,
@@ -85,6 +92,7 @@ public class Commands {
         HistoryCommand.SHORT_MESSAGE_USAGE,
         ListCommand.SHORT_MESSAGE_USAGE,
         RedoCommand.SHORT_MESSAGE_USAGE,
+        RelPathCommand.SHORT_MESSAGE_USAGE,
         RemarkCommand.SHORT_MESSAGE_USAGE,
         RemoveTagCommand.SHORT_MESSAGE_USAGE,
         SelectCommand.SHORT_MESSAGE_USAGE,
