@@ -25,8 +25,6 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.module.ReadOnlyLesson;
 
-import javax.swing.text.View;
-
 //@@author junming403
 public class ViewCommandTest {
 
@@ -42,7 +40,7 @@ public class ViewCommandTest {
     }
 
     @Test
-    public void execute_viewLesson_Failure() {
+    public void execute_viewLesson_failure() {
 
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
 
