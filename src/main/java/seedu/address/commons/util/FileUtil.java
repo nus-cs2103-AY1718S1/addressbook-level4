@@ -21,7 +21,7 @@ public class FileUtil {
     }
 
     //@@author chrisboo
-    public static File getFileFromChooser() {
+    public static File getFileFromChooser(boolean isNewFile) {
         FileChooser fileChooser = new FileChooser();
 
         // Set and add extension filter
@@ -29,8 +29,8 @@ public class FileUtil {
             "XML files (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extFilter);
 
-        // Show open file dialog and return selected file
-        return fileChooser.showOpenDialog(new Stage());
+        return isNewFile ? fileChooser.showSaveDialog(new Stage())
+                         : fileChooser.showOpenDialog(new Stage());
     }
     //@@author
 

@@ -14,7 +14,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
 import seedu.address.commons.core.Config;
@@ -218,7 +217,7 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleOpen() {
-        File file = FileUtil.getFileFromChooser();
+        File file = FileUtil.getFileFromChooser(false);
 
         raise(new OpenAddressBookRequestEvent(file));
     }
@@ -228,15 +227,7 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleNew() {
-        FileChooser fileChooser = new FileChooser();
-
-        // Set extension filter
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-            "XML files (*.xml)", "*.xml");
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        // Show open file dialog
-        File file = fileChooser.showSaveDialog(new Stage());
+        File file = FileUtil.getFileFromChooser(true);
 
         raise(new NewAddressBookRequestEvent(file));
     }
