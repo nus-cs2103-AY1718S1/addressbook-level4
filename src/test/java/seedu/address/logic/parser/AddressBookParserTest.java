@@ -7,10 +7,10 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.APPOINTMENT_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PICTURE_PATH;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PATH;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.model.util.SampleDataUtil.SAMPLE_PICTURE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -128,7 +128,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_changePic() throws Exception {
-        final String picturePath = VALID_PICTURE_PATH;
+        final String picturePath = SAMPLE_PICTURE;
         ChangePicCommand command = (ChangePicCommand) parser.parseCommand(ChangePicCommand.COMMAND_WORD + " "
                     + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_PATH + " " + picturePath);
         assertEquals(new ChangePicCommand(INDEX_FIRST_PERSON, picturePath), command);

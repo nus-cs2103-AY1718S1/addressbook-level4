@@ -39,7 +39,6 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_GROUP_NAME_FAMILY = "Family";
     public static final String VALID_GROUP_NAME_CS2103 = "CS2103";
-    public static final String VALID_PICTURE_PATH = "pic1.jpg";
     public static final String VALID_APPOINTMENT = "01/01/2020 00:00 60";
 
 
