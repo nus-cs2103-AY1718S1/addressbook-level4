@@ -78,19 +78,21 @@ Examples:
 === Adding a relationship between two persons: `addRelationship`
 
 Adds a relationship between two persons in the address book +
-Format: `addRelationship FROM_INDEX TO_INDEX DIRECTION`
+Format: `addRelationship FROM_INDEX TO_INDEX DIRECTION [n/NAME] [ce/CONFIDENCE_ESTIMATE]`
 
 ****
 * The indexes of the persons are based on the most recent listing shown
 * The direction of the relationship can only be `directed` or `undirected`. The direction is case-insensitive
 * The order of the indexes matters only when the direction is `directed`, as the relationship points from the person with FROM_INDEX to the person with TO_INDEX
 * At any point of time there will be at most 1 relationship between any two persons. If adding a different relationship from the existing one between two persons is attempted, upon the addition the previous relationship between these two persons will be removed.
+* `NAME` referring to the name of the relationship *can only be alphanumeric*.
+* `CONFIDENCE_ESTIMATE` refers to the confidence estimate the user gives to the relationship. `CONFIDENCE_ESTIMATE` *can only be numeric*.
 ****
 
 Examples:
 
-* `addRelationship 1 3 directed`
-* `addRelationship 2 3 undirected`
+* `addRelationship 1 3 directed ce/12.32131`
+* `addRelationship 2 3 undirected n/husband and wife ce/123123`
 
 === Listing all persons : `list`
 
@@ -254,6 +256,24 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+=== Deleting a relationship between two persons : `deleteRelationship`
+
+Deletes the relationship between two persons from the address book. +
+Format: `delete INDEX_FROM_PERSON INDEX_TO_PERSON`
+
+****
+* Deletes the relationship between two persons as specified using the indexes.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`deleteRelationship 1 2` +
+Deletes the relationship between the first and the 2nd person in the address book.
+
+
 === Removing a tag: `removeTag`
 
 Removes the specific tag from the address book. +
@@ -269,10 +289,30 @@ Example:
 * `removeTag friend` +
 Removes the tag `friend` from all the persons in the address book.
 
-=== Setting a tag colour: `colourtag`
+// tag::relPath[]
+=== Finding shortest relationship path between two people: `relPath`
+
+Highlights the shortest relationship path between two people in the address book in the graph display, if it exists. +
+Format: `relPath FROM_INDEX TO_INDEX`
+
+****
+* Highlights the shortest relationship path between two people as specified by `FROM_INDEX` and `TO_INDEX`.
+* Paths with higher minimum confidence estimates are preferred.
+* The indices refers to the index number shown in the most recent listing.
+* The indices *must be positive integers* 1, 2, 3, ...
+****
+
+Example:
+
+* `relPath 1 2` +
+Highlights the shortest path between the first and second person in the address book, if it exists.
+// end::relPath[]
+
+// tag::colourTag[]
+=== Setting a tag colour: `colourTag`
 
 Sets a colour of a tag to a new colour. +
-Format: `colourtag TAG COLOUR`
+Format: `colourTag TAG COLOUR`
 
 ****
 * Sets the colour of tag `TAG` to `COLOUR`.
@@ -283,8 +323,9 @@ Format: `colourtag TAG COLOUR`
 
 Example:
 
-* `colourtag friend red` +
+* `colourTag friend red` +
 Sets the colour of the tag `friend` to red on next program start.
+// end::colourTag[]
 
 === Selecting a person : `select`
 
@@ -372,16 +413,37 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Clearing command history : `clearhistory`
+// tag::clearHistory[]
+=== Clearing command history : `clearHistory`
 
 Clears the command history. +
-Format: `clearhistory`
+Format: `clearHistory`
 
 [WARNING]
 ====
 After the command history is cleared, you will not be able to undo any previous commands.
 ====
+// end::clearHistory[]
 
+=== Adding remarks to a person: `remark`
+
+Adds a remark to a person in the address book +
+Format: `remark INDEX r/REMARK`
+
+****
+* Add a remark to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing.
+  The index *must be a positive integer* 1, 2, 3, ...
+* Existing values will be updated to the input values.
+* When editing remark, the existing remark of the person will be removed i.e adding of remark is not cumulative.
+* You can remove the remark of a person by typing `r/` without specifying any remarks after it.
+****
+
+Examples:
+
+* `remark 3 r/Is the husband of Jessie`
+* `remark 2 r/Is the wife of John`
+
+// tag::backup[]
 === Backing up: `backup`
 
 Backs up the current address book to a fixed location (`addressbook.xml.bak` in current working directory).
@@ -390,6 +452,7 @@ Backs up the current address book to a fixed location (`addressbook.xml.bak` in 
 ====
 Any existing backup at the same location will be overwritten after running this command.
 ====
+// end::backup[]
 
 === Exiting the program : `exit`
 
@@ -463,10 +526,12 @@ Example:
 `deleteConfidenceEstimate 2 Address` +
 Deletes a confidence estimate from the `Address` of the 2nd person in the list.
 
+// tag::listRelated[]
 === List all related persons : `listrelated`
 
 Shows a list of all persons in the address book related to a given person. +
 Format: `listrelated INDEX`
+// end::listRelated[]
 
 === View shortest relationship path between two persons : `viewpath`
 
@@ -497,18 +562,22 @@ To set a new password, a user must first be logged into Intelli with the previou
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` +
 e.g. `add n/Jane`
-* *Add Relationship*: `addRelationship FROM_INDEX TO_INDEX DIRECTION` +
-e.g. `addRelationship 1 3 directed`
+* *AddRelationship* : `addRelationship INDEX_FROM_PERSON INDEX_TO_PERSON DIRECTION [n/NAME] [ce/CONFIDENCE_ESTIMATE}` +
+e.g. `addRelationship 2 3 directed ce/1212312.2 n/is cousin of`
 * *Back up* : `backup`
-* *Colour tags* : `colourtag TAG COLOUR` +
-e.g. `colourtag friend red`
+* *AddRelationship* : `addRelationship INDEX_FROM_PERSON INDEX_TO_PERSON DIRECTION [n/NAME] [ce/CONFIDENCE_ESTIMATE}` +
+e.g. `addRelationship 2 3 directed ce/1212312.2 n/is cousin of`
+* *Colour tags* : `colourTag TAG COLOUR` +
+e.g. `colourTag friend red`
 * *Clear* : `clear`
-* *Clear history* : `clearhistory`
+* *Clear history* : `clearHistory`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *DeleteRelationship* : `deleteRelationship FROM_PERSON_INDEX TO_PERSON_INDEX` +
+e.g. `deleteRelationship 2 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Exit* : `exit`
@@ -520,6 +589,8 @@ e.g. `find James Jake`
 * *Redo* : `redo`
 * *Remove tag* : `removeTag TAG` +
 e.g. `removeTag friend`
+* *Find shortest relationship path* : `relPath FROM_INDEX TO_INDEX` +
+e.g. `relPath 1 2`
 * *Sort* : `sort`
 * *Select* : `select INDEX` +
 e.g.`select 2`

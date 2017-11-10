@@ -14,6 +14,7 @@ import seedu.address.logic.commands.ClearHistoryCommand;
 import seedu.address.logic.commands.ColourTagCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteRelationshipCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -21,6 +22,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RelPathCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -84,8 +86,16 @@ public class AddressBookParser {
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
 
+        case DeleteRelationshipCommand.COMMAND_WORD:
+        case DeleteRelationshipCommand.COMMAND_ALIAS:
+            return new DeleteRelationshipCommandParser().parse(arguments);
+
         case RemoveTagCommand.COMMAND_WORD:
             return new RemoveTagCommandParser().parse(arguments);
+
+        case RelPathCommand.COMMAND_WORD:
+        case RelPathCommand.COMMAND_ALIAS:
+            return new RelPathCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:
