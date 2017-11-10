@@ -21,7 +21,6 @@ public class ReplyCommand extends Command {
     public static final String MESSAGE_COMMAND_INVALID = "No command to confirm execution.";
     private static final String MESSAGE_COMMAND_MISHANDLED = "Command handled inappropriately!";
 
-    private static ReadOnlyPerson personToEdit;
     private static Person storedPerson;
 
     private String toReply;
@@ -80,11 +79,4 @@ public class ReplyCommand extends Command {
         storedPerson = person;
     }
 
-    /**
-     * Stores original person to be edited and the final editedPerson.
-     */
-    public static void storeEditCommandParameter(ReadOnlyPerson original, Person editedPerson) {
-        personToEdit = original;
-        storedPerson = editedPerson;
-    }
 }
