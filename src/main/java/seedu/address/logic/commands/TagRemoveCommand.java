@@ -106,7 +106,14 @@ public class TagRemoveCommand extends UndoableCommand {
                 throw new AssertionError("The target person cannot be missing");
             }
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            editedPersonDisplay.append(String.format(MESSAGE_REMOVE_TAG_SUCCESS, editedPerson));
+            int tagListStringStartIndex = 1;
+            int tagListStringEndIndex;
+            String tagChangedDisplayRaw = editedPerson.getTags().toString();
+            tagListStringEndIndex = tagChangedDisplayRaw.length() - 1;
+            String tagChangedDisplay = editedPerson.getName() + " Tag List: "
+                    + tagChangedDisplayRaw.substring(tagListStringStartIndex, tagListStringEndIndex);
+
+            editedPersonDisplay.append(String.format(MESSAGE_REMOVE_TAG_SUCCESS, tagChangedDisplay));
             if (i != indexList.size() - 1) {
                 editedPersonDisplay.append("\n");
             }

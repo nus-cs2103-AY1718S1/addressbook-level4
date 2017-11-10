@@ -227,7 +227,7 @@ Deletes the 2nd and 3rd person in the address book
 Deletes the 1st person in the results of the `find` command
 // end::delete[]
 
-// tag::tadd[]
+// tag::tagadd[]
 === Adding a tag to a person(s) : `t-add` _[Since v1.1]_
 
 You can add a tag to specified person(s) in the address book current listing.
@@ -245,9 +245,9 @@ Examples:
 * `list` +
 `t-add 2 3 friends` +
 This command adds the tag friends to the 2nd and 3rd person in the address book
-// end::tadd[]
+// end::tagadd[]
 
-// tag::taddfav[]
+// tag::tagaddfav[]
 === Setting a person(s) as "favourite" : `t-add` _[Since v1.3]_
 
 You can mark specified person(s) from the address book as favourite.
@@ -269,9 +269,9 @@ This command sets 2nd and 3rd person in the address book as favourite
 * `list` +
 `t-add 2 3 fav` +
 This command sets 2nd and 3rd person in the address book as favourite
-// end::taddfav[]
+// end::tagaddfav[]
 
-// tag::tremove[]
+// tag::tagremove[]
 === Removing a tag from person(s) : `t-remove` _[Since v1.2]_
 
 You can remove a tag from specified person(s) from the address book.
@@ -292,9 +292,9 @@ Examples:
 This command removes the tag `friends` from the 2nd and 3rd person in the address book
 * `t-remove friends` +
 This command removes the tag `friends` from all person(s) with the tag `friends` in the current listing
-// tag::tremove[]
+// tag::tagremove[]
 
-// tag::tremovefav[]
+// tag::tagremovefav[]
 === Removing a person(s) from favourite : `t-remove` _[Since v1.2]_
 
 You can remove specified person(s) in the address book from your `favourite` list.
@@ -315,9 +315,9 @@ This command removes the tag `favourite` from the 2nd and 3rd person in the addr
 
 * `t-remove fav` +
 This command removes the tag `fav` from all person(s) with the the tag `fav` in the address book
-// end::tremovefav[]
+// end::tagremovefav[]
 
-// tag::tfind[]
+// tag::tagfind[]
 === Find the person(s) with given tags: `t-find` _[Since v1.3]_
 
 You can find all persons with the given tag.
@@ -334,12 +334,32 @@ Examples:
 This command lists all the people with tag `friend`
 * `t-find frien`
 This command could also list all the people with tag `friend` if any
-// end::tfind[]
+// end::tagfind[]
+
+// tag::changetheme[]
+=== Change the theme according to user input `theme` _[Since v1.5]_
+
+You can change the current theme into your preferred one.
+
+Format: `theme THEME`
+
+****
+* Currently there are 3 themes available, `Twilight`, `Sunburst`, `Minimalism`.
+* `Twilight` is dark in color; `Sunburst` is bright and lively; `Minimalism` is basic and is the default.
+* You can key in `Twilight` or `dark` or `1` to change into dark theme; `Sunburst` or `bright` or `2`to bright theme and `Minimalism` or `default` or `3` to default theme.
+* When you only key in `theme`, the result box would display "1.Twilight 2.Sunburst 3.Minimalism", you can simply key in the index after that to change into your preferred theme.
+* The result indicates that you have successfully changed into your theme of choice.
+****
 
 Examples:
 
-* `t-find friend classmate`
-Shows all the people with tag `friend` or tag `classmate`
+* `theme dark`
+This command changed to current theme to Twilight
+* `theme Twilight`
+This command changed to current theme to Twilight
+* `theme 1`
+This command changed to current theme to Twilight
+// end::changetheme[]
 
 // tag::map[]
 === Find the location of a person using Google Map: `m-show` _[Since v1.3]_
