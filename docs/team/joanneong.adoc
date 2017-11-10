@@ -1,0 +1,117 @@
+= Joanne Ong - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Intelli
+Intelli is a desktop relationship tracker used by private investigators (PI) to manage their information and leads. The PI interacts with it using a CLI, and it has a GUI created with JavaFX and GraphStream. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F10-B1/main/blob/master/collated/main/joanneong.md[Functional code]] [https://github.com/CS2103AUG2017-F10-B1/main/blob/master/collated/test/joanneong.md[Test code]]
+
+=== Enhancement Added: Enhanced find command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+---
+This offers a lot of flexibility for users who wish to find different information, and does not limit them to a simple name search.
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Command autocompletion
+
+==== External behavior
+
+---
+When the user types a command in the command box, a list of suggestions appears which can be selected to complete the command.
+
+
+==== Justification
+
+---
+Certain commands are lengthy, and users who would like to enter commands quickly will find this a handy feature.
+
+
+==== Implementation
+
+---
+This has been implemented by binding an autocompletion binding to the command box.
+
+
+=== Enhancement Added: Command information display
+
+==== External behavior
+
+---
+When the user types in the command box, and the input matches a command word, the corresponding usage information will be displayed.
+
+
+==== Justification
+
+---
+There are commands which require a number of parameters, and this can be a hassle for users to remember.
+
+
+==== Implementation
+
+---
+This is done by adding a new display component to the main window, and binding changes to the command box to this new component.
+
+
+=== Enhancement Added: Integrated graph display
+
+==== External behavior
+
+---
+This ensures that the graph display is successfully integrated into the application instead of opening an additional window.
+
+
+==== Justification
+
+---
+The application should be a coherent whole instead of splitting into two unsightly windows.
+
+
+==== Implementation
+
+---
+This is done with the help of Java SwingNodes and JComponents.
+
+
+=== Enhancement Added: Enhanced graph display
+
+==== External behavior
+
+---
+Improves the aesthetics of the integrated graph display.
+
+
+==== Justification
+
+---
+This increases the attractiveness of the application, and improves the user interface.
+
+
+=== Other contributions
+
+* Tidy up the user guide for easier perusal

@@ -126,6 +126,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 * `edit 3 r/` +
 Clears the existing remark of the 3rd person.
 
+// tag::find[]
 === Locating persons: `find`
 
 Finds persons whose details contain any of the given keywords. +
@@ -233,6 +234,7 @@ Returns any persons having tags matching `friends`
 Returns any persons having tags containing the phrase `frie`
 * `find t/friends family` +
 Returns any persons having tags matching `friends` AND/OR `family`
+// end::find[]
 
 === Deleting a person : `delete`
 
