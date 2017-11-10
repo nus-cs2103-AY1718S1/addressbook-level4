@@ -23,6 +23,13 @@ import seedu.address.model.reminder.ReadOnlyReminder;
  */
 public class ReminderCard extends UiPart<Region> {
 
+    public static final int TIMER_DELAY = 0; // in milliseconds
+    public static final int TIMER_PERIOD = 3600000; // in milliseconds
+
+    public static final int GREEN_WARNING_DAYS_LEFT = 7;
+    public static final int YELLOW_WARNING_DAYS_LEFT = 3;
+    public static final int ORANGE_WARNING_DAYS_LEFT = 0;
+
     private static final String FXML = "ReminderListCard.fxml";
 
     private static String[] colors = { "red", "gold", "blue", "purple", "orange", "brown",
@@ -110,9 +117,9 @@ public class ReminderCard extends UiPart<Region> {
         int daysBetween = (int) ChronoUnit.DAYS.between(currentTime, deadline);
 
         setDaysCountdownColor(daysBetween);
-        if (daysBetween == 0) {
+        if (daysBetween == ORANGE_WARNING_DAYS_LEFT) {
             daysCountdown.setText("today");
-        } else if (daysBetween < 0) {
+        } else if (daysBetween < ORANGE_WARNING_DAYS_LEFT) {
             daysCountdown.setText("overdue");
         } else {
             daysCountdown.setText(daysBetween + " day(s)" + " left");
@@ -130,15 +137,15 @@ public class ReminderCard extends UiPart<Region> {
                 Platform.runLater(() -> daysCountdown.setText(newDaysBetween + " day(s)" + " left"));
             }
         };
-        timer.scheduleAtFixedRate(task, 0, 3600000);
+        timer.scheduleAtFixedRate(task, TIMER_DELAY, TIMER_PERIOD);
     }
 
     private void setDaysCountdownColor(int daysBetween) {
-        if (daysBetween >= 7) {
+        if (daysBetween >= GREEN_WARNING_DAYS_LEFT) {
             daysCountdown.setStyle("-fx-text-fill: " + "greenyellow");
-        } else if (daysBetween >= 3) {
+        } else if (daysBetween >= YELLOW_WARNING_DAYS_LEFT) {
             daysCountdown.setStyle("-fx-text-fill: " + "yellow");
-        } else if (daysBetween >= 0) {
+        } else if (daysBetween >= ORANGE_WARNING_DAYS_LEFT) {
             daysCountdown.setStyle("-fx-text-fill: " + "orange");
         } else {
             daysCountdown.setStyle("-fx-text-fill: " + "red");
