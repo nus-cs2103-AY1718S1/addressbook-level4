@@ -4,7 +4,6 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -19,6 +18,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.DeselectionEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
@@ -160,22 +160,20 @@ public class MainWindow extends UiPart<Region> {
      * Should only display welcome page without contacts.
      */
     void fillInnerPartsForStartUp() {
-        Platform.runLater(() -> {
-            startUpPanel = new StartUpPanel(primaryStage);
-            infoPanelPlaceholder.getChildren().clear();
-            infoPanelPlaceholder.getChildren().add(startUpPanel.getRoot());
+        startUpPanel = new StartUpPanel(primaryStage);
+        infoPanelPlaceholder.getChildren().clear();
+        infoPanelPlaceholder.getChildren().add(startUpPanel.getRoot());
 
-            personListStartUpPanel = new PersonListStartUpPanel();
-            personListPanelPlaceholder.getChildren().clear();
-            personListPanelPlaceholder.getChildren().add(personListStartUpPanel.getRoot());
+        personListStartUpPanel = new PersonListStartUpPanel();
+        personListPanelPlaceholder.getChildren().clear();
+        personListPanelPlaceholder.getChildren().add(personListStartUpPanel.getRoot());
 
-            ResultDisplay resultDisplay = new ResultDisplay();
-            resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+        ResultDisplay resultDisplay = new ResultDisplay();
+        resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-            commandBox = new CommandBox(logic);
-            commandBoxPlaceholder.getChildren().clear();
-            commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
-        });
+        commandBox = new CommandBox(logic);
+        commandBoxPlaceholder.getChildren().clear();
+        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
     /**
@@ -223,8 +221,24 @@ public class MainWindow extends UiPart<Region> {
         infoPanelPlaceholder.getChildren().clear();
         infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
     }
-    //@@author
 
+    //@@author khooroko
+    /**
+     * Changes the current theme.
+     */
+    private void changeTheme() {
+        for (String stylesheet : getRoot().getStylesheets()) {
+            if (stylesheet.endsWith("DarkTheme.css")) {
+                getRoot().getStylesheets().remove(stylesheet);
+                getRoot().getStylesheets().add("/view/BrightTheme.css");
+            } else if (stylesheet.endsWith("BrightTheme.css")) {
+                getRoot().getStylesheets().remove(stylesheet);
+                getRoot().getStylesheets().add("/view/DarkTheme.css");
+            }
+        }
+    }
+
+    //@@author
     void hide() {
         primaryStage.hide();
     }
@@ -316,5 +330,14 @@ public class MainWindow extends UiPart<Region> {
         infoPanel = new InfoPanel(logic);
         infoPanelPlaceholder.getChildren().clear();
         infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
+    }
+
+    /**
+     * Handles a request to change theme.
+     */
+    @Subscribe
+    private void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        changeTheme();
     }
 }

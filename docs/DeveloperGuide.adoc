@@ -655,7 +655,7 @@ public boolean test(ReadOnlyPerson person) {
 }
 ----
 
-The list is filtered and updated through the `updateFilteredPersonList` method in the `Model` component. Since the person list is of a `FilteredList<>` type, filtering of the list can be handled by a Java `FilteredList` class method called `setPredicate`.
+The list is filtered and updated through the `ListObserver#updateCurrentFilteredList` method in the `Logic` component so that it works across all lists (master list, blacklist, whitelist and overdue list). Since the person list is of a `FilteredList<>` type, filtering of the list can be handled by Java's `FilteredList` class method called `setPredicate`.
 
 ==== Design Considerations
 
@@ -666,7 +666,6 @@ The list is filtered and updated through the `updateFilteredPersonList` method i
 **Alternative 2:** Predicate returns true only if the person contains the exact tags that are specified by the user +
 **Pros:** Shows the most relevant results if the user wants to search for an exact match. +
 **Cons:** If the user remembers one of the tags wrongly (but it is still a valid tag), there will be no contacts found.
-
 // end::filterTags[]
 
 // tag::loginLogout[]
@@ -701,6 +700,304 @@ if (numOfSpaces >= 2 && currentInput.charAt(currentInput.length() - 1) != ' '
 ----
 **Cons:** Although '\*' is an invalid password character, the user may still use it while entering the password. If the user types '*', the cursor will remain at its original position. The user will be under the impression that the command box is not registering what was typed.
 // end::loginLogout[]
+
+// tag::sort[]
+=== Sorting mechanism
+
+Sorting is done within the `UniquePersonList` class.
+[source, java]
+----
+public void sortBy(String order) throws IllegalArgumentException {
+    switch (order) {
+    case "name":
+        internalList.sort((Person p1, Person p2) -> p1.getName().compareTo(p2.getName()));
+        break;
+    case "debt":
+        internalList.sort((Person p1, Person p2) -> p2.getDebt().compareTo(p1.getDebt()));
+        break;
+    case "cluster":
+        internalList.sort((Person p1, Person p2) -> p1.getCluster().compareTo(p2.getCluster()));
+        break;
+    case "deadline":
+        internalList.sort((Person p1, Person p2) -> p1.getDeadline().compareTo(p2.getDeadline()));
+        internalList.sort((Person p1, Person p2) -> Boolean.compare(p1.isWhitelisted(), p2.isWhitelisted()));
+        break;
+    default:
+        throw new IllegalArgumentException("Invalid sort ordering");
+    }
+}
+----
+The `sort` command can take in a `String` that determines how the contacts should be sorted. If no ordering is
+specified, the contacts will be sorted by ascending lexicographical order by default. +
+[source, java]
+----
+public class SortCommandParser implements Parser<SortCommand> {
+    public SortCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        String trimmedArgs = args.trim().toLowerCase();
+        switch (trimmedArgs) {
+        case "":
+        case "name":
+        case "debt":
+        case "cluster":
+        case "deadline":
+            return new SortCommand(trimmedArgs);
+        default:
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        }
+    }
+}
+----
+[source, java]
+----
+public static final String DEFAULT_ORDERING = "name";
+
+public SortCommand(String order) {
+    //validity of order to sort is checked in {@code SortCommandParser}
+    if (order.equals("")) {
+        order = DEFAULT_ORDERING;
+    }
+    this.order = order;
+}
+
+public CommandResult execute() throws CommandException {
+    try {
+        model.sortBy(order);
+    } // irrelevant parts of the method omitted for brevity
+}
+----
+
+==== Design considerations
+
+**Aspect:** Default `sort` +
+**Alternative 1 (current choice):** `Sort` by `name` by default +
+**Pros:** Relatively easy to implement, extremely intuitive. +
+**Alternative 2:** `Sort` by `debt` by default +
+**Pros:** Equally easy to implement. +
+**Cons:** Slightly less intuitive as sorting by `name` is the most prevalent way of sorting contacts. +
+**Alternative 3:** No default `sort`. +
+**Pros:** Extremely easy to implement. +
+**Cons:** Not user-friendly.
+// end::sort[]
+
+// tag::optionalIndex[]
+=== Optional command indexes
+
+It is intuitive to allow commands such as `edit`, `delete`, `borrow` and others to be called on the currently selected
+person instead of always having to supply the `INDEX`. +
+Parsers of commands call a constructor of the commands without an index. Take the `RepaidCommandParser` and `RepaidCommand` for example.
+[source, java]
+----
+public RepaidCommand parse(String args) throws ParseException {
+    try {
+        if (args.trim().equals("")) {
+            return new RepaidCommand();
+        } else {
+            Index index = ParserUtil.parseIndex(args);
+            return new RepaidCommand(index);
+        }
+    } catch (IllegalValueException ive) {
+        throw new ParseException(
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RepaidCommand.MESSAGE_USAGE));
+    }
+}
+----
+[source, java]
+----
+public RepaidCommand() {
+    this.targetIndex = null;
+}
+public CommandResult executeUndoableCommand() throws CommandException {
+    ReadOnlyPerson personToWhitelist = selectPerson(targetIndex);
+    // Perform the command operation as per normal.
+}
+----
+The `selectPerson(Index)` method is placed in the `Command` class, and is used by such index-based commands to select
+the currently selected person to apply the command on if no index is provided.
+[source, java]
+----
+public ReadOnlyPerson selectPerson(Index index) throws CommandException {
+    ReadOnlyPerson selectedPerson;
+    if (index == null) {
+        if (model.getSelectedPerson() == null) {
+            throw new CommandException(Messages.MESSAGE_NO_PERSON_SELECTED);
+        } else {
+            selectedPerson = model.getSelectedPerson();
+        }
+    } else {
+        List<ReadOnlyPerson> lastShownList = listObserver.getCurrentFilteredList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+        selectedPerson = lastShownList.get(index.getZeroBased());
+    }
+    return selectedPerson;
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Executing index-based commands without index. +
+**Alternative 1 (current choice):** Calling a constructor of the `command` without an `Index` initialises its `targetIndex`
+to null, and the null index is handled as a special value during execution. +
+**Pros:** Easy to implement, easy to extend. +
+**Cons:** Although highly unlikely, it may be possible for a `command` to have an unintended null `targetIndex`, which
+will then cause it to behave as an indexless command instead of an error. +
+**Alternative 2:** Find and use the current selection index within the constructor with no parameters. +
+**Pros:** Easier to maintain and test. +
+**Cons:** Difficult to implement as the `model` of a `command` is only set during execution, so it will be hard or even
+impossible to retrieve the current selection in the constructor of a `command`.
+// end::optionalIndex[]
+
+// tag::interest[]
+=== Interest Calculator Mechanism
+
+As a debt collector, it can be troublesome to manage so many debts. The task is made more tedious when the debt collector has to
+consider all the debtor's loan's interest rates as well. Codii is able to automatically calculate a `Person` 's new debt based on his / her's
+interest rate. Whenever the user logs into Codii, the `Model` component, which handles the event `LoginAppRequestEvent` and checks every
+`Person` in the `AddressBook`.
+
+[source, java]
+----
+@Subscribe
+    public void handleLoginUpdateDebt(LoginAppRequestEvent event) {
+        // login is successful
+        if (event.getLoginStatus() == true) {
+            for (ReadOnlyPerson person : allPersons) {
+                if (!person.getInterest().value.equals("No interest set.")
+                        && (person.checkLastAccruedDate(new Date()) != 0)) {
+                    updateDebtFromInterest(person, person.checkLastAccruedDate(new Date()));
+                }
+            }
+        }
+    }
+----
+
+As seen from the above if a `Person` has his / her interest field defined,the event handler checks a `Person` 's debts last accrued date via the method:
+
+[source, java]
+----
+    /**
+     * Compares date of last accrued against current date.
+     * @return number of months the current date is ahead of last accrued date. Returns 0 if
+     * there is no need to increment debt.
+     */
+    @Override
+    public int checkLastAccruedDate(Date currentDate) {
+        if (lastAccruedDate.before(currentDate)) {
+            return DateUtil.getNumberOfMonthBetweenDates(currentDate, lastAccruedDate);
+        } else {
+            return 0;
+        }
+    }
+----
+
+The above method returns the difference in the number of months between the last accrued date and the current date to the event handler. The event
+handler than calls another method to update the `Person` 's debt by passing in the number of months as a parameter:
+
+[source, java]
+----
+    @Override
+    public void updateDebtFromInterest(ReadOnlyPerson person, int differenceInMonths) {
+        String accruedAmount = person.calcAccruedAmount(differenceInMonths);
+        try {
+            Debt amount = new Debt(accruedAmount);
+            addDebtToPerson(person, amount);
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "Should not occur as person obtained from allPersons";
+        } catch (IllegalValueException ive) {
+            assert false : Debt.MESSAGE_DEBT_CONSTRAINTS;
+        }
+    }
+----
+
+From the above code, the `Person` 's debts accrued amount would be calculated by the line:
+
+[source, java]
+----
+String accruedAmount = person.calcAccruedAmount(differenceInMonths);
+----
+
+Their respective debts would then be updated accordingly with the following line:
+
+[source, java]
+----
+addDebtToPerson(person, amount);
+----
+
+==== Design Considerations
+
+**Aspect:** When to update / check a Person's debt. +
+**Alternative 1 (Current choice):** Check through the `AddressBook` in the `Model` component every time the user logs in. +
+**Pros:** Convenient and intuitive to implement for developer. +
+**Cons:** If user never logs out, the debt would not be accrued. +
+**Alternative 2:** Create a `Refresh` command that does the checking instead of relying on the `LoginAppRequestEvent`. +
+**Pros:** User can have the most up-to-date debt as long as he / she remembers to always enter the `Refresh` command. +
+**Cons:** Not convenient for user at all. It is also unlikely that the user would remain logged in for such a long duration. +
+// end::interest[]
+
+// tag::theme[]
+=== Theme Changing Mechanism
+
+The changing of themes is done in the `MainWindow` class, which is the class that holds all the `UI` parts.
+
+[source, java]
+----
+private void changeTheme() {
+    for (String stylesheet : getRoot().getStylesheets()) {
+        if (stylesheet.endsWith("DarkTheme.css")) {
+            getRoot().getStylesheets().remove(stylesheet);
+            getRoot().getStylesheets().add("/view/BrightTheme.css");
+        } else if (stylesheet.endsWith("BrightTheme.css")) {
+            getRoot().getStylesheets().remove(stylesheet);
+            getRoot().getStylesheets().add("/view/DarkTheme.css");
+        }
+    }
+}
+----
+
+The `changeTheme` method is called when a `ChangeThemeRequestEvent` is raised from `ThemeCommand`.
+
+In `MainWindow`:
+[source, java]
+----
+@Subscribe
+private void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    changeTheme();
+}
+----
+In `ThemeCommand`:
+[source, java]
+----
+public CommandResult execute() {
+    EventsCenter.getInstance().post(new ChangeThemeRequestEvent());
+    return new CommandResult(MESSAGE_SUCCESS);
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Condition for changing themes. +
+**Alternative 1 (current choice):** Use `String#endsWith()`. +
+**Pros:** Foolproof, guaranteed to work if the theme exists. +
+**Alternative 2:** Use file paths. +
+**Pros:** Likely to work most of the time if handled well. +
+**Cons:** When debugging, it was found that the path started in the `build` folder instead of the `src` folder. Using
+this method seemed to cause inconsistencies between running the app from an IDE and from the `.jar` file.
+
+---
+
+**Aspect:** Switching of themes. +
+**Alternative 1 (current choice):** Simple toggle between two themes. +
+**Pros:** Easy to implement. +
+**Cons:** Troublesome to extend. +
+** Alternative 2:** Use an `int` to keep track of the current theme, assign each theme to a number, and use `+` and `%`
+to cycle through the themes. +
+**Pros:** Easy to extend. +
+**Cons:** Troublesome to implement considering that we intend to use only two themes.
+// end::theme[]
 
 === Logging
 

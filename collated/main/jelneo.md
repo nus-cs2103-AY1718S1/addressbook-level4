@@ -1,4 +1,28 @@
 # jelneo
+###### \java\seedu\address\commons\events\ui\ChangeToCommandBoxView.java
+``` java
+/**
+ * Indicate request to change to command box view
+ */
+public class ChangeToCommandBoxView extends BaseEvent {
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\ChangeToLoginViewEvent.java
+``` java
+/**
+ * Indicates a request to display login text fields
+ */
+public class ChangeToLoginViewEvent extends BaseEvent {
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
 ###### \java\seedu\address\commons\events\ui\LoginAppRequestEvent.java
 ``` java
 /**
@@ -17,6 +41,21 @@ public class LoginAppRequestEvent extends BaseEvent {
         return hasLoginSuccessfully;
     }
 
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\LoginInputChangeEvent.java
+``` java
+
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * Indicates that login inputs have changed
+ */
+public class LoginInputChangeEvent extends BaseEvent {
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
@@ -124,7 +163,7 @@ public class BorrowCommand extends UndoableCommand {
 /**
  * Filters contacts by tags in masterlist
  */
-public class FilterCommand extends UndoableCommand {
+public class FilterCommand extends Command {
     public static final String COMMAND_WORD = "filter";
     public static final String MESSAGE_FILTER_ACKNOWLEDGEMENT = "Showing all contacts with the tag(s): %1$s\n%2$s ";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": filters the address book by tag(s)\n"
@@ -138,9 +177,10 @@ public class FilterCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
 
+        model.deselectPerson();
         model.updateFilteredPersonList(new PersonContainsTagPredicate(tags));
 
         String allTagKeywords = tags.toString();
@@ -420,6 +460,21 @@ public class LoginCommandParser implements Parser<LoginCommand> {
         String trimmedPassword = password.trim();
         return new Password(trimmedPassword);
     }
+
+    /**
+     * Parses a {@code Optional<String> totalDebt} into an {@code Optional<Debt>} if {@code totalDebt}
+     * is present.
+     * Meant for parsing for Edit command.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     * @throws IllegalValueException when {@code totalDebt} is 0
+     */
+    public static Optional<Debt> parseTotalDebt(Optional<String> totalDebt) throws IllegalValueException {
+        requireNonNull(totalDebt);
+        if (totalDebt.isPresent() && Double.valueOf(totalDebt.get()) == 0) {
+            throw new IllegalValueException(MESSAGE_INVALID_TOTAL_DEBT);
+        }
+        return totalDebt.isPresent() ? Optional.of(new Debt(totalDebt.get())) : Optional.empty();
+    }
 }
 ```
 ###### \java\seedu\address\logic\parser\PaybackCommandParser.java
@@ -652,6 +707,7 @@ public class Username {
 
         return persons.getReadOnlyPerson(index);
     }
+
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -727,6 +783,7 @@ public class Username {
         indicateAddressBookChanged();
         return repayingPerson;
     }
+
 ```
 ###### \java\seedu\address\model\person\Person.java
 ``` java
@@ -737,7 +794,7 @@ public class Username {
     public void setTotalDebt(Debt totalDebt) throws IllegalValueException {
         requireNonNull(totalDebt);
         if (totalDebt.toNumber() < debt.get().toNumber()) {
-            throw new IllegalValueException("Total debt cannot be less than current debt");
+            throw new IllegalValueException(MESSAGE_INVALID_TOTAL_DEBT);
         }
         this.totalDebt.set(totalDebt);
     }
@@ -799,9 +856,10 @@ public class PersonContainsTagPredicate implements Predicate<ReadOnlyPerson> {
         String currentInput = commandTextField.getText();
         numOfSpaces = getNumOfSpaces(currentInput);
         prevInputLength = inputLength;
-        inputLength = currentInput.length();
+        inputLength = commandTextField.getLength();
         indexOfFirstWhitespace = currentInput.indexOf(" ");
         currentMaskFromIndex = currentInput.indexOf(" ", indexOfFirstWhitespace + 1) + 1;
+
         // update index indicating where to start masking from if user deletes and re-enters password
         if (maskFromIndex == 0) {
             maskFromIndex = currentMaskFromIndex;
@@ -841,7 +899,7 @@ public class PersonContainsTagPredicate implements Predicate<ReadOnlyPerson> {
      */
     private void maskPasswordInput(String currentInput) {
         // if user enters a new character, mask it with an asterisk
-        if (currentMaskFromIndex <= maskFromIndex) {
+        if (currentMaskFromIndex <= maskFromIndex && maskFromIndex <= inputLength) {
             passwordFromInput += commandTextField.getText(maskFromIndex, inputLength);
             commandTextField.replaceText(maskFromIndex, currentInput.length(), Character.toString(BLACK_CIRCLE));
             maskFromIndex++;
@@ -852,8 +910,12 @@ public class PersonContainsTagPredicate implements Predicate<ReadOnlyPerson> {
      * Updates {@code passwordFromInput} field appropriately when user backspaces
      */
     private void handleBackspaceEvent() {
-        passwordFromInput = passwordFromInput.substring(0, inputLength - currentMaskFromIndex);
-        maskFromIndex--;
+        if (getNumOfSpaces(commandTextField.getText()) < 2) {
+            initialiseVariablesUsedInMasking();
+        } else {
+            passwordFromInput = passwordFromInput.substring(0, inputLength - currentMaskFromIndex);
+            maskFromIndex--;
+        }
     }
 
     /**
@@ -876,29 +938,75 @@ public class PersonContainsTagPredicate implements Predicate<ReadOnlyPerson> {
  */
 public class DebtRepaymentProgressBar extends UiPart<Region> {
     private static final String FXML = "DebtRepaymentProgressBar.fxml";
+    private static final String COMPLETED_REPAYMENT_MESSAGE = "Completed";
+    private static final String NO_DEADLINE_REPAYMENT_MESSAGE = "No deadline set";
+    private Double totalDebt;
+    private Double repaid;
+    private Double ratio;
 
     @FXML
     private ProgressBar progressBar;
     @FXML
     private Label percentage;
+    @FXML
+    private Label repaymentInfo;
 
     public DebtRepaymentProgressBar(ReadOnlyPerson person) {
         super(FXML);
-        Double totalDebt = person.getTotalDebt().toNumber();
-        Double repaid = totalDebt - person.getDebt().toNumber();
-        progressBar.setProgress(repaid / totalDebt);
-        percentage.textProperty().bind(Bindings.convert(getPercentage(repaid, totalDebt)));
+
+        totalDebt = person.getTotalDebt().toNumber();
+        repaid = totalDebt - person.getDebt().toNumber();
+        ratio = repaid / totalDebt;
+        progressBar.setProgress(ratio);
+        repaymentInfo.textProperty().bind(Bindings.convert(getRepaymentStatus(person, ratio)));
+        setRepaymentProgressInfo(person);
+        percentage.textProperty().bind(Bindings.convert(getPercentage(ratio)));
         progressBar.getStyleClass().clear();
         progressBar.getStyleClass().add("progress-bar");
         registerAsAnEventHandler(this);
     }
 
     /**
-     * Returns a {@code OcbservableValue<String>} to bind to {@code percentage} property
+     * Styles repayment
      */
-    private ObservableValue<String> getPercentage(Double repaid, Double totalDebt) {
-        String percentage = String.format("%.2f", repaid / totalDebt * 100);
+    private void setRepaymentProgressInfo(ReadOnlyPerson person) {
+        String repaymentStatus = getRepaymentStatus(person, ratio).getValue();
+        if (ratio == 1.0) {
+            repaymentInfo.setId("completedText");
+        } else if (repaymentStatus.equals(NO_DEADLINE_REPAYMENT_MESSAGE)) {
+            repaymentInfo.setId("noDeadlineText");
+        } else {
+            repaymentInfo.setId("repaymentInfoText");
+        }
+    }
+
+    /**
+     * Returns a {@code ObservableValue<String>} to bind to {@code percentage} property
+     */
+    private ObservableValue<String> getPercentage(Double ratio) {
+        String percentage = String.format("%.2f", ratio * 100);
         return new SimpleObjectProperty<>(percentage.concat("%"));
+    }
+
+    /**
+     * Returns a {@code ObservableValue<String>} to bind to {@code repaymentInfo} property
+     */
+    private ObservableValue<String> getRepaymentStatus(ReadOnlyPerson person, double percentage) {
+        Deadline deadline = person.getDeadline();
+        if (!deadline.toString().equals(NO_DEADLINE_SET)) {
+            String day = deadline.getDay();
+            String month = deadline.getMonth();
+            String year = deadline.getYear();
+            String deadlineFormatted = year + month + day;
+
+            LocalDate deadlineDate = LocalDate.parse(deadlineFormatted, DateTimeFormatter.BASIC_ISO_DATE);
+            LocalDate today = LocalDate.now();
+            return new SimpleObjectProperty<>(Long.toString(
+                    ChronoUnit.DAYS.between(today, deadlineDate)) + " days left to repay debt");
+        } else if (percentage == 1.0) {
+            return new SimpleObjectProperty<>(COMPLETED_REPAYMENT_MESSAGE);
+        }
+        return new SimpleObjectProperty<>(NO_DEADLINE_REPAYMENT_MESSAGE);
     }
 }
 ```
@@ -910,8 +1018,70 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
      */
     private void resetDebtRepaymentProgressBar(ReadOnlyPerson person) {
         debtRepaymentProgressBar = new DebtRepaymentProgressBar(person);
+        progressBarPlaceholder.getChildren().clear();
         progressBarPlaceholder.getChildren().add(debtRepaymentProgressBar.getRoot());
     }
+
+```
+###### \java\seedu\address\ui\LoginView.java
+``` java
+/**
+ * Displays username and password fields
+ */
+public class LoginView extends UiPart<Region> {
+    private static final String FXML = "LoginView.fxml";
+    private static final Logger logger = LogsCenter.getLogger(LoginView.class);
+
+    private final Logic logic;
+    private ObjectProperty<Username> username;
+    private ObjectProperty<Password> password;
+
+    @FXML
+    private TextField usernameField;
+    @FXML
+    private PasswordField passwordField;
+
+    public LoginView(Logic logic) {
+        super(FXML);
+        this.logic = logic;
+        logger.info("Showing login view...");
+        usernameField.textProperty().addListener((unused1, unused2, unused3) -> {
+        });
+        passwordField.textProperty().addListener((unused1, unused2, unused3) -> {
+        });
+    }
+
+    /**
+     * Handles the Enter button pressed event.
+     */
+    @FXML
+    private void handleLoginInputChanged() {
+        String usernameText = usernameField.getText();
+        String passwordText = passwordField.getText();
+        if (!usernameText.isEmpty() && !passwordText.isEmpty()) {
+            // process login inputs
+
+            try {
+                CommandResult commandResult;
+                commandResult = logic.execute(LoginCommand.COMMAND_WORD + " " + usernameText
+                        + " " + passwordText);
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+            } catch (CommandException | ParseException e) {
+                raise(new NewResultAvailableEvent(e.getMessage(), true));
+            }
+            usernameField.setText("");
+            passwordField.setText("");
+        }
+    }
+
+    /**
+     * Handles the key press event, {@code keyEvent}.
+     */
+    @FXML
+    private void handleBackToCommandView() {
+        EventsCenter.getInstance().post(new ChangeToCommandBoxView());
+    }
+}
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
@@ -921,7 +1091,7 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
      */
     void fillInnerPartsForStartUp() {
         Platform.runLater(() -> {
-            startUpPanel = new StartUpPanel();
+            startUpPanel = new StartUpPanel(primaryStage);
             infoPanelPlaceholder.getChildren().clear();
             infoPanelPlaceholder.getChildren().add(startUpPanel.getRoot());
 
@@ -932,11 +1102,29 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
             ResultDisplay resultDisplay = new ResultDisplay();
             resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-            CommandBox commandBox = new CommandBox(logic);
+            commandBox = new CommandBox(logic);
             commandBoxPlaceholder.getChildren().clear();
             commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
         });
     }
+
+    /**
+     * Fills up all the placeholders command box.
+     */
+    void fillInnerPartsForCommandBox() {
+        commandBoxPlaceholder.getChildren().clear();
+        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+    }
+
+    /**
+     * Changes from command box to login view with text fields for username and password
+     */
+    public void fillCommandBoxWithLoginFields() {
+        LoginView loginView = new LoginView(logic);
+        commandBoxPlaceholder.getChildren().clear();
+        commandBoxPlaceholder.getChildren().add(loginView.getRoot());
+    }
+
 ```
 ###### \java\seedu\address\ui\PersonListStartUpPanel.java
 ``` java
@@ -961,15 +1149,18 @@ public class PersonListStartUpPanel extends UiPart<Region> {
  * The Start Up Panel will be loaded in place of the Browser Panel
  */
 public class StartUpPanel extends UiPart<Region> {
-
     private static final String FXML = "StartUpPanel.fxml";
+
+    @FXML
+    private ImageView welcome;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
 
-    public StartUpPanel() {
+    public StartUpPanel(Stage stage) {
         super(FXML);
-        logger.info("Loading start up panel...");
+        logger.info("Loading welcome page...");
+        welcome.fitHeightProperty().bind(stage.heightProperty());
     }
 
 }
@@ -992,6 +1183,16 @@ public class StartUpPanel extends UiPart<Region> {
     }
 
     /**
+     * Handles login event.
+     * Displays contacts in address book if login is successful
+     */
+    @Subscribe
+    public void handleChangeToLoginViewEvent(ChangeToLoginViewEvent event) {
+        // user wants to login
+        Platform.runLater(() -> mainWindow.fillCommandBoxWithLoginFields());
+    }
+
+    /**
      * Handles logout event.
      * Displays login page when user logs out
      */
@@ -1002,23 +1203,23 @@ public class StartUpPanel extends UiPart<Region> {
             logger.info("Logout successful");
             LoginCommand.setLoginStatus(false);
             //show login page
-            Platform.runLater(() -> mainWindow.fillInnerPartsForStartUp());
+            mainWindow.fillInnerPartsForStartUp();
         }
     }
 
     /**
-     * Handles change internal list event.
-     * Displays the list that user requested(e.g masterlist, blacklist etc)
+     * Changes from login view to command box
      */
     @Subscribe
-    private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
+    private void handleBackToCommandViewRequest(ChangeToCommandBoxView event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.fillInnerPartsWithIndicatedList(event.getListName());
+        mainWindow.fillInnerPartsForCommandBox();
     }
-}
+
 ```
 ###### \resources\view\DebtRepaymentProgressBar.fxml
 ``` fxml
+
 <StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ProgressBar fx:id="progressBar" prefHeight="24.0" prefWidth="160.0" progress="0.0" StackPane.alignment="CENTER_LEFT" />
@@ -1029,6 +1230,14 @@ public class StartUpPanel extends UiPart<Region> {
          <StackPane.margin>
             <Insets left="60.0" />
          </StackPane.margin>
+      </Label>
+      <Label fx:id="repaymentInfo" text="\\$repaymentInfo" StackPane.alignment="CENTER_LEFT">
+         <StackPane.margin>
+            <Insets left="170.0" />
+         </StackPane.margin>
+         <font>
+            <Font size="8.0" />
+         </font>
       </Label>
    </children>
 </StackPane>

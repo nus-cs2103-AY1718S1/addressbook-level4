@@ -19,11 +19,13 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.Password;
 import seedu.address.logic.Username;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddPictureCommand;
 import seedu.address.logic.commands.BanCommand;
 import seedu.address.logic.commands.BlacklistCommand;
 import seedu.address.logic.commands.BorrowCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeletePictureCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
@@ -42,6 +44,7 @@ import seedu.address.logic.commands.RepaidCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetPathCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UnbanCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.WhitelistCommand;
@@ -64,6 +67,20 @@ public class AddressBookParserTest {
         Person person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddCommand(person), command);
+    }
+
+    @Test
+    public void parseCommand_addpic() throws Exception {
+        AddPictureCommand command = (AddPictureCommand) parser.parseCommand(
+                AddPictureCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new AddPictureCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_delpic() throws Exception {
+        DeletePictureCommand command = (DeletePictureCommand) parser.parseCommand(
+                DeletePictureCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new DeletePictureCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test
@@ -260,6 +277,12 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(SetPathCommand.COMMAND_WORD) instanceof SetPathCommand);
         assertTrue(parser.parseCommand("setpath" + " "
                 + "C:/Users/acer/Desktop/SE/profilepic/") instanceof SetPathCommand);
+    }
+
+    @Test
+    public void perseCommand_themeCommandWord_returnsThemeCommand() throws Exception {
+        assertTrue(parser.parseCommand(ThemeCommand.COMMAND_WORD) instanceof ThemeCommand);
+        assertTrue(parser.parseCommand("theme 3") instanceof ThemeCommand);
     }
 
     @Test

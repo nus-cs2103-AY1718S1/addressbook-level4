@@ -136,19 +136,20 @@ public class UiManager extends ComponentManager implements Ui {
         if (event.getLoginStatus() == true) {
             logger.info("Login successful");
             LoginCommand.setLoginStatus(true);
-            //show address book
+            // show address book
             Platform.runLater(() -> mainWindow.fillInnerParts());
         }
     }
 
     /**
-     * Handles login event.
-     * Displays contacts in address book if login is successful
+     * Displays login view (which consists of username and password text fields) with buttons to navigate between
+     * this view and command box
      */
     @Subscribe
     public void handleChangeToLoginViewEvent(ChangeToLoginViewEvent event) {
         // user wants to login
-        Platform.runLater(() -> mainWindow.fillCommandBoxWithLoginFields());
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.fillCommandBoxWithLoginFields();
     }
 
     /**
@@ -171,6 +172,7 @@ public class UiManager extends ComponentManager implements Ui {
      */
     @Subscribe
     private void handleBackToCommandViewRequest(ChangeToCommandBoxView event) {
+        logger.info("Showing command box...");
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.fillInnerPartsForCommandBox();
     }

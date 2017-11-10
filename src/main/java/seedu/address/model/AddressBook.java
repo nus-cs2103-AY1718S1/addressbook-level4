@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.person.DateRepaid.NO_DATE_REPAID;
 import static seedu.address.model.util.DateUtil.formatDate;
 
 import java.util.Date;
@@ -317,8 +318,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.remove(t);
     }
 
-    //// sorting operations
 
+    //// sorting operations
     /**
      * Sorts the address book by given order
      */
@@ -343,6 +344,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             Debt newTotalDebt = new Debt(target.getTotalDebt().toNumber() + amount.toNumber());
             editedPerson.setDebt(newCurrDebt);
             editedPerson.setTotalDebt(newTotalDebt);
+            editedPerson.setDateRepaid(new DateRepaid(NO_DATE_REPAID));
             persons.setPerson(target, editedPerson);
         } catch (DuplicatePersonException dpe) {
             assert false : "There should be no duplicate when updating the debt of a person";
@@ -386,8 +388,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         return persons.getReadOnlyPerson(index);
     }
-    //@@author
 
+    //@@author
     /**
      * Resets person's debt field to zero, in the masterlist of the addressbook.
      * @return ReadOnly existingPerson
@@ -438,6 +440,50 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.getReadOnlyPerson(index);
     }
 
+    //@@author jaivigneshvenugopal
+    /**
+     * Adds the picture of the person into app database and sets the person's display picture boolean status to true
+     * @return updated person
+     */
+    public ReadOnlyPerson addProfilePic(ReadOnlyPerson person) {
+        int index;
+        index = persons.getIndexOf(person);
+
+        Person newUpdatedPerson = new Person(person);
+        newUpdatedPerson.setHasDisplayPicture(true);
+        try {
+            updatePerson(person, newUpdatedPerson);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("The target person cannot be a duplicate");
+        } catch (PersonNotFoundException e) {
+            throw new AssertionError("This is not possible as prior checks have been done");
+        }
+
+        return persons.getReadOnlyPerson(index);
+    }
+
+    /**
+     * Sets the person's display picture boolean status to false
+     * @return updated person
+     */
+    public ReadOnlyPerson removeProfilePic(ReadOnlyPerson person) {
+        int index;
+        index = persons.getIndexOf(person);
+
+        Person newUpdatedPerson = new Person(person);
+        newUpdatedPerson.setHasDisplayPicture(false);
+        try {
+            updatePerson(person, newUpdatedPerson);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("The target person cannot be a duplicate");
+        } catch (PersonNotFoundException e) {
+            throw new AssertionError("This is not possible as prior checks have been done");
+        }
+
+        return persons.getReadOnlyPerson(index);
+    }
+    //@@author
+
     //// util methods
 
     @Override
@@ -452,15 +498,16 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //@@author jaivigneshvenugopal
+
     @Override
     public ObservableList<ReadOnlyPerson> getBlacklistedPersonList() {
         return persons.asObservableBlacklist();
     }
-
     @Override
     public ObservableList<ReadOnlyPerson> getWhitelistedPersonList() {
         return persons.asObservableWhitelist();
     }
+
     //@@author
 
     @Override

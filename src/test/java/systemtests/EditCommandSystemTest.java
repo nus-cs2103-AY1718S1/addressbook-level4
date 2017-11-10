@@ -65,6 +65,7 @@ import seedu.address.logic.ListObserver;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Deadline;
@@ -248,7 +249,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid total debt -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
-                + INVALID_TOTAL_DEBT_DESC, Debt.MESSAGE_DEBT_CONSTRAINTS);
+                + INVALID_TOTAL_DEBT_DESC, ParserUtil.MESSAGE_INVALID_TOTAL_DEBT);
 
         /* Case: invalid interest -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()

@@ -19,6 +19,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeInternalListEvent;
 import seedu.address.commons.events.ui.JumpToNearbyListRequestEvent;
 import seedu.address.commons.events.ui.NearbyPersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author khooroko
@@ -82,6 +83,11 @@ public class NearbyPersonListPanel extends UiPart<Region> {
 
     @Subscribe
     private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
+        unregisterAsAnEventHandler(this);
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         unregisterAsAnEventHandler(this);
     }
 

@@ -1,4 +1,17 @@
 # khooroko
+###### \java\seedu\address\commons\events\ui\ChangeThemeRequestEvent.java
+``` java
+/**
+ * Indicates a request to change theme
+ */
+public class ChangeThemeRequestEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
 ###### \java\seedu\address\commons\events\ui\JumpToNearbyListRequestEvent.java
 ``` java
 /**
@@ -80,13 +93,20 @@ public class NearbyCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the person identified by the index number used in the currently selected person's "
-            + "nearby listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "nearby listing. If no index is provided, the next person in the nearby list is selected.\n"
+            + "Parameters: INDEX (optional, must be a positive integer if present)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_NEARBY_PERSON_SUCCESS = "Selected person in same area: %1$s";
+    public static final String MESSAGE_INVALID_NEARBY_INDEX = "The index provided is invalid. There are only %d "
+            + "contacts in this area";
+    public static final String MESSAGE_NO_NEARBY_PERSON = "There is only one person in this area";
 
     private final Index targetIndex;
+
+    public NearbyCommand() {
+        this.targetIndex = null;
+    }
 
     public NearbyCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
@@ -101,16 +121,27 @@ public class NearbyCommand extends Command {
             throw new CommandException(Messages.MESSAGE_NO_PERSON_SELECTED);
         }
 
-        if (targetIndex.getZeroBased() >= nearbyList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        if (nearbyList.size() == 1) {
+            throw new CommandException(MESSAGE_NO_NEARBY_PERSON);
         }
 
-        model.updateSelectedPerson(nearbyList.get(targetIndex.getZeroBased()));
-        EventsCenter.getInstance().post(new JumpToNearbyListRequestEvent(targetIndex));
+        Index nearbyIndex;
+
+        if (targetIndex != null) {
+            if (targetIndex.getZeroBased() >= nearbyList.size()) {
+                throw new CommandException(String.format(MESSAGE_INVALID_NEARBY_INDEX, nearbyList.size()));
+            }
+            nearbyIndex = targetIndex;
+        } else {
+            nearbyIndex = Index.fromZeroBased((nearbyList.indexOf(model.getSelectedPerson()) + 1) % nearbyList.size());
+        }
+
+        model.updateSelectedPerson(nearbyList.get(nearbyIndex.getZeroBased()));
+        EventsCenter.getInstance().post(new JumpToNearbyListRequestEvent(nearbyIndex));
 
         String currentList = listObserver.getCurrentListName();
 
-        return new CommandResult(currentList + String.format(MESSAGE_NEARBY_PERSON_SUCCESS, targetIndex.getOneBased()));
+        return new CommandResult(currentList + String.format(MESSAGE_NEARBY_PERSON_SUCCESS, nearbyIndex.getOneBased()));
 
     }
 
@@ -118,7 +149,8 @@ public class NearbyCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof NearbyCommand // instanceof handles nulls
-                && this.targetIndex.equals(((NearbyCommand) other).targetIndex)); // state check
+                && ((this.targetIndex == null && ((NearbyCommand) other).targetIndex == null) // both targetIndex null
+                || this.targetIndex.equals(((NearbyCommand) other).targetIndex))); // state check
     }
 }
 ```
@@ -127,7 +159,7 @@ public class NearbyCommand extends Command {
 /**
  * Sorts the masterlist by the input argument (i.e. "name" or "debt").
  */
-public class SortCommand extends UndoableCommand {
+public class SortCommand extends Command {
 
     public static final String COMMAND_WORD = "sort";
     public static final String MESSAGE_SUCCESS = "List has been sorted by %1$s!";
@@ -148,8 +180,9 @@ public class SortCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
+        model.deselectPerson();
         try {
             model.sortBy(order);
         } catch (IllegalArgumentException ive) {
@@ -178,6 +211,28 @@ public class SortCommand extends UndoableCommand {
         // state check
         SortCommand s = (SortCommand) other;
         return order.equals(s.order);
+    }
+}
+```
+###### \java\seedu\address\logic\commands\ThemeCommand.java
+``` java
+/**
+ * Changes theme.
+ */
+public class ThemeCommand extends Command {
+    public static final String COMMAND_WORD = "theme";
+    public static final String MESSAGE_SUCCESS = "Theme has been successfully changed!";
+
+    @Override
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent());
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ThemeCommand); // instanceof handles nulls
     }
 }
 ```
@@ -220,8 +275,12 @@ public class NearbyCommandParser implements Parser<NearbyCommand> {
      */
     public NearbyCommand parse(String args) throws ParseException {
         try {
-            Index index = ParserUtil.parseIndex(args);
-            return new NearbyCommand(index);
+            if (args.trim().equals("")) {
+                return new NearbyCommand();
+            } else {
+                Index index = ParserUtil.parseIndex(args);
+                return new NearbyCommand(index);
+            }
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, NearbyCommand.MESSAGE_USAGE));
@@ -279,6 +338,16 @@ public class SortCommandParser implements Parser<SortCommand> {
         this.selectedPerson = selectedPerson;
         nearbyPersons = allPersons.stream().filter(person -> person.isSameCluster(selectedPerson))
                 .collect(toCollection(FXCollections::observableArrayList));
+    }
+
+    /**
+     * Deselects the currently selected person.
+     */
+    @Override
+    public void deselectPerson() {
+        this.selectedPerson = null;
+        nearbyPersons = null;
+        EventsCenter.getInstance().post(new DeselectionEvent());
     }
 
     /**
@@ -518,6 +587,7 @@ public class PostalCode {
             break;
         case "deadline":
             internalList.sort((Person p1, Person p2) -> p1.getDeadline().compareTo(p2.getDeadline()));
+            internalList.sort((Person p1, Person p2) -> Boolean.compare(p1.isWhitelisted(), p2.isWhitelisted()));
             break;
         default:
             throw new IllegalArgumentException("Invalid sort ordering");
@@ -782,6 +852,7 @@ public class InfoPanel extends UiPart<Region> {
 
     private NearbyPersonListPanel nearbyPersonListPanel;
     private DebtRepaymentProgressBar debtRepaymentProgressBar;
+    private DebtorProfilePicture debtorProfilePicture;
 
     @FXML
     private Pane pane;
@@ -847,6 +918,8 @@ public class InfoPanel extends UiPart<Region> {
     private StackPane nearbyPersonListPanelPlaceholder;
     @FXML
     private StackPane progressBarPlaceholder;
+    @FXML
+    private StackPane profilePicPlaceholder;
     @FXML
     private Text debtRepaymentField;
 
@@ -1005,10 +1078,16 @@ public class InfoPanel extends UiPart<Region> {
         logic.updateSelectedPerson(event.getNewSelection().person);
         resetNearbyPersonListPanel(event.getNewSelection().person);
         resetDebtRepaymentProgressBar(event.getNewSelection().person);
+        resetDebtorProfilePicture(event.getNewSelection().person);
     }
 
     @Subscribe
     private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
+        unregisterAsAnEventHandler(this);
+    }
+
+    @Subscribe
+    private void handleDeselectionEvent(DeselectionEvent event) {
         unregisterAsAnEventHandler(this);
     }
 
@@ -1018,17 +1097,43 @@ public class InfoPanel extends UiPart<Region> {
 ``` java
     /**
      * Sets the person panel to display the unfiltered masterlist and raises a {@code JumpToListRequestEvent}.
-     * @param event
      */
     @Subscribe
     private void handleNearbyPersonNotInCurrentListEvent(NearbyPersonNotInCurrentListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         logic.resetFilteredPersonList();
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().removeAll();
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), ListCommand.COMMAND_WORD);
+        personListPanelPlaceholder.getChildren().clear();
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
         raise(new JumpToListRequestEvent(Index.fromZeroBased(logic.getFilteredPersonList()
                 .indexOf(event.getNewSelection().person))));
+    }
+
+    /**
+     * Ensures that the {@code InfoPanel} is cleared when the current list is empty (via {@code DeleteCommand} and
+     * {@code ClearCommand}).
+     */
+    @Subscribe
+    private void handleDeselectionEvent(DeselectionEvent event) {
+        infoPanel = new InfoPanel(logic);
+        infoPanelPlaceholder.getChildren().clear();
+        infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
+    }
+
+    /**
+     * Changes theme.
+     */
+    @Subscribe
+    private void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) {
+        for (String stylesheet : getRoot().getStylesheets()) {
+            if (stylesheet.endsWith("DarkTheme.css")) {
+                getRoot().getStylesheets().remove(stylesheet);
+                getRoot().getStylesheets().add("/view/BrightTheme.css");
+            } else if (stylesheet.endsWith("BrightTheme.css")) {
+                getRoot().getStylesheets().remove(stylesheet);
+                getRoot().getStylesheets().add("/view/DarkTheme.css");
+            }
+        }
     }
 }
 ```
@@ -1142,6 +1247,11 @@ public class NearbyPersonListPanel extends UiPart<Region> {
     }
 
     @Subscribe
+    private void handleDeselectionEvent(DeselectionEvent event) {
+        personListView.getSelectionModel().clearSelection();
+    }
+
+    @Subscribe
     private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
         unregisterAsAnEventHandler(this);
     }
@@ -1160,7 +1270,7 @@ public class NearbyPersonListPanel extends UiPart<Region> {
 ```
 ###### \resources\view\InfoPanel.fxml
 ``` fxml
-<StackPane fx:id="infoPanel" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="infoPanel" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
       <StackPane.margin>
          <Insets />
       </StackPane.margin>
@@ -1171,7 +1281,7 @@ public class NearbyPersonListPanel extends UiPart<Region> {
                <Insets bottom="2.0" top="5.0" />
             </VBox.margin></Label>
          <Text fx:id="debtRepaymentField" fill="GREY" text="Debt repayment progress" />
-         <StackPane fx:id="progressBarPlaceholder" alignment="CENTER_LEFT" maxHeight="50.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="50.0" prefWidth="200.0">
+         <StackPane fx:id="progressBarPlaceholder" alignment="CENTER_LEFT">
             <VBox.margin>
                <Insets bottom="10.0" />
             </VBox.margin>
@@ -1301,6 +1411,7 @@ public class NearbyPersonListPanel extends UiPart<Region> {
             </padding>
             <StackPane fx:id="nearbyPersonListPanelPlaceholder" HBox.hgrow="ALWAYS" />
          </HBox>
+         <StackPane fx:id="profilePicPlaceholder" prefHeight="0.0" prefWidth="774.0" translateX="200.0" translateY="-650.0" />
       </children>
    </VBox>
 </StackPane>
