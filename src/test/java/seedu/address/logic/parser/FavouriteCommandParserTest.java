@@ -1,4 +1,3 @@
-//@@author aaronyhsoh
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -10,6 +9,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.FavouriteCommand;
 
+//@@author aaronyhsoh
 public class FavouriteCommandParserTest {
 
     private FavouriteCommandParser parser = new FavouriteCommandParser();

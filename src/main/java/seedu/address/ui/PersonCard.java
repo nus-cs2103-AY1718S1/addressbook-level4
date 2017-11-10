@@ -14,7 +14,10 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static final String tagColor = "#5AC0FB";
+    //@@author qihao27
+    private static final String tagColor = "#dc143c";
+    //@@author
+
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -60,10 +63,10 @@ public class PersonCard extends UiPart<Region> {
      * so that they will be notified of any changes.
      */
     private void bindListeners(ReadOnlyPerson person) {
+
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        //@@author aaronyhsoh-unused
-        //highlightName(person);
-        //@@author
+
+
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));

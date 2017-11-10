@@ -505,18 +505,28 @@ public class NoPersonFoundException extends Exception {}
         switch (option) {
         case PREFIX_SORT_BY_NAME: Collections.sort(internalList, (a, b) ->
                 a.getName().toString().compareToIgnoreCase(b.getName().toString()));
+                Collections.sort(internalList, (a, b) ->
+                    String.valueOf(b.getFavourite()).compareToIgnoreCase(String.valueOf(a.getFavourite())));
         break;
         case PREFIX_SORT_BY_PHONE: Collections.sort(internalList, (a, b) ->
                 a.getPhone().toString().compareToIgnoreCase(b.getPhone().toString()));
+                Collections.sort(internalList, (a, b) ->
+                    String.valueOf(b.getFavourite()).compareToIgnoreCase(String.valueOf(a.getFavourite())));
         break;
         case PREFIX_SORT_BY_EMAIL: Collections.sort(internalList, (a, b) ->
                 a.getEmail().toString().compareToIgnoreCase(b.getEmail().toString()));
+                Collections.sort(internalList, (a, b) ->
+                    String.valueOf(b.getFavourite()).compareToIgnoreCase(String.valueOf(a.getFavourite())));
         break;
         case PREFIX_SORT_BY_ADDRESS: Collections.sort(internalList, (a, b) ->
                 a.getAddress().toString().compareToIgnoreCase(b.getAddress().toString()));
+                Collections.sort(internalList, (a, b) ->
+                    String.valueOf(b.getFavourite()).compareToIgnoreCase(String.valueOf(a.getFavourite())));
         break;
         case PREFIX_SORT_BY_TAG: Collections.sort(internalList, (a, b) ->
                 a.getTags().toString().compareToIgnoreCase(b.getTags().toString()));
+                Collections.sort(internalList, (a, b) ->
+                    String.valueOf(b.getFavourite()).compareToIgnoreCase(String.valueOf(a.getFavourite())));
         break;
         default: break;
         }
@@ -654,6 +664,10 @@ public class UniqueTodoList implements Iterable<TodoItem> {
 ``` java
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
                 Integer.toString(logic.getFilteredPersonList().size()));
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    private static final String tagColor = "#dc143c";
 ```
 ###### \java\seedu\address\ui\PersonCard.java
 ``` java
