@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.model.AddressBook;
 
+
 /**
  * Clears the address book.
  */
@@ -18,6 +19,7 @@ public class ClearCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
         model.resetData(new AddressBook());
+        model.clearInfoPanel();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

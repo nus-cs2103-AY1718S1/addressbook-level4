@@ -79,4 +79,9 @@ public class ModelStub implements Model {
     public void changeImage(ReadOnlyPerson target) throws PersonNotFoundException {
         fail("This method should not be called.");
     }
+
+    @Override
+    public void clearInfoPanel() {
+        fail("This method should not be called.");
+    }
 }

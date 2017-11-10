@@ -9,11 +9,13 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.ChangeImageEvent;
 import seedu.address.commons.events.ui.MapPersonEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -129,6 +131,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void changeImage(ReadOnlyPerson target) throws PersonNotFoundException {
         raise(new ChangeImageEvent(target));
+    }
+
+    @Override
+    public void clearInfoPanel() {
+        raise(new PersonPanelSelectionChangedEvent(null));
     }
 
     //@@author

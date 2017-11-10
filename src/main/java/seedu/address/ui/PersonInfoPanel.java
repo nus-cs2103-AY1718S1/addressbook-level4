@@ -128,7 +128,11 @@ public class PersonInfoPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        setConnections(event.getNewSelection().person);
+        if (event.getNewSelection() == null) {
+            setDefaultConnections();
+        } else {
+            setConnections(event.getNewSelection().person);
+        }
     }
 
     @Override

@@ -307,6 +307,7 @@ Format: `removetag [INDEX] TAG`
 Examples:
 
 * `removetag friends` +
+
 Removes the tag `friends` from all persons
 * `removetag 1 NUS` +
 Removes the tag `NUS` from first person
