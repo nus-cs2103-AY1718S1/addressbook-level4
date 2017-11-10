@@ -548,6 +548,7 @@ Generate QR Call Code for the 2nd person in the address book.
 `qc 1` +
 Generate QR Call Code for the 1st person in the results of the `find` command.
 // end::qrcall[]
+
 === Generating QR Code to sms a Contact : `qrsms`
 // tag::qrsms[]
 [NOTE]
@@ -571,6 +572,7 @@ Generate QR SMS Code for the 2nd person in the address book.
 `qs 1` +
 Generate QR SMS Code for the 1st person in the results of the `find` command.
 // end::qrsms[]
+
 === Generating QR Code to save a Contact : `qrsave`
 // tag::qrsave[]
 [NOTE]
@@ -596,6 +598,7 @@ Generate QR Save Contact Code for the 2nd person in the address book.
 `qrs 1` +
 Generate QR Save Contact Code for the 1st person in the results of the `find` command.
 // end::qrsave[]
+
 == Upcoming Features
 (added in v1.2) +
 There are more features to be added to the application. You will soon be able to do the following features:
