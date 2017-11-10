@@ -243,6 +243,9 @@ public class AddressBookParser {
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
             return new HelpCommand();
 
         case UndoCommand.COMMAND_WORD:
@@ -252,6 +255,9 @@ public class AddressBookParser {
             return new ParentModeCommand();
 
         case DisableParentModeCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
             return new DisableParentModeCommand();
 
         case RedoCommand.COMMAND_WORD:

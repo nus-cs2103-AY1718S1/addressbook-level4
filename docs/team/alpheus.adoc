@@ -44,6 +44,17 @@ include::../DeveloperGuide.adoc[tag=sort]
 
 === Enhancement Added: First time tutorial
 
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tutorial]
+
+#End of Extract#
+
+---
+
 ==== Justification
 
 Currently when new users launch Bluebird for the first time, they will be lost as to what Bluebird has to offer and also what different UI panels mean.
