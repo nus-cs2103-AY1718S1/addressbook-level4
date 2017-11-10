@@ -187,6 +187,17 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the target person from all groups with editedPerson
+     * @param target
+     * @param editedPerson
+     */
+    public void editPersonInGroup(ReadOnlyPerson target, ReadOnlyPerson editedPerson) {
+        groups.editPerson(target, editedPerson);
+    }
+
+    //@@author eldonng
+
+    /**
      * Removes a group from the address book
      * @throws GroupNotFoundException if the group is not found
      */

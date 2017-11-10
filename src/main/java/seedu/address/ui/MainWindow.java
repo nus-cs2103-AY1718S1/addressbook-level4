@@ -40,15 +40,11 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
     private PersonInfo personInfoPanel;
     private PersonListPanel personListPanel;
     private GroupListPanel groupListPanel;
     private Config config;
     private UserPrefs prefs;
-
-    @FXML
-    private StackPane browserPlaceholder;
 
     @FXML
     private StackPane personInfoPlaceholder;
@@ -134,9 +130,6 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
         personInfoPanel = new PersonInfo(prefs.getColourMap());
         personInfoPlaceholder.getChildren().add(personInfoPanel.getRoot());
 
@@ -220,10 +213,6 @@ public class MainWindow extends UiPart<Region> {
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
     }
 
     @Subscribe

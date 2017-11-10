@@ -77,6 +77,21 @@ public class UniqueGroupList implements Iterable<Group> {
         });
     }
 
+    /**
+     * replaces the target person with the new information to all groups
+     * @param target
+     * @param toAdd
+     */
+    public void editPerson(ReadOnlyPerson target, ReadOnlyPerson toAdd) {
+        requireNonNull(toAdd);
+        internalList.forEach(group -> {
+            if (group.getGroupMembers().contains(target)) {
+                group.getGroupMembers().remove(target);
+                group.getGroupMembers().add(toAdd);
+            }
+        });
+    }
+
     public void setGroups(UniqueGroupList replacement) {
         this.internalList.setAll(replacement.internalList);
     }

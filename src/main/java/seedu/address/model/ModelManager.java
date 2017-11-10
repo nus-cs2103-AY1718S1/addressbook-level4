@@ -139,6 +139,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
+        addressBook.editPersonInGroup(target, editedPerson);
         raise(new NewPersonInfoEvent(editedPerson));
         indicateAddressBookChanged();
     }
