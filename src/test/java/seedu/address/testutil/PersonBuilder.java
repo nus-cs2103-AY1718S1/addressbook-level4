@@ -84,7 +84,6 @@ public class PersonBuilder {
             allTags.addAll(SampleDataUtil.getTagSet(tags));
             allTags.addAll(this.person.getTags());
             this.person.setTags(allTags);
-           // System.out.println(this.person.getName() + " " + this.person.getTags());
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tags are expected to be unique.");
         }

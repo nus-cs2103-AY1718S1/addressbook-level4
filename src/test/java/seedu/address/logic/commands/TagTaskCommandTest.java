@@ -2,22 +2,16 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_NOT_URGENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_URGENT;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstTaskOnly;
 import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TASK;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_TASK;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Test;
@@ -26,21 +20,16 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.persons.TagCommand;
 import seedu.address.logic.commands.tasks.TagTaskCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TaskBuilder;
-import seedu.address.ui.TaskListPanel;
 
 public class TagTaskCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -58,7 +47,7 @@ public class TagTaskCommandTest {
         Task editedTask = new TaskBuilder(taskInUnfilteredList).build();
         model.updateTaskTags(editedTask, tags);
 
-        String expectedMessage = String.format(TagCommand.MESSAGE_TAG_PERSONS_SUCCESS, editedTask);
+        String expectedMessage = String.format(TagTaskCommand.MESSAGE_TAG_TASKS_SUCCESS, editedTask);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updateTask(model.getFilteredTaskList().get(0), editedTask);
@@ -67,7 +56,7 @@ public class TagTaskCommandTest {
 
         //testing for change in person tags in second index
         ReadOnlyTask taskInUnfilteredListTwo = model.getFilteredTaskList()
-                .get(INDEX_SECOND_PERSON.getZeroBased());
+                .get(INDEX_SECOND_TASK.getZeroBased());
         Task editedTaskTwo = new TaskBuilder(taskInUnfilteredListTwo).build();
         model.updateTaskTags(editedTaskTwo, tags);
 

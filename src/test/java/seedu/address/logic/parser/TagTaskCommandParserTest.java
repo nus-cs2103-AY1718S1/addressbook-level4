@@ -22,7 +22,6 @@ import java.util.Set;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.tasks.TagTaskCommand;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
@@ -74,7 +73,7 @@ public class TagTaskCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_TAG_DESC + TAG_DESC_NOT_URGENT, Tag.MESSAGE_TAG_CONSTRAINTS);
 
         // valid tag followed by invalid tag
-        assertParseFailure(parser, "1" + TAG_DESC_NOT_URGENT+ INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertParseFailure(parser, "1" + TAG_DESC_NOT_URGENT + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS);
 
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Task} being edited,
         // parsing it together with a valid tag results in error

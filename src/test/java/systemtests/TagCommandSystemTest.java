@@ -3,12 +3,9 @@ package systemtests;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_COLLEAGUE;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TASK;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 
@@ -29,8 +26,6 @@ public class TagCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void tag() throws Exception {
-        Model model = getModel();
-
         /* --------------------- Performing tag operation while a person card is selected -------------------------- */
 
         /* Case: selects first card in the person list, tag a person -> tagged, card selection remains unchanged but
@@ -102,15 +97,6 @@ public class TagCommandSystemTest extends AddressBookSystemTest {
 
         assertCommandSuccess(command, expectedModel,
                 String.format(TagCommand.MESSAGE_TAG_PERSONS_SUCCESS, taggedPerson), expectedSelectedCardIndex);
-    }
-
-    /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} except that the
-     * browser url and selected card remain unchanged.
-     * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
-     */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
-        assertCommandSuccess(command, expectedModel, expectedResultMessage, null);
     }
 
     /**
