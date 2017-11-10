@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static junit.framework.TestCase.assertEquals;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
 import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
 import static seedu.address.testutil.TypicalLessons.MA1101R_L2;
@@ -24,6 +25,8 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.module.ReadOnlyLesson;
 
+import javax.swing.text.View;
+
 //@@author junming403
 public class ViewCommandTest {
 
@@ -39,12 +42,12 @@ public class ViewCommandTest {
     }
 
     @Test
-    public void execute_viewSpecifiedLesson() {
+    public void execute_viewLesson_Failure() {
 
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
 
-        assertCommandSuccess(viewCommand, String.format(viewCommand.MESSAGE_VIEW_LESSON_SUCCESS,
-                model.getFilteredLessonList().get(0)), Arrays.asList(MA1101R_L1));
+        assertCommandFailure(viewCommand, model, ViewCommand.MESSAGE_VIEW_LESSON_FAILURE);
+
     }
 
     @Test

@@ -16,7 +16,6 @@ import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.predicates.FixedCodePredicate;
 import seedu.address.model.module.predicates.FixedLocationPredicate;
-import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
 
 //@@author junming403
 /**
@@ -31,9 +30,9 @@ public class ViewCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_VIEW_LESSON_SUCCESS = "Viewing lesson: %1$s";
     public static final String MESSAGE_VIEW_LOCATION_SUCCESS = "lessons(s) founded with location %1$s";
     public static final String MESSAGE_VIEW_MODULE_SUCCESS = "lessons(s) founded with module code %1$s";
+    public static final String MESSAGE_VIEW_LESSON_FAILURE = "You can only view module or location.";
     public static final String VIEWING_ATTRIBUTE_MODULE = "module";
     public static final String VIEWING_ATTRIBUTE_DEFAULT = "default";
     public static final String VIEWING_ATTRIBUTE_LOCATION = "location";
@@ -68,7 +67,7 @@ public class ViewCommand extends Command {
      * Update the filterList that only returns lesson with the same location or module name
      * base in the current listing unit
      */
-    private String updateFilterList(ReadOnlyLesson toView) {
+    private String updateFilterList(ReadOnlyLesson toView) throws CommandException {
 
         Predicate predicate;
         String result;
@@ -86,9 +85,7 @@ public class ViewCommand extends Command {
             break;
 
         default:
-            predicate = new ShowSpecifiedLessonPredicate(toView);
-            result = String.format(MESSAGE_VIEW_LESSON_SUCCESS, toView);
-            break;
+            throw new CommandException(MESSAGE_VIEW_LESSON_FAILURE);
         }
 
         ListingUnit.setCurrentPredicate(predicate);
