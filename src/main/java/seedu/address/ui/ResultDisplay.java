@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
@@ -15,6 +16,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.Commands;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.util.StringUtil;
 
 /**
  * A ui for the status bar that is displayed at the header of the application.
@@ -23,12 +25,14 @@ public class ResultDisplay extends UiPart<Region> {
 
     private static final Logger logger = LogsCenter.getLogger(ResultDisplay.class);
     private static final String FXML = "ResultDisplay.fxml";
+    private static final String[] allCommandWords = Commands.getAllCommandWords();
     private static final HashMap<String, String> allCommandUsages = Commands.getAllCommandUsages();
 
     private final StringProperty displayed = new SimpleStringProperty("");
 
     private String lastFoundCommand = "";
     private TextField linkedCommandInput;
+    private String topSuggestion = "";
 
     @FXML
     private TextArea resultDisplay;
@@ -45,10 +49,55 @@ public class ResultDisplay extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Gets the current top suggestion for custom auto-completion.
+     */
+    protected String getCurrentTopSuggestion() {
+        return this.topSuggestion;
+    }
+
     void setLinkedInput(CommandBox commandBox) {
         linkedCommandInput = commandBox.getCommandTextField();
-        linkedCommandInput.textProperty().addListener((observable, oldValue, newValue) ->
-            updateInfoDisplay(oldValue, newValue));
+        linkedCommandInput.textProperty().addListener((observable, oldValue, newValue) -> {
+            updateAutoCompleteDisplay(newValue);
+            updateInfoDisplay(oldValue, newValue);
+        });
+    }
+
+    /**
+     * Updates the auto complete display according to the user input in the command box.
+     *
+     * Only command words that contain the input and are shorter than the input length will
+     * be considered as valid auto complete options. Furthermore, if the input has a spacing,
+     * then there will not be any suggestions displayed since all command words are implemented
+     * as single words.
+     *
+     * The first valid suggestion is also stored for custom auto complete purposes.
+     */
+    private void updateAutoCompleteDisplay(String currentInput) {
+        ArrayList<String> matchingSuggestions = new ArrayList<>();
+
+        if (currentInput.contains(" ")) {
+            return ;
+        }
+
+        for (String commandWord: allCommandWords) {
+            if (currentInput.length() == 0 ||
+                    (currentInput.length() < commandWord.length() &&
+                            StringUtil.containsWordIgnoreCase(commandWord, currentInput))) {
+                matchingSuggestions.add(commandWord);
+            }
+        }
+        if (!matchingSuggestions.isEmpty()) {
+            topSuggestion = matchingSuggestions.get(0);
+        }
+
+        StringBuilder toDisplay = new StringBuilder();
+        for (String option: matchingSuggestions) {
+            toDisplay.append(option + " ");
+        }
+
+        displayed.setValue(toDisplay.toString());
     }
 
     /**
