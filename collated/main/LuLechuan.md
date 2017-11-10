@@ -585,7 +585,7 @@ public class Photo {
      *  Constructs a default photo.
      */
     public Photo() {
-        pathName = "..\\addressbook4\\docs\\images\\default_photo.png";
+        pathName = "..\\addressbook-level4\\docs\\images\\default_photo.png";
     }
 
     /**
@@ -773,21 +773,5 @@ public class XmlAdaptedPhone {
 
         Circle clip = new Circle(60, 60, 50);
         photoContainer.setClip(clip);
-    }
-```
-###### \java\seedu\address\ui\PersonInformationPanel.java
-``` java
-    /**
-     *  Initialise optional phone display list
-    public void initOptionalPhone(ReadOnlyPerson person) {
-        final int[] index = {1};
-        person.getPhoneList().forEach(optionalPhone -> {
-            optionalPhoneDisplayList.add("Other phone " + index[0] + " : " + optionalPhone.value);
-            index[0]++;
-        });
-
-        //optionalPhoneList.itemsProperty().bind(listProperty);
-
-        listProperty.set(FXCollections.observableArrayList(optionalPhoneDisplayList));
     }
 ```
