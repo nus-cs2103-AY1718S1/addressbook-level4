@@ -80,45 +80,6 @@ public class ChangeThemeCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\commands\DeleteAllPhotosCommand.java
-``` java
-
-/**
- * Delete all photos from all persons.
- */
-public class DeleteAllPhotosCommand extends Command {
-    public static final String COMMAND_WORD = "dallphotos";
-    public static final String COMMAND_ALIAS = "dpall";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes all photos from all persons. "
-            + "Example: " + COMMAND_WORD;
-
-    public static final String MESSAGE_DELETE_ALL_IMAGE_SUCCESS = "Deleted all photos";
-
-    @Override
-    public CommandResult execute() throws CommandException {
-        deleteAllPhotos();
-        EventsCenter.getInstance().post(new PhotoChangeEvent());
-
-        LoggingCommand loggingCommand = new LoggingCommand();
-        loggingCommand.keepLog("", "Deleted all photos");
-
-        return new CommandResult(String.format(MESSAGE_DELETE_ALL_IMAGE_SUCCESS));
-    }
-    /**
-     * Deletes all photos of persons in the address book.
-     */
-    public void deleteAllPhotos() {
-        File dir = new File("photos/");
-        for (File file : dir.listFiles()) {
-            if (!(file.getName().equals("default.jpeg"))) {
-                file.delete();
-            }
-        }
-    }
-}
-```
 ###### \java\seedu\address\logic\commands\DeletePhotoCommand.java
 ``` java
 
@@ -191,6 +152,45 @@ public class DeletePhotoCommand extends Command {
         photoPath.delete();
     }
 
+}
+```
+###### \java\seedu\address\logic\commands\DeletesAllPhotosCommand.java
+``` java
+
+/**
+ * Deletes all photos from all persons.
+ */
+public class DeletesAllPhotosCommand extends Command {
+    public static final String COMMAND_WORD = "daphotos";
+    public static final String COMMAND_ALIAS = "dap";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes all photos from all persons. "
+            + "Example: " + COMMAND_WORD;
+
+    public static final String MESSAGE_DELETE_ALL_IMAGE_SUCCESS = "Deleted all photos";
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        deletesAllPhotos();
+        EventsCenter.getInstance().post(new PhotoChangeEvent());
+
+        LoggingCommand loggingCommand = new LoggingCommand();
+        loggingCommand.keepLog("", "Deleted all photos");
+
+        return new CommandResult(String.format(MESSAGE_DELETE_ALL_IMAGE_SUCCESS));
+    }
+    /**
+     * Deletes all photos of persons in the address book.
+     */
+    public void deletesAllPhotos() {
+        File dir = new File("photos/");
+        for (File file : dir.listFiles()) {
+            if (!(file.getName().equals("default.jpeg"))) {
+                file.delete();
+            }
+        }
+    }
 }
 ```
 ###### \java\seedu\address\logic\commands\EditCommand.java
@@ -723,7 +723,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
      * Handles event for change theme command.
      */
     @Subscribe
-    public void handleCommandTheme(ThemeChangeEvent event) {
+    public void handleThemeCommand(ThemeChangeEvent event) {
         String theme = event.getTheme();
         if (theme.equals("dark")) {
             handleBlackTheme();
