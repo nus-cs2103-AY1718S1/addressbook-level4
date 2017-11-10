@@ -19,7 +19,9 @@ the contact's number and automatically port it to your smartphone. It is written
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=connectuslog]
-include::../UserGuide.adoc[tag=qrgeneration]
+include::../UserGuide.adoc[tag=qrcall]
+include::../UserGuide.adoc[tag=qrsms]
+include::../UserGuide.adoc[tag=qrsave]
 
 #End of Extract#
 
