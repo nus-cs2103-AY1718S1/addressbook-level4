@@ -40,7 +40,6 @@ public class QrGenSaveContactCommand {
         String qrCodeF = "&ecc=L";
         String lineE = qrCodeA + qrCodeB + qrCodeC + qrCodeD + qrCodeE + qrCodeF;
         String fullQr = lineA + newName + lineB + newName + lineC + phoneNum + lineD + contactEmail + lineE;
-        System.out.println(fullQr);
         return fullQr;
     }
 }
