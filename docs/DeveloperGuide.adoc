@@ -496,6 +496,67 @@ If the group cannot be found inside the `UniqueGroupList`, it will throw a `Grou
         return groupFoundAndDeleted;
     }
 ----
+
+==== Selecting a group
+To select a group in circles, users can enter the command `selectgroup INDEX`, where INDEX is the index of the group in the group list panel. +
+Alternatively, users can also choose to click on the group in the group list to select it.
+
+Firstly, when a `selectgroup` command is entered in the Command Box, it enters the `SelectGroupCommandParser` class, which parses the index of the group that is selected.
+
+Next, the `SelectGroupCommand` class will take in the Index parsed by `SelectGroupCommandParser`, and calls the `deleteGroup()` method in `Model`.
+If the Index is valid, it will post a `JumpToGroupListRequestEvent` which includes the `targetIndex` of the group that is being selected.
+The code implementation is shown below, and can be found in
+{repoURL}/src/main/java/seedu/address/logic/commands/SelectGroupCommand.java[`SelectGroupCommand.java`]
+[source,java]
+----
+public CommandResult execute() throws CommandException {
+
+        List<ReadOnlyGroup> lastShownList = model.getGroupList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
+        }
+
+        EventsCenter.getInstance().post(new JumpToGroupListRequestEvent(targetIndex));
+        return new CommandResult(String.format(MESSAGE_SELECT_GROUP_SUCCESS, targetIndex.getOneBased()));
+
+    }
+----
+
+Then, the `GroupListPanel` class in `UI` will handle the `JumpToGroupListRequestEvent`, and selects the `GroupCard` of the selected group.
+It will also call the `setEventHandlerForSelectionChangeEvent()` method, which raises a `GroupPanelSelectionChangedEvent` event.
+The code implementation is shown below, and can be found in
+{repoURL}/src/main/java/seedu/address/ui/GroupListPanel.java[`GroupListPanel.java`]
+[source,java]
+----
+private void handleJumpToGroupListRequestEvent(JumpToGroupListRequestEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    scrollTo(event.targetIndex);
+}
+
+private void setEventHandlerForSelectionChangeEvent() {
+        groupListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in group list panel changed to : '" + newValue + "'");
+                        raise(new GroupPanelSelectionChangedEvent(newValue));
+                    }
+                });
+    }
+
+----
+Finally, the `GroupPanelSelectionChangedEvent` is handled by `ModelManager`, which will update the `filteredList` of persons, to display the group members in the group on the `PersonListPanel`.
+The code implementation is shown below, and can be found in
+{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager.java`]
+[source,java]
+----
+private void handleGroupPanelSelectionChangedEvent(GroupPanelSelectionChangedEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    updateFilteredPersonList(person -> event.getNewSelection().group.getGroupMembers().contains(person));
+    raise(new NewPersonListEvent(getFilteredPersonList()));
+}
+----
+
 // end::groups[]
 
 // tag::pinunpin[]
