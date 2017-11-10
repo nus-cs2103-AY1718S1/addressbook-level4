@@ -1351,6 +1351,7 @@ public class SortFindPanel extends UiPart<Region> {
         try {
             CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + nameItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort name using sort menu");
         }
@@ -1364,6 +1365,7 @@ public class SortFindPanel extends UiPart<Region> {
         try {
             CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + phoneItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort phone using sort menu");
         }
@@ -1377,6 +1379,7 @@ public class SortFindPanel extends UiPart<Region> {
         try {
             CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + emailItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort email using sort menu");
         }
@@ -1390,6 +1393,7 @@ public class SortFindPanel extends UiPart<Region> {
         try {
             CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + addressItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort address using sort menu");
         }
@@ -1417,7 +1421,7 @@ public class SortFindPanel extends UiPart<Region> {
      * Handles switch to alias view event
      */
     @Subscribe
-    private void handleToggleToAllPersonViewEvent(ToggleToAliasViewEvent event) {
+    private void handleToggleToAliasViewEvent(ToggleToAliasViewEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchToAliasView();
     }

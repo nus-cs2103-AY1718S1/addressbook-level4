@@ -163,7 +163,7 @@ public class SortFindPanel extends UiPart<Region> {
      * Handles switch to alias view event
      */
     @Subscribe
-    private void handleToggleToAllPersonViewEvent(ToggleToAliasViewEvent event) {
+    private void handleToggleToAliasViewEvent(ToggleToAliasViewEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchToAliasView();
     }
