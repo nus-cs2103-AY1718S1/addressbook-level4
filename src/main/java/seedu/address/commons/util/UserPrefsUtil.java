@@ -6,6 +6,7 @@ import java.util.Optional;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.UserPrefs;
 
+//@@author chrisboo
 /**
  * A class for accessing User's Preferences
  */
@@ -28,3 +29,4 @@ public class UserPrefsUtil {
         saveUserPrefs(userPrefs, "preferences.json");
     }
 }
+//@@author
