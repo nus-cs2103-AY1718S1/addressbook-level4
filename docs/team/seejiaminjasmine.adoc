@@ -176,14 +176,14 @@ include::../DeveloperGuide.adoc[tag=deletephoto]
 
 ---
 
-=== Enhancement Added: Delete all photos
+=== Enhancement Added: Deletes all photos
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=deleteallphotos]
+include::../UserGuide.adoc[tag=deletesallphotos]
 
 #End of Extract#
 
@@ -200,7 +200,7 @@ The command is executed by typing `daphotos` and the command is easy for the use
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=deleteallphotos]
+include::../DeveloperGuide.adoc[tag=deletesallphotos]
 
 #End of Extract#
 

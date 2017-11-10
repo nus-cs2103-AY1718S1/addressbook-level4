@@ -939,25 +939,25 @@ If the person does not have an existing uploaded photo, a 'CommandException' wil
 
 // end::deletephoto[]
 
-// tag::deleteallphotos[]
-=== Delete all photos mechanism
+// tag::deletesallphotos[]
+=== Deletes all photos mechanism
 (added in v1.5)
 
-The delete all photos mechanism is similar to the delete photo mechanism where it is also implemented by `EventsCenter` and `Logic`.
+The deletes all photos mechanism is similar to the delete photo mechanism where it is also implemented by `EventsCenter` and `Logic`.
 
-* After entering the command, the execute() method in `DeleteAllPhotosCommand` will delete all the photos in the project directory. +
+* After entering the command, the execute() method in `DeletesAllPhotosCommand` will delete all the photos in the project directory. +
 
 ==== Design Considerations
 **Aspect:** Implementation of code +
-**Alternative 1 (current choice):** Implementing this feature in a separate `DeleteAllPhotosCommand` class +
-**Pros:** Separation of Concerns Principle (SoC) is not violated as the `DeleteAllPhotosCommand` class simply handles the deletion of all photos. +
+**Alternative 1 (current choice):** Implementing this feature in a separate `DeletesAllPhotosCommand` class +
+**Pros:** Separation of Concerns Principle (SoC) is not violated as the `DeletesAllPhotosCommand` class simply handles the deletion of all photos. +
 **Cons:** One more command has to be added which can inconvenience the user. +
 **Alternative 2 :** Implementing this feature in the `DeletePhotoCommand` class by having the same command and different parameters +
 **Pros:** There will be one less command which makes it more convenient to the user. +
 **Cons:** This will violate Separation of Concerns Principle (SoC) as even though both classes concerns the deletion of photos, `DeletePhotoCommand` +
-is specifically concerned in deleting a person's photo while `DeleteAllPhotosCommand` is concerned with deleting all photos.
+is specifically concerned in deleting a person's photo while `DeletesAllPhotosCommand` is concerned with deleting all photos.
 
-// end::deleteallphotos[]
+// end::deletesallphotos[]
 
 == Documentation
 

@@ -484,8 +484,8 @@ Examples:
 Deletes photo of the 1st person in the address book.
 // end::deletephoto[]
 
-// tag::deleteallphotos[]
-=== Delete all photos from all contacts : `daphotos`
+// tag::deletesallphotos[]
+=== Deletes all photos from all contacts : `daphotos`
 (added in v1.5)
 
 If you want to have a fresh start as all the photos are outdated,you can delete all the photos from all contacts. You can do so with the following command. +
@@ -496,7 +496,7 @@ Examples:
 * `daphotos` +
 * `dap` +
 Deletes all photos from all contacts in the address book.
-// end::deleteallphotos[]
+// end::deletesallphotos[]
 
 === Clearing all entries : `clear`
 
