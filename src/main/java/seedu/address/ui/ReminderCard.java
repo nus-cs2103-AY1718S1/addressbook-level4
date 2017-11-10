@@ -1,9 +1,15 @@
 //@@author cqhchan
 package seedu.address.ui;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -48,6 +54,8 @@ public class ReminderCard extends UiPart<Region> {
     private Label message;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Label daysCountdown;
 
     public ReminderCard(ReadOnlyReminder reminder, int displayedIndex) {
         super(FXML);
@@ -55,6 +63,7 @@ public class ReminderCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(reminder);
         bindListeners(reminder);
+        initCountdown(reminder);
     }
 
     private static String getColorForTag(String tagValue) {
@@ -89,6 +98,38 @@ public class ReminderCard extends UiPart<Region> {
             tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
             tags.getChildren().add(tagLabel);
         });
+    }
+
+    /**
+     * @param reminder
+     */
+    private void initCountdown(ReadOnlyReminder reminder) {
+        final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        LocalDate deadline = LocalDate.parse(reminder.getDate().toString(), dateFormatter);
+        LocalDate currentTime = LocalDate.now();
+        int daysBetween = (int) ChronoUnit.DAYS.between(currentTime, deadline);
+
+        if (daysBetween == 0) {
+            daysCountdown.setText("today");
+        } else if (daysBetween < 0) {
+            daysCountdown.setText("overdue");
+        } else {
+            daysCountdown.setText(daysBetween + " day(s)" + " left");
+            setDaysCountdown(deadline);
+        }
+    }
+
+    private void setDaysCountdown(LocalDate date) {
+        final Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                LocalDate currentDate = LocalDate.now();
+                int newDaysBetween = (int) ChronoUnit.DAYS.between(currentDate, date);
+                Platform.runLater(() -> daysCountdown.setText(newDaysBetween + " day(s)" + " left"));
+            }
+        };
+        timer.scheduleAtFixedRate(task, 0, 3600000);
     }
 
     @Override
