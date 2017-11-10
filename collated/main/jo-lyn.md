@@ -46,7 +46,7 @@ public class PersonEditedEvent extends BaseEvent {
 ###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
     /**
-     * Raise a person edited event to update display.
+     * Raises a person edited event to update display.
      */
     private void raisePersonEditedEvent(ReadOnlyPerson editedPerson) {
         EventsCenter.getInstance().post(new PersonEditedEvent(editedPerson, model.getIndex(editedPerson)));
@@ -124,7 +124,7 @@ public class RemarkCommand extends UndoableCommand {
     }
 
     /**
-     * @return the success message for the remark command.
+     * Returns the success message for the remark command.
      */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
         if (!remark.value.isEmpty()) {
@@ -171,6 +171,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the RemarkCommand
      * and returns an RemarkCommand object for execution.
+     *
      * @throws ParseArgsException if the user input does not conform the expected format
      */
     public RemarkCommand parse(String args) throws ParseArgsException {
@@ -289,7 +290,7 @@ public class Remark {
     }
 
     /**
-     * Load images for keyboard icons in the command box.
+     * Loads images for keyboard icons in the command box.
      */
     private void loadKeyboardIcons() {
         keyboardIdle = new Image(getClass().getResourceAsStream("/images/keyboard.png"));
@@ -300,13 +301,14 @@ public class Remark {
 ###### \java\seedu\address\ui\CommandBox.java
 ``` java
     /**
-     * Change {@code keyboardTyping} icon to {@code keyboardIdle} when there is no change
+     * Changes {@code Image keyboardTyping} icon to {@code Image keyboardIdle} when there is no change
      * to text field after some time.
      */
     private void updateKeyboardIcon() {
         ObservableList<String> styleClass = commandTextField.getStyleClass();
 
         keyboardIcon.setImage(keyboardTyping);
+
         pause.setOnFinished(event -> {
             if (!styleClass.contains(ERROR_STYLE_CLASS)) {
                 keyboardIcon.setImage(keyboardIdle);
@@ -429,7 +431,7 @@ public class KeyListener {
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
     /**
-     * Set key listeners for handling keyboard shortcuts.
+     * Sets key listeners for handling keyboard shortcuts.
      */
     protected void setKeyListeners() {
         KeyListener keyListener = new KeyListener(getRoot(), resultDisplay, personListPanel, commandBox);
@@ -453,9 +455,9 @@ public class KeyListener {
 ###### \java\seedu\address\ui\PersonCard.java
 ``` java
     /**
-     * Initialise the person card with the person details.
+     * Initializes the person card with the person details.
      */
-    private void initialisePerson(ReadOnlyPerson person, int displayedIndex) {
+    private void initializePerson(ReadOnlyPerson person, int displayedIndex) {
         id.setText(Integer.toString(displayedIndex));
         setAvatar(person);
         setTags(person);
@@ -650,9 +652,9 @@ public class Avatar {
     }
 
     /**
-     * Generates a new color with a random offset from {@code defaultColor}.
+     * Generates a new color with a random offset from {@code Color defaultColor}.
      *
-     * @return The new color in hex string format
+     * @return The new color in hexadecimal {@code String} format
      */
     private static String generateNewColor(Color defaultColor) {
         int r = defaultColor.getRed();
@@ -700,11 +702,14 @@ public class ColorsUtil {
  */
 public class KeyListenerUtil {
 
+    // Non-command events
     public static final KeyCombination KEY_COMBINATION_FOCUS_PERSON_LIST = KeyCombination.valueOf("Esc");
     public static final KeyCombination KEY_COMBINATION_FOCUS_PERSON_LIST_ALT = KeyCombination.valueOf("Ctrl+Left");
     public static final KeyCombination KEY_COMBINATION_FOCUS_COMMAND_BOX = KeyCombination.valueOf("Enter");
     public static final KeyCombination KEY_COMBINATION_FOCUS_RESULT_DISPLAY = KeyCombination.valueOf("Ctrl+Right");
     public static final KeyCombination KEY_COMBINATION_DELETE_SELECTION = KeyCombination.valueOf("Ctrl+D");
+
+    // Command events
     public static final KeyCombination KEY_COMBINATION_CLEAR = KeyCombination.valueOf(ClearCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_HISTORY = KeyCombination.valueOf(HistoryCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_UNDO = KeyCombination.valueOf(UndoCommand.COMMAND_HOTKEY);

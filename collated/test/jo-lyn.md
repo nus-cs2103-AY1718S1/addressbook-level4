@@ -59,7 +59,7 @@ public class PersonDetailPanelHandle extends NodeHandle<Node> {
     }
 
     /**
-     * Update tags in person detail panel.
+     * Updates tags in person detail panel.
      */
     public void updateTags() {
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
@@ -318,7 +318,7 @@ public class RemarkCommandTest {
     }
 
     /**
-     * Edit filtered list where index is larger than size of filtered list,
+     * Edits filtered list where index is larger than size of filtered list,
      * but smaller than size of rolodex.
      */
     @Test
@@ -644,7 +644,7 @@ public class PersonDetailPanelTest extends GuiUnitTest {
     }
 
     /**
-     * Asserts that panel displays nothing.
+     * Asserts that {@code panel} displays nothing.
      */
     private void assertPanelDisplaysNothing(PersonDetailPanelHandle panel) {
         assertEquals("", panel.getName());

@@ -252,3 +252,44 @@
    </HBox>
 </HBox>
 ```
+###### \resources\view\PersonListPanel.fxml
+``` fxml
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="personListPanel" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <ListView fx:id="personListView" VBox.vgrow="ALWAYS">
+      <VBox.margin>
+         <Insets />
+      </VBox.margin></ListView>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <padding>
+      <Insets bottom="10.0" top="10.0" />
+   </padding>
+</VBox>
+```
+###### \resources\view\ResultDisplay.fxml
+``` fxml
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane fx:id="placeHolder" alignment="CENTER_LEFT" styleClass="result-pane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <TextArea fx:id="resultDisplay" editable="false" maxHeight="300.0" styleClass="result-text-area" wrapText="true">
+    <StackPane.margin>
+      <Insets />
+    </StackPane.margin>
+    <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding></TextArea>
+  <opaqueInsets>
+    <Insets />
+  </opaqueInsets>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</StackPane>
+```
