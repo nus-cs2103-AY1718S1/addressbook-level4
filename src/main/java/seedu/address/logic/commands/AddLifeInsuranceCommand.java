@@ -28,7 +28,7 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "addli";
 
     public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)
-            + ": Adds a life insurance to Lisa. "
+            + ": Adds a life insurance to Lisa.\n"
             + "Parameters: "
             + PREFIX_NAME + "INSURANCE_NAME "
             + PREFIX_OWNER + "OWNER "
@@ -36,8 +36,8 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
             + PREFIX_BENEFICIARY + "BENEFICIARY "
             + PREFIX_PREMIUM + "PREMIUM "
             + PREFIX_SIGNING_DATE + "SIGNING_DATE "
-            + PREFIX_EXPIRY_DATE + "EXPIRY_DATE"
-            + PREFIX_CONTRACT_NAME + " CONTRACT_NAME\n"
+            + PREFIX_EXPIRY_DATE + "EXPIRY_DATE "
+            + PREFIX_CONTRACT_NAME + "CONTRACT_NAME\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Term Life "
             + PREFIX_OWNER + "Alex Yeoh "

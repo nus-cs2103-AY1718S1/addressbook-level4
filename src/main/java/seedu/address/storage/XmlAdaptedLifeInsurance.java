@@ -24,7 +24,7 @@ public class XmlAdaptedLifeInsurance {
     @XmlElement(required = true)
     private Double premium;
     @XmlElement(required = true)
-    private String contractPath;
+    private String contractName;
     @XmlElement(required = true)
     private String signingDate;
     @XmlElement(required = true)
@@ -49,7 +49,7 @@ public class XmlAdaptedLifeInsurance {
         insured = source.getInsured().getName();
         beneficiary = source.getBeneficiary().getName();
         premium = source.getPremium();
-        contractPath = source.getContractName();
+        contractName = source.getContractName();
         signingDate = source.getSigningDateString();
         expiryDate = source.getExpiryDateString();
     }
@@ -62,6 +62,6 @@ public class XmlAdaptedLifeInsurance {
 
     public LifeInsurance toModelType() throws IllegalValueException {
         return new LifeInsurance(this.id, this.insuranceName, this.owner, this.insured, this.beneficiary, this.premium,
-                this.contractPath, this.signingDate, this.expiryDate);
+                this.contractName, this.signingDate, this.expiryDate);
     }
 }

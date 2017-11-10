@@ -57,7 +57,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     @FXML
     private Label expiryDate;
     @FXML
-    private Label contractPath;
+    private Label contractName;
 
     public InsuranceProfilePanel() {
         super(FXML);
@@ -109,9 +109,9 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         if (isFileExists(insuranceFile)) {
             activateLinkToInsuranceFile();
         } else {
-            contractPath.getStyleClass().clear();
-            contractPath.getStyleClass().add("missing-file");
-            contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            contractName.getStyleClass().clear();
+            contractName.getStyleClass().add("missing-file");
+            contractName.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
                     FileChooser.ExtensionFilter extFilter =
@@ -138,9 +138,9 @@ public class InsuranceProfilePanel extends UiPart<Region> {
      *  Enable the link to open contract pdf file and adjusting the text hover highlight
      */
     private void activateLinkToInsuranceFile() {
-        contractPath.getStyleClass().clear();
-        contractPath.getStyleClass().add("valid-file");
-        contractPath.setOnMouseClicked(event -> {
+        contractName.getStyleClass().clear();
+        contractName.getStyleClass().add("valid-file");
+        contractName.setOnMouseClicked(event -> {
             try {
                 Desktop.getDesktop().open(insuranceFile);
             } catch (IOException ee) {
@@ -160,7 +160,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         owner.textProperty().bind(Bindings.convert(insurance.getOwner().nameProperty()));
         insured.textProperty().bind(Bindings.convert(insurance.getInsured().nameProperty()));
         beneficiary.textProperty().bind(Bindings.convert(insurance.getBeneficiary().nameProperty()));
-        contractPath.textProperty().bind(Bindings.convert(insurance.contractNameProperty()));
+        contractName.textProperty().bind(Bindings.convert(insurance.contractNameProperty()));
         premium.textProperty().bind(Bindings.convert(insurance.premiumStringProperty()));
         signingDate.textProperty().bind(Bindings.convert(insurance.signingDateStringProperty()));
         expiryDate.textProperty().bind(Bindings.convert(insurance.expiryDateStringProperty()));
