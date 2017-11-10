@@ -920,14 +920,15 @@ The code snippet below shows the details of how the color values are manipulated
 [source, java]
 ----
 /**
-* Generates a new color with a random offset from {@code defaultColor}.
+* Generates a new color with a random offset from {@code Color defaultColor}.
 *
-* @return The new color in hex string format
+* @return The new color in hexadecimal {@code String} format
 */
 private static String generateNewColor(Color defaultColor) {
     int r = defaultColor.getRed();
     int g = defaultColor.getGreen();
     int b = defaultColor.getBlue();
+
     int newR = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (r + generateOffset())));
     int newG = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (g + generateOffset())));
     int newB = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (b + generateOffset())));
