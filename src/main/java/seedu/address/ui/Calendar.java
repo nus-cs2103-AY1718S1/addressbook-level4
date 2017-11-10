@@ -159,8 +159,8 @@ public class Calendar {
      */
     public void populateUpdatedCalendar(UniqueEventList eventList, YearMonth yearMonth) {
         // Get the date we want to start with on the calendar
-        yearMonth = currentYearMonth;
-        LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
+        currentYearMonth = yearMonth;
+        LocalDate calendarDate = LocalDate.of(currentYearMonth.getYear(), currentYearMonth.getMonthValue(), 1);
         // Dial back the day until it is SUNDAY (unless the month starts on a sunday)
         while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY")) {
             calendarDate = calendarDate.minusDays(1);
@@ -189,7 +189,8 @@ public class Calendar {
                 }
             }
             // Change the title of the calendar
-            calendarTitle.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
+            calendarTitle.setText(currentYearMonth.getMonth().toString() + " "
+                    + String.valueOf(currentYearMonth.getYear()));
         }
     }
 }
