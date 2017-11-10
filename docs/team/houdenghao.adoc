@@ -114,6 +114,8 @@ include::../UserGuide.adoc[tag=findE]
 ---
 #Start of Extract [from: Developer Guide]#
 
+include::../DeveloperGuide.adoc[tag=findE]
+
 #End of Extract#
 
 ---
