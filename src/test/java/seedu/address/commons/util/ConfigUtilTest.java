@@ -43,10 +43,6 @@ public class ConfigUtilTest {
 
         thrown.expect(DataConversionException.class);
         read("NotJsonFormatConfig.json");
-
-        /* IMPORTANT: Any code below an exception-throwing line (like the one above) will be ignored.
-         * That means you should not have more than one exception test in one method
-         */
     }
 
     @Test
@@ -119,18 +115,17 @@ public class ConfigUtilTest {
     //@@author chrisboo
     @Test
     public void updateConfigTest() throws DataConversionException, IOException {
-        String configFilePath = addToTestDataPathIfNotNull("TypicalConfig.json");
-        String newAppTitle = "new Death Note";
+        Config original = getTypicalConfig();
 
-        Config oldConfig = read("TypicalConfig.json").get();
+        String configFilePath = testFolder.getRoot() + File.separator + "TempConfig.json";
+        ConfigUtil.saveConfig(original, configFilePath);
 
-        updateConfig(configFilePath, newAppTitle);
+        String updatedTitle = "Updated Title";
+        original.setAppTitle(updatedTitle);
+        updateConfig(configFilePath, updatedTitle);
+        Config readBack = ConfigUtil.readConfig(configFilePath).get();
 
-        Config config = read("TypicalConfig.json").get();
-        assertEquals(config.getAppTitle(), newAppTitle);
-
-        //after
-        updateConfig(configFilePath, oldConfig.getAppTitle());
+        assertEquals(readBack, original);
     }
     //@@author
 
