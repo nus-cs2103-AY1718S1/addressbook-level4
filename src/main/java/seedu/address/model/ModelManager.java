@@ -84,7 +84,6 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ScheduleListChangedEvent(getScheduleList()));
     }
 
-
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);

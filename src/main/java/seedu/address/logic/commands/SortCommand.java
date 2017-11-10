@@ -5,7 +5,6 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 //@@author limcel
 /**
  * Sorts all contacts in alphabetical order by their names from the address book.
- * Command is case-insensitive
  */
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";

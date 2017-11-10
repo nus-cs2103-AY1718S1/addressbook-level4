@@ -653,7 +653,6 @@ In version v1.3, you are be able to:
 In version v1.4, you are be able to:
 
 * View statistics of the current list of students from the `Statistics Panel`
-* Use the `ScheduleCommand` to add a schedule into your schedule list
 * Have automated assignment of different colours to different tags according to suitable RGB values
 * Add schedules into the cherBook
 * Add tab to show students in the same class and same tags respectively.
