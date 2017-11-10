@@ -449,6 +449,7 @@ Changes the addressbook theme to *Caspian* theme. +
 `theme 1` +
 Changes the addressbook theme to theme `INDEX` of one, which is default *DarkTheme*.
 
+// tag::remark[]
 === Remarking a person with `remark` command (v1.3)
 
 *Author*: Beh Bee Yee
@@ -469,6 +470,7 @@ Examples:
 Edits the remark for the first person in the existing to Likes to drink milk.
 * `remark 1 r/` +
 Removes the remark for the first person.
+// end::remark[]
 
 === Quick adding using improved `add` Command (v1.4)
 
