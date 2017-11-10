@@ -197,7 +197,7 @@
 ###### /java/seedu/address/logic/commands/AddMultipleCommand.java
 ``` java
 /**
- * Adds a person to the address book.
+ * Adds multiple persons to the address book.
  */
 public class AddMultipleCommand extends UndoableCommand {
 
@@ -589,7 +589,8 @@ public class MergeCommandParser implements Parser<MergeCommand> {
 ###### /java/seedu/address/model/person/PersonContainsKeywordsPredicate.java
 ``` java
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code Name} or {@code Tag} matches any of the keywords given.
+ * Tests that a {@code ReadOnlyPerson}'s {@code Name}, {@code Tag}, {@code Email}, {@code Phone},
+ * {@code Address}, {@code Comment} and {@code Appoint} matches any of the keywords given.
  */
 public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final HashMap<String, List<String>> keywords;
@@ -599,10 +600,10 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
     }
 
     /**
-     * Checks if a person contain the name predicate
+     * Checks that {@code person} contain the name predicates in {@code keywords}. Return true if there is any match.
      *
      * @param person should not be null
-     * @return result that indicates if a person contain name predicate
+     * @return result that indicates if {@code person} contain any of the name predicates in {@code keywords}.
      */
     private boolean checkPersonContainsNamePredicate(ReadOnlyPerson person) {
         boolean result = false;
@@ -614,10 +615,10 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
     }
 
     /**
-     * Checks if a person contain the tag predicate
+     * Checks that {@code person} contain the tag predicates in {@code keywords}. Return true if there is any match.
      *
      * @param person should not be null
-     * @return result that indicates if a person contain tag predicate
+     * @return result that indicates if {@code person} contain any of the name predicates in {@code keywords}.
      */
     private boolean checkPersonContainsTagPredicate(ReadOnlyPerson person) {
         boolean result = false;
@@ -628,10 +629,10 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
     }
 
     /**
-     * Checks if a person contain the email predicate
+     * Checks that {@code person} contain the email predicates in {@code keywords}. Return true if there is any match.
      *
      * @param person should not be null
-     * @return result that indicates if a person contain email predicate
+     * @return result that indicates if {@code person} contain any of the email predicates in {@code keywords}.
      */
     private boolean checkPersonContainsEmailPredicate(ReadOnlyPerson person) {
         boolean result = false;
@@ -643,10 +644,10 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
     }
 
     /**
-     * Checks if a person contain the phone predicate
+     * Checks that {@code person} contain the phone predicates in {@code keywords}. Return true if there is any match.
      *
      * @param person should not be null
-     * @return result that indicates if a person contain phone predicate
+     * @return result that indicates if {@code person} contain any of the phone predicates in {@code keywords}.
      */
     private boolean checkPersonContainsPhonePredicate(ReadOnlyPerson person) {
         boolean result = false;
@@ -658,10 +659,10 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
     }
 
     /**
-     * Checks if a person contain the address predicate
+     * Checks that {@code person} contain the address predicates in {@code keywords}. Return true if there is any match.
      *
      * @param person should not be null
-     * @return result that indicates if a person contain address predicate
+     * @return result that indicates if {@code person} contain any of the address predicates in {@code keywords}.
      */
     private boolean checkPersonContainsAddressPredicate(ReadOnlyPerson person) {
         boolean result = false;
@@ -673,10 +674,10 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
     }
 
     /**
-     * Checks if a person contain the comment predicate
+     * Checks that {@code person} contain the comment predicates in {@code keywords}. Return true if there is any match.
      *
      * @param person should not be null
-     * @return result that indicates if a person contain comment predicate
+     * @return result that indicates if {@code person} contain any of the comment predicates in {@code keywords}.
      */
     private boolean checkPersonContainsCommentPredicate(ReadOnlyPerson person) {
         boolean result = false;
@@ -689,10 +690,10 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
     }
 
     /**
-     * Checks if a person contain the appoint predicate
+     * Checks that {@code person} contain the appoint predicates in {@code keywords}. Return true if there is any match.
      *
      * @param person should not be null
-     * @return result that indicates if a person contain appoint predicate
+     * @return result that indicates if {@code person} contain any of the appoint predicates in {@code keywords}.
      */
     private boolean checkPersonContainsAppointPredicate(ReadOnlyPerson person) {
         boolean result = false;
