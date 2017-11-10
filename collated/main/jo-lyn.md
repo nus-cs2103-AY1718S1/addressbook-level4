@@ -660,6 +660,7 @@ public class Avatar {
         int r = defaultColor.getRed();
         int g = defaultColor.getGreen();
         int b = defaultColor.getBlue();
+
         int newR = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (r + generateOffset())));
         int newG = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (g + generateOffset())));
         int newB = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (b + generateOffset())));
