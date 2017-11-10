@@ -1,23 +1,35 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.address.model.task.Task;
+import seedu.address.testutil.TaskBuilder;
+
 //@@author raisa2010
-public class AddTaskCommandParserTest {
+public class AddTaskCommandParserTest  {
     private AddTaskCommandParser parser = new AddTaskCommandParser();
 
-   // @Test
+  //  @Test
   /*  public void parse_allFieldsPresent_success() throws Exception {
         Task expectedTask = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP)
-                .withStartDate(VALID_STARTDATE_INTERNSHIP).withDeadline(VALID_DEADLINE_INTERNSHIP)
+                .withDeadline(VALID_DEADLINE_INTERNSHIP)
                 .withTags(VALID_TAG_URGENT).build();
 
-        // multiple start dates - last date accepted
+        // multiple deadlines - last date accepted
         assertParseSuccess(parser, VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_GRAD_SCHOOL
                 + STARTDATE_DESC_INTERNSHIP + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT,
                 new AddTaskCommand(expectedTask));
 
+        // multiple single times - last accepted
+
+        // multiple time pairs - last accepted
+
         // multiple tags - all accepted
         Task expectedTaskWithMultipleTags = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP)
-                .withStartDate(VALID_STARTDATE_INTERNSHIP).withDeadline(VALID_DEADLINE_INTERNSHIP)
+                .withDeadline(VALID_DEADLINE_INTERNSHIP)
                 .withTags(VALID_TAG_URGENT, VALID_TAG_GROUP).build();
         assertParseSuccess(parser, VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_INTERNSHIP
                 + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT + TAG_DESC_GROUP,
@@ -31,10 +43,10 @@ public class AddTaskCommandParserTest {
                 + TAG_DESC_URGENT, new AddTaskCommand(expectedTaskWithPrefixInDesc));
     }
 
-   // @Test
-   // public void parse_optionalFieldsMissing_success() {
+    @Test
+    public void parse_optionalFieldsMissing_success() {
         // no start date
-  /*      Task expectedTask = new TaskBuilder().withDescription(VALID_DESCRIPTION_GRAD_SCHOOL)
+        Task expectedTask = new TaskBuilder().withDescription(VALID_DESCRIPTION_GRAD_SCHOOL)
                 .withDeadline(VALID_DEADLINE_GRAD_SCHOOL).withStartDate("").withTags(VALID_TAG_URGENT).build();
         assertParseSuccess(parser, VALID_DESCRIPTION_GRAD_SCHOOL + DEADLINE_DESC_GRAD_SCHOOL
                 + TAG_DESC_URGENT, new AddTaskCommand(expectedTask));

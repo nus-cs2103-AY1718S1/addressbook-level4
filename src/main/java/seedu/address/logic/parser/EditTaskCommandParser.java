@@ -67,7 +67,7 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
             throw new ParseException(EditTaskCommand.MESSAGE_NOT_EDITED);
         }
 
-        if (!DateTimeValidator.isStartTimeBeforeEndTime(editTaskDescriptor.getStartTime(), editTaskDescriptor.getEndTime()))
+      //  if (!DateTimeValidator.isStartTimeBeforeEndTime(editTaskDescriptor.getStartTime(), editTaskDescriptor.getEndTime()))
 
         return new EditTaskCommand(index, editTaskDescriptor);
     }

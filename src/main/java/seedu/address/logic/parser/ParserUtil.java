@@ -157,7 +157,6 @@ public class ParserUtil {
             }
             List<Date> dates = dateGroup.get(dateGroup.size() - 1).getDates();
 
-
             String endTime = DateTimeFormatter.formatTime(dates.get(dates.size() - 1));
             String startTime = dates.size() > 1 ? DateTimeFormatter.formatTime(dates.get(dates.size() - 2)) : "";
 
