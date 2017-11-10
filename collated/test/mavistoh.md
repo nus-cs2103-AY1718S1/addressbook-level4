@@ -1,29 +1,60 @@
-package systemtests;
+# mavistoh
+###### /java/seedu/address/model/person/BirthdayTest.java
+``` java
+public class BirthdayTest {
 
-import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ORDER_PERSONS_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_REPEATED_INDEXES;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
-import static seedu.address.testutil.TestUtil.getLastIndex;
-import static seedu.address.testutil.TestUtil.getMidIndex;
-import static seedu.address.testutil.TestUtil.getPerson;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+    @Test
+    public void isValidBirthday() {
+        //invalid birthdays
+        assertFalse(Birthday.isValidBirthday(" ")); // spaces only
+        assertFalse(Birthday.isValidBirthday("91")); // less than 3 numbers
+        assertFalse(Birthday.isValidBirthday("phone")); // non-numeric
+        assertFalse(Birthday.isValidBirthday("9011p041")); // alphabets within digits
+        assertFalse(Birthday.isValidBirthday("9312 1534")); // spaces within digits
+        assertFalse(Birthday.isValidBirthday("29-02-1995")); // not a leap year
+        assertFalse(Birthday.isValidBirthday("31-02-1995")); // feb cannot take 30/31
+        assertFalse(Birthday.isValidBirthday("29-02-1995")); // not a leap year
+        assertFalse(Birthday.isValidBirthday("31-09-1989")); // no 31st in sept
+        assertFalse(Birthday.isValidBirthday("02.09-1989")); // separators not consistent
 
-import org.junit.Test;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.model.Model;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-
-//@@author mavistoh
+        // valid birthdays
+        assertTrue(Birthday.isValidBirthday("-"));
+        assertTrue(Birthday.isValidBirthday("02-03-1995")); // follow regex
+        assertTrue(Birthday.isValidBirthday("02.03.1995")); // follow regex
+        assertTrue(Birthday.isValidBirthday("02/03/1995")); // follow regex
+    }
+}
+```
+###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
+``` java
+    /**
+     * Sets the {@code Birthday} of the {@code EditBirthdayDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withBirthday(String birthday) {
+        try {
+            ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("birthday is expected to be unique.");
+        }
+        return this;
+    }
+```
+###### /java/seedu/address/testutil/PersonBuilder.java
+``` java
+    /**
+     * Sets the {@code Birthday} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withBirthday(String birthday) {
+        try {
+            this.person.setBirthday(new Birthday(birthday));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("birthday is expected to be unique.");
+        }
+        return this;
+    }
+```
+###### /java/systemtests/DeleteCommandSystemTest.java
+``` java
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
@@ -242,3 +273,4 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         assertStatusBarUnchanged();
     }
 }
+```

@@ -61,10 +61,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    //@@author eldonng
     public void setGroups(List<? extends  ReadOnlyGroup> groups) throws DuplicateGroupException {
         this.groups.setGroups(groups);
     }
 
+    //@@author
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
@@ -194,6 +196,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //@@author eldonng
+
     /**
      * Removes a group from the address book
      * @throws GroupNotFoundException if the group is not found
@@ -208,12 +211,14 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// tag-level operations
 
+    //@@author
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
 
     //// util methods
 
+    //@@author eldonng
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags, "
@@ -221,6 +226,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: refine later
     }
 
+    //@@author
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
         return persons.asObservableList();
@@ -237,6 +243,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return groups.asObservableList();
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

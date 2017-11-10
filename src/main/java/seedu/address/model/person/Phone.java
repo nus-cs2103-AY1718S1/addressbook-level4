@@ -15,6 +15,7 @@ public class Phone {
     public static final String PHONE_EMPTY = "-";
     public final String value;
 
+    //@@author mavistoh
     /**
      * Validates given phone number.
      *
@@ -38,6 +39,7 @@ public class Phone {
     public static boolean isValidPhone(String test) {
         return test.matches(PHONE_VALIDATION_REGEX) || test.matches(PHONE_EMPTY);
     }
+    //@@author
 
     @Override
     public String toString() {

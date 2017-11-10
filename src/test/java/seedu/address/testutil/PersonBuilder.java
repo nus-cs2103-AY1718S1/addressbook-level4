@@ -97,6 +97,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author mavistoh
     /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.
      */
@@ -108,6 +109,7 @@ public class PersonBuilder {
         }
         return this;
     }
+    //@@author
 
     /**
      * Sets the {@code Email} of the {@code Person} that we are building.

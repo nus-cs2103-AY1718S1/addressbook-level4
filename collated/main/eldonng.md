@@ -48,7 +48,30 @@ public class NewGroupListEvent extends BaseEvent {
     public String toString() {
         return this.getClass().getSimpleName();
     }
+}
+```
+###### \java\seedu\address\commons\events\ui\NewPersonInfoEvent.java
+``` java
 
+/**
+ * Indicates that Person's information has been changed
+ */
+public class NewPersonInfoEvent extends BaseEvent {
+
+    private ReadOnlyPerson person;
+
+    public NewPersonInfoEvent(ReadOnlyPerson person) {
+        this.person = person;
+    }
+
+    public ReadOnlyPerson getPerson() {
+        return person;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }
 ```
 ###### \java\seedu\address\commons\events\ui\NewPersonListEvent.java
@@ -226,6 +249,8 @@ public class PinCommand extends UndoableCommand {
             }
         } catch (PersonNotFoundException pnfe) {
             throw new CommandException(MESSAGE_PIN_PERSON_FAILED);
+        } catch (EmptyAddressBookException eabe) {
+            throw new CommandException(MESSAGE_PIN_PERSON_FAILED);
         }
     }
 
@@ -255,8 +280,8 @@ public class SetColourCommand extends Command {
 
     public static final String SETCOLOUR_SUCCESS = "All tags [%1s] are now coloured %2s";
     public static final String SETCOLOUR_INVALID_COLOUR = "Unfortunately, %1s is unavailable to be set in addressbook";
-    private static final String[] colours = { "red", "yellow", "blue",
-        "orange", "brown", "green", "pink", "black", "grey" };
+    private static final String[] colours = {"blue", "red", "brown", "green", "black", "purple", "indigo", "grey",
+        "chocolate", "orange", "aquamarine"};
 
     private String tag;
     private String newColour;
@@ -325,7 +350,6 @@ public class UnpinCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
@@ -341,6 +365,8 @@ public class UnpinCommand extends UndoableCommand {
             }
         } catch (PersonNotFoundException pnfe) {
             throw new CommandException(MESSAGE_UNPIN_PERSON_FAILED);
+        } catch (EmptyAddressBookException eabe) {
+            throw new CommandException(MESSAGE_UNPIN_PERSON_FAILED);
         }
 
     }
@@ -353,36 +379,20 @@ public class UnpinCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\DeleteGroupCommandParser.java
+###### \java\seedu\address\logic\LogicManager.java
 ``` java
-/**
- * Parses input arguments and creates a new DeleteGroupCommand object
- */
-public class DeleteGroupCommandParser implements Parser<DeleteGroupCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the DeleteGroupCommand
-     * and returns an DeleteGroupCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public DeleteGroupCommand parse(String args) throws ParseException {
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new DeleteGroupCommand(index);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteGroupCommand.MESSAGE_USAGE));
-        }
+    @Override
+    public ObservableList<ReadOnlyGroup> getGroupList() {
+        return model.getGroupList();
     }
 
-}
 ```
-###### \java\seedu\address\logic\parser\GroupCommandParser.java
+###### \java\seedu\address\logic\parser\CreateGroupCommandParser.java
 ``` java
 /**
  * Parses input arguments and create a CreateGroupCommand object
  */
-public class GroupCommandParser implements  Parser<CreateGroupCommand> {
+public class CreateGroupCommandParser implements  Parser<CreateGroupCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the GroupCommand
@@ -416,6 +426,30 @@ public class GroupCommandParser implements  Parser<CreateGroupCommand> {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\DeleteGroupCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new DeleteGroupCommand object
+ */
+public class DeleteGroupCommandParser implements Parser<DeleteGroupCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeleteGroupCommand
+     * and returns an DeleteGroupCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public DeleteGroupCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new DeleteGroupCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteGroupCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
+```
 ###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
@@ -439,22 +473,6 @@ public class GroupCommandParser implements  Parser<CreateGroupCommand> {
         return tagSet;
     }
 
-    /**
-     * Parses a String and checks for validity. Leading and trailing whitespaces will be removed
-     * @throws IllegalValueException if specified string is invalid (not 1 of 3 options)
-     */
-    public static String parseSortType(String sortType) throws IllegalValueException {
-        String trimmedSortType = sortType.trim();
-        switch (trimmedSortType) {
-        case "name":
-        case "phone":
-        case "email":
-            return trimmedSortType;
-        default:
-            throw new IllegalValueException(MESSAGE_INVALID_SORT);
-        }
-    }
-
 ```
 ###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
@@ -469,24 +487,6 @@ public class GroupCommandParser implements  Parser<CreateGroupCommand> {
         throw new IllegalValueException(MESSAGE_INVALID_ARGUMENTS);
     }
 
-    /**
-     * Parses a String argument for tag. Leading and trailing whitespaces will be removed
-     */
-    public static String parseTag(String tag) {
-        String trimmedTag = tag.trim();
-        return trimmedTag;
-
-    }
-
-    /**
-     * Parses a String argument for a file path destination for Export.
-     * Leading and trailing whitespaces will be removed
-     */
-    public static String parseFilePath(String path) {
-        String trimmedPath = path.trim();
-        return trimmedPath;
-    }
-}
 ```
 ###### \java\seedu\address\logic\parser\PinCommandParser.java
 ``` java
@@ -562,6 +562,13 @@ public class UnpinCommandParser implements Parser<UnpinCommand> {
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
+    public void setGroups(List<? extends  ReadOnlyGroup> groups) throws DuplicateGroupException {
+        this.groups.setGroups(groups);
+    }
+
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
     /**
      * Adds a group to the address book.
      * @throws DuplicateGroupException if an equivalent group already exists.
@@ -571,9 +578,6 @@ public class UnpinCommandParser implements Parser<UnpinCommand> {
         groups.add(newGroup);
     }
 
-```
-###### \java\seedu\address\model\AddressBook.java
-``` java
     /**
      * Removes a group from the address book
      * @throws GroupNotFoundException if the group is not found
@@ -588,27 +592,14 @@ public class UnpinCommandParser implements Parser<UnpinCommand> {
 
     //// tag-level operations
 
-    public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
-        tags.add(t);
-    }
-
-    //// util methods
-
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags, "
                 + groups.asObservableList().size() + " groups.";
         // TODO: refine later
-    }
-
-    @Override
-    public ObservableList<ReadOnlyPerson> getPersonList() {
-        return persons.asObservableList();
-    }
-
-    @Override
-    public ObservableList<Tag> getTagList() {
-        return tags.asObservableList();
     }
 
 ```
@@ -619,22 +610,6 @@ public class UnpinCommandParser implements Parser<UnpinCommand> {
         return groups.asObservableList();
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AddressBook // instanceof handles nulls
-                && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags))
-                && this.groups.equals(((AddressBook) other).groups);
-    }
-
-    @Override
-    public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, groups, tags);
-    }
-
-}
 ```
 ###### \java\seedu\address\model\group\exceptions\DuplicateGroupException.java
 ``` java
@@ -845,6 +820,19 @@ public class UniqueGroupList implements Iterable<Group> {
         return groupFoundAndDeleted;
     }
 
+    /**
+     * Removes the equivalent person from all groups
+     * @param toRemove
+     */
+    public void removePerson(ReadOnlyPerson toRemove) {
+        requireNonNull(toRemove);
+        internalList.forEach(group -> {
+            if (group.getGroupMembers().contains(toRemove)) {
+                group.getGroupMembers().remove(toRemove);
+            }
+        });
+    }
+
     public void setGroups(UniqueGroupList replacement) {
         this.internalList.setAll(replacement.internalList);
     }
@@ -884,16 +872,66 @@ public class UniqueGroupList implements Iterable<Group> {
 
 }
 ```
+###### \java\seedu\address\model\Model.java
+``` java
+    /**
+     * Comparators for sorting purposes
+     */
+    Comparator<ReadOnlyPerson> COMPARATOR_SORT_BY_NAME = (
+        ReadOnlyPerson p1, ReadOnlyPerson p2) -> p1.getName().compareTo(p2.getName());
+    Comparator<ReadOnlyPerson> COMPARATOR_SORT_BY_PHONE = (
+        ReadOnlyPerson p1, ReadOnlyPerson p2) -> p1.getPhone().compareTo(p2.getPhone());
+    Comparator<ReadOnlyPerson> COMPARATOR_SORT_BY_EMAIL = (
+        ReadOnlyPerson p1, ReadOnlyPerson p2) -> p1.getEmail().compareTo(p2.getEmail());
+    /**
+     * {@code Predicate} that always evaluate to true
+     */
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_PINNED_PERSONS = p -> p.isPinned();
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_UNPINNED_PERSONS = p -> !p.isPinned();
+    Predicate<ReadOnlyGroup> PREDICATE_SHOW_ALL_GROUPS = unused -> true;
+
+
+```
+###### \java\seedu\address\model\Model.java
+``` java
+    /**
+     * Adds the given group
+     */
+    void addGroup(ReadOnlyGroup group) throws DuplicateGroupException;
+
+    /**
+     * Deletes the given group
+     */
+    void deleteGroup(ReadOnlyGroup group) throws GroupNotFoundException;
+
+    /**
+     * Pins the given person
+     */
+    void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException, EmptyAddressBookException;
+
+    /**
+     * Unpins the given person
+     */
+    void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException, EmptyAddressBookException;
+
+    /**
+     * Set the colour for the specific tag
+     * @param tag
+     * @param colour
+     */
+    void setTagColour(String tag, String colour) throws IllegalValueException;
+
+    HashMap<Tag, String> getTagColours();
+
+```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
-        raise(new NewGroupListEvent(getGroupList(), addressBook.getPersonList()));
-        indicateAddressBookChanged();
-    }
-
     @Override
-    public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-        addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.removePerson(target);
+        raise(new NewGroupListEvent(getGroupList(), addressBook.getPersonList()));
+
         indicateAddressBookChanged();
     }
 
@@ -906,55 +944,37 @@ public class UniqueGroupList implements Iterable<Group> {
         indicateAddressBookChanged();
     }
 
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
     @Override
     public synchronized void deleteGroup(ReadOnlyGroup group) throws GroupNotFoundException {
         addressBook.deleteGroup(group);
         indicateAddressBookChanged();
     }
 
-    @Override
-    public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireAllNonNull(target, editedPerson);
-
-        addressBook.updatePerson(target, editedPerson);
-        indicateAddressBookChanged();
-    }
-
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
-    public void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
+    public void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException,
+            EmptyAddressBookException{
         try {
-            Person addPin = addPinTag(person);
-            updatePerson(person, addPin);
+            person.setPin();
             sort(SortCommand.ARGUMENT_NAME);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
         }
     }
 
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
     @Override
-    public void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
+    public void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException,
+            EmptyAddressBookException {
         try {
-            Person removePin = removePinTag(person);
-            updatePerson(person, removePin);
+            person.setUnpin();
             sort(SortCommand.ARGUMENT_NAME);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
         }
     }
 
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
     @Override
     public void setTagColour(String tagName, String colour) throws IllegalValueException {
         List<Tag> tagList = addressBook.getTagList();
@@ -976,49 +996,6 @@ public class UniqueGroupList implements Iterable<Group> {
         return tagColours;
     }
 
-    private void updateAllPersons(HashMap<Tag, String> allTagColours) {
-        colourPrefs.updateColorMap(allTagColours);
-    }
-
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    /**
-     * @param personToPin
-     * @return updated Person with added pin to be added to the address book
-     * @throws CommandException
-     */
-    private Person addPinTag(ReadOnlyPerson personToPin) throws CommandException {
-        /**
-         * Create a new UniqueTagList to add pin tag into the list.
-         */
-        UniqueTagList updatedTags = new UniqueTagList(personToPin.getTags());
-        updatedTags.addPinTag();
-
-        return new Person(personToPin.getName(), personToPin.getPhone(), personToPin.getBirthday(),
-                personToPin.getEmail(), personToPin.getAddress(), updatedTags.toSet());
-    }
-
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    /**
-     * @param personToUnpin
-     * @return updated Person with removed pin to be added to the address book
-     * @throws CommandException
-     */
-    private Person removePinTag(ReadOnlyPerson personToUnpin) throws CommandException {
-        try {
-            UniqueTagList updatedTags = new UniqueTagList(personToUnpin.getTags());
-            updatedTags.removePinTag();
-            return new Person(personToUnpin.getName(), personToUnpin.getPhone(),
-                    personToUnpin.getBirthday(), personToUnpin.getEmail(), personToUnpin.getAddress(),
-                    updatedTags.toSet());
-        } catch (IllegalValueException ive) {
-            throw new CommandException(Tag.MESSAGE_TAG_CONSTRAINTS);
-        }
-    }
-
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -1033,27 +1010,12 @@ public class UniqueGroupList implements Iterable<Group> {
     }
     //=========== Filtered Person List Accessors =============================================================
 
-    /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
-     * {@code addressBook}
-     */
-    @Override
-    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
-    }
-
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public ObservableList<ReadOnlyGroup> getGroupList() {
         return FXCollections.unmodifiableObservableList(filteredGroups);
-    }
-
-    @Override
-    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-        requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
     }
 
 ```
@@ -1065,62 +1027,9 @@ public class UniqueGroupList implements Iterable<Group> {
         filteredGroups.setPredicate(predicate);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        // short circuit if same object
-        if (obj == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(obj instanceof ModelManager)) {
-            return false;
-        }
-
-        // state check
-        ModelManager other = (ModelManager) obj;
-        return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
-    }
-
-    @Override
-    public void sort(String sortType) throws DuplicatePersonException {
-        switch (sortType) {
-        case SortCommand.ARGUMENT_NAME:
-            addressBook.setPersons(sortBy(COMPARATOR_SORT_BY_NAME));
-            break;
-
-        case SortCommand.ARGUMENT_PHONE:
-            addressBook.setPersons(sortBy(COMPARATOR_SORT_BY_PHONE));
-            break;
-
-        case SortCommand.ARGUMENT_EMAIL:
-            addressBook.setPersons(sortBy(COMPARATOR_SORT_BY_EMAIL));
-            break;
-
-        default:
-            break;
-
-        }
-        indicateAddressBookChanged();
-    }
-
-    /**
-     * Sort the addressbook by the comparator given
-     * @return ArrayList<ReadOnlyPerson> sorted list</ReadOnlyPerson>
-     */
-    private ArrayList<ReadOnlyPerson> sortBy(Comparator<ReadOnlyPerson> comparator) {
-        ArrayList<ReadOnlyPerson> newList = new ArrayList<>();
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        SortedList<ReadOnlyPerson> sortedList =
-                getFilteredPersonList().filtered(PREDICATE_SHOW_PINNED_PERSONS).sorted(comparator);
-        newList.addAll(sortedList);
-        sortedList = getFilteredPersonList().filtered(PREDICATE_SHOW_UNPINNED_PERSONS).sorted(comparator);
-        newList.addAll(sortedList);
-
-        return newList;
-    }
-
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
     @Subscribe
     private void handleGroupPanelSelectionChangedEvent(GroupPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -1129,162 +1038,19 @@ public class UniqueGroupList implements Iterable<Group> {
     }
 }
 ```
-###### \java\seedu\address\model\tag\UniqueTagList.java
+###### \java\seedu\address\model\person\PersonContainsKeywordsPredicate.java
 ``` java
-    /**
-     * Creates a pin tag
-     * @return a Pin Tag to be used to add or remove person to be pinned in the address book
-     */
-    private Tag createPinTag() {
-        try {
-            return new Tag("Pinned");
-        } catch (IllegalValueException ive) {
-            return null; //Will not reach here
-        }
-
-    }
-    /**
-     * Returns all tags in this list as a Set.
-     * This set is mutable and change-insulated against the internal list.
-     */
-    public Set<Tag> toSet() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return new HashSet<>(internalList);
-    }
-
-    /**
-     * Replaces the Tags in this list with those in the argument tag list.
-     */
-    public void setTags(Set<Tag> tags) {
-        requireAllNonNull(tags);
-        internalList.setAll(tags);
-        assert CollectionUtil.elementsAreUnique(internalList);
-    }
-
-    /**
-     * Ensures every tag in the argument list exists in this object.
-     */
-    public void mergeFrom(UniqueTagList from) {
-        final Set<Tag> alreadyInside = this.toSet();
-        from.internalList.stream()
-                .filter(tag -> !alreadyInside.contains(tag))
-                .forEach(internalList::add);
-
-        assert CollectionUtil.elementsAreUnique(internalList);
-    }
-
-    /**
-     * Returns true if the list contains an equivalent Tag as the given argument.
-     */
-    public boolean contains(Tag toCheck) {
-        requireNonNull(toCheck);
-        return internalList.contains(toCheck);
-    }
-
-    /**
-     * Adds a Tag to the list.
-     *
-     * @throws DuplicateTagException if the Tag to add is a duplicate of an existing Tag in the list.
-     */
-    public void add(Tag toAdd) throws DuplicateTagException {
-        requireNonNull(toAdd);
-        if (contains(toAdd)) {
-            throw new DuplicateTagException();
-        }
-        internalList.add(toAdd);
-
-        assert CollectionUtil.elementsAreUnique(internalList);
-    }
-
-```
-###### \java\seedu\address\model\tag\UniqueTagList.java
-``` java
-    /**
-     * Adds a pin tag to the tag list
-     */
-    public void addPinTag() {
-        internalList.add(pinTag);
-    }
-
-```
-###### \java\seedu\address\model\tag\UniqueTagList.java
-``` java
-    /**
-     * Removes a pin tag from the tag list
-     * @throws IllegalValueException
-     */
-    public void removePinTag() throws IllegalValueException {
-        if (contains(pinTag)) {
-            internalList.remove(pinTag);
-        } else {
-            throw new IllegalValueException("Unable to find tag");
-        }
-    }
-
-
     @Override
-    public Iterator<Tag> iterator() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return internalList.iterator();
+    public boolean test(ReadOnlyPerson person) {
+        return keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getSearchText(), keyword))
+                || keywords.stream().anyMatch(keyword -> checkName(person.getName(), keyword));
     }
 
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
-     */
-    public ObservableList<Tag> asObservableList() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return FXCollections.unmodifiableObservableList(internalList);
+    private boolean checkName(Name personName, String keyword) {
+        return personName.toString().toLowerCase().contains(keyword.trim().toLowerCase());
     }
 
-    /**
-     * Searches the tag list to find Pinned Tag. Can always be found as the person in pinned already
-     *
-     * @param pinnedPerson
-     * @return true is pin tag exists, false if no pin tag
-     */
-    public static boolean containsPinTag(ReadOnlyPerson pinnedPerson) {
-        for (Tag tag : pinnedPerson.getTags()) {
-            if ("Pinned".equals(tag.tagName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return other == this // short circuit if same object
-                || (other instanceof UniqueTagList // instanceof handles nulls
-                        && this.internalList.equals(((UniqueTagList) other).internalList));
-    }
-
-    /**
-     * Returns true if the element in this list is equal to the elements in {@code other}.
-     * The elements do not have to be in the same order.
-     */
-    public boolean equalsOrderInsensitive(UniqueTagList other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        assert CollectionUtil.elementsAreUnique(other.internalList);
-        return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
-    }
-
-    @Override
-    public int hashCode() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return internalList.hashCode();
-    }
-
-    /**
-     * Signals that an operation would have violated the 'no duplicates' property of the list.
-     */
-    public static class DuplicateTagException extends DuplicateDataException {
-        protected DuplicateTagException() {
-            super("Operation would result in duplicate tags");
-        }
-    }
-
-}
 ```
 ###### \java\seedu\address\storage\XmlAdaptedGroup.java
 ``` java
@@ -1349,6 +1115,12 @@ public class XmlAdaptedGroup {
     }
 
 }
+```
+###### \java\seedu\address\ui\CommandBox.java
+``` java
+        TextFields.bindAutoCompletion(commandTextField, Messages.MESSAGE_AUTOCOMPLETE_LIST);
+    }
+
 ```
 ###### \java\seedu\address\ui\GroupCard.java
 ``` java
@@ -1476,11 +1248,6 @@ public class GroupListPanel extends UiPart<Region> {
                     }
                 });
     }
-    @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
-    }
 
     @Subscribe
     private void handleNewGroupListEvent(NewGroupListEvent event) {
@@ -1517,24 +1284,9 @@ public class GroupListPanel extends UiPart<Region> {
         }
     }
 
-    @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
-            return false;
-        }
-
-        // state check
-        PersonCard card = (PersonCard) other;
-        return id.getText().equals(card.id.getText())
-                && person.equals(card.person);
-    }
-
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
     private Image setPinIcon(ReadOnlyPerson person) {
         if (person.isPinned()) {
             return new Image(PIN_ICON);
@@ -1558,7 +1310,7 @@ public class PersonInfo extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private HashMap<String, String> colourMap;
+    private ObjectProperty<HashMap<String, String>> colourMap;
 
     @FXML
     private Circle circle;
@@ -1588,10 +1340,7 @@ public class PersonInfo extends UiPart<Region> {
     public PersonInfo(HashMap<String, String> colourMap) {
         super(FXML);
 
-        this.colourMap = colourMap;
-
-        // To prevent triggering events for typing inside the loaded Web page.
-        getRoot().setOnKeyPressed(Event::consume);
+        this.colourMap = new SimpleObjectProperty<>(colourMap);
 
         loadDefaultPage();
         registerAsAnEventHandler(this);
@@ -1617,18 +1366,30 @@ public class PersonInfo extends UiPart<Region> {
     public void loadPage(ReadOnlyPerson person) {
         circle.setRadius(70);
         initial.setText(person.getName().fullName.substring(0, 1));
-        name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
         circle.setFill(colors[initial.getText().hashCode() % colors.length]);
         emailHeader.setText("Email:");
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
         addressHeader.setText("Address:");
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
         birthdayHeader.setText("Birthday: ");
-        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         tagsHeader.setText("Tags:");
+        bindListeners(person);
+
+    }
+
+    /**
+     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * so that they will be notified of any changes.
+     */
+    private void bindListeners(ReadOnlyPerson person) {
+        name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
+        person.tagProperty().addListener(((observable, oldValue, newValue) -> initTags(person)));
+        colourMap.addListener(((observable, oldValue, newValue) -> initTags(person)));
         initTags(person);
     }
+
 
     /**
      * Initializes tags for the person
@@ -1644,11 +1405,15 @@ public class PersonInfo extends UiPart<Region> {
     }
 
     private void setTagColour(Label tagLabel, Tag tag) {
-        if (colourMap.containsKey(tag.tagName)) {
-            tagLabel.setStyle("-fx-background-color: " + colourMap.get(tag.tagName));
+        if (colourProperty().containsKey(tag.tagName)) {
+            tagLabel.setStyle("-fx-background-color: " + colourProperty().get(tag.tagName));
         } else {
             tagLabel.setStyle(null);
         }
+    }
+
+    private HashMap<String, String> colourProperty() {
+        return colourMap.get();
     }
 
     @Subscribe
@@ -1656,7 +1421,22 @@ public class PersonInfo extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }
+
+    @Subscribe
+    private void handleNewPersonInfoEvent(NewPersonInfoEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonPage(event.getPerson());
+    }
 }
+```
+###### \java\seedu\address\ui\PersonListPanel.java
+``` java
+    @Subscribe
+    private void handleNewPersonListEvent(NewPersonListEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setConnections(event.getPersonsList());
+    }
+
 ```
 ###### \resources\view\GroupListCard.fxml
 ``` fxml

@@ -13,6 +13,7 @@ import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EmptyAddressBookException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -20,6 +21,7 @@ import seedu.address.model.tag.Tag;
  * The API of the Model component.
  */
 public interface Model {
+    //@@author eldonng
     /**
      * Comparators for sorting purposes
      */
@@ -38,6 +40,7 @@ public interface Model {
     Predicate<ReadOnlyGroup> PREDICATE_SHOW_ALL_GROUPS = unused -> true;
 
 
+    //@@author
     /**
      * Clears existing backing model and replaces with the provided new data.
      */
@@ -58,6 +61,7 @@ public interface Model {
      */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    //@@author eldonng
     /**
      * Adds the given group
      */
@@ -71,12 +75,12 @@ public interface Model {
     /**
      * Pins the given person
      */
-    void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException;
+    void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException, EmptyAddressBookException;
 
     /**
      * Unpins the given person
      */
-    void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException;
+    void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException, EmptyAddressBookException;
 
     /**
      * Set the colour for the specific tag
@@ -87,6 +91,7 @@ public interface Model {
 
     HashMap<Tag, String> getTagColours();
 
+    //@@author
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -116,7 +121,7 @@ public interface Model {
 
     void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate);
 
-    void sort(String sortType) throws DuplicatePersonException;
+    void sort(String sortType) throws DuplicatePersonException, EmptyAddressBookException;
 
     Predicate<ReadOnlyPerson> getPredicateForTags(String tag) throws IllegalValueException;
 }

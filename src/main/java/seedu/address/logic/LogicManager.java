@@ -25,8 +25,10 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
+    //@@author LimeFallacie
     private final Storage storage;
 
+    //@@author LimeFallacie
     public LogicManager(Model model, Storage storage) {
         this.model = model;
         this.history = new CommandHistory();
@@ -35,6 +37,7 @@ public class LogicManager extends ComponentManager implements Logic {
         this.storage = storage;
     }
 
+    //@@author
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
@@ -54,11 +57,13 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getFilteredPersonList();
     }
 
+    //@@author eldonng
     @Override
     public ObservableList<ReadOnlyGroup> getGroupList() {
         return model.getGroupList();
     }
 
+    //@@author
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());

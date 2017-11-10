@@ -78,16 +78,21 @@ Format: `help` +
 image::Figure2.png[width="790"]
 _Figure 2: Circles’ Help Window_
 
-=== Adding a person: `add`
-The most important feature for any user of an address book is to add the contacts. To add contacts: +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+//tag::optional[]
 
-1. Enter `add n/NAME  p/PHONENUMBER e/EMAIL a/ADDRESS t/TAG` +
-_E.g: add n/John Doe p/81234567 e/johnd@gmail.com a/Blk 311, Clementi Ave 2,
+=== Adding a person: `add`
+The most important feature for any user of an address book is to add the contacts. Optional fields
+are denoted in square brackets [ ]. To add contacts: +
+Format: `add n/NAME [p/PHONE_NUMBER] [b/BIRTHDAY] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+
+//end::optional[]
+
+1. Enter `add n/NAME  p/PHONENUMBER b/BIRTHDAY e/EMAIL a/ADDRESS t/TAG` +
+_E.g: add n/John Doe p/81234567 b/02-03-1995 e/johnd@gmail.com a/Blk 311, Clementi Ave 2,
 #02-25, t/friends t/owesMoney_
 
 2. The following message will appear if the add was successful. (As shown in Figure 3) +
-_E.g: New person added: John Doe Phone: 81234567
+_E.g: New person added: John Doe Phone: 81234567 Birthday: 02-03-1995
 Email: johnd@gmail.com Address: Blk 311, Clementi Ave 2, #02-25, Tags: [owesMoney][friends]_
 
 image::Figure3.png[width="790"]
@@ -99,11 +104,15 @@ A person can have any number of tags (including 0) +
 The parameters for add command can be in any order. +
 Entering `n/NAME, p/PHONE’ or ‘p/PHONE, n/NAME` will work as well. +
 The tag parameter (t/TAG) can be left empty if there are no tags for the person +
+The fields  `PHONE`, `EMAIL`, `ADDRESS` and `BIRTHDAY` are optional fields. +
 You cannot add the exact same person into the Circles.
 
+// tag::listtag[]
 === Listing all persons : `list`
 To get a clear view of all the contacts available in your address book, you can simply use the List Command as shown in
 Fig 4 below: +
+
+==== Use case 1
 Format: `list all` +
 
 1. Enter `list all` +
@@ -112,6 +121,13 @@ _E.g: Listed all persons_
 
 image::Figure4.png[width="790"]
 _Figure 4: List of Contacts_
+
+==== Use case 2
+Format: `list [tag]` +
+
+1. Enter `list` followed by the tag you wish to display +
+2. All contacts with the corresponding [tag] will be displayed
+// end::listtag[]
 
 === Editing a person : `edit`
 
@@ -163,6 +179,7 @@ _Figure 6: Result of finding "Yeoh"_ +
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
+// tag::delete[]
 === Deleting a person : `delete`
 
 Circles allow you to delete contacts so you can just have the relevant contacts in your address book.
@@ -191,6 +208,7 @@ _Figure 8: Deleting multiple people_ +
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
+//end::delete[]
 
 === Selecting a person : `select`
 
@@ -348,6 +366,7 @@ The suitable colours to be changed are `blue, red, brown, green, black, purple, 
 aquamarine`.
 // end::setcolour[]
 
+// tag::sort[]
 === Sorting your contacts : `sort`
 The first step to organizing your address book to make it search-friendly is to have your contacts sorted alphabetically.
 Circles can do the job for you as well! +
@@ -360,18 +379,33 @@ image::Figure18.PNG[width="790"]
 _Figure 18: Sorting address book by name_ +
 
 [TIP]
-You can sort the address book by phone and email too! Just enter `sort phone` or
-`sort email` to sort address book by phone and email respectively
+You can sort the address book by phone number or email address too! Just enter `sort phone` or
+`sort email` to sort address book by phone number and email respectively
+// end::sort[]
 
+// tag::expimp[]
 === Exporting the contacts list : `export`
 Format: `export [directory]\[filename].xml` +
 
 Example: `export C:\user\desktop\circles.xml` +
 
+[TIP]
+The exact destination directory of your export is needed for the feature to work accurately. +
+If the exact directory is not provided, the file will be exported to the directory of the JAR file +
+and the file name may not be accurate.
+
 === Importing a contacts list in .xml format : `import`
 Format: `import [directory]\[filename].xml` +
 
 Example: `import C:\user\downloads\circles.xml
+
+[TIP]
+The exact directory location of your import file is needed for the feature to work accurately. +
+If the exact directory is not provided, Circles will not be able to locate your file, +
+and will not be able to import your contacts.
+To find the exact directory location of your file, right-click the file and select Properties (or Get Info on Mac); +
+and find the "Location" section. The file in question *MUST BE IN .XML FORMAT*.
+// end::expimp[]
 
 === Clearing all entries : `clear`
 When changing device used for Circles or to start a new address book, you might want to delete all contacts due to
@@ -468,6 +502,10 @@ e.g. `select 2`
 e.g. `setcolour friends red`
 * *Unpin* : `unpin INDEX` +
 e.g. `unpin 1`
+* *Export* : `export [directory]\[filename]` +
+e.g. `export C:\users\user\desktop\circles.xml`
+* *Import* : `import [directory]\filename]` +
+e.g. `import C:\users\user\desktop\addressbook.xml`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

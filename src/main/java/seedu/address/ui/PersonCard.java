@@ -92,6 +92,7 @@ public class PersonCard extends UiPart<Region> {
         }
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -110,6 +111,7 @@ public class PersonCard extends UiPart<Region> {
                 && person.equals(card.person);
     }
 
+    //@@author eldonng
     private Image setPinIcon(ReadOnlyPerson person) {
         if (person.isPinned()) {
             return new Image(PIN_ICON);

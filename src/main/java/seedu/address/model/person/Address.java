@@ -20,6 +20,7 @@ public class Address {
 
     public final String value;
 
+    //@@author mavistoh
     /**
      * Validates given address.
      *
@@ -42,6 +43,7 @@ public class Address {
     public static boolean isValidAddress(String test) {
         return test.matches(ADDRESS_VALIDATION_REGEX) || test.matches(ADDRESS_EMPTY);
     }
+    //@@author
 
     @Override
     public String toString() {
