@@ -1,10 +1,6 @@
 package seedu.address.ui;
 
-import java.net.URL;
-import java.util.logging.Logger;
-
 import com.google.common.eventbus.Subscribe;
-
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -17,6 +13,9 @@ import seedu.address.commons.events.ui.DisplayGmapEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
+import java.net.URL;
+import java.util.logging.Logger;
+
 /**
  * The Browser Panel of the App.
  */
@@ -25,7 +24,7 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String DEFAULT_PAGE = "default.html";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
-    public static final String GOOGLE_GMAP_URL_PREFIX = "http://maps.google.com/?q=";
+    private static final String GOOGLE_GMAP_URL_PREFIX = "https://www.google.com/maps/place/";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -35,7 +34,7 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private WebView browser;
 
-    public BrowserPanel(ObservableList<ReadOnlyPerson> personList, String theme) {
+    private BrowserPanel(ObservableList<ReadOnlyPerson> personList, String theme) {
         super(FXML);
         this.personList = personList;
         // To prevent triggering events for typing inside the loaded Web page.
