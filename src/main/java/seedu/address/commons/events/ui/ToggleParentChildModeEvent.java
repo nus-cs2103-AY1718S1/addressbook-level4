@@ -5,7 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 //@@author Alim95
 
 /**
- * An event requesting to toggle the to ParentMode.
+ * Indicates a request to toggle to ParentMode.
  */
 public class ToggleParentChildModeEvent extends BaseEvent {
 

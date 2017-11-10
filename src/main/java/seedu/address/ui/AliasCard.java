@@ -8,7 +8,7 @@ import javafx.scene.layout.Region;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * An UI component that displays information of a {@code Alias}.
  */
 public class AliasCard extends UiPart<Region> {
 
@@ -33,7 +33,7 @@ public class AliasCard extends UiPart<Region> {
     }
 
     /**
-     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * Binds the individual UI elements to observe their respective {@code Alias} properties
      * so that they will be notified of any changes.
      */
     private void bindListeners(ReadOnlyAliasToken alias) {

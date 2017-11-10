@@ -5,7 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 //@@author Alim95
 
 /**
- * An event requesting to update the pinned panel.
+ * Indicates a request to update the pinned panel.
  */
 public class UpdatePinnedPanelEvent extends BaseEvent {
 

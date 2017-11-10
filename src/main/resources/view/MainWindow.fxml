@@ -76,12 +76,12 @@
                                           <Insets bottom="5.0" left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="allLabel" onMouseReleased="#handleListAllClicked" style="-fx-text-fill: white;" text="All" GridPane.columnIndex="3">
+                                    <Label fx:id="listAllLabel" onMouseReleased="#handleListAllClicked" style="-fx-text-fill: white;" text="All" GridPane.columnIndex="3">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="pinLabel" onMouseReleased="#handleListPinnedClicked" text="Pinned" GridPane.columnIndex="4">
+                                    <Label fx:id="listPinnedLabel" onMouseReleased="#handleListPinnedClicked" text="Pinned" GridPane.columnIndex="4">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="10.0" />
                                        </GridPane.margin>
@@ -91,7 +91,7 @@
                                           <Insets bottom="5.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="sortedByLabel" prefHeight="21.0" prefWidth="149.0" style="-fx-text-fill: white;" text="Name" GridPane.columnIndex="6">
+                                    <Label fx:id="organizedByLabel" prefHeight="21.0" prefWidth="149.0" style="-fx-text-fill: white;" text="Name" GridPane.columnIndex="6">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="2.0" />
                                        </GridPane.margin>

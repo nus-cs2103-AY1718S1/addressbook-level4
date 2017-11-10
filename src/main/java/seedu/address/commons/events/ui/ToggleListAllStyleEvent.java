@@ -5,7 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 //@@author Alim95
 
 /**
- * An event requesting to toggle the style of All tab.
+ * Indicates a request to toggle the style of All tab.
  */
 public class ToggleListAllStyleEvent extends BaseEvent {
 

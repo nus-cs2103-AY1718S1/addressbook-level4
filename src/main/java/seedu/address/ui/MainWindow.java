@@ -73,7 +73,7 @@ public class MainWindow extends UiPart<Region> {
     private StackPane browserPlaceholder;
 
     @FXML
-    private Label sortedByLabel;
+    private Label organizedByLabel;
 
     @FXML
     private Label organizerLabel;
@@ -88,10 +88,10 @@ public class MainWindow extends UiPart<Region> {
     private Label aliasViewLabel;
 
     @FXML
-    private Label pinLabel;
+    private Label listPinLabel;
 
     @FXML
-    private Label allLabel;
+    private Label listAllLabel;
 
     @FXML
     private ScrollPane helpOverlay;
@@ -402,7 +402,7 @@ public class MainWindow extends UiPart<Region> {
     @Subscribe
     private void handleSortByLabelEvent(ToggleSortByLabelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        sortedByLabel.setText(event.toString());
+        organizedByLabel.setText(event.toString());
     }
 
     @Subscribe
@@ -433,7 +433,7 @@ public class MainWindow extends UiPart<Region> {
     @Subscribe
     private void handleUpdatePinnedPanelEvent(UpdatePinnedPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if (pinLabel.getStyle().equals(BRIGHT_LABEL)) {
+        if (listPinLabel.getStyle().equals(BRIGHT_LABEL)) {
             try {
                 logic.execute("listpin");
             } catch (CommandException | ParseException e) {
@@ -447,13 +447,13 @@ public class MainWindow extends UiPart<Region> {
      */
     private void switchToPersonView() {
         addSelectedPanel(personListPanel.getRoot());
-        setMiddleLabelsVisible(true);
+        setListLabelsVisible(true);
         dimAllViewLabels();
         personViewLabel.setStyle(BRIGHT_LABEL);
         organizerLabel.setText("Sorted By:");
-        sortedByLabel.setText(lastSorted);
-        lastSorted = sortedByLabel.getText();
-        setRightLabelsVisible(true);
+        organizedByLabel.setText(lastSorted);
+        lastSorted = organizedByLabel.getText();
+        setOrganizerLabelsVisible(true);
     }
 
     /**
@@ -461,12 +461,12 @@ public class MainWindow extends UiPart<Region> {
      */
     private void switchToTaskView() {
         addSelectedPanel(taskListPanel.getRoot());
-        setMiddleLabelsVisible(false);
+        setListLabelsVisible(false);
         dimAllViewLabels();
         taskViewLabel.setStyle(BRIGHT_LABEL);
         organizerLabel.setText("Showing:");
-        sortedByLabel.setText("All");
-        setRightLabelsVisible(true);
+        organizedByLabel.setText("All");
+        setOrganizerLabelsVisible(true);
     }
 
     /**
@@ -474,22 +474,21 @@ public class MainWindow extends UiPart<Region> {
      */
     private void switchToAliasView() {
         addSelectedPanel(aliasListPanel.getRoot());
-        setMiddleLabelsVisible(false);
+        setListLabelsVisible(false);
         dimAllViewLabels();
         aliasViewLabel.setStyle(BRIGHT_LABEL);
-        setRightLabelsVisible(false);
+        setOrganizerLabelsVisible(false);
     }
 
-    private void setRightLabelsVisible(boolean isVisible) {
+    private void setOrganizerLabelsVisible(boolean isVisible) {
         organizerLabel.setVisible(isVisible);
-        sortedByLabel.setVisible(isVisible);
+        organizedByLabel.setVisible(isVisible);
     }
 
-    private void setMiddleLabelsVisible(boolean isVisible) {
-        allLabel.setVisible(isVisible);
-        pinLabel.setVisible(isVisible);
+    private void setListLabelsVisible(boolean isVisible) {
+        listAllLabel.setVisible(isVisible);
+        listPinLabel.setVisible(isVisible);
     }
-
 
     private void dimAllViewLabels() {
         personViewLabel.setStyle(DIM_LABEL);
@@ -497,6 +496,9 @@ public class MainWindow extends UiPart<Region> {
         taskViewLabel.setStyle(DIM_LABEL);
     }
 
+    /**
+     * Removes current panel in personListPanelPlaceHolder and adds {@code toAdd} into it.
+     */
     private void addSelectedPanel(Region toAdd) {
         personListPanelPlaceholder.getChildren()
                 .removeAll(personListPanel.getRoot(), aliasListPanel.getRoot(), taskListPanel.getRoot());
@@ -539,12 +541,12 @@ public class MainWindow extends UiPart<Region> {
     }
 
     private void listAllToggleStyle() {
-        pinLabel.setStyle(DIM_LABEL);
-        allLabel.setStyle(BRIGHT_LABEL);
+        listPinLabel.setStyle(DIM_LABEL);
+        listAllLabel.setStyle(BRIGHT_LABEL);
     }
 
     private void listPinToggleStyle() {
-        pinLabel.setStyle(BRIGHT_LABEL);
-        allLabel.setStyle(DIM_LABEL);
+        listPinLabel.setStyle(BRIGHT_LABEL);
+        listAllLabel.setStyle(DIM_LABEL);
     }
 }
