@@ -630,7 +630,7 @@ and shown in the `PersonListPanel`.
 // tag::access[]
 === Access Website mechanism
 
-The access website mechanism has an `AccessCommand` that allows user to access the website by stating the
+The access website mechanism has an `AccessCommand` that allows users to access the website by stating the
 index of the desired contact in the contact list viewed.
 The implementation of the access website mechanism is mostly done in the `UI`, `Model`, and `Logic` component.
 The `AccessCommand` class inherits from the `Command` class.
@@ -656,7 +656,7 @@ Code of `AccessCommand` and its method `execute()`:
 public class AccessCommand extends Command {
     private final Index targetIndex;
 
-    // ... access logic ...
+    // ... AccessCommand logic ...
     public AccessCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
@@ -687,6 +687,8 @@ Code of how accessing website event is handled in `BrowserPanel`:
 [source,java]
 ----
 public class BrowserPanel extends UiPart<Region> {
+    // ... BrowserPanel logic ...
+
     public void handleWebsiteAccess(String website) {
         browserPanel.loadPage(website);
     }
@@ -703,22 +705,27 @@ public class BrowserPanel extends UiPart<Region> {
 }
 ----
 
-Through the sequence diagram, you can see how the code executes when a user
+Through the sequence diagrams below, you can see how the code executes when a user
 inputs `access 1` into the command line.
 
-Sequence diagram for `Logic` Component for `AccessCommand` and how it is executed:
+When a user inputs `access 1`, it will trigger `LogicManager` to parse the arguments
+into the `AddressBookParser` so that it can create a new `AccessCommand` and store it as a `Command`.
+
+Sequence diagram for `Logic` Component for `AccessCommand` and its execution:
 
 image::AccessCommandLogicSequenceDiagram.PNG[width="800"]
-Figure 5.6.1 Access Command Logic Sequence Diagram
+Figure 5.5.1 Access Command Logic Sequence Diagram
 
 After creating a new `AccessCommand`, `LogicManager` will call execute on `AccessCommand`
-and this will result in the website of the person at the index inputted to be called through an event request and event handler.
-The website will then be loaded onto the browser of the `BrowserPanel` of the `MainWindow`.
+and this will result in the website of the person at the index inputted to be attained through the `ObservableList<ReadOnlyPerson>`
+of the `ModelManager`. The website attained will be parsed through an event request and event handler.
+Finally, the website will then be loaded onto the browser of the `BrowserPanel` of the `MainWindow`.
 
-Sequence diagram for `execute()` method of `AccessCommand` and its event handling:
+The process can be observed in the sequence diagram below
+where it shows the sequence of `execute()` method of `AccessCommand` and its event handling.
 
 image::AccessCommandEventsSequenceDiagram.PNG[width="800"]
-Figure 5.6.2 Access Command Model/EventsCenter/UI Sequence Diagram
+Figure 5.5.2 Access Command Model/EventsCenter/UI Sequence Diagram
 
 ==== Design Considerations
 **Aspect:** How accessing a website of a person executes +
@@ -735,10 +742,10 @@ which is important for GUI enhancement. +
 
 // tag::locate[]
 === Location mechanism
-The location mechanism has an `LocationCommand` that allows user to access the address through Google Maps Search
+The location mechanism has a `LocationCommand` that allows users to access the address through Google Maps Search
 by stating the index of the desired contact in the contact list viewed.
 The implementation of the location mechanism is mostly done in the `UI`, `Model`, and `Logic` component
-and is very similar to the access website mechanism in terms of implementation and sequential process.
+and is very similar to the access website mechanism in terms of implementation and execution sequence.
 The `LocationCommand` class inherits from the `Command` class.
 
 Suppose a user would like to access one of his contacts address that is listed in the `PersonListPanel` of the address book
@@ -761,6 +768,8 @@ Code of `LocationCommand` and its method `execute()`:
 ----
 public class LocationCommand extends Command {
     private final Index targetIndex;
+
+    // ... LocationCommand logic ...
 
     public LocationCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
@@ -791,8 +800,11 @@ Code of how accessing location event is handled in `BrowserPanel`:
 [source,java]
 ----
 public class BrowserPanel extends UiPart<Region> {
+
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+
+    // ... BrowserPanel logic ...
 
     private void loadPersonLocation(String location) {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + location.replaceAll(" ", "+")
@@ -814,19 +826,25 @@ public class BrowserPanel extends UiPart<Region> {
 Through the sequence diagram, you can see how the code executes when a user
 inputs `locate 1` into the command line.
 
+When a user inputs `locate 1`, it will trigger `LogicManager` to parse the arguments
+into the `AddressBookParser` so that it can create a new `LocationCommand` and store it as a `Command`.
+
 Sequence diagram for `Logic` Component for `LocationCommand` and how it is executed:
 
 image::LocationCommandLogicSequenceDiagram.png[width="800"]
-Figure 5.7.1 Location Command Logic Sequence Diagram
+Figure 5.6.1 LocationCommand Logic Sequence Diagram
 
 After creating a new `LocationCommand`, `LogicManager` will call execute on `LocationCommand`
-and this will result in the address of the person at the index inputted to be called through an event request and event handler.
-The address will then be loaded onto Google Maps Search of the browser of the `MainWindow`.
+and this will result in the address of the person at the index inputted to be attained through
+the `ObservableList<ReadOnlyPerson>` of the `ModelManager`.
+The address attained will be parsed through an event request and event handler.
+Finally, the address will then be loaded onto Google Maps Search of the browser of the `MainWindow`.
 
-Sequence diagram for `execute()` method of `LocationCommand` and its event handling:
+The process can be observed in the sequence diagram below
+where it shows the sequence of `execute()` method of `LocationCommand` and its event handling.
 
 image::LocationCommandEventsSequenceDiagram.png[width="800"]
-Figure 5.7.2 Access Command Model/EventsCenter/UI Sequence Diagram
+Figure 5.6.2 LocationCommand Model/EventsCenter/UI Sequence Diagram
 
 ==== Design Considerations
 **Aspect:** How accessing a location of a person executes +
@@ -950,6 +968,91 @@ Figure 5.8.2 What the user sees
 **Pros:** Involuntary and less effort from the users' part +
 **Cons:** If pop up only shows a list of names, users might get confused as to who the person is if there are multiple persons with the same name. +
 //end::birthday[]
+
+// tag::commandlock[]
+=== Mode Switching Mechanism
+
+There are `two` modes in The Myth's Book which is firstly, `Persons Mode`, and secondly, `Events Mode`. +
+The mode switching mechanism allows users to type in different specific commands based on the mode
+that is being used in the software. The commands are categorised into mainly three groups: `General Commands`, `Person Commands`, `Event Commands`.
+
+The implementation of the mode switching mechanism is mostly done in the `Logic` component.
+The Mode Switching Mechanism is implemented in the `AddressBookParser` code of the `Logic` component.
+
+The `Person Commands` and `Event Commands` commands are basically controlled by a boolean variable `personListActivated`. +
+The `General Commands` is not controlled by the boolean variable `personListActivated` and is able to be executed in both modes. +
+`Person Commands`, `Event Commands`
+
+Suppose a user is currently on the `Persons Mode` on The Myth's Book and he wants to use the `Events Mode` and the commands related to `Events`.
+
+As such,
+. User is currently able to use commands related to Persons such as the `AddCommand` or `EditCommand`.
+. User is currently unable to use commands related to Events such as `AddEventCommand` or `DeleteEventCommand`.
+. User is currently able to use general commands related to both Persons and Events such as `HelpCommand` or `SwitchThemeCommand`.
+
+The execution of Mode Switching Mechanism is processed in this way:
+
+
+Code of `AddressBookParser` class and how it executes:
+[source,java]
+----
+public class AddressBookParser {
+
+    /**
+     * Used to control lock mechanism for different commands between person and events platforms.
+     */
+    private static Boolean personListActivated = true;
+
+    // ... AddressBookParser logic ...
+
+    public Command parseCommand(String userInput) throws ParseException {
+        // ... parseCommand logic ...
+
+        switch (commandWord) {
+        case AddCommand.COMMAND_WORD: case AddCommand.COMMAND_ALIAS:
+            if (personListActivated) {
+                return new AddCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
+
+        // ... other code ...
+
+        case ListCommand.COMMAND_WORD: case ListCommand.COMMAND_ALIAS:
+            personListActivated = true;
+            return new ListCommand();
+
+        // ... other code ...
+
+        case HelpCommand.COMMAND_WORD: case HelpCommand.COMMAND_ALIAS:
+            return new HelpCommand();
+
+        case AddEventCommand.COMMAND_WORD: case AddEventCommand.COMMAND_ALIAS:
+            if (!personListActivated) {
+                return new AddEventCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_EVENT_PLATFORM);
+            }
+
+        case EventsCommand.COMMAND_WORD:
+            personListActivated = false;
+            return new EventsCommand();
+
+        // ... other code ...
+    }
+}
+----
+
+==== Design Considerations
+**Aspect:** The handling of different commands inputted into CommandBox for the two different modes(Persons or Events) in The Myth's Book.  +
+**Alternative 1 (current choice):** Create a system in the AddressBookParser that can differentiate the different commands for different modes(Persons or Events). +
+**Pros:** Able to have better usability as it can separate and classify features for both Persons and Events that is able to exist concurrently with lesser bugs in the application. +
+**Cons:** Users would have to switch between Events and Persons platform when they want to use the other platform that they are not currently on. +
+**Alternative 2:** Use the initial AddressBookParser given that accepts all of command and still executes regardless of the software being used in either mode. +
+**Pros:** User can use all commands and does not need to face the issue of having to switch between the two platforms to use the different commands. +
+**Cons:** User experience and software might feel buggy as user might be on the events mode but executing commands related to the persons mode which user might be unable to see. +
+
+//end::commandlock[]
 
 //tag::calendar[]
 === Calendar mechanism
