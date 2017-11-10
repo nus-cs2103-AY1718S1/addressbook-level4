@@ -274,71 +274,6 @@ Deletes the 1st person in the results of the `find` command.
 `d 3` (`delete 3` command) +
 Deletes the 3rd person in cherBook.
 
-// tag::schedule[]
-=== Scheduling a person : `schedule` `Since v1.4`
-
-Schedules the person identified by the index number used in the last person listing. +
-Format: `schedule INDEX s/[DATE]` +
-Shorthand: `sch INDEX s/[DATE]`
-
-****
-* Schedules the person at the specified `INDEX` and adds them to the schedule list in cherBook.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`schedule 2 s/tomorrow 7pm` +
-Schedules the 2nd person in cherBook for tomorrow at 7pm and adds the schedule to the schedule list.
-* `find Betsy` +
-`sch 1 s/25 december 2017 3pm` +
-Schedules the 1st person in cherBook on 25 December at 3pm and adds the schedule to the schedule list in the results of the `find` command.
-// end::schedule[]
-
-// tag::viewschedule[]
-=== Viewing my schedule : `viewschedule` `Since v1.5`
-
-Views your full schedule list. +
-Format: `viewschedules` +
-Shorthand: `viewsch`
-
-****
-* Displays all your schedules in the command box.
-****
-
-Examples:
-
-* `list` +
-`viewschedules` +
-Displays all your schedules in the command box.
-* `find Betsy` +
-`viewsch` +
-Displays all your schedules in the command box.
-// end::viewschedule[]
-
-=== Deleting a schedule : `deleteschedule` `Since v1.5`
-
-Deletes the specified schedule from cherBook. +
-Format: `deleteschedule INDEX` +
-Shorthand: `dsch INDEX`
-
-****
-* Deletes the schedule at the specified `INDEX`.
-* The index refers to the schedule shown in schedules list.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `viewschedule` +
-`deleteschedule 2` +
-Deletes the 2nd schedule in the results of the `viewschedule` command which returns a list of schedules.
-* `viewsch` +
-`dsch 1` +
-Deletes the 1st schedule in the results of the `viewsch` command which returns a list of schedules.
-
 === Selecting a person : `select` `Since v1.0`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -418,21 +353,70 @@ removes `remark` from the 2nd person in the address book.
 
 // end::remark[]
 
-// tag::tab[]
-=== Listing entered commands : `tab` `Since v1.5`
-Switches between tabs listed above the graph. +
-Format: `tab index`
+// tag::schedule[]
+=== Scheduling a person : `schedule` `Since v1.4`
 
-[NOTE]
-Valid numbers are determined by number of tabs available. In this case, only 1 and 2 are valid, which displays line or bar respectively. +
-Typing the same index on the selected graph would just do nothing.
+Schedules the person identified by the index number used in the last person listing. +
+Format: `schedule INDEX s/[DATE]` +
+Shorthand: `sch INDEX s/[DATE]`
 
-Example:
+****
+* Schedules the person at the specified `INDEX` and adds them to the schedule list in cherBook.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
 
-* `tab 2` +
-Remains at tab 2 if tab 2 is selected else switches to tab 2.
+Examples:
 
-// end::tab[]
+* `list` +
+`schedule 2 s/tomorrow 7pm` +
+Schedules the 2nd person in cherBook for tomorrow at 7pm and adds the schedule to the schedule list.
+* `find Betsy` +
+`sch 1 s/25 december 2017 3pm` +
+Schedules the 1st person in cherBook on 25 December at 3pm and adds the schedule to the schedule list in the results of the `find` command.
+// end::schedule[]
+
+// tag::viewschedule[]
+=== Viewing my schedule : `viewschedule` `Since v1.5`
+
+Views your full schedule list. +
+Format: `viewschedules` +
+Shorthand: `viewsch`
+
+****
+* Displays all your schedules in the command box.
+****
+
+Examples:
+
+* `list` +
+`viewschedules` +
+Displays all your schedules in the command box.
+* `find Betsy` +
+`viewsch` +
+Displays all your schedules in the command box.
+// end::viewschedule[]
+
+=== Deleting a schedule : `deleteschedule` `Since v1.5`
+
+Deletes the specified schedule from cherBook. +
+Format: `deleteschedule INDEX` +
+Shorthand: `dsch INDEX`
+
+****
+* Deletes the schedule at the specified `INDEX`.
+* The index refers to the schedule shown in schedules list.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `viewschedule` +
+`deleteschedule 2` +
+Deletes the 2nd schedule in the results of the `viewschedule` command which returns a list of schedules.
+* `viewsch` +
+`dsch 1` +
+Deletes the 1st schedule in the results of the `viewsch` command which returns a list of schedules.
 
 === Listing entered commands : `history` `Since v1.0`
 
@@ -506,7 +490,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 // end::undoredo[]
 
 === Clearing all entries : `clear` `Since v1.0`
-
+//TODO: Celine to update this part, whether it clears schedules too?
 Clears all entries from cherBook. +
 Format: `clear`
 
@@ -516,17 +500,16 @@ Exits the program. +
 Format: `exit`
 
 // tag::studentdetailspanel[]
-=== Student Details Panel
+=== Student Details Panel `Since v1.3`
 
 cherBook uses a `Student Details Panel` to display the selected student details from the `Students Panel`.
 The details changes automatically where there is a change to the list of students in the `Students Panel`.
 You can use these details to pick out relevant information you need from your student.
-
 // end::studentdetailspanel[]
 
 
 // tag::statisticspanel[]
-=== Statistics Panel
+=== Statistics Panel `Since v1.4`
 
 cherBook uses a `Statistics Panel` to display the relevant statistics for the current list of students in the `Students Panel`.
 The statistics changes automatically when there is a change to the list of students in the `Students Panel`.
@@ -535,17 +518,31 @@ You can use these statistics to pick out trends in your student's grades and als
 // end::statisticspanel[]
 
 // tag::graphpanel[]
-=== Graph Panel
+=== Graph Panel `Since v1.3`
 
 cherBook uses a `GraphPanel` to plot the grades of all classmates of the selected student on a graph.
 The graphs are automatically sorted from the lowest grade to the highest.
 There are two tabs for you to choose from, line or bar and can be switch by using the `tab` command.
 The details changes when another student from a different class is selected.
 You can use these graph to better understand the trends of `grades` in a glance to easily see who are the weaker or stronger students.
-
 // end::graphpanel[]
 
-=== Saving the data
+// tag::tab[]
+=== Switching between graphs in GraphPanel : `tab` `Since v1.5`
+Switches between tabs listed above the graph. +
+Format: `tab index`
+
+[NOTE]
+Valid numbers are determined by number of tabs available. In this case, only 1 and 2 are valid, which displays line or bar respectively. +
+Typing the same index on the selected graph would just do nothing.
+
+Example:
+
+* `tab 2` +
+Remains at tab 2 if tab 2 is selected else switches to tab 2.
+// end::tab[]
+
+=== Saving the data `Since v1.0`
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
