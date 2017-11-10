@@ -979,18 +979,35 @@ that is being used in the software. The commands are categorised into mainly thr
 The implementation of the mode switching mechanism is mostly done in the `Logic` component.
 The Mode Switching Mechanism is implemented in the `AddressBookParser` code of the `Logic` component.
 
-The `Person Commands` and `Event Commands` commands are basically controlled by a boolean variable `personListActivated`. +
-The `General Commands` is not controlled by the boolean variable `personListActivated` and is able to be executed in both modes. +
-`Person Commands`, `Event Commands`
+The `Person Commands` and `Event Commands` commands are controlled by a boolean variable `personListActivated`. +
+The `General Commands` is not controlled by the boolean variable `personListActivated` and is able to be executed in both modes.
+`Person Commands` can be used when `personListActivated` is `true` while `Event Commands` can be used when `personListActivated` is `false`.
 
 Suppose a user is currently on the `Persons Mode` on The Myth's Book and he wants to use the `Events Mode` and the commands related to `Events`.
 
 As such,
-. User is currently able to use commands related to Persons such as the `AddCommand` or `EditCommand`.
-. User is currently unable to use commands related to Events such as `AddEventCommand` or `DeleteEventCommand`.
-. User is currently able to use general commands related to both Persons and Events such as `HelpCommand` or `SwitchThemeCommand`.
 
-The execution of Mode Switching Mechanism is processed in this way:
+* User is currently able to use `Person Commands` such as the `AddCommand` or `EditCommand`.
+* User is currently unable to use `Event Commands` such as the `AddEventCommand` or `DeleteEventCommand`.
+* User is able to use `General Commands` such as the `HelpCommand` or `SwitchThemeCommand`.
+
+The execution of Mode Switching Mechanism from `Persons Mode` to `Events Mode` processed in this way:
+
+. User wants to add a new event so user inputs `addevent n/ZoukOut d/5/12/2017 a/Sentosa Beach, Siloso`.
+. Input of user is parse as an argument through the `AddressBookParser` but throws an error as application is not in the `Events Mode`.
+. User then switches to `Events Mode` by inputting `events` which would turn `personListActivated` to `false`.
+. User is now able to use `Event Commands` such as the `AddEventCommand` or `DeleteEventCommand`.
+. User then uses the `AddEventCommand` and inputs `addevent n/ZoukOut d/5/12/2017 a/Sentosa Beach, Siloso`.
+. Input of user is successfully parse as an argument through the `AddressBookParser` and then through the `AddEventCommandParser` and adds a new event successfully.
+
+Suppose a user is currently on the `Events Mode` and wants to use the `Persons Mode` and the commands related to `Persons`.
+In order for user to switch back from `Events Mode` to `Persons Mode`:
+
+. User wants to add a new contact so user inputs `add n/Dion Poh p/63425234 e/dionPoh@hotmail.com`.
+. User switches to `Persons Mode` by inputting `list` which would turn `personListActivated` to `true`.
+. User is now able to use `Person Commands` such as the `AddCommand` or `EditCommand`.
+. User then uses the `AddCommand` and inputs `add n/Dion Poh p/63425234 e/dionPoh@hotmail.com`.
+. Input of user is successfully parse as an argument through the `AddressBookParser` and then through the `AddEventCommandParser` and adds a new contact successfully.
 
 
 Code of `AddressBookParser` class and how it executes:
