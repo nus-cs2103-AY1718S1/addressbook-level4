@@ -18,7 +18,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.email.Email;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -49,7 +48,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         try {
             ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editPersonDescriptor::setName);
             ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
-            parseEmailsForEdit(argMultimap.getAllValues(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmails);
+            editPersonDescriptor.setEmails(ParserUtil.parseEmails(argMultimap.getAllValues(PREFIX_EMAIL)));
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         } catch (IllegalValueException ive) {
@@ -61,22 +60,6 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         return new EditCommand(index, editPersonDescriptor);
-    }
-
-    //@@author 17navasaw
-    /**
-     * Parses {@code Collection<String> emails} into a {@code Set<Email>} if {@code emails} is non-empty.
-     * If {@code emails} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Email>} containing zero emails.
-     */
-    private Optional<Set<Email>> parseEmailsForEdit(Collection<String> emails) throws IllegalValueException {
-        assert emails != null;
-
-        if (emails.isEmpty()) {
-            return Optional.empty();
-        }
-        Collection<String> emailSet = emails.size() == 1 && emails.contains("") ? Collections.emptySet() : emails;
-        return Optional.of(ParserUtil.parseEmails(emailSet));
     }
 
     //@@author

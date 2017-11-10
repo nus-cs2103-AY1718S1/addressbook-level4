@@ -129,18 +129,15 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [e/UNIQUE EMAIL]... a/ADDRESS [t/TAG]
 A person can have any number of tags (including 0).
 
 [TIP]
-A person must have at least 1 email.
+A person must have at least 1 email. *[v1.3 update]*
 
 [TIP]
-ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter.
+ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter. *[v1.3 update]*
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/123, John street, #01-01, Singapore 407989`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/12, Newgate Prison, IL 043 p/1234567 t/criminal`
-
-[INFO]
-*v1.3 update:* This feature allows the adding of more than 1 EMAIL for a person, as well as restrict the ADDRESS to the format: `BLOCK, STREET, [UNIT,] POSTAL CODE`.
 
 ==== Editing a person : `edit`
 
@@ -152,11 +149,14 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]... [a/ADDRESS] [t/TAG]...`
 [TIP]
 Ensure that you have input the correct prefix [n/NAME] , [p/PHONE] , [e/EMAIL]  , [a/ADDRESS] ,  [t/TAG]
 
+[TIP]
+ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter. *[v1.3 update]*
+
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* When editing tags or emails, the existing related fields of the person will be removed i.e adding of tags and emails is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 

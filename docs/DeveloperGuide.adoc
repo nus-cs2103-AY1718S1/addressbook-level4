@@ -603,10 +603,15 @@ public class BrowserPanel extends UiPart<Region> {
 _Figure 4.3.6: Code section in BrowserPanel.java_
 
 By being a subscriber to this event, the `WebView` in `BrowserPanel` will load the corresponding web page whenever a new
-`PersonPanelSelectionChangedEvent` is posted to the `EventBus`. _Figure 4.3.7_ below shows the full UI outcome of selecting a selecting a `PersonCard` in the `PersonListPanel`, as well as displaying the corresponding address location in `BrowserPanel`.
+`PersonPanelSelectionChangedEvent` is posted to the `EventBus`. The sequence diagram in _Figure 4.3.7_ below shows how the raising of `PersonPanelSelectionChangedEvent` leads to the loading of the web page in `BrowserPanel`.
+
+image::Full UI outcome for SequenceDiagramLoadPersonPage.png[width="800"]
+_Figure 4.3.7 : Sequence diagram showing how the web page is loaded from `PersonPanelSelectionChangedEvent`_
+
+_Figure 4.3.8_ below shows the full UI outcome of selecting a selecting a `PersonCard` in the `PersonListPanel`, as well as displaying the corresponding address location in `BrowserPanel`.
 
 image::Full UI outcome for LocateCommand.png[width="800"]
-_Figure 4.3.7 : Full UI outcome of locate implementation_
+_Figure 4.3.8 : Full UI outcome of locate implementation_
 
 ==== Design Considerations for `LocateCommand`
 
@@ -836,8 +841,14 @@ _Figure 4.6.5: Output of `CalendarCommand.java` execution_
 
 ---
 //end::calendar[]
-// tag::agenda[]
 
+// tag::addemails[]
+=== Multiple email fields when adding contact [Since v1.3]
+
+
+// end::addemails[]
+
+// tag::agenda[]
 === Viewing of user's agenda [Since v1.4]
 
 All scheduled activities by the user are displayed as a list view in the `AgendaPanel`. The `AgendaPanel` is first initialised in the `MainWindow`, with the observable schedule list of the `AddressBook` being passed in as a parameter to its constructor. This can be observed in _Figure 4.7.1_ below.
