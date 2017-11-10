@@ -70,7 +70,8 @@ public class GuiTestAssert {
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
-    public static void assertBrowserCardEquals(BrowserSelectorCardHandle expectedCard, BrowserSelectorCardHandle actualCard) {
+    public static void assertBrowserCardEquals(BrowserSelectorCardHandle expectedCard,
+                                               BrowserSelectorCardHandle actualCard) {
         assertEquals(expectedCard.getBrowserTypeName(), actualCard.getBrowserTypeName());
     }
 

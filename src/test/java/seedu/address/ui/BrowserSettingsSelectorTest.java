@@ -13,8 +13,8 @@ import seedu.address.commons.events.ui.JumpToBrowserListRequestEvent;
 
 //@@author fongwz
 public class BrowserSettingsSelectorTest extends GuiUnitTest {
-    private static final JumpToBrowserListRequestEvent JUMP_TO_LINKEDIN_EVENT
-            = new JumpToBrowserListRequestEvent("linkedin");
+    private static final JumpToBrowserListRequestEvent JUMP_TO_LINKEDIN_EVENT =
+            new JumpToBrowserListRequestEvent("linkedin");
 
     private BrowserSettingsSelectorHandle browserSettingsSelectorHandle;
     private SettingsSelector settingsSelector;
