@@ -35,7 +35,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
     private ObjectProperty<InsurancePerson> beneficiary;
     private DoubleProperty premium;
     private StringProperty premiumString;
-    private StringProperty contractPath;
+    private StringProperty contractName;
     private StringProperty signingDateString;
     private StringProperty expiryDateString;
 
@@ -50,7 +50,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
      * Constructor for {@code XmlAdaptedLifeInsurance.toModelType()}
      */
     public LifeInsurance(String id, String insuranceName, String owner, String insured, String beneficiary,
-                         Double premium, String contractPath, String signingDateInput, String expiryDateInput)
+                         Double premium, String contractName, String signingDateInput, String expiryDateInput)
             throws IllegalValueException {
         this.id = new SimpleObjectProperty<>(UUID.fromString(id));
         this.insuranceName = new SimpleStringProperty(insuranceName);
@@ -62,7 +62,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
         this.insured = new SimpleObjectProperty<>(new InsurancePerson(insured));
         this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(beneficiary));
         this.premium = new SimpleDoubleProperty(premium);
-        this.contractPath = new SimpleStringProperty(contractPath);
+        this.contractName = new SimpleStringProperty(contractName);
         this.signingDate = new DateParser().parse(signingDateInput);
         this.signingDateString = new SimpleStringProperty(this.signingDate.format(DateParser.DATE_FORMAT));
         this.expiryDate = new DateParser().parse(expiryDateInput);
@@ -74,8 +74,8 @@ public class LifeInsurance implements ReadOnlyInsurance {
      * Constructor for {@code AddLifeInsuranceCommand}
      */
     public LifeInsurance(String insuranceName, String owner, String insured, String beneficiary, Double premium,
-                         String contractPath, LocalDate signingDate, LocalDate expiryDate) {
-        requireAllNonNull(owner, insured, beneficiary, premium, contractPath);
+                         String contractName, LocalDate signingDate, LocalDate expiryDate) {
+        requireAllNonNull(owner, insured, beneficiary, premium, contractName);
         this.id = new SimpleObjectProperty<>(UUID.randomUUID());
         this.insuranceName = new SimpleStringProperty(insuranceName);
         this.roleToPersonNameMap = new EnumMap<>(Roles.class);
@@ -86,7 +86,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
         this.insured = new SimpleObjectProperty<>(new InsurancePerson(insured));
         this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(beneficiary));
         this.premium = new SimpleDoubleProperty(premium);
-        this.contractPath = new SimpleStringProperty(contractPath);
+        this.contractName = new SimpleStringProperty(contractName);
         this.signingDate = signingDate;
         this.signingDateString = new SimpleStringProperty(this.signingDate.format(DateParser.DATE_FORMAT));
         this.expiryDate = expiryDate;
@@ -109,7 +109,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
         this.beneficiary = new SimpleObjectProperty<>(source.getBeneficiary());
         this.premium = new SimpleDoubleProperty(source.getPremium());
         this.premiumString = new SimpleStringProperty(this.getPremiumString());
-        this.contractPath = new SimpleStringProperty(source.getContractPath());
+        this.contractName = new SimpleStringProperty(source.getContractName());
         this.signingDateString = new SimpleStringProperty(source.getSigningDateString());
         this.expiryDateString = new SimpleStringProperty(source.getExpiryDateString());
     }
@@ -240,18 +240,18 @@ public class LifeInsurance implements ReadOnlyInsurance {
     //@author
 
     //@author OscarWang114
-    public void setContractPath(String contractPath) {
-        this.contractPath.set(requireNonNull(contractPath));
+    public void setContractName(String contractName) {
+        this.contractName.set(requireNonNull(contractName));
     }
 
     @Override
-    public StringProperty contractPathProperty() {
-        return contractPath;
+    public StringProperty contractNameProperty() {
+        return contractName;
     }
 
     @Override
-    public String getContractPath() {
-        return contractPath.get();
+    public String getContractName() {
+        return contractName.get();
     }
 
     public void setSigningDateString(String signingDateString) throws IllegalValueException {

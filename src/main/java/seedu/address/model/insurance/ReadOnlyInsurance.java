@@ -31,8 +31,8 @@ public interface ReadOnlyInsurance {
     Double getPremium();
     StringProperty premiumStringProperty();
     String getPremiumString();
-    StringProperty contractPathProperty();
-    String getContractPath();
+    StringProperty contractNameProperty();
+    String getContractName();
     StringProperty signingDateStringProperty();
     String getSigningDateString();
     StringProperty expiryDateStringProperty();
@@ -53,7 +53,7 @@ public interface ReadOnlyInsurance {
                 .append(" \nPremium: ")
                 .append(getPremiumString())
                 .append("  Contract File: ")
-                .append(getContractPath())
+                .append(getContractName())
                 .append("  Signing Date: ")
                 .append(getSigningDateString())
                 .append("  Expiry Date: ")

@@ -810,9 +810,9 @@ In the case that the file exist in the project folder, the entry for contract fi
          if (isFileExists(insuranceFile)) {
              activateLinkToInsuranceFile();
          } else {
-             contractPath.getStyleClass().clear();
-             contractPath.getStyleClass().add("missing-file");
-             contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
+             contractName.getStyleClass().clear();
+             contractName.getStyleClass().add("missing-file");
+             contractName.setOnMouseClicked(new EventHandler<MouseEvent>() {
                  @Override
                  public void handle(MouseEvent event) {
                      FileChooser.ExtensionFilter extFilter =
@@ -846,9 +846,9 @@ Upon successful retrieval of the file, or adding of the file if it does not exis
 [source,java]
 ----
 private void activateLinkToInsuranceFile() {
-         contractPath.getStyleClass().clear();
-         contractPath.getStyleClass().add("valid-file");
-         contractPath.setOnMouseClicked(event -> {
+         contractName.getStyleClass().clear();
+         contractName.getStyleClass().add("valid-file");
+         contractName.setOnMouseClicked(event -> {
              try {
                  Desktop.getDesktop().open(insuranceFile);
              } catch (IOException ee) {

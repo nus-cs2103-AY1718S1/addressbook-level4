@@ -49,7 +49,7 @@ public class XmlAdaptedLifeInsurance {
         insured = source.getInsured().getName();
         beneficiary = source.getBeneficiary().getName();
         premium = source.getPremium();
-        contractPath = source.getContractPath();
+        contractPath = source.getContractName();
         signingDate = source.getSigningDateString();
         expiryDate = source.getExpiryDateString();
     }
