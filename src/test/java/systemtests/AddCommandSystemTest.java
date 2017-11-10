@@ -94,7 +94,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + WEBSITE_DESC_AMY + "   "
                 + ADDRESS_DESC_AMY + "   " + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND + " ";
 
-        assertCommandSuccess(command, toAdd, Index.fromZeroBased(model.getFilteredPersonList().size()));
+        assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
         command = UndoCommand.COMMAND_WORD;
@@ -139,7 +139,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
 
-        assertCommandSuccess(command, toAdd, Index.fromZeroBased(model.getFilteredPersonList().size()));
+        assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except phone -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_BOB)
@@ -151,7 +151,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + SCH_EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd, Index.fromZeroBased(model.getFilteredPersonList().size()));
+        assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except home number -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
@@ -163,7 +163,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + SCH_EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd, Index.fromZeroBased(model.getFilteredPersonList().size()));
+        assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except email -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
@@ -175,7 +175,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + SCH_EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd, Index.fromZeroBased(model.getFilteredPersonList().size()));
+        assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except schEmail -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
@@ -190,7 +190,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
 
-        assertCommandSuccess(command, toAdd, Index.fromZeroBased(model.getFilteredPersonList().size()));
+        assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except address -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
@@ -202,7 +202,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + SCH_EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_BOB
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd, Index.fromZeroBased(model.getFilteredPersonList().size()));
+        assertCommandSuccess(command, toAdd);
 
         /* Case: filters the person list before adding -> added */
         executeCommand(FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER);
@@ -332,45 +332,16 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(PersonUtil.getAddCommand(toAdd), toAdd);
     }
 
+    //@@author itsdickson
     /**
-     * Performs the same verification as {@code assertCommandSuccess(ReadOnlyPerson)}. Executes {@code command}
-     * instead.
+     * Performs the same verification as {@code assertCommandSuccess(ReadOnlyPerson)} except that the result
+     * display box displays {@code expectedResultMessage} and the model related components equal to
+     * {@code expectedModel}. Executes {@code command} instead.
      * @see AddCommandSystemTest#assertCommandSuccess(ReadOnlyPerson)
      */
     private void assertCommandSuccess(String command, ReadOnlyPerson toAdd) {
         Model expectedModel = getModel();
-        try {
-            expectedModel.addPerson(toAdd);
-        } catch (DuplicatePersonException dpe) {
-            throw new IllegalArgumentException("toAdd already exists in the model.");
-        }
         String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
-
-        assertCommandSuccess(command, expectedModel, expectedResultMessage);
-    }
-
-    /**
-     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyPerson)} except that the result
-     * display box displays {@code expectedResultMessage} and the model related components equal to
-     * {@code expectedModel}.
-     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
-     */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
-        executeCommand(command);
-        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
-        assertCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchangedExceptSyncStatus();
-    }
-
-    /**
-     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyPerson)} except that the result
-     * display box displays {@code expectedResultMessage} and the model related components equal to
-     * {@code expectedModel}.
-     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
-     */
-    private void assertCommandSuccess(String command, ReadOnlyPerson toAdd, Index expectedSelectedCardIndex) {
-        Model expectedModel = getModel();
         try {
             expectedModel.addPerson(toAdd);
         } catch (DuplicatePersonException dpe) {
@@ -378,19 +349,21 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         }
         int preExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
         executeCommand(command);
-        if (preExecutionSelectedCardIndex == expectedSelectedCardIndex.getZeroBased()) {
+        int postExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
+        if (preExecutionSelectedCardIndex == postExecutionSelectedCardIndex) {
             assertSelectedCardUnchanged();
         } else {
-            assertSelectedCardChanged(expectedSelectedCardIndex);
+            assertSelectedCardChanged(Index.fromZeroBased(postExecutionSelectedCardIndex));
         }
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Model, String)}
+     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyPerson)}
      * except that the selected card is deselected.
-     * @see AddCommandSystemTest#assertCommandSuccess(String, Model, String)
+     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
      */
     private void assertUndoCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
@@ -401,17 +374,18 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Model, String)}
-     * except that the selected card is deselected.
-     * @see AddCommandSystemTest#assertCommandSuccess(String, Model, String)
+     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyPerson)}
+     * except that the selected card changed.
+     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
      */
     private void assertRedoCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertPersonListSelectedCardUnchanged();
+        assertSelectedCardChanged();
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
     }
+    //@@author
 
     /**
      * Executes {@code command} and verifies that the command box displays {@code command}, the result display
