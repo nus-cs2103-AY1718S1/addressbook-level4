@@ -1,5 +1,5 @@
 package seedu.address.model.person;
-//@@author renkai91
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -26,7 +26,7 @@ public class BirthdayTest {
         assertFalse(Birthday.isValidBirthday("000/99/2323")); // too many numbers for the day
         assertFalse(Birthday.isValidBirthday("23 /12/1122")); // space between
 
-        // valid birthday
+        // valid email
         assertTrue(Birthday.isValidBirthday("11/12/1099"));
         assertTrue(Birthday.isValidBirthday("09/03/2010"));
         assertTrue(Birthday.isValidBirthday("12/13/1009")); // also accepts months which don't exists
