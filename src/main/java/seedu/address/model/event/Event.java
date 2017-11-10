@@ -98,10 +98,6 @@ public class Event {
     }
 
 
-    public void setEventStatus(String eventStatus) {
-        this.eventStatus.set(requireNonNull(eventStatus));
-    }
-
     public ObjectProperty<String> eventStatusProperty() {
         return eventStatus;
     }
@@ -136,10 +132,6 @@ public class Event {
             eventStatus.setValue("Selected");
             eventStatusStyle.setValue("-fx-background-color: #b91372");
         }
-    }
-
-    public void setEventStatusStyle(String eventStatusStyle) {
-        this.eventStatusStyle.set(requireNonNull(eventStatusStyle));
     }
 
     public ObjectProperty<String> eventStatusStyleProperty() {
