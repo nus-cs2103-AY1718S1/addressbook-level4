@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_TAG_REMOVED;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -18,7 +19,7 @@ import seedu.address.logic.parser.RemoveTagCommandParser;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.NoSuchTagException;
 import seedu.address.model.tag.Tag;
 
 //@@author freesoup
@@ -39,7 +40,7 @@ public class RemoveTagCommandTest {
     }
 
     @Test
-    public void execute_removeTag_success() throws IllegalValueException, PersonNotFoundException {
+    public void execute_removeTag_success() throws IllegalValueException, NoSuchTagException {
         String expectedMessage = MESSAGE_TAG_REMOVED;
 
         RemoveTagCommand command = prepareCommand("friends");
@@ -49,12 +50,31 @@ public class RemoveTagCommandTest {
     }
 
     @Test
-    public void execute_removeSingleTag_success() throws IllegalValueException, PersonNotFoundException {
+    public void execute_removeNonExistantTag_failure() throws IllegalValueException {
+        //addressbook does not contain enemy tag.
+        assertCommandFailure(prepareCommand("enemy"), model, RemoveTagCommand.MESSAGE_TAG_NOT_FOUND);
+
+        //Elle has family tag but no enemy tag
+        assertCommandFailure(prepareCommand(4, "enemy"), model,
+                String.format(RemoveTagCommand.MESSAGE_TAG_NOT_FOUND_IN, 5));
+
+        //Carl has no tags
+        assertCommandFailure(prepareCommand(2, "colleagues"), model,
+                String.format(RemoveTagCommand.MESSAGE_TAG_NOT_FOUND_IN, 3));
+
+        //Benson has two tags, owesMoney and friend but no family tag.
+        assertCommandFailure(prepareCommand(1, "family"), model,
+                String.format(RemoveTagCommand.MESSAGE_TAG_NOT_FOUND_IN, 2));
+
+    }
+
+    @Test
+    public void execute_removeSingleTag_success() throws IllegalValueException, NoSuchTagException {
         String expectedMessage = MESSAGE_TAG_REMOVED;
 
-        RemoveTagCommand command = prepareCommand(5, "owesMoney");
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.removeTag(Index.fromOneBased(5), new Tag("owesMoney"));
+        RemoveTagCommand command = prepareCommand(4, "family");
+        ModelManager expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        expectedModel.removeTag(Index.fromZeroBased(4), new Tag("family"));
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 

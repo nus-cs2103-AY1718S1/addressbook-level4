@@ -2,7 +2,6 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -157,14 +156,19 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    public void sort(Comparator<ReadOnlyPerson> comparator) {
-        persons.sort(comparator);
-    }
-
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    /**
+     * test
+     * @param tag
+     */
+    public void removeTagFromUniqueList(Tag tag) {
+        tags.remove(tag);
+        syncMasterTagListWith(persons);
     }
 
     //// util methods
