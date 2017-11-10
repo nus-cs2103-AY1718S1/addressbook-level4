@@ -16,14 +16,17 @@ public interface ReadOnlyInsurance {
     String getInsuranceName();
     StringProperty insuranceNameProperty();
     ObjectProperty<UUID> idProperty();
-    String getId();
+    UUID getId();
     EnumMap getRoleToPersonNameMap();
     ObjectProperty<InsurancePerson> ownerProperty();
     InsurancePerson getOwner();
+    String getOwnerName();
     ObjectProperty<InsurancePerson> insuredProperty();
     InsurancePerson getInsured();
+    String getInsuredName();
     ObjectProperty<InsurancePerson> beneficiaryProperty();
     InsurancePerson getBeneficiary();
+    String getBeneficiaryName();
     DoubleProperty premiumProperty();
     Double getPremium();
     StringProperty premiumStringProperty();
@@ -34,4 +37,27 @@ public interface ReadOnlyInsurance {
     String getSigningDateString();
     StringProperty expiryDateStringProperty();
     String getExpiryDateString();
+
+    /**
+     * Formats the insurance as text, showing all the details.
+     */
+    default String getAsText() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getInsuranceName())
+                .append("  Owner: ")
+                .append(getOwnerName())
+                .append("  Insured: ")
+                .append(getInsuredName())
+                .append("  Beneficiary: ")
+                .append(getBeneficiaryName())
+                .append(" \nPremium: ")
+                .append(getPremiumString())
+                .append("  Contract File: ")
+                .append(getContractPath())
+                .append("  Signing Date: ")
+                .append(getSigningDateString())
+                .append("  Expiry Date: ")
+                .append(getExpiryDateString());
+        return builder.toString();
+    }
 }
