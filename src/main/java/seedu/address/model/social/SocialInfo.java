@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 //@@author marvinchin
 /**
  * Represents information about a social media account in the address book.
+ * Guarantees immutability.
  */
 public class SocialInfo {
 

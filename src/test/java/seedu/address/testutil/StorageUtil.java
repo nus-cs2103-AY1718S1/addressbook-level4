@@ -10,9 +10,9 @@ import seedu.address.storage.StorageManager;
 public class StorageUtil {
 
     /**
-     * Returns a null storage for tests where storage does not need to be used
+     * Returns a dummy storage for tests where a real storage does not need to be used
      */
-    public static Storage getNullStorage() {
+    public static Storage getDummyStorage() {
         return new StorageManager(null, null);
     }
 }

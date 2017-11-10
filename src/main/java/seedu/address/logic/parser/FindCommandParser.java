@@ -12,19 +12,20 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.TagsContainKeywordsPredicate;
 
+//@@author marvinchin
 /**
  * Parses input arguments and creates a new FindCommand object
  */
 public class FindCommandParser implements Parser<FindCommand> {
-    //@@author marvinchin
+    public static final String INVALID_FIND_COMMAND_FORMAT_MESSAGE =
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
     /**
      * Utility function to check that the input arguments is not empty.
      * Throws a parse exception if it is empty.
      */
     private void checkArgsNotEmpty(String args) throws ParseException {
         if (args == null || args.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            throw new ParseFindCommandException();
         }
     }
 
@@ -41,17 +42,32 @@ public class FindCommandParser implements Parser<FindCommand> {
         // check that the filtered args are not empty
         checkArgsNotEmpty(filteredArgs);
 
+        // args should have at most 1 option
+        if (opArgs.getOptions().size() > 1) {
+            throw new ParseFindCommandException();
+        }
+
         if (opArgs.getOptions().contains(FindByTagsCommand.COMMAND_OPTION)) {
             List<String> tagKeywords = parseWhitespaceSeparatedStrings(filteredArgs);
             TagsContainKeywordsPredicate predicate = new TagsContainKeywordsPredicate(tagKeywords);
             return new FindByTagsCommand(predicate);
-        } else {
+        } else if (opArgs.getOptions().isEmpty()) {
             checkArgsNotEmpty(opArgs.getFilteredArgs());
             List<String> nameKeywords = parseWhitespaceSeparatedStrings(filteredArgs);
             NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(nameKeywords);
             return new FindByNameCommand(predicate);
+        } else {
+            // option is not a valid option
+            throw new ParseFindCommandException();
         }
     }
-    //@@author
 
+    /**
+     * Represents a {@code ParseException} encountered when parsing arguments for a {@code FindCommand}
+     */
+    private class ParseFindCommandException extends ParseException {
+        public ParseFindCommandException() {
+            super(INVALID_FIND_COMMAND_FORMAT_MESSAGE);
+        }
+    }
 }

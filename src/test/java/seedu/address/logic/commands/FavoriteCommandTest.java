@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.address.testutil.StorageUtil.getNullStorage;
+import static seedu.address.testutil.StorageUtil.getDummyStorage;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
@@ -140,7 +140,7 @@ public class FavoriteCommandTest {
      */
     private FavoriteCommand prepareCommand(List<Index> indexList) {
         FavoriteCommand favoriteCommand = new FavoriteCommand(indexList);
-        favoriteCommand.setData(model, getNullStorage(), new CommandHistory(), new UndoRedoStack());
+        favoriteCommand.setData(model, getDummyStorage(), new CommandHistory(), new UndoRedoStack());
         return favoriteCommand;
     }
 }

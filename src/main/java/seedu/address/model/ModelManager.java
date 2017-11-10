@@ -15,6 +15,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonDefaultComparator;
@@ -101,6 +102,7 @@ public class ModelManager extends ComponentManager implements Model {
                 continue;
             }
         }
+
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
@@ -139,9 +141,24 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author marvinchin
     @Override
+    public Index getPersonIndex(ReadOnlyPerson target) throws PersonNotFoundException {
+        int zeroBasedIndex = filteredPersons.indexOf(target);
+        if (zeroBasedIndex == -1) {
+            throw new PersonNotFoundException();
+        }
+        return Index.fromZeroBased(zeroBasedIndex);
+    }
+
+    @Override
+    public void sortPersons(Comparator<ReadOnlyPerson> comparator) {
+        sortedPersons.setComparator(comparator);
+        lastSortComparator = comparator;
+    }
+
+    @Override
     public void selectPerson(ReadOnlyPerson target) throws PersonNotFoundException {
         indicatePersonAccessed(target);
-        //TODO(Marvin): Since IO operations are expensive, consider if we can defer this operation instead of saving
+        // TODO(Marvin): Since IO operations are expensive, consider if we can defer this operation instead of saving
         // on every access (which includes select)
         indicateAddressBookChanged();
     }
@@ -149,6 +166,7 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicatePersonAccessed(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.indicatePersonAccessed(target);
     }
+
     //@@author
 
     //=========== Filtered Person List Accessors =============================================================
@@ -180,11 +198,6 @@ public class ModelManager extends ComponentManager implements Model {
         return copy;
     }
 
-    @Override
-    public void sortPersons(Comparator<ReadOnlyPerson> comparator) {
-        sortedPersons.setComparator(comparator);
-        lastSortComparator = comparator;
-    }
     //@@author
 
     @Override
