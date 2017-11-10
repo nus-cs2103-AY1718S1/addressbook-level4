@@ -1,4 +1,5 @@
-/*@@author 17navasaw*/
+/*@@author 17navasaw-unused*/
+/*Theme unused because using it for the agenda panel did not match the overall look of the address book.*/
 .background {
     -fx-background-color: derive(#40593c, 20%);
     background-color: #40593c; /* Used in the default.html file */

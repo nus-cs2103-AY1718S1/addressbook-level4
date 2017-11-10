@@ -118,6 +118,7 @@ Examples:
 
 === Modifying contacts
 
+// tag::multipleemails[]
 ==== Adding a person: `add` [Last updated in v1.3]
 
 => Alias: `a` <=
@@ -129,20 +130,17 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [e/UNIQUE EMAIL]... a/ADDRESS [t/TAG]
 A person can have any number of tags (including 0).
 
 [TIP]
-A person must have at least 1 email.
+A person must have at least 1 email. *[v1.3 update]*
 
 [TIP]
-ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter.
+ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter. *[v1.3 update]*
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/123, John street, #01-01, Singapore 407989`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/12, Newgate Prison, IL 043 p/1234567 t/criminal`
 
-[INFO]
-*v1.3 update:* This feature allows the adding of more than 1 EMAIL for a person, as well as restrict the ADDRESS to the format: `BLOCK, STREET, [UNIT,] POSTAL CODE`.
-
-==== Editing a person : `edit`
+==== Editing a person : `edit` [Last updated in v1.3]
 
 => Alias: `e` <=
 
@@ -152,11 +150,14 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]... [a/ADDRESS] [t/TAG]...`
 [TIP]
 Ensure that you have input the correct prefix [n/NAME] , [p/PHONE] , [e/EMAIL]  , [a/ADDRESS] ,  [t/TAG]
 
+[TIP]
+ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter. *[v1.3 update]*
+
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* When editing tags or emails, the existing related fields of the person will be removed i.e adding of tags and emails is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
@@ -166,6 +167,7 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+// end::multipleemails[]
 
 ==== Deleting person(s) : `delete` [Last updated in v1.1]
 
@@ -301,6 +303,26 @@ Associates the specified schedule with the 1st and 3rd persons in the address bo
 * `find n/Betsy` +
 `schedule 1 d/25-12-2017 act/Christmas dinner` +
 Associates the specified schedule with the 1st person in the results of the `find` command.
+
+// tag::agenda[]
+===== Viewing of user's agenda [Since v1.4]
+
+A list of all scheduled activities by the user is displayed in the 'My Agenda' section of the application, as shown below in _Figure 3.4.3.1_.
+
+image::AgendaPanelUI.png[width="400"]
+_Figure 3.4.3.1: UI display for user's agenda_
+
+When an activity is scheduled, the agenda list will be immediately updated, with the list being arranged from earliest to latest date with the earliest being at the top.
+// end::agenda[]
+
+// tag::reminder[]
+===== Pop-up reminder window on startup [Since v1.5]
+
+A pop-up reminder will be appear after the main application window has opened, if there exists scheduled activities by the user which are due the day after the current date. The display of the reminder window can be seen in _Figure 3.4.3.2_ below:
+
+image::ReminderWindowUI.png[width="400"]
+_Figure 3.4.3.2: UI display for pop-up reminder window_
+// end::reminder[]
 
 // tag::copy[]
 ==== Getting email addresses : `copy` [Since v1.3]

@@ -7,6 +7,7 @@ import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
@@ -21,10 +22,13 @@ public class AgendaPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(AgendaPanel.class);
 
     @FXML
+    private Label agendaHeader;
+    @FXML
     private ListView<ScheduleCard> scheduleCardListView;
 
     public AgendaPanel(ObservableList<Schedule> scheduleList) {
         super(FXML);
+        agendaHeader.getStyleClass().remove("label");
         setConnections(scheduleList);
     }
 
