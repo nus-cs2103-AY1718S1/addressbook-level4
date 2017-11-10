@@ -59,6 +59,7 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -98,13 +99,13 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: undo adding Amy to the list -> Amy deleted */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, model, expectedResultMessage);
+        assertUndoCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: redo adding Amy to the list -> Amy added again */
         command = RedoCommand.COMMAND_WORD;
         model.addPerson(toAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, model, expectedResultMessage);
+        assertRedoCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a duplicate person -> rejected */
 
@@ -331,36 +332,60 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(PersonUtil.getAddCommand(toAdd), toAdd);
     }
 
+    //@@author itsdickson
     /**
-     * Performs the same verification as {@code assertCommandSuccess(ReadOnlyPerson)}. Executes {@code command}
-     * instead.
+     * Performs the same verification as {@code assertCommandSuccess(ReadOnlyPerson)} except that the result
+     * display box displays {@code expectedResultMessage} and the model related components equal to
+     * {@code expectedModel}. Executes {@code command} instead.
      * @see AddCommandSystemTest#assertCommandSuccess(ReadOnlyPerson)
      */
     private void assertCommandSuccess(String command, ReadOnlyPerson toAdd) {
         Model expectedModel = getModel();
+        String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
         try {
             expectedModel.addPerson(toAdd);
         } catch (DuplicatePersonException dpe) {
             throw new IllegalArgumentException("toAdd already exists in the model.");
         }
-        String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
-
-        assertCommandSuccess(command, expectedModel, expectedResultMessage);
-    }
-
-    /**
-     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyPerson)} except that the result
-     * display box displays {@code expectedResultMessage} and the model related components equal to
-     * {@code expectedModel}.
-     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
-     */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+        int preExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
         executeCommand(command);
+        int postExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
+        if (preExecutionSelectedCardIndex == postExecutionSelectedCardIndex) {
+            assertSelectedCardUnchanged();
+        } else {
+            assertSelectedCardChanged(Index.fromZeroBased(postExecutionSelectedCardIndex));
+        }
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
     }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyPerson)}
+     * except that the selected card is deselected.
+     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
+     */
+    private void assertUndoCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardDeselected();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyPerson)}
+     * except that the selected card changed.
+     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
+     */
+    private void assertRedoCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardChanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+    //@@author
 
     /**
      * Executes {@code command} and verifies that the command box displays {@code command}, the result display
