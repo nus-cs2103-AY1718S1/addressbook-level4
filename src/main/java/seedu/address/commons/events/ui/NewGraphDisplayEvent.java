@@ -4,6 +4,7 @@ import org.graphstream.graph.implementations.SingleGraph;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author joanneong
 /**
  * Indicates that a new graph display is available.
  */

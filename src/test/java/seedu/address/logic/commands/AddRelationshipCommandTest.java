@@ -22,6 +22,7 @@ import seedu.address.model.relationship.ConfidenceEstimate;
 import seedu.address.model.relationship.RelationshipDirection;
 import seedu.address.testutil.StorageStub;
 
+//@@author wenmogu
 public class AddRelationshipCommandTest {
     private static final ConfidenceEstimate DEFAULT_CE = ConfidenceEstimate.UNSPECIFIED;
     private static final Name DEFAULT_NAME = Name.UNSPECIFIED;

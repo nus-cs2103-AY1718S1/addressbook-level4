@@ -5,6 +5,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author wenmogu
 /**
  * This class is to specify a command for deleting relationship between two persons
  */
