@@ -111,13 +111,15 @@ public class ReminderCard extends UiPart<Region> {
      * @param reminder
      */
     private void initCountdown(ReadOnlyReminder reminder) {
+        // Calculates the day difference between the reminder's date and the current date
+        // Todo: Minus 1 day in day difference if the current time passes the reminder's time
         final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         LocalDate deadline = LocalDate.parse(reminder.getDate().toString(), dateFormatter);
         LocalDate currentTime = LocalDate.now();
         int daysBetween = (int) ChronoUnit.DAYS.between(currentTime, deadline);
 
         setDaysCountdownBasedOnDays(daysBetween);
-        if (daysBetween > ORANGE_WARNING_DAYS_LEFT) {
+        if (daysBetween >= ORANGE_WARNING_DAYS_LEFT) { // Only start the countdown if the deadline is not overdue
             startDaysCountdown(deadline);
         }
     }
