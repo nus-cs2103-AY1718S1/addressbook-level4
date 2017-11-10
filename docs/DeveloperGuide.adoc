@@ -620,7 +620,7 @@ _Figure 4.3.6 : Full UI outcome of locate implementation_
 === FindCommand by any search field [Since v1.2 and v1.4]
 
 
-`FindCommand` which reside in `Logic` will support the search of contact by any keywords. `Logic` uses the `AddressBookParser` class to parse user command. `parseCommand` in `AddressBookParser` will detect the command word `find` and the keywords keyed in by user and call `parse` method in `FindCommandParser`.`parse` method in `FindCommandParser` will check for the prefix based existing parameters `Name`, `Email`, `Address`, `Phone`,`Tags` , `Activity` and `Country`. Such parameters inherit from `Person` which resides inside `Model`._Figures 4.4.1_ indicates the the parsing of user command in  `FindCommandParser`.
+`FindCommand` which reside in `Logic` will support the search of contact by any keywords. `Logic` uses the `AddressBookParser` class to parse user command. `parseCommand` in `AddressBookParser` will detect the command word `find` and the keywords keyed in by user and call `parse` method in `FindCommandParser`.`parse` method in `FindCommandParser` will check for the prefix based existing parameters `Name`, `Email`, `Address`, `Phone`,`Tags` , `Activity` and `Country`. Such parameters inherit from `Person` which resides inside `Model`. _Figures 4.4.1_ indicates the the parsing of user command in  `FindCommandParser`.
 
 [source,java]
 ----
@@ -639,7 +639,7 @@ _Figure 4.4.1: Code section in FindCommandParser.java_
 [NOTE]
 A valid find command can only search for keywords based on specific prefix  [n/NAME] or [p/PHONE] or [e/EMAIL] or [a/ADDRESS] or [t/TAG] or [c/COUNTRY] or [act/ACTIVITY].
 
-Any other prefix as input will be considered as invalid input.In absence of valid prefix ,an exception will be thrown in  `FindCommandParser`, as shown in Figure 4.4.2_.
+Any other prefix as input will be considered as invalid input.In absence of valid prefix ,an exception will be thrown in  `FindCommandParser`, as shown in _Figure 4.4.2_.
 [source,java]
 ----
          default:
@@ -647,7 +647,7 @@ Any other prefix as input will be considered as invalid input.In absence of vali
 ----
 _Figure 4.4.2: Code section 2 in FindCommandParser.java_
 
-A successful match of the prefix in `FindCommandParser` will create a `FindCommand` object with `containsKeyWordPredicate` that resides in `Model` to be passed as parameter.Command execution in `LogicManager` will then call `updateFilteredPersonList` method in `ModelManager`.Addressbook will then search for contact based on the predicate paramater passed in `PredicateUtil1 as shown in -Figure 4.4.3_.
+A successful match of the prefix in `FindCommandParser` will create a `FindCommand` object with `containsKeyWordPredicate` that resides in `Model` to be passed as parameter.Command execution in `LogicManager` will then call `updateFilteredPersonList` method in `ModelManager`.Addressbook will then search for contact based on the predicate paramater passed in `PredicateUtil1 as shown in _Figure 4.4.3_.
 .
 [source,java]
 ----
@@ -773,7 +773,7 @@ Alternatively, it may also be possible to permanently display all fields in each
 The sequence diagram of `CalendarCommand` in _Figure 4.6.1_ below indicates the sequence diagram of the calendar function.
 
 image::SequenceDiagramCalendar.PNG[width="800"]
-_Figure 4.6.1 : Clenader sequence diagram_
+_Figure 4.6.1 : Calender sequence diagram_
 
 Upon taking in `CalendarCommand`  in the command line, a new `ShowCalendarRequestEvent` is posted by the `EventsCenter` class to its `EventBus`, as shown in _Figure 4.6.2_.  In addition , user are able  bypass `CalendarCommand` by pressing on `F2` key to post `ShowCalendarRequestEvent` thus allow user to launch calendar webpage via command line or via accelerators.
 
@@ -992,9 +992,9 @@ _Figure 4.8.3: Code section in Schedule.java_
 
 === Sending Email [Since v1.5]
 
-`EmailCommand` utilise `Desktop` to launch a email platform for users to send email to multiple contacts. Figure 4.9.1_ below indicates the sequence diagram that illsutrate how the components interact in the scenario where the user issues the email command.
+`EmailCommand` utilise `Desktop` to launch a email platform for users to send email to multiple contacts. _Figure 4.9.1_ below indicates the sequence diagram that illsutrate how the components interact in the scenario where the user issues the email command.
 
-image::SequenceDiagramEmail.PNG[width="600"]
+image::SequenceDiagramEmail.PNG[width="600"]_
 _Figure 4.9.1: Component interactions for email function_
 
 User will first have to key in indexes of the contact. `Logic` will use `AddressBookParser` class to parse user command. `ParseException` will be thrown in `EmailCommandParser` when there is detection of illegal value.By using a `Set` to store the indices inputed by user, this will prevent duplication of indicies. _Figure 4.9.2_ below indicates the parsing of user input in `EmailCommandParser`.
@@ -1039,7 +1039,7 @@ image::LogicComponentSequenceDiagramEmail.PNG[width="800"]
 _Figure 4.9.4: Component interactions inside Logic Component when user issue email command_
 
 
-The outcome of successful launching of email platform to send email to multiple contacts is shown in _Figure 4.9.5.
+The outcome of successful launching of email platform to send email to multiple contacts is shown in _Figure 4.9.5_.
 
 image::EmailCommand.PNG[width="800"]
 _Figure 4.9.5: Output of `EmailCommand.java` execution_
