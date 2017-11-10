@@ -25,8 +25,9 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Displays username and password fields
  */
 public class LoginView extends UiPart<Region> {
+    public static final String LOGIN_COMMAND_FORMAT = "login %1$s %2$s";
+
     private static final String FXML = "LoginView.fxml";
-    private static final String LOGIN_COMMAND_FORMAT = "login %1$s %2$s";
     private static final Logger logger = LogsCenter.getLogger(LoginView.class);
 
     private final Logic logic;
