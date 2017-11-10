@@ -63,7 +63,7 @@ public class ParserUtil {
         if (!isFileExists(file)) {
             throw new IllegalValueException(MESSAGE_INVALID_FILE);
         }
-        return file
+        return file;
     }
     //@@author
 
