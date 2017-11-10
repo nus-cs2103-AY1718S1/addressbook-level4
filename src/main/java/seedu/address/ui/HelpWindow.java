@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
@@ -26,6 +27,9 @@ public class HelpWindow extends UiPart<Region> {
     private WebView browser;
 
     private final Stage dialogStage;
+    public  String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko";
+
+
 
     public HelpWindow() {
         super(FXML);
@@ -35,8 +39,10 @@ public class HelpWindow extends UiPart<Region> {
         dialogStage.setResizable(true);
         FxViewUtil.setStageIcon(dialogStage, ICON);
 
+        WebEngine engine = browser.getEngine();
+        engine.setUserAgent(USER_AGENT);
         String userGuideUrl = getClass().getResource(USERGUIDE_FILE_PATH).toString();
-        browser.getEngine().load(userGuideUrl);
+        engine.load(userGuideUrl);
     }
 
     /**
