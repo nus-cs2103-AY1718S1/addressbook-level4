@@ -5,7 +5,6 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.EventPanelUnselectEvent;
 import seedu.address.commons.events.ui.TogglePanelEvent;
-import seedu.address.ui.EventsDetailsPanel;
 
 /**
  * Lists all persons in the address book to the user.
