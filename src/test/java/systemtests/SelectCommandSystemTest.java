@@ -8,7 +8,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
