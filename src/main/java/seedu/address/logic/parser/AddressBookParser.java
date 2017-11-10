@@ -22,6 +22,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.ReplyCommand;
@@ -101,6 +102,9 @@ public class AddressBookParser {
                 || commandWord.equalsIgnoreCase(ListCommand.COMMAND_WORDVAR_2)) {
             return new ListCommand();
 
+        } else if (commandWord.equalsIgnoreCase(LocateCommand.COMMAND_WORDVAR)) {
+            return new LocateCommandParser().parse(arguments);
+
         } else if (commandWord.equalsIgnoreCase(HistoryCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(HistoryCommand.COMMAND_WORDVAR_2)) {
             return new HistoryCommand();
@@ -146,7 +150,7 @@ public class AddressBookParser {
             return new SortCommand();
 
         } else if (commandWord.equalsIgnoreCase(ChangeWindowSizeCommand.COMMAND_WORD)) {
-            return new ChangeWindowSizeCommand(arguments.trim());
+            return new ChangeWindowSizeCommandParser().parse(arguments);
 
         } else {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

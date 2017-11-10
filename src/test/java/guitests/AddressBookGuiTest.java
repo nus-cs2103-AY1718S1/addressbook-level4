@@ -11,6 +11,7 @@ import org.testfx.api.FxToolkit;
 
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.ExtendedPersonDisplayHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
@@ -72,9 +73,17 @@ public abstract class AddressBookGuiTest {
     }
 
     protected PersonListPanelHandle getPersonListPanel() {
+
         return mainWindowHandle.getPersonListPanel();
     }
 
+    //@@author jacoblipech
+    protected ExtendedPersonDisplayHandle getExtendedPersonDisplay() {
+
+        return mainWindowHandle.getExtendedPersonDisplay();
+    }
+
+    //@@author
     protected MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();
     }

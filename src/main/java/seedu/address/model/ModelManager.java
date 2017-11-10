@@ -43,7 +43,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author vivekscl
     /* JaroWinklerDistance method uses double values ranging from 0 to 1. Set initial value to match very similar
-     * names only as setting the value to any value less than or equal to 0 will match the first name in filteredPersons
+     * names only. Setting the value to any value less than or equal to 0 will match the first name in filteredPersons
      */
     private final double initialToleranceValue = 0.5;
 

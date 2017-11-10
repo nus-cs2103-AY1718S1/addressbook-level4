@@ -36,6 +36,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -48,6 +49,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagContainsKeywordsPredicate;
+import seedu.address.model.windowsize.WindowSize;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -104,6 +106,7 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new FavouriteCommand(INDEX_FIRST_PERSON), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_filter() throws Exception {
@@ -219,13 +222,6 @@ public class AddressBookParserTest {
         assertEquals(new AddTagCommand(indexes, toAdd), command);
     }
 
-    @Test
-    public void parseCommand_changeWindowSizeCommand() throws Exception {
-        assertTrue(parser.parseCommand(ChangeWindowSizeCommand.COMMAND_WORD) instanceof ChangeWindowSizeCommand);
-        assertTrue(parser.parseCommand(ChangeWindowSizeCommand.COMMAND_WORD + " "
-            + ChangeWindowSizeCommand.BIG_WINDOW_SIZE_PARAM) instanceof ChangeWindowSizeCommand);
-    }
-
     //@@author taojiashu
     @Test
     public void parseCommand_showFavourite() throws Exception {
@@ -233,12 +229,24 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ShowFavouriteCommand.COMMAND_WORD_2 + " 3") instanceof ShowFavouriteCommand);
     }
 
+    @Test
+    public void parseCommand_locateCommand() throws Exception {
+        assertTrue(parser.parseCommand(LocateCommand.COMMAND_WORDVAR + " 1") instanceof LocateCommand);
+    }
+    //@@author
+
     //@@author vivekscl
     @Test
     public void parseCommand_undoCommandWord_returnsUndoCommand() throws Exception {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORDVAR_1) instanceof UndoCommand);
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORDVAR_2 + " 2") instanceof UndoCommand);
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORDVAR_3 + " 3") instanceof UndoCommand);
+    }
+
+    @Test
+    public void parseCommand_changeWindowSizeCommand() throws Exception {
+        assertTrue(parser.parseCommand(ChangeWindowSizeCommand.COMMAND_WORD + " "
+                + WindowSize.BIG_WINDOW_SIZE_INPUT) instanceof ChangeWindowSizeCommand);
     }
 
     //@@author
