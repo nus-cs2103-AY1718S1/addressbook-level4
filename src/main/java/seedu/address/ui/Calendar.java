@@ -130,7 +130,6 @@ public class Calendar {
      */
     public void previousMonth() {
         currentYearMonth = currentYearMonth.minusMonths(1);
-      //  populateCalendar(currentYearMonth, allEvents);
         EventsCenter.getInstance().post(new PopulateMonthEvent(currentYearMonth));
     }
 
@@ -139,7 +138,6 @@ public class Calendar {
      */
     public void nextMonth() {
         currentYearMonth = currentYearMonth.plusMonths(1);
-     //   populateCalendar(currentYearMonth, allEvents);
         EventsCenter.getInstance().post(new PopulateMonthEvent(currentYearMonth));
     }
 
@@ -160,7 +158,6 @@ public class Calendar {
      * @param eventList
      * @param yearMonth
      */
-
     public void populateUpdatedCalendar(UniqueEventList eventList, YearMonth yearMonth) {
         // Get the date we want to start with on the calendar
         yearMonth = currentYearMonth;
