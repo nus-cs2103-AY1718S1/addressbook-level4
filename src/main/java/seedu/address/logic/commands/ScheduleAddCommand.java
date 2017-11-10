@@ -20,6 +20,7 @@ import seedu.address.model.event.EventTime;
 import seedu.address.model.event.MemberList;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -91,10 +92,6 @@ public class ScheduleAddCommand extends UndoableCommand {
             toReplace.add(toEditPerson.createUpdatedPerson());
         }
 
-        if (uniqueMemberIndexes.isEmpty()) {
-            System.out.println("null");
-        }
-
         try {
             String commandResultString = "";
             if (model.hasEvenClashes(event)) {
@@ -130,6 +127,7 @@ public class ScheduleAddCommand extends UndoableCommand {
         private Set<Tag> tags;
         private Set<Event> events;
         private DateAdded dateAdded;
+        private Birthday birthday;
 
         public EditEventListPersonDescriptor(ReadOnlyPerson toCopy, Event event) {
             this.name = toCopy.getName();
@@ -138,6 +136,7 @@ public class ScheduleAddCommand extends UndoableCommand {
             this.address = toCopy.getAddress();
             this.tags = toCopy.getTags();
             this.dateAdded = toCopy.getDateAdded();
+            this.birthday = toCopy.getBirthday();
 
             this.events = createModifiableEventList(toCopy.getEvents());
             this.events.add(event);
@@ -148,36 +147,8 @@ public class ScheduleAddCommand extends UndoableCommand {
             return modifiableEventList;
         }
 
-        public Name getName() {
-            return name;
-        }
-
-        public Phone getPhone() {
-            return phone;
-        }
-
-        public Email getEmail() {
-            return email;
-        }
-
-        public Address getAddress() {
-            return address;
-        }
-
-        public Set<Tag> getTags() {
-            return tags;
-        }
-
-        public Set<Event> getEvents() {
-            return events;
-        }
-
-        public DateAdded getDateAdded() {
-            return dateAdded;
-        }
-
         public Person createUpdatedPerson() {
-            return new Person(name, phone, email, address, tags, events, dateAdded);
+            return new Person(name, birthday, phone, email, address, tags, events, dateAdded);
         }
     }
 }
