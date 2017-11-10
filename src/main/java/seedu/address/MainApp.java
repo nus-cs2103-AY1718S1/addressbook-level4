@@ -230,21 +230,6 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
-
-    @Subscribe
-    public void handleNewAddressBookRequestEvent(NewAddressBookRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-
-        try {
-            updateConfig("config.json", event.getFileName());
-            updateUserPrefs("preferences.json", event.getFilePath(), event.getFileName());
-
-            init();
-            start(this.primaryStage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
     //@@author
 
     @Subscribe
