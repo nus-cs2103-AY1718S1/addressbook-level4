@@ -22,6 +22,7 @@ import seedu.address.model.module.Code;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.predicates.FixedCodePredicate;
+
 import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
 import seedu.address.testutil.EditLessonDescriptorBuilder;
 
