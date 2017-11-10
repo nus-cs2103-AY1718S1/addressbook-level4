@@ -930,13 +930,13 @@ _Figure 4.7.4: Code section in UniqueEmailList.java_
 
 ==== Design Considerations for Adding or Editing contact with Multiple Emails
 
-**Aspect:** Storing of email inputs +
-**Alternative 1 (current choice)**: Agenda can be viewed in the `MainWindow`. +
-**Pros:** User is able to view the agenda immediately upon starting the application. +
-**Cons:** The `AgendaPanel` compromises the space allocated to the `BrowserPanel`. +
-**Alternative 2:** Agenda is located in a separated window, which can be opened using a command input +
-**Pros:** More space will be allocated to `BrowserPanel`, hence the user can enjoy a larger view of a contact's address location. User also has the freedom to minimise or expand agenda window. +
-**Cons:** User needs to take the extra step to view the agen
+**Aspect:** Storing of emails in `Person`+
+**Alternative 1 (current choice)**: Emails stored as `ObjectProperty` of `UniqueEmailList`. +
+**Pros:** We are able to add listeners to track changes in the object `UniqueEmailList`. +
+**Cons:** Need to call more methods to get the set of emails. +
+**Alternative 2:** Emails stored as a set +
+**Pros:** Able to get the set of emails and use it from a simple getter method. +
+**Cons:** We are unable to track changes in the email list if we want the UI to change accordingly.
 // end::multipleemails[]
 
 // tag::agenda[]

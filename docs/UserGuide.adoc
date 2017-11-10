@@ -118,6 +118,7 @@ Examples:
 
 === Modifying contacts
 
+// tag::multipleemails[]
 ==== Adding a person: `add` [Last updated in v1.3]
 
 => Alias: `a` <=
@@ -139,7 +140,7 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/123, John street, #01-01, Singapore 407989`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/12, Newgate Prison, IL 043 p/1234567 t/criminal`
 
-==== Editing a person : `edit`
+==== Editing a person : `edit` [Last updated in v1.3]
 
 => Alias: `e` <=
 
@@ -166,6 +167,7 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+// end::multipleemails[]
 
 ==== Deleting person(s) : `delete` [Last updated in v1.1]
 

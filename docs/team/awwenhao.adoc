@@ -99,7 +99,7 @@ include::../DeveloperGuide.adoc[tag=reminder]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=add]
+include::../UserGuide.adoc[tag=multipleemails]
 
 #End of Extract#
 
@@ -115,17 +115,6 @@ People in the workplace usually have an email for work and another for informal 
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=multipleemails]
-
-#End of Extract#
-
----
-
-==== Implementation: Greater restriction to address input in add feature
-
----
-#Start of Extract [from: Developer Guide]#
-
-include::../DeveloperGuide.adoc[tag=addaddressrestriction]
 
 #End of Extract#
 
