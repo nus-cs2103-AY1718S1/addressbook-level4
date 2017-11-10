@@ -33,6 +33,9 @@ import seedu.address.logic.commands.person.DeleteCommand;
 import seedu.address.logic.commands.person.EditCommand;
 import seedu.address.logic.commands.person.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.person.FindCommand;
+import seedu.address.logic.commands.person.FindPinnedCommand;
+import seedu.address.logic.commands.person.HideCommand;
+import seedu.address.logic.commands.person.ListAliasCommand;
 import seedu.address.logic.commands.person.ListCommand;
 import seedu.address.logic.commands.person.ListPinCommand;
 import seedu.address.logic.commands.person.PinCommand;
@@ -59,7 +62,6 @@ public class AddressBookParserTest {
     private final AddressBookParser parser = new AddressBookParser();
 
     @Before
-
     public void setParentMode() {
         parser.enableParentToggle();
     }
@@ -92,6 +94,13 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommandHide() throws Exception {
+        HideCommand command = (HideCommand) parser.parseCommand(
+                HideCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new HideCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
     public void parseCommandPin() throws Exception {
         PinCommand command = (PinCommand) parser.parseCommand(
                 PinCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
@@ -118,6 +127,12 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommandListAlias() throws Exception {
+        assertTrue(parser.parseCommand(ListAliasCommand.COMMAND_WORD) instanceof ListAliasCommand);
+        assertTrue(parser.parseCommand(ListAliasCommand.COMMAND_WORD + " 3") instanceof ListAliasCommand);
+    }
+
+    @Test
     public void parseCommandEdit() throws Exception {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
@@ -138,6 +153,14 @@ public class AddressBookParserTest {
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new PersonHasKeywordsPredicate(keywords, false)), command);
+    }
+
+    @Test
+    public void parseCommandFindPinned() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        FindPinnedCommand command = (FindPinnedCommand) parser.parseCommand(
+                FindPinnedCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindPinnedCommand(new PersonHasKeywordsPredicate(keywords, true)), command);
     }
 
     @Test

@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class TutorialMessages {
 
-    public static final int TOTAL_NUM_STEPS = 8;
+    public static final int TOTAL_NUM_STEPS = 9;
 
     /* Introductory Messages */
     public static final String INTRO_BEGIN = "Welcome to Bluebird! Would you like to go through the tutorial?";
@@ -42,7 +42,21 @@ public class TutorialMessages {
             + "18. Toggle to parent/child mode\n";
 
     public static final String INTRO_END = "Bluebird is set to Child Mode by default every time Bluebird "
-            + "is launched. The only commands available are Add, find, list, undo, redo and sort.";
+            + "is launched. To activate all commands, toggle to parent mode!\n"
+            + "The only commands available in Child Mode are:\n"
+            + "1. add\n"
+            + "2. find\n"
+            + "3. findpin\n"
+            + "4. list\n"
+            + "5. listpin\n"
+            + "6. remark\n"
+            + "7. sort\n"
+            + "8. history\n"
+            + "9. undo\n"
+            + "10. redo\n"
+            + "11. person\n"
+            + "12. task\n"
+            + "13. parent";
 
     /* Command usage messages */
     public static final String USAGE_BEGIN = "Let's try out the different commands of Bluebird! Activate Parent Mode "
