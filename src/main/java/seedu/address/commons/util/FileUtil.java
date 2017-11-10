@@ -21,6 +21,12 @@ public class FileUtil {
     }
 
     //@@author chrisboo
+
+    /**
+     * Return a file from FileChooser.
+     * If {@code isNewFile} is true, opens a FileChooser that creates/overwrite file.
+     * Otherwise, opens a FileChooser that selects existing file.
+     */
     public static File getFileFromChooser(boolean isNewFile) {
         FileChooser fileChooser = new FileChooser();
 
