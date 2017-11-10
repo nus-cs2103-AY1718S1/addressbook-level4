@@ -1,63 +1,19 @@
 # Haozhe321
-###### /java/seedu/room/logic/parser/DeleteByTagCommandParserTest.java
+###### \java\seedu\room\logic\commands\AddCommandTest.java
 ``` java
-public class DeleteByTagCommandParserTest {
-    private DeleteByTagCommandParser parser = new DeleteByTagCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsDeleteByTagCommand() throws IllegalValueException {
-        assertParseSuccess(parser, "friends", new DeleteByTagCommand("friends"));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "friends forever", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                DeleteByTagCommand.MESSAGE_USAGE));
-    }
-
-}
+        @Override
+        public void deleteByTag(Tag tag) throws IllegalValueException, CommandException {
+            fail("this method should not be called.");
+        }
 ```
-###### /java/seedu/room/logic/parser/ParserUtilTest.java
+###### \java\seedu\room\logic\commands\AddEventCommandTest.java
 ``` java
-    @Test
-    public void parseTimestamp_invalidInput_throwsNumberFormatException1() throws Exception {
-        thrown.expect(NumberFormatException.class);
-        ParserUtil.parseTimestamp(Optional.of(INVALID_TIMESTAMP_WITH_DECIMAL));
-    }
-
-    @Test
-    public void parseTimestamp_invalidInput_throwsNumberFormatException2() throws Exception {
-        thrown.expect(NumberFormatException.class);
-        ParserUtil.parseTimestamp(Optional.of("-1.5"));
-    }
-
-    @Test
-    public void parseTimestamp_invalidInput_throwsNumberFormatException3() throws Exception {
-        thrown.expect(NumberFormatException.class);
-        ParserUtil.parseTimestamp(Optional.of("2/3"));
-    }
-
-    @Test
-    public void parseTimestamp_invalidInput_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseTimestamp(Optional.of(INVALID_TIMESTAMP));
-    }
-
-    @Test
-    public void parseTimestamp_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseTimestamp(Optional.empty()).isPresent());
-    }
-
-    @Test
-    public void parseTimestamp_validValue_returnsTimestamp() throws Exception {
-        Timestamp expectedTimestamp = new Timestamp(1);
-        Optional<Timestamp> actualTimestamp = ParserUtil.parseTimestamp(Optional.of(VALID_TIMESTAMP));
-
-        assertEquals(expectedTimestamp.toString(), actualTimestamp.get().toString());
-    }
-
+        @Override
+        public void deleteByTag(Tag tag) throws IllegalValueException, CommandException {
+            fail("this method should not be called.");
+        }
 ```
-###### /java/seedu/room/logic/commands/DeleteByTagCommandTest.java
+###### \java\seedu\room\logic\commands\DeleteByTagCommandTest.java
 ``` java
 public class DeleteByTagCommandTest {
     private Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
@@ -112,14 +68,65 @@ public class DeleteByTagCommandTest {
     }
 }
 ```
-###### /java/seedu/room/logic/commands/AddCommandTest.java
+###### \java\seedu\room\logic\parser\DeleteByTagCommandParserTest.java
 ``` java
-        @Override
-        public void deleteByTag(Tag tag) throws IllegalValueException, CommandException {
-            fail("this method should not be called.");
-        }
+public class DeleteByTagCommandParserTest {
+    private DeleteByTagCommandParser parser = new DeleteByTagCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsDeleteByTagCommand() throws IllegalValueException {
+        assertParseSuccess(parser, "friends", new DeleteByTagCommand("friends"));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "friends forever", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                DeleteByTagCommand.MESSAGE_USAGE));
+    }
+
+}
 ```
-###### /java/seedu/room/model/person/TimestampTest.java
+###### \java\seedu\room\logic\parser\ParserUtilTest.java
+``` java
+    @Test
+    public void parseTimestamp_invalidInput_throwsNumberFormatException1() throws Exception {
+        thrown.expect(NumberFormatException.class);
+        ParserUtil.parseTimestamp(Optional.of(INVALID_TIMESTAMP_WITH_DECIMAL));
+    }
+
+    @Test
+    public void parseTimestamp_invalidInput_throwsNumberFormatException2() throws Exception {
+        thrown.expect(NumberFormatException.class);
+        ParserUtil.parseTimestamp(Optional.of("-1.5"));
+    }
+
+    @Test
+    public void parseTimestamp_invalidInput_throwsNumberFormatException3() throws Exception {
+        thrown.expect(NumberFormatException.class);
+        ParserUtil.parseTimestamp(Optional.of("2/3"));
+    }
+
+    @Test
+    public void parseTimestamp_invalidInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTimestamp(Optional.of(INVALID_TIMESTAMP));
+    }
+
+    @Test
+    public void parseTimestamp_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseTimestamp(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseTimestamp_validValue_returnsTimestamp() throws Exception {
+        Timestamp expectedTimestamp = new Timestamp(1);
+        Optional<Timestamp> actualTimestamp = ParserUtil.parseTimestamp(Optional.of(VALID_TIMESTAMP));
+
+        assertEquals(expectedTimestamp.toString(), actualTimestamp.get().toString());
+    }
+
+```
+###### \java\seedu\room\model\person\TimestampTest.java
 ``` java
 public class TimestampTest {
 
@@ -139,7 +146,7 @@ public class TimestampTest {
     }
 }
 ```
-###### /java/seedu/room/model/ResidentBookTest.java
+###### \java\seedu\room\model\ResidentBookTest.java
 ``` java
     @Test
     public void deleteTemporaryTest() {
@@ -202,7 +209,7 @@ public class TimestampTest {
         residentBook.removeByTag(new Tag("OWESMoney"));
     }
 ```
-###### /java/seedu/room/model/UniquePersonListTest.java
+###### \java\seedu\room\model\UniquePersonListTest.java
 ``` java
     @Test
     public void removeByTagTest() throws IllegalValueException, CommandException {
@@ -249,20 +256,11 @@ public class TimestampTest {
         uniquePersonList.removeByTag(new Tag("OWESMoney"));
     }
 ```
-###### /java/seedu/room/model/UniquePersonListTest.java
+###### \java\seedu\room\model\UniquePersonListTest.java
 ``` java
 }
 ```
-###### /java/seedu/room/testutil/TypicalPersons.java
-``` java
-    public static final ReadOnlyPerson TEMPORARY_JOE = new PersonBuilder().withName("Temporary Joe")
-            .withPhone("9482442").withEmail("joe@example.com").withRoom("17-210").withTemporary(0)
-            .withTags("friend").build();
-    public static final ReadOnlyPerson TEMPORARY_DOE = new PersonBuilder().withName("Temporary Doe")
-            .withPhone("9482442").withEmail("doe@example.com").withRoom("11-210").withTemporary(1000)
-            .withTags("friend").build();
-```
-###### /java/seedu/room/testutil/PersonBuilder.java
+###### \java\seedu\room\testutil\PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Temporary} of the {@code Person} that we are building.
@@ -275,4 +273,13 @@ public class TimestampTest {
         }
         return this;
     }
+```
+###### \java\seedu\room\testutil\TypicalPersons.java
+``` java
+    public static final ReadOnlyPerson TEMPORARY_JOE = new PersonBuilder().withName("Temporary Joe")
+            .withPhone("9482442").withEmail("joe@example.com").withRoom("17-210").withTemporary(0)
+            .withTags("friend").build();
+    public static final ReadOnlyPerson TEMPORARY_DOE = new PersonBuilder().withName("Temporary Doe")
+            .withPhone("9482442").withEmail("doe@example.com").withRoom("11-210").withTemporary(1000)
+            .withTags("friend").build();
 ```

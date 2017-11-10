@@ -1,420 +1,99 @@
 # shitian007
-###### /resources/view/PersonPanel.fxml
-``` fxml
-<HBox prefHeight="400" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-    <children>
-      <VBox alignment="TOP_CENTER" prefHeight="400.0">
-        <children>
-          <ImageView fx:id="picture" fitHeight="1.0" fitWidth="1.0" />
-          <Label fx:id="name" text="\$name" />
-          <FlowPane fx:id="tags" alignment="CENTER">
-               <padding>
-                  <Insets bottom="5.0" top="5.0" />
-               </padding></FlowPane>
-          <HBox alignment="CENTER" prefHeight="10.0" prefWidth="200.0">
-            <children>
-              <Label text="Phone: " />
-              <Label fx:id="phone" text="\$phone" />
-            </children>
-          </HBox>
-          <HBox alignment="CENTER" prefHeight="10.0">
-            <children>
-              <Label text="Room Address: " />
-              <Label fx:id="address" text="\$address" />
-            </children>
-          </HBox>
-          <HBox alignment="TOP_CENTER" prefHeight="25.0">
-            <children>
-              <Label text="Email: " />
-              <Label fx:id="email" text="\$email" />
-            </children>
-          </HBox>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#handleAddImage" text="+Image">
-                     <HBox.margin>
-                        <Insets right="80.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#handleDeleteImage" text="-Image" />
-               </children>
-               <padding>
-                  <Insets left="50.0" right="50.0" />
-               </padding>
-            </HBox>
-        </children>
-      </VBox>
-    </children>
-</HBox>
-```
-###### /java/seedu/room/ui/PersonPanel.java
+###### \java\seedu\room\logic\AutoComplete.java
 ``` java
 /**
- * The person information panel of the app.
+ * AutoComplete class integrated into LogicManager to keep track of current set
+ * of autocomplete suggestions
  */
-public class PersonPanel extends UiPart<Region> {
+public class AutoComplete {
 
-    private static final String FXML = "PersonPanel.fxml";
-    private static String[] colors = {"red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey"};
-    private static HashMap<String, String> tagColors = new HashMap<String, String>();
-    private static Random random = new Random();
+    private final String[] baseCommands = { "add", "addEvent", "addImage", "backup", "edit", "select", "delete",
+        "deleteByTag", "deleteEvent", "deleteImage", "deleteTag", "clear", "find", "list", "highlight", "history",
+        "import", "exit", "help", "undo", "redo", "sort", "swaproom"
+    };
+    private ArrayList<String> personsStringArray;
+    private String[] autoCompleteList;
+    private Model model;
 
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
-    private final Logic logic;
-
-    private ReadOnlyPerson person;
-
-    @FXML
-    private ImageView picture;
-    @FXML
-    private VBox informationPane;
-    @FXML
-    private Label name;
-    @FXML
-    private Label id;
-    @FXML
-    private Label phone;
-    @FXML
-    private Label address;
-    @FXML
-    private Label email;
-    @FXML
-    private FlowPane tags;
-
-    public PersonPanel(Logic logic) {
-        super(FXML);
-        this.logic = logic;
-        loadDefaultScreen();
-        registerAsAnEventHandler(this);
+    public AutoComplete(Model model) {
+        this.model = model;
+        autoCompleteList = baseCommands;
+        personsStringArray = new ArrayList<String>();
+        this.updatePersonsArray();
     }
 
-    private static String getColorForTag(String tagValue) {
-        if (!tagColors.containsKey(tagValue)) {
-            tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
+    /**
+     * Updates AutoComplete suggestions according to user typed input
+     * @param userInput
+     */
+    public void updateAutoCompleteList(String userInput) {
+        switch (userInput) {
+        case "":
+            this.resetAutocompleteList();
+            break;
+        case "find":
+            this.autoCompleteList = getConcatPersonsArray("find");
+            break;
+        case "edit":
+            this.autoCompleteList = getConcatPersonsArray("edit");
+            break;
+        case "delete":
+            this.autoCompleteList = getConcatPersonsArray("delete");
+            break;
+        case "select":
+            this.autoCompleteList = getConcatPersonsArray("select");
+            break;
+        case "addImage":
+            this.autoCompleteList = getConcatPersonsArray("addImage");
+            break;
+        case "deleteImage":
+            this.autoCompleteList = getConcatPersonsArray("deleteImage");
+            break;
+        default:
+            return;
         }
-
-        return tagColors.get(tagValue);
     }
 
-    /**
-     * Sets the default parameters when the app starts up and no one is selected
-     */
-    private void loadDefaultScreen() {
-        name.textProperty().setValue("No Resident Selected");
-        phone.textProperty().setValue("-");
-        address.textProperty().setValue("-");
-        email.textProperty().setValue("-");
-    }
-
-    /**
-     * loads the selected person's information to be displayed.
-     */
-    private void loadPersonInformation(ReadOnlyPerson person) {
-        this.person = updatePersonFromLogic(person);
-        name.textProperty().setValue(person.getName().toString());
-        phone.textProperty().setValue(person.getPhone().toString());
-        address.textProperty().setValue(person.getRoom().toString());
-        email.textProperty().setValue(person.getEmail().toString());
-        initTags();
-        initImage();
-    }
-
-    /**
-     * @param person whose image is to be updated within the filtered persons list
-     * @return the updated person
-     */
-    private ReadOnlyPerson updatePersonFromLogic(ReadOnlyPerson person) {
-        List<ReadOnlyPerson> personList = logic.getFilteredPersonList();
-        for (ReadOnlyPerson p : personList) {
-            if (p.getName().toString().equals(person.getName().toString())
-                    && p.getPhone().toString().equals(person.getPhone().toString())) {
-                return p;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Sets a background color for each tag.
-     * @param
-     */
-    private void initTags() {
-        tags.getChildren().clear();
-        person.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
-            tags.getChildren().add(tagLabel);
-        });
-    }
-
-    /**
-     * Initializes image for every person in person card
-     */
-    private void initImage() {
-        try {
-            File picFile = new File(person.getPicture().getPictureUrl());
-            if (picFile.exists()) {
-                FileInputStream fileStream = new FileInputStream(picFile);
-                Image personPicture = new Image(fileStream);
-                picture.setImage(personPicture);
+    // Concatenate Persons to suggestions when command typed
+    private String[] getConcatPersonsArray(String command) {
+        String[] newAutoCompleteList = new String[personsStringArray.size()];
+        for (int i = 0; i < personsStringArray.size(); i++) {
+            if (command.equals("find")) {
+                newAutoCompleteList[i] = command + " " + personsStringArray.get(i);
             } else {
-                initJarImage();
+                newAutoCompleteList[i] = command + " " + (i + 1);
             }
-            picture.setFitHeight(person.getPicture().PIC_HEIGHT);
-            picture.setFitWidth(person.getPicture().PIC_WIDTH);
-            informationPane.getChildren().add(picture);
-            picture.setOnMouseClicked((MouseEvent e) -> {
-                handleAddImage();
-            });
-        } catch (Exception e) {
-            System.out.println("Image not found");
+        }
+        return newAutoCompleteList;
+    }
+
+    /**
+     * Reset autocomplete suggestions to base commands
+     */
+    public void resetAutocompleteList() {
+        this.autoCompleteList = baseCommands;
+    }
+
+    /**
+     * Update array of persons suggestions when list modified
+     */
+    public void updatePersonsArray() {
+        personsStringArray.clear();
+        for (ReadOnlyPerson p: model.getFilteredPersonList()) {
+            personsStringArray.add(p.getName().toString());
         }
     }
 
     /**
-     * Handle loading of image from both within and outside of jar file
+     * Getter for auto-complete list suggestions
      */
-    public void initJarImage() throws FileNotFoundException {
-        try {
-            InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
-            Image personPicture = new Image(in);
-            picture.setImage(personPicture);
-            person.getPicture().setJarResourcePath();
-        } catch (Exception e) {
-            File picFile = new File(person.getPicture().getJarPictureUrl());
-            FileInputStream fileStream = new FileInputStream(picFile);
-            Image personPicture = new Image(fileStream);
-            picture.setImage(personPicture);
-            person.getPicture().setJarResourcePath();
-        }
-    }
-
-    /**
-     * Handler for adding image to person
-     */
-    @FXML
-    private void handleAddImage() {
-        FileChooser picChooser = new FileChooser();
-        File selectedPic = picChooser.showOpenDialog(null);
-        if (selectedPic != null) {
-            try {
-                person.getPicture().setPictureUrl(person.getName().toString() + person.getPhone().toString() + ".jpg");
-                logic.updatePersonListPicture((Person) person);
-                if (person.getPicture().checkJarResourcePath()) {
-                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getJarPictureUrl()));
-                    FileInputStream fileStream = new FileInputStream(person.getPicture().getJarPictureUrl());
-                    Image newPicture = new Image(fileStream);
-                    picture.setImage(newPicture);
-                } else {
-                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
-                    FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
-                    Image newPicture = new Image(fileStream);
-                    picture.setImage(newPicture);
-                }
-            } catch (Exception e) {
-                System.out.println(e + "Cannot set Image of person");
-            }
-        } else {
-            System.out.println("Please select an Image File");
-        }
-    }
-
-    /**
-     * Handler for deleting a person's image
-     */
-    @FXML
-    private void handleDeleteImage() {
-        try {
-            person.getPicture().resetPictureUrl();
-            if (person.getPicture().checkJarResourcePath()) {
-                System.out.println(person.getPicture().getJarPictureUrl());
-                InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
-                person.getPicture().setJarResourcePath();
-                Image personPicture = new Image(in);
-                picture.setImage(personPicture);
-            } else {
-                person.getPicture().resetPictureUrl();
-                File picFile = new File(person.getPicture().getPictureUrl());
-                FileInputStream fileStream = new FileInputStream(picFile);
-                Image personPicture = new Image(fileStream);
-                picture.setImage(personPicture);
-            }
-        } catch (Exception e) {
-            System.out.println("Placeholder Image not found");
-        }
-    }
-
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonInformation(event.getNewSelection().person);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof PersonPanel)) {
-            return false;
-        }
-
-        return false;
+    // Update array of persons suggestions when list modified
+    public String[] getAutoCompleteList() {
+        return autoCompleteList;
     }
 }
 ```
-###### /java/seedu/room/ui/MainWindow.java
-``` java
-        PersonPanel personPanel = new PersonPanel(logic);
-        personPanelPlaceholder.getChildren().add(personPanel.getRoot());
-```
-###### /java/seedu/room/logic/Logic.java
-``` java
-    /**
-     * Updates Picture of person list within model
-     */
-    void updatePersonListPicture(Person p);
-
-    /** Updates and gets list of Auto-complete Strings */
-    void updateAutoCompleteList(String userInput);
-    String[] getAutoCompleteList();
-```
-###### /java/seedu/room/logic/parser/ResidentBookParser.java
-``` java
-        case HighlightCommand.COMMAND_WORD:
-        case HighlightCommand.COMMAND_ALIAS:
-            return new HighlightCommandParser().parse(arguments);
-```
-###### /java/seedu/room/logic/parser/DeleteImageCommandParser.java
-``` java
-/**
- * Parses the given {@code String} of arguments in the context of the DeleteImageCommand
- * and returns an DeleteImageCommand object for execution.
- * @throws ParseException if the user input does not conform the expected format
- */
-public class DeleteImageCommandParser implements Parser<DeleteImageCommand> {
-    @Override
-    public DeleteImageCommand parse(String args) throws ParseException {
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new DeleteImageCommand(index);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteImageCommand.MESSAGE_USAGE));
-        }
-    }
-}
-```
-###### /java/seedu/room/logic/parser/AddImageCommandParser.java
-``` java
-/**
- * Parses the given {@code String} of arguments in the context of the AddImageCommand
- * and returns an AddImageCommand object for execution.
- * @throws ParseException if the user input does not conform the expected format
- */
-public class AddImageCommandParser implements Parser<AddImageCommand> {
-    @Override
-    public AddImageCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-
-        Index index;
-        String url;
-        try {
-            String[] individualArgs = args.split(" ", 3);
-            index = ParserUtil.parseIndex(individualArgs[1]);
-            url = individualArgs[2];
-        } catch (Exception e) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddImageCommand.MESSAGE_USAGE));
-        }
-
-        return new AddImageCommand(index, url);
-    }
-}
-```
-###### /java/seedu/room/logic/parser/HighlightCommandParser.java
-``` java
-package seedu.room.logic.parser;
-
-import static seedu.room.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import seedu.room.logic.commands.HighlightCommand;
-import seedu.room.logic.parser.exceptions.ParseException;
-
-/**
- * Parses input arguments and creates a new AddCommand object
- */
-public class HighlightCommandParser implements Parser<HighlightCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the SortCommand
-     * and returns an SortCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public HighlightCommand parse(String args) throws ParseException {
-        String highlightTag = args.trim();
-        if (validTag(highlightTag)) {
-            return new HighlightCommand(highlightTag);
-        } else {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HighlightCommand.MESSAGE_USAGE));
-        }
-    }
-
-    private boolean validTag(String highlightTag) {
-        return !highlightTag.isEmpty();
-    }
-}
-
-```
-###### /java/seedu/room/logic/commands/HighlightCommand.java
-``` java
-package seedu.room.logic.commands;
-
-import static java.util.Objects.requireNonNull;
-
-import seedu.room.logic.commands.exceptions.CommandException;
-import seedu.room.model.person.exceptions.TagNotFoundException;
-
-/**
- * Adds a person to the address book.
- */
-public class HighlightCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "highlight";
-    public static final String COMMAND_ALIAS = "hl";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Highlights names with the specified tag. "
-            + "Parameters: " + "tag."
-            + "Example: " + COMMAND_WORD + " "
-            + "Unregistered";
-
-    public static final String MESSAGE_SUCCESS = "Highlighted persons with tag: ";
-    public static final String MESSAGE_TAG_NOT_FOUND = "Tag not found: ";
-
-    private final String highlightTag;
-
-    /**
-     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
-     */
-    public HighlightCommand(String highlightTag) {
-        this.highlightTag = highlightTag;
-    }
-
-    @Override
-    protected CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(model);
-        try {
-            model.updateHighlightStatus(highlightTag);
-            return new CommandResult(MESSAGE_SUCCESS + highlightTag);
-        } catch (TagNotFoundException e) {
-            throw new CommandException(MESSAGE_TAG_NOT_FOUND + highlightTag);
-        }
-    }
-}
-```
-###### /java/seedu/room/logic/commands/AddImageCommand.java
+###### \java\seedu\room\logic\commands\AddImageCommand.java
 ``` java
 /**
  * Allows the addition of an image to a resident currently in the resident book
@@ -427,9 +106,9 @@ public class AddImageCommand extends UndoableCommand {
             + "by the index number used in the last person listing. "
             + "Existing Image will be replaced by the new image.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[ Image Url ]...\n"
+            + "[ Image Url ]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + "/Downloads/placeholder_image";
+            + "/Users/username/Downloads/person-placeholder.jpg";
 
     public static final String MESSAGE_ADD_IMAGE_SUCCESS = "Successfully changed image for Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the resident book.";
@@ -544,21 +223,7 @@ public class AddImageCommand extends UndoableCommand {
 
 }
 ```
-###### /java/seedu/room/logic/commands/exceptions/TagNotFoundException.java
-``` java
-package seedu.room.logic.commands.exceptions;
-
-/**
- * Signals that the operation will result in duplicate Person objects.
- */
-public class TagNotFoundException extends IllegalArgumentException {
-    public TagNotFoundException(String message) {
-        super(message);
-    }
-}
-
-```
-###### /java/seedu/room/logic/commands/DeleteImageCommand.java
+###### \java\seedu\room\logic\commands\DeleteImageCommand.java
 ``` java
 /**
  * Allows deletion of an image for a specified person
@@ -645,99 +310,86 @@ public class DeleteImageCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/room/logic/AutoComplete.java
+###### \java\seedu\room\logic\commands\HighlightCommand.java
 ``` java
-package seedu.room.logic;
-
-import java.util.ArrayList;
-
-import seedu.room.model.Model;
-import seedu.room.model.person.ReadOnlyPerson;
-
-
 /**
- * AutoComplete class integrated into LogicManager to keep track of current set
- * of autocomplete suggestions
+ * Adds a person to the address book.
  */
-public class AutoComplete {
+public class HighlightCommand extends UndoableCommand {
 
-    private final String[] baseCommands = { "add", "edit", "select", "delete", "clear",
-        "backup", "find", "list", "history", "exit", "help", "undo", "redo"
-    };
-    private ArrayList<String> personsStringArray;
-    private String[] autoCompleteList;
-    private Model model;
+    public static final String COMMAND_WORD = "highlight";
+    public static final String COMMAND_ALIAS = "hl";
 
-    public AutoComplete(Model model) {
-        this.model = model;
-        autoCompleteList = baseCommands;
-        personsStringArray = new ArrayList<String>();
-        this.updatePersonsArray();
-    }
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Highlights names with the specified tag. "
+            + "Parameters: " + "tag."
+            + "Example: " + COMMAND_WORD + " "
+            + "friends";
+
+    public static final String MESSAGE_RESET_HIGHLIGHT = "Removed all highlighted Residents.";
+    public static final String MESSAGE_NONE_HIGHLIGHTED = "No Highlighted Residents.";
+
+    public static final String MESSAGE_PERSONS_HIGHLIGHTED_SUCCESS = "Highlighted persons with tag: ";
+    public static final String MESSAGE_TAG_NOT_FOUND = "Tag not found: ";
+
+    private final String highlightTag;
 
     /**
-     * Updates AutoComplete suggestions according to user typed input
-     * @param userInput
+     * Creates an HighlightCommand to add the specified {@code ReadOnlyPerson}
      */
-    public void updateAutoCompleteList(String userInput) {
-        switch (userInput) {
-        case "":
-            this.resetAutocompleteList();
-            break;
-        case "find":
-            this.autoCompleteList = getConcatPersonsArray("find");
-            break;
-        case "edit":
-            this.autoCompleteList = getConcatPersonsArray("edit");
-            break;
-        case "delete":
-            this.autoCompleteList = getConcatPersonsArray("delete");
-            break;
-        default:
-            return;
-        }
+    public HighlightCommand(String highlightTag) {
+        this.highlightTag = highlightTag;
     }
 
-    // Concatenate Persons to suggestions when command typed
-    private String[] getConcatPersonsArray(String command) {
-        String[] newAutoCompleteList = new String[personsStringArray.size()];
-        for (int i = 0; i < personsStringArray.size(); i++) {
-            if (command.equals("find")) {
-                newAutoCompleteList[i] = command + " " + personsStringArray.get(i);
-            } else {
-                newAutoCompleteList[i] = command + " " + (i + 1);
+    @Override
+    protected CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        if (highlightTag.equals("-")) {
+            try {
+                model.resetHighlightStatus();
+                return new CommandResult(MESSAGE_RESET_HIGHLIGHT);
+            } catch (NoneHighlightedException e) {
+                throw new CommandException(MESSAGE_NONE_HIGHLIGHTED);
+            }
+        } else {
+            try {
+                model.updateHighlightStatus(highlightTag);
+                return new CommandResult(MESSAGE_PERSONS_HIGHLIGHTED_SUCCESS + highlightTag);
+            } catch (TagNotFoundException e) {
+                throw new CommandException(MESSAGE_TAG_NOT_FOUND + highlightTag);
             }
         }
-        return newAutoCompleteList;
     }
 
-    /**
-     * Reset autocomplete suggestions to base commands
-     */
-    public void resetAutocompleteList() {
-        this.autoCompleteList = baseCommands;
-    }
-
-    /**
-     * Update array of persons suggestions when list modified
-     */
-    public void updatePersonsArray() {
-        personsStringArray.clear();
-        for (ReadOnlyPerson p: model.getFilteredPersonList()) {
-            personsStringArray.add(p.getName().toString());
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
         }
-    }
 
-    /**
-     * Getter for auto-complete list suggestions
-     */
-    // Update array of persons suggestions when list modified
-    public String[] getAutoCompleteList() {
-        return autoCompleteList;
+        // instanceof handles nulls
+        if (!(other instanceof HighlightCommand)) {
+            return false;
+        }
+
+        // state check
+        HighlightCommand hl = (HighlightCommand) other;
+        return highlightTag.equals(hl.highlightTag);
     }
 }
 ```
-###### /java/seedu/room/logic/LogicManager.java
+###### \java\seedu\room\logic\Logic.java
+``` java
+    /**
+     * Updates Picture of person list within model
+     */
+    void updatePersonListPicture(Person p);
+
+    /** Updates and gets list of Auto-complete Strings */
+    void updateAutoCompleteList(String userInput);
+    String[] getAutoCompleteList();
+```
+###### \java\seedu\room\logic\LogicManager.java
 ``` java
     @Override
     public void updateAutoCompleteList(String userInput) {
@@ -754,7 +406,179 @@ public class AutoComplete {
         model.updateFilteredPersonListPicture(PREDICATE_SHOW_ALL_PERSONS, person);
     }
 ```
-###### /java/seedu/room/model/person/Picture.java
+###### \java\seedu\room\logic\parser\AddImageCommandParser.java
+``` java
+/**
+ * Parses the given {@code String} of arguments in the context of the AddImageCommand
+ * and returns an AddImageCommand object for execution.
+ * @throws ParseException if the user input does not conform the expected format
+ */
+public class AddImageCommandParser implements Parser<AddImageCommand> {
+    @Override
+    public AddImageCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+
+        Index index;
+        String url;
+        try {
+            String[] individualArgs = args.split(" ", 3);
+            index = ParserUtil.parseIndex(individualArgs[1]);
+            url = individualArgs[2];
+        } catch (Exception e) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddImageCommand.MESSAGE_USAGE));
+        }
+
+        return new AddImageCommand(index, url);
+    }
+}
+```
+###### \java\seedu\room\logic\parser\DeleteImageCommandParser.java
+``` java
+/**
+ * Parses the given {@code String} of arguments in the context of the DeleteImageCommand
+ * and returns an DeleteImageCommand object for execution.
+ * @throws ParseException if the user input does not conform the expected format
+ */
+public class DeleteImageCommandParser implements Parser<DeleteImageCommand> {
+    @Override
+    public DeleteImageCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new DeleteImageCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteImageCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
+###### \java\seedu\room\logic\parser\HighlightCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new HighlightCommand object
+ */
+public class HighlightCommandParser implements Parser<HighlightCommand> {
+
+    public final String unhighlightArg = "-";
+    /**
+     * Parses the given {@code String} of arguments in the context of the HighlightCommand
+     * and returns an HighlightCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public HighlightCommand parse(String args) throws ParseException {
+        String highlightTag = args.trim();
+        if (validTag(highlightTag) || highlightTag.equals(unhighlightArg)) {
+            return new HighlightCommand(highlightTag);
+        } else {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HighlightCommand.MESSAGE_USAGE));
+        }
+    }
+
+    private boolean validTag(String highlightTag) {
+        return !highlightTag.isEmpty();
+    }
+}
+
+```
+###### \java\seedu\room\logic\parser\ResidentBookParser.java
+``` java
+        case HighlightCommand.COMMAND_WORD:
+        case HighlightCommand.COMMAND_ALIAS:
+            return new HighlightCommandParser().parse(arguments);
+```
+###### \java\seedu\room\model\Model.java
+``` java
+    /**
+     * Updates the highlight status of persons with the specified tag
+     * @throws TagNotFoundException if input tag name does not exist
+     */
+    void updateHighlightStatus(String highlightTag) throws TagNotFoundException;
+
+    /**
+     * Removes all highlighting of all persons in the
+     * @throws NoneHighlightedException
+     */
+    void resetHighlightStatus() throws NoneHighlightedException;
+
+```
+###### \java\seedu\room\model\ModelManager.java
+``` java
+    @Override
+    public void updateFilteredPersonListPicture(Predicate<ReadOnlyPerson> predicate, Person person) {
+        requireNonNull(predicate);
+        filteredPersons.setPredicate(predicate);
+        for (ReadOnlyPerson p : filteredPersons) {
+            if (p.getName().toString().equals(person.getName().toString())
+                    && p.getPhone().toString().equals(person.getPhone().toString())) {
+                p.getPicture().setPictureUrl(person.getPicture().getPictureUrl());
+            }
+        }
+        indicateResidentBookChanged();
+    }
+```
+###### \java\seedu\room\model\ModelManager.java
+``` java
+    /**
+     * Updates the highlight status of a resident if tag matches input tag
+     */
+    public void updateHighlightStatus(String highlightTag) throws TagNotFoundException  {
+        residentBook.updateHighlightStatus(highlightTag);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateResidentBookChanged();
+    }
+
+    /**
+     * Removes the highlight status of all residents
+     */
+    public void resetHighlightStatus() throws NoneHighlightedException {
+        residentBook.resetHighlightStatus();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateResidentBookChanged();
+    }
+```
+###### \java\seedu\room\model\person\exceptions\NoneHighlightedException.java
+``` java
+/**
+ * Signals that there is no resident currently highlighted
+ */
+public class NoneHighlightedException extends IllegalArgumentException {
+    public NoneHighlightedException(String message) {
+        super(message);
+    }
+}
+```
+###### \java\seedu\room\model\person\exceptions\TagNotFoundException.java
+``` java
+/**
+ * Signals that the tag name specified in the operation does not exist in resident book
+ */
+public class TagNotFoundException extends IllegalArgumentException {
+    public TagNotFoundException(String message) {
+        super(message);
+    }
+}
+
+```
+###### \java\seedu\room\model\person\Person.java
+``` java
+    /**
+     * @param replacement Set of tags to replace the person's current set of tags
+     */
+    public void setTags(Set<Tag> replacement) {
+        tags.set(new UniqueTagList(replacement));
+    }
+
+    // Setter for person's highlightStatus status
+    public void setHighlightStatus(boolean val) {
+        this.highlightStatus = val;
+    }
+
+    // Getter for person's highlightStatus status
+    public boolean getHighlightStatus() {
+        return this.highlightStatus;
+    }
+```
+###### \java\seedu\room\model\person\Picture.java
 ``` java
 /**
  * Represents the url of the picture of the person in the resident book.
@@ -766,8 +590,10 @@ public class Picture {
 
     public static final String IMAGE_URL_VALIDATION_REGEX = "[^ ]+";
 
+    public static final String FOLDER_NAME = "contact_images";
+
     public static final String BASE_URL = System.getProperty("user.dir")
-            + "/data/contact_images/";
+            + "/data/" + FOLDER_NAME + "/";
 
     public static final String PLACEHOLDER_IMAGE = System.getProperty("user.dir")
             + "/src/main/resources/images/placeholder_person.png";
@@ -846,99 +672,382 @@ public class Picture {
 
 }
 ```
-###### /java/seedu/room/model/person/ReadOnlyPerson.java
+###### \java\seedu\room\model\person\ReadOnlyPerson.java
 ``` java
     ObjectProperty<Picture> pictureProperty();
     Picture getPicture();
 ```
-###### /java/seedu/room/model/person/UniquePersonList.java
+###### \java\seedu\room\model\person\UniquePersonList.java
 ``` java
     /**
      * Updates the highlight status of the persons with the specified tag
      */
-    public void updateHighlight(String highlightTag) throws TagNotFoundException {
-        for (Person p : internalList) {
-            p.setHighlightStatus(false);
-            Set<Tag> personTags = p.getTags();
-            for (Tag t : personTags) {
-                if (t.toString().equals("[" + highlightTag + "]")) {
-                    p.setHighlightStatus(true);
+    public void updateHighlightStatus(String highlightTag) throws TagNotFoundException {
+        resetHighlightStatusHelper();
+        boolean tagFound = false;
+        for (Person person : this.internalList) {
+            for (Tag t : person.getTags()) {
+                if (t.getTagName().equals(highlightTag)) {
+                    tagFound = true;
+                    person.setHighlightStatus(true);
                 }
             }
         }
-    }
-```
-###### /java/seedu/room/model/person/Person.java
-``` java
-    @Override
-    public ObjectProperty<Picture> pictureProperty() {
-        return picture;
-    }
-```
-###### /java/seedu/room/model/person/Person.java
-``` java
-    /**
-     * Replaces this person's tags with the tags in the argument tag set.
-     */
-    public void setTags(Set<Tag> replacement) {
-        tags.set(new UniqueTagList(replacement));
-    }
-
-    public void setHighlightStatus(boolean val) {
-        this.highlight = val;
-    }
-
-    public boolean getHighlightStatus() {
-        return this.highlight;
-    }
-```
-###### /java/seedu/room/model/ResidentBook.java
-``` java
-    /** Updates highlight status of person with specified tag
-     */
-    public void updateHighlight(String highlightTag) {
-        try {
-            persons.updateHighlight(highlightTag);
-            if (!this.tags.contains(new Tag(highlightTag))) {
-                throw new TagNotFoundException("Tag not found");
-            }
-        } catch (IllegalValueException e) {
-            throw new TagNotFoundException("Tag not found");
+        if (!tagFound) {
+            throw new TagNotFoundException("No Such Tag Exists");
         }
     }
-```
-###### /java/seedu/room/model/ModelManager.java
-``` java
-    @Override
-    public void updateFilteredPersonListPicture(Predicate<ReadOnlyPerson> predicate, Person person) {
-        requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
-        for (ReadOnlyPerson p : filteredPersons) {
-            if (p.getName().toString().equals(person.getName().toString())
-                    && p.getPhone().toString().equals(person.getPhone().toString())) {
-                p.getPicture().setPictureUrl(person.getPicture().getPictureUrl());
+
+    /**
+     * Removes highlighting of everyone
+     */
+    public void resetHighlightStatus() throws NoneHighlightedException {
+        boolean highlightReset = resetHighlightStatusHelper();
+        if (!highlightReset) {
+            throw new NoneHighlightedException("No Residents Highlighted");
+        }
+    }
+
+    /**
+     * @return true if at least one resident's highlight status has been reset
+     */
+    public boolean resetHighlightStatusHelper() {
+        boolean highlightReset = false;
+        for (Person person : this.internalList) {
+            if (person.getHighlightStatus()) {
+                person.setHighlightStatus(false);
+                highlightReset = true;
             }
         }
-        indicateResidentBookChanged();
+        return highlightReset;
     }
+
 ```
-###### /java/seedu/room/model/ModelManager.java
+###### \java\seedu\room\model\ResidentBook.java
 ``` java
     /**
-     * Updates the highlight status of a person if tag matches input tag
+     * Updates highlight status of person with specified tag
      */
     public void updateHighlightStatus(String highlightTag) throws TagNotFoundException {
-        residentBook.updateHighlight(highlightTag);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateResidentBookChanged();
+        try {
+            if (!this.tags.contains(new Tag(highlightTag))) {
+                throw new TagNotFoundException("No such Tag Exists");
+            } else {
+                persons.updateHighlightStatus(highlightTag);
+            }
+        } catch (IllegalValueException e) {
+            throw new TagNotFoundException("No such Tag Exists");
+        }
+    }
+
+    /**
+     * Removes highlight status of all persons
+     */
+    public void resetHighlightStatus() throws NoneHighlightedException {
+        persons.resetHighlightStatus();
     }
 ```
-###### /java/seedu/room/model/Model.java
+###### \java\seedu\room\model\tag\Tag.java
+``` java
+    // Getter for tagColor
+    public String getTagColor() {
+        return this.tagColor;
+    }
+
+    // Setter for tagColor
+    public void setTagColor(String color) {
+        this.tagColor = color;
+    }
+```
+###### \java\seedu\room\ui\CommandBox.java
 ``` java
     /**
-     * Updates the highlight status of persons with the specified tag
-     *
-     * @throws TagNotFoundException if no specified tag exists
+     * Initializes suggestions and binds it to TextFields
      */
-    void updateHighlightStatus(String highlightTag) throws TagNotFoundException;
+    public void initAutoComplete() {
+        suggestions = SuggestionProvider.create((Arrays.asList(logic.getAutoCompleteList())));
+        TextFields.bindAutoCompletion(commandTextField, suggestions);
+    }
+
+    /**
+     * Updates AutoCompleteList according to current TextField input
+     */
+    public void updateAutoCompleteList() {
+        logic.updateAutoCompleteList(commandTextField.getText());
+        suggestions.clearSuggestions();
+        suggestions.addPossibleSuggestions(Arrays.asList(logic.getAutoCompleteList()));
+    }
+```
+###### \java\seedu\room\ui\MainWindow.java
+``` java
+        PersonPanel personPanel = new PersonPanel(logic);
+        personPanelPlaceholder.getChildren().add(personPanel.getRoot());
+```
+###### \java\seedu\room\ui\PersonPanel.java
+``` java
+/**
+ * The person information panel of the app.
+ */
+public class PersonPanel extends UiPart<Region> {
+
+    private static final String FXML = "PersonPanel.fxml";
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private final Logic logic;
+
+    private ReadOnlyPerson person;
+
+    @FXML
+    private ImageView picture;
+    @FXML
+    private VBox informationPane;
+    @FXML
+    private Label name;
+    @FXML
+    private Label id;
+    @FXML
+    private Label phone;
+    @FXML
+    private Label address;
+    @FXML
+    private Label email;
+    @FXML
+    private FlowPane tags;
+    @FXML
+    private Button addImageButton;
+    @FXML
+    private Button resetImageButton;
+
+    public PersonPanel(Logic logic) {
+        super(FXML);
+        this.logic = logic;
+        loadDefaultScreen();
+        registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Sets the default parameters when the app starts up and no one is selected
+     */
+    private void loadDefaultScreen() {
+        name.textProperty().setValue("No Resident Selected");
+        phone.textProperty().setValue("-");
+        address.textProperty().setValue("-");
+        email.textProperty().setValue("-");
+        enableButtons(false);
+    }
+
+    /**
+     * loads the selected person's information to be displayed.
+     */
+    private void loadPersonInformation(ReadOnlyPerson person) {
+        this.person = updatePersonFromLogic(person);
+        name.textProperty().setValue(person.getName().toString());
+        phone.textProperty().setValue(person.getPhone().toString());
+        address.textProperty().setValue(person.getRoom().toString());
+        email.textProperty().setValue(person.getEmail().toString());
+        initTags();
+        initImage();
+        enableButtons(true);
+    }
+
+    /**
+     * @param state Set button status
+     */
+    private void enableButtons(boolean state) {
+        this.addImageButton.setDisable(!state);
+        this.resetImageButton.setDisable(!state);
+    }
+
+    /**
+     * @param person whose image is to be updated within the filtered persons list
+     * @return the updated person
+     */
+    private ReadOnlyPerson updatePersonFromLogic(ReadOnlyPerson person) {
+        List<ReadOnlyPerson> personList = logic.getFilteredPersonList();
+        for (ReadOnlyPerson p : personList) {
+            if (p.getName().toString().equals(person.getName().toString())
+                    && p.getPhone().toString().equals(person.getPhone().toString())) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Sets a background color for each tag.
+     */
+    private void initTags() {
+        tags.getChildren().clear();
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + tag.getTagColor());
+            tags.getChildren().add(tagLabel);
+        });
+    }
+
+    /**
+     * Initializes image for every person in person card
+     */
+    private void initImage() {
+        try {
+            File picFile = new File(person.getPicture().getPictureUrl());
+            if (picFile.exists()) {
+                FileInputStream fileStream = new FileInputStream(picFile);
+                Image personPicture = new Image(fileStream);
+                picture.setImage(personPicture);
+            } else {
+                initJarImage();
+            }
+            picture.setFitHeight(person.getPicture().PIC_HEIGHT);
+            picture.setFitWidth(person.getPicture().PIC_WIDTH);
+            informationPane.getChildren().add(picture);
+            picture.setOnMouseClicked((MouseEvent e) -> {
+                handleAddImage();
+            });
+        } catch (Exception e) {
+            System.out.println("Image not found");
+        }
+    }
+
+    /**
+     * Handle loading of image from both within and outside of jar file
+     */
+    public void initJarImage() throws FileNotFoundException {
+        try {
+            InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
+            Image personPicture = new Image(in);
+            picture.setImage(personPicture);
+            person.getPicture().setJarResourcePath();
+        } catch (Exception e) {
+            File picFile = new File(person.getPicture().getJarPictureUrl());
+            FileInputStream fileStream = new FileInputStream(picFile);
+            Image personPicture = new Image(fileStream);
+            picture.setImage(personPicture);
+            person.getPicture().setJarResourcePath();
+        }
+    }
+
+    /**
+     * Button handler for adding image to person
+     */
+    @FXML
+    private void handleAddImage() {
+        FileChooser picChooser = new FileChooser();
+        File selectedPic = picChooser.showOpenDialog(null);
+        if (selectedPic != null) {
+            try {
+                person.getPicture().setPictureUrl(person.getName().toString() + person.getPhone().toString() + ".jpg");
+                logic.updatePersonListPicture((Person) person);
+                if (person.getPicture().checkJarResourcePath()) {
+                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getJarPictureUrl()));
+                    FileInputStream fileStream = new FileInputStream(person.getPicture().getJarPictureUrl());
+                    Image newPicture = new Image(fileStream);
+                    picture.setImage(newPicture);
+                } else {
+                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
+                    FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
+                    Image newPicture = new Image(fileStream);
+                    picture.setImage(newPicture);
+                }
+            } catch (Exception e) {
+                System.out.println(e + "Cannot set Image of person");
+            }
+        } else {
+            System.out.println("Please select an Image File");
+        }
+    }
+
+    /**
+     * Button handler for resetting a person's image
+     */
+    @FXML
+    private void handleResetImage() {
+        try {
+            person.getPicture().resetPictureUrl();
+            if (person.getPicture().checkJarResourcePath()) {
+                InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
+                person.getPicture().setJarResourcePath();
+                Image personPicture = new Image(in);
+                picture.setImage(personPicture);
+            } else {
+                person.getPicture().resetPictureUrl();
+                File picFile = new File(person.getPicture().getPictureUrl());
+                FileInputStream fileStream = new FileInputStream(picFile);
+                Image personPicture = new Image(fileStream);
+                picture.setImage(personPicture);
+            }
+        } catch (Exception e) {
+            System.out.println("Placeholder Image not found");
+        }
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonInformation(event.getNewSelection().person);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof PersonPanel)) {
+            return false;
+        }
+
+        return false;
+    }
+}
+```
+###### \resources\view\PersonPanel.fxml
+``` fxml
+<HBox prefHeight="400" fx:id="personPanel" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+      <VBox fx:id="personDetailsBox" alignment="CENTER" maxHeight="300.0">
+        <children>
+          <ImageView fx:id="picture" fitHeight="1.0" fitWidth="1.0" />
+          <Label fx:id="name" text="\$name" />
+          <FlowPane fx:id="tags" alignment="CENTER">
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding></FlowPane>
+          <HBox alignment="CENTER" prefHeight="10.0" prefWidth="200.0">
+            <children>
+              <Label text="Phone: " />
+              <Label fx:id="phone" text="\$phone" />
+            </children>
+          </HBox>
+          <HBox alignment="CENTER" prefHeight="10.0">
+            <children>
+              <Label text="Room Address: " />
+              <Label fx:id="address" text="\$address" />
+            </children>
+          </HBox>
+          <HBox alignment="TOP_CENTER" prefHeight="25.0">
+            <children>
+              <Label text="Email: " />
+              <Label fx:id="email" text="\$email" />
+            </children>
+          </HBox>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="addImageButton" mnemonicParsing="false" onAction="#handleAddImage" text="+Image">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="resetImageButton" mnemonicParsing="false" onAction="#handleResetImage" text="-Image" />
+               </children>
+               <padding>
+                  <Insets left="50.0" right="50.0" />
+               </padding>
+            </HBox>
+        </children>
+      </VBox>
+    </children>
+</HBox>
 ```
