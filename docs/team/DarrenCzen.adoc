@@ -165,6 +165,31 @@ The implementation of website field for a contact allows users to carry out acti
 of university students such as browsing a person's social network website in The Myth's Book.
 
 ---
+=== Enhancement : Switching between Persons Mode and Events Mode
+
+Code on GitHub: +
+Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/142[#142]
+
+==== External behavior
+
+---
+
+---
+
+==== Justification
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=modeswitch]
+
+#End of Extract#
+
+---
 
 === Enhancement: Allow inputted names to become capitalized fully
 
@@ -201,17 +226,6 @@ The implementation of website field for a contact allows users to carry out acti
 of university students such as browsing a person's social network website in The Myth's Book.
 
 ---
-
-=== Enhancement proposed: Toggling of Person List and Events List
-
-==== External behavior
-
----
-
----
-
-==== Justification
-
 
 === Other contributions
 
