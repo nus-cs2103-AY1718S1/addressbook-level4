@@ -215,12 +215,50 @@ of university students such as browsing a person's social network website in The
 
 === Other contributions
 
-* Wrote introduction and about of The Myth's Book for User Guide and Developer Guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/91[#91])
-* Change structure of software's user guide and updated preface of most sections in user guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/123[#123])
-* Added prefix table for Add Command in user guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/123[#123])
-* Updated software's user guide to be more user friendly and user focused. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/134[#134])
-* Updated software's developer guide to showcase more user stories. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/35[#35], https://github.com/CS2103AUG2017-T15-B3/main/pull/53[#53])
+==== Additional Contributions to software application
+
+These are the additional contributions that I have made to the software and testing of The Myth's Book.
+You can click and view the attached pull request links to see some of the additional codes written by me.
+
 * Wrote additional tests to test hashcode of person's attributes to increase test coverage (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/96[#96])
+
+==== Contributions to software's documentation
+
+These are the contributions that I have made to the documentation of The Myth's Book.
+As some of the documentation might be too long, parts of the documentation has been cropped into images for
+better user readability. You can click and view the attached pull request links to see more of the documentation written by me.
+
+* Wrote introduction and about of The Myth's Book for User Guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/91[#91])
+
+** Image of Introduction & About of User Guide
+
+image::UserGuideIntro.PNG[width="600"]
+
+* Wrote introduction and about of The Myth's Book for Developer Guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/91[#91])
+
+** Image of Introduction & About of Developer Guide
+
+image::DevGuideIntro.PNG[width="600"]
+
+* Added most of the user stories in software's developer guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/35[#35], https://github.com/CS2103AUG2017-T15-B3/main/pull/53[#53])
+
+** Image of Some User Stories written in Developer Guide
+
+image::UserStoryDG.PNG[width="600"]
+
+* Updated software's user guide to be more user friendly and user focused. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/134[#134])
+* Change structure of software's user guide and updated preface of most sections in user guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/123[#123])
+
+** Image of some prefaces written in User Guide
+
+image::PrefaceUG.PNG[width="600"]
+
+
+* Added prefix table for Add Command in user guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/123[#123])
+
+** Image of prefix table for Add Command written in User Guide
+
+image::UGPrefix.PNG[width="600"]
 
 ==== Contribution to Acceptance Testing: HitMeUp (CS2103AUG2017-W14-B3)
 
