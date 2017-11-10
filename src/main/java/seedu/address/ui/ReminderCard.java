@@ -116,8 +116,7 @@ public class ReminderCard extends UiPart<Region> {
         LocalDate currentTime = LocalDate.now();
         int daysBetween = (int) ChronoUnit.DAYS.between(currentTime, deadline);
 
-        setDaysCountdownColorBasedOnDays(daysBetween);
-        setDaysCountdownContentBasedOnDays(daysBetween);
+        setDaysCountdownBasedOnDays(daysBetween);
         if (daysBetween > ORANGE_WARNING_DAYS_LEFT) {
             startDaysCountdown(deadline);
         }
@@ -133,28 +132,33 @@ public class ReminderCard extends UiPart<Region> {
             public void run() {
                 LocalDate currentDate = LocalDate.now();
                 int newDaysBetween = (int) ChronoUnit.DAYS.between(currentDate, date);
-                Platform.runLater(() -> daysCountdown.setText(newDaysBetween + " day(s)" + " left"));
+                Platform.runLater(() -> setDaysCountdownBasedOnDays(newDaysBetween));
             }
         };
         timer.scheduleAtFixedRate(task, TIMER_DELAY, TIMER_PERIOD);
     }
 
-    private void setDaysCountdownContentBasedOnDays(int daysBetween) {
-        if (daysBetween > ORANGE_WARNING_DAYS_LEFT) {
-            daysCountdown.setText(daysBetween + " day(s)" + " left");
-        } else if (daysBetween == ORANGE_WARNING_DAYS_LEFT) {
+    private void setDaysCountdownBasedOnDays(int days) {
+        setDaysCountdownContentBasedOnDays(days);
+        setDaysCountdownColorBasedOnDays(days);
+    }
+
+    private void setDaysCountdownContentBasedOnDays(int days) {
+        if (days > ORANGE_WARNING_DAYS_LEFT) {
+            daysCountdown.setText(days + " day(s)" + " left");
+        } else if (days == ORANGE_WARNING_DAYS_LEFT) {
             daysCountdown.setText("today");
         } else {
             daysCountdown.setText("overdue");
         }
     }
 
-    private void setDaysCountdownColorBasedOnDays(int daysBetween) {
-        if (daysBetween >= GREEN_WARNING_DAYS_LEFT) {
+    private void setDaysCountdownColorBasedOnDays(int days) {
+        if (days >= GREEN_WARNING_DAYS_LEFT) {
             daysCountdown.setStyle("-fx-text-fill: " + "greenyellow");
-        } else if (daysBetween >= YELLOW_WARNING_DAYS_LEFT) {
+        } else if (days >= YELLOW_WARNING_DAYS_LEFT) {
             daysCountdown.setStyle("-fx-text-fill: " + "yellow");
-        } else if (daysBetween >= ORANGE_WARNING_DAYS_LEFT) {
+        } else if (days >= ORANGE_WARNING_DAYS_LEFT) {
             daysCountdown.setStyle("-fx-text-fill: " + "orange");
         } else {
             daysCountdown.setStyle("-fx-text-fill: " + "red");
