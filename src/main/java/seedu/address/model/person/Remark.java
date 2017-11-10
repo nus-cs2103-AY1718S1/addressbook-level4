@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a Person's remark in the rolodex.
- * Guarantees: immutable, is always valid.
+ * Guarantees: immutable, is always valid
  */
 public class Remark {
     public static final String MESSAGE_REMARK_CONSTRAINTS =
