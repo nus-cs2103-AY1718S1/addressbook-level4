@@ -31,8 +31,8 @@ public class MainWindow extends UiPart<Region> {
 
     private static final String ICON = "/images/address_book_32.png";
     private static final String FXML = "MainWindow.fxml";
-    private static final int MIN_HEIGHT = 600;
-    private static final int MIN_WIDTH = 450;
+    private static final int DEFAULT_HEIGHT = 600;
+    private static final int DEFAULT_WIDTH = 350;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -75,8 +75,7 @@ public class MainWindow extends UiPart<Region> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setIcon(ICON);
-        setWindowMinSize();
-        setWindowDefaultSize(prefs);
+        setWindowDefaultSize();
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
 
@@ -163,20 +162,11 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
-     * Sets the default size based on user preferences.
+     * Sets the default size based on default values.
      */
-    private void setWindowDefaultSize(UserPrefs prefs) {
-        primaryStage.setHeight(prefs.getGuiSettings().getWindowHeight());
-        primaryStage.setWidth(prefs.getGuiSettings().getWindowWidth());
-        if (prefs.getGuiSettings().getWindowCoordinates() != null) {
-            primaryStage.setX(prefs.getGuiSettings().getWindowCoordinates().getX());
-            primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
-        }
-    }
-
-    private void setWindowMinSize() {
-        primaryStage.setMinHeight(MIN_HEIGHT);
-        primaryStage.setMinWidth(MIN_WIDTH);
+    private void setWindowDefaultSize() {
+        primaryStage.setHeight(DEFAULT_HEIGHT);
+        primaryStage.setWidth(DEFAULT_WIDTH);
     }
 
     /**
