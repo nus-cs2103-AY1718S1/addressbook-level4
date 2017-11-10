@@ -52,7 +52,7 @@ import seedu.address.model.tag.TagMatchingKeywordPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
-//@@author Pengyuz
+
 public class AddressBookParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -65,7 +65,7 @@ public class AddressBookParserTest {
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddCommand(person), command);
     }
-
+    //@@author Pengyuz
     @Test
     public void parseCommand_create() throws Exception {
         Person person = new PersonBuilder().build();
@@ -79,7 +79,7 @@ public class AddressBookParserTest {
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getPutCommand(person));
         assertEquals(new AddCommand(person), command);
     }
-
+    //@@author
     @Test
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
@@ -94,7 +94,7 @@ public class AddressBookParserTest {
                 DeleteCommand.COMMAND_WORD + " I/" + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(todelete), command);
     }
-
+    //@@author Pengyuz
     @Test
     public void parseCommand_remove() throws Exception {
         ArrayList<Index> todelete = new ArrayList<>();
@@ -112,7 +112,7 @@ public class AddressBookParserTest {
                 DeleteCommand.COMMAND_WORD_3 + " I/" + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(todelete), command);
     }
-
+    //@@author
     @Test
     public void parseCommand_edit() throws Exception {
         Person person = new PersonBuilder().build();
@@ -203,7 +203,7 @@ public class AddressBookParserTest {
                 FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
-
+    //@@author Pengyuz
     @Test
     public void parseCommand_search() throws Exception {
         List<String> keywords = Arrays.asList("n/", "foo", "bar", "baz");
@@ -219,7 +219,7 @@ public class AddressBookParserTest {
                 FindCommand.COMMAND_WORD_3 + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
-
+    //@@author
     @Test
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
@@ -305,7 +305,7 @@ public class AddressBookParserTest {
                         + PREFIX_ADDRESS + startLocation);
         assertEquals(new MapRouteCommand(INDEX_FIRST_PERSON, startLocation), command);
     }
-
+    //@@author Pengyuz
     @Test
     public void parseCommand_binclear() throws Exception {
         assertTrue(parser.parseCommand(BinclearCommand.COMMAND_WORD) instanceof BinclearCommand);
@@ -329,7 +329,7 @@ public class AddressBookParserTest {
                 BinrestoreCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new BinrestoreCommand(todelete), command);
     }
-
+    //@@author
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);

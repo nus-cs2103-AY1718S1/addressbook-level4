@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import java.util.HashSet;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -28,6 +29,7 @@ import seedu.address.model.event.Event;
 
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.EmptyListException;
@@ -127,8 +129,11 @@ public class ModelManager extends ComponentManager implements Model {
             if (recycleBin.getPersonList().contains(s)) {
                 addressBook.removePerson(s);
             } else {
+
+                Person o = new Person(s.getName(), s.getBirthday(), s.getPhone(), s.getEmail(), s.getAddress(),
+                        new HashSet<>(), new HashSet<>(), s.getDateAdded());
                 addressBook.removePerson(s);
-                recycleBin.addPerson(s);
+                recycleBin.addPerson(o);
             }
         }
         indicateRecycleBinChanged();
@@ -170,17 +175,19 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void restorePerson(ArrayList<ReadOnlyPerson> targets) throws DuplicatePersonException,
             PersonNotFoundException {
-        boolean flag = true;
+        boolean isChanged = true;
         for (ReadOnlyPerson s : targets) {
             if (addressBook.getPersonList().contains(s)) {
                 recycleBin.removePerson(s);
             } else {
+                Person o = new Person(s.getName(), s.getBirthday(), s.getPhone(), s.getEmail(), s.getAddress(),
+                        new HashSet<>(), new HashSet<>(), s.getDateAdded());
                 recycleBin.removePerson(s);
-                addressBook.addPerson(s);
-                flag = false;
+                addressBook.addPerson(o);
+                isChanged = false;
             }
         }
-        if (!flag) {
+        if (!isChanged) {
             indicateAddressBookChanged();
         }
         indicateRecycleBinChanged();
