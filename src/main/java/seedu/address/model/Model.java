@@ -71,4 +71,6 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredInsuranceList(Predicate<ReadOnlyInsurance> predicate);
+
+    void deleteInsurance(ReadOnlyInsurance insuranceToDelete) throws InsuranceNotFoundException;
 }

@@ -51,12 +51,26 @@ public class UniqueLifeInsuranceMap {
      * @throws DuplicateInsuranceException if the life insurance to add is a duplicate of an
      * existing life insurance in the map.
      */
-    public void put(UUID key, ReadOnlyInsurance toPut) throws DuplicateInsuranceException {
+    public void put(ReadOnlyInsurance toPut) throws DuplicateInsuranceException {
         requireNonNull(toPut);
         if (containsValue(toPut)) {
             throw new DuplicateInsuranceException();
         }
-        internalMap.put(key, new LifeInsurance(toPut));
+        internalMap.put(toPut.getId(), new LifeInsurance(toPut));
+    }
+
+    /**
+     * Adds life insurance to map, private because this is only allowed when transferring data from another map
+     * @param id
+     * @param toPut
+     * @throws DuplicateInsuranceException
+     */
+    private void put(UUID id, ReadOnlyInsurance toPut) throws DuplicateInsuranceException {
+        requireNonNull(toPut);
+        if (containsValue(toPut)) {
+            throw new DuplicateInsuranceException();
+        }
+        internalMap.put(id, new LifeInsurance(toPut));
     }
 
     /**
@@ -124,7 +138,18 @@ public class UniqueLifeInsuranceMap {
         assert CollectionUtil.elementsAreUnique(internalMap.values());
         return FXCollections.unmodifiableObservableList(internalList);
     }
-    //@@author
+    //@@author Juxarius
+
+    /**
+     * @param insurance insurance to be deleted
+     * @return
+     */
+    public boolean remove(ReadOnlyInsurance insurance) {
+        requireNonNull(insurance);
+        boolean removeSuccess = internalMap.remove(insurance.getId(), insurance);
+        syncMappedListWithInternalMap();
+        return removeSuccess;
+    }
 
     //@@author OscarWang114
     /**

@@ -168,14 +168,26 @@ public class AddressBook implements ReadOnlyAddressBook {
      *Adds an insurance to the address book.
      */
     public void addInsurance(ReadOnlyInsurance i) {
-        UUID id = UUID.randomUUID();
         LifeInsurance lifeInsurance = new LifeInsurance(i);
         try {
-            lifeInsuranceMap.put(id, lifeInsurance);
+            lifeInsuranceMap.put(lifeInsurance);
         } catch (DuplicateInsuranceException e) {
             assert false : "AddressBooks should not have duplicate insurances";
         }
         syncWithUpdate();
+    }
+    //@@author Juxarius
+
+    /**
+     * @param target insurance to be deleted
+     * @throws InsuranceNotFoundException
+     */
+    public void deleteInsurance(ReadOnlyInsurance target) throws InsuranceNotFoundException {
+        if (lifeInsuranceMap.remove(target)) {
+            syncWithUpdate();
+        } else {
+            throw new InsuranceNotFoundException();
+        }
     }
     //@@author
 
@@ -236,6 +248,10 @@ public class AddressBook implements ReadOnlyAddressBook {
             assert false : "AddressBooks should not have duplicate insurances";
         }
     }
+
+    private void clearAllPersonsInsuranceIds() {
+        persons.forEach(p -> p.clearLifeInsuranceIds());
+    }
     //@@author
 
     //@@author OscarWang114
@@ -244,6 +260,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *  - links to its owner, insured, and beneficiary {@code Person} if they exist in master person list respectively
      */
     public void syncMasterLifeInsuranceMap() {
+        clearAllPersonsInsuranceIds();
         lifeInsuranceMap.forEach((id, insurance) -> {
             insurance.resetAllInsurancePerson();
             String owner = insurance.getOwner().getName();
