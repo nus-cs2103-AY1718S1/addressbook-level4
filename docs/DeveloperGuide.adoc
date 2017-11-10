@@ -791,23 +791,46 @@ After `Model` updates the person list which will be shown in the GUI, the `ShowP
 
 The selectE command is facilitated by the `LogicManager`. This command inherits from `Command`.
 
-The following *_sequence diagram_* _(Figure 3.8)_ show how the show all joined events operation works:
+The following *_sequence diagram_* _(Figure 4.8)_ show how the show all joined events operation works:
 
 image::ShowAllJoinedEventsSequenceDiagram.png[width="800"]
-_Figure 3.8: sequence diagram for selectE command_
+_Figure 4.8: sequence diagram for selectE command_
 
-The user enters a SelectE command which is received by `LogicManger`.
-`LogicManager` calls `AddressBookParser` to parse the user command.
-`AddressBookParser` will call `SelectJoinedEventsCommandParser` to parse the list of INDEXES.
-`AddressBookParser` creates an `SelectJoinedEventsCommand` object and returns it.
-`LogicManager` receives the `Command` object and executes it.
-The `SelectJoinedEventsCommand` calls `getFilteredPersonList()` in the `Model` to get the person list.
-The `SelectJoinedEventsCommand` then creates a list of event names using the person list and list of INDEXES.
-The `SelectJoinedEventsCommand` then proceeds to create a `EventContainsKeywordsPredicate` with the list of event names.
-The `SelectJoinedEventsCommand` then calls `updateFilteredEventList(p)` in the `Model`.
-The `Model` processes the event list.
-The `SelectJoinedEventsCommand` then creates a `CommandResult` object and returns it to `LogicManager`.
-`LogicManager` receives the result and displays it through the `UI`.
+As seen in the *_sequence diagram_* (Figure 4.8) above, when the user enters a selectE command, the input is parsed by the `SelectJoinedEventsCommandParser`.
+A `SelectJoinedEventsCommand` is then created from the parsed user input.
+When the `LogicManager` executes the `SelectJoinedEventsCommand`, the latter calls `getFilteredPersonList()` to get the current person list.
+The `SelectJoinedEventsCommand` will then check the entered index values and get the names of the events the person/s have participated.
+This is shown in the code snippet below:
+
+[source,java]
+@Override
+public CommandResult execute() throws CommandException {
+    for (Index targetIndex: indexList) {
+                if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                    throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                }
+                personNames.append(lastShownList.get(targetIndex.getZeroBased()).getName()).append(", ");
+                for (ReadOnlyEvent event: lastShownList.get(targetIndex.getZeroBased()).getParticipation()) {
+                    eventNames.append(event.getEventName()).append("[-]");
+                }
+            }
+}
+
+As seen in the code snippet above, the `SelectJoinedEventsCommand` will throw an exception if the entered index values are invalid and will combine the participated event names into a String named "eventNames".
+The `SelectJoinedEventsCommand` will then separate the event names using the combination of symbols, "[-]", so they can be used by a predicate to find the participated events.
+This is shown in the code snippet below:
+
+[source,java]
+@Override
+public CommandResult execute() throws CommandException {
+    String[] eventNameKeywords = (eventNames.toString().trim()).split("\\[-]+");
+            EventContainsKeywordPredicate predicate = new EventContainsKeywordPredicate(Arrays.asList(eventNameKeywords));
+            // Update the UI and return result.
+}
+
+As shown in the code snippet above, the event names will be separated and stored in a String[] named "eventNameKeywords".
+A `EventContainsKeywordPredicate` will be created and will use the "eventNameKeywords" to find the events that are participated by the entered person/s.
+The UI will then be updated to display the events found.
 
 [discrete]
 ===== Design Considerations
@@ -917,7 +940,7 @@ image::DG_Toggle1.png[]
 _Figure 3.11.2 Toggle mechanism sequence 1_
 
 As seen in the sequence diagram _(Figure 3.11.2)_ above, when the user enters a toggle command, a `ToggleCommand` is created.
-When the `LogicManager` executes the `ToggleCommand`, the `EventsCenter` will post a `TogglePanelEvent` to the `EventBus`:
+When the `LogicManager` executes the `ToggleCommand`, the `EventsCenter` will post a `TogglePanelEvent` to the `EventBus` which is shown in the code snippet below:
 
 [source,java]
 public class ToggleCommand extends Command {
@@ -935,7 +958,8 @@ _Figure 3.11.3 Toggle mechanism sequence 2_
 
 As seen in the sequence diagram _(Figure 3.11.3)_ above, the event is handled by the `TogglePanel`.
 The `TogglePanel` has a variable called `browserIsFront` which keeps track of whether the browser is currently displayed.
-`TriggerToggle` uses `browserIsFront` to toggle the correct panel to the front and updates `browserToFront` accordingly:
+`TriggerToggle` uses `browserIsFront` to toggle the correct panel to the front and updates `browserToFront` accordingly.
+This is shown in the code snippet below:
 
 [source,java]
 public class TogglePanel extends UiPart<Region> {
@@ -970,7 +994,8 @@ public class TogglePanel extends UiPart<Region> {
 As seen from the above code snippet, when `browserIsFront` is true, the place holder where the browser is at, will be sent to the back and made to be invisible. While the `toggleSplitPane`, which holds the information board and events list, is brought to the front and made visible. `BrowserIsFront` is then set to be false.
 When `browserIsFront` is false, the opposite happens. The place holder with the browser is brought to the front and made visible, while the `toggleSplitPane` is sent to the back and made to be invisible. +
 
-One thing to take note of with the select command, is that the browser will be brought to the front and displayed no matter the current status of `browserIsFront`:
+One thing to take note of with the select command, is that the browser will be brought to the front and displayed no matter the current status of `browserIsFront`.
+This is shown in the code snippet below:
 
 [source,java]
 public class BrowserPanel extends UiPart<Region> {
