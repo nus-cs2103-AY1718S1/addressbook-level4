@@ -365,6 +365,10 @@ Keyboard Shortcut: kbd:[Ctrl+N]
 * The command recognizes directories in formats kbd:[/] or kbd:[{backslash} ] as valid filepaths
 ****
 
+After creating a new Rolodex, verify that you have correctly created the Rolodex at the correct directory by checking the status bar of your application:
+
+image::OpenNewStatusBar.png[width="700"]
+
 [NOTE]
 ====
 The `new` command will refresh your session and all existing _undoable_ commands will be cleared. It is recommended that you confirm you are satisfied with your changes before opening a new file.
