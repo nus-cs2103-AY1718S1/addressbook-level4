@@ -137,7 +137,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Search for persons by parameter: 'Search' 'Since v1.3'
+=== Search for persons by parameter: `Search` `Since v1.3`
 
 Finds persons whose details match the given keywords. +
 Format: 'search KEYWORD [MORE KEYWORD]'
@@ -352,7 +352,7 @@ Examples:
 * `choose linkedin` +
 Displays the linkedin results page of profiles that match user selected.
 
-=== Searching for a person's address by google maps : 'map' 'Since v1.4'
+=== Searching for a person's address by google maps : `map` `Since v1.4`
 
 Displays a google map search based of the person's address of the given index in the browser panel. +
 Format: 'map [INDEX]'

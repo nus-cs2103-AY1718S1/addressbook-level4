@@ -41,6 +41,7 @@ public class BrowserPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private boolean hasLinkedinBeenChosen = false;
+    private boolean hasMapsBeenChosen = false;
 
     @FXML
     private WebView browser;
@@ -67,15 +68,29 @@ public class BrowserPanel extends UiPart<Region> {
             } catch (CommandException e) {
                 e.printStackTrace();
             }
+        } else if (hasMapsBeenChosen) {
+            try {
+                loadPersonMap(person);
+            } catch (CommandException e) {
+                e.printStackTrace();
+            }
         } else {
-
             loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
                     + GOOGLE_SEARCH_URL_SUFFIX);
         }
     }
 
     //@@author martyn-wong
-    private void loadPersonMap(ReadOnlyPerson person) {
+    /***
+     * Loads google map of person
+     * @param person
+     */
+    private void loadPersonMap(ReadOnlyPerson person) throws CommandException {
+        if (personSelected == null) {
+            throw new CommandException("Please select a person");
+        }
+        setMapsChosenTrue();
+        setLinkedinChosenFalse();
         loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
     }
@@ -89,7 +104,8 @@ public class BrowserPanel extends UiPart<Region> {
         if (personSelected == null) {
             throw new CommandException("Please select a person");
         }
-        hasLinkedinBeenChosen = true;
+        setLinkedinChosenTrue();
+        setMapsChosenFalse();
         String[] name = personSelected.getName().fullName.split(" ");
 
         loadPage(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
@@ -122,6 +138,19 @@ public class BrowserPanel extends UiPart<Region> {
     }
     //@@author
 
+    //@@author martyn-wong
+    /**
+     * Setter method to set the Boolean value of hasMapsBeenChosen
+     */
+    public void setMapsChosenTrue () {
+        hasMapsBeenChosen = true;
+    }
+
+    public void setMapsChosenFalse () {
+        hasMapsBeenChosen = false;
+    }
+    //@@author
+
     /**
      * Frees resources allocated to the browser.
      */
@@ -144,13 +173,16 @@ public class BrowserPanel extends UiPart<Region> {
             loadLinkedIn();
         } else if (event.getBrowserSelection().equals("google")) {
             hasLinkedinBeenChosen = false;
+            hasMapsBeenChosen = false;
             loadPersonPage(personSelected);
+        } else if (event.getBrowserSelection().equals("maps")) {
+            loadPersonMap(personSelected);
         }
     }
 
     //@author martyn-wong
     @Subscribe
-    private void handleMapPanelEvent(MapPersonEvent event) {
+    private void handleMapPanelEvent(MapPersonEvent event) throws CommandException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonMap(event.getPerson());
     }
