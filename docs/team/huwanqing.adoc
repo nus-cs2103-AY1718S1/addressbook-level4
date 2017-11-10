@@ -58,9 +58,9 @@ The feature will be extremely helpful if the event involve a large number of peo
 ==== Implementation
 
 ---
-#Start of Extract [from: Developer Guide]#
+#Start of Extract [from: Developer Guide] written by Adoby7#
 
-include::../DeveloperGuide.adoc[tag=joinDisjoin]
+include::../DeveloperGuide.adoc[tag=interaction]
 
 #End of Extract#
 
