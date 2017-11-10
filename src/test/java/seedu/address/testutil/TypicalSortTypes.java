@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+//@@author LimeFallacie
 /**
  * A utility class containing a list of {@code sortType} Strings to be used in tests.
  */

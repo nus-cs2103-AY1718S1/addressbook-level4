@@ -22,6 +22,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.storage.Storage;
 import seedu.address.testutil.TypicalStorage;
 
+//@@author eldonng
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code PinCommand and UnpinCommand}.
  */

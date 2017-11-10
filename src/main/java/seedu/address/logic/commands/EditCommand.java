@@ -174,6 +174,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(phone);
         }
 
+        //@@author mavistoh
         public void setBirthday(Birthday birthday) {
             this.birthday = birthday;
         }
@@ -181,6 +182,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Birthday> getBirthday() {
             return Optional.ofNullable(birthday);
         }
+        //@@author
 
         public void setEmail(Email email) {
             this.email = email;

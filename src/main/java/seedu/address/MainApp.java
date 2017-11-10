@@ -52,6 +52,7 @@ public class MainApp extends Application {
     protected UserPrefs userPrefs;
 
 
+    //@@author LimeFallacie
     @Override
     public void init() throws Exception {
         logger.info("=============================[ Drawing Circles ]===========================");
@@ -67,6 +68,9 @@ public class MainApp extends Application {
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
+        if (!model.getFilteredPersonList().isEmpty()) {
+            model.sort("name");
+        }
 
         logic = new LogicManager(model, storage);
 
@@ -75,6 +79,7 @@ public class MainApp extends Application {
         initEventsCenter();
     }
 
+    //@@author
     private String getApplicationParameter(String parameterName) {
         Map<String, String> applicationParameters = getParameters().getNamed();
         return applicationParameters.get(parameterName);

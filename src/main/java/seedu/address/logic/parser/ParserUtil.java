@@ -67,6 +67,7 @@ public class    ParserUtil {
         return listOfIndex;
     }
 
+    //@@author mavistoh
     /**
      * Parses {@code oneBasedIndex} into an {@code Index[]} and returns it. Leading and trailing whitespaces will be
      * trimmed.
@@ -107,6 +108,7 @@ public class    ParserUtil {
         return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
     }
 
+    //@@author mavistoh
     /**
      * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -114,6 +116,7 @@ public class    ParserUtil {
     public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
         return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
@@ -153,6 +156,7 @@ public class    ParserUtil {
         return tagSet;
     }
 
+    //@@author LimeFallacie
     /**
      * Parses a String and checks for validity. Leading and trailing whitespaces will be removed
      * @throws IllegalValueException if specified string is invalid (not 1 of 3 options)
@@ -181,6 +185,7 @@ public class    ParserUtil {
         throw new IllegalValueException(MESSAGE_INVALID_ARGUMENTS);
     }
 
+    //@@author LimeFallacie
     /**
      * Parses a String argument for tag. Leading and trailing whitespaces will be removed
      */
