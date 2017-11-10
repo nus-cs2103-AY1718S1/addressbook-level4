@@ -16,7 +16,7 @@
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
     <Menu mnemonicParsing="false" text="File">
         <!-- @@author Choony93 -->
-        <MenuItem mnemonicParsing="false" text="Import Addressbook (TDB)"/>
+        <MenuItem mnemonicParsing="false" text="Import Addressbook" onAction="#handleImport"/>
         <MenuItem mnemonicParsing="false" text="Export Addressbook (TDB)"/>
         <Menu text="Themes">
             <MenuItem text="Bootstrap3" onAction="#handleThemeBootstrap3" userData="0"/>
