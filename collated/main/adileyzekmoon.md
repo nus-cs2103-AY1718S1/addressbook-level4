@@ -1,5 +1,5 @@
 # adileyzekmoon
-###### /java/seedu/address/logic/commands/FilterAllCommand.java
+###### \java\seedu\address\logic\commands\FilterAllCommand.java
 ``` java
     public static final String COMMAND_WORD = "filterall";
     public static final String COMMAND_ALIAS = "fa";
@@ -21,7 +21,7 @@
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 ```
-###### /java/seedu/address/logic/commands/FilterCommand.java
+###### \java\seedu\address\logic\commands\FilterCommand.java
 ``` java
     public static final String COMMAND_WORD = "filter";
     public static final String COMMAND_ALIAS = "fi";
@@ -43,7 +43,7 @@
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 ```
-###### /java/seedu/address/model/person/PersonContainsAllKeywordsPredicate.java
+###### \java\seedu\address\model\person\PersonContainsAllKeywordsPredicate.java
 ``` java
 public class PersonContainsAllKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
@@ -67,7 +67,7 @@ public class PersonContainsAllKeywordsPredicate implements Predicate<ReadOnlyPer
 
 }
 ```
-###### /java/seedu/address/model/person/PersonContainsKeywordsPredicate.java
+###### \java\seedu\address\model\person\PersonContainsKeywordsPredicate.java
 ``` java
 public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
@@ -91,12 +91,12 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
 
 }
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
     public static final String DEFAULT_PAGE = "default.html";
     public static final String FACEBOOK_SEARCH_URL_PREFIX = "https://www.facebook.com/public/?query=";
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
     private void loadPersonPage(ReadOnlyPerson person) {
         loadPage(FACEBOOK_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "%20"));

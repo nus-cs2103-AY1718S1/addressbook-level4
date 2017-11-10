@@ -1,5 +1,5 @@
 # adileyzekmoon
-###### /java/seedu/address/logic/commands/FilterAllCommandTest.java
+###### \java\seedu\address\logic\commands\FilterAllCommandTest.java
 ``` java
     @Test
     public void equals() throws Exception {
@@ -36,7 +36,7 @@
         assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
     }
 ```
-###### /java/seedu/address/logic/commands/FilterCommandTest.java
+###### \java\seedu\address\logic\commands\FilterCommandTest.java
 ``` java
     @Test
     public void equals() throws Exception {

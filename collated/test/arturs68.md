@@ -1,5 +1,5 @@
 # arturs68
-###### /java/guitests/guihandles/PersonCardHandle.java
+###### \java\guitests\guihandles\PersonCardHandle.java
 ``` java
         Region groupContainer = getChildNode(GROUPS_FIELD_ID);
         this.groupLabels = groupContainer
@@ -8,7 +8,7 @@
                 .map(Label.class::cast)
                 .collect(Collectors.toList());
 ```
-###### /java/guitests/guihandles/PersonCardHandle.java
+###### \java\guitests\guihandles\PersonCardHandle.java
 ``` java
     public List<String> getGroups() {
         return groupLabels
@@ -18,17 +18,17 @@
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ChangePicCommandTest.java
+###### \java\seedu\address\logic\commands\ChangePicCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PICTURE_PATH;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.model.person.ProfilePicture.DEFAULT_PICTURE;
+import static seedu.address.model.util.SampleDataUtil.SAMPLE_PICTURE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -59,7 +59,7 @@ public class ChangePicCommandTest {
     public void execute_changepic_success() throws Exception {
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
                 .build();
-        editedPerson.setProfilePicture(new ProfilePicture(VALID_PICTURE_PATH));
+        editedPerson.setProfilePicture(new ProfilePicture(SAMPLE_PICTURE));
 
         ChangePicCommand changePicCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getProfilePicture().value);
 
@@ -77,7 +77,7 @@ public class ChangePicCommandTest {
 
         ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(personInFilteredList).build();
-        editedPerson.setProfilePicture(new ProfilePicture(VALID_PICTURE_PATH));
+        editedPerson.setProfilePicture(new ProfilePicture(SAMPLE_PICTURE));
         ChangePicCommand changePicCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getProfilePicture().value);
         String expectedMessage = String.format(ChangePicCommand.MESSAGE_CHANGEPIC_SUCCESS, editedPerson.getName());
 
@@ -90,7 +90,7 @@ public class ChangePicCommandTest {
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        ChangePicCommand changePicCommand = prepareCommand(outOfBoundIndex, VALID_PICTURE_PATH);
+        ChangePicCommand changePicCommand = prepareCommand(outOfBoundIndex, SAMPLE_PICTURE);
 
         assertCommandFailure(changePicCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -106,7 +106,7 @@ public class ChangePicCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        ChangePicCommand changePicCommand = prepareCommand(outOfBoundIndex, VALID_PICTURE_PATH);
+        ChangePicCommand changePicCommand = prepareCommand(outOfBoundIndex, SAMPLE_PICTURE);
 
         assertCommandFailure(changePicCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -129,10 +129,10 @@ public class ChangePicCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new ChangePicCommand(INDEX_SECOND_PERSON, VALID_PICTURE_PATH)));
+        assertFalse(standardCommand.equals(new ChangePicCommand(INDEX_SECOND_PERSON, SAMPLE_PICTURE)));
 
         // different groups -> returns false
-        assertFalse(standardCommand.equals(new ChangePicCommand(INDEX_FIRST_PERSON, VALID_PICTURE_PATH)));
+        assertFalse(standardCommand.equals(new ChangePicCommand(INDEX_FIRST_PERSON, SAMPLE_PICTURE)));
     }
 
     /**
@@ -145,7 +145,7 @@ public class ChangePicCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/GroupCommandTest.java
+###### \java\seedu\address\logic\commands\GroupCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -274,7 +274,7 @@ public class GroupCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/RemoveTagCommandTest.java
+###### \java\seedu\address\logic\commands\RemoveTagCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -418,7 +418,7 @@ public class RemoveTagCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/UngroupCommandTest.java
+###### \java\seedu\address\logic\commands\UngroupCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -563,7 +563,7 @@ public class UngroupCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_removeTag() throws Exception {
@@ -589,15 +589,15 @@ public class UngroupCommandTest {
         assertEquals(new UngroupCommand(INDEX_FIRST_PERSON, group), command);
     }
 ```
-###### /java/seedu/address/logic/parser/ChangePicCommandParserTest.java
+###### \java\seedu\address\logic\parser\ChangePicCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PICTURE_PATH;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PATH;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.model.util.SampleDataUtil.SAMPLE_PICTURE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
@@ -610,7 +610,7 @@ public class ChangePicCommandParserTest {
 
     @Test
     public void parse_indexSpecified_failure() throws Exception {
-        final String picturePath = VALID_PICTURE_PATH;
+        final String picturePath = SAMPLE_PICTURE;
 
         // has picturePath
         Index targetIndex = INDEX_FIRST_PERSON;
@@ -633,7 +633,7 @@ public class ChangePicCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/GroupCommandParserTest.java
+###### \java\seedu\address\logic\parser\GroupCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -682,7 +682,7 @@ public class GroupCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/RemoveTagCommandParserTest.java
+###### \java\seedu\address\logic\parser\RemoveTagCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -713,7 +713,7 @@ public class RemoveTagCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/UngroupCommandParserTest.java
+###### \java\seedu\address\logic\parser\UngroupCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -751,7 +751,7 @@ public class UngroupCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/AddressBookTest.java
+###### \java\seedu\address\model\AddressBookTest.java
 ``` java
     @Test
     public void sorted() {
@@ -762,7 +762,7 @@ public class UngroupCommandParserTest {
         assertEquals(sorted, newData.getPersonList());
     }
 ```
-###### /java/seedu/address/model/AddressBookTest.java
+###### \java\seedu\address\model\AddressBookTest.java
 ``` java
     @Test
     public void getGroupList_modifyList_throwsUnsupportedOperationException() {
@@ -770,7 +770,7 @@ public class UngroupCommandParserTest {
         addressBook.getGroupList().remove(0);
     }
 ```
-###### /java/seedu/address/model/ModelManagerTest.java
+###### \java\seedu\address\model\ModelManagerTest.java
 ``` java
     @Test
     public void removeTag() throws IllegalValueException, PersonNotFoundException {
@@ -799,7 +799,7 @@ public class UngroupCommandParserTest {
         }
     }
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
     /**
      * Parses the {@code groups} into a {@code Set<Group>} and set it to the {@code Person} that we are building.

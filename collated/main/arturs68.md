@@ -1,15 +1,17 @@
 # arturs68
-###### /java/seedu/address/logic/commands/ChangePicCommand.java
+###### \java\seedu\address\logic\commands\ChangePicCommand.java
 ``` java
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PATH;
 
+import java.io.File;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ProfilePicture;
@@ -58,6 +60,13 @@ public class ChangePicCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
+        if (picturePath.contains("/") || picturePath.contains("\\")) {
+            File file = new File(picturePath);
+            if (!file.exists()) {
+                throw new CommandException("No file found in the path: " + picturePath);
+            }
+        }
+
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
 
         Person editedPerson;
@@ -69,6 +78,8 @@ public class ChangePicCommand extends UndoableCommand {
             throw new CommandException("The person cannot be duplicated when changing the profile picture");
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
+        } catch (IllegalValueException ive) {
+            throw new CommandException(ive.getMessage());
         }
         model.updateFilteredPersonList(p ->true);
         return new CommandResult(generateSuccessMessage(editedPerson));
@@ -97,7 +108,7 @@ public class ChangePicCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/GroupCommand.java
+###### \java\seedu\address\logic\commands\GroupCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -201,7 +212,7 @@ public class GroupCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/RemoveTagCommand.java
+###### \java\seedu\address\logic\commands\RemoveTagCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -258,7 +269,7 @@ public class RemoveTagCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/UngroupCommand.java
+###### \java\seedu\address\logic\commands\UngroupCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -364,7 +375,7 @@ public class UngroupCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ChangePicCommandParser.java
+###### \java\seedu\address\logic\parser\ChangePicCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -405,7 +416,7 @@ public class ChangePicCommandParser implements Parser<ChangePicCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/GroupCommandParser.java
+###### \java\seedu\address\logic\parser\GroupCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -444,7 +455,7 @@ public class GroupCommandParser implements Parser<GroupCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> Group} into an {@code Optional<Group>} if {@code group} is present.
@@ -455,7 +466,7 @@ public class GroupCommandParser implements Parser<GroupCommand> {
         return groupName.isPresent() ? Optional.of(new Group(groupName.get())) : Optional.empty();
     }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> tag} into an {@code Optional<Tag>} if {@code tag} is present.
@@ -467,7 +478,7 @@ public class GroupCommandParser implements Parser<GroupCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/RemoveTagCommandParser.java
+###### \java\seedu\address\logic\parser\RemoveTagCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -512,7 +523,7 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/UngroupCommandParser.java
+###### \java\seedu\address\logic\parser\UngroupCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -551,7 +562,7 @@ public class UngroupCommandParser implements Parser<UngroupCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
      * Ensures that every group in this person:
@@ -583,7 +594,7 @@ public class UngroupCommandParser implements Parser<UngroupCommand> {
         persons.forEach(this::syncMasterGroupListWith);
     }
 ```
-###### /java/seedu/address/model/group/Group.java
+###### \java\seedu\address\model\group\Group.java
 ``` java
 package seedu.address.model.group;
 
@@ -649,7 +660,7 @@ public class Group {
 
 }
 ```
-###### /java/seedu/address/model/group/UniqueGroupList.java
+###### \java\seedu\address\model\group\UniqueGroupList.java
 ``` java
 package seedu.address.model.group;
 
@@ -808,7 +819,7 @@ public class UniqueGroupList implements Iterable<Group> {
 
 }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /** Removes the given tag from everyone in the address book and deletes it from the addressBook tag list.
      * Returns false if no such a tag exists and true otherwise
@@ -820,7 +831,7 @@ public class UniqueGroupList implements Iterable<Group> {
     void updateGroups(Group group);
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void updateGroups(Group group) {
@@ -841,7 +852,7 @@ public class UniqueGroupList implements Iterable<Group> {
         indicateAddressBookChanged();
     }
 ```
-###### /java/seedu/address/model/person/exceptions/GroupNotFoundException.java
+###### \java\seedu\address\model\person\exceptions\GroupNotFoundException.java
 ``` java
 package seedu.address.model.person.exceptions;
 
@@ -851,7 +862,7 @@ package seedu.address.model.person.exceptions;
 public class GroupNotFoundException extends Exception {
 }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     public void setProfilePicture(ProfilePicture profilePicture) {
         this.profilePicture.set(requireNonNull(profilePicture));
@@ -867,7 +878,7 @@ public class GroupNotFoundException extends Exception {
         return profilePicture.get();
     }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     /**
      * Replaces this person's groups with the groups in the argument group set.
@@ -889,11 +900,15 @@ public class GroupNotFoundException extends Exception {
         return groups;
     }
 ```
-###### /java/seedu/address/model/person/ProfilePicture.java
+###### \java\seedu\address\model\person\ProfilePicture.java
 ``` java
 package seedu.address.model.person;
 
+import static seedu.address.model.util.SampleDataUtil.SAMPLE_PICTURE;
+
 import java.io.File;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's profile picture in the address book.
@@ -910,8 +925,20 @@ public class ProfilePicture {
     /**
      * Assigns the path to the profile picture
      */
-    public ProfilePicture(String fileName) {
-        this.value = fileName;
+    public ProfilePicture(String fileName) throws IllegalValueException {
+        String nameToBeSet = fileName;
+        if (fileName.contains("/") || fileName.contains("\\")) {
+            File file = new File(fileName);
+            if (!file.exists()) {
+                nameToBeSet = DEFAULT_PICTURE;
+            }
+        } else {
+            if (!(fileName.equals(DEFAULT_PICTURE) || fileName.equals(SAMPLE_PICTURE))) {
+                throw new IllegalValueException(
+                        "Wrong file path specified. Perhaps you meant: " + DEFAULT_PICTURE + " ?");
+            }
+        }
+        this.value = nameToBeSet;
     }
 
     public static String getPath(String value) {
@@ -937,7 +964,7 @@ public class ProfilePicture {
 
 }
 ```
-###### /java/seedu/address/model/person/SortedUniquePersonList.java
+###### \java\seedu\address\model\person\SortedUniquePersonList.java
 ``` java
     /**
      * Sorts the list of unique persons
@@ -946,7 +973,7 @@ public class ProfilePicture {
         internalList.sort(Comparator.comparing((ReadOnlyPerson person) -> person.getName().toString()));
     }
 ```
-###### /java/seedu/address/storage/AddressBookStorage.java
+###### \java\seedu\address\storage\AddressBookStorage.java
 ``` java
     /**
      * Saves the given {@link ReadOnlyAddressBook} to the fixed temporary location (standard location + "-backup.xml")
@@ -955,7 +982,7 @@ public class ProfilePicture {
      */
 }
 ```
-###### /java/seedu/address/storage/XmlAdaptedGroup.java
+###### \java\seedu\address\storage\XmlAdaptedGroup.java
 ``` java
 package seedu.address.storage;
 
@@ -998,7 +1025,7 @@ public class XmlAdaptedGroup {
 
 }
 ```
-###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
 ``` java
     @Override
     public ObservableList<Group> getGroupList() {
@@ -1015,14 +1042,14 @@ public class XmlAdaptedGroup {
     }
 }
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
         person.groupProperty().addListener((observable, oldValue, newValue) -> {
             groups.getChildren().clear();
             person.getGroups().forEach(group -> groups.getChildren().add((new Label(group.groupName))));
         });
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
     /**
      * Initializes the group labels and sets style to them
@@ -1036,7 +1063,10 @@ public class XmlAdaptedGroup {
         } catch (IllegalArgumentException iae) {
             im = new Image(getPath(DEFAULT_PICTURE));
         }
+        profilePicture.setPreserveRatio(false);
         profilePicture.setImage(im);
+        profilePicture.setFitWidth(90);
+        profilePicture.setFitHeight(120);
     }
 
     /**
@@ -1050,11 +1080,11 @@ public class XmlAdaptedGroup {
                                 + "-fx-effect: dropshadow( one-pass-box , gray , 8 , 0.0 , 2 , 0 );"));
     }
 ```
-###### /resources/view/PersonListCard.fxml
+###### \resources\view\PersonListCard.fxml
 ``` fxml
       <FlowPane fx:id="groups" />
 ```
-###### /resources/view/PersonListCard.fxml
+###### \resources\view\PersonListCard.fxml
 ``` fxml
    <ImageView fx:id="profilePicture" fitHeight="150.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
       <image>
