@@ -125,7 +125,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addInsurance(ReadOnlyInsurance insurance) {
+        public void addLifeInsurance(ReadOnlyInsurance insurance) {
             fail("This method should not be called.");
         }
 

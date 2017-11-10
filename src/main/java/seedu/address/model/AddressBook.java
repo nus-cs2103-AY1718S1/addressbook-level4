@@ -76,6 +76,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setLifeInsurances(Map<UUID, ReadOnlyInsurance> insurances) throws DuplicateInsuranceException {
         this.lifeInsuranceMap.setInsurances(insurances);
     }
+
+    /**
+     * Replaces the given insurance {@code target} in the map with {@code editedReadOnlyInsurance}.
+     *
+     * @throws InsuranceNotFoundException if the id of {@code target} cannot be found in the map.
+     */
+    public void updateLifeInsurance(ReadOnlyInsurance target, ReadOnlyInsurance editedReadOnlyInsurance)
+            throws InsuranceNotFoundException{
+        UUID id = target.getId();
+        LifeInsurance lifeInsurance = new LifeInsurance(editedReadOnlyInsurance);
+        this.lifeInsuranceMap.replace(id, editedReadOnlyInsurance);
+    }
     //@@author
 
     /**
