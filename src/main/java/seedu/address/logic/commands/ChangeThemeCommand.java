@@ -10,7 +10,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
  */
 public class ChangeThemeCommand extends Command {
 
-    public static final String COMMAND_WORD = "ChangeToTheme";
+    public static final String COMMAND_WORD = "changeToTheme";
     public static final String COMMAND_ALIAS = "ct";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -30,7 +30,7 @@ public class ChangeThemeCommand extends Command {
     public CommandResult execute() throws CommandException {
 
         String[] themeList = new String[]{"/view/DarkTheme.css", "/view/DarkTheme2.css", "/view/LightTheme.css",
-            "/view/LightTheme.css"};
+            "/view/LightTheme2.css"};
         if (targetIndex > themeList.length) {
             throw new CommandException(Messages.MESSAGE_INVALID_THEME_INDEX);
         }
