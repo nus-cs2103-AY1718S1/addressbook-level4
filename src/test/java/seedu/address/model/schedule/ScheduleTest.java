@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author YuchenHe98
 public class ScheduleTest {
 
     @Test
