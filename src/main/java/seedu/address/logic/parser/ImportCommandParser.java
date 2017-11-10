@@ -59,7 +59,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     }
 
     /**
-     * checks if the file is a valid file name using {@code FILE_NAME_VALIDATION_REGEX}
+     * returns true if the file is a valid file name using {@code FILE_NAME_VALIDATION_REGEX}
      */
     public static boolean isValidFileName(String fileName) {
         return fileName.matches(FILE_NAME_VALIDATION_REGEX);
