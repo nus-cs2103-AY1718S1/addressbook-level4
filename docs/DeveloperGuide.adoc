@@ -283,7 +283,7 @@ image::NewUML.png[width="800]
 ---
 
 **Aspect:** Generation of the unique filepath for images rewritten to `displaypictures` folder. +
-**Alternative 1(current choice): ** Using UUID class to generate a unique file path of the image that is to be written into `displaypictures`. + 
+**Alternative 1(current choice): ** Using UUID class to generate a unique file path of the image that is to be written into `displaypictures`. +
 **Pros:** Generated filepath is unqiue. If the user wishes to overwrite the current image with a new image, the new image does not overwrite the old image. It allows `undo` command to be performed correctly which will revert the display picture of the specified contact to its previous image. +
 **Cons:** Causes the file size of `displaypictures` folder to get too large too quickly if users has alot of contacts that he wishes to add a display photo to or if users add photos at a rapid rate or both. +
 **Alternative 2:** Using hashcode of the contact's email to generate the unique file path of the image that is to be written into `displaypictures`. +
