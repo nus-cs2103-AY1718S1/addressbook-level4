@@ -1,5 +1,5 @@
 # fongwz
-###### \java\seedu\address\logic\commands\ChooseCommandTest.java
+###### /java/seedu/address/logic/commands/ChooseCommandTest.java
 ``` java
 public class ChooseCommandTest {
     @Rule
@@ -55,7 +55,7 @@ public class ChooseCommandTest {
     }
 }
 ```
-###### \java\seedu\address\ui\CommandBoxTest.java
+###### /java/seedu/address/ui/CommandBoxTest.java
 ``` java
     /**
      * Testing the command box helper

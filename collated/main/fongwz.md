@@ -1,5 +1,5 @@
 # fongwz
-###### \java\seedu\address\commons\events\ui\BrowserPanelSelectionChangedEvent.java
+###### /java/seedu/address/commons/events/ui/BrowserPanelSelectionChangedEvent.java
 ``` java
 /**
  * Represents a selection change in the Browser List Panel
@@ -22,7 +22,7 @@ public class BrowserPanelSelectionChangedEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\ChangeThemeEvent.java
+###### /java/seedu/address/commons/events/ui/ChangeThemeEvent.java
 ``` java
 /**
  * Indicates a request to jump to the list of browser panels
@@ -41,7 +41,7 @@ public class ChangeThemeEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\JumpToBrowserListRequestEvent.java
+###### /java/seedu/address/commons/events/ui/JumpToBrowserListRequestEvent.java
 ``` java
 /**
  * Indicates a request to jump to the list of browser panels
@@ -60,7 +60,7 @@ public class JumpToBrowserListRequestEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\ShowBrowserEvent.java
+###### /java/seedu/address/commons/events/ui/ShowBrowserEvent.java
 ``` java
 /**
  * Indicates a request show the browser panel
@@ -76,7 +76,7 @@ public class ShowBrowserEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\ShowMeetingEvent.java
+###### /java/seedu/address/commons/events/ui/ShowMeetingEvent.java
 ``` java
 /**
  * Indicates a request show the meeting panel
@@ -92,7 +92,7 @@ public class ShowMeetingEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\FirstPreloader.java
+###### /java/seedu/address/FirstPreloader.java
 ``` java
 /**
  * Preloader class
@@ -146,7 +146,7 @@ public class FirstPreloader extends Preloader {
     }
 }
 ```
-###### \java\seedu\address\Launcher.java
+###### /java/seedu/address/Launcher.java
 ``` java
 /**
  * Launches the splash screen before mainapp is started
@@ -157,7 +157,7 @@ public class Launcher {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ChooseCommand.java
+###### /java/seedu/address/logic/commands/ChooseCommand.java
 ``` java
 /**
  * Chooses the display screen mode
@@ -187,7 +187,7 @@ public class ChooseCommand extends Command {
         if (targetDisplay.equals("meeting")) {
             EventsCenter.getInstance().post(new ShowMeetingEvent());
             EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
-        } else if (targetDisplay.equals("linkedin") || targetDisplay.equals("google") || targetDisplay.equals("maps")) {
+        } else if (targetDisplay.equals("linkedin") || targetDisplay.equals("google")) {
             EventsCenter.getInstance().post(new ShowBrowserEvent());
             EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
         } else {
@@ -198,7 +198,7 @@ public class ChooseCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\Logic.java
+###### /java/seedu/address/logic/Logic.java
 ``` java
     /** Returns an unmodifiable view of the list of commands */
     ObservableList<String> getCommandList();
@@ -209,7 +209,7 @@ public class ChooseCommand extends Command {
     /** Returns the list of meetings */
     ObservableList<ReadOnlyMeeting> getMeetingList();
 ```
-###### \java\seedu\address\logic\LogicManager.java
+###### /java/seedu/address/logic/LogicManager.java
 ``` java
     @Override
     public ObservableList<String> getCommandList() {
@@ -283,7 +283,7 @@ public class ChooseCommand extends Command {
         }
     }
 ```
-###### \java\seedu\address\logic\parser\ChooseCommandParser.java
+###### /java/seedu/address/logic/parser/ChooseCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a ChooseCommand Object
@@ -306,7 +306,7 @@ public class ChooseCommandParser implements Parser<ChooseCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses {@code args} into a trimmed argument and returns it.
@@ -324,7 +324,7 @@ public class ChooseCommandParser implements Parser<ChooseCommand> {
         return parsedArgs;
     }
 ```
-###### \java\seedu\address\ui\BrowserSelectorCard.java
+###### /java/seedu/address/ui/BrowserSelectorCard.java
 ``` java
 /**
  * A UI component that displays information on the browser display type
@@ -368,7 +368,7 @@ public class BrowserSelectorCard extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
     public CommandBox(Logic logic, StackPane commandBoxHelp, SplitPane settingsPane) {
         super(FXML);
@@ -401,7 +401,7 @@ public class BrowserSelectorCard extends UiPart<Region> {
         historySnapshot = logic.getHistorySnapshot();
     }
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
     /**
      * Shows the command helper
@@ -460,7 +460,7 @@ public class BrowserSelectorCard extends UiPart<Region> {
         timelineRight.play();
     }
 ```
-###### \java\seedu\address\ui\CommandBoxHelper.java
+###### /java/seedu/address/ui/CommandBoxHelper.java
 ``` java
 /**
  * The UI component that is responsible for listing out possible commands based on user input in CLI
@@ -628,7 +628,7 @@ public class CommandBoxHelper extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\HelperCard.java
+###### /java/seedu/address/ui/HelperCard.java
 ``` java
 /**
  * A ui component that displays commands in the command helper box
@@ -657,13 +657,13 @@ public class HelperCard extends UiPart<Region> {
 
 }
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
         SettingsSelector settingsSelector = new SettingsSelector();
         settingsSelector.selectTheme(style);
         settingsSelectorPlaceholder.getChildren().add(settingsSelector.getRoot());
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
         //Setting initial position of settings panel
         settingsPane.setTranslateX(160);
@@ -671,7 +671,7 @@ public class HelperCard extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic, commandBoxHelperPlaceholder, settingsPane);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     @Subscribe
     private void handleShowBrowserEvent(ShowBrowserEvent event) {
@@ -715,7 +715,7 @@ public class HelperCard extends UiPart<Region> {
     }
 
 ```
-###### \java\seedu\address\ui\MeetingPanel.java
+###### /java/seedu/address/ui/MeetingPanel.java
 ``` java
 /**
  *  UI component containing a listview to show list of meetings
@@ -761,7 +761,7 @@ public class MeetingPanel extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\MeetingPanelCard.java
+###### /java/seedu/address/ui/MeetingPanelCard.java
 ``` java
 /**
  *  UI component that displays information about upcoming meetings
@@ -795,7 +795,7 @@ public class MeetingPanelCard extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\SettingsSelector.java
+###### /java/seedu/address/ui/SettingsSelector.java
 ``` java
 /**
  * Panel containing the list of settings
@@ -936,7 +936,7 @@ public class SettingsSelector extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\SplashScreen.java
+###### /java/seedu/address/ui/SplashScreen.java
 ``` java
 /**
  * UI component to load splash screen and animate it
@@ -981,7 +981,7 @@ public class SplashScreen extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\ThemeSelectorCard.java
+###### /java/seedu/address/ui/ThemeSelectorCard.java
 ``` java
 /**
  * A UI component that displays information on which theme is currently selected
@@ -1015,7 +1015,7 @@ public class ThemeSelectorCard extends UiPart<Region> {
     }
 }
 ```
-###### \resources\view\BrowserSelectorCard.fxml
+###### /resources/view/BrowserSelectorCard.fxml
 ``` fxml
 
 <?import javafx.scene.control.Label?>
@@ -1043,7 +1043,7 @@ public class ThemeSelectorCard extends UiPart<Region> {
    </children>
 </HBox>
 ```
-###### \resources\view\CommandBoxHelper.fxml
+###### /resources/view/CommandBoxHelper.fxml
 ``` fxml
 
 <?import javafx.scene.control.ListView?>
@@ -1055,7 +1055,7 @@ public class ThemeSelectorCard extends UiPart<Region> {
    </children>
 </VBox>
 ```
-###### \resources\view\HelperCard.fxml
+###### /resources/view/HelperCard.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
@@ -1083,7 +1083,7 @@ public class ThemeSelectorCard extends UiPart<Region> {
     </GridPane>
 </HBox>
 ```
-###### \resources\view\MainWindow.fxml
+###### /resources/view/MainWindow.fxml
 ``` fxml
     <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
         <padding>
@@ -1091,7 +1091,7 @@ public class ThemeSelectorCard extends UiPart<Region> {
         </padding>
     </StackPane>
 ```
-###### \resources\view\MainWindow.fxml
+###### /resources/view/MainWindow.fxml
 ``` fxml
           <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
         <VBox fx:id="personList" minWidth="340.0" prefWidth="340.0" SplitPane.resizableWithParent="false">
@@ -1123,7 +1123,7 @@ public class ThemeSelectorCard extends UiPart<Region> {
       </StackPane>
     </SplitPane>
 ```
-###### \resources\view\MeetingPanel.fxml
+###### /resources/view/MeetingPanel.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
@@ -1228,7 +1228,7 @@ public class ThemeSelectorCard extends UiPart<Region> {
    </children>
 </StackPane>
 ```
-###### \resources\view\MeetingPanelCard.fxml
+###### /resources/view/MeetingPanelCard.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
@@ -1277,7 +1277,7 @@ public class ThemeSelectorCard extends UiPart<Region> {
    </children>
 </HBox>
 ```
-###### \resources\view\SettingsSelector.fxml
+###### /resources/view/SettingsSelector.fxml
 ``` fxml
 
 <?import javafx.scene.control.Label?>
@@ -1310,7 +1310,7 @@ public class ThemeSelectorCard extends UiPart<Region> {
    </children>
 </VBox>
 ```
-###### \resources\view\ThemeSelectorCard.fxml
+###### /resources/view/ThemeSelectorCard.fxml
 ``` fxml
 
 <?import javafx.scene.control.Label?>

@@ -134,7 +134,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return false;
         }
-        //@@author Srivatsa
+        //@@author Sri-vatsa
         @Override
         public void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException {
             fail("This method should not be called.");
@@ -172,7 +172,7 @@ public class AddCommandTest {
         public void recordSearchHistory() throws CommandException {
             fail("This method should not be called.");
         }
-        //@@author Srivatsa
+        //@@author Sri-vatsa
         @Override
         public void sortPersonListBySearchCount() {
             fail("This method should not be called.");

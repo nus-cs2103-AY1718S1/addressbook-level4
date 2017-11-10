@@ -1,5 +1,5 @@
 # liuhang0213
-###### \java\seedu\address\logic\commands\NextMeetingCommandTest.java
+###### /java/seedu/address/logic/commands/NextMeetingCommandTest.java
 ``` java
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalMeetings.getTypicalMeetingList;
@@ -53,7 +53,7 @@ public class NextMeetingCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\PrefCommandTest.java
+###### /java/seedu/address/logic/commands/PrefCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code PrefCommand}.
@@ -132,7 +132,7 @@ public class PrefCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\PrefCommandParserTest.java
+###### /java/seedu/address/logic/parser/PrefCommandParserTest.java
 ``` java
 public class PrefCommandParserTest {
 
@@ -163,7 +163,7 @@ public class PrefCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\model\UniqueMeetingListTest.java
+###### /java/seedu/address/model/UniqueMeetingListTest.java
 ``` java
 public class UniqueMeetingListTest {
 
@@ -214,7 +214,7 @@ public class UniqueMeetingListTest {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlMeetingListStorageTest.java
+###### /java/seedu/address/storage/XmlMeetingListStorageTest.java
 ``` java
 
 public class XmlMeetingListStorageTest {
@@ -318,7 +318,7 @@ public class XmlMeetingListStorageTest {
 
 }
 ```
-###### \java\seedu\address\testutil\MeetingBuilder.java
+###### /java/seedu/address/testutil/MeetingBuilder.java
 ``` java
 /**
  * A utility class to help with building Meeting objects.
@@ -348,7 +348,7 @@ public class MeetingBuilder {
 
 }
 ```
-###### \java\seedu\address\testutil\TypicalMeetings.java
+###### /java/seedu/address/testutil/TypicalMeetings.java
 ``` java
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.

@@ -1,5 +1,5 @@
 # liuhang0213
-###### \java\seedu\address\logic\commands\NextMeetingCommand.java
+###### /java/seedu/address/logic/commands/NextMeetingCommand.java
 ``` java
 /**
  * Lists all upcoming meetings to the user.
@@ -42,7 +42,7 @@ public class NextMeetingCommand extends Command {
 
 
 ```
-###### \java\seedu\address\logic\commands\PrefCommand.java
+###### /java/seedu/address/logic/commands/PrefCommand.java
 ``` java
 /**
  * Edits the details of an existing person in the address book.
@@ -148,7 +148,7 @@ public class PrefCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\parser\PrefCommandParser.java
+###### /java/seedu/address/logic/parser/PrefCommandParser.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
@@ -187,7 +187,7 @@ public class PrefCommandParser implements Parser<PrefCommand> {
     }
 }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
      * Returns the maximum internal index in the unique person list
@@ -202,7 +202,7 @@ public class PrefCommandParser implements Parser<PrefCommand> {
     }
 
 ```
-###### \java\seedu\address\model\Meeting.java
+###### /java/seedu/address/model/Meeting.java
 ``` java
 /**
  * Represents a Meeting
@@ -307,7 +307,7 @@ public class Meeting implements ReadOnlyMeeting {
     */
 }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     /** Raises an event to indicate a person been added */
     private void indicatePersonAdded(ReadOnlyPerson person) {
@@ -315,7 +315,7 @@ public class Meeting implements ReadOnlyMeeting {
     }
 
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     /** Raises an event to indicate a person been edited */
     private void indicatePersonEdited(ReadOnlyPerson person) {
@@ -323,7 +323,7 @@ public class Meeting implements ReadOnlyMeeting {
     }
 
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     /** Raises an event to indicate a person been deleted */
     private void indicatePersonDeleted(ReadOnlyPerson person) {
@@ -337,7 +337,7 @@ public class Meeting implements ReadOnlyMeeting {
         indicatePersonDeleted(target);
     }
 ```
-###### \java\seedu\address\model\person\InternalId.java
+###### /java/seedu/address/model/person/InternalId.java
 ``` java
 import seedu.address.commons.exceptions.IllegalValueException;
 
@@ -385,7 +385,7 @@ public class InternalId {
 
 }
 ```
-###### \java\seedu\address\model\person\UniquePersonList.java
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
     /**
      * Returns the maximum internal index among all persons in the address book
@@ -404,7 +404,7 @@ public class InternalId {
     }
 
 ```
-###### \java\seedu\address\model\person\UniquePersonList.java
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
     /**
      * Updates the maximum internal index among all persons in the person list
@@ -423,7 +423,7 @@ public class InternalId {
     }
 
 ```
-###### \java\seedu\address\model\ReadOnlyAddressBook.java
+###### /java/seedu/address/model/ReadOnlyAddressBook.java
 ``` java
     /**
      * Returns an unmodifiable view of a person by the given internal index
@@ -440,7 +440,7 @@ public class InternalId {
 
 }
 ```
-###### \java\seedu\address\model\ReadOnlyMeetingList.java
+###### /java/seedu/address/model/ReadOnlyMeetingList.java
 ``` java
 /**
  * Unmodifiable view of a meeting list
@@ -460,7 +460,7 @@ public interface ReadOnlyMeetingList {
     ReadOnlyMeeting getUpcomingMeeting();
 }
 ```
-###### \java\seedu\address\model\UniqueMeetingList.java
+###### /java/seedu/address/model/UniqueMeetingList.java
 ``` java
 /**
  * A list of meetings that enforces no nulls and uniqueness between its elements.
@@ -557,7 +557,7 @@ public class UniqueMeetingList implements Iterable<ReadOnlyMeeting>, ReadOnlyMee
     }
 
 ```
-###### \java\seedu\address\storage\AddressBookStorage.java
+###### /java/seedu/address/storage/AddressBookStorage.java
 ``` java
     /**
      * Backs up the current state of addressbook to local storage
@@ -573,7 +573,7 @@ public class UniqueMeetingList implements Iterable<ReadOnlyMeeting>, ReadOnlyMee
 
 }
 ```
-###### \java\seedu\address\storage\MeetingListStorage.java
+###### /java/seedu/address/storage/MeetingListStorage.java
 ``` java
 /**
  * Represents a storage for meetings
@@ -626,7 +626,7 @@ public interface MeetingListStorage {
 
 }
 ```
-###### \java\seedu\address\storage\Storage.java
+###### /java/seedu/address/storage/Storage.java
 ``` java
     @Subscribe
     void handlePersonChangedEvent(PersonChangedEvent event);
@@ -640,7 +640,7 @@ public interface MeetingListStorage {
     void saveFileFromUrl(String urlString, String filePath) throws IOException;
 
 ```
-###### \java\seedu\address\storage\Storage.java
+###### /java/seedu/address/storage/Storage.java
 ``` java
     /**
      * Downloads gravatar image and save in local storage using each person's email address
@@ -650,7 +650,7 @@ public interface MeetingListStorage {
     void downloadProfilePhoto(ReadOnlyPerson person, String def);
 }
 ```
-###### \java\seedu\address\storage\StorageManager.java
+###### /java/seedu/address/storage/StorageManager.java
 ``` java
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
@@ -662,7 +662,7 @@ public interface MeetingListStorage {
     }
 
 ```
-###### \java\seedu\address\storage\StorageManager.java
+###### /java/seedu/address/storage/StorageManager.java
 ``` java
     @Override
     @Subscribe
@@ -775,7 +775,7 @@ public interface MeetingListStorage {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlAdaptedMeeting.java
+###### /java/seedu/address/storage/XmlAdaptedMeeting.java
 ``` java
 /**
  * JAXB-friendly version of the Person.
@@ -830,7 +830,7 @@ public class XmlAdaptedMeeting {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlAdaptedPerson.java
+###### /java/seedu/address/storage/XmlAdaptedPerson.java
 ``` java
     /**
      * Returns the internal id of the person as read from the xml file
@@ -841,7 +841,7 @@ public class XmlAdaptedMeeting {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlAddressBookStorage.java
+###### /java/seedu/address/storage/XmlAddressBookStorage.java
 ``` java
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
@@ -855,7 +855,7 @@ public class XmlAdaptedMeeting {
 
 }
 ```
-###### \java\seedu\address\storage\XmlMeetingListStorage.java
+###### /java/seedu/address/storage/XmlMeetingListStorage.java
 ``` java
 /**
  * A class to access Meeting data stored as an xml file on the hard disk.
@@ -942,7 +942,7 @@ public class XmlMeetingListStorage implements MeetingListStorage {
 
 }
 ```
-###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+###### /java/seedu/address/storage/XmlSerializableAddressBook.java
 ``` java
     @Override
     public ReadOnlyPerson getPersonByInternalIndex(int index) throws PersonNotFoundException {
@@ -971,7 +971,7 @@ public class XmlMeetingListStorage implements MeetingListStorage {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlSerializableData.java
+###### /java/seedu/address/storage/XmlSerializableData.java
 ``` java
 /**
  * An abstract class for address book and meeting list
@@ -980,7 +980,7 @@ public class XmlMeetingListStorage implements MeetingListStorage {
 public abstract class XmlSerializableData {
 }
 ```
-###### \java\seedu\address\storage\XmlSerializableMeetingList.java
+###### /java/seedu/address/storage/XmlSerializableMeetingList.java
 ``` java
 /**
  * An Immutable MeetingList that is serializable to XML format
@@ -1031,7 +1031,7 @@ public class XmlSerializableMeetingList extends XmlSerializableData implements R
     }
 }
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     private void setPersonListPanel() {
         try {
@@ -1040,12 +1040,12 @@ public class XmlSerializableMeetingList extends XmlSerializableData implements R
             personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
         } catch (IllegalStateException e) {
             logger.info("Cannot update profile photo on a non-main thread. "
-                    + "Type 'list' to see the new profile photos. '¯\\_(ツ)_/¯");
+                    + "Type 'list' to see the new profile photos. '??\\_(???)_/??");
         }
     }
 
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     @Subscribe
     private void handleDefaultProfilePhotoChangedEvent(PrefDefaultProfilePhotoChangedEvent event) {
@@ -1069,7 +1069,7 @@ public class XmlSerializableMeetingList extends XmlSerializableData implements R
     }
 }
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     /**
      * Initializes the profile picture using Gravatar
