@@ -18,7 +18,11 @@ It shows how all the features implemented by the author work.
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=retrievetaguntagretag]
+include::../UserGuide.adoc[tag=tagsmanipulation]
+
+include::../UserGuide.adoc[tag=retrieve]
+
+include::../UserGuide.adoc[tag=view]
 
 #End of Extract#
 

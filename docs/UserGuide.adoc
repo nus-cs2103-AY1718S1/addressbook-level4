@@ -386,6 +386,7 @@ Selects the 2nd person in the Gentleman's Guide.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::view[]
 === Opening full profile of a person : `view`
 
 *The Gentleman comes across the contact of an old friend who he has not seen for a long time.
@@ -399,6 +400,7 @@ Format: `view INDEX`
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
+// end::view[]
 
 Examples:
 
@@ -454,26 +456,11 @@ Format: `sortPriority`
 
 // end::sort[]
 
-// tag::retrievetaguntagretag[]
-=== Retrieving all persons having an existing tag : `retrieve`
-
-Lists all contacts having a certain existing tag in the Gentleman's Guide. +
-Format: `retrieve TAG`
-
-****
-* Retrieves all persons having the specified `TAG` tag.
-* The tag name *must be alphanumeric*
-****
-
-Examples:
-
-* `retrieve friends` +
-Retrieves all persons with the "friends" tag in the Gentleman's Guide.
-
+// tag::tagsmanipulation[]
 === Tagging multiple persons : `tag`
 
-*As a Gentleman, you want to keep track of what relevant information such as where you met your contacts.
-Thus you tag your contacts*
+*As a Gentleman, you want to keep track of relevant information about your contacts such as where you met the contact owners and what your relationships with them are.
+Thus, you tag your contacts.*
 
 Tags the persons identified by the index numbers used in the last person listing. +
 Format: `tag INDEX,[MORE_INDEXES],... TAG`
@@ -494,7 +481,7 @@ Assigns the "friends" tag to the 1st, 2nd and 3rd persons in the results of the 
 === Untagging multiple persons : `untag`
 
 *As a Gentleman, you want to be up to date of relevant information about your contacts.
-Thus you can untag your contacts*
+Thus you can untag your contacts.*
 
 Removes the specified tags from the persons identified by the index numbers used in the last person listing. +
 Format: `tag INDEX,[MORE_INDEXES],... TAG/[MORE_TAGS]/...`
@@ -526,12 +513,12 @@ Removes the "friends" and "enemies" tags from all persons in the results of the 
 `untag -a` +
 Removes all tags from all persons in the results of the `list` command.
 
-=== Renaming an existing tag : `retag`
+=== Renaming a tag in contact list : `retag`
 
 *As a Gentleman, you want to be up to date of relevant information about your contacts.
-Thus you can retag your contacts*
+Thus you can retag your contacts.*
 
-Renames a certain existing tag to a new tag name. +
+Renames a certain tag in contact list to a new tag name. +
 Format: `retag OLD_TAG NEW_TAG`
 
 ****
@@ -544,7 +531,24 @@ Examples:
 
 * `retag enemies friends` +
 Renames the existing "enemies" tag in the Gentleman's Guide to "friends".
-// end::retrievetaguntagretag[]
+// end::tagsmanipulation[]
+
+// tag::retrieve[]
+=== Retrieving all persons having an existing tag : `retrieve`
+
+Lists all contacts having a certain existing tag in the Gentleman's Guide. +
+Format: `retrieve TAG`
+
+****
+* Retrieves all persons having the specified `TAG` tag.
+* The tag name *must be alphanumeric*
+****
+
+Examples:
+
+* `retrieve friends` +
+Retrieves all persons with the "friends" tag in the Gentleman's Guide.
+// end::retrieve[]
 
 === Listing entered commands : `history`
 
