@@ -30,7 +30,7 @@ public class CommandBoxParser {
     private static final  String EMPTY_STRING = "";
 
     /**
-     * Used for initial separation of command word and args.
+     * Used for initial separation of command word and args
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
@@ -38,7 +38,7 @@ public class CommandBoxParser {
         PREFIX_DELIVERY_DATE, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_STATUS, PREFIX_TAG};
 
     /**
-     * Parses {@code String} to see if it contains any instances of a {@code Command} and {@code Prefix}.
+     * Parses {@code String} to see if it contains any instances of a {@code Command} and {@code Prefix}
      *
      * @return {@code String} array containing the {@code Command} at index 0 and the remaining arguments at index 1
      */
@@ -58,7 +58,7 @@ public class CommandBoxParser {
     }
 
     /**
-     * Returns the ArrayList of prefixes that are missing from the {@code String argument}.
+     * Returns the ArrayList of prefixes that are missing from the {@code String argument}
      */
     public ArrayList<String> getMissingPrefixes(String argument) {
         Prefix[] prefixes = ALL_PREFIXES;

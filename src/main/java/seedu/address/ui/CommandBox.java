@@ -82,7 +82,7 @@ public class CommandBox extends UiPart<Region> {
      */
     private void updateAutocompleter() {
         String currentText = commandTextField.getText();
-        autocompleter.updateState(currentText);
+        autocompleter.updateAutocompleter(currentText);
     }
 
     /**
