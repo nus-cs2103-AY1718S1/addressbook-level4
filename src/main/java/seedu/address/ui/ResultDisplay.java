@@ -29,7 +29,7 @@ public class ResultDisplay extends UiPart<Region> {
     private static final HashMap<String, String> allCommandUsages = Commands.getAllCommandUsages();
 
     private static final String CASE_INSENSITIVE_AND_WORD_START_REGEX = "(?i)^";
-    private static final String OPTIONAL_ALPANUMERIC_CHARACTERS_REGEX = "\\w*";
+    private static final String OPTIONAL_ALPHANUMERIC_CHARACTERS_REGEX = "\\w*";
 
 
     private final StringProperty displayed = new SimpleStringProperty("");
@@ -93,7 +93,7 @@ public class ResultDisplay extends UiPart<Region> {
             if (currentInput.length() == 0
                     || (currentInput.length() < commandWord.length()
                         && commandWord.matches(CASE_INSENSITIVE_AND_WORD_START_REGEX
-                            + currentInput + OPTIONAL_ALPANUMERIC_CHARACTERS_REGEX))) {
+                            + currentInput + OPTIONAL_ALPHANUMERIC_CHARACTERS_REGEX))) {
                 matchingSuggestions.add(commandWord);
             }
         }

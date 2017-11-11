@@ -91,6 +91,10 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getResultDisplay();
     }
 
+    public ResultDisplayHandle getInfoDisplay() {
+        return mainWindowHandle.getInfoDisplay();
+    }
+
     /**
      * Executes {@code command} in the application's {@code CommandBox}.
      * Method returns after UI components have been updated.

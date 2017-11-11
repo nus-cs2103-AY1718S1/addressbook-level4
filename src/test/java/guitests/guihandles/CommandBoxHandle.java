@@ -25,14 +25,22 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
 
     //@@author joanneong
     /**
-     * Enters the given input in the Command Box without executing the input and
+     * Enters the given input in the {@code CommandBox} without executing the input and
+     * without using autocompletion.
+     */
+    public void enterInputWithoutAutocompletion(String input) {
+        click();
+        guiRobot.interact(() -> getRootNode().setText(input));
+    }
+
+    /**
+     * Enters the given input in the {@code CommandBox} without executing the input and
      * chooses the first option in the auto-complete suggestions.
      *
      * Note that the input is not executed.
      */
     public void enterInput(String input) {
-        click();
-        guiRobot.interact(() -> getRootNode().setText(input));
+        enterInputWithoutAutocompletion(input);
 
         guiRobot.type(KeyCode.TAB);
     }
