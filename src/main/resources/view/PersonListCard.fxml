@@ -32,7 +32,7 @@
         <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
       </HBox>
       <FlowPane fx:id="tags" />
-
+      <!-- @@author Lenaldnwj -->
       <Label fx:id="phone" lineSpacing="10.0" styleClass="cell_small_label" text="\$phone">
         <graphic>
           <ImageView>
