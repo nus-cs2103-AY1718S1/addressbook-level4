@@ -8,7 +8,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MODULE_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_SLOT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 
+import seedu.address.MainApp;
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.module.BookedSlot;
@@ -16,6 +18,8 @@ import seedu.address.model.module.Lesson;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
+
+import java.util.logging.Logger;
 
 //@@author junming403
 /**
@@ -45,6 +49,8 @@ public class AddCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_LESSON = "This lesson already exists in the ModU";
     public static final String MESSAGE_DUPLICATE_BOOKEDSLOT =
             "This time slot have already been booked in this location";
+    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+
 
     private final Lesson toAdd;
 
@@ -63,10 +69,13 @@ public class AddCommand extends UndoableCommand {
             model.addLesson(toAdd);
             model.handleListingUnit();
             EventsCenter.getInstance().post(new ViewedLessonEvent());
+            logger.info("---[Add success]Added lesson: " + toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateLessonException e) {
+            logger.info("---[Add failure]Duplicate lesson: " + toAdd);
             throw new CommandException(MESSAGE_DUPLICATE_LESSON);
         } catch (DuplicateBookedSlotException s) {
+            logger.info("---[Add failure]Duplicate time slot: " + toAdd.getTimeSlot());
             throw new CommandException(MESSAGE_DUPLICATE_BOOKEDSLOT);
         }
 

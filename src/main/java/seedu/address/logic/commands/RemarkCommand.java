@@ -100,9 +100,9 @@ public class RemarkCommand extends UndoableCommand {
         if (ListingUnit.getCurrentListingUnit().equals(MODULE)) {
             try {
                 model.deleteRemark(remarkToDelete);
-                logger.info("---Deleted remark:" + remarkToDelete);
+                logger.info("---[Remark deleting success]Deleted remark:" + remarkToDelete);
             } catch (RemarkNotFoundException e) {
-                logger.info("---The remark to delete does not exist: " + remarkContent);
+                logger.info("---[Remark deleting failure]The remark to delete does not exist: " + remarkContent);
                 throw new CommandException(e.getMessage());
             }
             EventsCenter.getInstance().post(new RemarkChangedEvent());
@@ -128,12 +128,12 @@ public class RemarkCommand extends UndoableCommand {
             try {
                 Remark remark = new Remark(remarkContent, moduleToRemark.getCode());
                 model.addRemark(remark);
-                logger.info("---Added Remark: " + remark);
+                logger.info("---[Remark success]Added Remark: " + remark);
             } catch (DuplicateRemarkException e) {
-                logger.info("---Duplicate Remark: " + remarkContent);
+                logger.info("---[Remark failure]Duplicate Remark: " + remarkContent);
                 throw new CommandException(e.getMessage());
             } catch (IllegalValueException e) {
-                logger.info("---Invalid Remark" + remarkContent);
+                logger.info("---[Remark failure]Invalid Remark" + remarkContent);
                 throw new CommandException(e.getMessage());
             }
             EventsCenter.getInstance().post(new RemarkChangedEvent());

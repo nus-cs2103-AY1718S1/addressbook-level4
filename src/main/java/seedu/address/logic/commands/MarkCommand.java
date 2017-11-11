@@ -55,10 +55,10 @@ public class MarkCommand extends UndoableCommand {
         if (ListingUnit.getCurrentListingUnit().equals(LESSON)) {
             try {
                 model.bookmarkLesson(lessonToCollect);
-                logger.info("---Bookmark lesson" + lessonToCollect);
+                logger.info("---[Mark success]Bookmark lesson" + lessonToCollect);
                 EventsCenter.getInstance().post(new RefreshPanelEvent());
             } catch (DuplicateLessonException pnfe) {
-                logger.info("---Lesson already in marked list:" + lessonToCollect);
+                logger.info("---[Mark failure]Lesson already in marked list:" + lessonToCollect);
                 throw new CommandException(pnfe.getMessage());
             }
             return new CommandResult(String.format(MESSAGE_BOOKMARK_LESSON_SUCCESS, lessonToCollect));

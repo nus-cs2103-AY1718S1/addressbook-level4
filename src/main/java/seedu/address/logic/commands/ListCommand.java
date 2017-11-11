@@ -50,13 +50,13 @@ public class ListCommand extends Command {
 
         switch (parameter) {
         case MODULE_KEYWORD :
-            logger.info("---Switching Listing element to " + MODULE_KEYWORD);
+            logger.info("---[List success]Switching Listing element to " + MODULE_KEYWORD);
             return executeListModule();
         case LOCATION_KEYWORD:
-            logger.info("---Switching Listing element to " + LOCATION_KEYWORD);
+            logger.info("---[List success]Switching Listing element to " + LOCATION_KEYWORD);
             return executeListLocation();
         case MARKED_LIST_KEYWORD:
-            logger.info("---Switching to marked lesson list");
+            logger.info("---[List success]Switching to marked lesson list");
             return executeListMarked();
         default:
             assert false : "There cannot be other parameters passed in";

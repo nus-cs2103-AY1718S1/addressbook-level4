@@ -80,19 +80,19 @@ public class ViewCommand extends Command {
         switch (getCurrentListingUnit()) {
 
         case LOCATION:
-            logger.info("---Viewing lessons with location " + toView.getLocation());
+            logger.info("---[View success]Viewing lessons with location " + toView.getLocation());
             predicate = new FixedLocationPredicate(toView.getLocation());
             result = String.format(MESSAGE_VIEW_LOCATION_SUCCESS, toView.getLocation());
             break;
 
         case MODULE:
             predicate = new FixedCodePredicate(toView.getCode());
-            logger.info("---Viewing lessons with module code " + toView.getCode());
+            logger.info("---[View success]Viewing lessons with module code " + toView.getCode());
             result = String.format(MESSAGE_VIEW_MODULE_SUCCESS, toView.getCode());
             break;
 
         default:
-            logger.info("---Viewing failed, invalid listing unit: LESSON");
+            logger.info("---[View success]Viewing failed, invalid listing unit: LESSON");
             throw new CommandException(MESSAGE_VIEW_LESSON_FAILURE);
         }
 

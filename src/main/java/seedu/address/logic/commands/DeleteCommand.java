@@ -84,7 +84,7 @@ public class DeleteCommand extends UndoableCommand {
         Location locationToDelete = lastShownList.get(targetIndex.getZeroBased()).getLocation();
         try {
             deleteLessonsWithLocation(locationToDelete);
-            logger.info("---Deleted lessons with location:" + locationToDelete);
+            logger.info("---[Delete success]Deleted lessons with location:" + locationToDelete);
         } catch (LessonNotFoundException e) {
             assert false : "The target lesson cannot be missing";
         }
@@ -121,7 +121,7 @@ public class DeleteCommand extends UndoableCommand {
 
             deleteLessonsWithCode(moduleToDelete);
             deleteRemarkWithCode(moduleToDelete);
-            logger.info("---Deleted lessons with module code:" + moduleToDelete);
+            logger.info("---[Delete success]Deleted lessons with module code:" + moduleToDelete);
 
         } catch (LessonNotFoundException e) {
             assert false : "The target lesson cannot be missing";
@@ -177,7 +177,7 @@ public class DeleteCommand extends UndoableCommand {
         try {
             model.unbookBookedSlot(new BookedSlot(lessonToDelete.getLocation(), lessonToDelete.getTimeSlot()));
             model.deleteLesson(lessonToDelete);
-            logger.info("---Deleted lesson:" + lessonToDelete);
+            logger.info("---[Delete success]Deleted lesson:" + lessonToDelete);
         } catch (LessonNotFoundException pnfe) {
             assert false : "The target lesson cannot be missing";
         }
