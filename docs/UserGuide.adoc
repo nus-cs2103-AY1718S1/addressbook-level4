@@ -522,7 +522,7 @@ If you want to add a note for a contact:
 
 .   Locate the contact and take note of its index +
 .   Type in your desired INDEX and NOTE +
-`>> note 1 n/This is an important note` +
+`>> note 1 This is an important note` +
 (See Figure 4.13.1) +
 image:note1.png[note1, 600] +
 _Figure 4.13.1_
