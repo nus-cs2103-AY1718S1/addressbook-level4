@@ -16,8 +16,6 @@ import static seedu.address.testutil.TypicalParcels.HOON;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Logger;
 
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -30,6 +28,9 @@ import org.telegram.abilitybots.api.objects.MessageContext;
 import org.telegram.abilitybots.api.sender.MessageSender;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import seedu.address.TestApp;
 import seedu.address.bot.parcel.ParcelParser;
 import seedu.address.commons.core.LogsCenter;

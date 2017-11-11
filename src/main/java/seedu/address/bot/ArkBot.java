@@ -11,9 +11,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import com.google.common.annotations.VisibleForTesting;
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import org.telegram.abilitybots.api.bot.AbilityBot;
 import org.telegram.abilitybots.api.objects.Ability;
 import org.telegram.abilitybots.api.objects.Locality;
@@ -28,6 +25,11 @@ import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.PhotoSize;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+
+import com.google.common.annotations.VisibleForTesting;
+
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import seedu.address.bot.parcel.DisplayParcel;
 import seedu.address.bot.parcel.ParcelParser;
 import seedu.address.bot.qrcode.QRcodeAnalyser;
