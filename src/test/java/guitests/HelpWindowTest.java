@@ -33,7 +33,6 @@ public class HelpWindowTest extends AddressBookGuiTest {
         getProfilePanel().click();
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
-
         //@@author
 
         /*
