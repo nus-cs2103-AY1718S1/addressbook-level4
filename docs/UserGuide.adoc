@@ -92,8 +92,7 @@ Got a meeting with professor or an assignment deadline you need to remember?
 * By default, you can store and update the title, interval (starting time and end time), venue and description of the event. (`addE` and `editE` command)
 * Similar to link:#contacts[contacts], you can add customize properties and add tags to events as well.
 * Setting a starting and/or end time for an event, will be reflected accordingly on the link:#calendar[calendar] component.
-* You can set a notification at a specific time before an event starts (when to arrive at the venue before a meeting
-begins) or before an event ends (when you need to finalize your assignment and submit it to your professor).
+* Reminders will automatically be added upon addition of event and start to notify you from 2 days before the actual event.
 * If one or more of your link:#contacts[contacts] are attending the event with you, you can link them to the event too.
 
 === Calendar
@@ -230,7 +229,7 @@ or if the expression is not simple or clear enough.
 * Reminders in the form of a bell image will be displayed on the event card itself.
 * Red Bell : Day of event +
   Orange Bell: One day before event +
-  Green Bell: Two days before event.
+  Green Bell: Two days before event
 ====
 //end::autoReminders[]
 
@@ -692,6 +691,30 @@ Example:
 * You may need to wait for a while as the application is retrieving information from NUSMods.
 ====
 
+//tag::importGoogle[]
+==== From Google Accounts
+
+_(Coming in v2.0)_
+
+Imports your contacts and events from Google Contacts and Google Calender respectively. +
+Format: `(i)import --google https://myaccount.google.com/`
+
+****
+* Upon execution of the command, you will be brought to Google's login page for authentication.
+* Upon successful authentication, data from Google contacts and calendar will automatically be imported into **BoNUS**'s contact list and event list.
+****
+
+Example:
+`import --google https://myaccount.google.com/`
+
+[NOTE]
+====
+* URL as shown in example is the default URL that will be opened for you
+* You would have to enter your login credentials on Google's sign in page before data from Google Contacts and Google Calendar gets imported.
+* In the case of you not entering proper login credentials after three tries, **BoNUS** will cancel the request for importing from Google.
+====
+//end::importGoogle[]
+
 // tag::exportXml[]
 === Exporting data : `(p)export`
 
@@ -817,6 +840,32 @@ Example:
 If you enter an invalid color name, the background for that tag will be set to transparent temporarily. You can use this
 again to set it to a legal color.
 ====
+
+// tag::bookingNUS[]
+=== Booking of NUS facilities
+
+_(Exclusive feature for NUS students)_
+_(Coming in v2.0)_
+
+The **BoNUS** team understands that booking of facilities in NUS may be troublesome. Therefore, we have decided to integrate
+the facility booking website with **BoNUS** such that upon successful booking of a specific facility, your Events List will
+be updated accordingly with the Date, Time and Venue of booking.
+
+Format: `(book)bookNUS`
+
+* Upon execution the command, you will be brought the the NUS facility booking website on a separate browser.
+* Upon successful booking of the facility, Event with date, time and venue will automatically be added as events to the application.
+
+Example:
+
+* `bookNUS`
+
+[NOTE]
+====
+* Make sure you have stable Internet connection when using this command.
+* There may be some waiting time involved due to the retrieval of information from the website to update **BoNUS**.
+====
+// end::bookingNUS[]
 
 === Exiting the program : `(x)exit`
 
