@@ -3,6 +3,7 @@ package seedu.room.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.room.logic.commands.RemoveTagCommand.MESSAGE_REMOVE_TAG_NOT_EXIST;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -54,6 +55,7 @@ public class ResidentBook implements ReadOnlyResidentBook {
     public ResidentBook(ReadOnlyResidentBook toBeCopied) {
         this();
         resetData(toBeCopied);
+        deleteTemporary();
     }
 
     //// list overwrite operations
@@ -80,6 +82,27 @@ public class ResidentBook implements ReadOnlyResidentBook {
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
     }
+
+    //@@author Haozhe321
+    /**
+     * delete temporary persons on start up of the app
+     */
+    public void deleteTemporary() {
+        UniquePersonList personsList = this.getUniquePersonList();
+
+        Iterator<Person> itr = personsList.iterator(); //iterator to iterate through the persons list
+        while (itr.hasNext()) {
+            Person person = itr.next();
+            LocalDateTime personExpiry = person.getTimestamp().getExpiryTime();
+            LocalDateTime current = LocalDateTime.now();
+            if (personExpiry != null) { //if this is a temporary contact
+                if (current.compareTo(personExpiry) == 1) { //if current time is past the time of expiry
+                    itr.remove();
+                }
+            }
+        }
+    }
+    //@@author
 
     //// person-level operations
 

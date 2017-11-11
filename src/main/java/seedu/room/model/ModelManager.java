@@ -60,11 +60,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.eventBook = new EventBook(eventBook);
         filteredPersons = new FilteredList<>(this.residentBook.getPersonList());
         filteredEvents = new FilteredList<>(this.eventBook.getEventList());
-        try {
-            deleteTemporary(this.residentBook);
-        } catch (PersonNotFoundException e) {
-            logger.warning("no such person found");
-        }
+
     }
 
     public ModelManager() {
@@ -93,26 +89,6 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateResidentBookChanged() {
         raise(new ResidentBookChangedEvent(residentBook));
     }
-
-    //@@author Haozhe321
-    /**
-     * delete temporary persons on start up of the app
-     */
-    public synchronized void deleteTemporary(ResidentBook residentBook) throws PersonNotFoundException {
-        UniquePersonList personsList = residentBook.getUniquePersonList();
-        Iterator<Person> itr = personsList.iterator(); //iterator to iterate through the persons list
-        while (itr.hasNext()) {
-            Person person = itr.next();
-            LocalDateTime personExpiry = person.getTimestamp().getExpiryTime();
-            LocalDateTime current = LocalDateTime.now();
-            if (personExpiry != null) { //if this is a temporary contact
-                if (current.compareTo(personExpiry) == 1) { //if current time is past the time of expiry
-                    itr.remove();
-                }
-            }
-        }
-    }
-    //@@author
 
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
