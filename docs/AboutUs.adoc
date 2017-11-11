@@ -14,7 +14,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Tee You Kuan
 image::teeyk.jpg[width="150", align="left"]
-{empty}[https://github.com/Estois[github]] [<<teeyoukuan#, portfolio>>]
+{empty}[https://github.com/Estois[github]] [https://github.com/CS2103AUG2017-T10-B2/main/blob/master/docs/team/teeyoukuan.adoc[portfolio]]
 
 Role: Developer +
 Responsibilities: Logic, Model
@@ -24,7 +24,7 @@ Responsibilities: Logic, Model
 
 === Wong Zeng Feng
 image::zfwong.jpg[width="150", align="left"]
-{empty}[https://github.com/zengfengw[github]] [<<wongzengfeng#, portfolio>>]
+{empty}[https://github.com/zengfengw[github]] [https://github.com/CS2103AUG2017-T10-B2/main/blob/master/docs/team/wongzengfeng.adoc[portfolio]]
 
 Role: Developer +
 Responsibilities: Logic, Model
@@ -34,7 +34,7 @@ Responsibilities: Logic, Model
 
 === Yan Wei Cheng
 image::yanwc.png[width="150", align="left"]
-{empty}[https://github.com/Affalen[github]] [<<yanweicheng#, portfolio>>]
+{empty}[https://github.com/Affalen[github]] [https://github.com/CS2103AUG2017-T10-B2/main/blob/master/docs/team/yanweicheng.adoc[portfolio]]
 
 Role: Developer +
 Responsibilities: Logic, UI
@@ -44,7 +44,7 @@ Responsibilities: Logic, UI
 
 === Yap Zuo Xuan
 image::yapzx.jpg[width="150", align="left"]
-{empty}[http://github.com/wishingmaid[github]] [<<yapzuoxuan#, portfolio>>]
+{empty}[http://github.com/wishingmaid[github]] [https://github.com/CS2103AUG2017-T10-B2/main/blob/master/docs/team/yapzuoxuan.adoc[portfolio]]
 
 Role: Developer +
 Responsibilities: Logic, Storage, UI
