@@ -17,7 +17,7 @@ We are computing students from NUS, and are based  in the http://www.comp.nus.ed
 
 == Project Team
 
-=== Nicholas Chua
+=== Chua Yun Zhi Nicholas
 image::aboutus_nicholas.jpg[width="150", align="left"]
 {empty}[https://github.com/nicholaschuayunzhi[github]] [https://cs2103aug2017-w11-b4.github.io/main/team/nicholaschuayunzhi.html[project portfolio]]
 
