@@ -1,5 +1,5 @@
 # Sri-vatsa
-###### /java/seedu/address/commons/events/model/MeetingListChangedEvent.java
+###### \java\seedu\address\commons\events\model\MeetingListChangedEvent.java
 ``` java
 /** Indicates the MeetingList in the model has changed*/
 public class MeetingListChangedEvent extends BaseEvent {
@@ -17,7 +17,7 @@ public class MeetingListChangedEvent extends BaseEvent {
 }
 
 ```
-###### /java/seedu/address/logic/commands/AddMeetingCommand.java
+###### \java\seedu\address\logic\commands\AddMeetingCommand.java
 ``` java
 
 import static java.util.Objects.requireNonNull;
@@ -117,7 +117,7 @@ public class AddMeetingCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/DeleteTagCommand.java
+###### \java\seedu\address\logic\commands\DeleteTagCommand.java
 ``` java
 /**
  *
@@ -197,7 +197,7 @@ public class DeleteTagCommand extends UndoableCommand {
 
 }
 ```
-###### /java/seedu/address/logic/commands/FindCommand.java
+###### \java\seedu\address\logic\commands\FindCommand.java
 ``` java
     @Override
     public CommandResult execute() throws CommandException {
@@ -211,7 +211,7 @@ public class DeleteTagCommand extends UndoableCommand {
         return new CommandResult(getMessageForPersonListShownSummary(searchResultsCount));
     }
 ```
-###### /java/seedu/address/logic/commands/ListByMostSearchedCommand.java
+###### \java\seedu\address\logic\commands\ListByMostSearchedCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -238,7 +238,7 @@ public class ListByMostSearchedCommand extends UndoableCommand {
 }
 
 ```
-###### /java/seedu/address/logic/commands/ListCommand.java
+###### \java\seedu\address\logic\commands\ListCommand.java
 ``` java
     @Override
     public CommandResult executeUndoableCommand() {
@@ -246,12 +246,12 @@ public class ListByMostSearchedCommand extends UndoableCommand {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 ```
-###### /java/seedu/address/logic/Logic.java
+###### \java\seedu\address\logic\Logic.java
 ``` java
     /** Returns the address book */
     ArrayList<String> getMeetingNames(ReadOnlyMeeting meeting);
 ```
-###### /java/seedu/address/logic/parser/AddMeetingCommandParser.java
+###### \java\seedu\address\logic\parser\AddMeetingCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddMeetingCommand object
@@ -299,7 +299,7 @@ public class AddMeetingCommandParser implements Parser<AddMeetingCommand>  {
 
 }
 ```
-###### /java/seedu/address/logic/parser/CliSyntax.java
+###### \java\seedu\address\logic\parser\CliSyntax.java
 ``` java
     public static final Prefix PREFIX_DATE = new Prefix("on ");
     public static final Prefix PREFIX_TIME = new Prefix("from ");
@@ -309,7 +309,7 @@ public class AddMeetingCommandParser implements Parser<AddMeetingCommand>  {
 
 }
 ```
-###### /java/seedu/address/logic/parser/DeleteTagCommandParser.java
+###### \java\seedu\address\logic\parser\DeleteTagCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -347,7 +347,7 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand>  {
 
 
 ```
-###### /java/seedu/address/logic/parser/exceptions/IllegalDateTimeException.java
+###### \java\seedu\address\logic\parser\exceptions\IllegalDateTimeException.java
 ``` java
 
 /**
@@ -361,7 +361,7 @@ public class IllegalDateTimeException extends IllegalValueException {
 
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> location} into an {@code Optional<String>} if {@code location} is present.
@@ -373,7 +373,7 @@ public class IllegalDateTimeException extends IllegalValueException {
     }
 
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> date} into an {@code Optional<String>} if {@code date} is present.
@@ -385,7 +385,7 @@ public class IllegalDateTimeException extends IllegalValueException {
     }
 
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> time} into an {@code Optional<String>} if {@code time} is present.
@@ -397,7 +397,7 @@ public class IllegalDateTimeException extends IllegalValueException {
     }
 
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses {@code String date} & {@code String time} if {@code date} & {@code time} are present.
@@ -420,7 +420,7 @@ public class IllegalDateTimeException extends IllegalValueException {
 
 
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> notes} into an {@code Optional<String>} if {@code notes} is present.
@@ -432,7 +432,7 @@ public class IllegalDateTimeException extends IllegalValueException {
     }
 
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses {@code Collection<String> ids} into a {@code Set<>}.
@@ -447,7 +447,7 @@ public class IllegalDateTimeException extends IllegalValueException {
     }
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /***
      * sorts persons in the addressbook by number of times they were previously searched
@@ -464,7 +464,7 @@ public class IllegalDateTimeException extends IllegalValueException {
         persons.sortLexicographically();
     }
 ```
-###### /java/seedu/address/model/asana/AuthenticateAsanaUser.java
+###### \java\seedu\address\model\asana\AuthenticateAsanaUser.java
 ``` java
 import java.awt.Desktop;
 import java.io.IOException;
@@ -530,7 +530,7 @@ public class AuthenticateAsanaUser {
     }
 }
 ```
-###### /java/seedu/address/model/asana/PostTask.java
+###### \java\seedu\address\model\asana\PostTask.java
 ``` java
 
 import java.io.IOException;
@@ -636,7 +636,7 @@ public class PostTask extends Command {
 
 }
 ```
-###### /java/seedu/address/model/asana/storeAccessToken.java
+###### \java\seedu\address\model\asana\StoreAccessToken.java
 ``` java
 
 import seedu.address.logic.commands.Command;
@@ -646,11 +646,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 /**
  * Stores AccessToken hashed
  */
-public class storeAccessToken extends Command {
+public class StoreAccessToken extends Command {
 
     private final String mAccessToken;
 
-    public storeAccessToken(String accessToken) {
+    public StoreAccessToken(String accessToken) {
         mAccessToken = accessToken;
     }
     @Override
@@ -659,7 +659,7 @@ public class storeAccessToken extends Command {
     }
 }
 ```
-###### /java/seedu/address/model/asana/TokenParser.java
+###### \java\seedu\address\model\asana\TokenParser.java
 ``` java
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -667,15 +667,15 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parse accesstoken input from user
  */
-public class TokenParser implements Parser<storeAccessToken> {
+public class TokenParser implements Parser<StoreAccessToken> {
     @Override
-    public storeAccessToken parse(String userInput) throws ParseException {
+    public StoreAccessToken parse(String userInput) throws ParseException {
         //TODO Parse userinput
-        return new storeAccessToken(userInput);
+        return new StoreAccessToken(userInput);
     }
 }
 ```
-###### /java/seedu/address/model/exceptions/DuplicateMeetingException.java
+###### \java\seedu\address\model\exceptions\DuplicateMeetingException.java
 ``` java
 /**
  *Signals that an operation would have violated the 'no duplicates' property of the list.
@@ -686,7 +686,7 @@ public class DuplicateMeetingException extends DuplicateDataException {
     }
 }
 ```
-###### /java/seedu/address/model/exceptions/IllegalIdException.java
+###### \java\seedu\address\model\exceptions\IllegalIdException.java
 ``` java
 
 /***
@@ -699,7 +699,7 @@ public class IllegalIdException extends IllegalValueException {
     }
 }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /** Deletes given tag from everyone in the addressbook */
     boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException;
@@ -708,7 +708,7 @@ public class IllegalIdException extends IllegalValueException {
     /** Add accessToken to meetingsList*/
     //void addAccessToken(String accessToken);
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /**
      * Updates search count for each person who is searched using {@code FindCommand}
@@ -727,7 +727,7 @@ public class IllegalIdException extends IllegalValueException {
     void sortPersonListLexicographically();
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     /** Raises an event to indicate the model has chnaged */
     private void indicateMeetingListChanged() {
@@ -735,7 +735,7 @@ public class IllegalIdException extends IllegalValueException {
     }
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException {
@@ -761,7 +761,7 @@ public class IllegalIdException extends IllegalValueException {
         return hasOneOrMoreDeletion;
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
 
     /***
@@ -796,7 +796,7 @@ public class IllegalIdException extends IllegalValueException {
     }*/
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     /***
      * Records how many times each person in addressbook is searched for
@@ -824,7 +824,7 @@ public class IllegalIdException extends IllegalValueException {
         }
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     //=========== Sort addressBook methods =============================================================
     /***
@@ -837,7 +837,7 @@ public class IllegalIdException extends IllegalValueException {
         indicateAddressBookChanged();
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     /***
      * Sorts persons in Address book alphabetically
@@ -849,14 +849,14 @@ public class IllegalIdException extends IllegalValueException {
         indicateAddressBookChanged();
     }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     @Override
     public SearchData getSearchData() {
         return searchCount.get();
     }
 ```
-###### /java/seedu/address/model/person/SearchData.java
+###### \java\seedu\address\model\person\SearchData.java
 ``` java
 package seedu.address.model.person;
 
@@ -918,7 +918,7 @@ public class SearchData {
 
 }
 ```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
     /***
      * sort addressbook persons by number of times they were searched for
@@ -985,7 +985,7 @@ public class SearchData {
 
     }
 ```
-###### /java/seedu/address/model/UniqueMeetingList.java
+###### \java\seedu\address\model\UniqueMeetingList.java
 ``` java
     /**
      * Sorts the meeting by date. For retrieving earliest meeting in the list
@@ -1066,7 +1066,7 @@ public class SearchData {
 
 }
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
     public static final String DEFAULT_PAGE = "default.html";
     public static final String LINKEDIN_SEARCH_URL_PREFIX = "https://www.linkedin.com/search/results/";
@@ -1079,7 +1079,7 @@ public class SearchData {
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
     public static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
     /***
      * Loads person page
@@ -1093,15 +1093,20 @@ public class SearchData {
             } catch (CommandException e) {
                 e.printStackTrace();
             }
+        } else if (hasMapsBeenChosen) {
+            try {
+                loadPersonMap(person);
+            } catch (CommandException e) {
+                e.printStackTrace();
+            }
         } else {
-
             loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
                     + GOOGLE_SEARCH_URL_SUFFIX);
         }
     }
 
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
 
     /***
@@ -1111,7 +1116,8 @@ public class SearchData {
         if (personSelected == null) {
             throw new CommandException("Please select a person");
         }
-        hasLinkedinBeenChosen = true;
+        setLinkedinChosenTrue();
+        setMapsChosenFalse();
         String[] name = personSelected.getName().fullName.split(" ");
 
         loadPage(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
@@ -1119,7 +1125,7 @@ public class SearchData {
                 + LINKEDIN_URL_SUFFIX);
     }
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
 
     /**
@@ -1133,7 +1139,7 @@ public class SearchData {
         hasLinkedinBeenChosen = false;
     }
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
     @Subscribe
     private void handleBrowserPanelSelectionChangedEvent(BrowserPanelSelectionChangedEvent event)
@@ -1143,19 +1149,22 @@ public class SearchData {
             loadLinkedIn();
         } else if (event.getBrowserSelection().equals("google")) {
             hasLinkedinBeenChosen = false;
+            hasMapsBeenChosen = false;
             loadPersonPage(personSelected);
+        } else if (event.getBrowserSelection().equals("maps")) {
+            loadPersonMap(personSelected);
         }
     }
 
     //@author martyn-wong
     @Subscribe
-    private void handleMapPanelEvent(MapPersonEvent event) {
+    private void handleMapPanelEvent(MapPersonEvent event) throws CommandException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonMap(event.getPerson());
     }
 }
 ```
-###### /java/seedu/address/ui/ResultDisplay.java
+###### \java\seedu\address\ui\ResultDisplay.java
 ``` java
 
     public ResultDisplay(String message) {
