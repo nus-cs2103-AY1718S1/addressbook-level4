@@ -116,6 +116,13 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
                 + MIXED_TIME_DESC_INTERNSHIP + TAG_DESC_URGENT;
         assertCommandSuccess(command, toAdd);
 
+        /* Case: add a task with an invalid start time and a valid end time -> only end time accepted */
+        toAdd = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP).withDeadline(VALID_DEADLINE_INTERNSHIP)
+                .withStartTime("").withEndTime(VALID_ENDTIME_INTERNSHIP).withTags(VALID_TAG_URGENT).build();
+        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + DEADLINE_DESC_INTERNSHIP
+                + INVALID_STARTTIME_VALID_ENDTIME_DESC + TAG_DESC_URGENT;
+        assertCommandSuccess(command, toAdd);
+
         /* Case: add to empty address book -> added */
         executeCommand(ClearCommand.COMMAND_WORD);
         assert getModel().getAddressBook().getTaskList().size() == 0;
@@ -156,15 +163,10 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
                 + INVALID_STARTTIME_DESC + TAG_DESC_URGENT;
         assertCommandFailure(command, DateTimeValidator.MESSAGE_TIME_CONSTRAINTS);
 
-        /* Case: add a task with an invalid start time and a valid end time -> rejected */
-        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + DEADLINE_DESC_INTERNSHIP
-                + INVALID_STARTTIME_VALID_ENDTIME_DESC + TAG_DESC_URGENT;
-        assertCommandFailure(command, DateTimeValidator.MESSAGE_TIME_CONSTRAINTS);
-
         /* Case: add a task with start time after end time -> rejected */
         command = AddTaskCommand.COMMAND_WORD + " " + VALID_DESCRIPTION_INTERNSHIP + DEADLINE_DESC_INTERNSHIP
                 + INVALID_TIME_DESC_INCORRECT_ORDER;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
+        assertCommandFailure(command, DateTimeValidator.MESSAGE_TIME_CONSTRAINTS);
 
         /* Case: invalid deadline -> rejected */
         command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + TIME_DESC_INTERNSHIP

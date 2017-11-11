@@ -104,6 +104,8 @@ public class CommandTestUtil {
     public static final String DEADLINE_DESC_INTERNSHIP = " " + PREFIX_DEADLINE_ON + " " + VALID_DEADLINE_INTERNSHIP;
     public static final String DEADLINE_DESC_GRAD_SCHOOL = " " + PREFIX_DEADLINE_BY + " " + VALID_DEADLINE_GRAD_SCHOOL;
     public static final String DEADLINE_DESC_PAPER = " " + PREFIX_DEADLINE_ON + " " + VALID_DEADLINE_PAPER;
+    public static final String STARTTIME_DESC_INTERNSHIP = " " + PREFIX_TIME_AT + " " + VALID_STARTTIME_INTERNSHIP;
+    public static final String ENDTTIME_DESC_INTERNSHIP = " " + PREFIX_TIME_AT + " " + VALID_ENDTIME_INTERNSHIP;
     public static final String TIME_DESC_INTERNSHIP = " " + PREFIX_TIME_AT + " " + VALID_STARTTIME_INTERNSHIP + " "
             + PREFIX_ENDTIME_TO + " " + VALID_ENDTIME_INTERNSHIP;
     public static final String TIME_DESC_GRAD_SCHOOL = " " + PREFIX_TIME_AT + " " + VALID_STARTTIME_GRAD_SCHOOL + " "
@@ -112,7 +114,7 @@ public class CommandTestUtil {
             " to " + VALID_ENDTIME_GRAD_SCHOOL;
     public static final String MIXED_TIME_DESC_GRAD_SCHOOL = " " + PREFIX_TIME_AT + " " + VALID_STARTTIME_GRAD_SCHOOL +
             " to " + VALID_ENDTIME_INTERNSHIP;
-    public static final String TIME_DESC_PAPER = " " + PREFIX_TIME_AT + " " + VALID_ENDTIME_PAPER;
+    public static final String ENDTIME_DESC_PAPER = " " + PREFIX_TIME_AT + " " + VALID_ENDTIME_PAPER;
     public static final String TIME_DESC_GYM = " " + PREFIX_TIME_AT + " " + VALID_STARTTIME_GYM + " "
             + PREFIX_ENDTIME_TO + " " + VALID_ENDTIME_GYM;
     public static final String TAG_DESC_URGENT = " " + PREFIX_TAG + VALID_TAG_URGENT;

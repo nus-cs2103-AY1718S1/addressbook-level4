@@ -60,6 +60,7 @@ public abstract class DateTimeValidator {
             Date parsedEndTime = new SimpleDateFormat("HH:mm").parse(endTime.toString());
             return parsedStartTime.before(parsedEndTime);
         } catch (ParseException p) {
+            assert(!startTime.isPresent() | !endTime.isPresent());
             return true;
         }
     }

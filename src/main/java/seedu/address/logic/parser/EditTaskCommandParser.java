@@ -59,6 +59,12 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
                     .ifPresent(editTaskDescriptor::setEventTimes);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
 
+            if (editTaskDescriptor.getStartTime().isPresent() && editTaskDescriptor.getEndTime().isPresent()
+                    && !DateTimeValidator.isStartTimeBeforeEndTime(editTaskDescriptor.getStartTime().get(),
+                    editTaskDescriptor.getEndTime().get())) {
+                throw new IllegalValueException(DateTimeValidator.MESSAGE_TIME_CONSTRAINTS);
+            }
+
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -66,8 +72,6 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
         if (!editTaskDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditTaskCommand.MESSAGE_NOT_EDITED);
         }
-
-      //  if (!DateTimeValidator.isStartTimeBeforeEndTime(editTaskDescriptor.getStartTime(), editTaskDescriptor.getEndTime()))
 
         return new EditTaskCommand(index, editTaskDescriptor);
     }

@@ -10,14 +10,18 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESCRIPTION;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_NOT_URGENT;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_URGENT;
+import static seedu.address.logic.commands.CommandTestUtil.TIME_DESC_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.UNQUOTED_DESCRIPTION_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENDTIME_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTTIME_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_NOT_URGENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_URGENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_AT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TASKS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
@@ -48,8 +52,8 @@ import seedu.address.testutil.TaskUtil;
 //@@author raisa2010
 public class EditTaskCommandSystemTest extends AddressBookSystemTest {
 
-   /* @Test
-   /* public void edit() throws Exception {
+    @Test
+    public void edit() throws Exception {
         Model expectedModel = getModel();
         String commandMode = ChangeModeCommand.COMMAND_WORD + " tm";
         String expectedResultMessage = String.format(MESSAGE_CHANGE_MODE_SUCCESS, "taskmanager");
@@ -60,56 +64,56 @@ public class EditTaskCommandSystemTest extends AddressBookSystemTest {
         /* Case: edit all fields, command with leading spaces, trailing spaces and multiple spaces between each field
          * -> edited
          */
-      /*  Index index = INDEX_FIRST_TASK;
+        Index index = INDEX_FIRST_TASK;
         String command = " " + EditTaskCommand.COMMAND_WORD + "  " + index.getOneBased() + "  "
-                + VALID_DESCRIPTION_INTERNSHIP + "  " + STARTDATE_DESC_INTERNSHIP + " " + DEADLINE_DESC_INTERNSHIP
+                + VALID_DESCRIPTION_INTERNSHIP + "  " + TIME_DESC_INTERNSHIP + " " + DEADLINE_DESC_INTERNSHIP
                 + "  " + TAG_DESC_URGENT + " ";
         Task editedTask = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP)
-                .withStartDate(VALID_STARTDATE_INTERNSHIP).withDeadline(VALID_DEADLINE_INTERNSHIP)
-                .withTags(VALID_TAG_URGENT).build();
+                .withStartTime(VALID_STARTTIME_INTERNSHIP).withEndTime(VALID_ENDTIME_INTERNSHIP)
+                .withDeadline(VALID_DEADLINE_INTERNSHIP).withTags(VALID_TAG_URGENT).build();
         assertCommandSuccess(command, index, editedTask);
 
         /* Case: undo editing the last task in the list -> last task restored */
-      /*  command = UndoCommand.COMMAND_WORD;
+        command = UndoCommand.COMMAND_WORD;
         expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case: redo editing the last person in the list -> last person edited again */
-        /*command = RedoCommand.COMMAND_WORD;
+        command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         expectedModel.updateTask(
                 getModel().getFilteredTaskList().get(INDEX_FIRST_PERSON.getZeroBased()), editedTask);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case: edit a task with new values same as existing values -> edited */
-     /*   command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + VALID_DESCRIPTION_INTERNSHIP
-                + STARTDATE_DESC_INTERNSHIP + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT;
+        command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + VALID_DESCRIPTION_INTERNSHIP
+                + TIME_DESC_INTERNSHIP + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT;
         assertCommandSuccess(command, index, INTERNSHIP);
 
         /* Case: edit some fields -> edited */
-       /* index = INDEX_FIRST_TASK;
+        index = INDEX_FIRST_TASK;
         command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_NOT_URGENT;
         ReadOnlyTask taskToEdit = getModel().getFilteredTaskList().get(index.getZeroBased());
         editedTask = new TaskBuilder(taskToEdit).withTags(VALID_TAG_NOT_URGENT).build();
         assertCommandSuccess(command, index, editedTask);
 
         /* Case: clear tags -> cleared */
-      /*  index = INDEX_FIRST_TASK;
+        index = INDEX_FIRST_TASK;
         command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_TAG.getPrefix();
         editedTask = new TaskBuilder(taskToEdit).withTags().build();
         assertCommandSuccess(command, index, editedTask);
 
-        /* Case: clear start dates -> cleared */
-     /*   index = INDEX_FIRST_TASK;
-        command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_STARTDATE.getPrefix()
+        /* Case: clear times -> cleared */
+      /*  index = INDEX_FIRST_TASK;
+        command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_TIME_AT.getPrefix()
                 + TAG_DESC_URGENT;
-        editedTask = new TaskBuilder(taskToEdit).withStartDate("").build();
-        assertCommandSuccess(command, index, editedTask);
+        editedTask = new TaskBuilder(taskToEdit).withStartTime("").withEndTime("").build();
+        assertCommandSuccess(command, index, editedTask);*/
 
         /* Case: clear deadlines -> cleared */
-      /*  index = INDEX_FIRST_TASK;
+        index = INDEX_FIRST_TASK;
         command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_DEADLINE_BY.getPrefix()
-                + STARTDATE_DESC_INTERNSHIP;
+                + TAG_DESC_URGENT;
         editedTask = new TaskBuilder(taskToEdit).withDeadline("").build();
         assertCommandSuccess(command, index, editedTask);
 
@@ -211,7 +215,7 @@ public class EditTaskCommandSystemTest extends AddressBookSystemTest {
         /* Case: description contains deadline prefix but without quotes -> rejected */
      /*   command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + UNQUOTED_DESCRIPTION_PAPER;
         assertCommandFailure(command, String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
-                EditTaskCommand.MESSAGE_USAGE));
+                EditTaskCommand.MESSAGE_USAGE));*/
     }
 
     //@@author
@@ -221,7 +225,7 @@ public class EditTaskCommandSystemTest extends AddressBookSystemTest {
      * @param toEdit the index of the current model's filtered list
      * @see EditTaskCommandSystemTest#assertCommandSuccess(String, Index, ReadOnlyTask, Index)
      */
-  /*  private void assertCommandSuccess(String command, Index toEdit, ReadOnlyTask editedTask) {
+    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyTask editedTask) {
         assertCommandSuccess(command, toEdit, editedTask, null);
     }
 
@@ -233,7 +237,7 @@ public class EditTaskCommandSystemTest extends AddressBookSystemTest {
      * @param toEdit the index of the current model's filtered list.
      * @see EditTaskCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
      */
-  /*  private void assertCommandSuccess(String command, Index toEdit, ReadOnlyTask editedTask,
+    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyTask editedTask,
                                       Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
         try {
@@ -254,7 +258,7 @@ public class EditTaskCommandSystemTest extends AddressBookSystemTest {
      * browser url and selected card remain unchanged.
      * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
      */
-  /*  private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         assertCommandSuccess(command, expectedModel, expectedResultMessage, null);
     }
 
@@ -272,7 +276,7 @@ public class EditTaskCommandSystemTest extends AddressBookSystemTest {
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
      */
-  /*  private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
                                       Index expectedSelectedCardIndex) {
         executeCommand(command);
         expectedModel.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
@@ -297,14 +301,13 @@ public class EditTaskCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
-/*    private void assertCommandFailure(String command, String expectedResultMessage) {
-        Model expectedModel = getModel();*/
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
 
-     /*   executeCommand(command);
+        executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedTaskCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }
-}*/
 }

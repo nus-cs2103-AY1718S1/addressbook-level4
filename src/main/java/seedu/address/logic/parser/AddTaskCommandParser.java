@@ -6,6 +6,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_FROM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_ON;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ENDTIME_TO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_AT;
 
