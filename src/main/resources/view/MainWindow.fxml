@@ -61,11 +61,7 @@
                 <padding>
                     <Insets bottom="10" left="10" right="20" top="10" />
                 </padding>
-                <AnchorPane fx:id="notificationButton" maxWidth="35" prefHeight="30">
-                    <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="/images/notification.png" />
-                    </ImageView>
-                </AnchorPane>
+                <AnchorPane fx:id="notificationButton" maxWidth="35" prefHeight="30" />
             </StackPane>
         </items>
     </SplitPane>
@@ -99,10 +95,10 @@
             <padding>
                 <Insets bottom="5" left="5" right="5" top="5" />
             </padding>
-            <TabPane fx:id="tabPane" minHeight="80" prefHeight="500.0" prefWidth="200.0" styleClass="tabPane" tabClosingPolicy="UNAVAILABLE" tabMinWidth="120.0" VBox.vgrow="ALWAYS">
+            <TabPane fx:id="tabPane" minHeight="80" prefHeight="500.0" prefWidth="250.0" styleClass="tabPane" tabClosingPolicy="UNAVAILABLE" tabMinWidth="120.0" VBox.vgrow="ALWAYS">
                 <tabs>
                     <Tab fx:id="contactTab" styleClass="contactsTab" text="Contacts">
-                        <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+                        <StackPane fx:id="personListPanelPlaceholder" prefWidth="229.0" VBox.vgrow="ALWAYS" />
                     </Tab>
                     <Tab fx:id="eventTab" closable="false" styleClass="eventsTab" text="Events">
                         <StackPane fx:id="eventListPanelPlaceholder" VBox.vgrow="ALWAYS" />
