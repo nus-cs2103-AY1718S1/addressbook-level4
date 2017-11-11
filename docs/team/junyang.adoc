@@ -43,6 +43,47 @@ include::../DeveloperGuide.adoc[tag=autoReminders]
 
 ---
 
+=== Enhancement proposed: Booking of facilities from NUS
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=bookingNUS]
+
+---
+
+==== Justification
+
+Since NUSMods is already being integrated with **BoNUS**, what is another factor that NUS students are largely concerned with in terms of school resources?
+The idea of integrating the booking of facilities in NUS with **BoNUS** then came about.
+
+BoNUS is an organizer for NUS students. In view of the busy schedules of students in school, **BoNUS** not only aims to make lives for students more
+convenient, but also allow students to be updated of their personal upcoming events. As such, we took into consideration the booking of facilities for consultation, group meetings or even study groups. To facilitate this
+, we decided to integrate the booking of facilities with the `Event` component from **BoNUS** such that upon successful booking of facilities,
+the `Event` list in **BoNUS** would automatically be updated with your latest booking.
+
+=== Enhancement proposed: Importing of contacts / events from Google
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=importGoogle]
+
+---
+
+==== Justification
+
+Since majority of students often use Google for multiple purposes, GMail, Google Docs or even Google slides. It is no wonder that
+most students have Google Accounts and have important information stored within. +
+
+Therefore, to facilitate your transition to **BoNUS**, we have decided to include the import of contacts / events from Google itself,
+making the transition to **BoNUS** a comfortable one. Furthermore, as Google acts as a back up for Contact Storage, with **BoNUS**,
+it can act as a secondary storage/backup for each of your contacts and events stored in calendar.
+
+With facilitated transition towards **BoNUS**, your life can now be better organized with **BoNUS**.
+
 === Other contributions
 
 * Added a command to switch in between bright and dark themes for students to personalize BoNUS.
@@ -52,7 +93,7 @@ include::../DeveloperGuide.adoc[tag=autoReminders]
 * Modified small parts of the UI
 (Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/90[#90], https://github.com/CS2103AUG2017-T09-B3/main/pull/68[#68])
 * Wrote JUnit tests in various classes
-(Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/140[#140], https://github.com/CS2103AUG2017-T09-B3/main/pull/55[#55])
+(Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/140[#140], https://github.com/CS2103AUG2017-T09-B3/main/pull/55[#55], https://github.com/CS2103AUG2017-T09-B3/main/pull/182[#182])
 * Assisted Project UNIBOOK in bug reporting
 (Issues https://github.com/CS2103AUG2017-T13-B2/main/issues/73[#73])
 
