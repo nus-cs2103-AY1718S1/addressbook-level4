@@ -48,8 +48,6 @@ public class MainWindow extends UiPart<Region> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
-    private Button todoButton;
-    private Button browserButton;
 
     @FXML
     private StackPane switchablePlaceholder;
@@ -68,6 +66,14 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    //@@author qihao
+    @FXML
+    private Button todoButton;
+
+    @FXML
+    private Button browserButton;
+    //@@author
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -153,6 +159,13 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        //@@author qihao27
+        todoButton = new Button();
+        browserButton = new Button();
+        todoButton.setOnAction(event -> handleTodoButton());
+        browserButton.setOnAction(event -> handleBrowserButton());
+        //@@author
     }
 
     void hide() {
