@@ -18,6 +18,7 @@ import org.telegram.abilitybots.api.objects.MessageContext;
 import org.telegram.abilitybots.api.objects.Privacy;
 import org.telegram.abilitybots.api.sender.MessageSender;
 import org.telegram.telegrambots.api.methods.GetFile;
+import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.api.objects.File;
 import org.telegram.telegrambots.api.objects.Message;
@@ -54,19 +55,35 @@ public class ArkBot extends AbilityBot {
 
     public static final String BOT_MESSAGE_FAILURE = "Oh dear, something went wrong! Please try again!";
     public static final String BOT_MESSAGE_SUCCESS = "%s command has been successfully executed!";
-    public static final String BOT_MESSAGE_HELP = "Welcome to ArkBot, your friendly companion to ArkBot on Desktop.\n"
+    public static final String BOT_MESSAGE_START = "Welcome to ArkBot, your friendly companion to ArkBot on Desktop.\n"
                                                  + "Over here, you can interface with your Desktop application with "
                                                  + "the following functions /add, /list, /delete, /undo, /redo, "
                                                  + "/complete and /help.";
     public static final String BOT_MESSAGE_COMPLETE_COMMAND = "Please upload QR code to complete delivery.\n"
                                                             + "Type \"/cancel\" to stop uploading process.";
     public static final String BOT_MESSAGE_CANCEL_COMMAND = "QR Code upload successfully cancelled!";
+    public static final String BOT_MESSAGE_HELP = "The commands available to ArkBot v1.5 are as follows: \n"
+                                                + "/all \\[Parcel Details] - Adds a parcel.\n"
+                                                + "/list - Lists uncompleted parcel deliveries.\n"
+                                                + "/delete \\[Parcel Index] - Deletes a parcel.\n"
+                                                + "/undo - Undo a command.\n"
+                                                + "/redo - Redo a command.\n"
+                                                + "/complete \\[Parcel Index] - Marks a parcel as completed.\n"
+                                                + "/complete - Activates `listen` mode.\n"
+                                                + "/cancel - Cancels `listen` mode.\n"
+                                                + "/help - Brings up this dialogue again.\n\n"
+                                                + "In `listen` mode, ArkBot will wait for a QR code of a parcel "
+                                                + "to be marked as completed. Otherwise, ArkBot "
+                                                + "will return the details of the parcel embedded in the QR code.\n\n"
+                                                + "Refer to our [User Guide](https://github.com/CS2103AUG2017-T16-B1"
+                                                + "/main/blob/master/docs/UserGuide.adoc) for more information.";
     private static final String BOT_SET_COMPLETED = " " + "s/Completed";
     private static final String DEFAULT_BOT_TOKEN = "339790464:AAGUN2BmhnU0I2B2ULenDdIudWyv1d4OTqY";
     private static final String DEFAULT_BOT_USERNAME = "ArkBot";
     private static final Privacy PRIVACY_SETTING = Privacy.PUBLIC;
 
     private static final Logger logger = LogsCenter.getLogger(ArkBot.class);
+
     private Logic logic;
     private Model model;
     private Optional<Message> lastKnownMessage;
@@ -91,6 +108,23 @@ public class ArkBot extends AbilityBot {
     @Override
     public int creatorId() {
         return 164502603;
+    }
+
+    /**
+     * Replicates the effects of AddCommand on ArkBot.
+     */
+    public Ability startCommand() {
+        return Ability
+                .builder()
+                .name("start")
+                .info("welcomes the user to ArkBot")
+                .input(0)
+                .locality(Locality.ALL)
+                .privacy(PRIVACY_SETTING)
+                .action(ctx -> Platform.runLater(() -> {
+                        sender.send(BOT_MESSAGE_START, ctx.chatId());
+                }))
+                .build();
     }
 
     /**
@@ -156,6 +190,7 @@ public class ArkBot extends AbilityBot {
                 .privacy(PRIVACY_SETTING)
                 .action((MessageContext ctx) -> Platform.runLater(() -> {
                     try {
+                        model.setActiveList(false);
                         logic.execute(DeleteCommand.COMMAND_WORD + " "
                                 + combineArguments(ctx.arguments()));
                         ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
@@ -319,7 +354,13 @@ public class ArkBot extends AbilityBot {
                 .locality(Locality.ALL)
                 .privacy(PRIVACY_SETTING)
                 .action(ctx -> Platform.runLater(() -> {
-                    sender.send(BOT_MESSAGE_HELP, ctx.chatId());
+                    try {
+                        sender.sendMessage(new SendMessage().setText(BOT_MESSAGE_HELP)
+                                                            .setChatId(ctx.chatId())
+                                                            .setParseMode("Markdown"));
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
                 }))
                 .build();
     }
@@ -528,22 +569,6 @@ public class ArkBot extends AbilityBot {
         }
 
         return null;
-    }
-
-    /**
-     * Example method to make sure that the tests work.
-     */
-    public Ability saysHelloWorld() {
-        return Ability.builder()
-                .name("hello") // Name and command (/hello)
-                .info("Says hello world!") // Necessary if you want it to be reported via /commands
-                .privacy(PRIVACY_SETTING)  // Choose from Privacy Class (Public, Admin, Creator)
-                .locality(Locality.ALL) // Choose from Locality enum Class (User, Group, PUBLIC)
-                .input(0) // Arguments required for command (0 for ignore)
-                .action(ctx -> {
-                    sender.send("Hello World!", ctx.chatId());
-                })
-                .build();
     }
 
     @VisibleForTesting

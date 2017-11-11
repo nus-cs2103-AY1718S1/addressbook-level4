@@ -5,18 +5,15 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.stage.Stage;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.generics.BotSession;
-
-import com.google.common.eventbus.Subscribe;
-
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.stage.Stage;
 import seedu.address.bot.ArkBot;
-import seedu.address.bot.BotSettings;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
@@ -59,7 +56,6 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
-    protected BotSettings botSettings;
     protected ArkBot bot;
     protected BotSession botSession;
 
@@ -89,18 +85,18 @@ public class MainApp extends Application {
 
         // Instantiate bot here
         if (!botStarted) {
-            botSettings = new BotSettings();
 
             ApiContextInitializer.init();
 
             TelegramBotsApi botsApi = new TelegramBotsApi();
             try {
                 bot = new ArkBot(logic, model,
-                        botSettings.getBotToken(), botSettings.getBotUsername());
+                        config.getBotToken(), config.getBotUsername());
                 botSession = botsApi.registerBot(bot);
                 botStarted = true;
             } catch (TelegramApiException e) {
-                e.printStackTrace();
+                logger.warning("Invalid Telegram Bot authentication token. Please check to ensure that " +
+                        "you have keyed in the token correctly and restart the application.");
             }
         }
     }

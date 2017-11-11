@@ -7,6 +7,7 @@ import static seedu.address.bot.ArkBot.BOT_MESSAGE_CANCEL_COMMAND;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_COMPLETE_COMMAND;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_FAILURE;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_HELP;
+import static seedu.address.bot.ArkBot.BOT_MESSAGE_START;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_SUCCESS;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.testutil.TypicalParcels.BENSON;
@@ -88,10 +89,10 @@ public class ArkBotTest {
         Update mockedUpdate = mock(Update.class);
         MessageContext context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID);
 
-        bot.saysHelloWorld().action().accept(context);
+        bot.startCommand().action().accept(context);
 
-        // We verify that the sender was called only ONCE and sent Hello World to CHAT_ID
-        Mockito.verify(sender, times(1)).send("Hello World!", CHAT_ID);
+        // We verify that the sender was called only ONCE and sent start up message
+        Mockito.verify(sender, times(1)).send(BOT_MESSAGE_START, CHAT_ID);
 
         /*================================== UNDO COMMAND FAILURE TEST ====================================*/
 
