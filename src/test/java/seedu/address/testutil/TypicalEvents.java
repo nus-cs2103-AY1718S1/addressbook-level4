@@ -1,15 +1,11 @@
 package seedu.address.testutil;
 
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_EVENT1;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_EVENT2;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_EVENT1;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_EVENT2;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_EVENT1;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_EVENT2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +14,6 @@ import java.util.List;
 import seedu.address.model.AddressBook;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.property.PropertyManager;
 
 
@@ -46,11 +41,10 @@ public class TypicalEvents {
             .withAddress("123, Sheraton Towers , #06-111").withReminder().build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
-    public static final ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
-    public static final ReadOnlyPerson BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-            .build();
+    public static final ReadOnlyEvent EV1 = new EventBuilder().withName(VALID_NAME_EVENT1)
+            .withDateTime(VALID_DATE_EVENT1).withAddress(VALID_VENUE_EVENT1).build();
+    public static final ReadOnlyEvent EV2 = new EventBuilder().withName(VALID_NAME_EVENT2)
+            .withDateTime(VALID_DATE_EVENT2).withAddress(VALID_VENUE_EVENT2).build();
 
 
     private TypicalEvents() {} // prevents instantiation

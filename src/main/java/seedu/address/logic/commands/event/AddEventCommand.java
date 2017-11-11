@@ -48,7 +48,14 @@ public class AddEventCommand extends UndoableCommand {
      * Creates an AddEventCommand to add the specified {@code ReadOnlyEvent}
      */
     public AddEventCommand(ReadOnlyEvent event) {
+
         toAdd = new Event(event);
+        Reminder r = new Reminder(toAdd, "Reminder : You have an event!");
+        try {
+            toAdd.addReminder(r);
+        } catch (DuplicateReminderException dre) {
+            System.err.println("This should never happen. A new event should have no existing reminder");
+        }
     }
 
     @Override
@@ -56,14 +63,10 @@ public class AddEventCommand extends UndoableCommand {
         requireNonNull(model);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
         try {
-            Reminder r = new Reminder(toAdd, "Reminder : You have an event!");
-            toAdd.addReminder(r);
             model.addEvent(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateEventException e) {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
-        } catch (DuplicateReminderException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_REMINDER);
         }
     }
 

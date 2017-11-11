@@ -27,7 +27,6 @@ public class EventUtil {
         sb.append(PREFIX_NAME + event.getName().toString() + " ");
         sb.append(PREFIX_DATE_TIME + event.getTime().toString() + " ");
         sb.append(PREFIX_ADDRESS + event.getAddress().toString());
-        sb.append(event.getReminders());
         return sb.toString();
     }
 }

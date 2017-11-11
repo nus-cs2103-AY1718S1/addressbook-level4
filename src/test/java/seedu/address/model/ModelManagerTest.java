@@ -101,7 +101,6 @@ public class ModelManagerTest {
         modelManager.addEvent(EVENT1);
         modelManager1.addEvent(EVENT1);
         modelManager1.addEvent(TypicalEvents.EVENT2);
-        System.out.println(modelManager);
         assertEquals(modelManager, modelManager1);
     }
 
