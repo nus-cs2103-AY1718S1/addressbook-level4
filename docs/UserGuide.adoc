@@ -490,7 +490,7 @@ Try enabling the welcome window, close and rerun ConTag.
 
 If the welcome window is successfully enabled, you should be able to see a the following window as shown in _Figure 3.5.5.1_ every time ConTag is run. The welcome window displays 1 out of the 15 default productivity quotes at random to keep you motivated throughout the day.
 
-image::WelcomeScreen.PNG[width="400"]
+image::WelcomeScreen.png[width="400"]
 _Figure 3.4.3.1: The welcome window_
 
 ==== Exiting the program : `exit`
