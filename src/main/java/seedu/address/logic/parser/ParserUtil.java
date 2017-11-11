@@ -1,10 +1,6 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
-import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_MONTHLY;
-import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_WEEKLY;
-import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_YEARLY;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
