@@ -453,12 +453,13 @@ Removes the `friends` tag from the second to fifth person in the contact list.
 
 *Description:* Adds/Removes the specified remarks(s).
 
-Format to add remark: `addremark INDEX r/REMARK` +
-Format to remove remark: `removeremark INDEX REMARKINDEX`
+Format to add remark: `addremark INDEX r/REMARK...` +
+Format to remove remark: `removeremark INDEX REMARKINDEX...`
 
 ****
 * Add/Remove multiple remarks from multiple indexes as specified.
 * `INDEX` refers to the index number shown in the last person listing.
+** Only one `INDEX` can be selected at a time, although multiple `REMARKINDEX` can be selected
 * The `INDEX` and `REMARKINDEX` must be a *positive integer* ( `1, 2, 3, ...`).
 ****
 [TIP]

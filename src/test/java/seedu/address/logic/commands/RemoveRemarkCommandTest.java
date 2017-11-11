@@ -38,7 +38,8 @@ public class RemoveRemarkCommandTest {
 
         RemoveRemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON,  1);
 
-        String expectedMessage = String.format(RemoveRemarkCommand.MESSAGE_REMOVE_REMARK_SUCCESS, editedPerson);
+        String expectedMessage = String.format(RemoveRemarkCommand.MESSAGE_REMOVE_REMARK_SUCCESS, "\nRemarks left: "
+                + editedPerson.getRemark());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
@@ -54,7 +55,8 @@ public class RemoveRemarkCommandTest {
                 .withRemark("").build();
         RemoveRemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, 1);
 
-        String expectedMessage = String.format(RemoveRemarkCommand.MESSAGE_REMOVE_REMARK_SUCCESS, editedPerson);
+        String expectedMessage = String.format(RemoveRemarkCommand.MESSAGE_REMOVE_REMARK_SUCCESS, "\nRemarks left: "
+                + editedPerson.getRemark());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
