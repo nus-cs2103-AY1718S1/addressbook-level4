@@ -46,7 +46,7 @@
     <items>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="50.0" stylesheets="@LightTheme.css">
         <children>
-          <Label fx:id="" alignment="TOP_RIGHT" text="" />
+          <Label fx:id="favourite" alignment="TOP_RIGHT" text="" />
           <ImageView fx:id="favouriteIcon" fitHeight="30" fitWidth="30" layoutY="10.0" preserveRatio="true" />
         </children>
       </AnchorPane>
