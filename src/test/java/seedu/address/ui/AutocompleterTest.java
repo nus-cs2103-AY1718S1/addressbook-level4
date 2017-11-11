@@ -12,6 +12,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.parcel.Email;
 
 //@@author Kowalski985
 public class AutocompleterTest extends GuiUnitTest {
@@ -19,6 +20,7 @@ public class AutocompleterTest extends GuiUnitTest {
     private static final String EMPTY_STRING = "";
     private static final String ADD_COMMAND_WORD = "add";
     private static final String EDIT_COMMAND_WORD = "edit";
+    private static final String EXIT_COMMAND_WORD = "exit";
     private static final String MULTIPLE_RESULTS_MESSAGE = "Multiple matches found:" + "\n" + "edit" + "\t" + "exit";
     private static final String PROMPT_USER_TO_USE_HELP_MESSAGE = "To see what commands are available, type 'help' "
             + "into the command box";
@@ -59,170 +61,99 @@ public class AutocompleterTest extends GuiUnitTest {
         assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
 
         // autocomplete with empty string
-        autocompleter.updateState(EMPTY_STRING);
-        String autocompleteResult = autocompleter.autocomplete();
-        assertEquals(EMPTY_STRING, autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(PROMPT_USER_TO_USE_HELP_MESSAGE, resultDisplayHandle.getText());
+        assertAutocompleteSuccess(EMPTY_STRING, EMPTY_STRING, PROMPT_USER_TO_USE_HELP_MESSAGE);
 
         // lowercase autocomplete with only one autocomplete option
-        autocompleter.updateState("a");
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals(ADD_COMMAND_WORD, autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+        assertAutocompleteSuccess("a", ADD_COMMAND_WORD, EMPTY_STRING);
 
         // uppercase autocomplete with only one autocomplete option
-        autocompleter.updateState("A");
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals(ADD_COMMAND_WORD, autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+        assertAutocompleteSuccess("A", ADD_COMMAND_WORD, EMPTY_STRING);
 
         // mix uppercase and lowercase autocomplete with only one autocomplete option
-        autocompleter.updateState("Ed");
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals(EDIT_COMMAND_WORD, autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+        assertAutocompleteSuccess("Ed", EDIT_COMMAND_WORD, EMPTY_STRING);
 
         // lowercase autocomplete with multiple autocomplete options
-        autocompleter.updateState("e");
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals("edit", autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(MULTIPLE_RESULTS_MESSAGE, resultDisplayHandle.getText());
+        assertAutocompleteSuccess("e", EDIT_COMMAND_WORD, MULTIPLE_RESULTS_MESSAGE);
 
         // uppercase autocomplete with multiple autocomplete options
         autocompleter.updateState("");
-        autocompleter.updateState("E");
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals("edit", autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(MULTIPLE_RESULTS_MESSAGE, resultDisplayHandle.getText());
+        assertAutocompleteSuccess("E", EDIT_COMMAND_WORD, MULTIPLE_RESULTS_MESSAGE);
 
         // lowercase autocomplete with multiple options and cycling
         autocompleter.updateState("");
-        autocompleter.updateState("E");
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals("edit", autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(MULTIPLE_RESULTS_MESSAGE, resultDisplayHandle.getText());
-        autocompleter.updateState(autocompleteResult);
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals("exit", autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(MULTIPLE_RESULTS_MESSAGE, resultDisplayHandle.getText());
+        assertAutocompleteSuccess("E", EDIT_COMMAND_WORD, MULTIPLE_RESULTS_MESSAGE);
+        assertAutocompleteSuccess(EDIT_COMMAND_WORD, EXIT_COMMAND_WORD, MULTIPLE_RESULTS_MESSAGE);
 
         // autocomplete with no possible options
-        autocompleter.updateState("Z");
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals("Z", autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+        assertAutocompleteSuccess("Z", "Z", EMPTY_STRING);
     }
 
     @Test
     public void autocomplete_forPrefixesOnly() throws Exception {
 
         // autocomplete prefix with first letter of prefix filled in
-        autocompleter.updateState("add #");
-        String autocompleteResult = autocompleter.autocomplete();
-        assertEquals("add #/", autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+        assertAutocompleteSuccess("add #", "add #/", EMPTY_STRING);
 
         // autocomplete first prefix after command word
-        autocompleter.updateState("add");
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals("add #/", autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+        assertAutocompleteSuccess("add", "add #/", EMPTY_STRING);
 
         // autocomplete second prefix
-        autocompleter.updateState("add #/RR123456789SG");
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals("add #/RR123456789SG n/", autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+        assertAutocompleteSuccess("add #/RR123456789SG",
+                "add #/RR123456789SG n/", EMPTY_STRING);
 
         // autocomplete cycle first prefix
-        autocompleter.updateState("add #/");
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals("add n/", autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+        assertAutocompleteSuccess("add #/", "add n/", EMPTY_STRING);
 
         // autocomplete cycle second prefix
-        autocompleter.updateState("add #/RR123456789SG");
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals("add #/RR123456789SG n/", autocompleteResult);
-        autocompleter.updateState(autocompleteResult);
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals("add #/RR123456789SG a/", autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+        assertAutocompleteSuccess("add #/RR123456789SG",
+                "add #/RR123456789SG n/", EMPTY_STRING);
+        assertAutocompleteSuccess("add #/RR123456789SG n/",
+                "add #/RR123456789SG a/", EMPTY_STRING);
     }
 
     @Test
     public void autocomplete_forIndexesOnly() throws Exception {
         // autocomplete index after command
-        autocompleter.updateState("select");
-        String autocompleteResult = autocompleter.autocomplete();
-        assertEquals("select 1", autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+        assertAutocompleteSuccess("select", "select 1", EMPTY_STRING);
 
         // autocomplete cycle to next index after command
-        autocompleter.updateState("select 1");
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals("select 2", autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+        assertAutocompleteSuccess("select 1", "select 2", EMPTY_STRING);
 
         // autocomplete cycle wrap around
-        autocompleter.updateState("select 2");
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals("select 1", autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+        assertAutocompleteSuccess("select 2", "select 1", EMPTY_STRING);
+
+        // autocomplete when letters are entered into the command box
+        assertAutocompleteSuccess("select abc", "select 2", EMPTY_STRING);
+
+        // autocomplete when mix of letters and numbers are entered into command box
+        assertAutocompleteSuccess("select abc123", "select 1", EMPTY_STRING);
     }
 
     @Test
     public void autocomplete_forIndexesAndPrefixes() throws Exception {
         // autocomplete first index after command
-        autocompleter.updateState("edit");
-        String autocompleteResult = autocompleter.autocomplete();
-        assertEquals("edit 1", autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+        assertAutocompleteSuccess(EDIT_COMMAND_WORD, "edit 1", EMPTY_STRING);
 
         // cycle to next index
-        autocompleter.updateState("edit 1");
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals("edit 2", autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+        assertAutocompleteSuccess("edit 1", "edit 2", EMPTY_STRING);
 
         // fill in prefix
-        autocompleter.updateState("edit 2 ");
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals("edit 2 #/", autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+        assertAutocompleteSuccess("edit 2", "edit 2 #/", EMPTY_STRING);
 
         // cycle to next prefix
-        autocompleter.updateState("edit 2 #/");
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals("edit 2 n/", autocompleteResult);
-        guiRobot.pauseForEvent();
-        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+        assertAutocompleteSuccess("edit 2 #/", "edit 2 n/", EMPTY_STRING);
 
         // move to next prefix
-        autocompleter.updateState("edit 2 #/RR123456789SG");
-        autocompleteResult = autocompleter.autocomplete();
-        assertEquals("edit 2 #/RR123456789SG n/", autocompleteResult);
+        assertAutocompleteSuccess("edit 2 #/RR123456789SG",
+                "edit 2 #/RR123456789SG n/", EMPTY_STRING);
+    }
+
+
+    private void assertAutocompleteSuccess(String commandBoxText, String expectedResult, String expectedMessage) {
+        autocompleter.updateState(commandBoxText);
+        String autocompleteResult = autocompleter.autocomplete();
+        assertEquals(expectedResult, autocompleteResult);
         guiRobot.pauseForEvent();
-        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
+        assertEquals(expectedMessage, resultDisplayHandle.getText());
     }
 }
