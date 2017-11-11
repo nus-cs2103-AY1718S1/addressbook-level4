@@ -45,7 +45,7 @@ public class AppointmentList {
     }
 
     /**
-     * sorts all the appointments in the list before adding it to the internal list
+     * Sorts all the appointments in the list before adding it to the internal list
      */
     private void sortAppointmentsInChronologicalOrder(List<Appointment> appointment) {
         requireNonNull(appointment);

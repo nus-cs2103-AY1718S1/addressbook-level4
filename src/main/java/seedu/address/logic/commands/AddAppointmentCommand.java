@@ -86,7 +86,7 @@ public class AddAppointmentCommand extends UndoableCommand {
     }
 
     /**
-     * @return is appointment date set to after current time
+     * Checks if appointment date set to after current time
      */
     private boolean isDateValid() {
         requireNonNull(appointment);
