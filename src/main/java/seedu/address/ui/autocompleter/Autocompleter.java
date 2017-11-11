@@ -151,7 +151,6 @@ public class Autocompleter {
      * @param commandBoxText the current text inside the {@code CommandBox}
      */
     private void updateState(String commandBoxText) {
-        requireNonNull(commandBoxText);
         if (commandBoxText.equals(EMPTY_STRING)) {
             state = AutocompleteState.EMPTY;
             return;
