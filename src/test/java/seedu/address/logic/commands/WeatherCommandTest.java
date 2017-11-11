@@ -10,6 +10,7 @@ import org.junit.Test;
 import seedu.address.commons.events.ui.ShowWeatherRequestEvent;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
+//@@author LuLechuan
 public class WeatherCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
