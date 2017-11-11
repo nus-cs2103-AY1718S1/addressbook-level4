@@ -22,9 +22,9 @@ public class RadioCommand extends Command {
             + "GENRE (must be either chinese, classic, comedy, country, news, pop) \n"
             + "Example: " + COMMAND_WORD + " play news ";
 
-    private static final String MESSAGE_STOP = "Radio Stopped";
+    public static final String MESSAGE_STOP = "Radio Stopped";
 
-    private static String messageSuccess = "Radio Playing";
+    public static final String MESSAGE_SUCCESS = "Radio Playing";
 
     private static Radio music;
 
@@ -64,10 +64,10 @@ public class RadioCommand extends Command {
                 music = new Radio(genre);
                 music.start();
 
-                messageSuccess = genre.toUpperCase() + " Radio Playing";
+                String printedSuccessMessage = genre.toUpperCase() + " " + MESSAGE_SUCCESS;
                 //Text to Speech
-                new TextToSpeech(messageSuccess);
-                return new CommandResult(messageSuccess);
+                new TextToSpeech(printedSuccessMessage);
+                return new CommandResult(printedSuccessMessage);
             }
             return new CommandResult(MESSAGE_USAGE);
         case "stop":

@@ -2,6 +2,8 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -39,6 +41,8 @@ public class AddressBookParser {
 
         String commandWord = command[0];
         String arguments = command[1];
+
+        playTypingSound();
 
         switch (commandWord) {
 
@@ -96,6 +100,16 @@ public class AddressBookParser {
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
+    }
+
+    private static MediaPlayer mediaPlayer;
+
+    public void playTypingSound(){
+        String musicFile = getClass().getClassLoader().getResource("audio/typing.mp3").toString();
+        Media sound = new Media(musicFile);
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.setVolume(90.0);
+        mediaPlayer.play();
     }
 
 }
