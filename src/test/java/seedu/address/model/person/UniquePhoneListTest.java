@@ -16,10 +16,10 @@ import seedu.address.model.person.phone.UniquePhoneList;
 
 public class UniquePhoneListTest {
 
-    private final Logger logger = LogsCenter.getLogger(UniquePhoneListTest.class);
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    private final Logger logger = LogsCenter.getLogger(UniquePhoneListTest.class);
 
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
