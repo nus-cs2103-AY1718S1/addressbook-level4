@@ -73,7 +73,7 @@ public class ExtendedPersonDetails extends UiPart<Region> {
     public ExtendedPersonDetails() {
         super(FXML);
         registerAsAnEventHandler(this);
-        setUpUI();
+        setUpUi();
     }
     //@@author
     /** */
@@ -110,8 +110,7 @@ public class ExtendedPersonDetails extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonDetails(event.getNewSelection().person);
     }
-    
-    private void setUpUI() {
+    private void setUpUi() {
         Image image = new Image(getClass().getResource(defaultPicture).toExternalForm());
         setCircle(circle, image);
         Image imagePhone = new Image(getClass().getResource(phoneIcon).toExternalForm());

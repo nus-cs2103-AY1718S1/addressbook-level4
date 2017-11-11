@@ -27,7 +27,7 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String GOOGLE_MAP_URL_PREFIX = "https://www.google.com.sg/maps/search/";
     //public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
     private static String[] motivationPages = {"motivation1.jpg", "motivation2.jpg", "motivation3.jpg",
-            "motivation4.jpg", "motivation5.jpg", "motivation6.jpg", "motivation7.jpg","motivation8.png"};
+        "motivation4.jpg", "motivation5.jpg", "motivation6.jpg", "motivation7.jpg", "motivation8.png"};
     private static Random random = new Random();
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -79,8 +79,8 @@ public class BrowserPanel extends UiPart<Region> {
     //@@author wishingmaid
     /** randomises which motivational page is used from the resource images folder */
     private void setUpMotivationPage() {
-        Image image = new Image(getClass().getResource("/images/" + 
-                motivationPages[random.nextInt(motivationPages.length)]).toExternalForm());
+        Image image = new Image(getClass().getResource("/images/"
+                + motivationPages[random.nextInt(motivationPages.length)]).toExternalForm());
         splashPage.setImage(image);
     }
     //@@author
