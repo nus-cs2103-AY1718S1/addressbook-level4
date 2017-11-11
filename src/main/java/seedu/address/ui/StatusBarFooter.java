@@ -49,11 +49,14 @@ public class StatusBarFooter extends UiPart<Region> {
     public StatusBarFooter(int totalPersons) throws JAXBException, IOException {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
-        setSaveLocation(getWeatherCondition());
         setTotalPersons(totalPersons);
+        setSaveLocation(getWeather());
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Set the total number of person in the current address Book
+     */
     private void setTotalPersons(int totalPersons) {
         this.totalPersons.setText(totalPersons + " person(s) in total");
     }
@@ -80,9 +83,9 @@ public class StatusBarFooter extends UiPart<Region> {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
 
-    private String getWeatherCondition() throws JAXBException, IOException {
-        YahooWeatherRequest request = new YahooWeatherRequest();
-        return request.getYahooWeatherConditionSg();
+    private String getWeather() throws JAXBException, IOException {
+        WeatherRequest request = new WeatherRequest();
+        return request.getSGWeather();
     }
 
     @Subscribe

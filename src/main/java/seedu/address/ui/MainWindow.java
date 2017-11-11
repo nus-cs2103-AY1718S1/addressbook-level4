@@ -163,9 +163,10 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        //StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        //@@author eeching
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
+        //@@author
 
         //@@author willxujun
         SearchBox searchBox = new SearchBox(logic);
