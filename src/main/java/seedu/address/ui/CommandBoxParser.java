@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static java.util.Objects.requireNonNull;
+
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERY_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -43,6 +45,7 @@ public class CommandBoxParser {
      * @return {@code String} array containing the {@code Command} at index 0 and the remaining arguments at index 1
      */
     public String[] parseCommandAndPrefixes(String commandBoxText) {
+        requireNonNull(commandBoxText);
         String[] parseResults = {EMPTY_STRING, EMPTY_STRING };
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(commandBoxText.trim());
         if (!matcher.matches()) {
@@ -61,6 +64,7 @@ public class CommandBoxParser {
      * Returns the ArrayList of prefixes that are missing from the {@code String argument}
      */
     public ArrayList<String> getMissingPrefixes(String argument) {
+        requireNonNull(argument);
         Prefix[] prefixes = ALL_PREFIXES;
         ArrayList<String> missingPrefixes = new ArrayList<>();
         ArgumentMultimap argMap = ArgumentTokenizer.tokenize(argument, prefixes);

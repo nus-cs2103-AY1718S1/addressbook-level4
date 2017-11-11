@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static java.util.Objects.requireNonNull;
+
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERY_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -62,7 +64,7 @@ public enum AutocompleteCommand {
     private static final String[] commandsWithPrefixes = {"add", "edit"};
 
     public static AutocompleteCommand getInstance(String commandName) {
-
+        requireNonNull(commandName);
         switch (commandName) {
         case AddCommand.COMMAND_WORD:
             return ADD;
@@ -114,12 +116,20 @@ public enum AutocompleteCommand {
         }
     }
 
-    public static boolean hasIndexParameter (String command) {
-        return Arrays.asList(commandsWithIndexes).contains(command);
+    public static boolean hasIndexParameter (String command) throws NullPointerException {
+        try {
+            return Arrays.asList(commandsWithIndexes).contains(command);
+        } catch (NullPointerException e) {
+            throw new NullPointerException();
+        }
     }
 
-    public static boolean hasPrefixParameter (String command) {
-        return Arrays.asList(commandsWithPrefixes).contains(command);
+    public static boolean hasPrefixParameter (String command) throws NullPointerException {
+        try {
+            return Arrays.asList(commandsWithPrefixes).contains(command);
+        } catch (NullPointerException e) {
+            throw new NullPointerException();
+        }
     }
 
 
