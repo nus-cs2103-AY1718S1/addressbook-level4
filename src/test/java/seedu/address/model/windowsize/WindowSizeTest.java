@@ -51,13 +51,13 @@ public class WindowSizeTest {
     @Test
     public void getUserDefinedWindowWidth_invalidWidth_invalidResult() {
         thrown.expect(AssertionError.class);
-        double result = (WindowSize.getUserDefinedWindowWidth(""));
+        double width = (WindowSize.getUserDefinedWindowWidth(""));
 
     }
 
     @Test
     public void getUserDefinedWindowHeight_invalidHeight_invalidResult() {
         thrown.expect(AssertionError.class);
-        double result = (WindowSize.getUserDefinedWindowHeight(""));
+        double height = (WindowSize.getUserDefinedWindowHeight(""));
     }
 }
