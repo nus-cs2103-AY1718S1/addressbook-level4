@@ -103,7 +103,6 @@ public class InsuranceProfilePanel extends UiPart<Region> {
      * Then add click event on contract field to open up the file
      * @param insurance
      */
-
     private void initializeContractFile(ReadOnlyInsurance insurance) {
         insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractName());
         if (isFileExists(insuranceFile)) {
@@ -119,11 +118,11 @@ public class InsuranceProfilePanel extends UiPart<Region> {
                     FileChooser chooser = new FileChooser();
                     chooser.getExtensionFilters().add(extFilter);
                     File openedFile = chooser.showOpenDialog(null);
+
                     if (isFileExists(openedFile)) {
                         try {
-                            insuranceFile =  new File(PDFFOLDERPATH + openedFile.getName());
                             Files.copy(openedFile.toPath(), insuranceFile.toPath());
-                            if (isFileExists(insuranceFile)) {
+                            if(isFileExists(insuranceFile)) {
                                 activateLinkToInsuranceFile();
                             }
                         } catch (IOException ex) {
@@ -132,7 +131,6 @@ public class InsuranceProfilePanel extends UiPart<Region> {
                     }
                 }
             });
-
         }
     }
 
