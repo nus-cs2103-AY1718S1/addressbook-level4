@@ -1162,6 +1162,16 @@ public Address(String address) throws IllegalValueException {
     }
 }
 ----
+==== Design Considerations
+**Aspect:** The ease of adding contacts to The Myth's Book.  +
+**Alternative 1 (current choice):** Make certain fields that are supposed to be inputted to be optional. +
+**Pros:** Users are able to add contacts without much trouble as it only requires minimally 3 inputs. +
+**Cons:** Users would not have full details of a contact that is being added if all fields are not filled in. +
+**Alternative 2:** All fields must be inputted in order for users to add a contact. +
+**Pros:** When a contact is added, all information related to the contact is accounted for. +
+**Cons:** As there are currently 8-9 fields that are required to fill in, it might be realistically troublesome for a user
+to add a contact which is not user friendly. +
+
 //end::optionalfield[]
 
 

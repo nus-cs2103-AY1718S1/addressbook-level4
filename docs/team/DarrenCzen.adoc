@@ -58,7 +58,7 @@ include::../DeveloperGuide.adoc[tag=sort]
 
 ---
 
-=== Enhancement Added: Access Command, Accessing a website of a contact
+=== Enhancement Added: Access Command, accessing a website of a contact
 
 This section includes the behaviour and justification of the `Access Command` and explains how it is implemented.
 
@@ -93,7 +93,7 @@ include::../DeveloperGuide.adoc[tag=access]
 
 ---
 
-=== Enhancement Added: Location Command, Locate an address of a user
+=== Enhancement Added: Location Command, locate an address of a user
 
 This section includes the behaviour and justification of the `Location Command` and explains how it is implemented.
 
@@ -253,8 +253,7 @@ include::../DeveloperGuide.adoc[tag=modeswitch]
 
 === Enhancement: Convert inputted names to become capitalized fully(Upper CamelCase)
 
-Code on GitHub: +
-Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/123/commits/cf57e5e78374ec3ee69125e8342ed27c9efa06da[#123]
+Code on GitHub: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/123/commits/cf57e5e78374ec3ee69125e8342ed27c9efa06da[#123]
 
 ==== External behavior
 
@@ -286,7 +285,7 @@ by typing `add n/adam bait e/adambait@example.com p/98123414`.
 
 The conversion of the name is processed in this way:
 
-. User will input `add n/Adam Bait e/adambait@example.com p/98123414 a/18 Taiseng`.
+. User will input `add n/adam bait e/adambait@example.com p/98123414 a/18 Taiseng`.
 . Input of user will be handled by the `LogicManager` and parse as an argument through the `AddressBookParser` and `AddCommandParser`.
 . `AddCommandParser` will check for all the prefixes inputted and the existence of compulsory prefixes required.
 . Inputted string name of `"adam bait"` will then be handled through methods in `ParserUtil.java` and `Name.java`.
@@ -327,6 +326,7 @@ public static String toCapitalized(String s) {
 These are the additional contributions that I have made to the software and testing of The Myth's Book.
 You can click and view the attached pull request links to see some of the additional codes written by me.
 
+* Helped teammate to create an Events Details Panel for `Event` component of The Myth's Book (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/142[#142])
 * Wrote additional tests to test hashcode of person's attributes to increase test coverage (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/96[#96])
 * Implemented Aliases for basic commands (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/34[#34])
 
