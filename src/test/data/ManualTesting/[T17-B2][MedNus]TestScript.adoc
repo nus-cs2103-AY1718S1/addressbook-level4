@@ -33,15 +33,15 @@ You can download the latest `SampleData.xml` link:https://github.com/CS2103AUG20
 This section shows you the general commands which are  +
 No text input will be specified and you can enter any text input to test the following keyboard key functionality. +
 
-[width="59%",cols="10%,<30%,<30%,<30%",options="header",]
+[width="59%",cols="<30%,<30%,<30%",options="header",]
 |=======================================================================
-|Step |Input |Expected Output |Remarks
+|Input |Expected Output |Remarks
 
-|1. |`copy 2` |`Amanda Lee's email address has been copied to your clipboard.` |Copies email address of person at index 2 to your clipboard
+|`copy 2` |`Amanda Lee's email address has been copied to your clipboard.` |Copies email address of person at index 2 to your clipboard
 
-|2. |`duplicates 2` |`2 persons listed!` |
+|`duplicates 2` |`2 persons listed!` |
 
-|3. |`batch Flu Fever` |`Clears entire command box text field` |Removes all persons with tags `Flu` or `Fever` or both. Undo this before proceeding to the next step.
+|`batch Flu Fever` |`Clears entire command box text field` |Removes all persons with tags `Flu` or `Fever` or both. Undo this before proceeding to the next step.
 
 |=======================================================================
 
