@@ -25,7 +25,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
-import seedu.address.commons.events.ui.SwitchToBrowserEvent;
 import seedu.address.commons.events.ui.ToggleListAllStyleEvent;
 import seedu.address.commons.events.ui.ToggleListPinStyleEvent;
 import seedu.address.commons.events.ui.ToggleParentChildModeEvent;
@@ -62,7 +61,6 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
     private CommandBox commandBox;
@@ -73,7 +71,7 @@ public class MainWindow extends UiPart<Region> {
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane tutorialPlaceholder;
 
     @FXML
     private Label organizedByLabel;
@@ -197,9 +195,6 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
 
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
         taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         aliasListPanel = new AliasListPanel(logic.getFilteredAliasTokenList());
@@ -218,12 +213,9 @@ public class MainWindow extends UiPart<Region> {
         sortFindPanel = new SortFindPanel(logic);
         sortFindPanelPlaceholder.getChildren().add(sortFindPanel.getRoot());
 
-        browserPanel = new BrowserPanel();
         if (MainApp.isFirstTimeOpen()) {
-            TutorialPanel tutorialPanel = new TutorialPanel(this, browserPlaceholder);
-            browserPlaceholder.getChildren().add(tutorialPanel.getRoot());
-        } else {
-            switchToBrowser();
+            TutorialPanel tutorialPanel = new TutorialPanel(this, tutorialPlaceholder);
+            tutorialPlaceholder.getChildren().add(tutorialPanel.getRoot());
         }
     }
 
@@ -383,10 +375,6 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
-    void releaseResources() {
-        browserPanel.freeResources();
-    }
-
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -394,11 +382,6 @@ public class MainWindow extends UiPart<Region> {
     }
 
     //@@author Alim95
-    @Subscribe
-    private void handleSwitchToBrowserEvent(SwitchToBrowserEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        switchToBrowser();
-    }
 
     @Subscribe
     private void handleShowPinnedListEvent(ToggleListPinStyleEvent event) {
@@ -516,11 +499,6 @@ public class MainWindow extends UiPart<Region> {
         personListPanelPlaceholder.getChildren()
                 .removeAll(personListPanel.getRoot(), aliasListPanel.getRoot(), taskListPanel.getRoot());
         personListPanelPlaceholder.getChildren().add(toAdd);
-    }
-
-    private void switchToBrowser() {
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-        browserPlaceholder.setVisible(false);
     }
 
     /**
