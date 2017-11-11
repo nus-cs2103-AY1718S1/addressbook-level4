@@ -32,36 +32,22 @@ You can download the latest `SampleData.xml` link:https://github.com/CS2103AUG20
 == General Commands
 This section shows you the general commands which allow you to manipulate the filtered list display. +
 
-== Random title
+[width="59%",cols="20%,<40%,<40%",options="header",]
 |=======================================================================
 |Command To Enter |Expected Output |Remarks
 
-|`copy 2` |`Amanda Lee's email address has been copied to your clipboard.` |Copies email address of person at index 2 to your clipboard
+|`copy 2` |`Amanda Lee's email address has been copied to your clipboard.` |Copies email address of person at index 2 of the currently displayed list to your clipboard
 
-|`duplicates 2` |`2 persons listed!` |
+|`duplicates` |`2 persons listed!` |Finds all persons who share names with at least 1 other person in MedNus
 
-|`batch Flu Fever` |`Clears entire command box text field` |Removes all persons with tags `Flu` or `Fever` or both. Undo this by typing `undo` before proceeding to the next step.
+|`batch Flu Fever` |`Clears entire command box text field` |Removes all persons with tags `Flu` or `Fever` or both. Undo this by typing `undo` before proceeding to the next step
 
 |=======================================================================
 
 == Calendar Related Functionality
 This section shows you commands related to appointments and calendar views. +
 
-== Random section
-[width="100%", cols="3*", options="header"]
-|===
-
-^| Name
-^| Description
-^| Version
-
->| Asciidoctor
-| Awesome way to write documentation
-^.^| 1.5.0
-|===
-
-== Random title
-[width="100%", cols="^.>,<.<,>.^", options="header"]
+[width="59%",cols="20%,<40%,<40%",options="header",]
 |=======================================================================
 |Command To Enter |Expected Output |Remarks
 
