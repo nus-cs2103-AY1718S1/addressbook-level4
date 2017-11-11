@@ -51,6 +51,7 @@ public class TypicalEvents {
         return el;
     }
 
+    //@@author HouDenghao
     /**
      * Returns an {@code EventList} with all the typical events.
      */
@@ -66,10 +67,20 @@ public class TypicalEvents {
         return el;
     }
 
+    /**
+     * Returns an {@code EventList} with all the typical events.
+     */
+    public static EventList getEmptyEventList() {
+        EventList el = new EventList();
+        return el;
+    }
+
+    //@@author
     public static List<ReadOnlyEvent> getTypicalEvents() {
         return new ArrayList<>(Arrays.asList(FIRST, SECOND, THIRD, FORTH));
     }
 
+    //@@author HouDenghao
     public static List<ReadOnlyEvent> getUnsortedEvents() {
         return new ArrayList<>(Arrays.asList(FORTH, SECOND, FIRST, THIRD));
     }
