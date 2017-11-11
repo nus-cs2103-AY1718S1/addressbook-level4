@@ -366,7 +366,7 @@ __Constraints__
 
 === Managing Tasks
 
-tag::addtask[]
+// tag::addtask[]
 ==== Adding tasks: `add`
 
 Whether it is a host of pending submissions, a get-together or a multiday program, adding it to Mobilize can easily help you keep track of it all. +
@@ -411,6 +411,7 @@ _Constraints_ +
 
 // tag::find[]
 ==== Finding tasks by description or deadline: `find`
+Want to find a task? The find feature allows you to find a task using descriptions or deadline.
 
 To find task whose description contain any of the given keywords, use +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -438,9 +439,10 @@ __Constraints:__
 * Only full words will be matched e.g `Finish` will not match `Finished`.
 * Only valid dates will be matched e.g `291017` will not match `29-10-2017`.
 ****
+// end::find[]
+
 // tag::deletetask[]
 
-// end::find[]
 ==== Deleting tasks : `delete`
 
 To delete the specified task from the task manager, use: +
@@ -458,6 +460,7 @@ __Constraints__
 // end::deletetask[]
 
 // tag::edittask[]
+
 ==== Editing tasks: `edit`
 
 Change of plans? The edit feature offers a hassle-free solution to change any parameter of an existing task.
@@ -510,7 +513,7 @@ __Constraints:__
 // tag::list[]
 ==== Listing tasks : `list` +
 
-To go back to the default list of tasks after a round of filtering, use the list command:
+Want to go back to the default list of task after a search? Simply use the list command:
 
 Format: `list`
 // end::list[]
