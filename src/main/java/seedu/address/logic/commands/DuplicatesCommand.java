@@ -18,7 +18,13 @@ public class DuplicatesCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateDuplicatePersonList();
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        String commandResultMessage = makeCommandResultMessage();
+        return new CommandResult(commandResultMessage);
+    }
+
+    public String makeCommandResultMessage() {
+        int numPersons = model.getFilteredPersonList().size();
+        return getMessageForPersonListShownSummary(numPersons);
     }
 
     @Override
