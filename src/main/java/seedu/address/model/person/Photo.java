@@ -1,14 +1,5 @@
 package seedu.address.model.person;
 
-import java.awt.BorderLayout;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author LuLechuan
@@ -36,46 +27,8 @@ public class Photo {
         this.pathName = pathName;
     }
 
-    /**
-     * Returns true if a given string is empty, which means an unknown path
-     */
-    private static boolean isUnknownPath(String test) {
-        File file = new File(test);
-        return !file.exists();
-    }
-
-    /**
-     *
-     * @return true if a given pathName has unknown value
-     */
-    public boolean isUnknownPathName() {
-        File file = new File(this.pathName);
-        return !file.exists();
-    }
-
     public String getPathName() {
         return pathName;
-    }
-
-    /**
-     *  Displace the photo
-     */
-    public void showPhoto() {
-        JFrame frame = new JFrame("Icon Photo");
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File(pathName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        ImageIcon imgIcon = new ImageIcon(img);
-        JLabel lbl = new JLabel();
-        lbl.setIcon(imgIcon);
-        frame.getContentPane().add(lbl, BorderLayout.CENTER);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
     }
 
     @Override
