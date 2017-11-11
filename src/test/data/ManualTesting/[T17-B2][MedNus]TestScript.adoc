@@ -35,7 +35,7 @@ No text input will be specified and you can enter any text input to test the fol
 
 [width="59%",cols="10%,20%,<40%,<40%",options="header",]
 |=======================================================================
-|Step |Command To Enter |Expected Output |Remarks
+|Step |Input |Expected Output |Remarks
 
 |1. |`copy 2` |`Amanda Lee's email address has been copied to your clipboard.` |Copies email address of person at index 2 to your clipboard
 
