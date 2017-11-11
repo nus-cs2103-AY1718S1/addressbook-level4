@@ -487,8 +487,6 @@ image::UG_mainheader_advancedfeatures.png[width="900"]
 //-
 {sp}
 
-image::divider.png[width="900"]
-
 // tag::autocomplete[]
 === Autocompleting commands: kbd:[Tab]
 
@@ -679,11 +677,11 @@ image::UG_list2.png[width="590"]
 
 image:step4.png[width="70"] Type `email` into the command box first, then follow the index of the contact list and your recipient's email address, after which press kbd:[Enter] to execute it.
 
-image::UG_email1.png[width="590"]
+image::UG_share1.png[width="590"]
 
 image:step5.png[width="70"] The result box will display "Email Sent!". +
 
-image::UG_email2.png[width="590"]
+image::UG_share2.png[width="590"]
 
 {sp}+
 
