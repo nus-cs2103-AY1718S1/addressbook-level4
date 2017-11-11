@@ -6,7 +6,6 @@ import static org.mockito.Mockito.times;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_CANCEL_COMMAND;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_COMPLETE_COMMAND;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_FAILURE;
-import static seedu.address.bot.ArkBot.BOT_MESSAGE_HELP;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_START;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_SUCCESS;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -17,6 +16,8 @@ import static seedu.address.testutil.TypicalParcels.HOON;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Logger;
 
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -28,9 +29,7 @@ import org.telegram.abilitybots.api.objects.EndUser;
 import org.telegram.abilitybots.api.objects.MessageContext;
 import org.telegram.abilitybots.api.sender.MessageSender;
 import org.telegram.telegrambots.api.objects.Update;
-
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
+import org.telegram.telegrambots.exceptions.TelegramApiException;
 import seedu.address.TestApp;
 import seedu.address.bot.parcel.ParcelParser;
 import seedu.address.commons.core.LogsCenter;
@@ -84,8 +83,8 @@ public class ArkBotTest {
     }
 
     @Test
-    public void canSayHelloWorld() throws InterruptedException, ParseException, DuplicateParcelException,
-            ParcelNotFoundException {
+    public void arkBotAllTests() throws InterruptedException, ParseException, DuplicateParcelException,
+            ParcelNotFoundException, TelegramApiException {
         Update mockedUpdate = mock(Update.class);
         MessageContext context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID);
 
@@ -277,17 +276,6 @@ public class ArkBotTest {
 
         assertEquals(bot.getWaitingForImageFlag(), false);
         // We verify that the sender was called only ONCE and sent complete command success and QR code prompt.
-        Mockito.verify(sender, times(1)).send(message, CHAT_ID);
-
-        /*===================================== HELP COMMAND SUCCESS TEST =========================================*/
-
-        mockedUpdate = mock(Update.class);
-        context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID);
-        message = BOT_MESSAGE_HELP;
-        bot.helpCommand().action().accept(context);
-        waitForRunLater();
-
-        // We verify that the sender was called only ONCE and sent help message.
         Mockito.verify(sender, times(1)).send(message, CHAT_ID);
 
     }

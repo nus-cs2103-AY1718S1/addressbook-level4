@@ -11,6 +11,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import com.google.common.annotations.VisibleForTesting;
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import org.telegram.abilitybots.api.bot.AbilityBot;
 import org.telegram.abilitybots.api.objects.Ability;
 import org.telegram.abilitybots.api.objects.Locality;
@@ -25,11 +28,6 @@ import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.PhotoSize;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
-
-import com.google.common.annotations.VisibleForTesting;
-
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import seedu.address.bot.parcel.DisplayParcel;
 import seedu.address.bot.parcel.ParcelParser;
 import seedu.address.bot.qrcode.QRcodeAnalyser;
@@ -63,12 +61,12 @@ public class ArkBot extends AbilityBot {
                                                             + "Type \"/cancel\" to stop uploading process.";
     public static final String BOT_MESSAGE_CANCEL_COMMAND = "QR Code upload successfully cancelled!";
     public static final String BOT_MESSAGE_HELP = "The commands available to ArkBot v1.5 are as follows: \n"
-                                                + "/all \\[Parcel Details] - Adds a parcel.\n"
+                                                + "/all Parcel Details - Adds a parcel.\n"
                                                 + "/list - Lists uncompleted parcel deliveries.\n"
-                                                + "/delete \\[Parcel Index] - Deletes a parcel.\n"
+                                                + "/delete Parcel Index - Deletes a parcel.\n"
                                                 + "/undo - Undo a command.\n"
                                                 + "/redo - Redo a command.\n"
-                                                + "/complete \\[Parcel Index] - Marks a parcel as completed.\n"
+                                                + "/complete Parcel Index - Marks a parcel as completed.\n"
                                                 + "/complete - Activates `listen` mode.\n"
                                                 + "/cancel - Cancels `listen` mode.\n"
                                                 + "/help - Brings up this dialogue again.\n\n"
@@ -354,8 +352,8 @@ public class ArkBot extends AbilityBot {
                 .action(ctx -> Platform.runLater(() -> {
                     try {
                         sender.sendMessage(new SendMessage().setText(BOT_MESSAGE_HELP)
-                                                            .setChatId(ctx.chatId())
-                                                            .setParseMode("Markdown"));
+                                                                .setChatId(ctx.chatId())
+                                                                .enableMarkdown(true));
                     } catch (TelegramApiException e) {
                         e.printStackTrace();
                     }
