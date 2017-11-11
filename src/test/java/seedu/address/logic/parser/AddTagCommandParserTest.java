@@ -61,7 +61,7 @@ public class AddTagCommandParserTest {
     }
 
     @Test
-    public void parse_MultipleTagsWithIndex_returnsAddTagCommand() throws Exception {
+    public void parse_multipleTagsWithIndex_returnsAddTagCommand() throws Exception {
         Tag tagToAdd1 = new Tag("enemy");
         Tag tagToAdd2 = new Tag("singer");
         Set<Index> indexSet = new HashSet<>();
