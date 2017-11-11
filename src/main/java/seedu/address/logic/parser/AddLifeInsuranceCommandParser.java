@@ -2,7 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BENEFICIARY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTRACT_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTRACT_FILE_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRY_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddLifeInsuranceCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.insurance.ContractFileName;
 import seedu.address.model.insurance.InsuranceName;
 import seedu.address.model.insurance.InsurancePerson;
 import seedu.address.model.insurance.LifeInsurance;
@@ -38,10 +39,10 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
         ArgumentMultimap argMultimap;
         argMultimap = ArgumentTokenizer.tokenize(
                 args, PREFIX_NAME, PREFIX_OWNER, PREFIX_INSURED, PREFIX_BENEFICIARY, PREFIX_PREMIUM,
-                PREFIX_CONTRACT_NAME, PREFIX_SIGNING_DATE, PREFIX_EXPIRY_DATE);
+                PREFIX_CONTRACT_FILE_NAME, PREFIX_SIGNING_DATE, PREFIX_EXPIRY_DATE);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_OWNER, PREFIX_INSURED, PREFIX_BENEFICIARY,
-                PREFIX_PREMIUM, PREFIX_CONTRACT_NAME, PREFIX_SIGNING_DATE, PREFIX_EXPIRY_DATE)) {
+                PREFIX_PREMIUM, PREFIX_CONTRACT_FILE_NAME, PREFIX_SIGNING_DATE, PREFIX_EXPIRY_DATE)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddLifeInsuranceCommand.MESSAGE_USAGE));
         }
@@ -53,16 +54,13 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
             final InsurancePerson beneficiary =
                     ParserUtil.parseInsurancePerson(argMultimap.getValue(PREFIX_BENEFICIARY)).get();
             final Premium premium = ParserUtil.parsePremium(argMultimap.getValue(PREFIX_PREMIUM)).get();
-            String contractName = ParserUtil.parseContract(argMultimap.getValue(PREFIX_CONTRACT_NAME)).get();
-            LocalDate signingDate = new DateParser().parse(
-                    ParserUtil.parseContract(argMultimap.getValue(PREFIX_SIGNING_DATE)).get()
-            );
-            LocalDate expiryDate = new DateParser().parse(
-                    ParserUtil.parseContract(argMultimap.getValue(PREFIX_EXPIRY_DATE)).get()
-            );
+            final ContractFileName contractFileName =
+                    ParserUtil.parseContractFileName(argMultimap.getValue(PREFIX_CONTRACT_FILE_NAME)).get();
+            final LocalDate signingDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_SIGNING_DATE)).get();
+            final LocalDate expiryDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_EXPIRY_DATE)).get();
 
             ReadOnlyInsurance lifeInsurance = new LifeInsurance(insuranceName, owner, insured, beneficiary, premium,
-                    contractName, signingDate, expiryDate);
+                    contractFileName, signingDate, expiryDate);
 
             return new AddLifeInsuranceCommand(lifeInsurance);
         } catch (IllegalValueException ive) {

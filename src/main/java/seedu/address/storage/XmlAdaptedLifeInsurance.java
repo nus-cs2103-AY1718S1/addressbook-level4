@@ -1,10 +1,13 @@
 package seedu.address.storage;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.DateParser;
+import seedu.address.model.insurance.ContractFileName;
 import seedu.address.model.insurance.InsuranceName;
 import seedu.address.model.insurance.InsurancePerson;
 import seedu.address.model.insurance.LifeInsurance;
@@ -54,7 +57,7 @@ public class XmlAdaptedLifeInsurance {
         insured = source.getInsured().getName();
         beneficiary = source.getBeneficiary().getName();
         premium = source.getPremium().toString();
-        contractName = source.getContractName();
+        contractName = source.getContractFileName().toString();
         signingDate = source.getSigningDateString();
         expiryDate = source.getExpiryDateString();
     }
@@ -72,7 +75,11 @@ public class XmlAdaptedLifeInsurance {
         final InsurancePerson insured = new InsurancePerson(this.insured);
         final InsurancePerson beneficiary = new InsurancePerson(this.beneficiary);
         final Premium premium = new Premium(this.premium);
+        final ContractFileName contractName = new ContractFileName(this.contractName);
+        final DateParser dateParser = new DateParser();
+        final LocalDate signingDate = dateParser.parse(this.signingDate);
+        final LocalDate expiryDate = dateParser.parse(this.expiryDate);
         return new LifeInsurance(id, insuranceName, owner, insured, beneficiary, premium,
-                this.contractName, this.signingDate, this.expiryDate);
+                contractName, signingDate, expiryDate);
     }
 }

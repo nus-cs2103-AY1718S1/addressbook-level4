@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -14,6 +15,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.SelectCommand.PanelChoice;
+import seedu.address.model.insurance.ContractFileName;
 import seedu.address.model.insurance.InsuranceName;
 import seedu.address.model.insurance.InsurancePerson;
 import seedu.address.model.insurance.Premium;
@@ -165,13 +167,23 @@ public class ParserUtil {
         return premium.isPresent() ? Optional.of(new Premium(premium.get())) : Optional.empty();
     }
     /**
-     * Parses a {@code Optional<String> contract} into an {@code Optional<String>} if {@code contract} is present.
+     * Parses a {@code Optional<String> contract} into an {@code Optional<ContractFileName>} if {@code contract} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<String> parseContract(Optional<String> contract) throws IllegalValueException {
+    public static Optional<ContractFileName> parseContractFileName(Optional<String> contract) throws IllegalValueException {
         requireNonNull(contract);
-        return contract.isPresent() ? Optional.of(contract.get()) : Optional.empty();
+        return contract.isPresent() ? Optional.of(new ContractFileName(contract.get())) : Optional.empty();
     }
+    /**
+     * Parses a {@code Optional<String> date} into an {@code Optional<LocalDate>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<LocalDate> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        DateParser dateParser = new DateParser();
+        return date.isPresent() ? Optional.of(dateParser.parse(date.get())) : Optional.empty();
+    }
+
     //@@author Juxarius
 
     /**

@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BENEFICIARY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTRACT_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTRACT_FILE_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRY_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -15,7 +15,7 @@ import java.util.List;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
-import seedu.address.model.insurance.exceptions.DuplicateInsuranceContractNameException;
+import seedu.address.model.insurance.exceptions.DuplicateContractFileNameException;
 import seedu.address.model.insurance.exceptions.DuplicateInsuranceException;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -37,7 +37,7 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
             + PREFIX_PREMIUM + "PREMIUM "
             + PREFIX_SIGNING_DATE + "SIGNING_DATE "
             + PREFIX_EXPIRY_DATE + "EXPIRY_DATE "
-            + PREFIX_CONTRACT_NAME + "CONTRACT_NAME\n"
+            + PREFIX_CONTRACT_FILE_NAME + "CONTRACT_NAME\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Term Life "
             + PREFIX_OWNER + "Alex Yeoh "
@@ -46,7 +46,7 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
             + PREFIX_PREMIUM + "600 "
             + PREFIX_SIGNING_DATE + "17 11 2017 "
             + PREFIX_EXPIRY_DATE + "17 11 2037 "
-            + PREFIX_CONTRACT_NAME + "AlexYeoh-TermLife";
+            + PREFIX_CONTRACT_FILE_NAME + "AlexYeoh-TermLife";
 
     public static final String MESSAGE_SUCCESS = "New insurance added: %1$s";
     public static final String MESSAGE_DUPLICATE_INSURANCE_CONTRACT_FILE =
@@ -94,7 +94,7 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
             return new CommandResult(String.format(MESSAGE_SUCCESS, lifeInsurance));
         } catch (DuplicateInsuranceException die) {
             throw new AssertionError("AddressBooks should not have duplicate insurances");
-        } catch (DuplicateInsuranceContractNameException dicne) {
+        } catch (DuplicateContractFileNameException dicne) {
             throw new CommandException(MESSAGE_DUPLICATE_INSURANCE_CONTRACT_FILE);
         }
     }

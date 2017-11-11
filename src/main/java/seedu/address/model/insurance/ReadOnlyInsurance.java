@@ -3,7 +3,6 @@ package seedu.address.model.insurance;
 import java.util.EnumMap;
 import java.util.UUID;
 
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 
@@ -29,8 +28,8 @@ public interface ReadOnlyInsurance {
     String getBeneficiaryName();
     ObjectProperty<Premium> premiumProperty();
     Premium getPremium();
-    StringProperty contractNameProperty();
-    String getContractName();
+    ObjectProperty<ContractFileName> contractFileNameProperty();
+    ContractFileName getContractFileName();
     StringProperty signingDateStringProperty();
     String getSigningDateString();
     StringProperty expiryDateStringProperty();
@@ -49,7 +48,7 @@ public interface ReadOnlyInsurance {
                 && other.getPremium().equals(this.getPremium())
                 && other.getSigningDateString().equals(this.getSigningDateString())
                 && other.getExpiryDateString().equals(this.getExpiryDateString()))
-                && other.getContractName().equals(this.getContractName());
+                && other.getContractFileName().equals(this.getContractFileName());
     }
 
     /**
@@ -67,7 +66,7 @@ public interface ReadOnlyInsurance {
                 .append(" \nPremium: ")
                 .append(getPremium())
                 .append("  Contract File: ")
-                .append(getContractName())
+                .append(getContractFileName())
                 .append("  Signing Date: ")
                 .append(getSigningDateString())
                 .append("  Expiry Date: ")

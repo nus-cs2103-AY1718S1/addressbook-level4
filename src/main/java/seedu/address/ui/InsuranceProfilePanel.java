@@ -105,7 +105,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
      */
 
     private void initializeContractFile(ReadOnlyInsurance insurance) {
-        insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractName());
+        insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractFileName());
         if (isFileExists(insuranceFile)) {
             activateLinkToInsuranceFile();
         } else {
@@ -144,7 +144,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
             try {
                 Desktop.getDesktop().open(insuranceFile);
             } catch (IOException ee) {
-                logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractName());
+                logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractFileName());
             }
         });
     }
@@ -160,7 +160,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         owner.textProperty().bind(Bindings.convert(insurance.getOwner().nameProperty()));
         insured.textProperty().bind(Bindings.convert(insurance.getInsured().nameProperty()));
         beneficiary.textProperty().bind(Bindings.convert(insurance.getBeneficiary().nameProperty()));
-        contractName.textProperty().bind(Bindings.convert(insurance.contractNameProperty()));
+        contractName.textProperty().bind(Bindings.convert(insurance.contractFileNameProperty()));
         premium.textProperty().bind(Bindings.convert(insurance.premiumProperty()));
         signingDate.textProperty().bind(Bindings.convert(insurance.signingDateStringProperty()));
         expiryDate.textProperty().bind(Bindings.convert(insurance.expiryDateStringProperty()));

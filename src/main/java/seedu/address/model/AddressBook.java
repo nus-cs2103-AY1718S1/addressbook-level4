@@ -15,7 +15,7 @@ import seedu.address.commons.function.ThrowingConsumer;
 import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.insurance.UniqueLifeInsuranceMap;
-import seedu.address.model.insurance.exceptions.DuplicateInsuranceContractNameException;
+import seedu.address.model.insurance.exceptions.DuplicateContractFileNameException;
 import seedu.address.model.insurance.exceptions.DuplicateInsuranceException;
 import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
 import seedu.address.model.person.Person;
@@ -75,7 +75,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //@@author OscarWang114
     public void setLifeInsurances(Map<UUID, ReadOnlyInsurance> insurances)
-            throws DuplicateInsuranceException, DuplicateInsuranceContractNameException {
+            throws DuplicateInsuranceException, DuplicateContractFileNameException {
         this.lifeInsuranceMap.setInsurances(insurances);
     }
 
@@ -111,7 +111,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             setLifeInsurances(newData.getLifeInsuranceMap());
         } catch (DuplicateInsuranceException die) {
             assert false : "AddressBooks should not have duplicate insurances";
-        } catch (DuplicateInsuranceContractNameException dicne) {
+        } catch (DuplicateContractFileNameException dicne) {
             assert false : "AddressBooks should not have duplicate insurance contract names";
         }
         syncMasterLifeInsuranceMap();
@@ -172,7 +172,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *Adds an insurance to the address book.
      */
     public void addInsurance(ReadOnlyInsurance i)
-            throws DuplicateInsuranceException, DuplicateInsuranceContractNameException {
+            throws DuplicateInsuranceException, DuplicateContractFileNameException {
         UUID id = UUID.randomUUID();
         LifeInsurance lifeInsurance = new LifeInsurance(i);
         lifeInsuranceMap.put(lifeInsurance.getId(), lifeInsurance);

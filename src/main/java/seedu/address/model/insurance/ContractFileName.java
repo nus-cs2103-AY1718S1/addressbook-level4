@@ -1,25 +1,26 @@
 package seedu.address.model.insurance;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTRACT_FILE_NAME;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.exceptions.EmptyFieldException;
 
 /**
- * Represents an insurance's name in LISA.
+ * Represents a contract file name of an insurance in LISA.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
-public class InsuranceName {
+public class ContractFileName {
 
-    public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Insurance names should only contain alphanumeric characters and spaces, and it should not be blank";
+    public static final String MESSAGE_NAME_CONSTRAINTS = "Contract file names should start with "
+            + "alphanumeric characters. It can only contain underscores, hyphens, spaces, "
+            + "an optional file extension, and should not be blank";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum}_\\-]*(\\.[\\p{Alnum}]+)?";
 
     public final String fullName;
 
@@ -28,11 +29,11 @@ public class InsuranceName {
      *
      * @throws IllegalValueException if given name string is invalid.
      */
-    public InsuranceName(String name) throws IllegalValueException {
+    public ContractFileName(String name) throws IllegalValueException {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (trimmedName.isEmpty()) {
-            throw new EmptyFieldException(PREFIX_NAME);
+            throw new EmptyFieldException(PREFIX_CONTRACT_FILE_NAME);
         }
         if (!isValidName(trimmedName)) {
             throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);

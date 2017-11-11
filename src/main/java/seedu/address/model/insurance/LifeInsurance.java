@@ -33,13 +33,13 @@ public class LifeInsurance implements ReadOnlyInsurance {
     private ObjectProperty<InsurancePerson> insured;
     private ObjectProperty<InsurancePerson> beneficiary;
     private ObjectProperty<Premium> premium;
-    private StringProperty contractName;
-    private StringProperty signingDateString;
-    private StringProperty expiryDateString;
+    private ObjectProperty<ContractFileName> contractFileName;
 
     //@@author Juxarius
     private LocalDate signingDate;
     private LocalDate expiryDate;
+    private StringProperty signingDateString;
+    private StringProperty expiryDateString;
     //@@author
 
     //@author OscarWang114
@@ -47,7 +47,8 @@ public class LifeInsurance implements ReadOnlyInsurance {
      * Constructor for {@code XmlAdaptedLifeInsurance.toModelType()}
      */
     public LifeInsurance(UUID id, InsuranceName insuranceName, InsurancePerson owner, InsurancePerson insured,
-                         InsurancePerson beneficiary, Premium premium, String contractName, String signingDateInput, String expiryDateInput)
+                         InsurancePerson beneficiary, Premium premium, ContractFileName contractFileName,
+                         LocalDate signingDate, LocalDate expiryDate)
             throws IllegalValueException {
         this.id = new SimpleObjectProperty<>(id);
         this.insuranceName = new SimpleObjectProperty<>(insuranceName);
@@ -59,10 +60,10 @@ public class LifeInsurance implements ReadOnlyInsurance {
         this.insured = new SimpleObjectProperty<>(insured);
         this.beneficiary = new SimpleObjectProperty<>(beneficiary);
         this.premium = new SimpleObjectProperty<>(premium);
-        this.contractName = new SimpleStringProperty(contractName);
-        this.signingDate = new DateParser().parse(signingDateInput);
+        this.contractFileName = new SimpleObjectProperty(contractFileName);
+        this.signingDate = signingDate;
         this.signingDateString = new SimpleStringProperty(this.signingDate.format(DateParser.DATE_FORMAT));
-        this.expiryDate = new DateParser().parse(expiryDateInput);
+        this.expiryDate = expiryDate;
         this.expiryDateString = new SimpleStringProperty(this.expiryDate.format(DateParser.DATE_FORMAT));
     }
 
@@ -70,8 +71,9 @@ public class LifeInsurance implements ReadOnlyInsurance {
      * Constructor for {@code AddLifeInsuranceCommand}
      */
     public LifeInsurance(InsuranceName insuranceName, InsurancePerson owner, InsurancePerson insured,
-                         InsurancePerson beneficiary, Premium premium, String contractName, LocalDate signingDate, LocalDate expiryDate) {
-        requireAllNonNull(owner, insured, beneficiary, premium, contractName);
+                         InsurancePerson beneficiary, Premium premium, ContractFileName contractFileName,
+                         LocalDate signingDate, LocalDate expiryDate) {
+        requireAllNonNull(owner, insured, beneficiary, premium, this.contractFileName);
         this.id = new SimpleObjectProperty<>(UUID.randomUUID());
         this.insuranceName = new SimpleObjectProperty<>(insuranceName);
         this.roleToPersonNameMap = new EnumMap<>(Roles.class);
@@ -82,7 +84,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
         this.insured = new SimpleObjectProperty<>(insured);
         this.beneficiary = new SimpleObjectProperty<>(beneficiary);
         this.premium = new SimpleObjectProperty<>(premium);
-        this.contractName = new SimpleStringProperty(contractName);
+        this.contractFileName = new SimpleObjectProperty<>(contractFileName);
         this.signingDate = signingDate;
         this.signingDateString = new SimpleStringProperty(this.signingDate.format(DateParser.DATE_FORMAT));
         this.expiryDate = expiryDate;
@@ -103,7 +105,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
         this.insured = new SimpleObjectProperty<>(source.getInsured());
         this.beneficiary = new SimpleObjectProperty<>(source.getBeneficiary());
         this.premium = new SimpleObjectProperty<>(source.getPremium());
-        this.contractName = new SimpleStringProperty(source.getContractName());
+        this.contractFileName = new SimpleObjectProperty<>(source.getContractFileName());
         this.signingDateString = new SimpleStringProperty(source.getSigningDateString());
         this.expiryDateString = new SimpleStringProperty(source.getExpiryDateString());
     }
@@ -223,13 +225,13 @@ public class LifeInsurance implements ReadOnlyInsurance {
 
     //@@author OscarWang114
     @Override
-    public StringProperty contractNameProperty() {
-        return contractName;
+    public ObjectProperty<ContractFileName> contractFileNameProperty() {
+        return contractFileName;
     }
 
     @Override
-    public String getContractName() {
-        return contractName.get();
+    public ContractFileName getContractFileName() {
+        return contractFileName.get();
     }
 
     public void setSigningDateString(String signingDateString) throws IllegalValueException {
