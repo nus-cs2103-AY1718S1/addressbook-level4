@@ -5,20 +5,15 @@ import static org.junit.Assert.assertNotNull;
 import static seedu.address.testutil.TypicalEvents.EVENT1;
 
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import seedu.address.model.event.Event;
-import seedu.address.model.property.Name;
 import seedu.address.model.property.PropertyManager;
 
 //@@author junyango
 
 public class ReminderTest {
-
     private static Event event;
-    private static Name name;
     private static String message;
 
     @BeforeClass
@@ -26,13 +21,9 @@ public class ReminderTest {
         PropertyManager.initializePropertyManager();
 
         event = new Event(EVENT1);
-        name = event.getName();
-        message = "You have a new event!";
+        message = "You have an event";
 
     }
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     @Test
     public void createReminder_preDefinedFieldsPresent_checkCorrectness() throws Exception {
         Reminder reminder = new Reminder(event, message);
