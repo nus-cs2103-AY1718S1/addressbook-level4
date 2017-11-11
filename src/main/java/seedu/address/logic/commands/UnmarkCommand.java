@@ -68,7 +68,8 @@ public class UnmarkCommand extends UndoableCommand {
                 return new CommandResult(String.format(MESSAGE_UNBOOKMARK_LESSON_SUCCESS, lessonToUnbookmark));
 
             } catch (NotRemarkedLessonException e) {
-                logger.info("---[Unmark failure]The lesson to unbookmark is not in the marked list:" + lessonToUnbookmark);
+                logger.info("---[Unmark failure]The lesson to unbookmark is not in the marked list:"
+                        + lessonToUnbookmark);
                 throw new CommandException(e.getMessage());
             }
         } else {

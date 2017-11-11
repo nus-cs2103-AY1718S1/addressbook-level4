@@ -8,6 +8,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MODULE_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_SLOT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 
+import java.util.logging.Logger;
+
 import seedu.address.MainApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
@@ -18,8 +20,6 @@ import seedu.address.model.module.Lesson;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
-
-import java.util.logging.Logger;
 
 //@@author junming403
 /**
