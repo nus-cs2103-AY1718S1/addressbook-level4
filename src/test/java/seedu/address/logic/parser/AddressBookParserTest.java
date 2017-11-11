@@ -5,6 +5,9 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import seedu.address.logic.commands.BirthdaysCommand;
+import seedu.address.logic.commands.FavouriteCommand;
+import seedu.address.logic.commands.UnfavouriteCommand;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -134,6 +137,27 @@ public class AddressBookParserTest {
     public void parseCommand_sort() throws Exception {
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD) instanceof SortCommand);
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD + " 3") instanceof SortCommand);
+    }
+
+    //@@author archthegit
+
+    @Test
+    public void parseCommand_favourite() throws Exception {
+        FavouriteCommand command = (FavouriteCommand) parser.parseCommand(
+                FavouriteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new FavouriteCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_unfavourite() throws Exception {
+        UnfavouriteCommand command = (UnfavouriteCommand) parser.parseCommand(
+                UnfavouriteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new UnfavouriteCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_birthdays() throws Exception {
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
     }
 
     //@@author
