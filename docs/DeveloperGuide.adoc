@@ -379,14 +379,14 @@ _Figure 4.1.7 : Activity Diagram of UndoRedoStack_
 === Sort mechanism
 // tag::sortreason[]
 The reason for the implementation of sort allows the user to organise their list of contacts in cherBook more easily.
-Provide an alternative for them to view their contacts instead of the usual way - most recent added contact being added to the last index of the list.
-Makes it easy for users to browse through their list of contacts in situations where `find` command cannot be used.
-The `sort` mechanism is implemented using `SortCommand`. It supports sorting of contacts names in the AddressBook according to alphabetical order from A to Z.
+This provides an alternative for them to view their contacts instead of the usual way - most recent added contact being added to the last index of the list.
+Users will find it easier to browse through their list of contacts in situations where the `find` command cannot be used.
+The `sort` mechanism is implemented using `SortCommand`. It supports the sorting of contact names in cherBook according to alphabetical order from A to Z.
 
 // end::sortreason[]
 
 // tag::sortimplementation[]
-When the user calls for sorting to be implemented, an empty `ArrayList` would be created. Under the `Model` component, `UniquePersonList` would compare the names of all persons in lower case using a comparator and return an `Observable List` containing of `ReadOnlyPerson`.
+When the user calls for sorting to be implemented, an empty `ArrayList` would be created. Under the `Model` component, `UniquePersonList` would compare the names of all persons in lower case using a comparator and return an `Observable List` containing of ``ReadOnlyPerson``s.
 
 `SortCommand` inherits from `Command`.
 
@@ -410,11 +410,11 @@ _Figure 4.2.1 : Sequence Diagram of Sort Operation_
 
 When the user calls ‘sort’ or ‘st’ to `sort` the contacts, the `Model` will take in an `ArrayList` named contactList from the `Parser`.
 
-Upon a successful `sort`, contacts are displayed in alphabetical order.
-If an empty list is given, the address book will return with message: “No contacts to be sorted”.
-If the list is already in correct order, the address book will return with: “All contacts are sorted alphabetically by name”.
+Upon a successful `sort`, all contacts in cherBook are displayed in alphabetical order.
+If an empty list is given, the address book will return with the message: “No contacts to be sorted”.
+If the list is already in the correct alphabetical order, the address book will return with the following message: “All contacts are sorted alphabetically by name”.
 
-The following will show how the list is being returned to the user:
+The following code will show how the list is being returned to the user:
 [source,java]
 ----
 public ObservableList<ReadOnlyPerson> asObservableListSortedByName() {
@@ -428,7 +428,7 @@ public ObservableList<ReadOnlyPerson> asObservableListSortedByName() {
     }
 }
 ----
-It is implemented this way to ensure that all person names in the `UniquePersonList` is compared to at the lowest level of abstraction.
+The sort mechanism is implemented this way to ensure that all person names in the `UniquePersonList` is compared to at the lowest level of abstraction.
 
 ==== Design Considerations
 
@@ -456,15 +456,15 @@ It is implemented this way to ensure that all person names in the `UniquePersonL
 **Alternative 1 (current choice):** Creates an empty `ArrayList` to obtain the names from the `UniquePersonList` before sorting occurs. The `sort` overwrites the existing list of unsorted contacts.  +
 **Pros:** The original list of unsorted contacts is not altered. +
 **Cons:** Additional space usage and longer time needed to overwrite the original contact list, inefficiency and memory wastage may arise. +
-**Alternative 2:** Manually edits the list of contacts in the AddressBook. +
-**Pros:** We do not need to maintain a separate list, and just reuse what is already in the codebase, and it saves space. +
+**Alternative 2:** Manually edit the list of contacts in cherBook. +
+**Pros:** Do not need to maintain a separate list, just reuse what is already in the codebase, and it saves space. +
 **Cons:**  Inefficient as compared to using an algorithm. If the user made a mistake, the change cannot be reverted as the original list of contacts is not saved. +
 // end::sortimplementation[]
 
 
 === Schedule mechanism
 // tag::schedulereason[]
-The `schedule` mechanism is implemented using `ScheduleCommand`. It supports scheduling of contacts in the AddressBook for better management of time.
+The `schedule` mechanism is implemented using `ScheduleCommand`. It supports the scheduling of contacts in cherBook for better management of time.
 The reason for the implementation of scheduling is to allow cherBook users (teacher/educator) to add schedules they have like consultations or meetings with their students or fellow colleagues.
 With this scheduling command, users are able add their schedules with any person from their list of contacts just by typing the index of the person, the date and time of the schedule.
 The date and time can be entered in natural language, helping users save their time to manually pen down their scheduled dates and timings.
@@ -473,7 +473,7 @@ The date and time can be entered in natural language, helping users save their t
 // tag::scheduleimplementation[]
 When the user calls for scheduling to be implemented, two arguments would have to be passed into the constructor.
 The two arguments are Name of the person being scheduled and the Calendar date with time.
-Under the `Model` component, `UniqueScheduleList` would add the created `schedule` into the `set of schedules`.
+Under the `Model` component, the created `schedule` is directly added into the address book.
 
 `ScheduleCommand` inherits from `Command`.
 
@@ -521,23 +521,27 @@ It is implemented this way to ensure that all `schedules` are added into the Add
 **Alternative 1 (current choice):** `ScheduleCommand` inherits from Command. +
 **Pros:** After scheduling the contacts, the schedules remain in the order they are entered into the AddressBook. +
 **Cons:** The user is unable to sort the list of schedules according to chronological order. +
+**Alternative 2:** `ScheduleCommand` inherits from Command. +
+**Pros:** After scheduling the contacts, the schedules remain in the order they are entered into the AddressBook. +
+**Cons:** The user is unable to sort the list of schedules according to chronological order. +
 
 ---
 
 **Aspect:** How `schedule` executes +
 **Alternative 1 (current choice):** Adds a `schedule` into the `schedules list` once the person name and calendar date is parsed. +
 **Pros:** Easy to implement. +
-**Cons:** Vigorous user testing and logging is required to debug corner test cases. +
+**Cons:** Vigorous user testing and logging is required to debug corner test cases because there is little control over imported APIs. +
 
 ---
 
 **Aspect:** Data structure to support the `schedule` command +
-**Alternative 1 (current choice):** Creates an empty `Set` to obtain the `schedules` from the `UniqueScheduleList`. +
-**Pros:** The original set of `schedules` is not altered. +
-**Cons:** Able to change the contents of the schedules easily. +
-**Alternative 2:** Add a new field in each individual person card to hold their respective `schedule`. +
-**Pros:** The teacher would be able to identify each student respectively, and it makes tracking and debugging easier. +
-**Cons:** Inefficiency and time consuming because to find a `schedule`, the algorithm would have to iterate through all `PersonCards` to get the list of `schedules`.
+**Alternative 1 (current choice):** The list of schedules is altered directly from cherBook and is a standalone class. +
+**Pros:** Without association with any other classes, it is easy to implement and debug. Performance of program is fast because the list of schedules is retrieved directly from cherBook.  +
+**Cons:** The user would not be able to view information of the schedules directly from each contact. +
+**Alternative 2:** Add each schedule into the contact as an attribute.  +
+**Pros:** The user would be able to view the schedules directly from the respective contacts. +
+**Cons:** Performance of program would be affected, because to retrieve the whole list of schedules, the algorithm would have to iterate through all the contacts in cherBook. +
+
 // end::scheduleimplementation[]
 
 === View Schedule mechanism
@@ -549,7 +553,7 @@ This way, the user is able to maintain their timetable easily.
 // end::viewschedulereason[]
 
 // tag::viewscheduleimplementation[]
-When the user calls to view all the schedules, the `'Model'` component would  call `UniqueScheduleList` to return with the set of schedules that was previously added into cherBook.
+When the user calls to view all the schedules, the `'Model'` component would return with the set of schedules that was previously added into cherBook.
 
 ViewScheduleCommand is implemented this way:
 [source,java]
@@ -562,6 +566,11 @@ public class ViewScheduleCommand extends Command {
 }
 ----
 The schedules would be listed in the `ResultDisplay` panel, and each schedule would be separated with a new line.
+
+**Aspect:** Data structure to support the `ViewSchedule` command +
+**Alternative 1 (current choice):** The list of schedules is obtained directly from the `Model` before it is being displayed on the `ResultDisplay` panel. +
+**Pros:** It is easy to implement and debug. Performance of program is fast because the list of schedules is retrieved directly from the `Model`.  +
+**Cons:** The user do not have the alternative to view information of the schedules from each individual contact. +
 // end::viewscheduleimplementation[]
 
 

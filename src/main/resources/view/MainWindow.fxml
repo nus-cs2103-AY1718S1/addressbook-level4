@@ -39,30 +39,36 @@
         </padding>
     </StackPane>
 
-    <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" VBox.vgrow="ALWAYS">
+    <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
         <VBox fx:id="personList" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" SplitPane.resizableWithParent="false">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
             <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
         </VBox>
-        <SplitPane dividerPositions="0.5" orientation="VERTICAL">
-            <items>
-
-                <StackPane fx:id="extendedPersonCardPlaceholder">
-                    <padding>
-                        <Insets bottom="10" left="10" right="10" top="10" />
-                    </padding>
-                </StackPane>
-                <StackPane fx:id="statisticsPanelPlaceholder" />
-            </items>
-        </SplitPane>
-
-        <StackPane fx:id="graphPanelPlaceholder" minWidth="300.0">
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
-        </StackPane>
+      <StackPane fx:id="extendedScreenPlaceHolder">
+         <children>
+            <SplitPane fx:id="statsGraphPlaceHolder" dividerPositions="0.5" prefHeight="200.0" prefWidth="200.0">
+               <items>
+                    <SplitPane fx:id="detailsStatsPlaceHolder" dividerPositions="0.5" orientation="VERTICAL">
+                        <items>
+                                  <StackPane fx:id="extendedPersonCardPlaceholder">
+                                <padding>
+                                    <Insets bottom="10" left="10" right="10" top="10" />
+                                </padding>
+                            </StackPane>
+                            <StackPane fx:id="statisticsPanelPlaceholder" />
+                        </items>
+                    </SplitPane>
+                                <StackPane fx:id="graphPanelPlaceholder">
+                        <padding>
+                            <Insets bottom="10" left="10" right="10" top="10" />
+                        </padding>
+                    </StackPane>
+               </items>
+            </SplitPane>
+         </children>
+      </StackPane>
     </SplitPane>
 
     <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />

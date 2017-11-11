@@ -3,7 +3,6 @@ package seedu.address.model.schedule;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -37,15 +36,6 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         internalList.addAll(schedules);
 
         assert CollectionUtil.elementsAreUnique(internalList);
-    }
-
-    /**
-     * Returns all schedules in this list as a Set.
-     * This set is mutable and change-insulated against the internal list.
-     */
-    public Set<Schedule> toSet() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return new HashSet<>(internalList);
     }
 
     /**
@@ -117,8 +107,6 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.hashCode();
     }
-
-    //@@author limcel
     /**
      * Returns an observable list as as an unmodifiable {@code ObservableList}
      */

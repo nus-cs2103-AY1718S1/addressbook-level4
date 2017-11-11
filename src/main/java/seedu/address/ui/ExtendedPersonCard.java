@@ -15,7 +15,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author limcel
 /**
- * Extended Person Card Panel that displays the details of a Person
+ * An UI component that displays all information of a {@code Person}.
  */
 public class ExtendedPersonCard extends UiPart<Region> {
 
