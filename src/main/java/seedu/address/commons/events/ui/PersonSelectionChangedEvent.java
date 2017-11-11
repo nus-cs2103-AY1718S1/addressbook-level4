@@ -6,7 +6,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 //@@author archthegit
 
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a selection change in Person
  */
 
 public class PersonSelectionChangedEvent extends BaseEvent {
