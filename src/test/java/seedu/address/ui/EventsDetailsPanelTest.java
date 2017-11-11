@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.EventsUtil.postNow;
+import static seedu.address.testutil.TypicalEvents.FINALS;
 import static seedu.address.testutil.TypicalEvents.ZOUKOUT;
 
 import org.junit.Before;
@@ -44,6 +45,11 @@ public class EventsDetailsPanelTest extends GuiUnitTest {
         //Selecting of ZoukOut EventCard.
         postNow(selectionChangedEventStub);
         assertTrue(eventsDetailsPanelHandle.isSelectedEventChanged());
+        eventsDetailsPanelHandle.rememberSelectedEventDetails();
+
+        selectionChangedEventStub = new EventPanelSelectionChangedEvent(new EventCard(FINALS, 1));
+        postNow(selectionChangedEventStub);
+        assertTrue(eventsDetailsPanelHandle.isSelectedEventChanged());
     }
 
     @Test
@@ -61,5 +67,7 @@ public class EventsDetailsPanelTest extends GuiUnitTest {
         //Panel Y is loaded with same event info
         eventsDetailsPanelY.loadEventInfo(ZOUKOUT);
         assertTrue(eventsDetailsPanelX.equals(eventsDetailsPanelY));
+        assertTrue(eventsDetailsPanelX.equals(eventsDetailsPanelX));
+        assertFalse(eventsDetailsPanelX.equals(""));
     }
 }

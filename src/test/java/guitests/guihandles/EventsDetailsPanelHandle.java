@@ -59,6 +59,7 @@ public class EventsDetailsPanelHandle extends NodeHandle<Node> {
         return dateText.getText();
     }
 
+    //@@author archthegit
     /**
      * Remember the details of the event that was last selected
      */
@@ -77,5 +78,5 @@ public class EventsDetailsPanelHandle extends NodeHandle<Node> {
                 || !getAddress().equals(latestAddress)
                 || !getDate().equals(latestDate);
     }
-
+    //@@author
 }
