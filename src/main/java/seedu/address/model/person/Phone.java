@@ -21,7 +21,7 @@ public class Phone {
      * @throws IllegalValueException if given phone string is invalid.
      */
     public Phone(String phone) throws IllegalValueException {
-        if (phone == null) {
+        if (phone == null || phone.equals("")) {
             this.value = PHONE_EMPTY;
         } else {
             String trimmedPhone = phone.trim();

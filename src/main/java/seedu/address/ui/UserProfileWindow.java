@@ -1,5 +1,10 @@
 package seedu.address.ui;
 
+import static seedu.address.model.person.Address.MESSAGE_ADDRESS_CONSTRAINTS;
+import static seedu.address.model.person.Email.MESSAGE_EMAIL_CONSTRAINTS;
+import static seedu.address.model.person.Name.MESSAGE_NAME_CONSTRAINTS;
+import static seedu.address.model.person.Phone.MESSAGE_PHONE_CONSTRAINTS;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Set;
@@ -89,7 +94,9 @@ public class UserProfileWindow extends UiPart<Region> {
      * @param scene
      */
     private void setAccelerators(Scene scene) {
-        scene.getAccelerators().put(KeyCombination.valueOf("ENTER"), ()-> handleCancel());
+        scene.getAccelerators().put(KeyCombination.valueOf("ESC"), ()-> handleCancel());
+        scene.getAccelerators().put(KeyCombination.valueOf("ENTER"), ()-> handleOk());
+
     }
 
     /**
@@ -125,7 +132,7 @@ public class UserProfileWindow extends UiPart<Region> {
         try {
             updateUserPerson();
             raise(new UserPersonChangedEvent(userPerson));
-            logger.info("UserPerson updated via UserProfileWindow, saving");
+            logger.fine("UserPerson updated via UserProfileWindow, saving");
             stage.close();
         } catch (Exception e) {
             logger.fine("Invalid UserPerson modification");
@@ -134,24 +141,17 @@ public class UserProfileWindow extends UiPart<Region> {
 
     @Subscribe
     private void handleUserPersonChangedEvent(UserPersonChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        logger.fine(LogsCenter.getEventHandlingLogMessage(event));
     }
 
     /**
      * Updates the user person
      */
-    void updateUserPerson() throws Exception {
+    private void updateUserPerson() throws Exception {
         try {
             userPerson.setName(new Name(nameTextField.getText()));
         } catch (IllegalValueException e) {
-            statusLabel.setText("Illegal Name value, only alphanumeric values accepted");
-            throw new Exception();
-        }
-
-        try {
-            userPerson.setPhone(new Phone(phoneTextField.getText()));
-        } catch (IllegalValueException e) {
-            statusLabel.setText("Illegal Phone number, only numeric values accepted");
+            statusLabel.setText(MESSAGE_NAME_CONSTRAINTS);
             throw new Exception();
         }
 
@@ -164,14 +164,21 @@ public class UserProfileWindow extends UiPart<Region> {
             userPerson.setEmail(emailList);
 
         } catch (IllegalValueException e) {
-            statusLabel.setText("Email(s) must be in x@x format");
+            statusLabel.setText(MESSAGE_EMAIL_CONSTRAINTS);
+            throw new Exception();
+        }
+
+        try {
+            userPerson.setPhone(new Phone(phoneTextField.getText()));
+        } catch (IllegalValueException e) {
+            statusLabel.setText(MESSAGE_PHONE_CONSTRAINTS);
             throw new Exception();
         }
 
         try {
             userPerson.setAddress(new Address(addressTextField.getText()));
         } catch (IllegalValueException e) {
-            statusLabel.setText("Please input a valid address value");
+            statusLabel.setText(MESSAGE_ADDRESS_CONSTRAINTS);
             throw new Exception();
         }
 

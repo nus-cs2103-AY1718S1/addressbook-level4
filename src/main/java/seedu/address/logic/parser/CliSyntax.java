@@ -32,4 +32,5 @@ public class CliSyntax {
     public static final String ARG_REMARK = "remark";
     public static final String ARG_TAG = "tag";
     public static final String ARG_WEB_LINK = "weblink";
+    //@@author bladerail
 }

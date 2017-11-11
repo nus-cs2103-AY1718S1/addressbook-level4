@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.logic.parser.CliSyntax.ARG_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.ARG_DEFAULT;
 import static seedu.address.logic.parser.CliSyntax.ARG_EMAIL;
@@ -16,11 +15,12 @@ import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.GEORGE;
-import static seedu.address.testutil.TypicalPersons.getSortedTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getSortedTypicalPersons;
 import static seedu.address.testutil.TypicalPersons.getUnsortedTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.junit.Test;
 
@@ -30,6 +30,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UserPerson;
@@ -44,81 +45,68 @@ public class SortCommandTest {
     private Model model;
     private Model expectedModel;
     private SortCommand sortCommand;
-    private String filterType;
 
     @Test
     public void execute_sortByNameSuccess() {
-        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
-        expectedModel = new ModelManager(getSortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
-        filterType = ARG_NAME;
-
-        sortCommand = prepareCommand(filterType);
-        assertCommandSuccess(sortCommand, model,
-                String.format(SortCommand.MESSAGE_SUCCESS, filterType), expectedModel);
-
+        List<ReadOnlyPerson> sortedListByName = getSortedTypicalPersons();
+        sortUnsortedAddressBookByFilterType(ARG_NAME, sortedListByName);
     }
 
     @Test
     public void execute_sortByDefaultSortsByNameSuccess() {
-        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
-        expectedModel = new ModelManager(getSortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
-        filterType = ARG_DEFAULT;
-
-        sortCommand = prepareCommand(filterType);
-        assertCommandSuccess(sortCommand, model,
-                String.format(SortCommand.MESSAGE_SUCCESS, filterType), expectedModel);
-
+        List<ReadOnlyPerson> sortedListByName = getSortedTypicalPersons();
+        sortUnsortedAddressBookByFilterType(ARG_DEFAULT, sortedListByName);
     }
 
     @Test
     public void execute_sortByEmailSuccess() {
-        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
         List<ReadOnlyPerson> sortedList = Arrays.asList(new Person(ALICE),
                 new Person(GEORGE), new Person(DANIEL), new Person(CARL),
                 new Person(BENSON), new Person(FIONA), new Person(ELLE));
-        expectedModel = createExpectedModel(sortedList);
-        filterType = ARG_EMAIL;
-
-        sortCommand = prepareCommand(filterType);
-        assertCommandSuccess(sortCommand, model,
-                String.format(SortCommand.MESSAGE_SUCCESS, filterType), expectedModel);
+        sortUnsortedAddressBookByFilterType(ARG_EMAIL, sortedList);
 
     }
 
     @Test
     public void execute_sortByPhoneSuccess() {
-        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
         List<ReadOnlyPerson> sortedList = Arrays.asList(new Person(ALICE),
                 new Person(DANIEL), new Person(ELLE), new Person(FIONA), new Person(GEORGE),
                 new Person(CARL), new Person(BENSON));
-        expectedModel = createExpectedModel(sortedList);
-        filterType = ARG_PHONE;
-
-        sortCommand = prepareCommand(filterType);
-        assertCommandSuccess(sortCommand, model,
-                String.format(SortCommand.MESSAGE_SUCCESS, filterType), expectedModel);
+        sortUnsortedAddressBookByFilterType(ARG_PHONE, sortedList);
 
     }
 
     @Test
     public void execute_sortByAddressSuccess() {
-        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
         List<ReadOnlyPerson> sortedList = Arrays.asList(new Person(DANIEL),
                 new Person(ALICE), new Person(BENSON), new Person(GEORGE), new Person(FIONA),
                 new Person(ELLE), new Person(CARL));
-        expectedModel = createExpectedModel(sortedList);
-        showFirstPersonOnly(model);
-        filterType = ARG_ADDRESS;
-
-        sortCommand = prepareCommand(filterType);
-        assertCommandSuccess(sortCommand, model,
-                String.format(SortCommand.MESSAGE_SUCCESS, filterType), expectedModel);
+        sortUnsortedAddressBookByFilterType(ARG_ADDRESS, sortedList);
 
     }
 
     @Test
+    public void execute_sortCommandSortsLastShownList() {
+        List<ReadOnlyPerson> sortedList = Arrays.asList(new Person(ALICE),
+                new Person(DANIEL), new Person(ELLE), new Person(FIONA), new Person(GEORGE),
+                new Person(CARL), new Person(BENSON));
+        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
+        expectedModel = createExpectedModel(sortedList);
+
+
+        Predicate<ReadOnlyPerson> predicate = new ContainsKeywordsPredicate(Arrays.asList("Street"));
+        model.updateFilteredPersonList(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
+        String filterType = ARG_PHONE;
+
+        sortCommand = prepareCommand(filterType);
+        assertCommandSuccess(sortCommand, model,
+                String.format(SortCommand.MESSAGE_SUCCESS, filterType), expectedModel);
+    }
+
+    @Test
     public void equals() {
-        filterType = "";
+        String filterType = "";
 
         final SortCommand standardCommand = new SortCommand(filterType);
 
@@ -162,5 +150,14 @@ public class SortCommandTest {
         } catch (DuplicatePersonException dpe) {
             throw new IllegalArgumentException("person is expected to be unique.");
         }
+    }
+
+    private void sortUnsortedAddressBookByFilterType(String filterType, List<ReadOnlyPerson> sortedList) {
+        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
+        expectedModel = createExpectedModel(sortedList);
+
+        sortCommand = prepareCommand(filterType);
+        assertCommandSuccess(sortCommand, model,
+                String.format(SortCommand.MESSAGE_SUCCESS, filterType), expectedModel);
     }
 }

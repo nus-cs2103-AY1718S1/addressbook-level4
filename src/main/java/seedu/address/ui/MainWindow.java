@@ -107,7 +107,9 @@ public class MainWindow extends UiPart<Region> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        //@@author bladerail
         setAccelerator(userProfileMenuItem, KeyCombination.valueOf("F2"));
+        //@@author
     }
 
     /**

@@ -135,6 +135,9 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void sortFilteredPersonList(String filterType) {
         Predicate currPredicate = filteredPersons.getPredicate();
+        if (currPredicate == null) {
+            currPredicate = PREDICATE_SHOW_ALL_PERSONS;
+        }
         addressBook.sortPersons(filterType);
         ObservableList<ReadOnlyPerson> sortedList = this.addressBook.getPersonList();
         this.filteredPersons = new FilteredList<>(sortedList);

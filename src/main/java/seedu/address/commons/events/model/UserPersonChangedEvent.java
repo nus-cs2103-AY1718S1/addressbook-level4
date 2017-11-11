@@ -15,7 +15,7 @@ public class UserPersonChangedEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return "UserPerson changed: " + userPerson.getName();
+        return "UserPerson changed: \n" + userPerson.getAsText();
     }
 
     public UserPerson getUserPerson() {

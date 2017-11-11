@@ -11,6 +11,7 @@ import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.UserProfileWindowHandle;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UserPerson;
+import seedu.address.ui.UserProfileWindow;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -78,6 +79,11 @@ public class GuiTestAssert {
         assertEquals(userProfileWindowHandle.getAddress(), userPerson.getAddress().toString());
         assertEquals(userProfileWindowHandle.getEmail(), userPerson.getEmailAsText());
         assertEquals(userProfileWindowHandle.getWebLink(), userPerson.getWebLinksAsText());
+    }
+
+    public static void assertUserProfileWindowStatusLabelEquals(
+            UserProfileWindowHandle userProfileWindowHandle, String text) {
+        assertEquals(userProfileWindowHandle.getStatusLabel().getText(), text);
     }
     //@@author
 }
