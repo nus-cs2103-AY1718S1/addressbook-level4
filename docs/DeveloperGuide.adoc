@@ -500,6 +500,45 @@ From the two scenarios, we know that unless the user knows the exact details (i.
 ---
 // end::finds[]
 
+// tag::important[]
+=== Important tag
+
+Any contact that has `important` tag will be sorted to be at the top of the list. +
+
+It is implemented to check whether any contact in addressbook has `important` tag each time `add` or `list` command is executed
+
+[source,java]
+----
+@Override
+    public void filterImportantTag() throws PersonNotFoundException, DuplicatePersonException {
+        ArrayList<ReadOnlyPerson> notImportantPersons = new ArrayList<ReadOnlyPerson>();
+        ArrayList<ReadOnlyPerson> importantPersons = new ArrayList<ReadOnlyPerson>();
+
+        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
+            // ...Check through and filter all persons in addressbook with important tag to importantPersons list...
+        }
+
+        /**
+         * If any tags in addressbook contains the {@code keyword}
+         * then proceed to insert the contact(s) in {@code importantPersons} to the top of the addressbook
+         */
+
+        if (importantPersons.size() != 0) {
+            // ...Perform logic to insert persons with important tag at the top...
+        }
+    }
+----
+
+==== Design Considerations
+**Aspect:** Perform insertion of persons with important tag to the top quickly. +
+**Alternative 1 (current choice):** Filter person with `important` tag to a list and those without to another list then merge the lists together. +
+**Pros:** Easy to implement and works well when there are not a lot of contacts. +
+**Cons:** Time complexity is O(n2) hence slows down as more contacts are being added over time. +
+**Alternative 2:** Create additional addressbook that stores only important contacts and execute merge only when a new person is added to the addressbook. +
+**Pros:** Able to achieve O(n) time complexity. +
+**Cons:** Additional addressbook is redundant and takes up memory space.
+// end::important[]
+
 // tag::birthday[]
 === Add person(s) Birthday
 
