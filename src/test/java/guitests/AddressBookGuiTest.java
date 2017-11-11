@@ -12,6 +12,7 @@ import org.testfx.api.FxToolkit;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.ExtendedPersonCardHandle;
 import guitests.guihandles.GraphPanelHandle;
+import guitests.guihandles.HomePanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
@@ -76,14 +77,6 @@ public abstract class AddressBookGuiTest {
 
     protected MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();
-    }
-
-    protected ExtendedPersonCardHandle getExtendedPersonCard() {
-        return mainWindowHandle.getExtendedPersonCard();
-    }
-
-    protected GraphPanelHandle getGraphPanel() {
-        return mainWindowHandle.getGraphPanel();
     }
 
     protected StatusBarFooterHandle getStatusBarFooter() {

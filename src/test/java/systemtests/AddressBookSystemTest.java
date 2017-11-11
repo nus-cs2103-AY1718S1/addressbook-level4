@@ -80,14 +80,6 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    public ExtendedPersonCardHandle getExtendedPersonCard() {
-        return mainWindowHandle.getExtendedPersonCard();
-    }
-
-    public GraphPanelHandle getGraphPanel() {
-        return mainWindowHandle.getGraphPanel();
-    }
-
     public StatusBarFooterHandle getStatusBarFooter() {
         return mainWindowHandle.getStatusBarFooter();
     }
