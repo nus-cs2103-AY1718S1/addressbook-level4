@@ -47,18 +47,13 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * The Browser Panel of the App.
  */
-public class BrowserPanel extends UiPart<Region> {
+public class MainContactPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
-    private static final String FXML = "BrowserPanel.fxml";
+    private static final String FXML = "MainContactPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
-
-    @FXML
-    private WebView browser;
 
     @FXML
     private Circle contactImageCircle;
@@ -91,11 +86,10 @@ public class BrowserPanel extends UiPart<Region> {
 
     private ParallelTransition pt;
 
-    public BrowserPanel() {
+    public MainContactPanel() {
         super(FXML);
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
-        loadDefaultPage();
         //Setup needed JFX nodes which will be updated upon selecting persons
         setupContactImageCircle();
         setupContactDetailsVBox();
@@ -214,35 +208,10 @@ public class BrowserPanel extends UiPart<Region> {
         schedulePlaceholder.setVisible(false);
     }
 
-    private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
-    }
-
-    public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
-    }
-
-    /**
-     * Loads a default HTML file with a background that matches the general theme.
-     */
-    private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
-    }
-
-    /**
-     * Frees resources allocated to the browser.
-     */
-    public void freeResources() {
-        browser = null;
-    }
-
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event)
             throws MalformedURLException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
         setContactImage(event.getNewSelection().person);
         setContactDetails(event.getNewSelection().person);
         setIcons();
