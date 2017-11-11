@@ -14,7 +14,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `Hu Wanqing`, `Jiang Chunhui`, `Hou Denghao`, `Leon Chow WenHao`      Since: `August 2017`
 
-== Welcome to Planno
+= Welcome to Planno
 
 Planno is a Java application that helps users to conveniently manage contact as well as event details. To achieve this, Planno provides a large number of simple commands for users. +
 
