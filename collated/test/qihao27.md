@@ -53,28 +53,6 @@ public class TodoCountHandle extends NodeHandle<Node> {
 ```
 ###### \java\seedu\address\commons\util\StringUtilTest.java
 ``` java
-    //---------------- Tests for isAlnumOnly --------------------------------------
-
-    @Test
-    public void isAlnumOnly() {
-
-        // empty strings
-        assertFalse(StringUtil.isAlnumOnly("")); // Boundary value
-        assertFalse(StringUtil.isAlnumOnly("  "));
-
-        // string with white space
-        assertFalse(StringUtil.isAlnumOnly(" john ")); // Leading/trailing spaces
-
-        // contains special characters
-        assertFalse(StringUtil.isAlnumOnly("j@hn#"));
-
-        // EP: valid options, should return true
-        assertTrue(StringUtil.isAlnumOnly("john"));
-        assertTrue(StringUtil.isAlnumOnly("John"));
-        assertTrue(StringUtil.isAlnumOnly("Boom Shakalaka"));
-        assertTrue(StringUtil.isAlnumOnly("bOoM ShakAlaKa")); // case insensitive
-    }
-
     //---------------- Tests for isSortOption --------------------------------------
 
     @Test
@@ -137,92 +115,107 @@ public class TodoCountHandle extends NodeHandle<Node> {
             fail("This method should not be called.");
         }
 ```
-###### \java\seedu\address\logic\commands\DeleteAltCommandTest.java
+###### \java\seedu\address\logic\commands\DeleteByNameCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalNames.NAME_FIRST_PERSON;
-import static seedu.address.testutil.TypicalNames.NAME_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import org.junit.Test;
-
-import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
 /**
- * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
+ * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteByNameCommand}.
  */
-public class DeleteAltCommandTest {
+public class DeleteByNameCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_validName_success() throws Exception {
-        ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteAltCommand deleteAltCommand = prepareCommand(NAME_FIRST_PERSON);
-
-        String expectedMessage = String.format(DeleteAltCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
-
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
-
-        assertCommandSuccess(deleteAltCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_invalidName_throwsCommandException() throws Exception {
-        DeleteAltCommand deleteAltCommand = prepareCommand("invalid name");
-
-        assertCommandFailure(deleteAltCommand, model, Messages.MESSAGE_PERSON_NAME_ABSENT);
-    }
-
-    @Test
-    public void execute_insufficientInput_throwsCommandException() throws Exception {
-        DeleteAltCommand deleteAltCommand = prepareCommand("al");
-
-        assertCommandFailure(deleteAltCommand, model, Messages.MESSAGE_PERSON_NAME_INSUFFICIENT);
-    }
-
-    @Test
     public void equals() {
-        DeleteAltCommand deleteFirstAltCommand = new DeleteAltCommand(NAME_FIRST_PERSON);
-        DeleteAltCommand deleteSecondAltCommand = new DeleteAltCommand(NAME_SECOND_PERSON);
+        NameContainsKeywordsPredicate firstPredicate =
+            new NameContainsKeywordsPredicate(Collections.singletonList("first"));
+        NameContainsKeywordsPredicate secondPredicate =
+            new NameContainsKeywordsPredicate(Collections.singletonList("second"));
+
+        DeleteByNameCommand deleteFirstCommand = new DeleteByNameCommand(firstPredicate);
+        DeleteByNameCommand deleteSecondCommand = new DeleteByNameCommand(secondPredicate);
 
         // same object -> returns true
-        assertTrue(deleteFirstAltCommand.equals(deleteFirstAltCommand));
+        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteAltCommand deleteFirstAltCommandCopy = new DeleteAltCommand(NAME_FIRST_PERSON);
-        assertTrue(deleteFirstAltCommand.equals(deleteFirstAltCommandCopy));
+        DeleteByNameCommand deleteFirstCommandCopy = new DeleteByNameCommand(firstPredicate);
+        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(deleteFirstAltCommand.equals(1));
+        assertFalse(deleteFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(deleteFirstAltCommand.equals(null));
+        assertFalse(deleteFirstCommand.equals(null));
 
         // different person -> returns false
-        assertFalse(deleteFirstAltCommand.equals(deleteSecondAltCommand));
+        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+    }
+
+    @Test
+    public void execute_findByName_multiplePersonsFound() throws ParseException, CommandException {
+        String expectedMessage = "Multiple contacts with specified name found!\n"
+            + "Please add more details for distinction or use the following command:\n"
+            + DeleteCommand.MESSAGE_USAGE;
+        DeleteByNameCommand command = prepareCommand("Kurz Elle Kunz");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA),
+            Arrays.asList());
     }
 
     /**
      * Returns a {@code DeleteCommand} with the parameter {@code name}.
      */
-    private DeleteAltCommand prepareCommand(String name) {
-        DeleteAltCommand deleteAltCommand = new DeleteAltCommand(name);
-        deleteAltCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return deleteAltCommand;
+    private DeleteByNameCommand prepareCommand(String userInput) {
+        DeleteByNameCommand deleteByNameCommand =
+                new DeleteByNameCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+        deleteByNameCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return deleteByNameCommand;
+    }
+
+    /**
+     * Asserts that {@code command} is successfully executed, and<br>
+     * - the command feedback is equal to {@code expectedMessage}<br>
+     * - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
+     * - the {@code AddressBook} in model remains the same
+     * if the size of {@code ActualList<ReadOnlyPerson>} is more than 1
+     */
+    private void assertCommandSuccess(DeleteByNameCommand command, String expectedMessage,
+                                      List<ReadOnlyPerson> expectedList,
+                                      List<ReadOnlyPerson> actualList) throws CommandException {
+        CommandResult commandResult = command.execute();
+
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+        assertEquals(expectedList, model.getFilteredPersonList());
+        if (actualList.size() > 1) {
+            AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
+            assertEquals(expectedAddressBook, model.getAddressBook());
+        }
     }
 }
 ```
@@ -360,10 +353,11 @@ public class SortCommandTest {
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
-    public void parseCommand_delete_alt() throws Exception {
-        DeleteAltCommand command = (DeleteAltCommand) parser.parseCommand(
-                DeleteAltCommand.COMMAND_WORD + " " + NAME_FIRST_PERSON);
-        assertEquals(new DeleteAltCommand(NAME_FIRST_PERSON), command);
+    public void parseCommand_deleteByName() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        DeleteByNameCommand command = (DeleteByNameCommand) parser.parseCommand(
+            DeleteByNameCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new DeleteByNameCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
 ```
@@ -391,60 +385,44 @@ public class SortCommandTest {
     }
 
 ```
-###### \java\seedu\address\logic\parser\DeleteAltCommandParserTest.java
+###### \java\seedu\address\logic\parser\DeleteByNameCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalNames.NAME_FIRST_PERSON;
+
+import java.util.Arrays;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.DeleteAltCommand;
+import seedu.address.logic.commands.DeleteByNameCommand;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
- * outside of the DeleteAltCommand code. For example, inputs "abc" and "abc 1" take the
- * same path through the DeleteAltCommand, and therefore we test only one of them.
+ * outside of the DeleteByNameCommand code. For example, inputs "abc" and "abc 1" take the
+ * same path through the DeleteByNameCommand, and therefore we test only one of them.
  * The path variation for those two cases occur inside the ParserUtil, and
  * therefore should be covered by the ParserUtilTest.
  */
-public class DeleteAltCommandParserTest {
+public class DeleteByNameCommandParserTest {
 
-    private DeleteAltCommandParser parser = new DeleteAltCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsDeleteAltCommand() {
-        assertParseSuccess(parser, "Alice Pauline", new DeleteAltCommand(NAME_FIRST_PERSON));
-    }
+    private DeleteByNameCommandParser parser = new DeleteByNameCommandParser();
 
     @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "1",
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteAltCommand.MESSAGE_USAGE));
+    public void parse_validArgs_returnsDeleteByNameCommand() {
+        // no leading and trailing whitespaces
+        DeleteByNameCommand expectedDeleteByNameCommand =
+            new DeleteByNameCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        assertParseSuccess(parser, "Alice Bob", expectedDeleteByNameCommand);
+
+        // multiple whitespaces between keywords
+        assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedDeleteByNameCommand);
     }
 }
 ```
 ###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
-    @Test
-    public void parseString_invalidInput_throwsIllegalValueExceptionException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        thrown.expectMessage(MESSAGE_INVALID_STRING);
-        ParserUtil.parseString("1a");
-    }
-
-    @Test
-    public void parseString_validInput_success() throws Exception {
-        // No numbers
-        assertEquals(NAME_FIRST_PERSON, ParserUtil.parseString("Alice Pauline"));
-
-        // Leading and trailing whitespaces
-        assertEquals(NAME_FIRST_PERSON, ParserUtil.parseString("  Alice Pauline  "));
-    }
-
     @Test
     public void parseOption_invalidInput_throwsIllegalValueExceptionException() throws Exception {
         thrown.expect(IllegalValueException.class);

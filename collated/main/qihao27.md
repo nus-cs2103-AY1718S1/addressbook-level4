@@ -1,7 +1,7 @@
 # qihao27
 ###### \java\seedu\address\commons\core\Messages.java
 ``` java
-    public static final String MESSAGE_PERSON_NAME_ABSENT = "The person name provided is absent";
+    public static final String MESSAGE_PERSON_NAME_ABSENT = "The person's name provided can not be found.";
     public static final String MESSAGE_PERSON_NAME_INSUFFICIENT = "The person name provide is too short."
             + "\nRequire more than 3 characters";
 ```
@@ -34,24 +34,6 @@ public class NewResultCheckEvent extends BaseEvent {
 ```
 ###### \java\seedu\address\commons\util\StringUtil.java
 ``` java
-    /**
-     * Returns true if {@code s} represents letters or numbers
-     * e.g. abc, as12, gg, ..., <br>
-     * Will return false for any other non-alnum string input
-     * e.g. empty string, " abc " (untrimmed), "1a#" (contains special character)
-     * Will return false if the input string case does not match the string stored (case sensitive)
-     * @throws NullPointerException if {@code s} is null.
-     */
-    public static boolean isAlnumOnly(String s) {
-        requireNonNull(s);
-
-        try {
-            return s.matches("[\\p{Alnum}][\\p{Alnum} ]*");
-        } catch (IllegalArgumentException iae) {
-            return false;
-        }
-    }
-
     /**
      * Returns true if {@code s} represents lower case [OPTION] String
      * e.g. -n, -p, -t, ..., <br>
@@ -88,80 +70,78 @@ public class NewResultCheckEvent extends BaseEvent {
         }
     }
 ```
-###### \java\seedu\address\logic\commands\DeleteAltCommand.java
+###### \java\seedu\address\logic\commands\Command.java
+``` java
+    /**
+     * Constructs a feedback message to summarise an operation that displayed a listing of persons with same predicate.
+     *
+     * @return summary message for persons displayed
+     */
+    public static String getMessageForSamePredicatePersonListShownSummary() {
+        return "Multiple contacts with specified name found!\n"
+            + "Please add more details for distinction or use the following command:\n"
+            + DeleteCommand.MESSAGE_USAGE;
+    }
+```
+###### \java\seedu\address\logic\commands\DeleteByNameCommand.java
 ``` java
 package seedu.address.logic.commands;
-
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-
-import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+import java.util.List;
+import java.util.function.Predicate;
+
 /**
- * Deletes a person identified using its last displayed index from the address book.
+ * Deletes a person identified using its name from the address book.
  */
-public class DeleteAltCommand extends UndoableCommand {
+public class DeleteByNameCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "del";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the name.\n"
-            + "Parameters: NAME (must be alphabetical letters)\n"
+            + "Parameters: [NAME]\n"
             + "Example: " + COMMAND_WORD + " john";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
-    private final String targetName;
+    private final Predicate<ReadOnlyPerson> predicate;
 
-    public DeleteAltCommand(String targetName) {
-        this.targetName = targetName.toLowerCase();
+    public DeleteByNameCommand(Predicate<ReadOnlyPerson> predicate) {
+        this.predicate = predicate;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredPersonList(predicate);
+        List<ReadOnlyPerson> predicateList = model.getFilteredPersonList();
 
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        if (predicateList.size() > 1) {
+            return new CommandResult(getMessageForSamePredicatePersonListShownSummary());
+        } else if (predicateList.size() == 0) {
+            throw new CommandException(Messages.MESSAGE_PERSON_NAME_ABSENT);
+        } else {
+            ReadOnlyPerson personToDelete = predicateList.get(0);
 
-        int index = 0;
-
-        for (ReadOnlyPerson p : lastShownList) {
-            if (p.getName().toString().toLowerCase().contains(targetName) && targetName.length() > 3) {
-                index = lastShownList.indexOf(p);
-                break;
-            } else {
-                index = -1;
+            try {
+                model.deletePerson(personToDelete);
+            } catch (PersonNotFoundException pnfe) {
+                assert false : "The target person cannot be missing";
             }
+
+            return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
         }
-
-        if (index >= lastShownList.size() || index == -1) {
-            if (targetName.length() <= 3) {
-                throw new CommandException(Messages.MESSAGE_PERSON_NAME_INSUFFICIENT);
-            } else {
-                throw new CommandException(Messages.MESSAGE_PERSON_NAME_ABSENT);
-            }
-        }
-
-        ReadOnlyPerson personToDelete = lastShownList.get(index);
-
-        try {
-            model.deletePerson(personToDelete);
-        } catch (PersonNotFoundException pnfe) {
-            assert false : "The target person cannot be missing";
-        }
-
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DeleteAltCommand // instanceof handles nulls
-                && this.targetName.equals(((DeleteAltCommand) other).targetName)); // state check
+                || (other instanceof DeleteByNameCommand // instanceof handles nulls
+                && this.predicate.equals(((DeleteByNameCommand) other).predicate)); // state check
     }
 }
 ```
@@ -259,9 +239,13 @@ public class SortCommand extends UndoableCommand {
     public static final String PREFIX_SORT_BY_ADDRESS = PREFIX_OPTION_INDICATOR + "a";
     public static final String PREFIX_SORT_BY_TAG = PREFIX_OPTION_INDICATOR + "t";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts all persons."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts all persons.\n"
             + "Parameters: [OPTION] (must be one of the available field and a String)\n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_NAME;
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_NAME + " (sort by name)\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_PHONE + " (sort by phone number)\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_EMAIL + " (sort by email address)\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_ADDRESS + " (sort by address)\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_TAG + " (sort by tag)\n";
 
     public static final String MESSAGE_SUCCESS_BY_NAME = "Persons sorted by name.";
     public static final String MESSAGE_SUCCESS_BY_PHONE = "Persons sorted by phone.";
@@ -310,8 +294,9 @@ public class SortCommand extends UndoableCommand {
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
-        case DeleteAltCommand.COMMAND_WORD:
-            return new DeleteAltCommandParser().parse(arguments);
+        case DeleteByNameCommand.COMMAND_WORD:
+            return new DeleteByNameCommandParser().parse(arguments);
+
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
@@ -322,34 +307,38 @@ public class SortCommand extends UndoableCommand {
         case ExportCommand.COMMAND_ALIAS:
             return new ExportCommandParser().parse(arguments);
 ```
-###### \java\seedu\address\logic\parser\DeleteAltCommandParser.java
+###### \java\seedu\address\logic\parser\DeleteByNameCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
+import seedu.address.logic.commands.DeleteByNameCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
+
+import java.util.Arrays;
+
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.DeleteAltCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-
 /**
- * Parses input arguments and creates a new DeleteAltCommand object
+ * Parses input arguments and creates a new DeleteByNameCommand object
  */
-public class DeleteAltCommandParser implements Parser<DeleteAltCommand> {
+public class DeleteByNameCommandParser implements Parser<DeleteByNameCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteAltCommand
      * and returns an DeleteAltCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public DeleteAltCommand parse(String args) throws ParseException {
-        try {
-            String name = ParserUtil.parseString(args);
-            return new DeleteAltCommand(name);
-        } catch (IllegalValueException ive) {
+    public DeleteByNameCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteAltCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteByNameCommand.MESSAGE_USAGE));
         }
+
+        String[] nameKeywords = trimmedArgs.split("\\s+");
+
+        return new DeleteByNameCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 
 }
@@ -389,23 +378,11 @@ public class ExportCommandParser implements Parser<ExportCommand> {
 ``` java
     public static final String MESSAGE_INVALID_STRING = "String does not contain alphanum only.";
     public static final String MESSAGE_INVALID_OPTION = "String does not contain hyphen and lower case alphabet only.";
-    public static final String MESSAGE_INVALID_FILE_PATH = "String does not contain \".xml\" as suffix.";
+    public static final String MESSAGE_INVALID_FILE_PATH =
+            "String does not contain \".xml\" as suffix or contains invalid file path.";
 ```
 ###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
-    /**
-     * Parses a String of letters into a {@code trimmedString} and returns it. Leading and trailing whitespaces
-     * will be trimmed.
-     * @throws IllegalValueException if the specified string is invalid (not letters only).
-     */
-    public static String parseString(String str) throws IllegalValueException {
-        String trimmedString = str.trim();
-        if (!StringUtil.isAlnumOnly(trimmedString) || trimmedString.length() < 3) {
-            throw new IllegalValueException(MESSAGE_INVALID_STRING);
-        }
-        return trimmedString;
-    }
-
     /**
      * Parses a String of option into a {@code trimmedString} and returns it. Leading and trailing whitespaces
      * will be trimmed.
@@ -1179,11 +1156,8 @@ public class UniqueTodoList implements Iterable<TodoItem> {
     <items>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="50.0" stylesheets="@LightTheme.css">
         <children>
-          <Label fx:id="favourite" alignment="TOP_RIGHT" text="">
-            <graphic>
-              <ImageView fx:id="favouriteIcon" fitHeight="30" fitWidth="30" preserveRatio="true" />
-            </graphic>
-          </Label>
+          <Label fx:id="favourite" alignment="TOP_RIGHT" text="" />
+        <ImageView fx:id="favouriteIcon" fitHeight="30" fitWidth="30" layoutY="10.0" preserveRatio="true" />
         </children>
       </AnchorPane>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="158.0">
