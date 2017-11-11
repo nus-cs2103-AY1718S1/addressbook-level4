@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.logging.Logger;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -12,11 +14,10 @@ import seedu.address.model.person.exceptions.PhoneNotFoundException;
 import seedu.address.model.person.phone.Phone;
 import seedu.address.model.person.phone.UniquePhoneList;
 
-import java.util.logging.Logger;
-
 public class UniquePhoneListTest {
 
     private final Logger logger = LogsCenter.getLogger(UniquePhoneListTest.class);
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
