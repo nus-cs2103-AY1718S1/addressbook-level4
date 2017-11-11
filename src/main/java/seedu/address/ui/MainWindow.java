@@ -150,17 +150,17 @@ public class MainWindow extends UiPart<Region> {
         PersonInformationPanel personInformationPanel = new PersonInformationPanel();
         personInformationPanelPlaceholder.getChildren().add(personInformationPanel.getRoot());
         setBackground(personInformationPanelPlaceholder,
-                "../addressbook-level4/docs/images/backgroundRight.jpg", 920, 600);
+                "/Users/xuyiqing/Desktop/CS2103/addressbook-level4/docs/images/backgroundRight.jpg", 920, 600);
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
         setBackground(personListPanelPlaceholder,
-                "../addressbook-level4/docs/images/backgroundLeft.jpg", 330, 600);
+                "/Users/xuyiqing/Desktop/CS2103/addressbook-level4/docs/images/backgroundLeft.jpg", 330, 600);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
         setBackground(resultDisplayPlaceholder,
-                "../addressbook-level4/docs/images/backgroundUp.jpg", 1250, 105);
+                "/Users/xuyiqing/Desktop/CS2103/addressbook-level4/docs/images/backgroundUp.jpg", 1250, 105);
 
         //StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getFilteredPersonList().size());
