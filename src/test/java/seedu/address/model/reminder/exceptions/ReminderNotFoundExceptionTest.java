@@ -1,4 +1,4 @@
-package seedu.address.model.reminder;
+package seedu.address.model.reminder.exceptions;
 
 import static org.junit.Assert.assertEquals;
 
