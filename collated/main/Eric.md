@@ -91,7 +91,7 @@ public class AddAppointmentCommand extends UndoableCommand {
     }
 
     /**
-     * @return is appointment date set to after current time
+     * Checks if appointment date set to after current time
      */
     private boolean isDateValid() {
         requireNonNull(appointment);
@@ -346,7 +346,9 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
             Appointment appointment = getAppointmentFromString(argumentMultimap.getValue(PREFIX_DATE).get());
             return new AddAppointmentCommand(index, appointment);
         } catch (NumberFormatException e) {
-            throw new ParseException(e.getMessage(), e);
+            throw new ParseException("Please input an index for appointment.\n"
+                    + String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AddAppointmentCommand.MESSAGE_USAGE));
         }
     }
 
@@ -653,7 +655,7 @@ public class AppointmentList {
     }
 
     /**
-     * sorts all the appointments in the list before adding it to the internal list
+     * Sorts all the appointments in the list before adding it to the internal list
      */
     private void sortAppointmentsInChronologicalOrder(List<Appointment> appointment) {
         requireNonNull(appointment);
@@ -1029,24 +1031,33 @@ public class CalendarWindow extends UiPart<Region> {
      * Creates a new a calendar with the update information
      */
     private void updateCalendar() {
-        calendarView.setToday(LocalDate.now());
-        calendarView.setTime(LocalTime.now());
-        calendarView.getCalendarSources().clear();
+        setTime();
         CalendarSource calendarSource = new CalendarSource("Appointments");
         int styleNum = 0;
         for (ReadOnlyPerson person : personList) {
-            Calendar calendar = new Calendar(person.getName().toString());
-            calendar.setStyle(Calendar.Style.getStyle(styleNum));
-            styleNum++;
-            styleNum = styleNum % 5;
+            Calendar calendar = getCalendar(styleNum, person);
             calendarSource.getCalendars().add(calendar);
             ArrayList<Entry> entries = getEntries(person);
-
+            styleNum++;
+            styleNum = styleNum % 5;
             for (Entry entry : entries) {
                 calendar.addEntry(entry);
             }
         }
         calendarView.getCalendarSources().add(calendarSource);
+    }
+
+    private Calendar getCalendar(int styleNum, ReadOnlyPerson person) {
+        Calendar calendar = new Calendar(person.getName().toString());
+        calendar.setStyle(Calendar.Style.getStyle(styleNum));
+        calendar.setLookAheadDuration(Duration.ofDays(365));
+        return calendar;
+    }
+
+    private void setTime() {
+        calendarView.setToday(LocalDate.now());
+        calendarView.setTime(LocalTime.now());
+        calendarView.getCalendarSources().clear();
     }
 
     private ArrayList<Entry> getEntries(ReadOnlyPerson person) {
