@@ -49,7 +49,7 @@ public class ShowParticipantsCommandTest {
                 String.format(ShowParticipantsCommand.MESSAGE_SHOW_PARTICIPANTS_SUCCESS, event.getEventName());
         ShowParticipantsCommand command = prepareCommand(INDEX_THIRD_EVENT);
 
-        assertSuccess(command, expectedMessage, Collections.emptyList());
+        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class ShowParticipantsCommandTest {
                 String.format(ShowParticipantsCommand.MESSAGE_SHOW_PARTICIPANTS_SUCCESS, event.getEventName());
         ShowParticipantsCommand command = prepareCommand(INDEX_FIRST_EVENT);
 
-        assertSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON, CARL, DANIEL));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON, CARL, DANIEL));
     }
 
     /**
@@ -77,12 +77,12 @@ public class ShowParticipantsCommandTest {
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertSuccess(ShowParticipantsCommand command, String message, List<ReadOnlyPerson> expectedList) {
+    private void assertCommandSuccess(ShowParticipantsCommand command, String message, List<ReadOnlyPerson> list) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         try {
             CommandResult commandResult = command.execute();
             assertEquals(message, commandResult.feedbackToUser);
-            assertEquals(expectedList, model.getFilteredPersonList());
+            assertEquals(list, model.getFilteredPersonList());
             assertEquals(expectedAddressBook, model.getAddressBook());
         }   catch (CommandException e)  {
             e.printStackTrace();
