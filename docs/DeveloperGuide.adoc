@@ -14,7 +14,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `Hu Wanqing`, `Jiang Chunhui`, `Hou Denghao`, `Leon Chow WenHao`      Since: `August 2017`
 
-= Welcome to Planno
+== Welcome to Planno
 
 Planno is a Java application that helps users to conveniently manage contact as well as event details. To achieve this, Planno provides a large number of simple commands for users. +
 
@@ -867,7 +867,7 @@ _Figure 4.10.1 PortraitPath class structure_
 As shown in above diagram, we only store a string value, which is the file path in this class.
 We only load the image file in the UI component.
 
-The portrait can only be changed by this command. In other words, `Add`command can only create a person without a portrait. +
+The portrait can only be changed by this command. In other words, `Add` command can only create a person without a portrait. +
 
 However, users may type a wrong path. As we only load it in the UI component, we will only know if any errors occur when it reaches the UI component, which makes handling exceptions harder as they are usually handled in the Logic component.
 Therefore, we apply defensive coding here. We check whether the file can be loaded before modifying the person's information.
@@ -881,11 +881,11 @@ _Figure 4.10.2 defensive code for loading file_
 
 **Aspect:** How to store the portrait. +
 **Alternative 1 (current choice):**  Only store the path in .xml file, and only load the image in UI. +
-**Pros:** Easy to implement, and save the memory. +
-**Cons:** Cannot move the image file in the computer, otherwise the user needs to change the path. +
+**Pros:** This is easy to implement, and this saves the memory. +
+**Cons:** User cannot move the image file in the computer, otherwise the user needs to change the path. +
 **Alternative 2:** Store the image file. +
-**Pros:** No need to load the image every time. +
-**Cons:** Hard to store images into .xml file. +
+**Pros:** The app does not need to load the image every time. +
+**Cons:** It is hard to store images into .xml file. +
 // end::portrait[]
 
 // tag::toggle[]

@@ -11,7 +11,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-W14-B4/main
 image::UG_cover.png[width="750", align="left"]
-= Planno - User Guide
+== Planno - User Guide
 
 By: `Team W14-B4`      Since: `Sep 2017`      Licence: `NUS`
 
