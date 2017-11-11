@@ -147,21 +147,29 @@ public class KeyListenerTest extends RolodexGuiTest {
         KeyCodeCombination addCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+A");
 
         guiRobot.push(addCommandKeyCode);
+        guiRobot.pauseForHuman();
         assertEquals(AddCommand.FORMAT, getCommandBox().getInput());
 
         guiRobot.push(KeyCode.A);
+        guiRobot.pauseForHuman();
         assertEquals("add n/a p/PHONE_NUMBER e/EMAIL a/ADDRESS", getCommandBox().getInput());
 
         guiRobot.push(KeyCode.TAB);
+        guiRobot.pauseForHuman();
         guiRobot.push(KeyCode.B);
+        guiRobot.pauseForHuman();
         assertEquals("add n/a p/b e/EMAIL a/ADDRESS", getCommandBox().getInput());
 
         guiRobot.push(KeyCode.TAB);
+        guiRobot.pauseForHuman();
         guiRobot.push(KeyCode.C);
+        guiRobot.pauseForHuman();
         assertEquals("add n/a p/b e/c a/ADDRESS", getCommandBox().getInput());
 
         guiRobot.push(KeyCode.TAB);
+        guiRobot.pauseForHuman();
         guiRobot.push(KeyCode.D);
+        guiRobot.pauseForHuman();
         assertEquals("add n/a p/b e/c a/d", getCommandBox().getInput());
 
     }
