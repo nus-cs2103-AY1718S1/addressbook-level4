@@ -1,6 +1,34 @@
-# willxujun
-###### \java\seedu\address\logic\commands\SearchCommandTest.java
-``` java
+package seedu.address.logic.commands;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.person.NamePhoneTagContainsKeywordsPredicate;
+import seedu.address.model.person.ReadOnlyPerson;
+//@@author willxujun
 /**
  * Contains integration tests (interaction with the Model) for {@code SearchCommand}.
  * Adapted from FindCommandTest with additional phone and tag searches.
@@ -96,7 +124,8 @@ public class SearchCommandTest {
      */
     private SearchCommand prepareCommand(String userInput) {
         SearchCommand command =
-                new SearchCommand(new NamePhoneTagContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new SearchCommand(new NamePhoneTagContainsKeywordsPredicate(
+                        Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -107,7 +136,8 @@ public class SearchCommandTest {
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(SearchCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
+    private void assertCommandSuccess(SearchCommand command, String expectedMessage,
+                                      List<ReadOnlyPerson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 
@@ -116,52 +146,3 @@ public class SearchCommandTest {
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
 }
-```
-###### \java\seedu\address\logic\parser\AddCommandParserTest.java
-``` java
-        //empty (unknown) email value
-        expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-                .withEmail(UNKNOWN_EMAIL).withAddress(VALID_ADDRESS_AMY).withTags().build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
-                + UNKNOWN_EMAIL_DESC + ADDRESS_DESC_AMY, new AddCommand(expectedPerson));
-
-        //empty (unknown) address value
-        expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-                .withEmail(VALID_EMAIL_AMY).withAddress(UNKNOWN_ADDRESS).withTags().build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + UNKNOWN_ADDRESS_DESC, new AddCommand(expectedPerson));
-```
-###### \java\seedu\address\logic\parser\SearchParserTest.java
-``` java
-public class SearchParserTest {
-
-    private SearchParser parser = new SearchParser();
-
-    @Test
-    public void parse_validArgs_returnsSearchCommand() {
-        // no leading and trailing whitespaces
-        SearchCommand expectedSearchCommand =
-                new SearchCommand(new NamePhoneTagContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
-        assertParseSuccess(parser, "Alice Bob", expectedSearchCommand);
-
-        // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedSearchCommand);
-    }
-
-    @Test
-    public void parse_whitespaceArgs_returnsListCommand() {
-        ListCommand expectedListCommand =
-                new ListCommand();
-        assertParseSuccess(parser, "    ", expectedListCommand);
-    }
-
-}
-```
-###### \java\systemtests\FindCommandSystemTest.java
-``` java
-        /* Case: find multiple persons in address book, 2 keywords -> 0 persons found because of new AND search*/
-        command = FindCommand.COMMAND_WORD + " Benson Daniel";
-        ModelHelper.setFilteredList(expectedModel);
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-```

@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Random;
@@ -72,6 +73,7 @@ public class PersonCard extends UiPart<Region> {
         return tagColors.get(tagValue);
     }
 
+    //@@author ngzuyao
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
@@ -88,6 +90,7 @@ public class PersonCard extends UiPart<Region> {
         });*/
         initPhoto(person);
     }
+    //@@author
 
     /**
      * Sets a background color for each tag.
@@ -111,14 +114,27 @@ public class PersonCard extends UiPart<Region> {
         File photoImage = new File(pathName);
         Image photo = null;
         try {
-            photo = new Image(photoImage.toURI().toURL().toString(), 80, 80, false, false);
+            if (photoImage.exists()) {
+                photo = new Image(photoImage.toURI().toURL().toString(), 40, 40, false, true);
+            } else {
+                photo = createJarImage("/images/default_photo.png");
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         photoContainer.setImage(photo);
 
-        Circle clip = new Circle(60, 60, 50);
+        Circle clip = new Circle(30, 30, 25);
         photoContainer.setClip(clip);
+    }
+
+    /**
+     *  Create an image that can be used by the Jar file
+     */
+    public Image createJarImage(String jarPath) {
+        InputStream inputStream = this.getClass().getResourceAsStream(jarPath);
+        Image photo = new Image(inputStream, 40, 40, false, true);
+        return photo;
     }
     //@@author
 

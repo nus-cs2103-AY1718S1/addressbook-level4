@@ -12,13 +12,13 @@ import seedu.address.model.person.NamePhoneTagContainsKeywordsPredicate;
 /**
  * Represents a parser that parses input from the search bar
  */
-public class SearchParser {
+public class SearchParser implements Parser<Command> {
 
     /**
      * returns a Command as parsed
      * @param args
-     * @return a FindCommand of the search word args if search bar input is not empty, a ListCommand if empty search bar
-     * @throws ParseException
+     * @return a SearchCommand of the search word args if search bar input is not empty, a ListCommand if empty
+     * @throws ParseException that should never be thrown because there is no restriction on search keywords
      */
     public Command parse(String args) throws ParseException {
         String trimmedArgs = args.trim();

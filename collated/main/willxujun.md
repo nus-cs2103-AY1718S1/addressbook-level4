@@ -36,13 +36,13 @@ public class SearchCommand extends Command {
 /**
  * Represents a parser that parses input from the search bar
  */
-public class SearchParser {
+public class SearchParser implements Parser<Command> {
 
     /**
      * returns a Command as parsed
      * @param args
-     * @return a FindCommand of the search word args if search bar input is not empty, a ListCommand if empty search bar
-     * @throws ParseException
+     * @return a SearchCommand of the search word args if search bar input is not empty, a ListCommand if empty search bar
+     * @throws ParseException that should never be thrown because there is no restriction on search keywords
      */
     public Command parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
@@ -70,6 +70,9 @@ public class NamePhoneTagContainsKeywordsPredicate implements Predicate<ReadOnly
         this.keywords = keywords;
     }
 
+    /*
+    Tests name, primaryPhone, secondary phones in UniquePhoneList and tags sequentially.
+     */
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream()
@@ -129,6 +132,10 @@ public class NamePhoneTagContainsKeywordsPredicate implements Predicate<ReadOnly
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
         commandBox.getCommandTextField().requestFocus();
 
+        /*
+        ChangeListener for caret focus.
+        Switches focus to searchBox upon switching out of commandBox.
+         */
         commandBox.getCommandTextField().focusedProperty().addListener(
                 new ChangeListener<Boolean>() {
                     @Override
@@ -136,6 +143,18 @@ public class NamePhoneTagContainsKeywordsPredicate implements Predicate<ReadOnly
                                         Boolean newValue) {
                         if (oldValue == true) {
                             searchBox.getTextField().requestFocus();
+                        }
+                    }
+                }
+        );
+
+        searchBox.getTextField().focusedProperty().addListener(
+                new ChangeListener<Boolean>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+                                        Boolean newValue) {
+                        if (oldValue == true) {
+                            commandBox.getCommandTextField().requestFocus();
                         }
                     }
                 }
@@ -169,12 +188,12 @@ public class SearchBox extends UiPart<Region> {
     }
 
     /**
-     * Handles the Key typed event
+     * Captures user input in searchBox.
      */
     @FXML
     private void handleKeyTyped(KeyEvent keyEvent) {
         String s = keyEvent.getCharacter();
-        if (s.equals("\u0008") || s.equals("\u007F")) {
+        if (isDeleteOrBackspace(s)) {
             if (!searchBuffer.isEmpty()) {
                 searchBuffer = searchBuffer.substring(0, searchBuffer.length() - 1);
             } else {
@@ -192,6 +211,10 @@ public class SearchBox extends UiPart<Region> {
             logger.info("Invalid search: " + searchTextField.getText());
             raise(new NewResultAvailableEvent((e.getMessage())));
         }
+    }
+
+    private boolean isDeleteOrBackspace (String toTest) {
+        return toTest.equals("\u0008") || toTest.equals("\u007F");
     }
 
 }

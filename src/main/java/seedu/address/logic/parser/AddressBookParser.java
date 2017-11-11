@@ -23,6 +23,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UploadPhotoCommand;
+import seedu.address.logic.commands.WeatherCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -94,6 +95,9 @@ public class AddressBookParser {
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
+
+        case WeatherCommand.COMMAND_WORD:
+            return new WeatherCommand();
 
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();
