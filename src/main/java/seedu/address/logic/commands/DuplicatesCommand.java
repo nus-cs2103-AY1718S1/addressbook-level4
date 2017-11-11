@@ -22,6 +22,10 @@ public class DuplicatesCommand extends Command {
         return new CommandResult(commandResultMessage);
     }
 
+    /**
+     * Makes the command result message for this command.
+     * @return String The command result message.
+     */
     public String makeCommandResultMessage() {
         int filteredPersonListSize = model.getFilteredPersonList().size();
         return getMessageForPersonListShownSummary(filteredPersonListSize);
