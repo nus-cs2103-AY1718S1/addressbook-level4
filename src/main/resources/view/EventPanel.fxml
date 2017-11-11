@@ -12,7 +12,7 @@
    <children>
       <ImageView fitHeight="507.0" fitWidth="1085.0" opacity="0.15">
          <image>
-            <Image url="@../../../../../../Desktop/eventpanelbackground.jpg" />
+            <Image url="/images/eventpanelbackground.jpg" />
          </image>
       </ImageView>
       <StackPane id="eventPeriod" prefHeight="150.0" prefWidth="200.0">
