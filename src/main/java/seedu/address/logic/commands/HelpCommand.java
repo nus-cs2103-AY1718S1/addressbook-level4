@@ -62,10 +62,6 @@ public class HelpCommand extends Command {
 
         switch(commandIdentifier.value) {
 
-        case HelpCommand.COMMAND_QUICK_HELP_WORD:
-            commandResult = COMMAND_QUICK_HELP;
-            break;
-
         case AddCommand.COMMAND_ALIAS:
             //Fallthrough
 
@@ -170,11 +166,16 @@ public class HelpCommand extends Command {
         case UndoCommand.COMMAND_WORD:
             commandResult = UndoCommand.MESSAGE_USAGE;
             break;
-
+        //@@author icehawker
         case Country.COMMAND_WORD:
             commandResult = Country.getCodeList();
             break;
 
+        case HelpCommand.COMMAND_QUICK_HELP_WORD:
+            commandResult = COMMAND_QUICK_HELP;
+            break;
+
+        //@@author CT15
         default:
             EventsCenter.getInstance().post(new ShowHelpRequestEvent());
             commandResult = SHOWING_HELP_MESSAGE;
