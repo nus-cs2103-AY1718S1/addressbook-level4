@@ -9,9 +9,9 @@ import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.CustomCommand;
-import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.customField.CustomField;
 
+//@@author LuLechuan
 public class CustomCommandParserTest {
 
     private CustomCommandParser parser = new CustomCommandParser();

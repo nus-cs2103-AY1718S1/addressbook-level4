@@ -11,6 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.UploadPhotoCommand;
 import seedu.address.model.person.Photo;
 
+//@@author LuLechuan
 public class UploadPhotoCommandParserTest {
 
     private UploadPhotoCommandParser parser = new UploadPhotoCommandParser();
