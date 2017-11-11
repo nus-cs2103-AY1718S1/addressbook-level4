@@ -165,10 +165,58 @@ The enhancement also helps to facilitate user-friendliness in using The Myth's B
 
 ---
 
-Code of `toCapitalized` method inside `Name.java`:
+Code of `parse` method inside `AddCommandParser.java`:
 [source,java]
 ----
+public AddCommand parse(String args) throws ParseException {
 
+    Address address;
+    // ... method logic ...
+
+    ArgumentMultimap argMultimap =
+            ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_HOME_NUMBER,
+                    PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_WEBSITE, PREFIX_SCH_EMAIL,
+                    PREFIX_BIRTHDAY, PREFIX_TAG);
+
+    if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL)) {
+        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+    }
+
+    try {
+        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
+        Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
+
+        // ... method logic ...
+
+        Optional<Address> tempAddress = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS));
+        address = (tempAddress.isPresent()) ? tempAddress.get() : new Address(null);
+
+        // ... method logic ...
+
+        ReadOnlyPerson person = new Person(name, phone, homeNumber,
+             email, schEmail, website, address, birthday, false, tagList);
+
+        return new AddCommand(person);
+    } catch (IllegalValueException ive) {
+        throw new ParseException(ive.getMessage(), ive);
+    }
+}
+----
+
+Code of `Address` constructor inside `Address.java`:
+[source,java]
+----
+public Address(String address) throws IllegalValueException {
+    if (address == null) {
+        this.value = ADDRESS_TEMPORARY;
+    } else {
+        if (!isValidAddress(address)) {
+            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+        }
+        this.value = address;
+    }
+}
 ----
 
 ---
