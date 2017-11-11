@@ -281,7 +281,7 @@ public class CommandBox extends UiPart<Region> {
     /**
      * if the command is add, and the next field is selected from pressing tab key, update the field selection
      */
-    private void updateSelection() {
+    public void updateSelection() {
         commandTextField.selectRange(anchorPosition, anchorPosition + selectedText.length());
         selectedText = "";
         needToNavigateToNextField = false;
