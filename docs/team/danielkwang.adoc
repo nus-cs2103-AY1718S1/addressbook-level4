@@ -19,20 +19,14 @@ the contact's number and automatically port it to your smartphone. It is written
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=connectuslog]
-include::../UserGuide.adoc[tag=qrcall]
-include::../UserGuide.adoc[tag=qrsms]
-include::../UserGuide.adoc[tag=qrsave]
 
 #End of Extract#
 
 ---
 
 ==== Justification
-"LoggingCommand" feature was implemented to keep track of important such as "Add" , "Clear" , "Edit" , "Select" , etc. This is to ensure that the user can still check for mistakes or accidental deletion of contact after realising mistakes was committed weeks ago. +
-"ClearLog" feature is useful for keeping ConnectUsLog.txt neat as the list of information will keep on expanding. Therefore, user can choose to clear the log file after confirming that the logs are not needed. +
-"qrcall" feature was implemented to reduce chance of human error and time when the user wants to make call to specific contact. With the help of Quick Response Code (QR Code), the user just need to use their smartphone to scan the code which will instruct the phone on what to do. This helps save time and chance for error during the time when the user needs to make a call. +
-"qrsms" feature was implemented to keep our user free from human error and help save time to compose a sms. It comes with function where there is greeting template message . The user simply need to scan the QR Code to compose their sms for the intended contact. +
-"qrsavecontact" feature was implemented to help Android users to save contact easily by simply scanning the QR Code to save contact they want from the addressbook application. This will help save a lot of time if the user needs to save multiple acount and reduce chances of human error with potential of wrong information keyed in during the process of manual saving of contact information.
+The LoggingCommand feature was implemented to ensure that user are still able to check the actions they executed. Only important actions such as "Add" , "Clear" , "Edit" , "Select" . etc. are recorded to the ConnectUsLog.txt file. This allow the user to have chance to check for mistakes or accidental removal of contact after realising it was a mistake committed weeks ago. +
+Since there is ConnectUsLog.txt involved , user can also have the option to clear the file in order to make their records more neat compared to needing to browse through huge number of record which was confirmed unnecessary. +
 
 ==== Implementation
 
@@ -41,9 +35,6 @@ include::../UserGuide.adoc[tag=qrsave]
 
 include::../DeveloperGuide.adoc[tag=loggingcom]
 include::../DeveloperGuide.adoc[tag=clearlog]
-include::../DeveloperGuide.adoc[tag=qrcall]
-include::../DeveloperGuide.adoc[tag=qrsms]
-include::../DeveloperGuide.adoc[tag=qrsave]
 
 #End of Extract#
 
@@ -64,7 +55,7 @@ include::../UserGuide.adoc[tag=qrcall]
 
 ==== Justification
 
-"qrcall" feature was implemented to reduce chance of human error and time when the user wants to make call to specific contact. With the help of Quick Response Code (QR Code), the user just need to use their smartphone to scan the code which will instruct the phone on what to do. This helps save time and chance for error during the time when the user needs to make a call. +
+The QRCall feature was implemented to reduce chance of human error and time when the user wants to make call to specific contact. With the help of Quick Response Code (QR Code), the user just need to use their smartphone to scan the code which will instruct the phone on what to do. This helps save time and chance for error during the time when the user needs to make a call. +
 
 ==== Implementation
 
@@ -91,7 +82,7 @@ include::../UserGuide.adoc[tag=qrsms]
 ---
 
 ==== Justification
-"qrsms" feature was implemented to keep our user free from human error and help save time to compose a sms. It comes with function where there is greeting template message . The user simply need to scan the QR Code to compose their sms for the intended contact. +
+The QRSMS feature was implemented to keep our user free from human error and help save time to compose a sms. It comes with function where there is greeting template message . The user simply need to scan the QR Code to compose their sms for the intended contact. +
 
 ==== Implementation
 
@@ -104,7 +95,7 @@ include::../DeveloperGuide.adoc[tag=qrsms]
 
 ---
 
-=== Enhancement Added: Quick Response (QR) Code Generation for Saving Contact Number
+=== Enhancement Added: QR (Quick Response) Code Generation for Saving Contact Number
 
 ==== External behavior
 
@@ -119,7 +110,7 @@ include::../UserGuide.adoc[tag=qrsave]
 
 ==== Justification
 
-"qrsavecontact" feature was implemented to help Android users to save contact easily by simply scanning the QR Code to save contact they want from the addressbook application. This will help save a lot of time if the user needs to save multiple acount and reduce chances of human error with potential of wrong information keyed in during the process of manual saving of contact information.
+The QRSaveContact feature was implemented to help Android users to save contact easily by simply scanning the QR Code to save contact they want from the addressbook application. This will help save a lot of time if the user needs to save multiple acount and reduce chances of human error with potential of wrong information keyed in during the process of manual saving of contact information.
 
 ==== Implementation
 
@@ -139,7 +130,5 @@ As most of the features that i implemented are targeted at user convenience. The
 === Other contributions
 
 * Offers suggestions for team with alternative solution to solve the issue they encountered with
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
+* Assist with refining User Guide
+* Found some bugs in other team's project during Acceptance Testing (Issues https://github.com/CS2103AUG2017-W11-B1/main/issues/158[158], https://github.com/CS2103AUG2017-W11-B1/main/issues/160[160])
