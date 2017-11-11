@@ -99,6 +99,15 @@ public class DisjoinCommand extends UndoableCommand {
 
     }
 
+    /**
+     * Assign the target person and event
+     * Only used for testing
+     */
+    public void assignValueForTest(Person person, Event event) {
+        this.personToRemove = person;
+        this.eventToRemove = event;
+    }
+
     @Override
     public boolean equals(Object other) {
         return this == other

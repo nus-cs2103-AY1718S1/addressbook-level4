@@ -24,6 +24,9 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
 //@@author Adoby7
+/**
+ * Test the undo function of AddCommand
+ */
 public class UndoAddCommandTest {
     private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();

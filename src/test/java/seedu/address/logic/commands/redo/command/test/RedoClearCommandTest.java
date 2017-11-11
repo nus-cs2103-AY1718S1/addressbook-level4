@@ -23,6 +23,9 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
 //@@author Adoby7
+/**
+ * Test the redo function of ClearCommand
+ */
 public class RedoClearCommandTest {
     private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();

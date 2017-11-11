@@ -2,7 +2,11 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.joinEvents;
+import static seedu.address.logic.commands.CommandTestUtil.quitEvent;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventList;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Before;
@@ -18,6 +22,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 
+// @@author Adoby7
 /**
  * Contains integration tests for disjoin command
  */
@@ -26,14 +31,14 @@ public class DisjoinCommandTest {
     private Model model;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), getTypicalEventList(), new UserPrefs());
         joinEvents(model);
     }
 
     @Test
     public void testDisjoinInvalidIndexFail() {
-        final Index validIndex = Index.fromOneBased(1);
+        final Index validIndex = INDEX_FIRST_EVENT;
         final Index invalidLargeIndex = Index.fromOneBased(10000);
         DisjoinCommand invalidPersonIndexCommand = prepareCommand(invalidLargeIndex, validIndex, model);
         DisjoinCommand invalidEventIndexCommand = prepareCommand(validIndex, invalidLargeIndex, model);
@@ -46,7 +51,7 @@ public class DisjoinCommandTest {
     @Test
     public void testNotParticipantFail() {
         String expectedMessage = DisjoinCommand.MESSAGE_PERSON_NOT_PARTICIPATE;
-        final Index validIndex = Index.fromOneBased(1);
+        final Index validIndex = INDEX_FIRST_EVENT;
         final Index invalidIndex = Index.fromOneBased(6);
         Model actualModel = new ModelManager(model.getAddressBook(), model.getEventList(), new UserPrefs());
         DisjoinCommand noParticipantCommand = prepareCommand(invalidIndex, validIndex, actualModel);
@@ -56,16 +61,16 @@ public class DisjoinCommandTest {
     }
 
     @Test
-    public void testSuccess() throws Exception {
-        Index personIndex = Index.fromOneBased(2);
-        Index eventIndex = Index.fromOneBased(1);
+    public void testSuccess() {
+        Index personIndex = INDEX_SECOND_PERSON;
+        Index eventIndex = INDEX_FIRST_EVENT;
         Model expectedModel = new ModelManager(model.getAddressBook(), model.getEventList(), new UserPrefs());
-        Person person = (Person) expectedModel.getFilteredPersonList().get(1);
-        Event event = (Event) expectedModel.getFilteredEventList().get(0);
+        Person person = (Person) expectedModel.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        Event event = (Event) expectedModel.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
         String expectedMessage = String.format(DisjoinCommand.MESSAGE_DISJOIN_SUCCESS, person.getName(),
             event.getEventName());
         DisjoinCommand command = prepareCommand(personIndex, eventIndex, model);
-        expectedModel.quitEvent(person, event);
+        quitEvent(expectedModel, person, event);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
@@ -79,17 +84,4 @@ public class DisjoinCommandTest {
         return command;
     }
 
-    /**
-     * Let some persons join certain events
-     */
-    private void joinEvents(Model model) throws Exception {
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 2; j++) {
-                Person person = (Person) model.getFilteredPersonList().get(i);
-                Event event = (Event) model.getFilteredEventList().get(j);
-                model.joinEvent(person, event);
-            }
-        }
-
-    }
 }
