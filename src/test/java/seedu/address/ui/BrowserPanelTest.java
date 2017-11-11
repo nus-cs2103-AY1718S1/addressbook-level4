@@ -49,7 +49,7 @@ public class BrowserPanelTest extends GuiUnitTest {
                 + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
 
         waitUntilBrowserLoaded(browserPanelHandle);
-        TimeUnit.SECONDS.sleep(1);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+        System.out.printf("%s %s", expectedPersonUrl.toString(), browserPanelHandle.getLoadedUrl().toString());
     }
 }
