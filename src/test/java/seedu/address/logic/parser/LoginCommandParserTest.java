@@ -5,12 +5,11 @@ import static guitests.guihandles.MainWindowHandle.TEST_USERNAME;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Password.MESSAGE_PASSWORD_LENGTH_CONSTRAINTS;
 import static seedu.address.logic.Username.MESSAGE_USERNAME_CHARACTERS_CONSTRAINTS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.logic.parser.LoginCommandParser.EMPTY_PASSWORD_MESSAGE;
 import static seedu.address.logic.parser.LoginCommandParser.EMPTY_USERNAME_MESSAGE;
+import static seedu.address.ui.LoginView.SEPARATOR;
 import static seedu.address.ui.LoginView.setShowingLoginView;
 
 import org.junit.Test;
@@ -24,7 +23,7 @@ import seedu.address.logic.commands.LoginCommand;
 public class LoginCommandParserTest {
     private static final String VALID_USERNAME = "User_1234";
     private static final String VALID_PASSWORD = "P@$$worD";
-    private static final String GUI_LOGIN_ARGS = " " + PREFIX_USERNAME + "%1$s" + " " + PREFIX_PASSWORD + "%2$s";
+    private static final String GUI_LOGIN_ARGS = " " + "%1$s" + SEPARATOR + "%2$s" + SEPARATOR;
 
     private LoginCommandParser parser = new LoginCommandParser();
 

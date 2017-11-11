@@ -1,8 +1,6 @@
 package seedu.address.ui;
 
 import static seedu.address.logic.commands.LoginCommand.isLoggedIn;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
 import java.util.logging.Logger;
 
@@ -27,8 +25,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Displays username and password fields
  */
 public class LoginView extends UiPart<Region> {
-    public static final String GUI_LOGIN_COMMAND_FORMAT = "login " + PREFIX_USERNAME + "%1$s"
-            + " " + PREFIX_PASSWORD + "%2$s";
+    public static final String SEPARATOR = "|";
+    public static final String GUI_LOGIN_COMMAND_FORMAT = "login " + "%1$s" + SEPARATOR + "%2$s" + SEPARATOR;
 
     private static final String FXML = "LoginView.fxml";
     private static final Logger logger = LogsCenter.getLogger(LoginView.class);
@@ -63,8 +61,14 @@ public class LoginView extends UiPart<Region> {
         // process login inputs
         try {
             CommandResult commandResult;
-            commandResult = logic.execute(String.format(GUI_LOGIN_COMMAND_FORMAT, usernameText, passwordText));
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+            if (!containSeparatorString(usernameText) && !containSeparatorString(passwordText)) {
+                commandResult = logic.execute(String.format(GUI_LOGIN_COMMAND_FORMAT, usernameText, passwordText));
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+            } else if (containSeparatorString(usernameText)) {
+                throw new ParseException(Username.MESSAGE_USERNAME_CHARACTERS_CONSTRAINTS);
+            } else {
+                throw new ParseException(Password.MESSAGE_PASSWORD_CHARACTERS_CONSTRAINTS);
+            }
         } catch (CommandException | ParseException e) {
             raise(new NewResultAvailableEvent(e.getMessage(), true));
         }
@@ -88,5 +92,13 @@ public class LoginView extends UiPart<Region> {
 
     public static boolean isShowingLoginView() {
         return showingLoginView;
+    }
+
+    /**
+     * Checks if {@code input} contains {@code SEPARATOR}
+     * @return true if {@code input} contains {@code SEPARATOR}
+     */
+    private boolean containSeparatorString(String input) {
+        return input.contains(SEPARATOR);
     }
 }

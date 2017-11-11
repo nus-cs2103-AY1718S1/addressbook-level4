@@ -2,9 +2,10 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
+import static seedu.address.ui.LoginView.SEPARATOR;
 import static seedu.address.ui.LoginView.isShowingLoginView;
+
+import java.util.regex.Pattern;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Password;
@@ -32,7 +33,7 @@ public class LoginCommandParser implements Parser<LoginCommand> {
         String trimmedArgs = args.trim();
 
         if (isShowingLoginView()) {
-            return parseForGui(args);
+            return parseForGui(trimmedArgs);
         }
 
         try {
@@ -62,17 +63,22 @@ public class LoginCommandParser implements Parser<LoginCommand> {
      */
     public LoginCommand parseForGui(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_USERNAME, PREFIX_PASSWORD);
 
-        if (argMultimap.getValue(PREFIX_USERNAME).get().isEmpty()) {
+        // last element in argsList is ignored
+        String[] argsList = args.split(Pattern.quote(SEPARATOR), -1);
+
+        String enteredUsername = argsList[0];
+        String enteredPassword = argsList[1];
+
+        if (enteredUsername.isEmpty()) {
             throw new ParseException(EMPTY_USERNAME_MESSAGE);
         }
-        if (argMultimap.getValue(PREFIX_PASSWORD).get().isEmpty()) {
+        if (enteredPassword.isEmpty()) {
             throw new ParseException(EMPTY_PASSWORD_MESSAGE);
         }
         try {
-            Username username = ParserUtil.parseUsername(argMultimap.getValue(PREFIX_USERNAME).get());
-            Password password = ParserUtil.parsePassword(argMultimap.getValue(PREFIX_PASSWORD).get());
+            Username username = new Username(enteredUsername);
+            Password password = new Password(enteredPassword);
             return new LoginCommand(username, password);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage());

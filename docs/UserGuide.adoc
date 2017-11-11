@@ -77,19 +77,26 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 
 // tag::login[]
-=== Logging into the address book application : `login`
+=== Logging into the address book application using Command Line Interface (CLI) : `login`
 
 Logs into the address book. +
 Format: `login USERNAME PASSWORD`
+
+[NOTE]
+It is advisable to use the GUI login instead of the CLI login. +
+The current implementation for password masking in the CLI login is less sophisticated than the GUI login.
+This can lead to unexpected or incorrect behaviors such as inconsistent masking of password or being unable to log in when username and password are entered correctly. +
+The CLI login is option is available for convenience only.
 
 Examples:
 
 * `login userAcc_123 pa$$_Word!@#&`
 * `login batMan_111 (Batcave.327+-)`
 
+[NOTE]
 Sample account to log into address book: +
-Username: loanShark97 +
-Password: hitMeUp123 +
+Username: *loanShark97* +
+Password: *hitMeUp123* +
 
 // end::login[]
 
@@ -99,15 +106,17 @@ Password: hitMeUp123 +
 Logs into the address book. +
 Format: `login`
 
-1) Type `login` in the command box. +
-2) Enter username and password in the respective fields +
-3) Press `Enter` on keyboard or click the `Log in` button +
+1) Type `login` and press kbd:[Enter] in the command box. You should see the same welcome page as shown in Figure 1.3. +
+2) Enter username and password in the respective fields. +
+3) Press kbd:[Enter] or click the `Log in` button. +
 
-image::loginView.png[width="790"]
+image::loginView.PNG[width="790"]
+_Figure 1.3 : How the welcome screen looks like after `login` is entered in the command box_
 
+[NOTE]
 Sample account to log into address book: +
-Username: loanShark97 +
-Password: hitMeUp123 +
+Username: *loanShark97* +
+Password: *hitMeUp123* +
 
 // end::loginGUI[]
 
