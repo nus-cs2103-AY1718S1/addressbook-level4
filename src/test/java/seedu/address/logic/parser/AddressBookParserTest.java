@@ -101,13 +101,11 @@ public class AddressBookParserTest {
         String tag = "foo";
         RemoveTagCommand command = (RemoveTagCommand) parser.parseCommand(
                 RemoveTagCommand.COMMAND_WORD + " " + "all" + " " + tag);
-        assertTrue(command instanceof RemoveTagCommand);
         assertEquals(new RemoveTagCommand(new Tag(tag)), command);
 
 
         RemoveTagCommand command2 = (RemoveTagCommand) parser.parseCommand(
                 RemoveTagCommand.COMMAND_WORD + " " + "5" + " " + tag);
-        assertTrue(command2 instanceof RemoveTagCommand);
         assertEquals(new RemoveTagCommand(Index.fromOneBased(5), new Tag(tag)), command2);
     }
 
@@ -115,7 +113,6 @@ public class AddressBookParserTest {
     public void parseCommand_sort() throws Exception {
         SortCommand command = (SortCommand) parser.parseCommand(
                 SortCommand.COMMAND_WORD + " " + "name asc");
-        assertTrue(command instanceof SortCommand);
         assertEquals(new SortCommand(ReadOnlyPerson.NAMESORTASC), command);
     }
 
@@ -123,7 +120,6 @@ public class AddressBookParserTest {
     public void parseCommand_export() throws Exception {
         ExportCommand command = (ExportCommand) parser.parseCommand(
                 ExportCommand.COMMAND_WORD + " " + "output.vcf");
-        assertTrue(command instanceof ExportCommand);
         assertEquals(new ExportCommand("output.vcf"), command);
     }
 
@@ -131,7 +127,6 @@ public class AddressBookParserTest {
     public void parseCommand_import() throws Exception {
         ImportCommand command = (ImportCommand) parser.parseCommand(ImportCommand.COMMAND_WORD + " "
                         + ImportCommandParserTest.TEST_FILE_DIRECTORY + "ValidTypicalAddressBook.xml");
-        assertTrue(command instanceof  ImportCommand);
         assertEquals(new ImportCommand(getTypicalAddressBook().getPersonList()), command);
     }
     //@@author
