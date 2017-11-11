@@ -377,7 +377,7 @@ public class MainWindow extends UiPart<Region> {
     private void handlePopulateEvent(PopulateRequestEvent request) {
         logger.info(LogsCenter.getEventHandlingLogMessage(request));
         // calendar.populateNewCalendar(request.event);
-        calendar.populateUpdatedCalendar(request.eventList, YearMonth.now());
+        calendar.populateUpdatedCalendar(request.eventList);
     }
 
     /**
