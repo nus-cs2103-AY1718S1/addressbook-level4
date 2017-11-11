@@ -56,6 +56,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+// tag::add[]
 === Adding a person: `add`
 
 Adds a person to the address book +
@@ -69,6 +70,7 @@ Examples:
 
 * `add n/John Doe p/98765432 b/21/07/1991 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison b/21/07/1991 p/1234567 t/criminal`
+// end::add[]
 
 === Listing all persons : `list`
 
@@ -382,6 +384,7 @@ Format `b/dd/mm/yyyy` allow Mybook to keep track all students birthday
 Easy to identify who's birthday is coming up on that month.
 //end::birthday[]
 
+// tag::sort[]
 === Sorted Contacts (v1.3)
 
 *Author*: Soh Hong Hwee
@@ -389,6 +392,7 @@ Easy to identify who's birthday is coming up on that month.
 All persons displayed will be sorted in ascending alphabetical order based on their name. +
 Using `List` command will always display all persons in sorted ascedning alphabetical order. +
 Persons with `Important` or `important` tag will be at the top in ascending alphabetical order then follow by other persons.
+// end::sort[]
 
 // tag::gmap2[]
 === Gmap command accepts person name (v1.3)
