@@ -3,6 +3,8 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,13 +37,31 @@ public class AddressBookParser {
      * Enumerator list to define the types of commands.
      */
     private enum CommandType {
-        ADD, ADDLI, CLEAR, DEL, EDIT, EXIT, FIND, PFIND, HELP, HISTORY, LIST, PRINT, REDO, UNDO, SELECT, WHY, NONE
+        ADD,
+        ADDLI,
+        CLEAR,
+        DEL,
+        EDIT,
+        EXIT,
+        FIND,
+        PFIND,
+        HELP,
+        HISTORY,
+        LIST,
+        PRINT,
+        REDO,
+        UNDO,
+        SELECT,
+        WHY,
+        NONE
     }
 
     /**
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
+    private static HashMap<String, CommandType> commandWordMap = new HashMap<>();
 
     /**
      * Parses user input into command for execution.
@@ -116,97 +136,56 @@ public class AddressBookParser {
         }
     }
 
+    /**
+     * Set up a map for O(1) command word to commandType access
+     */
+    private void setUpCommandWordMap() {
+        Arrays.stream(AddCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.ADD));
+        Arrays.stream(AddLifeInsuranceCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.ADDLI));
+        Arrays.stream(ClearCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.CLEAR));
+        Arrays.stream(DeleteCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.DEL));
+        Arrays.stream(EditCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.EDIT));
+        Arrays.stream(ExitCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.EXIT));
+        Arrays.stream(FindCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.FIND));
+        Arrays.stream(PartialFindCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.PFIND));
+        Arrays.stream(HelpCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.HELP));
+        Arrays.stream(HistoryCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.HISTORY));
+        Arrays.stream(ListCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.LIST));
+        Arrays.stream(PrintCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.PRINT));
+        Arrays.stream(RedoCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.REDO));
+        Arrays.stream(UndoCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.UNDO));
+        Arrays.stream(SelectCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.SELECT));
+        Arrays.stream(WhyCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.WHY));
+    }
+
 
     /**
-     * Searches the entire list of acceptable command words in each command and returns the enumerated value type.
+     * Searches the map for the commandWord
      * @param commandWord
      * @return enumerated value for the switch statement to process
      */
 
     private CommandType getCommandType(String commandWord) {
-        for (String word : AddCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.ADD;
-            }
+        if (commandWordMap.isEmpty()) {
+            setUpCommandWordMap();
         }
-        for (String word : AddLifeInsuranceCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.ADDLI;
-            }
-        }
-        for (String word : ClearCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.CLEAR;
-            }
-        }
-        for (String word : DeleteCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.DEL;
-            }
-        }
-        for (String word : EditCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.EDIT;
-            }
-        }
-        for (String word : ExitCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.EXIT;
-            }
-        }
-        for (String word : FindCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.FIND;
-            }
-        }
-        for (String word : PartialFindCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.PFIND;
-            }
-        }
-        for (String word : HelpCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.HELP;
-            }
-        }
-        for (String word : HistoryCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.HISTORY;
-            }
-        }
-        for (String word : ListCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.LIST;
-            }
-        }
-        for (String word : RedoCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.REDO;
-            }
-        }
-        for (String word : SelectCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.SELECT;
-            }
-        }
-        for (String word : UndoCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.UNDO;
-            }
-        }
-
-        for (String word : WhyCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.WHY;
-            }
-        }
-        for (String word : PrintCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.PRINT;
-            }
-        }
-
-        return CommandType.NONE;
+        return commandWordMap.getOrDefault(commandWord, CommandType.NONE);
     }
     //@@author
 
