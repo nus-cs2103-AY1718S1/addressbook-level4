@@ -15,6 +15,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.CommandInputChangedEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.util.TextUtil;
+import seedu.address.logic.Audio;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -56,8 +57,12 @@ public class CommandBox extends UiPart<Region> {
             width = (width > halfWindowWidth) ? halfWindowWidth : width;
             commandTextField.setPrefWidth(width);
             commandTextField.setAlignment(Pos.CENTER_RIGHT);
+            //@@author hanselblack
+            //Plays typing Sound
+            new Audio("audio/typing.mp3").playSound();
+            //@@author
         });
-
+        //@@author nicholaschuayunzhi
         commandBoxItems.setOnMouseClicked((event) -> {
             commandTextField.requestFocus();
             commandTextField.positionCaret(commandTextField.getText().length());

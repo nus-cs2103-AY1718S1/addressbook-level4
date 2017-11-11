@@ -4,8 +4,9 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import java.util.Arrays;
 
-import seedu.address.logic.threads.Radio;
 import seedu.address.logic.TextToSpeech;
+import seedu.address.logic.threads.Radio;
+
 
 //@@author hanselblack
 /**

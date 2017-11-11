@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
-import seedu.address.logic.Audio;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -40,10 +39,6 @@ public class AddressBookParser {
 
         String commandWord = command[0];
         String arguments = command[1];
-
-        //@@author hanselblack
-        //Plays typing Sound
-        new Audio("audio/typing.mp3").playSound();
 
         switch (commandWord) {
 
