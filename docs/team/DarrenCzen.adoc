@@ -198,6 +198,17 @@ The implementation of website field for a contact allows users to carry out acti
 of university students such as browsing a person's social network website in The Myth's Book.
 
 ---
+==== Implementation
+
+---
+
+In the implementation of the website field, instead of using a self implemented regex, the testing
+of validity of an inputted website uses a url validator method that is provided by
+the package belonging to `Apache Commons Validator` which proves to be more useful and
+efficient than a self-implemented regex to test a validity of a link.
+
+---
+
 === Enhancement Added: Switching between Persons Mode and Events Mode
 
 This section includes the behaviour and justification of the switching between modes in The Myth's Book and explains how it is implemented.
