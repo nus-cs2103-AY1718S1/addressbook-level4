@@ -827,6 +827,8 @@ The person detail panel displays the complete information of a person that is se
 
 image::detailPanel.png[width="600"]
 
+image::detailPanelLabeled.png[width="600"]
+
 // end::detailPanelBehavior[]
 
 // tag::detailPanelImp[]
@@ -972,10 +974,10 @@ private void updateKeyboardIcon() {
 
 ==== Autoselection for Newly Added/Edited Person
 
-A newly added, or edited person will be automatically selected in the `PersonListPanel`. This makes it easier for the user to take note
+A newly added, or edited person will automatically be selected in the `PersonListPanel`. This makes it easier for the user to take note
 of changes made to their contacts.
 
-This implementation is done by raising an event whenever the add and edit command respectively is executed.
+This implementation is done by raising an event whenever the add and edit commands are executed.
 The `PersonListPanel` is registered as an event handler and will subsequently scroll to the person that is newly modified.
 
 This feature is integrated with the link:#detailPanel[Person Detail Panel implementation], and more details on the event handling
