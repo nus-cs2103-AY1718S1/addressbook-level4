@@ -18,6 +18,7 @@ public class OpenRolodexCommand extends Command {
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "o", "cd", "ls", "<"));
     public static final String COMMAND_HOTKEY = "Ctrl+O";
+    public static final String FORMAT = "open FILEPATH";
 
     public static final String MESSAGE_OPENING = "Opening file: `%1$s`";
     public static final String MESSAGE_NOT_EXIST = "Unable to find `%1$s`. "
