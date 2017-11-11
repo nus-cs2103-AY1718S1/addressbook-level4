@@ -12,6 +12,9 @@ import org.junit.Test;
 import seedu.address.testutil.PersonBuilder;
 
 //@@author marvinchin
+/**
+ * Contains unit tests for {@code TagsContainKeywordsPredicate}.
+ */
 public class TagsContainKeywordsPredicateTest {
 
     @Test

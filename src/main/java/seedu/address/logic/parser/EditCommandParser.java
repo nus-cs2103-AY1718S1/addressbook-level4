@@ -106,7 +106,8 @@ public class EditCommandParser implements Parser<EditCommand> {
     }
 
     /**
-     * Checks if the input collection represents an empty collection. Returns an empty collection if it is.
+     * Returns the input collection, or an empty collection if the input collection contains
+     * only a single element which is an empty string.
      */
     private Collection<String> getCollectionToParse(Collection<String> collection) {
         return collection.size() == 1 && collection.contains("")

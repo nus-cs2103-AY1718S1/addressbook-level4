@@ -6,7 +6,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author marvinchin
 /**
- * Finds and lists all persons in address book who meet the specified criteria.
+ * Finds and lists all {@code Person}s in address book who meet the specified criteria.
  */
 public abstract class FindCommand extends Command {
 
@@ -33,8 +33,7 @@ public abstract class FindCommand extends Command {
 
 
     /**
-     * Returns the collection of persons to be deleted.
-     * To be implemented by the classes inheriting this class.
+     * Returns the predicate used to determine which {@code Person}s should be shown.
      */
     protected abstract Predicate<ReadOnlyPerson> getPredicate();
 }

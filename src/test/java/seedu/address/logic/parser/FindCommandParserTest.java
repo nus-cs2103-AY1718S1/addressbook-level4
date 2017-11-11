@@ -13,6 +13,9 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.TagsContainKeywordsPredicate;
 
+/**
+ * Containts unit tests for the FindCommand
+ */
 public class FindCommandParserTest {
 
     private FindCommandParser parser = new FindCommandParser();

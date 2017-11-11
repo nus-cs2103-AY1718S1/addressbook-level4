@@ -9,6 +9,9 @@ import org.junit.Test;
 import seedu.address.logic.commands.ExportCommand;
 
 //@@author marvinchin
+/**
+ * Contains unit tests for {@code ExportCommandParser}.
+ */
 public class ExportCommandParserTest {
 
     private ExportCommandParser parser = new ExportCommandParser();

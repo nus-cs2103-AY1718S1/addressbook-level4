@@ -6,7 +6,7 @@ import java.util.Date;
 
 //@@author marvinchin
 /**
- * Represents the last time a person is accessed.
+ * Represents the last date a {@code Person} is accessed.
  * Guarantees immutability.
  */
 public class LastAccessDate implements Comparable<LastAccessDate> {
@@ -20,11 +20,11 @@ public class LastAccessDate implements Comparable<LastAccessDate> {
     }
 
     /**
-     * Constructs a new LastAccessDate with the date equivalent to the date.
+     * Constructs a new LastAccessDate with the date equivalent to the input {@code Date}.
      */
     public LastAccessDate(Date date) {
         requireNonNull(date);
-        // save a copy instead of using input date directly to avoid reference to external objects that can be mutated
+        // store a copy instead of using input date directly to avoid reference to external objects that can be mutated
         lastAccessDate = copyDate(date);
     }
 
@@ -46,7 +46,7 @@ public class LastAccessDate implements Comparable<LastAccessDate> {
     }
 
     /**
-     * Utility method to create a copy of the input date
+     * Utility method to create a copy of the input {@code Date}s.
      */
     private Date copyDate(Date originalDate) {
         // clone using constructor instead of clone method due to vulnerabilities in the clone method

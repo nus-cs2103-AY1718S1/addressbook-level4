@@ -10,11 +10,15 @@ import static seedu.address.model.person.PersonComparatorUtil.comparePhone;
 import java.util.Comparator;
 
 //@@author marvinchin
-
 /**
- * Compares persons by their last access date. Sorts first by last access date, then by favorite,
- * then by name in lexicographic order, then by phone in numeric order, then by address in lexicographic order,
- * then by email in lexicographic order
+ * Comparator for {@Person}s when sorting by {@code LastAccessDate}.
+ * Sorts in the order:
+ * 1. {@code LastAccessDate} in order of recency
+ * 2. {@code Name} in lexicographic order
+ * 3. {@code Favorite} status
+ * 4. {@code Phone} in numeric order
+ * 5. {@code Address} in lexicographic order
+ * 6. {@code Email} in lexicographic order
  */
 public class PersonRecentComparator implements Comparator<ReadOnlyPerson> {
     @Override

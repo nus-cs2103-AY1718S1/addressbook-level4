@@ -33,6 +33,9 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 //@@author marvinchin
+/**
+ * Contains system tests for {@code SortCommand}
+ */
 public class SortCommandSystemTest extends AddressBookSystemTest {
 
     @Test

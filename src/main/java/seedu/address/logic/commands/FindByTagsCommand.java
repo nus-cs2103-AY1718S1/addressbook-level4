@@ -7,7 +7,7 @@ import seedu.address.model.person.TagsContainKeywordsPredicate;
 
 //@@author marvinchin
 /**
- * Finds and lists all persons in address book whose tags contains any of the argument keywords.
+ * Finds and lists all {@code Person}s in address book whose {@code Tag}s contains any of the input keywords.
  * Keyword matching is case sensitive.
  */
 public class FindByTagsCommand extends FindCommand {

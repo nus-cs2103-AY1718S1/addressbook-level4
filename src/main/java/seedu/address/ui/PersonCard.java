@@ -224,7 +224,7 @@ public class PersonCard extends UiPart<Region> {
 
     //@@author marvinchin
     /**
-     * Creates a social info label for each {@code Person}
+     * Creates labels for each {@code SocialInfo} belonging to a {@code Person}.
      */
     private void initSocialInfos(ReadOnlyPerson person) {
         person.getSocialInfos().forEach(socialInfo -> {

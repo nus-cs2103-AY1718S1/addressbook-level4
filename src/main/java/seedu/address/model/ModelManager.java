@@ -40,7 +40,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author marvinchin
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a {@code ModelManager} with the given {@code addressBook} and {@code userPrefs}.
      */
     public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
         super();

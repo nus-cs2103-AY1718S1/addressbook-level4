@@ -5,7 +5,7 @@ import seedu.address.model.social.SocialInfo;
 
 //@@author marvinchin
 /**
- * Handles mappings of social related identifiers when parsing SocialInfo
+ * Handles mappings of social related identifiers when parsing {@code SocialInfo}.
  */
 public class SocialInfoMapping {
 
@@ -25,9 +25,9 @@ public class SocialInfoMapping {
 
 
     /**
-     * Returns the SocialInfo object represented by the input String.
-     * @throws IllegalValueException if the input does not represent a valid SocialInfo recognized
-     * by the defined mappings
+     * Returns the SocialInfo object represented by the input {@code String}.
+     * @throws IllegalValueException if the input does not represent a valid {@code SocialInfo} recognized
+     * by the defined mappings.
      */
     public static SocialInfo parseSocialInfo(String rawSocialInfo) throws IllegalValueException {
         String[] splitRawSocialInfo = rawSocialInfo.split(" ", 2);

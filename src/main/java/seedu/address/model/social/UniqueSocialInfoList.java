@@ -13,8 +13,7 @@ import seedu.address.commons.exceptions.DuplicateDataException;
 
 //@@author marvinchin
 /**
- * A list of social media information that enforces no nulls and
- * no duplicate social info types between its elements.
+ * A list of {@code SocialInfo}s that enforces no nulls and no duplicate social platforms between its elements.
  */
 public class UniqueSocialInfoList implements Iterable<SocialInfo> {
 
@@ -26,38 +25,37 @@ public class UniqueSocialInfoList implements Iterable<SocialInfo> {
     public UniqueSocialInfoList() {}
 
     /**
-     * Creates a UniqueSocialInfoList using given socialInfos.
+     * Creates a UniqueSocialInfoList using given {@code socialInfos}.
      * Enforces no nulls.
      */
     public UniqueSocialInfoList(Set<SocialInfo> socialInfos) {
         requireAllNonNull(socialInfos);
         internalList.addAll(socialInfos);
 
-        assert internalListSocialTypesUnique();
+        assert areInternalListSocialTypesUnique();
     }
 
 
     /**
-     * Returns all the social media information in this list as a Set.
+     * Returns all the social media information in this list as a {@code Set}.
      */
     public Set<SocialInfo> toSet() {
-        assert internalListSocialTypesUnique();
+        assert areInternalListSocialTypesUnique();
         return new HashSet<>(internalList);
     }
 
     /**
-     * Replaces the SocialInfo in this list with those in the argument SocialInfo list.
-     * @param socialInfos
+     * Replaces the {@code SocialInfo} in the internal list with those in the argument {@code SocialInfo} set.
      */
     public void setSocialInfos(Set<SocialInfo> socialInfos) {
         requireAllNonNull(socialInfos);
         internalList.setAll(socialInfos);
 
-        assert internalListSocialTypesUnique();
+        assert areInternalListSocialTypesUnique();
     }
 
     /**
-     * Returns true if the list contains a SocialInfo with the same type
+     * Returns true if the internal list contains a {@code SocialInfo} with the same social platform.
      */
     public boolean containsSameType(SocialInfo toCheck) {
         requireNonNull(toCheck);
@@ -74,9 +72,9 @@ public class UniqueSocialInfoList implements Iterable<SocialInfo> {
     }
 
     /**
-     * Adds a SocialInfo to the list
-     * @throws DuplicateSocialTypeException if the SocialInfo to add is a duplicate of an existing
-     * SocialInfo in the list.
+     * Adds a {@code SocialInfo} to the internal list.
+     * @throws DuplicateSocialTypeException if the platform represented by the {@code SocialInfo} to add is a duplicate
+     * of another element in the list.
      */
     public void add(SocialInfo toAdd) throws DuplicateSocialTypeException {
         requireNonNull(toAdd);
@@ -86,13 +84,13 @@ public class UniqueSocialInfoList implements Iterable<SocialInfo> {
         }
         internalList.add(toAdd);
 
-        assert internalListSocialTypesUnique();
+        assert areInternalListSocialTypesUnique();
     }
 
     /**
-     * Checks that there are no SocialInfos of the same type in the collection
+     * Checks that there are no {@code SocialInfo} of the same platform in the internal list.
      */
-    private boolean internalListSocialTypesUnique() {
+    private boolean areInternalListSocialTypesUnique() {
         HashSet<String> socialTypes = new HashSet<>();
 
         for (SocialInfo socialInfo : internalList) {
@@ -109,24 +107,23 @@ public class UniqueSocialInfoList implements Iterable<SocialInfo> {
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
-     * @return
      */
     public ObservableList<SocialInfo> asObservableList() {
-        assert internalListSocialTypesUnique();
+        assert areInternalListSocialTypesUnique();
 
         return FXCollections.unmodifiableObservableList(internalList);
     }
 
     @Override
     public Iterator<SocialInfo> iterator() {
-        assert internalListSocialTypesUnique();
+        assert areInternalListSocialTypesUnique();
         return internalList.iterator();
 
     }
 
     @Override
     public boolean equals(Object other) {
-        assert internalListSocialTypesUnique();
+        assert areInternalListSocialTypesUnique();
 
         return other == this
                 || (other instanceof UniqueSocialInfoList
@@ -138,14 +135,14 @@ public class UniqueSocialInfoList implements Iterable<SocialInfo> {
      * The elements do not have to be in the same order.
      */
     public boolean equalsOrderInsensitive(UniqueSocialInfoList other) {
-        assert internalListSocialTypesUnique();
-        assert other.internalListSocialTypesUnique();
+        assert areInternalListSocialTypesUnique();
+        assert other.areInternalListSocialTypesUnique();
         return other == this
                 || new HashSet<>(internalList).equals(new HashSet<>(other.internalList));
     }
 
     /**
-     * Signals that an operation would have violated the 'no duplicate social type' property of the list.
+     * Signals that an operation would have violated the 'no duplicate social platform' property of the list.
      */
     public static class DuplicateSocialTypeException extends DuplicateDataException {
         protected DuplicateSocialTypeException() {

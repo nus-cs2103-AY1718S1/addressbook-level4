@@ -7,11 +7,12 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author marvinchin
 /**
- * Sorts the displayed person list by their names in alphabetical order.
+ * Sorts the {@code Person}s in the address book first by favorite status, then by name in lexicographic order.
+ * @see PersonDefaultComparator
  */
 public class SortByDefaultCommand extends SortCommand {
     @Override
-    public Comparator<ReadOnlyPerson> getComparator() {
+    protected Comparator<ReadOnlyPerson> getComparator() {
         return new PersonDefaultComparator();
     }
 

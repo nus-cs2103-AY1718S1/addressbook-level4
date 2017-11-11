@@ -5,7 +5,7 @@ import seedu.address.storage.StorageManager;
 
 //@@author marvinchin
 /**
- * Utility class for storage utilities
+ * Utility class for tests involving {@code Storage}.
  */
 public class StorageUtil {
 

@@ -18,7 +18,10 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.PersonBuilder;
 
 //@@author marvinchin
-public class ComparatorUtilTest {
+/**
+ * Contains unit tests for {@code PersonComparatorUtil}
+ */
+public class PersonComparatorUtilTest {
 
     @Test
     public void compareFavorite_sameFavorite_returnZero() {
