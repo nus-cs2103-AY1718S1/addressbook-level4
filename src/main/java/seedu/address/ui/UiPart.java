@@ -11,9 +11,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.model.ModelManager;
 
 /**
  * Represents a distinct part of the UI. e.g. Windows, dialogs, panels, status bars, etc.
