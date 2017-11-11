@@ -32,7 +32,6 @@ public class Calendar {
 
     /**
      * Create a calendar view
-     *
      * @param yearMonth year month to create the calendar of
      */
     public Calendar(YearMonth yearMonth, ObservableList<ReadOnlyEvent> eventList) {
@@ -109,9 +108,7 @@ public class Calendar {
             ap.setStyle("calendar-color");
             ap.getChildren().add(txt);
             calendarDate = calendarDate.plusDays(1);
-        }
 
-        for (AnchorPaneNode ap : allCalendarDays) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
             String newDate = formatter.format(ap.getDate());
             for (ReadOnlyEvent event : events) {
