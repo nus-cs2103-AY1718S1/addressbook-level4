@@ -499,6 +499,21 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+// tag::randomisedUniqueTagColors[]
+=== Randomised Unique Tag Colors: `Since v1.4`
+
+For your convenience, all assignment of colors will be automated by cherBook for you.
+
+Whenever you access the cherBook, a new range of `random` colors will be assigned to the background of the tags.
+
+Modifications were made to the range of possible colors. It is to ensure that the background color's `saturation` and `lumination` is at an optimal level
+to match with the white font of the tag description. Thus, allowing you to be able to see the tag description clearly as seen in the following picture.
+
+image::TagColor.png[width="350"]
+_Figure 5.20.1 : Example of color tags_
+
+// end::randomisedUniqueTagColors[]
+
 // tag::studentdetailspanel[]
 === Student Details Panel `Since v1.3`
 
@@ -624,7 +639,7 @@ A high average implies that the class/cohort has performed above expectations.
 In version v1.0, users will be able to:
 
 * Use command shortcuts
-* Back-up Storage)
+* Back-up Storage
 * Have colorful tags
 
 === Features added in v1.1
@@ -646,8 +661,8 @@ In version v1.3, you are be able to:
 
 * View graph of your student's academics grades
 * View all your student's information on the `Student Details Panel`
-* Have optional fields like (email, grades, address, postal code, remarks and tags) when adding a student
-* See student's academic progress over time from teh `GraphPanel`
+* Have optional fields like (email, address, postal code and tags) when adding a student
+* See student's academic progress over time from the `GraphPanel`
 
 === Features added in v1.4
 In version v1.4, you are be able to:
