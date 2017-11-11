@@ -1,6 +1,11 @@
 package seedu.address.testutil;
 
+import java.time.LocalDate;
+
+import javax.xml.bind.annotation.XmlType;
+
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.DateParser;
 import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.person.Person;
@@ -24,9 +29,11 @@ public class InsuranceBuilder {
 
     public InsuranceBuilder() {
         try {
+            LocalDate defaultSigningDate = new DateParser().parse(DEFAULT_SIGNING_DATE);
+            LocalDate defaultExpiryDate = new DateParser().parse(DEFAULT_EXPIRY_DATE);
             this.insurance = new LifeInsurance(DEFAULT_INSURANCE_NAME, DEFAULT_OWNER,
                     DEFAULT_INSURED, DEFAULT_BENEFICIARY, DEFAULT_PREMIUM, DEFAULT_CONTRACT_PATH,
-                    DEFAULT_SIGNING_DATE, DEFAULT_EXPIRY_DATE);
+                    defaultSigningDate, defaultExpiryDate);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default insurance's values are invalid.");
         }
@@ -82,8 +89,8 @@ public class InsuranceBuilder {
     /**
      * Sets the Contract Path of the {@code LifeInsurance} that we are building.
      */
-    public InsuranceBuilder withContractPath(String contractPath) {
-        this.insurance.setContractPath(contractPath);
+    public InsuranceBuilder withContractName(String contractName) {
+        this.insurance.setContractName(contractName);
         return this;
     }
 

@@ -18,7 +18,7 @@ public class TypicalInsurances {
             .withBeneficiary(new Person(BENSON))
             .withInsured(new Person(CARL))
             .withPremium(123.45)
-            .withContractPath("common.pdf")
+            .withContractName("common.pdf")
             .withSigningDate("01 Jan 2017")
             .withExpiryDate("31 Dec 2020").build();
 

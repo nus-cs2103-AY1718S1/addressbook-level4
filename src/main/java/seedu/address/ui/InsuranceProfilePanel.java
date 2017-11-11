@@ -100,7 +100,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         owner.setText(null);
         insured.setText(null);
         beneficiary.setText(null);
-        contractPath.setText(null);
+        contractName.setText(null);
         premium.setText(null);
         signingDate.setText(null);
         expiryDate.setText(null);
