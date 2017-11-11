@@ -17,6 +17,8 @@ import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
+import seedu.address.model.relationship.Relationship;
+import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -109,6 +111,31 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedReadOnlyPerson);
 
         Person editedPerson = new Person(editedReadOnlyPerson);
+
+        Set<Relationship> oldRelationships = target.getRelationships();
+
+        for (Relationship oldRelationship: oldRelationships) {
+            //keep a copy of the original relationship
+            Relationship oldRelationshipCopy = new Relationship(oldRelationship);
+
+            Relationship tempNewRelationship = oldRelationship.replacePerson(target, editedPerson);
+
+            ReadOnlyPerson counterPart = oldRelationshipCopy.counterpartOf(target); //the old counterpart
+            //a copy of counterpart to be modified into new counterpart and put into the new relationship
+            ReadOnlyPerson counterPartCopy = new Person(counterPart);
+            Person counterPartCopyCast = (Person) counterPartCopy;
+
+            counterPartCopyCast.removeRelationship(oldRelationshipCopy);
+            Relationship newRelationship = tempNewRelationship.replacePerson(counterPart,
+                    counterPartCopyCast);
+            try {
+                editedPerson.addRelationship(newRelationship);
+                counterPartCopyCast.addRelationship(newRelationship);
+                persons.setPerson(counterPart, counterPartCopyCast);
+            } catch (DuplicateRelationshipException dre) {
+                assert false : "impossible";
+            }
+        }
         syncMasterTagListWith(editedPerson);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
