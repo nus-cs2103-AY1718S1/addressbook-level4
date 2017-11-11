@@ -5,10 +5,12 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.BrowserSelectorCardHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.ui.BrowserSelectorCard;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -63,6 +65,24 @@ public class GuiTestAssert {
         int numberOfPeople = personListPanelHandle.getListSize();
         assertEquals(size, numberOfPeople);
     }
+
+    //@@author fongwz
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertBrowserCardEquals(BrowserSelectorCardHandle expectedCard,
+                                               BrowserSelectorCardHandle actualCard) {
+        assertEquals(expectedCard.getBrowserTypeName(), actualCard.getBrowserTypeName());
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedBrowser}.
+     */
+    public static void assertBrowserCardDisplay(BrowserSelectorCard expectedBrowser,
+                                                BrowserSelectorCardHandle actualCard) {
+        assertEquals(expectedBrowser.getImageString(), actualCard.getBrowserTypeName());
+    }
+    //@@author
 
     /**
      * Asserts the message shown in {@code resultDisplayHandle} equals to {@code expected}.
