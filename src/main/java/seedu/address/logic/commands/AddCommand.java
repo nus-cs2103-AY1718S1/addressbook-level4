@@ -50,7 +50,7 @@ public class AddCommand extends UndoableCommand {
     //@@author
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in LISA";
 
     private final Person toAdd;
 
@@ -178,8 +178,7 @@ public class AddCommand extends UndoableCommand {
             }
 
             // state check
-            AddCommand.AddPersonOptionalFieldDescriptor a =
-                    (AddCommand.AddPersonOptionalFieldDescriptor) other;
+            AddCommand.AddPersonOptionalFieldDescriptor a = (AddCommand.AddPersonOptionalFieldDescriptor) other;
 
             return getPhone().equals(a.getPhone())
                     && getEmail().equals(a.getEmail())
