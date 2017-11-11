@@ -85,7 +85,7 @@ public class AddQuickCommandParser implements Parser<AddQuickCommand> {
             if (prefix.equals(PREFIX_BIRTHDAY)) {
                 return value.ofNullable("00/00/0000");
             } else if (prefix.equals(PREFIX_EMAIL)) {
-                return value.ofNullable("default@default.email");
+                return value.ofNullable("No email");
             } else if (prefix.equals(PREFIX_ADDRESS)) {
                 return value.ofNullable("No address");
             } else if (prefix.equals(PREFIX_REMARK)) {

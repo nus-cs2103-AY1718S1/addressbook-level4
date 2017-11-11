@@ -1,5 +1,5 @@
 # meiyi1234
-###### \java\seedu\address\logic\parser\RemarkCommandParserTest.java
+###### /java/seedu/address/logic/parser/RemarkCommandParserTest.java
 ``` java
 public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
@@ -31,7 +31,7 @@ public class RemarkCommandParserTest {
 }
 
 ```
-###### \java\seedu\address\model\person\RemarkTest.java
+###### /java/seedu/address/model/person/RemarkTest.java
 ``` java
 public class RemarkTest {
 

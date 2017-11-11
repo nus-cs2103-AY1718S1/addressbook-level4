@@ -1,4 +1,14 @@
 # Choony93reused
+###### /resources/view/themes/caspian/caspian.css
+``` css
+.list-cell:filled:even {
+    -fx-background-color: #bbffff;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #e2ffff;
+}
+```
 ###### /resources/view/themes/bootstrap3/bootstrap3.css
 ``` css
 .list-cell:filled:even {
@@ -18,34 +28,18 @@
 	-fx-text-fill: black;
 }
 ```
-###### /resources/view/themes/caspian/caspian.css
+###### /resources/view/themes/modena/whiteOnBlack.css
 ``` css
 .list-cell:filled:even {
-    -fx-background-color: #bbffff;
+    -fx-background-color: #000000;
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #e2ffff;
-}
-```
-###### /resources/view/themes/modena/blackOnWhite.css
-``` css
-.list-cell:filled:even {
-    -fx-background-color: #e9e9e9;
-}
-
-.list-cell:filled:odd {
-    -fx-background-color: #fafafa;
+    -fx-background-color: #323232;
 }
 
 .list-cell:filled:selected {
     -fx-background-color: #939393;
-	-fx-text-fill: black;
-}
-
-.list-view .list-cell:empty {
-    /* Empty cells will not have alternating colours */
-    -fx-background: white;
 }
 ```
 ###### /resources/view/themes/modena/modena.css
@@ -66,18 +60,24 @@
     -fx-background: black;
 }
 ```
-###### /resources/view/themes/modena/whiteOnBlack.css
+###### /resources/view/themes/modena/blackOnWhite.css
 ``` css
 .list-cell:filled:even {
-    -fx-background-color: #000000;
+    -fx-background-color: #e9e9e9;
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #323232;
+    -fx-background-color: #fafafa;
 }
 
 .list-cell:filled:selected {
     -fx-background-color: #939393;
+	-fx-text-fill: black;
+}
+
+.list-view .list-cell:empty {
+    /* Empty cells will not have alternating colours */
+    -fx-background: white;
 }
 ```
 ###### /resources/view/themes/modena/yellowOnBlack.css

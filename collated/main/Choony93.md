@@ -1,30 +1,234 @@
 # Choony93
-###### /java/seedu/address/commons/events/model/AddressBookImportEvent.java
-``` java
-public class AddressBookImportEvent extends BaseEvent {
+###### /resources/view/MainWindow.fxml
+``` fxml
+        <MenuItem mnemonicParsing="false" text="Import Addressbook" onAction="#handleImport"/>
+        <MenuItem mnemonicParsing="false" text="Export Addressbook (TDB)"/>
+        <Menu text="Themes">
+            <MenuItem text="Bootstrap3" onAction="#handleThemeBootstrap3" userData="0"/>
+            <MenuItem text="Dark" onAction="#handleThemeDark" userData="1"/>
+            <MenuItem text="Caspian" onAction="#handleThemeCaspian" userData="2"/>
+            <Menu text="Modena">
+                <MenuItem text="Default" onAction="#handleThemeModena" userData="3"/>
+                <MenuItem text="Black On White" onAction="#handleThemeModenaBoW" userData="4"/>
+                <MenuItem text="White On Black" onAction="#handleThemeModenaWoB" userData="5"/>
+                <MenuItem text="Yellow On Black" onAction="#handleThemeModenaYoB" userData="6"/>
+            </Menu>
+        </Menu>
+```
+###### /resources/view/PersonListCard.fxml
+``` fxml
+                <Pane HBox.hgrow="ALWAYS"/>
+                <MenuButton fx:id="options_button" text="" alignment="CENTER_RIGHT" styleClass="menu-personcard">
+                    <items>
+                        <MenuItem text="Delete" onAction="#handleDelete"/>
+                        <MenuItem text="Google Map" onAction="#handleGoogleMap"/>
+                        <MenuItem text="Add photo" onAction="#handleAddImage"/>
+                    </items>
+                </MenuButton>
+```
+###### /resources/view/Extensions.css
+``` css
+.menu-personcard {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+	-fx-mark-color: grey;
+	-fx-pref-width: 120px;
+	-fx-text-alignment: right;
+}
 
-    public final String filePath;
-    public final ReadOnlyAddressBook importedBook;
-
-    public AddressBookImportEvent(String filePath, ReadOnlyAddressBook importedBook) {
-        this.filePath = filePath;
-        this.importedBook = importedBook;
-    }
-
-    @Override
-    public String toString() {
-        return "New Addressbook imported from file: " + filePath;
-    }
+.menu-personcard:showing {
+    -fx-mark-color: #00FFFF;
 }
 ```
-###### /java/seedu/address/commons/events/ui/ChangeThemeEvent.java
+###### /java/seedu/address/ui/UiManager.java
 ``` java
-public class ChangeThemeEvent extends BaseEvent {
+    @Subscribe
+    private void handleOptionsDeleteEvent(PersonPanelDeleteEvent event) throws CommandException, ParseException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        this.logic.execute("delete " + event.targetIndex);
+    }
+```
+###### /java/seedu/address/ui/MainWindow.java
+``` java
+    /**
+     * Sets the current theme based on given css.
+     *
+     * @param themeUrl e.g. {@code "/darktheme/DarkTheme.css"}
+     */
+    private void setTheme(String themeUrl) {
+        this.getPrimaryStage().getScene().getStylesheets().clear();
+        this.getPrimaryStage().getScene().getStylesheets().add(MainApp.class
+                .getResource("/view/" + themeUrl).toExternalForm());
+        this.currentTheme = themeUrl;
+        browserPanel.loadDefaultPage(themeUrl);
+    }
+```
+###### /java/seedu/address/ui/MainWindow.java
+``` java
+
+    /**
+     * Changes the current theme
+     */
+    @FXML
+    public void handleThemeBootstrap3() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_BOOTSTRAP3);
+    }
+
+    @FXML
+    public void handleThemeDark() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_DARKTHEME);
+    }
+
+    @FXML
+    public void handleThemeCaspian() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_CASPIAN);
+    }
+
+    @FXML
+    public void handleThemeModena() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_MODENA);
+    }
+
+    @FXML
+    public void handleThemeModenaBoW() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_MODENA_BLACKONWHITE);
+    }
+
+    @FXML
+    public void handleThemeModenaWoB() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_MODENA_WHITEONBLACK);
+    }
+
+    @FXML
+    public void handleThemeModenaYoB() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_MODENA_YELLOWONBLACK);
+    }
+
+    /**
+     * Displays a file chooser to extract url
+     */
+    @FXML
+    public void handleImport() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Import From...");
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("XML Files", "*.xml"));
+        File selectedFile = fileChooser.showOpenDialog(primaryStage);
+
+        ReadOnlyAddressBook addressBookOptional;
+        CommandResult cmdResult;
+        try {
+            addressBookOptional = XmlFileStorage.loadDataFromSaveFile(new File(selectedFile.getPath()));
+            raise(new AddressBookImportEvent(selectedFile.getPath(), addressBookOptional));
+
+            cmdResult = new CommandResult(String.format(MESSAGE_IMPORT_SUCCESS, selectedFile.getPath()));
+            raise(new NewResultAvailableEvent(cmdResult.feedbackToUser, true));
+        } catch (DataConversionException e) {
+            cmdResult = new CommandResult(String.format(MESSAGE_INVALID_XML_FORMAT_ERROR, selectedFile.getPath()));
+            raise(new NewResultAvailableEvent(cmdResult.feedbackToUser, true));
+        } catch (IOException e) {
+            cmdResult = new CommandResult(String.format(MESSAGE_INVALID_IMPORT_FILE_ERROR, selectedFile.getPath()));
+            raise(new NewResultAvailableEvent(cmdResult.feedbackToUser, true));
+        }
+    }
+```
+###### /java/seedu/address/ui/MainWindow.java
+``` java
+    @Subscribe
+    private void handleChangeThemeEvent(ChangeThemeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setTheme(THEME_FILE_FOLDER + THEME_LIST_DIR.get(event.targetIndex));
+    }
+```
+###### /java/seedu/address/ui/PersonCard.java
+``` java
+    private static String getColorForTag(String tagValue) {
+
+        if (!tagColors.containsKey(tagValue)) {
+            int multiplier = 1;
+            int asciiSum = (tagValue.hashCode() > 1) ? tagValue.hashCode() : tagValue.hashCode() * -1;
+
+            int colorRed = asciiSum % 256;
+            int colorGreen = (asciiSum / 2) % 256;
+            int colorBlue = (asciiSum / 3) % 256;
+            while ((colorRed + colorGreen + colorBlue) > 700) {
+                asciiSum = (asciiSum / multiplier) * ++multiplier;
+                colorRed = asciiSum % 256;
+                colorGreen = (asciiSum / 2) % 256;
+                colorBlue = (asciiSum / 3) % 256;
+            }
+            String colorString = String.format("#%02x%02x%02x", colorRed, colorGreen, colorBlue);
+            tagColors.put(tagValue, colorString);
+        }
+
+        return tagColors.get(tagValue);
+    }
+
+    /**
+     * Menu list option: Delete
+     * Raises PersonPanelOptionsDelete, handled by UIManager
+     * Handle Delete user
+     */
+    @FXML
+    public void handleDelete() throws CommandException, ParseException {
+        raise(new PersonPanelDeleteEvent(Index.fromOneBased(this.displayedIndex)));
+    }
+
+    /**
+     * Menu list option: GoogleMap
+     * Raises DisplayGmapEvent, handled by BrowserPanel
+     * Display google map on main viewport
+     */
+    @FXML
+    public void handleGoogleMap() {
+        raise(new DisplayGmapEvent(Index.fromOneBased(this.displayedIndex)));
+    }
+```
+###### /java/seedu/address/ui/UiPart.java
+``` java
+    public static final String THEME_CSS_DARKTHEME = "/darktheme/DarkTheme.css";
+    public static final String THEME_CSS_BOOTSTRAP3 = "/bootstrap3/bootstrap3.css";
+    public static final String THEME_CSS_CASPIAN = "/caspian/caspian.css";
+    public static final String THEME_CSS_MODENA = "/modena/modena.css";
+    public static final String THEME_CSS_MODENA_BLACKONWHITE = "/modena/blackOnWhite.css";
+    public static final String THEME_CSS_MODENA_WHITEONBLACK = "/modena/whiteOnBlack.css";
+    public static final String THEME_CSS_MODENA_YELLOWONBLACK = "/modena/yellowOnBlack.css";
+
+    public static final List<String> THEME_LIST_DIR = Collections.unmodifiableList(
+            new ArrayList<String>() {{
+                add(THEME_CSS_DARKTHEME);
+                add(THEME_CSS_BOOTSTRAP3);
+                add(THEME_CSS_CASPIAN);
+                add(THEME_CSS_MODENA);
+                add(THEME_CSS_MODENA_BLACKONWHITE);
+                add(THEME_CSS_MODENA_WHITEONBLACK);
+                add(THEME_CSS_MODENA_YELLOWONBLACK);
+            }});
+```
+###### /java/seedu/address/ui/UiPart.java
+``` java
+    public static String getThemeNameByIndex(int index) {
+        String themeName = THEME_LIST_DIR.get(index);
+        themeName = themeName.replaceAll(".css", "");
+        themeName = themeName.substring(themeName.lastIndexOf("/") + 1);
+        themeName = themeName.substring(0, 1).toUpperCase() + themeName.substring(1);
+
+        if (THEME_LIST_DIR.get(index).contains("modena") && !THEME_LIST_DIR.get(index).contains("modena.css")) {
+            themeName = "(Modena) " + themeName;
+        }
+        return themeName;
+    }
+```
+###### /java/seedu/address/commons/events/ui/PersonPanelDeleteEvent.java
+``` java
+public class PersonPanelDeleteEvent extends BaseEvent {
 
     public final int targetIndex;
 
-    public ChangeThemeEvent(Index targetIndex) {
-        this.targetIndex = targetIndex.getZeroBased();
+    public PersonPanelDeleteEvent(Index targetIndex) {
+        this.targetIndex = targetIndex.getOneBased();
     }
 
     @Override
@@ -51,14 +255,14 @@ public class DisplayGmapEvent extends BaseEvent {
 
 }
 ```
-###### /java/seedu/address/commons/events/ui/PersonPanelDeleteEvent.java
+###### /java/seedu/address/commons/events/ui/ChangeThemeEvent.java
 ``` java
-public class PersonPanelDeleteEvent extends BaseEvent {
+public class ChangeThemeEvent extends BaseEvent {
 
     public final int targetIndex;
 
-    public PersonPanelDeleteEvent(Index targetIndex) {
-        this.targetIndex = targetIndex.getOneBased();
+    public ChangeThemeEvent(Index targetIndex) {
+        this.targetIndex = targetIndex.getZeroBased();
     }
 
     @Override
@@ -66,6 +270,153 @@ public class PersonPanelDeleteEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 
+}
+```
+###### /java/seedu/address/commons/events/model/AddressBookImportEvent.java
+``` java
+public class AddressBookImportEvent extends BaseEvent {
+
+    public final String filePath;
+    public final ReadOnlyAddressBook importedBook;
+
+    public AddressBookImportEvent(String filePath, ReadOnlyAddressBook importedBook) {
+        this.filePath = filePath;
+        this.importedBook = importedBook;
+    }
+
+    @Override
+    public String toString() {
+        return "New Addressbook imported from file: " + filePath;
+    }
+}
+```
+###### /java/seedu/address/logic/parser/AddressBookParser.java
+``` java
+        case GmapCommand.COMMAND_WORD:
+            return new GmapCommandParser().parse(arguments);
+
+        case ThemeCommand.COMMAND_WORD:
+            return new ThemeCommandParser().parse(arguments);
+
+        case ImportCommand.COMMAND_WORD:
+            return new ImportCommandParser().parse(arguments);
+```
+###### /java/seedu/address/logic/parser/GmapCommandParser.java
+``` java
+        String trimmedArgs = args.trim();
+
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, GmapCommand.MESSAGE_USAGE));
+        } else {
+            if (Character.isDigit(trimmedArgs.charAt(0))) {
+                try {
+                    Index index = ParserUtil.parseIndex(args);
+                    return new GmapCommand(index);
+                } catch (IllegalValueException ive) {
+                    throw new ParseException(
+                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, GmapCommand.MESSAGE_USAGE));
+                }
+            } else {
+                String[] nameKeywords = trimmedArgs.split("\\s+");
+                return new GmapCommand(new NameConsistsKeywordsPredicate(Arrays.asList(nameKeywords)));
+            }
+        }
+```
+###### /java/seedu/address/logic/parser/ThemeCommandParser.java
+``` java
+        String trimmedArgs = args.trim();
+
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
+        }
+
+        if (Character.isDigit(trimmedArgs.charAt(0))) {
+            try {
+                Index index = ParserUtil.parseIndex(args);
+                return new ThemeCommand(index);
+            } catch (IllegalValueException ive) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
+            }
+        }
+
+        return new ThemeCommand(trimmedArgs);
+```
+###### /java/seedu/address/logic/commands/ThemeCommand.java
+``` java
+public class ThemeCommand extends Command {
+
+    public static final String COMMAND_WORD = "theme";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Changes current theme based on index.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1\n"
+            + "OR\n"
+            + ": Changes current theme based on theme name.\n"
+            + "Parameters: NAME \n"
+            + "Example: " + COMMAND_WORD + " modena";
+
+    public static final String MESSAGE_THEME_CHANGE_SUCCESS = "Theme successfully changed to: %1$s";
+    public static final String MESSAGE_THEME_INVALID_NAME = "Could not find theme Name or Index.\n"
+            + "Available themes:\n%1$s";
+
+    private final boolean usingName;
+    private String themeName = "";
+    private Index targetIndex = Index.fromOneBased(Integer.parseInt("1"));
+
+    public ThemeCommand(Index targetIndex) {
+        this.usingName = false;
+        this.targetIndex = targetIndex;
+    }
+
+    public ThemeCommand(String themeName) {
+        this.usingName = true;
+        this.themeName = themeName;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        boolean themeNameNotFound = false;
+        if (this.usingName) {
+            themeNameNotFound = true;
+            for (int i = 0; i < UiPart.THEME_LIST_DIR.size(); i++) {
+                String tempName = UiPart.getThemeNameByIndex(i);
+                if (tempName.contains(")")) {
+                    tempName = tempName.substring(tempName.lastIndexOf(")") + 2);
+                }
+                if (tempName.equalsIgnoreCase(this.themeName)) {
+                    this.targetIndex = Index.fromOneBased(i + 1);
+                    themeNameNotFound = false;
+                }
+            }
+        }
+
+        if (targetIndex.getZeroBased() >= UiPart.THEME_LIST_DIR.size() || themeNameNotFound) {
+            String themeList = "";
+            for (int i = 0; i < UiPart.THEME_LIST_DIR.size(); i++) {
+                themeList += (Integer.toString(i + 1) + ". " + UiPart.getThemeNameByIndex(i) + "\n");
+            }
+            throw new CommandException(String.format(MESSAGE_THEME_INVALID_NAME, themeList));
+        }
+
+        EventsCenter.getInstance().post(new ChangeThemeEvent(targetIndex));
+        return new CommandResult(String.format(MESSAGE_THEME_CHANGE_SUCCESS,
+                UiPart.getThemeNameByIndex(this.targetIndex.getZeroBased())));
+
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ThemeCommand // instanceof handles nulls
+                && this.targetIndex.equals(((ThemeCommand) other).targetIndex)) // state check
+                || (other instanceof ThemeCommand // instanceof handles nulls
+                && this.themeName.equals(((ThemeCommand) other).themeName)); // state check
+    }
 }
 ```
 ###### /java/seedu/address/logic/commands/GmapCommand.java
@@ -174,139 +525,6 @@ public class ImportCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ThemeCommand.java
-``` java
-public class ThemeCommand extends Command {
-
-    public static final String COMMAND_WORD = "theme";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Changes current theme based on index.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1\n"
-            + "OR\n"
-            + ": Changes current theme based on theme name.\n"
-            + "Parameters: NAME \n"
-            + "Example: " + COMMAND_WORD + " modena";
-
-    public static final String MESSAGE_THEME_CHANGE_SUCCESS = "Theme successfully changed to: %1$s";
-    public static final String MESSAGE_THEME_INVALID_NAME = "Could not find theme Name or Index.\n"
-            + "Available themes:\n%1$s";
-
-    private final boolean usingName;
-    private String themeName = "";
-    private Index targetIndex = Index.fromOneBased(Integer.parseInt("1"));
-
-    public ThemeCommand(Index targetIndex) {
-        this.usingName = false;
-        this.targetIndex = targetIndex;
-    }
-
-    public ThemeCommand(String themeName) {
-        this.usingName = true;
-        this.themeName = themeName;
-    }
-
-    @Override
-    public CommandResult execute() throws CommandException {
-
-        boolean themeNameNotFound = false;
-        if (this.usingName) {
-            themeNameNotFound = true;
-            for (int i = 0; i < UiPart.THEME_LIST_DIR.size(); i++) {
-                String tempName = UiPart.getThemeNameByIndex(i);
-                if (tempName.contains(")")) {
-                    tempName = tempName.substring(tempName.lastIndexOf(")") + 2);
-                }
-                if (tempName.equalsIgnoreCase(this.themeName)) {
-                    this.targetIndex = Index.fromOneBased(i + 1);
-                    themeNameNotFound = false;
-                }
-            }
-        }
-
-        if (targetIndex.getZeroBased() >= UiPart.THEME_LIST_DIR.size() || themeNameNotFound) {
-            String themeList = "";
-            for (int i = 0; i < UiPart.THEME_LIST_DIR.size(); i++) {
-                themeList += (Integer.toString(i + 1) + ". " + UiPart.getThemeNameByIndex(i) + "\n");
-            }
-            throw new CommandException(String.format(MESSAGE_THEME_INVALID_NAME, themeList));
-        }
-
-        EventsCenter.getInstance().post(new ChangeThemeEvent(targetIndex));
-        return new CommandResult(String.format(MESSAGE_THEME_CHANGE_SUCCESS,
-                UiPart.getThemeNameByIndex(this.targetIndex.getZeroBased())));
-
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof ThemeCommand // instanceof handles nulls
-                && this.targetIndex.equals(((ThemeCommand) other).targetIndex)) // state check
-                || (other instanceof ThemeCommand // instanceof handles nulls
-                && this.themeName.equals(((ThemeCommand) other).themeName)); // state check
-    }
-}
-```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
-``` java
-        case GmapCommand.COMMAND_WORD:
-            return new GmapCommandParser().parse(arguments);
-
-        case ThemeCommand.COMMAND_WORD:
-            return new ThemeCommandParser().parse(arguments);
-
-        case ImportCommand.COMMAND_WORD:
-            return new ImportCommandParser().parse(arguments);
-```
-###### /java/seedu/address/logic/parser/GmapCommandParser.java
-``` java
-        String trimmedArgs = args.trim();
-
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, GmapCommand.MESSAGE_USAGE));
-        } else {
-            if (Character.isDigit(trimmedArgs.charAt(0))) {
-                try {
-                    Index index = ParserUtil.parseIndex(args);
-                    return new GmapCommand(index);
-                } catch (IllegalValueException ive) {
-                    throw new ParseException(
-                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, GmapCommand.MESSAGE_USAGE));
-                }
-            } else {
-                String[] nameKeywords = trimmedArgs.split("\\s+");
-                return new GmapCommand(new NameConsistsKeywordsPredicate(Arrays.asList(nameKeywords)));
-            }
-        }
-```
-###### /java/seedu/address/logic/parser/ThemeCommandParser.java
-``` java
-        String trimmedArgs = args.trim();
-
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
-        }
-
-        if (Character.isDigit(trimmedArgs.charAt(0))) {
-            try {
-                Index index = ParserUtil.parseIndex(args);
-                return new ThemeCommand(index);
-            } catch (IllegalValueException ive) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
-            }
-        }
-
-        return new ThemeCommand(trimmedArgs);
-```
-###### /java/seedu/address/model/Model.java
-``` java
-    void handleAddressBookImportEvent(AddressBookImportEvent abce);
-```
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
@@ -343,133 +561,7 @@ public class ThemeCommand extends Command {
         }
     }
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### /java/seedu/address/model/Model.java
 ``` java
-    private static String getColorForTag(String tagValue) {
-
-        if (!tagColors.containsKey(tagValue)) {
-            int multiplier = 1;
-            int asciiSum = (tagValue.hashCode() > 1) ? tagValue.hashCode() : tagValue.hashCode() * -1;
-
-            int colorRed = asciiSum % 256;
-            int colorGreen = (asciiSum / 2) % 256;
-            int colorBlue = (asciiSum / 3) % 256;
-            while ((colorRed + colorGreen + colorBlue) > 700) {
-                asciiSum = (asciiSum / multiplier) * ++multiplier;
-                colorRed = asciiSum % 256;
-                colorGreen = (asciiSum / 2) % 256;
-                colorBlue = (asciiSum / 3) % 256;
-            }
-            String colorString = String.format("#%02x%02x%02x", colorRed, colorGreen, colorBlue);
-            tagColors.put(tagValue, colorString);
-        }
-
-        return tagColors.get(tagValue);
-    }
-
-    /**
-     * Menu list option: Delete
-     * Raises PersonPanelOptionsDelete, handled by UIManager
-     * Handle Delete user
-     */
-    @FXML
-    public void handleDelete() throws CommandException, ParseException {
-        raise(new PersonPanelDeleteEvent(Index.fromOneBased(this.displayedIndex)));
-    }
-
-    /**
-     * Menu list option: GoogleMap
-     * Raises DisplayGmapEvent, handled by BrowserPanel
-     * Display google map on main viewport
-     */
-    @FXML
-    public void handleGoogleMap() {
-        raise(new DisplayGmapEvent(Index.fromOneBased(this.displayedIndex)));
-    }
-```
-###### /java/seedu/address/ui/UiManager.java
-``` java
-    @Subscribe
-    private void handleOptionsDeleteEvent(PersonPanelDeleteEvent event) throws CommandException, ParseException {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        this.logic.execute("delete " + event.targetIndex);
-    }
-```
-###### /java/seedu/address/ui/UiPart.java
-``` java
-    public static final String THEME_CSS_DARKTHEME = "/darktheme/DarkTheme.css";
-    public static final String THEME_CSS_BOOTSTRAP3 = "/bootstrap3/bootstrap3.css";
-    public static final String THEME_CSS_CASPIAN = "/caspian/caspian.css";
-    public static final String THEME_CSS_MODENA = "/modena/modena.css";
-    public static final String THEME_CSS_MODENA_BLACKONWHITE = "/modena/blackOnWhite.css";
-    public static final String THEME_CSS_MODENA_WHITEONBLACK = "/modena/whiteOnBlack.css";
-    public static final String THEME_CSS_MODENA_YELLOWONBLACK = "/modena/yellowOnBlack.css";
-
-    public static final List<String> THEME_LIST_DIR = Collections.unmodifiableList(
-            new ArrayList<String>() {{
-                add(THEME_CSS_DARKTHEME);
-                add(THEME_CSS_BOOTSTRAP3);
-                add(THEME_CSS_CASPIAN);
-                add(THEME_CSS_MODENA);
-                add(THEME_CSS_MODENA_BLACKONWHITE);
-                add(THEME_CSS_MODENA_WHITEONBLACK);
-                add(THEME_CSS_MODENA_YELLOWONBLACK);
-            }});
-```
-###### /java/seedu/address/ui/UiPart.java
-``` java
-    public static String getThemeNameByIndex(int index) {
-        String themeName = THEME_LIST_DIR.get(index);
-        themeName = themeName.replaceAll(".css", "");
-        themeName = themeName.substring(themeName.lastIndexOf("/") + 1);
-        themeName = themeName.substring(0, 1).toUpperCase() + themeName.substring(1);
-
-        if (THEME_LIST_DIR.get(index).contains("modena") && !THEME_LIST_DIR.get(index).contains("modena.css")) {
-            themeName = "(Modena) " + themeName;
-        }
-        return themeName;
-    }
-```
-###### /resources/view/Extensions.css
-``` css
-.menu-personcard {
-    -fx-border-color: transparent;
-    -fx-border-width: 0;
-    -fx-background-radius: 0;
-    -fx-background-color: transparent;
-	-fx-mark-color: grey;
-	-fx-pref-width: 120px;
-	-fx-text-alignment: right;
-}
-
-.menu-personcard:showing {
-    -fx-mark-color: #00FFFF;
-}
-```
-###### /resources/view/MainWindow.fxml
-``` fxml
-        <MenuItem mnemonicParsing="false" text="Import Addressbook (TDB)"/>
-        <MenuItem mnemonicParsing="false" text="Export Addressbook (TDB)"/>
-        <Menu text="Themes">
-            <MenuItem text="Bootstrap3" onAction="#handleThemeBootstrap3" userData="0"/>
-            <MenuItem text="Dark" onAction="#handleThemeDark" userData="1"/>
-            <MenuItem text="Caspian" onAction="#handleThemeCaspian" userData="2"/>
-            <Menu text="Modena">
-                <MenuItem text="Default" onAction="#handleThemeModena" userData="3"/>
-                <MenuItem text="Black On White" onAction="#handleThemeModenaBoW" userData="4"/>
-                <MenuItem text="White On Black" onAction="#handleThemeModenaWoB" userData="5"/>
-                <MenuItem text="Yellow On Black" onAction="#handleThemeModenaYoB" userData="6"/>
-            </Menu>
-        </Menu>
-```
-###### /resources/view/PersonListCard.fxml
-``` fxml
-                <Pane HBox.hgrow="ALWAYS"/>
-                <MenuButton fx:id="options_button" text="" alignment="CENTER_RIGHT" styleClass="menu-personcard">
-                    <items>
-                        <MenuItem text="Delete" onAction="#handleDelete"/>
-                        <MenuItem text="Google Map" onAction="#handleGoogleMap"/>
-                        <MenuItem text="Add photo" onAction="#handleAddImage"/>
-                    </items>
-                </MenuButton>
+    void handleAddressBookImportEvent(AddressBookImportEvent abce);
 ```
