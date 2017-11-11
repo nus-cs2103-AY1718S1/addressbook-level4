@@ -418,32 +418,93 @@ public class CalendarCommandTest {
 ```
 ###### \java\seedu\address\logic\commands\EmailCommandTest.java
 ``` java
+
 /**
- * Contains integration tests (interaction with the Model) for {@code LocateCommand}.
+ * Contains integration tests (interaction with the Model) for {@code EmailCommand}.
  */
 public class EmailCommandTest {
 
-
-    @Rule
-    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
-
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void assertExecutionSuccess() throws CommandException {
-        EmailCommand command = new EmailCommand();
+    public void equals() {
+        Set<Index> indices = new HashSet<>();
+        indices.add(INDEX_FIRST_PERSON);
+        EmailCommand emailAliceCommand = new EmailCommand(indices);
+        Set<Index> indicesBob = new HashSet<>();
+        indicesBob.add(INDEX_SECOND_PERSON);
+        EmailCommand emailBobCommand = new EmailCommand(indicesBob);
 
-        try {
-            CommandResult commandResult = command.execute();
-            assertEquals(MESSAGE_DISPLAY_EMAIL_SUCCESS, commandResult.feedbackToUser);
-        } catch (CommandException ce) {
-            throw new IllegalArgumentException("Execution of command should not fail.", ce);
-        }
+        // same object -> returns true
+        assertTrue(emailAliceCommand.equals(emailAliceCommand));
+
+        // same values -> returns true
+        EmailCommand emailAliceCommandCopy = new EmailCommand(indices);
+        assertTrue(emailAliceCommand.equals(emailAliceCommandCopy));
+
+
+        // different types -> returns false
+        assertFalse(emailAliceCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(emailAliceCommand.equals(null));
 
     }
 
+    @Test
+    public void execute_validIndexUnfilteredList_success() throws Exception {
+        ReadOnlyPerson personToEmail = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        EmailCommand emailCommand = prepareCommand(INDEX_FIRST_PERSON);
+        Set<String> recipientSet = new HashSet<>();
+        for (Email email : personToEmail.getEmails()) {
+            recipientSet.add(email.toString());
+        }
+
+        String emailList = String.join(",", recipientSet);
+        String expectedMessage = String.format(EmailCommand.MESSAGE_DISPLAY_EMAIL_SUCCESS, emailList);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        assertCommandSuccess(emailCommand, model, expectedMessage, expectedModel);
+    }
+
+
+    @Test
+    public void execute_invalidIndexFilteredList_throwsCommandException() {
+        showFirstPersonOnly(model);
+
+        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        EmailCommand emailCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(emailCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        EmailCommand emailCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(emailCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+
+    /**
+     * Returns a {@code EmailCommand} with the parameter {@code index}.
+     */
+    private EmailCommand prepareCommand(Index index) {
+        Set<Index> indices = new HashSet<>();
+        indices.add(index);
+
+        UserPrefs prefs = new UserPrefs();
+        EmailCommand emailCommand = new EmailCommand(indices);
+        emailCommand.setData(model, prefs, new CommandHistory(), new UndoRedoStack());
+        return emailCommand;
+    }
+
+
 }
-
-
 ```
 ###### \java\seedu\address\logic\commands\FindCommandTest.java
 ``` java
@@ -680,6 +741,7 @@ public class EmailCommandTest {
         assertEquals(new FindCommand(new TagContainsKeywordsPredicate(keywords)), commandUsingAlias);
     }
 
+
     @Test
     public void parseCommand_findSchedule() throws Exception {
         List<String> keywords = Arrays.asList("interview", "meeting", "party");
@@ -691,6 +753,31 @@ public class EmailCommandTest {
         assertEquals(new FindCommand(new ScheduleContainsKeywordsPredicate(keywords)), commandUsingAlias);
     }
 
+    @Test
+    public void parseCommand_email() throws Exception {
+        EmailCommand command = (EmailCommand) parser.parseCommand(
+                EmailCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        EmailCommand commandUsingAlias = (EmailCommand) parser.parseCommand(
+                EmailCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        Set<Index> indices = new HashSet<>();
+        indices.add(INDEX_FIRST_PERSON);
+        assertEquals(new EmailCommand(indices), command);
+        assertEquals(new EmailCommand(indices), commandUsingAlias);
+    }
+
+    @Test
+    public void parseCommand_copy() throws Exception {
+        CopyCommand command = (CopyCommand) parser.parseCommand(
+                CopyCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        CopyCommand commandUsingAlias = (CopyCommand) parser.parseCommand(
+                CopyCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        ArrayList<Index> indices = new ArrayList<>();
+        indices.add(INDEX_FIRST_PERSON);
+
+        assertEquals(new CopyCommand(indices), command);
+        assertEquals(new CopyCommand(indices), commandUsingAlias);
+    }
+
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
@@ -699,11 +786,32 @@ public class EmailCommandTest {
         assertTrue(parser.parseCommand(CalendarCommand.COMMAND_WORD) instanceof CalendarCommand);
     }
 
+```
+###### \java\seedu\address\logic\parser\EmailCommandParserTest.java
+``` java
+public class EmailCommandParserTest {
+
+    private EmailCommandParser parser = new EmailCommandParser();
+
     @Test
-    public void parseEmail_calendar() throws Exception {
-        assertTrue(parser.parseCommand(EmailCommand.COMMAND_WORD) instanceof EmailCommand);
+    public void parse_validArgs_returnsEmailCommand() {
+        Set<Index> indices = new HashSet<>();
+        indices.add(INDEX_FIRST_PERSON);
+        indices.add(INDEX_SECOND_PERSON);
+        assertParseSuccess(parser, "1 2", new EmailCommand(indices));
     }
 
+    @Test
+    public void parse_emptyArg_throwsParseException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
+    }
+
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
+    }
+}
 ```
 ###### \java\seedu\address\logic\parser\FindCommandParserTest.java
 ``` java

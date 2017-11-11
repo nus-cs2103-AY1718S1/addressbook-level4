@@ -136,12 +136,76 @@ public class AgendaPanelHandle extends NodeHandle<ListView<ScheduleCard>> {
     }
 }
 ```
+###### \java\guitests\guihandles\ReminderWindowBottomHandle.java
+``` java
+package guitests.guihandles;
+
+import java.util.List;
+import java.util.Optional;
+
+import javafx.scene.control.ListView;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.ui.ScheduleCard;
+
+/**
+ * Provides a handle for {@code reminderWindowBottom} containing the list of {@code ScheduleCard}.
+ */
+public class ReminderWindowBottomHandle extends NodeHandle<ListView<ScheduleCard>> {
+    public static final String SCHEDULE_LIST_VIEW_ID = "#reminderSchedulesListView";
+
+    //private Optional<ScheduleCard> lastRememberedSelectedScheduleCard;
+
+    public ReminderWindowBottomHandle(ListView<ScheduleCard> reminderWindowBottomNode) {
+        super(reminderWindowBottomNode);
+    }
+
+    /**
+     * Navigates the listview to display and select the schedule.
+     */
+    public void navigateToCard(Schedule schedule) {
+        List<ScheduleCard> cards = getRootNode().getItems();
+        Optional<ScheduleCard> matchingCard = cards.stream().filter(card -> card.schedule.equals(schedule)).findFirst();
+
+        if (!matchingCard.isPresent()) {
+            throw new IllegalArgumentException("Person does not exist.");
+        }
+
+        guiRobot.interact(() -> {
+            getRootNode().scrollTo(matchingCard.get());
+            getRootNode().getSelectionModel().select(matchingCard.get());
+        });
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Returns the schedule card handle of a schedule associated with the {@code index} in the list.
+     */
+    public ScheduleCardHandle getScheduleCardHandle(int index) {
+        return getScheduleCardHandle(getRootNode().getItems().get(index).schedule);
+    }
+
+    /**
+     * Returns the {@code ScheduleCardHandle} of the specified {@code schedule} in the list.
+     */
+    public ScheduleCardHandle getScheduleCardHandle(Schedule schedule) {
+        Optional<ScheduleCardHandle> handle = getRootNode().getItems().stream()
+                .filter(card -> card.schedule.equals(schedule))
+                .map(card -> new ScheduleCardHandle(card.getRoot()))
+                .findFirst();
+        return handle.orElseThrow(() -> new IllegalArgumentException("Schedule does not exist."));
+    }
+}
+```
 ###### \java\guitests\guihandles\ScheduleCardHandle.java
 ``` java
 package guitests.guihandles;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
 
 /**
  * Provides a handle to a schedule card in the schedule list panel.
@@ -150,28 +214,37 @@ public class ScheduleCardHandle extends NodeHandle<Node> {
     private static final String NUMBER_FIELD_ID = "#number";
     private static final String ACTIVITY_FIELD_ID = "#activity";
     private static final String DATE_FIELD_ID = "#date";
-    private static final String NAME_FIELD_ID = "#personName";
+    private static final String NAMES_FIELD_ID = "#personNames";
 
     private final Label numberLabel;
     private final Label activityLabel;
     private final Label dateLabel;
-    private final Label nameLabel;
+    private final List<Label> nameLabels;
 
     public ScheduleCardHandle(Node cardNode) {
         super(cardNode);
 
         this.numberLabel = getChildNode(NUMBER_FIELD_ID);
-        this.nameLabel = getChildNode(NAME_FIELD_ID);
         this.activityLabel = getChildNode(ACTIVITY_FIELD_ID);
         this.dateLabel = getChildNode(DATE_FIELD_ID);
+
+        Region namesContainer = getChildNode(NAMES_FIELD_ID);
+        this.nameLabels = namesContainer
+                .getChildrenUnmodifiable()
+                .stream()
+                .map(Label.class::cast)
+                .collect(Collectors.toList());
     }
 
     public String getNumber() {
         return numberLabel.getText();
     }
 
-    public String getName() {
-        return nameLabel.getText();
+    public List<String> getNames() {
+        return nameLabels
+                .stream()
+                .map(Label::getText)
+                .collect(Collectors.toList());
     }
 
     public String getActivity() {
@@ -230,8 +303,9 @@ public class ScheduleCardHandle extends NodeHandle<Node> {
         ArrayList<Index> indices = new ArrayList<>();
         indices.add(index);
 
+        UserPrefs prefs = new UserPrefs();
         DeleteCommand deleteCommand = new DeleteCommand(indices);
-        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        deleteCommand.setData(model, prefs, new CommandHistory(), new UndoRedoStack());
         return deleteCommand;
     }
 
@@ -242,8 +316,9 @@ public class ScheduleCardHandle extends NodeHandle<Node> {
      * Returns a {@code LocateCommand} with parameters {@code index}.
      */
     private LocateCommand prepareCommand(Index index) {
+        UserPrefs prefs = new UserPrefs();
         LocateCommand locateCommand = new LocateCommand(index);
-        locateCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        locateCommand.setData(model, prefs, new CommandHistory(), new UndoRedoStack());
         return locateCommand;
     }
 }
@@ -261,6 +336,32 @@ public class ScheduleCardHandle extends NodeHandle<Node> {
         new ScheduleCommand(indices, null, null);
     }
 
+    @Test
+    public void execute_addValidScheduleSuccessful() throws Exception {
+        Schedule validSchedule = new ScheduleBuilder().build();
+        Set<Index> indices = new HashSet<>();
+        indices.add(INDEX_FIRST_PERSON);
+
+        ModelManager modelStub = new ModelManager();
+        Person validPerson = new PersonBuilder().build();
+        modelStub.addPerson(validPerson);
+
+        CommandResult commandResult = getScheduleCommandForPerson(indices, validSchedule, modelStub).execute();
+
+        assertEquals(String.format(ScheduleCommand.MESSAGE_SCHEDULE_SUCCESS, indices.size()),
+                commandResult.feedbackToUser);
+    }
+
+    /**
+     * Generates a new AddCommand with the details of the given person.
+     */
+    private ScheduleCommand getScheduleCommandForPerson(Set<Index> indices, Schedule validSchedule, Model model) {
+        ScheduleCommand command =
+                new ScheduleCommand(indices, validSchedule.getScheduleDate(), validSchedule.getActivity());
+        command.setData(model, new UserPrefs(), new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
 ```
 ###### \java\seedu\address\logic\commands\UndoCommandTest.java
 ``` java
@@ -275,8 +376,8 @@ public class ScheduleCardHandle extends NodeHandle<Node> {
         deleteCommandOne = new DeleteCommand(indices);
         deleteCommandTwo = new DeleteCommand(indices);
 
-        deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
-        deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+        deleteCommandOne.setData(model, prefs, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+        deleteCommandTwo.setData(model, prefs, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
     }
 
 ```
@@ -384,7 +485,7 @@ public class LocateCommandParserTest {
     private LocateCommandParser parser = new LocateCommandParser();
 
     @Test
-    public void parse_validArgs_returnsSelectCommand() {
+    public void parse_validArgs_returnsLocateCommand() {
         assertParseSuccess(parser, "1", new LocateCommand(INDEX_FIRST_PERSON));
     }
 
@@ -422,6 +523,26 @@ public class LocateCommandParserTest {
     }
 
 ```
+###### \java\seedu\address\model\person\address\AddressTest.java
+``` java
+    @Test
+    public void hasValidAddressFormat() {
+        // invalid address formats
+        assertFalse(Address.hasValidAddressFormat("")); // empty string
+        assertFalse(Address.hasValidAddressFormat(" ")); // no delimiter present
+        assertFalse(Address.hasValidAddressFormat("22,fort road")); // less than 3 tokens
+        assertFalse(Address.hasValidAddressFormat("22,fort road,,")); // 2 tokens with consecutive commas
+        assertFalse(Address.hasValidAddressFormat(",,,")); // no characters between commas
+        assertFalse(Address.hasValidAddressFormat("22,fort road,#08-01,Singapore,439099")); // more than 4 tokens
+
+        // valid address formats
+        assertTrue(Address.hasValidAddressFormat("Blk 456, Den Road, Singapore 409999")); // 3 tokens
+        assertTrue(Address.hasValidAddressFormat("Blk 456, Den Road, #01-355, Singapore 409999")); // 4 tokens
+        assertTrue(Address.hasValidAddressFormat(" , , , ")); // whitespaces between commas
+        assertTrue(Address.hasValidAddressFormat("Leng Inc, 1234 Market St, San Francisco CA 2349879"));
+    }
+}
+```
 ###### \java\seedu\address\model\person\address\BlockTest.java
 ``` java
 package seedu.address.model.person.address;
@@ -436,14 +557,15 @@ public class BlockTest {
     @Test
     public void isValidBlock() {
         // invalid blocks
-        assertFalse(Block.isValidBlock(""));
-        assertFalse(Block.isValidBlock("-23"));
-        assertFalse(Block.isValidBlock(" "));
+        assertFalse(Block.isValidBlock(""));        // empty string
+        assertFalse(Block.isValidBlock("-23"));     // unaccepted symbol
+        assertFalse(Block.isValidBlock(" "));       // whitespace
 
         // valid blocks
-        assertTrue(Block.isValidBlock("23A"));
-        assertTrue(Block.isValidBlock("23"));
-        assertTrue(Block.isValidBlock("A"));
+        assertTrue(Block.isValidBlock("23A"));      // numbers and alphabets with no whitespaces
+        assertTrue(Block.isValidBlock("23"));       // numbers only
+        assertTrue(Block.isValidBlock("A"));        // alphabets only
+        assertTrue(Block.isValidBlock("23 Alpha")); // numbers and alphabets with whitespace
     }
 
 }
@@ -532,26 +654,6 @@ public class UnitTest {
     }
 }
 ```
-###### \java\seedu\address\model\person\AddressTest.java
-``` java
-    @Test
-    public void hasValidAddressFormat() {
-        // invalid address formats
-        assertFalse(Address.hasValidAddressFormat("")); // empty string
-        assertFalse(Address.hasValidAddressFormat(" ")); // no delimiter present
-        assertFalse(Address.hasValidAddressFormat("22,fort road")); // less than 3 tokens
-        assertFalse(Address.hasValidAddressFormat("22,fort road,,")); // 2 tokens with consecutive commas
-        assertFalse(Address.hasValidAddressFormat(",,,")); // no characters between commas
-        assertFalse(Address.hasValidAddressFormat("22,fort road,#08-01,Singapore,439099")); // more than 4 tokens
-
-        // valid address formats
-        assertTrue(Address.hasValidAddressFormat("Blk 456, Den Road, Singapore 409999")); // 3 tokens
-        assertTrue(Address.hasValidAddressFormat("Blk 456, Den Road, #01-355, Singapore 409999")); // 4 tokens
-        assertTrue(Address.hasValidAddressFormat(" , , , ")); // whitespaces between commas
-        assertTrue(Address.hasValidAddressFormat("Leng Inc, 1234 Market St, San Francisco CA 2349879"));
-    }
-}
-```
 ###### \java\seedu\address\model\UniqueEmailListTest.java
 ``` java
 package seedu.address.model;
@@ -614,7 +716,7 @@ public class UniqueEmailListTest {
     public ScheduleBuilder withScheduleDate(String scheduleDate) {
         try {
             schedule = new Schedule(new ScheduleDate(scheduleDate), schedule.getActivity(),
-                    schedule.getPersonInvolvedName());
+                    schedule.getPersonInvolvedNames());
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("schedule date is expected to be unique.");
         }
@@ -627,7 +729,7 @@ public class UniqueEmailListTest {
     public ScheduleBuilder withActivity(String activity) {
         try {
             schedule = new Schedule(schedule.getScheduleDate(), new Activity(activity),
-                    schedule.getPersonInvolvedName());
+                    schedule.getPersonInvolvedNames());
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("activity is expected to be unique.");
         }
@@ -716,6 +818,61 @@ public class AgendaPanelTest extends GuiUnitTest {
     }
 }
 ```
+###### \java\seedu\address\ui\ReminderWindowTest.java
+``` java
+package seedu.address.ui;
+
+import static org.junit.Assert.assertEquals;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysSchedule;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeoutException;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.testfx.api.FxToolkit;
+
+import guitests.guihandles.ReminderWindowBottomHandle;
+import guitests.guihandles.ScheduleCardHandle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.testutil.ScheduleBuilder;
+
+
+public class ReminderWindowTest extends GuiUnitTest {
+    private static final List<Schedule> scheduleList = Arrays.asList(new ScheduleBuilder().build(),
+            new ScheduleBuilder().withPersonName("Prince").build());
+    private static final ObservableList<Schedule> TEST_SCHEDULES =
+            FXCollections.observableList(scheduleList);
+
+    private ReminderWindow reminderWindow;
+    private ReminderWindowBottomHandle reminderWindowBottomHandle;
+
+    @Before
+    public void setUp() throws TimeoutException {
+        guiRobot.interact(() -> reminderWindow = new ReminderWindow(TEST_SCHEDULES));
+        FxToolkit.setupStage((stage) -> stage.setScene(reminderWindow.getRoot().getScene()));
+        FxToolkit.showStage();
+
+        reminderWindowBottomHandle = new ReminderWindowBottomHandle(getChildNode(reminderWindow.getRoot(),
+                reminderWindowBottomHandle.SCHEDULE_LIST_VIEW_ID));
+    }
+
+    @Test
+    public void display() {
+        for (int i = 0; i < TEST_SCHEDULES.size(); i++) {
+            reminderWindowBottomHandle.navigateToCard(TEST_SCHEDULES.get(i));
+            Schedule expectedSchedule = TEST_SCHEDULES.get(i);
+            ScheduleCardHandle actualCard = reminderWindowBottomHandle.getScheduleCardHandle(i);
+
+            assertCardDisplaysSchedule(expectedSchedule, actualCard);
+            assertEquals(Integer.toString(i + 1) + ". ", actualCard.getNumber());
+        }
+    }
+}
+```
 ###### \java\seedu\address\ui\ScheduleCardTest.java
 ``` java
 package seedu.address.ui;
@@ -746,7 +903,7 @@ public class ScheduleCardTest extends GuiUnitTest {
         ScheduleCard scheduleCard2 = new ScheduleCard(testSchedule, 1);
         // changes made to Schedule reflects on card
         guiRobot.interact(() -> {
-            testSchedule2.setPersonInvolvedName(testSchedule2.getPersonInvolvedName());
+            testSchedule2.setPersonInvolvedNames(testSchedule2.getPersonInvolvedNames());
             testSchedule2.setScheduleDate(testSchedule2.getScheduleDate());
             testSchedule2.setActivity(testSchedule2.getActivity());
         });

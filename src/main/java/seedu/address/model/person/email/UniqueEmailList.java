@@ -27,7 +27,7 @@ public class UniqueEmailList {
     public UniqueEmailList() {}
 
     /**
-     * Creates a UniqueEmailList using given tags.
+     * Creates a UniqueEmailList using given emails.
      * Enforces no nulls.
      */
     public UniqueEmailList(Set<Email> emails) {
