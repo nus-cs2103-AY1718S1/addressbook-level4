@@ -409,8 +409,8 @@ public class MainWindow extends UiPart<Region> {
         File file = fileChooser.showOpenDialog(primaryStage.getScene().getWindow());
 
         try {
-            logic.execute("edit " + event.index + " ph/"
-                    + file.toURI().getPath());
+            logic.execute("edit " + event.index.getOneBased() + " ph/"
+                    + file.getAbsolutePath());
         } catch (CommandException | ParseException e) {
             raise(new NewResultAvailableEvent(e.getMessage(), true));
         }

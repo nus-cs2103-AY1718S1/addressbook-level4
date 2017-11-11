@@ -47,7 +47,6 @@ public class EventList implements Iterable<Event> {
         internalMap.addListener(new MapChangeListener<Timeslot, Event>() {
             @Override
             public void onChanged(Change<? extends Timeslot, ? extends Event> change) {
-                logger.info("Heard change.");
                 boolean removed = change.wasRemoved();
                 if (removed != change.wasAdded()) {
                     if (removed) {
