@@ -777,20 +777,20 @@ public void stickyNotesInit() {
 
 We are using `java.util.logging` package for logging. The **LogsCenter** class is used to manage the logging levels and logging destinations. +
 
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See Configuration) +
-* The Logger for a class can be obtained using LogsCenter.getLogger(Class) which will log messages according to the specified logging level +
-* Currently log messages are output through: Console and to a .log file. +
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration]) +
+* The Logger for a class can be obtained using **LogsCenter.getLogger(Class)** which will log messages according to the specified logging level +
+* Currently log messages are output through: Console and to a `.log` file. +
 
 Logging Levels +
 
-* SEVERE: Critical problem detected which may possibly cause the termination of the application. +
-* WARNING: Potential problem detected which will not terminate the application but cause application oddities. +
-* INFO: Information showing the noteworthy actions by the application +
-* FINE: Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size.
+* `SEVERE`: Critical problem detected which may possibly cause the termination of the application. +
+* `WARNING`: Potential problem detected which will not terminate the application but cause application oddities. +
+* `INFO`: Information showing the noteworthy actions by the application +
+* `FINE`: Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size.
 
 === Configuration
 
-Certain properties of the application can be controlled (e.g application name, logging level) through the configuration file (default: config.json ).
+Certain properties of the application can be controlled (e.g application name, logging level) through the configuration file (default: `config.json` ).
 
 == Documentation
 
@@ -830,6 +830,7 @@ There are three ways to run tests.
 
 [TIP]
 The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+
 *Method 1: Using IntelliJ JUnit test runner*
 
 * To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
@@ -844,7 +845,7 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using l
 
 *Method 3: Using link:#gradle[Gradle] (headless)*
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our link:#gui[GUI] tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
+Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our link:#gui[GUI] tests can be run in the headless mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
 To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
 
@@ -853,12 +854,12 @@ To run tests in headless mode, open a console and run the command `gradlew clean
 We have two types of tests:
 
 .  *link:#gui[GUI] Tests* - These are tests involving the link:#gui[GUI]. They include,
-.. _System Tests_ that test the entire App by simulating user actions on the link:#gui[GUI]. These are in the `systemtests` package.
-.. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
+.. System Tests that test the entire App by simulating user actions on the link:#gui[GUI]. These are in the `systemtests` package.
+.. Unit tests that test the individual components. These are in `seedu.address.ui` package.
 .  *Non-link:#gui[GUI] Tests* - These are tests not involving the link:#gui[GUI]. They include,
-..  _Unit tests_ targeting the lowest level methods/classes. +
+..  Unit tests targeting the lowest level methods/classes. +
 e.g. `seedu.address.commons.StringUtilTest`
-..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
+..  Integration tests that are checking the integration of multiple code units (those code units are assumed to be working). +
 e.g. `seedu.address.storage.StorageManagerTest`
 ..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
 e.g. `seedu.address.logic.LogicManagerTest`
@@ -878,7 +879,7 @@ See <<UsingGradle#, UsingGradle.adoc>> to learn how to use link:#gradle[Gradle] 
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform Continuous Integration on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Making a Release
 
