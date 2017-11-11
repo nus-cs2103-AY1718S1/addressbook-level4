@@ -27,18 +27,21 @@ public class RedoCommand extends Command {
         }
 
         String commandString = undoRedoStack.peekRedo().toString();
-        String feedbackToUser = parseCommand(commandString);
+        String feedbackToUser = parseRedoCommand(commandString);
         undoRedoStack.popRedo().redo();
+
         return new CommandResult(feedbackToUser);
     }
 
+    //@@arnollim
     /**
-     * Parses the output command to display the previously undone command
+     * Parses the output command to display the previously redone command
      */
-    public static String parseCommand(String commandString) {
+    public static String parseRedoCommand(String commandString) {
         String output = String.format(FULL_MESSAGE_SUCCESS, commandString);
         return output;
     }
+    //@@author
 
     @Override
     public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack) {

@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.WhyCommand;
 
+//@@ author arnollim
 /**
  * WhyCommandParserTest tests the validity of the indices provided to WhyCommand
  */
@@ -17,7 +18,16 @@ public class WhyCommandParserTest {
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, WhyCommand.MESSAGE_USAGE));
+        String invalidIndex = "abc";
+        String feedbackToUser = String.format(MESSAGE_INVALID_COMMAND_FORMAT, WhyCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, invalidIndex, feedbackToUser);
+    }
+
+    @Test
+    public void parse_invalidIndex_throwsParseException() {
+        String invalidIndex = "0";
+        String feedbackToUser = String.format(MESSAGE_INVALID_COMMAND_FORMAT, WhyCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, invalidIndex, feedbackToUser);
     }
 
 }

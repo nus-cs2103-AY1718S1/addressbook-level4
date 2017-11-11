@@ -27,13 +27,11 @@ public class PrintCommand extends Command {
 
     public static final String[] COMMAND_WORDS = {"print"};
     public static final String COMMAND_WORD = "print";
-
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Saves the addressbook into a .txt file named by you for your viewing.\n"
             + "Example: " + COMMAND_WORD + " filename\n"
             + "file can then be found in the in data/ folder as data/filename.txt\n"
             + MESSAGE_INVALID_FILEPATH;
-
     public static final String MESSAGE_SUCCESS = "Address Book has been saved!\n"
             + "Find your Address Book in the %1$s.txt file you created "
             + "in the same directory as the application file path!";
@@ -54,8 +52,11 @@ public class PrintCommand extends Command {
 
         List<String> lines = new ArrayList<>();
         String timeStamp = new SimpleDateFormat("dd/MM/YYYY" + " " + "HH:mm:ss").format(new Date());
-        lines.add("LISA was last updated on: " + timeStamp + "\n\n");
 
+        //First line in the .txt file is the time and date printed, so that the user will know the recency
+        //of the printed address book
+        lines.add("LISA was last updated on: " + timeStamp + "\n\n");
+        //Next, feedback the total number of contacts at said time and date
         lines.add("There are " + lastShownList.size() + " contacts in LISA\n\n");
 
         int personIndex = 1;
@@ -113,8 +114,8 @@ public class PrintCommand extends Command {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-
-        return new CommandResult(String.format(MESSAGE_SUCCESS, this.fileName));
+        String feedbackToUser = String.format(MESSAGE_SUCCESS, this.fileName);
+        return new CommandResult(feedbackToUser);
     }
 
 }

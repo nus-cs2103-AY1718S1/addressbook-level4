@@ -51,7 +51,7 @@ public class UndoCommandTest {
         String lastCommand = undoRedoStack.peekUndo().toString();
         Command previousCommand = addressBookParser.parseCommand(lastCommand);
         String previousCommandString = previousCommand.toString();
-        String expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
+        String expectedResultMessage = UndoCommand.parseUndoCommand(previousCommandString);
         assertCommandSuccess(undoCommand, model, expectedResultMessage, expectedModel);
 
         // single command in undoStack
@@ -59,7 +59,7 @@ public class UndoCommandTest {
         lastCommand = undoRedoStack.peekUndo().toString();
         previousCommand = addressBookParser.parseCommand(lastCommand);
         previousCommandString = previousCommand.toString();
-        expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
+        expectedResultMessage = UndoCommand.parseUndoCommand(previousCommandString);
         assertCommandSuccess(undoCommand, model, expectedResultMessage, expectedModel);
         //@@author
 
