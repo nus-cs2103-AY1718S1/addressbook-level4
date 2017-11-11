@@ -33,8 +33,8 @@ import seedu.address.model.tag.Tag;
  */
 public class ParserUtil {
 
-    static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    static final String MESSAGE_INVALID_FILE = "File must be an xml document.";
+    private static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    private static final String MESSAGE_INVALID_FILE = "File must be an xml document.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
