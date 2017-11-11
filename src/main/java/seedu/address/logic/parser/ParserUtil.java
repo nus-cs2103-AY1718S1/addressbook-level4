@@ -52,13 +52,13 @@ public class ParserUtil {
 
     //@@author chrisboo
     /**
-     * Parse {@code address} into a {@code File} and returns it. Leading and trailing whitespaces will be trimmed.
+     * Parse {@code path} into a {@code File} and returns it. Leading and trailing whitespaces will be trimmed.
      *
      * @throws IllegalValueException if the file does not exist
      */
-    static File parseFile(String address) throws IllegalValueException {
-        requireNonNull(address);
-        String trimmedAddress = address.trim();
+    static File parseFile(String path) throws IllegalValueException {
+        requireNonNull(path);
+        String trimmedAddress = path.trim();
         File file = new File(trimmedAddress);
         if (!isFileExists(file)) {
             throw new IllegalValueException(MESSAGE_INVALID_FILE);

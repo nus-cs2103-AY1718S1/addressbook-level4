@@ -89,8 +89,11 @@ public class AddressBookParser {
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
 
+        //@@author chrisboo
+        case OpenCommand.COMMAND_SHORT:
         case OpenCommand.COMMAND_WORD:
             return new OpenCommandParser().parse(arguments);
+        //@@author
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
