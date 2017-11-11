@@ -1,8 +1,11 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.util.FileUtil.isFileExists;
+
 import java.io.File;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.SwitchAddressBookRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
@@ -30,12 +33,11 @@ public class OpenCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        try {
-            EventsCenter.getInstance().post(new SwitchAddressBookRequestEvent(file, false));
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!isFileExists(file)) {
+            throw new CommandException(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
         }
 
+        EventsCenter.getInstance().post(new SwitchAddressBookRequestEvent(file, false));
         return new CommandResult(String.format(MESSAGE_OPEN_PERSON_SUCCESS, file.getPath()));
     }
 

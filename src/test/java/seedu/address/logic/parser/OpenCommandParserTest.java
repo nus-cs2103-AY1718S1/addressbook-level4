@@ -3,7 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TestUtil.getFilePathInSandboxFolder;
+import static seedu.address.testutil.TestUtil.getAbsoluteFilePathInSandboxFolder;
 
 import java.io.File;
 
@@ -28,15 +28,16 @@ public class OpenCommandParserTest {
     @Test
     public void parse_invalidPath_failure() {
         // path is a directory
-        assertParseFailure(parser, getFilePathInSandboxFolder(""), MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, getAbsoluteFilePathInSandboxFolder(""), MESSAGE_INVALID_FORMAT);
 
-        // path does not exists
-        assertParseFailure(parser, getFilePathInSandboxFolder("nonExistingFile.xml"), MESSAGE_INVALID_FORMAT);
+        // path is not a DeathNote file
+        assertParseFailure(parser, getAbsoluteFilePathInSandboxFolder("serialize.json"), MESSAGE_INVALID_FORMAT);
     }
 
     @Test
     public void parse_validArgs_success() {
-        String filePath = getFilePathInSandboxFolder("sampleData.xml");
+        String fileName = "sampleData.xml";
+        String filePath = getAbsoluteFilePathInSandboxFolder(fileName);
         assertParseSuccess(parser, filePath, new OpenCommand(new File(filePath)));
     }
 }

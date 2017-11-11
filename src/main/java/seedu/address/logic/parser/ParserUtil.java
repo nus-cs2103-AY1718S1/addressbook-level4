@@ -1,7 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.FileUtil.isFileExists;
+import static seedu.address.commons.util.FileUtil.getExtension;
 
 import java.io.File;
 import java.util.Collection;
@@ -34,7 +34,7 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    static final String MESSAGE_INVALID_FILE = "File does not exists.";
+    static final String MESSAGE_INVALID_FILE = "File must be an xml document.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -57,10 +57,9 @@ public class ParserUtil {
      * @throws IllegalValueException if the file does not exist
      */
     static File parseFile(String path) throws IllegalValueException {
-        requireNonNull(path);
         String trimmedAddress = path.trim();
         File file = new File(trimmedAddress);
-        if (!isFileExists(file)) {
+        if (!getExtension(file).equals(".xml")) {
             throw new IllegalValueException(MESSAGE_INVALID_FILE);
         }
         return file;
