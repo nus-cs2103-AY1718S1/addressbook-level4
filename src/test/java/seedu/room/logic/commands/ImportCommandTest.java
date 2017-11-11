@@ -53,6 +53,11 @@ public class ImportCommandTest {
         XmlEventBookStorage eventBookStorage = new XmlEventBookStorage(getTempFilePath("bc"));
         storageManager = new StorageManager(residentBookStorage, eventBookStorage, userPrefsStorage);
 
+        try {
+            storageManager.backupResidentBook(getTypicalImportFile());
+        } catch (IOException e) {
+            throw new AssertionError("Execution of command should not fail.", e);
+        }
     }
 
     private String getTempFilePath(String fileName) {
