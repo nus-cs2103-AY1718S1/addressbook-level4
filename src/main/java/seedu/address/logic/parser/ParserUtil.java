@@ -1,6 +1,8 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.BackupCommand.BACKUP_DIR_SUFFIX;
+import static seedu.address.logic.commands.BackupCommand.BACKUP_DIR_SUFFIX_ALT;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -142,6 +144,26 @@ public class ParserUtil {
     public static EnablingKeyword parseEnablingKeyword(String enablingKeyword) throws IllegalValueException {
         requireNonNull(enablingKeyword);
         return new EnablingKeyword(enablingKeyword.trim());
+    }
+
+    //@@author icehawker
+    /**
+     * Parses {@code address} returns a cleaned version, in case user has not included the file name in input.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the input address is invalid.
+     */
+    public static String parseBackup(String address) throws IllegalValueException {
+        requireNonNull(address);
+        if (!address.contains(BACKUP_DIR_SUFFIX)) {
+            // if input ends with '\' character, concat without '\' symbol
+            if (address.contains("/(?:\\)$/")) {
+                return address.trim().concat(BACKUP_DIR_SUFFIX);
+            } else {
+                return address.trim().concat(BACKUP_DIR_SUFFIX_ALT);
+            }
+        }
+        return address.trim();
     }
 
     //@@author
