@@ -127,6 +127,7 @@ The default mode of Mobilize will be address book.
 // end::switch[]
 === Managing Contacts
 
+// tag::birthday[]
 ==== Adding new contacts : `add`
 
 Whether you’ve just met a new colleague or reconnected with an old friend, adding new contacts to Mobilize is easy! +
@@ -158,7 +159,9 @@ __Constraints:__
 * BIRTHDAY must be a eight-digit number in “dd-mm-yyyy” format.
 * Every TAG must be preceded by a tag prefix, t/.
 ****
+// end::birthday[]
 
+// tag::findtag[]
 ==== Finding contacts: `find`
 
 Whether you’re a social butterfly or a networking pro, sifting through contacts can be a tedious task. +
@@ -196,6 +199,7 @@ Returns any person having birthday on `17-07`
 __Constraints:__
 
 * Only full words will be matched e.g `Han` will not match `Hans`, `friend` will not match `friends` and `1707` will not match `17-07`
+// end::findtag[]
 
 ==== Deleting contacts : `delete`
 
@@ -224,7 +228,7 @@ __Constraints__
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
-[coming in v2.0]
+// tag::tag[]
 ==== Tagging multiple contacts : `tag` +
 
 Tags are a useful way of grouping and labeling contacts. But editing them manually, one by one, can be a tedious process.
@@ -252,6 +256,7 @@ __Constraints__
 * Every INDEX must be separated by a comma.
 * Every TAG must have a prefix.
 ****
+// end::tag[]
 
 // tag::detag[]
 ==== Removing tags from multiple contacts : `detag`
@@ -361,6 +366,7 @@ __Constraints__
 
 === Managing Tasks
 
+tag::addtask[]
 ==== Adding tasks: `add`
 
 Whether it is a host of pending submissions, a get-together or a multiday program, adding it to Mobilize can easily help you keep track of it all. +
@@ -401,6 +407,7 @@ _Constraints_ +
 ****
 * Dates MUST be preceded by one of the prefixes.
 ****
+// end::addtask[]
 
 // tag::find[]
 ==== Finding tasks by description or deadline: `find`
@@ -431,6 +438,8 @@ __Constraints:__
 * Only full words will be matched e.g `Finish` will not match `Finished`.
 * Only valid dates will be matched e.g `291017` will not match `29-10-2017`.
 ****
+// tag::deletetask[]
+
 // end::find[]
 ==== Deleting tasks : `delete`
 
@@ -446,7 +455,9 @@ __Constraints__
 * If a task is first searched by the “find” feature, then the new index of the task according to the filtered list of Task Cards, is what must be used in the INDEX parameter.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
+// end::deletetask[]
 
+// tag::edittask[]
 ==== Editing tasks: `edit`
 
 Change of plans? The edit feature offers a hassle-free solution to change any parameter of an existing task.
@@ -476,7 +487,8 @@ __Constraints__
 * If a prefix is used with a blank parameter, the respective date associated with that prefix will be deleted.
 ****
 
-==== Archiving completed tasks: `archive`
+// end::edittask[]
+==== Archiving completed tasks: `archive` [Coming in V2.0]
 
 Done with your task? Congratulations! To mark it as done, just key in:
 

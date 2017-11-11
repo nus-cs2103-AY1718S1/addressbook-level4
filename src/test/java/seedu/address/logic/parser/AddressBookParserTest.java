@@ -6,15 +6,18 @@ import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -28,9 +31,12 @@ import seedu.address.logic.commands.persons.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.persons.FindCommand;
 import seedu.address.logic.commands.persons.ListCommand;
 import seedu.address.logic.commands.persons.SelectCommand;
+import seedu.address.logic.commands.persons.TagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -128,6 +134,16 @@ public class AddressBookParserTest {
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD, MODE_ADDRESS_BOOK) instanceof RedoCommand);
         assertTrue(parser.parseCommand("redo 1", MODE_ADDRESS_BOOK) instanceof RedoCommand);
+    }
+
+    @Test
+    public void parseCommand_tagCommand_returnsTagCommand() throws Exception {
+        String tag = "foo";
+        Set<Tag> tagList = SampleDataUtil.getTagSet(tag);
+        Index[] indices = {INDEX_FIRST_PERSON, INDEX_SECOND_PERSON};
+        TagCommand command =
+                (TagCommand) parser.parseCommand(PersonUtil.getTagCommand(indices, tag), MODE_ADDRESS_BOOK);
+        assertEquals(new TagCommand(indices, tagList), command);
     }
 
     @Test

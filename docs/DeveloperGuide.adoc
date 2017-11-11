@@ -302,6 +302,7 @@ The current detag mechanism does not support multiple tag removal, i.e. remove 2
 **Cons:** Cannot not remove tags of multiple contacts, and it is mandatory to retype the tags that do not need to be removed +
 // end::detag[]
 
+// tag::findtag[]
 === FindTag mechanism
 
 The FindTag mechanism is facilitated by the `FindCommand` class which inherits from `Command` class. It allows the user to find persons using tags. Users can search using multiple tags too.
@@ -338,7 +339,9 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
                 || StringUtil.containsWordIgnoreCase(person.getBirthday().value, keyword));
     }
 ----
+// end::findtag[]
 
+tag::tag[]
 === Tag mechanism
 
 The Tag mechanism is a specialised form of the edit feature that allows users to tag multiple contacts with multiple tags.
@@ -359,6 +362,9 @@ The `ModelManager` class in the `Model` component is then called to update all t
 
 The Storage and UI are subsequently updated with the new information.
 
+end::tag[]
+
+tag::addtask[]
 === AddTask mechanism
 
 The Add Task mechanism is facilitated by the `AddTaskCommand` class which inherits from the `UndoableCommand` class. It allows for the addition of new tasks to the application with a starting date and a deadline. Both dates are optional and may be omitted.
@@ -423,6 +429,10 @@ there are only two types of task dates. +
 **Cons** Description might contain slashes. t/ (to) would clash with t/ prefix for tags so to/ would have to be used.
 Limits possibilities of adding new prefixes and making the format more flexible in the future. +
 
+end::addtask[]
+
+
+// tag::deletetask[]
 === DeleteTask mechanism
 
 The Delete Task mechanism is facilitated by the `DeleteTaskCommand` class which inherits from the `UndoableCommand` class. It allows for the removal of a task at a specified index.
@@ -453,6 +463,8 @@ public class DeleteTaskCommand extends UndoableCommand {
     }
 }
 ----
+// end::deletetask[]
+
 // tag::find[]
 === FindTask mechanism
 
@@ -1174,7 +1186,6 @@ Use case resumes at step 2.
 3. AddressBook shows the list of persons with the details
 +
 Use case ends.
-
 *Extensions*
 
 [none]

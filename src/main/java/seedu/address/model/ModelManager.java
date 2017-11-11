@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -19,7 +20,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
@@ -92,19 +92,20 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void updatePersonTags(ReadOnlyPerson person, Set<Tag> newTags)
+            throws PersonNotFoundException, DuplicatePersonException {
+        requireAllNonNull(newTags);
+
+        addressBook.updatePersonTags(person, newTags);
+        indicateAddressBookChanged();
+    }
+
     //@@author tpq95
     @Override
     public synchronized void deleteTag(ReadOnlyPerson person, Tag oldTag) throws PersonNotFoundException,
             DuplicatePersonException, TagNotFoundException {
         addressBook.deleteTag(person, oldTag);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public synchronized void attachTag(ReadOnlyPerson person, Tag newTag) throws PersonNotFoundException,
-            DuplicatePersonException, UniqueTagList.DuplicateTagException {
-        addressBook.attachTag(person, newTag);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
@@ -130,6 +131,15 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedTask);
 
         addressBook.updateTask(target, editedTask);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateTaskTags(ReadOnlyTask task, Set<Tag> newTags)
+            throws TaskNotFoundException, DuplicateTaskException {
+        requireAllNonNull(newTags);
+
+        addressBook.updateTaskTags(task, newTags);
         indicateAddressBookChanged();
     }
 
