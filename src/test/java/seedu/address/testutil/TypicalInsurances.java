@@ -22,5 +22,4 @@ public class TypicalInsurances {
             .withExpiryDate("31 Dec 2020").build();
 
     private TypicalInsurances() {} // prevents instantiation
-
 }
