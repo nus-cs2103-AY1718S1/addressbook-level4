@@ -377,6 +377,7 @@ public class ListPinCommand extends Command {
     public CommandResult execute() {
         model.updateFilteredPersonList(new PersonIsPinnedPredicate());
         EventsCenter.getInstance().post(new ToggleListPinStyleEvent());
+        EventsCenter.getInstance().post(new ListSizeEvent(model.getFilteredPersonList().size()));
         EventsCenter.getInstance().post(new ToggleSearchBoxStyle(true));
         return new CommandResult(MESSAGE_SUCCESS);
     }
@@ -441,7 +442,7 @@ public class PinCommand extends Command {
 ``` java
 
 /**
- * Lists all persons in the address book to the user.
+ * Sorts the address book based on given keyword.
  */
 public class SortCommand extends UndoableCommand {
 
@@ -951,7 +952,9 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     @FXML
     private void handleListAllClicked() {
         try {
-            logic.execute("list");
+            CommandResult result = logic.execute("list");
+            raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent("list"));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to list all using label");
         }
@@ -963,7 +966,9 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     @FXML
     private void handleListPinnedClicked() {
         try {
-            logic.execute("listpin");
+            CommandResult result = logic.execute("listpin");
+            raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent("listpin"));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to list pinned using label");
         }
@@ -975,7 +980,9 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     @FXML
     private void handleTaskViewClicked() {
         try {
-            logic.execute("task");
+            CommandResult result = logic.execute("task");
+            raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent("task"));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to toggle to task view using label");
         }
@@ -987,7 +994,9 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     @FXML
     private void handlePersonViewClicked() {
         try {
-            logic.execute("person");
+            CommandResult result = logic.execute("person");
+            raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent("person"));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to toggle to person view using label");
         }
@@ -999,7 +1008,9 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     @FXML
     private void handleAliasViewClicked() {
         try {
-            logic.execute("listalias");
+            CommandResult result = logic.execute("listalias");
+            raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent("listalias"));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to toggle to alias view using label");
         }
@@ -1252,6 +1263,8 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
             imageDisplay.setImage(new Image(UNDO_ICON));
             break;
         case "sort":
+        case "list":
+        case "listpin":
             listSizeDisplay.setVisible(true);
             imageDisplay.setImage(new Image(SUCCESS_ICON));
             break;
@@ -1793,7 +1806,7 @@ public class TutorialPanel extends UiPart<Region> {
                                           <Insets bottom="5.0" left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="listPinnedLabel" onMouseReleased="#handleListPinnedClicked" text="Pinned" GridPane.columnIndex="4">
+                                    <Label fx:id="listPinLabel" onMouseReleased="#handleListPinnedClicked" text="Pinned" GridPane.columnIndex="4">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="10.0" />
                                        </GridPane.margin>

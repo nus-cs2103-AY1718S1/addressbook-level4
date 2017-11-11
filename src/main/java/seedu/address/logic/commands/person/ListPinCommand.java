@@ -1,6 +1,7 @@
 package seedu.address.logic.commands.person;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.model.ListSizeEvent;
 import seedu.address.commons.events.ui.ToggleListPinStyleEvent;
 import seedu.address.commons.events.ui.ToggleSearchBoxStyle;
 import seedu.address.logic.commands.Command;
@@ -21,6 +22,7 @@ public class ListPinCommand extends Command {
     public CommandResult execute() {
         model.updateFilteredPersonList(new PersonIsPinnedPredicate());
         EventsCenter.getInstance().post(new ToggleListPinStyleEvent());
+        EventsCenter.getInstance().post(new ListSizeEvent(model.getFilteredPersonList().size()));
         EventsCenter.getInstance().post(new ToggleSearchBoxStyle(true));
         return new CommandResult(MESSAGE_SUCCESS);
     }
