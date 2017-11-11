@@ -42,14 +42,14 @@ public class PersonJoinsEventsPredicateTest {
         assertFalse(firstPredicate.equals(1));
 
         // null -> returns false
-        assertFalse(firstPredicate.equals(null));
+        assertFalse(firstPredicate == null);
 
         // different person -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
 
     @Test
-    public void test_personJoinsEvents_returnsTrue() {
+    public void testPersonJoinsEventsReturnsTrue() {
         PersonJoinsEventsPredicate predicate =
                 new PersonJoinsEventsPredicate("First meeting");
         ReadOnlyPerson target = model.getFilteredPersonList().get(0);
@@ -57,7 +57,7 @@ public class PersonJoinsEventsPredicateTest {
     }
 
     @Test
-    public void test_personDoesNotJoinEvents_returnsFalse() {
+    public void testPersonDoesNotJoinEventsReturnsFalse() {
         PersonJoinsEventsPredicate predicate =
                 new PersonJoinsEventsPredicate("First Meeting");
         ReadOnlyPerson target = model.getFilteredPersonList().get(5);

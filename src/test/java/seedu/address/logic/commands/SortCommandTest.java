@@ -49,21 +49,21 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_emptyList_showEmptylist() {
+    public void executeEmptyListShowEmptylist() {
         SortCommand command = prepareCommand(emptyModel);
         assertSuccess(command, SortCommand.MESSAGE_SUCCESS, Collections.emptyList(),
                Collections.emptyList(), emptyModel);
     }
 
     @Test
-    public void execute_allFilledList_showSortedList() {
+    public void executeAllFilledListShowSortedList() {
         SortCommand command = prepareCommand(filledModel);
         assertSuccess(command, SortCommand.MESSAGE_SUCCESS, Arrays.asList(ALICE, BENSON, CARL, DANIEL),
                 Arrays.asList(FIRST, SECOND, THIRD, FORTH), filledModel);
     }
 
     @Test
-    public void execute_onlyOneFilledList_showOneSortedList() {
+    public void executeOnlyOneFilledListShowOneSortedList() {
         SortCommand commandOne = prepareCommand(personModel);
         assertSuccess(commandOne, SortCommand.MESSAGE_SUCCESS, Arrays.asList(ALICE, BENSON, CARL, DANIEL),
                 Collections.emptyList(), personModel);

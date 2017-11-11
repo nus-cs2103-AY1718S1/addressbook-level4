@@ -15,12 +15,12 @@ public class ShowParticipantsCommandParserTest {
     private ShowParticipantsCommandParser parser = new ShowParticipantsCommandParser();
 
     @Test
-    public void parse_validArgs_returnsShowParticipantsCommand() {
+    public void parseValidArgsReturnsShowParticipantsCommand() {
         assertParseSuccess(parser, "1", new ShowParticipantsCommand(INDEX_FIRST_EVENT));
     }
 
     @Test
-    public void parse_invalidArgs_throwsParseException() {
+    public void parseInvalidArgsThrowsParseException() {
         assertParseFailure(parser, "a",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowParticipantsCommand.MESSAGE_USAGE));
     }

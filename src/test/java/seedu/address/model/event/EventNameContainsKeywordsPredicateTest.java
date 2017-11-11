@@ -37,14 +37,14 @@ public class EventNameContainsKeywordsPredicateTest {
         assertFalse(firstPredicate.equals(1));
 
         // null -> returns false
-        assertFalse(firstPredicate.equals(null));
+        assertFalse(firstPredicate == null);
 
         // different person -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
 
     @Test
-    public void test_nameContainsKeywords_returnsTrue() {
+    public void testNameContainsKeywordsReturnsTrue() {
         // One keyword
         EventNameContainsKeywordsPredicate predicate =
                 new EventNameContainsKeywordsPredicate(Collections.singletonList("First"));
@@ -65,7 +65,7 @@ public class EventNameContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_nameDoesNotContainKeywords_returnsFalse() {
+    public void testNameDoesNotContainKeywordsReturnsFalse() {
         // Zero keywords
         EventNameContainsKeywordsPredicate predicate = new EventNameContainsKeywordsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new EventBuilder().withName("First").build()));

@@ -43,7 +43,7 @@ public class ShowParticipantsCommandTest {
     }
 
     @Test
-    public void execute_noPersonJoinsEvent_showsEmptyList() {
+    public void executeNoPersonJoinsEventShowsEmptyList() {
         Event event = (Event) model.getFilteredEventList().get(INDEX_THIRD_EVENT.getZeroBased());
         String expectedMessage =
                 String.format(ShowParticipantsCommand.MESSAGE_SHOW_PARTICIPANTS_SUCCESS, event.getEventName());
@@ -53,7 +53,7 @@ public class ShowParticipantsCommandTest {
     }
 
     @Test
-    public void execute_personJoinsEvent_showsEverything() {
+    public void executePersonJoinsEventShowsEverything() {
         Event event = (Event) model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
         String expectedMessage =
                 String.format(ShowParticipantsCommand.MESSAGE_SHOW_PARTICIPANTS_SUCCESS, event.getEventName());

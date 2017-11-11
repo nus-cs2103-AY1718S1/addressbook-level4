@@ -17,13 +17,13 @@ public class FindEventCommandParserTest {
     private FindEventCommandParser parser = new FindEventCommandParser();
 
     @Test
-    public void parse_emptyArg_throwsParseException() {
+    public void parseEmptyArgThrowsParseException() {
         assertParseFailure(parser, "     ",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
     }
 
     @Test
-    public void parse_validArgs_returnsFindEventCommand() {
+    public void parseValidArgsReturnsFindEventCommand() {
         // no leading and trailing whitespaces
         FindEventCommand expectedFindEventCommand =
                 new FindEventCommand(new EventNameContainsKeywordsPredicate(Arrays.asList("First", "Second")));

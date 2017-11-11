@@ -46,7 +46,7 @@ public class EventCardTest extends GuiUnitTest {
         assertTrue(eventCard.equals(eventCard));
 
         // null -> returns false
-        assertFalse(eventCard.equals(null));
+        assertFalse(eventCard == null);
 
         // different types -> returns false
         assertFalse(eventCard.equals(0));
