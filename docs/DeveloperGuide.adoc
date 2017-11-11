@@ -689,7 +689,7 @@ The method can be seen in the code section below.
     }
 ----
 
-The method is illustrated in the following picture.
+The output of the method is illustrated in the following picture.
 
 image::OptionalInputMessage.png[width="300"]
 _Figure 4.5.2 : Messages shown when the user does not enter the optional fields_
@@ -712,9 +712,9 @@ Alternative 1 (current choice): This feature manipulates the input to include th
 stating that the field is not recorded. +
 Pros: Simpler to understand and tweak this feature as it only manipulates the parsed input of the user. +
 Cons: Unable to implement UI features that requires the attribute to have a optional property. +
-Alternative 2: This feature will implement a optional characteristic in attributes that are optional +
-Pros: Optionality aspect of then attributes can be used by other features of cherBook. +
-Cons: Harder to understand the mechanism and implement changes to this feature. +
+Alternative 2: This feature implements a optional characteristic in optional attributes. +
+Pros: Optionality aspect of the attributes can be used by other features of cherBook. +
+Cons: Harder to understand the mechanism and more work is required implement changes to this feature. +
 // end::optionalInput[]
 
 // tag::uniquetagcolor[]
@@ -762,8 +762,13 @@ public static String obtainTagColors(String tagName) {
 
 The section below explains how various parts of the above code segment works.
 
-A color is determined by three factors, `hue`, `saturation` and `luminance`. The code segment shown below randomises the value of each of the three factors,
-and a random `color` are obtained as a result.
+A color is determined by three factors, `hue`, `saturation` and `luminance`.
+
+image::HueSaturationLuminance.png[width="550"]
+_Figure 4.6.2 : Color Range of Hue, Saturation and Luminance_
+
+The code segment shown below randomises the value of each of the three factors,
+and a random `color` is obtained.
 
 ----
 Random random = new Random();
@@ -776,14 +781,14 @@ Color color = Color.getHSBColor(hue, saturation, luminance);
 ----
 
 [NOTE]
-Random range of saturation and luminance are specified to ensure that the random color generated will always mesh well with the white font of
-the tag description. This can be seen in the picture below.
+Random range of `saturation` and `luminance` are tweaked to ensure that the random color generated will always mesh well with the white font of
+the tag description.
 
 image::tagColorPic.png[width="400"]
-_Figure 4.6.2 : Compatibility of tag color background with white font of tag description_
+_Figure 4.6.3 : Compatibility of tag color background with white font of tag description_
 
 Next, in the code segment below, the `red`, `green` and `blue` components are extracted from the `color`. It is then formatted into a `hexadecimal
-representation` of the color, before being converted to a String data type and assigned to `assignedColor`.
+representation` of the color, before being converted to a `String` data type and assigned to `assignedColor`.
 [NOTE]
 Hexadecimal representation of the color is compatible with JavaFx.
 
@@ -795,8 +800,8 @@ hexRepresentation.format("%02X", color.getBlue());
 assignedColor = hexRepresentation.toString();
 ----
 
-The `assignedColor` is added into an `ArrayList<String> usedColors`. This ensures no same colors will be assigned
-to a tag with different description in subsequent iterations by randomising a different color again should a same color is
+The `assignedColor` is added into an `ArrayList<String> usedColors`. This ensures no same color will be assigned
+to a tag with different description in subsequent iterations by randomising a different color again, should a same color is
 generated. The method will then return `assignedColor`.
 
 Lastly, in the code below, `obtainTagColors(tag.tagName)`, the hexadecimal String representation of the color, will be appended
@@ -818,7 +823,7 @@ Aspect: How tag colors are assigned. +
 Alternative 1 (current choice): Tag colors are assigned randomly. +
 Pros: Easy for developers to understand the mechanism of this feature. +
 Cons: User has no control over the assigning of tag colors. +
-Alternative 2: Allow user to assign the colors to the tags themselves. +
+Alternative 2: Tag colors are assigned by the user. +
 Pros: User will have more freedom in personalising the tags. +
 Cons: The range of colors will be more limited. +
 // end::uniquetagcolor[]
