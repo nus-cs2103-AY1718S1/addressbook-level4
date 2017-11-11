@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@Extensions.css" />
     </stylesheets>
@@ -75,6 +75,11 @@
                                               </StackPane>
                                           </content>
                                       </Tab>
+                              <Tab text="Recyclebin ">
+                                 <content>
+                                    <StackPane fx:id="recycleBinListPlaceHolder" prefHeight="150.0" prefWidth="200.0" />
+                                 </content>
+                              </Tab>
                                   </tabs>
                               </TabPane>
                           </SplitPane>
