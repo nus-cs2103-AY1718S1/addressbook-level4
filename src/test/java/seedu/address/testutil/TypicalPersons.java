@@ -36,7 +36,7 @@ public class TypicalPersons {
             .withEmail("alice@example.com")
             .withBirthday("15/02/1992")
             .withPhone("85355255")
-            .withWebsite("https://www.paulinealice.com/")
+            .withWebsite("https://twitter.com/")
             .withTags("friends")
             .withPicture(null)
             .build();
@@ -64,7 +64,7 @@ public class TypicalPersons {
             .withEmail("cornelia@example.com")
             .withAddress("10th street")
             .withBirthday("15/02/1995")
-            .withWebsite("https://www.danielnyc.com/")
+            .withWebsite("https://twitter.com/")
             .withPicture(null)
             .build();
     public static final ReadOnlyPerson ELLE = new PersonBuilder()
@@ -131,7 +131,6 @@ public class TypicalPersons {
             .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "n/Meier"; // A keyword that matches MEIER
-    public static final String KEYWORD_MATCHING_CARL = "n/Carl"; // A keyword that matches CARL
 
     private TypicalPersons() {} // prevents instantiation
 

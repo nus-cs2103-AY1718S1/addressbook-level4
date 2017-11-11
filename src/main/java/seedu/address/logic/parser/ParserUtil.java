@@ -1,7 +1,9 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.FileUtil.getExtension;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -32,6 +34,7 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    static final String MESSAGE_INVALID_FILE = "File must be an xml document.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -39,13 +42,29 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
-    static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
+    public static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
         String trimmedIndex = oneBasedIndex.trim();
         if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
+
+    //@@author chrisboo
+    /**
+     * Parse {@code path} into a {@code File} and returns it. Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the file does not exist
+     */
+    public static File parseFile(String path) throws IllegalValueException {
+        String trimmedAddress = path.trim();
+        File file = new File(trimmedAddress);
+        if (!getExtension(file).equals(".xml")) {
+            throw new IllegalValueException(MESSAGE_INVALID_FILE);
+        }
+        return file;
+    }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.

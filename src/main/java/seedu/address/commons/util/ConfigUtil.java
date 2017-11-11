@@ -19,4 +19,13 @@ public class ConfigUtil {
         JsonUtil.saveJsonFile(config, configFilePath);
     }
 
+    /**
+     * Update the appTitle field in config.json
+     */
+    public static void updateConfig(String configFilePath, String addressBookFileName)
+        throws DataConversionException, IOException {
+        Config config = readConfig(configFilePath).get();
+        config.setAppTitle(addressBookFileName);
+        saveConfig(config, configFilePath);
+    }
 }

@@ -34,8 +34,12 @@ public class JsonUserPrefsStorage implements UserPrefsStorage {
      * @param prefsFilePath location of the data. Cannot be null.
      * @throws DataConversionException if the file format is not as expected.
      */
-    public Optional<UserPrefs> readUserPrefs(String prefsFilePath) throws DataConversionException {
+    public static Optional<UserPrefs> readUserPrefs(String prefsFilePath) throws DataConversionException {
         return JsonUtil.readJsonFile(prefsFilePath, UserPrefs.class);
+    }
+
+    public static void saveUserPrefs(UserPrefs userPrefs, String prefsFilePath) throws IOException {
+        JsonUtil.saveJsonFile(userPrefs, prefsFilePath);
     }
 
     @Override
@@ -43,4 +47,16 @@ public class JsonUserPrefsStorage implements UserPrefsStorage {
         JsonUtil.saveJsonFile(userPrefs, filePath);
     }
 
+    //@@author chrisboo
+    /**
+     * Update the addressBookFilePath and addressBookName fields in preferences.json
+     */
+    public static void updateUserPrefs(String userPrefsFilePath, String addressBookFilePath, String addressBookName)
+        throws DataConversionException, IOException {
+        UserPrefs userPrefs = readUserPrefs(userPrefsFilePath).get();
+        userPrefs.setAddressBookFilePath(addressBookFilePath);
+        userPrefs.setAddressBookName(addressBookName);
+        saveUserPrefs(userPrefs, userPrefsFilePath);
+    }
+    //@@author
 }

@@ -14,17 +14,16 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
-import seedu.address.commons.events.ui.NewAddressBookRequestEvent;
-import seedu.address.commons.events.ui.OpenAddressBookRequestEvent;
 import seedu.address.commons.events.ui.ShowBirthdayAlarmRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchAddressBookRequestEvent;
+import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -213,39 +212,23 @@ public class MainWindow extends UiPart<Region> {
 
     //@@author chrisboo
     /**
-     * Opens a FileChooser to let the user select an address book to load.
-     */
-    @FXML
-    private void handleOpen() {
-        FileChooser fileChooser = new FileChooser();
-
-        // Set extension filter
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-            "XML files (*.xml)", "*.xml");
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        // Show open file dialog
-        File file = fileChooser.showOpenDialog(new Stage());
-
-        raise(new OpenAddressBookRequestEvent(file));
-    }
-
-    /**
      * Opens a FileChooser to let the user select an address book to save.
      */
     @FXML
     private void handleNew() {
-        FileChooser fileChooser = new FileChooser();
+        File file = FileUtil.getFileFromChooser(true);
 
-        // Set extension filter
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-            "XML files (*.xml)", "*.xml");
-        fileChooser.getExtensionFilters().add(extFilter);
+        raise(new SwitchAddressBookRequestEvent(file, true));
+    }
 
-        // Show open file dialog
-        File file = fileChooser.showSaveDialog(new Stage());
+    /**
+     * Opens a FileChooser to let the user select an address book to load.
+     */
+    @FXML
+    private void handleOpen() {
+        File file = FileUtil.getFileFromChooser(false);
 
-        raise(new NewAddressBookRequestEvent(file));
+        raise(new SwitchAddressBookRequestEvent(file, false));
     }
     //@@author
 

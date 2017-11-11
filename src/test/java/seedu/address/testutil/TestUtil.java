@@ -13,10 +13,26 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class TestUtil {
 
+    //@@author chrisboo
+    /**
+     * Folder used to store data needed for testing
+     */
+    private static final String DATA_FOLDER = FileUtil.getPath("./src/test/data/");
+    //@@author
+
     /**
      * Folder used for temp files created during testing. Ignored by Git.
      */
     private static final String SANDBOX_FOLDER = FileUtil.getPath("./src/test/data/sandbox/");
+
+    //@@author chrisboo
+    /**
+     * Prepends {@code fileName} with file path in data folder
+     */
+    public static String getFilePathInDataFolder(String fileName) {
+        return new File(DATA_FOLDER + fileName).getAbsolutePath();
+    }
+    //@@author
 
     /**
      * Appends {@code fileName} to the sandbox folder path and returns the resulting string.
