@@ -117,6 +117,9 @@ public class FileUtil {
     }
 
     public static String getExtension(File file) {
-        return FilenameUtils.getExtension(file.getPath());
+        String fileName = file.getName();
+
+        int index = fileName.lastIndexOf('.');
+        return index == -1 ? "" : fileName.substring(fileName.lastIndexOf('.'));
     }
 }
