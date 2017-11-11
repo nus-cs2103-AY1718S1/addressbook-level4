@@ -147,6 +147,9 @@ public class PersonInformationPanel extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initialise custom field display flowpane
+     */
     //@@author LuLechuan
     public void initCustomField(ReadOnlyPerson person) {
         customFieldNameList.getChildren().clear();
