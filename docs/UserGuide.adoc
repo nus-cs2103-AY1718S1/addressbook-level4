@@ -177,6 +177,7 @@ Command format in command box: `unmark INDEX` +
 The specified lesson must not initially be in the marked list. +
 
 Valid example:
+
 * Type `list marked` to list all marked lessons in ModU. +
 Next, type `unmark 1` to remove the lesson at index 1 from the marked list. +
 
@@ -461,7 +462,8 @@ Format: `remark INDEX CONTENT`
 Examples:
 
 * `list module` +
-`Remark 1 This is a very interesting Module` +Remark the module of index 1 with comment "This is a very interesting module".
+`Remark 1 This is a very interesting Module` +
+Remark the module of index 1 with comment "This is a very interesting module".
 
 `delete a remark with given index.` +
 Format: `remark -d INDEX`
@@ -486,6 +488,7 @@ Format: `theme`
 Toggle between light and dark theme. If the current theme is light, executing `theme` will change the theme to be dark theme.
 
 Examples:
+
 * `theme dark`
 * `theme light`
 // end::theme[]
