@@ -679,7 +679,7 @@ display of the entire list in an easier to see manner. +
 === RemarkCommand mechanism
 
 `RemarkCommand` implements from `UndoableCommand` and supports undoing and redoing. It is facilitated by the `LogicManager`, where most the
-process is executed. This command allows user to input `REMARK` field to a contact using the command format `remark INDEX r/[REMARK]`. if `[REMARK]` is an
+process is executed. This command allows user to input `REMARK` field to a contact using the command format `remark INDEX r/[REMARK]`. If the `[REMARK]` is an
 empty string, the command removes the existing `remark` on the contact at that `INDEX` . +
 
 A `RemarkCommandParser` class is also created for user inputs. When user inputs the command for `remark`, the `AddressBookParser` would call `RemarkCommandParser` to

@@ -82,7 +82,7 @@ include::../UserGuide.adoc[tag=emailall]
 
 ==== Justification
 
-This feature would be useful and convenient for university as they do not have to send individual
+This feature would be useful and convenient for university students as they do not have to send individual
 emails to different contacts. The user can put desired contacts with the same tag and then use `emailall`
 to send mass emails - making this process much faster and more efficient.
 
