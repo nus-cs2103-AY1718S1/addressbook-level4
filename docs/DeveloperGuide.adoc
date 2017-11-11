@@ -499,7 +499,7 @@ public CommandResult execute() {
 }
 ----
 
-The following sequence diagram is an example that summarises how the `HelpCommand` is being called and executed.
+The following sequence diagram shows an example that summarises how the `HelpCommand` is being called and executed.
 
 image::HelpCommandLogicComponent.png[width="800"]
 _Figure 4.2.1: Sequence diagram for the command `help add`
