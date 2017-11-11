@@ -202,7 +202,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void taskByEnd() {
-        sortedTasks.setComparator((t1, t2) -> t1.getEndDateTime().compareTo(t2.getEndDateTime()));
+        sortedTasks.setComparator((t1, t2) -> t1.getEndDateTime().toString().compareTo(t2.getEndDateTime().toString()));
     }
 
     @Override

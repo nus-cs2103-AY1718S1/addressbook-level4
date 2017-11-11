@@ -18,6 +18,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTime;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.Name;
 import seedu.address.model.task.ReadOnlyTask;
@@ -102,8 +103,8 @@ public class EditTaskCommand extends UndoableCommand {
 
         Name updatedTaskName = editTaskDescriptor.getName().orElse(taskToEdit.getName());
         Description updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
-        String updatedStartDateTime = editTaskDescriptor.getStartDateTime().orElse(taskToEdit.getStartDateTime());
-        String updatedEndDateTime = editTaskDescriptor.getEndDateTime().orElse(taskToEdit.getEndDateTime());
+        DateTime updatedStartDateTime = editTaskDescriptor.getStartDateTime().orElse(taskToEdit.getStartDateTime());
+        DateTime updatedEndDateTime = editTaskDescriptor.getEndDateTime().orElse(taskToEdit.getEndDateTime());
         Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(taskToEdit.getTags());
         Boolean updateComplete = editTaskDescriptor.getComplete().orElse(taskToEdit.getComplete());
         //Remark updatedRemark = taskToEdit.getRemark(); // edit command does not allow editing remarks
@@ -139,8 +140,8 @@ public class EditTaskCommand extends UndoableCommand {
     public static class EditTaskDescriptor {
         private Name taskName;
         private Description description;
-        private String start;
-        private String end;
+        private DateTime start;
+        private DateTime end;
         private Set<Tag> tags;
         private Boolean complete;
 
@@ -179,19 +180,19 @@ public class EditTaskCommand extends UndoableCommand {
             return Optional.ofNullable(description);
         }
 
-        public void setStart(String start) {
+        public void setStart(DateTime start) {
             this.start = start;
         }
 
-        public Optional<String> getStartDateTime() {
+        public Optional<DateTime> getStartDateTime() {
             return Optional.ofNullable(start);
         }
 
-        public void setEnd(String end) {
+        public void setEnd(DateTime end) {
             this.end = end;
         }
 
-        public Optional<String> getEndDateTime() {
+        public Optional<DateTime> getEndDateTime() {
             return Optional.ofNullable(end);
         }
 

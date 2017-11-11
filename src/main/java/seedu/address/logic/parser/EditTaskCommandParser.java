@@ -20,6 +20,7 @@ import seedu.address.logic.commands.EditTaskCommand;
 import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTime;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.Name;
 
@@ -57,9 +58,14 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
             if (parserDescription.isPresent()) {
                 editTaskDescriptor.setDescription(new Description(parserDescription.get()));
             }
-            ParserUtil.parseString(argMultimap.getValue(PREFIX_START_DATE_TIME))
-                    .ifPresent(editTaskDescriptor::setStart);
-            ParserUtil.parseString(argMultimap.getValue(PREFIX_END_DATE_TIME)).ifPresent(editTaskDescriptor::setEnd);
+            Optional<String> parserStart = ParserUtil.parseString(argMultimap.getValue(PREFIX_START_DATE_TIME));
+            if (parserStart.isPresent()) {
+                editTaskDescriptor.setStart(new DateTime(parserStart.get()));
+            }
+            Optional<String> parserEnd = ParserUtil.parseString(argMultimap.getValue(PREFIX_END_DATE_TIME));
+            if (parserEnd.isPresent()) {
+                editTaskDescriptor.setEnd(new DateTime(parserEnd.get()));
+            }
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

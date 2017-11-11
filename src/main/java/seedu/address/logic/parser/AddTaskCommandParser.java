@@ -17,6 +17,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTime;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.Name;
 import seedu.address.model.task.ReadOnlyTask;
@@ -46,8 +47,10 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
             Name name = new Name(ParserUtil.parseString(argMultimap.getValue(PREFIX_NAME)).get());
             Description description =
                     new Description(ParserUtil.parseString(argMultimap.getValue(PREFIX_DESCRIPTION)).get());
-            String startDateTime = ParserUtil.parseString(argMultimap.getValue(PREFIX_START_DATE_TIME)).get();
-            String endDateTime = ParserUtil.parseString(argMultimap.getValue(PREFIX_END_DATE_TIME)).get();
+            DateTime startDateTime =
+                    new DateTime(ParserUtil.parseString(argMultimap.getValue(PREFIX_START_DATE_TIME)).get());
+            DateTime endDateTime =
+                    new DateTime(ParserUtil.parseString(argMultimap.getValue(PREFIX_END_DATE_TIME)).get());
 
             Optional<Integer> priority = ParserUtil.parseInteger(argMultimap.getValue(PREFIX_PRIORITY));
 

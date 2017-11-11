@@ -96,11 +96,11 @@ public class DateTime {
      * @return
      */
     public String toString() {
-        String dayString = Integer.toString(day);
-        String monthString = Integer.toString(month);
+        String dayString = helperFormat(Integer.toString(day));
+        String monthString = helperFormat(Integer.toString(month));
         String yearString = Integer.toString(year);
-        String hourString = Integer.toString(hour);
-        String minuteString = Integer.toString(minute);
+        String hourString = helperFormat(Integer.toString(hour));
+        String minuteString = helperFormat(Integer.toString(minute));
         return dayString + "-" + monthString + "-" + yearString + " " + hourString + ":" + minuteString + state;
     }
 
@@ -110,5 +110,17 @@ public class DateTime {
      */
     public int hashCode() {
         return this.toString().hashCode();
+    }
+
+    /**
+     * Helper for making toString format correct
+     * @param input
+     * @return
+     */
+    private String helperFormat (String input) {
+        if (input.length() < 2) {
+            return "0" + input;
+        }
+        return input;
     }
 }

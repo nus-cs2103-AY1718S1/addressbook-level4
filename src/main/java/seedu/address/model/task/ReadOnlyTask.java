@@ -18,10 +18,10 @@ public interface ReadOnlyTask {
     Name getName();
     ObjectProperty<Description> descriptionProperty();
     Description getDescription();
-    ObjectProperty<String> startTimeProperty();
-    String getStartDateTime();
-    ObjectProperty<String> endTimeProperty();
-    String getEndDateTime();
+    ObjectProperty<DateTime> startTimeProperty();
+    DateTime getStartDateTime();
+    ObjectProperty<DateTime> endTimeProperty();
+    DateTime getEndDateTime();
 
     // functional property
     ObjectProperty<Integer> priorityProperty();

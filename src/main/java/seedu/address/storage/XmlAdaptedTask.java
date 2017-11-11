@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTime;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.Name;
 import seedu.address.model.task.ReadOnlyTask;
@@ -55,8 +56,8 @@ public class XmlAdaptedTask {
     public XmlAdaptedTask(ReadOnlyTask source) {
         taskName = source.getName().toString();
         taskDescription = source.getDescription().toString();
-        startDateTime = source.getStartDateTime();
-        endDateTime = source.getEndDateTime();
+        startDateTime = source.getStartDateTime().toString();
+        endDateTime = source.getEndDateTime().toString();
         tagged = new ArrayList<>();
         id = source.getId();
         for (Tag tag : source.getTags()) {
@@ -79,8 +80,8 @@ public class XmlAdaptedTask {
         }
         final Name taskName = new Name(this.taskName);
         final Description taskDescription = new Description(this.taskDescription);
-        final String startDateTime = this.startDateTime;
-        final String endDateTime = this.endDateTime;
+        final DateTime startDateTime = new DateTime(this.startDateTime);
+        final DateTime endDateTime = new DateTime(this.endDateTime);
         final Set<Tag> tags = new HashSet<>(personTags);
         final Boolean complete = this.complete;
         final ArrayList<Integer> peopleIndices = new ArrayList<>(this.peopleIndices);
