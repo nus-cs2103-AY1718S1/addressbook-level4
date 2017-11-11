@@ -270,7 +270,7 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The **UndoRedoStack** will be empty at the beginning.
 
- The user executes a new UndoableCommand, delete 5, to delete all lessons associated with the module in index 5. The current state of ModU is saved before executing the command. The command will then be pushed onto the undoStack (the current state is saved together with the command) (Figure 12).
+The user executes a new UndoableCommand, delete 5, to delete all lessons associated with the module in index 5. The current state of ModU is saved before executing the command. The command will then be pushed onto the undoStack (the current state is saved together with the command) (Figure 12).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
 _Figure 12: undoStack Diagram 1_
