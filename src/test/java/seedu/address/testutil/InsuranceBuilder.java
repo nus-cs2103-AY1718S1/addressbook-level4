@@ -2,8 +2,6 @@ package seedu.address.testutil;
 
 import java.time.LocalDate;
 
-import javax.xml.bind.annotation.XmlType;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.DateParser;
 import seedu.address.model.insurance.LifeInsurance;
