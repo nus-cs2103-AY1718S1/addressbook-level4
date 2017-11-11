@@ -16,7 +16,7 @@ By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
 
-This _Developer Guide_ is written by the **BoNUS v1.0** team for the benefits of future developers and maintainers of the
+This _Developer Guide_ is written by the **BoNUS v1.5** team for the benefits of future developers and maintainers of the
 application.
 
 * This guide includes instructions for setting up the development environment.
