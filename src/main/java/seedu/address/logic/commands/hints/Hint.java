@@ -27,8 +27,7 @@ public abstract class Hint {
 
         if ((argumentHint == null)
                 || (description == null)
-                || (userInput == null)
-                || (argumentHint == null)) {
+                || (userInput == null)) {
             assert false;
         }
     }
