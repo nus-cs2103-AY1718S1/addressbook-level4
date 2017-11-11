@@ -54,8 +54,15 @@ public class HintParserTest {
         assertEquals(FindCommand.COMMAND_WORD + " n/", autocomplete(FindCommand.COMMAND_WORD + " n"));
         assertEquals(FindCommand.COMMAND_WORD + " p/", autocomplete(FindCommand.COMMAND_WORD + " n/"));
 
-        assertEquals(MusicCommand.COMMAND_WORD + " play", autocomplete(MusicCommand.COMMAND_WORD));
-        assertEquals(MusicCommand.COMMAND_WORD + " pause", autocomplete(MusicCommand.COMMAND_WORD + " paus"));
+
+
+        if (!MusicCommand.isMusicPlaying()) {
+            assertEquals(MusicCommand.COMMAND_WORD + " play", autocomplete(MusicCommand.COMMAND_WORD));
+            assertEquals(MusicCommand.COMMAND_WORD + " play", autocomplete(MusicCommand.COMMAND_WORD + " paus"));
+        } else {
+            assertEquals(MusicCommand.COMMAND_WORD + " pause", autocomplete(MusicCommand.COMMAND_WORD));
+            assertEquals(MusicCommand.COMMAND_WORD + " pause", autocomplete(MusicCommand.COMMAND_WORD + " paus"));
+        }
     }
     //@@author
 
@@ -80,17 +87,18 @@ public class HintParserTest {
         assertHintEquals("add n/name p/123 e/e@e.com" , " a/address");
         assertHintEquals("add n/name p/123 e/e@e.com a" , "/address");
         assertHintEquals("add n/name p/123 e/e@e.com a/" , "address");
-        assertHintEquals("add n/name p/123 e/e@e.com a/address" , " t/tag");
-        assertHintEquals("add n/name p/123 e/e@e.com a/address " , "t/tag");
-        assertHintEquals("add n/name p/123 e/e@e.com a/address t" , "/tag");
-        assertHintEquals("add n/name p/123 e/e@e.com a/address t/" , "tag");
-        assertHintEquals("add n/name p/123 e/e@e.com a/address t/tag" , " i/avatar file path");
-        assertHintEquals("add n/name p/123 e/e@e.com a/address t/tag i/avatar file path   " , "");
-        assertHintEquals("add n/name p/123 e/e@e.com a/address t/tag i/avatar file path   bla bla" , " ");
+        assertHintEquals("add n/name p/123 e/e@e.com a/address" , " r/remark (optional)");
+        assertHintEquals("add n/name p/123 e/e@e.com a/address " , "r/remark (optional)");
+        assertHintEquals("add n/name p/123 e/e@e.com a/address r" , "/remark (optional)");
+        assertHintEquals("add n/name p/123 e/e@e.com a/address r/" , "remark (optional)");
+        assertHintEquals("add n/name p/123 e/e@e.com a/address r/remark " , "t/tag (optional)");
+        assertHintEquals("add n/name p/123 e/e@e.com a/address r/remark t/tag" , " i/avatar file path (optional)");
+        assertHintEquals("add n/name p/123 e/e@e.com a/address r/remark t/tag i/avatar file path " , "");
+        assertHintEquals("add n/name p/123 e/e@e.com a/address r/remark t/tag i/avatar file path   bla bla" , " ");
 
         assertHintEquals("add p/phone", " n/name");
         assertHintEquals("add p/phone n", "/name");
-        assertHintEquals("add p/phone t", "/tag");
+        assertHintEquals("add p/phone t", "/tag (optional)");
 
         //tag is not completed twice
         //TODO: update to account for this
@@ -122,6 +130,9 @@ public class HintParserTest {
 
         assertHintEquals("edit 12 p/123", " n/name");
         assertHintEquals("edit 12 p/123 ", "n/name");
+
+        assertHintEquals("edit 12 r", "/remark");
+        assertHintEquals("edit 12 r/", "remark");
 
         //TODO: change this functionality
         assertHintEquals("edit p/123", " 1 index");
@@ -181,16 +192,15 @@ public class HintParserTest {
 
     @Test
     public void generate_standard_hint() {
-        assertHintEquals("history", " show command history");
-        assertHintEquals("exit", " exits the app");
-        assertHintEquals("clear", " clears address book");
+        assertHintEquals("history", " shows command history");
+        assertHintEquals("exit", " exits the application");
+        assertHintEquals("clear", " clears all contacts");
         assertHintEquals("help", " shows user guide");
-        assertHintEquals("undo", " undo command");
+        assertHintEquals("undo", " undo previous command");
         assertHintEquals("redo", " redo command");
-        assertHintEquals("unknown", " type help for guide");
+        assertHintEquals("unknown", " type help for user guide");
+        assertHintEquals("list", " lists all contacts");
 
-        //TODO: to change
-        assertHintEquals("alias", " creates an alias");
     }
 
     public void assertHintEquals(String userInput, String expected) {

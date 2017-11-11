@@ -6,7 +6,7 @@ package seedu.address.logic.commands.hints;
  */
 public class HistoryCommandHint extends NoArgumentsHint {
 
-    protected static final String HISTORY_COMMAND_DESC = "show command history";
+    protected static final String HISTORY_COMMAND_DESC = "shows command history";
 
     public HistoryCommandHint(String userInput) {
         this.userInput = userInput;

@@ -122,14 +122,10 @@ public class HintUtil {
 
             if (Character.isDigit(trimmed.charAt(i))) {
                 hasDigit = true;
-            }
-
-            if (Character.isAlphabetic(trimmed.charAt(i))) {
-                return false;
-            }
-
-            if (Character.isSpaceChar(trimmed.charAt(i))) {
+            } else if (Character.isSpaceChar(trimmed.charAt(i))) {
                 return true;
+            } else {
+                return false;
             }
         }
 

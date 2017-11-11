@@ -28,7 +28,7 @@ public abstract class Hint {
         if ((argumentHint == null)
                 || (description == null)
                 || (userInput == null)
-                || (autocomplete() != null)) {
+                || (autocomplete() == null)) {
             assert false;
         }
 

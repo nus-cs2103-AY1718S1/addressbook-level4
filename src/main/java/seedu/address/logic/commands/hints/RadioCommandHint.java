@@ -23,12 +23,6 @@ public class RadioCommandHint extends FixedArgumentsHint {
 
         String[] args = arguments.trim().split("\\s+");
 
-        if (args.length == 0) {
-            String autoCorrectHint = (RadioCommand.isRadioPlaying()) ? "stop" : "play";
-            offerHint(autoCorrectHint, "radio " + autoCorrectHint);
-            return;
-        }
-
         String actionArgument = args[0];
         if (!isValidFixedArg(actionArgument, ACTION)) {
             //completing an arg?
@@ -87,12 +81,8 @@ public class RadioCommandHint extends FixedArgumentsHint {
             return " plays classic radio";
         case "chinese":
             return " plays chinese radio";
-        case "comedy":
-            return " plays comedy radio";
         case "news":
             return " plays news radio";
-        case "country":
-            return " plays country radio";
         default:
             return "";
         }

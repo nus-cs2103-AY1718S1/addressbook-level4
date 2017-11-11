@@ -90,9 +90,7 @@ public class HintUtilTest {
         assertTrue(hasPreambleIndex(" 123"));
         assertTrue(hasPreambleIndex("  123434 "));
 
-        //TODO: change this return false as the index is mixed with other characters
-        assertTrue(hasPreambleIndex("  1234343nbnbn3---bn"));
-
+        assertFalse(hasPreambleIndex("  1234343nbnbn3---bn"));
         assertFalse(hasPreambleIndex(""));
         assertFalse(hasPreambleIndex(" -1"));
         assertFalse(hasPreambleIndex("dsdsdsd"));

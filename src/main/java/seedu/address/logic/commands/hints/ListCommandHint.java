@@ -6,7 +6,7 @@ package seedu.address.logic.commands.hints;
  */
 public class ListCommandHint extends NoArgumentsHint {
 
-    protected static final String LIST_COMMAND_DESC = "lists all users";
+    protected static final String LIST_COMMAND_DESC = "lists all contacts";
 
     public ListCommandHint(String userInput) {
         this.userInput = userInput;

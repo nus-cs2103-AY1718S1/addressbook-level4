@@ -133,7 +133,7 @@ public class StringUtil {
      * @return the index where str2 and str1 begin to differ; -1 if they are equal
      * @since 2.0
      */
-    public static int indexOfDifference(String str1, String str2) {
+    private static int indexOfDifference(String str1, String str2) {
         if (str1 == str2) {
             return -1;
         }

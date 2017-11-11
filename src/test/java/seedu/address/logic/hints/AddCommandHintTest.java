@@ -18,8 +18,8 @@ public class AddCommandHintTest {
         parseAndAssertHint(addCommandHint, "p/", "phone", "add n/ p/");
         addCommandHint = new AddCommandHint("add n/nicholas p/321 e/email@e.com a/address",
                 " n/nicholas p/321 e/email@e.com a/address");
-        parseAndAssertHint(addCommandHint, " t/", "tag",
-                "add n/nicholas p/321 e/email@e.com a/address t/");
+        parseAndAssertHint(addCommandHint, " r/", "remark (optional)",
+                "add n/nicholas p/321 e/email@e.com a/address r/");
         //prefix completion
         addCommandHint = new AddCommandHint("add n", " n");
         parseAndAssertHint(addCommandHint, "/", "name", "add n/");
@@ -30,15 +30,15 @@ public class AddCommandHintTest {
 
         //prefix cycle
         addCommandHint = new AddCommandHint("add i/", " i/");
-        parseAndAssertHint(addCommandHint, "", "avatar file path", "add n/");
+        parseAndAssertHint(addCommandHint, "", "avatar file path (optional)", "add n/");
         addCommandHint = new AddCommandHint("add a/", " a/");
-        parseAndAssertHint(addCommandHint, "", "address", "add t/");
+        parseAndAssertHint(addCommandHint, "", "address", "add r/");
 
         //exhausted all prefix
-        addCommandHint = new AddCommandHint("add n/nicholas p/321 e/email@e.com a/address t/tag i/picture.png",
-                " n/nicholas p/321 e/email@e.com a/address t/tag i/picture.png");
+        addCommandHint = new AddCommandHint("add n/nicholas p/321 e/email@e.com a/address t/tag i/picture.png r/remark",
+                " n/nicholas p/321 e/email@e.com a/address t/tag i/picture.png r/remark");
         parseAndAssertHint(addCommandHint, " ", "",
-                "add n/nicholas p/321 e/email@e.com a/address t/tag i/picture.png ");
+                "add n/nicholas p/321 e/email@e.com a/address t/tag i/picture.png r/remark ");
     }
 
     /**

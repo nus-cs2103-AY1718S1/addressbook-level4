@@ -10,7 +10,7 @@ import seedu.address.logic.parser.HintParser;
  */
 public class MusicCommandHint extends FixedArgumentsHint {
 
-    private static final String[] ACTION = new String[] {"play", "pause", "stop"};
+    private static final String[] ACTION = new String[] {"play", "pause"};
     private static final String[] GENRE = MusicCommand.GENRE_LIST;
 
     public MusicCommandHint(String userInput, String arguments) {
@@ -24,12 +24,6 @@ public class MusicCommandHint extends FixedArgumentsHint {
 
         String[] args = arguments.trim().split("\\s+");
 
-        if (args.length == 0) {
-            String autoCorrectHint = (MusicCommand.isMusicPlaying()) ? "pause" : "play";
-            offerHint(autoCorrectHint, "music " + autoCorrectHint);
-            return;
-        }
-
         String actionArgument = args[0];
         if (!isValidFixedArg(actionArgument, ACTION)) {
             //completing an arg?
@@ -39,14 +33,7 @@ public class MusicCommandHint extends FixedArgumentsHint {
                 offerHint(autoCorrectHint, "music " + autoCorrectHint);
                 return;
             } else {
-                String autoCorrectInput = "music " + autoCompletedArg;
-                if (!MusicCommand.isMusicPlaying()) {
-                    autoCorrectInput = "music play";
-                } else {
-                    if (autoCompletedArg.equals("play")) {
-                        autoCorrectInput = "music pause";
-                    }
-                }
+                String autoCorrectInput = "music " + ((!MusicCommand.isMusicPlaying()) ? "play" : "pause");
                 handleCompletingArg(actionArgument, autoCompletedArg, autoCorrectInput);
                 return;
             }

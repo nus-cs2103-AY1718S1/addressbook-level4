@@ -46,7 +46,7 @@ public class CommandHint extends Hint {
             description = " type help for user guide";
             argumentHint = "";
         } else {
-            argumentHint = StringUtil.difference(commandWord, autocompleted);
+            argumentHint = StringUtil.difference(commandWord, autocompleted) + " ";
             description = " - " + getDescription(autocompleted);
         }
     }
