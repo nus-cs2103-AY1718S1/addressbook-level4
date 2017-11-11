@@ -67,70 +67,385 @@ Hence, please read the following information so that you will understand the com
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add m/CODE`, `CODE` is a parameter which can be used as `add m/MA1101R`.
-* Items in square brackets are optional e.g `m/NAME l/LECTURER [l/LECTURER]` can be used as `m/MA1101R l/Ma Siu Lun l/Victor Tan` or as `m/MA1101R l/Ma Siu Lun`.
-* Items with `…`​ after them can be used multiple times, at least one time e.g. `l/LECTURER [l/LECTURER]...` can be used as `{nbsp}` (i.e. 1 times), `l/Ma Siu Lun`, `l/Ma Siu Lun l/Victor Tan` etc.
-* Parameters can be in any order e.g. if the command specifies `gp/GROUP ts/TIME_SLOT ct/CLASS_TYPE`, `v/VENUE m/CODE` is also acceptable.
+* Certain commands require prefixes before the parameters. It will be stated clearly whether prefixes are required.
+Prefixes are characters followed by a backslash, for example: `m/`, `l/`, `gp/`, `ts/` and more. +
+
+* Words in UPPER_CASE are the parameters to be supplied by the user
+e.g. in add m/MODULE, MODULE is a parameter that represents the module code such as MA1101R.
+The command will then look like this: add m/MA1101R. +
+
+* Parameters in square brackets are optional. For example, m/MODULE l/LECTURER [l/LECTURER] can be executed by
+typing m/MA1101R l/Ma Siu Lun l/Victor Tan or m/MA1101R l/Ma Siu Lun. +
+
+* Parameters followed by “…” can be entered multiple times.
+For example, l/LECTURER… can be entered as l/Ma Siu Lun l/Victor Tan l/Alex Neo and more. +
+
+* Parameters can be in any order. For example, if the command example states this particular
+order gp/GROUP ts/TIME_SLOT ct/CLASS_TYPE, rearranging the order to ts/TIME_SLOT ct/CLASS_TYPE gp/GROUP is also acceptable.
+
+====
+
+====
+*List modes*
+
+These are the 4 list modes currently supported by ModU. They will be further explained in link:#listing-all-lesson-code-list-code[Listing all lessons: list]. +
+* Module list mode +
+* Location list mode +
+* Marked list mode +
+* Lesson list mode +
+
+
 ====
 
 // tag::help[]
 === Viewing help : `help`
 
-Format: `help`
+The help command will open the user guide in a new window and provide explanations of every command available in the application. +
+
+Command format in command box: `help`
 // end::help[]
+
+// tag::list[]
+=== Listing all lesson : `list`
+
+The `list` command will display a list based on the attribute specified by the user.
+There are three attributes, namely: __module__, __location__ and __marked__. +
+
+Command format in command box: `list ATTRIBUTE` +
+[TIP]
+The attribute must be in lower case. +
+
+Valid examples: +
+
+* To switch to *module list mode*, type `list module` to list all registered modules in ModU. +
+
+* To switch to *location list mode*, type `list location` to list all locations of every lesson registered in ModU. +
+
+* To switch to *marked list mode*, type `list marked` to list all marked lessons in ModU. +
+
+//image::video/list.gif[width="490"]
+
+// end::list[]
 
 // tag::add[]
 === Adding a lesson: `add`
 
-Adds a lesson to the ModU list +
-Format: `add m/MODULE_CODE ct/CLASS_TYPE v/VENUE gp/GROUP ts/TIME_SLOT l/LECTURER...`
+The `add` command will add a lesson to ModU. If the module for the lesson has not been created yet,
+ModU will automatically create the module in the system. It will then insert the specified lesson into the module. +
+
+Command format in command box: `add m/MODULE_CODE ct/CLASS_TYPE v/VENUE gp/GROUP ts/TIME_SLOT l/LECTURER…` +
 
 [TIP]
-A lesson must have at least one lecturer and a lesson must not have a same time slot and location as existing lesson in ModU
+A lesson must have at least one lecturer. +
+A lesson must not have the same time slot and location as an existing lesson in ModU. +
 
-Examples:
+Valid examples:
 
-* `add m/MA1101R ct/LEC v/LT27 gp/1 ts/FRI[1400-1600] l/Ma Siu Lun`
-* `add m/CS2100 ct/LEC v/LT19 gp/1 ts/MON[1400-1600] l/Wong WEng Fa l/Suppiah `
+* Type `add m/MA1101R ct/LEC v/LT27 gp/1 ts/FRI[1400-1600] l/Ma Siu Lun` to add a lesson with only one lecturer.
 
-image::video/add.gif[width="790"]
+* Type `add m/CS2100 ct/LEC v/LT19 gp/1 ts/MON[1400-1600] l/Wong Weng Fai l/Suppiah` to add a lesson with more than one lecturers.
+
+//image::video/add.gif[width="490"]
 // end::add[]
 
 // tag::mark[]
 === Marking a lesson: `mark`
 
-Marks a lesson to the marked list +
-Format: `mark INDEX`
+The `mark` command will mark a lesson and add it into a marked list. The index must be a positive integer: 1, 2, 3 and so on. +
 
-****
-* Mark the lesson at the specified `INDEX`. The index refers to the index number shown in the last lesson listing. The index *must be a positive integer* 1, 2, 3, ...
-* The specified lesson must be initially not in the marked list.
-****
+Command format in command box: `mark INDEX` +
 
-Examples:
+[TIP]
+The specified lesson must not initially be in the marked list. +
 
-* `view 1` +
-`mark 1` +
-Mark the person into the marked list.
+Valid examples:
+
+* In *module list mode*, type `view 1` to display all lessons in the module. +
+Next, type `mark 1` to add lesson into the marked list. +
+
+* In *lesson list mode*, type `mark 1` to add the lesson into the marked list.
 // end::mark[]
 
 // tag::unmark[]
 === Unmarking a lesson: `unmark`
 
-remove a lesson from the marked list +
-Format: `unmark INDEX`
+The `unmark` command will remove a marked lesson from the marked list. The index must be a positive integer: 1, 2, 3, and so on. +
 
-****
-* Unmark the lesson at the specified `INDEX`. The index refers to the index number shown in the last lesson listing. The index *must be a positive integer* 1, 2, 3, ...
-* The specified lesson must already exist in the marked list.
-****
+Command format in command box: `unmark INDEX` +
 
-Examples:
+[TIP]
+The specified lesson must not initially be in the marked list. +
 
-* `view 1` +
-`unmark 1` +
-Remove the lesson from the marked list.
+Valid example:
+* Type `list marked` to list all marked lessons in ModU. +
+Next, type `unmark 1` to remove the lesson at index 1 from the marked list. +
+
 // end::unmark[]
+
+// tag::view[]
+=== Viewing specific lesson from the list: `view`
+
+The `view` command will display all lessons in a module or a location. +
+
+Command format in command box: `view INDEX` +
+
+[TIP]
+This is the only command that allows you to switch to *lesson list mode*. +
+
+Valid examples:
+
+* In *module list mode*, type `view 2` to view all lessons of the module. +
+
+* In *location list mode*, type `view 2` to view all lessons conducted at this location. +
+
+//image::video/view.gif[width="490"]
+
+// end::view[]
+
+// tag::edit[]
+=== Editing a lesson : `edit`
+
+The `edit` command will edit existing lessons, modules or locations. The index must be a positive integer: 1, 2, 3, and so on. +
+
+Command format in command box: `edit INDEX [m/MODULE_CODE] [ct/CLASS_TYPE] [v/VENUE] [gp/GROUP] [ts/TIME_SLOT] [l/Lecturer…]` +
+
+[TIP]
+At least one of the optional fields must be provided. +
+Existing values will be updated to the input values. +
+The prefix can be omitted in both *module list mode* and *location list mode*. +
+
+Valid examples:
+
+* Type `list module` to list all registered modules in ModU. +
+Next, type `edit 2 CS2101` to rename all the lessons associated with the module at index 2 to CS2101. +
+
+* Type `list location` to list all locations of all lessons registered in ModU. +
+Next, type `edit 2 LT19` to relocate all the lessons associated with the location at index 2 to LT19. +
+
+* In *lesson list mode*, type `view 2` to view the lesson at index 2. +
+Next, type `edit 2 v/LT19` to relocate the lesson to LT19. Note that for this example, the prefix is compulsory. +
+
+//
+//image::video/edit.gif[width="490"]
+//
+//image::video/editModule.gif[width="490"]
+//
+//image::video/editLocation.gif[width="740"]
+// end::edit[]
+
+// tag::find[]
+=== Locating lessons by module code: `find`
+
+The `find` command will find lessons matching the given keyword(s). +
+
+Command format in command box: `find KEYWORD [MORE_KEYWORDS]` +
+
+[TIP]
+The search is case insensitive. +
+The order of the keywords does not matter. +
+[TIP]
+Partial keywords will be matched. +
+Lessons matching at least one keyword will be returned as a result. +
+[TIP]
+The location will be searched if the list is in *location list mode*. +
+The module code will be searched if the list is in *module list mode*. +
+
+Valid examples:
+
+* Type `list module` to list all registered modules in ModU. +
+Next, type `find CS2101 ma1101r` to display all modules that contain the keywords CS2101 and ma1101r. +
+
+* Type `list location` to list all locations of all lessons registered in ModU. +
+Next, type `find LT19` to display all locations that contain the keyword LT19. +
+
+* Type `list module` to list all registered modules in ModU. +
+Next, type `view 1` to go into *lesson list mode* of module at index 1. +
+Type `find FRI` to display all lessons that contain the keyword FRI. +
+
+
+//image::video/find.gif[width="790"]
+// end::find[]
+
+// tag::sort[]
+=== Sorting lesson by module code: `sort`
+
+The `sort` command will sort the existing list in alphabetical order. +
+
+Command format in command box: `sort`
+
+[TIP]
+It will sort the list according to its current listed attribute. +
+
+Valid examples:
+
+* In *module list mode*, type `sort` to arrange the modules in an alphabetical order.
+
+* In *location list mode*, type `sort` to arrange the locations in an alphabetical order.
+
+//image::video/sortModule.gif[width="790"]
+// end::sort[]
+
+// tag::delete[]
+=== Deleting a lesson : `delete`
+The `delete` command will delete a lesson, module or location. The index must be a positive integer: 1, 2, 3, and so on. +
+
+Command format in command box: `delete INDEX` +
+
+Valid examples:
+
+* In *module list mode*, type `delete 1` to remove the module at index 1. +
+
+* In *location list mode*, type `delete 1` to remove the location at index 1. +
+
+* In *lesson list mode*, type `delete 1` to remove the lesson at index 1. +
+
+//image::video/delete.gif[width="790"]
+// end::delete[]
+
+// tag::select[]
+=== Selecting a lesson : `select`
+
+The `select` command will select the lesson identified by the index number. The index must be a positive integer: 1, 2, 3, and so on. +
+
+Command format in command box: `select INDEX` +
+
+Valid examples:
+
+* In *module list mode*, type `select 1` to display all remarks of the module at index 1. +
+
+* In *location list mode*, type `select 1` to display NUS campus map of the location at index 1. +
+
+//image::video/select.gif[width="790"]
+// end::select[]
+
+// tag::history[]
+=== Listing entered commands : `history`
+
+The `history` command will list all the commands that you have entered in reverse chronological order.
+For example, from the most recent command to the least recent command. +
+
+Command format in command box: `history` +
+
+[TIP]
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box. +
+
+//image::video/history.gif[width="790"]
+// end::history[]
+
+
+// tag::undoredo[]
+=== Undoing previous command : `undo`
+
+The `undo` command will restore the list to the state before the previous undoable command was executed. +
+
+Command format in command box: `undo` +
+
+[TIP]
+Undoing previous command is not allowed once you have switched the list mode. +
+
+
+Valid examples:
+
+* In *module list mode*, type `delete 1` to remove the module at index 1. +
+Next, type `undo` to restore the state of the list before `delete 1` was executed. +
+
+* In *module list mode*, type `clear` to remove all registered modules in ModU. +
+Next, type `undo` to restore the state of the list before `clear` was executed. +
+
+Invalid examples:
+
+* In *module list mode*, type `delete 1` to remove the module at index 1. +
+Next, type `view 1` to go into *lesson list mode* of module at index 1. +
+Type `undo` in the command box. +
+The `undo` command fails because the list mode has changed from *module list mode* to *lesson list mode*. +
+
+* In *module list mode*, type `select 1` to display all the remarks of the module at index 1. +
+Next, type `undo` in the command box. +
+The `undo` command fails as there are no undoable commands executed previously. +
+
+//image::video/undo.gif[width="790"]
+
+=== Redoing the previously undone command : `redo`
+
+The `redo` command will reverse the most recent `undo` command. The command is not redoable. +
+
+Command format in command box: `redo` +
+
+Valid examples:
+
+* In *module list mode*, type `delete 1` to remove the module at index 1. +
+Next, type `undo` to restore the state of the list before `delete 1` was executed. +
+Type `redo` to re-execute `delete 1`. +
+
+* In *module list mode*, type `delete 1` to remove the module at index 1. +
+Next, type `clear` to remove all the modules. +
+Type `undo` to restore the state of the list before `clear` was executed. +
+Type `undo` to restore the state of the list before `delete 1` was executed. +
+Type `redo` to re-execute `delete 1`. +
+Type `redo` to re-execute `clear`. +
+
+Invalid example:
+
+* In *lesson list mode*, type `delete 1` to remove the module at index 1. +
+Next, type `redo` in the command box. +
+The `redo` command fails as there are no `undo` commands executed previously. +
+
+//image::video/redo.gif[width="790"]
+// end::undoredo[]
+
+
+// tag::clear[]
+=== Clearing all entries : `clear`
+
+The `clear` command will clear all data stored in ModU. +
+
+Command format in command box: `clear` +
+
+//image::video/clear.gif[width="790"]
+// end::clear[]
+
+// tag::exit[]
+=== Exiting the program : `exit`
+
+The `exit` command will exit ModU. +
+
+Command format in command box: `exit` +
+
+//image::video/edit.gif[width="790"]
+// end::exit[]
+
+
+// tag::customise[]
+=== Customising the font size : `customise`
+
+The `customise` command will adjust the font size of the application.
+There are five font sizes for you to choose from, namely: __xsmall__, __small__, __normal__, __large__, __xlarge__. +
+
+Command format in command box: `customise fs/FONT-SIZE` +
+
+Valid example:
+
+* In *module list mode*, type `customise fx/large` to increase the font size from the current size to large. +
+
+// end::customise[]
+
+
+// tag::colorKeyword[]
+=== Highlighting keywords : `color`
+
+The `color` command will highlight the command keywords. The valid attributes are __enable__ and __disable__. +
+
+Command format in command box: `color ATTRIBUTE` +
+
+Valid example:
+
+* In *module list mode*, type `color enable` to enable highlighting of valid command keywords. +
+
+//image::video/color.gif[width="790"]
+
+// end::colorKeyword[]
+
+
 
 // tag::remark[]
 === Remarking a module: `remark`
@@ -161,311 +476,6 @@ Examples:
 Delete the remark in current remark panel with index 1.
 // end::remark[]
 
-// tag::list[]
-=== Listing all lesson : `list`
-
-Shows a list of all modules in the ModU. +
-Format: `list module`
-
-Shows a list of all location in the ModU. +
-Format: `List location`
-
-Shows a list of all marked lessons in the ModU. +
-Format: `List marked`
-
-image::video/list.gif[width="790"]
-// end::list[]
-
-// tag::view[]
-=== Viewing specific lesson from the list: `view`
-
-Views the detail information about a lesson. +
-Format: `view INDEX`
-****
-* You can either view a lesson from a module or a location.
-****
-
-Examples:
-
-* `list module` +
-`view 2` +
-View the detail information with the second index shown in the module list.
-
-* `list location` +
-`view 2` +
-View the detail information with the second index shown in the location list.
-
-image::video/view.gif[width="790"]
-// end::view[]
-
-// tag::edit[]
-=== Editing a lesson : `edit`
-
-Edits an existing lesson in the ModU list. +
-Format: `edit INDEX [m/MODULE_CODE] [ct/CLASS_TYPE] [v/VENUE] [gp/GROUP] [ts/TIME_SLOT] [l/Lecturer...]`
-
-****
-* Edits the lesson at the specified `INDEX`. The index refers to the index number shown in the last lesson listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing lecturers, the existing lecturers of the lesson will be removed i.e adding of lecturers is not cumulative.
-****
-
-image::video/edit.gif[width="790"]
-
-Edits an existing attribute(module/location) in the ModU list. +
-Format: `edit INDEX [CODE/LOCATION]...`
-
-****
-* Edits the attribute at the specified `INDEX`. The index refers to the index number shown in the last attribute listing. The index *must be a positive integer* 1, 2, 3, ...
-* Requires to list by that specified attribute(module/location) first.
-* All lessons with the specifed attribute value will be updated to with the attribute of input values.
-****
-
-Examples:
-
-* `list module` +
- Returns a list of location +
-* `edit 1 m/CS2101` +
-Edits the module code of the 1st lesson to be `CS2101`.
-
-image::video/editModule.gif[width="790"]
-
-* `list location` +
- Returns a list of location +
-* `edit 3 LT27` +Assume
-Edits all the lessons with the third location shown in the location list to be `LT27`.
-
-image::video/editLocation.gif[width="790"]
-// end::edit[]
-
-// tag::find[]
-=== Locating lessons by module code: `find`
-
-Finds lessons whose code match the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `MA1101R` will match `Ma1101r`
-* The order of the keywords does not matter. e.g. `MA1101R CS2101` will match `CS2101` and 'MA1101R'
-* The location will be search if the list is listed by location
-* The module code will be search if the list is listed by module
-* Any detail of a lesson will be search if view is called previously
-* Partial of the code will be matched e.g. `MA1101` will match `MA1101R`
-* Lessons matching at least one keyword will be returned (i.e. `OR` search). e.g. `MA1101R CS2101` will return `MA1101R` or `CS2101`
-* If find command is executed after executing view command, the find command would not support find module code if it is viewed into a specific module code and if it is viewed into a specific location, it will not support find location.
-****
-
-Examples:
-
-* `list module` +
-`find MA1101R` +
-Returns modules with code name `MA1101R`
-* `find MA1101R CS2101 CS2103` +
-Returns module having code `MA1101R`, `CS2101`, or `CS2103`
-* `list location` +
-`find lt25` +
-Returns location with name `LT25`
-* `view 1` +
-`find TUE`
-Return lesson with any details that contains `TUE` case insensitive
-
-image::video/find.gif[width="790"]
-// end::find[]
-
-// tag::sort[]
-=== Sorting lesson by module code: `sort`
-
-Sort the existing list. +
-Format: `sort KEYWORD`
-
-****
-* The sort command will sort the list according to its current listed attribute
-* If the list was not listed in any attribute, it will be sorted by code of the lesson
-****
-
-Examples:
-
-* `list location` +
-Returns a list of location +
-`sort` +
-Return a list of location sorted in alphabetical order for letters and increasing order for numbers.
-
-image::video/sortLocation.gif[width="790"]
-
-* `list lesson` +
-Returns whole module +
-`sort` +
-Return a list sorted by code in alphabetical order for letters and increasing order for numbers.
-
-image::video/sortModule.gif[width="790"]
-// end::sort[]
-
-// tag::delete[]
-=== Deleting a lesson : `delete`
-
-Deletes all the lessons with specified attribute value in the attribute list from the ModU list. +
-Format: `delete INDEX`
-
-****
-* Deletes the lesson at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list location` +
-`delete 2` +
-Deletes the 2nd lesson in the ModU location list.
-* `find MA1101R` +
-`delete 1` +
-Deletes the 1st lesson in the results of the `find` command.
-* `list module` +
-`delete 2` +
-Deletes the 2nd lesson in the ModU location list.
-
-image::video/delete.gif[width="790"]
-// end::delete[]
-
-// tag::select[]
-=== Selecting a lesson : `select`
-
-Selects the lesson/module/location identified by the index number used in the last listing. +
-Format: `select INDEX`
-
-****
-* If current listing element is location, Selects the location and loads the NUS campus map page showing the location at the specified `INDEX`.
-* If current listing element is Module, Selects the module and displays all remark with the "sticky notes" related to the module at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list module` +
-`select 2` +
-Selects the 2nd module in the module list and show all remarks of this module.
-* `list location` +
-`select 1` +
-Selects the 1st location in the location list and loas the NUS campus map page showing the location.
-
-image::video/select.gif[width="790"]
-// end::select[]
-
-// tag::history[]
-=== Listing entered commands : `history`
-
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
-
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
-
-image::video/history.gif[width="790"]
-// end::history[]
-
-// tag::undoredo[]
-=== Undoing previous command : `undo`
-
-Restores the list to the state before the previous _undoable_ command was executed. +
-Format: `undo`
-
-****
-* You can only use `undo` with current listing element(Module/Location/Lesson).
-* Undo previous command is no longger allowed once user switched listing element.
-****
-
-[NOTE]
-====
-Undoable commands: those commands that modify the list's content (`add`, `delete`, `edit` and `clear`).
-====
-
-Examples:
-
-* `delete 1` +
-`list module` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
-`list module` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-
-image::video/undo.gif[width="790"]
-
-=== Redoing the previously undone command : `redo`
-
-Reverses the most recent `undo` command. +
-Format: `redo`
-
-****
-If the most recent `undo` command is execueted with the panel listing elements different from those
-elements when the actual command is executed. The command will not be allowed to redo.
-****
-
-Examples:
-
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-
-
-image::video/redo.gif[width="790"]
-// end::undoredo[]
-
-// tag::clear[]
-=== Clearing all entries : `clear`
-
-Clears all entries from the ModU list. +
-Format: `clear`
-
-image::video/clear.gif[width="790"]
-// end::clear[]
-
-// tag::exit[]
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit`
-
-image::video/edit.gif[width="790"]
-// end::exit[]
-
-// tag::customise[]
-=== Customising the font size : `customise`
-
-Customise the font size of ModU list +
-Format: `customise`
-
-[TIP]
-A lesson can have any number of tags (including 0)
-
-Examples:
-
-* `customise fs\xsmall`
-* `customise fs\small`
-* `customise fs\xlarge`
-// end::customise[]
-
 // tag::theme[]
 === Change theme : `theme`
 
@@ -481,50 +491,40 @@ Examples:
 // end::theme[]
 
 
-// tag::colorKeyword[]
-=== Highlighting keywords : `color`
-
-Highlight the command keywords. +
-Format: `color enable/disable`
-
-Examples:
-
-* `color enable`
-* `color disable`
-
-image::video/color.gif[width="790"]
-
-// end::colorKeyword[]
 
 === Saving the data
 
-ModU data are saved in the hard disk automatically after any command that changes the data. +
+All data will be saved in the hard disk automatically after any command that changes the data.
 There is no need to save manually.
+
 
 == Tutorial
 
-Assume you are a a professor from the National University of Singapore (NUS) and you want to start planning your
-timetable for the upcoming semester. The university then introduced you to ModU,
-an effective timetable scheduling software developed by the School of Computing (SoC) students.
+Assume you are a professor from the National University of Singapore (NUS) and
+you want to start planning your timetable for the upcoming semester.
+The university has introduced you to ModU, an effective timetable scheduling software developed by
+the School of Computing (SoC) students.
+
 
 This is the screen when you first launch ModU. +
+
+image::tutorial/NewUi.png[width="790"]
 
 * `Command Box`: receive user command inputs
 * `Resust Display Box`: display result of the commands
 * `Module/Lesson Display Panel`: display list of modules or lessons
 * `Timetable/Browser`: display timetable of a particular module or a browser when a location is selected
 
-image::tutorial/NewUi.png[width="790"]
 
-Since this is the first time you are using this software,
-you are unsure of what are the available commands.
+Since this is the first time you are using this software, you are unsure of what are the available commands.
 
-Type `help` in the command box. ModU will automatically open up the user guide that will list all available commands.
+Type `help` in the command box. ModU will open up the user guide that will list all available commands in ModU.
 
 image::tutorial/Help.png[width="790"]
 
-After you have read through the commands, you realised that it is hard to remember all the commands.
+After you have read through the commands, you realised that it is difficult to remember all the different commands.
 You want to be able to identify key words, prefix and check the validity of command.
+
 
 Type `color enable` in the command box. ModU will highlight the various commands and prefix.
 It will display a tick when the command is valid or a cross when the command is invalid.
@@ -621,10 +621,8 @@ image::tutorial/clear.png[width="790"]
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous ModU folder.
-
-*Q*: How do I enable the highlighting of keyword feature? +
-*A*: Type `color enable` in the command box.
+*A*: Install the app in the computer that you want to transfer the data to and overwrite the empty data file
+it creates with the file that contains the data in your ModU folder stored in the previous computer.
 
 *Q*: How do I get support? +
 *A*: if you have any questions, you can contact us by mailto:liangcao@yahoo.com[email].

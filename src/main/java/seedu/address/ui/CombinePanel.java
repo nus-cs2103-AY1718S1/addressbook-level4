@@ -27,6 +27,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
@@ -46,6 +47,7 @@ import seedu.address.model.module.predicates.SelectedStickyNotePredicate;
  */
 public class CombinePanel extends UiPart<Region> {
 
+    private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 5.1; rv:7.0.1) Gecko/20100101 Firefox/7.0.1";
     public static final String DEFAULT_PAGE = "default.html";
     public static final String NUS_MAP_SEARCH_URL_PREFIX = "http://map.nus.edu.sg/#page=search&type=by&qword=";
 
@@ -288,7 +290,10 @@ public class CombinePanel extends UiPart<Region> {
     }
 
     public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
+        WebEngine engine = browser.getEngine();
+        engine.setUserAgent(USER_AGENT);
+
+        Platform.runLater(() -> engine.load(url));
     }
 
     /**
