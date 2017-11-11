@@ -967,6 +967,60 @@ _Figure 4.9.1 : Sequence Diagram of `Tab` Operation_
 ---
 //end::tab[]
 
+// tag::commandshortcuts[]
+=== Command Alias mechanism
+
+The Command Alias mechanism is facilitated by the `COMMAND_ALIAS` in each `Command` class and the `parseCommand()` method in `AddressBookParser`.
+The `AddressBookParser` is responsible for analyzing command words while each command's `COMMAND_ALIAS` stores the command alias to be accepted by the parser.
+
+The aliased added to each command class is implemented like this e.g. `FindCommand` :
+
+```
+public class FindCommand extends Command {
+    public static final String COMMAND_WORD = "find";
+    public static final String COMMAND_ALIAS = "f";
+    //...... other logic ......
+}
+```
+Just like how we store each individual command word constant `COMMAND_WORD` inside each `Command` class e.g. `FindCommand.COMMAND_WORD`, `DeleteCommand.COMMAND_WORD` , a new constant was added for each command alias e.g. `FindCommand.COMMAND_ALIAS`.
+
+The `parseCommand()` in `AddressBookParser` is implemented like this:
+
+```
+ public Command parseCommand(String userInput) throws ParseException {
+        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        }
+
+        final String commandWord = matcher.group("commandWord");
+        final String arguments = matcher.group("arguments");
+        switch (commandWord) {
+
+        case AddCommand.COMMAND_WORD://Fallthrough
+        case AddCommand.COMMAND_ALIAS:
+            return new AddCommandParser().parse(arguments);
+        // ...... more conditions ......
+        default:
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        }
+    }
+```
+
+When a command alias is detected in the switch statement, it will result in the return statement below it, causing it to behave similarly to its corresponding command word.
+When a command word is detected, it will fall through and executes the command as per normal.
+
+==== Design Considerations
+**Aspect:** Where to add the command Aliases +
+**Alternative 1 (current choice):** Add the aliases in each `Command` Class +
+**Pros:** More cohesive command classes. +
+**Cons:** None. +
+**Alternative 2:** Add the aliases in the AddressBookParser.parseCommand(String) method. +
+**Pros:** Easier to read code in the AddressBookParser . +
+**Cons:** Use of magic numbers/strings means that the code is harder to trace and debug. +
+// end::commandshortcuts[]
+
+
 // tag::findtags[]
 === FindTags mechanism
 
