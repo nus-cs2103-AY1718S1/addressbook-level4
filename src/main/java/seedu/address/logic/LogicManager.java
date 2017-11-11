@@ -46,6 +46,11 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
+    public ObservableList<ReadOnlyPerson> getAllPersonList() {
+        return model.getAllPersonList();
+    }
+
+    @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return model.getFilteredPersonList();
     }
@@ -54,4 +59,11 @@ public class LogicManager extends ComponentManager implements Logic {
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
     }
+
+    // @@author donjar
+    @Override
+    public int getFontSizeChange() {
+        return model.getFontSizeChange();
+    }
+    // @@author
 }

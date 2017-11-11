@@ -1,0 +1,104 @@
+= Lawrence Li - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Personal Information Management Program (PIMP)
+PIMP (Personal Information Manager Program) is a command line interface (CLI) address book that allows users to maintain their contacts. This program allows users to store various properties of their contacts, such as their home addresses, email addresses, phone numbers, or even custom tags. It also allows users to view the social media profiles of their address book entries. Since PIMP is targeted at young socialites, it includes many functionalities suitable for such an audience, such as birthday alerts. The program has four main components, namely the `User Interface (UI)`, `Logic`, `Model` and `Storage` components. Addressbook data is stored locally in an .xml file.
+
+PIMP v1.5 is available on any platform running Java 8.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W10-B1/main/blob/master/collated/main/Zzmobie.md[Functional code]] [https://github.com/CS2103AUG2017-W10-B1/main/blob/master/collated/main/Zzmobie.md[Test code]] {give links to collated code files}
+
+=== Enhancement Added: FindTag
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findtag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This command allows the user to search through the tags of their contacts. It is particularly useful if the user has tagged a group of his/her addressbook entries with a specific tag, say "friend", and would like the addressbook to list only those entries.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findtag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: AccessCount
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=access]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As PIMP is designed for the socialite in mind, we decided to implement features that a socialite would want. One such feature would be the ability to find out how frequently he/she has accessed a certain entry, so that the socialite can learn more about their social circles. It would allow the socialite to find out who he/she looks up to and frequently accesses, and who he/she has been neglecting.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=access]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: AccessDisplay
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=accessdisplay]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature allows the socialites to hide the access display counter as an option. One possible reason a user might want to hide the counter would be to avoid embarassment if other people found out one entry has been accessed significantly more than others.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=accessdisplay]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `SortAccess`
+
+While it is useful for a socialite to be able to see the access counts of each individual entry, it is possible that a socialite would have too many PIMP contacts, so that finding the most frequently, or least frequently accessed entries would prove cumbersome. Adding a sort by access command would resolve this issue.
+
+=== Other contributions
+
+* Updated the GUI to always open to the maximum screen size (Pull request https://github.com[#68])
+* Updated the access count to display as an icon with a heart and a number (Pull request https://github.com[#144])

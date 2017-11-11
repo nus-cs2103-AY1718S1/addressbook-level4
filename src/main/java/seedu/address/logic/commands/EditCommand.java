@@ -8,20 +8,26 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.RefreshStatisticsPanelIfOpenEvent;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.AccessCount;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
+import seedu.address.model.person.SocialMedia;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -32,7 +38,7 @@ import seedu.address.model.tag.Tag;
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
-
+    public static final String COMMAND_ALIAS = "e";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
             + "Existing values will be overwritten by the input values.\n"
@@ -78,6 +84,7 @@ public class EditCommand extends UndoableCommand {
 
         try {
             model.updatePerson(personToEdit, editedPerson);
+            EventsCenter.getInstance().post(new RefreshStatisticsPanelIfOpenEvent());
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
@@ -92,16 +99,28 @@ public class EditCommand extends UndoableCommand {
      * edited with {@code editPersonDescriptor}.
      */
     private static Person createEditedPerson(ReadOnlyPerson personToEdit,
-                                             EditPersonDescriptor editPersonDescriptor) {
+                                             EditPersonDescriptor editPersonDescriptor)  {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Remark updatedRemark = personToEdit.getRemark();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Date createdAt = editPersonDescriptor.getCreatedAt().orElse(personToEdit.getCreatedAt());
+        AccessCount accessCount = new AccessCount(personToEdit.getAccessCount().numAccess() + 1);
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        SocialMedia updatedSocialMedia;
+        if (editPersonDescriptor.getSocialMedia().isPresent()) {
+            updatedSocialMedia = new SocialMedia(personToEdit.getSocialMedia(),
+                    editPersonDescriptor.getSocialMedia().get());
+        } else {
+            updatedSocialMedia = personToEdit.getSocialMedia();
+        }
+
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark,
+                updatedTags, createdAt, updatedSocialMedia, accessCount);
     }
 
     @Override
@@ -132,6 +151,8 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private Date createdAt;
+        private SocialMedia socialMedia;
 
         public EditPersonDescriptor() {}
 
@@ -141,13 +162,16 @@ public class EditCommand extends UndoableCommand {
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.tags = toCopy.tags;
+            this.createdAt = toCopy.createdAt;
+            this.socialMedia = toCopy.socialMedia;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address,
+                    this.tags, this.createdAt, this.socialMedia);
         }
 
         public void setName(Name name) {
@@ -190,6 +214,22 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(tags);
         }
 
+        public void setCreatedAt(Date createdAt) {
+            this.createdAt = createdAt;
+        }
+
+        public Optional<Date> getCreatedAt() {
+            return Optional.ofNullable(createdAt);
+        }
+
+        public void setSocialMedia(SocialMedia socialMedia) {
+            this.socialMedia = socialMedia;
+        }
+
+        public Optional<SocialMedia> getSocialMedia() {
+            return Optional.ofNullable(socialMedia);
+        }
+
         @Override
         public boolean equals(Object other) {
             // short circuit if same object
@@ -209,7 +249,9 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
-                    && getTags().equals(e.getTags());
+                    && getTags().equals(e.getTags())
+                    && getCreatedAt().equals(e.getCreatedAt())
+                    && getSocialMedia().equals(e.getSocialMedia());
         }
     }
 }

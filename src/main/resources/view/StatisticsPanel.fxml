@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.Label?>
+<ScrollPane>
+    <GridPane xmlns="http://javafx.com/javafx"
+              xmlns:fx="http://javafx.com/fxml"
+              prefHeight="400.0" prefWidth="600.0"
+              minWidth="800.0">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="16.66" />
+            <ColumnConstraints percentWidth="16.66" />
+            <ColumnConstraints percentWidth="16.66" />
+            <ColumnConstraints percentWidth="16.66" />
+            <ColumnConstraints percentWidth="16.66" />
+            <ColumnConstraints percentWidth="16.66" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+        </rowConstraints>
+        <children>
+            <BarChart id="personAddedChart"
+                      fx:id="personAddedChart"
+                      GridPane.rowIndex="0"
+                      GridPane.columnIndex="0"
+                      GridPane.columnSpan="6" >
+                <xAxis>
+                    <CategoryAxis side="BOTTOM" />
+                </xAxis>
+                <yAxis>
+                    <NumberAxis side="LEFT" />
+                </yAxis>
+            </BarChart>
+            <PieChart id="fbChart"
+                      fx:id="fbChart"
+                      GridPane.rowIndex="1"
+                      GridPane.columnIndex="0"
+                      GridPane.columnSpan="2"
+            />
+            <PieChart id="twChart"
+                      fx:id="twChart"
+                      GridPane.rowIndex="1"
+                      GridPane.columnIndex="2"
+                      GridPane.columnSpan="2"
+            />
+            <PieChart id="igChart"
+                    fx:id="igChart"
+                    GridPane.rowIndex="1"
+                    GridPane.columnIndex="4"
+                    GridPane.columnSpan="2"
+            />
+        </children>
+    </GridPane>
+</ScrollPane>
