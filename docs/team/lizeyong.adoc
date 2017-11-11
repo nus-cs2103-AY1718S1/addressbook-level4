@@ -9,7 +9,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/main/newalter.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/test/newalter.md[Test code]]
 
-=== Enhancement Added: A Universal Find Command
+=== Enhancement Added: Rework `find` Command
 
 ==== External behavior
 
@@ -21,6 +21,8 @@ include::../UserGuide.adoc[tag=find]
 #End of Extract#
 
 ---
+
+==== Highlight 1: Filtering of
 
 ==== Justification
 
@@ -58,7 +60,6 @@ include::../DeveloperGuide.adoc[tag=filter]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=wildcard]
 
 #End of Extract#
 
@@ -118,4 +119,5 @@ If a certain keyword is frequently used, it should show up first in the suggesti
 
 * Discovered a bug that causes the app to crush and provided a solution. (https://github.com/nus-cs2103-AY1718S1/forum/issues/137[Issue #137])
 * Discovered bugs during acceptance testing. (Issues https://github.com/CS2103AUG2017-W14-B4/main/issues/116[#116], https://github.com/CS2103AUG2017-W14-B4/main/issues/117[#117], https://github.com/CS2103AUG2017-W14-B4/main/issues/118[#118])
+* Proposed wildcard symbol feature for reuse. (https://github.com/nus-cs2103-AY1718S1/forum/issues/132[Issue #132])
 
