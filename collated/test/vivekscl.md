@@ -42,14 +42,14 @@ public class WindowSizeTest {
     @Test
     public void getUserDefinedWindowWidth_invalidWidth_invalidResult() {
         thrown.expect(AssertionError.class);
-        double width = (WindowSize.getUserDefinedWindowWidth(""));
+        WindowSize.getUserDefinedWindowWidth("");
 
     }
 
     @Test
     public void getUserDefinedWindowHeight_invalidHeight_invalidResult() {
         thrown.expect(AssertionError.class);
-        double height = (WindowSize.getUserDefinedWindowHeight(""));
+        WindowSize.getUserDefinedWindowHeight("");
     }
 }
 ```
@@ -148,7 +148,7 @@ public class WindowSizeTest {
         List<String> targetsAsList = Arrays.asList(closestMatchingNames.split("\\s+"));
         String expectedMessage = String.format(MESSAGE_NO_PERSON_FOUND, keywordsAsString,
                 String.join(", ", targetsAsList));
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE,FIONA));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
 ```
