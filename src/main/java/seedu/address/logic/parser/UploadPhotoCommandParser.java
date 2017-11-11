@@ -30,7 +30,8 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
             if (st.hasMoreTokens()) {
                 photoPath = st.nextToken();
             } else {
-                photoPath = "/Users/xuyiqing/Desktop/CS2103/addressbook-level4/docs/images/default_photo.png";
+                photoPath = System.getProperty("user.dir")
+                        + "/docs/images/default_photo.png";
             }
 
             while (st.hasMoreTokens()) {

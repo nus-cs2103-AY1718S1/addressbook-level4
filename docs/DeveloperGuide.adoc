@@ -216,6 +216,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 == Implementation
 
+// tag::personinformationpanel[]
 === Person Information Panel
 
 The person information panel is created using javafx. It should display detailed information of a person when the person is selected from the person list panel. Before any person is selected, the person information panel should be blank.
@@ -239,6 +240,7 @@ The following diagram shows the class diagram for person information panel:
 image::PersonInformationPanelClassDiagram.png[width="800"]
 
 As we can see, it inherits from the UiPart class, and that MainWindow class has access to the panel, which is then displayed in the GUI.
+// end::personinformationpanel[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -386,6 +388,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::customField[]
 === Custom Field
 ==== Model
 A UniqueCustomFieldList Class is created which will be used to store a person's Custom Fields.
@@ -417,7 +420,9 @@ A new label will be displaced for each person for each custom field.
 ==== Sequence Diagram
 image::CustomCommandSequenceDiagram.png[width="800"]
 image::CustomCommandSequenceDiagramForStorage[width="800"]
+// end:: customField[]
 
+// tag::photo[]
 === Upload photo
 ==== Model
 A Photo class is created and added as an attribute to the Person class to store the icon photo of each person.
@@ -446,31 +451,53 @@ Image of the icon photo will be displayed after uploaded.
 
 ==== Sequence Diagram
 image::UploadPhotoCommandSequenceDiagram.png[width="800"]
+// end:: photo[]
 
-=== Search bar
-==== Front end
-The search bar is implemented in the front end using `SearchBox.fxml`, which controls the text field that receives query keywords from user.
+// tag::deleteByName[]
+=== DeleteByName
+==== Logic
+A Command - `DeleteByName` Command is created to serve the purpose of deleting an contact from the `Contact book` via its name.
+The Command takes into a String as the parameter which represents the `Name` of the person that is intended to delete.
+When the command is called, the `Contact Book` will get the internal list of all persons and check through the `Name` attribute of each person.
+If there is a person with name equals to the parameter input, the person will be removed from the `Contact Book`.
+If the input name does not match any `Name` in the internal list of all `Person` objects, the internal list will not be modified but the `Result Box` will feedback to users that the person name is not found.
+// end:: deleteByName[]
 
-At construction time, a buffer string is initialised to empty and is ready to store the current user input on the search bar.
+// tag::search[]
+=== The search box
+Efficient search via the search box is facilitated in UI and Logic components.
+
+==== UI
+The mark-up for search box is `SearchBox.fxml`, which just describes a Javafx Textfield.
+This mark-up is hooked with `SearchBox.java`.
+
+At program initialisation, along with other components, UI is started with `UiManager.java`
+which constructs a `MainWindow`. `MainWindow#fillInnerParts()` is called to construct all visual sections of
+the UI, including `SearchBox`.
+
+`SearchBox` is constructed with awareness of Logic, similar to `CommandBox`. At construction time of `SearchBox`, a buffer string is initialised to empty and is ready to store the current user input on the search bar.
+
 Each time a user types an alphanumeric character, a `KeyTypedEvent` is generated which is captured by the handler `handleKeyTyped()`.
-The character is concatenated to the buffer string and passed to logic component and executed using `#logic:executeSearch(String)`.
-Conversely, if a user hits backspace, a `KeyPressedEvent` is generated and captured in `handleKeyPress()`.
-The handler deletes the last character in the buffer string using `Substring()` and passes the resulting buffer string to logic for processing.
+The character is concatenated to the buffer string and passed to logic component and executed using `Logic#executeSearch(String)`.
 
-==== Back end
+If a user hits backspace, situation differs according to OS. If MacOS is used, a `KeyPressedEvent` is generated and captured in `handleKeyPress()`.
+The handler deletes the last character in the buffer string using `Substring()` and passes the resulting buffer string to logic for processing.
+If Windows is used, because backspace returns a unicode character which would generate both `KeyPressedEvent` and `KeyTypedEvent` that results in double deletion,
+only `KeyTypedEvent` is used to handle user input.
+
+==== Logic
 You are expected to have read `2.3 logic component` (especially the class diagram) before you could understand this part.
 
-Like `CommandBox`, `SearchBox` has the same logic component to execute query words. Different from `#logic:execute(commandText)` that executes commands,
-a dedicated method `executeSearch(searchText)` is used to parse the user input.
-A separate parser `SearchParser` is implemented in the same level of abstraction as `AddressBookParser`, and would return a `Command` like `AddressbookParser` does.
-What is different is `SearchParser` returns either `FindCommand(Predicate)` or `ListCommand`,
-depending on whether the searchText is empty - empty search word is interpreted as listing all persons, like other convenient modern address book search features behave.
+Like `CommandBox`, `SearchBox` has the same logic component to execute query words. Different from `logic#execute()` that executes commands,
+a dedicated method `executeSearch()` is used to handle requests from UI component.
 
-The logic that executes commands returned by `SearchParser` is largely the same as before, with minor modifications.
-Previously, a person would only be listed if an exact match of name is found; in this version, a person will be displayed as long as
-all words in his full name contains all the search keywords as prefix.
-For example, `Hansen Johannah` can be found by typing `Han Johan` in the search bar,
-but `Hansen Jonannah` cannot be found because the prefix `Johan` is not in any part of the full name.
+A separate parser `SearchParser` is implemented in the same level of abstraction as `AddressBookParser`, and would return a `Command` like `AddressbookParser` does.
+What is different is `SearchParser` returns `SearchCommand(Predicate)` or a `ListCommand()`,
+depending on whether the searchText is empty - empty search word is interpreted as listing all persons.
+
+`SearchCommand` is the same abstraction as `FindCommand`, except for a different predicate `NamePhoneTagContainsKeywordsPredicate`.
+This long predicate tests the person list in Model for name, phone and tag one by one, and would update the filtered person list
+once there is a match.
 
 ==== Sequence diagram
 image::SearchBarSequenceDiagram.png[width="800"]
@@ -494,27 +521,22 @@ inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
 **Alternative 2:** integrate into `execute()` method using a flag +
 **Pros:** cohesion in `execute()` is maintained +
 **Cons:** modularity compromised, can envision the method getting larger as more features are integrated as flags.
-
----
-{stub to be copied and pasted later on for further entries}
-
-**Aspect:** +
-**Alternative 1 (current choice):** +
-**Pros:**  +
-**Cons:** +
-**Alternative 2:** +
-**Pros:**   +
-**Cons:**
+// end::search[]
 
 //tag::additionalPhoneList[]
 
 === Multiple phone numbers supported
 (launched in V1.3)
 
-==== Description
+ ====Description
+
+Since our target audience are the NUS students, which include a large proportion of international students, our addressBook will support the users to add multiple phone numbers.
+=======
+
+
+ ====Description
 
 Since our target audience are the NUS students, which include a large propotion of international students, our addressBook will support the users to add multiple phone numbers, emails addresses and home addresses.
-
 ==== Model
 
 UniquePhoneList Classes are created for each person to store the person's multiple phone numbers.
@@ -540,6 +562,7 @@ The 3 parameters represents the index of the person in the AddressBook, action t
 For add, we will add the phone to the uniquePhoneList and check for duplicate. Example call of add is illustrated as below.
 image::add.png[width="200"]
 
+
 For remove, we will loop through the uniquePhoneList and remove this phone and check for NoPhoneFoundException. The illustration is below.
 image::remove.png[width="200']
 
@@ -551,7 +574,6 @@ image::showAllPhones.png[width="200']
 
 ==== Storage
 New XML element for UniquePhoneList and new XmlAdaptedPhone class with XML value Phone are created to allow the storage for unique phone list and optional phones.
-
 ==== Ui
 A new label will be displaced for each person for each instance of the same fields.
 

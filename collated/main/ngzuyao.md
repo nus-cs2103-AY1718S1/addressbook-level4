@@ -1,4 +1,25 @@
-//@@author ngzuyao
+# ngzuyao
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    /**
+     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * so that they will be notified of any changes.
+     */
+    private void bindListeners(ReadOnlyPerson person) {
+        name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        /* Commented out to remove address, email and tags from Person Card
+        address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        person.tagProperty().addListener((observable, oldValue, newValue) -> {
+            tags.getChildren().clear();
+            initTags(person);
+        });*/
+        initPhoto(person);
+    }
+```
+###### \java\seedu\address\ui\PersonInformationPanel.java
+``` java
 package seedu.address.ui;
 
 import java.util.ArrayList;
@@ -152,7 +173,9 @@ public class PersonInformationPanel extends UiPart<Region> {
         bindListeners(event.getNewSelection().person, event.getNewSelection().stringid);
     }
 
-    //@@author ngzuyao
+```
+###### \java\seedu\address\ui\PersonInformationPanel.java
+``` java
     private void setLabelIndentation() {
         phoneLabel.setMinHeight(MIN_HEIGHT);
         phoneLabel.setMinWidth(MIN_WIDTH);
@@ -171,23 +194,4 @@ public class PersonInformationPanel extends UiPart<Region> {
         label.setMinWidth(MIN_WIDTH);
         label.setMinHeight(MIN_HEIGHT);
     }
-    //@@author
-
-    @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof PersonInformationPanel)) {
-            return false;
-        }
-
-        // state check
-        PersonInformationPanel card = (PersonInformationPanel) other;
-        return id.getText().equals(card.id.getText())
-                && person.equals(card.person);
-    }
-}
+```
