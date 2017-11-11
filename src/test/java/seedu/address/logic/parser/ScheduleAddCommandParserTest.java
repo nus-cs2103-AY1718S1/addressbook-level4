@@ -21,7 +21,7 @@ import seedu.address.model.event.EventDuration;
 import seedu.address.model.event.EventName;
 import seedu.address.model.event.EventTime;
 
-
+//@@author eldriclim
 public class ScheduleAddCommandParserTest {
 
     @Rule
