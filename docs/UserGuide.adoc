@@ -169,6 +169,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 // end::multipleemails[]
 
+// tag::deletemultiple[]
 ==== Deleting person(s) : `delete` [Last updated in v1.1]
 
 => Alias: `d` <=
@@ -194,6 +195,7 @@ Deletes the 1st and 2nd person in the address book.
 * `find n/Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+// end::deletemultiple[]
 
 ==== Clearing all entries : `clear`
 

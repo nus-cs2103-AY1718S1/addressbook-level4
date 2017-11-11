@@ -425,6 +425,141 @@ _Figure 4.1.10 : UndoRedoStack Activity Diagram_
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+// tag::deletemultiple[]
+=== Deleting multiple persons [Since v1.1]
+
+In _Figure 3.3.3_, the interactions in the `Logic` component are shown when a person is deleted. Since version 1.1, the `DeleteCommand` has been enhanced in its execution, to delete persons belonging to different indices keyed in by the user.
+
+In the `DeleteCommandParser`, the user input string consisting of indices is extracted by splitting into tokens and storing them in an array, based on a whitespace delimiter. The parse method is also designed to throw an exception when the user inputs repeated indices. These can be observed from _Figure 4.2.1_ below.
+
+[source,java]
+----
+public class DeleteCommandParser implements Parser<DeleteCommand> {
+
+    public DeleteCommand parse(String args) throws ParseException {
+        // Extract user input indices
+        String[] indicesInString = trimmedArgs.split("\\s+");
+
+        for (int i = 0; i < indicesInString.length; i++) {
+            // ... parse each token ...
+
+            // Check if there are repeated indices
+            if (i >= secondParsedIndex) {
+                for (Index indexInList: indices) {
+                    if (indexInList.equals(index)) {
+                        throw new ParseException(invalidCommandString);
+                    }
+                }
+            }
+            // ... add accepted indices to list for command execution...
+        }
+    }
+}
+----
+_Figure 4.2.1 : Code section in DeleteCommandParser.java_
+
+The `DeleteCommand` is initialised with an  `ArrayList` of indices, which is sorted in descending order, as shown below in _Figure 4.2.2_.
+
+[source,java]
+----
+public class DeleteCommand extends UndoableCommand {
+
+     public DeleteCommand(ArrayList<Index> targetIndices) {
+            // sort in descending order
+            Collections.sort(targetIndices);
+
+            this.targetIndices = targetIndices;
+        }
+}
+
+public class Index implements Comparable {
+    // compareTo method overriden so that sorting list of indices can function as intended
+    @Override
+    public int compareTo(Object o) {
+        Index compareIndex = (Index) o;
+
+        return (compareIndex).getZeroBased() - this.zeroBasedIndex;
+    }
+}
+----
+_Figure 4.2.2 : Code section in DeleteCommand.java and Index.java_
+
+The deletion of a `Person` will affect the value of the indices associated with the persons that come after it, during the iteration of the indices in the list. The indices have to be deleted from the highest value first to the lowest value, in order for the intended persons to be deleted.
+
+Consider the scenario where a user wants to delete the persons at the first and second index from the list shown in _Figure 4.2.3a_. From the list shown, the user wants to delete persons 'Cheng Wei Hong' and `Liam William`.
+
+image::DeleteScenario1.png[width="400"]
+_Figure 4.2.3a : Original person list before deletion_
+
+If the `Person` in the first index is deleted first the list will look like that in _Figure 4.2.3b_:
+
+image::DeleteScenario2.png[width="400"]
+_Figure 4.2.3b : Person List after deletion of first index_
+
+After the second index is deleted, the list will be as shown in _Figure 4.2.3c_:
+
+image::DeleteScenario3.png[width="400"]
+_Figure 4.2.3c : Person List after deletion of first index_
+
+As can be observed, 'Liam William' still exists in the list, which is not what the user intended. If the second index is deleted first followed by the first index, the list will appear as shown in _Figure 4.2.3d_:
+
+image::DeleteScenario4.png[width="400"]
+_Figure 4.2.3d : Person List after correct deletion of persons_
+
+Hence, the list of index values is first sorted in descending order so that the persons associated with the highest index can be deleted first, as shown below in _Figure 4.2.4_.
+
+[source,java]
+----
+public class DeleteCommand extends UndoableCommand {
+
+     @Override
+     public CommandResult executeUndoableCommand() throws CommandException {
+
+         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+         // iterate through already sorted list
+         for (int i = 0; i < targetIndices.size(); i++) {
+             // ... get target index ...
+
+             ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+             try {
+                 model.deletePerson(personToDelete);
+             } catch (PersonNotFoundException pnfe) {
+                 assert false : "The target person cannot be missing";
+             }
+         }
+         // ... return command result ...
+     }
+}
+
+----
+_Figure 4.2.4 : Code section in DeleteCommand.java_
+
+==== Design Considerations for Deleting Multiple Persons
+
+**Aspect:** User input restrictions +
+**Alternative 1 (current choice):** Disallow repeated indices from user, even if indices can be found in the list. +
+**Pros:** Prevent any deletion from occurring if user makes a mistake in keying in a repeated index. +
+**Cons:** Less flexibility in keying indices for deletion. +
+**Alternative 2:** Accept repeated indices, as long as they can be found in the list. +
+**Pros:** Greater flexibility for user inputs. +
+**Cons:** User will have to undo command if there is a mistake in keying in repeated indices.
+
+---
+
+**Aspect:** Implementation of `DeleteCommand` +
+**Alternative 1 (current choice):** Delete all persons belonging to each index keyed in by the user. +
+**Pros:** User able to delete persons belonging to random indices in the list all at once. +
+**Cons:** Slow in deleting a large number of contacts at once as user has to key in index values 1 by 1. +
+**Alternative 2:** Delete persons belonging to a range of indices. +
+**Pros:** User is able to delete a lot of persons at once if they are listed consecutively. +
+**Cons:** User will take a lot of time in deleting persons belonging to indices that are not next to each other.
+
+---
+// end::deletemultiple[]
+
 // tag::help[]
 
 === Displaying the Usage of a Specific Command [Since v1.2]
