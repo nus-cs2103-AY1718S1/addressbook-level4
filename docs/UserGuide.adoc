@@ -517,8 +517,10 @@ Removes all tags from all persons in the results of the `list` command.
 
 === Renaming a tag in contact list : `retag`
 
-*As a Gentleman, you want to be up to date of relevant information about your contacts.
-Thus, you can retag your contacts.*
+*As a Gentleman, you want to be up to date of the relevant information about your contacts.
+You will soon transfer to another department of the company to obtain more work experience.
+Separation with your current colleagues is sad, but nothing can be done.
+Thus, you rename the "colleagues" tag to "exColleagues".*
 
 Renames a certain tag in contact list to a new tag name. +
 Format: `retag OLD_TAG NEW_TAG`
@@ -531,12 +533,16 @@ Format: `retag OLD_TAG NEW_TAG`
 
 Examples:
 
-* `retag enemies friends` +
-Renames the existing "enemies" tag in the Gentleman's Guide to "friends".
+* `retag colleagues exColleagues` +
+Renames the existing "colleagues" tag in the Gentleman's Guide to "exColleagues".
 // end::tagsmanipulation[]
 
 // tag::retrieve[]
 === Retrieving all persons having an existing tag : `retrieve`
+
+*After having worked in the new department for quite a time, you feel like having a reunion with your former colleagues.
+Thus, you use the retrieve command to quickly get their contacts so that you can send invitations to all of them at the same time
+ while avoiding leaving someone out accidentally.*
 
 Lists all contacts having a certain existing tag in the Gentleman's Guide. +
 Format: `retrieve TAG`
@@ -548,8 +554,8 @@ Format: `retrieve TAG`
 
 Examples:
 
-* `retrieve friends` +
-Retrieves all persons with the "friends" tag in the Gentleman's Guide.
+* `retrieve exColleagues` +
+Retrieves all persons with the "exColleagues" tag in the Gentleman's Guide.
 // end::retrieve[]
 
 === Listing entered commands : `history`
@@ -711,14 +717,14 @@ e.g.`view 2`
 * *Sort by Age* : `sortAge`
 * *Sort by Birthday* : `sortBirthday`
 * *Sort by Priority* : `sortPriority`
-* *Retrieve* : `retrieve TAG` +
-e.g.`retrieve family`
 * *Tag* : `tag INDEX,[MORE_INDEXES],... TAG` +
 e.g.`tag 1,2,3 friends`
 * *Untag* : `untag INDEX,[MORE_INDEXES],... TAG/[MORE_TAGS]/...` +
 e.g.`untag 1,2,3 friends/enemies`
 * *Retag* : `retag OLD_TAG NEW_TAG` +
-e.g.`retag enemies friends`
+e.g.`retag colleagues exColleagues`
+* *Retrieve* : `retrieve TAG` +
+e.g.`retrieve exColleagues`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
