@@ -1,14 +1,8 @@
 package seedu.address.ui;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import java.util.logging.Logger;
-
-import javax.imageio.ImageIO;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -87,7 +81,6 @@ public class BrowserPanel extends UiPart<Region> {
     private void setUpMotivationPage()  {
         Image image = new Image(getClass().getResource("/images/"
                 + motivationPages[random.nextInt(motivationPages.length)]).toExternalForm());
-        //Image image = new Image(getClass().getResource("/images/motivation4.jpg").toExternalForm());
         splashPage.setImage(image);
     }
     //@@author
