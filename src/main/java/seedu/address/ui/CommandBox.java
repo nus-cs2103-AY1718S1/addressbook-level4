@@ -333,6 +333,7 @@ public class CommandBox extends UiPart<Region> {
             commandTextField.selectRange(indexOfFirstSpace + 1, input.length());
             break;
         default:
+            // let JavaFx handle the keypress
         }
         isFirstTab = false;
     }
@@ -461,7 +462,7 @@ public class CommandBox extends UiPart<Region> {
      * format in the textfield
      * @param command input by the user
      */
-    public void displayFullFormat(String command) {
+    private void displayFullFormat(String command) {
         if (AddCommand.COMMAND_WORD_ABBREVIATIONS.contains(command)) {
             replaceText(AddCommand.FORMAT);
         } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(command)) {
