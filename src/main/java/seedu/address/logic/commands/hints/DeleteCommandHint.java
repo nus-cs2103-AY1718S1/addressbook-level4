@@ -16,14 +16,14 @@ public class DeleteCommandHint extends ArgumentsHint {
 
     @Override
     public void parse() {
-        //case : edit *|
+        //case : delete *|
         if (!HintUtil.hasIndex(arguments)) {
             handleOfferIndex(userInput);
             return;
         }
 
         if (Character.isDigit(userInput.charAt(userInput.length() - 1))) {
-            //case edit 1|
+            //case delete 1|
             handleIndexTabbing(HintUtil.getIndex(arguments));
             return;
         }

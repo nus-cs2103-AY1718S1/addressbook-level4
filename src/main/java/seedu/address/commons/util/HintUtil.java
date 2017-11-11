@@ -116,13 +116,25 @@ public class HintUtil {
     public static boolean hasPreambleIndex(String arguments) {
 
         String trimmed = arguments.trim();
-        if (arguments.length() > 0) {
-            if (Character.isDigit(trimmed.charAt(0))) {
+
+        boolean hasDigit = false;
+
+        for (int i = 0; i < trimmed.length(); i++) {
+
+            if (Character.isDigit(trimmed.charAt(i))) {
+                hasDigit = true;
+            }
+
+            if (Character.isAlphabetic(trimmed.charAt(i))) {
+                return false;
+            }
+
+            if (Character.isSpaceChar(trimmed.charAt(i))) {
                 return true;
             }
         }
 
-        return false;
+        return hasDigit;
     }
 
     /**

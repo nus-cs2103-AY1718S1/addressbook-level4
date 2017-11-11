@@ -8,6 +8,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME_STRING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE_STRING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK_STRING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_STRING;
 
@@ -26,7 +28,7 @@ import seedu.address.logic.parser.Prefix;
 public class EditCommandHint extends ArgumentsHint {
 
     private static final List<Prefix> PREFIXES =
-            Arrays.asList(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+            Arrays.asList(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK, PREFIX_TAG);
 
     private List<Prefix> possiblePrefixesToComplete;
 
@@ -43,15 +45,9 @@ public class EditCommandHint extends ArgumentsHint {
             return;
         }
 
-        try {
-            if (Character.isDigit(userInput.charAt(userInput.length() - 1))) {
-                //case edit 1|
-                Integer.parseInt(arguments.trim());
-                handleIndexTabbing(HintUtil.getPreambleIndex(arguments, PREFIXES));
-                return;
-            }
-        } catch (NumberFormatException e) {
-            //continue with execution
+        if (HintUtil.hasIndex(arguments) && Character.isDigit(userInput.charAt(userInput.length() - 1))) {
+            handleIndexTabbing(HintUtil.getPreambleIndex(arguments, PREFIXES));
+            return;
         }
 
         possiblePrefixesToComplete = HintUtil.getUncompletedPrefixes(arguments, PREFIXES);
@@ -81,20 +77,20 @@ public class EditCommandHint extends ArgumentsHint {
     @Override
     protected String getDescription(Prefix prefix) {
         switch (prefix.toString()) {
-        case PREFIX_NAME_STRING:
-            return "name";
-        case PREFIX_PHONE_STRING:
-            return "phone";
-        case PREFIX_ADDRESS_STRING:
-            return "address";
-        case PREFIX_EMAIL_STRING:
-            return "email";
-        case PREFIX_TAG_STRING:
-            return "tag";
-        default:
-            return "";
+            case PREFIX_NAME_STRING:
+                return "name";
+            case PREFIX_PHONE_STRING:
+                return "phone";
+            case PREFIX_ADDRESS_STRING:
+                return "address";
+            case PREFIX_EMAIL_STRING:
+                return "email";
+            case PREFIX_REMARK_STRING:
+                return "remark";
+            case PREFIX_TAG_STRING:
+                return "tag";
+            default:
+                return "";
         }
     }
-
-
 }

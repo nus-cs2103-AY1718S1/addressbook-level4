@@ -34,6 +34,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.MusicCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ShareCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.hints.AddCommandHint;
 import seedu.address.logic.commands.hints.ClearCommandHint;
@@ -46,6 +47,7 @@ import seedu.address.logic.commands.hints.Hint;
 import seedu.address.logic.commands.hints.HistoryCommandHint;
 import seedu.address.logic.commands.hints.ListCommandHint;
 import seedu.address.logic.commands.hints.RedoCommandHint;
+import seedu.address.logic.commands.hints.ShareCommandHint;
 import seedu.address.logic.commands.hints.UndoCommandHint;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
@@ -106,6 +108,11 @@ public class HintParser {
             DeleteCommandHint deleteCommandHint = new DeleteCommandHint(userInput, arguments);
             deleteCommandHint.parse();
             return deleteCommandHint.autocomplete();
+
+            case ShareCommand.COMMAND_WORD:
+                ShareCommandHint shareCommandHint = new ShareCommandHint(userInput, arguments);
+                shareCommandHint.parse();
+                return shareCommandHint.autocomplete();
 
         case MusicCommand.COMMAND_WORD:
             if (arguments.isEmpty()) {
@@ -191,6 +198,8 @@ public class HintParser {
         case SelectCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandHint(userInput, arguments);
+        case ShareCommand.COMMAND_WORD:
+            return new ShareCommandHint(userInput, arguments);
         case ClearCommand.COMMAND_WORD:
             return new ClearCommandHint(userInput);
         case ListCommand.COMMAND_WORD:

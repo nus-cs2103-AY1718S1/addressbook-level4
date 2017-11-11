@@ -10,6 +10,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME_STRING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE_STRING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK_STRING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_STRING;
 
@@ -28,7 +30,7 @@ import seedu.address.logic.parser.Prefix;
 public class AddCommandHint extends ArgumentsHint {
 
     private static final List<Prefix> PREFIXES =
-            Arrays.asList(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+            Arrays.asList(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK,
             PREFIX_TAG, PREFIX_AVATAR);
 
 
@@ -64,7 +66,6 @@ public class AddCommandHint extends ArgumentsHint {
         // we should offer a hint
         // case: add n/* |
         handleOfferHint(PREFIXES);
-        assertRequiredIsNonNull();
     }
 
     @Override
@@ -79,9 +80,11 @@ public class AddCommandHint extends ArgumentsHint {
         case PREFIX_EMAIL_STRING:
             return "email";
         case PREFIX_TAG_STRING:
-            return "tag";
+            return "tag (optional)";
         case PREFIX_AVATAR_STRING:
-            return "avatar file path";
+            return "avatar file path (optional)";
+        case PREFIX_REMARK_STRING:
+            return "remark (optional)";
         default:
             return "";
         }
