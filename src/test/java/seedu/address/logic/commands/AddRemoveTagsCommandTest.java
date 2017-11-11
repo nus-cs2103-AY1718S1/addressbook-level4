@@ -51,7 +51,7 @@ public class AddRemoveTagsCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
                 new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), editedPerson);
 
         assertCommandSuccess(addTagsCommand, model, expectedMessage, expectedModel);
     }
@@ -72,9 +72,29 @@ public class AddRemoveTagsCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
                 new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), editedPerson);
 
         assertCommandSuccess(removeTagsCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_removeTags_failure() throws Exception {
+        Person editedPerson = new PersonBuilder(
+                model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased())).withTags().build();
+
+        ArrayList<String> tagsList = new ArrayList<>();
+        tagsList.add("friends");
+        tagsList.add("husband");
+
+        AddRemoveTagsCommand removeTagsCommand = prepareCommandRemove(INDEX_FIRST_PERSON,
+                ParserUtil.parseTags(tagsList));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), editedPerson);
+
+        assertCommandFailure(removeTagsCommand, model,
+                AddRemoveTagsCommand.makeTagDontExistMessage("husband"));
     }
 
     @Test
