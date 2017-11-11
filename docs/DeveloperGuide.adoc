@@ -944,7 +944,8 @@ Figure 5.8.2 What the user sees
 //tag::calendar[]
 === Calendar mechanism
 
-The Calendar mechanism is facilitated by the `AnchorPaneNode` class. It is then created with GridPanes and VBox.
+The Calendar is created with GridPanes and VBox. The following code snippets describes how the `AnchorPaneNode` object fills up the
+GridPane of the calendar. At the end of the method, the VBox gathers all the required parameters to get the view of the calendar.
 
 ----
     public Calendar(YearMonth yearMonth, ObservableList<ReadOnlyEvent> eventList) {

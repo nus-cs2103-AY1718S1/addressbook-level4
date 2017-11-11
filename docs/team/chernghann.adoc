@@ -35,7 +35,7 @@ include::../UserGuide.adoc[tag=calendar]
 
 As an address book targeted at University students in Singapore age between 18-24.
 On average, an university students have to juggle between many commitments in school and out of school. Many of these young adults are actively involved in many events internally and externally.
-Thus, the add event feature allos the users to be able to store and keep track of what events that are coming up and be able to plan and organise their schedule.
+Thus, the add event feature allows the users to be able to store and keep track of what events that are coming up and be able to plan and organise their schedule.
 
 ==== Implementation
 
@@ -98,6 +98,13 @@ Same idea applies to having an additional Home Number Field to be implemented fo
 
 === Enhancement Proposed: Sending of Text Messages
 
+Most of the University students have their phone numbers linked to popular instant messaging service platform such as Whatsapp and Telegram.
+The enhancement that I am proposing is a function in The Myth's Book will allow the user to send text messages to the big platforms mentioned earlier.
+This will allow The Myth's Book to become an all-in-one application for the university students.
+
+* Considerations:
+- Having an in-app messaging service without tapping into using Whatsapp Web or Telegram Desktop functions
+- Account based application such that the messages are secured and personal for the user.
 
 
 
@@ -105,3 +112,6 @@ Same idea applies to having an additional Home Number Field to be implemented fo
 * Acceptance Testing
 - Provide suggestions for improvement (Pull request https://github.com/CS2103AUG2017-W09-B1/main/issues/121#event-1330982844[#121] , https://github.com/CS2103AUG2017-W09-B1/main/issues/115[#115])
 - Found a bug in implementation (Pull request https://github.com/CS2103AUG2017-W09-B1/main/issues/113[#113])
+
+* Documentation
+- Included a `Back to Top` for User Guide and Developer Guide.
