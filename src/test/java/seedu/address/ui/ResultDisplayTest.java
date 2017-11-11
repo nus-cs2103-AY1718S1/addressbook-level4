@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.ui.testutil.LogicStub;
 
 public class ResultDisplayTest extends GuiUnitTest {
 
@@ -17,7 +18,7 @@ public class ResultDisplayTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        ResultDisplay resultDisplay = new ResultDisplay();
+        ResultDisplay resultDisplay = new ResultDisplay(new LogicStub());
         uiPartRule.setUiPart(resultDisplay);
 
         resultDisplayHandle = new ResultDisplayHandle(getChildNode(resultDisplay.getRoot(),

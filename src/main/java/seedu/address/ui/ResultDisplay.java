@@ -11,8 +11,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.FontSizeChangeRequestEvent;
+import seedu.address.commons.events.ui.FontSizeRefreshRequestEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.logic.Logic;
 
 /**
  * A ui for the display of the results.
@@ -23,15 +24,17 @@ public class ResultDisplay extends UiPart<Region> {
     private static final String FXML = "ResultDisplay.fxml";
 
     private static final int DEFAULT_FONT_SIZE = 17;
-    private int fontSizeChange = 0;
 
     private final StringProperty displayed = new SimpleStringProperty("");
+
+    private final Logic logic;
 
     @FXML
     private TextArea resultDisplay;
 
-    public ResultDisplay() {
+    public ResultDisplay(Logic logic) {
         super(FXML);
+        this.logic = logic;
         resultDisplay.textProperty().bind(displayed);
         registerAsAnEventHandler(this);
     }
@@ -44,9 +47,8 @@ public class ResultDisplay extends UiPart<Region> {
 
     // @@author donjar
     @Subscribe
-    private void handleFontSizeChangeEvent(FontSizeChangeRequestEvent event) {
+    private void handleFontSizeChangeEvent(FontSizeRefreshRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        fontSizeChange = event.sizeChange;
         refreshFontSizes();
     }
 
@@ -54,7 +56,7 @@ public class ResultDisplay extends UiPart<Region> {
      * Updates the font sizes of all components of this component with the {@code fontSizeChange} given.
      */
     private void refreshFontSizes() {
-        resultDisplay.setStyle("-fx-font-size: " + (DEFAULT_FONT_SIZE + fontSizeChange));
+        resultDisplay.setStyle("-fx-font-size: " + (DEFAULT_FONT_SIZE + logic.getFontSizeChange()));
     }
     // @@author
 }

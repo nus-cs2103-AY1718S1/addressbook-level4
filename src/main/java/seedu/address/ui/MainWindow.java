@@ -143,10 +143,10 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerParts() {
         switchToBrowserPanel();
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanel = new PersonListPanel(logic);
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        ResultDisplay resultDisplay = new ResultDisplay();
+        ResultDisplay resultDisplay = new ResultDisplay(logic);
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         PeopleCount peopleCount = new PeopleCount(logic.getFilteredPersonList().size());

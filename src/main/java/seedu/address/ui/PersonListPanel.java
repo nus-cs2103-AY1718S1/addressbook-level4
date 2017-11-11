@@ -16,6 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.AccessCountDisplayToggleEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.Logic;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -32,19 +33,19 @@ public class PersonListPanel extends UiPart<Region> {
     private ObservableList<PersonCard> mappedListWithAccessCount;
     private ObservableList<PersonCard> mappedListWithoutAccessCount;
 
-    public PersonListPanel(ObservableList<ReadOnlyPerson> personList) {
+    public PersonListPanel(Logic logic) {
         super(FXML);
-        setConnections(personList);
+        setConnections(logic.getFilteredPersonList(), logic);
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<ReadOnlyPerson> personList) {
+    private void setConnections(ObservableList<ReadOnlyPerson> personList, Logic logic) {
         mappedListWithAccessCount = EasyBind.map(
                 personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1,
-                         true));
+                         true, logic));
         mappedListWithoutAccessCount = EasyBind.map(
                 personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1,
-                         false));
+                         false, logic));
         personListView.setItems(mappedListWithAccessCount);
         personListView.setCellFactory(listView -> new PersonListViewCell());
         setEventHandlerForSelectionChangeEvent();

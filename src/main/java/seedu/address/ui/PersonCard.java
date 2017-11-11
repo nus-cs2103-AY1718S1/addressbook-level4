@@ -12,7 +12,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.FontSizeChangeRequestEvent;
+import seedu.address.commons.events.ui.FontSizeRefreshRequestEvent;
+import seedu.address.logic.Logic;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -31,7 +32,7 @@ public class PersonCard extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private int fontSizeChange = 0;
+    private Logic logic;
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -63,10 +64,11 @@ public class PersonCard extends UiPart<Region> {
 
     private boolean isAccessDisplayed;
 
-    public PersonCard(ReadOnlyPerson person, int displayedIndex, boolean isAccessDisplayed) {
+    public PersonCard(ReadOnlyPerson person, int displayedIndex, boolean isAccessDisplayed, Logic logic) {
         super(isAccessDisplayed ? FXML : FXML_WITHOUT_ACCESSES);
         this.person = person;
         this.isAccessDisplayed = isAccessDisplayed;
+        this.logic = logic;
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person, isAccessDisplayed);
@@ -118,16 +120,16 @@ public class PersonCard extends UiPart<Region> {
 
     // @@author donjar
     @Subscribe
-    private void handleFontSizeChangeEvent(FontSizeChangeRequestEvent event) {
+    private void handleFontSizeChangeEvent(FontSizeRefreshRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        fontSizeChange = event.sizeChange;
         refreshFontSizes();
     }
 
     /**
-     * Updates the font size of this card.
+     * Refreshes the font size of this card.
      */
     private void refreshFontSizes() {
+        int fontSizeChange = logic.getFontSizeChange();
         name.setStyle("-fx-font-size: " + (DEFAULT_BIG_FONT_SIZE + fontSizeChange));
         id.setStyle("-fx-font-size: " + (DEFAULT_BIG_FONT_SIZE + fontSizeChange));
 

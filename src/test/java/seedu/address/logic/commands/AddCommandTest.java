@@ -143,6 +143,12 @@ public class AddCommandTest {
 
         // @@author donjar
         @Override
+        public int getFontSizeChange() {
+            fail("This method should not be called.");
+            return 0;
+        }
+
+        @Override
         public void resetFontSize() {
             fail("This method should not be called.");
         }
