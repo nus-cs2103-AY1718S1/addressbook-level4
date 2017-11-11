@@ -44,8 +44,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Here are some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* **`add`** `n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`delete`** `3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
 .  You can refer to the link:#features[Features] section below for details of each command.
@@ -234,10 +234,11 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 *You received an email from an unknown source. You have no time to check through your entire list
 to see if you know the person. Instead you use the findEmail command in the Gentleman's Guide.*
 
-Finds person(s) whose emails is same as the keyword(s). +
+Finds person(s) whose email(s) is same as the keyword(s). +
 Format: `findEmail KEYWORD [MORE_KEYWORDS]`
 
 ****
+* The search is case insensitive. e.g `Alexyeoh@example.com` will match `alexyeoh@example.com`
 * Only emails are searched.
 * Only full words will be matched e.g. `johnny` will not match `johnny@example.con`
 * Multiple emails can be searched at one time.
@@ -248,7 +249,7 @@ Examples:
 * `findEmail alex@example.com` +
 Returns person with the email `alex@example.com`
 * `findEmail alex@example.com jamie@example.com` +
-Returns person with emails `alex@example.com` , `jamie@example.com`
+Returns persons with email `alex@example.com` or `jamie@example.com`
 
 === Locating persons by phone number: `findPhone`
 
@@ -280,7 +281,7 @@ Finds reminders whose task names contain any of the given keywords. +
 Format: `findReminder KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `proposals` will match `Proposals`
+* The search is case insensitive. e.g `proposal` will match `Proposal`
 * The order of the keywords does not matter. e.g. `Proposal Submission` will match `Submission Proposal`
 * Only the task name is searched.
 * Only full words will be matched e.g. `proposal` will not match `proposals`
@@ -400,12 +401,12 @@ Below is an illustration of an unsorted and sort list of contacts.
 **Before**
 
 image::unsortedlist.png[width="300"]
-_Figure 3.17.1 : Unsorted reminder list ._
+_Figure 3.17.1 : Unsorted reminder list._
 
 **After**
 
 image::sortedlist.png[width="300"]
-_Figure 3.17.2 : Sorted reminder list (In alphabetical order) ._
+_Figure 3.17.2 : Sorted reminder list (In alphabetical order)._
 
 === Sorting all entries by age : `sortAge`
 
@@ -416,7 +417,7 @@ Format: `sortAge`
 
 === Sorting all entries by birthday: `sortBirthday`
 
-*Or you may be interested in checking upcoming birthdays for your friends and give them a surprise.*
+*Or you may be interested in checking upcoming birthdays of your friends and give them a surprise.*
 
 Sorts all entries in the person list by their birthday, from 1st Jan to 31st Dec. +
 Format: `sortBirthday`

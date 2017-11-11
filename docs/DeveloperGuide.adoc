@@ -397,16 +397,20 @@ Similiarly, the user can choose to implement the `logoutcommand` which would cal
 The `BirthdayCommand` lies in the `commands` of `Logic`. and deals with `UndoableCommands`, thus the actions can
 be reversed.  The following diagram shows the inheritance diagram for commands:
 
-image::birthdayLogic.png[width="700"]
+image::birthdayLogic.png[width="900"]
 _Figure 4.3.1.1a : Structure of Commands in the Logic Component._
 
-The user will not be able to enter the birthday parameter when adding contacts. +
-Suppose that the user has a list of persons. The birthday parameters will be empty if the user has not modified the persons yet.
-The user then adds the birthday through the BirthdayCommand : " `birthday 2 b/20/07/1994` "  where he adds the birthday parameter of the 2nd person in the list. +
+You will not be able to enter the birthday parameter when adding contacts. +
+Suppose that you have a list of persons. The birthday parameters of each contact will be empty if you have not modified them before. +
+You can then choose to add their birthday using the BirthdayCommand. For example if you want to add the birthday of the
+second person in your contact list, key in " `birthday 2 b/20/07/1994` "  where his birthday is 20/07/1994. +
+Similarly, you can edit their birthday using the same command.+
+To delete their birthday simply not key in anything for his birthday. For example, +
+" `birthday 2 b/` "
 
 The following sequence diagram shows how the birthday operation works:
 
-image::birthdaySD.png[width="800"]
+image::birthdaySD.png[width="900"]
 _Figure 4.3.1.1b : Interactions in the Birthday Command._
 
 ==== Design Considerations
@@ -420,7 +424,7 @@ _Figure 4.3.1.1b : Interactions in the Birthday Command._
 **Cons:** More parameters to add while creating person class and harder to implement. +
 
 ---
-**Aspect:** More birthday commands +
+**Aspect:** Birthday commands with specific uses +
 **Alternative 1 (current choice):** Only one birthday command to add / edit / delete birthday from person +
 **Pros:** Convenient, lesser commands for users to remember. +
 **Cons:** Birthday command is very general and may be confusing to the user instead +
@@ -555,18 +559,18 @@ e.g. `findReminder project`
 Finds reminder(s) with the priority (Low / Medium / High) given. +
 e.g. `findPriority High`
 
-The 4 advanced find commands, as well as the basic `find` oommand lies in the `commands` of `Logic`. and does not deal
+The 4 advanced find commands, as well as the original `find` command lies in the `commands` of `Logic`. and does not deal
 with `UndoableCommands`, thus the actions cannot be reversed. +
 The following diagram shows the inheritance diagram for `findPhone` command:
 
-image::findPhoneSD.png[width="800"]
+image::findPhoneSD.png[width="900"]
 _Figure 4.6.1.1 Interactions in the findPhone command._
 
 Suppose the user keys in the command (e.g. `findReminder Proposal`) to search for all his reminders with the keyword
 "Proposal". The application searches through the entire reminder list and displays all reminders
 with the keyword.
 
-image::BeforeAndAfterFindReminder.png[width="600"]
+image::BeforeAndAfterFindReminder.png[width=850"]
 _Figure 4.6.3.1 Reminder list before and after the findReminder command_
 
 [Note]
@@ -586,6 +590,8 @@ with email "alex@example.com". +
 the type of find command he wants +
 **Pros:** Lesser commands to remember and checks user guide less often. +
 **Cons:** Slower and less direct. +
+
+---
 
 // end::find[]
 
