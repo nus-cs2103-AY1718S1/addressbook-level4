@@ -116,6 +116,9 @@ public enum AutocompleteCommand {
         }
     }
 
+    /**
+     * Returns true if {@code command} takes in an {@code Index} as an argument
+     */
     public static boolean hasIndexParameter (String command) throws NullPointerException {
         try {
             return Arrays.asList(commandsWithIndexes).contains(command);
@@ -124,6 +127,9 @@ public enum AutocompleteCommand {
         }
     }
 
+    /**
+     * Returns true if {@code command} takes in a {@code Prefix} as an argument
+     */
     public static boolean hasPrefixParameter (String command) throws NullPointerException {
         try {
             return Arrays.asList(commandsWithPrefixes).contains(command);

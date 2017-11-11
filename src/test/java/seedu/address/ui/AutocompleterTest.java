@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalParcels.AMY;
 import static seedu.address.testutil.TypicalParcels.IDA;
 
+import java.io.IOException;
+import java.util.logging.Level;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,9 +18,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.testutil.TestLogger;
 import seedu.address.ui.autocompleter.Autocompleter;
-
-import java.io.IOException;
-import java.util.logging.Level;
 
 //@@author Kowalski985
 public class AutocompleterTest extends GuiUnitTest {
@@ -197,7 +197,11 @@ public class AutocompleterTest extends GuiUnitTest {
                 EMPTY_STRING, "EDIT", "COMMAND_NEXT_PREFIX");
     }
 
-
+    /**
+     * Simulates an autocomplete with {@code commandBoxText} and verifies that the resulting string matches
+     * {@code expectedResult} also verifies that the logged details match {@code expectedCommand}
+     * and {@code expectedState}
+     */
     private void assertAutocompleteSuccess(String commandBoxText, String expectedResult, String expectedMessage,
                    String expectedCommand, String expectedState) throws DataConversionException, IOException {
         TestLogger testLogger = new TestLogger(autocompleter.getClass(), Level.INFO);
@@ -211,5 +215,4 @@ public class AutocompleterTest extends GuiUnitTest {
                 + CURRENT_COMMAND_LOG_MESSAGE + expectedCommand + "\n";
         assertEquals(capturedLog, expectedLogMessage);
     }
-
 }

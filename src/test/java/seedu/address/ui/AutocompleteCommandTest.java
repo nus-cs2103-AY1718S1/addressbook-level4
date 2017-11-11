@@ -3,6 +3,7 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
 import seedu.address.ui.autocompleter.AutocompleteCommand;
 
 //@@author Kowalski985
