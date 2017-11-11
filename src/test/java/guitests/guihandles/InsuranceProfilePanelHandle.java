@@ -3,8 +3,9 @@ package guitests.guihandles;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
+//@@author RSJunior37
 /**
- * A handler for the {@code InsuranceProfile} of the UI.
+ * A handler for the {@code InsuranceProfilePanel} of the UI.
  */
 public class InsuranceProfilePanelHandle extends NodeHandle<Node> {
 
