@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -9,6 +10,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.MainApp;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyRolodex;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -19,6 +22,8 @@ import seedu.address.model.tag.Tag;
  */
 @XmlRootElement(name = "rolodex")
 public class XmlSerializableRolodex implements ReadOnlyRolodex {
+
+    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
     @XmlElement
     private List<XmlAdaptedPerson> persons;
@@ -49,8 +54,7 @@ public class XmlSerializableRolodex implements ReadOnlyRolodex {
             try {
                 return p.toModelType();
             } catch (IllegalValueException e) {
-                e.printStackTrace();
-                //TODO: better error handling
+                logger.warning(e.getMessage());
                 return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
@@ -63,8 +67,7 @@ public class XmlSerializableRolodex implements ReadOnlyRolodex {
             try {
                 return t.toModelType();
             } catch (IllegalValueException e) {
-                e.printStackTrace();
-                //TODO: better error handling
+                logger.warning(e.getMessage());
                 return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
