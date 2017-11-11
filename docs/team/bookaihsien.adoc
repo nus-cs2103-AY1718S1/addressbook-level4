@@ -4,12 +4,12 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: DeathNote
-DeathNote is a desktop address book application used for teaching Software Engineering principles. The user interacts
-with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
 *Code contributed*:
-[https://github.com/CS2103AUG2017-W10-B3/main/blob/master/collated/main/chrisboo.md[Functional code]]
-[https://github.com/CS2103AUG2017-W10-B3/main/blob/master/collated/test/chrisboo.md[Test code]]
+
+https://github.com/CS2103AUG2017-W10-B3/main/blob/master/collated/main/chrisboo.md[Functional code]
+https://github.com/CS2103AUG2017-W10-B3/main/blob/master/collated/test/chrisboo.md[Test code]
+
 
 === Enhancement Added: Improve flexibility of `add` command
 
@@ -31,7 +31,7 @@ Adds a person to Death Note +
 
 ==== Justification
 
-This feature allows flexibility in the usage of Death Note.
+This feature allows flexibility in the usage of DeathNote.
 
 ==== Implementation
 
@@ -80,7 +80,7 @@ checks of `null` in its respective class:
 
 ---
 
-=== Enhancement Added: Open or create new address book
+=== Enhancement Added: Working with Multiple DeathNote
 
 ==== External behavior
 
@@ -130,7 +130,6 @@ This loads the selected XML file which opens a new address book with contacts fr
 
 === Enhancement Added: Improve `find` command
 
-
 ==== External behavior
 
 ---
@@ -173,4 +172,3 @@ This allows user to find a person faster and easier.
 
 . Add shorthand to commands.
 . Add Appveyor, Coveralls and Codeacy to the project for efficient integrations.
-. Add AddressBook file name as window title (pr https://github.com/CS2103AUG2017-W10-B3/DeathNote/pull/27[#27]).
