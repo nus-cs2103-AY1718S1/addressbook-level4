@@ -53,7 +53,7 @@ include::../UserGuide.adoc[tag=important]
 
 Allows user to access contacts that are important conveniently.
 
-=== Enhancement Added: Sorted contacts in alphabeticial order
+=== Enhancement Added: Sorted contacts in alphabetical order
 
 ==== Logic
 
