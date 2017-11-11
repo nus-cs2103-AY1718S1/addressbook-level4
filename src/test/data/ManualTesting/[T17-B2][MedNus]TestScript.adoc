@@ -1,0 +1,59 @@
+= Test Script
+
+== Introduction
+This test script explains the steps to perform manual testing. +
+This test script covers all functionality of the product, grouped according to three main sections: +
+
+* *General Commands*
+* *Calendar Related Functionality*
+* *Miscellaneous Functionality*
+
+This test script gives you a comprehensive guide on:
+
+. How you can set up the application necessary for manual testing. +
+. The input for manual testing and the corresponding output.
+
+== Setting Up
+
+. Make sure you have the latest version of MedNus. +
+You can download the latest `MedNus.jar` link:https://github.com/CS2103AUG2017-T17-B2/main/releases[here].
+. Copy the jar file to the folder you want to use as the home folder for your Address Book.
+. Double-click the file to start the app. The graphical user interface (GUI) should appear in a few seconds.
+.
+
+== General Commands
+
+
+== Calendar Related Functionality
+
+
+== Misc. Enhancements
+
+=== Keyboard Key Commands
+This section shows you the available keyboard key commands implemented so that you can easily +
+edit the command box. +
+No text input will be specified and you can enter any text input to test the following keyboard key functionality. +
+
+[width="59%",cols="20%,<40%,<40%",options="header",]
+|=======================================================================
+|Key To Enter |Expected Result |Remarks
+
+|*Escape* |Clears entire command box text field |-
+
+|*Alt* |Shifts text cursor to the start of the previous word |-
+
+|*Control* |Shifts text cursor to the end of the next word |-
+
+|*Shift-Alt* |Shifts text cursor all the way to the left |-
+
+|*Shift-Control* |Shifts text cursor all the way to the right |-
+
+|*Shift-Delete* |Deletes a chunk of word/blank space |For Mac Users
+
+|*Shift-Backspace* |Deletes a chunk of word/blank space |For Windows Users
+
+|*Right* (Add Command)|Add Command Shortcut to autofill Prefixes |"Add" or "A" must be present at the start of the line
+
+|*Right* (Edit Command)|Edit Command Shortcut to autofill Prefixes |"Edit INDEX" or "e INDEX" must be present at the start of the line
+
+|=======================================================================
