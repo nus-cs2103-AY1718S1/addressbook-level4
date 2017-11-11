@@ -32,5 +32,17 @@ public class ShareCommandParserTest {
 
         assertParseFailure(parser, "    ",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShareCommand.MESSAGE_USAGE));
+
+        assertParseFailure(parser, "1 s/",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShareCommand.MESSAGE_USAGE));
+
+        assertParseFailure(parser, "0",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShareCommand.MESSAGE_USAGE));
+
+        assertParseFailure(parser, "-1",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShareCommand.MESSAGE_USAGE));
+
+        assertParseFailure(parser, "1 1",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShareCommand.MESSAGE_USAGE));
     }
 }
