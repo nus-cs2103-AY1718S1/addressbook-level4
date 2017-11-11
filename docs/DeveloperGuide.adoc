@@ -387,7 +387,7 @@ image::OpenNewHighLevelSequenceDiagram.png[]
 
 1. A user requests to open `data/default.rldx`.
 2. The command is handled the same way as other commands, by the parser in
-logic, then via the `OpenCommand` object itself, under the `Logic` component of the application.
+logic, then via the `OpenRolodexCommand` object itself, under the `Logic` component of the application.
 3. Upon a successful parsing of the command and execution, the command would raise a new `OpenRolodexRequestEvent` to
 be handled by the `EventsCenter`.
 4. The `EventsCenter` posts a new `OpenRolodexRequestEvent` back to the `MainApp` where the new Rolodex path would be
@@ -635,7 +635,7 @@ An example as implemented in the open command:
 import java.util.HashSet;
 import java.util.Set;
 
-public class OpenCommand extends Command {
+public class OpenRolodexCommand extends Command {
 
     public static final String COMMAND_WORD = "open";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
