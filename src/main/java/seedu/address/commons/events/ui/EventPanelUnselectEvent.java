@@ -1,17 +1,14 @@
 package seedu.address.commons.events.ui;
 
-//@@author itsdickson
-
 import seedu.address.commons.events.BaseEvent;
 
+//@@author DarrenCzen
 /**
- * An event requesting to view the themes page.
+ * event to unselect an event card in the case of a delete
  */
-public class ShowThemeRequestEvent extends BaseEvent {
-
+public class EventPanelUnselectEvent extends BaseEvent {
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
 }
-//@@author

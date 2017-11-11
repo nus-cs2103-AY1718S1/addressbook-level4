@@ -1,5 +1,7 @@
 package seedu.address.commons.events.ui;
 
+//@@author DarrenCzen
+
 import seedu.address.commons.events.BaseEvent;
 
 /**
@@ -18,3 +20,4 @@ public class TogglePanelEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 }
+//@@author

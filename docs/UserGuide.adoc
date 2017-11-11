@@ -139,10 +139,24 @@ This command lists all the contacts stored in The Myth's Book. +
 
 Format: `list`
 
+// tag::events[]
+=== Listing all events : `events`
+
+This command replaces the list of contacts, and subsequently lists all the events stored in The Myth's Book. +
+
+Format: `events`
+
+You should see the result of using `events` as seen in Figure 5.4.1.
+
+image::events.png[width="800"]
+Figure 5.4.1 `events` Result for Events Command
+// end::events[]
+
 // tag::sort[]
 === Sorting all persons : `sort`
 
 This command sorts all contacts stored in The Myth's Book by their names alphabetically. +
+
 Format: `sort`
 
 //end::sort[]
@@ -192,8 +206,9 @@ by typing this command, you will be able to find both `john` and `John Doe`.
 
 * `find Betsy Tim John` +
 By typing this command, you will be able to find any person having names `Betsy`, `Tim`, or `John`
-
 // end::find[]
+
+// tag::findtag[]
 === Finding a person's tag : `findtag`
 
 This command will help you find contacts whose tags contain any of the given keywords. +
@@ -214,6 +229,7 @@ By typing this command, you will be able to find any person having tag `friends`
 
 * `findtag owesMoney neighbours friends` +
 By typing this command, you will be able to find any person having tags `owesMoney`, `neighbours`, or `friends`.
+// end::findtag[]
 
 === Selecting a person : `select`
 
@@ -325,16 +341,19 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::themeslist[]
 === Listing all themes : `themeslist`
 
-This command shows a list of all themes that is available to you in The Myth's Book. +
-
+This command shows a list of all themes that is available to you in pop-up window format in The Myth's Book. +
 Format: `themeslist`
 
-You should be able to see the result of using `themeslist` in the command result box.
+You should see the result of using `themeslist` as seen in Figure 5.14.1.
 
-The displayed result should look like the figure below.
+image::themeslist.png[width="800"]
+Figure 5.14.1 `themeslist` Result for Themes List Command
+// end::themeslist[]
 
+// tag::switch[]
 === Switching themes : `switch`
 
 This command helps you to switch the current theme to your favourite theme. +
@@ -353,8 +372,11 @@ Examples:
 1. By typing `themeslist`, you will be able to see the available themes that The Myth's Book has to offer. +
 2. By typing `switch 2`, you will be able to switch to the 2nd theme listed in the themes list.
 
-You should be able to see the result of using `switch INDEX`
-as seen in the figure below.
+You should see the result of using `switch 2` as seen in Figure 5.15.1.
+
+image::Switch.png[width="800"]
+Figure 5.15.1 `switch 2` Result for Switch Command
+// end::switch[]
 
 // tag::reminder[]
 === Checking for birthdays : `birthdays`
@@ -446,6 +468,7 @@ Eg. 09/12/2017 will not be accepted as a valid date.
 
 // end::addevent[]
 
+// tag::favouriteunfavourite[]
 === Favouriting a person : `favourite`
 
 This command helps you to favourite the specified person in the most recent listing from The Myth's Book. +
@@ -496,6 +519,7 @@ By typing `unfavourite 1`, you will be able to unfavourite the 1st person in the
 * `find Betsy` +
 `unfavourite 1` +
 By typing `unfavourite 1`, you will be able to unfavourite the 1st person in the results of the `find` command.
+// end::favouriteunfavourite[]
 
 
 // tag::locate[]
@@ -566,6 +590,7 @@ Figure 7.2.3
 
 // end::calendar[]
 
+// tag::brighttheme[]
 === Bright Theme
 
 UI that is of a bright colour scheme as compared to the default `Dark Theme`. +
@@ -574,6 +599,7 @@ You will be able to switch between `Bright Theme` and `Dark Theme` through the c
 image::BrightTheme.png[width="800"]
 
 link:#the-myths-book---user-guide[Back To Top]
+// end::brighttheme[]
 
 == FAQ
 

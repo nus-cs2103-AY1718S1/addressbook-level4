@@ -113,6 +113,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
+    //@@author itsdickson
     @Override
     public synchronized void deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
         addressBook.deleteEvent(event);
@@ -120,7 +121,6 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    // @@author itsdickson
     @Override
     public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.favouritePerson(target);
@@ -148,6 +148,7 @@ public class ModelManager extends ComponentManager implements Model {
     public String getCurrentTheme() {
         return currentTheme;
     }
+    //@@author
 
     //@@author archthegit
     @Override

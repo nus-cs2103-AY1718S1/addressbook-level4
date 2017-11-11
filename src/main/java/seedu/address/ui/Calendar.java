@@ -14,6 +14,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.PopulateMonthEvent;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.UniqueEventList;
@@ -27,7 +29,6 @@ public class Calendar {
     private VBox view;
     private Text calendarTitle;
     private YearMonth currentYearMonth;
-    private ArrayList<ReadOnlyEvent> allEvents = new ArrayList<>();
 
     /**
      * Create a calendar view
@@ -47,10 +48,6 @@ public class Calendar {
                 allCalendarDays.add(ap);
                 ap.getStyleClass().add("calendar-color");
             }
-        }
-
-        for (ReadOnlyEvent event: eventList) {
-            allEvents.add(event);
         }
 
         // Days of the week labels
@@ -81,7 +78,7 @@ public class Calendar {
         titleBar.setSpacing(5);
         titleBar.setAlignment(Pos.BASELINE_CENTER);
         // Populate calendar with the appropriate day numbers
-        populateCalendar(yearMonth, allEvents);
+        populateCalendar(yearMonth, eventList);
         // Create the calendar view
         view = new VBox(titleBar, dayLabels, calendar);
     }
@@ -90,7 +87,7 @@ public class Calendar {
      * Set the days of the calendar to correspond to the appropriate date
      * @param yearMonth year and month of month to render
      */
-    public void populateCalendar(YearMonth yearMonth, ArrayList<ReadOnlyEvent> events) {
+    public void populateCalendar(YearMonth yearMonth, ObservableList<ReadOnlyEvent> events) {
         // Get the date we want to start with on the calendar
         LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
         // Dial back the day until it is SUNDAY (unless the month starts on a sunday)
@@ -107,21 +104,19 @@ public class Calendar {
             ap.setDate(calendarDate);
             ap.setTopAnchor(txt, 5.0);
             ap.setLeftAnchor(txt, 5.0);
-            ap.setStyle("-fx-background-color: #e6e6fa;");
+            ap.setStyle("calendar-color");
             ap.getChildren().add(txt);
             calendarDate = calendarDate.plusDays(1);
         }
 
-        for (ReadOnlyEvent event : events) {
-            for (AnchorPaneNode ap : allCalendarDays) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-                String newDate = formatter.format(ap.getDate());
-                if (newDate.equals(event.getDate().toString())) {
+        for (AnchorPaneNode ap : allCalendarDays) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+            String newDate = formatter.format(ap.getDate());
+            for (ReadOnlyEvent event : events) {
+                String date = event.getDate().toString();
+                if (newDate.equals(date)) {
                     ap.getChildren();
-                    ap.setStyle("-fx-background-color: #fff8dc;");
-                } else {
-                    ap.getChildren();
-                    ap.setStyle("-fx-background-color: #e6e6fa;");
+                    ap.setStyle("-fx-background-color: #ffebcd;");
                 }
             }
         }
@@ -134,7 +129,7 @@ public class Calendar {
      */
     public void previousMonth() {
         currentYearMonth = currentYearMonth.minusMonths(1);
-        populateCalendar(currentYearMonth, allEvents);
+        EventsCenter.getInstance().post(new PopulateMonthEvent(currentYearMonth));
     }
 
     /**
@@ -142,7 +137,7 @@ public class Calendar {
      */
     public void nextMonth() {
         currentYearMonth = currentYearMonth.plusMonths(1);
-        populateCalendar(currentYearMonth, allEvents);
+        EventsCenter.getInstance().post(new PopulateMonthEvent(currentYearMonth));
     }
 
     public VBox getView() {
@@ -162,7 +157,6 @@ public class Calendar {
      * @param eventList
      * @param yearMonth
      */
-
     public void populateUpdatedCalendar(UniqueEventList eventList, YearMonth yearMonth) {
         // Get the date we want to start with on the calendar
         yearMonth = currentYearMonth;
@@ -191,7 +185,7 @@ public class Calendar {
                 String newDate = formatter.format(ap.getDate());
                 if (newDate.equals(event1.getDate().toString())) {
                     ap.getChildren();
-                    ap.setStyle("-fx-background-color: #fff8dc;");
+                    ap.setStyle("-fx-background-color: #ffebcd;");
                 }
             }
             // Change the title of the calendar
