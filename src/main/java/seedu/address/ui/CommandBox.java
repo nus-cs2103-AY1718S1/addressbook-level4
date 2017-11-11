@@ -174,16 +174,17 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * press tab key
+     * press tab key, used in KeyListener class to trigger auto-completion
      */
     public void pressTab() {
         robot.push(KeyCode.TAB);
     }
 
     /**
-     * press control key
+     * press control key, used to display selected text
      */
     public void pressCtrl() {
+        //add pause to prevent pressing tab before the input is updated
         pause = new PauseTransition();
         pause.setDuration(Duration.millis(MILLISECONDS_PAUSE_BEFORE_PRESSING_CTRL));
         pause.setOnFinished(event -> {
@@ -341,7 +342,7 @@ public class CommandBox extends UiPart<Region> {
         default:
             // let JavaFx handle the keypress
         }
-        //isFirstTab = false;
+        isFirstTab = false;
     }
 
     private boolean isAutoCompleteCommand(String command) {

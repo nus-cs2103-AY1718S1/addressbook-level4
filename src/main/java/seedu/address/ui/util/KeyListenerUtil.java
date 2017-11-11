@@ -47,7 +47,8 @@ public class KeyListenerUtil {
     public static final KeyCombination KEY_COMBINATION_FIND = KeyCombination.valueOf(FindCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_SELECT = KeyCombination.valueOf(SelectCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_DELETE = KeyCombination.valueOf(DeleteCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_DELETE_ALTERNATIVE = KeyCombination.valueOf(DeleteCommand.COMMAND_HOTKEY_ALTERNATIVE);
+    public static final KeyCombination KEY_COMBINATION_DELETE_ALTERNATIVE =
+            KeyCombination.valueOf(DeleteCommand.COMMAND_HOTKEY_ALTERNATIVE);
     public static final KeyCombination KEY_COMBINATION_REMARK = KeyCombination.valueOf(RemarkCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_EMAIL = KeyCombination.valueOf(EmailCommand.COMMAND_HOTKEY);
 
