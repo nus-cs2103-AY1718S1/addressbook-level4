@@ -80,7 +80,7 @@ public class CommandBox extends UiPart<Region> {
     private String input;
     private FxRobot robot;
     private Set<String> setOfAutoCompleteCommands = new HashSet<>();
-    private boolean needToNavigateToNextField;
+    private boolean needToUpdateSelection;
     private boolean isFirstTab;
 
 
@@ -279,7 +279,7 @@ public class CommandBox extends UiPart<Region> {
         if (isFirstTab) {
             autoSelectFirstField();
         }
-        if (needToNavigateToNextField) {
+        if (needToUpdateSelection) {
             updateSelection();
         }
     }
@@ -290,7 +290,7 @@ public class CommandBox extends UiPart<Region> {
     public void updateSelection() {
         commandTextField.selectRange(anchorPosition, anchorPosition + selectedText.length());
         selectedText = "";
-        needToNavigateToNextField = false;
+        needToUpdateSelection = false;
     }
 
     /**
@@ -371,10 +371,10 @@ public class CommandBox extends UiPart<Region> {
         input = commandTextField.getText().trim().toLowerCase();
         if (isAutoCompleteCommand(input)) {
             displayFullFormat(input);
-            needToNavigateToNextField = false;
+            needToUpdateSelection = false;
             isFirstTab = true;
         } else if (isAddCommandFormat(input)) {
-            needToNavigateToNextField = true;
+            needToUpdateSelection = true;
 
             int positionOfNameField = input.indexOf(PREFIX_NAME.toString());
             int positionOfPhoneField = input.indexOf(PREFIX_PHONE.toString());
@@ -387,7 +387,7 @@ public class CommandBox extends UiPart<Region> {
             selectNextField(positionOfCurrentCaret, fieldsPositionArray);
 
         } else if (isRemarkCommandFormat(input)) {
-            needToNavigateToNextField = true;
+            needToUpdateSelection = true;
 
             int positionOfIndex = input.indexOf(" ") - 1;
             int positionOfRemarkFiels = input.indexOf(PREFIX_REMARK.toString());
@@ -407,7 +407,7 @@ public class CommandBox extends UiPart<Region> {
         input = commandTextField.getText().trim().toLowerCase();
         if (isAddCommandFormat(input)) {
 
-            needToNavigateToNextField = true;
+            needToUpdateSelection = true;
 
             int positionOfNameField = input.indexOf(PREFIX_NAME.toString());
             int positionOfPhoneField = input.indexOf(PREFIX_PHONE.toString());

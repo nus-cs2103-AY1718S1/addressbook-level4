@@ -146,7 +146,7 @@ public class KeyListenerTest extends RolodexGuiTest {
 
     @Test
     public void executeKeyEventForAddCommand() {
-        KeyCodeCombination addCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+A");
+        KeyCodeCombination addCommandKeyCode = new KeyCodeCombination(KeyCode.EQUALS, KeyCombination.CONTROL_DOWN);
 
         guiRobot.push(addCommandKeyCode);
         assertEquals(AddCommand.FORMAT, getCommandBox().getInput());
