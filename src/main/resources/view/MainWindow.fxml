@@ -138,17 +138,17 @@
             <Insets bottom="310.0" left="8.0" right="8.0" top="40.0" />
          </StackPane.margin>
          <content>
-            <GridPane alignment="TOP_CENTER" blendMode="SRC_ATOP" gridLinesVisible="true" minWidth="1144.0" style="-fx-background-color: white;">
+            <GridPane fx:id="overlayGrid" alignment="TOP_CENTER" blendMode="SRC_ATOP" maxWidth="1.7976931348623157E308" style="-fx-background-color: derive(#1d1d1d, 20%);">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="0.0" prefWidth="173.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1064.0" minWidth="10.0" prefWidth="546.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="200.0" minWidth="200.0" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="1100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints maxHeight="40.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="40.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="58.0" minHeight="50.0" prefHeight="58.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="58.0" minHeight="50.0" prefHeight="58.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="58.0" minHeight="50.0" prefHeight="58.0" vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
                   <RowConstraints vgrow="SOMETIMES" />
                   <RowConstraints vgrow="SOMETIMES" />
                   <RowConstraints vgrow="SOMETIMES" />
@@ -184,192 +184,249 @@
                   <RowConstraints vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Add a contact" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="2">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Add contact" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label prefHeight="45.0" prefWidth="730.0" text="Clear" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="5">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label prefHeight="45.0" prefWidth="769.0" text="Delete" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="6">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label prefHeight="45.0" prefWidth="586.0" text="Command" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="1346.0" text="Example" textFill="#bdadff" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="730.0" text="Clear" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="5">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="769.0" text="Delete" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="6">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="586.0" text="Command" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="1">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="1346.0" text="Usage" textFill="#8b71f2" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <TextField alignment="CENTER" editable="false" text="clear" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="clear" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="delete INDEX [MORE_INDEX]" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="delete 2" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Rename Task" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="8">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Rename Task" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="8">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Find" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="16">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Find" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="16">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="List" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="20">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="List" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="20">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="List pinned" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="21">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="List pinned" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="21">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Help" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="24">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Help" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="24">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG] …​" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="edit 1 p/91234567 e/johndoe@example.com" GridPane.columnIndex="1" GridPane.rowIndex="7">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="find KEYWORD [MORE_KEYWORDS]" GridPane.columnIndex="1" GridPane.rowIndex="16">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="find alice bob charlie" GridPane.columnIndex="1" GridPane.rowIndex="16">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="list" GridPane.columnIndex="1" GridPane.rowIndex="20">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="list" GridPane.columnIndex="1" GridPane.rowIndex="20">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="listpin" GridPane.columnIndex="1" GridPane.rowIndex="21">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="listpin" GridPane.columnIndex="1" GridPane.rowIndex="21">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="help" GridPane.columnIndex="1" GridPane.rowIndex="24">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="help" GridPane.columnIndex="1" GridPane.rowIndex="24">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="select INDEX" GridPane.columnIndex="1" GridPane.rowIndex="26">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="select 3" GridPane.columnIndex="1" GridPane.rowIndex="26">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="history" GridPane.columnIndex="1" GridPane.rowIndex="27">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="history" GridPane.columnIndex="1" GridPane.rowIndex="27">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Select" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="26">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Select" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="26">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="History" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="27">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="History" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="27">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Sort" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="28">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Sort" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="28">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="sort KEYWORD" GridPane.columnIndex="1" GridPane.rowIndex="28">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="sort phone" GridPane.columnIndex="1" GridPane.rowIndex="28">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="undo" GridPane.columnIndex="1" GridPane.rowIndex="29">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="undo" GridPane.columnIndex="1" GridPane.rowIndex="29">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="redo" GridPane.columnIndex="1" GridPane.rowIndex="30">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="redo" GridPane.columnIndex="1" GridPane.rowIndex="30">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="hide INDEX" GridPane.columnIndex="1" GridPane.rowIndex="31">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="hide 3" GridPane.columnIndex="1" GridPane.rowIndex="31">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Undo" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="29">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Undo" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="29">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Redo" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="30">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Redo" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="30">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Hide " textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="31">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Hide " textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="31">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="586.0" text="Alias" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="18">
+                  <Label prefHeight="45.0" prefWidth="586.0" text="Alias" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="18">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Unalias" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="19">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Unalias" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="19">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Pin a contact" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="14">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Pin a contact" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="14">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Unpin a contact" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="15">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Unpin a contact" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="15">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="alias k/KEYWORD s/REPRESENTATION" GridPane.columnIndex="1" GridPane.rowIndex="18">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="alias k/ph s/ Public Holiday" GridPane.columnIndex="1" GridPane.rowIndex="18">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="unalias k/KEYWORD" GridPane.columnIndex="1" GridPane.rowIndex="19">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="unalias k/ph" GridPane.columnIndex="1" GridPane.rowIndex="19">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="pin INDEX" GridPane.columnIndex="1" GridPane.rowIndex="14">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="pin 2" GridPane.columnIndex="1" GridPane.rowIndex="14">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="unpin INDEX" GridPane.columnIndex="1" GridPane.rowIndex="15">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="unpin 1" GridPane.columnIndex="1" GridPane.rowIndex="15">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label text="Press Esc to close">
+                  <Label text="Press Esc to close" textFill="#bdadff">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -377,137 +434,176 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Person View" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="32">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Person View" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="32">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="person" GridPane.columnIndex="1" GridPane.rowIndex="32">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="person" GridPane.columnIndex="1" GridPane.rowIndex="32">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Task View" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="33">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Task View" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="33">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="task" GridPane.columnIndex="1" GridPane.rowIndex="33">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="task" GridPane.columnIndex="1" GridPane.rowIndex="33">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Parent Mode" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="35">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Parent Mode" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="35">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="parent" GridPane.columnIndex="1" GridPane.rowIndex="35">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="parent" GridPane.columnIndex="1" GridPane.rowIndex="35">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="child" GridPane.columnIndex="1" GridPane.rowIndex="36">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="child" GridPane.columnIndex="1" GridPane.rowIndex="36">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Child Mode" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="36">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Child Mode" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="36">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Add a task" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="4">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Add a task" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="4">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [t/tag]" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/22/08/1993 t/friends t/owesMoney" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text=" add HEADER OR add HEADER by DEADLINE OR add HEADER from START_TIME to END_TIME" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="add Go Fishing from 9am to 11am" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Edit a contact" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="7">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Edit a contact" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="7">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Reschedule Task" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="10">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Reschedule Task" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="10">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="rename INDEX NEW_HEADER" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="rename 2 Football training" GridPane.columnIndex="1" GridPane.rowIndex="8">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="reschedule INDEX by DEADLINE OR reschedule INDEX from START_TIME to END_TIME" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="reschedule 1 from 8am to 12pm" GridPane.columnIndex="1" GridPane.rowIndex="10">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="List Alias" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="22">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="List Alias" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="22">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="listalias" GridPane.columnIndex="1" GridPane.rowIndex="22">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="listalias" GridPane.columnIndex="1" GridPane.rowIndex="22">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Mark Task" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="11">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Mark Task" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="11">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Unmark Task" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="12">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Unmark Task" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="12">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="mark INDEX [MORE_INDEX]" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="mark 1~3" GridPane.columnIndex="1" GridPane.rowIndex="11">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="unmark INDEX [MORE_INDEX]" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="unmark 1~3" GridPane.columnIndex="1" GridPane.rowIndex="12">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Find pinned" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="17">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Find pinned" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="17">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="findpinned KEYWORD [MORE_KEYWORDS]" GridPane.columnIndex="1" GridPane.rowIndex="17">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="findpinned bala" GridPane.columnIndex="1" GridPane.rowIndex="17">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Exit" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="37">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Exit" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="37">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="exit" GridPane.columnIndex="1" GridPane.rowIndex="37">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="exit" GridPane.columnIndex="1" GridPane.rowIndex="37">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Add remarks" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="3">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Add remarks" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="3">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="remark INDEX r/REMARK" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="remark 1" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font size="20.0" />
                      </font>

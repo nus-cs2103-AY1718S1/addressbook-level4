@@ -375,3 +375,7 @@
 #searchBox {
     -fx-background-color: dimgrey;
 }
+
+#overlayGrid {
+    -fx-background-color: red;
+}
