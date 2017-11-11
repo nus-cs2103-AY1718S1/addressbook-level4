@@ -53,7 +53,7 @@ public class KeyListener {
     }
 
     /**
-     * Handles key press events
+     * Handles key press events from the user.
      */
     public void handleKeyPress() {
         mainNode.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
@@ -69,8 +69,7 @@ public class KeyListener {
     }
 
     /**
-     * Executes the key event.
-     * Matches {@code keyEvent} with non-command events before handling keys mapped to command words.
+     * Executes the {@code keyEvent} matching an assigned {@code KeyCombination}.
      */
     private void executeKeyEvent(KeyEvent keyEvent) {
 
@@ -129,7 +128,7 @@ public class KeyListener {
     }
 
     /**
-     * Handles execution of command
+     * Executes command triggered by key presses.
      */
     private void executeCommand(String command) {
         if (command.equals(OpenRolodexCommand.COMMAND_WORD) || command.equals(NewRolodexCommand.COMMAND_WORD)) {

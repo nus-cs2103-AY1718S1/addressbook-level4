@@ -78,7 +78,7 @@ public class RemarkCommand extends UndoableCommand {
     }
 
     /**
-     * @return the success message for the remark command
+     * Returns the success message for the remark command.
      */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
         if (!remark.value.isEmpty()) {

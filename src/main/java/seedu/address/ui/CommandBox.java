@@ -106,7 +106,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Load images for keyboard icons in the command box.
+     * Loads images for keyboard icons in the command box.
      */
     private void loadKeyboardIcons() {
         keyboardIdle = new Image(getClass().getResourceAsStream("/images/keyboard.png"));
@@ -252,13 +252,14 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Change {@code keyboardTyping} icon to {@code keyboardIdle} when there is no change
+     * Changes {@code Image keyboardTyping} icon to {@code Image keyboardIdle} when there is no change
      * to text field after some time.
      */
     private void updateKeyboardIcon() {
         ObservableList<String> styleClass = commandTextField.getStyleClass();
 
         keyboardIcon.setImage(keyboardTyping);
+
         pause.setOnFinished(event -> {
             if (!styleClass.contains(ERROR_STYLE_CLASS)) {
                 keyboardIcon.setImage(keyboardIdle);

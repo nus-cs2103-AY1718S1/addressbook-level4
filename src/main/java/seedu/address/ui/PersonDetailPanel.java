@@ -59,7 +59,7 @@ public class PersonDetailPanel extends UiPart<Region> {
     }
 
     /**
-     * Displays an empty panel
+     * Displays an empty panel.
      */
     private void showEmptyPanel() {
         name.setText("");
@@ -74,7 +74,7 @@ public class PersonDetailPanel extends UiPart<Region> {
     }
 
     /**
-     * Shows the details of the person on the panel
+     * Shows the details of the person on the panel.
      */
     private void showPersonDetails(ReadOnlyPerson person) {
         setAvatar(person);
@@ -124,7 +124,7 @@ public class PersonDetailPanel extends UiPart<Region> {
     }
 
     /**
-     * Shows person details on the panel when a person is selected
+     * Shows person details on the panel when a person is selected.
      */
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
@@ -133,7 +133,7 @@ public class PersonDetailPanel extends UiPart<Region> {
     }
 
     /**
-     * Updates the panel when the details of the selected person is changed
+     * Updates the panel when the details of the selected person is changed.
      */
     @Subscribe
     private void handlePersonDetailsChangedEvent(PersonEditedEvent event) {
@@ -143,6 +143,7 @@ public class PersonDetailPanel extends UiPart<Region> {
 
     @Subscribe
     private void handlePersonListClearedEvent(ClearPersonDetailPanelRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showEmptyPanel();
     }
 }
