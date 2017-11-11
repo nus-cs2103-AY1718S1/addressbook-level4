@@ -27,10 +27,10 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public RemoveTagCommand parse(String args) throws ParseException {
-        final int Index_Lower_Limit = 0;
-        final int Index_Upper_Limit = 1;
-        final int Is_Tag = 2;
-        final int Is_Range = 3;
+        final int indexLowerLimit = 0;
+        final int indexUpperLimit = 1;
+        final int indexIsTag = 2;
+        final int indexIsRange = 3;
         Set<Tag> toRemoveSet = new HashSet<>();
         Set<Index> index = new HashSet<>();
         List<String> indexSet = new ArrayList<>();
@@ -49,10 +49,10 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
 
         boolean removeAll;
         boolean isRange;
-        String lowerLimit = firstItemArray.get(Index_Lower_Limit);
-        String upperLimit = firstItemArray.get(Index_Upper_Limit);
-        String checkFirstTag = firstItemArray.get(Is_Tag);
-        String checkIsRange = firstItemArray.get(Is_Range);
+        String lowerLimit = firstItemArray.get(indexLowerLimit);
+        String upperLimit = firstItemArray.get(indexUpperLimit);
+        String checkFirstTag = firstItemArray.get(indexIsTag);
+        String checkIsRange = firstItemArray.get(indexIsRange);
 
         if (checkIsRange.equals("true")) {
             isRange = true;
@@ -131,10 +131,10 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
 
             boolean isTag;
             boolean isRangeAgain;
-            String lowerLimit2 = firstItemArray.get(Index_Lower_Limit);
-            String upperLimit2 = firstItemArray.get(Index_Upper_Limit);
-            String checkIsTag = firstItemArray.get(Is_Tag);
-            String checkIsRangeAgain = firstItemArray.get(Is_Range);
+            String lowerLimit2 = firstItemArray.get(indexLowerLimit);
+            String upperLimit2 = firstItemArray.get(indexUpperLimit);
+            String checkIsTag = firstItemArray.get(indexIsTag);
+            String checkIsRangeAgain = firstItemArray.get(indexIsRange);
 
             if (checkIsRangeAgain.equals("true")) {
                 isRangeAgain = true;
