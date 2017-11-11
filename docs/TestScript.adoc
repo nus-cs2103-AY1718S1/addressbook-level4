@@ -1,0 +1,20 @@
+=Test Script
+==Set up
+.    Change the name of `SampleData.xml` into `addressbook.xml`
+.    Move the `addressbook.xml` file into `~/data/`, where `~` is the directory you have the jar file located at.
+
+
+[width="100%",cols="33%, 33%, 34%",options="header",]
+|=======================================================================
+|Index |Command/Actions |Expected Output
+| |help |Opens the User Guide
+| |Run the `sync` command |`CommandException` should be thrown
+| |add n/John Moe | a new person named John Moe is added to the contact list
+| |add n/John Moe |
+| |add n/Bob Rob t/friend p/91234567| a new person named Bob Rob with phone number 91234567 and tag friend is added to the contact list
+| |add p/98765432 |
+| |add n/Charlie Brown e/charlieb@example.com p/91191191 t/friend t/neighbour |
+| |add n/ /friend t/neighbour|
+|=======================================================================
+
+

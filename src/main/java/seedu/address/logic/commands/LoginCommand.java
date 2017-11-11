@@ -11,7 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 public class LoginCommand extends Command {
 
     public static final String COMMAND_WORD = "login";
-    public static final String COMMAND_ALIAS = "lgin";
+    public static final String COMMAND_ALIAS = "li";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Login to Google Contacts ";
 

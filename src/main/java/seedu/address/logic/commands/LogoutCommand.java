@@ -10,7 +10,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 public class LogoutCommand extends Command {
 
     public static final String COMMAND_WORD = "logout";
-    public static final String COMMAND_ALIAS = "lgout";
+    public static final String COMMAND_ALIAS = "lo";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Logout of Google Contacts ";
 
