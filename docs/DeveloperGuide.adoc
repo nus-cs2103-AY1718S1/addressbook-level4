@@ -616,9 +616,8 @@ variable change to `true`. Similarly, the variable can be changed from `true` to
 The first time tutorial will be launched when users start the Bluebird app for the very first time. To
 detect that Bluebird is launched for the first time, a boolean variable `firstTimeOpen` in `MainApp` is used.
 It is set to `false` by default and will only be set to `true` when Bluebird detects that `addressbook.xml` is not found.
-When `firstTimeOpen` is detected as `true` by the `MainWindow`, `TutorialPanel` will be added into the browser place holder
-instead of `BrowserPanel`. `TutorialPanel` will be removed and `BrowserPanel` will be added back at the end of the tutorial.
-Figure 4.10.1 shows the sequence of events that happens.
+When `firstTimeOpen` is detected as `true` by the `MainWindow`, `TutorialPanel` will be added into the tutorial place holder.
+ `TutorialPanel` will be removed at the end of the tutorial. Figure 4.10.1 shows the sequence of events that happens.
 
 image::FinalTutSD.png[width="800"]
 Figure 4.10.1: Sequence diagram for first time tutorial
@@ -630,48 +629,25 @@ to click next, back or skip tutorial at any point of the tutorial. The sequence 
 image::sdCarryOutTut.png[width="800"]
 Figure 4.10.2: Sequence diagram for refrence frame "carry out tutorial"
 
-At the end of the tutorial, there will be a `SwitchToBrowserEvent` raised by `TutorialPanel`
-which will be posted to `EventsCenter` and handled by `MainWindow`. Figure 4.10.3 below shows the sequence of event.
-
-image::tutorialEventCenter.png[width="800"]
-Figure 4.10.3: Sequence diagram for event handling of SwitchToBrowserEvent
-
-The code snippet below shows how `TutorialPanel` is added in place of `BrowserPanel` in the
-`MainWindow` when Bluebird is launched for the first time. A `SwitchToBrowserEvent` will be raised
-by `TutorialPanel` at the end of the tutorial and handled in `MainWindow`.
+The code snippet below shows how `TutorialPanel` is added in the
+`MainWindow` when Bluebird is launched for the first time.
 
 [source,java]
 ----
 public class MainWindow extends UiPart<Region> {
     ...
     void fillInnerParts() {
-    ...
-    browserPanel = new BrowserPanel();
+        ...
         if (MainApp.isFirstTimeOpen()) {
-            TutorialPanel tutorialPanel =
-             new TutorialPanel(this, browserPlaceholder);
-            browserPlaceholder.getChildren().add(tutorialPanel.getRoot());
-        } else {
-            switchToBrowser();
+            TutorialPanel tutorialPanel = new TutorialPanel(this, browserPlaceholder);
+             tutorialPlaceholder.getChildren().add(tutorialPanel.getRoot());
         }
-    ...
+        ...
 }
-
-@Subscribe
-private void handleSwitchToBrowserEvent(SwitchToBrowserEvent event) {
-    logger.info(LogsCenter.getEventHandlingLogMessage(event));
-    switchToBrowser();
-}
-
-private void switchToBrowser() {
-    browserPlaceholder.getChildren().add(browserPanel.getRoot());
-}
-
-
 ----
 
-The code snippet below shows how `TutorialPanel` is removed and `BrowserPanel` is added after
-the end of tutorial. The `SwitchToBrowserEvent` is handled in `MainWindow`.
+The code snippet below shows how `TutorialPanel` is removed after
+the end of tutorial.
 
 [source,java]
 ----
@@ -680,7 +656,6 @@ public class TutorialPanel extends UiPart<Region> {
     private void endTutorial() {
         mainWindow.unhighlightAll();
         browserPlaceHolder.getChildren().remove(this.getRoot());
-        raise(new SwitchToBrowserEvent());
     }
     ...
 }
