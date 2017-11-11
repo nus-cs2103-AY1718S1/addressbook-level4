@@ -19,12 +19,14 @@ public class PrefCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits user preferences "
             + "Parameters: KEY [NEW_VALUE]\n"
-            + "Example: " + COMMAND_WORD + " AddressBookName" + " MyNewAddressBook\n";
+            + "Example: " + COMMAND_WORD + " AddressBookName" + " MyNewAddressBook\n"
+            + "See help page for a list of available preferences";
     public static final String MESSAGE_TEMPLATE = COMMAND_WORD + "KEY [NEW_VALUE]";
 
     public static final String MESSAGE_EDIT_PREF_SUCCESS = "Edited preference: %1$s \nfrom %2$s \nto %3$s";
     public static final String MESSAGE_PREF_KEY_NOT_FOUND = "Invalid preference key: %1$s";
     public static final String MESSAGE_ACCESSING_PREF_ERROR = "Unable to read preference value for %1$s";
+    public static final String MESSAGE_INVALID_VALUE_ERROR = "Invalid value %1$s for preference key %2$s";
 
     private String prefKey;
     private String newPrefValue = "";
@@ -44,7 +46,8 @@ public class PrefCommand extends Command {
         if (!newPrefValue.isEmpty()) {
             // Editing preference
             writePrefValue(prefKey, newPrefValue);
-            return new CommandResult(String.format(MESSAGE_EDIT_PREF_SUCCESS, prefKey, currentPrefValue, newPrefValue));
+            return new CommandResult(String.format(MESSAGE_EDIT_PREF_SUCCESS, prefKey, currentPrefValue,
+                    readPrefValue(prefKey)));
         }
         return new CommandResult(currentPrefValue);
     }
@@ -87,7 +90,7 @@ public class PrefCommand extends Command {
         } catch (NoSuchMethodException e) {
             throw new CommandException(String.format(MESSAGE_PREF_KEY_NOT_FOUND, prefKey));
         } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new CommandException(String.format(MESSAGE_ACCESSING_PREF_ERROR, prefKey));
+            throw new CommandException(String.format(MESSAGE_INVALID_VALUE_ERROR, newPrefValue, prefKey));
         }
     }
 

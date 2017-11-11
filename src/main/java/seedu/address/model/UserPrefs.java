@@ -1,5 +1,7 @@
 package seedu.address.model;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import seedu.address.commons.core.EventsCenter;
@@ -8,12 +10,14 @@ import seedu.address.commons.events.BaseEvent;
 
 import seedu.address.commons.events.model.PrefDefaultProfilePhotoChangedEvent;
 import seedu.address.commons.events.ui.ChangeThemeEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents User's preferences.
  */
 public class UserPrefs {
 
+    public static final String MESSAGE_INVALID_VALUE = "Invalid value for key %1$s";
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String meetingListFilePath = "data/meetinglist.xml";
@@ -65,20 +69,40 @@ public class UserPrefs {
         return theme;
     }
 
-    public void setTheme(String theme) {
-        this.theme = theme;
-        raise(new ChangeThemeEvent(theme));
+    public void setTheme(String theme) throws IllegalValueException {
+        switch (theme.toUpperCase()) {
+
+        case "DARK":
+            this.theme = "Dark";
+            break;
+        case "LIGHT":
+            this.theme = "Light";
+            break;
+        case "BLUE":
+            this.theme = "Blue";
+            break;
+        default:
+            throw new IllegalValueException(String.format(MESSAGE_INVALID_VALUE, "Theme"));
+        }
+
+        raise(new ChangeThemeEvent(this.theme));
     }
 
     public String getDefaultProfilePhoto() {
         return defaultProfilePhoto;
     }
 
-    public void setDefaultProfilePhoto(String defaultProfilePhoto) {
-        String oldValue = getDefaultProfilePhoto();
-        this.defaultProfilePhoto = defaultProfilePhoto;
-        raise(new PrefDefaultProfilePhotoChangedEvent(oldValue, defaultProfilePhoto));
+    public void setDefaultProfilePhoto(String defaultProfilePhoto) throws IllegalValueException {
 
+        List<String> validValues = Arrays.asList("person", "geometric", "monster", "face", "retro", "robot",
+                "blank");
+        if (validValues.contains(defaultProfilePhoto.toLowerCase())) {
+            String oldValue = getDefaultProfilePhoto();
+            this.defaultProfilePhoto = defaultProfilePhoto.toLowerCase();
+            raise(new PrefDefaultProfilePhotoChangedEvent(oldValue, defaultProfilePhoto.toLowerCase()));
+        } else {
+            throw new IllegalValueException(String.format(MESSAGE_INVALID_VALUE, "DefaultProfilePhoto"));
+        }
     }
 
     private static void raise(BaseEvent e) {
