@@ -42,6 +42,12 @@ This section shows you the general commands which allow you to manipulate the fi
 
 |`batch Flu Fever` |`Deleted Persons with Tags: [[Flu], [Fever]]` |Removes all persons with tags `Flu` or `Fever` or both. Undo this by typing `undo` before proceeding to the next step
 
+|`command 4` |`some output` |Some remark
+
+|`command 5` |`some output` |Some remark
+
+|`command 6` |`some output` |Some remark
+
 |=======================================================================
 
 == Calendar Related Functionality
