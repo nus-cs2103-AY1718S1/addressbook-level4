@@ -32,7 +32,7 @@ You can download the latest `SampleData.xml` link:https://github.com/CS2103AUG20
 == General Commands
 This section shows you the general commands which allow you to manipulate the filtered list display. +
 
-[width="59%",cols="20%,<40%,<40%",options="header",]
+[cols="30%,30%,40%"]
 |=======================================================================
 |Command To Enter |Expected Output |Remarks
 
@@ -40,13 +40,14 @@ This section shows you the general commands which allow you to manipulate the fi
 
 |`duplicates 2` |`2 persons listed!` |
 
-|`batch Flu Fever` |`Clears entire command box text field` |Removes all persons with tags `Flu` or `Fever` or both. Undo this before proceeding to the next step.
+|`batch Flu Fever` |`Clears entire command box text field` |Removes all persons with tags `Flu` or `Fever` or both. Undo this by typing `undo` before proceeding to the next step.
 
 |=======================================================================
 
 == Calendar Related Functionality
-This section shows you commands related to appointments and calendar views.
-[width="59%",cols="20%,<40%,<40%",options="header",]
+This section shows you commands related to appointments and calendar views. +
+
+[cols="30%,30%,40%"]
 |=======================================================================
 |Command To Enter |Expected Output |Remarks
 
