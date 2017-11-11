@@ -17,5 +17,4 @@ public class Messages {
             + "Switch to the person platform by entering the command: list";
     public static final String MESSAGE_INVALID_EVENT_PLATFORM = "You are not in the event platform! "
             + "Switch to the event platform by entering the command: events";
-
 }
