@@ -12,8 +12,8 @@ import seedu.address.model.person.Person;
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */
 public class TypicalInsurances {
-
-    public static final ReadOnlyInsurance COMMON_INSURANCE = new LifeInsuranceBuilder().withInsuranceName("Common Insurance")
+    public static final ReadOnlyInsurance COMMON_INSURANCE =
+            new LifeInsuranceBuilder().withInsuranceName("Common Insurance")
             .withOwner(new Person(ALICE))
             .withBeneficiary(new Person(BENSON))
             .withInsured(new Person(CARL))
