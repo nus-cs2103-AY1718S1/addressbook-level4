@@ -2,8 +2,14 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -29,7 +35,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class AddressBookParser {
 
-    private static MediaPlayer mediaPlayer;
+    private Player player;
     /**
      * Parses user input into command for execution.
      *
@@ -109,11 +115,19 @@ public class AddressBookParser {
      *
      */
     public void playTypingSound() {
-        String musicFile = getClass().getClassLoader().getResource("audio/typing.mp3").toString();
-        Media sound = new Media(musicFile);
-        mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.setVolume(90.0);
-        mediaPlayer.play();
+        URL url = this.getClass().getClassLoader().getResource("audio/typing.mp3");
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            try {
+                BufferedInputStream in = new BufferedInputStream(url.openStream());
+                player = new Player(in);
+                player.play();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JavaLayerException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
 }
