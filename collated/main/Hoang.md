@@ -114,10 +114,7 @@ public class EmailSendWindow extends UiPart<Region> {
     }
 }
 ```
-###### /src/main/java/seedu/address/ui/EmailSendWindow.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/ui/EmailLoginWindow.java
 ``` java
 package seedu.address.ui;
@@ -232,10 +229,7 @@ public class EmailLoginWindow extends UiPart<Region> {
     }
 }
 ```
-###### /src/main/java/seedu/address/ui/EmailLoginWindow.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/ui/SearchBar.java
 ``` java
 package seedu.address.ui;
@@ -370,10 +364,7 @@ public class SearchBar extends UiPart<Region> {
     }
 }
 ```
-###### /src/main/java/seedu/address/ui/SearchBar.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/ui/FunctionButtons.java
 ``` java
 package seedu.address.ui;
@@ -507,10 +498,7 @@ public class FunctionButtons extends UiPart<Region> {
     }
 }
 ```
-###### /src/main/java/seedu/address/ui/FunctionButtons.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/model/person/PersonContainsLettersPredicate.java
 ``` java
 package seedu.address.model.person;
@@ -583,10 +571,7 @@ public class PersonContainsLettersPredicate implements Predicate<ReadOnlyPerson>
     }
 }
 ```
-###### /src/main/java/seedu/address/model/person/PersonContainsLettersPredicate.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/email/EmailManager.java
 ``` java
 package seedu.address.email;
@@ -757,10 +742,7 @@ public class EmailManager implements Email {
     }
 }
 ```
-###### /src/main/java/seedu/address/email/EmailManager.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/email/Email.java
 ``` java
 package seedu.address.email;
@@ -820,10 +802,7 @@ public interface Email {
     void logout();
 }
 ```
-###### /src/main/java/seedu/address/email/Email.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/email/exceptions/LoginFailedException.java
 ``` java
 package seedu.address.email.exceptions;
@@ -841,10 +820,7 @@ public class LoginFailedException extends Exception {
     }
 }
 ```
-###### /src/main/java/seedu/address/email/exceptions/LoginFailedException.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/email/exceptions/EmailSendFailedException.java
 ``` java
 package seedu.address.email.exceptions;
@@ -861,10 +837,7 @@ public class EmailSendFailedException extends Exception {
     }
 }
 ```
-###### /src/main/java/seedu/address/email/exceptions/EmailSendFailedException.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/email/exceptions/NotAnEmailException.java
 ``` java
 package seedu.address.email.exceptions;
@@ -878,10 +851,7 @@ public class NotAnEmailException extends Exception {
     }
 }
 ```
-###### /src/main/java/seedu/address/email/exceptions/NotAnEmailException.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/logic/commands/EmailLoginCommand.java
 ``` java
 package seedu.address.logic.commands;
@@ -933,10 +903,7 @@ public class EmailLoginCommand extends Command {
     }
 }
 ```
-###### /src/main/java/seedu/address/logic/commands/EmailLoginCommand.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/logic/commands/EmailLogoutCommand.java
 ``` java
 package seedu.address.logic.commands;
@@ -975,10 +942,7 @@ public class EmailLogoutCommand extends Command {
     }
 }
 ```
-###### /src/main/java/seedu/address/logic/commands/EmailLogoutCommand.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/logic/commands/ExportCommand.java
 ``` java
 package seedu.address.logic.commands;
@@ -1057,10 +1021,7 @@ public class ExportCommand extends Command {
     }
 }
 ```
-###### /src/main/java/seedu/address/logic/commands/ExportCommand.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/logic/commands/GetEmailCommand.java
 ``` java
 package seedu.address.logic.commands;
@@ -1103,10 +1064,7 @@ public class GetEmailCommand extends Command {
     }
 }
 ```
-###### /src/main/java/seedu/address/logic/commands/GetEmailCommand.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/logic/commands/FindContainCommand.java
 ``` java
 package seedu.address.logic.commands;
@@ -1141,10 +1099,7 @@ public class FindContainCommand extends Command {
     }
 }
 ```
-###### /src/main/java/seedu/address/logic/commands/FindContainCommand.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/logic/commands/EmailSendCommand.java
 ``` java
 package seedu.address.logic.commands;
@@ -1205,10 +1160,7 @@ public class EmailSendCommand extends Command {
     }
 }
 ```
-###### /src/main/java/seedu/address/logic/commands/EmailSendCommand.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/logic/parser/EmailLoginParser.java
 ``` java
 package seedu.address.logic.parser;
@@ -1252,10 +1204,7 @@ public class EmailLoginParser implements Parser<EmailLoginCommand> {
     }
 }
 ```
-###### /src/main/java/seedu/address/logic/parser/EmailLoginParser.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/logic/parser/ExportCommandParser.java
 ``` java
 package seedu.address.logic.parser;
@@ -1309,10 +1258,7 @@ public class ExportCommandParser implements Parser<ExportCommand> {
     }
 }
 ```
-###### /src/main/java/seedu/address/logic/parser/ExportCommandParser.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/logic/parser/EmailSendParser.java
 ``` java
 package seedu.address.logic.parser;
@@ -1343,10 +1289,7 @@ public class EmailSendParser implements Parser<EmailSendCommand> {
     }
 }
 ```
-###### /src/main/java/seedu/address/logic/parser/EmailSendParser.java
-``` java
 
-```
 ###### /src/main/java/seedu/address/logic/parser/FindContainCommandParser.java
 ``` java
 package seedu.address.logic.parser;
@@ -1448,260 +1391,4 @@ public class FindContainCommandParser implements Parser<FindContainCommand> {
         return new FindContainCommand(new PersonContainsLettersPredicate(mapKeywords));
     }
 }
-```
-###### /src/main/java/seedu/address/logic/parser/FindContainCommandParser.java
-``` java
-
-```
-###### /src/test/java/seedu/address/logic/commands/ExportCommandTest.java
-``` java
-package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.ExportCommand.MESSAGE_ACCESS_DENIED;
-import static seedu.address.logic.commands.ExportCommand.MESSAGE_SUCCESS;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-
-public class ExportCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-
-    @Test(expected = CommandException.class)
-    public void accessDeniedFolder() throws CommandException {
-        //when trying to create parent folder
-        ExportCommand command = new ExportCommand(".txt", "C:/Windows/a");
-        command.setData(model, null, null, null);
-        assertEquals(command.execute(), new CommandException(MESSAGE_ACCESS_DENIED));
-
-    }
-
-    @Test(expected = CommandException.class)
-    public void accessDeniedFile() throws CommandException {
-        //when trying to create file
-        ExportCommand command = new ExportCommand(".txt", "C:/Windows/a");
-        command.setData(model, null, null, null);
-        assertEquals(command.execute(), new CommandException(MESSAGE_ACCESS_DENIED));
-    }
-
-    @Test
-    public void success() throws CommandException {
-        ExportCommand command = new ExportCommand(".txt", "C:/a");
-        command.setData(model, null, null, null);
-        assertTrue(command.execute().feedbackToUser.equals(new CommandResult(MESSAGE_SUCCESS).feedbackToUser));
-    }
-}
-```
-###### /src/test/java/seedu/address/logic/commands/ExportCommandTest.java
-``` java
-
-```
-###### /src/test/java/seedu/address/logic/commands/EmailSendCommandTest.java
-``` java
-package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import seedu.address.email.Email;
-import seedu.address.email.EmailManager;
-import seedu.address.email.exceptions.LoginFailedException;
-import seedu.address.logic.commands.exceptions.CommandException;
-
-public class EmailSendCommandTest {
-    private EmailSendCommand command;
-    private Email emailManager = new EmailManager();
-
-    //Test case of not logged in
-    @Test
-    public void notLoggedIn() throws CommandException {
-        command = new EmailSendCommand(new String[]{"cs2103testacc@gmail.com"}, "Title", "Body");
-        command.setData(null, null, null, emailManager);
-
-        CommandResult result = command.execute();
-        assertEquals("No email logged in", result.feedbackToUser);
-    }
-
-    //Test case of invalid recipients address
-    @Test
-    public void notValidRecipients() throws LoginFailedException, CommandException {
-        //logged in email
-        emailManager.login("cs2103testacc@gmail.com", "testpass");
-
-        command = new EmailSendCommand(new String[]{"cs2103testacc;adffd"}, "Title", "Body");
-        command.setData(null, null, null, emailManager);
-
-        CommandResult result = command.execute();
-        assertEquals("One or more of the given emails is not valid", result.feedbackToUser);
-    }
-}
-```
-###### /src/test/java/seedu/address/logic/commands/EmailSendCommandTest.java
-``` java
-
-```
-###### /src/test/java/seedu/address/logic/commands/EmailLoginCommandTest.java
-``` java
-package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertEquals;
-import static seedu.address.logic.commands.EmailLoginCommand.MESSAGE_SUCCESS;
-
-import org.junit.Test;
-
-import seedu.address.email.Email;
-import seedu.address.email.EmailManager;
-import seedu.address.logic.commands.exceptions.CommandException;
-
-public class EmailLoginCommandTest {
-    private EmailLoginCommand command;
-    private Email emailManager = new EmailManager();
-
-    //test for wrong email / password
-    @Test
-    public void wrongCredentials() throws CommandException {
-        command = new EmailLoginCommand("phungtuanhoang1996@gmail.com", "thispasswordiswrong");
-        command.setData(null, null, null, emailManager);
-        CommandResult result = command.execute();
-        assertEquals(EmailLoginCommand.MESSAGE_FAILED + EmailManager.MESSAGE_LOGIN_FAILED,
-                result.feedbackToUser);
-    }
-
-    //test for correct email / password
-    @Test
-    public void correctCredentials() throws CommandException {
-        String email = "cs2103testacc@gmail.com";
-        command = new EmailLoginCommand(email, "testpass");
-        command.setData(null, null, null, emailManager);
-        CommandResult result = command.execute();
-        assertEquals(MESSAGE_SUCCESS + email,
-                result.feedbackToUser);
-    }
-}
-```
-###### /src/test/java/seedu/address/logic/commands/EmailLoginCommandTest.java
-``` java
-
-```
-###### /src/test/java/seedu/address/logic/parser/ExportCommandParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import org.junit.Test;
-import seedu.address.logic.commands.ExportCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.ExportCommand.MESSAGE_FILE_TYPE_NOT_SUPPORTED;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-
-import static org.junit.Assert.*;
-
-public class ExportCommandParserTest {
-    private ExportCommandParser parser = new ExportCommandParser();
-
-    @Test
-    public void parse_wrongFileType() {
-        assertParseFailure(parser, "export .pdf C:/", MESSAGE_FILE_TYPE_NOT_SUPPORTED);
-    }
-
-    @Test
-    public void parse_missingArguments() {
-        assertParseFailure(parser, "export C:/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### /src/test/java/seedu/address/logic/parser/ExportCommandParserTest.java
-``` java
-
-```
-###### /src/test/java/seedu/address/logic/parser/EmailLoginParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import org.junit.Test;
-import seedu.address.logic.commands.EmailLoginCommand;
-
-import static org.junit.Assert.*;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-
-public class EmailLoginParserTest {
-    private EmailLoginParser parser = new EmailLoginParser();
-
-    //wrong arguments testing
-    @Test
-    public void parse_wrongArguments() {
-        //missing arguments
-        assertParseFailure(parser, "email_login \"a@gmail.com\"",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailLoginCommand.MESSAGE_USAGE));
-
-        //excessive arguments
-        assertParseFailure(parser, "email_login \"a@gmail.com\" \"password\" \"password\"",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailLoginCommand.MESSAGE_USAGE));
-
-        //wrong arguments
-        assertParseFailure(parser, "email_login a@gmail.com \"password\"",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailLoginCommand.MESSAGE_USAGE));
-    }
-
-    //invalid email testing
-    @Test
-    public void parse_invalidEmail() {
-        assertParseFailure(parser, "email_login \"agmail\" \"password\"",
-               EmailLoginCommand.MESSAGE_INVALID_EMAIL);
-    }
-}
-```
-###### /src/test/java/seedu/address/logic/parser/EmailLoginParserTest.java
-``` java
-
-```
-###### /src/test/java/seedu/address/logic/parser/EmailSendParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import org.junit.Test;
-import seedu.address.email.Email;
-import seedu.address.email.EmailManager;
-import seedu.address.logic.commands.EmailSendCommand;
-
-
-import static org.junit.Assert.*;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-
-public class EmailSendParserTest {
-    private EmailSendParser parser = new EmailSendParser();
-    private Email emailManager = new EmailManager();
-
-    //test for missing / excessive arguments
-    @Test
-    public void parse_wrongArguments() {
-        //missing arguments
-        assertParseFailure(parser, "email_send \"a@a.a\"",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailSendCommand.MESSAGE_USAGE));
-
-        //excessive arguments
-        assertParseFailure(parser, "email_send \"a@a.a\" \"title\" \"title\" \"body\"",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailSendCommand.MESSAGE_USAGE));
-
-        //not putting in quotation mark
-        assertParseFailure(parser, "email_send a@a.a title title \"body\"",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailSendCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### /src/test/java/seedu/address/logic/parser/EmailSendParserTest.java
-``` java
-
 ```

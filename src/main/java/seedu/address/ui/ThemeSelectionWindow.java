@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
 import seedu.address.model.UserPrefs;
@@ -32,7 +33,7 @@ public class ThemeSelectionWindow extends UiPart<Region> {
     @FXML
     private Label currentThemeLabel;
 
-    public ThemeSelectionWindow(UserPrefs prefs) {
+    public ThemeSelectionWindow(UserPrefs prefs, Stage parentStage) {
         super(FXML);
         this.prefs = prefs;
 
@@ -40,10 +41,12 @@ public class ThemeSelectionWindow extends UiPart<Region> {
         this.primaryStage = new Stage();
         Scene scene = new Scene(getRoot());
         this.primaryStage.setScene(scene);
-
-        // Set theme
-        scene.getStylesheets().add(
-                MainApp.class.getResource("/view/" + prefs.getCurrentUserTheme() + ".css").toExternalForm());
+        this.primaryStage.getIcons().add(new Image("/images/address_book_32.png"));
+        this.primaryStage.setHeight(729);
+        this.primaryStage.setWidth(1018);
+        this.primaryStage.setResizable(false);
+        this.primaryStage.initOwner(parentStage);
+        this.primaryStage.initModality(Modality.WINDOW_MODAL);
 
         // Configure UI
         this.primaryStage.setTitle("Theme Selection");

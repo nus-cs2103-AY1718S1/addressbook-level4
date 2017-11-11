@@ -360,6 +360,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::emailcomponent[]
 === Email Component
 The email component ultilised the external library `javax.mail` for sending and receiving emails.
 
@@ -376,6 +377,7 @@ As the library `javax.mail` uses `IMAP` protocol for receving emails and `SMTP` 
 **Pros:** Already has the GUI which is user friendly, support for all email providers +
 **Cons:** However, it will be more difficult to work with other commands to send to a specific groups of contacts.
 
+// end::emailcomponent[]
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -450,6 +452,58 @@ image::AddMultipleCommandExecutionErrorDiagram.png[width="800"]
 **Cons:** Restrictive data structure that do not support adding multiple persons.
 
 // end::multiple[]
+
+// tag::searchbar[]
+=== Search Bar implementation
+
+The Search Bar is a GUI feature that allows users to type into 5 text fields (for name / phone / address / email / tag)
+and filters those whose details contain the string in the respective text fields.
+
+Every text field in the Search Bar listens to changes and calls `onSearchBarChanged` if an input is detected. The `onSearchBarChanged` function then
+collates information in all 5 text fields and calls a `find_contain` command with the collated information.
+
+*Sequence diagram of Search Bar*
+
+image::search-bar-sequence.png[]
+
+* `SearchBar.java` inherits from UIPart and therefore using `FXML` a function `onSearchBarChanged()` that is called every time a text field changes can be attached to each of the search field.
+* `onSearchBarChanged()` reads current texts in all search fields and builds a command input for `find_contain`.
+* The command input is then passed to `LogicManager` and `AddressBookParser` then `FindContainCommandParser` respectively.
+* As such, a new `find_contain` command is executed every time there is a change in the search bar. The `find_contain` passes a new `predicate` to the `ModelManager` to update the filtered person list.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `SearchBar.java` +
+**Alternative 1 (current choice):** Add a new `SearchBar` that inherits `UIPart` +
+**Pros:** Very easy to find and filter desired contacts +
+**Cons:** Additional data structures that might cost more space. +
+**Alternative 2:** Just use the `find_contain` command +
+**Pros:** Uses entirely existing methods to implement. +
+**Cons:** Slow and time consuming for users.
+
+// end::searchbar[]
+
+// tag::checkbox[]
+=== Implemation of check box in contact card for sending email to multiple persons
+
+To the left of every contact card, there is a check box. When the email send window opens, the recipient field will automatically contain all ticked persons' emails.
+
+image::email-checkbox.png[]
+
+The ticked person cards's references are stored in an `ArrayList` in `PersonListPanel.java`. The following sequence happens when a person card is ticked.
+
+image::ticked-persons.png[]
+
+Also, a listener is added to the `ObservableList` containing the filtered persons to show in the panel. When a change in the `ObservableList` is listened, the `TickedPersons` `ArrayList` is reset.
+
+ personList.addListener(new ListChangeListener<ReadOnlyPerson>() {
+             @Override
+             public void onChanged(Change<? extends ReadOnlyPerson> c) {
+                 tickedPersons = new ArrayList<PersonCard>();
+             }
+         });
+
+// end::checkbox[]
 
 // tag::themeing[]
 

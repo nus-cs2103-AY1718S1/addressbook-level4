@@ -6,8 +6,8 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
@@ -20,6 +20,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.UserPrefs;
 
 /**
  * Pop up window for email login
@@ -31,6 +32,7 @@ public class EmailLoginWindow extends UiPart<Region> {
     private Stage primaryStage;
     private Logic logic;
     private FunctionButtons functionButtonsPanel;
+    private UserPrefs prefs;
 
     @FXML
     private Text loginText;
@@ -48,13 +50,20 @@ public class EmailLoginWindow extends UiPart<Region> {
     private Button emailWindowLoginButton;
 
     @FXML
-    private Label feedbackLabel;
+    private TextArea feedbackLabel;
 
-    public EmailLoginWindow(Logic logic, Stage parentStage, FunctionButtons functionButtonsPanel) {
+    public EmailLoginWindow(Logic logic, Stage parentStage, FunctionButtons functionButtonsPanel, UserPrefs prefs) {
         super(FXML);
 
         this.primaryStage = new Stage();
         Scene scene = new Scene(getRoot());
+
+        if (prefs.getCurrentUserTheme().equals("DarkTheme")) {
+            scene.getStylesheets().add("view/CSS/EmailLoginWindowDark.css");
+        } else {
+            scene.getStylesheets().add("view/CSS/EmailLoginWindowLight.css");
+        }
+
         this.primaryStage.setScene(scene);
         this.primaryStage.initOwner(parentStage);
         this.primaryStage.initModality(Modality.WINDOW_MODAL);

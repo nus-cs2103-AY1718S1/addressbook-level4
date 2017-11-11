@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox minHeight="729.0" minWidth="1018.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
 
     <URL value="@Extensions.css" />
@@ -40,20 +40,20 @@
       <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
   </StackPane>
-   <StackPane fx:id="searchBarPlaceholder" prefHeight="30.0" prefWidth="918.0" styleClass="pane-with-border" />
+   <StackPane fx:id="searchBarPlaceholder" alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="918.0" styleClass="pane-with-border" />
 
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" styleClass="default" VBox.vgrow="ALWAYS">
     <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
       <StackPane fx:id="personListPanelPlaceholder" styleClass="pane-with-border" VBox.vgrow="ALWAYS" />
     </VBox>
-      <VBox>
+      <VBox styleClass="default">
          <children>
             <StackPane fx:id="functionButtonsPanel" prefWidth="340.0" />
 
-          <StackPane fx:id="browserPlaceholder" prefWidth="340">
+          <StackPane fx:id="browserPlaceholder" prefWidth="340" styleClass="default">
             <padding>
               <Insets bottom="10" left="10" right="10" top="10" />
             </padding>

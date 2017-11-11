@@ -88,6 +88,8 @@ public class MainWindow extends UiPart<Region> {
         scene.getStylesheets().add(
                 MainApp.class.getResource("/view/" + prefs.getCurrentUserTheme() + ".css").toExternalForm());
         primaryStage.setScene(scene);
+        primaryStage.setMinWidth(1018);
+        primaryStage.setMinHeight(729);
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -136,7 +138,7 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
+        browserPanel = new BrowserPanel(prefs);
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
@@ -151,7 +153,7 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        FunctionButtons functionButtons = new FunctionButtons(logic, primaryStage, this);
+        FunctionButtons functionButtons = new FunctionButtons(logic, primaryStage, this, prefs);
         functionButtonsPanel.getChildren().add(functionButtons.getRoot());
 
         SearchBar searchBar = new SearchBar(logic);
@@ -215,7 +217,7 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     public void handleTheme() {
         System.out.println("Entering themeing mode!");
-        ThemeSelectionWindow themeSelectionWindow = new ThemeSelectionWindow(prefs);
+        ThemeSelectionWindow themeSelectionWindow = new ThemeSelectionWindow(prefs, primaryStage);
         themeSelectionWindow.show();
 
     }

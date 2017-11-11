@@ -1,4 +1,4 @@
-= Address Book
+= Blast!
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
@@ -6,21 +6,17 @@ image::https://travis-ci.org/CS2103AUG2017-T12-B2/main.svg?branch=master[]
 
 ___
 
-ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
-endif::[]
 
-ifndef::env-github[]
-image::images/Ui.png[width="600"]
-endif::[]
-
-* *Address Book* is an application written in Java that allows users to manage their contacts.
-* This application specifically targets tutors and businessmen who have numberous contacts, as well as important informations that go along with each of them. As such, *AddressBook* has these following features (not exhaustive):
+* *Blast!* is an application written in Java that allows users to manage their contacts and disseminate information through emails.
+* This application specifically targets tutors and businessmen who have numberous contacts, as well as important informations that go along with each of them. As such, *Blast!* has these following features (not exhaustive):
     ** Importing multiple contacts from a file.
     ** Exporting contacts to a file for printing.
+    ** Merging different contacts data files.
     ** Attach an image and appoints or tags to a contact.
+    ** Quickly filter desired contacts through user friendly interface.
     ** Blasting emails to a group of contacts for faster information dissemination.
-    ** *And a lot more* :)
+    ** *And a lot more!*
 
 
 == Site Map

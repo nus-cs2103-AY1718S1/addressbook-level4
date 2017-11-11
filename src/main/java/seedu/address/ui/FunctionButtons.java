@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -16,6 +16,7 @@ import seedu.address.logic.commands.EmailLogoutCommand;
 import seedu.address.logic.commands.GetEmailCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.UserPrefs;
 
 /**
  * A panel for function button on the main window
@@ -25,6 +26,7 @@ public class FunctionButtons extends UiPart<Region> {
     private Logic logic;
     private Stage stage;
     private MainWindow mainWindow;
+    private UserPrefs prefs;
 
     @FXML
     private StackPane loginPane;
@@ -35,13 +37,14 @@ public class FunctionButtons extends UiPart<Region> {
     @FXML
     private Button sendButton;
     @FXML
-    private Label loginStatus;
+    private TextField loginStatus;
 
-    public FunctionButtons(Logic logic, Stage stage, MainWindow mainWindow) {
+    public FunctionButtons(Logic logic, Stage stage, MainWindow mainWindow, UserPrefs prefs) {
         super(FXML);
         this.logic = logic;
         this.stage = stage;
         this.mainWindow = mainWindow;
+        this.prefs = prefs;
 
         updateLoginStatus();
     }
@@ -52,7 +55,7 @@ public class FunctionButtons extends UiPart<Region> {
     @FXML
     private void openEmailLoginWindow() {
         if (loginButton.getText().equals("Login")) {
-            EmailLoginWindow emailLoginWindow = new EmailLoginWindow(logic, stage, this);
+            EmailLoginWindow emailLoginWindow = new EmailLoginWindow(logic, stage, this, prefs);
             emailLoginWindow.show();
         } else {
             try {
@@ -96,7 +99,8 @@ public class FunctionButtons extends UiPart<Region> {
             }
         }
 
-        EmailSendWindow emailSendWindow = new EmailSendWindow(logic, stage, recipients, feedbackPersonsWithoutEmail);
+        EmailSendWindow emailSendWindow = new EmailSendWindow(logic, stage, recipients, feedbackPersonsWithoutEmail,
+                prefs);
         emailSendWindow.show();
     }
 
