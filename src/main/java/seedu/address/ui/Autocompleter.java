@@ -48,8 +48,11 @@ public class Autocompleter {
     }
 
     /**
-     * Returns the autocompleted command to be filled into the command box
-     * @return autocomplete text
+     * Returns a string that will replace the current text in the {@code CommandBox}
+     * depending on the current state of the autocompleter. A {@code NewResultAvailableEven}
+     * will is also raised to update the text inside the {@code ResultDisplay}
+     *
+     * @return {@code String} that will replace text in teh {@code CommandBox}
      */
     public String autocomplete() {
         switch (state) {
@@ -95,7 +98,8 @@ public class Autocompleter {
     }
 
     /**
-     * return the current value of resultIndex and then increment it by 1 with wrap-around
+     * Returns the current value of resultIndex and then increment it by 1 with wrap-around
+     *
      * @return current value of resultIndex
      */
     private int cycleIndex() {
@@ -106,8 +110,9 @@ public class Autocompleter {
     }
 
     /**
-     * returns the current value of countingIndex ,updates the value of maxIndex and then increments
+     * Returns the current value of countingIndex, updates the value of maxIndex and then increments
      * countingIndex by 1 with wrap-around
+     *
      * @return current value of countingIndex
      */
     private int cycleCountingIndex() {
@@ -121,8 +126,10 @@ public class Autocompleter {
     }
 
     /**
-     * Updates the state of the autocompleter
-     * @param commandBoxText from {@code CommandBox}
+     * Updates the {@code AutocompleteState} and {@code AutocompleteCommand} according their current values
+     * as well as the current text inside the {@code commandBoxText}.
+     *
+     * @param commandBoxText the current text inside the {@code CommandBox}
      */
     public void updateState(String commandBoxText) {
         textInCommandBox = commandBoxText;
@@ -137,16 +144,18 @@ public class Autocompleter {
         String arguments = currentTextArray[CommandBoxParser.ARGUMENT_INDEX];
         currentCommand = AutocompleteCommand.getInstance(commandWord);
 
-        // first word does not match any commands
+        // First word does not match any commands
         if (currentCommand.equals(AutocompleteCommand.NONE)) {
             autocompleteCommandWord(commandBoxText);
             return;
         }
 
+        // Autocompleter is currently cycling through possible commands
         if (isCyclingThroughCommands(commandWord)) {
             return;
         }
 
+        // Current command word has an index parameter in its arguments
         if (AutocompleteCommand.hasIndexParameter(commandWord)
                 && (!AutocompleteCommand.hasPrefixParameter(commandWord)
                 || needIndex(arguments))) {
@@ -155,6 +164,7 @@ public class Autocompleter {
             return;
         }
 
+        // Current command word has a prefix parameter in its arguments
         if (AutocompleteCommand.hasPrefixParameter(commandWord)) {
 
             ArrayList<String> missingPrefixes = parser.getMissingPrefixes(arguments);
@@ -180,13 +190,19 @@ public class Autocompleter {
 
     }
 
+    /**
+     * Returns true if the value of resultIndex to 0 if the the autocompleter was not cycling through possible options
+     * in its previous state.
+     *
+     * @param commandWord the current text inside the {@code CommandBox}
+     */
     private boolean isCyclingThroughCommands(String commandWord) {
         return state.equals(AutocompleteState.MULTIPLE_COMMAND) && textInCommandBox.length() == commandWord.length();
     }
 
     /**
-     * Returns true if the the autocompleter was not cycling through possible options
-     * in it's previous state
+     * Resets the value of resultIndex to 0 if the the autocompleter was not cycling through possible options
+     * in its previous state.
      */
     private void resetIndexIfNeeded() {
         if (!state.equals(AutocompleteState.MULTIPLE_COMMAND)) {
@@ -194,12 +210,20 @@ public class Autocompleter {
         }
     }
 
+    /**
+     * Resets the value of resultIndex to 1 if the autocompleter was not cycling through prefixes
+     * int its previous state.
+     */
     private void setIndexToOneIfNeeded() {
         if (!state.equals(AutocompleteState.COMMAND_CYCLE_PREFIX)) {
             resultIndex = 1;
         }
     }
 
+    /**
+     * Resets the value of counting to 1 if the autocompleter was not cycling through indexes
+     * int its previous state.
+     */
     private void resetCountingAndMaxIndexIfNeeded() {
         if (!state.equals(AutocompleteState.INDEX)) {
             countingIndex = 1;
@@ -212,7 +236,9 @@ public class Autocompleter {
     }
 
     /**
-     * Check if the index field in the {@code String} has already been entered
+     * Returns true if the index field in the {@code String} has been filled in.
+     *
+     * @param arguments the current {@code String} of the arguments in the {@code CommandBox}
      */
     private boolean containsIndex(String arguments) {
         String parameters = arguments;
@@ -228,7 +254,7 @@ public class Autocompleter {
     }
 
     /**
-     * Returns true if the string is numeric
+     * Returns true if the {@code String} is numeric.
      */
     private boolean isNumeric (String index) {
         try {
@@ -239,7 +265,7 @@ public class Autocompleter {
     }
 
     /**
-     * Returns true if the last character of the {@code String} is a digit
+     * Returns true if the last character of the {@code String} is a digit.
      */
     private boolean lastCharIsDigit(String text) {
         if (text.length() < 1) {
@@ -249,7 +275,10 @@ public class Autocompleter {
     }
 
     /**
-     * Handle autocomplete when there is only word in the command box
+     * Updates the {@code AutocompleteState} of the autocompleter and the list of possible commands to put inside
+     * the {@code CommandBox}.
+     *
+     * @param commandBoxText the current {@code String} inside the {@code CommandBox}
      */
     private void autocompleteCommandWord(String commandBoxText) {
         ArrayList<String> possibleResults = getClosestCommands(commandBoxText);
@@ -271,8 +300,8 @@ public class Autocompleter {
     }
 
     /**
-     * Returns true if the last 2 characters of {@code String} is a space
-     * followed the first letter of a {@code Prefix}
+     * Returns true if the last 2 characters of {@code String} is a space followed
+     * by the first letter of a {@code Prefix}.
      */
     private boolean lastCharIsStartOfPrefix(String commandBoxText) {
         if (commandBoxText.length() < 1) {
@@ -285,7 +314,7 @@ public class Autocompleter {
     }
 
     /**
-     * Checks if the last two characters of the {@code String} are prefixes
+     * Checks if the last two characters of the {@code String} are prefixes.
      */
     private boolean lastTwoCharactersArePrefix(String commandBoxText) {
         if (commandBoxText.length() < 2) {
@@ -297,7 +326,7 @@ public class Autocompleter {
     }
 
     /**
-     * Get a list of possible commands to autocomplete
+     * Returns an {@code ArrayList} of possible commands to autocomplete.
      */
     private ArrayList<String> getClosestCommands (String commandBoxText) {
         ArrayList<String> possibleResults = new ArrayList<>();
@@ -308,7 +337,7 @@ public class Autocompleter {
     }
 
     /**
-     * Checks if the text in the command box is a substring of a particular command word
+     * Checks if the text in the command box is a substring of a particular command word.
      */
     private boolean isPossibleMatch(String commandBoxText, String commandWord) {
         return (commandBoxText.length() <= commandWord.length()
@@ -316,7 +345,7 @@ public class Autocompleter {
     }
 
     /**
-     * Creates message to tell user that there are multiple results
+     * Creates message to tell user that there are multiple results.
      */
     private void displayMultipleResults(ArrayList<String> results) {
         String resultToDisplay = MULTIPLE_RESULT_MESSAGE + ":\n";
@@ -332,6 +361,7 @@ public class Autocompleter {
 
     /**
      * Registers the object as an event handler at the {@link EventsCenter}
+     *
      * @param handler usually {@code this}
      */
     private void registerAsAnEventHandler(Object handler) {

@@ -38,8 +38,9 @@ public class CommandBoxParser {
         PREFIX_DELIVERY_DATE, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_STATUS, PREFIX_TAG};
 
     /**
-     * Parses {@code String} to see if it contains any instances of a {@code Command} and {@code Prefix}
-     * @param commandBoxText
+     * Parses {@code String} to see if it contains any instances of a {@code Command} and {@code Prefix}.
+     *
+     * @return {@code String} array containing the {@code Command} at index 0 and the remaining arguments at index 1
      */
     public String[] parseCommandAndPrefixes(String commandBoxText) {
         String[] parseResults = {EMPTY_STRING, EMPTY_STRING };
@@ -57,8 +58,7 @@ public class CommandBoxParser {
     }
 
     /**
-     * Returns the ArrayList of prefixes that are missing from the {@code String argument}
-     * @return {@code ArrayList} of missing prefixes as {@code Strings}
+     * Returns the ArrayList of prefixes that are missing from the {@code String argument}.
      */
     public ArrayList<String> getMissingPrefixes(String argument) {
         Prefix[] prefixes = ALL_PREFIXES;
