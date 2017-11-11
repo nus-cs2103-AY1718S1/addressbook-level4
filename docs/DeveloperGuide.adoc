@@ -502,7 +502,7 @@ This function is mainly facilitated by two events: `JumpToListRequestEvent` and 
 
 The sequence diagram in _Figure 4.3.1_ below shows how the locate command is executed in the logic component:
 
-image::LogicComponentSequenceDiagramLocate.PNG[width="800"]
+image::LogicComponentSequenceDiagramLocate.png[width="800"]
 _Figure 4.3.1 : Sequence Diagram for locating address in logic component_
 
 Notice when the `LocateCommand` is being executed, after checking that the target index is valid, a new `JumpToListRequestEvent` is posted by the `EventsCenter` class to its `EventBus`, as shown in _Figure 4.3.2_:
@@ -605,7 +605,7 @@ _Figure 4.3.6: Code section in BrowserPanel.java_
 By being a subscriber to this event, the `WebView` in `BrowserPanel` will load the corresponding web page whenever a new
 `PersonPanelSelectionChangedEvent` is posted to the `EventBus`. The sequence diagram in _Figure 4.3.7_ below shows how the raising of `PersonPanelSelectionChangedEvent` leads to the loading of the web page in `BrowserPanel`.
 
-image::Full UI outcome for SequenceDiagramLoadPersonPage.png[width="800"]
+image::SequenceDiagramLoadPersonPage.png[width="800"]
 _Figure 4.3.7 : Sequence diagram showing how the web page is loaded from `PersonPanelSelectionChangedEvent`_
 
 _Figure 4.3.8_ below shows the full UI outcome of selecting a selecting a `PersonCard` in the `PersonListPanel`, as well as displaying the corresponding address location in `BrowserPanel`.
@@ -930,7 +930,7 @@ _Figure 4.7.4: Code section in UniqueEmailList.java_
 
 ==== Design Considerations for Adding or Editing contact with Multiple Emails
 
-**Aspect:** Storing of emails in `Person`+
+**Aspect:** Storing of emails in `Person` +
 **Alternative 1 (current choice)**: Emails stored as `ObjectProperty` of `UniqueEmailList`. +
 **Pros:** We are able to add listeners to track changes in the object `UniqueEmailList`. +
 **Cons:** Need to call more methods to get the set of emails. +
@@ -942,7 +942,7 @@ _Figure 4.7.4: Code section in UniqueEmailList.java_
 // tag::agenda[]
 === Viewing of user's agenda [Since v1.4]
 
-All scheduled activities by the user are displayed as a list view in the `AgendaPanel`. The `AgendaPanel` is first initialised in the `MainWindow`, with the observable schedule list of the `AddressBook` being passed in as a parameter to its constructor. This can be observed in _Figure 4.7.1_ below.
+All scheduled activities by the user are displayed as a list view in the `AgendaPanel`. The `AgendaPanel` is first initialised in the `MainWindow`, with the observable schedule list of the `AddressBook` being passed in as a parameter to its constructor. This can be observed in _Figure 4.8.1_ below.
 
 [source,java]
 ----
@@ -957,9 +957,9 @@ public class MainWindow extends UiPart<Region> {
 }
 
 ----
-_Figure 4.7.1: Code section in MainWindow.java_
+_Figure 4.8.1: Code section in MainWindow.java_
 
-Each schedule in the schedule list is represented as a `ScheduleCard`. Each `ScheduleCard` can be viewed in each cell of the list view. The `AgendaPanel` connects each schedule to a `ScheduleCard` as seen in _Figure 4.7.2_ below.
+Each schedule in the schedule list is represented as a `ScheduleCard`. Each `ScheduleCard` can be viewed in each cell of the list view. The `AgendaPanel` connects each schedule to a `ScheduleCard` as seen in _Figure 4.8.2_ below.
 
 [source,java]
 ----
@@ -972,9 +972,9 @@ public class AgendaPanel extends UiPart<Region> {
     }
 }
 ----
-_Figure 4.7.2: Code section in AgendaPanel.java_
+_Figure 4.8.2: Code section in AgendaPanel.java_
 
-New additions to the `AddressBook` schedule list will be reflected in the schedule cards and changes in any schedule will be reflected in the cards themselves. This is implemented as shown in _Figure 4.7.3_ below:
+New additions to the `AddressBook` schedule list will be reflected in the schedule cards and changes in any schedule will be reflected in the cards themselves. This is implemented as shown in _Figure 4.8.3_ below:
 
 [source,java]
 ----
@@ -989,12 +989,12 @@ public class ScheduleCard extends UiPart<Region> {
     }
 }
 ----
-_Figure 4.7.3: Code section in ScheduleCard.java_
+_Figure 4.8.3: Code section in ScheduleCard.java_
 
-The UI outcome for the `AgendaPanel` consisting of a few schedules can be seen below in _Figure 4.7.4_.
+The UI outcome for the `AgendaPanel` consisting of a few schedules can be seen below in _Figure 4.8.4_.
 
 image::AgendaPanelUI.png[width="400"]
-_Figure 4.7.4: UI display for user's agenda_
+_Figure 4.8.4: UI display for user's agenda_
 
 ==== Design Considerations for Viewing of User's Agenda
 
@@ -1012,7 +1012,7 @@ _Figure 4.7.4: UI display for user's agenda_
 === Pop-up reminder window [Since v1.5]
 
 The `AddressBook` consists of 2 schedule lists: one contains all the scheduled activities by the user, while the other contains the scheduled activities that the user need to be reminded of. +
-If there exists any activities that the user need to be reminded of, a `ReminderWindow` will open after the `MainWindow`, as shown in _Figure 4.8.1_ below.
+If there exists any activities that the user need to be reminded of, a `ReminderWindow` will open after the `MainWindow`, as shown in _Figure 4.9.1_ below.
 
 [source,java]
 ----
@@ -1033,11 +1033,11 @@ public class UiManager extends ComponentManager implements Ui {
      }
 }
 ----
-_Figure 4.8.1: Code section in UiManager.java_
+_Figure 4.9.1: Code section in UiManager.java_
 
 The `Reminder Window` contains a list view and each `Schedule` connection to `ScheduleCard` is set similar to that in the `AgendaPanel`. [Refer to _Figure 4.7.2_]
 
-The schedule list to be reminded in the `AddressBook` is formed during every synchronisation of the master schedule list with a `Person`, as seen in _Figure 4.8.2_ below.
+The schedule list to be reminded in the `AddressBook` is formed during every synchronisation of the master schedule list with a `Person`, as seen in _Figure 4.9.2_ below.
 
 [source,java]
 ----
@@ -1050,9 +1050,9 @@ private void syncMasterScheduleListWith(Person person) {
      // ... check person schedule references ...
 }
 ----
-_Figure 4.8.2: Code section in AddressBook.java_
+_Figure 4.9.2: Code section in AddressBook.java_
 
-Scheduled activities whose due date is 1 day after the date the user starts the application will be added to the `schedulesToRemind` list in `AddressBook`. This criteria is enforced in a static method in `Schedule.java`, as shown in _Figure 4.8.3_ below.
+Scheduled activities whose due date is 1 day after the date the user starts the application will be added to the `schedulesToRemind` list in `AddressBook`. This criteria is enforced in a static method in `Schedule.java`, as shown in _Figure 4.9.3_ below.
 
 [source,java]
 ----
@@ -1081,7 +1081,7 @@ public static boolean doesScheduleNeedReminder(Schedule schedule) {
      }
 }
 ----
-_Figure 4.8.3: Code section in Schedule.java_
+_Figure 4.9.3: Code section in Schedule.java_
 
 
 ==== Design Considerations for Pop-up Reminder Window
@@ -1099,12 +1099,12 @@ _Figure 4.8.3: Code section in Schedule.java_
 
 === Sending Email [Since v1.5]
 
-`EmailCommand` utilise `Desktop` to launch a email platform for users to send email to multiple contacts. _Figure 4.9.1_ below indicates the sequence diagram that illsutrate how the components interact in the scenario where the user issues the email command.
+`EmailCommand` utilise `Desktop` to launch a email platform for users to send email to multiple contacts. _Figure 4.10.1_ below indicates the sequence diagram that illsutrate how the components interact in the scenario where the user issues the email command.
 
-image::SequenceDiagramEmail.PNG[width="600"]_
-_Figure 4.9.1: Component interactions for email function_
+image::SequenceDiagramEmail.PNG[width="600"]
+_Figure 4.10.1: Component interactions for email function_
 
-User will first have to key in indexes of the contact. `Logic` will use `AddressBookParser` class to parse user command. `ParseException` will be thrown in `EmailCommandParser` when there is detection of illegal value.By using a `Set` to store the indices inputed by user, this will prevent duplication of indicies. _Figure 4.9.2_ below indicates the parsing of user input in `EmailCommandParser`.
+User will first have to key in indexes of the contact. `Logic` will use `AddressBookParser` class to parse user command. `ParseException` will be thrown in `EmailCommandParser` when there is detection of illegal value.By using a `Set` to store the indices inputed by user, this will prevent duplication of indicies. _Figure 4.10.2_ below indicates the parsing of user input in `EmailCommandParser`.
 
 [source,java]
 ----
@@ -1122,9 +1122,9 @@ public class EmailCommandParser implements Parser<EmailCommand> {
 }
 
 ----
-_Figure 4.9.2: Code section in EmailCommandParser.java_
+_Figure 4.10.2: Code section in EmailCommandParser.java_
 
-A `Command` object will be executed by `Logic Manger`.During command excution, a filtered person list will be extracted from `Model`. The emails extracted from the filtered person list will be stored in a `recipientList` as shown in _Figure 4.9.3_ .`Desktop` class will be used to send email using `Desktop.Action.Mail` baed on `recipientList`.
+A `Command` object will be executed by `Logic Manger`.During command excution, a filtered person list will be extracted from `Model`. The emails extracted from the filtered person list will be stored in a `recipientList` as shown in _Figure 4.10.3_ .`Desktop` class will be used to send email using `Desktop.Action.Mail` baed on `recipientList`.
 
 [source,java]
 ----
@@ -1137,31 +1137,31 @@ public class EmailCommand extends Command {
 //email logic
 }
 ----
-_Figure 4.9.3: Code section in EmailCommand.java_
+_Figure 4.10.3: Code section in EmailCommand.java_
 
 
-Figure 4.9.4 below shows the Sequence Diagram for interactions within the Logic component for the excution of email command.
+Figure 4.10.4 below shows the Sequence Diagram for interactions within the Logic component for the excution of email command.
 
 image::LogicComponentSequenceDiagramEmail.PNG[width="800"]
-_Figure 4.9.4: Component interactions inside Logic Component when user issue email command_
+_Figure 4.10.4: Component interactions inside Logic Component when user issue email command_
 
 
-The outcome of successful launching of email platform to send email to multiple contacts is shown in _Figure 4.9.5_.
+The outcome of successful launching of email platform to send email to multiple contacts is shown in _Figure 4.10.5_.
 
 image::EmailCommand.PNG[width="800"]
-_Figure 4.9.5: Output of `EmailCommand.java` execution_
+_Figure 4.10.5: Output of `EmailCommand.java` execution_
 
 
 ==== Design Considerations for `EmailCommand`
 
 
 **Aspect:** Data structure to support `EmailCommand` +
-**Alternative 1 (current choice)**: Use Set for storing of user's input of indices  +
-**Pros:** Prevent duplication of indices to speed up execution of `EmailCommand` +
+**Alternative 1 (current choice)**: Use Set for storing of user's input of indices.  +
+**Pros:** Prevent duplication of indices to speed up execution of `EmailCommand`. +
 **Cons:** Set provides random access.Two objects might be considred equal if they have the same hascode even though they are different.  +
 **Alternative 2:** Using ArrayList +
-**Pros:** List implementations are ordered as List stores element in the order they were added +
-**Cons:** Unable to detect duplicate indicies +
+**Pros:** List implementations are ordered as List stores element in the order they were added. +
+**Cons:** Unable to detect duplicate indicies. +
 
 ---
 
