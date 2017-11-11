@@ -1252,6 +1252,22 @@ public class TypicalTasks {
 
 }
 ```
+###### \java\seedu\address\ui\StatusBarFooterTest.java
+``` java
+    @Test
+    public void display() {
+        // initial state
+        String initialNumberPerson = String.format(SYNC_NUMBER_STATUS, addressBook.getPersonList().size(),
+                addressBook.getTaskList().size());
+        assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION, SYNC_STATUS_INITIAL, initialNumberPerson);
+
+        // after address book is updated
+        postNow(EVENT_STUB);
+        assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
+                String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()),
+                String.format(SYNC_NUMBER_STATUS, 0, 0));
+    }
+```
 ###### \java\systemtests\AliasCommandSystemTest.java
 ``` java
 public class AliasCommandSystemTest extends AddressBookSystemTest {

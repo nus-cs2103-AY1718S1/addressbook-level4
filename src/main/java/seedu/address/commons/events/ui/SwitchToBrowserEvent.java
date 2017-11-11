@@ -5,7 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 //@@author Alim95
 
 /**
- * An event requesting to switch to browser panel.
+ * Indicates a request to switch to browser panel.
  */
 public class SwitchToBrowserEvent extends BaseEvent {
 

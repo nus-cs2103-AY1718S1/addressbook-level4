@@ -24,48 +24,35 @@ public class SortCommandTest {
 
     @Test
     public void executeSortByNameSuccess() {
-        SortCommand sortCommand = prepareCommand(TO_SORT_NAME);
-
-        String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, TO_SORT_NAME);
-
-        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel.sortList(TO_SORT_NAME);
-
-        assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+        assertSortCommandSuccess(TO_SORT_NAME, model);
     }
 
     @Test
     public void executeSortByPhoneSuccess() {
-        SortCommand sortCommand = prepareCommand(TO_SORT_PHONE);
-
-        String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, TO_SORT_PHONE);
-
-        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel.sortList(TO_SORT_PHONE);
-
-        assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+        assertSortCommandSuccess(TO_SORT_PHONE, model);
     }
 
     @Test
     public void executeSortByEmailSuccess() {
-        SortCommand sortCommand = prepareCommand(TO_SORT_EMAIL);
-
-        String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, TO_SORT_EMAIL);
-
-        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel.sortList(TO_SORT_EMAIL);
-
-        assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+        assertSortCommandSuccess(TO_SORT_EMAIL, model);
     }
 
     @Test
     public void executeSortByAddressSuccess() {
-        SortCommand sortCommand = prepareCommand(TO_SORT_ADDRESS);
+        assertSortCommandSuccess(TO_SORT_ADDRESS, model);
+    }
 
-        String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, TO_SORT_ADDRESS);
+    /**
+     * Executes a {@code SortCommand} with the given {@code toSortBy}, and checks that expected message and model
+     * is correct.
+     */
+    private void assertSortCommandSuccess(String toSortBy, Model model) {
+        SortCommand sortCommand = prepareCommand(toSortBy);
+
+        String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, toSortBy);
 
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel.sortList(TO_SORT_ADDRESS);
+        expectedModel.sortList(toSortBy);
 
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
     }
