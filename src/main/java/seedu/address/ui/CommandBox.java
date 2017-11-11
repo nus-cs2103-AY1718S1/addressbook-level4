@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.LoginCommand.isLoggedIn;
+
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -26,6 +28,7 @@ public class CommandBox extends UiPart<Region> {
 
     public static final char BLACK_CIRCLE = '\u25CF';
     public static final String ERROR_STYLE_CLASS = "error";
+    public static final String ALREADY_LOGGED_IN_MESSAGE = "Already logged in";
     private static final String FXML = "CommandBox.fxml";
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
@@ -205,7 +208,7 @@ public class CommandBox extends UiPart<Region> {
         }
         return count;
     }
-    //@@author
+
 
     /**
      * Handles the Enter button pressed event.
@@ -213,14 +216,14 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandInputChanged() {
         String commandText = commandTextField.getText();
-        if (commandText.trim().equals(LoginCommand.COMMAND_WORD) && !LoginCommand.isLoggedIn()) {
+        if (commandText.trim().equals(LoginCommand.COMMAND_WORD) && !isLoggedIn()) {
             commandTextField.setText("");
             raise(new ChangeToLoginViewEvent());
             return;
         }
 
         if (LoginCommand.isLoggedIn() && commandText.contains(LoginCommand.COMMAND_WORD)) {
-            raise(new NewResultAvailableEvent("Already logged in.", true));
+            raise(new NewResultAvailableEvent(ALREADY_LOGGED_IN_MESSAGE, true));
         } else {
             // allow only help, exit and login commands to execute before login
             boolean isCommandExecutableBeforeLogin = commandText.contains(LoginCommand.COMMAND_WORD)
@@ -247,7 +250,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Takes in a {@code commandInput} and executes the right command according to it.
+     * Executes the correct command based on {@code commandInput}.
      * @throws CommandException when an error occurs during execution of a command
      * @throws ParseException when an error occurs during the parsing of command arguments
      */
@@ -255,7 +258,7 @@ public class CommandBox extends UiPart<Region> {
         CommandResult commandResult;
         if (commandInput.contains(LoginCommand.COMMAND_WORD)) {
             commandResult = logic.execute(commandInput.substring(0,
-                    currentMaskFromIndex) + passwordFromInput);
+                    indexOfSecondWhitespace + 1) + passwordFromInput);
         } else {
             commandResult = logic.execute(commandInput);
         }
@@ -266,6 +269,7 @@ public class CommandBox extends UiPart<Region> {
         logger.info("Result: " + commandResult.feedbackToUser);
         raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
     }
+    //@@author
 
     /**
      * Initializes the history snapshot.
