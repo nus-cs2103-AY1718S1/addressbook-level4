@@ -386,6 +386,29 @@ Selects the 2nd person in the Gentleman's Guide.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Opening full profile of a person : `view`
+
+*The Gentleman comes across the contact of an old friend who he has not seen for a long time.
+Thus, he uses the view command to open his friend's full profile which he had stored inside the Gentleman's Guide.*
+
+Views profile of the person identified by the index number used in the last person listing. +
+Format: `view INDEX`
+
+****
+* Views profile of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`view 2` +
+Views profile of the 2nd person in the Gentleman's Guide.
+* `find Betsy` +
+`view 1` +
+Views profile of the 1st person in the results of the `find` command.
+
 // tag::sort[]
 === Sorting all entries by name: `sort`
 
@@ -676,6 +699,8 @@ e.g. `findPriority Medium`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *View* : `view INDEX` +
+e.g.`view 2`
 * *Sort by Name* : `sort`
 * *Sort by Age* : `sortAge`
 * *Sort by Birthday* : `sortBirthday`
