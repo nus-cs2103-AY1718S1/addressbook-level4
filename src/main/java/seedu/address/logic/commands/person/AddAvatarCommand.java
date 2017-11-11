@@ -20,8 +20,8 @@ public class AddAvatarCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds avatar to the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer) IMAGE_URL\n"
-            + "Example: " + COMMAND_WORD + " 1 https://avatars0.githubusercontent.com/u/1342004";
+            + "Parameters: INDEX (must be a positive integer) IMAGE_PATH\n"
+            + "Example: " + COMMAND_WORD + " 1 something.png";
 
     public static final String MESSAGE_ADD_AVATAR_SUCCESS = "Added avatar to person: %1$s";
 

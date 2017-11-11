@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import java.io.File;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.property.Property;
@@ -15,15 +17,22 @@ import seedu.address.ui.person.PersonDetailsPanel;
  * done by separate methods rather than a single regular expression (the complexity is not at the same level).
  */
 public class Avatar {
-    private static final String INVALID_URL_MESSAGE = "The provided image path is invalid.";
+    private static final String INVALID_PATH_MESSAGE = "The provided image path is invalid.";
+    private static final String IMAGE_NOT_EXISTS = "The provided image path does not exist.";
 
     private String path;
 
     public Avatar(String path) throws IllegalValueException {
         if (!isValidAvatarPath(path)) {
-            throw new IllegalValueException(INVALID_URL_MESSAGE);
+            throw new IllegalValueException(INVALID_PATH_MESSAGE);
         }
-        this.path = path;
+
+        File file = new File(path);
+        if (!FileUtil.isFileExists(file)) {
+            throw new IllegalValueException(IMAGE_NOT_EXISTS);
+        }
+
+        this.path = file.toURI().toString();
     }
 
     /**
