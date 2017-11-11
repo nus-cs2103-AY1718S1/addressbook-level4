@@ -22,6 +22,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.property.EventNameContainsKeywordsPredicate;
 import seedu.address.model.property.NameContainsKeywordsPredicate;
 import seedu.address.model.reminder.Reminder;
 import seedu.address.model.tag.Tag;
@@ -181,6 +182,10 @@ public class ModelManagerTest {
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().getValue().split("\\s+");
         modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
+
+        String[] keywordsE = EVENT1.getName().getValue().split("\\s+");
+        modelManager.updateFilteredEventsList(new EventNameContainsKeywordsPredicate(Arrays.asList(keywordsE)));
         assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
