@@ -18,7 +18,6 @@ import org.junit.ClassRule;
 
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.InsuranceListPanelHandle;
-import guitests.guihandles.InsuranceProfilePanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
