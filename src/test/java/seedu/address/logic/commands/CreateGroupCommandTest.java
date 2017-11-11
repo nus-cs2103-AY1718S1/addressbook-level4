@@ -15,6 +15,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
@@ -32,9 +34,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.storage.Storage;
 import seedu.address.testutil.GroupBuilder;
 import seedu.address.testutil.TypicalStorage;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 //@@author eldonng
 public class CreateGroupCommandTest {
