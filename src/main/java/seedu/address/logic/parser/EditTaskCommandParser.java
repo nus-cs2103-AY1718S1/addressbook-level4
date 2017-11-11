@@ -19,6 +19,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.task.DateTimeValidator;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
+import seedu.address.model.task.EventTime;
 
 //@@author raisa2010
 /**
@@ -50,7 +51,7 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
             parseDescriptionForEdit(argMultimap.getPreamble()).ifPresent(editTaskDescriptor::setDescription);
             parseDeadlineForEdit(argMultimap.getAllValues(PREFIX_DEADLINE_BY, PREFIX_DEADLINE_FROM, PREFIX_DEADLINE_ON))
                     .ifPresent(editTaskDescriptor::setDeadline);
-            ParserUtil.parseEventTimes(argMultimap.getValue(PREFIX_TIME_AT))
+            parseEventTimesForEdit(argMultimap.getAllValues(PREFIX_TIME_AT))
                     .ifPresent(editTaskDescriptor::setEventTimes);
             ParserUtil.parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
 
@@ -87,6 +88,22 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
                 ? Optional.of(new Deadline(""))
                 : ParserUtil.parseDeadline(Optional.of(dates.get(dates.size() - 1)));
 
+    }
+
+    /**
+     *
+     *
+     */
+    public Optional<EventTime[]> parseEventTimesForEdit(List<String> times) throws IllegalValueException {
+        assert times != null;
+
+        if (times.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return times.size() == 1 && times.contains("")
+                ? Optional.of(new EventTime[]{new EventTime(""), new EventTime("")})
+                : ParserUtil.parseEventTimes(Optional.of(times.get(times.size() - 1)));
     }
 
     /**

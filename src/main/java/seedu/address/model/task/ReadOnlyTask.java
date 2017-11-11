@@ -43,7 +43,7 @@ public interface ReadOnlyTask {
         final StringBuilder builder = new StringBuilder();
         builder.append(getDescription());
         if (!getDeadline().isEmpty()) {
-            builder.append(" To: ").append(getDeadline());
+            builder.append(" Deadline: ").append(getDeadline());
         }
         if (getEndTime().isPresent() && !getStartTime().isPresent()) {
             builder.append(" At: ").append(getEndTime());

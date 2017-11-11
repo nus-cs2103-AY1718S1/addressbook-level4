@@ -82,6 +82,7 @@ public class TaskCard extends UiPart<Region> {
         task.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(task);
+
         });
         setColour();
     }

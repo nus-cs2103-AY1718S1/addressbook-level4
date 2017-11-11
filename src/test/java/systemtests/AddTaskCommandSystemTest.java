@@ -55,13 +55,13 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void add() throws Exception {
 
-        /* Case: change the current command mode to task manager -> success */
+        /* Change the current command mode to task manager */
         String commandMode = ChangeModeCommand.COMMAND_WORD + " tm";
         String expectedResultMessage = String.format(MESSAGE_CHANGE_MODE_SUCCESS, "TaskManager");
         Model model = getModel();
         assertCommandSuccess(commandMode, model, expectedResultMessage);
 
-        /* Case: add a task without tags to a non-empty address book, command with leading spaces and trailing spaces
+        /* Case: add a task to a non-empty address book, command with leading spaces and trailing spaces
          * -> added */
         ReadOnlyTask toAdd = INTERNSHIP;
         String command = "   " + AddTaskCommand.COMMAND_WORD + "  " + VALID_DESCRIPTION_INTERNSHIP + "  "

@@ -32,9 +32,4 @@ public class EventTime {
     public int hashCode() {
         return time.hashCode();
     }
-
-
-    //public boolean areTimesValid
-
-    //publ
 }

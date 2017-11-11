@@ -4,11 +4,8 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.tasks.EditTaskCommand;
 import seedu.address.logic.commands.tasks.EditTaskCommand.EditTaskDescriptor;
-import seedu.address.logic.parser.EditTaskCommandParser;
 import seedu.address.logic.parser.ParserUtil;
-import seedu.address.model.task.EventTime;
 import seedu.address.model.task.ReadOnlyTask;
 
 /**

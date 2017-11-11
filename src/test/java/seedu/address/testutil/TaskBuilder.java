@@ -1,11 +1,8 @@
 package seedu.address.testutil;
 
-import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
-
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.parser.Suffix;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;

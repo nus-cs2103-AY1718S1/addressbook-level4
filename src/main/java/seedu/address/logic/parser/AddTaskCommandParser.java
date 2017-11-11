@@ -92,6 +92,7 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
      */
     private static boolean isSinglePrefixPresent(ArgumentMultimap argumentMultimap) {
         return !(argumentMultimap.getValue(PREFIX_DEADLINE_BY).isPresent()
-                && argumentMultimap.getValue(PREFIX_DEADLINE_ON).isPresent());
+                && argumentMultimap.getValue(PREFIX_DEADLINE_ON).isPresent()
+                && argumentMultimap.getValue(PREFIX_DEADLINE_FROM).isPresent());
     }
 }

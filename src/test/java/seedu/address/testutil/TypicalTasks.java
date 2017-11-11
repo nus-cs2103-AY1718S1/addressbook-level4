@@ -5,6 +5,10 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_INTERN
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_TODAY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENDTIME_GRAD_SCHOOL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENDTIME_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTTIME_GRAD_SCHOOL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTTIME_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_URGENT;
 
 import java.util.ArrayList;
@@ -53,12 +57,11 @@ public class TypicalTasks {
 
     // Manually added - Task's details found in {@code CommandTestUtil}
     public static final ReadOnlyTask INTERNSHIP = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP)
-            .withDeadline(VALID_DEADLINE_INTERNSHIP).withStartTime("09:00").withEndTime("17:00")
-            .withTags(VALID_TAG_URGENT)
-            .build();
+            .withDeadline(VALID_DEADLINE_INTERNSHIP).withStartTime(VALID_STARTTIME_INTERNSHIP)
+            .withEndTime(VALID_ENDTIME_INTERNSHIP).withTags(VALID_TAG_URGENT).build();
     public static final ReadOnlyTask GRAD_SCHOOL = new TaskBuilder().withDescription(VALID_DESCRIPTION_GRAD_SCHOOL)
-            .withDeadline(VALID_DEADLINE_GRAD_SCHOOL).withStartTime("10:00").withEndTime("13:00")
-            .withTags(VALID_TAG_URGENT).build();
+            .withDeadline(VALID_DEADLINE_GRAD_SCHOOL).withStartTime(VALID_STARTTIME_GRAD_SCHOOL)
+            .withEndTime(VALID_ENDTIME_GRAD_SCHOOL).withTags(VALID_TAG_URGENT).build();
 
     public static final String KEYWORD_MATCHING_FINISH = "Finish"; // A keyword that matches Finish
 

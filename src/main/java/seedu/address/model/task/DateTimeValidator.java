@@ -56,11 +56,12 @@ public abstract class DateTimeValidator {
      */
     public static boolean isStartTimeBeforeEndTime(EventTime startTime, EventTime endTime) {
         try {
-            Date parsedStartTime = new SimpleDateFormat("HH:mm").parse(startTime.toString());
-            Date parsedEndTime = new SimpleDateFormat("HH:mm").parse(endTime.toString());
+            Date parsedStartTime =
+                    new SimpleDateFormat(DateTimeFormatter.DISPLAY_TIME_FORMAT).parse(startTime.toString());
+            Date parsedEndTime = new SimpleDateFormat(DateTimeFormatter.DISPLAY_TIME_FORMAT).parse(endTime.toString());
             return parsedStartTime.before(parsedEndTime);
         } catch (ParseException p) {
-            assert(!startTime.isPresent() | !endTime.isPresent());
+            assert !startTime.isPresent() | !endTime.isPresent();
             return true;
         }
     }

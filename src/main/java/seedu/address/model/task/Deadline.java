@@ -15,7 +15,6 @@ public class Deadline {
      * Creates an empty deadline with no recur interval if the deadline is not specified.
      */
     public Deadline(String date) {
-
         requireNonNull(date);
         String trimmedDate = date.trim();
         this.date = trimmedDate;
