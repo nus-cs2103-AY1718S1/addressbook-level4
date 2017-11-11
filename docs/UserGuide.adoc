@@ -633,59 +633,59 @@ A high average implies that the class/cohort has performed above expectations.
 ....
 
 == Patch Notes
-//TODO: Fill in all major updates and feature implementations that i missed out here
+
+=== Features Coming in v2.0
+In version v2.0, you will be able to:
+
+* Compare statistics of different groups with the `compare` command
+* Send emails to the students and parents directly from cherBook using the `sendemail` command
+
+=== Features added in v1.5
+In version v1.5, you are be able to:
+//TODO: update here and remove this comment
+
+* `update here and remove this comment`
+
+=== Features added in v1.5rc
+In version v1.5rc, you are be able to:
+
+* View your appointments with the `viewschedule` command
+* Delete yor appointments with students with the `deleteschedule` command
+* Switch between the linge graph and bar chart with the `tab` command
+
+=== Features added in v1.4
+In version v1.4, you are be able to:
+
+* View the statistics of specific groups of students from the `Statistics Panel`
+* Have more colors(randomised) for your student's tags
+* Set up appointments with your students with the `addschedule` command
+* Add tab to show students in the same class and same tags respectively.
+
+=== Features added in v1.3
+In version v1.3, you are be able to:
+
+* View your students' details from the `Student Details Panel`
+* View graphs and charts detailing your students' academic progress from the `GraphPanel`
+* Omit optional fields(email, address, postal code and tags) when adding students
+
+=== Features added in v1.2
+In version v1.2, you are be able to:
+
+* Sort your students by their names in alphabetical order with the `sort` command
+* Add `Grades`,`FormClass` and `Remarks` attributes to your students
+* Differentiate the multiple phone numbers for each student
+
+=== Features added in v1.1
+In version v1.1, you are be able to:
+
+* Search students easily by tags with the `findtags` command
+* Add `PostalCode` attributes to you students
+* Add multiple phone numbers for each student
+
 === Features added in v1.0
 
 In version v1.0, users will be able to:
 
 * Use command shortcuts
-* Back-up Storage
-* Have colorful tags
-
-=== Features added in v1.1
-In version v1.1, you are be able to:
-
-* Find students by tags using the `findtags` command
-* Add `PostalCode` attributes to their students
-* Add multiple numbers for each student
-
-=== Features added in v1.2
-In version v1.2, you are be able to:
-
-* Add `Grades`,`FormClass` and `Remarks` attributes to their students
-* Differentiate the multiple phone numbers for each student
-* Sort students names in alphabetical order using the `sort` command
-
-=== Features added in v1.3
-In version v1.3, you are be able to:
-
-* View graph of your student's academics grades
-* View all your student's information on the `Student Details Panel`
-* Have optional fields like (email, address, postal code and tags) when adding a student
-* See student's academic progress over time from the `GraphPanel`
-
-=== Features added in v1.4
-In version v1.4, you are be able to:
-
-* View statistics of the current list of students from the `Statistics Panel`
-* Have automated assignment of different colours to different tags according to suitable RGB values
-* Add schedules into the cherBook
-* Add tab to show students in the same class and same tags respectively.
-
-=== Features added in v1.5rc
-In version v1.5, you are be able to:
-
-* Use the `TabCommand` to display different graph types (Line/Bar Chart) of the selected student's academic grades
-* Use the `ViewScheduleCommand` to view all your schedules in a list sorted by date and time
-* Use the `DeleteScheduleCommand` to delete schedules that are overdue
-
-=== Features added in v1.5
-In version v1.5, you are be able to:
-//TODO Add mroe here
-* Use the `ViewScheduleCommand` to view all your schedules in a list sorted by date and time
-
-=== Features Coming in v2.0
-In version v2.0, users will be able to:
-
-* Compare statistics of different groups with the `compare` command
-* Send emails to the students and parents directly from cherBook using the `sendemail` command
+* Back-up their cherBook data
+* Have your students' tags color coded
