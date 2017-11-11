@@ -13,7 +13,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Ang Tian Lan
 image::tianlan.jpg[width="150", align="left"]
-{empty} [https://github.com/angtianlannus[github]][https://github.com/CS2103AUG2017-W13-B4/main/blob/master/docs/team/angtianlan.adoc[Project Portfolio]]
+{empty} [https://github.com/angtianlannus[github]][<<angtianlan#, portfolio>>]
 
 
 Role: Developer +
@@ -23,7 +23,7 @@ Responsibilities: Storage component, adding SortCommand, enhance FindCommand, Bo
 
 === Cao Liang
 image::liang_profile_pic.jpeg[width="150", align="left"]
-{empty}[https://github.com/caoliangnus[github]] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/docs/team/caoliang.adoc[Project Portfolio]]
+{empty}[https://github.com/caoliangnus[github]] [<<caoliang#, portfolio>>]
 
 
 Role: Developer +
@@ -42,7 +42,7 @@ Responsibilities: Logic component, editing list//edit/delete command, adding vie
 
 === Chew Chaow Thong Daniel
 image::DanielChew.jpg[width="150", align="left"]
-{empty}[https://github.com/cctdaniel[github]] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/docs/team/danielchew.adoc[Project Portfolio]]
+{empty}[https://github.com/cctdaniel[github]] [<<danielchew#, portfolio>>]
 
 
 Role: Developer +
