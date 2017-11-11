@@ -67,7 +67,8 @@ public abstract class UndoableCommand extends Command {
      */
     public boolean canRedo() {
         return previousListingUnit.equals(ListingUnit.getCurrentListingUnit())
-                && previousPredicate.equals(ListingUnit.getCurrentPredicate());
+                && previousPredicate.equals(ListingUnit.getCurrentPredicate())
+                || this instanceof ClearCommand;
     }
 
 
