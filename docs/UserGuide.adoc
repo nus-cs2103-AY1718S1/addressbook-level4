@@ -476,6 +476,12 @@ Format: `(avr)avatar INDEX IMAGE_URL`
 * The image will only be displayed correctly when you have Internet connection.
 ****
 
+[NOTE]
+====
+* The avatar will only be shown to you if you have stable Internet connection.
+* You may need to wait for a while as the application is downloading the image from the specified URL.
+====
+
 Examples:
 
 * `list` +
