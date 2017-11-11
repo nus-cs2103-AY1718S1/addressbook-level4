@@ -3,19 +3,25 @@ package systemtests;
 
 import org.junit.Test;
 import seedu.address.logic.commands.AddEventCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
-import seedu.address.model.event.Date;
-import seedu.address.model.event.EventName;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
-import seedu.address.model.person.Address;
 import seedu.address.testutil.AddEventUtil;
 import seedu.address.testutil.EventBuilder;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.commands.CommandTestUtil.EVENT_ADDRESS_A_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.EVENT_ADDRESS_B_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.EVENT_DATE_A_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.EVENT_DATE_B_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.EVENT_NAME_A_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.EVENT_NAME_B_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_ADDRESS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_DATE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_NAME;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_B_ADDRESS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_B_DATE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_B_NAME;
 import static seedu.address.testutil.TypicalEvents.EVENT_A;
 
 public class AddEventCommandSystemTest extends AddressBookSystemTest {
