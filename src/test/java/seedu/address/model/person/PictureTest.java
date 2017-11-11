@@ -49,7 +49,7 @@ public class PictureTest {
         Picture.copyImage(src, dst);
     }
 
-    @Test @Ignore
+    @Test
     public void resizeAndSaveImageTest() throws Exception {
         thrown.expect(IllegalValueException.class);
 
