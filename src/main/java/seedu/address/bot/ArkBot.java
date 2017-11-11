@@ -121,9 +121,7 @@ public class ArkBot extends AbilityBot {
                 .input(0)
                 .locality(Locality.ALL)
                 .privacy(PRIVACY_SETTING)
-                .action(ctx -> Platform.runLater(() -> {
-                        sender.send(BOT_MESSAGE_START, ctx.chatId());
-                }))
+                .action(ctx -> Platform.runLater(() -> sender.send(BOT_MESSAGE_START, ctx.chatId())))
                 .build();
     }
 

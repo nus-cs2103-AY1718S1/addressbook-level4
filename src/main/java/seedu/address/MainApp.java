@@ -5,14 +5,16 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import com.google.common.eventbus.Subscribe;
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.stage.Stage;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.generics.BotSession;
+
+import com.google.common.eventbus.Subscribe;
+
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.stage.Stage;
 import seedu.address.bot.ArkBot;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
@@ -95,8 +97,8 @@ public class MainApp extends Application {
                 botSession = botsApi.registerBot(bot);
                 botStarted = true;
             } catch (TelegramApiException e) {
-                logger.warning("Invalid Telegram Bot authentication token. Please check to ensure that " +
-                        "you have keyed in the token correctly and restart the application.");
+                logger.warning("Invalid Telegram Bot authentication token. Please check to ensure that "
+                        + "you have keyed in the token correctly and restart the application.");
             }
         }
     }
