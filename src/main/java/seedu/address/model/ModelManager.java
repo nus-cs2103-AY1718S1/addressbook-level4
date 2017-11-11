@@ -146,6 +146,10 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    /**
+     *  Returns a new person after checking if the  given tag is to be added or removed
+     *  and setting the new tag for the person.
+     */
     private Person setTagsForNewPerson(ReadOnlyPerson oldPerson, Tag tagToAddOrRemove, boolean isAdd) {
         Person newPerson = new Person(oldPerson);
         Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
@@ -171,20 +175,23 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author vivekscl
+    /**
+     * Returns the closest matching name(s) for given predicate. If no such name can be found,
+     * the keyword itself is returned.
+     */
     @Override
     public String getClosestMatchingName(NameContainsKeywordsPredicate predicate) {
 
         requireNonNull(predicate);
         ArrayList<String> allNames = getListOfAllFirstAndLastNames(predicate);
         List<String> keywords = predicate.getKeywords();
-        return keywords.size() == 1 ? getClosestMatchingNameForOneKeyword(keywords, allNames, initialToleranceValue)
+        return keywords.size() == 1
+                ? getClosestMatchingNameForOneKeyword(keywords.get(0), allNames, initialToleranceValue)
                 : getClosestMatchingNameForMultipleKeywords(keywords, allNames, initialToleranceValue);
     }
 
     /**
-     * This helper method gets a list of all the names, separates them and returns a list of first and last names.
-     * The default value for the result is the first keyword given. Since no such name can be found for the given
-     * input, the keyword itself is returned.
+     * Returns a list of first and last names.
      */
     private ArrayList<String> getListOfAllFirstAndLastNames(NameContainsKeywordsPredicate predicate) {
 
@@ -198,43 +205,33 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * If there is only one keyword given, this helper method gets the closest matching name from that keyword.
+     * Returns the closest matching name from one keyword.
      */
-    private String getClosestMatchingNameForOneKeyword(List<String> keywords,
+    private String getClosestMatchingNameForOneKeyword(String keyword,
                                                        ArrayList<String> allNames, double maxDistance) {
 
         JaroWinklerDistance currentJaroWinklerDistance = new JaroWinklerDistance();
-        String target = keywords.get(0);
-        String result = keywords.get(0);
+        String closestMatchingName = keyword;
         for (String s : allNames) {
-            if (maxDistance < currentJaroWinklerDistance.apply(target, s)) {
-                maxDistance = currentJaroWinklerDistance.apply(target, s);
-                result = s;
+            if (maxDistance < currentJaroWinklerDistance.apply(keyword, s)) {
+                maxDistance = currentJaroWinklerDistance.apply(keyword, s);
+                closestMatchingName = s;
             }
         }
-        return result;
+        return closestMatchingName;
     }
 
     /**
-     * If there are multiple keywords given, this helper method gets the closest matching list of names from the
-     * keywords and converts them into a readable string.
+     * Returns the closest matching list of names as a readable string from multiple keywords.
      */
     private String getClosestMatchingNameForMultipleKeywords(List<String> keywords,
                                                              ArrayList<String> allNames, double maxDistance) {
 
-        JaroWinklerDistance currentJaroWinklerDistance = new JaroWinklerDistance();
-        ArrayList<String> result = new ArrayList<String>();
-        for (String target : keywords) {
-            for (String s : allNames) {
-                if (maxDistance < currentJaroWinklerDistance.apply(target, s)) {
-                    maxDistance = currentJaroWinklerDistance.apply(target, s);
-                    if (!result.contains(s)) {
-                        result.add(s);
-                    }
-                }
-            }
-        }
-        return result.isEmpty() ? keywords.get(0) : String.join(" ", result);
+        ArrayList<String> listOfClosestMatchingNames = keywords.stream()
+                .map(keyword -> getClosestMatchingNameForOneKeyword(keyword, allNames, maxDistance))
+                .distinct().collect(Collectors.toCollection(ArrayList::new));
+        return listOfClosestMatchingNames.isEmpty() ? keywords.get(0)
+                : String.join(" ", listOfClosestMatchingNames);
     }
 
     //@@author jacoblipech

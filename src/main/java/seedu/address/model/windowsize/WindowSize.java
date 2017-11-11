@@ -27,7 +27,7 @@ public final class WindowSize {
 
     private WindowSize() {}
 
-    /*
+    /**
      * Returns the appropriate width according to the given windowSize.
      */
     public static double getUserDefinedWindowWidth(String windowSize) {
@@ -51,7 +51,7 @@ public final class WindowSize {
         return width;
     }
 
-    /*
+    /**
      * Returns the appropriate height according to the given windowSize.
      */
     public static double getUserDefinedWindowHeight(String windowSize) {
