@@ -34,6 +34,7 @@
         <dob>29 Jan 1997</dob>
         <gender>FEMALE</gender>
         <tagged>neighbours</tagged>
+        <lifeInsuranceId>067e6162-3b6f-4ae2-a171-2470b63dff00</lifeInsuranceId>
     </persons>
     <persons>
         <name>David Li</name>
@@ -62,6 +63,8 @@
         <address>Mary street, block 123</address>
         <dob>05 May 1990</dob>
         <gender>FEMALE</gender>
+        <lifeInsuranceId>ce003136-c8e2-4cdd-ae2d-860d203a9aa1</lifeInsuranceId>
+        <lifeInsuranceId>e21b7a14-8994-4fd5-9b00-fd64e41dcac1</lifeInsuranceId>
     </persons>
     <persons>
         <name>Oscar</name>
@@ -90,6 +93,8 @@
         <dob>01 Feb 1997</dob>
         <gender>MALE</gender>
         <tagged>colleagues</tagged>
+        <lifeInsuranceId>ce003136-c8e2-4cdd-ae2d-860d203a9aa1</lifeInsuranceId>
+        <lifeInsuranceId>bb96325f-5e40-4056-85b1-ce5df6b273d6</lifeInsuranceId>
     </persons>
     <tags>colleagues</tags>
     <tags>classmates</tags>
@@ -106,21 +111,7 @@
                 <insured>Another person not in Lisa</insured>
                 <beneficiary>Bernice Yu</beneficiary>
                 <premium>50.0</premium>
-                <contractName>AlexYeoh-Cheap.pdf</contractName>
-                <signingDate>01 Nov 2017</signingDate>
-                <expiryDate>01 Nov 2018</expiryDate>
-            </value>
-        </entry>
-        <entry>
-            <key>c2de267e-91e2-4cc5-a4b7-8fd02120cbea</key>
-            <value>
-                <id>c2de267e-91e2-4cc5-a4b7-8fd02120cbea</id>
-                <insuranceName>Term</insuranceName>
-                <owner>Alex Yeoh</owner>
-                <insured>Oscar</insured>
-                <beneficiary>Oscar</beneficiary>
-                <premium>500.0</premium>
-                <contractPath>pdf</contractPath>
+                <contractFileName>AlexYeoh-Cheap.pdf</contractFileName>
                 <signingDate>01 Nov 2017</signingDate>
                 <expiryDate>01 Nov 2018</expiryDate>
             </value>
@@ -134,7 +125,7 @@
                 <insured>David Li</insured>
                 <beneficiary>Roy Balakrishnan</beneficiary>
                 <premium>8500.0</premium>
-                <contractName>BerniceYu-WholeLife.pdf</contractName>
+                <contractFileName>BerniceYu-WholeLife.pdf</contractFileName>
                 <signingDate>01 Nov 2017</signingDate>
                 <expiryDate>01 Nov 2117</expiryDate>
             </value>
@@ -148,7 +139,7 @@
                 <insured>Bernice Yu</insured>
                 <beneficiary>Charlotte Oliveiro</beneficiary>
                 <premium>100.0</premium>
-                <contractName>AlexYeoh-Normal.pdf</contractName>
+                <contractFileName>AlexYeoh-Normal.pdf</contractFileName>
                 <signingDate>01 Nov 2017</signingDate>
                 <expiryDate>01 Nov 2018</expiryDate>
             </value>
@@ -162,7 +153,7 @@
                 <insured>Oscar</insured>
                 <beneficiary>David Li</beneficiary>
                 <premium>1000.0</premium>
-                <contractName>Oscar-Normal.pdf</contractName>
+                <contractFileName>Oscar-Normal.pdf</contractFileName>
                 <signingDate>01 Nov 2017</signingDate>
                 <expiryDate>01 Nov 2018</expiryDate>
             </value>
@@ -176,23 +167,9 @@
                 <insured>Roy Balakrishnan</insured>
                 <beneficiary>Mary Jane</beneficiary>
                 <premium>500.0</premium>
-                <contractName>NotInLisa-Expensive.pdf</contractName>
+                <contractFileName>NotInLisa-Expensive.pdf</contractFileName>
                 <signingDate>01 Nov 2017</signingDate>
                 <expiryDate>01 Nov 2020</expiryDate>
-            </value>
-        </entry>
-        <entry>
-            <key>1edc1deb-96f3-4651-a881-87f5b0db372c</key>
-            <value>
-                <id>1edc1deb-96f3-4651-a881-87f5b0db372c</id>
-                <insuranceName>Term</insuranceName>
-                <owner>Alex Yeoh</owner>
-                <insured>Oscar</insured>
-                <beneficiary>Oscar</beneficiary>
-                <premium>500.0</premium>
-                <contractPath>pdf</contractPath>
-                <signingDate>01 Nov 2017</signingDate>
-                <expiryDate>01 Nov 2018</expiryDate>
             </value>
         </entry>
         <entry>
@@ -204,23 +181,9 @@
                 <insured>John Doe</insured>
                 <beneficiary>Mary Jane</beneficiary>
                 <premium>600.0</premium>
-                <contractName>TermLife.pdf</contractName>
+                <contractFileName>TermLife.pdf</contractFileName>
                 <signingDate>01 Nov 2017</signingDate>
                 <expiryDate>01 Nov 2037</expiryDate>
-            </value>
-        </entry>
-        <entry>
-            <key>38b2bc00-9dce-468e-8e01-2bec687bcd5e</key>
-            <value>
-                <id>38b2bc00-9dce-468e-8e01-2bec687bcd5e</id>
-                <insuranceName>Term</insuranceName>
-                <owner>Alex Yeoh</owner>
-                <insured>Oscar</insured>
-                <beneficiary>Oscar</beneficiary>
-                <premium>500.0</premium>
-                <contractPath>pdf</contractPath>
-                <signingDate>01 Nov 2017</signingDate>
-                <expiryDate>01 Nov 2018</expiryDate>
             </value>
         </entry>
         <entry>
@@ -232,22 +195,7 @@
                 <insured>Oscar</insured>
                 <beneficiary>Oscar</beneficiary>
                 <premium>1000.0</premium>
-                <contractName>AlexYeoh-Prudential.pdf</contractName>
-                <contractPath>contract.pdf</contractPath>
-                <signingDate>01 Nov 2017</signingDate>
-                <expiryDate>01 Nov 2018</expiryDate>
-            </value>
-        </entry>
-        <entry>
-            <key>0f6e4b41-e0f9-4015-a82c-e694e60ee1ad</key>
-            <value>
-                <id>0f6e4b41-e0f9-4015-a82c-e694e60ee1ad</id>
-                <insuranceName>Term</insuranceName>
-                <owner>Alex Yeoh</owner>
-                <insured>Oscar</insured>
-                <beneficiary>Oscar</beneficiary>
-                <premium>500.0</premium>
-                <contractPath>pdf</contractPath>
+                <contractFileName>contract.pdf</contractFileName>
                 <signingDate>01 Nov 2017</signingDate>
                 <expiryDate>01 Nov 2018</expiryDate>
             </value>
@@ -261,7 +209,7 @@
                 <insured>Oscar</insured>
                 <beneficiary>Oscar</beneficiary>
                 <premium>1000.0</premium>
-                <contractName>Oscar-AXA.pdf</contractName>
+                <contractFileName>Oscar-AXA.pdf</contractFileName>
                 <signingDate>01 Nov 2017</signingDate>
                 <expiryDate>01 Nov 2018</expiryDate>
             </value>

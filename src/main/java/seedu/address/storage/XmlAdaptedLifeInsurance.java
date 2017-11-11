@@ -30,9 +30,9 @@ public class XmlAdaptedLifeInsurance {
     @XmlElement(required = true)
     private String beneficiary;
     @XmlElement(required = true)
-    private String premium;
+    private Double premium;
     @XmlElement(required = true)
-    private String contractName;
+    private String contractFileName;
     @XmlElement(required = true)
     private String signingDate;
     @XmlElement(required = true)
@@ -56,8 +56,8 @@ public class XmlAdaptedLifeInsurance {
         owner = source.getOwner().getName();
         insured = source.getInsured().getName();
         beneficiary = source.getBeneficiary().getName();
-        premium = source.getPremium().toString();
-        contractName = source.getContractFileName().toString();
+        premium = source.getPremium().toDouble();
+        contractFileName = source.getContractFileName().toString();
         signingDate = source.getSigningDateString();
         expiryDate = source.getExpiryDateString();
     }
@@ -74,8 +74,8 @@ public class XmlAdaptedLifeInsurance {
         final InsurancePerson owner = new InsurancePerson(this.owner);
         final InsurancePerson insured = new InsurancePerson(this.insured);
         final InsurancePerson beneficiary = new InsurancePerson(this.beneficiary);
-        final Premium premium = new Premium(this.premium);
-        final ContractFileName contractName = new ContractFileName(this.contractName);
+        final Premium premium = new Premium(this.premium.toString());
+        final ContractFileName contractName = new ContractFileName(this.contractFileName);
         final DateParser dateParser = new DateParser();
         final LocalDate signingDate = dateParser.parse(this.signingDate);
         final LocalDate expiryDate = dateParser.parse(this.expiryDate);
