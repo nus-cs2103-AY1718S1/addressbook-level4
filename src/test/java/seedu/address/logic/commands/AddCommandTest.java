@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -20,6 +21,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.persons.AddCommand;
 import seedu.address.model.AddressBook;
+import seedu.address.model.CommandMode;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
@@ -135,13 +137,17 @@ public class AddCommandTest {
             throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
+        //@@author
 
-        @Override
-        public void attachTag(ReadOnlyPerson person, Tag tag)
+        public void updatePersonTags(ReadOnlyPerson person, Set<Tag> tagSet)
                 throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
-        //@@author
+
+        public void updateTaskTags(ReadOnlyTask task, Set<Tag> tagSet)
+                throws TaskNotFoundException, DuplicateTaskException {
+            fail("This method should not be called.");
+        }
 
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
@@ -187,7 +193,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public String getCommandMode() {
+        public CommandMode getCommandMode() {
             fail("This method should not be called ");
             return null;
         }

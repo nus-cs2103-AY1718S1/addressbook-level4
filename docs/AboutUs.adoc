@@ -16,8 +16,8 @@ work with and the constant support.
 image::tpq95.png[width="150", height="150", align="left"]
 {empty}[http://github.com/tpq95[github]] [<<johndoe#, portfolio>>]
 
-Role: Team Lead + Tester +
-Responsibilities: Model + Assigning Tasks
+Role: Team Lead +
+Responsibilities: Model + Scheduling and Tracking
 
 '''
 
@@ -44,7 +44,7 @@ image::raisa2010.png[width="150", height="150", align="left"]
 {empty} [https://github.com/raisa2010[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Scheduling and Tracking + Deadlines and Deliverables
+Responsibilities: Documentation + Deadlines and Deliverables + Tester
 
 '''
 

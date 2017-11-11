@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -20,6 +21,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.model.AddressBook;
+import seedu.address.model.CommandMode;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -27,7 +29,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
@@ -133,16 +134,15 @@ public class  AddTaskCommandTest {
         }
 
         @Override
-        public void deleteTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
-                DuplicatePersonException, TagNotFoundException {
-            fail("This method must not be called.");
+        public void updatePersonTags(ReadOnlyPerson target, Set<Tag> newTags)
+                throws PersonNotFoundException, DuplicatePersonException {
+            fail("This method should not be called.");
         }
 
         @Override
-        /** Add tag of given person */
-        public void attachTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
-                DuplicatePersonException, UniqueTagList.DuplicateTagException {
-            fail("This method should not be called.");
+        public void deleteTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
+                DuplicatePersonException, TagNotFoundException {
+            fail("This method must not be called.");
         }
 
         @Override
@@ -173,6 +173,12 @@ public class  AddTaskCommandTest {
         }
 
         @Override
+        public void updateTaskTags(ReadOnlyTask target, Set<Tag> allTags)
+                throws DuplicateTaskException, TaskNotFoundException {
+            fail("This method should not be called");
+        }
+
+        @Override
         public ObservableList<ReadOnlyTask> getFilteredTaskList() {
             fail("This method should not be called");
             return null;
@@ -189,7 +195,7 @@ public class  AddTaskCommandTest {
         }
 
         @Override
-        public String getCommandMode() {
+        public CommandMode getCommandMode() {
             fail("This method should not be called ");
             return null;
         }

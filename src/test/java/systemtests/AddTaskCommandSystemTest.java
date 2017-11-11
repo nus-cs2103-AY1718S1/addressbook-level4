@@ -57,7 +57,7 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: change the current command mode to task manager -> success */
         String commandMode = ChangeModeCommand.COMMAND_WORD + " tm";
-        String expectedResultMessage = String.format(MESSAGE_CHANGE_MODE_SUCCESS, "taskmanager");
+        String expectedResultMessage = String.format(MESSAGE_CHANGE_MODE_SUCCESS, "TaskManager");
         Model model = getModel();
         assertCommandSuccess(commandMode, model, expectedResultMessage);
 

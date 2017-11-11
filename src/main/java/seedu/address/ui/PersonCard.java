@@ -17,7 +17,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static String[] colours = { "red", "orange", "cyan", "green", "blue", "purple", "pink", "grey", "black" };
+    private static String[] colours = {"orange", "cyan", "blue", "purple", "pink", "grey", "black" };
     private static HashMap<String, String> tagColours = new HashMap<String, String>();
     private static Random random = new Random();
 
@@ -84,8 +84,8 @@ public class PersonCard extends UiPart<Region> {
 
     //@@author tpq95
     /**
-     * Set the colour of label for the same tag
-     * @param person
+     * Initializes the tags attached to each person sets the colour of label for the same tag.
+     * @param person the person whose tags are being initialized.
      */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {

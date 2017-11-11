@@ -47,9 +47,9 @@ public class ChangeModeCommand extends Command {
      */
     private String paraphraseCurrentMode(String mode) {
         if ("ab".equals(mode) || "addressbook".equals(mode)) {
-            return "addressbook";
+            return "AddressBook";
         } else {
-            return "taskmanager";
+            return "TaskManager";
         }
     }
 

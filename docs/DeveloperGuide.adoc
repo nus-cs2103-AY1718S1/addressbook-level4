@@ -239,9 +239,10 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-=== Switchmode mechanism
+// tag::switch[]
+=== SwitchMode mechanism
 
-The switchmode mechanism is facilitated by the ChangeModeCommand class which inherits from Command class. It allows the user switch between 2 sets of command for either addressbook or taskmanager.
+The switchMode mechanism is facilitated by the ChangeModeCommand class which inherits from Command class. It allows the user switch between 2 sets of command for either addressbook or taskmanager.
 
 Suppose the user has just executed the ChangeMode using:
 
@@ -254,7 +255,7 @@ In any command mode, the execute() function of the LogicManager class is first c
 A diagram is shown below to illustrate this mechanism.
 
 image::ChangeModeDiagram.png[width="800", height="500"]
-
+// end::switch[]
 // tag::birthday[]
 === Add contact mechanism: birthday parameter
 
@@ -301,6 +302,7 @@ The current detag mechanism does not support multiple tag removal, i.e. remove 2
 **Cons:** Cannot not remove tags of multiple contacts, and it is mandatory to retype the tags that do not need to be removed +
 // end::detag[]
 
+// tag::findtag[]
 === FindTag mechanism
 
 The FindTag mechanism is facilitated by the `FindCommand` class which inherits from `Command` class. It allows the user to find persons using tags. Users can search using multiple tags too.
@@ -337,7 +339,9 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
                 || StringUtil.containsWordIgnoreCase(person.getBirthday().value, keyword));
     }
 ----
+// end::findtag[]
 
+tag::tag[]
 === Tag mechanism
 
 The Tag mechanism is a specialised form of the edit feature that allows users to tag multiple contacts with multiple tags.
@@ -358,6 +362,9 @@ The `ModelManager` class in the `Model` component is then called to update all t
 
 The Storage and UI are subsequently updated with the new information.
 
+end::tag[]
+
+tag::addtask[]
 === AddTask mechanism
 
 The Add Task mechanism is facilitated by the `AddTaskCommand` class which inherits from the `UndoableCommand` class. It allows for the addition of new tasks to the application with a starting date and a deadline. Both dates are optional and may be omitted.
@@ -422,6 +429,10 @@ there are only two types of task dates. +
 **Cons** Description might contain slashes. t/ (to) would clash with t/ prefix for tags so to/ would have to be used.
 Limits possibilities of adding new prefixes and making the format more flexible in the future. +
 
+end::addtask[]
+
+
+// tag::deletetask[]
 === DeleteTask mechanism
 
 The Delete Task mechanism is facilitated by the `DeleteTaskCommand` class which inherits from the `UndoableCommand` class. It allows for the removal of a task at a specified index.
@@ -452,7 +463,9 @@ public class DeleteTaskCommand extends UndoableCommand {
     }
 }
 ----
+// end::deletetask[]
 
+// tag::find[]
 === FindTask mechanism
 
 The FindTask mechanism is facilitated by the `FindTaskCommand` class which inherits from `Command` class. It allows the user to find tasks using descriptions. User can search using multiple descriptions too.
@@ -474,7 +487,8 @@ At first, the `execute()` function of the `LogicManager` class is called, which 
 **Alternative 2:** Use string.contains() to find tasks. +
 **Pros:** Keywords do not have to be exactly the same as those in the description of tasks. +
 **Cons:** The search result might not be accurate. For e.g. if the user searches using the keyword 'a' all the tasks'descriptions that contains the character 'a' will appear.
-
+// end::find[]
+// tag::list[]
 === ListTask mechanism
 
 The ListTask mechanism is facilitated by the `ListTaskCommand` class which inherits from `Command` class. It allows the user to list out all the current tasks.
@@ -486,7 +500,8 @@ Suppose the user has just executed the `ListTaskCommand` using:
 ----
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `ListTaskCommand` feature is being evoked and calls the `execute()` in the `ListTaskCommand` class which update the current list to show all tasks creates and return a `CommandResult` object.
-
+// end::list[]
+// tag::select[]
 === SelectTask mechanism
 
 The SelectTask mechanism is facilitated by the `SelectTaskCommand` class which inherits from `Command` class. It allows the user to select the task at specific index.
@@ -498,7 +513,7 @@ Suppose the user has just executed the `SelectTaskCommand` using:
 ----
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `SelectTaskCommand` feature is being evoked and calls the `SelectTaskCommandParser` to parse the string and check if the index is valid. After validation the `SelectTaskCommand` class is been called. `SelectTaskCommand` will then paraphrase the tag of selected task and pass it through `conductSearch`. `conductSearch` will call `model.updateFilteredPersonList()` with `PersonContainsKeywordsPredicate` with keyword `tag` as parameter to find the tag among person list and update person list. If there are no match found, all person will be listed. Then `LogicManager` then calls the `execute()` in the `SelectTaskCommand` class which calls `EventCenter` with the parameter of `JumpToTaskListRequestEvent` class to highlight selected task card in Ui at target index. Then `execute()` creates and return a `CommandResult` object.
-
+// end::select[]
 // tag::calendar[]
 === Calendar mechanism
 
@@ -506,16 +521,21 @@ The calendar mechanism is facilitated by the `DatePickerSkin` skin instance whic
 
 Suppose the address book is modified (e.g. using `add`, `edit`, `addtask`, `deletetask`).
 
-After the modification of the address book i.e. saving of data to the `addressbook.xml` file, `ObservableList` of `Person` and `Task` classes stored in the address book are passed into the `CalendarPanel` Ui.
+After the modification of the address book i.e. saving of data to the `addressbook.xml` file, `ObservableList` of `Person` and `Task` classes stored in the address book are passed into the `CalendarPanel` Ui through `Model`.
 
 Next, `getDayCellFactory` will format the `DateCell` of the `DatePicker`. The formatting is done with `Birthday` and `Deadline` as conditions and colour and tooltip of `DateCell` as variables to be change by the formatter.
 
-[NOTE] Implementation of finding related person/task when selecting of coloured `DateCell` is still ongoing.
+By selecting the date on the calendar, the date value from the `DatePicker` will be captured and be parsed as a string. The string is then pass to `Logic` to execute the `FindCommand` which will show all persons and tasks having `Birthday` and `Deadline` on that specific date.
+
+[NOTE] Implementation of CLI for the calendar is still ongoing.
 
 The following are examples of colour and tooltip of the calendar:
 
 image::CalendarDeadlineTooltip.png[width="150", height"100"]
+Figure 4.11.a: Tooltip and colour for Deadline
+
 image::CalendarBirthdayTooltip.png[width="150", height"100"]
+Figure 4.11.b: Tooltip and colour for Birthday
 
 [discrete]
 ==== Design Considerations
@@ -1166,7 +1186,6 @@ Use case resumes at step 2.
 3. AddressBook shows the list of persons with the details
 +
 Use case ends.
-
 *Extensions*
 
 [none]

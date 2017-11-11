@@ -7,20 +7,15 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_FROM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_ON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_AT;
-import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.tasks.EditTaskCommand;
 import seedu.address.logic.commands.tasks.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.tag.Tag;
 import seedu.address.model.task.DateTimeValidator;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
@@ -57,7 +52,7 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
                     .ifPresent(editTaskDescriptor::setDeadline);
             ParserUtil.parseEventTimes(argMultimap.getValue(PREFIX_TIME_AT))
                     .ifPresent(editTaskDescriptor::setEventTimes);
-            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
+            ParserUtil.parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
 
             if (editTaskDescriptor.getStartTime().isPresent() && editTaskDescriptor.getEndTime().isPresent()
                     && !DateTimeValidator.isStartTimeBeforeEndTime(editTaskDescriptor.getStartTime().get(),
@@ -76,23 +71,6 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
         return new EditTaskCommand(index, editTaskDescriptor);
     }
 
-    //@@author
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
-     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Tag>} containing zero tags.
-     */
-    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws IllegalValueException {
-        assert tags != null;
-
-        if (tags.isEmpty()) {
-            return Optional.empty();
-        }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return Optional.of(ParserUtil.parseTags(tagSet));
-    }
-
-    //@@author raisa2010
     /**
      * Parses {@code List<String> dates} into a {@code Optional<Deadline>} containing the last date in the list,
      * if {@code dates} is non-empty.

@@ -30,7 +30,7 @@ public class TaskCard extends UiPart<Region> {
     private static final int GREEN_RANGE = 7;
     private static final int YELLOW_RANGE = 3;
     private static final int RED_RANGE = 0;
-    private static String[] colours = { "red", "orange", "cyan", "green", "blue", "purple", "pink", "grey", "black" };
+    private static String[] colours = { "orange", "cyan", "blue", "purple", "pink", "grey", "black" };
     private static HashMap<String, String> tagColours = new HashMap<String, String>();
     private static Random random = new Random();
 
@@ -79,6 +79,10 @@ public class TaskCard extends UiPart<Region> {
         } else {
             time.textProperty().bind(Bindings.convert(task.endTimeProperty()));
         }
+        task.tagProperty().addListener((observable, oldValue, newValue) -> {
+            tags.getChildren().clear();
+            initTags(task);
+        });
         setColour();
     }
     //@@author
@@ -103,17 +107,17 @@ public class TaskCard extends UiPart<Region> {
             LocalDate deaddate = LocalDate.parse(taskDate, formatter);
             int range = deaddate.getDayOfYear() - date.getDayOfYear();
             if (range >= GREEN_RANGE) {
-                bkgndColour = "#00c300";
+                bkgndColour = "#6A8A82";
             } else if (range >= YELLOW_RANGE) {
-                bkgndColour = "#d1d14f";
+                bkgndColour = "#A37C27";
             } else if (range >= RED_RANGE) {
-                bkgndColour = "#ff444d";
+                bkgndColour = "#A7414A";
             } else {
                 bkgndColour = "#878787";
             }
         } else {
             // for task with no deadline
-            bkgndColour = "#ffd0d0";
+            bkgndColour = "#563838";
         }
         gridPane.setStyle("-fx-background-color: " + bkgndColour + ";"
                 + "-fx-border-style: solid inside;"
