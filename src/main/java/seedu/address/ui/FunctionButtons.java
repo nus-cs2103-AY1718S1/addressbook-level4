@@ -99,7 +99,8 @@ public class FunctionButtons extends UiPart<Region> {
             }
         }
 
-        EmailSendWindow emailSendWindow = new EmailSendWindow(logic, stage, recipients, feedbackPersonsWithoutEmail, prefs);
+        EmailSendWindow emailSendWindow = new EmailSendWindow(logic, stage, recipients, feedbackPersonsWithoutEmail,
+                prefs);
         emailSendWindow.show();
     }
 
