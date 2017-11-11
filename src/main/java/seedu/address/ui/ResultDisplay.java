@@ -16,7 +16,6 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.Commands;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
-import seedu.address.commons.util.StringUtil;
 
 /**
  * A ui for the status bar that is displayed at the header of the application.
@@ -25,8 +24,13 @@ public class ResultDisplay extends UiPart<Region> {
 
     private static final Logger logger = LogsCenter.getLogger(ResultDisplay.class);
     private static final String FXML = "ResultDisplay.fxml";
+
     private static final String[] allCommandWords = Commands.getAllCommandWords();
     private static final HashMap<String, String> allCommandUsages = Commands.getAllCommandUsages();
+
+    private static final String CASE_INSENSITIVE_AND_WORD_START_REGEX = "(?i)^";
+    private static final String OPTIONAL_ALPANUMERIC_CHARACTERS_REGEX = "\\w*";
+
 
     private final StringProperty displayed = new SimpleStringProperty("");
 
@@ -59,7 +63,7 @@ public class ResultDisplay extends UiPart<Region> {
     void setLinkedInput(CommandBox commandBox) {
         linkedCommandInput = commandBox.getCommandTextField();
         linkedCommandInput.textProperty().addListener((observable, oldValue, newValue) -> {
-            updateAutoCompleteDisplay(newValue);
+            updateAutoCompleteDisplay(newValue.trim());
             updateInfoDisplay(oldValue, newValue);
         });
     }
@@ -68,9 +72,11 @@ public class ResultDisplay extends UiPart<Region> {
      * Updates the auto complete display according to the user input in the command box.
      *
      * Only command words that contain the input and are shorter than the input length will
-     * be considered as valid auto complete options. Furthermore, if the input has a spacing,
-     * then there will not be any suggestions displayed since all command words are implemented
-     * as single words.
+     * be considered as valid auto complete options. Also, given an input of length n, the first n
+     * characters of the command must match the input (case-insensitive) for it to be a valid suggestion.
+     *
+     * Furthermore, if the input has a spacing, then there will not be any suggestions displayed
+     * since all command words are implemented as single words.
      *
      * The first valid suggestion is also stored for custom auto complete purposes.
      */
@@ -78,13 +84,16 @@ public class ResultDisplay extends UiPart<Region> {
         ArrayList<String> matchingSuggestions = new ArrayList<>();
 
         if (currentInput.contains(" ")) {
-            return ;
+            displayed.setValue("");
+            topSuggestion = "";
+            return;
         }
 
         for (String commandWord: allCommandWords) {
-            if (currentInput.length() == 0 ||
-                    (currentInput.length() < commandWord.length() &&
-                            StringUtil.containsWordIgnoreCase(commandWord, currentInput))) {
+            if (currentInput.length() == 0
+                    || (currentInput.length() < commandWord.length()
+                        && commandWord.matches(CASE_INSENSITIVE_AND_WORD_START_REGEX
+                            + currentInput + OPTIONAL_ALPANUMERIC_CHARACTERS_REGEX))) {
                 matchingSuggestions.add(commandWord);
             }
         }
@@ -94,7 +103,7 @@ public class ResultDisplay extends UiPart<Region> {
 
         StringBuilder toDisplay = new StringBuilder();
         for (String option: matchingSuggestions) {
-            toDisplay.append(option + " ");
+            toDisplay.append(option + "\n");
         }
 
         displayed.setValue(toDisplay.toString());
