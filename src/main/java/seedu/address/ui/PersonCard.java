@@ -115,7 +115,7 @@ public class PersonCard extends UiPart<Region> {
         Image photo = null;
         try {
             if (photoImage.exists()) {
-                photo = new Image(photoImage.toURI().toURL().toString(), 80, 80, false, true);
+                photo = new Image(photoImage.toURI().toURL().toString(), 40, 40, false, true);
             } else {
                 photo = createJarImage("/images/default_photo.png");
             }
@@ -124,7 +124,7 @@ public class PersonCard extends UiPart<Region> {
         }
         photoContainer.setImage(photo);
 
-        Circle clip = new Circle(60, 60, 50);
+        Circle clip = new Circle(30, 30, 25);
         photoContainer.setClip(clip);
     }
 
@@ -133,7 +133,7 @@ public class PersonCard extends UiPart<Region> {
      */
     public Image createJarImage(String jarPath) {
         InputStream inputStream = this.getClass().getResourceAsStream(jarPath);
-        Image photo = new Image(inputStream, 80, 80, false, true);
+        Image photo = new Image(inputStream, 40, 40, false, true);
         return photo;
     }
     //@@author
