@@ -572,9 +572,9 @@ The NameComparator compares two names and ignore their case.
 **Alternative 1 (current choice):** Use java Collection.sort() which is a merge sort algorithm. +
 **Pros:** Works well with few persons in the addressbook and merge sort algorithm is stable. +
 **Cons:** Time complexity is nlog(n) hence takes long to sort as more persons are being added over time. +
-**Alternative 2:** Implement insertion sort algorithm
-**Pros:** Able to achieve O(n) time complexity. +
-**Cons:** Addressbook has to be almost sorted to achieved O(n) time complexity, otherwise can rise in O(n2).
+**Alternative 2:** Implement insertion sort algorithm. +
+**Pros:** Able to achieve O(n) time complexity which is the fastest. +
+**Cons:** Addressbook has to be almost sorted to achieved O(n) time complexity, otherwise can result in O(n2).
 
 ---
 // end::sort[]
