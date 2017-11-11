@@ -24,6 +24,8 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BinclearCommand;
 import seedu.address.logic.commands.BindeleteCommand;
 import seedu.address.logic.commands.BinrestoreCommand;
+import seedu.address.logic.commands.BirthdayAddCommand;
+import seedu.address.logic.commands.BirthdayRemoveCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -45,6 +47,7 @@ import seedu.address.logic.commands.TagRemoveCommand;
 import seedu.address.logic.commands.TagRemoveCommand.TagRemoveDescriptor;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
@@ -196,6 +199,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
     }
 
+    //@@author dalessr
     @Test
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("n/", "foo", "bar", "baz");
@@ -203,6 +207,26 @@ public class AddressBookParserTest {
                 FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
+
+    @Test
+    public void parseCommand_birthdayAdd() throws Exception {
+        List<String> keywords = Arrays.asList("1", "01/01/2000");
+        BirthdayAddCommand command = (BirthdayAddCommand) parser.parseCommand(
+                BirthdayAddCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        Index firstIndex = new Index(0);
+        Birthday birthday = new Birthday("01/01/2000");
+        assertEquals(new BirthdayAddCommand(firstIndex, birthday), command);
+    }
+
+    @Test
+    public void parseCommand_birthdayRemove() throws Exception {
+        List<String> keywords = Arrays.asList("1");
+        BirthdayRemoveCommand command = (BirthdayRemoveCommand) parser.parseCommand(
+                BirthdayRemoveCommand.COMMAND_WORD + " " + keywords.get(0) + "");
+        Index firstIndex = new Index(0);
+        assertEquals(new BirthdayRemoveCommand(firstIndex), command);
+    }
+
     //@@author Pengyuz
     @Test
     public void parseCommand_search() throws Exception {
@@ -290,6 +314,7 @@ public class AddressBookParserTest {
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
     }
 
+    //@@author dalessr
     @Test
     public void parseCommand_map_show() throws Exception {
         MapShowCommand command = (MapShowCommand) parser.parseCommand(

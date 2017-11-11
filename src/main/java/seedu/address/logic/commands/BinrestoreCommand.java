@@ -3,9 +3,12 @@ package seedu.address.logic.commands;
 import java.util.ArrayList;
 import java.util.List;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -47,6 +50,9 @@ public class BinrestoreCommand extends UndoableCommand {
         if (isVaild && isEmpty) {
             try {
                 model.restorePerson(personstodelete);
+                model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+                Index lastIndex = new Index(model.getFilteredPersonList().size() - 1);
+                EventsCenter.getInstance().post(new JumpToListRequestEvent(lastIndex));
             } catch (PersonNotFoundException pnfe) {
                 assert false : "The target person cannot be missing";
             } catch (DuplicatePersonException d) {

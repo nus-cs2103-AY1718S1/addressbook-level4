@@ -1,5 +1,9 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.ClearPersonListEvent;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.tag.TagMatchingKeywordPredicate;
 //@@author ZhangH795
 /**
@@ -24,6 +28,12 @@ public class TagFindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
+        if (model.getFilteredPersonList().size() > 0) {
+            Index defaultIndex = new Index(0);
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(defaultIndex));
+        } else {
+            EventsCenter.getInstance().post(new ClearPersonListEvent());
+        }
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
