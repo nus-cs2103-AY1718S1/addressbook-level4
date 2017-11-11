@@ -110,15 +110,20 @@ For the following tutorials, command formatting will be explained using the foll
 This is not applicable for parameters without a prefix.
 For example, if a command syntax uses: edit INDEX n/NAME, then the INDEX parameter MUST be in the
 exact position as in the syntax, in this case, after the command word i.e. edit.
+
 // tag::switch[]
 === Switching Between Address Book and Task Manager : `switch`
 
 To help you save time to remember all the commands in Mobilize, you can toggle between address book and task manager using:
 
-Format: `switch ab` or `switch tm`
+Format: `switch addressbook` or `switch taskmanager`
+
+[TIP]
+You can use `ab` for `addressbook` and `tm` for `taskmanager`
 
 [NOTE]
-The default system of Mobilize will be address book.
+The default mode of Mobilize will be address book.
+
 // end::switch[]
 === Managing Contacts
 
@@ -394,13 +399,14 @@ _Constraints_ +
 ****
 * Dates MUST be preceded by one of the prefixes.
 ****
+
 // tag::find[]
 ==== Finding tasks by description or deadline: `find`
 
-To find people whose description contain any of the given keywords, use +
+To find task whose description contain any of the given keywords, use +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-To find people by deadlines, use +
+To find task by deadlines, use +
 Format: `find DD-MM-YYYY`
 
 Examples:
@@ -419,9 +425,9 @@ __Constraints:__
 ****
 * The search is case insensitive. e.g `finish` will match `Finish`.
 * The order of the keywords does not matter. e.g. `Finish task` will match `task finish`.
-* Only the description and deadline is searched.
+* Only the description and deadline are searched.
 * Only full words will be matched e.g `Finish` will not match `Finished`.
-* Only valid date will be matched e.g `291017` will not match `29-10-2017`.
+* Only valid dates will be matched e.g `291017` will not match `29-10-2017`.
 ****
 // end::find[]
 ==== Deleting tasks : `delete`
@@ -490,21 +496,21 @@ __Constraints:__
 // tag::list[]
 ==== Listing tasks : `list` +
 
-To go back to the default list of tasks after a round of filtering, use:
+To go back to the default list of tasks after a round of filtering, use the list command:
 
 Format: `list`
 // end::list[]
+
 // tag::select[]
 ==== Selecting a task: `select`
 
 To select the task identified by the index number used in the last task listing, use: +
 Format: `select INDEX`
 
-****
-* Selects the task at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
+[NOTE]
+====
+The selected task will show involved people in the address book. If there are no involved personnel, there will be no changes in the displayed list of contacts.
+====
 
 Examples:
 
@@ -515,10 +521,13 @@ Selects the 2nd task in the task manager.
 `select 1` +
 Selects the 1st task in the results of the `find` command.
 
-[NOTE]
-====
-The selected task will show involved people in the address book. If there are no involved personnel, there will be no changes in the displayed list of contacts.
-====
+__Constraints:__
+****
+* Selects the task at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
 // end::select[]
 === Managing Common Features
 
