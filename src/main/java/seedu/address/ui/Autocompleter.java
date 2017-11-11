@@ -248,8 +248,6 @@ public class Autocompleter {
         return Character.isDigit(text.charAt(text.length() - 1));
     }
 
-
-
     /**
      * Handle autocomplete when there is only word in the command box
      */
@@ -297,7 +295,6 @@ public class Autocompleter {
         return Arrays.stream(AutocompleteCommand.ALL_PREFIXES)
                 .anyMatch(s -> lastTwoCharacters.equals(s.toString()));
     }
-
 
     /**
      * Get a list of possible commands to autocomplete
