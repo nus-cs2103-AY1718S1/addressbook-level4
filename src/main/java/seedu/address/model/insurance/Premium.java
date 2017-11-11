@@ -8,7 +8,7 @@ import seedu.address.logic.parser.exceptions.EmptyFieldException;
 
 //@@author OscarWang114
 /**
- * Represents a Insurance's premium in LISA.
+ * Represents a insurance's premium in LISA.
  * Guarantees: immutable; is valid as declared in {@link #isValidPremium(String)}
  */
 public class Premium {
@@ -49,13 +49,14 @@ public class Premium {
         return this.value;
     }
 
-    //@author Juxarius
+    //@@author Juxarius
     @Override
     public String toString() {
         return "S$ " + String.format("%.2f", value);
     }
-    //@author
+    //@@author
 
+    //@@author OscarWang114
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -67,5 +68,5 @@ public class Premium {
     public int hashCode() {
         return value.hashCode();
     }
-
+    //
 }

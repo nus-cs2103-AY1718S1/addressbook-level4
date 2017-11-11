@@ -30,6 +30,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.LifeInsuranceBuilder;
 
+//@@author OscarWang114
 public class AddLifeInsuranceCommandTest {
 
     @Rule

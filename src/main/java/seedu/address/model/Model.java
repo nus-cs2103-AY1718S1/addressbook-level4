@@ -58,22 +58,22 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
-    //@@author OscarWang114
-    /** Returns an unmodifiable view of the filtered insurance list */
-    ObservableList<ReadOnlyInsurance> getFilteredInsuranceList();
-    //@@author
-
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    //@@author OscarWang114
+    /** Returns an unmodifiable view of the filtered insurance list */
+    ObservableList<ReadOnlyInsurance> getFilteredInsuranceList();
+
     /**
      * Updates the filter of the filtered insurance list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredInsuranceList(Predicate<ReadOnlyInsurance> predicate);
+    //@@author
 
     void deleteInsurance(ReadOnlyInsurance insuranceToDelete) throws InsuranceNotFoundException;
 }

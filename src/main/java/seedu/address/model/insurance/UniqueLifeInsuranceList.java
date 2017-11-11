@@ -52,6 +52,7 @@ public class UniqueLifeInsuranceList implements Iterable<LifeInsurance> {
     }
     //@@author
 
+    //@@author OscarWang114
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */

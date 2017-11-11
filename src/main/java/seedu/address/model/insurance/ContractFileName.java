@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTRACT_FILE_NAME;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.exceptions.EmptyFieldException;
 
+//@@author OscarWang114
 /**
  * Represents a contract file name of an insurance in LISA.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
@@ -42,7 +43,7 @@ public class ContractFileName {
     }
 
     /**
-     * Returns true if a given string is a valid insurance name.
+     * Returns true if a given string is a valid contract file name.
      */
     public static boolean isValidName(String test) {
         return test.matches(NAME_VALIDATION_REGEX);

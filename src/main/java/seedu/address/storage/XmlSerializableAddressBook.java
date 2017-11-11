@@ -95,7 +95,6 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
                         return i.getValue().toModelType();
                     } catch (IllegalValueException e) {
                         e.printStackTrace();
-                        //TODO: better error handling
                         return null;
                     }
                 }

@@ -67,7 +67,7 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
     /**
      * Check if any {@code ReadOnlyPerson} arguments (owner, insured, and beneficiary) required to create a
      * life insurance are inside the person list by matching their names case-insensitively. If matches,
-     * set the person as the owner, insured, or beneficiary accordingly. Note that a person can
+     * set the person as the owner, insured, or beneficiary accordingly.
      */
     private void isAnyPersonInList(List<ReadOnlyPerson> list, LifeInsurance lifeInsurance) {
         String ownerName = lifeInsurance.getOwner().getName();

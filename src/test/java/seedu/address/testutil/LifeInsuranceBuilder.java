@@ -13,7 +13,7 @@ import seedu.address.model.insurance.Premium;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.person.ReadOnlyPerson;
 
-//@@author OscarWang117
+//@@author OscarWang114
 /**
  * A utility class to help with building LifeInsurance objects.
  */

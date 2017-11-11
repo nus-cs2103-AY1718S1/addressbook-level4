@@ -95,23 +95,14 @@ public class LifeInsurance implements ReadOnlyInsurance {
      * Creates a copy of the given ReadOnlyInsurance.
      */
     public LifeInsurance(ReadOnlyInsurance source) {
+        this(source.getInsuranceName(), source.getOwner(), source.getInsured(), source.getBeneficiary(),
+                source.getPremium(), source.getContractFileName(), source.getSigningDate(), source.getExpiryDate());
         this.id = new SimpleObjectProperty<>(source.idProperty().get());
-        this.insuranceName = new SimpleObjectProperty<>(source.getInsuranceName());
-        this.roleToPersonNameMap = source.getRoleToPersonNameMap();
-        this.owner = new SimpleObjectProperty<>(source.getOwner());
-        this.insured = new SimpleObjectProperty<>(source.getInsured());
-        this.beneficiary = new SimpleObjectProperty<>(source.getBeneficiary());
-        this.premium = new SimpleObjectProperty<>(source.getPremium());
-        this.contractFileName = new SimpleObjectProperty<>(source.getContractFileName());
-        this.signingDate = source.getSigningDate();
-        this.expiryDate = source.getExpiryDate();
-        this.signingDateString = new SimpleStringProperty(source.getSigningDateString());
-        this.expiryDateString = new SimpleStringProperty(source.getExpiryDateString());
     }
 
     /**
      * Resets the value of the owner, insured, beneficiary of this insurance. Every new {@code InsurancePerson}
-     * object is constructed with the {@code name} field assigned as {@code Name} and the {@code person} field
+     * object is constructed with the name field assigned as {@code Name} and the person field
      * assigned as {@code Optional.empty()}.
      */
     public void resetAllInsurancePersons() {

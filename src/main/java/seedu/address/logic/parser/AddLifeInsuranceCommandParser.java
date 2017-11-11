@@ -26,7 +26,7 @@ import seedu.address.model.insurance.ReadOnlyInsurance;
 
 //@@author OscarWang114
 /**
- * Parses input arguments and creates a new AddLifeInsuranceCommand object
+ * Parses input arguments and creates a new {@code AddLifeInsuranceCommand} object
  */
 public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCommand> {
 

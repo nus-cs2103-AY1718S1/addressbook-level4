@@ -25,7 +25,7 @@ public class Address {
 
     //@@author OscarWang114
     /**
-     * Initialize a Address object with value of empty String. This can ONLY be used in the default field of
+     * Initialize a Address object with value of empty String. This can only be used in the default field of
      * {@code AddPersonOptionalFieldDescriptor}
      */
     public Address() {

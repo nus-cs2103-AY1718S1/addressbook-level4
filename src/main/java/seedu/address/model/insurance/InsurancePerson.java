@@ -10,7 +10,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author OscarWang114
 /**
- * Represents a person and his/her name in an insurance in LISA.
+ * Represents a person and his/her name in an insurance inside LISA.
  */
 public class InsurancePerson {
 

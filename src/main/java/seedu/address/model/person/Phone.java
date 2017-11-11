@@ -20,7 +20,7 @@ public class Phone {
 
     //@@author OscarWang114
     /**
-     * Initialize a Phone object with value of empty String. This can ONLY be used in the default field of
+     * Initialize a Phone object with value of empty String. This can only be used in the default field of
      * {@code AddPersonOptionalFieldDescriptor}
      */
     public Phone() {

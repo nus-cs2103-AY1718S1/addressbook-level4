@@ -8,6 +8,6 @@ import seedu.address.commons.exceptions.DuplicateDataException;
  */
 public class DuplicateContractFileNameException extends DuplicateDataException {
     public DuplicateContractFileNameException() {
-        super("Operation would result in duplicate insurance contract names");
+        super("Operation would result in duplicate insurance contract file names");
     }
 }

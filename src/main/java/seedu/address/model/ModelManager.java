@@ -86,7 +86,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //@author OscarWang114
+    //@@author OscarWang114
     @Override
     public synchronized void addLifeInsurance(ReadOnlyInsurance insurance)
             throws DuplicateInsuranceException, DuplicateContractFileNameException {
@@ -125,7 +125,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredInsurances.setPredicate(predicate);
     }
-    //
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
