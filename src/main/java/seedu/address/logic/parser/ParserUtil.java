@@ -42,7 +42,7 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
-    static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
+    public static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
         String trimmedIndex = oneBasedIndex.trim();
         if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
@@ -56,7 +56,7 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the file does not exist
      */
-    static File parseFile(String path) throws IllegalValueException {
+    public static File parseFile(String path) throws IllegalValueException {
         String trimmedAddress = path.trim();
         File file = new File(trimmedAddress);
         if (!getExtension(file).equals(".xml")) {
