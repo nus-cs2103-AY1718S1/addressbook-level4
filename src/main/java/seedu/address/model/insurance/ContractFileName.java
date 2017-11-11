@@ -57,8 +57,8 @@ public class ContractFileName {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof InsuranceName // instanceof handles nulls
-                && this.fullName.equals(((InsuranceName) other).fullName)); // state check
+                || (other instanceof ContractFileName // instanceof handles nulls
+                && this.fullName.equals(((ContractFileName) other).fullName)); // state check
     }
 
     @Override
