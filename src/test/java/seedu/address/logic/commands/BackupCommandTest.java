@@ -92,7 +92,7 @@ public class BackupCommandTest {
 
     // No CommandExceptions to test: IO Exception always thrown before Command Exception within BackupCommand
     @Test
-    public void execute_invalidFilePath_throwsIOException() {
+    public void execute_invalidFilePath_throwsIoException() {
         // directory testBackup does not exist
         String invalidAddress = "v:\\Gibberish Folder\\Gibberish Name";
         BackupCommand backupCommand = prepareCommand(invalidAddress);
