@@ -305,7 +305,7 @@ The current detag mechanism does not support multiple tag removal, i.e. remove 2
 // tag::findtag[]
 === FindTag mechanism
 
-The FindTag mechanism is facilitated by the `FindCommand` class which inherits from `Command` class. It allows the user to find contacts using tags. Users can search using multiple tags too.
+The FindTag mechanism is facilitated by the `FindCommand` class which inherits from the `Command` class. It allows the user to find contacts using tags. Users can search using multiple tags too.
 
 Suppose the user has just executed the `FindCommand` using:
 
