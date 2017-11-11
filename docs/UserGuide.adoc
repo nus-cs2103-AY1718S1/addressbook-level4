@@ -106,15 +106,16 @@ Contact us directly by emailing to `kaihsien.boo[at]u.nus.edu`.
 
 === Adding a person: `add` / `a` kbd:[V2.0]
 
-//tag::bday[]
 
-Adds a person to Death Note +
+//tag::add[]
+Adds a person to DeathNote +
 
   Format: `add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
 
   Shorthand: `a n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
-
+//end::add[]
 * Only the *NAME* field is compulsory +
+//tag::bday[]
 * Birthday is in dd/MM/yyyy format +
 * Picture should be in PNG format +
 

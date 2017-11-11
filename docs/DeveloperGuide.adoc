@@ -413,10 +413,10 @@ This loads the selected XML file which opens a new address book with contacts fr
 **Alternative 1 (current choice):** Event-Driven Architectural Style +
 **Alternative 2:** N-Tier Architectural Design +
 
-=== Add new person with optional fields
-
-Adding new person in the application requires only name. All other fields are optional. This is done by allowing the creation of
-`Phone`, `Email`, etc. objects with `null` parameter.
+=== Adds a person with optional fields
+//tag::add[]
+Adding a new person into DeathNote requires only `Name`. All other fields are optional. This is
+achieved by allowing field objects to be instantiated with `null` parameter.
 
 Problems arise when these field classes can created with a `null` parameter. Necessary changes are mostly about additional
 checks of `null` in its respective class:
@@ -452,7 +452,7 @@ checks of `null` in its respective class:
         return false;
     }
 ----
-
+//end::add[]
 ==== Design considerations
 
 **Aspect:** Nature of field object when dealing with `null` +

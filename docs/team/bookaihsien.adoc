@@ -6,7 +6,6 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: DeathNote
 
 *Code contributed*:
-
 https://github.com/CS2103AUG2017-W10-B3/main/blob/master/collated/main/chrisboo.md[Functional code]
 https://github.com/CS2103AUG2017-W10-B3/main/blob/master/collated/test/chrisboo.md[Test code]
 
@@ -19,11 +18,7 @@ https://github.com/CS2103AUG2017-W10-B3/main/blob/master/collated/test/chrisboo.
 
 #Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
 
-Adds a person to Death Note +
-
-  Format: `add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
-
-  Shorthand: `a n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
+include::../UserGuide.adoc[tag=add]
 
 #End of Extract#
 
@@ -31,7 +26,7 @@ Adds a person to Death Note +
 
 ==== Justification
 
-This feature allows flexibility in the usage of DeathNote.
+Most of the time we don't have the full contact information about a person. This feature allows them to use DeathNote just as well.
 
 ==== Implementation
 
@@ -39,42 +34,7 @@ This feature allows flexibility in the usage of DeathNote.
 
 #Start of Extract [from: Developer Guide]#
 
-This is done by allowing the creation of `Phone`, `Email`, etc. objects with `null` parameter.
-
-Problems arise when these field classes can created with a `null` parameter. Necessary changes are mostly about additional
-checks of `null` in its respective class:
-
-----
-    public Phone(String phone) throws IllegalValueException {
-        String trimmedPhone = phone == null ? null : phone.trim();
-        if (!isValidPhone(trimmedPhone)) {
-            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
-        }
-        this.value = trimmedPhone;
-    }
-----
-
-----
-    public static boolean isValidPhone(String test) {
-        return test == null || test.matches(PHONE_VALIDATION_REGEX);
-    }
-----
-
-----
-    public boolean equals(Object other) {
-        if (other == this) { // short circuit if same object
-            return true;
-        } else if (!(other instanceof Phone)) { // instanceof handle nulls
-            return false;
-        } else if (this.value == ((Phone) other).value) {
-            return true;
-        } else if (this.value != null && this.value.equals(((Phone) other).value)) { // state check
-            return true;
-        }
-
-        return false;
-    }
-----
+include::../DeveloperGuide.adoc[tag=add]
 
 #End of Extract#
 
