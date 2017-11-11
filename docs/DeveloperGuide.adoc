@@ -471,21 +471,19 @@ Scenarios include - +
 // tag::listImplementation[]
 *How it is implemented* +
 
+Figure 20 as follows shows the activity diagram for the list package. +
+Implementation passes through two main segements: Logic and Model. +
 
 image::ListPackageActivityDiagram.png[width="800"]
     Figure 20: List Package Activity Diagram
 
-The diagram above shows the activity diagram for the list package. +
-Implementation passes through two main segments: Logic and Model. +
- +
+An explanation will be provided using ListByTag Command as an example. +
+The sequence diagram of the ListByTag Command can be seen in Figure 21 as follows. +
 
 image::ListByTagSD.png[width="800"]
     Figure 21: ListByTag Command Sequence Diagram
 
-An explanation will be provided using ListByTag Command as an example. +
-The sequence diagram of the ListByTag Command can be seen in the figure above. +
 The explanation for the above diagram is as follows: +
-
 
 1. Logic
 
@@ -639,10 +637,11 @@ user field for the additonal information.
 *How it is implemented* +
 Implementation passes through two main segments: Logic and Model. +
 
+The sequence diagram of the Remark Command can be seen in Figure 22 below. +
+
 image::RemarkSD.png[width="800"]
     Figure 22: Remark Command Sequence Diagram
 
-The sequence diagram of the Remark Command can be seen in the figure above. +
 The explanation for the above diagram is as follows: +
 
 1. Logic
