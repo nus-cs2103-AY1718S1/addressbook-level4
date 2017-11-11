@@ -843,7 +843,7 @@ again to set it to a legal color.
 ====
 
 // tag::bookingNUS[]
-=== Booking of NUS facilities
+=== Booking of NUS facilities: `(book)bookNUS`
 
 _(Exclusive feature for NUS students)_ +
 _(Coming in v2.0)_

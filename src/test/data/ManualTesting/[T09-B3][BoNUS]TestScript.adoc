@@ -46,6 +46,20 @@ for more information.
 
 === Add/view/edit/delete contacts
 
+==== Add avatar to an existing person
+
+To add avatar to a contact, we need to use the `avatar` command.
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Add avatar to the third person in the listing (assume there are at least three contacts) +
+_Command:_ +
+`avatar 3 http://profileengine.com/large/420503790/nus.soc`
+
 === Add/view/edit/delete events
 
 [NOTE]
@@ -138,6 +152,10 @@ _Command:_ +
 _Result:_ +
 `0 examinations have been added as events.` +
 `However, some examination were not added since they already exist in the application.`
+
+==== Export data to `.xml` format
+
+To export data to a `.xml` file, we need to use the `export` command
 
 === Advance setting
 
@@ -257,3 +275,7 @@ _Result:_ +
 `Entered commands (from most recent to earliest):` +
 `...` +
 _(All commands will be listed below.)_
+
+==== Undo/redo previous commands
+
+Use `undo` or `redo` to undo/redo the last command entered.
