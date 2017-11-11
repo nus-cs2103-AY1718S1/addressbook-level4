@@ -16,8 +16,6 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -167,22 +165,24 @@ public class EditCommand extends UndoableCommand {
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
     }
-//    /**
-//     * Creates and returns a {@code Meeting} with the details of {@code meetingToEdit}
-//     * edited with {@code editMeetingDescriptor}.
-//     */
-//    private static Meeting createEditedMeeting(ReadOnlyMeeting meetingToEdit,
-//                                               EditMeetingCommand.EditMeetingDescriptor editMeetingDescriptor,
-//                                               PersonToMeet person, PhoneNum phone) {
-//        assert meetingToEdit != null;
-//
-//        NameMeeting updatedName = editMeetingDescriptor.getName().orElse(meetingToEdit.getName());
-//        DateTime updatedDate = editMeetingDescriptor.getDate().orElse(meetingToEdit.getDate());
-//        Place updatedPlace = editMeetingDescriptor.getPlace().orElse(meetingToEdit.getPlace());
-//        MeetingTag updatedTag = editMeetingDescriptor.getMeetTag().orElse(meetingToEdit.getMeetTag());
-//
-//        return new Meeting(updatedName, updatedDate, updatedPlace, person, phone, updatedTag);
-//    }
+
+    /**
+     * Creates and returns a {@code Meeting} with the details of {@code meetingToEdit}
+     * edited with {@code editMeetingDescriptor}.
+     */
+    /*
+    private static Meeting createEditedMeeting(ReadOnlyMeeting meetingToEdit,
+                                               EditMeetingCommand.EditMeetingDescriptor editMeetingDescriptor,
+                                               PersonToMeet person, PhoneNum phone) {
+        assert meetingToEdit != null;
+
+        NameMeeting updatedName = editMeetingDescriptor.getName().orElse(meetingToEdit.getName());
+        DateTime updatedDate = editMeetingDescriptor.getDate().orElse(meetingToEdit.getDate());
+        Place updatedPlace = editMeetingDescriptor.getPlace().orElse(meetingToEdit.getPlace());
+        MeetingTag updatedTag = editMeetingDescriptor.getMeetTag().orElse(meetingToEdit.getMeetTag());
+        return new Meeting(updatedName, updatedDate, updatedPlace, person, phone, updatedTag);
+    }
+    */
 
     @Override
     public boolean equals(Object other) {

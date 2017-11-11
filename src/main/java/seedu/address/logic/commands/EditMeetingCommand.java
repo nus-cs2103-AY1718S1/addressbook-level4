@@ -182,7 +182,9 @@ public class EditMeetingCommand extends UndoableCommand {
             return Optional.ofNullable(meetTag);
         }
 
-        public void setPersonsMeet(List<ReadOnlyPerson> persons) { this.personsMeet = persons; }
+        public void setPersonsMeet(List<ReadOnlyPerson> persons) {
+            this.personsMeet = persons;
+        }
 
         public Optional<List<ReadOnlyPerson>> getPersonsMeet() {
             return Optional.ofNullable(personsMeet);
