@@ -4,7 +4,6 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.PrintCommand.MESSAGE_SUCCESS;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
@@ -22,7 +21,7 @@ public class PrintCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_valid_fileName_success () {
+    public void execute_valid_filename_success () {
         String fileName = "fileName";
         PrintCommand printCommand = prepareCommand(fileName);
 
