@@ -270,9 +270,9 @@ public class CommandBox extends UiPart<Region> {
         input = commandTextField.getText();
         updateKeyboardIcon();
         setStyleToDefault();
-        if (isFirstTab) {
+        //if (isFirstTab) {
             autoSelectFirstField();
-        }
+        //}
         if (needToNavigateToNextField) {
             updateSelection();
         }

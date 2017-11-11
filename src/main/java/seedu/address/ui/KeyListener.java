@@ -149,9 +149,7 @@ public class KeyListener {
      */
     private void displayCommandFormat(String command) {
         commandBox.replaceText(command);
-        commandBox.setFocus();
-        commandBox.autoSelectFirstField();
-        commandBox.updateSelection();
+        commandBox.pressCtrl();
     }
 
     /**
