@@ -391,10 +391,10 @@ public class KeyListener {
             executeCommand(ListCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_OPEN_FILE.match(keyEvent)) {
-            executeCommand(OpenCommand.COMMAND_WORD);
+            executeCommand(OpenRolodexCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_NEW_FILE.match(keyEvent)) {
-            executeCommand(NewCommand.COMMAND_WORD);
+            executeCommand(NewRolodexCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_ADD.match(keyEvent)) {
             displayCommandFormat(AddCommand.FORMAT);
@@ -420,7 +420,7 @@ public class KeyListener {
      * Executes command triggered by key presses.
      */
     private void executeCommand(String command) {
-        if (command.equals(OpenCommand.COMMAND_WORD) || command.equals(NewCommand.COMMAND_WORD)) {
+        if (command.equals(OpenRolodexCommand.COMMAND_WORD) || command.equals(NewRolodexCommand.COMMAND_WORD)) {
             commandBox.replaceText(command + " ");
         } else {
             commandBox.replaceText(command);
@@ -716,8 +716,10 @@ public class KeyListenerUtil {
     public static final KeyCombination KEY_COMBINATION_UNDO = KeyCombination.valueOf(UndoCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_REDO = KeyCombination.valueOf(RedoCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_LIST = KeyCombination.valueOf(ListCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_OPEN_FILE = KeyCombination.valueOf(OpenCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_NEW_FILE = KeyCombination.valueOf(NewCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_OPEN_FILE = KeyCombination
+            .valueOf(OpenRolodexCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_NEW_FILE = KeyCombination
+            .valueOf(NewRolodexCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_ADD = KeyCombination.valueOf(AddCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_EDIT = KeyCombination.valueOf(EditCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_FIND = KeyCombination.valueOf(FindCommand.COMMAND_HOTKEY);

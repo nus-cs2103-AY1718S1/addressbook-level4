@@ -139,7 +139,7 @@ public class KeyListenerTest extends RolodexGuiTest {
         KeyCodeCombination openKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+O");
 
         guiRobot.push(openKeyCode);
-        assertEquals(OpenCommand.COMMAND_WORD + " ", getCommandBox().getInput());
+        assertEquals(OpenRolodexCommand.COMMAND_WORD + " ", getCommandBox().getInput());
     }
 
     @Test
@@ -147,7 +147,7 @@ public class KeyListenerTest extends RolodexGuiTest {
         KeyCodeCombination newKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+N");
 
         guiRobot.push(newKeyCode);
-        assertEquals(NewCommand.COMMAND_WORD + " ", getCommandBox().getInput());
+        assertEquals(NewRolodexCommand.COMMAND_WORD + " ", getCommandBox().getInput());
     }
 
     @Test
@@ -406,7 +406,7 @@ public class RemarkCommandTest {
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 ```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
+###### \java\seedu\address\logic\parser\parserutil\ParserUtilTest.java
 ``` java
     @Test
     public void parseRemarkNullThrowsNullPointerException() throws Exception {
@@ -694,14 +694,14 @@ public class PersonDetailPanelTest extends GuiUnitTest {
 ``` java
         /* Case: edit some fields excluding name -> edited with no change in index */
         index = INDEX_FIRST_PERSON;
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
+        command = COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
         personToEdit = getModel().getLatestPersonList().get(index.getZeroBased());
         editedPerson = new PersonBuilder(personToEdit).withTags(VALID_TAG_FRIEND).build(personToEdit.getTags());
         assertCommandSuccess(command, index, editedPerson, index);
 
         /* Case: edit some fields including name -> edited with change in index */
         index = INDEX_SECOND_PERSON;
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY;
+        command = COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY;
         personToEdit = getModel().getLatestPersonList().get(index.getZeroBased());
         editedPerson = new PersonBuilder(personToEdit).withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .build(personToEdit.getTags());
