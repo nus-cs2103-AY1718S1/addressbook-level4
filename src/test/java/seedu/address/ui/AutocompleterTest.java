@@ -150,7 +150,7 @@ public class AutocompleterTest extends GuiUnitTest {
         assertAutocompleteSuccess("edit 1", "edit 2", EMPTY_STRING);
 
         // fill in prefix
-        assertAutocompleteSuccess("edit 2", "edit 2 #/", EMPTY_STRING);
+        assertAutocompleteSuccess("edit 2 ", "edit 2 #/", EMPTY_STRING);
 
         // cycle to next prefix
         assertAutocompleteSuccess("edit 2 #/", "edit 2 n/", EMPTY_STRING);
