@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="homePage" pickOnBounds="true" preserveRatio="true" />
+      <Text fill="WHITE" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome Home" translateY="70.0">
+         <font>
+            <Font size="96.0" />
+         </font>
+      </Text>
+      <Label fx:id="quotesLabel" ellipsisString="" text="\\$quotes" textAlignment="CENTER" translateY="180.0" wrapText="true">
+         <font>
+            <Font name="Arial" size="50.0" />
+         </font>
+      </Label>
+   </children>
+</StackPane>

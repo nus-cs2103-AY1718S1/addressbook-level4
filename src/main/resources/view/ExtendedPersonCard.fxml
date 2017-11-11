@@ -138,6 +138,7 @@
                   <Image url="@../images/student.png" />
               </image>
           </ImageView>
+      <Label GridPane.columnIndex="1" />
     </children>
    <columnConstraints>
       <ColumnConstraints maxWidth="87.56741333007812" minWidth="25.0" prefWidth="25.0" />

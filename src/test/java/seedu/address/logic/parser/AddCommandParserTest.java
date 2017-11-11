@@ -300,6 +300,13 @@ public class AddCommandParserTest {
     @Test
     public void optionalInput() {
 
+        // When student phone, address, postal code, and email not entered by user
+        assertEquals(AddCommandParser.optionalInput("add n/John Doe "
+                + "pp/97979797 f/12S23 g/123.0 "
+                + "t/friends t/owesMoney"), "add n/John Doe pp/97979797 f/12S23 g/123.0 "
+                + "t/friends t/owesMoney a/ (Address not recorded) "
+                + "e/ (Email not recorded) c/ (Postal code not recorded) p/ (Student phone not recorded)");
+
         // When address, postal code, and email not entered by user
         assertEquals(AddCommandParser.optionalInput("add n/John Doe p/97272031 "
                 + "pp/97979797 f/12S23 g/123.0 "

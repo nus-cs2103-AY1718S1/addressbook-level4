@@ -204,11 +204,12 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
                         + INVALID_FORMCLASS_DESC,
                 FormClass.MESSAGE_FORMCLASS_CONSTRAINTS);
-
+        //@@author Lenaldnwj
         /* Case: invalid parentPhone -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
                         + INVALID_PARENTPHONE_DESC,
                 ParentPhone.MESSAGE_PARENTPHONE_CONSTRAINTS);
+        //@@author
 
         /* Case: invalid postalCode -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()

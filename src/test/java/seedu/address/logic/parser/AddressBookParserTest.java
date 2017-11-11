@@ -30,6 +30,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindTagsCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.HomeCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
@@ -338,6 +339,11 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_tabCommandWord_returnsTabCommand() throws Exception {
         assertTrue(parser.parseCommand(TabCommand.COMMAND_WORD + " 1") instanceof TabCommand);
+    }
+
+    @Test
+    public void parseCommand_homeCommandWord_returnsHomeCommand() throws Exception {
+        assertTrue(parser.parseCommand("home") instanceof HomeCommand);
     }
     //@@author
 
