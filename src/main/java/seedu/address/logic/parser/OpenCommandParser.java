@@ -8,6 +8,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.OpenCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author chrisboo
 /**
  * Parses input arguments and creates a new OpenCommand object
  */
@@ -29,3 +30,4 @@ public class OpenCommandParser implements Parser<OpenCommand> {
         }
     }
 }
+//@@author
