@@ -48,6 +48,15 @@ public class GuiTestAssert {
         assertEquals(expectedEvent.getDate().value, actualCard.getEventDate());
         assertEquals(expectedEvent.getAddress().value, actualCard.getEventAddress());
     }
+
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertCardEventsEquals(EventCardHandle expectedCard, EventCardHandle actualCard) {
+        assertEquals(expectedCard.getEventName(), actualCard.getEventName());
+        assertEquals(expectedCard.getEventDate(), actualCard.getEventDate());
+        assertEquals(expectedCard.getEventAddress(), actualCard.getEventAddress());
+    }
     //@@author
 
     //@@author archthegit
