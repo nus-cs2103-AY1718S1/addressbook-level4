@@ -18,19 +18,20 @@ public class Timestamp {
     private long daysToLive;
 
     public Timestamp(long day) throws IllegalValueException {
-        creationTime = LocalDateTime.now().withNano(0).withSecond(0).withMinute(0);
+        this.creationTime = LocalDateTime.now().withNano(0).withSecond(0).withMinute(0);
         if (!isValidTimestamp(day)) {
             throw new IllegalValueException(MESSAGE_TIMESTAMP_CONSTRAINTS);
         }
         if (day > 0) {
-            expiryTime = creationTime.plusDays(day).withNano(0).withSecond(0).withMinute(0);
+            this.expiryTime = this.creationTime.plusDays(day).withNano(0).withSecond(0).withMinute(0);
         }
-        daysToLive = day;
+        this.daysToLive = day;
     }
 
+    //overloaded constructor
     public Timestamp(String expiry) {
-        expiryTime = LocalDateTime.parse(expiry);
-        expiryTime = expiryTime.withNano(0).withSecond(0).withMinute(0);
+        this.expiryTime = LocalDateTime.parse(expiry);
+        this.expiryTime = this.expiryTime.withNano(0).withSecond(0).withMinute(0);
     }
 
     public LocalDateTime getCreationTime() {
@@ -54,10 +55,10 @@ public class Timestamp {
      * @return the expiry time of the timestamp in String
      */
     public String toString() {
-        if (expiryTime == null) {
+        if (this.expiryTime == null) {
             return "null";
         } else {
-            return expiryTime.toString();
+            return this.expiryTime.toString();
         }
     }
 
