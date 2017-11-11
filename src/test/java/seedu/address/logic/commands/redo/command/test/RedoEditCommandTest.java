@@ -1,9 +1,10 @@
 package seedu.address.logic.commands.redo.command.test;
 
-import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.modifyPerson;
+import static seedu.address.logic.commands.UndoRedoCommandUtil.assertCommandAssertionError;
+import static seedu.address.logic.commands.UndoRedoCommandUtil.prepareRedoCommand;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventList;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
@@ -11,44 +12,31 @@ import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import java.util.Arrays;
-import java.util.Collections;
-
-import org.junit.Before;
 import org.junit.Test;
 
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.ModelStub;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author Adoby7
 /**
  * Test the redo function of EditCommand
  */
 public class RedoEditCommandTest {
-    private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
-    private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
-
     private final Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventList(), new UserPrefs());
     private final EditCommand editCommandOne = new EditCommand(CARL, IDA);
     private final EditCommand editCommandTwo = new EditCommand(DANIEL, HOON);
 
-    @Before
-    public void setUp() {
-        editCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
-        editCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
-    }
-
     @Test
     public void execute() {
-        UndoRedoStack undoRedoStack = prepareStack(
-                Collections.emptyList(), Arrays.asList(editCommandTwo, editCommandOne));
-        RedoCommand redoCommand = new RedoCommand();
-        redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        RedoCommand redoCommand = prepareRedoCommand(model, editCommandOne, editCommandTwo);
         Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalEventList(), new UserPrefs());
 
         // multiple commands in redoStack
@@ -61,5 +49,31 @@ public class RedoEditCommandTest {
 
         // no command in redoStack
         assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
+    }
+
+    @Test
+    public void executeWithAssertionError() throws Exception {
+        ModelStub modelStubOne = new RedoEditCommandTest.ModelStubThrowExceptionOne();
+        ModelStub modelStubTwo = new RedoEditCommandTest.ModelStubThrowExceptionTwo();
+        RedoCommand redoCommandOne = prepareRedoCommand(modelStubOne, editCommandOne, editCommandTwo);
+        RedoCommand redoCommandTwo = prepareRedoCommand(modelStubTwo, editCommandOne, editCommandTwo);
+        String expectedMessage = Messages.MESSAGE_REDO_ASSERTION_ERROR;
+
+        assertCommandAssertionError(redoCommandOne, expectedMessage);
+        assertCommandAssertionError(redoCommandTwo, expectedMessage);
+    }
+
+    private class ModelStubThrowExceptionOne extends ModelStub {
+        @Override
+        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson) throws DuplicatePersonException {
+            throw new DuplicatePersonException();
+        }
+    }
+
+    private class ModelStubThrowExceptionTwo extends ModelStub {
+        @Override
+        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson) throws PersonNotFoundException {
+            throw new PersonNotFoundException();
+        }
     }
 }

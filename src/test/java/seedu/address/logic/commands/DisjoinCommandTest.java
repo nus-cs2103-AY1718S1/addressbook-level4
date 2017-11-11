@@ -70,7 +70,7 @@ public class DisjoinCommandTest {
         String expectedMessage = String.format(DisjoinCommand.MESSAGE_DISJOIN_SUCCESS, person.getName(),
             event.getEventName());
         DisjoinCommand command = prepareCommand(personIndex, eventIndex, model);
-        quitEvent(expectedModel, person, event);
+        quitEvent(expectedModel, INDEX_SECOND_PERSON, INDEX_FIRST_EVENT);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }

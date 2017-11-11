@@ -1,40 +1,37 @@
 package seedu.address.logic.commands.undo.command.test;
 
-import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.joinEvents;
 import static seedu.address.logic.commands.CommandTestUtil.quitEvent;
+import static seedu.address.logic.commands.UndoRedoCommandUtil.assertCommandAssertionError;
+import static seedu.address.logic.commands.UndoRedoCommandUtil.prepareUndoCommand;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventList;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import java.util.Arrays;
-import java.util.Collections;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.DisjoinCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.ModelStub;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.PersonHaveParticipateException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.HaveParticipateEventException;
 
 // @@author Adoby7
 /**
  * Test the undo function of DisjoinCommand
  */
 public class UndoDisjoinCommandTest {
-    private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
-    private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
-
     private final Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventList(), new UserPrefs());
     private final DisjoinCommand disjoinCommandOne = new DisjoinCommand(INDEX_FIRST_PERSON, INDEX_FIRST_EVENT);
     private final DisjoinCommand disjoinCommandTwo = new DisjoinCommand(INDEX_SECOND_PERSON, INDEX_FIRST_EVENT);
@@ -42,26 +39,19 @@ public class UndoDisjoinCommandTest {
 
     @Before
     public void setUp() {
-        disjoinCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
-        disjoinCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
         joinEvents(model);
         modelCopy = new ModelManager(model.getAddressBook(), model.getEventList(), new UserPrefs());
     }
 
     @Test
     public void execute() throws Exception {
-        UndoRedoStack undoRedoStack = prepareStack(
-            Arrays.asList(disjoinCommandOne, disjoinCommandTwo), Collections.emptyList());
-        UndoCommand undoCommand = new UndoCommand();
-        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        UndoCommand undoCommand = prepareUndoCommand(model, disjoinCommandOne, disjoinCommandTwo);
         disjoinCommandOne.execute();
         disjoinCommandTwo.execute();
 
         // multiple commands in undoStack
         Model expectedModel = new ModelManager(modelCopy.getAddressBook(), modelCopy.getEventList(), new UserPrefs());
-        Person person = (Person) expectedModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Event event = (Event) expectedModel.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
-        quitEvent(expectedModel, person, event);
+        quitEvent(expectedModel, INDEX_FIRST_PERSON, INDEX_FIRST_EVENT);
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // single command in undoStack
@@ -70,5 +60,30 @@ public class UndoDisjoinCommandTest {
 
         // no command in undoStack
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
+    }
+    @Test
+    public void executeWithAssertionError() throws Exception {
+        ModelStub modelStubOne = new ModelStubThrowExceptionOne();
+        ModelStub modelStubTwo = new ModelStubThrowExceptionTwo();
+        UndoCommand undoCommandOne = prepareUndoCommand(modelStubOne, disjoinCommandOne, disjoinCommandTwo);
+        UndoCommand undoCommandTwo = prepareUndoCommand(modelStubTwo, disjoinCommandOne, disjoinCommandTwo);
+        String expectedMessage = Messages.MESSAGE_UNDO_ASSERTION_ERROR;
+
+        assertCommandAssertionError(undoCommandOne, expectedMessage);
+        assertCommandAssertionError(undoCommandTwo, expectedMessage);
+    }
+
+    private class ModelStubThrowExceptionOne extends ModelStub {
+        @Override
+        public void joinEvent(Person person, Event event) throws PersonHaveParticipateException {
+            throw new PersonHaveParticipateException();
+        }
+    }
+
+    private class ModelStubThrowExceptionTwo extends ModelStub {
+        @Override
+        public void joinEvent(Person person, Event event) throws HaveParticipateEventException {
+            throw new HaveParticipateEventException();
+        }
     }
 }

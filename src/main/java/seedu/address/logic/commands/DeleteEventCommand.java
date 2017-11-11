@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_REDO_ASSERTION_ERROR;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
 import java.util.List;
 
@@ -68,7 +68,6 @@ public class DeleteEventCommand extends UndoableCommand {
     protected void undo() {
         requireAllNonNull(model, eventToDelete);
         model.addEvent(targetIndex.getZeroBased(), eventToDelete);
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 
     @Override
@@ -77,19 +76,10 @@ public class DeleteEventCommand extends UndoableCommand {
         try {
             model.deleteEvent(eventToDelete);
         } catch (EventNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         } catch (DeleteOnCascadeException doce) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
     }
 
-    /**
-     * Assign a typical event to delete
-     * Can only be used for JUnit test
-     */
-    public void assignEvent(ReadOnlyEvent event) {
-        this.eventToDelete = event;
-    }
 }

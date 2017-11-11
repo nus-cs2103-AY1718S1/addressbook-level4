@@ -61,8 +61,8 @@ public class DisjoinCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        personToRemove = (Person) lastShownPersonList.get(personIndex.getZeroBased());
-        eventToRemove = (Event) lastShownEventList.get(eventIndex.getZeroBased());
+        personToRemove = new Person (lastShownPersonList.get(personIndex.getZeroBased()));
+        eventToRemove = new Event (lastShownEventList.get(eventIndex.getZeroBased()));
         try {
             model.quitEvent(personToRemove, eventToRemove);
             return new CommandResult(String.format(MESSAGE_DISJOIN_SUCCESS, personToRemove.getName(),

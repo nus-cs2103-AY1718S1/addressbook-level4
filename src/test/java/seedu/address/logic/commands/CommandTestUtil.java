@@ -17,9 +17,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.EventList;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventNameContainsKeywordsPredicate;
@@ -140,7 +142,9 @@ public class CommandTestUtil {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
+        EventList expectedEventList = new EventList(actualModel.getEventList());
         List<ReadOnlyPerson> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        List<ReadOnlyEvent> expectedFilteredEventList = new ArrayList<>(actualModel.getFilteredEventList());
 
         try {
             command.execute();
@@ -148,7 +152,9 @@ public class CommandTestUtil {
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
+            assertEquals(expectedEventList, actualModel.getEventList());
             assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+            assertEquals(expectedFilteredEventList, actualModel.getFilteredEventList());
         }
     }
 
@@ -240,7 +246,9 @@ public class CommandTestUtil {
     /**
      * Let a specific person quit a specific event
      */
-    public static void quitEvent(Model model, Person person, Event event) {
+    public static void quitEvent(Model model, Index personIndex, Index eventIndex) {
+        Person person = (Person) model.getFilteredPersonList().get(personIndex.getZeroBased());
+        Event event = (Event) model.getFilteredEventList().get(eventIndex.getZeroBased());
         try {
             model.quitEvent(person, event);
         } catch (PersonNotParticipateException e) {
