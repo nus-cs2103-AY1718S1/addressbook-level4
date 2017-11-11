@@ -591,21 +591,25 @@ public static boolean isValidPicture(String fileLocation) {
 
 Once the existence of the file is checked, we check the size of the file so that we do not save very large files
 as we do not want our data file to be too large. +
-We resize the files if they are too large by shrinking it into a shorter width and height.
+We resize the files if they are too large by shrinking it into a shorter width and height. +
+We also rename the file with a unique ID so that picture names will not collide and be overwritten.
 
 [source, java]
 ----
 public Picture(String fileLocation) {
 ...
+    String newFileName = UUID.randomUUID().toString() + PICTURE_SUFFIX;
+
     File src = new File(trimmedFileLocation);
-    File dest = new File(PICTURE_SAVE_LOCATION + fileName);
+    File dest = new File(PICTURE_SAVE_LOCATION + newFileName);
 
     // If file is too big, resize it.
     if (src.length() > PICTURE_MAX_SIZE) {
-        resizeAndSaveImage(src, fileName);
+        resizeAndSaveImage(src, newFileName);
     } else {
         copyImage(src, dest);
     }
+    this.value = newFileName;
 ...
 }
 ----
