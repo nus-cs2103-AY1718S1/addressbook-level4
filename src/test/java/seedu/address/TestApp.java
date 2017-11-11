@@ -53,6 +53,7 @@ public class TestApp extends MainApp {
         }
 
     }
+
     public TestApp(Supplier<ReadOnlyAddressBook> initialDataSupplier,
                    Supplier<ReadOnlyAddressBook> initialEventSupplier, String saveFileLocation) {
         super();

@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 
 /**
@@ -64,6 +63,10 @@ public class Reminder implements ReadOnlyReminder {
     @Override
     public String getMessage() {
         return message.get();
+    }
+
+    public String getName() {
+        return name.get();
     }
 
     @Override
