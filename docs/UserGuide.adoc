@@ -386,7 +386,7 @@ Creates a new Rolodex file `default.rldx` at the relative directory `data` and r
 === `open`, `o`, `cd`, `ls` or `<`: Opening an Existing Rolodex Storage File _(Since v1.3)_
 
 Reloads the application with data from a rolodex at the specified filepath. +
-Format: `open FILEPATH` or `o FILEPATH`
+Format: `open FILEPATH` or `o FILEPATH` +
 Keyboard Shortcut: kbd:[Ctrl+O]
 
 ****
@@ -452,7 +452,7 @@ Redo commands are _undoable_ with the `undo` command.
 
 Adds a remark to the specified person in Rolodex. +
 Format: `remark INDEX [r/REMARK]` +
-Alternatives: `remark` can be replaced by `note` or `rmk`
+Alternatives: `remark` can be replaced by `note` or `rmk` or `comment`
 
 ****
 * Adds a remark to the person at the specified `INDEX`.
@@ -605,46 +605,70 @@ image::profile_pic_after.png[width="500"]
 |===
 | Command | Format
 
-.3+| Add | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-         | `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+.4+| Add | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [t/TAG]...`
+         | `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [t/TAG]...`
+         | `+ n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [t/TAG]...`
          | *E.g.* `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 .2+| Clear | `clear`
            | `c`
-.3+| Delete | `delete INDEX`
+.4+| Delete | `delete INDEX`
             | `d INDEX`
+            | `- INDEX`
             | *E.g.* `delete 3`
-.3+| Edit | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-          | `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+.5+| Edit | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...`
+          | `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...`
+          | `change INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...`
+          | `modify INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...`
           | *E.g.* `edit 2 n/James Lee e/jameslee@example.com`
-.5+| Email | `email INDEX [s/SUBJECT]`
+.6+| Email | `email INDEX [s/SUBJECT]`
            | `mail INDEX [s/SUBJECT]`
+           | `mailto INDEX [s/SUBJECT]`
            | `send INDEX [s/SUBJECT]`
            | `m INDEX [s/SUBJECT]`
            | *E.g.* `email 1 s/Long time no see`
+.5+| Exit | `exit`
+          | `quit`
+          | `close`
+          | `bye`
+          | `esc`
+.5+| Find | `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
+          | `filter KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
+          | `search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
+          | `f KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
+          | *E.g.* `find James Jake Jhon` *or* `find friends n/desc`
+.2+| Help | `help`
+          | `h`
+.3+| History | `history`
+             | `his`
+             | `past`
+.5+| List | `list [SORT_ARGUMENTS]`
+          | `show [SORT_ARGUMENTS]`
+          | `display [SORT_ARGUMENTS]`
+          | `l [SORT_ARGUMENTS]`
+          | *E.g.* `list` *or* `list n/desc`
+.5+| New | `new FILEPATH`
+         | `n FILEPATH`
+         | `touch FILEPATH`
+         | `> FILEPATH`
+         | *E.g.* `new data\default.rldx`
+.6+| Open | `open FILEPATH`
+          | `o FILEPATH`
+          | `cd FILEPATH`
+          | `ls FILEPATH`
+          | `< FILEPATH`
+          | *E.g.* `open data\default.rldx`
+.2+| Redo | `redo`
+          | `r`
 .5+| Remark | `remark INDEX r/REMARK`
             | `note INDEX r/REMARK`
             | `rmk INDEX r/REMARK`
             | `comment INDEX r/REMARK`
             | *E.g.* `remark 1 r/Loves to sing`
-.4+| Find | `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
-          | `f KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
-          | `search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
-          | *E.g.* `find James Jake Jhon` *or* `find friends n/desc`
-.3+| List | `list [SORT_ARGUMENTS]`
-          | `l [SORT_ARGUMENTS]`
-          | *E.g.* `list` *or* `list n/desc`
-.2+| Help | `help`
-          | `h`
 .3+| Select | `select INDEX`
             | `s INDEX`
             | *E.g.* `select 2`
-.3+| History | `history`
-             | `his`
-             | `past`
 .2+| Undo | `undo`
           | `u`
-.2+| Redo | `redo`
-          | `r`
 |===
 
 == Keyboard Shortcuts

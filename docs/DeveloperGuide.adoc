@@ -818,6 +818,7 @@ pressing the kbd:[esc] key will result in the application focusing on the person
 
 // end::shortcut[]
 
+[[detailPanel]]
 === Person Detail Panel
 
 // tag::detailPanelBehavior[]
@@ -825,6 +826,8 @@ pressing the kbd:[esc] key will result in the application focusing on the person
 The person detail panel displays the complete information of a person that is selected.
 
 image::detailPanel.png[width="600"]
+
+image::detailPanelLabeled.png[width="600"]
 
 // end::detailPanelBehavior[]
 
@@ -839,7 +842,8 @@ For example, the sequence diagram below shows the sequence of events to update t
 image::DetailPanelSequenceDiagram.png[width="800"]
 
 The information displayed on the panel is extracted from the `ReadOnlyPerson` that is returned by the `EventsCenter`.
-The details of the implementation can be seen from the following code snippet.
+The details of the implementation can be seen from the following code snippets.
+
 [source, java]
 ----
 /**
@@ -849,6 +853,20 @@ private void showPersonDetails(ReadOnlyPerson person) {
     setAvatar(person);
     setTextFields(person);
     setTags(person);
+}
+----
+
+The `showPersonDetails` method is called when a `PersonEditedEvent` is raised, which occurs when the user edits a person.
+
+[source,java]
+----
+/**
+* Updates the panel when the details of the selected person is changed
+*/
+@Subscribe
+private void handlePersonDetailsChangedEvent(PersonEditedEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    showPersonDetails(event.editedPerson);
 }
 ----
 
@@ -867,7 +885,126 @@ The behavior of the panel is summarized in the table below.
 | Other commands | No change in display
 |===
 
+==== Design Considerations
+
+**Aspect:** Synchronization of person details with the panel display +
+**Alternative 1 (current choice):** Using the event system to update the panel +
+**Pros:** Allows for custom panel behavior for different user actions. +
+**Cons:** Increase coupling as updating the panel relies on the logic component for user actions involving commands. +
+**Alternative 2:** Bind the fields in the panel to their corresponding object properties +
+**Pros:** Less coupling. +
+**Cons:**  Higher implementation overhead to set up the bindings properly and
+difficult to enforce custom panel behaviour for specific user actions.
 // end::detailPanelImp[]
+
+// tag::uiImprovements[]
+=== UI Improvements
+
+The user interface of the application has been revamped to take on a clean design, which aims to improve
+the user's experience with Rolodex.
+
+image::Ui2.png[width="800"]
+
+Other improvements made to the UI include the following features:
+
+==== Randomized Avatars Colors
+
+Avatar colors are randomized and generated over a color range to reduce the chance of two adjacent persons sharing the same avatar color.
+Some results from using this color generator can be seen from the following screenshots.
+
+image:avatars.png[width="300"] image:avatars2.png[width="300"]
+
+The generation of avatar colors involves two steps: +
+
+1. Randomly pick a default color from `ColorsUtil`, which contains a list of selected colors chosen from
+link:https://www.materialui.co/blog/what-is-material-ui/[Google's material ui color palette]. +
+2. Generate a randomized offset value to create a new color which values differ from the default color by this offset.
+
+The code snippet below shows the details of how the color values are manipulated in the color generator.
+[source, java]
+----
+/**
+* Generates a new color with a random offset from {@code Color defaultColor}.
+*
+* @return The new color in hexadecimal {@code String} format
+*/
+private static String generateNewColor(Color defaultColor) {
+    int r = defaultColor.getRed();
+    int g = defaultColor.getGreen();
+    int b = defaultColor.getBlue();
+
+    int newR = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (r + generateOffset())));
+    int newG = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (g + generateOffset())));
+    int newB = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (b + generateOffset())));
+
+    return String.format("#%02x%02x%02x", newR, newG, newB);
+}
+----
+
+An upper bound is applied to the offset to ensure that the new color does not deviate too far from the default color.
+
+==== Keyboard Icon
+
+A keyboard icon is added in the command box to provide visual feedback for certain user events:
+
+** image:keyboard.png[width="30"] : User is idle
+** image:keyboardTyping.png[width="30"] : User is typing
+** image:keyboardError.png[width="30"] : User entered an invalid command
+
+The keyboard icon is updated by setting `ImageView` of the icon to one of the three variations as shown above, whichever is appropriate
+for the current state of the user.
+
+In particular, to check that the user is idle, we measure the time elapsed since any changes made to the
+`CommandBox`. This is done with the `PauseTransition` class from JavaFX, which allows us to execute an event after a set duration.
+For better illustration, below is a simplified code snippet of the implementation.
+
+[source, java]
+----
+private void updateKeyboardIcon() {
+
+    // set icon to typing keyboard
+
+    pause.setOnFinished(event -> {
+        // set icon to idle keyboard
+    });
+    pause.playFromStart(); // reset timer
+}
+----
+`pause` is a `PauseTransition` object, and `setOnFinished` takes in an event handler as its parameter.
+
+==== Autoselection for Newly Added/Edited Person
+
+A newly added, or edited person will automatically be selected in the `PersonListPanel`. This makes it easier for the user to take note
+of changes made to their contacts.
+
+This implementation is done by raising an event whenever the add and edit commands are executed.
+The `PersonListPanel` is registered as an event handler and will subsequently scroll to the person that is newly modified.
+
+This feature is integrated with the link:#detailPanel[Person Detail Panel implementation], and more details on the event handling
+can be found under the section.
+
+==== Responsive Split Pane
+
+The split pane which separates the contact list from the other UI components is responsive.
+Its divider is automatically maintained at the optimal position when the window size changes.
+
+This is achieved by setting up listeners to the property of the window. The divider will be repositioned when the listener
+detects any changes in the window property. The code below illustrates the implementation in greater detail.
+
+[source, java]
+----
+private void setSplitPaneDividerPosition() {
+
+    // repositions divider when window is just showed
+    primaryStage.showingProperty().addListener((observable, oldValue, newValue) ->
+            splitPane.setDividerPositions(SPLIT_PANE_DIVIDER_POSITION));
+
+    // repositions divider when window width changes
+    primaryStage.widthProperty().addListener((observable, oldValue, newValue) ->
+            splitPane.setDividerPositions(SPLIT_PANE_DIVIDER_POSITION));
+}
+----
+// end::uiImprovements[]
 
 // tag::helpWindowHighlight[]
 === Help Window Highlighting
