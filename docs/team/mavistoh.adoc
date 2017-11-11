@@ -117,4 +117,7 @@ be made from `/resources/view` and link to `Mode` Command.
 * Implemented `Find Address` function for V1.1 version of Circles. This function
  finds contact with keyword matching contact's address. (Pull request https://github.com/CS2103AUG2017-T17-B3/main/pull/12[#12]) +
  This was subsequently improved into `Find [KEYWORD]` function which matches keyword to all fields
-from the contact card.
+from the contact card. +
+
+* Found bugs for Team T10-B3 during acceptance testing. (Issue https://github.com/CS2103AUG2017-T10-B3/main/issues/72[#1],
+Issue https://github.com/CS2103AUG2017-T10-B3/main/issues/77[#2])
