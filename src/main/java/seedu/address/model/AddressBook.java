@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -176,26 +175,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     //@@author vivekscl
     @Override
     public String toString() {
-        Iterator<Person> personIterator = persons.iterator();
-        Iterator<Tag> tagIterator = tags.iterator();
-        String allPersonsString = "Persons: ";
-        String allTagsString = "Tags: ";
-
-        if (personIterator.hasNext()) {
-            allPersonsString += "\n" + personIterator.next() + "\n";
-        }
-        if (tagIterator.hasNext()) {
-            allTagsString += "\n" + tagIterator.next();
-        }
-
-        while (personIterator.hasNext()) {
-            allPersonsString = allPersonsString.concat(personIterator.next() + "\n");
-        }
-        while (tagIterator.hasNext()) {
-            allTagsString = allTagsString.concat(", " + tagIterator.next());
-        }
-
-        return allPersonsString + allTagsString;
+        return "Persons: " + getPersonList() + "\nTags: " + getTagList();
     }
 
     //@@author
