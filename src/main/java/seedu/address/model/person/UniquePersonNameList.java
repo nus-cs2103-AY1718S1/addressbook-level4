@@ -21,6 +21,11 @@ public class UniquePersonNameList {
     private final ObservableList<Name> internalList = FXCollections.observableArrayList();
 
     /**
+     * Constructs empty PersonNameList.
+     */
+    public UniquePersonNameList() {}
+
+    /**
      * Creates a UniquePersonNameList using given names.
      * Enforces no nulls.
      */

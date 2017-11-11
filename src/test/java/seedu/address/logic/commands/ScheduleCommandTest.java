@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,18 +19,17 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
 import seedu.address.model.schedule.Schedule;
-import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.ScheduleBuilder;
 
 //@@author CT15
 public class ScheduleCommandTest {
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     //@@author 17navasaw
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
     @Test
     public void constructor_nullSchedule_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
@@ -47,18 +47,14 @@ public class ScheduleCommandTest {
         Set<Index> indices = new HashSet<>();
         indices.add(INDEX_FIRST_PERSON);
 
-        ModelManager modelStub = new ModelManager();
-        Person validPerson = new PersonBuilder().build();
-        modelStub.addPerson(validPerson);
-
-        CommandResult commandResult = getScheduleCommandForPerson(indices, validSchedule, modelStub).execute();
+        CommandResult commandResult = getScheduleCommandForPerson(indices, validSchedule, model).execute();
 
         assertEquals(String.format(ScheduleCommand.MESSAGE_SCHEDULE_SUCCESS, indices.size()),
                 commandResult.feedbackToUser);
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new ScheduleCommand with the details of the given schedule.
      */
     private ScheduleCommand getScheduleCommandForPerson(Set<Index> indices, Schedule validSchedule, Model model) {
         ScheduleCommand command =
