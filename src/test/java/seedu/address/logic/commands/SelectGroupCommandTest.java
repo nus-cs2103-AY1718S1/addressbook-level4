@@ -27,7 +27,7 @@ import seedu.address.storage.Storage;
 import seedu.address.testutil.TypicalStorage;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
-
+//@@author eldonng
 public class SelectGroupCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
