@@ -23,6 +23,7 @@ import seedu.address.model.person.Bloodtype;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Relationship;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
@@ -42,6 +43,7 @@ public class ParserUtilTest {
     private static final String VALID_REMARK = "neighbour";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_RELATIONSHIP = "Husband: John Doe";
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
@@ -238,6 +240,27 @@ public class ParserUtilTest {
         Optional<Remark> actualRemark = ParserUtil.parseRemark(Optional.of(VALID_REMARK));
 
         assertEquals(expectedRemark, actualRemark.get());
+    }
+    //@@author
+
+    //@@author Ernest
+    @Test
+    public void parseRelationshipNullThrowsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseRelationship(null);
+    }
+
+    @Test
+    public void parseRelationshipOptionalEmptyReturnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseRelationship(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseRelationshipValidValueReturnsRelationship() throws Exception {
+        Relationship expectedRelationship = new Relationship(VALID_RELATIONSHIP);
+        Optional<Relationship> actualRelationship = ParserUtil.parseRelationship(Optional.of(VALID_RELATIONSHIP));
+
+        assertEquals(expectedRelationship, actualRelationship.get());
     }
     //@@author
 }

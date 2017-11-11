@@ -170,6 +170,7 @@ public class Person implements ReadOnlyPerson {
         return remark.get();
     }
 
+    //@@author Ernest
     public void setRelationship(Relationship relation) {
         this.relation.set(requireNonNull(relation));
     }
@@ -183,6 +184,7 @@ public class Person implements ReadOnlyPerson {
     public Relationship getRelationship() {
         return relation.get();
     }
+    //@@author
 
     //@@author Eric
     @Override

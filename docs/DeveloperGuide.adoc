@@ -683,6 +683,7 @@ unlikely to have and will ensue only once all existing must-have and good-to-hav
 
 // end::remarkimple[]
 
+// tag::listbloodtype[]
 === *Enhancement: ListByBloodtypeCommand* +
 
 Since MedNus has Bloodtype implemented, we decided that being able to list people according to blood types +
@@ -718,6 +719,8 @@ The second constructor takes in a String from the user.
 *Reasons for how it is implemented*
 
 The reason for the use of ListByBloodtypeCommandParser is to filter out extra spaces that the user may have typed in.
+
+// end::listbloodtype[]
 
 // tag::batch[]
 === *Enhancement: Batch delete all persons who share a particular tag* +

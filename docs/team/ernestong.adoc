@@ -47,6 +47,14 @@ Bloodtype will all be capitalized.
 
 === Enhancement Added: Add class Bloodtype
 
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=bloodtype]
+
+#End of Extract#
+
+=== Enhancement Added: Add List Bloodtype Command
+
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=bloodtype]
@@ -55,7 +63,15 @@ include::../UserGuide.adoc[tag=bloodtype]
 
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=bloodtype]
+include::../DeveloperGuide.adoc[tag=listbloodtype]
+
+#End of Extract#
+
+=== Enhancement Added: Add Relationship Command
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=relationship]
 
 #End of Extract#
 

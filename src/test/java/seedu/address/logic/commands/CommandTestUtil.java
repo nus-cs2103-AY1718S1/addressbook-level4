@@ -52,6 +52,8 @@ public class CommandTestUtil {
     public static final String NON_COMPULSORY_ADDRESS_AMY = "-";
     public static final String NON_COMPULSORY_BLOODTYPE = "-";
     public static final String NON_COMPULSORY_REMARK = "";
+    public static final String NON_COMPULSORY_RELATIONSHIP = "";
+
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;

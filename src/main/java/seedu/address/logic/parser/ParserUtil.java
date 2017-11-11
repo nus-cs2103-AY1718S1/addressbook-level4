@@ -102,7 +102,6 @@ public class ParserUtil {
         requireNonNull(bloodType);
         return bloodType.isPresent() ? Optional.of(new Bloodtype(bloodType.get())) : Optional.empty();
     }
-    //@@author
 
     /**
      * Parses a {@code Optional<String> relation} into an {@code Optional<Relationship>} if {@code relation} is present.
@@ -112,6 +111,7 @@ public class ParserUtil {
         requireNonNull(relation);
         return relation.isPresent() ? Optional.of(new Relationship(relation.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.

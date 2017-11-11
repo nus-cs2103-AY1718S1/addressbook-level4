@@ -220,6 +220,7 @@ public class AddressBookParserTest {
     }
     //@@author
 
+    //@@author Ernest
     @Test
     public void parseCommandRelationship() throws Exception {
         final Relationship relation = new Relationship("Some relation.");
@@ -227,6 +228,7 @@ public class AddressBookParserTest {
                 + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_RELATIONSHIP + " " + relation.value);
         assertEquals(new RelationshipCommand(INDEX_FIRST_PERSON, relation), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {

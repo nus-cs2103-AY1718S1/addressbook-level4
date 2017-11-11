@@ -2087,4 +2087,12 @@ public class TagContainsKeywordsPredicateTest {
                 .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
+
+        /* Case: missing relationship -> success */
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withBloodType(VALID_BLOODTYPE_AMY).withRemark(NON_COMPULSORY_REMARK)
+                .withRemark(NON_COMPULSORY_RELATIONSHIP).withTags(VALID_TAG_FRIEND).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + TAG_DESC_FRIEND
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY;
+        assertCommandSuccess(command, toAdd);
 ```
