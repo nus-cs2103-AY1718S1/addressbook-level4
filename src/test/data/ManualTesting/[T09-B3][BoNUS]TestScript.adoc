@@ -97,7 +97,6 @@ After listing events, you should having the view of event list
 *Negative test cases* +
 1) editE n/CS1010 Project Meeting _(invalid index)_ +
 2) editE 2 CS3222 Consultation 19112017 15:00 School of Computing, SR10, NUS _(missing prefixes)_
-====
 
 
 === Import/export data
@@ -109,28 +108,29 @@ After listing events, you should having the view of event list
 To add a new property, we need to use the `config --add-property` command.
 
 . Add a new property with the short name of `h` and full name of `hobby` +
-Command: +
+_Command:_ +
 `config --add-property s/h f/hobby` +
-Result: +
+_Result:_ +
 `Added a new property: s/h f/hobby`
 
 . Adds a new property with the short name of `m`, full name of `major` and specify the regular expression constraint. +
-Command: +
+_Command:_ +
 `config --add-property s/m f/major m/Major should only contain letters and it should not be blank r/[{Alpha}]+` +
-Result: +
+_Result:_ +
 `Added a new property: s/m f/major m/Major should only contain letters and it should not be blank r/[{Alpha}]+`
 
 . Set the value of customize property added just now in `AddCommand` +
-Command: +
+_Command:_ +
 `add n/Linda p/89658712 e/linda@example.com a/School of Computing h/Programming` +
-Result: +
-`New person added: Linda Phone: 89658712 Email: linda@example.com Address: School of Computing Tags:`
+_Result:_ +
+`New person added: Linda Phone: 89658712 Email: linda@example.com Address: School of Computing Tags:` +
+In the meantime, a new person card belonging to Linda should appear in the person listing panel.
 
 . Verify the value of hobby has been set correctly +
-Command: +
+_Command:_ +
 `find Linda` +
 `select 1` +
-Result: +
+_Result:_ +
 Linda's personal details are shown on the right-hand side of the interface. Properties are ordered by their full names and
 each property takes one line. You should see the value of the row `Hobby` is `Programming`.
 
