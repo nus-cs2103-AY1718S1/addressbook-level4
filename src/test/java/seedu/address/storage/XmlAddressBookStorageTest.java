@@ -82,7 +82,7 @@ public class XmlAddressBookStorageTest {
         original.addPerson(new Person(HOON));
         original.removePerson(new Person(ALICE));
         original.addEvent(new Event(EVENT1));
-        original.getEventList().get(0).addReminder(new Reminder((Event)EVENT1, "You have an event!" ));
+        original.getEventList().get(0).addReminder(new Reminder((Event) EVENT1,"You have an event!"));
         original.removeEvent(new Event(EVENT1));
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
@@ -91,7 +91,7 @@ public class XmlAddressBookStorageTest {
         //Save and read without specifying file path
         original.addPerson(new Person(IDA));
         original.addEvent(new Event(EVENT2));
-        original.getEventList().get(0).addReminder(new Reminder((Event)EVENT2, "You have an event!" ));
+        original.getEventList().get(0).addReminder(new Reminder((Event) EVENT2,"You have an event!" ));
         xmlAddressBookStorage.saveAddressBook(original); //file path not specified
         readBack = xmlAddressBookStorage.readAddressBook().get(); //file path not specified
         assertEquals(original, new AddressBook(readBack));

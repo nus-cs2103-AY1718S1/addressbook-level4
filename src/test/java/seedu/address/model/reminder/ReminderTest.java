@@ -12,13 +12,14 @@ import org.junit.rules.ExpectedException;
 import seedu.address.model.event.Event;
 import seedu.address.model.property.Name;
 import seedu.address.model.property.PropertyManager;
-import seedu.address.testutil.TypicalEvents;
+
+//@@author junyango
 
 public class ReminderTest {
 
-    public static Event event;
-    public static Name name;
-    public static String message;
+    private static Event event;
+    private static Name name;
+    private static String message;
 
     @BeforeClass
     public static void setUp() throws Exception {
