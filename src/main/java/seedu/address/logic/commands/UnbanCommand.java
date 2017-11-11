@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -23,26 +24,24 @@ public class UnbanCommand extends UndoableCommand {
     public static final String MESSAGE_UNBAN_PERSON_SUCCESS = "Removed %1$s from BLACKLIST";
     public static final String MESSAGE_UNBAN_PERSON_FAILURE = "%1$s is not BLACKLISTED!";
 
-    private final Index targetIndex;
+    private final ReadOnlyPerson personToUnban;
 
-    public UnbanCommand() {
-        this.targetIndex = null;
+    public UnbanCommand() throws CommandException {
+        personToUnban = selectPersonForCommand();
     }
 
-    public UnbanCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
+    public UnbanCommand(Index targetIndex) throws CommandException {
+        personToUnban = selectPersonForCommand(targetIndex);
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-
         String messageToDisplay = MESSAGE_UNBAN_PERSON_SUCCESS;
-
-        ReadOnlyPerson personToUnban = selectPerson(targetIndex);
+        ReadOnlyPerson targetPerson = personToUnban;
 
         try {
             if (personToUnban.isBlacklisted()) {
-                model.removeBlacklistedPerson(personToUnban);
+                targetPerson = model.removeBlacklistedPerson(personToUnban);
             } else {
                 messageToDisplay = MESSAGE_UNBAN_PERSON_FAILURE;
             }
@@ -50,18 +49,17 @@ public class UnbanCommand extends UndoableCommand {
             assert false : "The target person is not in blacklist";
         }
 
-        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+        ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
 
-        String currentList = listObserver.getCurrentListName();
+        String currentList = ListObserver.getCurrentListName();
 
-        return new CommandResult(currentList + String.format(messageToDisplay, personToUnban.getName()));
+        return new CommandResult(currentList + String.format(messageToDisplay, targetPerson.getName()));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UnbanCommand // instanceof handles nulls
-                && ((this.targetIndex == null && ((UnbanCommand) other).targetIndex == null) // both targetIndex null
-                || this.targetIndex.equals(((UnbanCommand) other).targetIndex))); // state check
+                && this.personToUnban.equals(((UnbanCommand) other).personToUnban)); // state check
     }
 }
