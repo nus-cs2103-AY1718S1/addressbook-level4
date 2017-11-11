@@ -59,6 +59,8 @@ public class PrintCommand extends Command {
         lines.add("There are " + lastShownList.size() + " contacts in LISA\n\n");
 
         int personIndex = 1;
+
+        //iterating through each person in LISA
         for (ReadOnlyPerson person: lastShownList) {
             String entry = personIndex + ". " + person.getAsParagraph();
             lines.add(entry);
@@ -67,6 +69,9 @@ public class PrintCommand extends Command {
 
             UniqueLifeInsuranceList insurances = person.getLifeInsurances();
             int insuranceIndex = 1;
+
+            //within each person, iterate through all the insurance policies associated
+            //with this person
             for (ReadOnlyInsurance insurance: insurances) {
                 String insuranceHeader = "Insurance Policy " + insuranceIndex
                         + ": " + insurance.getInsuranceName() + " ======";
@@ -84,12 +89,16 @@ public class PrintCommand extends Command {
                         + "Signing Date: " + signingDate + "\n"
                         + "Expiry Date: " + expiryDate
                 );
+
+                //insuranceEnd is just a printed line "=====" which ties with the length
+                //of insuranceHeader to make the txt file more organised.
                 String insuranceEnd = "";
                 int headerLength = insuranceHeader.length();
                 for( int i = 1; i<= headerLength; i++) {
                     insuranceEnd = insuranceEnd + "=";
                 }
                 lines.add(insuranceEnd);
+
                 lines.add("\n");
                 insuranceIndex++;
             }
