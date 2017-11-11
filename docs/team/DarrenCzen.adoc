@@ -164,88 +164,11 @@ The enhancement also helps to facilitate user-friendliness in using The Myth's B
 ==== Implementation
 
 ---
-The implementation of making fields optional for `AddCommand` allows users to add contacts with lesser
-information required as it only requires name,phone,email to add a contact and other fields can be
-optionally added together into the input of adding a contact. The implementation is mostly done in the`Model` and `Logic` component.
+#Start of Extract [from: Developer Guide]#
 
-Suppose a user would like to add a new contact with an address to The Myth's Book and executes the `AddCommand`
-by typing `add n/Adam Bait e/adambait@example.com p/98123414 a/18 Taiseng`.
+include::../DeveloperGuide.adoc[tag=optionalfield]
 
-The execution of `AddCommand` is processed in this way:
-
-. User will input `add n/Adam Bait e/adambait@example.com p/98123414 a/18 Taiseng`.
-. Input of user will be handled by the `LogicManager` and parse as an argument through the `AddressBookParser` and `AddCommandParser`.
-. `AddCommandParser` will check for all the prefixes inputted and the existence of compulsory prefixes required.
-. As `Name`,`Phone`,`Email` fields are necessary fields, they are handled as per normal in the `parse` method of `AddCommandParser`
-after being checked that the user has inputted the correct prefixes and information for the 3 necessary fields.
-. For the `Address` field which are similar to other optional fields, it tests whether user has inputted
-the address field or not in `parse` method of `AddCommandParser` and `parseAddress` method of `ParserUtil.java`.
-. Based on whether the user has inputted the optional `Address` field, it is handled either by
-assigning it with the inputted and validated string of address or assigning it with a
-temporary string variable as seen from `Address` constructor of `Address.java`.
-. Once all information inputted is handled, user's inputted contact will be successfully added into The Myth's Book.
-
-Code of `parse` method inside `AddCommandParser.java`:
-[source,java]
-----
-public AddCommand parse(String args) throws ParseException {
-
-    Address address;
-    // ... method logic ...
-
-    ArgumentMultimap argMultimap =
-            ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_HOME_NUMBER,
-                    PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_WEBSITE, PREFIX_SCH_EMAIL,
-                    PREFIX_BIRTHDAY, PREFIX_TAG);
-
-    if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL)) {
-        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-    }
-
-    try {
-        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
-        Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
-
-        // ... method logic ...
-
-        Optional<Address> tempAddress = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS));
-        address = (tempAddress.isPresent()) ? tempAddress.get() : new Address(null);
-
-        // ... method logic ...
-
-        ReadOnlyPerson person = new Person(name, phone, homeNumber,
-             email, schEmail, website, address, birthday, false, tagList);
-
-        return new AddCommand(person);
-    } catch (IllegalValueException ive) {
-        throw new ParseException(ive.getMessage(), ive);
-    }
-}
-----
-
-Code of `parseAddress` method inside `ParserUtil.java`:
-[source,java]
-----
-public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
-    return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
-}
-----
-
-Code of `Address` constructor inside `Address.java`:
-[source,java]
-----
-public Address(String address) throws IllegalValueException {
-    if (address == null) {
-        this.value = ADDRESS_TEMPORARY;
-    } else {
-        if (!isValidAddress(address)) {
-            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
-        }
-        this.value = address;
-    }
-}
-----
+#End of Extract#
 
 ---
 
