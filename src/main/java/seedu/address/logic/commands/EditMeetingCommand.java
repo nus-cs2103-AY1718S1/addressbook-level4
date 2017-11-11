@@ -178,15 +178,15 @@ public class EditMeetingCommand extends UndoableCommand {
             return Optional.ofNullable(place);
         }
 
-        public void setMeetTag (MeetingTag meetTag) { this.meetTag = meetTag; }
-
         public Optional<MeetingTag> getMeetTag() {
             return Optional.ofNullable(meetTag);
         }
 
         public void setPersonsMeet(List<ReadOnlyPerson> persons) { this.personsMeet = persons; }
 
-        public Optional<List<ReadOnlyPerson>> getPersonsMeet() { return Optional.ofNullable(personsMeet); }
+        public Optional<List<ReadOnlyPerson>> getPersonsMeet() {
+            return Optional.ofNullable(personsMeet);
+        }
 
         @Override
         public boolean equals(Object other) {

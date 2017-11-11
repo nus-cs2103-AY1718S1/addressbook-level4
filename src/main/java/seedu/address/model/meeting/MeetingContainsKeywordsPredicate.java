@@ -17,23 +17,32 @@ public class MeetingContainsKeywordsPredicate implements Predicate<ReadOnlyMeeti
         this.keywords = keywords;
     }
 
-    private boolean ListContainsKeyword(List<String> keywords, List<ReadOnlyPerson> target) {
-        for (int indexKeyword = 0; indexKeyword < keywords.size(); indexKeyword++){
-            for (int indexTarget = 0; indexTarget < target.size(); indexTarget++){
+
+    //@@author kyngyi
+    /**
+     * Tests if a {@code ReadOnlyMeeting}'s {@code List<ReadOnlyPerson>} contains any persons with name
+     * matching any of the keywords given.
+     */
+    private boolean PersonListContainsKeyword(List<String> keywords, List<ReadOnlyPerson> target) {
+        for (int indexKeyword = 0; indexKeyword < keywords.size(); indexKeyword++) {
+            for (int indexTarget = 0; indexTarget < target.size(); indexTarget++) {
                 if (StringUtil.containsWordIgnoreCase(target.get(indexTarget).getName().fullName,
-                        (keywords.get(indexKeyword)))){
+                        (keywords.get(indexKeyword)))) {
                     return true;
                 }
             }
         }
         return false;
     }
+    //@@author
+
+    //@@author Syabil
     @Override
     public boolean test(ReadOnlyMeeting meeting) {
         for (int index = 0; index < meeting.getPersonsMeet().size(); index++){
             if (keywords.stream()
                     .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(meeting.getName().fullName, keyword))
-                    || ListContainsKeyword(keywords, meeting.getPersonsMeet())) {
+                    || PersonListContainsKeyword(keywords, meeting.getPersonsMeet())) {
                 return true;
             }
         }

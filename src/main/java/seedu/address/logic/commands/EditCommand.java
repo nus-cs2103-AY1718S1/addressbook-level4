@@ -1,39 +1,21 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.AddMeetingCommand.MESSAGE_MEETING_CLASH;
-import static seedu.address.logic.commands.AddMeetingCommand.MESSAGE_OVERDUE_MEETING;
-import static seedu.address.logic.commands.EditMeetingCommand.MESSAGE_DUPLICATE_MEETING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MEETINGS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.ParserUtil;
-import seedu.address.model.meeting.DateTime;
-import seedu.address.model.meeting.Meeting;
-import seedu.address.model.meeting.MeetingContainsFullWordPredicate;
-import seedu.address.model.meeting.MeetingTag;
-import seedu.address.model.meeting.NameMeeting;
-import seedu.address.model.meeting.Place;
-import seedu.address.model.meeting.ReadOnlyMeeting;
-import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
-import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
-import seedu.address.model.meeting.exceptions.MeetingClashException;
-import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
