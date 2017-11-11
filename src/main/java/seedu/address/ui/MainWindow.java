@@ -37,7 +37,12 @@ import seedu.address.commons.events.ui.ValidResultDisplayEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.EnablePersonCommand;
+import seedu.address.logic.commands.EnableTaskCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.person.ListAliasCommand;
+import seedu.address.logic.commands.person.ListCommand;
+import seedu.address.logic.commands.person.ListPinCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 
@@ -213,7 +218,7 @@ public class MainWindow extends UiPart<Region> {
         sortFindPanel = new SortFindPanel(logic);
         sortFindPanelPlaceholder.getChildren().add(sortFindPanel.getRoot());
 
-        if (MainApp.isFirstTimeOpen()) {
+        if (MainApp.isIsFirstTimeOpen()) {
             TutorialPanel tutorialPanel = new TutorialPanel(this, tutorialPlaceholder);
             tutorialPlaceholder.getChildren().add(tutorialPanel.getRoot());
         }
@@ -306,9 +311,9 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handleListAllClicked() {
         try {
-            CommandResult result = logic.execute("list");
+            CommandResult result = logic.execute(ListCommand.COMMAND_WORD);
             raise(new NewResultAvailableEvent(result.feedbackToUser));
-            raise(new ValidResultDisplayEvent("list"));
+            raise(new ValidResultDisplayEvent(ListCommand.COMMAND_WORD));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to list all using label");
         }
@@ -320,9 +325,9 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handleListPinnedClicked() {
         try {
-            CommandResult result = logic.execute("listpin");
+            CommandResult result = logic.execute(ListPinCommand.COMMAND_WORD);
             raise(new NewResultAvailableEvent(result.feedbackToUser));
-            raise(new ValidResultDisplayEvent("listpin"));
+            raise(new ValidResultDisplayEvent(ListPinCommand.COMMAND_WORD));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to list pinned using label");
         }
@@ -334,9 +339,9 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handleTaskViewClicked() {
         try {
-            CommandResult result = logic.execute("task");
+            CommandResult result = logic.execute(EnableTaskCommand.COMMAND_WORD);
             raise(new NewResultAvailableEvent(result.feedbackToUser));
-            raise(new ValidResultDisplayEvent("task"));
+            raise(new ValidResultDisplayEvent(EnableTaskCommand.COMMAND_WORD));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to toggle to task view using label");
         }
@@ -348,9 +353,9 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handlePersonViewClicked() {
         try {
-            CommandResult result = logic.execute("person");
+            CommandResult result = logic.execute(EnablePersonCommand.COMMAND_WORD);
             raise(new NewResultAvailableEvent(result.feedbackToUser));
-            raise(new ValidResultDisplayEvent("person"));
+            raise(new ValidResultDisplayEvent(EnablePersonCommand.COMMAND_WORD));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to toggle to person view using label");
         }
@@ -362,9 +367,9 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handleAliasViewClicked() {
         try {
-            CommandResult result = logic.execute("listalias");
+            CommandResult result = logic.execute(ListAliasCommand.COMMAND_WORD);
             raise(new NewResultAvailableEvent(result.feedbackToUser));
-            raise(new ValidResultDisplayEvent("listalias"));
+            raise(new ValidResultDisplayEvent(ListAliasCommand.COMMAND_WORD));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to toggle to alias view using label");
         }
@@ -431,7 +436,7 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         if (listPinLabel.getStyle().equals(BRIGHT_LABEL)) {
             try {
-                logic.execute("listpin");
+                logic.execute(ListPinCommand.COMMAND_WORD);
             } catch (CommandException | ParseException e) {
                 logger.warning("Unable to list pin when unpinning");
             }

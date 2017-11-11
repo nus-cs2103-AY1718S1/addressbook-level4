@@ -98,6 +98,7 @@ public abstract class AddressBookSystemTest {
         mainWindowHandle.getCommandBox().run(command);
     }
 
+    //@@author Alim95
     /**
      * Executes {@code command} in the application's {@code CommandBox}.
      * Method returns after UI components have been updated.
@@ -110,6 +111,7 @@ public abstract class AddressBookSystemTest {
 
         mainWindowHandle.getCommandBox().run("parent");
     }
+    //@@author
 
     /**
      * Displays all persons in the address book.

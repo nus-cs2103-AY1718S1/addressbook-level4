@@ -20,26 +20,29 @@ public class TutorialMessages {
             + "where you will see your list of contacts and tasks";
     public static final String INTRO_FIVE = "This is the sort menu, where you can select how to sort the list.";
     public static final String INTRO_SIX = "This is the search box, where "
-            + "you are able to search for the person you want.";
+            + "you are able to search for the person or tasks you want.";
     public static final String INTRO_SEVEN = "Features of Bluebird:\n"
             + "1. Add contacts/tasks\n"
             + "2. Delete contacts/tasks\n"
             + "3. Edit contacts/tasks\n"
             + "4. Find contacts/tasks\n"
-            + "5. Select a contact\n"
-            + "6. Pin a contact\n"
-            + "7. Unpin a contact\n"
-            + "8. Hide a contact\n"
-            + "9. Clear all contacts and tasks\n"
-            + "10. List all contacts and tasks\n"
-            + "11. List all pinned contacts\n"
-            + "12. Sort list of contacts\n"
-            + "13. Help window\n"
-            + "14. History of command inputs\n"
-            + "15. Undo a command\n"
-            + "16. Redo a command\n"
-            + "17. Toggle to person/task mode\n"
-            + "18. Toggle to parent/child mode\n";
+            + "5. Add remark to contacts\n"
+            + "6. Select a contact\n"
+            + "7. Pin/Unpin a contact\n"
+            + "8. Alias/Unalias\n"
+            + "9. List all alias\n"
+            + "10. Hide a contact\n"
+            + "11. Clear all contacts and tasks\n"
+            + "12. List all contacts and tasks\n"
+            + "13. List all pinned contacts\n"
+            + "14. Sort list of contacts\n"
+            + "15. Help window\n"
+            + "16. History of command inputs\n"
+            + "17. Undo a command\n"
+            + "18. Redo a command\n"
+            + "19. Toggle to person/task mode\n"
+            + "20. Toggle to parent/child mode\n"
+            + "21. Exit Bluebird";
 
     public static final String INTRO_END = "Bluebird is set to Child Mode by default every time Bluebird "
             + "is launched. To activate all commands, toggle to parent mode!\n"
@@ -56,7 +59,8 @@ public class TutorialMessages {
             + "10. redo\n"
             + "11. person\n"
             + "12. task\n"
-            + "13. parent";
+            + "13. parent\n"
+            + "14. exit\n";
 
     /* Command usage messages */
     public static final String USAGE_BEGIN = "Let's try out the different commands of Bluebird! Activate Parent Mode "
