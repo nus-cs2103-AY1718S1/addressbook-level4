@@ -32,7 +32,7 @@ You can download the latest `SampleData.xml` link:https://github.com/CS2103AUG20
 == General Commands
 This section shows you the general commands which allow you to manipulate the filtered list display. +
 
-[cols="30%,30%,40%"]
+
 |=======================================================================
 |Command To Enter |Expected Output |Remarks
 
