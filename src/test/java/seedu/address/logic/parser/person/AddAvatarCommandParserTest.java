@@ -16,6 +16,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.person.AddAvatarCommand;
 import seedu.address.model.person.Avatar;
 
+//@@author yunpengn
 public class AddAvatarCommandParserTest {
     private static final String VALID_PATH = FileUtil.getPath("./src/test/resources/SampleAvatar.jpg");
     private static final String NOT_IMAGE_PATH = FileUtil.getPath("./src/test/resources/SampleNotImage.txt");

@@ -28,6 +28,7 @@ import seedu.address.model.person.Avatar;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.PersonBuilder;
 
+//@@author yunpengn
 public class AddAvatarCommandTest {
     private static final String VALID_PATH = FileUtil.getPath("./src/test/resources/SampleAvatar.jpg");
     private static Avatar validAvatar;
