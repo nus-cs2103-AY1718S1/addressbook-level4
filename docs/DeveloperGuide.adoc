@@ -1325,8 +1325,7 @@ Use case ends
 *MSS*
 
 1.  User requests to merge a given file to default storage file
-2.  AddressBook merges the data of the two files
-3.  AddressBook output the merged data file to a specified default path
+2.  AddressBook merges the data of into the default storage file
 
 *Extensions*
 
@@ -1352,11 +1351,11 @@ Use case ends.
 Use case resumes at step 2.
 
 [none]
-* 3a. The merged data file does not exist
+* 2d. The default data file does not exist
 +
-** 3c1. AddressBook creates the file
+** 2d1. AddressBook creates the file
 +
-Use case resumes at step 3.
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
