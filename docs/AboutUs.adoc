@@ -33,8 +33,7 @@ Responsibilities: Data
 
 === Wang Junming
 image::WangJunming.jpg[width="150", align="left"]
-{empty}[https://github.com/junming403[github]] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/docs/team/wangjunming.adoc[Project Portfolio]]
-
+{empty}[https://github.com/junming403[github]] [<<wangjunming#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Logic component, editing list//edit/delete command, adding view, mark, unmark, remark command.
