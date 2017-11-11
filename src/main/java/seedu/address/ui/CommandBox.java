@@ -102,9 +102,7 @@ public class CommandBox extends UiPart<Region> {
         TextFields.bindAutoCompletion(commandTextField, sr -> {
             Set<String> suggestedCommands = new HashSet<>();
             for (String command: LIST_OF_ALL_COMMANDS) {
-                if (command.equals(sr.getUserText())) {
-                    //do not need to display drop down list if user input is already a valid command
-                } else if (command.startsWith(sr.getUserText())) {
+                if (!command.equals(sr.getUserText()) && command.startsWith(sr.getUserText())) {
                     suggestedCommands.add(command);
                 }
             }

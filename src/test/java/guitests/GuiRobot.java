@@ -29,13 +29,13 @@ public class GuiRobot extends FxRobot {
 
     /**
      * Pauses execution for {@code PAUSE_FOR_HUMAN_DELAY_MILLISECONDS} milliseconds for a human to examine the
-     * effects of the test. This method will be disabled when the GUI tests are executed in headless mode to avoid
-     * unnecessary delays.
+     * effects of the test.
      */
     public void pauseForHuman() {
+        /* the pause is also enabled in headless mode to avoid unexpected behaviour in tests
         if (isHeadlessMode) {
             return;
-        }
+        }*/
 
         sleep(PAUSE_FOR_HUMAN_DELAY_MILLISECONDS);
     }
