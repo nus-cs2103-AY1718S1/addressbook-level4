@@ -107,7 +107,11 @@ public class ListObserver {
      * Monitors current displayed list on person list panel.
      * @return {@code Index} of current selected person.
      */
-    public static Index getIndexofSelectedPersonInCurrentList() {
+    public static Index getIndexOfSelectedPersonInCurrentList() {
+        if (model.getSelectedPerson() == null) {
+            return null;
+        }
+
         Index index;
         switch (model.getCurrentListName()) {
 
@@ -130,7 +134,7 @@ public class ListObserver {
     /**
      * @return {@code Index} of person in current displayed list.
      */
-    public static Index getIndexofPersonInCurrentList(ReadOnlyPerson person) {
+    public static Index getIndexOfPersonInCurrentList(ReadOnlyPerson person) {
         Index index;
 
         switch (model.getCurrentListName()) {
