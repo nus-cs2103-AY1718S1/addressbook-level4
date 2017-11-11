@@ -459,8 +459,9 @@ Format: `sortPriority`
 // tag::tagsmanipulation[]
 === Tagging multiple persons : `tag`
 
-*As a Gentleman, you want to keep track of relevant information about your contacts such as where you met the contact owners and what your relationships with them are.
-Thus, you tag your contacts.*
+*As a Gentleman, you want to keep track of the relevant information about your contacts such as
+where you met the contact owners and what your current relationships with them are.
+Thus, you tag your contacts for easy reference.*
 
 Tags the persons identified by the index numbers used in the last person listing. +
 Format: `tag INDEX,[MORE_INDEXES],... TAG`
@@ -480,8 +481,9 @@ Assigns the "friends" tag to the 1st, 2nd and 3rd persons in the results of the 
 
 === Untagging multiple persons : `untag`
 
-*As a Gentleman, you want to be up to date of relevant information about your contacts.
-Thus you can untag your contacts.*
+*As a Gentleman, you want to be up to date of the relevant information about your contacts.
+You see some tags containing information that is no longer suitable to describe the contacts.
+Thus, you untag them from your contacts.*
 
 Removes the specified tags from the persons identified by the index numbers used in the last person listing. +
 Format: `tag INDEX,[MORE_INDEXES],... TAG/[MORE_TAGS]/...`
@@ -516,7 +518,7 @@ Removes all tags from all persons in the results of the `list` command.
 === Renaming a tag in contact list : `retag`
 
 *As a Gentleman, you want to be up to date of relevant information about your contacts.
-Thus you can retag your contacts.*
+Thus, you can retag your contacts.*
 
 Renames a certain tag in contact list to a new tag name. +
 Format: `retag OLD_TAG NEW_TAG`
