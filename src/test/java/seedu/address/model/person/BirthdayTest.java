@@ -8,7 +8,7 @@ import org.junit.Test;
 public class BirthdayTest {
 
     @Test
-    public void isValidBirthday(){
+    public void isValidBirthday() {
         // invalid formats for birthdays
         assertFalse(Birthday.isValidBirthday("")); // empty string
         assertFalse(Birthday.isValidBirthday(" ")); // spaces only
