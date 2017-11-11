@@ -228,6 +228,16 @@ public class AddCommandTest {
         public ObservableList<Remark> getFilteredRemarkList() {
             return null;
         }
+
+        @Override
+        public void updateLocationList() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateModuleList() {
+            fail("This method should not be called.");
+        }
     }
 
     /**
@@ -501,12 +511,11 @@ public class DeleteCommandTest {
 ``` java
 public class DeleteRemarkCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private RemarkCommand remarkCommand;
 
     @Before
     public void setUp() throws CommandException {
         ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
-        remarkCommand = new RemarkCommand(INDEX_FIRST_LESSON, "This is a sample remark");
+        RemarkCommand remarkCommand = new RemarkCommand(INDEX_FIRST_LESSON, "This is a sample remark");
         remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         remarkCommand.executeUndoableCommand();
     }
@@ -1175,12 +1184,12 @@ public class ViewCommandTest {
     }
 
     @Test
-    public void execute_viewSpecifiedLesson() {
+    public void execute_viewLesson_failure() {
 
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
 
-        assertCommandSuccess(viewCommand, String.format(viewCommand.MESSAGE_VIEW_LESSON_SUCCESS,
-                model.getFilteredLessonList().get(0)), Arrays.asList(MA1101R_L1));
+        assertCommandFailure(viewCommand, model, ViewCommand.MESSAGE_VIEW_LESSON_FAILURE);
+
     }
 
     @Test
@@ -1897,7 +1906,7 @@ public class RemarkTest {
         assertFalse(Remark.isValidRemark("")); // empty string
         assertFalse(Remark.isValidRemark(getLongString()));
 
-        // valid phone numbers
+        // valid remark
         assertTrue(Remark.isValidRemark("it is a valid remark")); // Must follow this format
     }
 
@@ -2862,7 +2871,7 @@ public class MarkCommandSystemTest extends AddressBookSystemTest {
         ReadOnlyLesson lessonToUnmark = expectedModel.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
         expectedModel.unBookmarkLesson(lessonToUnmark);
         String expectedResultMessage = String.format(MESSAGE_UNBOOKMARK_LESSON_SUCCESS, lessonToUnmark);
-        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+        assertCommandExecuteSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case: Mark the first lesson in the list, command with leading spaces and trailing spaces -> marked */
         expectedModel = getModel();
@@ -2870,7 +2879,7 @@ public class MarkCommandSystemTest extends AddressBookSystemTest {
         ReadOnlyLesson lessonToMark = expectedModel.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
         expectedModel.bookmarkLesson(lessonToMark);
         expectedResultMessage = String.format(MESSAGE_BOOKMARK_LESSON_SUCCESS, lessonToMark);
-        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+        assertCommandExecuteSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case: Unmark the first lesson in the marked list,
          * command with leading spaces and trailing spaces -> unmarked
@@ -2884,7 +2893,7 @@ public class MarkCommandSystemTest extends AddressBookSystemTest {
         lessonToUnmark = expectedModel.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
         expectedModel.unBookmarkLesson(lessonToUnmark);
         expectedResultMessage = String.format(MESSAGE_UNBOOKMARK_LESSON_SUCCESS, lessonToUnmark);
-        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+        assertCommandExecuteSuccess(command, expectedModel, expectedResultMessage);
 
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
 
@@ -2897,21 +2906,21 @@ public class MarkCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: Mark the first lesson in the list again, duplicate mark -> rejected */
         command = "     " + MarkCommand.COMMAND_WORD + "      " + INDEX_FIRST_LESSON.getOneBased() + "       ";
-        assertCommandFailure(command, MESSAGE_DUPLICATE_LESSON_FAILURE);
+        assertCommandExecuteFailure(command, MESSAGE_DUPLICATE_LESSON_FAILURE);
 
         /* Case: invalid index (0) -> rejected */
         command = MarkCommand.COMMAND_WORD + " 0";
-        assertCommandFailure(command, MESSAGE_INVALID_MARK_COMMAND_FORMAT);
+        assertCommandExecuteFailure(command, MESSAGE_INVALID_MARK_COMMAND_FORMAT);
 
         /* Case: invalid index (-1) -> rejected */
         command = MarkCommand.COMMAND_WORD + " -1";
-        assertCommandFailure(command, MESSAGE_INVALID_MARK_COMMAND_FORMAT);
+        assertCommandExecuteFailure(command, MESSAGE_INVALID_MARK_COMMAND_FORMAT);
 
         /* Case: invalid index (size + 1) -> rejected */
         Index outOfBoundsIndex = Index.fromOneBased(
                 getModel().getAddressBook().getLessonList().size() + 1);
         command = MarkCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
-        assertCommandFailure(command, MESSAGE_INVALID_DISPLAYED_INDEX);
+        assertCommandExecuteFailure(command, MESSAGE_INVALID_DISPLAYED_INDEX);
 
         command = UnmarkCommand.COMMAND_WORD + " 1";
         executeCommand(command);
@@ -2919,54 +2928,15 @@ public class MarkCommandSystemTest extends AddressBookSystemTest {
         /* Case: wrong listing type, list by module -> rejected */
         executeCommand(listModuleCommand);
         command = MarkCommand.COMMAND_WORD + " 1";
-        assertCommandFailure(command, MarkCommand.MESSAGE_WRONG_LISTING_UNIT_FAILURE);
+        assertCommandExecuteFailure(command, MarkCommand.MESSAGE_WRONG_LISTING_UNIT_FAILURE);
 
         /* Case: wrong listing type, list by location -> rejected */
         String listLocationCommand = ListCommand.COMMAND_WORD + " location";
         executeCommand(listLocationCommand);
         command = MarkCommand.COMMAND_WORD + " 1";
-        assertCommandFailure(command, MarkCommand.MESSAGE_WRONG_LISTING_UNIT_FAILURE);
+        assertCommandExecuteFailure(command, MarkCommand.MESSAGE_WRONG_LISTING_UNIT_FAILURE);
 
     }
-
-    /**
-     * Executes {@code command} and in addition,<br>
-     * 1. Asserts that the command box displays an empty string.<br>
-     * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
-     * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
-     * 4. Asserts that the status bar's sync status changes.<br>
-     * 5. Asserts that the command box has the default style class.<br>
-     * Verifications 1 to 3 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
-        executeCommand(command);
-        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
-        assertCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchangedExceptSyncStatus();
-    }
-
-
-    /**
-     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
-     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
-     * These verifications are done by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
-     * error style.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandFailure(String command, String expectedResultMessage) {
-        Model expectedModel = getModel();
-        executeCommand(command);
-        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
-        assertCommandBoxShowsErrorStyle();
-        assertStatusBarUnchanged();
-    }
-
 }
 ```
 ###### /java/systemtests/RemarkCommandSystemTest.java
@@ -2991,7 +2961,7 @@ public class RemarkCommandSystemTest extends AddressBookSystemTest {
         Code moduleToRemark = expectedModel.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()).getCode();
         expectedModel.addRemark(new Remark(SAMPLE_REMARK, moduleToRemark));
         String expectedResultMessage = String.format(MESSAGE_REMARK_MODULE_SUCCESS, moduleToRemark);
-        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+        assertCommandExecuteSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case:remark the second module in the list -> remarked*/
         expectedModel = getModel();
@@ -2999,7 +2969,7 @@ public class RemarkCommandSystemTest extends AddressBookSystemTest {
         moduleToRemark = expectedModel.getFilteredLessonList().get(INDEX_SECOND_LESSON.getZeroBased()).getCode();
         expectedModel.addRemark(new Remark(SAMPLE_REMARK, moduleToRemark));
         expectedResultMessage = String.format(MESSAGE_REMARK_MODULE_SUCCESS, moduleToRemark);
-        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+        assertCommandExecuteSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case:delete the second remark in the list -> deleted*/
         expectedModel = getModel();
@@ -3007,110 +2977,73 @@ public class RemarkCommandSystemTest extends AddressBookSystemTest {
         Remark remarkToDelete = expectedModel.getFilteredRemarkList().get(INDEX_SECOND_LESSON.getZeroBased());
         expectedModel.deleteRemark(remarkToDelete);
         expectedResultMessage = String.format(MESSAGE_DELETE_REMARK_SUCCESS, remarkToDelete);
-        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+        assertCommandExecuteSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case: Undo the previous step -> Undoed */
         expectedModel = getModel();
         command = UndoCommand.COMMAND_WORD;
         expectedModel.addRemark(new Remark(SAMPLE_REMARK, moduleToRemark));
         expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+        assertCommandExecuteSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case: redo the last command -> redoed */
         expectedModel = getModel();
         command = RedoCommand.COMMAND_WORD;
         expectedModel.deleteRemark(remarkToDelete);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+        assertCommandExecuteSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case: add in the same remark again to the first module, duplicate remark -> rejected */
         command = RemarkCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + " " + SAMPLE_REMARK;
-        assertCommandFailure(command, MESSSAGE_DUPLICATE_REMARK);
+        assertCommandExecuteFailure(command, MESSSAGE_DUPLICATE_REMARK);
 
         /* Case: invalid module index (0) -> rejected */
         command = RemarkCommand.COMMAND_WORD + " 0 " + SAMPLE_REMARK;
-        assertCommandFailure(command, MESSAGE_INVALID_REMARK_COMMAND_FORMAT);
+        assertCommandExecuteFailure(command, MESSAGE_INVALID_REMARK_COMMAND_FORMAT);
 
         /* Case: invalid module index (-1) -> rejected */
         command = RemarkCommand.COMMAND_WORD + " -1 " + SAMPLE_REMARK;
-        assertCommandFailure(command, MESSAGE_INVALID_REMARK_COMMAND_FORMAT);
+        assertCommandExecuteFailure(command, MESSAGE_INVALID_REMARK_COMMAND_FORMAT);
 
         /* Case: invalid module index (size + 1) -> rejected */
         Index outOfBoundsIndex = Index.fromOneBased(
                 getModel().getAddressBook().getLessonList().size() + 1);
         command = RemarkCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased() + " " + SAMPLE_REMARK;
-        assertCommandFailure(command, MESSAGE_INVALID_DISPLAYED_INDEX);
+        assertCommandExecuteFailure(command, MESSAGE_INVALID_DISPLAYED_INDEX);
 
         /* Case: invalid remark index (0) -> rejected */
         command = RemarkCommand.COMMAND_WORD + " -d 0";
-        assertCommandFailure(command, MESSAGE_INVALID_REMARK_COMMAND_FORMAT);
+        assertCommandExecuteFailure(command, MESSAGE_INVALID_REMARK_COMMAND_FORMAT);
 
         /* Case: invalid remark index (-1) -> rejected */
         command = RemarkCommand.COMMAND_WORD + " -d -1 " + SAMPLE_REMARK;
-        assertCommandFailure(command, MESSAGE_INVALID_REMARK_COMMAND_FORMAT);
+        assertCommandExecuteFailure(command, MESSAGE_INVALID_REMARK_COMMAND_FORMAT);
 
         /* Case: invalid remark index (size + 1) -> rejected */
         outOfBoundsIndex = Index.fromOneBased(
                 getModel().getAddressBook().getRemarkList().size() + 1);
         command = RemarkCommand.COMMAND_WORD + " -d " + outOfBoundsIndex.getOneBased();
-        assertCommandFailure(command, MESSAGE_INVALID_DISPLAYED_INDEX);
+        assertCommandExecuteFailure(command, MESSAGE_INVALID_DISPLAYED_INDEX);
 
         /* Case: add remark when list by lessons, wrong listing type -> rejected */
         command = ViewCommand.COMMAND_WORD + " 1";
         executeCommand(command);
         command = RemarkCommand.COMMAND_WORD + " 1  another remark";
-        assertCommandFailure(command, MESSAGE_WRONG_LISTING_UNIT_FAILURE);
+        assertCommandExecuteFailure(command, MESSAGE_WRONG_LISTING_UNIT_FAILURE);
 
         /* Case: delete remark when list by lessons, wrong listing type -> rejected */
         command = RemarkCommand.COMMAND_WORD + " -d 1";
-        assertCommandFailure(command, MESSAGE_WRONG_LISTING_UNIT_FAILURE);
+        assertCommandExecuteFailure(command, MESSAGE_WRONG_LISTING_UNIT_FAILURE);
 
         /* Case: add remark when list by location, wrong listing type -> rejected */
         command = ListCommand.COMMAND_WORD + " location";
         executeCommand(command);
         command = RemarkCommand.COMMAND_WORD + " 1  another remark";
-        assertCommandFailure(command, MESSAGE_WRONG_LISTING_UNIT_FAILURE);
+        assertCommandExecuteFailure(command, MESSAGE_WRONG_LISTING_UNIT_FAILURE);
 
         /* Case: delete remark when list by location, wrong listing type -> rejected */
         command = RemarkCommand.COMMAND_WORD + " -d 1";
-        assertCommandFailure(command, MESSAGE_WRONG_LISTING_UNIT_FAILURE);
-    }
-
-    /**
-     * Executes {@code command} and in addition,<br>
-     * 1. Asserts that the command box displays an empty string.<br>
-     * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
-     * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
-     * 4. Asserts that the status bar's sync status changes.<br>
-     * 5. Asserts that the command box has the default style class.<br>
-     * Verifications 1 to 3 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
-        executeCommand(command);
-        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
-        assertCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchangedExceptSyncStatus();
-    }
-
-    /**
-     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
-     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
-     * These verifications are done by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
-     * error style.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandFailure(String command, String expectedResultMessage) {
-        Model expectedModel = getModel();
-        executeCommand(command);
-        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
-        assertCommandBoxShowsErrorStyle();
-        assertStatusBarUnchanged();
+        assertCommandExecuteFailure(command, MESSAGE_WRONG_LISTING_UNIT_FAILURE);
     }
 
 }
