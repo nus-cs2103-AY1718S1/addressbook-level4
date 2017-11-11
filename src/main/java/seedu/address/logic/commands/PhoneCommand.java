@@ -80,6 +80,27 @@ public class PhoneCommand extends UndoableCommand {
         return personUpdated;
     }
 
+    public Index getIndex() {
+        return targetIndex;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public Phone getPhone() {
+        return phone;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof PhoneCommand // instanceof handles nulls
+                && this.targetIndex.equals(((PhoneCommand) other).getIndex())
+                && this.action.equals(((PhoneCommand) other).getAction())
+                && this.phone.equals(((PhoneCommand) other).getPhone()));
+    }
+
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();

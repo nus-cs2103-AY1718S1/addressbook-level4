@@ -1,5 +1,5 @@
 # ngzuyao
-###### \Nickname.java
+###### /Nickname.java
 ``` java
 /**
  * This code was not used because it was redundant after the implementation of a custom field.
@@ -78,7 +78,7 @@ public class Nickname {
 
 }
 ```
-###### \ReadOnlyPerson.java
+###### /ReadOnlyPerson.java
 ``` java
     /**
      * Formats the person as text, showing all contact details.
