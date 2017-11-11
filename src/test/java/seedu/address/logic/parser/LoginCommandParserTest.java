@@ -30,6 +30,8 @@ public class LoginCommandParserTest {
 
     @Test
     public void cliParse_validArgs_returnsLoginCommand() {
+        setShowingLoginView(false);
+
         try {
             LoginCommand expectedLoginCommand =
                     new LoginCommand(new Username(VALID_USERNAME), new Password(VALID_PASSWORD));
@@ -46,6 +48,7 @@ public class LoginCommandParserTest {
 
     @Test
     public void cliParse_invalidArgs() {
+        setShowingLoginView(false);
         // empty input
         assertParseFailure(parser, "    ", String.format(
                 MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
