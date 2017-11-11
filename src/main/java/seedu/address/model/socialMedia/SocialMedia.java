@@ -40,7 +40,8 @@ public class SocialMedia implements ReadOnlySocialMedia {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof SocialMedia // instanceof handles nulls
-                && this.socialMediaUrlsName.toString().equals(((SocialMedia) other).socialMediaUrlsName.toString())); // state check
+                && this.socialMediaUrlsName.toString().equals(((SocialMedia) other).socialMediaUrlsName
+                .toString())); // state check
     }
 
     @Override
