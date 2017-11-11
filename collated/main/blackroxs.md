@@ -69,10 +69,9 @@ public class ImportCommand extends UndoableCommand {
             ReadOnlyResidentBook newList = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
 
             ArrayList<String> namesAdded = new ArrayList<>();
-            String namesFeedback = "";
 
             addUniquePerson(newList, namesAdded);
-            namesFeedback = getNamesFeedback(namesAdded, namesFeedback);
+            String namesFeedback = getNamesFeedback(namesAdded);
 
             return new CommandResult(String.format(MESSAGE_SUCCESS + " Added: " + namesFeedback));
         } catch (NullPointerException e) {
@@ -86,6 +85,12 @@ public class ImportCommand extends UndoableCommand {
         }
     }
 
+    /**
+     * Add only persons not found in current ResidentBook
+     *
+     * @param newList    import file viewed as ReadOnlyResidentBook
+     * @param namesAdded list of names that are added
+     */
     private void addUniquePerson(ReadOnlyResidentBook newList, ArrayList<String> namesAdded) {
         ObservableList<ReadOnlyPerson> personList = newList.getPersonList();
 
@@ -99,9 +104,15 @@ public class ImportCommand extends UndoableCommand {
         }
     }
 
-    private String getNamesFeedback(ArrayList<String> namesAdded, String namesFeedback) throws NoUniqueImport {
-
-        if(namesAdded.size() == 0 ){
+    /**
+     * Form the string to return as feedback to user
+     * @param namesAdded list of names that are added
+     * @return concatenated string of all names
+     * @throws NoUniqueImport no resident has been added to list (invalid import)
+     */
+    private String getNamesFeedback(ArrayList<String> namesAdded) throws NoUniqueImport {
+        String namesFeedback = "";
+        if (namesAdded.size() == 0) {
             throw new NoUniqueImport(MESSAGE_FILE_NOT_UNIQUE);
         }
 
