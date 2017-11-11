@@ -6,7 +6,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.getTypicalPersonIndexList;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Test;
 
@@ -24,7 +24,8 @@ public class SelectJoinedEventsCommandParserTest {
     public void parse_validArgs_returnsSelectJoinedEventsCommand() {
         // Valid argument for SelectJoinedEventsCommand is a List<Index>
         // Valid index specified
-        assertParseSuccess(parser, "1", new SelectJoinedEventsCommand(Arrays.asList(INDEX_FIRST_PERSON)));
+        assertParseSuccess(parser, "1", new SelectJoinedEventsCommand(
+                Collections.singletonList(INDEX_FIRST_PERSON)));
 
         // Valid indexes specified
         assertParseSuccess(parser, "1 2 3", new SelectJoinedEventsCommand(getTypicalPersonIndexList()));

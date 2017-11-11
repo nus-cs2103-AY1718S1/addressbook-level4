@@ -21,7 +21,7 @@ public class TypicalIndexes {
      * Returns an {@code list} with all the typical person indexes.
      */
     public static List<Index> getTypicalPersonIndexList() {
-        List idx = new ArrayList();
+        List<Index> idx = new ArrayList<Index>();
         for (Index index : getTypicalPersonIndexes()) {
             try {
                 idx.add(index);
@@ -36,7 +36,7 @@ public class TypicalIndexes {
      * Returns an {@code list} with all the typical event indexes.
      */
     public static List<Index> getTypicalEventIndexList() {
-        List idx = new ArrayList();
+        List<Index> idx = new ArrayList<>();
         for (Index index : getTypicalEventIndexes()) {
             try {
                 idx.add(index);

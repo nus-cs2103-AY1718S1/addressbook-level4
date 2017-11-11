@@ -93,7 +93,7 @@ public class StorageManagerTest {
      */
     class XmlAddressBookStorageExceptionThrowingStub extends XmlAddressBookStorage {
 
-        public XmlAddressBookStorageExceptionThrowingStub(String filePath) {
+        private XmlAddressBookStorageExceptionThrowingStub(String filePath) {
             super(filePath);
         }
 
@@ -139,7 +139,7 @@ public class StorageManagerTest {
      */
     class XmlEventStorageExceptionThrowingStub extends XmlEventStorage {
 
-        public XmlEventStorageExceptionThrowingStub(String filePath) {
+        private XmlEventStorageExceptionThrowingStub(String filePath) {
             super(filePath);
         }
 

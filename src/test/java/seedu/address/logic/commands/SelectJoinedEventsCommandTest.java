@@ -19,10 +19,10 @@ import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -56,7 +56,8 @@ public class SelectJoinedEventsCommandTest {
     public void execute_invalidIndex_failure() {
         // Invalid out of bounds index
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        assertExecutionFailure(Arrays.asList(outOfBoundsIndex), Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertExecutionFailure(Collections.singletonList(outOfBoundsIndex),
+                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     /**
@@ -82,22 +83,22 @@ public class SelectJoinedEventsCommandTest {
         Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
 
         // First person index - Alice - Valid - 1 event joined total
-        assertExecutionSuccess(Arrays.asList(INDEX_FIRST_PERSON),
+        assertExecutionSuccess(Collections.singletonList(INDEX_FIRST_PERSON),
                 String.format(SelectJoinedEventsCommand.MESSAGE_SELECT_PERSON_JOINED_EVENTS + ", "
                         + String.format(MESSAGE_EVENTS_LISTED_OVERVIEW, 1), ALICE.getName()),
-                Arrays.asList(FIRST));
+                Collections.singletonList(FIRST));
 
         // Third person index - Carl - Valid - 2 events joined total
-        assertExecutionSuccess(Arrays.asList(INDEX_THIRD_PERSON),
+        assertExecutionSuccess(Collections.singletonList(INDEX_THIRD_PERSON),
                 String.format(SelectJoinedEventsCommand.MESSAGE_SELECT_PERSON_JOINED_EVENTS + ", "
                         + String.format(MESSAGE_EVENTS_LISTED_OVERVIEW, 2), CARL.getName()),
                 Arrays.asList(FIRST, SECOND));
 
         // Last person index - George - Valid - 0 events joined total
-        assertExecutionSuccess(Arrays.asList(lastPersonIndex),
+        assertExecutionSuccess(Collections.singletonList(lastPersonIndex),
                 String.format(SelectJoinedEventsCommand.MESSAGE_SELECT_PERSON_JOINED_EVENTS + ", "
                         + String.format(MESSAGE_EVENTS_LISTED_OVERVIEW, 0), GEORGE.getName()),
-                Arrays.asList());
+                Collections.emptyList());
     }
 
     /**
@@ -113,7 +114,7 @@ public class SelectJoinedEventsCommandTest {
                 String.format(SelectJoinedEventsCommand.MESSAGE_SELECT_PERSON_JOINED_EVENTS + ", "
                         + String.format(MESSAGE_EVENTS_LISTED_OVERVIEW, 1), ALICE.getName() + ", "
                         + GEORGE.getName()),
-                Arrays.asList(FIRST));
+                Collections.singletonList(FIRST));
 
         // First & second person index - Alice, Benson - Valid - 2 events joined total
         assertExecutionSuccess(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON),
@@ -134,22 +135,22 @@ public class SelectJoinedEventsCommandTest {
                 String.format(SelectJoinedEventsCommand.MESSAGE_SELECT_PERSON_JOINED_EVENTS + ", "
                         + String.format(MESSAGE_EVENTS_LISTED_OVERVIEW, 0), FIONA.getName() + ", "
                         + GEORGE.getName()),
-                Arrays.asList());
+                Collections.emptyList());
     }
 
     @Test
     public void equals() {
         SelectJoinedEventsCommand selectJoinedEventsFirstCommand = new SelectJoinedEventsCommand(
-                Arrays.asList(INDEX_FIRST_PERSON));
+                Collections.singletonList(INDEX_FIRST_PERSON));
         SelectJoinedEventsCommand selectJoinedEventsSecondCommand = new SelectJoinedEventsCommand(
-                Arrays.asList(INDEX_SECOND_PERSON));
+                Collections.singletonList(INDEX_SECOND_PERSON));
 
         // same object -> returns true
         assertTrue(selectJoinedEventsFirstCommand.equals(selectJoinedEventsFirstCommand));
 
         // same values -> returns true
         SelectJoinedEventsCommand selectJoinedEventsFirstCommandCopy = new SelectJoinedEventsCommand(
-                Arrays.asList(INDEX_FIRST_PERSON));
+                Collections.singletonList(INDEX_FIRST_PERSON));
         assertTrue(selectJoinedEventsFirstCommand.equals(selectJoinedEventsFirstCommandCopy));
 
         // different types -> returns false
