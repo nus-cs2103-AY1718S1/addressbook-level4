@@ -351,6 +351,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+
 // tag::favourite[]
 === Favourite mechanism
 
@@ -383,6 +384,38 @@ image::FavouritePersonSequenceDiagram.png[width="800"]
 **Pros:** Makes clear what the method is trying to do +
 **Cons:** Is not necessary when existing code is able to perform the same action +
 // end::favourite[]
+
+// tag::find[]
+=== Find mechanism
+
+The find feature allows you to find persons based on keywords given. These keywords could belong to any of
+the *5* link:#datafields[`DATAFIELDS`] that are attributed to a `Person`. These link:#datafields[`DATAFIELDS`] are associated to the given keywords through the use of
+prefixes that are unique to each link:#datafields[`DATAFIELD`].
+
+Below are the prefixes and their corresponding link:#datafields[`DATAFIELDS`]:
+****
+PREFIX -> DATAFIELD +
+`n/` -> name +
+`p/` -> phone +
+`a/` -> address +
+`e/` -> email +
+`t/` -> tag
+****
+
+The following sequence diagram further illustrates how the find mechanism works.
+
+image::find.png[width="800"]
+
+==== Design Considerations
+**Aspect:** Process of checking keywords to data in the contact list. +
+**Alternative 1 (current choice):** Explicitly checks every field for given array list of keywords. +
+**Pros:** Method is effective and reliable in executing command successfully. +
+**Cons:** May cause complications due to checking every object in the array list. +
+**Alternative 2:** Introduce a conditional operation. +
+**Pros:** Reduces chances of error. +
+**Cons:** Code may not be concise.
+
+// end::find[]
 
 // tag::sort[]
 === Sort mechanism
@@ -434,6 +467,7 @@ The `MainWindow` subscribes to these 2 events to determine when it should set `p
 
 // end::tags[]
 
+// tag::addremove[]
 // tag::addtag[]
 === Tag addition mechanism
 
@@ -466,7 +500,7 @@ As seen above, execution of `AddTagCommand` is governed by the `addTag` method l
 
 // end::addtag[]
 
-// tag::remove[]
+// tag::removetag[]
 === Tag removal mechanism
 
 The remove tag feature allows users to remove specified `Tag(s)` either from specified `Indexes` or from the whole address book.
@@ -498,6 +532,7 @@ As seen above, execution of `RemoveTagCommand` is governed by the `removeTag` me
 **Cons:** Current method of removing tags has to accommodate the use of the new mechanism. +
 
 // end::removetag[]
+// end::addremove[]
 
 // tag::remarkchecklist[]
 === Remark CheckList Implementation
@@ -1320,15 +1355,17 @@ A contact detail that is not meant to be shared with others
 ....
 
 [[command-line]]
+Command-line
 
 ....
 The text bar where user types in when Contact List Pro is opened up
 ....
 
-[[fields]]
+[[datafields]]
+Data fields
 
 ....
-The different component of contact's details.
+The different components of a contact's details.
 ....
 
 [appendix]

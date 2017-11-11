@@ -727,9 +727,9 @@ public class Remark {
      */
     private static String getColorForTag(String tagValue) {
 
-        if (!tagColors.containsKey(tagValue) && colourNum < colors.length) {
+        if ((!tagColors.containsKey(tagValue)) && (colourNum < colors.length)) {
             tagColors.put(tagValue, colors[colourNum++]);
-        } else if (colourNum >= colors.length && !tagColors.containsKey(tagValue)) {
+        } else if ((colourNum >= colors.length) && (!tagColors.containsKey(tagValue))) {
             colourNum = 0; //Resets the color num for reuse
         } else if (tagColors.containsKey(tagValue)) {
             //if the tag already has a colour in the hasmap, we do not need to do anything
@@ -750,7 +750,8 @@ public class Remark {
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            String setColour = "-fx-background-color: " + getColorForTag(tag.tagName);
+            tagLabel.setStyle("-fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid; " + setColour);
             tags.getChildren().add(tagLabel);
         });
     }
@@ -1318,12 +1319,11 @@ public class RemarkPanel extends UiPart<Region> {
 ```
 ###### \resources\view\MainWindow.fxml
 ``` fxml
+            <padding>
+              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
             <StackPane fx:id="remarkListDisplayPlaceholder" maxHeight="200.0" maxWidth="380.0" minHeight="0.0" prefHeight="100.0" prefWidth="380.0" />
-            <StackPane fx:id="remarkDisplayPlaceholder" maxWidth="400" minHeight="40.0" prefHeight="300.0" prefWidth="400.0">
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </StackPane>
+            <StackPane fx:id="remarkDisplayPlaceholder" maxWidth="400" minHeight="40.0" prefHeight="300.0" prefWidth="400.0" />
 ```
 ###### \resources\view\RemarkListPanel.fxml
 ``` fxml

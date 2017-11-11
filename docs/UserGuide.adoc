@@ -99,6 +99,7 @@ Adding `TAGS` are optional.
 
 *Suggestion for use:* If you want to view all contacts in the contact list.
 
+// tag::tags[]
 ==== Listing all tags : `tags`
 
 *Description:* Shows a list of all tags in the contact list.
@@ -106,6 +107,8 @@ Adding `TAGS` are optional.
 *Format:* `tags`
 
 *Suggestion for use:* If you want to view all existing tags in _**The Classroom**_.
+
+// end::tags[]
 
 ==== Editing a person : `edit`
 
@@ -130,6 +133,7 @@ Adding `TAGS` are optional.
 
 *Suggestion for use:* If you need to update the contact details of any of your contacts.
 
+// tag::favourite[]
 ==== Favouriting a person : `favourite`
 
 *Description:* Favourites or unfavourites an existing person in the contact list.
@@ -152,6 +156,11 @@ Favourites/Unfavourites the 6th person in the contact list.
 Favourites/Unfavourites the 1st person from the results of the `find` command.
 
 *Suggestion for use:* You want to easily access a particular contact.
+
+// end::favourite[]
+
+
+// tag::find[]
 
 ==== Finding persons : `find`
 
@@ -195,6 +204,8 @@ Returns any person having tags `friends`, `colleagues`, or both.
 
 *Suggestion for use:* If you can only remember a contact's address and wants to find the contact in the contact list.
 
+// end::find[]
+
 ==== Deleting a person : `delete`
 
 *Description:* Deletes the specified person from the contact list.
@@ -218,6 +229,7 @@ Deletes the 1st person from the results of the `find` command.
 
 *Suggestion for use:* If you do not want to keep a contact in the contact list.
 
+// tag::sort[]
 ==== Sorting the contact list : `sort`
 
 *Description:* Sorts the contact list according to the specified _data field_.
@@ -246,6 +258,8 @@ Sorts the contact list according to their names in reverse order.
 Sorts the contact list according to their phone numbers in reverse order without prioritising favourited contacts first.
 
 *Suggestion for use:* If you want to view the number of contacts having names starting with the same letter.
+
+// end::sort[]
 
 ==== Selecting a person : `select`
 
@@ -346,6 +360,8 @@ The second `redo` command reverses the first `undo` command and re-execute the `
 
 // end::undoredo[]
 
+// tag::addremove[]
+// tag::addtag[]
 ==== Adding tag(s) : `addtag`
 
 *Description:* Adds the specified tag(s).
@@ -384,6 +400,7 @@ Adds the `friends` tag to the person from the second to fifth index in the conta
 
 // end::addtag[]
 
+// tag::removetag[]
 ==== Removing tag(s) : `removetag`
 
 *Description:* Removes the specified tag(s).
@@ -429,18 +446,20 @@ Removes the `friends` tag from the second to fifth person in the contact list.
 *Suggestion for use:* If you want to mass delete a tag that is no longer in use.
 
 // end::removetag[]
+// end::addremove[]
 
 // tag::remarkchecklist[]
 ==== Add/remove a remark note to contact: `addremark`, `removeremark`
 
 *Description:* Adds/Removes the specified remarks(s).
 
-Format to add remark: `addremark INDEX r/REMARK` +
-Format to remove remark: `removeremark INDEX REMARKINDEX`
+Format to add remark: `addremark INDEX r/REMARK...` +
+Format to remove remark: `removeremark INDEX REMARKINDEX...`
 
 ****
 * Add/Remove multiple remarks from multiple indexes as specified.
 * `INDEX` refers to the index number shown in the last person listing.
+** Only one `INDEX` can be selected at a time, although multiple `REMARKINDEX` can be selected
 * The `INDEX` and `REMARKINDEX` must be a *positive integer* ( `1, 2, 3, ...`).
 ****
 [TIP]
