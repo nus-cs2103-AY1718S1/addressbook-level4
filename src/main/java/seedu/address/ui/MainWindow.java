@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -18,6 +19,8 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.HomeRequestEvent;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -48,16 +51,7 @@ public class MainWindow extends UiPart<Region> {
     private UserPrefs prefs;
 
     @FXML
-    private StackPane extendedPersonCardPlaceholder;
-
-    @FXML
-    private StackPane statisticsPanelPlaceholder;
-
-    @FXML
     private StackPane commandBoxPlaceholder;
-
-    @FXML
-    private StackPane graphPanelPlaceholder;
 
     @FXML
     private MenuItem helpMenuItem;
@@ -70,6 +64,15 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane extendedScreenPlaceHolder;
+
+    @FXML
+    private SplitPane statsGraphPlaceHolder;
+
+    @FXML
+    private SplitPane detailsStatsPlaceHolder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -139,13 +142,10 @@ public class MainWindow extends UiPart<Region> {
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         extendedPersonCard = new ExtendedPersonCard();
-        extendedPersonCardPlaceholder.getChildren().add(extendedPersonCard.getRoot());
 
         GraphPanel graphPanel = new GraphPanel(logic);
-        graphPanelPlaceholder.getChildren().add(graphPanel.getRoot());
 
         StatisticsPanel statisticsPanel = new StatisticsPanel(logic.getFilteredPersonList());
-        statisticsPanelPlaceholder.getChildren().add(statisticsPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -155,8 +155,28 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        detailsStatsPlaceHolder.getItems().set(0, extendedPersonCard.getRoot());
+        detailsStatsPlaceHolder.getItems().set(1, statisticsPanel.getRoot());
+        statsGraphPlaceHolder.getItems().set(0, detailsStatsPlaceHolder);
+        statsGraphPlaceHolder.getItems().set(1, graphPanel.getRoot());
     }
 
+    //@@author nahtanojmil
+    /**
+     * change to home display page when the home command is parsed. @param valid
+     */
+    public void setScreenDisplay(boolean valid) {
+        HomePanel homePanel = new HomePanel(prefs);
+        if (valid) {
+            extendedScreenPlaceHolder.getChildren().removeAll();
+            extendedScreenPlaceHolder.getChildren().setAll(homePanel.getRoot());
+            homePanel.refreshPage();
+        } else {
+            extendedScreenPlaceHolder.getChildren().removeAll();
+            extendedScreenPlaceHolder.getChildren().setAll(statsGraphPlaceHolder);
+        }
+    }
     void hide() {
         primaryStage.hide();
     }
@@ -186,7 +206,7 @@ public class MainWindow extends UiPart<Region> {
         }
     }
 
-    private void setWindowMinSize() {
+    public void setWindowMinSize() {
         primaryStage.setMinHeight(MIN_HEIGHT);
         primaryStage.setMinWidth(MIN_WIDTH);
     }
@@ -240,5 +260,15 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleJumpRequestEvent(JumpToListRequestEvent event) {
+        setScreenDisplay(false);
+    }
+
+    @Subscribe
+    private void handleHomeRequest (HomeRequestEvent event) {
+        setScreenDisplay(true);
     }
 }
