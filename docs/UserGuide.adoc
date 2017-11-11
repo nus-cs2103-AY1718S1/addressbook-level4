@@ -67,7 +67,7 @@ This section aims to help you understand the features in *ABC*. It contains a de
 * Items that comes before `…`​ can have multiple entries e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Index refers to the index number shown in the most recent listing. The index *must be a positive integer* e.g. 1, 2, 3, ...
 // tag::tabcomplete[]
-* Suggestions will pop up for partial words keyed in. Press kbd:[TAB] to auto-complete using the first suggestion.
+* Suggestions will pop up for partial words keyed in. Press kbd:[TAB] to auto-complete using the first suggestion or press kbd:[&uarr;]kbd:[&darr;] arrows and kbd:[Enter] to choose the suggestion.
 // end::tabcomplete[]
 ====
 
@@ -158,18 +158,16 @@ Command Name: `find` +
 Shorthand Alias: `f` +
 Function : Displays a filtered list of persons whose specified fields contain any of the given keywords +
 Format: `find [n/KEYWORD...] [p/KEYWORD...] [e/KEYWORD...] [a/KEYWORD...] [t/KEYWORD...]` +
-[NOTE] There must be at least one argument
+[NOTE]
+There must be at least one argument
 ====
 
 ****
 * The search is case insensitive e.g `hans` will match `Hans`
-* The order of the keywords does not matter e.g. `Hans Bo` will match `Bo Hans`
 * Only exact words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one search term in the specified field will be returned e.g. `find n/Hans Bo` will return `Hans Gruber`, `Bo Yang`
-// tag::wildcard[]
-* Wildcard symbols `\*` and `?` are allowed in parameters for `find` where `*` matches any non-space string and `?` matches any non-space unit-length symbol
-// end::wildcard[]
-* The search is done on the existing list. Successive `find` commands make the list smaller
+* Wildcard symbols `\*` and `?` are allowed in the parameters where `*` matches any non-space string and `?` matches any non-space unit-length symbol
+* The search is done on the most recent listing. Successive `find` commands make the list smaller
 ****
 
 If you want to find a person named `John Watson`:
@@ -186,12 +184,12 @@ _Figure 4.4.2_
 
 Here are some other ways you can use `find`:
 
-* `find n/Betsy Tim John` +
-Lists any person having names `Betsy`, `Tim`, or `John`
-* `f n/Watson` +
-Lists any person having the name `Watson`
-* `find j*` +
-Lists any person whose name starts with `j` +
+* `find t/friends family p/88887777` +
+Lists any person having tags `friends`or `family` or whose phone number is `88887777`
+* `f e/*@example.com` +
+Lists any person whose email domain is `example.com`
+* `find n/steph?n` +
+Lists persons whose name is `stephan` or `stephen` +
 // end::find[]
 
 // tag::sort[]
