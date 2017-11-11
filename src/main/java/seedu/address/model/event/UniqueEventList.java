@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import org.fxmisc.easybind.EasyBind;
 
@@ -26,6 +27,9 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class UniqueEventList implements Iterable<Event> {
+    private static final DateTimeFormatter formatter =
+            DateTimeFormatter.ofPattern("dd MMM, yyyy HH:mm", Locale.ENGLISH);
+
     private final ObservableList<Event> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<ReadOnlyEvent> mappedList = EasyBind.map(internalList, (event) -> event);
@@ -56,9 +60,8 @@ public class UniqueEventList implements Iterable<Event> {
      *
      */
     public void sortEvents() {
-        DateTimeFormatter sdf = DateTimeFormatter.ofPattern("ddMMyyyy HH:mm");
-        internalList.sort((e1, e2) -> (LocalDateTime.parse(e1.getTime().toString(), sdf)
-                .compareTo(LocalDateTime.parse(e2.getTime().toString(), sdf))));
+        internalList.sort((e1, e2) -> (LocalDateTime.parse(e1.getTime().getValue(), formatter)
+                .compareTo(LocalDateTime.parse(e2.getTime().getValue(), formatter))));
     }
 
     /**

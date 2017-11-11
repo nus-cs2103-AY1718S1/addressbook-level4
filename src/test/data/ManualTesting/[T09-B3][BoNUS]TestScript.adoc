@@ -45,6 +45,61 @@ for more information.
 
 === Add/view/edit/delete events
 
+[NOTE]
+====
+* You should be having the view of contacts list
+====
+
+
+==== Listing of events
+*Positive test case* +
+1) listE _(Listed all events)_
+
+*Negative test case* +
+1) ListE _(commands are case sensitive)_ +
+2) lIsTE _(commands are case sensitive)_ +
+3) listEE _(incorrect command)_ +
+
+[NOTE]
+====
+After listing events, you should having the view of event list
+====
+
+==== Adding of events
+*Positive test cases* +
+1) addE n/CS3201 Project Meeting dt/17112017 15:30 a/School Of Computing, SR09, NUS +
+2) addE n/2101 dt/18112017 14:00 a/School of Computing, SR10, NUS +
+3) addE n/Lunch Date with John dt/19112017 12:00 a/Clementi Mall, Foodfare +
+
+*Negative test cases* +
+1) addE n/Meeting for $$ collection dt/20112017 16:30 a/School Of Computing, SR1, NUS _(invalid character in name)_ +
+2) addE n/Consultation with CS2101 Tutor dt/201117 16:30 a/CELC, NUS _(invalid date)_ +
+3) addE n/Consultation with CS2103 Tutor dt/20112017 16:30pm a/School Of Computing, SR08, NUS _(invalid time)_  +
+4) addE n/GEQ1000 Project Meeting dt/20112017 1600 a/The Frontier, Science, NUS _(invalid time)_ +
+5) addE Lunch Date dt/23112017 16:00 a/The Deck, FASS, NUS _(missing prefix for name)_ +
+
+
+==== Deleting of Events +
+*Positive test cases* +
+1) deleteE 8 +
+2) deleteE 9 +
+
+*Negative test cases* +
+1) deleteE 30 _(invalid index)_ +
+2) deleteE -1 _(invalid index)_ +
+
+==== Editing of Events
+*Positive test cases* +
+1) editE 4 n/CS2010 Project Meeting _(name changed)_ +
+2) editE 5 dt/18112017 15:00 _(time changed)_ +
+3) editE 6 a/Causeway Point, Ichiban Sushi _(venue changed)_ +
+
+*Negative test cases* +
+1) editE n/CS1010 Project Meeting _(invalid index)_ +
+2) editE 2 CS3222 Consultation 19112017 15:00 School of Computing, SR10, NUS _(missing prefixes)_
+====
+
+
 === Import/export data
 
 === Advance setting
