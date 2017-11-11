@@ -66,7 +66,7 @@ public class EditTaskCommandParserTest {
     }
 
     @Test
-    public void parse_invalidIndex_failure() throws Exception {
+    public void parse_invalidPreamble_failure() throws Exception {
         // negative index
         assertParseFailure(parser, "-5" + UNQUOTED_DESCRIPTION_PAPER, MESSAGE_INVALID_FORMAT);
 

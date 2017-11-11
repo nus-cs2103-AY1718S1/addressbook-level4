@@ -8,7 +8,6 @@ import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.persons.TagCommand;
 import seedu.address.logic.commands.tasks.TagTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
@@ -32,10 +31,16 @@ public class TagTaskCommandParser implements Parser<TagTaskCommand> {
 
         try {
             parsedIndices =  ParserUtil.parseIndices(argMultimap.getPreamble().split(","));
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagTaskCommand.MESSAGE_USAGE));
+        }
+
+        try {
             tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
+            throw new ParseException(ive.getMessage());
         }
+
         return new TagTaskCommand(parsedIndices, tagList);
     }
 
