@@ -21,9 +21,8 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class BinrestoreCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "bin-restore";
-
     public static final String MESSAGE_SUCCESS = "Resotred";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + "Restore the person in bin to address book";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ":Restore the person in bin to address book";
     private ArrayList<Index> targets;
     private boolean isVaild = true;
     private boolean isEmpty = false;

@@ -18,7 +18,7 @@ public class ExportCommand extends Command {
 
     public static final String COMMAND_WORD = "export";
 
-    public static final String MESSAGE_SUCCESS = "new file created";
+    public static final String MESSAGE_SUCCESS = "New file created";
     public static final String MESSAGE_USAGE = COMMAND_WORD + "export the person details in txt file";
     private String filepath;
     public ExportCommand (String f) {
@@ -108,7 +108,6 @@ public class ExportCommand extends Command {
                 output.newLine();
 
             }
-<<<<<<< HEAD
         } catch (Exception o) {
             throw new CommandException("can't create a file in the path" + filepath);
         }
@@ -117,18 +116,11 @@ public class ExportCommand extends Command {
     public CommandResult execute() throws CommandException {
         try {
             init();
-            return new CommandResult("Output the file at: " + filepath);
-        } catch (Exception o) {
-=======
-            output.write("End of file");
-            output.close();
-
             model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
             EventsCenter.getInstance().post(new ClearPersonListEvent());
             return new CommandResult(MESSAGE_SUCCESS);
 
         } catch (Exception e) {
->>>>>>> fccae482d3a4e5bafcf64c84fb94d5034ca9dd80
             throw new CommandException("can't create a file in the path" + filepath);
         }
     }
