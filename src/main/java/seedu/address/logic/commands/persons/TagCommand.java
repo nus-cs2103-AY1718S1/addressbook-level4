@@ -18,6 +18,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author raisa2010
 /**
  * Tags multiple people in the address book.
  */
@@ -91,6 +92,7 @@ public class TagCommand extends UndoableCommand {
 
         //state check
         for (int i = 0; i < indices.length; i++) {
+            assert(indices.length == ((TagCommand) other).indices.length);
             if (!indices[i].equals(((TagCommand) other).indices[i])) {
                 return false;
             }
