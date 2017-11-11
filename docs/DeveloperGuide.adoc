@@ -566,7 +566,7 @@ image::MergeCommandSequenceDiagram.png[width="800"]
 
 // tag::find[]
 
-==== Filter mechanism for find command
+=== Filter mechanism for find command
 
 The feature to filter contacts stored in the address book is facilitated by both Logic and Model component.
 The `FindCommand` class contains `PersonContainsKeywordsPredicate` as an attribute. `PersonContainsKeywordsPredicate`
