@@ -1,23 +1,23 @@
-= John Doe - Project Portfolio
+= Dong Shaocong - Project Portfolio
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
 == Project: 3W
-3W is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+3W is a desktop address book application used for learning Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. 
 
-*Code contributed*: [https://github.com/CS2103AUG2017-W15-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-W15-B4/main/tree/master/src/test[Test code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B4/main/blob/master/collated/main/ShaocongDong.md[functional code]][https://github.com/CS2103AUG2017-W15-B4/main/blob/master/collated/test/ShaocongDong.md[test code]]
 
 === Enhancement Added:
 ==== TaskBook
-* A parallel book besides addressbook to record the user's multiple events.
-* It uses external storage different from addressbook.
-* AddTask command
-* deleteTask command
-* seleteTask command
-* Help on implementing markTask command
-* setPriority command
-* taskByPriority command
+. https://github.com/CS2103AUG2017-W15-B4/main/pull/2[Initial Updates on documentation]
+. https://github.com/CS2103AUG2017-W15-B4/main/pull/14[Add TaskBook to our app including storage, model, and logic]
+. https://github.com/CS2103AUG2017-W15-B4/main/pull/15[Add Task Command]
+. https://github.com/CS2103AUG2017-W15-B4/main/pull/19[Delete Task Command]
+. https://github.com/CS2103AUG2017-W15-B4/main/pull/27[Edit Task Command]
+. https://github.com/CS2103AUG2017-W15-B4/main/pull/34[Select Task Command]
+. https://github.com/CS2103AUG2017-W15-B4/main/pull/46[Task Priority Functionalities]
+
 
 ==== External behavior
 
@@ -39,14 +39,23 @@ include::../UserGuide.adoc[tag=undoredo]
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=taskbook]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed: Add task Book (in parallel with address book)
 
-{Explain similar to the Undo/Redo feature above.}
+
 
 === Other contributions
+    . Generate JAR file for weekly milestones.
+    . Update task model for UI integration[https://github.com/CS2103AUG2017-W15-B4/main/pull/14/commits/a129504f10ea2716ab38b4620cabf35eefd71347[commit]]
+    . Design the fxml and css file for TaskBook panel and task card for our UI.
+    . Make link response message more friendly[https://github.com/CS2103AUG2017-W15-B4/main/pull/70[pull request]]
+    . Debug for markTask][https://github.com/CS2103AUG2017-W15-B4/main/pull/44[pull request]]
+    . Update developer guide diagrams[https://github.com/CS2103AUG2017-W15-B4/main/pull/80[pull request]]
+    . Make the taskBook commands undoable and redoable.[https://github.com/CS2103AUG2017-W15-B4/main/commit/701e15ecf9b15a3d4cff0b6b0f1f6858ad3e1f85[commit]]
+    . Apply Dependency Inversion Principle For Task Model[https://github.com/CS2103AUG2017-W15-B4/main/pull/14/commits/20a33d4d60cfb51e0129b5ce82b9c320414c0950[commit]]
+    . Apply Defensive Programming[https://github.com/CS2103AUG2017-W15-B4/main/pull/46/commits/aa3b5bd407ac32c9d0489b14223d465564218f20[commit]]
