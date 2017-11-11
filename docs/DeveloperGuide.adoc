@@ -928,9 +928,6 @@ What the user finally sees is a list of people with their birthday today as show
     }
 ----
 
-image::BirthdaysMechanism2.png[width="200"]
-Figure 5.8.2 What the user sees
-
 ==== Design Considerations
 **Aspect:** UI of `BirthdaysCommand` +
 **Alternative 1 (current choice):** Showing the persons as a list. +

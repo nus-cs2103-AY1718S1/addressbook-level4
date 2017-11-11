@@ -198,6 +198,11 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
+If you followed the command format, you should see a list similar to the Figure 5.7.1 shown below.
+
+image::Find.png[width="400"]
+Figure 5.16.1
+
 Examples:
 
 * `find John` +
@@ -211,7 +216,7 @@ By typing this command, you will be able to find any person having names `Betsy`
 // tag::findtag[]
 === Finding a person's tag : `findtag`
 
-This command will help you find contacts whose tags contain any of the given keywords. +
+This command helps you find contacts whose tags contain any of the given keywords. +
 Format: `findtag TAGS [MORE_TAGS]`
 
 ****
@@ -384,6 +389,11 @@ Figure 5.15.1 `switch 2` Result for Switch Command
 This command shows you a list of all the contacts who have their birthdays today.
 
 Format: `birthdays`
+
+After typing in the command, you should see a list similar to Figure 5.16.1 shown below.
+
+image::BirthdaysMechanism2.png[width="200"]
+Figure 5.16.1
 
 // end::reminder[]
 
@@ -565,7 +575,10 @@ link:#the-myths-book---user-guide[Back To Top]
 // tag::details[]
 === Details Panel
 
-This `Details Panel` is a graphical user interface that shows you all the `hidden` details of a person that is not shown in the person list.
+This `Details Panel` is a graphical user interface that shows you all the `hidden` details of a person that is not shown in the person list. If a person card is clicked on or the select command is used, you should see the details of the person as shown below in Figure 7.1.1 .
+
+image::DetailsPanel.png[width="600"]
+Figure 7.1.1
 // end::details[]
 
 // tag::calendar[]
