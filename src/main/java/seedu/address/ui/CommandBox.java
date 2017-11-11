@@ -1,5 +1,11 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -52,8 +58,10 @@ public class CommandBox extends UiPart<Region> {
     private static final String FXML = "CommandBox.fxml";
     private static final int MILLISECONDS_SINCE_TYPING = 300;
     private static final int MILLISECONDS_PAUSE_BEFORE_PRESSING_CTRL = 100;
-    private static final int START_OF_FIRST_FIELD = 6;
-    private static final int END_OF_FIRST_FIELD = 10;
+    private static final int START_OF_ADD_FIRST_FIELD = 6;
+    private static final int END_OF_ADD_FIRST_FIELD = 10;
+    private static final int START_OF_REMARK_FIRST_FIELD = 7;
+    private static final int END_OF_REMARK_FIRST_FIELD = 12;
     private static final String[] LIST_OF_ALL_COMMANDS = {AddCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD,
         DeleteCommand.COMMAND_WORD, EditCommand.COMMAND_WORD, EmailCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD,
         FindCommand.COMMAND_WORD, HelpCommand.COMMAND_WORD, HistoryCommand.COMMAND_WORD, ListCommand.COMMAND_WORD,
@@ -73,6 +81,7 @@ public class CommandBox extends UiPart<Region> {
     private FxRobot robot;
     private Set<String> setOfAutoCompleteCommands = new HashSet<>();
     private boolean needToNavigateToNextField;
+    private boolean isFirstTab;
 
 
 
@@ -152,13 +161,18 @@ public class CommandBox extends UiPart<Region> {
             navigateToNextInput();
             break;
         case TAB:
-            autocomplete();
+            if (keyEvent.isShiftDown()) {
+                selectPreviousField();
+            } else {
+                autocomplete();
+            }
             //press control key to make the text selection in command box appear
             pressCtrl();
             break;
         default:
             // let JavaFx handle the keypress
         }
+
     }
 
 
@@ -254,10 +268,13 @@ public class CommandBox extends UiPart<Region> {
      * process input as user is typing
      */
     public void processInput() {
+        setFocus();
         input = commandTextField.getText();
         updateKeyboardIcon();
         setStyleToDefault();
-        autoSelectFirstField();
+        if (isFirstTab) {
+            autoSelectFirstField();
+        }
         if (needToNavigateToNextField) {
             updateSelection();
         }
@@ -299,21 +316,27 @@ public class CommandBox extends UiPart<Region> {
     /**
      * if the input matches the command format, automatically selects the first field that the user need to key in
      */
-    private void autoSelectFirstField() {
-        setFocus();
+    public void autoSelectFirstField() {
         switch (input) {
         case AddCommand.FORMAT:
-            commandTextField.selectRange(START_OF_FIRST_FIELD, END_OF_FIRST_FIELD);
+            commandTextField.selectRange(START_OF_ADD_FIRST_FIELD, END_OF_ADD_FIRST_FIELD);
+            break;
+        case RemarkCommand.FORMAT:
+            commandTextField.selectRange(START_OF_REMARK_FIRST_FIELD, END_OF_REMARK_FIRST_FIELD);
             break;
         case EditCommand.FORMAT:
+        case EmailCommand.FORMAT:
         case FindCommand.FORMAT:
         case SelectCommand.FORMAT:
         case DeleteCommand.FORMAT:
+        case NewRolodexCommand.FORMAT:
+        case OpenRolodexCommand.FORMAT:
             int indexOfFirstSpace = input.indexOf(" ");
             commandTextField.selectRange(indexOfFirstSpace + 1, input.length());
             break;
         default:
         }
+        isFirstTab = false;
     }
 
     private boolean isAutoCompleteCommand(String command) {
@@ -323,6 +346,10 @@ public class CommandBox extends UiPart<Region> {
     private boolean isAddCommandFormat(String input) {
         return input.startsWith("add")
                 && input.contains("n/") && input.contains("p/") && input.contains("e/") && input.contains("a/");
+    }
+
+    private boolean isRemarkCommandFormat(String input) {
+        return input.startsWith("remark") && input.contains("r/");
     }
 
     private void changeSelectionToNextField() {
@@ -340,29 +367,94 @@ public class CommandBox extends UiPart<Region> {
         if (isAutoCompleteCommand(input)) {
             displayFullFormat(input);
             needToNavigateToNextField = false;
+            isFirstTab = true;
         } else if (isAddCommandFormat(input)) {
             needToNavigateToNextField = true;
 
-            int positionOfNameField = input.indexOf("n/");
-            int positionOfPhoneField = input.indexOf("p/");
-            int positionOfEmailField = input.indexOf("e/");
-            int positionOfAddressField = input.indexOf("a/");
+            int positionOfNameField = input.indexOf(PREFIX_NAME.toString());
+            int positionOfPhoneField = input.indexOf(PREFIX_PHONE.toString());
+            int positionOfEmailField = input.indexOf(PREFIX_EMAIL.toString());
+            int positionOfAddressField = input.indexOf(PREFIX_ADDRESS.toString());
+            int positionOfCurrentCaret = commandTextField.getCaretPosition();
+            int[] fieldsPositionArray = {positionOfNameField, positionOfPhoneField,
+                positionOfEmailField, positionOfAddressField};
 
-            int currentPosition = commandTextField.getCaretPosition();
+            selectNextField(positionOfCurrentCaret, fieldsPositionArray);
 
-            if (currentPosition > positionOfNameField && currentPosition < positionOfPhoneField) {
-                commandTextField.positionCaret(positionOfPhoneField + 2);
+        } else if (isRemarkCommandFormat(input)) {
+            needToNavigateToNextField = true;
+
+            int positionOfIndex = input.indexOf(" ") - 1;
+            int positionOfRemarkFiels = input.indexOf(PREFIX_REMARK.toString());
+            int positionOfCurrentCaret = commandTextField.getCaretPosition();
+            int[] fieldsPositionArray = {positionOfIndex, positionOfRemarkFiels};
+
+            selectNextField(positionOfCurrentCaret, fieldsPositionArray);
+        }
+    }
+
+    /**
+     * pressing shift+tab changes the selection to the previous field
+     * only applies to add command
+     * (remark command only has two fields, using tab to toggle between the two fields is enough)
+     */
+    private void selectPreviousField() {
+        input = commandTextField.getText().trim().toLowerCase();
+        if (isAddCommandFormat(input)) {
+
+            needToNavigateToNextField = true;
+
+            int positionOfNameField = input.indexOf(PREFIX_NAME.toString());
+            int positionOfPhoneField = input.indexOf(PREFIX_PHONE.toString());
+            int positionOfEmailField = input.indexOf(PREFIX_EMAIL.toString());
+            int positionOfAddressField = input.indexOf(PREFIX_ADDRESS.toString());
+            int positionOfEnd = input.length();
+            int positionOfCurrentCaret = commandTextField.getCaretPosition();
+
+            int[] fieldsPositionArray = {positionOfNameField, positionOfPhoneField, positionOfEmailField,
+                positionOfAddressField, positionOfEnd};
+            selectPreviousField(positionOfCurrentCaret, fieldsPositionArray);
+        }
+    }
+
+    /**
+     * check the current position is in between which two fields
+     * then navigate to the previous field
+     * @param fieldsPositionArray array of field positions in the order of left to right
+     */
+    private void selectPreviousField(int currentPosition, int[] fieldsPositionArray) {
+        boolean changedCaretPosition = false;
+        for (int i = 1; i < fieldsPositionArray.length - 1; i++) {
+            if (currentPosition > fieldsPositionArray[i] && currentPosition <= fieldsPositionArray[i + 1]) {
+                commandTextField.positionCaret(fieldsPositionArray[i - 1] + 2);
                 changeSelectionToNextField();
-            } else if (currentPosition > positionOfPhoneField && currentPosition < positionOfEmailField) {
-                commandTextField.positionCaret(positionOfEmailField + 2);
-                changeSelectionToNextField();
-            } else if (currentPosition > positionOfEmailField && currentPosition < positionOfAddressField) {
-                commandTextField.positionCaret(positionOfAddressField + 2);
-                changeSelectionToNextField();
-            } else {
-                commandTextField.positionCaret(positionOfNameField + 2);
-                changeSelectionToNextField();
+                changedCaretPosition = true;
             }
+        }
+        if (!changedCaretPosition) {
+            commandTextField.positionCaret(fieldsPositionArray[fieldsPositionArray.length - 2] + 2);
+            changeSelectionToNextField();
+        }
+    }
+
+    /**
+     * check the current position is in between which two fields
+     * then navigate to the next field
+     * @param fieldsPositionArray array of field positions in the order of left to right
+     *                            last element is the end position of text input
+     */
+    private void selectNextField(int currentPosition, int[] fieldsPositionArray) {
+        boolean changedCaretPosition = false;
+        for (int i = 0; i < fieldsPositionArray.length - 1; i++) {
+            if (currentPosition > fieldsPositionArray[i] && currentPosition < fieldsPositionArray[i + 1]) {
+                commandTextField.positionCaret(fieldsPositionArray[i + 1] + 2);
+                changeSelectionToNextField();
+                changedCaretPosition = true;
+            }
+        }
+        if (!changedCaretPosition) {
+            commandTextField.positionCaret(fieldsPositionArray[0] + 2);
+            changeSelectionToNextField();
         }
     }
 
@@ -371,7 +463,7 @@ public class CommandBox extends UiPart<Region> {
      * format in the textfield
      * @param command input by the user
      */
-    private void displayFullFormat(String command) {
+    public void displayFullFormat(String command) {
         if (AddCommand.COMMAND_WORD_ABBREVIATIONS.contains(command)) {
             replaceText(AddCommand.FORMAT);
         } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(command)) {

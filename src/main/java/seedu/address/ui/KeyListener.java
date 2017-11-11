@@ -15,6 +15,7 @@ import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_LIST;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_NEW_FILE;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_OPEN_FILE;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_REDO;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_REMARK;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_SELECT;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_UNDO;
 
@@ -31,6 +32,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.NewRolodexCommand;
 import seedu.address.logic.commands.OpenRolodexCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 
@@ -102,10 +104,10 @@ public class KeyListener {
             executeCommand(ListCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_OPEN_FILE.match(keyEvent)) {
-            executeCommand(OpenRolodexCommand.COMMAND_WORD);
+            displayCommandFormat(OpenRolodexCommand.FORMAT);
 
         } else if (KEY_COMBINATION_NEW_FILE.match(keyEvent)) {
-            executeCommand(NewRolodexCommand.COMMAND_WORD);
+            displayCommandFormat(NewRolodexCommand.FORMAT);
 
         } else if (KEY_COMBINATION_ADD.match(keyEvent)) {
             displayCommandFormat(AddCommand.FORMAT);
@@ -121,6 +123,9 @@ public class KeyListener {
 
         } else if (KEY_COMBINATION_DELETE.match(keyEvent)) {
             displayCommandFormat(DeleteCommand.FORMAT);
+
+        } else if (KEY_COMBINATION_REMARK.match(keyEvent)) {
+            displayCommandFormat(RemarkCommand.FORMAT);
 
         } else {
                 // no key combination matches, do nothing
@@ -144,7 +149,7 @@ public class KeyListener {
      */
     private void displayCommandFormat(String command) {
         commandBox.replaceText(command);
-        commandBox.pressCtrl();
+        commandBox.autoSelectFirstField();
     }
 
     /**
