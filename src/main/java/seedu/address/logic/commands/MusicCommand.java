@@ -21,7 +21,7 @@ public class MusicCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": play/pause/stop music "
             + "of your selected genre.\n"
-            + "Parameters: ACTION (must be either play, pause or stop) "
+            + "Parameters: ACTION (must be either play or stop) "
             + "GENRE (must be either pop, dance or classic) \n"
             + "Example: " + COMMAND_WORD + " play classic ";
 

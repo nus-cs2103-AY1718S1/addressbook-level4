@@ -55,20 +55,6 @@ public class RadioCommandTest {
         radioCommand = new RadioCommand("stop");
         radioCommand.execute();
 
-        genre = "comedy";
-        radioCommand = new RadioCommand("play", genre);
-        commandResult = radioCommand.execute();
-        assertEquals(genre.toUpperCase() + " " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
-        radioCommand = new RadioCommand("stop");
-        radioCommand.execute();
-
-        genre = "country";
-        radioCommand = new RadioCommand("play", genre);
-        commandResult = radioCommand.execute();
-        assertEquals(genre.toUpperCase() + " " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
-        radioCommand = new RadioCommand("stop");
-        radioCommand.execute();
-
         genre = "news";
         radioCommand = new RadioCommand("play", genre);
         commandResult = radioCommand.execute();

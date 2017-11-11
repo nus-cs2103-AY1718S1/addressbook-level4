@@ -36,22 +36,16 @@ public class Radio extends Thread {
                 radioStreamUrl = "http://198.105.214.140:2000/Live?icy=http";
                 break;
             case "classic":
-                radioStreamUrl = "http://198.105.216.204:8164/stream";
-                break;
-            case "comedy":
-                radioStreamUrl = "http://ams-2.1radio.mk/1radio_comedy_64";
-                break;
-            case "country":
-                radioStreamUrl = "http://7609.live.streamtheworld.com/977_COUNTRY_SC";
+                radioStreamUrl = "http://media-sov.musicradio.com/ClassicFMMP3";
                 break;
             case "news":
                 radioStreamUrl = "http://streams.kqed.org/kqedradio?";
                 break;
             case "pop":
-                radioStreamUrl = "http://19353.live.streamtheworld.com/977_HITS_SC";
+                radioStreamUrl = "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_q";
                 break;
             default:
-                radioStreamUrl = "http://19353.live.streamtheworld.com/977_HITS_SC";
+                radioStreamUrl = "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_q";
                 break;
             }
 

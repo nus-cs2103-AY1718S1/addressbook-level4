@@ -19,8 +19,8 @@ public class RadioCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": play/stop radio "
             + "of your selected genre.\n"
-            + "Parameters: ACTION (must be either play, pause or stop) "
-            + "GENRE (must be either chinese, classic, comedy, country, news, pop) \n"
+            + "Parameters: ACTION (must be either play or stop) "
+            + "GENRE (must be either chinese, classic, news, pop) \n"
             + "Example: " + COMMAND_WORD + " play news ";
 
     public static final String MESSAGE_NO_RADIO_PLAYING = "There is no radio currently playing";
@@ -31,7 +31,7 @@ public class RadioCommand extends Command {
 
     private String command;
     private String genre = "pop";
-    private String[] genreList = {"chinese", "classic", "comedy", "country", "news", "pop"};
+    private String[] genreList = {"chinese", "classic", "news", "pop"};
 
     public RadioCommand(String command, String genre) {
         this.command = command;
@@ -52,7 +52,6 @@ public class RadioCommand extends Command {
             return true;
         }
     }
-
     /**
      * Stops radio playing in the player
      */
@@ -68,7 +67,9 @@ public class RadioCommand extends Command {
         boolean genreExist = Arrays.asList(genreList).contains(genre);
         switch (command) {
         case "play":
-
+            if (MusicCommand.isMusicPlaying()) {
+                MusicCommand.stopMusicPlayer();
+            }
             stopRadioPlayer();
             if (genreExist) {
                 radio = new Radio(genre);
@@ -79,7 +80,7 @@ public class RadioCommand extends Command {
                 new TextToSpeech(printedSuccessMessage).speak();
                 return new CommandResult(printedSuccessMessage);
             }
-            return new CommandResult(MESSAGE_USAGE);
+            return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RadioCommand.MESSAGE_USAGE));
         case "stop":
             if (isRadioPlaying()) {
                 radio.stop();
