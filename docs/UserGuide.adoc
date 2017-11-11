@@ -316,6 +316,32 @@ You will see the following after typing `delete 1` and `deleteE 1`:
 image::UG_delete.png[width="790"]
 _Figure 3.7: delete command result_
 
+=== Selecting a person : `select`
+
+Selects the person identified by the index number used in the last person listing. +
+Format: `select INDEX`
+
+****
+* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* The browser will be displayed when the command is used.
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd person in the Planno.
+* `find Betsy` +
+`select 1` +
+Selects the 1st person in the results of the `find` command.
+
+You will see the following after typing `select 1`:
+
+image::UG_Select.png[width="790"]
+_Figure 3.8: select command result_
+
 // tag::join[]
 === Connecting a person to an event : `join`
 You can use it to show a person is involved in an event. +
@@ -337,7 +363,7 @@ This command only displays a successful message. You cannot see explicit change 
 You will see the following after typing above commands: +
 
 image::UG_join.png[width='790']
-_Figure 3.8: join result_
+_Figure 3.9: join result_
 // end::join[]
 
 // tag::disjoin[]
@@ -363,7 +389,7 @@ This command only displays a successful message. You cannot see explicit change 
 You will see the following after typing above commands: +
 
 image::UG_disjoin.png[width='790']
-_Figure 3.9: disjoin result_
+_Figure 3.10: disjoin result_
 // end::disjoin[]
 
 // tag::showP[]
@@ -388,20 +414,20 @@ Shows all participants who are involved in the 1st event of event list.
 You will see the following after typing above commands: +
 
 image::UG_showPerson.png[width='790']
-_Figure 3.10: show persons result_
+_Figure 3.11: show persons result_
 
 // end::showP[]
 
 // tag::selectE[]
-=== Selecting all events which a person joins : `selectE`
+=== Selecting and showing all events which a person joins : `selectE`
 
 You can use it to view all events which a certain person joins. +
 Format: `selectE PERSON_INDEX`
 
 ****
-* Shows all events which the person at the specified `PERSON_INDEX` joins.
-* The index refers to the index number shown in the most recent person listing.
-* The index *must be a positive integer* `1, 2, 3, ...`.
+* Selects and shows all events which the person at the specified `PERSON_INDEXS` joins.
+* The index/s refers to the index number/s shown in the most recent person listing.
+* The index/s *must be a positive integer* `1, 2, 3, ...`.
 ****
 
 Examples: +
@@ -409,7 +435,7 @@ Assuming that you have typed `join p/2 e/1` before this example.
 
 * `list` +
 `selectE 2` +
-Shows all events which the 2nd person in the address book joins.
+Shows all events which the 2nd person in Planno joins.
 * `find Betsy` +
 `selectE 1` +
 Shows all events which the 1st person in the results of the `find` command joins.
@@ -417,7 +443,7 @@ Shows all events which the 1st person in the results of the `find` command joins
 You will see the following after typing `list` and `selectE 2`: +
 
 image::UG_selectEvent.png[width='790']
-_Figure 3.11: select events result_
+_Figure 3.12: select events result_
 
 // end::selectE[]
 
@@ -442,7 +468,7 @@ Shows the email of every person who is in the first event in the address book.
 You will see the following after typing `list` and `displayEmails 1`: +
 
 image::UG_displayEmails.png[width='790']
-_Figure 3.12:  display emails result_
+_Figure 3.13:  display emails result_
 
 // tag::portrait[]
 === Attaching a portrait to a person: `portrait`
@@ -454,7 +480,7 @@ You can use this command to attach a portrait to a person so that you can identi
 The default portrait for every person is the following picture:
 
 image::portraitDefault.png[]
-_Figure 3.13.1 default portrait_
+_Figure 3.14.1 default portrait_
 
 Format: `portrait PERSON_INDEX p/IMAGE_FILE_PATH`
 
@@ -476,12 +502,12 @@ The image named `sample picture.png` and located at `C:/Users/My Profile/Images/
 Assume the `sample picture.png` looks like this:
 
 image::portraitSample.png[]
-_Figure 3.13.2 the sample.png_
+_Figure 3.14.2 the sample.png_
 
 Then you will see the following after typing the example portrait command
 
 image::UG_portrait.png[]
-_Figure 3.13.3 attach a portrait_
+_Figure 3.14.3 attach a portrait_
 
 // end::portrait[]
 
@@ -501,17 +527,17 @@ Format & Example: `toggle`
 You will see the following after typing the toggle command when the information board and events list are displayed but a `select` command has not been entered:
 
 image::UG_Toggle1.png[]
-_Figure 3.14.1 toggle result when browser is displayed_
+_Figure 3.15.1 toggle result when browser is displayed_
 
 You will see the following after typing the toggle command when the browser is displayed:
 
 image::UG_Toggle2.png[]
-_Figure 3.14.2 toggle result when information board and events list are displayed_
+_Figure 3.15.2 toggle result when information board and events list are displayed_
 
 You will see the following after typing the toggle command when the information board and events list are displayed and a `select` command:
 
 image::UG_Toggle3.png[]
-_Figure 3.14.3 toggle result when information board and events list are displayed and a `select` command is entered before_
+_Figure 3.15.3 toggle result when information board and events list are displayed and a `select` command is entered before_
 
 // end::toggle[]
 
@@ -527,7 +553,7 @@ Format & Example: `history`
 You will see the following after typing history command: +
 
 image::UG_history.png[width='790']
-_Figure 3.13: history result_
+_Figure 3.16: history result_
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -558,17 +584,17 @@ The `undo` command fails as there are no undoable commands executed previously.
 You will see the following after typing `delete 1` and `clear`:
 
 image::UG_clear.png[width='790']
-_Figure 3.14.1: before undo_
+_Figure 3.17.1: before undo_
 
 You will see the following after typing `undo` (undo `clear`):
 
 image::UG_undo1.png[width='790']
-_Figure 3.14.2: undo once_
+_Figure 3.17.2: undo once_
 
 You will see the following after typing `undo` again (undo `delete 1`):
 
 image::UG_undo2.png[width='790']
-_Figure 3.14.3: undo twice_
+_Figure 3.17.3: undo twice_
 
 === Redoing the previously undone command : `redo`
 
@@ -595,17 +621,17 @@ The `redo` command fails as there are no `undo` commands executed previously.
 You will see the following after typing `delete 1`, `clear`, `undo` and `undo`:
 
 image::UG_undo2.png[width='790']
-_Figure 3.15.1: before redo_
+_Figure 3.18.1: before redo_
 
 You will see the following after typing `redo` (redo `delete 1`):
 
 image::UG_redo1.png[width='790']
-_Figure 3.15.2: redo once_
+_Figure 3.18.2: redo once_
 
 You will see the following after typing `redo` again (redo `clear`):
 
 image::UG_redo2.png[width='790']
-_Figure 3.15.2: redo twice
+_Figure 3.18.2: redo twice
 
 // end::undoredo[]
 
@@ -621,7 +647,7 @@ Format & Example: `clear`
 You will see the following after clear command:
 
 image::UG_clear.png[width="790"]
-_Figure 3.16: clear result_
+_Figure 3.19: clear result_
 
 === Viewing help : `help`
 
@@ -694,7 +720,10 @@ e.g. `join p/3 e/1`
 
 * *Redo* : `redo`
 
-* *Selecting every event a person has joined* : `selectE p/INDEX` +
+* *Selecting a person* : `select INDEX` +
+e.g. `select 4`
+
+* *Selecting and showing every event a person has joined* : `selectE p/INDEX` +
 e.g. `selectE p/1`
 
 * *Showing every participant in an event* : `showP EVENT_INDEX` +
