@@ -123,7 +123,7 @@ include::../DeveloperGuide.adoc[tag=qrsave]
 
 ---
 
-=== Enhancement Proposed: Addition of Voice Command with Google Voice Recognition
+=== Enhancement Proposed: Addition of Voice Command with Google Voice Recognition `Coming in v2.0`
 
 As most of the features that i implemented are targeted at user convenience. The proposed suggestion will help make the application more easy to use with just commanding the application on what to do while you can multitask with other task you are busy with.
 
