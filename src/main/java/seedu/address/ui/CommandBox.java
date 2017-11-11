@@ -271,7 +271,7 @@ public class CommandBox extends UiPart<Region> {
         updateKeyboardIcon();
         setStyleToDefault();
         //if (isFirstTab) {
-            autoSelectFirstField();
+        autoSelectFirstField();
         //}
         if (needToNavigateToNextField) {
             updateSelection();
