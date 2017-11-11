@@ -16,7 +16,7 @@ public class InsuranceProfilePanelHandle extends NodeHandle<Node> {
     private static final String OWNER_FIELD_ID = "#owner";
     private static final String INSURED_FIELD_ID = "#insured";
     private static final String BENEFICIARY_FIELD_ID = "#beneficiary";
-    private static final String CONTRACT_PATH_ID = "#contractPath";
+    private static final String CONTRACT_NAME_ID = "#contractName";
     private static final String PREMIUM_FIELD_ID = "#premium";
     private static final String SIGNING_DATE_ID = "#signingDate";
     private static final String EXPIRY_DATE_ID = "#expiryDate";
@@ -24,7 +24,7 @@ public class InsuranceProfilePanelHandle extends NodeHandle<Node> {
     private final Label ownerLabel;
     private final Label insuredLabel;
     private final Label beneficiaryLabel;
-    private final Label contractPathLabel;
+    private final Label contractNameLabel;
     private final Label premiumLabel;
     private final Label signingDateLabel;
     private final Label expiryDateLabel;
@@ -35,7 +35,7 @@ public class InsuranceProfilePanelHandle extends NodeHandle<Node> {
         this.ownerLabel = getChildNode(OWNER_FIELD_ID);
         this.insuredLabel = getChildNode(INSURED_FIELD_ID);
         this.beneficiaryLabel = getChildNode(BENEFICIARY_FIELD_ID);
-        this.contractPathLabel = getChildNode(CONTRACT_PATH_ID);
+        this.contractNameLabel = getChildNode(CONTRACT_NAME_ID);
         this.premiumLabel = getChildNode(PREMIUM_FIELD_ID);
         this.signingDateLabel = getChildNode(SIGNING_DATE_ID);
         this.expiryDateLabel = getChildNode(EXPIRY_DATE_ID);
@@ -55,7 +55,7 @@ public class InsuranceProfilePanelHandle extends NodeHandle<Node> {
     }
 
     public String getContractPathId() {
-        return contractPathLabel.getText();
+        return contractNameLabel.getText();
     }
 
     public String getPremium() {
@@ -233,9 +233,11 @@ public class InsuranceBuilder {
 
     public InsuranceBuilder() {
         try {
+            LocalDate defaultSigningDate = new DateParser().parse(DEFAULT_SIGNING_DATE);
+            LocalDate defaultExpiryDate = new DateParser().parse(DEFAULT_EXPIRY_DATE);
             this.insurance = new LifeInsurance(DEFAULT_INSURANCE_NAME, DEFAULT_OWNER,
                     DEFAULT_INSURED, DEFAULT_BENEFICIARY, DEFAULT_PREMIUM, DEFAULT_CONTRACT_PATH,
-                    DEFAULT_SIGNING_DATE, DEFAULT_EXPIRY_DATE);
+                    defaultSigningDate, defaultExpiryDate);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default insurance's values are invalid.");
         }
@@ -291,8 +293,8 @@ public class InsuranceBuilder {
     /**
      * Sets the Contract Path of the {@code LifeInsurance} that we are building.
      */
-    public InsuranceBuilder withContractPath(String contractPath) {
-        this.insurance.setContractPath(contractPath);
+    public InsuranceBuilder withContractName(String contractName) {
+        this.insurance.setContractName(contractName);
         return this;
     }
 
