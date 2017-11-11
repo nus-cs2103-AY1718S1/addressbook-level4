@@ -96,7 +96,7 @@ image:step1.png[width="70"]Ensure you have Java version `1.8.0_60` or later inst
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 
-image:step2.png[width="70"] Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+image:step2.png[width="70"] Download the latest `[W11-B4][Unify].jar` link:{repoURL}/releases[here].
 
 image:step3.png[width="70"]  Copy the file to the folder you want to use as the home folder for your Address Book.
 
@@ -912,7 +912,7 @@ image::UG_redo2.png[width="590"]
 
 image::divider.png[width="900"]
 
-=== Saving the data
+== Saving the data
 
 Unify knows that your contacts are important and automatically saves them to your hard disk. There is no need to save manually.
 
