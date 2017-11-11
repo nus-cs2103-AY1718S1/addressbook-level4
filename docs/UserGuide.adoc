@@ -355,14 +355,12 @@ You can add, sort and remove appointments from a specific contact at a given ind
 
 Appointment can be set using natural language. +
 You can refer to the following http://natty.joestelmach.com/doc.jsp[link] for the supported formats. +
+You can add multiple appointments to the same contact. +
+If no end time of appointment is specified, default appointment time is 1 hour. +
 
-You can add multiple appointments to the same contact.
-
-[NOTE]
-If no end time is specified, default appointment time is 1 hour. +
-However, please include at least the hour and a day that can be specified. +
 
 [WARNING]
+Please do not input invalid dates/time. +
 You can only set dates that are after current time. (i.e. You cannot set a time to yesterday) +
 
 [width="59%",cols="<23%,<25%,<30%",options="header",]
