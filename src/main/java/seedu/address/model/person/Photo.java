@@ -40,7 +40,8 @@ public class Photo {
      * Returns true if a given string is empty, which means an unknown path
      */
     private static boolean isUnknownPath(String test) {
-        return test.equals("");
+        File file = new File(test);
+        return !file.exists();
     }
 
     /**
@@ -48,7 +49,8 @@ public class Photo {
      * @return true if a given pathName has unknown value
      */
     public boolean isUnknownPathName() {
-        return pathName.equals("");
+        File file = new File(this.pathName);
+        return !file.exists();
     }
 
     public String getPathName() {
