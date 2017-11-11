@@ -719,6 +719,7 @@ v1.5
 * Implementation of `events` Command which allows users to list the events in The Myth's Book. `Dickson Chan`
 * Implementation of Populating of Calendar into The Myth's Book, which allows users to see the dates of events on the Calendar when they add or delete events. `Chia Cherng Hann`
 * Implementation of Events and Persons mode which restricts users to a set of commands pertaining to each mode. `Darren Chin`
+* Implementation of Events Details Panel which displays all the information of a selected event. `Darren Chin`
 * Adding of new test cases to improve test coverage of The Myth's Book. `Archana Pradeep` `Darren Chin`
 
 v1.4
