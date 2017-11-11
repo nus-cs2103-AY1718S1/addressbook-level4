@@ -53,9 +53,13 @@ public class Birthday {
         return test.matches(BIRTHDAY_VALIDATION_REGEX);
     }
 
+    /**
+     * Check validity of input values
+     */
+
     public static void isValidBirthdayValue (String birthdayString) throws IllegalValueException {
 
-        if (birthdayString.equals(NO_BIRTHDAY_DEFAULT)){
+        if (birthdayString.equals(NO_BIRTHDAY_DEFAULT)) {
             return;
         }
 
