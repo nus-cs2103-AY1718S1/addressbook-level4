@@ -217,7 +217,7 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     public void handleTheme() {
         System.out.println("Entering themeing mode!");
-        ThemeSelectionWindow themeSelectionWindow = new ThemeSelectionWindow(prefs);
+        ThemeSelectionWindow themeSelectionWindow = new ThemeSelectionWindow(prefs, primaryStage);
         themeSelectionWindow.show();
 
     }
