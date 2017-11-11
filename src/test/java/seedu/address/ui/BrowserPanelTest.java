@@ -10,7 +10,6 @@ import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -50,7 +49,6 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         waitUntilBrowserLoaded(browserPanelHandle);
         URL url = browserPanelHandle.getLoadedUrl();
-        TimeUnit.SECONDS.sleep(10);
-        assertEquals(expectedPersonUrl, url);
+        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
     }
 }
