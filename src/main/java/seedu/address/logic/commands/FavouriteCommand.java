@@ -58,7 +58,7 @@ public class FavouriteCommand extends Command {
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Favourite favourite = personToEdit.getFavourite();
         favourite.toggleFavourite();
-        changedToFav = favourite.getFavourite();
+        changedToFav = favourite.isFavourite();
 
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), favourite, personToEdit.getBirthday(), personToEdit.getTags());

@@ -36,7 +36,7 @@ public class Favourite {
         updateFavouriteStatus();
     }
 
-    public boolean getFavourite() {
+    public boolean isFavourite() {
         return favourite;
     }
 
