@@ -33,7 +33,7 @@ You can download the latest `SampleData.xml` link:https://github.com/CS2103AUG20
 This section shows you the general commands which are  +
 No text input will be specified and you can enter any text input to test the following keyboard key functionality. +
 
-[width="59%",cols=">30%,>30%,<30%",options="header",]
+[width="59%",cols="30%,30%,40%",options="header",]
 |=======================================================================
 |Input |Expected Output |Remarks
 
