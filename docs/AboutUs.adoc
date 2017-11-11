@@ -16,8 +16,31 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::shaocongdong.png[width="150", align="left"]
 {empty}[http://github.com/ShaocongDong[github]] [<<shaocongdong#, portfolio>>]
 
-Role: Task Book Manager +
-Responsibilities: Functionalities of task book
+Role: Developer
+
+* Components in charge of: TaskBook functionalities
+* Aspects/tools in charge of: JUnit testing, Travis, GH-Pages, Developer Guide
+* Features implemented:
+    * [Initial Updates on documentation](https://github.com/CS2103AUG2017-W15-B4/main/pull/2)
+    * [Add TaskBook to our app including storage, model, and logic](https://github.com/CS2103AUG2017-W15-B4/main/pull/14)
+    * [Add Task Command](https://github.com/CS2103AUG2017-W15-B4/main/pull/15)
+    * [Delete Task Command](https://github.com/CS2103AUG2017-W15-B4/main/pull/19)
+    * [Edit Task Command(https://github.com/CS2103AUG2017-W15-B4/main/pull/27)
+    * [Select Task Command(https://github.com/CS2103AUG2017-W15-B4/main/pull/34)
+    * [Task Functionalities](https://github.com/CS2103AUG2017-W15-B4/main/pull/46)
+
+* Code written: [[functional code](https://github.com/CS2103AUG2017-W15-B4/main/blob/master/collated/main/ShaocongDong.md)][[test code](https://github.com/CS2103AUG2017-W15-B4/main/blob/master/collated/test/ShaocongDong.md)]
+* Other major contributions:
+    * Generate JAR file for weekly milestones.
+    * Update task model for UI integration[[commit](https://github.com/CS2103AUG2017-W15-B4/main/pull/14/commits/a129504f10ea2716ab38b4620cabf35eefd71347)]
+    * Design the fxml and css file for TaskBook panel and task card for our UI.
+    * [Make link response message more friendly](https://github.com/CS2103AUG2017-W15-B4/main/pull/70)
+    * [debug for markTask](https://github.com/CS2103AUG2017-W15-B4/main/pull/44)
+    * [Update developer guide diagrams](https://github.com/CS2103AUG2017-W15-B4/main/pull/80)
+    * Make the taskBook commands undoable and redoable.[[commit](https://github.com/CS2103AUG2017-W15-B4/main/commit/701e15ecf9b15a3d4cff0b6b0f1f6858ad3e1f85)]
+    * Apply Dependency Inversion Principle For Task Model[[commit](https://github.com/CS2103AUG2017-W15-B4/main/pull/14/commits/20a33d4d60cfb51e0129b5ce82b9c320414c0950)]
+    * Apply Defensive Programming[[commit](https://github.com/CS2103AUG2017-W15-B4/main/pull/46/commits/aa3b5bd407ac32c9d0489b14223d465564218f20)]
+
 
 '''
 
