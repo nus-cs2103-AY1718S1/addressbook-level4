@@ -141,7 +141,7 @@ public class Autocompleter {
         textInCommandBox = commandBoxText;
         updateState(commandBoxText);
         logger.info("Current state of the autocompleter is now " + state.toString());
-        logger.info("Current command recognized by autocompleter is now " + currentCommand.toString());
+        logger.info("Current command recognized by the autocompleter is now " + currentCommand.toString());
     }
 
     /**
