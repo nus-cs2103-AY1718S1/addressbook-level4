@@ -31,18 +31,30 @@ public class ShareCommandTest {
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        ShareCommand shareCommand = prepareCommand(outOfBoundIndex);
-
+        ShareCommand shareCommand = prepareCommand(outOfBoundIndex, shareEmailArray);
         assertCommandFailure(shareCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_share_success() {
-        ShareCommand shareCommand = prepareCommand(INDEX_FIRST_PERSON);
+        ShareCommand shareCommand = prepareCommand(INDEX_FIRST_PERSON, shareEmailArray);
 
         try {
             CommandResult commandResult = shareCommand.execute();
             assertEquals(shareCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+    }
+
+    @Test
+    public void execute_share_invalidEmail() {
+        shareEmailArray = new String[]{"wrongemailformat"};
+        ShareCommand shareCommand = prepareCommand(INDEX_FIRST_PERSON, shareEmailArray);
+
+        try {
+            CommandResult commandResult = shareCommand.execute();
+            assertEquals(shareCommand.MESSAGE_EMAIL_NOT_VALID, commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
@@ -75,7 +87,7 @@ public class ShareCommandTest {
     /**
      * Returns a {@code ShareCommand} with the parameter {@code index}.
      */
-    private ShareCommand prepareCommand(Index index) {
+    private ShareCommand prepareCommand(Index index, String[] shareEmailArray) {
         ShareCommand shareCommand = new ShareCommand(index, shareEmailArray);
         shareCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return shareCommand;

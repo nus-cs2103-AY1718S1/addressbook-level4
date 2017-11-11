@@ -4,6 +4,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import java.util.Arrays;
 
+import seedu.address.logic.InternetConnectionCheck;
 import seedu.address.logic.TextToSpeech;
 import seedu.address.logic.threads.Radio;
 
@@ -23,9 +24,10 @@ public class RadioCommand extends Command {
             + "GENRE (must be either chinese, classic, news, pop) \n"
             + "Example: " + COMMAND_WORD + " play news ";
 
-    public static final String MESSAGE_NO_RADIO_PLAYING = "There is no radio currently playing";
+    public static final String MESSAGE_NO_RADIO_PLAYING = "No radio is currently playing";
     public static final String MESSAGE_STOP = "Radio Stopped";
     public static final String MESSAGE_SUCCESS = "Radio Playing";
+    public static final String MESSAGE_NO_INTERNET = "Not Connected to the Internet";
 
     private static Radio radio;
 
@@ -43,7 +45,8 @@ public class RadioCommand extends Command {
     }
 
     /**
-     * Returns boolean status whether radio is currently playing.
+     * Returns true if radio player is currently playing.
+     * else return false
      */
     public static boolean isRadioPlaying() {
         if (radio == null) {
@@ -67,20 +70,24 @@ public class RadioCommand extends Command {
         boolean genreExist = Arrays.asList(genreList).contains(genre);
         switch (command) {
         case "play":
-            if (MusicCommand.isMusicPlaying()) {
-                MusicCommand.stopMusicPlayer();
-            }
-            stopRadioPlayer();
-            if (genreExist) {
-                radio = new Radio(genre);
-                radio.start();
+            if (InternetConnectionCheck.isConnectedToInternet()) {
+                if (MusicCommand.isMusicPlaying()) {
+                    MusicCommand.stopMusicPlayer();
+                }
+                stopRadioPlayer();
+                if (genreExist) {
+                    radio = new Radio(genre);
+                    radio.start();
 
-                String printedSuccessMessage = genre.toUpperCase() + " " + MESSAGE_SUCCESS;
-                //Text to Speech
-                new TextToSpeech(printedSuccessMessage).speak();
-                return new CommandResult(printedSuccessMessage);
+                    String printedSuccessMessage = genre.toUpperCase() + " " + MESSAGE_SUCCESS;
+                    //Text to Speech
+                    new TextToSpeech(printedSuccessMessage).speak();
+                    return new CommandResult(printedSuccessMessage);
+                }
+                return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RadioCommand.MESSAGE_USAGE));
+            } else {
+                return new CommandResult(MESSAGE_NO_INTERNET);
             }
-            return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RadioCommand.MESSAGE_USAGE));
         case "stop":
             if (isRadioPlaying()) {
                 radio.stop();

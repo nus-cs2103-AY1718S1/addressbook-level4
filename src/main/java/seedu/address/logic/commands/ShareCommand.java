@@ -8,6 +8,7 @@ import javax.mail.internet.InternetAddress;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.InternetConnectionCheck;
 import seedu.address.logic.TextToSpeech;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ParserUtil;
@@ -28,10 +29,10 @@ public class ShareCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "Email Sent!";
-
     public static final String MESSAGE_EMAIL_NOT_VALID = "Email address is not valid!";
+    public static final String MESSAGE_NO_INTERNET = "Not Connected to the Internet";
 
-    private static final String MESSAGE_FAILURE = "Email was not sent!";
+    public static final String MESSAGE_FAILURE = "Email was not sent!";
 
     private static SendEmail sendEmail;
 
@@ -52,39 +53,42 @@ public class ShareCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
+        if (InternetConnectionCheck.isConnectedToInternet()) {
+            ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
+            String to;
 
-        String to;
+            for (int index = 0; index < shareEmailArray.length; index++) {
+                to = shareEmailArray[index];
+                if (isNumeric(to)) {
+                    try {
+                        Index recepientIndex = ParserUtil.parseIndex(to);
+                        if (recepientIndex.getZeroBased() >= lastShownList.size()) {
+                            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                        }
+                        ReadOnlyPerson personRecipient = lastShownList.get(recepientIndex.getZeroBased());
+                        to = personRecipient.getEmail().toString();
 
-        for (int index = 0; index < shareEmailArray.length; index++) {
-            to = shareEmailArray[index];
-            if (isNumeric(to)) {
-                try {
-                    Index recepientIndex = ParserUtil.parseIndex(to);
-                    if (recepientIndex.getZeroBased() >= lastShownList.size()) {
-                        throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                    } catch (IllegalValueException ive) {
+                        //Text to Speech
+                        new TextToSpeech(MESSAGE_FAILURE).speak();
+                        return new CommandResult(MESSAGE_FAILURE);
                     }
-                    ReadOnlyPerson personRecipient = lastShownList.get(recepientIndex.getZeroBased());
-                    to = personRecipient.getEmail().toString();
-
-                } catch (IllegalValueException ive) {
+                }
+                if (isValidEmailAddress(to)) {
+                    sendEmail = new SendEmail(to, person);
+                    sendEmail.start();
+                } else {
                     //Text to Speech
-                    new TextToSpeech(MESSAGE_FAILURE).speak();;
-                    return new CommandResult(MESSAGE_FAILURE);
+                    new TextToSpeech(MESSAGE_EMAIL_NOT_VALID).speak();;
+                    return new CommandResult(MESSAGE_EMAIL_NOT_VALID);
                 }
             }
-            if (isValidEmailAddress(to)) {
-                sendEmail = new SendEmail(to, person);
-                sendEmail.start();
-            } else {
-                //Text to Speech
-                new TextToSpeech(MESSAGE_EMAIL_NOT_VALID).speak();;
-                return new CommandResult(MESSAGE_EMAIL_NOT_VALID);
-            }
+            //Text to Speech
+            new TextToSpeech(MESSAGE_SUCCESS).speak();;
+            return new CommandResult(MESSAGE_SUCCESS);
+        } else {
+            return new CommandResult(MESSAGE_NO_INTERNET);
         }
-        //Text to Speech
-        new TextToSpeech(MESSAGE_SUCCESS).speak();;
-        return new CommandResult(MESSAGE_SUCCESS);
     }
 
     /**

@@ -25,7 +25,7 @@ public class MusicCommand extends Command {
             + "GENRE (must be either pop, dance or classic) \n"
             + "Example: " + COMMAND_WORD + " play classic ";
 
-    public static final String MESSAGE_NO_MUSIC_PLAYING = "There is no music currently playing";
+    public static final String MESSAGE_NO_MUSIC_PLAYING = "No music is currently playing";
     public static final String MESSAGE_STOP = "Music Stopped";
     private static final int maxTrackNumber = 2;
 
@@ -49,7 +49,8 @@ public class MusicCommand extends Command {
     }
 
     /**
-     * Returns boolean status whether music is currently playing.
+     * Returns true if music player is currently playing.
+     * else return false
      */
     public static boolean isMusicPlaying() {
         if (music == null) {
@@ -83,8 +84,6 @@ public class MusicCommand extends Command {
                 if (!genre.equals(previousGenre)) {
                     trackNumber = 1;
                 }
-                String musicFile = getClass().getClassLoader().getResource("audio/music/"
-                        + genre + trackNumber + ".mp3").toString();
                 messageSuccess = genre.toUpperCase() + " Music " + trackNumber + " Playing";
                 music = new Music("audio/music/"
                         + genre + trackNumber + ".mp3");
@@ -93,6 +92,7 @@ public class MusicCommand extends Command {
                 if (trackNumber < maxTrackNumber) {
                     trackNumber++;
                 } else {
+                    //reset track number back to 1
                     trackNumber = 1;
                 }
                 //Text to Speech
@@ -101,7 +101,7 @@ public class MusicCommand extends Command {
                 previousGenre = genre;
                 return new CommandResult(messageSuccess);
             } else {
-                return new CommandResult(MESSAGE_USAGE);
+                return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MusicCommand.MESSAGE_USAGE));
             }
         //Stop the music that is currently playing
         case "stop":

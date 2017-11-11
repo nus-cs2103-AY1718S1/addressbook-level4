@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.MusicCommand.MESSAGE_NO_MUSIC_PLAYING;
-import static seedu.address.logic.commands.MusicCommand.MESSAGE_USAGE;
 
 import org.junit.Test;
 
@@ -16,13 +15,19 @@ public class MusicCommandTest {
     public void execute_music_wrongGenre() {
         MusicCommand musicCommand = new MusicCommand("play", "nonExistedGenre");
         CommandResult commandResult = musicCommand.execute();
-        assertEquals(MESSAGE_USAGE, commandResult.feedbackToUser);
+        assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                MusicCommand.MESSAGE_USAGE), commandResult.feedbackToUser);
     }
 
     @Test
     public void execute_music_wrongCommand() {
         MusicCommand musicCommand = new MusicCommand("wrongCommand", "nonExistedGenre");
         CommandResult commandResult = musicCommand.execute();
+        assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                MusicCommand.MESSAGE_USAGE), commandResult.feedbackToUser);
+
+        musicCommand = new MusicCommand("play", "nonExistedGenre");
+        commandResult = musicCommand.execute();
         assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 MusicCommand.MESSAGE_USAGE), commandResult.feedbackToUser);
 
@@ -33,25 +38,99 @@ public class MusicCommandTest {
     }
 
     @Test
-    public void execute_stopPause_noExistingPlayer() {
+    public void execute_stop_noExistingPlayer() {
         MusicCommand musicCommand = new MusicCommand("stop");
         CommandResult commandResult = musicCommand.execute();
+        assertEquals(MESSAGE_NO_MUSIC_PLAYING, commandResult.feedbackToUser);
+
+        musicCommand = new MusicCommand("stop", "additionalParameterGenre");
+        commandResult = musicCommand.execute();
         assertEquals(MESSAGE_NO_MUSIC_PLAYING, commandResult.feedbackToUser);
     }
 
     @Test
     public void execute_music_successCommand() {
-        String genre = "";
+        String genre = "pop";
+        String trackNumber = "1";
         MusicCommand musicCommand = new MusicCommand("play");
         CommandResult commandResult = musicCommand.execute();
-        assertEquals("POP Music 1 Playing", commandResult.feedbackToUser);
+        assertEquals(genre.toUpperCase() + " Music " + trackNumber
+                + " Playing", commandResult.feedbackToUser);
         musicCommand = new MusicCommand("stop");
         musicCommand.execute();
 
         genre = "pop";
+        trackNumber = "2";
         musicCommand = new MusicCommand("play", genre);
         commandResult = musicCommand.execute();
-        assertEquals("POP Music 2 Playing", commandResult.feedbackToUser);
+        assertEquals(genre.toUpperCase() + " Music " + trackNumber
+                + " Playing", commandResult.feedbackToUser);
+        musicCommand = new MusicCommand("stop");
+        musicCommand.execute();
+
+        genre = "dance";
+        trackNumber = "1";
+        musicCommand = new MusicCommand("play", genre);
+        commandResult = musicCommand.execute();
+        assertEquals(genre.toUpperCase() + " Music " + trackNumber
+                + " Playing", commandResult.feedbackToUser);
+        musicCommand = new MusicCommand("stop");
+        musicCommand.execute();
+
+        genre = "dance";
+        trackNumber = "2";
+        musicCommand = new MusicCommand("play", genre);
+        commandResult = musicCommand.execute();
+        assertEquals(genre.toUpperCase() + " Music " + trackNumber
+                + " Playing", commandResult.feedbackToUser);
+        musicCommand = new MusicCommand("stop");
+        musicCommand.execute();
+
+        genre = "classic";
+        trackNumber = "1";
+        musicCommand = new MusicCommand("play", genre);
+        commandResult = musicCommand.execute();
+        assertEquals(genre.toUpperCase() + " Music " + trackNumber
+                + " Playing", commandResult.feedbackToUser);
+        musicCommand = new MusicCommand("stop");
+        musicCommand.execute();
+
+        genre = "classic";
+        trackNumber = "2";
+        musicCommand = new MusicCommand("play", genre);
+        commandResult = musicCommand.execute();
+        assertEquals(genre.toUpperCase() + " Music " + trackNumber
+                + " Playing", commandResult.feedbackToUser);
+        musicCommand = new MusicCommand("stop");
+        musicCommand.execute();
+    }
+
+    @Test
+    public void execute_music_successNexTrack() {
+        String genre = "pop";
+        String trackNumber = "1";
+        MusicCommand musicCommand = new MusicCommand("play", genre);
+        CommandResult commandResult = musicCommand.execute();
+        assertEquals(genre.toUpperCase() + " Music " + trackNumber
+                + " Playing", commandResult.feedbackToUser);
+        musicCommand = new MusicCommand("stop");
+        musicCommand.execute();
+
+        genre = "pop";
+        trackNumber = "2";
+        musicCommand = new MusicCommand("play", genre);
+        commandResult = musicCommand.execute();
+        assertEquals(genre.toUpperCase() + " Music " + trackNumber
+                + " Playing", commandResult.feedbackToUser);
+        musicCommand = new MusicCommand("stop");
+        musicCommand.execute();
+
+        genre = "classic";
+        trackNumber = "1";
+        musicCommand = new MusicCommand("play", genre);
+        commandResult = musicCommand.execute();
+        assertEquals(genre.toUpperCase() + " Music " + trackNumber
+                + " Playing", commandResult.feedbackToUser);
         musicCommand = new MusicCommand("stop");
         musicCommand.execute();
     }

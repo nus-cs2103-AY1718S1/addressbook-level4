@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.RadioCommand.MESSAGE_USAGE;
+import static seedu.address.logic.commands.RadioCommand.MESSAGE_NO_RADIO_PLAYING;
 
 import org.junit.Test;
 
@@ -16,7 +16,8 @@ public class RadioCommandTest {
     public void execute_radio_wrongGenre() {
         RadioCommand radioCommand = new RadioCommand("play", "nonExistedGenre");
         CommandResult commandResult = radioCommand.execute();
-        assertEquals(MESSAGE_USAGE, commandResult.feedbackToUser);
+        assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                RadioCommand.MESSAGE_USAGE), commandResult.feedbackToUser);
     }
 
     @Test
@@ -26,10 +27,26 @@ public class RadioCommandTest {
         assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 RadioCommand.MESSAGE_USAGE), commandResult.feedbackToUser);
 
+        radioCommand = new RadioCommand("play", "nonExistedGenre");
+        commandResult = radioCommand.execute();
+        assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                RadioCommand.MESSAGE_USAGE), commandResult.feedbackToUser);
+
         radioCommand = new RadioCommand("wrongCommand");
         commandResult = radioCommand.execute();
         assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 RadioCommand.MESSAGE_USAGE), commandResult.feedbackToUser);
+    }
+
+    @Test
+    public void execute_stop_noExistingPlayer() {
+        RadioCommand radioCommand = new RadioCommand("stop");
+        CommandResult commandResult = radioCommand.execute();
+        assertEquals(MESSAGE_NO_RADIO_PLAYING, commandResult.feedbackToUser);
+
+        radioCommand = new RadioCommand("stop", "additionalParameterGenre");
+        commandResult = radioCommand.execute();
+        assertEquals(MESSAGE_NO_RADIO_PLAYING, commandResult.feedbackToUser);
     }
 
     @Test
