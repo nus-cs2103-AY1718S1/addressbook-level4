@@ -191,8 +191,8 @@ public class BrowserPanel extends UiPart<Region> {
             AnchorPane parent = fxmlLoader.load();
             //Get the webview from the loaded component then put URL
             WebView socialPageView = (WebView) parent.getChildren().get(0);
-            //Replace the following line with an actual URL once Person has actual social URLs
-            socialPageView.getEngine().load(person.getPhone().toString());
+            String temp = person.getSocialMedia().iterator().next().getName().url;
+            socialPageView.getEngine().load(temp);
             //Create the scene and stage
             Scene scene = new Scene(parent);
             Stage stage = new Stage();
