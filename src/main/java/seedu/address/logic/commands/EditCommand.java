@@ -167,7 +167,6 @@ public class EditCommand extends UndoableCommand {
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
     }
-  
 //    /**
 //     * Creates and returns a {@code Meeting} with the details of {@code meetingToEdit}
 //     * edited with {@code editMeetingDescriptor}.
