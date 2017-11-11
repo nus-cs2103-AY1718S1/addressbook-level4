@@ -147,30 +147,43 @@ public class KeyListenerTest extends RolodexGuiTest {
         KeyCodeCombination addCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+A");
 
         guiRobot.push(addCommandKeyCode);
-        guiRobot.pauseForHuman();
         assertEquals(AddCommand.FORMAT, getCommandBox().getInput());
 
         guiRobot.push(KeyCode.A);
-        guiRobot.pauseForHuman();
         assertEquals("add n/a p/PHONE_NUMBER e/EMAIL a/ADDRESS", getCommandBox().getInput());
 
         guiRobot.push(KeyCode.TAB);
-        guiRobot.pauseForHuman();
         guiRobot.push(KeyCode.B);
-        guiRobot.pauseForHuman();
         assertEquals("add n/a p/b e/EMAIL a/ADDRESS", getCommandBox().getInput());
 
         guiRobot.push(KeyCode.TAB);
-        guiRobot.pauseForHuman();
         guiRobot.push(KeyCode.C);
-        guiRobot.pauseForHuman();
         assertEquals("add n/a p/b e/c a/ADDRESS", getCommandBox().getInput());
 
         guiRobot.push(KeyCode.TAB);
-        guiRobot.pauseForHuman();
         guiRobot.push(KeyCode.D);
-        guiRobot.pauseForHuman();
         assertEquals("add n/a p/b e/c a/d", getCommandBox().getInput());
+
+        KeyCodeCombination shiftTab = new KeyCodeCombination(KeyCode.TAB, KeyCombination.SHIFT_DOWN);
+        guiRobot.push(shiftTab);
+        guiRobot.push(KeyCode.E);
+        assertEquals("add n/a p/b e/e a/d", getCommandBox().getInput());
+
+        guiRobot.push(shiftTab);
+        guiRobot.push(KeyCode.F);
+        assertEquals("add n/a p/f e/e a/d", getCommandBox().getInput());
+
+        guiRobot.push(shiftTab);
+        guiRobot.push(KeyCode.G);
+        assertEquals("add n/g p/f e/e a/d", getCommandBox().getInput());
+
+        guiRobot.push(shiftTab);
+        guiRobot.push(KeyCode.H);
+        assertEquals("add n/g p/f e/e a/h", getCommandBox().getInput());
+
+        guiRobot.push(KeyCode.TAB);
+        guiRobot.push(KeyCode.I);
+        assertEquals("add n/i p/f e/e a/h", getCommandBox().getInput());
 
     }
 

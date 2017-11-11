@@ -155,6 +155,7 @@ public class KeyListener {
     /**
      * Deletes the selected contact
      * TODO: Implement deletion at selected contact
+     * coming in v2.0
      */
     private String deleteSelectedContact() {
         return null;
