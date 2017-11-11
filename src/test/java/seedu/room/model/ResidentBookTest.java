@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.room.testutil.TypicalPersons.ALICE;
+import static seedu.room.testutil.TypicalPersons.BENSON;
 import static seedu.room.testutil.TypicalPersons.TEMPORARY_DOE;
 import static seedu.room.testutil.TypicalPersons.TEMPORARY_JOE;
 import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
@@ -21,9 +22,9 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.room.commons.exceptions.IllegalValueException;
+import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
-import seedu.room.model.person.exceptions.PersonNotFoundException;
 import seedu.room.model.tag.Tag;
 import seedu.room.testutil.ResidentBookBuilder;
 
@@ -92,6 +93,38 @@ public class ResidentBookTest {
         //added new temporary contact has expiry day of 1000 years, so it won't be deleted
         assertTrue(residentBookTwo.getPersonList().size() == 2);
 
+    }
+
+    @Test
+    public void removeByTagTest() throws IllegalValueException, CommandException {
+
+        //initialise residentBookOne with one contact first, who has tag of "friends"
+        ResidentBook residentBook = new ResidentBookBuilder().withPerson(ALICE).build();
+
+        //remove residents who has tag "friends"
+        residentBook.removeByTag(new Tag("friends"));
+
+        assertTrue(residentBook.getUniquePersonList().getInternalList().size() == 0);
+
+        residentBook = new ResidentBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        assertTrue(residentBook.getUniquePersonList().getInternalList().size() == 2);
+        residentBook.removeByTag(new Tag("friends"));
+        assertTrue(residentBook.getUniquePersonList().getInternalList().size() == 0);
+
+        residentBook = new ResidentBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        assertTrue(residentBook.getUniquePersonList().getInternalList().size() == 2);
+        residentBook.removeByTag(new Tag("owesMoney"));
+        assertTrue(residentBook.getUniquePersonList().getInternalList().size() == 1);
+    }
+
+    @Test
+    public void removeByTag_NonExistentTag_throwsIllegalValueException() throws IllegalValueException, CommandException{
+        ResidentBook residentBook = new ResidentBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        assertTrue(residentBook.getUniquePersonList().getInternalList().size() == 2);
+        thrown.expect(CommandException.class);
+        thrown.expectMessage("No persons with such tag found");
+        residentBook.removeByTag(new Tag("OWESMoney"));
+        assertTrue(residentBook.getUniquePersonList().getInternalList().size() == 1);
     }
     //@@author
 
