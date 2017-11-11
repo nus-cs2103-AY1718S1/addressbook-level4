@@ -39,7 +39,4 @@ public class CreateGroupCommandTest {
         // different person -> returns false
         assertFalse(addGroup1Command.equals(addGroup2Command));
     }
-
-
-
 }
