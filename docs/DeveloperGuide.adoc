@@ -494,8 +494,8 @@ From the two scenarios, we know that unless the user knows the exact details (i.
 **Pros:** Easier to be implemented when only one type of detail is used. +
 **Cons:** Repeating functions for different details. +
 **Alternative 2:** Able to find with multiple details. +
-**Pros:** Harder to implement and complexity increases. +
-**Cons:** Lesser repeated functions is possible.
+**Pros:** Lesser repeated functions is possible. +
+**Cons:** Harder to implement and increased complexity may affect effiency.
 
 ---
 // end::finds[]
