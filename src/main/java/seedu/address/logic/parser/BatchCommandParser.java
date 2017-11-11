@@ -23,20 +23,20 @@ public class BatchCommandParser implements Parser<BatchCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public BatchCommand parse(String args) throws ParseException {
+        final Set<String> tagNames = new HashSet<>();
+        Scanner tagNameScanner = new Scanner(args);
+
+        while (tagNameScanner.hasNext()) {
+            String nextTagName = tagNameScanner.next();
+            tagNames.add(nextTagName);
+        }
+
         try {
-            final Set<String> stringSet = new HashSet<>();
-            Scanner sc = new Scanner(args);
-
-            while (sc.hasNext()) {
-                stringSet.add(sc.next());
-            }
-
-            Set<Tag> tags = ParserUtil.parseTags(stringSet);
+            Set<Tag> tags = ParserUtil.parseTags(tagNames);
             return new BatchCommand(tags);
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, BatchCommand.MESSAGE_USAGE));
         }
     }
-
 }
