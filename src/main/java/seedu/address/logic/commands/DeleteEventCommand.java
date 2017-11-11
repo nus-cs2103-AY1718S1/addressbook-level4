@@ -16,6 +16,7 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
 public class DeleteEventCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "deleteevent";
+    public static final String COMMAND_ALIAS = "de";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the event identified by the index number used in the last person listing.\n"
