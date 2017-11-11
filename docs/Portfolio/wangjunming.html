@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.3">
+<title>Wang Junming - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Wang Junming - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-modu"><a class="link" href="#project-modu">Project: ModU</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Many universities have timetable committee to deal with all matters concerning timetabling scheduling. One prevalent concern of such matters would be timetable clashes while scheduling.</p>
+</div>
+<div class="paragraph">
+<p>Welcome to ModU, a timetable scheduling software for professors and administrators in tertiary institutions.</p>
+</div>
+<div class="paragraph">
+<p>With ModU, you are able to easily identify timetable slots that are available for the module you are scheduling. Made a mistake while scheduling the timetable? Fret not, you can easily make any changes to the timetable.</p>
+</div>
+<div class="paragraph">
+<p>ModU uses the command line interface (CLI) as the main input. The natural language input field will allow you to quickly search, add, delete and edit your timetable. Just type what you want and ModU will do the rest for you!</p>
+</div>
+<div class="paragraph">
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/main/junming403.md">Functional code</a>] [<a href="https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/test/junming403.md">Test code</a>]</p>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-view-list-edit-delete"><a class="link" href="#enhancement-added-view-list-edit-delete">Enhancement Added: View/List/Edit/Delete</a></h3>
+<div class="sect3">
+<h4 id="external-behavior"><a class="link" href="#external-behavior">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="listing-all-lesson-code-list-code"><a class="link" href="#listing-all-lesson-code-list-code">Listing all lesson : <code>list</code></a></h3>
+<div class="paragraph">
+<p>The <code>list</code> command will display a list based on the attribute specified by the user.
+There are three attributes, namely: <em>module</em>, <em>location</em> and <em>marked</em>.<br></p>
+</div>
+<div class="paragraph">
+<p>Command format in command box: <code>list ATTRIBUTE</code><br></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The attribute must be in lower case.<br>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Valid examples:<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>To switch to <strong>module list mode</strong>, type <code>list module</code> to list all registered modules in ModU.<br></p>
+</li>
+<li>
+<p>To switch to <strong>location list mode</strong>, type <code>list location</code> to list all locations of every lesson registered in ModU.<br></p>
+</li>
+<li>
+<p>To switch to <strong>marked list mode</strong>, type <code>list marked</code> to list all marked lessons in ModU.<br></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="viewing-specific-lesson-from-the-list-code-view-code"><a class="link" href="#viewing-specific-lesson-from-the-list-code-view-code">Viewing specific lesson from the list: <code>view</code></a></h3>
+<div class="paragraph">
+<p>The <code>view</code> command will display all lessons in a module or a location.<br></p>
+</div>
+<div class="paragraph">
+<p>Command format in command box: <code>view INDEX</code><br></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+This is the only command that allows you to switch to <strong>lesson list mode</strong>.<br>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Valid examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In <strong>module list mode</strong>, type <code>view 2</code> to view all lessons of the module.<br></p>
+</li>
+<li>
+<p>In <strong>location list mode</strong>, type <code>view 2</code> to view all lessons conducted at this location.<br></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="editing-a-lesson-code-edit-code"><a class="link" href="#editing-a-lesson-code-edit-code">Editing a lesson : <code>edit</code></a></h3>
+<div class="paragraph">
+<p>The <code>edit</code> command will edit existing lessons, modules or locations. The index must be a positive integer: 1, 2, 3, and so on.<br></p>
+</div>
+<div class="paragraph">
+<p>Command format in command box: <code>edit INDEX [m/MODULE_CODE] [ct/CLASS_TYPE] [v/VENUE] [gp/GROUP] [ts/TIME_SLOT] [l/Lecturer…]</code><br></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+At least one of the optional fields must be provided.<br>
+Existing values will be updated to the input values.<br>
+The prefix can be omitted in both <strong>module list mode</strong> and <strong>location list mode</strong>.<br>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Valid examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Type <code>list module</code> to list all registered modules in ModU.<br>
+Next, type <code>edit 2 CS2101</code> to rename all the lessons associated with the module at index 2 to CS2101.<br></p>
+</li>
+<li>
+<p>Type <code>list location</code> to list all locations of all lessons registered in ModU.<br>
+Next, type <code>edit 2 LT19</code> to relocate all the lessons associated with the location at index 2 to LT19.<br></p>
+</li>
+<li>
+<p>In <strong>lesson list mode</strong>, type <code>view 2</code> to view the lesson at index 2.<br>
+Next, type <code>edit 2 v/LT19</code> to relocate the lesson to LT19. Note that for this example, the prefix is compulsory.<br></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deleting-a-lesson-code-delete-code"><a class="link" href="#deleting-a-lesson-code-delete-code">Deleting a lesson : <code>delete</code></a></h3>
+<div class="paragraph">
+<p>The <code>delete</code> command will delete a lesson, module or location. The index must be a positive integer: 1, 2, 3, and so on.<br></p>
+</div>
+<div class="paragraph">
+<p>Command format in command box: <code>delete INDEX</code><br></p>
+</div>
+<div class="paragraph">
+<p>Valid examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In <strong>module list mode</strong>, type <code>delete 1</code> to remove the module at index 1.<br></p>
+</li>
+<li>
+<p>In <strong>location list mode</strong>, type <code>delete 1</code> to remove the location at index 1.<br></p>
+</li>
+<li>
+<p>In <strong>lesson list mode</strong>, type <code>delete 1</code> to remove the lesson at index 1.<br></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification"><a class="link" href="#justification">Justification</a></h4>
+<div class="paragraph">
+<p>Since it is a module manager software, it must be able to list by various elements(listing type). In this case, module, lesson and location. Each module has a set of lessons, each location also includes a set of lessons.</p>
+</div>
+<div class="paragraph">
+<p>Since we can list by various listing type. We also need to be able to edit them accordingly.
+Thus when list lesson, we can edit/delete a specific lesson. When list by location, we can edit/delete the specific location and all lessons with this location will be edited/deleted accordingly.
+Similarly, we can list by module and edit/delete all lessons in this module.</p>
+</div>
+<div class="paragraph">
+<p>It offers a convenient way of managing lessons. You can see all the lessons of one specific module, and you can also check all lessons in a specific location and decide if you want to schedule your lessons there.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="listingunit-mechanism"><a class="link" href="#listingunit-mechanism">ListingUnit mechanism</a></h3>
+<div class="paragraph">
+<p><strong>ListingUnit</strong> is an enumeration class which has three enumeration types: <strong>LESSON</strong>, <strong>MODULE</strong> and <strong>LOCATION</strong>. It records the current listing attribute of the lesson list panel. It has static method <strong>getCurrentListingUnit</strong> and <strong>setCurrentListingUnit</strong> that allows us to record the current listing type and get the current listing type at any time. It is implemented in this way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>public enum ListingUnit {
+    MODULE, LOCATION, LESSON;
+
+    private static ListingUnit currentListingUnit = MODULE;
+    private static Predicate currentPredicate;
+
+    //...
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When list command is used, the variable <strong>currentListingUnit</strong> will be set accordingly, either by <strong>LOCATION</strong> or <strong>MODULE</strong>. Similarly, when view command is used, the variable <strong>currentListingUnit</strong> will be set to <strong>LESSON</strong>.</p>
+</div>
+<div class="paragraph">
+<p><strong>ListingUnit</strong> facilitates the implementation of the various parts of the Logic component, such as <strong>EditCommand</strong>, <strong>ViewCommand</strong>, <strong>DeleteCommand</strong> and others. For example, <strong>EditCommand</strong> will need to know the current listing attribute in order to parse the arguments.</p>
+</div>
+<div class="paragraph">
+<p>ListingUnit also records the current predicate used in <strong>filteredLessonList</strong> and has static methods <strong>setCurrentPredicate</strong> and <strong>getCurrentPredicate</strong>. Whenever the predicate is changed, the variable <strong>currentPredicate</strong> will be updated accordingly.</p>
+</div>
+<div class="paragraph">
+<p>The recorded predicate is mainly used to facilitate the implementation of <strong>RedoCommand</strong>. We do not allow redoing of the previous command in a different context. Since many of the commands are index-based, executing the command with a different listing type will cause different results. As a result, when implementing the redo mechanism, we can obtain the <strong>currentPredicate</strong> and compare it with the predicate memorised by the command and only push it onto the <strong>redoStack</strong> if the predicate is the same.</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect</strong>: Implementation of <strong>ListingUnit</strong><br>
+<strong>Alternative 1 (current choice)</strong>: Construct an enumeration class <strong>ListingUnit</strong> and record current listing type and predicates.<br>
+<strong>Pros</strong>: It makes the implementation of many other features easier.<br>
+<strong>Cons</strong>: In testing, <strong>ListingUnit</strong> class carries data from one test to another even when we want each test to be independent of the others.<br>
+<strong>Alternative 2 (previous choice)</strong>: Use a variable in model manager to keep record of current <strong>ListingUnit</strong>.<br>
+<strong>Pros</strong>: There is no need for an extra enumeration class.<br>
+<strong>Cons</strong>: In order to access the variable in other components, the variable must be declared static. However, we cannot define static abstract methods in an interface.
+=== List/View mechanism
+The list and view mechanisms are similar and both are facilitated by <strong>ListingUnit</strong> and predicate. When the user lists by different attributes, the static variable current <strong>ListingUnit</strong> will reset to either <strong>MODULE</strong> or <strong>LOCATION</strong>, depending on the user’s input. When the user view by index, the static variable current <strong>ListingUnit</strong> will be set to <strong>LESSON</strong>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The default listing unit is <strong>MODULE</strong>. When listing by attribute, for example, list location, the <strong>currentListingUnit</strong> will be set to <strong>LOCATION</strong> and shows a list of all locations.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For different listing type, we always use the same <strong>lessonList</strong> but set different predicate to it. <strong>UniqueModuleCodePredicate</strong> and <strong>UniqueLocationPredicate</strong> are used to facilitate the implementation of list. For example, when the user types in list module, a <strong>UniqueModulePredicate</strong> will be used to filter the <strong>lessonList</strong>. <a href="#ui">UI</a> will hide all other irrelevant information of the lesson such as location and time slot and shows a list of all modules.</p>
+</div>
+<div class="paragraph">
+<p>The following <em><a href="#sequence-diagram">Sequence diagram</a> (Figure 20)</em> shows how the list command works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ListCommandSequenceDiagram.jpg" alt="ListCommandSequenceDiagram" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 20: Sequence Diagram for ListCommand</em></p>
+</div>
+<div class="paragraph">
+<p>The following <em>Activity Diagram (Figure 21)</em> summarizes what happens when a user executes list command.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ListCommandActivityDiagram.png" alt="ListCommandActivityDiagram" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 10: Activity Diagram for ListCommand</em></p>
+</div>
+<div class="paragraph">
+<p><strong>FixedCodePredicate</strong> and <strong>FixedLocationPredicate</strong> are used to facilitate the implementation of <strong>ViewCommand</strong>. According to the current listing type, which we can obtain from <strong>ListingUnit</strong>, we can create either a <strong>FixedCodePredicate</strong> or a <strong>FixedLocationPredicate</strong> to filter the lesson list and set <strong>currentListingUnit</strong> to be <strong>LESSON</strong>.</p>
+</div>
+<div class="paragraph">
+<p>The following <em><a href="#sequence-diagram">Sequence diagram</a> (Figure 22)</em> shows how the view command works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ViewCommandSequenceDiagram.jpg" alt="ViewCommandSequenceDiagram" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 22 Sequence Diagram for ViewCommand</em></p>
+</div>
+<div class="paragraph">
+<p>The following <em>Activity Diagram (Figure 23)</em> summarizes what happens when a user executes <strong>ViewCommand</strong>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ViewCommandActivityDiagram.png" alt="ViewCommandActivityDiagram" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 23: Activity Diagram for view</em></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect</strong>: Implementation of <strong>List</strong> and <strong>View Command</strong><br>
+<strong>Alternative 1 (current choice)</strong>: Set different predicates to the <strong>filteredList</strong> and hide irrelevant information in the lesson list panel.<br>
+<strong>Pros</strong>: It would be easy to understand and do not use extra spaces to store different kind of lists (For example, location list).<br>
+<strong>Cons</strong>: This will increase overhead due to implementation of new predicates.<br>
+<strong>Alternative 2 (previous choice)</strong>: Store lesson list, unique module list and unique location list separately and switches to different panel list before calling view command.<br>
+<strong>Pros</strong>: This implementation will make the overall structure more organized.<br>
+<strong>Cons</strong>: It would be much harder to implement and the switching of panel will cause heavier load to the system compared to a single panel.</p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-mark-unmark"><a class="link" href="#enhancement-added-mark-unmark">Enhancement Added: Mark/Unmark</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-2"><a class="link" href="#external-behavior-2">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="marking-a-lesson-code-mark-code"><a class="link" href="#marking-a-lesson-code-mark-code">Marking a lesson: <code>mark</code></a></h3>
+<div class="paragraph">
+<p>The <code>mark</code> command will mark a lesson and add it into a marked list. The index must be a positive integer: 1, 2, 3 and so on.<br></p>
+</div>
+<div class="paragraph">
+<p>Command format in command box: <code>mark INDEX</code><br></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The specified lesson must not initially be in the marked list.<br>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Valid examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In <strong>module list mode</strong>, type <code>view 1</code> to display all lessons in the module.<br>
+Next, type <code>mark 1</code> to add lesson into the marked list.<br></p>
+</li>
+<li>
+<p>In <strong>lesson list mode</strong>, type <code>mark 1</code> to add the lesson into the marked list.
+=== Unmarking a lesson: <code>unmark</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>unmark</code> command will remove a marked lesson from the marked list. The index must be a positive integer: 1, 2, 3, and so on.<br></p>
+</div>
+<div class="paragraph">
+<p>Command format in command box: <code>unmark INDEX</code><br></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The specified lesson must not initially be in the marked list.<br>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Valid example:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Type <code>list marked</code> to list all marked lessons in ModU.<br>
+Next, type <code>unmark 1</code> to remove the lesson at index 1 from the marked list.<br></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification-2"><a class="link" href="#justification-2">Justification</a></h4>
+<div class="paragraph">
+<p>By marking lessons, you can have a marked list. By which as a student, you can customize your time table. While as a lecturer, you can also mark all the lessons you are teaching to create your timetable.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-2"><a class="link" href="#implementation-2">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="mark-unmark-mechanism"><a class="link" href="#mark-unmark-mechanism">Mark/Unmark mechanism</a></h3>
+<div class="paragraph">
+<p>The mark mechanism is facilitated by an extra attribute <strong>isMarked</strong> of Lesson class. <strong>isMarked</strong> is a boolean attribute which indicates if the given lesson is in the marked list.</p>
+</div>
+<div class="paragraph">
+<p>When the user mark a lesson, the specified lesson’s <strong>isMarked</strong> attribute will be set to true. When the user unmark a lesson, the specified lesson’s <strong>isMarked</strong> attribute will be set to false.</p>
+</div>
+<div class="paragraph">
+<p>By default, when a new lesson is added, it is not in the marked list and thus the <strong>isMarked</strong> attribute will be set to false. The following <em><a href="#sequence-diagram">Sequence diagram</a> (Figure 24)</em> shows how the mark command works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/MarkCommandSequenceDiagram.jpg" alt="MarkCommandSequenceDiagram" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 24: Sequence Diagram for MarkCommand</em></p>
+</div>
+<div class="paragraph">
+<p>You can see a list of all marked lessons by the command list marked.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Each lesson is only allowed to be added into the marked list once, thus any further mark attempt will cause an exception to be thrown.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect</strong>: Implementation of mark/unmark<br>
+<strong>Alternative 1 (current choice)</strong>: Create an extra attribute <strong>isMarked</strong> for each lesson to record if the lesson is in the marked list.<br>
+<strong>Pros</strong>: It would be easier to implement list marked since we are using predicates to update the lesson list.<br>
+<strong>Cons</strong>: It is requires to filter out marked lessons every time.<br>
+<strong>Alternative 2 (previous choice)</strong>: Stores additional marked lesson list.<br>
+<strong>Pros</strong>: We do not need to filter out the marked lessons each time.<br>
+<strong>Cons</strong>: Lessons might be stored multiple times.</p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-remark"><a class="link" href="#enhancement-added-remark">Enhancement Added: Remark</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-3"><a class="link" href="#external-behavior-3">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="remarking-a-module-code-remark-code"><a class="link" href="#remarking-a-module-code-remark-code">Remarking a module: <code>remark</code></a></h3>
+<div class="paragraph">
+<p><code>remark a module with given content.</code><br>
+Format: <code>remark INDEX CONTENT</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Remark the module at the specified <code>INDEX</code>. The index refers to the index number shown in the last module listing. The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>Only module can be remarked therefore <code>remark</code> command only apply when listing element is module.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>list module</code><br>
+<code>Remark 1 This is a very interesting Module</code><br>
+Remark the module of index 1 with comment "This is a very interesting module".</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>delete a remark with given index.</code><br>
+Format: <code>remark -d INDEX</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The index here is the index of the remark we want to delete while the index in <code>remark INDEX CONTENT</code> refers to the index of the module we want to add our remark to.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>remark -d 1</code><br>
+Delete the remark in current remark panel with index 1.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification-3"><a class="link" href="#justification-3">Justification</a></h4>
+<div class="paragraph">
+<p>As a professor, you might also want to add some supplementary information about the module, such as an introduction. Thus your student can know what is this module about.
+Thus you can remark the module. And the remark content will be shown as sticky notes.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-3"><a class="link" href="#implementation-3">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="remark-mechanism"><a class="link" href="#remark-mechanism">Remark mechanism</a></h3>
+<div class="paragraph">
+<p>The remark mechanism is facilitated by <strong>UniqueRemarkList</strong>. Each time we add or delete a remark, the <strong>UniqueRemarkList</strong> is updated and changes are saved into storage. A filtered list is used to show remarks related to a specified module when a module is selected.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Only module can be remarked, therefore user can use remark if and only if the current listing element is <strong>MODULE</strong>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following <em><a href="#sequence-diagram">Sequence diagram</a> (Figure 27)</em> shows how the remark operation works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/RemarkCommandSequenceDiagram.jpg" alt="RemarkCommandSequenceDiagram" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 27: Sequence Diagram for RemarkCommand</em></p>
+</div>
+<div class="paragraph">
+<p>The following <em>Activity Diagram (Figure 28)</em> summarizes what happens when a user executes remark command.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/RemarkCommandActivityDiagram.png" alt="RemarkCommandActivityDiagram" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 28: Activity Diagram for RemarkCommand</em></p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect</strong>: Implementation of <strong>RemarkCommand</strong><br>
+<strong>Alternative 1 (current choice)</strong>: use a <strong>uniqueRemarkList</strong> similar to <strong>uniqueLessonList</strong>.<br>
+<strong>Pros</strong>: Store all remarks as a single list thus it is easy to manage.<br>
+<strong>Cons</strong>: Need to filter out a selected set of remarks when user select a specific module.</p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-proposed-add-command-code-export-import-code"><a class="link" href="#enhancement-proposed-add-command-code-export-import-code">Enhancement Proposed: Add command <code>export/import</code></a></h3>
+<div class="paragraph">
+<p>In v2.0, ModU should be able to export/import the lessons info file out.
+In v2.0, ModU should be able to export the customized timetable out.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-proposed-online-version"><a class="link" href="#enhancement-proposed-online-version">Enhancement Proposed: Online Version</a></h3>
+<div class="paragraph">
+<p>In v2.0, ModU should be an online platform for professors to plan the courses they are teaching and for students to make their study timetable.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Change the whole model from <code>Person(address, email, phone&#8230;&#8203;.)</code> to <code>Lesson(module code, location, time slot, class type, group number, lecturer)</code> and update test case accordingly (Pull requests <a href="https://github.com/CS2103AUG2017-W13-B4/main/pull/52/files">#52</a>, <a href="https://github.com/CS2103AUG2017-W13-B4/main/pull/55/files">#55</a>, <a href="https://github.com/CS2103AUG2017-W13-B4/main/pull/56/files">#56</a>, <a href="https://github.com/CS2103AUG2017-W13-B4/main/pull/98/files">#98</a>)</p>
+</li>
+<li>
+<p>Add in the border color together with tick or cross to indicate if the command format is valid before execution (Pull requests <a href="https://github.com/CS2103AUG2017-W13-B4/main/pull/72/files">#72</a>)</p>
+</li>
+<li>
+<p>Enhance undo/redo mechanism. Undo redo crossing different listing type is not allowed because it causes confusion. (No specific pull request about this, can check developer guide for more info, see <code>DeveloperGuide</code> undoredo mechanism)</p>
+</li>
+<li>
+<p>Bugs/Suggestions found/proposed in acceptance testing in week 11. (Issues <a href="https://github.com/CS2103AUG2017-F09-B1/main/issues/87">#87</a>, <a href="https://github.com/CS2103AUG2017-F09-B1/main/issues/86">#86</a>, <a href="https://github.com/CS2103AUG2017-F09-B1/main/issues/84">#84</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="project-powerpointlabs"><a class="link" href="#project-powerpointlabs">Project: PowerPointLabs</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>{Optionally (not graded), you may include other projects in your portfolio.}</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-11-06 14:48:29 +08:00
+</div>
+</div>
+</body>
+</html>
