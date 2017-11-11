@@ -11,14 +11,15 @@ import java.util.function.Predicate;
  * user.
  */
 
-public class CheckBirthdays {
+public class CheckBirthdays implements Predicate<ReadOnlyPerson> {
 
-    public BirthdayChecker(){
+    public CheckBirthdays() {
 
     }
 
     /**
      * Checks if a person's birthday falls on the current day.
+     *
      * @param person
      * @return boolean
      * @throws ParseException
@@ -26,7 +27,7 @@ public class CheckBirthdays {
 
     public boolean showBirthdays(ReadOnlyPerson person) throws ParseException {
         String birthday = person.getBirthday().toString();
-        Date date = new SimpleDateFormat("DD/MM/YYYY").parse(birthday);
+        Date date = new SimpleDateFormat("dd/MM/yyyy").parse(birthday);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return (((calendar.get(Calendar.MONTH)) == Calendar.getInstance().get(Calendar.MONTH))
@@ -34,7 +35,7 @@ public class CheckBirthdays {
     }
 
     @Override
-    public boolean test(ReadOnlyPerson person){
+    public boolean test(ReadOnlyPerson person) {
         boolean index = false;
         try {
             index = showBirthdays(person);
