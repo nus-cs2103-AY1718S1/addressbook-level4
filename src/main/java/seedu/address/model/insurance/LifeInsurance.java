@@ -153,6 +153,10 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return owner;
     }
 
+    public void setInsuranceName(String insuranceName) {
+        this.insuranceName.set(requireNonNull(insuranceName));
+    }
+
     @Override
     public InsurancePerson getOwner() {
         return owner.get();
@@ -205,6 +209,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
 
     public void setPremium(Double premium) {
         this.premium.set(requireNonNull(premium));
+        this.premiumString.set(getPremiumString());
     }
 
     @Override
@@ -278,6 +283,10 @@ public class LifeInsurance implements ReadOnlyInsurance {
     @Override
     public String getExpiryDateString() {
         return expiryDateString.get();
+    }
+
+    public void setContractName(String contractName) {
+        this.contractName.set(requireNonNull(contractName));
     }
 
     @Override
