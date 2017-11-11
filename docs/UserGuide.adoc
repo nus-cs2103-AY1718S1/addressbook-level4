@@ -156,17 +156,17 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-// tag::themeslist[]
-=== Listing all themes : `themeslist`
+// tag::themes[]
+=== Listing all themes : `themes`
 
 This command shows a list of all themes that is available to you in pop-up window format in The Myth's Book. +
-Format: `themeslist`
+Format: `themes`
 
-You should see the result of using `themeslist` as seen in Figure 6.5.1.
+You should see the result of using `themes` as seen in Figure 6.5.1.
 
 image::themeslist.png[width="800"]
-Figure 6.5.1 `themeslist` Result for Themes List Command
-// end::themeslist[]
+Figure 6.5.1 `themes` Result for Themes List Command
+// end::themes[]
 
 // tag::switch[]
 === Switching themes : `switch`
@@ -182,9 +182,9 @@ Format: `switch INDEX`
 
 Examples:
 
-* `themeslist` +
+* `themes` +
 `switch 2` +
-1. By typing `themeslist`, you will be able to see the available themes that The Myth's Book has to offer. +
+1. By typing `themes`, you will be able to see the available themes that The Myth's Book has to offer. +
 2. By typing `switch 2`, you will be able to switch to the 2nd theme listed in the themes list.
 
 You should see the result of using `switch 2` as seen in Figure 6.6.1.
@@ -499,10 +499,10 @@ By typing this command, you will be able to favourite the 2nd person in the most
 `favourite 1` +
 By typing this command, you will be able to favourite the 1st person in the results of the `find` command.
 
-=== Listing all favourited persons : `favouritelist`
+=== Listing all favourited persons : `favourites`
 
 This command shows a list of all favourited persons in The Myth's Book. +
-Format: `favouritelist`
+Format: `favourites`
 
 === Unfavouriting a person : `unfavourite`
 
@@ -521,9 +521,9 @@ Examples:
 `unfavourite 2` +
 By typing `unfavourite 2`, you will be able to unfavourite the 2nd person in the most recent person listing of The Myth's Book.
 
-* `favouritelist` +
+* `favourites` +
 `unfavourite 1` +
-By typing `unfavourite 1`, you will be able to unfavourite the 1st person in the results of the `favouritelist` command.
+By typing `unfavourite 1`, you will be able to unfavourite the 1st person in the results of the `favourites` command.
 
 * `find Betsy` +
 `unfavourite 1` +
@@ -668,7 +668,7 @@ General Commands
 * *Redo* : `redo`
 * *SwitchTheme* : `switchtheme INDEX` +
 e.g. `switchtheme 2`
-* *ThemesList* : `themeslist`
+* *Themes* : `themes`
 * *Undo* : `undo`
 
 Persons Commands
@@ -684,7 +684,7 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Favourite* : `favourite INDEX` +
 e.g. `favourite 3`
-* *FavouriteList* : `favouritelist`
+* *Favourites* : `favourites`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *FindTag* : `findtag TAG [MORE_TAGS]` +
@@ -741,14 +741,14 @@ v1.2
 * Adding of school email field for a contact. `Chia Cherng Hann`
 * Adding of website field for a contact. `Darren Chin`
 * Implementation of Person Card Details Panel which displays all the information of a selected contact. `Archana Pradeep`
-* Implementation of favourites list which allows users to `favourite` and `unfavourite` contacts and view `favouritelist`. `Dickson Chan`
+* Implementation of favourites list which allows users to `favourite` and `unfavourite` contacts and view `favourites`. `Dickson Chan`
 
 v1.1
 
 * Adding of birthday field for a contact. `Archana Pradeep`
 * Adding of home number field for a contact. `Chia Cherng Hann`
 * Sort command to sort all contacts in The Myth's Book based on their names alphabetically. `Darren Chin`
-* Implementation of `switchtheme` and `themeslist` command that allows a user to switch the look of the Graphical User Interface of The Myth's Book. `Dickson Chan`
+* Implementation of `switchtheme` and `themes` command that allows a user to switch the look of the Graphical User Interface of The Myth's Book. `Dickson Chan`
 
 v1.0
 

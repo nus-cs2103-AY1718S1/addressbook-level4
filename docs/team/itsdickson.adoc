@@ -46,7 +46,7 @@ include::../UserGuide.adoc[tag=favouriteunfavourite]
 
 ---
 
-=== Enhancement Added: Switch Theme
+=== Enhancement Added: Switch/Themes
 
 (Pull Requests https://github.com/CS2103AUG2017-T15-B3/main/pull/50[#50], https://github.com/CS2103AUG2017-T15-B3/main/pull/63[#63], https://github.com/CS2103AUG2017-T15-B3/main/pull/78[#78])
 
@@ -85,7 +85,7 @@ include::../DeveloperGuide.adoc[tag=switch]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=themeslist]
+include::../UserGuide.adoc[tag=themes]
 
 #End of Extract#
 
@@ -100,7 +100,7 @@ include::../UserGuide.adoc[tag=themeslist]
 ---
 #Start of Extract [from: Developer Guide]#
 
-//include::../DeveloperGuide.adoc[tag=themeslist]
+include::../DeveloperGuide.adoc[tag=themes]
 
 #End of Extract#
 
@@ -130,7 +130,37 @@ include::../UserGuide.adoc[tag=events]
 ---
 #Start of Extract [from: Developer Guide]#
 
-//include::../DeveloperGuide.adoc[tag=events]
+include::../DeveloperGuide.adoc[tag=events]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Delete Event
+
+(Pull Request https://github.com/CS2103AUG2017-T15-B3/main/pull/135[#135])
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deleteevent]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deleteevent]
 
 #End of Extract#
 
