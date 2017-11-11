@@ -505,9 +505,9 @@ From the two scenarios, we know that unless the user knows the exact details (i.
 // tag::important[]
 === Important tag
 
-Any contact that has `important` tag will be sorted to be at the top of the list. +
+Any person that has `important` tag will be filtered and then insert to the top of the list. +
 
-It is implemented to check whether any contact in addressbook has `important` tag each time `add` or `list` command is executed
+It is implemented to check whether any person in addressbook has `important` tag each time `add` or `list` command is executed
 
 [source,java]
 ----
@@ -526,7 +526,7 @@ It is implemented to check whether any contact in addressbook has `important` ta
          */
 
         if (importantPersons.size() != 0) {
-            // ...Perform logic to insert persons with important tag at the top...
+            // ...Perform logic to insert persons with important tag to the top...
         }
     }
 ----
@@ -535,8 +535,8 @@ It is implemented to check whether any contact in addressbook has `important` ta
 
 **Aspect:** Perform insertion of persons with important tag to the top quickly. +
 **Alternative 1 (current choice):** Filter person with `important` tag to a list and those without to another list then merge the lists together. +
-**Pros:** Easy to implement and works well when there are not a lot of contacts. +
-**Cons:** Time complexity is O(n2) hence slows down as more contacts are being added over time. +
+**Pros:** Easy to implement and works well when there are not a lot of persons. +
+**Cons:** Time complexity is O(n2) hence slows down as more persons are being added over time. +
 **Alternative 2:** Create additional addressbook that stores only important contacts and execute merge only when a new person is added to the addressbook. +
 **Pros:** Able to achieve O(n) time complexity. +
 **Cons:** Additional addressbook is redundant and takes up memory space.
@@ -544,13 +544,47 @@ It is implemented to check whether any contact in addressbook has `important` ta
 ---
 // end::important[]
 
+// tag::sort[]
+=== Sorted persons
+
+Persons stored in the addressbook will be sorted in ascending alphabetical order based on their name.
+
+Persons in the addressbook will be sorted each time the user execute `add` or `list` command.
+
+Sorting is achieved by using java Collection.sort() method with a specified NameComparator.
+
+[source,java]
+----
+public class NameComparator implements Comparator <ReadOnlyPerson> {
+
+    @Override
+    public int compare(ReadOnlyPerson p1, ReadOnlyPerson p2) {
+        return p1.getName().fullName.compareToIgnoreCase(p2.getName().fullName);
+    }
+}
+---
+
+The NameComparator compares two names and ignore their case.
+
+==== Design Considerations
+
+**Aspect:** Sort the persons in the list fast. +
+**Alternative 1 (current choice):** Use java Collection.sort() which is a merge sort algorithm. +
+**Pros:** Works well with few persons in the addressbook and merge sort algorithm is stable. +
+**Cons:** Time complexity is nlog(n) hence takes long to sort as more persons are being added over time. +
+**Alternative 2:** Implement insertion sort algorithm
+**Pros:** Able to achieve O(n) time complexity. +
+**Cons:** Addressbook has to be almost sorted to achieved O(n) time complexity, otherwise can rise in O(n2).
+
+---
+// end::sort[]
+
 // tag::birthday[]
 === Add person(s) Birthday
 
 The `birthday` command is an improved version from `add` command. It allows user to add using with as phone number, birthday, email or tag.
 
 The user can use this command with 'b/dd/mm/yyyy'
-
 
 ==== Design Considerations
 
