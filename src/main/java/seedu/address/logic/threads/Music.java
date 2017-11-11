@@ -1,4 +1,4 @@
-package seedu.address.logic;
+package seedu.address.logic.threads;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

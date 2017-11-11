@@ -8,7 +8,7 @@ import javax.mail.internet.InternetAddress;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.SendEmail;
+import seedu.address.logic.threads.SendEmail;
 import seedu.address.logic.TextToSpeech;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ParserUtil;
