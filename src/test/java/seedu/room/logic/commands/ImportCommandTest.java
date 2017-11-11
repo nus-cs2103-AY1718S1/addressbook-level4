@@ -10,11 +10,13 @@ import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
 
 import java.io.File;
 import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
+
 import seedu.room.logic.CommandHistory;
 import seedu.room.logic.UndoRedoStack;
 import seedu.room.model.Model;
