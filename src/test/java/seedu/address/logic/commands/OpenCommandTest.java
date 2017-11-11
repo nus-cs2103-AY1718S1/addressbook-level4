@@ -4,7 +4,7 @@ import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static seedu.address.testutil.TestUtil.getAbsoluteFilePathInSandboxFolder;
+import static seedu.address.testutil.TestUtil.getFilePathInDataFolder;
 
 import java.io.File;
 
@@ -21,19 +21,19 @@ public class OpenCommandTest {
 
     @Test
     public void execute_fileExists_success() {
-        assertExecutionSuccess(getAbsoluteFilePathInSandboxFolder("sampleData2.xml"));
+        assertExecutionSuccess(getFilePathInDataFolder("sampleData.xml"));
     }
 
     @Test
     public void execute_fileNotExist_failure() {
         assertExecutionFailure(
-            getAbsoluteFilePathInSandboxFolder("nonExistentFile.xml"), Messages.MESSAGE_INVALID_FILE_PATH);
+            getFilePathInDataFolder("nonExistentFile.xml"), Messages.MESSAGE_INVALID_FILE_PATH);
     }
 
     @Test
     public void equals() {
-        File firstFile = new File(getAbsoluteFilePathInSandboxFolder("sampleData.xml"));
-        File secondFile = new File(getAbsoluteFilePathInSandboxFolder("sampleData2.xml"));
+        File firstFile = new File(getFilePathInDataFolder("sampleData.xml"));
+        File secondFile = new File(getFilePathInDataFolder("sampleData2.xml"));
 
         OpenCommand openFirstCommand = new OpenCommand(firstFile);
         OpenCommand openSecondCommand = new OpenCommand(secondFile);
