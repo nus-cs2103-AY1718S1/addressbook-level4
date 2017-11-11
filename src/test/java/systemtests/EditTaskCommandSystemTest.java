@@ -117,9 +117,7 @@ public class EditTaskCommandSystemTest extends AddressBookSystemTest {
         editedTask = new TaskBuilder(taskToEdit).withDeadline("").build();
         assertCommandSuccess(command, index, editedTask);
 
-        // TODO: 1/11/17 Look into how changing of task card order affect this code, especially null date @Raisa
         /* Case: deadline prefix inside quoted description -> only description edited */
-        /*
         index = INDEX_FIRST_TASK;
         ReadOnlyTask taskToEdit2 = new TaskBuilder(QUIZ).build();
         command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + " " + DESCRIPTION_QUOTED_PAPER

@@ -66,16 +66,6 @@ public class TagCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Index, ReadOnlyPerson, Index)} except that
-     * the browser url and selected card remain unchanged.
-     * @param toEdit the index of the current model's filtered list
-     * @see TagCommandSystemTest#assertCommandSuccess(String, Index, ReadOnlyPerson, Index)
-     */
-    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyPerson editedPerson) {
-        assertCommandSuccess(command, toEdit, editedPerson, null);
-    }
-
-    /**
      * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>
      * 1. Asserts that result display box displays the success message of executing {@code TagCommand}.<br>
      * 2. Asserts that the model related components are updated to reflect the person at index {@code toEdit} being
