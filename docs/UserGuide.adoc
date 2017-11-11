@@ -674,7 +674,6 @@ _Figure 4.18.1_ +
 (See Figure 4.18.2 and 4.18.3) +
 image:sync2.png[sync2, 600] +
 _Figure 4.18.2_ +
-
 image:sync3.png[sync3, 600] +
 _Figure 4.18.3_
 
