@@ -32,12 +32,15 @@ public class FindCommandParser implements Parser<FindCommand> {
     private void parseMultiMap(ArgumentMultimap argsMap, HashMap<String, List<String>> mapKeywords, Prefix prefix)
             throws ParseException {
         String trimmedArgs;
+
         try {
             if (argsMap.getValue(prefix).isPresent()) {
                 trimmedArgs = ParserUtil.parseKeywords(argsMap.getValue(prefix)).get().trim();
+
                 if (trimmedArgs.isEmpty()) {
                     throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
                 }
+
                 String[] keywordNameList = trimmedArgs.split("\\s+");
                 mapKeywords.put(prefix.toString(), Arrays.asList(keywordNameList));
             }
@@ -54,6 +57,7 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     public FindCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
+
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
@@ -61,8 +65,6 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TAG, PREFIX_EMAIL,
                 PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_COMMENT, PREFIX_APPOINT);
-
-
 
         HashMap<String, List<String>> mapKeywords = new HashMap<>();
 

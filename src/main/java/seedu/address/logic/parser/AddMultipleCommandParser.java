@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVATAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -20,6 +21,7 @@ import seedu.address.logic.commands.AddMultipleCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appoint;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -49,14 +51,12 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMultipleCommand.MESSAGE_USAGE));
         }
 
-        ArrayList<ReadOnlyPerson> personsList = new ArrayList<>();
         File fileToRead = new File(filePath);
-        String data;
-
         if (!FileUtil.isFileExists(fileToRead)) {
             throw new ParseException(String.format(AddMultipleCommand.MESSAGE_INVALID_FILE, filePath));
         }
 
+        String data;
         try {
             data = FileUtil.readFromFile(fileToRead);
         } catch (IOException ie) {
@@ -64,33 +64,57 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
         }
 
         String[] lines = data.split(System.lineSeparator());
+        ArrayList<ReadOnlyPerson> personsList = parseParticularsIntoPersonsList(lines);
 
+        return new AddMultipleCommand(personsList);
+    }
+
+    /**
+     * Parses the particulars from {@code argMultimap} into a person
+     *
+     * @param argMultimap should not be null.
+     * @return a person with the parsed attributes
+     * @throws ParseException if any of the person particulars contain illegal value
+     */
+    private ReadOnlyPerson parseParticularsIntoPerson(ArgumentMultimap argMultimap) throws ParseException {
+        try {
+            Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+            Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
+            Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
+            Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            Avatar avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR)).get();
+            Comment comment = new Comment(""); // add command does not allow adding comments straight away
+            Appoint appoint = new Appoint("");
+
+            return new Person(name, phone, email, address, comment, appoint, avatar, tagList);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
+     * Parses persons' particulars from {@code lines} and returns {@code personsList}, an ArrayList of ReadOnlyPerson
+     *
+     * @param lines should not be null. The string array contains the person particulars
+     * @return personsList that is being parsed from {@code lines}.
+     * @throws ParseException if the compulsory person particulars are not present
+     */
+    private ArrayList<ReadOnlyPerson> parseParticularsIntoPersonsList(String[] lines) throws ParseException {
+        ArrayList<ReadOnlyPerson> personsList = new ArrayList<>();
         for (String eachLine : lines) {
             String toAdd = " " + eachLine;
             ArgumentMultimap argMultimap =
                     ArgumentTokenizer.tokenize(toAdd, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                            PREFIX_TAG);
+                            PREFIX_TAG, PREFIX_AVATAR);
             if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
                 throw new ParseException(String.format(MESSAGE_INVALID_PERSON_FORMAT,
                         AddMultipleCommand.MESSAGE_PERSON_FORMAT));
             }
-            try {
-                Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-                Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
-                Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
-                Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
-                Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-                Comment comment = new Comment(""); // add command does not allow adding comments straight away
-                Appoint appoint = new Appoint("");
-                ReadOnlyPerson person = new Person(name, phone, email, address, comment, appoint, tagList);
-
-                personsList.add(person);
-            } catch (IllegalValueException ive) {
-                throw new ParseException(ive.getMessage(), ive);
-            }
+            ReadOnlyPerson person = parseParticularsIntoPerson(argMultimap);
+            personsList.add(person);
         }
-
-        return new AddMultipleCommand(personsList);
+        return personsList;
     }
 
     /**
