@@ -45,6 +45,10 @@ public class PersonInformationPanel extends UiPart<Region> {
     @FXML
     private VBox optionalPhoneList;
     @FXML
+    private VBox customFieldNameList;
+    @FXML
+    private VBox customFieldValueList;
+    @FXML
     private FlowPane tags;
     @FXML
     private Label name;
@@ -64,8 +68,6 @@ public class PersonInformationPanel extends UiPart<Region> {
     private Label email;
     @FXML
     private Label emailLabel;
-    @FXML
-    private Label customFields;
 
     public PersonInformationPanel() {
         super(FXML);
@@ -112,10 +114,10 @@ public class PersonInformationPanel extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        customFields.textProperty().bind(Bindings.convert(person.customFieldProperty()));
         id.setText(Integer.toString(personId));
         optionalPhoneList.getChildren().clear();
         initOptionalPhones(person);
+        initCustomField(person);
     }
 
     /**
@@ -144,6 +146,24 @@ public class PersonInformationPanel extends UiPart<Region> {
             optionalPhoneList.getChildren().add(otherPhone);
         });
     }
+
+    /**
+     * Initialise custom field display flowpane
+     */
+    //@@author LuLechuan
+    public void initCustomField(ReadOnlyPerson person) {
+        customFieldNameList.getChildren().clear();
+        customFieldValueList.getChildren().clear();
+        person.getCustomFields().forEach(customField -> {
+            Label customFieldName = new Label(customField.customFieldName + ":");
+            setIndentation(customFieldName);
+            customFieldNameList.getChildren().add(customFieldName);
+            Label customFieldValue = new Label(customField.getCustomFieldValue());
+            setIndentation(customFieldValue);
+            customFieldValueList.getChildren().add(customFieldValue);
+        });
+    }
+    //@@author
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {

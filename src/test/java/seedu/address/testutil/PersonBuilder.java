@@ -24,6 +24,8 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_ADDITIONAL_PHONE1 = "24444";
+    public static final String DEFAULT_ADDITIONAL_PHONE2 = "25555";
 
     private Person person;
 
@@ -34,7 +36,10 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            UniquePhoneList defaultPhoneList = new UniquePhoneList(new Phone(DEFAULT_ADDITIONAL_PHONE1));
+            defaultPhoneList.add(new Phone(DEFAULT_ADDITIONAL_PHONE2));
+            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
+                    defaultTags, defaultPhoneList);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -98,15 +103,18 @@ public class PersonBuilder {
     /**
      * UniquePhoneList
      */
-    public PersonBuilder withPhoneList(String phone) {
+    public PersonBuilder withPhoneList(String... phones) {
         try {
-            this.person.setPhoneList(new UniquePhoneList(new Phone(phone)));
+            UniquePhoneList list = new UniquePhoneList();
+            for (String phone : phones) {
+                list.add(new Phone(phone));
+            }
+            this.person.setPhoneList(list);
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("phone is expected to be unique.");
+            throw new IllegalArgumentException("This is not an additional phone number.");
         }
         return this;
     }
-
 
     /**
      * Sets the {@code Email} of the {@code Person} that we are building.

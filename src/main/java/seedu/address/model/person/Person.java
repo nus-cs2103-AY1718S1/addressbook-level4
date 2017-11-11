@@ -51,6 +51,23 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     }
 
     /**
+     * Every field must be present and not null except Phone list, Custom Field and Photo.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, UniquePhoneList list) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.primaryPhone = new SimpleObjectProperty<>(phone);
+        this.uniquePhoneList = new SimpleObjectProperty<>(list);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.photo = new SimpleObjectProperty<>(new Photo());
+
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.customFields = new SimpleObjectProperty<>(new UniqueCustomFieldList());
+    }
+
+    /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Photo photo,
