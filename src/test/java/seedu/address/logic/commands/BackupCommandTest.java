@@ -9,6 +9,8 @@ import java.io.File;
 
 import org.junit.Test;
 
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -120,7 +122,9 @@ public class BackupCommandTest {
      * Returns a {@code EmailCommand} with the parameter {@code index}.
      */
     private BackupCommand prepareCommand(String address) {
+        UserPrefs prefs = new UserPrefs();
         BackupCommand backupCommand = new BackupCommand(address);
+        backupCommand.setData(model, prefs, new CommandHistory(), new UndoRedoStack());
         return backupCommand;
     }
 }
