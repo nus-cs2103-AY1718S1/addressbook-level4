@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import seedu.address.logic.commands.FavouriteListCommand;
 import seedu.address.logic.commands.SwitchThemeCommand;
 import seedu.address.logic.commands.ThemeListCommand;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -154,6 +155,11 @@ public class AddressBookParserTest {
         UnfavouriteCommand command = (UnfavouriteCommand) parser.parseCommand(
                 UnfavouriteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new UnfavouriteCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_favouriteList() throws Exception {
+        assertTrue(parser.parseCommand(FavouriteListCommand.COMMAND_WORD) instanceof FavouriteListCommand);
     }
 
     @Test
