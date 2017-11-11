@@ -20,7 +20,7 @@ public class TutorialMessages {
             + "where you will see your list of contacts and tasks";
     public static final String INTRO_FIVE = "This is the sort menu, where you can select how to sort the list.";
     public static final String INTRO_SIX = "This is the search box, where "
-            + "you are able to search for the person you want.";
+            + "you are able to search for the person or tasks you want.";
     public static final String INTRO_SEVEN = "Features of Bluebird:\n"
             + "1. Add contacts/tasks\n"
             + "2. Delete contacts/tasks\n"
@@ -59,7 +59,8 @@ public class TutorialMessages {
             + "10. redo\n"
             + "11. person\n"
             + "12. task\n"
-            + "13. parent";
+            + "13. parent\n"
+            + "14. ecit\n";
 
     /* Command usage messages */
     public static final String USAGE_BEGIN = "Let's try out the different commands of Bluebird! Activate Parent Mode "
