@@ -88,4 +88,12 @@ public class UploadPhotoCommand extends UndoableCommand {
 
         return new CommandResult(String.format(MESSAGE_UPDATE_PERSON_PHOTO_SUCCESS, personUpdated));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UploadPhotoCommand // instanceof handles nulls
+                && this.targetIndex.equals(((UploadPhotoCommand) other).targetIndex)
+                && this.photo.equals(((UploadPhotoCommand) other).photo)); // state check
+    }
 }

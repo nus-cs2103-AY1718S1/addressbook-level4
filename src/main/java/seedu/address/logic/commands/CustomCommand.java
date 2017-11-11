@@ -93,4 +93,12 @@ public class CustomCommand extends UndoableCommand {
 
         return new CommandResult(String.format(MESSAGE_UPDATE_PERSON_CUSTOM_FIELD_SUCCESS, personUpdated));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CustomCommand // instanceof handles nulls
+                && this.targetIndex.equals(((CustomCommand) other).targetIndex)
+                && this.customField.equals(((CustomCommand) other).customField)); // state check
+    }
 }
