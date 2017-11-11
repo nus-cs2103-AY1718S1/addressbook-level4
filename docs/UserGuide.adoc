@@ -439,14 +439,13 @@ __Constraints:__
 // end::find[]
 ==== Deleting tasks : `delete`
 
-Due to our fast changing lives, if your task was cancelled suddenly and you would like to delete the task from your task manager, simply use this delete function.
-To delete the specified task from the task manager, use: +
+Due to our fast changing lives, if your task was cancelled suddenly and you would like to delete the task from your task manager, the delete function is here to save your day!
 
 Format: `delete INDEX`
 
 __Constraints__
 
-Note the following constraints when deleting task:
+Note the following constraints when deleting a task:
 
 ****
 * Deletes the task at the specified `INDEX`.
