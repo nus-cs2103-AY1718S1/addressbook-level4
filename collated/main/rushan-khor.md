@@ -1,50 +1,59 @@
 # rushan-khor
-###### \java\seedu\address\logic\commands\BatchCommand.java
+###### /java/seedu/address/logic/parser/BatchCommandParser.java
 ``` java
 /**
- * Deletes a person identified using it's last displayed index from the address book.
+ * Parses input arguments and creates a new DeleteCommand object
  */
-public class BatchCommand extends UndoableCommand {
+public class BatchCommandParser implements Parser<BatchCommand> {
 
-    public static final String COMMAND_WORD = "batch";
-    public static final String COMMAND_ALIAS = "b"; // shorthand equivalent alias
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeleteCommand
+     * and returns an DeleteCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public BatchCommand parse(String args) throws ParseException {
+        final Set<String> tagNames = new HashSet<>();
+        Scanner tagNameScanner = new Scanner(args);
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes all persons with the given tags.\n"
-            + COMMAND_ALIAS + ": Shorthand equivalent for batch delete. \n"
-            + "Parameters: TAG (must be a tag that at least one person has)\n"
-            + "Example 1: " + COMMAND_ALIAS + " friends \n"
-            + "Example 2: " + COMMAND_WORD + " colleagues";
-
-    public static final String MESSAGE_BATCH_DELETE_SUCCESS = "Deleted Persons with Tags: %1$s";
-
-    private final Set<Tag> tagsToDelete;
-
-    public BatchCommand(Set<Tag> tagsToDelete) {
-        this.tagsToDelete = tagsToDelete;
-    }
-
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        try {
-            model.deletePersonsByTags(tagsToDelete);
-        } catch (PersonNotFoundException e) {
-            throw new CommandException("The target person cannot be missing");
+        while (tagNameScanner.hasNext()) {
+            tagNames.add(tagNameScanner.next());
         }
 
-        return new CommandResult(String.format(MESSAGE_BATCH_DELETE_SUCCESS, tagsToDelete));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof BatchCommand // instanceof handles nulls
-                && this.tagsToDelete.equals(((BatchCommand) other).tagsToDelete)); // state check
+        try {
+            Set<Tag> tags = ParserUtil.parseTags(tagNames);
+            return new BatchCommand(tags);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, BatchCommand.MESSAGE_USAGE));
+        }
     }
 }
 ```
-###### \java\seedu\address\logic\commands\CopyCommand.java
+###### /java/seedu/address/logic/parser/CopyCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new CopyCommand object
+ */
+public class CopyCommandParser implements Parser<CopyCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the CopyCommand
+     * and returns an CopyCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public CopyCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new CopyCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, CopyCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/CopyCommand.java
 ``` java
     @Override
     public CommandResult execute() throws CommandException {
@@ -94,7 +103,52 @@ public class BatchCommand extends UndoableCommand {
         systemClipboard.setContent(systemClipboardContent);
     }
 ```
-###### \java\seedu\address\logic\commands\DuplicatesCommand.java
+###### /java/seedu/address/logic/commands/BatchCommand.java
+``` java
+/**
+ * Deletes a person identified using it's last displayed index from the address book.
+ */
+public class BatchCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "batch";
+    public static final String COMMAND_ALIAS = "b"; // shorthand equivalent alias
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes all persons with the given tags.\n"
+            + COMMAND_ALIAS + ": Shorthand equivalent for batch delete. \n"
+            + "Parameters: TAG (must be a tag that at least one person has)\n"
+            + "Example 1: " + COMMAND_ALIAS + " friends \n"
+            + "Example 2: " + COMMAND_WORD + " colleagues";
+
+    public static final String MESSAGE_BATCH_DELETE_SUCCESS = "Deleted Persons with Tags: %1$s";
+
+    private final Set<Tag> tagsToDelete;
+
+    public BatchCommand(Set<Tag> tagsToDelete) {
+        this.tagsToDelete = tagsToDelete;
+    }
+
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            model.deletePersonsByTags(tagsToDelete);
+        } catch (PersonNotFoundException e) {
+            throw new CommandException("One of the tags is not in use. Remove it and try again.");
+        }
+
+        return new CommandResult(String.format(MESSAGE_BATCH_DELETE_SUCCESS, tagsToDelete));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof BatchCommand // instanceof handles nulls
+                && this.tagsToDelete.equals(((BatchCommand) other).tagsToDelete)); // state check
+    }
+}
+```
+###### /java/seedu/address/logic/commands/DuplicatesCommand.java
 ``` java
 /**
  * Finds and lists persons in address book with possible duplicate entries (by name).
@@ -123,175 +177,7 @@ public class DuplicatesCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\BatchCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new DeleteCommand object
- */
-public class BatchCommandParser implements Parser<BatchCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the DeleteCommand
-     * and returns an DeleteCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public BatchCommand parse(String args) throws ParseException {
-        try {
-            final Set<String> stringSet = new HashSet<>();
-            Scanner sc = new Scanner(args);
-
-            while (sc.hasNext()) {
-                stringSet.add(sc.next());
-            }
-
-            Set<Tag> tags = ParserUtil.parseTags(stringSet);
-            return new BatchCommand(tags);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, BatchCommand.MESSAGE_USAGE));
-        }
-    }
-
-}
-```
-###### \java\seedu\address\logic\parser\CopyCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new CopyCommand object
- */
-public class CopyCommandParser implements Parser<CopyCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the CopyCommand
-     * and returns an CopyCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public CopyCommand parse(String args) throws ParseException {
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new CopyCommand(index);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, CopyCommand.MESSAGE_USAGE));
-        }
-    }
-
-}
-```
-###### \java\seedu\address\model\AddressBook.java
-``` java
-    /**
-     * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
-     *
-     * @param tag all persons containing this tag will be deleted
-     */
-    public void deletePersonsWithTag(Tag tag) throws PersonNotFoundException {
-        ArrayList<Person> toRemove = new ArrayList<>();
-        for (Person person : persons) {
-            if (person.hasTag(tag)) {
-                toRemove.add(person);
-            }
-        }
-
-        if (toRemove.isEmpty()) {
-            throw new PersonNotFoundException();
-        }
-        for (Person person : toRemove) {
-            removePerson(person);
-            removeUnusedTags(person.getTags());
-        }
-    }
-```
-###### \java\seedu\address\model\AddressBook.java
-``` java
-    /**
-     * Removes {@code tagsToRemove} from this {@code AddressBook} if and only if they are not help by any persons.
-     */
-    public void removeUnusedTags(Set<Tag> tagsToRemove) {
-        Set<Tag> cleanedTagList = getTagsExcluding(tagsToRemove);
-        tags.setTags(cleanedTagList);
-        syncMasterTagListWith(persons);
-    }
-
-    /**
-     * Returns tag list from this {@code AddressBook} excluding {@code excludedTags}.
-     */
-    public Set<Tag> getTagsExcluding(Set<Tag> excludedTags) {
-        Set<Tag> results = tags.toSet();
-        for (Tag excludedTag : excludedTags) {
-            results.remove(excludedTag);
-        }
-        return results;
-    }
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    @Override
-    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        addressBook.removePerson(target);
-        indicateAddressBookChanged();
-    }
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    /**
-     * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
-     *
-     * @param tag all persons containing this tag will be deleted
-     */
-    public void deletePersonsWithTag(Tag tag) throws PersonNotFoundException {
-        addressBook.deletePersonsWithTag(tag);
-        indicateAddressBookChanged();
-    }
-
-    /**
-     * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
-     *
-     * @param tags all persons containing this tag will be deleted
-     */
-    @Override
-    public void deletePersonsByTags(Set<Tag> tags) throws PersonNotFoundException {
-        for (Tag tag : tags) {
-            deletePersonsWithTag(tag);
-        }
-    }
-
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    /**
-     * Gets a list of duplicate names
-     */
-    private HashSet<Name> getDuplicateNames() {
-        HashSet<Name> examinedNames = new HashSet<>();
-        HashSet<Name> duplicateNames = new HashSet<>();
-        ObservableList<ReadOnlyPerson> allPersonsInAddressBook = getFilteredPersonList();
-
-        for (ReadOnlyPerson person : allPersonsInAddressBook) {
-            if (examinedNames.contains(person.getName())) {
-                duplicateNames.add(person.getName());
-            }
-            examinedNames.add(person.getName());
-        }
-        return duplicateNames;
-    }
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    @Override
-    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-        requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
-    }
-
-    @Override
-    public void updateDuplicatePersonList() {
-        HashSet<Name> duplicateNames = getDuplicateNames();
-        HasPotentialDuplicatesPredicate predicate = new HasPotentialDuplicatesPredicate(duplicateNames);
-        updateFilteredPersonList(predicate);
-    }
-```
-###### \java\seedu\address\model\person\HasPotentialDuplicatesPredicate.java
+###### /java/seedu/address/model/person/HasPotentialDuplicatesPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Bloodtype} matches any of the keywords given.
@@ -316,4 +202,123 @@ public class HasPotentialDuplicatesPredicate implements Predicate<ReadOnlyPerson
     }
 
 }
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    /**
+     * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
+     *
+     * @param tag all persons containing this tag will be deleted
+     */
+    public void deletePersonsWithTag(Tag tag) throws PersonNotFoundException {
+        ArrayList<Person> toRemove = new ArrayList<>();
+        for (Person person : persons) {
+            if (person.hasTag(tag)) {
+                toRemove.add(person);
+            }
+        }
+
+        if (toRemove.isEmpty()) {
+            throw new PersonNotFoundException();
+        }
+        for (Person person : toRemove) {
+            removePerson(person);
+            removeUnusedTags(person.getTags());
+        }
+    }
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    /**
+     * Removes {@code tagsToRemove} from this {@code AddressBook} if and only if they are not help by any persons.
+     */
+    public void removeUnusedTags(Set<Tag> tagsToRemove) {
+        Set<Tag> cleanedTagList = getTagsExcluding(tagsToRemove);
+        tags.setTags(cleanedTagList);
+        syncMasterTagListWith(persons);
+    }
+
+    /**
+     * Returns tag list from this {@code AddressBook} excluding {@code excludedTags}.
+     */
+    public Set<Tag> getTagsExcluding(Set<Tag> excludedTags) {
+        Set<Tag> results = tags.toSet();
+        for (Tag excludedTag : excludedTags) {
+            results.remove(excludedTag);
+        }
+        return results;
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.removePerson(target);
+        indicateAddressBookChanged();
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /**
+     * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
+     *
+     * @param tag all persons containing this tag will be deleted
+     */
+    public void deletePersonsWithTag(Tag tag) throws PersonNotFoundException {
+        addressBook.deletePersonsWithTag(tag);
+        indicateAddressBookChanged();
+    }
+
+    /**
+     * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
+     *
+     * @param tags all persons containing this tag will be deleted
+     */
+    @Override
+    public void deletePersonsByTags(Set<Tag> tags) throws PersonNotFoundException {
+        for (Tag tag : tags) {
+            deletePersonsWithTag(tag);
+        }
+    }
+
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /**
+     * Gets a list of duplicate names
+     */
+    private HashSet<Name> getDuplicateNames() {
+        HashSet<Name> examinedNames = new HashSet<>();
+        HashSet<Name> duplicateNames = new HashSet<>();
+
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        ObservableList<ReadOnlyPerson> allPersonsInAddressBook = getFilteredPersonList();
+
+        for (ReadOnlyPerson person : allPersonsInAddressBook) {
+            Name currentName = person.getName();
+
+            if (examinedNames.contains(currentName)) {
+                duplicateNames.add(currentName);
+            }
+            else {
+                examinedNames.add(currentName);
+            }
+        }
+        return duplicateNames;
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+        requireNonNull(predicate);
+        filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateDuplicatePersonList() {
+        HashSet<Name> duplicateNames = getDuplicateNames();
+        HasPotentialDuplicatesPredicate predicate = new HasPotentialDuplicatesPredicate(duplicateNames);
+        updateFilteredPersonList(predicate);
+    }
 ```

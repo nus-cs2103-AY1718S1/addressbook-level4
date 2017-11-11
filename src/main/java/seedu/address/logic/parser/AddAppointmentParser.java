@@ -48,7 +48,9 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
             Appointment appointment = getAppointmentFromString(argumentMultimap.getValue(PREFIX_DATE).get());
             return new AddAppointmentCommand(index, appointment);
         } catch (NumberFormatException e) {
-            throw new ParseException(e.getMessage(), e);
+            throw new ParseException("Please input an index for appointment.\n"
+                    + String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AddAppointmentCommand.MESSAGE_USAGE));
         }
     }
 

@@ -190,13 +190,19 @@ public class ModelManager extends ComponentManager implements Model {
     private HashSet<Name> getDuplicateNames() {
         HashSet<Name> examinedNames = new HashSet<>();
         HashSet<Name> duplicateNames = new HashSet<>();
+
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         ObservableList<ReadOnlyPerson> allPersonsInAddressBook = getFilteredPersonList();
 
         for (ReadOnlyPerson person : allPersonsInAddressBook) {
-            if (examinedNames.contains(person.getName())) {
-                duplicateNames.add(person.getName());
+            Name currentName = person.getName();
+
+            if (examinedNames.contains(currentName)) {
+                duplicateNames.add(currentName);
             }
-            examinedNames.add(person.getName());
+            else {
+                examinedNames.add(currentName);
+            }
         }
         return duplicateNames;
     }
