@@ -44,7 +44,7 @@ public class XmlAdaptedPerson {
      */
     public XmlAdaptedPerson(ReadOnlyPerson source) {
         if (source.getAvatar() != null) {
-            avatar = source.getAvatar().getUrl();
+            avatar = source.getAvatar().getPath();
         }
 
         properties = new ArrayList<>();

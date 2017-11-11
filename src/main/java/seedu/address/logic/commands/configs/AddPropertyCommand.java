@@ -20,7 +20,7 @@ public class AddPropertyCommand extends ConfigCommand {
 
     static final String MESSAGE_DUPLICATE_PROPERTY =
             "Another property with the same short name already exists in the application.";
-    static final String MESSAGE_INVALID_REGEX = "The regular expression you provide is invalid.";
+    static final String MESSAGE_INVALID_REGEX = "The regular expression you provided is invalid.";
 
     private final String shortName;
     private final String fullName;

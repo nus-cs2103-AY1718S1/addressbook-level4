@@ -297,6 +297,80 @@ public class ModuleInfoTest {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\person\AddAvatarCommandTest.java
+``` java
+public class AddAvatarCommandTest {
+    private static final String VALID_PATH = FileUtil.getPath("./src/test/resources/SampleAvatar.jpg");
+    private static Avatar validAvatar;
+    private static ModelStub model;
+
+    @BeforeClass
+    public static void setUp() throws Exception {
+        validAvatar = new Avatar(VALID_PATH);
+        model = new AddAvatarModelStub();
+    }
+
+    @Test
+    public void equal_twoCommands_checkCorrectness() {
+        Command command1 = new AddAvatarCommand(Index.fromOneBased(1), validAvatar);
+        Command command2 = new AddAvatarCommand(Index.fromOneBased(1), validAvatar);
+        assertEquals(command1, command2);
+
+        command1 = new AddAvatarCommand(Index.fromZeroBased(1), validAvatar);
+        command2 = new AddAvatarCommand(Index.fromOneBased(1), validAvatar);
+        assertNotEquals(command1, command2);
+    }
+
+    @Test
+    public void execute_changeAvatar_checkCorrectness() throws Exception {
+        Command command = new AddAvatarCommand(Index.fromOneBased(1), validAvatar);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        CommandResult result = command.execute();
+
+        ReadOnlyPerson person = model.getFilteredPersonList().get(0);
+        assertEquals(String.format(MESSAGE_ADD_AVATAR_SUCCESS, person), result.feedbackToUser);
+        assertEquals(validAvatar, person.getAvatar());
+    }
+
+    @Test
+    public void execute_invalidIndex_expectException() {
+        Command command = new AddAvatarCommand(Index.fromOneBased(5), validAvatar);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+
+        CommandResult result = null;
+        try {
+            result = command.execute();
+        } catch (CommandException ce) {
+            assertEquals(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, ce.getMessage());
+            assertNull(result);
+        }
+
+    }
+
+    private static class AddAvatarModelStub extends ModelStub {
+        private List<ReadOnlyPerson> list = new ArrayList<>();
+
+        public AddAvatarModelStub() {
+            list.add(new PersonBuilder().build());
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+            return FXCollections.observableList(list);
+        }
+
+        @Override
+        public void setPersonAvatar(ReadOnlyPerson target, Avatar avatar) {
+            target.setAvatar(avatar);
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\ConfigCommandParserTest.java
 ``` java
 public class ConfigCommandParserTest {
@@ -373,6 +447,56 @@ public class ImportCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportNusmodsCommand.MESSAGE_USAGE));
 
         assertParseFailure(parser, NUSMODS_INVALID_IMPORT, String.format(INVALID_URL, ""));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\person\AddAvatarCommandParserTest.java
+``` java
+public class AddAvatarCommandParserTest {
+    private static final String VALID_PATH = FileUtil.getPath("./src/test/resources/SampleAvatar.jpg");
+    private static final String NOT_IMAGE_PATH = FileUtil.getPath("./src/test/resources/SampleNotImage.txt");
+    private final AddAvatarCommandParser parser = new AddAvatarCommandParser();
+
+    @Test
+    public void parse_allFieldsPresent_checkCorrectness() throws Exception {
+        String input = "1 " + VALID_PATH;
+        Command expected = new AddAvatarCommand(Index.fromOneBased(1), new Avatar(VALID_PATH));
+        assertParseSuccess(parser, input, expected);
+    }
+
+    @Test
+    public void parse_fieldsMissing_expectException() throws Exception {
+        String input = "1 ";
+        String message = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAvatarCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, input, message);
+    }
+
+    @Test
+    public void parse_invalidIndex_expectException() throws Exception {
+        String input = "-1 " + VALID_PATH;
+        String message = String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, input, message);
+    }
+
+    @Test
+    public void parse_invalidFilePath_expectException() throws Exception {
+        String input = "1 " + "invalid*.jpg";
+        String message = String.format(MESSAGE_INVALID_COMMAND_FORMAT, INVALID_PATH_MESSAGE);
+        assertParseFailure(parser, input, message);
+    }
+
+    @Test
+    public void parse_fileNotExist_expectException() throws Exception {
+        String input = "1 " + "noSuchFile.jpg";
+        String message = String.format(MESSAGE_INVALID_COMMAND_FORMAT, IMAGE_NOT_EXISTS);
+        assertParseFailure(parser, input, message);
+    }
+
+    @Test
+    public void parse_fileNotImage_expectException() throws Exception {
+        String input = "1 " + NOT_IMAGE_PATH;
+        String message = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FILE_NOT_IMAGE);
+        assertParseFailure(parser, input, message);
     }
 }
 ```
@@ -483,6 +607,78 @@ public class ArgumentMultimapTest {
         assertEquals(VALID_TAG_COLOR, TagColorManager.getColor(myTag));
     }
 ```
+###### \java\seedu\address\model\person\AvatarTest.java
+``` java
+public class AvatarTest {
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void create_validFile_checkCorrectness() throws Exception {
+        String path = FileUtil.getPath("./src/test/resources/SampleAvatar.jpg");
+        File file = new File(path);
+
+        Avatar avatar = new Avatar(path);
+        assertEquals(file.toURI().toString(), avatar.getPath());
+    }
+
+    @Test
+    public void create_invalidName_expectException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        Avatar avatar = new Avatar("invalid*.png");
+        assertNull(avatar);
+    }
+
+    @Test
+    public void create_invalidNameSeparator_expectException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        Avatar avatar = new Avatar("folder\\folder/invalid*.png");
+        assertNull(avatar);
+    }
+
+    @Test
+    public void create_fileNotExist_expectException() throws Exception {
+        String path = FileUtil.getPath("./src/test/resources/SampleAvatar2.jpg");
+        thrown.expect(IllegalValueException.class);
+        Avatar avatar = new Avatar(path);
+        assertNull(avatar);
+    }
+
+    @Test
+    public void create_fileNotImage_expectException() throws Exception {
+        String path = FileUtil.getPath("./src/test/resources/SampleNotImage.txt");
+        thrown.expect(IllegalValueException.class);
+        Avatar avatar = new Avatar(path);
+        assertNull(avatar);
+    }
+
+    @Test
+    public void equals_twoSameAvatar_checkCorrectness() throws Exception {
+        String path = FileUtil.getPath("./src/test/resources/SampleAvatar.jpg");
+        Avatar avatar1 = new Avatar(path);
+        Avatar avatar2 = new Avatar(path);
+        assertEquals(avatar1, avatar2);
+    }
+
+    @Test
+    public void hashCode_checkCorrectness() throws Exception {
+        String path = FileUtil.getPath("./src/test/resources/SampleAvatar.jpg");
+        File file = new File(path);
+
+        Avatar avatar = new Avatar(path);
+        assertEquals(file.toURI().toString().hashCode(), avatar.hashCode());
+    }
+
+    @Test
+    public void toString_checkCorrectness() throws Exception {
+        String path = FileUtil.getPath("./src/test/resources/SampleAvatar.jpg");
+        File file = new File(path);
+
+        Avatar avatar = new Avatar(path);
+        assertEquals("Avatar from " + file.toURI().toString(), avatar.toString());
+    }
+}
+```
 ###### \java\seedu\address\model\person\PersonTest.java
 ``` java
 public class PersonTest {
@@ -529,13 +725,19 @@ public class PersonTest {
 ###### \java\seedu\address\model\property\DateTimeTest.java
 ``` java
     @Test
+    public void create_viaString_checkCorrectness() throws Exception {
+        DateTime dateTime = new DateTime(VALID_DATE_EVENT1);
+        assertEquals(VALID_DISPLAY_DATE_EVENT1, dateTime.getValue());
+    }
+
+    @Test
     public void create_viaDateObject_checkCorrectness() throws Exception {
         SimpleDateFormat dateFormatter = new SimpleDateFormat("ddMMyyyy HH:mm");
         Date date = dateFormatter.parse(VALID_DATE_EVENT1);
 
         // Create a Datetime property via alternative constructor.
         DateTime dateTime = new DateTime(date);
-        assertEquals(VALID_DATE_EVENT1, dateTime.getValue());
+        assertEquals(VALID_DISPLAY_DATE_EVENT1, dateTime.getValue());
     }
 
     @Test
@@ -863,6 +1065,19 @@ public class UniquePropertyMapTest {
      */
     private UniquePropertyMap createSampleMap() throws Exception {
         return new UniquePropertyMap(mySet);
+    }
+}
+```
+###### \java\seedu\address\model\reminder\exceptions\ReminderNotFoundExceptionTest.java
+``` java
+public class ReminderNotFoundExceptionTest {
+    private ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void createException_toString_checkCorrectness() throws Exception {
+        thrown.expect(ReminderNotFoundException.class);
+        Exception exception = new ReminderNotFoundException("Some message here");
+        assertEquals("Some message here", exception.toString());
     }
 }
 ```

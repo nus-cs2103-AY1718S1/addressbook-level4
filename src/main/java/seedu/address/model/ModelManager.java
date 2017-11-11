@@ -247,9 +247,6 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeEvent(event);
         indicateAddressBookChanged();
     }
-
-    //@@author
-
     //@@author
 
     //=========== Filtered Person List Accessors =============================================================

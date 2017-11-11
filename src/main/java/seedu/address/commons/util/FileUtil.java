@@ -8,11 +8,13 @@ import java.nio.file.Files;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.activation.MimetypesFileTypeMap;
+
 /**
  * Writes and reads files
  */
 public class FileUtil {
-
+    private static final MimetypesFileTypeMap TYPE_MAP = new MimetypesFileTypeMap();
     private static final String CHARSET = "UTF-8";
 
     //@@author low5545
@@ -102,6 +104,14 @@ public class FileUtil {
     public static String getPath(String pathWithForwardSlash) {
         checkArgument(pathWithForwardSlash.contains("/"));
         return pathWithForwardSlash.replace("/", File.separator);
+    }
+
+    /**
+     * Checks whether the given file is an image (according to its MIME type).
+     */
+    public static boolean isImage(File file) {
+        String type = TYPE_MAP.getContentType(file);
+        return type.split("/")[0].equals("image");
     }
 
     //@@author low5545

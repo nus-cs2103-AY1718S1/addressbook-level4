@@ -925,13 +925,16 @@ public class UniqueEventListTest {
     public void sortEventList_successfullySortEvent() throws Exception {
         AddressBook addressBook = getTypicalAddressBook();
         UserPrefs userPrefs = new UserPrefs();
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+
         ModelManager modelManager1 = new ModelManager(addressBook, userPrefs);
-        modelManager.addEvent(TypicalEvents.EVENT2);
-        modelManager.addEvent(EVENT1);
+        modelManager1.addEvent(EVENT2);
         modelManager1.addEvent(EVENT1);
-        modelManager1.addEvent(TypicalEvents.EVENT2);
-        assertEquals(modelManager, modelManager1);
+
+        ModelManager modelManager2 = new ModelManager(addressBook, userPrefs);
+        modelManager2.addEvent(EVENT1);
+        modelManager2.addEvent(EVENT2);
+
+        assertEquals(modelManager1, modelManager2);
     }
 
     @Test
@@ -965,7 +968,7 @@ public class UniqueEventListTest {
         ObservableList<ReadOnlyEvent> events = modelManager.getAddressBook().getEventList();
         int originalEventListSize = events.size();
         modelManager.addEvent(EVENT1);
-        modelManager.addEvent(TypicalEvents.EVENT2);
+        modelManager.addEvent(EVENT2);
         modelManager.deleteEvent(events.get(1));
         int newEventListSize = modelManager.getAddressBook().getEventList().size();
         assertEquals(1, newEventListSize - originalEventListSize);
@@ -1002,12 +1005,6 @@ public class DateTimeTest {
         assertTrue(DateTime.isValidTime("25122015 08:30"));
         assertTrue(DateTime.isValidTime("14122016 13:30"));
         assertTrue(DateTime.isValidTime("09121924 23:30"));
-    }
-
-    @Test
-    public void create_viaString_checkCorrectness() throws Exception {
-        DateTime dateTime = new DateTime(VALID_DATE_EVENT1);
-        assertEquals(VALID_DATE_EVENT1, dateTime.getValue());
     }
 
 ```
@@ -1512,7 +1509,7 @@ public class AddEventCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### \java\systemtests\ModelHelper.java
+###### \java\systemtests\util\ModelHelper.java
 ``` java
 
     /**

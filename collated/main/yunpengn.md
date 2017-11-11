@@ -39,10 +39,11 @@ public class AddPropertyCommand extends ConfigCommand {
     public static final String MESSAGE_USAGE = "Example: " + COMMAND_WORD + " --add-property "
             + "s/b f/birthday m/Birthday needs to be a valid date format "
             + "r/^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{4}";
+    public static final String MESSAGE_SUCCESS = "Added a new property: %1$s";
 
     static final String MESSAGE_DUPLICATE_PROPERTY =
             "Another property with the same short name already exists in the application.";
-    static final String MESSAGE_INVALID_REGEX = "The regular expression you provide is invalid.";
+    static final String MESSAGE_INVALID_REGEX = "The regular expression you provided is invalid.";
 
     private final String shortName;
     private final String fullName;
@@ -464,8 +465,8 @@ public class AddAvatarCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds avatar to the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer) IMAGE_URL\n"
-            + "Example: " + COMMAND_WORD + " 1 https://avatars0.githubusercontent.com/u/1342004";
+            + "Parameters: INDEX (must be a positive integer) IMAGE_PATH\n"
+            + "Example: " + COMMAND_WORD + " 1 something.png";
 
     public static final String MESSAGE_ADD_AVATAR_SUCCESS = "Added avatar to person: %1$s";
 
@@ -774,7 +775,7 @@ public class AddAvatarCommandParser implements Parser<AddAvatarCommand> {
             Avatar avatar = new Avatar(matcher.group("url").trim());
             return new AddAvatarCommand(index, avatar);
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAvatarCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ive.getMessage()));
         }
     }
 }
@@ -942,17 +943,27 @@ public class NaturalLanguageUtil {
  * done by separate methods rather than a single regular expression (the complexity is not at the same level).
  */
 public class Avatar {
-    private static final String INVALID_URL_MESSAGE = "The provided URL is invalid.";
-    private static final String IMG_URL_PATTERN = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}"
-            + "\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)";
+    public static final String INVALID_PATH_MESSAGE = "The provided image path is invalid.";
+    public static final String IMAGE_NOT_EXISTS = "The provided image path does not exist.";
+    public static final String FILE_NOT_IMAGE = "The provided file exists, but it is not an image.";
 
-    private String url;
+    private String path;
 
-    public Avatar(String url) throws IllegalValueException {
-        if (!isValidImageUrl(url)) {
-            throw new IllegalValueException(INVALID_URL_MESSAGE);
+    public Avatar(String path) throws IllegalValueException {
+        requireNonNull(path);
+        if (!isValidAvatarPath(path)) {
+            throw new IllegalValueException(INVALID_PATH_MESSAGE);
         }
-        this.url = url;
+
+        File file = new File(path);
+        if (!FileUtil.isFileExists(file)) {
+            throw new IllegalValueException(IMAGE_NOT_EXISTS);
+        }
+        if (!FileUtil.isImage(file)) {
+            throw new IllegalValueException(FILE_NOT_IMAGE);
+        }
+
+        this.path = file.toURI().toString();
     }
 
     /**
@@ -965,32 +976,25 @@ public class Avatar {
                 && !FileUtil.hasInvalidNameSeparators(path);
     }
 
-    /**
-     * Checks whether a given string is a valid URL and it points to an image.
-     */
-    private boolean isValidImageUrl(String url) {
-        return url.matches(IMG_URL_PATTERN);
-    }
-
-    public String getUrl() {
-        return url;
+    public String getPath() {
+        return path;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Avatar // instanceof handles nulls
-                && this.url.equals(((Avatar) other).url));
+                && this.path.equals(((Avatar) other).path));
     }
 
     @Override
     public int hashCode() {
-        return url.hashCode();
+        return path.hashCode();
     }
 
     @Override
     public String toString() {
-        return "Avatar from " + url;
+        return "Avatar from " + path;
     }
 }
 ```
@@ -1073,6 +1077,22 @@ public class Address extends Property {
 ```
 ###### \java\seedu\address\model\property\DateTime.java
 ``` java
+    // To check whether the raw input is in standard format.
+    private static final String INPUT_STANDARD_FORMAT = "^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{4}"
+            + "(\\s((0[1-9]|1[0-9]|2[0-3]):([0-5][0-9]))?$)";
+    // The formatter corresponding to raw input from user.
+    private static final SimpleDateFormat inputFormatter = new SimpleDateFormat("ddMMyyyy HH:mm");
+    // The formatter corresponding to the format used in UI and storage.
+    private static final SimpleDateFormat outputFormatter = new SimpleDateFormat("dd MMM, yyyy HH:mm", Locale.ENGLISH);
+
+    public DateTime(String value) throws IllegalValueException, PropertyNotFoundException {
+        super(PROPERTY_SHORT_NAME, prepareDateTimeValue(value));
+    }
+
+    public DateTime(Date value) throws IllegalValueException, PropertyNotFoundException {
+        super(PROPERTY_SHORT_NAME, formatDateTime(value));
+    }
+
     /**
      * Returns true if a given string is a valid phone number.
      */
@@ -1088,10 +1108,14 @@ public class Address extends Property {
     /**
      * Prepares the value by checking whether the input can be interpreted by the natural language parser.
      */
-    public static String prepareDateTimeValue(String value) throws IllegalValueException, PropertyNotFoundException {
+    private static String prepareDateTimeValue(String value) throws IllegalValueException, PropertyNotFoundException {
         // Returns the original value directly if it is already in standard format.
-        if (isInStandardFormat(value)) {
-            return value;
+        if (value.matches(INPUT_STANDARD_FORMAT)) {
+            try {
+                return formatDateTime(parseDateTime(value));
+            } catch (ParseException e) {
+                System.err.println("This should never happen. Format check has been performed.");
+            }
         }
 
         Optional<Date> dateObject = NaturalLanguageUtil.parseSingleDateTime(value);
@@ -1102,19 +1126,15 @@ public class Address extends Property {
         }
     }
 
+    public static Date parseDateTime(String date) throws ParseException {
+        return inputFormatter.parse(date);
+    }
+
     /**
-     * Checks whether a string representation of datetime is in standard format.
+     * Converts the given {@link Date} object into the format used in UI and storage.
      */
-    public static boolean isInStandardFormat(String value) {
-        return value.matches(STANDARD_FORMAT);
-    }
-
-    public static Date parseDateTime(String value) throws ParseException {
-        return dateFormatter.parse(value);
-    }
-
-    public static String formatDateTime(Date date) {
-        return dateFormatter.format(date);
+    private static String formatDateTime(Date date) {
+        return outputFormatter.format(date);
     }
 }
 ```
@@ -1676,64 +1696,142 @@ public class TagColorManager {
 ```
 ###### \java\seedu\address\model\util\SampleDataUtil.java
 ``` java
-
-    public static ArrayList<Event> getSampleEvents() {
+/**
+ * Contains utility methods for populating {@code AddressBook} with sample data.
+ */
+public class SampleDataUtil {
+    public static Person[] getSamplePersons() {
         try {
-            ArrayList<Event> events = new ArrayList<>();
-            String reminderMsg = "You have an event!";
-
-            Event event1 = new Event(new Name("Volleyball Practice"), new DateTime("19102017 08:30"),
-                        new Address("OCBC ARENA Hall 3, #01-111"), new ArrayList<>());
-            event1.addReminder(new Reminder(event1, reminderMsg));
-            Event event2 = new Event(new Name("CS2103T Lecture"), new DateTime("20102017 14:00"),
-                        new Address("iCube Auditorium, NUS"), new ArrayList<>());
-            event2.addReminder(new Reminder(event2, reminderMsg));
-            Event event3 = new Event(new Name("Project Meeting"), new DateTime("20102017 14:00"),
-                        new Address("iCube Auditorium, NUS"), new ArrayList<>());
-            event3.addReminder(new Reminder(event3, reminderMsg));
-            Event event4 = new Event(new Name("Family Lunch"), new DateTime("20112017 13:00"),
-                        new Address("Sakae Sushi, Causeway Point"), new ArrayList<>());
-            event4.addReminder(new Reminder(event4, reminderMsg));
-            Event event5 = new Event(new Name("Movie date"), new DateTime("22112017 22:00"),
-                        new Address("Golden Village Yishun"), new ArrayList<>());
-            event5.addReminder(new Reminder(event5, reminderMsg));
-            Event event6 = new Event(new Name("Consultation for EE2020"), new DateTime("23112017 16:00"),
-                        new Address("E3-06-14, Faculty of Engineering, NUS "), new ArrayList<>());
-            event6.addReminder(new Reminder(event6, reminderMsg));
-            Event event7 = new Event(new Name("Project Meeting for CS2101"), new DateTime("31112017 09:00"),
-                        new Address("SR09, School of Computing"), new ArrayList<>());
-            event7.addReminder(new Reminder(event7, reminderMsg));
-            Event event8 = new Event(new Name("Dental Appointment"), new DateTime("02122017 14:00"),
-                        new Address("National Dental Centre"), new ArrayList<>());
-            event8.addReminder(new Reminder(event8, reminderMsg));
-            Event event9 = new Event(new Name("Volleyball Practice"), new DateTime("08122017 18:00"),
-                        new Address("OCBC ARENA Hall 3, #01-111"), new ArrayList<>());
-            event9.addReminder(new Reminder(event9, reminderMsg));
-            Event event10 = new Event(new Name("Lunch with OG mates"), new DateTime("09122017 14:00"),
-                        new Address("The Deck, FASS, NUS"), new ArrayList<>());
-            event10.addReminder(new Reminder(event10, reminderMsg));
-            Event event11 = new Event(new Name("Family Dinner"), new DateTime("11122017 19:00"),
-                        new Address("Home Sweet Home"), new ArrayList<>());
-            event11.addReminder(new Reminder(event11, reminderMsg));
-
-            events.add(event1);
-            events.add(event2);
-            events.add(event3);
-            events.add(event4);
-            events.add(event5);
-            events.add(event6);
-            events.add(event7);
-            events.add(event8);
-            events.add(event9);
-            events.add(event10);
-            events.add(event11);
-            return events;
-
-
+            return new Person[] {
+                new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
+                        new Address("Blk 30 Geylang Street 29, #06-40"),
+                        getTagSet("friends")),
+                new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
+                        new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
+                        getTagSet("colleagues", "friends")),
+                new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
+                        new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
+                        getTagSet("neighbours")),
+                new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
+                        new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
+                        getTagSet("family")),
+                new Person(new Name("Francina Schepers"), new Phone("62667887"), new Email("francina@example.com"),
+                        new Address("Blk 477 Jurong East Street 28, #01-33"),
+                        getTagSet("family")),
+                new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
+                        new Address("Blk 47 Tampines Street 20, #17-35"),
+                        getTagSet("classmates")),
+                new Person(new Name("Lucas Smith"), new Phone("94572019"), new Email("lucas@example.com"),
+                        new Address("Blk 122 Aljunied Lane, #04-26"),
+                        getTagSet("classmates")),
+                new Person(new Name("Rhea Vallo"), new Phone("65028849"), new Email("vallor@example.com"),
+                        new Address("Blk 12 Lorong 14 Marine Parade, #05-25"),
+                        getTagSet("family")),
+                new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
+                        new Address("Blk 45 Aljunied Street 85, #11-31"),
+                        getTagSet("colleagues")),
+                new Person(new Name("Zachary Tang"), new Phone("91676489"), new Email("zachtang@example.com"),
+                        new Address("Blk 43 Marine Crescent, #24-02"),
+                        getTagSet("relatives"))
+            };
         } catch (IllegalValueException | PropertyNotFoundException e) {
             throw new AssertionError("sample data cannot be invalid", e);
         }
     }
+
+    public static ArrayList<ReadOnlyEvent> getSampleEvents() {
+        try {
+            ArrayList<ReadOnlyEvent> events = new ArrayList<>();
+            ReadOnlyEvent toAdd;
+            String reminderMessage = "You have an event!";
+
+            toAdd = new Event(new Name("Volleyball Practice"), new DateTime("19102017 08:30"),
+                    new Address("OCBC ARENA Hall 3, #01-111"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("CS2103T Lecture"), new DateTime("20102017 14:00"),
+                    new Address("iCube Auditorium, NUS"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("Project Meeting"), new DateTime("20102017 14:00"),
+                    new Address("iCube Auditorium, NUS"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("Family Lunch"), new DateTime("20112017 13:00"),
+                    new Address("Sakae Sushi, Causeway Point"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("Movie date"), new DateTime("22112017 22:00"),
+                    new Address("Golden Village Yishun"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("Consultation for EE2020"), new DateTime("23112017 16:00"),
+                    new Address("E3-06-14, Faculty of Engineering, NUS "), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("Project Meeting for CS2101"), new DateTime("31112017 09:00"),
+                    new Address("SR09, School of Computing"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("Dental Appointment"), new DateTime("02122017 14:00"),
+                    new Address("National Dental Centre"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("Volleyball Practice"), new DateTime("08122017 18:00"),
+                    new Address("OCBC ARENA Hall 3, #01-111"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("Lunch with OG mates"), new DateTime("09122017 14:00"),
+                    new Address("The Deck, FASS, NUS"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("Family Dinner"), new DateTime("11122017 19:00"),
+                    new Address("Home Sweet Home"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+
+            return events;
+        } catch (IllegalValueException | PropertyNotFoundException e) {
+            throw new AssertionError("sample data cannot be invalid", e);
+        }
+    }
+
+    public static ReadOnlyAddressBook getSampleAddressBook() {
+        try {
+            AddressBook sampleAb = new AddressBook();
+
+            // Initialize the PropertyManager by adding all the preLoaded properties.
+            PropertyManager.initializePropertyManager();
+
+            // Add sample contacts.
+            for (Person samplePerson : getSamplePersons()) {
+                sampleAb.addPerson(samplePerson);
+            }
+
+            // Add sample events.
+            for (ReadOnlyEvent sampleEvent : getSampleEvents()) {
+                sampleAb.addEvent(sampleEvent);
+            }
+
+            return sampleAb;
+        } catch (DuplicatePersonException | DuplicateEventException e) {
+            throw new AssertionError("sample data cannot contain duplicate persons/events", e);
+        }
+    }
+
+    /**
+     * Returns a tag set containing the list of strings given.
+     */
+    public static Set<Tag> getTagSet(String... strings) throws IllegalValueException {
+        HashSet<Tag> tags = new HashSet<>();
+        for (String s : strings) {
+            tags.add(new Tag(s));
+        }
+
+        return tags;
+    }
+
+}
 ```
 ###### \java\seedu\address\storage\XmlAdaptedPerson.java
 ``` java
@@ -1766,7 +1864,7 @@ public class XmlAdaptedPerson {
      */
     public XmlAdaptedPerson(ReadOnlyPerson source) {
         if (source.getAvatar() != null) {
-            avatar = source.getAvatar().getUrl();
+            avatar = source.getAvatar().getPath();
         }
 
         properties = new ArrayList<>();
