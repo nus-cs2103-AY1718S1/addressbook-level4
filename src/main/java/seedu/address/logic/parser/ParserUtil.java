@@ -151,7 +151,15 @@ public class ParserUtil {
      */
     public static Optional<Double> parsePremium(Optional<String> premium) throws IllegalValueException {
         requireNonNull(premium);
-        return premium.isPresent() ? Optional.of(Double.parseDouble(premium.get())) : Optional.empty();
+        try {
+            if (premium.isPresent()) {
+                return Optional.of(Double.parseDouble(premium.get()));
+            } else {
+                return Optional.empty();
+            }
+        } catch (NumberFormatException nfe) {
+            throw new IllegalValueException("Premium input cannot be recognised as a double!");
+        }
     }
     /**
      * Parses a {@code Optional<String> contract} into an {@code Optional<String>} if {@code contract} is present.
