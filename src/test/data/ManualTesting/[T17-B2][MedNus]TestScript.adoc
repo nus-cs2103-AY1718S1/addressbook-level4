@@ -48,7 +48,7 @@ This section shows you the general commands which allow you to manipulate the fi
 This section shows you commands related to appointments and calendar views. +
 
 == Random section
-[cols="3*", options="header"]
+[width="100%", cols="3*", options="header"]
 |===
 
 ^| Name
@@ -61,7 +61,7 @@ This section shows you commands related to appointments and calendar views. +
 |===
 
 == Random title
-[cols="^.>,<.<,>.^", options="header"]
+[width="100%", cols="^.>,<.<,>.^", options="header"]
 |=======================================================================
 |Command To Enter |Expected Output |Remarks
 
