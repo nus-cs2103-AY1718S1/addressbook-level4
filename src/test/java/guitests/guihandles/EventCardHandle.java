@@ -3,14 +3,14 @@ package guitests.guihandles;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
-//@@author HouDenghao
+// @@author HouDenghao
 /**
  * Provides a handle to a event card in the event list panel.
  */
 public class EventCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
     private static final String NAME_FIELD_ID = "#name";
-    private static final String DESCRIPTION_FIELD_ID = "#phone";
+    private static final String DESCRIPTION_FIELD_ID = "#description";
     private static final String TIME_FIELD_ID = "#time";
 
     private final Label idLabel;

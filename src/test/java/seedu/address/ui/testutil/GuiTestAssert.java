@@ -28,6 +28,18 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
+    // @@author HouDenghao
+    /**
+     * Asserts that {@code actualEventCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertEventCardEquals(EventCardHandle expectedCard, EventCardHandle actualCard) {
+        assertEquals(expectedCard.getId(), actualCard.getId());
+        assertEquals(expectedCard.getName(), actualCard.getName());
+        assertEquals(expectedCard.getDescription(), actualCard.getDescription());
+        assertEquals(expectedCard.getTime(), actualCard.getTime());
+    }
+
+    // @@author
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
      */
@@ -50,7 +62,7 @@ public class GuiTestAssert {
         assertEquals(expectedEvent.getEventTime().eventTime, actualCard.getTime());
     }
 
-    // @@author HouDenghao
+    // @@author
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
      * in the correct order.
