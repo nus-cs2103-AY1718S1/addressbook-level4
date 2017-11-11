@@ -15,7 +15,7 @@ import com.github.fedy2.weather.data.unit.DegreeUnit;
 public class WeatherRequest {
     private static final String WHERE_ON_EARTH_IDENTIFIER = "1062617"; //this is Yahoo's woeid for Singapore
 
-    public String getSGWeather() throws JAXBException, IOException {
+    public String getSgWeather() throws JAXBException, IOException {
 
         YahooWeatherService service = new YahooWeatherService();
         Channel channel = service.getForecast(WHERE_ON_EARTH_IDENTIFIER, DegreeUnit.CELSIUS);

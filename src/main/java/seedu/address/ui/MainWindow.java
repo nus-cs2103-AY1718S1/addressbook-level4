@@ -34,7 +34,6 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
-import seedu.address.commons.events.ui.ShowWeatherRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -296,15 +295,6 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
-    /**
-     * Opens the weather forecast window.
-     */
-    @FXML
-    public void handleWeather() throws JAXBException, IOException {
-        WeatherWindow weatherWindow = new WeatherWindow();
-        weatherWindow.show();
-    }
-
     void show() {
         primaryStage.show();
     }
@@ -329,11 +319,5 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
-    }
-
-    @Subscribe
-    private void handleShowWeatherEvent(ShowWeatherRequestEvent event) throws JAXBException, IOException {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleWeather();
     }
 }

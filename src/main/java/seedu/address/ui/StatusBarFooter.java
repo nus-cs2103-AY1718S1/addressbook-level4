@@ -45,7 +45,7 @@ public class StatusBarFooter extends UiPart<Region> {
     @FXML
     private StatusBar totalPersons;
 
-
+    //@@author eeching
     public StatusBarFooter(int totalPersons) throws JAXBException, IOException {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
@@ -60,7 +60,7 @@ public class StatusBarFooter extends UiPart<Region> {
     private void setTotalPersons(int totalPersons) {
         this.totalPersons.setText(totalPersons + " person(s) in total");
     }
-
+    //@@author
     /**
      * Sets the clock used to determine the current time.
      */
@@ -83,11 +83,12 @@ public class StatusBarFooter extends UiPart<Region> {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
 
+    //@@author eeching
     private String getWeather() throws JAXBException, IOException {
         WeatherRequest request = new WeatherRequest();
-        return request.getSGWeather();
+        return request.getSgWeather();
     }
-
+    //@@author
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
         long now = clock.millis();

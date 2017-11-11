@@ -32,21 +32,6 @@ import seedu.address.model.tag.Tag;
 public class PhoneCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "updatePhone";
-    private static final String COMMAND_SHOW_ALL_PHONES  = "showAllPhones";
-    private static final String COMMAND_ADD = "add";
-    private static final String COMMAND_REMOVE = "remove";
-    private static final String PERSON_NOT_FOUND_EXCEPTION_MESSAGE = "The target person cannot be missing.\n";
-    private static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.\n";
-    private static final String PHONE_NOT_FOUND_EXCEPTION_MESSAGE = "Phone number to be removed is not found in the list.\n";
-    private static final String DUPLICATE_PHONE_EXCEPTION_MESSAGE = "Phone number to be added already exists in the list.\n";
-    private static final String INVALID_COMMAND_MESSAGE = "Command is invalid, please check again.\n";
-    private static final String PRIMARY_PHONE_MESSAGE = "The primary phone number is %s.\n";
-    private static final String ADD_PHONE_SUCCESS_MESSAGE = "Phone number %s has been added.\n";
-    private static final String REMOVE_PHONE_SUCCESS_MESSAGE = "Phone number %s has been removed.\n";
-    private static final String TOTAL_NUMBER_OF_PHONES = "The updated phone list now has %s phone numbers.\n";
-
-    private final Logger logger = LogsCenter.getLogger(PhoneCommand.class);
-
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Updates one person's additional phone identified by the index"
             + " number used in the last person listing.\n"
@@ -56,6 +41,22 @@ public class PhoneCommand extends UndoableCommand {
             + "VALUE"
             + "Example: " + COMMAND_WORD + " 1" + " add" + " 6583609887";
 
+    private static final String COMMAND_SHOW_ALL_PHONES  = "showAllPhones";
+    private static final String COMMAND_ADD = "add";
+    private static final String COMMAND_REMOVE = "remove";
+    private static final String PERSON_NOT_FOUND_EXCEPTION_MESSAGE = "The target person cannot be missing.\n";
+    private static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.\n";
+    private static final String PHONE_NOT_FOUND_EXCEPTION_MESSAGE = "Phone number to be removed is not found in"
+            + " the list.\n";
+    private static final String DUPLICATE_PHONE_EXCEPTION_MESSAGE = "Phone number to be added already exists in"
+            + " the list.\n";
+    private static final String INVALID_COMMAND_MESSAGE = "Command is invalid, please check again.\n";
+    private static final String PRIMARY_PHONE_MESSAGE = "The primary phone number is %s.\n";
+    private static final String ADD_PHONE_SUCCESS_MESSAGE = "Phone number %s has been added.\n";
+    private static final String REMOVE_PHONE_SUCCESS_MESSAGE = "Phone number %s has been removed.\n";
+    private static final String TOTAL_NUMBER_OF_PHONES = "The updated phone list now has %s phone numbers.\n";
+
+    private final Logger logger = LogsCenter.getLogger(PhoneCommand.class);
 
     private final Index targetIndex;
 
@@ -146,25 +147,25 @@ public class PhoneCommand extends UndoableCommand {
             logger.info("Execute update phone command");
             CommandResult commandResult;
             switch (action) {
-                case COMMAND_SHOW_ALL_PHONES:
-                    String allPhones = String.format(PRIMARY_PHONE_MESSAGE, primaryPhone)
-                            + uniquePhoneList.getAllPhone();
-                    commandResult =  new CommandResult(allPhones);
-                    break;
-                case COMMAND_ADD:
-                    String successAdditionMessage = String.format(ADD_PHONE_SUCCESS_MESSAGE, phone.number);
-                    String infoAddition = String.format(TOTAL_NUMBER_OF_PHONES, uniquePhoneList.getSize() + 1)
-                            + String.format(PRIMARY_PHONE_MESSAGE, primaryPhone);
-                    commandResult = new CommandResult(successAdditionMessage + infoAddition);
-                    break;
-                case COMMAND_REMOVE:
-                    String successRemovalMessage = String.format(REMOVE_PHONE_SUCCESS_MESSAGE, phone.number);
-                    String infoRemoval = String.format(TOTAL_NUMBER_OF_PHONES, uniquePhoneList.getSize() + 1)
+            case COMMAND_SHOW_ALL_PHONES:
+                String allPhones = String.format(PRIMARY_PHONE_MESSAGE, primaryPhone)
+                        + uniquePhoneList.getAllPhone();
+                commandResult =  new CommandResult(allPhones);
+                break;
+            case COMMAND_ADD:
+                String successAdditionMessage = String.format(ADD_PHONE_SUCCESS_MESSAGE, phone.number);
+                String infoAddition = String.format(TOTAL_NUMBER_OF_PHONES, uniquePhoneList.getSize() + 1)
                         + String.format(PRIMARY_PHONE_MESSAGE, primaryPhone);
-                    commandResult = new CommandResult(successRemovalMessage + infoRemoval);
-                    break;
-                default :
-                    commandResult = new CommandResult(INVALID_COMMAND_MESSAGE);
+                commandResult = new CommandResult(successAdditionMessage + infoAddition);
+                break;
+            case COMMAND_REMOVE:
+                String successRemovalMessage = String.format(REMOVE_PHONE_SUCCESS_MESSAGE, phone.number);
+                String infoRemoval = String.format(TOTAL_NUMBER_OF_PHONES, uniquePhoneList.getSize() + 1)
+                        + String.format(PRIMARY_PHONE_MESSAGE, primaryPhone);
+                commandResult = new CommandResult(successRemovalMessage + infoRemoval);
+                break;
+            default :
+                commandResult = new CommandResult(INVALID_COMMAND_MESSAGE);
             }
             logger.info("Result: " + commandResult.feedbackToUser);
             return commandResult;
