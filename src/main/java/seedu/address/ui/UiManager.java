@@ -64,7 +64,7 @@ public class UiManager extends ComponentManager implements Ui {
             if (overDueParcels(logic.getUncompletedParcelList())) {
                 PopupOverdueParcelsWindow popupOverdueParcelsWindow =
                         new PopupOverdueParcelsWindow(logic.getUncompletedParcelList());
-                popupOverdueParcelsWindow.show();
+                popupOverdueParcelsWindow.showAndHide();
             }
             //@@author
 

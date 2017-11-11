@@ -74,7 +74,7 @@ public class PopupOverdueParcelsWindow extends UiPart<Region> {
      *     </li>
      * </ul>
      */
-    public void show () {
+    public void showAndHide () {
         logger.fine("Showing popup window for overdue.");
         dialogStage.show();
         PauseTransition pause = new PauseTransition(Duration.seconds(7));
