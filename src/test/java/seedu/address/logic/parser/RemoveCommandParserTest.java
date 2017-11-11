@@ -22,7 +22,7 @@ public class RemoveCommandParserTest {
     private RemoveCommandParser parser = new RemoveCommandParser();
 
     @Test
-    public void parse_validArgsWithIndex_returnsRemoveTagCommand() throws Exception {
+    public void parse_validTagWithIndex_returnsRemoveTagCommand() throws Exception {
         Tag tagToRemove = new Tag("friends");
         Set<Index> indexSet = new HashSet<>();
         Set<Tag> tagSet = new HashSet<>();
@@ -35,7 +35,7 @@ public class RemoveCommandParserTest {
     }
 
     @Test
-    public void parse_validArgsNoIndex_returnsRemoveTagCommand() throws Exception {
+    public void parse_validTagNoIndex_returnsRemoveTagCommand() throws Exception {
         Tag tagToRemove = new Tag("friends");
         Set<Index> indexSet = new HashSet<>();
         Set<Tag> tagSet = new HashSet<>();
@@ -53,15 +53,40 @@ public class RemoveCommandParserTest {
     }
 
     @Test
-    public void parse_invalidArgsWithIndex_throwsParseException() {
-        assertParseFailure(parser, "? 2", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+    public void parse_invalidTagWithValidIndex_throwsParseException() {
+        assertParseFailure(parser, "2 ?", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 RemoveTagCommand.MESSAGE_USAGE));
     }
 
     @Test
-    public void parse_validArgsWithInvalidIndex_throwsParseException() {
-        assertParseFailure(parser, "friends 0", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+    public void parse_validTagWithInvalidIndex_throwsParseException() {
+        assertParseFailure(parser, "0 friends", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 RemoveTagCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_emptyArgs_throwsParseException() {
+        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                RemoveTagCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validTagInvalidRange1_throwsParseException() {
+        assertParseFailure(parser, "1-2a friends", String.format("Invalid index range provided.\n"
+                + MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+    }
+
+
+    @Test
+    public void parse_validTagInvalidRange3_throwsParseException() {
+        assertParseFailure(parser, "3-2 friends", String.format("Invalid index range provided.\n"
+                + MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validTagInvalidRange4_throwsParseException() {
+        assertParseFailure(parser, "2 4-3 friends", String.format("Invalid index range provided.\n"
+                + MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
     }
 
 }
