@@ -16,8 +16,6 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
 import guitests.guihandles.CommandBoxHandle;
-import guitests.guihandles.ExtendedPersonCardHandle;
-import guitests.guihandles.GraphPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
