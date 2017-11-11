@@ -36,7 +36,7 @@ public class OpenRolodexCommandParserTest {
         OpenRolodexCommand expectedOpenRolodexCommand = new OpenRolodexCommand(filePathWithSpacing);
         assertParseSuccess(parser, filePathWithSpacing, expectedOpenRolodexCommand);
 
-        filePathWithSpacing = "56 75/22 3456g 45642345/y5/ bhh3 57y357/ 65467y5 - 0 o1";
+        filePathWithSpacing = "56 75/22 3456g 45642345/y5/ bhh3 57y357/ 65467y5 - 0 o1.rldx";
         expectedOpenRolodexCommand = new OpenRolodexCommand(filePathWithSpacing);
         assertParseSuccess(parser, filePathWithSpacing, expectedOpenRolodexCommand);
     }
