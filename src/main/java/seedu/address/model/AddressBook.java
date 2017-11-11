@@ -35,9 +35,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
-    //@@author OscarWang114
     private final UniqueLifeInsuranceMap lifeInsuranceMap;
-    //@@author
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -49,9 +47,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
-        //@@author OscarWang114
         lifeInsuranceMap = new UniqueLifeInsuranceMap();
-        //@@author
     }
 
     public AddressBook() {}
@@ -139,7 +135,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
-        // TODO: consider reverse the order?
         persons.add(newPerson);
         persons.sortPersons();
         syncWithUpdate();
@@ -178,8 +173,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         lifeInsuranceMap.put(lifeInsurance.getId(), lifeInsurance);
         syncWithUpdate();
     }
+    //@@author
     //@@author Juxarius
-
     /**
      * @param target insurance to be deleted
      * @throws InsuranceNotFoundException
@@ -192,7 +187,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
     //@@author
-
 
     /**
      * Ensures that every tag in this person:
