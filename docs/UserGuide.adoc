@@ -209,7 +209,7 @@ Deletes the 1st person in the results of the `find` command.
 Removes a tag from every person in the list in the address book. +
 If an an index is given the tag is removed from the person +
 in the specified index shown on the list. +
-Format: `removetag TAGNAME` OR `removetag INDEX TAGNAME`
+Format: `removetag all TAGNAME` OR `removetag INDEX TAGNAME`
 
 [NOTE]
 Remove Tag command available since v1.1 +
@@ -226,7 +226,7 @@ Option to remove a tag for selected people since V1.2
 Examples:
 
 * `list` +
-`removetag friends` +
+`removetag all friends` +
 Deletes the tag `friends` from everyone in the address book.
 
 * `list` +
