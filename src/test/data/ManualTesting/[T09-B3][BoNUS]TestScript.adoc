@@ -27,3 +27,9 @@ _Figure 1 : User Interface Demo_
 . Download the latest release `[T09-B3][BoNUS].jar`, the sample data `[T09-B3][BoNUS]SampleData.xml` and test instructions
 `[T09-B3][BoNUS]TestScript.pdf` (this document itself).
 . A folder you want to use as home folder for testing **BoNUS** and copy the `.jar` you have downloaded there.
+
+=== Importing the Sample Data
+
+. Rename the downloaded `[T09-B3][BoNUS]SampleData.xml` to `addressbook.xml`.
+. Create a folder called `data` under the home folder used for testing **BoNUS**.
+. Move `addressbook.xml` into the `data` folder created just now.

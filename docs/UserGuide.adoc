@@ -500,9 +500,8 @@ Examples:
 [NOTE]
 ====
 Theme will be saved upon exit.
-When **boNUS** is opened again, theme will be initialized to the theme that was saved previously.
+When **BoNUS** is opened again, theme will be initialized to the theme that was saved previously.
 ====
-
 
 As shown in Figure 5.15.1 and Figure 5.15.2, Figures depict the Bright Theme and Dark Theme respectively.
 
