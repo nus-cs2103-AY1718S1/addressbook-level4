@@ -429,9 +429,9 @@ _Figure 4.1.10 : UndoRedoStack Activity Diagram_
 
 === Displaying the Usage of a Specific Command [Since v1.2]
 
-This function is an enhancement of the exisitng help function, which opens the help command. The modification allows the help command to take in an optional command identifier argument. If the command identifier is specified, the result display will display the usage of the command specified. Otherwise, help window will be opened. This enhancement requires modifications in the Model and Logic components of the application.
+This function is an enhancement of the exisitng help function, which opens the help window. The modification allows the help command to take in an optional command identifier argument. If the command identifier is specified, the result display panel will display the usage of the command specified. Otherwise, help window will be opened. This enhancement requires modifications in the Model component of the application.
 
-For the Model component, `CommandIdentifier` is implemented this way in _Figure 4.2.1_:
+For the Model component, `CommandIdentifier` is implemented this way, as shown in _Figure 4.2.1_:
 [source,java]
 ----
 public class CommandIdentifier {
