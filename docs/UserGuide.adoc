@@ -353,8 +353,9 @@ Selects the 1st person in the results of the `find` command.
 
 __Constraints__
 
+Note the following constraints when selecting contacts:
+
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing.
 * INDEX *must be a positive integer* 1, 2, 3, ...
 * If a contact is first searched by the “find” feature, then the new index of the contact according to the filtered list of Contact Cards, is what must be used in the INDEX parameter.
 ****
@@ -438,11 +439,14 @@ __Constraints:__
 // end::find[]
 ==== Deleting tasks : `delete`
 
+Due to our fast changing lives, if your task was cancelled suddenly and you would like to delete the task from your task manager, simply use this delete function.
 To delete the specified task from the task manager, use: +
 
 Format: `delete INDEX`
 
 __Constraints__
+
+Note the following constraints when deleting task:
 
 ****
 * Deletes the task at the specified `INDEX`.
