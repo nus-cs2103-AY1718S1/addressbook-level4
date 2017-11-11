@@ -17,8 +17,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
  */
 public class AddMultipleByTsvCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "addMulTsv";
-    public static final String COMMAND_ALIAS = "addMT";
+    public static final String COMMAND_WORD = "addMul";
+    public static final String COMMAND_ALIAS = "addM";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds multiple people to the address book "
             + "given a tsv (tab separated value) txt file containing their contact information. "
             + "Parameters: TSV_PATH\n"

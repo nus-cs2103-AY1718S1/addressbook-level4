@@ -15,6 +15,7 @@ public abstract class Command {
     protected CommandHistory history;
     protected UndoRedoStack undoRedoStack;
     protected RecentlyDeletedQueue queue;
+    protected String theme;
 
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
@@ -39,9 +40,11 @@ public abstract class Command {
      * Commands making use of any of these should override this method to gain
      * access to the dependencies.
      */
-    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {
+    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack,
+                        RecentlyDeletedQueue queue, String theme) {
         this.model = model;
         this.undoRedoStack = undoRedoStack;
         this.queue = queue;
+        this.theme = theme;
     }
 }

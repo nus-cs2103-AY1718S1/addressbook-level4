@@ -33,7 +33,8 @@ public class HistoryCommand extends Command {
     }
 
     @Override
-    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {
+    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack,
+                        RecentlyDeletedQueue queue, String theme) {
         requireNonNull(history);
         this.history = history;
     }
