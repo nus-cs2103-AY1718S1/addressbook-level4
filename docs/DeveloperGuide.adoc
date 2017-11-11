@@ -428,7 +428,7 @@ The `AddMultipleCommand` contains two `ArrayList`; One `Person` array list to fa
 
 The user executes a new `AddMultipleCommand`, `multiple ./data/personsToAdd.txt`, to add a list of persons' particulars contained in `personsToAdd.txt`.
 
-After the parsing of inputs and construction of a new `AddMultipleCommand`, the `ArrayList`, `readOnlyPeople` will point to the `personsList` that was passed in from `AddMultipleCommandParser` while `ArrayList`, `toAdd` will contain `Person` that was constructed with `personsList`.
+After the parsing of inputs and construction of a new `AddMultipleCommand`, the `ArrayList`, `readOnlyPeople` will point to the `personsList` that was passed in from `AddMultipleCommandParser`; while `ArrayList`, `toAdd` will contain `Person` that was constructed with `personsList`.
 The below is a graphical representation of two examples `ArrayList`.
 
 image::AddMultipleCommandInitializationDiagram.png[width="800"]
