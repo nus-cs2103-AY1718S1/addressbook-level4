@@ -165,7 +165,7 @@ A person can have any number of tags (including 0)
 
 image::UG_header_examples.png[width="400"]
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/Loves Tea`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 i/d:/pictures/betsy.png t/criminal`
 
 image::UG_header_stepbystep.png[width="400"]
@@ -650,8 +650,8 @@ image::divider.png[width="900"]
 // end::find[]
 
 // tag::ShareCommand[]
-=== Sharing contact's details as an email : `share`
-image::UG_commandheader_email.png[width="500"]
+=== Sharing contact's details by email : `share`
+image::UG_commandheader_share.png[width="500"]
 
 Want to share a contact to your colleagues via e-mail?
 Unify's `email` command lets you email the selected contact's details to your personal email! +
@@ -662,7 +662,7 @@ Format: `email INDEX EMAIL_ADDRESS`+
 image::UG_header_examples.png[width="400"]
 
 * `list` +
-`email 2 cs2103@gmail.com` +
+`share 2 s/cs2103@gmail.com` +
 Sends an email to cs2103@gmail.com with the 2nd person's details in the address book.
 
 image::UG_header_stepbystep.png[width="400"]
@@ -767,6 +767,63 @@ image::UG_musicpause2.png[width="590"]
 
 image::divider.png[width="900"]
 // end::musiccommand[]
+
+// tag::radiocommand[]
+=== Playing radio : `radio play`
+image::UG_commandheader_radioplay.png[width="500"]
+
+Want to listen to some of your favourite tunes? Unify's got you covered! Unify's `music play` command plays a music track
+from a specific genre from a list of built in mp3 music. If you had already paused a track, `music play` resumes playing that track. +
+
+image::UG_header_format.png[width="400"]
+Format: `radio play [GENRE]`
+
+image::header_note.png[width="400"]
+
+* The genre can only be pop, classic, news `music play` alone will play pop songs as default.
+
+* This requires internet connection!
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type `music play` into the command box, then follows by a `genre` and press kbd:[Enter] to execute it.
+
+image::UG_musicplay1.png[width="590"]
+
+image:step2.png[width="70"] If your genre is Pop, the result box will display "POP Music Playing". +
+
+image::UG_musicplay2.png[width="590"]
+
+{sp}+
+
+image::divider.png[width="900"]
+
+=== Stopping radio : `radio stop`
+image::UG_commandheader_radiostop.png[width="500"]
+
+Maybe the music is getting distracting or you're just not in the mood for some tunes.
+`music stop` stops the current music track playing so that you can focus on the task at hand.+
+
+image::UG_header_format.png[width="400"]
+Format: `music stop`
+
+image::header_note.png[width="400"]
+This requires internet connection!
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type `music stop` into the command box, and press kbd:[Enter] to execute it.
+
+image::UG_musicstop1.png[width="590"]
+
+image:step2.png[width="70"] The result box will display "Music Stopped". +
+
+image::UG_musicstop2.png[width="590"]
+
+{sp}+
+
+image::divider.png[width="900"]
+// end::radiocommand[]
 
 === Undoing previous command : `undo`
 image::UG_commandheader_undo.png[width="500"]
