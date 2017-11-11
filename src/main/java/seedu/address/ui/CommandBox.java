@@ -164,11 +164,13 @@ public class CommandBox extends UiPart<Region> {
             } else {
                 autocomplete();
             }
+
             //press control key to make the text selection in command box appear
             pressCtrl();
             break;
         default:
-            // let JavaFx handle the keypress
+            //key pressed does not match UP, DOWN or TAB
+            //let JavaFx handle the keypress
         }
 
     }
@@ -278,6 +280,7 @@ public class CommandBox extends UiPart<Region> {
         updateKeyboardIcon();
         setStyleToDefault();
         if (isFirstTab) {
+            //only do this after the first tab which is used to display the full command format
             autoSelectFirstField();
         }
         if (needToUpdateSelection) {
@@ -340,8 +343,10 @@ public class CommandBox extends UiPart<Region> {
             commandTextField.selectRange(indexOfFirstSpace + 1, input.length());
             break;
         default:
-            // let JavaFx handle the keypress
+            //input is not an auto-complete command
+            //do nothing
         }
+
         isFirstTab = false;
     }
 
