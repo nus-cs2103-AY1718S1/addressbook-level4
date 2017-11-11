@@ -531,7 +531,7 @@ Upon detecting `ChangeThemeRequestEvent`, `Ui` will call `handleChangeTheme` to 
 // tag::sort[]
 === Sort mechanism
 
-The sort mechanism sorts the names of people inside the `addressbook` of the 'ModelManager'.
+The sort mechanism sorts the names of people inside the `addressbook` of the `ModelManager`.
 When the sort method is executed, it organizes the position of the people existing in the `addressbook`
 based on their names in alphabetical order. The sort mechanism touches all components of the software application
 but mainly involving the logic and model component.
@@ -540,7 +540,7 @@ In the figure [Figure 5.4.1] below, the `SortCommand` inherits from `UndoableCom
 which is an extra layer between abstract `Command` class which belongs to the Logic Component.
 This allows the SortCommand to be undoable, where the previous state of the address book before sorting is saved.
 
-image::SortCommandLogicClassDiagram.PNG[width="800"]
+image::SortCommandLogicClassDiagram.PNG[width="600"]
 Figure 5.4.1 SortCommand Logic Class Diagram
 
 Suppose a user has an unorganized list of contacts and executes the `SortCommand` to organize his contacts.
@@ -591,14 +591,14 @@ public void sort() {
 The following sequence diagrams shows how the sort operation works:
 As seen in the figure [Figure 5.4.2] below, when sort is typed into command line input, new `SortCommand` is created.
 
-image::SortCommandLogicSequenceDiagram.PNG[width="800"]
+image::SortCommandLogicSequenceDiagram.PNG[width="600"]
 Figure 5.4.2 SortCommand Logic Sequence Diagram
 
 As seen in the figure [Figure 5.4.3] below, when `executeUndoableCommand` is called in SortCommand class, it will call the sort function in ModelManager.
 It will call the sort() function of its own class until it reaches InternalList.sort() where the sorting of
 contacts positions based on their names will be executed.
 
-image::SortCommandModelSequenceDiagram.PNG[width="800"]
+image::SortCommandModelSequenceDiagram.PNG[width="600"]
 Figure 5.4.3 SortCommand Model Sequence Diagram
 
 Finally, the execution will create a sorted addressbook where the names of contacts are alphabetically sorted

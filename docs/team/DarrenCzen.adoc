@@ -25,8 +25,9 @@ The Myth's Book is a software application that is coded in `Java` programming la
 ---
 === Enhancement Added: Sort Command, Sort Names Alphabetically
 
-Code on GitHub: +
-Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/46[#46]
+This section includes the behaviour and justification of the sort command and explains how it is implemented.
+
+Code on GitHub: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/46[#46]
 
 ==== External behavior
 
@@ -41,9 +42,10 @@ include::../UserGuide.adoc[tag=sort]
 
 ==== Justification
 
-The `Sort Command` enhances the organization of contact/person list of The Myth's Book by sorting the contacts based
-on their names alphabetically. Therefore, this allows users to be able to view and look through the overall contacts list in
-an orderly manner whenever needed which attributes to the factor of user-friendliness and user-readability.
+University students are often very particular about the way things are organized around them and
+the `Sort Command` helps to organize the contacts list of The Myth's Book by sorting the contacts based
+on their names alphabetically. Therefore, this contributes to the aspect of user friendliness and allows
+users to be able to look through the overall contacts list in an orderly manner whenever needed with better user-readability.
 
 ==== Implementation
 
@@ -58,8 +60,9 @@ include::../DeveloperGuide.adoc[tag=sort]
 
 === Enhancement Added: Access Command, Accessing a website of a contact
 
-Code on GitHub: +
-Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/77[#77]
+This section includes the behaviour and justification of the `Access Command` and explains how it is implemented.
+
+Code on GitHub: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/77[#77]
 
 ==== External behavior
 
@@ -74,8 +77,9 @@ include::../UserGuide.adoc[tag=access]
 
 ==== Justification
 
-The `Access Command` allows users to be able to access the website of a contact through the in-built browser panel which
-helps to facilitate ease of access for users. The command also helps users to avoid opening other programs and avoid switching
+University students are often very particular about convenience in using software programs and
+the `Access Command` allows users to be able to access the website of a contact through the in-built browser panel which
+ eliminates tediousness and helps to facilitate ease of accessing websites for users. The command also helps users to avoid opening other programs and avoid switching
 between programs so as to facilitate user-friendliness and create an `all-in-one` platform in The Myth's Book.
 
 ==== Implementation
@@ -91,8 +95,9 @@ include::../DeveloperGuide.adoc[tag=access]
 
 === Enhancement Added: Location Command, Locate an address of a user
 
-Code on GitHub: +
-Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/79[#79]
+This section includes the behaviour and justification of the `Location Command` and explains how it is implemented.
+
+Code on GitHub: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/79[#79]
 
 ==== External behavior
 
@@ -107,7 +112,8 @@ include::../UserGuide.adoc[tag=locate]
 
 ==== Justification
 
-The `Location Command` allows users to be able to access the address of a contact through the in-built browser panel
+University students are often very particular about convenience in using software programs and
+the `Location Command` allows users to be able to access the address of a contact through the in-built browser panel
 using Google Maps Search which helps to facilitate ease of access for users.
 The command also helps users to avoid opening other programs and avoid switching between programs so as to facilitate
 user-friendliness and create an `all-in-one` platform in The Myth's Book.
@@ -124,10 +130,11 @@ include::../DeveloperGuide.adoc[tag=locate]
 ---
 
 
-=== Enhancement: Add Command, Optional fields
+=== Enhancement Added: Optional fields for Add Command
 
-Code on GitHub: +
-Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/99[#99], https://github.com/CS2103AUG2017-T15-B3/main/pull/96[#96]
+This section includes the behaviour and justification of the tweaking of `AddCommand` and explains how it is implemented.
+
+Code on GitHub: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/99[#99], https://github.com/CS2103AUG2017-T15-B3/main/pull/96[#96]
 
 ==== External behavior
 
@@ -142,11 +149,30 @@ include::../UserGuide.adoc[tag=add]
 
 ==== Justification
 
-The implementation of optional fields when adding a contact allows users to be able to add contacts with ease
-as it is not realistically possible for users to attain every information of a contact when adding a contact.
+The `AddCommand` can take in `9` different fields (name, phone, email, school email, home number,
+website, birthday, address, tags) which is a lot of information required for users to fill in
+if all were necessary to fill in in order to add a contact.
+Furthermore, University students are often very particular about convenience
+in using software programs and it is not realistically possible for users to attain every
+piece of information from a contact when adding a contact.
+The implementation of optional fields when adding a contact allows users to only need the
+name, phone and email of a person and be able to add contacts with ease.
 The enhancement also helps to facilitate user-friendliness in using The Myth's Book.
 
 ---
+
+==== Implementation
+
+---
+
+Code of `toCapitalized` method inside `Name.java`:
+[source,java]
+----
+
+----
+
+---
+
 
 === Enhancement: Website field for Person Class
 
