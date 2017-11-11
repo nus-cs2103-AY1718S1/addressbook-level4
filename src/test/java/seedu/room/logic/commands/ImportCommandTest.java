@@ -1,9 +1,10 @@
 package seedu.room.logic.commands;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static seedu.room.logic.commands.CommandTestUtil.INVALID_FILE;
 import static seedu.room.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.room.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.room.testutil.TypicalImportFile.TYPICAL_IMPORT_SUCCESS_MESSAGE;
 import static seedu.room.testutil.TypicalImportFile.getTypicalImportFile;
 import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
 
@@ -16,7 +17,6 @@ import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 import seedu.room.logic.CommandHistory;
 import seedu.room.logic.UndoRedoStack;
-import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.model.Model;
 import seedu.room.model.ModelManager;
 import seedu.room.model.ResidentBook;
@@ -77,12 +77,9 @@ public class ImportCommandTest {
         ImportCommand command = prepareCommand(backup.getAbsolutePath());
         ResidentBook correctVersion = TypicalImportFile.getCombinedResult();
 
-        try {
-            command.executeUndoableCommand();
-        } catch (CommandException ce) {
-            throw new AssertionError("Execution of command should not fail.", ce);
-        }
-        assertEquals(correctVersion, model.getResidentBook());
+        ModelManager expectedModel = new ModelManager(correctVersion, new UserPrefs());
+
+        assertCommandSuccess(command, model, TYPICAL_IMPORT_SUCCESS_MESSAGE, expectedModel);
     }
 
     /**
