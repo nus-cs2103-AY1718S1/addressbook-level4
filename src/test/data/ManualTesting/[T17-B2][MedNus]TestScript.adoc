@@ -40,7 +40,7 @@ This section shows you the general commands which allow you to manipulate the fi
 
 |`duplicates` |`2 persons listed!` |Finds all persons who share names with at least 1 other person in MedNus
 
-|`batch Flu Fever` |`Clears entire command box text field` |Removes all persons with tags `Flu` or `Fever` or both. Undo this by typing `undo` before proceeding to the next step
+|`batch Flu Fever` |`Deleted Persons with Tags: [[Flu], [Fever]]` |Removes all persons with tags `Flu` or `Fever` or both. Undo this by typing `undo` before proceeding to the next step
 
 |=======================================================================
 
