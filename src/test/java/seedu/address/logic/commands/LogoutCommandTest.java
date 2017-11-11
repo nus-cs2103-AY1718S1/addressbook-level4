@@ -29,6 +29,7 @@ public class LogoutCommandTest {
 
         java.io.File filetoDelete =
                 new java.io.File(System.getProperty("user.home"), ".store/addressbook/StoredCredential");
+        filetoDelete.mkdirs();
         filetoDelete.createNewFile();
         String expectedMessage = String.format(LogoutCommand.MESSAGE_SUCCESS);
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
