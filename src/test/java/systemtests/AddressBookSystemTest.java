@@ -113,7 +113,7 @@ public abstract class AddressBookSystemTest {
 
         mainWindowHandle.getCommandBox().run(command);
 
-        waitUntilBrowserLoaded(getBrowserPanel());
+        //waitUntilBrowserLoaded(getBrowserPanel());
     }
 
     /**
