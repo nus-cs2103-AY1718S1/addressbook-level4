@@ -4,11 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MESSAGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
 import java.util.ArrayList;
@@ -74,30 +78,27 @@ public class CommandTestUtil {
     public static final String VALID_TASK_ASSIGNMENT = "Task assignment";
     public static final String VALID_PRIORITY_PROJECT = "High";
     public static final String VALID_PRIORITY_ASSIGNMENT = "Medium";
-    public static final String VALID_DATE_PROJECT = "09/09/2017 0900";
-    public static final String VALID_DATE_ASSIGNMENT = "10/10/2017 1000";
+    public static final String VALID_DATE_PROJECT = "09/09/2017 09:00";
+    public static final String VALID_DATE_ASSIGNMENT = "10/10/2017 10:00";
     public static final String VALID_MESSAGE_PROJECT = "Submit to Manager";
     public static final String VALID_MESSAGE_ASSIGNMENT = "Submit by soft copy";
     public static final String VALID_TAG_OFFICE = "office";
     public static final String VALID_TAG_SOFTCOPY = "softcopy";
 
+    public static final String TASK_DESC_PROJECT = " " + PREFIX_TASK + VALID_TASK_PROJECT;
+    public static final String TASK_DESC_ASSIGNMENT = " " + PREFIX_TASK + VALID_TASK_ASSIGNMENT;
+    public static final String PRIORITY_DESC_PROJECT = " " + PREFIX_PRIORITY + VALID_PRIORITY_PROJECT;
+    public static final String PRIORITY_DESC_ASSIGNMENT = " " + PREFIX_PRIORITY + VALID_PRIORITY_ASSIGNMENT;
+    public static final String DATE_DESC_PROJECT = " " + PREFIX_DATE + VALID_DATE_PROJECT;
+    public static final String DATE_DESC_ASSIGNMENT = " " + PREFIX_DATE + VALID_DATE_ASSIGNMENT;
+    public static final String MESSAGE_DESC_PROJECT = " " + PREFIX_MESSAGE + VALID_MESSAGE_PROJECT;
+    public static final String MESSAGE_DESC_ASSIGNMENT = " " + PREFIX_MESSAGE + VALID_MESSAGE_ASSIGNMENT;
 
-    /*
-    public static final String NAME_DESC_PROJECT = " " + PREFIX_TASK + VALID_TASK_PROJECT;
-    public static final String NAME_DESC_ASSIGNMENT = " " + PREFIX_TASK + VALID_TASK_ASSIGNMENT;
-    public static final String PHONE_DESC_PROJECT = " " + PREFIX_PRIORITY + VALID_PRIORITY_PROJECT;
-    public static final String PHONE_DESC_ASSIGNMENT = " " + PREFIX_PRIORITY + VALID_PRIORITY_ASSIGNMENT;
-    public static final String EMAIL_DESC_PROJECT = " " + PREFIX_DATE + VALID_DATE_PROJECT;
-    public static final String EMAIL_DESC_ASSIGNMENT = " " + PREFIX_DATE + VALID_DATE_ASSIGNMENT;
-    public static final String ADDRESS_DESC_PROJECT = " " + PREFIX_MESSAGE + VALID_MESSAGE_PROJECT;
-    public static final String ADDRESS_DESC_ASSIGNMENT = " " + PREFIX_MESSAGE + VALID_MESSAGE_ASSIGNMENT;
     public static final String TAG_DESC_OFFICE = " " + PREFIX_TAG + VALID_TAG_OFFICE;
     public static final String TAG_DESC_SOFTCOPY = " " + PREFIX_TAG + VALID_TAG_SOFTCOPY;
     public static final String INVALID_TASK_DESC = " " + PREFIX_TASK + "Submission&"; // '&' not allowed in tasks
-    public static final String INVALID_PRIORITY_DESC = " " + PREFIX_PRIORITY + "low1"; // '1' not allowed in phones
+    public static final String INVALID_PRIORITY_DESC = " " + PREFIX_PRIORITY + "low1"; // '1' not allowed in priorities
     public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "0!"; // '!' not allowed in dates
-    public static final String INVALID_MESSAGE_DESC = " " + PREFIX_MESSAGE; // empty string not allowed for addresses
-    */
 
     public static final EditReminderCommand.EditReminderDescriptor DESC_PROJECT;
     public static final EditReminderCommand.EditReminderDescriptor DESC_ASSIGNMENT;

@@ -637,6 +637,8 @@ public class UntagCommandParser implements Parser<UntagCommand> {
 
 package seedu.address.model.clock;
 
+import java.util.Objects;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
@@ -645,98 +647,119 @@ import javafx.beans.property.SimpleObjectProperty;
  */
 public class ClockDisplay {
 
-    private ObjectProperty<RunningClock> clock;
+    private ObjectProperty<RunningTime> time;
+    private ObjectProperty<RunningDate> date;
 
     public ClockDisplay() {
-        this.clock = new SimpleObjectProperty<>(new RunningClock());
+        this.time = new SimpleObjectProperty<>(new RunningTime());
+        this.date = new SimpleObjectProperty<>(new RunningDate());
     }
 
-    public void setClock(RunningClock clock) {
-        this.clock.set(clock);
+    public void setTime(RunningTime time) {
+        this.time.set(time);
     }
 
-    public ObjectProperty<RunningClock> clockProperty() {
-        return clock;
+    public ObjectProperty<RunningTime> timeProperty() {
+        return time;
     }
 
-    public RunningClock getClock() {
-        return clock.get();
+    public RunningTime getTime() {
+        return time.get();
     }
 
-    @Override
-    public String toString() {
-        return clock.get().toString();
+    public void setDate(RunningDate date) {
+        this.date.set(date);
+    }
+
+    public ObjectProperty<RunningDate> dateProperty() {
+        return date;
+    }
+
+    public RunningDate getDate() {
+        return date.get();
+    }
+
+    public String getTimeAsText() {
+        return time.get().toString();
+    }
+
+    public String getDateAsText() {
+        return date.get().toString();
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ClockDisplay // instanceof handles nulls
-                && this.clock.equals(((ClockDisplay) other).clock)); // state check
+                && this.time.equals(((ClockDisplay) other).time) // state checks onwards
+                && this.date.equals(((ClockDisplay) other).date));
     }
 
     @Override
     public int hashCode() {
-        return clock.hashCode();
+        return Objects.hash(time, date);
     }
 
 }
 ```
-###### \java\seedu\address\model\clock\RunningClock.java
+###### \java\seedu\address\model\clock\RunningTime.java
 ``` java
 
 package seedu.address.model.clock;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
- * Represents a running clock inside the address book application.
+ * Represents a running time inside the address book application.
  */
-public class RunningClock {
+public class RunningTime {
 
-    private String value;
+    private int hour;
+    private int minute;
+    private int second;
 
-    public RunningClock() {
+    public RunningTime() {
         setCurrentTime();
     }
 
-    public String getValue() {
-        return value;
-    }
-
     public int getHour() {
-        return LocalDateTime.now().getHour();
+        return hour;
     }
 
     public int getMinute() {
-        return LocalDateTime.now().getMinute();
+        return minute;
     }
 
     public int getSecond() {
-        return LocalDateTime.now().getSecond();
+        return second;
     }
 
     public void setCurrentTime() {
-        this.value = ((getHour() < 10) ? ("0" + getHour()) : getHour()) + ":"
-                + ((getMinute() < 10) ? ("0" + getMinute()) : getMinute()) + ":"
-                + ((getSecond() < 10) ? ("0" + getSecond()) : getSecond());
+        this.hour = LocalDateTime.now().getHour();
+        this.minute = LocalDateTime.now().getMinute();
+        this.second = LocalDateTime.now().getSecond();
     }
 
     @Override
     public String toString() {
-        return value;
+        return ((hour < 10) ? ("0" + hour) : hour) + ":"
+                + ((minute < 10) ? ("0" + minute) : minute) + ":"
+                + ((second < 10) ? ("0" + second) : second);
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof RunningClock // instanceof handles nulls
-                && this.value.equals(((RunningClock) other).value)); // state check
+                || (other instanceof RunningTime // instanceof handles nulls
+                && this.hour == ((RunningTime) other).hour // state checks onwards
+                && this.minute == ((RunningTime) other).minute
+                && this.second == ((RunningTime) other).second);
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return Objects.hash(hour, minute, second);
     }
 
 }
@@ -893,20 +916,59 @@ package seedu.address.model.reminder;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
 /**
  * Represents a reminder's date in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}
  */
 public class Date {
 
+    public static final String MESSAGE_DATE_CONSTRAINTS =
+            "Date should conform the following format: dd/MM/yyyy HH:mm";
+
     public final String date;
 
     /**
      * Validates given date.
      */
-    public Date(String date) {
-        requireNonNull(date);
-        this.date = date.trim();
+    public Date(String dateAndTime) throws IllegalValueException {
+        requireNonNull(dateAndTime);
+        if (!isValidDate(dateAndTime)) {
+            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
+        }
+        String[] splittedDateAndTime = dateAndTime.trim().split("\\s+");
+        String date = splittedDateAndTime[0].trim();
+        String time = splittedDateAndTime[1].trim();
+
+        this.date = date + " " + time;
+    }
+
+    /**
+     * Returns true if a given string is a valid date.
+     */
+    public static boolean isValidDate(String dateAndTime) {
+        String[] splittedDateAndTime = dateAndTime.trim().split("\\s+");
+        if (splittedDateAndTime.length != 2) {
+            return false;
+        }
+
+        final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        try {
+            String date = splittedDateAndTime[0].trim();
+            LocalDate.parse(date, dateFormatter);
+            String time = splittedDateAndTime[1].trim();
+            LocalTime.parse(time, timeFormatter);
+        } catch (DateTimeParseException dtpe) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -973,6 +1035,10 @@ public class Message {
     public Message(String message) {
         requireNonNull(message);
         this.message = message.trim();
+    }
+
+    public static boolean isValidMessage(String message) {
+        return true;
     }
 
     @Override
@@ -1581,17 +1647,30 @@ public class XmlAdaptedReminder {
     /**
      * Starts running the clock display.
      */
-    private void startClock(ClockDisplay footerClock) {
+    private void startFooterClock(ClockDisplay footerClock) {
         final Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                footerClock.getClock().setCurrentTime();
-                footerClock.setClock(requireNonNull(footerClock.getClock()));
-                Platform.runLater(() -> displayClock.setText(footerClock.toString()));
+                setFooterClockTime(footerClock);
+                setFooterClockDate(footerClock);
             }
         };
         timer.scheduleAtFixedRate(task, 0, 1000);
+    }
+
+    private void setFooterClockTime(ClockDisplay footerClock) {
+        requireNonNull(footerClock.getTime());
+
+        footerClock.getTime().setCurrentTime();
+        Platform.runLater(() -> displayTime.setText(footerClock.getTimeAsText()));
+    }
+
+    private void setFooterClockDate(ClockDisplay footerClock) {
+        requireNonNull(footerClock.getDate());
+
+        footerClock.getDate().setCurrentDate();
+        Platform.runLater(() -> displayDate.setText(footerClock.getDateAsText()));
     }
 ```
 ###### \resources\view\DarkTheme.css
@@ -1620,9 +1699,52 @@ public class XmlAdaptedReminder {
     -fx-text-fill: white;
 }
 
-#displayClock {
+#displayDate {
+    -fx-font-family: 'Nova Square';
+    -fx-font-size: 25;
+    -fx-text-fill: white;
+}
+
+#displayTime {
+    -fx-padding: 0 150 0 0;
+    -fx-font-family: 'Digital-7 Italic';
     -fx-font-size: 50;
     -fx-text-fill: white;
+}
+
+.opening-img {
+    height: 584px;
+}
+
+#profilePic {
+    -fx-border-color: deepskyblue;
+}
+
+#profileInfo {
+    -fx-border-color: deepskyblue;
+}
+
+#profileName {
+    -fx-font-family: 'HaloHandletter';
+    -fx-font-size: 50px;
+}
+
+.profile_big_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 20px;
+    -fx-font-style: italic;
+    -fx-text-fill: white;
+}
+
+.profile_small_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+}
+
+.profile_small_text_area {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 18px;
 }
 ```
 ###### \resources\view\ReminderListPanel.fxml

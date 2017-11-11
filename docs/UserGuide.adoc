@@ -1,4 +1,4 @@
-= Gentleman's Guide (V1.5) - User Guide
+= Gentleman's Guide (V1.5rc) - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -179,8 +179,8 @@ Edits the task name of the 2nd reminder to be `Progress Report` and clears all e
 // tag::birthday[]
 === Modifying birthday to person: `birthday`
 
-*As a Gentleman, you respect those around you. As a Gentleman, you remember the day of their conception.
-Thus you add their birthdays into the Gentleman's Guide.*
+*As a Gentleman, you respect those around you and want them to feel appreciated.
+Start off by remembering their birthdays and add it into the Gentleman's Guide.*
 
 Adds / Edits / Removes a birthday to an existing person in the Gentleman's Guide. +
 Format: `birthday INDEX [b/dd/mm/yyyy]`
@@ -188,7 +188,7 @@ Format: `birthday INDEX [b/dd/mm/yyyy]`
 ****
 * Add / Edits / Removes birthday parameter to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * For adding / editing : Format must be of " `dd/mm/yyyy` " including the " `/` "
-* For removing : input nothing after " `b/` "
+* For removing : Simply input nothing after " `b/` "
 ****
 
 Now you can be the best boss in the world, without all the effort!
@@ -199,6 +199,9 @@ Examples:
 Adds / changes birthday of the 1st person to be `20/07/1995`
 * `birthday 3 b/` +
 Removes the birthday of the 3rd person.
+
+image::samplePersonCard.png[width="400"]
+_Figure 3.8.1 Birthday on a person card_
 
 // end::birthday[]
 
@@ -228,14 +231,14 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 // tag::find[]
 === Locating persons by emails: `findEmail`
 
-*You received an email from an unknown source. As a Gentleman, you do not ask who it is.
-Thus, you look for the email in the Gentleman's Guide.*
+*You received an email from an unknown source. You have no time to check through your entire list
+to see if you know the person. Instead you use the findEmail command in the Gentleman's Guide.*
 
-Finds persons whose emails is same as the keyword. +
+Finds person(s) whose emails is same as the keyword(s). +
 Format: `findEmail KEYWORD [MORE_KEYWORDS]`
 
 ****
-* Only the email is searched.
+* Only emails are searched.
 * Only full words will be matched e.g. `johnny` will not match `johnny@example.con`
 * Multiple emails can be searched at one time.
 ****
@@ -252,12 +255,12 @@ Returns person with emails `alex@example.com` , `jamie@example.com`
 *You received a phone call from an unknown number. As a Gentleman, you have to know who you are addressing.
 Thus, you search for the number on the Gentleman's Guide before answering.*
 
-Finds persons whose phone is same as the keyword. +
+Finds person(s) whose phone is same as the keyword(s). +
 Format: `findPhone KEYWORD [MORE_KEYWORDS]`
 
 ****
-* Only the numbers is searched.
-* Only full words will be matched e.g. `9567` will not match `95678432`
+* Only numbers are searched.
+* Only full numbers will be matched e.g. `9567` will not match `95678432`
 * Multiple phone numbers can be searched at one time.
 ****
 
@@ -270,8 +273,8 @@ Returns person with numbers `87655678` , `98435670`
 
 === Locating reminders by task names: `findReminder`
 
-*As a Gentleman, you want to know when your next date with The Lady is.
-Thus, you search for "date" on the Gentleman's Guide.*
+*As a Gentleman, you want to know when your project submission deadline is.
+Thus, you search for "project" on the Gentleman's Guide to show all reminders with task name "project".*
 
 Finds reminders whose task names contain any of the given keywords. +
 Format: `findReminder KEYWORD [MORE_KEYWORDS]`
@@ -291,6 +294,9 @@ Returns `Proposal` and `Proposal Submission`
 * `findReminder Meeting Project Work` +
 Returns any reminder having task names `Meeting`, `Proposal Submission`
 
+image::BeforeAndAfterFindReminder.png[width="600"]
+_Figure 3.12.1 Reminder list before and after the findReminder command_
+
 
 === Locating reminders by priority: `findPriority`
 
@@ -302,7 +308,7 @@ Format: `findPriority KEYWORD [MORE_KEYWORDS]`
 
 ****
 * Only Low / Medium / High is searched.
-* The search is case sensitive. e.g `low` will not match `Low`
+* The search is case insensitive. e.g `low` will match `Low`
 * Only full words will be matched e.g. `Hig` will not match `High`
 * Multiple priorities can be searched at one time.
 ****
@@ -383,6 +389,9 @@ Selects the 1st person in the results of the `find` command.
 // tag::sort[]
 === Sorting all entries by name: `sort`
 
+*As a Gentleman, you are well-organized and you would want your contact list to be neat.
+You use the sort command to sort the names of your contacts in alphabetical order.*
+
 Sorts all entries in the Gentleman's Guide by alphabetical order. +
 Format: `sort`
 
@@ -391,30 +400,38 @@ Below is an illustration of an unsorted and sort list of contacts.
 **Before**
 
 image::unsortedlist.png[width="300"]
-_Figure 3.16.1 : Unsorted reminder list ._
+_Figure 3.17.1 : Unsorted reminder list ._
 
 **After**
 
 image::sortedlist.png[width="300"]
-_Figure 3.16.2 : Sorted reminder list (In alphabetical order) ._
+_Figure 3.17.2 : Sorted reminder list (In alphabetical order) ._
 
 === Sorting all entries by age : `sortAge`
+
+*You may be interested in seeing who's the oldest friend in your contact list. Use the sortAge command.*
 
 Sorts all entries in the person list by their age, from the oldest to youngest. +
 Format: `sortAge`
 
 === Sorting all entries by birthday: `sortBirthday`
 
+*Or you may be interested in checking upcoming birthdays for your friends and give them a surprise.*
+
 Sorts all entries in the person list by their birthday, from 1st Jan to 31st Dec. +
 Format: `sortBirthday`
 
 === Sorting all entries by priority: `sortPriority`
 
-Sorts all entires in the reminder list by their priority, from High to Medium to Low. +
+*As a Gentleman, you keep your priorities right, and you set an example to everyone. So bring your priorities
+forward now!*
+
+Sorts all entries in the reminder list by their priority, from High to Medium to Low. +
 Format: `sortPriority`
 
 // end::sort[]
 
+// tag::retrievetaguntagretag[]
 === Retrieving all persons having an existing tag : `retrieve`
 
 Lists all contacts having a certain existing tag in the Gentleman's Guide. +
@@ -504,6 +521,7 @@ Examples:
 
 * `retag enemies friends` +
 Renames the existing "enemies" tag in the Gentleman's Guide to "friends".
+// end::retrievetaguntagretag[]
 
 === Listing entered commands : `history`
 

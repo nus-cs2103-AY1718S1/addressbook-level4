@@ -22,7 +22,7 @@ public class RetrieveCommand extends Command {
 
     public static final String MESSAGE_EMPTY_ARGS = "Please provide a tag name! \n%1$s";
 
-    public static final String MESSAGE_NOT_FOUND = "Tag not found.";
+    public static final String MESSAGE_NOT_FOUND = "Tag not found in person list.";
 
     private final TagContainsKeywordPredicate predicate;
 

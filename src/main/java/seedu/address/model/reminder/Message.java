@@ -20,6 +20,10 @@ public class Message {
         this.message = message.trim();
     }
 
+    public static boolean isValidMessage(String message) {
+        return true;
+    }
+
     @Override
     public String toString() {
         return message;
