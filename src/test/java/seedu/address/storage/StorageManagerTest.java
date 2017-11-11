@@ -122,7 +122,7 @@ public class StorageManagerTest {
     @Test
     public void backUpCommandTest() throws IOException, DataConversionException {
         AddressBook original = getTypicalAddressBook();
-        storageManager.backupAddressBook(original);
+        storageManager.backup(original);
         Optional<ReadOnlyAddressBook> backupAddressBookOptional = storageManager
                 .readAddressBook(storageManager.getBackupStorageFilePath());
         AddressBook backupAddressBook = new AddressBook(backupAddressBookOptional.get());
