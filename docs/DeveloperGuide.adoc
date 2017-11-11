@@ -488,6 +488,16 @@ Alternative considered is to allow user input multiple details in each search. I
 * There will be no results returned in this scenario as input phone number does not match the phone number in the `Contact 1` although the name matches exactly.
 
 From the two scenarios, we know that unless the user knows the exact details (i.e. full name, exact phone number, exact email and etc) otherwise `finds` command with multiple details input is practically not useful as no results will be returned.
+
+**Aspect:** Finding person with other details. +
+**Alternative 1 (current choice):** Able to search with other details but only one type of detail for each search +
+**Pros:** Easier to be implemented when only one type of detail is used. +
+**Cons:** Repeating functions for different details. +
+**Alternative 2:** Able to find with multiple details. +
+**Pros:** Harder to implement and complexity increases. +
+**Cons:** Lesser repeated functions is possible.
+
+---
 // end::finds[]
 
 // tag::birthday[]
