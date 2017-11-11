@@ -31,6 +31,15 @@ public class TestUtil {
         return SANDBOX_FOLDER + fileName;
     }
 
+    //@@author chrisboo
+    /**
+     * Prepend the current directory to {@code fileName}.
+     */
+    public static String getAbsoluteFilePathInSandboxFolder(String fileName) {
+        return new File(getFilePathInSandboxFolder(fileName)).getAbsolutePath();
+    }
+    //@@author
+
     /**
      * Returns the middle index of the person in the {@code model}'s person list.
      */
