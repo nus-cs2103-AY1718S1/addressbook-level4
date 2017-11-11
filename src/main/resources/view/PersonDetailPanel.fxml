@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<StackPane fx:id="personDetailPanel" minHeight="200.0" minWidth="400.0" styleClass="person-detail-panel" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="personDetailPanel" minHeight="200.0" minWidth="400.0" styleClass="person-detail-pane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane alignment="CENTER">
         <columnConstraints>

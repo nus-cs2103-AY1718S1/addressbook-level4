@@ -36,6 +36,7 @@ public class MainWindow extends UiPart<Region> {
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 800;
+    private static final float SPLIT_PANE_DIVIDER_POSITION = 0.35f;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -84,7 +85,7 @@ public class MainWindow extends UiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
-        setSplitPaneDividerProperty();
+        setSplitPaneDividerPosition();
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
 
@@ -97,7 +98,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
-     * Set key listeners for handling keyboard shortcuts.
+     * Sets key listeners for handling keyboard shortcuts.
      */
     protected void setKeyListeners() {
         KeyListener keyListener = new KeyListener(getRoot(), resultDisplay, personListPanel, commandBox);
@@ -193,15 +194,15 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
-     * Proportions the split pane divider position according to window size
+     * Proportions the split pane divider position according to window size.
      */
-    private void setSplitPaneDividerProperty() {
+    private void setSplitPaneDividerPosition() {
 
         primaryStage.showingProperty().addListener((observable, oldValue, newValue) ->
-                splitPane.setDividerPositions(0.35f));
+                splitPane.setDividerPositions(SPLIT_PANE_DIVIDER_POSITION));
 
         primaryStage.widthProperty().addListener((observable, oldValue, newValue) ->
-                splitPane.setDividerPositions(0.35f));
+                splitPane.setDividerPositions(SPLIT_PANE_DIVIDER_POSITION));
     }
 
     /**
