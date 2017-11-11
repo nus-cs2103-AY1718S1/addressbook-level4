@@ -970,16 +970,42 @@ _Figure 4.9.1 : Sequence Diagram of `Tab` Operation_
 // tag::findtags[]
 === FindTags mechanism
 
-The `FindTags` mechanism is implemented using FindTagsCommand.
-It supports searching for persons whose tags contains at least all the tags input by the user.
+The `FindTags` mechanism is facilitated by the `TagsContainKeywordsPredicate`, which resides within `FindTagsCommand`.
+The `TagsContainKeywordsPredicate` tests whether each person's tags contain all keywords input by the user
+and thus supports AND search.
 
-When the user uses the `FindTags` command, a `TagsContainKeywordsPredicate` is created.
-The `TagsContainKeywordsPredicate` tests whether each person's tags contain all keywords input by the user.
-Under the `Model` component, `TagsContainKeywordsPredicate` is used to filter the persons in the AddressBook.
-After filtering, `PersonListPanel` only shows persons whose tags contain all keywords input by the user.
+The following sequence diagram shows how the FindTags operation works:
 
-This search operation is an `AND search`. Suppose the user executes `findtags friends NUS`. +
-Only persons with at least both `friends` and `NUS` will be displayed. Persons with only `friends` or only `NUS` will not be displayed. +
+image::FindTagsSequenceDiagramForLogic.png[width="800"]
+_Figure 4.10.1 : Sequence Diagram of `FindTags` Operation_
+
+As can seen from above, when a `FindTags` command is called, E.g. `findtags NUS friends`.
+An instance of `TagsContainKeywordsPredicate` is created.
+
+The `TagsContainsKeywordsPredicate` found inside `FindTagsCommand` is implemented this way:
+
+----
+public class TagsContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    private final List<String> keywords;
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return keywords.stream()
+                .allMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getTagsAsString(), keyword));
+    }
+    // ... other logic ...
+}
+----
+
+[NOTE]
+The test is case insensitive as `StringUtil.containsWordIgnoreCase()` ignores case.
+[NOTE]
+This search operation is an `AND search`
+So only persons with at least both `friends` and `NUS` will be displayed. Persons with only `friends` or only `NUS` will not be displayed. +
+
+Inside the `TagsContainKeywordsPredicate`, the search terms `NUS` and `friends` are stored inside the `keywords` list.
+The overidding `test()` method evluates whether the person's tags matches all the search terms in `keywords`.
+This `Predicate` is then used to filter the persons in the AddressBook.
 
 The `FindTagsCommand` is implemented this way:
 
@@ -997,43 +1023,16 @@ public class FindTagsCommand extends Command {
 }
 ----
 
-`Model.updateFilteredPersonList()` updates the `PersonListPanel` display by filter using the `TagsContainsKeywordsPredicate` instance.
+This `predicate` is passed through `model.updateFilteredPersonList(predicate)` to update the `filteredPersonList`.
+This causes the `filteredPersonList` to only contain students whose tags match all keywords `NUS` and `friends`
+and also display them in the `PersonListPanel` UI element.
 
-And the `TagsContainsKeywordsPredicate` found inside `FindTagsCommand` is implemented this way:
-
-----
-public class TagsContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
-    private final List<String> keywords;
-
-    @Override
-    public boolean test(ReadOnlyPerson person) {
-        return keywords.stream()
-                .allMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getTagsAsString(), keyword));
-    }
-    // ... other logic ...
-}
-----
-[NOTE]
-The test is case insensitive as `StringUtil.containsWordIgnoreCase()` ignores case.
-
-
-The `keywords.stream().allMatch()` method in `test()` returns true if the person's tags contains all keywords in `keywords`.
-This supports the evaluation of the person by the predicate.
-
-The `PersonListPanel` will show persons whose tags contain at least all keywords input by the user.
 However if there are no persons with all keywords in the tags, the `PersonListPanel` will just be blank.
 
-This is implemented using `Predicates` because `Predicates` help move the business logic to a more central place, helping in unit-testing them separately.
-Also, the `Predicate` can can be reused, improving code manageability. +
-The code with Predicates is also much more readable than using if-else blocks.
+Meanwhile, the `ModelManager` posts a `FilteredPersonListChangedEvent` to the `EventsCenter`, causing the `StatisticsPanel` of the UI to update itself and reflect the new Statistics.
 
-The following sequence diagram shows how the FindTags operation works:
-
-image::FindTagsSequenceDiagramForLogic.png[width="800"]
-_Figure 4.10.1 : Sequence Diagram of `FindTags` Operation_
-
-After the addressBook's `filteredPersonsList` has been updated, the `Model` Component posts an `AddressBookChangedEvent`
-to indicate the model has changed and a `FilteredPersonListChangedEvent` to update the `StatisticsPanel` of the UI to reflect the new Statistical values.
+This search feature is implemented using `Predicate` because `Predicate` help move the business logic to a more central place, helping in unit-testing them separately.
+Also, the `Predicate` can can be reused, improving code manageability and readability.
 
 ==== Design Considerations
 
