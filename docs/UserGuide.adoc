@@ -31,12 +31,12 @@ The user guide includes an overview of the features in `cherBook v1.4`
 and demonstrates how to use them with the help of examples. +
 
 Some statistical concepts will be used in the explanations of the features `cherBook v1.4`.
-However, no prior technical knowledge is needed to understand this user guide.
-The statistical concepts  --- link:#percentile[`_percentile_`], link:#average[`average`] and link:#standard-deviation[`_standard deviation_`] --- will be explained and demonstrated in the the link:#glossary[Glossary] below.
+However, you will not need prior technical knowledge understand this user guide.
+Statistical concepts such as link:#average[`averages`] , link:#percentile[`percentiles`] and link:#standard-deviation[`standard deviations`] --- will be explained in the the link:#glossary[Glossary] below.
 
 == Setting Up and Getting Started
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Ensure you have Java version `1.8.0_60` or later versions installed on your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
@@ -86,14 +86,13 @@ Here’s how you can use them:
   You can select the student using the `select` command.
 
 . Statistics Panel
-* The `Statistics` Panel displays the relevant statistics for the current list of students in the Students Panel.
+* The `Statistics Panel` displays the relevant statistics for the current list of students in the `Students Panel`.
 
 . Graphs Panel
 * The `Graph Panel` displays either a line or bar chart containing grades of students in the currently selected student's class.
 
-
+[[features]]
 == Features
-
 ====
 *Command Format*
 
@@ -106,7 +105,8 @@ Here’s how you can use them:
 ====
 
 === Viewing help : `help` `Since v1.0`
-//TODO: add before and after screenshots for features
+
+View cherBook's User Guide in the help window. +
 Format: `help`
 
 === Adding a person: `add` `Since v1.0`
@@ -137,7 +137,7 @@ Examples:
 
 // tag::optionalinputtagstwo[]
 
-=== Optional fields: `add` `Since v1.3`
+=== Optional fields for adding a person `Since v1.3`
 
 You can find a list of optional input fields for the add command in the table below.
 
@@ -161,7 +161,7 @@ a message will be generated to inform you that the particular field is not recor
 
 === Listing all persons : `list` `Since v1.0`
 
-Shows a list of all persons in cherBook. +
+Shows you a list of all persons in cherBook. +
 Format: `list` +
 Shorthand: `l`
 
@@ -172,7 +172,7 @@ Format: `edit INDEX [n/NAME] [p/(STUDENT_NUMBER)] [pp/(PARENT_NUMBER)] [e/EMAIL]
 Shorthand: `e INDEX [n/NAME] [p/(STUDENT_NUMBER)] [pp/(PARENT_NUMBER)] [e/EMAIL] [a/ADDRESS] [f/FORMCLASS] [g/GRADES] [c/POSTALCODE] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the person at the specified `INDEX`. The index refers to the index number currently shown in the `Students Panel`. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
@@ -252,13 +252,13 @@ Returns any person having both `friends` and `owesMoney` tags
 
 === Deleting a person : `delete` `Since v1.0`
 
-Deletes the specified person from cherBook. +
+Removes an existing person from cherBook. +
 Format: `delete INDEX` +
 Shorthand: `d INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
+* The index refers to the index number currently shown in the `Students Panel`.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
@@ -276,13 +276,13 @@ Deletes the 3rd person in cherBook.
 
 === Selecting a person : `select` `Since v1.0`
 
-Selects the person identified by the index number used in the last person listing. +
+Selects an existing person in cherBook. +
 Format: `select INDEX` +
 Shorthand: `s INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
+* Selects the student and loads the student's details in the `Student Details Panel`.
+* The index refers to the index number currently shown in the `Students Panel`.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
@@ -301,7 +301,7 @@ Selects the 3rd person in cherBook.
 // tag::sort[]
 === Sorting all persons : `sort` `Since v1.2`
 
-Shows a list of all persons in cherBook sorted in alphabetical order. +
+Shows a list of all persons in cherBook with their names sorted in alphabetical order. +
 Format: `sort` +
 Shorthand: `st`
 
@@ -323,14 +323,14 @@ Sorts the list in alphabetical order.
 
 // tag::remark[]
 === Adding/Deleting a remark to a person : `remark` `Since v1.2`
-
+//TODO: Simlify and make the UG for remark operations more consise
 Adds or removes a remark from the specified person in cherBook +
 Format: `remark Index [rm/REMARK]` +
 Shorthand: `rm Index [rm/REMARK]`
 
 ****
 * Adds or deletes a `remark` at the specific`INDEX`.
-* The index refers to the index number shown in the most recent listing.
+* The index refers to the index number currently shown in the `Students Panel`.
 * The index *must be positive integer* 1, 2, 3, ...
 ****
 
@@ -362,7 +362,7 @@ Shorthand: `sch INDEX s/[DATE]`
 
 ****
 * Schedules the person at the specified `INDEX` and adds them to the schedule list in cherBook.
-* The index refers to the index number shown in the most recent listing.
+* The index refers to the index number currently shown in the `Students Panel`.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
@@ -491,7 +491,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear` `Since v1.0`
 //TODO: Celine to update this part, whether it clears schedules too?
-Clears all entries from cherBook. +
+Clears all student and schedule entries from cherBook. +
 Format: `clear`
 
 === Exiting the program : `exit` `Since v1.0`
@@ -517,7 +517,7 @@ _Figure 5.20.1 : Example of color tags_
 // tag::studentdetailspanel[]
 === Student Details Panel `Since v1.3`
 
-cherBook uses a `Student Details Panel` to display the selected student details from the `Students Panel`.
+cherBook uses the `Student Details Panel` to display details belonging to the currently selected student.
 The details changes automatically where there is a change to the list of students in the `Students Panel`.
 You can use these details to pick out relevant information you need from your student.
 // end::studentdetailspanel[]
@@ -526,7 +526,7 @@ You can use these details to pick out relevant information you need from your st
 // tag::statisticspanel[]
 === Statistics Panel `Since v1.4`
 
-cherBook uses a `Statistics Panel` to display the relevant statistics for the current list of students in the `Students Panel`.
+cherBook uses the `Statistics Panel` to display the relevant statistics for the current list of students in the `Students Panel`.
 The statistics changes automatically when there is a change to the list of students in the `Students Panel`.
 E.g. When you enter the command `findtags studentCouncil`, the `Students Panel` will only show students with the `studentcouncil` tag and `Statistics Panel` will then show statistics for students with the `studentcouncil` tag.
 You can use these statistics to pick out trends in your student's grades and also monitor how well they are coping with their studies.
@@ -544,8 +544,8 @@ You can use these graph to better understand the trends of `grades` in a glance 
 
 // tag::tab[]
 === Switching between graphs in GraphPanel : `tab` `Since v1.5`
-Switches between tabs listed above the graph. +
-Format: `tab index`
+Switches between the line and bar chart in the `GraphPanel`. +
+Format: `tab TABNUMBER`
 
 [NOTE]
 Valid numbers are determined by number of tabs available. In this case, only 1 and 2 are valid, which displays line or bar respectively. +
@@ -658,7 +658,7 @@ In version v1.4, you are be able to:
 
 * View the statistics of specific groups of students from the `Statistics Panel`
 * Have more colors(randomised) for your student's tags
-* Set up appointments with your students with the `addschedule` command
+* Set up appointments with your students with the `schedule` command
 * Add tab to show students in the same class and same tags respectively.
 
 === Features added in v1.3
