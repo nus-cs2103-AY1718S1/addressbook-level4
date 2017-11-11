@@ -96,17 +96,10 @@ public class XmlEventStorageTest {
     }
 
     @Test
-    public void getPersonList_modifyList_throwsUnsupportedOperationException() {
-        XmlSerializableAddressBook addressBook = new XmlSerializableAddressBook();
+    public void getEventList_modifyList_throwsUnsupportedOperationException() {
+        XmlSerializableEventStorage eventStorage = new XmlSerializableEventStorage();
         thrown.expect(UnsupportedOperationException.class);
-        addressBook.getPersonList().remove(0);
-    }
-
-    @Test
-    public void getTagList_modifyList_throwsUnsupportedOperationException() {
-        XmlSerializableAddressBook addressBook = new XmlSerializableAddressBook();
-        thrown.expect(UnsupportedOperationException.class);
-        addressBook.getTagList().remove(0);
+        eventStorage.getEventList().remove(0);
     }
 
     /**
