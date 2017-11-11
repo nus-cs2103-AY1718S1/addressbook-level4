@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableList;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.BackupCommand;
 import seedu.address.logic.commands.CalendarCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CopyCommand;
@@ -54,7 +55,8 @@ public class CommandIdentifier {
             + LocateCommand.COMMAND_WORD + ", "
             + UndoCommand.COMMAND_WORD + ", "
             + WelcomeCommand.COMMAND_WORD + ", "
-            + Country.COMMAND_WORD;
+            + Country.COMMAND_WORD + ", "
+            + BackupCommand.COMMAND_WORD;
 
     public static final List<String> COMMAND_VALIDATION_LIST = ImmutableList.of(
             HelpCommand.COMMAND_QUICK_HELP_WORD,
@@ -75,7 +77,8 @@ public class CommandIdentifier {
             LocateCommand.COMMAND_WORD, LocateCommand.COMMAND_ALIAS,
             UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_ALIAS,
             WelcomeCommand.COMMAND_WORD, WelcomeCommand.COMMAND_ALIAS,
-            Country.COMMAND_WORD); // no alias
+            Country.COMMAND_WORD, // no alias
+            BackupCommand.COMMAND_WORD, BackupCommand.COMMAND_ALIAS);
 
     public final String value;
 
