@@ -3,9 +3,9 @@ package seedu.address.storage;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.socialMedia.ReadOnlySocialMedia;
-import seedu.address.model.socialMedia.SocialMedia;
-import seedu.address.model.socialMedia.SocialMediaUrl;
+import seedu.address.model.socialmedia.ReadOnlySocialMedia;
+import seedu.address.model.socialmedia.SocialMedia;
+import seedu.address.model.socialmedia.SocialMediaUrl;
 
 
 
@@ -16,8 +16,6 @@ public class XmlAdaptedSocialMedia {
 
     @XmlElement(required = true)
     private String socialMediaName;
-    @XmlElement
-    private String socialMediaDetails;
     /**
      * Constructs an XmlAdaptedSocialMedia.
      * This is the no-arg constructor that is required by JAXB.

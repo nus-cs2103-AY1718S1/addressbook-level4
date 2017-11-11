@@ -20,8 +20,8 @@ import seedu.address.model.person.ProfPic;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.schedule.ReadOnlySchedule;
 import seedu.address.model.schedule.Schedule;
-import seedu.address.model.socialMedia.ReadOnlySocialMedia;
-import seedu.address.model.socialMedia.SocialMedia;
+import seedu.address.model.socialmedia.ReadOnlySocialMedia;
+import seedu.address.model.socialmedia.SocialMedia;
 import seedu.address.model.tag.Tag;
 
 /**
