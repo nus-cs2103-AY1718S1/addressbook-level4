@@ -37,6 +37,8 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.Person;
 
+//@@author LeonChowWenHao
+
 /**
  * Contains integration tests (interaction with the Model) for {@code SelectJoinedEventsCommand}.
  */
@@ -53,7 +55,7 @@ public class SelectJoinedEventsCommandTest {
      * Test for entering single invalid index value. All assertions should be failures.
      **/
     @Test
-    public void execute_invalidIndex_failure() {
+    public void executeInvalidIndexFailure() {
         // Invalid out of bounds index
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         assertExecutionFailure(Collections.singletonList(outOfBoundsIndex),
@@ -64,7 +66,7 @@ public class SelectJoinedEventsCommandTest {
      * Test for entering multiple invalid index value. All assertions should be failures.
      **/
     @Test
-    public void execute_multipleInvalidIndexes_failure() {
+    public void executeMultipleInvalidIndexesFailure() {
         // One valid index, one invalid out of bounds index
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         assertExecutionFailure(Arrays.asList(INDEX_FIRST_PERSON, outOfBoundsIndex),
@@ -79,7 +81,7 @@ public class SelectJoinedEventsCommandTest {
      * Test for entering single valid index value. All assertions should be successful.
      **/
     @Test
-    public void execute_validIndex_success() {
+    public void executeValidIndexSuccess() {
         Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
 
         // First person index - Alice - Valid - 1 event joined total
@@ -105,7 +107,7 @@ public class SelectJoinedEventsCommandTest {
      * Test for entering multiple valid index values. All assertions should be successful.
      **/
     @Test
-    public void execute_multipleValidIndexes_success() {
+    public void executeMultipleValidIndexesSuccess() {
         Index secondLastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size() - 1);
         Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
 
@@ -157,7 +159,7 @@ public class SelectJoinedEventsCommandTest {
         assertFalse(selectJoinedEventsFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(selectJoinedEventsFirstCommand.equals(null));
+        assertFalse(selectJoinedEventsFirstCommand == null);
 
         // different person index -> returns false
         assertFalse(selectJoinedEventsFirstCommand.equals(selectJoinedEventsSecondCommand));
@@ -215,14 +217,10 @@ public class SelectJoinedEventsCommandTest {
         Event event1 = (Event) model.getFilteredEventList().get(0);
         Event event2 = (Event) model.getFilteredEventList().get(1);
 
-        try {
-            model.joinEvent(person1, event1);
-            model.joinEvent(person2, event2);
-            model.joinEvent(person3, event1);
-            model.joinEvent(person3, event2);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+        model.joinEvent(person1, event1);
+        model.joinEvent(person2, event2);
+        model.joinEvent(person3, event1);
+        model.joinEvent(person3, event2);
     }
 
 }

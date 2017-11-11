@@ -124,7 +124,7 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void handleEventStorageChangedEvent_exceptionThrown_eventRaised() {
+    public void handleEventStorageChangedEventExceptionThrownEventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorage("dummy"),
                 new JsonUserPrefsStorage("dummy"),

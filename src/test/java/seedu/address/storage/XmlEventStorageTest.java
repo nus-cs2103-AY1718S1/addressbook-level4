@@ -32,7 +32,7 @@ public class XmlEventStorageTest {
     public TemporaryFolder testFolder = new TemporaryFolder();
 
     @Test
-    public void readEventStorage_nullFilePath_throwsNullPointerException() throws Exception {
+    public void readEventStorageNullFilePathThrowsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         readEventStorage(null);
     }
@@ -48,12 +48,12 @@ public class XmlEventStorageTest {
     }
 
     @Test
-    public void read_missingFile_emptyResult() throws Exception {
+    public void readMissingFileEmptyResult() throws Exception {
         assertFalse(readEventStorage("NonExistentFile.xml").isPresent());
     }
 
     @Test
-    public void read_notXmlFormat_exceptionThrown() throws Exception {
+    public void readNotXmlFormatExceptionThrown() throws Exception {
 
         thrown.expect(DataConversionException.class);
         readEventStorage("NotXmlFormatEventStorage.xml");
@@ -64,7 +64,7 @@ public class XmlEventStorageTest {
     }
 
     @Test
-    public void readAndSaveEventStorage_allInOrder_success() throws Exception {
+    public void readAndSaveEventStorageAllInOrderSuccess() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempEventStorage.xml";
         EventList original = getTypicalEventList();
         XmlEventStorage xmlEventStorage = new XmlEventStorage(filePath);
@@ -90,13 +90,13 @@ public class XmlEventStorageTest {
     }
 
     @Test
-    public void saveEventStorage_nullEventStorage_throwsNullPointerException() {
+    public void saveEventStorageNullEventStorageThrowsNullPointerException() {
         thrown.expect(NullPointerException.class);
         saveEventStorage(null, "SomeFile.xml");
     }
 
     @Test
-    public void getEventList_modifyList_throwsUnsupportedOperationException() {
+    public void getEventListModifyListThrowsUnsupportedOperationException() {
         XmlSerializableEventStorage eventStorage = new XmlSerializableEventStorage();
         thrown.expect(UnsupportedOperationException.class);
         eventStorage.getEventList().remove(0);
@@ -114,7 +114,7 @@ public class XmlEventStorageTest {
     }
 
     @Test
-    public void saveEventStorage_nullFilePath_throwsNullPointerException() throws IOException {
+    public void saveEventStorageNullFilePathThrowsNullPointerException() throws IOException {
         thrown.expect(NullPointerException.class);
         saveEventStorage(new EventList(), null);
     }
