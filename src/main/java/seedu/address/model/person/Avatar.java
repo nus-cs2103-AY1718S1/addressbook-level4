@@ -15,17 +15,15 @@ import seedu.address.ui.person.PersonDetailsPanel;
  * done by separate methods rather than a single regular expression (the complexity is not at the same level).
  */
 public class Avatar {
-    private static final String INVALID_URL_MESSAGE = "The provided URL is invalid.";
-    private static final String IMG_URL_PATTERN = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}"
-            + "\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)";
+    private static final String INVALID_URL_MESSAGE = "The provided image path is invalid.";
 
-    private String url;
+    private String path;
 
-    public Avatar(String url) throws IllegalValueException {
-        if (!isValidImageUrl(url)) {
+    public Avatar(String path) throws IllegalValueException {
+        if (!isValidAvatarPath(path)) {
             throw new IllegalValueException(INVALID_URL_MESSAGE);
         }
-        this.url = url;
+        this.path = path;
     }
 
     /**
@@ -38,31 +36,24 @@ public class Avatar {
                 && !FileUtil.hasInvalidNameSeparators(path);
     }
 
-    /**
-     * Checks whether a given string is a valid URL and it points to an image.
-     */
-    private boolean isValidImageUrl(String url) {
-        return url.matches(IMG_URL_PATTERN);
-    }
-
-    public String getUrl() {
-        return url;
+    public String getPath() {
+        return path;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Avatar // instanceof handles nulls
-                && this.url.equals(((Avatar) other).url));
+                && this.path.equals(((Avatar) other).path));
     }
 
     @Override
     public int hashCode() {
-        return url.hashCode();
+        return path.hashCode();
     }
 
     @Override
     public String toString() {
-        return "Avatar from " + url;
+        return "Avatar from " + path;
     }
 }
