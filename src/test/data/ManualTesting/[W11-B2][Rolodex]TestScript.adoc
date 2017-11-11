@@ -6,8 +6,8 @@ This is a document explaining the steps to perform manual testing
 (i.e. manual scripted testing), starting with how to load the sample
 data.
 
-You can also view this document at
-link:here[https://cs2103aug2017-w11-b2.github.io/main/] in all html
+You can also view this document
+https://cs2103aug2017-w11-b2.github.io/TestScript[here] in all its html
 glory.
 
 [[setting-up]]
@@ -15,17 +15,22 @@ Setting Up
 ~~~~~~~~~~
 
 1.  *Follow the instructions with numbers labeled closely.*
-2.  Start up rolodex.jar in an empty directory and close it.
-3.  You should see a preferences.json file in the same directory as your
+2.  Download the latest rolodex.jar from
+https://github.com/CS2103AUG2017-W11-B2/main/releases[here].
+3.  Download our sample database with more than 25 persons pre-loaded
+for this exercise
+https://github.com/CS2103AUG2017-W11-B2/main/tree/master/src/test/data/ManualTesting/%5BW11-B2%5D%5BRolodex%5DSampleData.rldx[here].
+4.  Start up rolodex.jar in an empty directory and close it.
+5.  You should see a preferences.json file in the same directory as your
 jar file.
-4.  Replace the value of the key rolodexFilePath in the json file to a
+6.  Replace the value of the key rolodexFilePath in the json file to a
 directory of your choosing.
-5.  Place SampleData.rldx in that directory. We recommend creating a
+7.  Place SampleData.rldx in that directory. We recommend creating a
 directory data in the same folder as your rolodex.jar file and placing
 SampleData.rldx in there. (i.e. _data/SampleData.rldx_)
-6.  Start up rolodex.jar again. You should see the application loaded
+8.  Start up rolodex.jar again. You should see the application loaded
 with at least 25 sample contacts.
-7.  The status bar on the bottom right should correctly display the
+9.  The status bar on the bottom right should correctly display the
 directory at which you placed the SampleData.rldx (the file you are
 going to be operating on).
 
