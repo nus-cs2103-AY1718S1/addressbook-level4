@@ -65,7 +65,7 @@ public class LogicManager extends ComponentManager implements Logic {
             throw efe;
         } catch (MissingPrefixException mpe) {
             // this assertion is because this exception should only be thrown by the addli command
-            // to change to an exception if this exception is used elsewhere
+            // to change if this exception is used elsewhere
             final String inputToTest = commandText;
             assert Arrays.stream(AddLifeInsuranceCommand.COMMAND_WORDS).anyMatch(commandWord ->
                 inputToTest.contains(commandWord));

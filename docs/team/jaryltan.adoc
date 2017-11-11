@@ -6,7 +6,67 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == LISA: Levels Integrated Secretarial Agent
 LISA: Levels Integrated Secretarial Agent is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [../../collated/main/Juxarius.md[Functional code]] [../../collated/test/Juxarius.md[Test code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-T13-B1/main/tree/master/collated/main/Juxarius.md[Functional code]]
+ [https://github.com/CS2103AUG2017-T13-B1/main/tree/master/collated/test/Juxarius.md[Test code]]
+
+=== Enhancement Added: Multiple Command Words
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+Every command has multiple command words that are recognised.
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Many commands require the user to type out the entire word which can be a hassle. We want to provide
+familiar users with shortcuts to the commands. Also, was suggested by textbook.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=commandWord]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add Life Insurance Prefix Autofill
+
+=== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=prefixAutofill]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+All fields are required here as a contract needs to be complete before it is valid.
+However, due to the multitude of information required, users are given a method to prompt them
+on all the missing information as well as aid them in re-positioning the caret to the correct position
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=prefixAutofill]
+
+#End of Extract#
+
+---
 
 === Enhancement Added: Date Parser
 
@@ -101,12 +161,15 @@ include::../DeveloperGuide.adoc[tag=tagManagement]
 
 
 === Enhancements Implemented:
+Multiple Command Words +
+Prefix Autofill for Add Insurance Command +
 Improved Tag Management +
 Autofill Feature +
 Date Parser +
 Overall Architecture of Program Flow for UI +
 
 === Enhancements Proposed and has been implemented:
+Prefix Autofill for Add Insurance Command +
 Improved Tag Management +
 Autofill Feature +
 Insurance Class +
@@ -121,6 +184,7 @@ Command Shadowing +
 Helped properly implement sort contacts by name feature +
 Helped review fellow teammates PR and correct teammates misconceptions +
 Helped organise team's repo +
+Responsible for glass box testing of LISA and follow-up debugging +
 Improved various commands of LISA +
 Helped out in CS2103 module forums [https://github.com/nus-cs2103-AY1718S1/forum/issues/177[Example Thread]] +
 Offered `DateParser` as a `Reuse-Offer` on module forums [https://github.com/nus-cs2103-AY1718S1/forum/issues/167[Easy Date Parser]] +
