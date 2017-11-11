@@ -1,10 +1,12 @@
 package seedu.address.logic.parser;
 
-import org.junit.Test;
-import seedu.address.logic.commands.DeleteByNameCommand;
-
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
+import org.junit.Test;
+
+import seedu.address.logic.commands.DeleteByNameCommand;
+
+//@@author LuLechuan
 public class DeleteByNameCommandParserTest {
 
     private DeleteByNameCommandParser parser = new DeleteByNameCommandParser();
