@@ -16,9 +16,6 @@ public class WhyCommandParser implements Parser<WhyCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public WhyCommand parse(String args) throws ParseException {
-        /**
-         Parsing
-         */
         try {
             Index index = ParserUtil.parseIndex(args);
             return new WhyCommand(index);
