@@ -10,12 +10,18 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.Region;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.ReadOnlyPerson;
 
+
+
+
+
+
 //@@author Pengyuz
 /**
- * Panel containing the list of persons.
+ * Panel containing the list of persons in bin.
  */
 public class RecycleBinPanel extends UiPart<Region> {
     private static final String FXML = "RecycleBinPanel.fxml";
