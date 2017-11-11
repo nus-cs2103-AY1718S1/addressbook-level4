@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.elements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +17,10 @@ import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.storage.elements.XmlAdaptedEvent;
+import seedu.address.storage.elements.XmlAdaptedPerson;
+import seedu.address.storage.elements.XmlAdaptedPropertyManager;
+import seedu.address.storage.elements.XmlAdaptedTag;
 
 /**
  * An Immutable AddressBook that is serializable to XML format

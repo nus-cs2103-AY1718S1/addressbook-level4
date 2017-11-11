@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.elements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
+import seedu.address.storage.elements.XmlAdaptedPropertyInfo;
 
 //@@author yunpengn
 /**

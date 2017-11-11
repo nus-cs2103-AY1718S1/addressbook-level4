@@ -17,12 +17,10 @@ public interface UserPrefsStorage {
     String getUserPrefsFilePath();
 
     //@@author junyango
-
     /**
      * Returns address book theme
      */
     String getAddressBookTheme();
-
     //@@author
 
     /**
