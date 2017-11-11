@@ -386,6 +386,31 @@ Selects the 2nd person in the Gentleman's Guide.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::view[]
+=== Opening full profile of a person : `view`
+
+*The Gentleman comes across the contact of an old friend who he has not seen for a long time.
+Thus, he uses the view command to open his friend's full profile which he had stored inside the Gentleman's Guide.*
+
+Views profile of the person identified by the index number used in the last person listing. +
+Format: `view INDEX`
+
+****
+* Views profile of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+// end::view[]
+
+Examples:
+
+* `list` +
+`view 2` +
+Views profile of the 2nd person in the Gentleman's Guide.
+* `find Betsy` +
+`view 1` +
+Views profile of the 1st person in the results of the `find` command.
+
 // tag::sort[]
 === Sorting all entries by name: `sort`
 
@@ -431,26 +456,12 @@ Format: `sortPriority`
 
 // end::sort[]
 
-// tag::retrievetaguntagretag[]
-=== Retrieving all persons having an existing tag : `retrieve`
-
-Lists all contacts having a certain existing tag in the Gentleman's Guide. +
-Format: `retrieve TAG`
-
-****
-* Retrieves all persons having the specified `TAG` tag.
-* The tag name *must be alphanumeric*
-****
-
-Examples:
-
-* `retrieve friends` +
-Retrieves all persons with the "friends" tag in the Gentleman's Guide.
-
+// tag::tagsmanipulation[]
 === Tagging multiple persons : `tag`
 
-*As a Gentleman, you want to keep track of what relevant information such as where you met your contacts.
-Thus you tag your contacts*
+*As a Gentleman, you want to keep track of the relevant information about your contacts such as
+where you met the contact owners and what your current relationships with them are.
+Thus, you tag your contacts for easy reference.*
 
 Tags the persons identified by the index numbers used in the last person listing. +
 Format: `tag INDEX,[MORE_INDEXES],... TAG`
@@ -470,8 +481,9 @@ Assigns the "friends" tag to the 1st, 2nd and 3rd persons in the results of the 
 
 === Untagging multiple persons : `untag`
 
-*As a Gentleman, you want to be up to date of relevant information about your contacts.
-Thus you can untag your contacts*
+*As a Gentleman, you want to be up to date of the relevant information about your contacts.
+You see some tags containing information that is no longer suitable to describe the contacts.
+Thus, you untag them from your contacts.*
 
 Removes the specified tags from the persons identified by the index numbers used in the last person listing. +
 Format: `tag INDEX,[MORE_INDEXES],... TAG/[MORE_TAGS]/...`
@@ -503,12 +515,14 @@ Removes the "friends" and "enemies" tags from all persons in the results of the 
 `untag -a` +
 Removes all tags from all persons in the results of the `list` command.
 
-=== Renaming an existing tag : `retag`
+=== Renaming a tag in contact list : `retag`
 
-*As a Gentleman, you want to be up to date of relevant information about your contacts.
-Thus you can retag your contacts*
+*As a Gentleman, you want to be up to date of the relevant information about your contacts.
+You will soon transfer to another department of the company to obtain more work experience.
+Separation with your current colleagues is sad, but nothing can be done.
+Thus, you rename the "colleagues" tag to "exColleagues".*
 
-Renames a certain existing tag to a new tag name. +
+Renames a certain tag in contact list to a new tag name. +
 Format: `retag OLD_TAG NEW_TAG`
 
 ****
@@ -519,9 +533,30 @@ Format: `retag OLD_TAG NEW_TAG`
 
 Examples:
 
-* `retag enemies friends` +
-Renames the existing "enemies" tag in the Gentleman's Guide to "friends".
-// end::retrievetaguntagretag[]
+* `retag colleagues exColleagues` +
+Renames the existing "colleagues" tag in the Gentleman's Guide to "exColleagues".
+// end::tagsmanipulation[]
+
+// tag::retrieve[]
+=== Retrieving all persons having an existing tag : `retrieve`
+
+*After having worked in the new department for quite a time, you feel like having a reunion with your former colleagues.
+Thus, you use the retrieve command to quickly get their contacts so that you can send invitations to all of them at the same time
+ while avoiding leaving someone out accidentally.*
+
+Lists all contacts having a certain existing tag in the Gentleman's Guide. +
+Format: `retrieve TAG`
+
+****
+* Retrieves all persons having the specified `TAG` tag.
+* The tag name *must be alphanumeric*
+****
+
+Examples:
+
+* `retrieve exColleagues` +
+Retrieves all persons with the "exColleagues" tag in the Gentleman's Guide.
+// end::retrieve[]
 
 === Listing entered commands : `history`
 
@@ -676,18 +711,20 @@ e.g. `findPriority Medium`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *View* : `view INDEX` +
+e.g.`view 2`
 * *Sort by Name* : `sort`
 * *Sort by Age* : `sortAge`
 * *Sort by Birthday* : `sortBirthday`
 * *Sort by Priority* : `sortPriority`
-* *Retrieve* : `retrieve TAG` +
-e.g.`retrieve family`
 * *Tag* : `tag INDEX,[MORE_INDEXES],... TAG` +
 e.g.`tag 1,2,3 friends`
 * *Untag* : `untag INDEX,[MORE_INDEXES],... TAG/[MORE_TAGS]/...` +
 e.g.`untag 1,2,3 friends/enemies`
 * *Retag* : `retag OLD_TAG NEW_TAG` +
-e.g.`retag enemies friends`
+e.g.`retag colleagues exColleagues`
+* *Retrieve* : `retrieve TAG` +
+e.g.`retrieve exColleagues`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
