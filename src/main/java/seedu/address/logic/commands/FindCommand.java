@@ -8,6 +8,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import java.util.ArrayList;
 import java.util.List;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
@@ -89,13 +92,15 @@ public class FindCommand extends Command {
 
         NameContainsKeywordsPredicate updatedPredicate = new NameContainsKeywordsPredicate(namesToSearch);
         model.updateFilteredPersonList(updatedPredicate);
+        Index defaultIndex = new Index(0);
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(defaultIndex));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
     /**
      * Get a list of names whose contact details contain all the address keywords provided by user.
      * @param addressKeywords a list of address keywords to search for
-     * @return a list of names found by searching the corresponding address keywords
+     * Returns a list of names found by searching the corresponding address keywords
      */
     private ArrayList<String> getNamesFromAddressKeywords(ArrayList<String> addressKeywords) {
         ArrayList<String> matchedNames = new ArrayList<>();
@@ -123,7 +128,7 @@ public class FindCommand extends Command {
     /**
      * Get a list of names whose contact details contain at least one of the email keywords provided by user.
      * @param emailKeywords a list of email keywords to search for
-     * @return a list of names found by searching the corresponding email keywords
+     * Returns a list of names found by searching the corresponding email keywords
      */
     private ArrayList<String> getNamesFromEmailKeywords(ArrayList<String> emailKeywords) {
         ArrayList<String> matchedNames = new ArrayList<>();
@@ -148,7 +153,7 @@ public class FindCommand extends Command {
     /**
      * Get a list of names whose contact details contain at least one of the phone keywords provided by user.
      * @param phoneKeywords a list of phone keywords to search for
-     * @return a list of names found by searching the corresponding phone keywords
+     * Returns a list of names found by searching the corresponding phone keywords
      */
     private ArrayList<String> getNamesFromPhoneKeywords(ArrayList<String> phoneKeywords) {
         ArrayList<String> matchedNames = new ArrayList<>();
@@ -173,7 +178,7 @@ public class FindCommand extends Command {
     /**
      * Get a list of names whose contact details contain at least one of the name keywords provided by user.
      * @param nameKeywords a list of name keywords to search for
-     * @return a list of names found by searching the corresponding name keywords
+     * Returns a list of names found by searching the corresponding name keywords
      */
     private ArrayList<String> getNamesFromNameKeywords(ArrayList<String> nameKeywords) {
         ArrayList<String> matchedNames = new ArrayList<>();

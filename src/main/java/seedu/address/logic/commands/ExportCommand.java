@@ -5,7 +5,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.time.LocalDateTime;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ClearPersonListEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 import seedu.address.model.event.Event;
 //@@author Pengyuz
 /**
@@ -78,6 +81,9 @@ public class ExportCommand extends Command {
             }
             output.write("End of file");
             output.close();
+
+            model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+            EventsCenter.getInstance().post(new ClearPersonListEvent());
             return new CommandResult(MESSAGE_SUCCESS);
 
         } catch (Exception e) {

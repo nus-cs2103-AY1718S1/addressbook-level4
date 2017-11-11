@@ -18,7 +18,6 @@ public class BinclearCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
         model.resetRecyclebin(new AddressBook());
-        //EventsCenter.getInstance().post(new ClearPersonListEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

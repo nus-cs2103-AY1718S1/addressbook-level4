@@ -12,8 +12,10 @@ import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
@@ -106,6 +108,7 @@ public class TagRemoveCommand extends UndoableCommand {
                 throw new AssertionError("The target person cannot be missing");
             }
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
             int tagListStringStartIndex = 1;
             int tagListStringEndIndex;
             String tagChangedDisplayRaw = editedPerson.getTags().toString();
@@ -114,6 +117,9 @@ public class TagRemoveCommand extends UndoableCommand {
                     + tagChangedDisplayRaw.substring(tagListStringStartIndex, tagListStringEndIndex);
 
             editedPersonDisplay.append(String.format(MESSAGE_REMOVE_TAG_SUCCESS, tagChangedDisplay));
+            Index defaultIndex = new Index(0);
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(defaultIndex));
+
             if (i != indexList.size() - 1) {
                 editedPersonDisplay.append("\n");
             }
