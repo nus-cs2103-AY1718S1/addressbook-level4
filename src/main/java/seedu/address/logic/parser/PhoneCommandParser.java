@@ -6,7 +6,6 @@ import java.util.StringTokenizer;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.CustomCommand;
 import seedu.address.logic.commands.PhoneCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.phone.Phone;
@@ -35,7 +34,7 @@ public class PhoneCommandParser implements Parser<PhoneCommand> {
             return new PhoneCommand(index, action, phone);
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, CustomCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, PhoneCommand.MESSAGE_USAGE));
         }
     }
 
