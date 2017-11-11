@@ -5,6 +5,7 @@ import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_CLEAR;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_DELETE;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_DELETE_SELECTION;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_EDIT;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_EMAIL;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_FIND;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_FOCUS_COMMAND_BOX;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_FOCUS_PERSON_LIST;
@@ -26,6 +27,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -104,28 +106,31 @@ public class KeyListener {
             executeCommand(ListCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_OPEN_FILE.match(keyEvent)) {
-            displayCommandFormat(OpenRolodexCommand.FORMAT);
+            displayCommandFormat(OpenRolodexCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_NEW_FILE.match(keyEvent)) {
-            displayCommandFormat(NewRolodexCommand.FORMAT);
+            displayCommandFormat(NewRolodexCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_ADD.match(keyEvent)) {
-            displayCommandFormat(AddCommand.FORMAT);
+            displayCommandFormat(AddCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_EDIT.match(keyEvent)) {
-            displayCommandFormat(EditCommand.FORMAT);
+            displayCommandFormat(EditCommand.COMMAND_WORD);
+
+        } else if (KEY_COMBINATION_EMAIL.match(keyEvent)) {
+            displayCommandFormat(EmailCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_FIND.match(keyEvent)) {
-            displayCommandFormat(FindCommand.FORMAT);
+            displayCommandFormat(FindCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_SELECT.match(keyEvent)) {
-            displayCommandFormat(SelectCommand.FORMAT);
+            displayCommandFormat(SelectCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_DELETE.match(keyEvent)) {
-            displayCommandFormat(DeleteCommand.FORMAT);
+            displayCommandFormat(DeleteCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_REMARK.match(keyEvent)) {
-            displayCommandFormat(RemarkCommand.FORMAT);
+            displayCommandFormat(RemarkCommand.COMMAND_WORD);
 
         } else {
                 // no key combination matches, do nothing
@@ -136,12 +141,8 @@ public class KeyListener {
      * Executes command triggered by key presses.
      */
     private void executeCommand(String command) {
-        if (command.equals(OpenRolodexCommand.COMMAND_WORD) || command.equals(NewRolodexCommand.COMMAND_WORD)) {
-            commandBox.replaceText(command + " ");
-        } else {
-            commandBox.replaceText(command);
-            commandBox.handleCommandInputChanged();
-        }
+        commandBox.replaceText(command);
+        commandBox.handleCommandInputChanged();
     }
 
     /**
@@ -149,7 +150,7 @@ public class KeyListener {
      */
     private void displayCommandFormat(String command) {
         commandBox.replaceText(command);
-        commandBox.pressCtrl();
+        commandBox.pressTab();
     }
 
     /**

@@ -13,12 +13,14 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.NewRolodexCommand;
 import seedu.address.logic.commands.OpenRolodexCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 
@@ -199,6 +201,17 @@ public class KeyListenerTest extends RolodexGuiTest {
     }
 
     @Test
+    public void executeKeyEventForEmailCommand() {
+        KeyCodeCombination emailCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+M");
+
+        guiRobot.push(emailCommandKeyCode);
+        assertEquals(EmailCommand.FORMAT, getCommandBox().getInput());
+
+        guiRobot.push(KeyCode.A);
+        assertEquals("email a", getCommandBox().getInput());
+    }
+
+    @Test
     public void executeKeyEventForDeleteCommand() {
         KeyCodeCombination deleteCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+Shift+D");
 
@@ -220,6 +233,24 @@ public class KeyListenerTest extends RolodexGuiTest {
         assertEquals("find a", getCommandBox().getInput());
     }
 
+    @Test
+    public void executeKeyEventForRemarkCommand() {
+        KeyCodeCombination remarkCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+R");
+
+        guiRobot.push(remarkCommandKeyCode);
+        assertEquals(RemarkCommand.FORMAT, getCommandBox().getInput());
+
+        guiRobot.push(KeyCode.A);
+        assertEquals("remark a r/REMARK", getCommandBox().getInput());
+
+        guiRobot.push(KeyCode.TAB);
+        guiRobot.push(KeyCode.B);
+        assertEquals("remark a r/b", getCommandBox().getInput());
+
+        guiRobot.push(KeyCode.TAB);
+        guiRobot.push(KeyCode.C);
+        assertEquals("remark c r/b", getCommandBox().getInput());
+    }
     @Test
     public void executeKeyEventForSelectCommand() {
         KeyCodeCombination selectCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+S");

@@ -9,6 +9,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -47,6 +48,7 @@ public class KeyListenerUtil {
     public static final KeyCombination KEY_COMBINATION_SELECT = KeyCombination.valueOf(SelectCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_DELETE = KeyCombination.valueOf(DeleteCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_REMARK = KeyCombination.valueOf(RemarkCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_EMAIL = KeyCombination.valueOf(EmailCommand.COMMAND_HOTKEY);
 
     public static final Set<KeyCombination> POSSIBLE_KEY_COMBINATIONS =
             new HashSet<>(Arrays.asList(
@@ -64,6 +66,7 @@ public class KeyListenerUtil {
                     KEY_COMBINATION_NEW_FILE,
                     KEY_COMBINATION_ADD,
                     KEY_COMBINATION_EDIT,
+                    KEY_COMBINATION_EMAIL,
                     KEY_COMBINATION_FIND,
                     KEY_COMBINATION_SELECT,
                     KEY_COMBINATION_DELETE

@@ -173,6 +173,12 @@ public class CommandBox extends UiPart<Region> {
 
     }
 
+    /**
+     * press tab key
+     */
+    public void pressTab() {
+        robot.push(KeyCode.TAB);
+    }
 
     /**
      * press control key
@@ -270,9 +276,9 @@ public class CommandBox extends UiPart<Region> {
         input = commandTextField.getText();
         updateKeyboardIcon();
         setStyleToDefault();
-        //if (isFirstTab) {
-        autoSelectFirstField();
-        //}
+        if (isFirstTab) {
+            autoSelectFirstField();
+        }
         if (needToNavigateToNextField) {
             updateSelection();
         }
@@ -335,7 +341,7 @@ public class CommandBox extends UiPart<Region> {
         default:
             // let JavaFx handle the keypress
         }
-        isFirstTab = false;
+        //isFirstTab = false;
     }
 
     private boolean isAutoCompleteCommand(String command) {
