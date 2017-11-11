@@ -198,11 +198,11 @@ public class AddressBookParser {
             }
 
         case ListPinCommand.COMMAND_WORD:
-            if (isPersonEnabled && !isTaskEnabled) {
-                return new ListPinCommand();
-            }
             if (isAliasEnabled) {
                 throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new ListPinCommand();
             } else {
                 throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
             }
