@@ -37,6 +37,7 @@ public class CalendarBox {
     private YearMonth currentYearMonth;
     private final Color yellow = Color.web("#CA9733");
     private Logic logic;
+    private HashMap<LocalDate, ArrayList<ReadOnlyEvent>> hashEvents;
     private Text[] dayNames = new Text[]{ new Text("Sunday"), new Text("Monday"), new Text("Tuesday"),
             new Text("Wednesday"), new Text("Thursday"), new Text("Friday"),
             new Text("Saturday") };
@@ -68,59 +69,18 @@ public class CalendarBox {
      * @param eventList list of events to populate
      */
     public void populateCalendar(YearMonth yearMonth, ObservableList<ReadOnlyEvent> eventList) {
-        HashMap<LocalDate, ArrayList<ReadOnlyEvent>> hashEvents = new HashMap<LocalDate, ArrayList<ReadOnlyEvent>>();
+        hashEvents = new HashMap<LocalDate, ArrayList<ReadOnlyEvent>>();
         hashEvents = eventsHashMap(eventList);
 
         // Get the date we want to start with on the calendar
         LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
+
         // Dial back the day until it is SUNDAY (unless the month starts on a sunday)
         while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY")) {
             calendarDate = calendarDate.minusDays(1);
         }
 
-        // Populate the calendar with day numbers
-        for (AnchorPaneNode ap : allCalendarDays) {
-            ap.setId("calendarCell");
-            if (ap.getChildren().size() != 0) {
-                ap.getChildren().remove(0);
-            }
-
-            ap.getChildren().clear();
-            //make today's date light up
-            if (calendarDate.equals(LocalDate.now())) {
-                ap.lightUpToday();
-            } else {
-                ap.revertBackground();
-            }
-            addDates(calendarDate, ap);
-
-            if (hashEvents.containsKey(calendarDate)) {
-                ArrayList<ReadOnlyEvent> eventInADay = hashEvents.get(calendarDate);
-
-                int numEvents = 0;
-                String allEventTitle = "";
-                //go through the list of events and add them to the grid
-                for (ReadOnlyEvent actualEvent: eventInADay) {
-
-                    //if number of events is already more than 2, populate only 2 and tell users there are more events
-                    if (numEvents == 2) {
-                        allEventTitle = allEventTitle + "and more...";
-                        break;
-                    }
-                    String eventTitle = actualEvent.getTitle().toString();
-                    if (eventTitle.length() > 8) {
-                        eventTitle = eventTitle.substring(0, 8) + "...";
-                    }
-                    allEventTitle = allEventTitle + eventTitle + "\n";
-                    numEvents++;
-                }
-                Text eventText = new Text(allEventTitle);
-                addEventName(ap, eventText);
-
-            }
-            calendarDate = calendarDate.plusDays(1);
-
-        }
+        populateDays(calendarDate);
         // Change the title of the calendar
         calendarTitle.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
     }
@@ -241,17 +201,6 @@ public class CalendarBox {
     }
 
     /**
-     * add the date number to the grids
-     */
-    public void addDates(LocalDate calendarDate, AnchorPaneNode ap) {
-        Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
-        ap.setDate(calendarDate);
-        ap.setTopAnchor(txt, 10.0);
-        ap.setLeftAnchor(txt, 5.0);
-        ap.getChildren().add(txt);
-    }
-
-    /**
      * Create a HashMap of LocalDate and Arraylist of ReadOnlyEvent to use for populating events on calendar
      * @param eventList
      * @return HashMap of LocalDate and Arraylist of ReadOnlyEvent
@@ -269,6 +218,70 @@ public class CalendarBox {
         }
 
         return hashEvents;
+    }
+
+    public void setupAnchorPaneNode(AnchorPaneNode node) {
+        node.setId("calendarCell");
+        if (node.getChildren().size() != 0) {
+            node.getChildren().remove(0);
+        }
+        node.getChildren().clear();
+    }
+
+    public void setupToday(AnchorPaneNode node, LocalDate calendarDate) {
+        if (calendarDate.equals(LocalDate.now())) {
+            node.lightUpToday();
+        } else {
+            node.revertBackground();
+        }
+    }
+
+    /**
+     * add the date number to the grids
+     */
+    public void addDates(LocalDate calendarDate, AnchorPaneNode ap) {
+        Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
+        ap.setDate(calendarDate);
+        ap.setTopAnchor(txt, 10.0);
+        ap.setLeftAnchor(txt, 5.0);
+        ap.getChildren().add(txt);
+    }
+
+    public String populateDayEvents(ArrayList<ReadOnlyEvent> eventInADay) {
+        int numEvents = 0;
+        String eventTitles = "";
+        for (ReadOnlyEvent actualEvent: eventInADay) {
+
+            //if number of events is already more than 2, populate only 2 and tell users there are more events
+            if (numEvents == 2) {
+                eventTitles = eventTitles + "and more...";
+                break;
+            }
+            String eventTitle = actualEvent.getTitle().toString();
+            if (eventTitle.length() > 8) {
+                eventTitle = eventTitle.substring(0, 8) + "...";
+            }
+            eventTitles = eventTitles + eventTitle + "\n";
+            numEvents++;
+        }
+        return eventTitles;
+    }
+
+    public void populateDays(LocalDate calendarDate) {
+        for (AnchorPaneNode ap : allCalendarDays) {
+            setupAnchorPaneNode(ap);
+            setupToday(ap, calendarDate);
+            addDates(calendarDate, ap);
+
+            if (hashEvents.containsKey(calendarDate)) {
+                ArrayList<ReadOnlyEvent> eventInADay = hashEvents.get(calendarDate);
+                Text eventText = new Text(populateDayEvents(eventInADay));
+                addEventName(ap, eventText);
+
+            }
+            calendarDate = calendarDate.plusDays(1);
+
+        }
     }
 
 /////////////////////////////////////// Other methods ////////////////////////////////////////////////
