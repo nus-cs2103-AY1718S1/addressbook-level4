@@ -71,7 +71,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     @Test
     public void selectCommandAutoComplete() {
-        assertAutoComplete("sel", SelectCommand.COMMAND_WORD);
+        assertAutoComplete("s", SelectCommand.COMMAND_WORD);
         assertInputHistory(KeyCode.TAB, SelectCommand.FORMAT);
     }
 
@@ -83,7 +83,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     @Test
     public void deleteCommandAutoComplete() {
-        assertAutoComplete("de", DeleteCommand.COMMAND_WORD);
+        assertAutoComplete("d", DeleteCommand.COMMAND_WORD);
         assertInputHistory(KeyCode.TAB, DeleteCommand.FORMAT);
     }
 
