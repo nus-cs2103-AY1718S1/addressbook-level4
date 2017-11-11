@@ -256,7 +256,7 @@ You can also delete contacts in a filtered list:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in your *ABC*.
 * `find n/Betsy` +
 `delete 1` +
 Deletes the 1st person from the result of the `find` command.
@@ -489,13 +489,13 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in your *ABC*.
 * `find n/Betsy` +
 `select 1` +
 Selects the 1st person from the result of the `find` command.
 * `list` +
 `s 7` +
-Selects the 7th person in the address book.
+Selects the 7th person in your *ABC*.
 
 // tag::note[]
 === Making a note: `note`
@@ -704,13 +704,13 @@ _Figure 4.19.1_
 ====
 Command Name: `undo` +
 Shorthand Alias: `u` +
-Function: Restores the address book to the state where the previous _undoable_ command was not executed +
+Function: Restores your *ABC* to the state where the previous _undoable_ command was not executed +
 Format: `undo`
 ====
 
 [NOTE]
 ====
-_Undoable_ commands: those commands that modify the address book's content. They include `add`, `sort`, `delete`, `edit`, `addtag`, `deletetag`, `addmeeting`, `deletemeeting`, `note`, `restore` and `clear`.
+_Undoable_ commands: those commands that modify the content in your *ABC*. They include `add`, `sort`, `delete`, `edit`, `addtag`, `deletetag`, `addmeeting`, `deletemeeting`, `note`, `restore` and `clear`.
 ====
 
 When you `delete` a contact by accident: +
@@ -902,7 +902,7 @@ _Figure 4.24.1_ +
 
 === Saving the data
 
-Address book data is saved in the hard disk automatically after any command that changes the data. +
+Data is saved in the hard disk automatically after any changes. +
 There is no need to save manually.
 
 == Changelog
