@@ -29,7 +29,7 @@ import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 //@@author junyango
 
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the details of an existing event in the address book.
  */
 public class EditEventCommand extends UndoableCommand {
 
@@ -55,8 +55,8 @@ public class EditEventCommand extends UndoableCommand {
     private final EditEventDescriptor editEventDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
-     * @param editEventDescriptor details to edit the person with
+     * @param index of the event in the filtered event list to edit
+     * @param editEventDescriptor details to edit the event with
      */
     public EditEventCommand(Index index, EditEventDescriptor editEventDescriptor) {
         requireNonNull(index);
@@ -93,7 +93,7 @@ public class EditEventCommand extends UndoableCommand {
     }
 
     /**
-     * Creates and returns a {@code Event} with the details of {@code personToEdit}
+     * Creates and returns a {@code Event} with the details of {@code eventToEdit}
      * edited with {@code editEventDescriptor}.
      */
     private static Event createEditedEvent(ReadOnlyEvent eventToEdit,
@@ -127,8 +127,8 @@ public class EditEventCommand extends UndoableCommand {
     }
 
     /**
-     * Stores the details to edit the person with. Each non-empty field value will replace the
-     * corresponding field value of the person.
+     * Stores the details to edit the event with. Each non-empty field value will replace the
+     * corresponding field value of the event.
      */
     public static class EditEventDescriptor {
         private Name name;
