@@ -2,7 +2,7 @@
 ###### /java/systemtests/SortCommandSystemTest.java
 ``` java
 /**
- * Contains system tests for {@code SortCommand}
+ * Contains system tests for {@code SortCommand}.
  */
 public class SortCommandSystemTest extends AddressBookSystemTest {
 
@@ -91,7 +91,7 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Utility method to get the person at the given index in the model's filtered person list
+     * Utility method to get the {@code Person} at the given index in the model's filtered person list.
      */
     private ReadOnlyPerson getPersonAtIndex(Index index) {
         Model model = getModel();
@@ -99,8 +99,8 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Verifies that the add command succeeds and that the ordering of persons in the model's filtered person list
-     * set by the last sort function still holds true
+     * Verifies that the {@code AddCommand} succeeds and that the ordering of {@code Person}s
+     * in the model's filtered person list set by the last {@code SortCommand} still holds true
      */
     private void assertAddCommandRetainsSortOrder(String command, ReadOnlyPerson toAdd,
             Comparator<ReadOnlyPerson> expectedComparator) throws DuplicatePersonException {
@@ -113,8 +113,8 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Verifies that the edit command succeeds and that the ordering of persons in the model's filtered person list
-     * set by the last sort function still holds true
+     * Verifies that the {@code EditCommand} succeeds and that the ordering of {@code Person}s
+     * in the model's filtered person list set by the last {@code SortCommand} still holds true
      */
     private void assertEditCommandRetainsSortOrder(String command, ReadOnlyPerson target, ReadOnlyPerson editedPerson,
             Comparator<ReadOnlyPerson> expectedComparator) throws DuplicatePersonException, PersonNotFoundException {
@@ -127,8 +127,8 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Verifies that the favorite command succeeds and that the ordering of persons in the model's filtered person list
-     * set by the last sort function still holds true
+     * Verifies that the {@code FavoriteCommand} succeeds and that the ordering of {@code Person}s
+     * in the model's filtered person list set by the last {@code SortCommand} still holds true
      */
     private void assertFavoriteCommandRetainsSortOrder(String command, ReadOnlyPerson toFav,
             Comparator<ReadOnlyPerson> expectedComparator) throws DuplicatePersonException, PersonNotFoundException {
@@ -144,8 +144,8 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Verifies that the sort command succeeds and that the ordering of persons in the model's filtered person list is
-     * correctly set by the sort function
+     * Verifies that the {@code SortCommand} succeeds and that the ordering of {@code Person}s
+     * in the model's filtered person list is correctly set.
      */
     private void assertSortCommandSuccess(String command, String expectedResultMessage,
             Comparator<ReadOnlyPerson> expectedComparator) {
@@ -844,7 +844,7 @@ public class ExportCommandTest {
 ###### /java/seedu/address/model/comparator/PersonComparatorUtilTest.java
 ``` java
 /**
- * Contains unit tests for {@code PersonComparatorUtil}
+ * Contains unit tests for {@code PersonComparatorUtil}.
  */
 public class PersonComparatorUtilTest {
 
@@ -1252,7 +1252,7 @@ public class StorageUtil {
 ###### /java/seedu/address/testutil/modelstubs/ModelStubThrowingDuplicatePersonException.java
 ``` java
 /**
- * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+ * A {@code Model} stub that always throw a {@code DuplicatePersonException} when trying to add a {@code Person}.
  */
 public class ModelStubThrowingDuplicatePersonException extends ModelStub {
     @Override
@@ -1269,7 +1269,7 @@ public class ModelStubThrowingDuplicatePersonException extends ModelStub {
 ###### /java/seedu/address/testutil/modelstubs/ModelStubAcceptingPersonAdded.java
 ``` java
 /**
- * A Model stub that always accept the person being added.
+ * A {@code Model} stub that always accept the {@code Person} being added.
  */
 public class ModelStubAcceptingPersonAdded extends ModelStub {
     public final ArrayList<Person> personsAdded = new ArrayList<>();
@@ -1295,7 +1295,7 @@ public class ModelStubAcceptingPersonAdded extends ModelStub {
 ###### /java/seedu/address/testutil/modelstubs/ModelStub.java
 ``` java
 /**
- * A default model stub that have all of the methods failing.
+ * A default {@code Model} stub that have all of the methods failing.
  */
 public class ModelStub implements Model {
     @Override

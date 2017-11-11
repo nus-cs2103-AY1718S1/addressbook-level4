@@ -26,7 +26,7 @@ public class OptionBearingArgument {
     private String filteredArgs;
 
     /**
-     * Constructs an OptionBearingArgument for the input argument string.
+     * Constructs an OptionBearingArgument for the input {@code String}.
      */
     public OptionBearingArgument(String args) {
         requireNonNull(args);
@@ -36,7 +36,7 @@ public class OptionBearingArgument {
     }
 
     /**
-     * Parses the string to get the list of options, and a filtered argument string with the options removed.
+     * Parses the {@code String} to get the list of options, and a filtered argument string with the options removed.
      */
     private void parse(String args) {
         String[] splitArgs = args.split("\\s+");
@@ -67,7 +67,7 @@ public class OptionBearingArgument {
 ###### /java/seedu/address/logic/parser/ImportCommandParser.java
 ``` java
 /**
- * Parses input arguments and creates a new ImportCommand object.
+ * Parses input arguments and creates a new {@code ImportCommand}.
  */
 public class ImportCommandParser implements Parser {
 
@@ -89,7 +89,7 @@ public class ImportCommandParser implements Parser {
 ###### /java/seedu/address/logic/parser/ExportCommandParser.java
 ``` java
 /**
- * Parses input arguments and creates a new ExportCommand object.
+ * Parses input arguments and creates a new {@code ExportCommand}.
  */
 public class ExportCommandParser implements Parser {
 
@@ -187,7 +187,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
 
     /**
-     * Checks that the input {@String} is not empty.
+     * Checks that the input {@code String} is not empty.
      * @throws ParseException if it is empty.
      */
     private void checkArgsNotEmpty(String args) throws ParseException {
@@ -249,7 +249,7 @@ public class FindCommandParser implements Parser<FindCommand> {
     public static final String INVALID_FIND_COMMAND_FORMAT_MESSAGE =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
     /**
-     * Checks that the input {@String} is not empty.
+     * Checks that the input {@code String} is not empty.
      * @throws ParseException if it is empty.
      */
     private void checkArgsNotEmpty(String args) throws ParseException {
@@ -529,7 +529,7 @@ public class SortByDefaultCommand extends SortCommand {
 ###### /java/seedu/address/logic/commands/SortCommand.java
 ``` java
 /**
- * Sorts the displayed person list
+ * Sorts the displayed person list.
  */
 public abstract class SortCommand extends Command {
 
@@ -555,7 +555,7 @@ public abstract class SortCommand extends Command {
     }
 
     /**
-     * Gets the comparator that defines the ordering in the person list
+     * Gets the comparator that defines the ordering in the person list.
      */
     protected abstract Comparator<ReadOnlyPerson> getComparator();
 }
@@ -834,7 +834,7 @@ public class FindByNameCommand extends FindCommand {
 ###### /java/seedu/address/storage/XmlAdaptedSocialInfo.java
 ``` java
 /**
- * JAXB-friendly adapted version of the SocialInfo.
+ * JAXB-friendly adapted version of the {@code SocialInfo}.
  */
 public class XmlAdaptedSocialInfo {
 
@@ -852,7 +852,7 @@ public class XmlAdaptedSocialInfo {
     public XmlAdaptedSocialInfo() {}
 
     /**
-     * Converts a given SocialInfo into this class for JAXB use.
+     * Converts a given {@code SocialInfo} into this class for JAXB use.
      * @param source future changes to this will not affect the created
      */
     public XmlAdaptedSocialInfo(SocialInfo source) {
@@ -862,7 +862,7 @@ public class XmlAdaptedSocialInfo {
     }
 
     /**
-     * Converts this JAXB-friendly adapted social info object into the model's {@code SocialInfo} object.
+     * Converts this JAXB-friendly adapted {@code SocialInfo} object into the model's {@code SocialInfo} object.
      * @throws IllegalValueException if there were any data constraints violated in the adapted {@code SocialInfo}
      */
     public SocialInfo toModelType() throws IllegalValueException {
@@ -1356,7 +1356,7 @@ public class SocialInfo {
     }
 
     /**
-     * Format state as text for viewing.
+     * Formats state as text for viewing.
      */
     public String toString() {
         return "["
@@ -1489,7 +1489,7 @@ public class SocialInfo {
     void selectPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /**
-     * Gets the {@code Index} of the {@code target} in the filtered person list.
+     * Returns the {@code Index} of the {@code target} in the filtered person list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
     Index getPersonIndex(ReadOnlyPerson target) throws PersonNotFoundException;
