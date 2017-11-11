@@ -61,10 +61,12 @@ public class UiManager extends ComponentManager implements Ui {
             mainWindow.fillInnerParts();
             mainWindow.initSplitPanePlaceholder();
             //@@author vicisapotato
-            if (overDueParcels(logic.getUncompletedParcelList())) {
+            //Popup window only shows if there are overdue parcels in the list
+            //Popup window will then hide itself after 7 seconds.
+            if (hasOverDueParcels(logic.getUncompletedParcelList())) {
                 PopupOverdueParcelsWindow popupOverdueParcelsWindow =
                         new PopupOverdueParcelsWindow(logic.getUncompletedParcelList());
-                popupOverdueParcelsWindow.show();
+                popupOverdueParcelsWindow.showAndHide();
             }
             //@@author
 
@@ -76,10 +78,11 @@ public class UiManager extends ComponentManager implements Ui {
     //@@author vicisapotato
     /**
      * Checks for presence of overdue parcels in parcel list
+     * by iterating through the uncompleted parcel list and checking the status of each parcel.
+     * Returns true the moment one parcel has an overdue status.
      */
-    public boolean overDueParcels (ObservableList<ReadOnlyParcel> uncompletedParcelList) {
+    public boolean hasOverDueParcels (ObservableList<ReadOnlyParcel> uncompletedParcelList) {
 
-        // if there are overdue parcels
         for (int i = 0; i < uncompletedParcelList.size(); i++) {
             if (uncompletedParcelList.get(i).getStatus().equals(Status.OVERDUE)) {
                 return true;
