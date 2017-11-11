@@ -5,18 +5,26 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.BirthdayAddCommand;
+import seedu.address.logic.commands.BirthdayRemoveCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.MapRouteCommand;
+import seedu.address.logic.commands.MapShowCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ScheduleAddCommand;
+import seedu.address.logic.commands.ScheduleRemoveCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.TagAddCommand;
+import seedu.address.logic.commands.TagFindCommand;
 import seedu.address.logic.commands.TagRemoveCommand;
 import seedu.address.logic.commands.UndoCommand;
 
@@ -76,6 +84,22 @@ public class HelpCommandParserTest {
         assertParseSuccess(parser, TagAddCommand.COMMAND_WORD, new HelpCommand("tagadd"));
 
         assertParseSuccess(parser, TagRemoveCommand.COMMAND_WORD, new HelpCommand("tagremove"));
+
+        assertParseSuccess(parser, TagFindCommand.COMMAND_WORD, new HelpCommand("tagfind"));
+
+        assertParseSuccess(parser, BirthdayAddCommand.COMMAND_WORD, new HelpCommand("birthdayadd"));
+
+        assertParseSuccess(parser, BirthdayRemoveCommand.COMMAND_WORD, new HelpCommand("birthdayremove"));
+
+        assertParseSuccess(parser, MapShowCommand.COMMAND_WORD, new HelpCommand("mapshow"));
+
+        assertParseSuccess(parser, MapRouteCommand.COMMAND_WORD, new HelpCommand("maproute"));
+
+        assertParseSuccess(parser, ScheduleAddCommand.COMMAND_WORD, new HelpCommand("scheduleadd"));
+
+        assertParseSuccess(parser, ScheduleRemoveCommand.COMMAND_WORD, new HelpCommand("scheduleremove"));
+
+        assertParseSuccess(parser, ExportCommand.COMMAND_WORD, new HelpCommand("export"));
 
         assertParseSuccess(parser, UndoCommand.COMMAND_WORD, new HelpCommand("undo"));
 
