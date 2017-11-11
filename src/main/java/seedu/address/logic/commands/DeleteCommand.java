@@ -4,10 +4,13 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_REMARKS;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 
+import seedu.address.MainApp;
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.RemarkChangedEvent;
@@ -40,6 +43,8 @@ public class DeleteCommand extends UndoableCommand {
     public static final String MESSAGE_DELETE_LESSON_SUCCESS = "Deleted Lesson: %1$s";
     public static final String MESSAGE_DELETE_LESSON_WITH_LOCATION_SUCCESS = "Deleted location: %1$s";
     public static final String MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS = "Deleted Module: %1$s";
+    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+
 
     private final Index targetIndex;
 
@@ -79,6 +84,7 @@ public class DeleteCommand extends UndoableCommand {
         Location locationToDelete = lastShownList.get(targetIndex.getZeroBased()).getLocation();
         try {
             deleteLessonsWithLocation(locationToDelete);
+            logger.info("---Deleted lessons with location:" + locationToDelete);
         } catch (LessonNotFoundException e) {
             assert false : "The target lesson cannot be missing";
         }
@@ -115,6 +121,7 @@ public class DeleteCommand extends UndoableCommand {
 
             deleteLessonsWithCode(moduleToDelete);
             deleteRemarkWithCode(moduleToDelete);
+            logger.info("---Deleted lessons with module code:" + moduleToDelete);
 
         } catch (LessonNotFoundException e) {
             assert false : "The target lesson cannot be missing";
@@ -170,6 +177,7 @@ public class DeleteCommand extends UndoableCommand {
         try {
             model.unbookBookedSlot(new BookedSlot(lessonToDelete.getLocation(), lessonToDelete.getTimeSlot()));
             model.deleteLesson(lessonToDelete);
+            logger.info("---Deleted lesson:" + lessonToDelete);
         } catch (LessonNotFoundException pnfe) {
             assert false : "The target lesson cannot be missing";
         }

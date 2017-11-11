@@ -3,8 +3,11 @@ package seedu.address.logic.commands;
 import static seedu.address.model.ListingUnit.LESSON;
 
 import java.util.List;
+import java.util.logging.Logger;
 
+import seedu.address.MainApp;
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.RefreshPanelEvent;
@@ -28,6 +31,8 @@ public class MarkCommand extends UndoableCommand {
 
     public static final String MESSAGE_BOOKMARK_LESSON_SUCCESS = "Marked Lesson:  %1$s";
     public static final String MESSAGE_WRONG_LISTING_UNIT_FAILURE = "You can only add lesson into marked list";
+    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+
 
     private final Index targetIndex;
 
@@ -50,8 +55,10 @@ public class MarkCommand extends UndoableCommand {
         if (ListingUnit.getCurrentListingUnit().equals(LESSON)) {
             try {
                 model.bookmarkLesson(lessonToCollect);
+                logger.info("---Bookmark lesson" + lessonToCollect);
                 EventsCenter.getInstance().post(new RefreshPanelEvent());
             } catch (DuplicateLessonException pnfe) {
+                logger.info("---Lesson already in marked list:" + lessonToCollect);
                 throw new CommandException(pnfe.getMessage());
             }
             return new CommandResult(String.format(MESSAGE_BOOKMARK_LESSON_SUCCESS, lessonToCollect));

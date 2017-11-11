@@ -5,8 +5,11 @@ import static seedu.address.model.ListingUnit.getCurrentListingUnit;
 
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
+import seedu.address.MainApp;
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.RefreshPanelEvent;
@@ -36,6 +39,8 @@ public class ViewCommand extends Command {
     public static final String VIEWING_ATTRIBUTE_MODULE = "module";
     public static final String VIEWING_ATTRIBUTE_DEFAULT = "default";
     public static final String VIEWING_ATTRIBUTE_LOCATION = "location";
+    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+
     private final Index targetIndex;
 
     public ViewCommand(Index targetIndex) {
@@ -75,16 +80,19 @@ public class ViewCommand extends Command {
         switch (getCurrentListingUnit()) {
 
         case LOCATION:
+            logger.info("---Viewing lessons with location " + toView.getLocation());
             predicate = new FixedLocationPredicate(toView.getLocation());
             result = String.format(MESSAGE_VIEW_LOCATION_SUCCESS, toView.getLocation());
             break;
 
         case MODULE:
             predicate = new FixedCodePredicate(toView.getCode());
+            logger.info("---Viewing lessons with module code " + toView.getCode());
             result = String.format(MESSAGE_VIEW_MODULE_SUCCESS, toView.getCode());
             break;
 
         default:
+            logger.info("---Viewing failed, invalid listing unit: LESSON");
             throw new CommandException(MESSAGE_VIEW_LESSON_FAILURE);
         }
 

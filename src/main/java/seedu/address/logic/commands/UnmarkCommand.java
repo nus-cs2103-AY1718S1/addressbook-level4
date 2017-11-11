@@ -4,8 +4,11 @@ import static seedu.address.model.ListingUnit.LESSON;
 
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
+import seedu.address.MainApp;
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.RefreshPanelEvent;
@@ -34,6 +37,8 @@ public class UnmarkCommand extends UndoableCommand {
 
     public static final String MESSAGE_UNBOOKMARK_LESSON_SUCCESS = "Unmarked Lesson:  %1$s";
     public static final String MESSAGE_WRONG_LISTING_UNIT_FAILURE = "You can only remove lesson from marked list";
+    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+
 
     private final Index targetIndex;
 
@@ -51,17 +56,19 @@ public class UnmarkCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
         }
 
-        ReadOnlyLesson lessonToCollect = lastShownList.get(targetIndex.getZeroBased());
+        ReadOnlyLesson lessonToUnbookmark = lastShownList.get(targetIndex.getZeroBased());
 
         if (ListingUnit.getCurrentListingUnit().equals(LESSON)) {
             try {
-                model.unBookmarkLesson(lessonToCollect);
+                model.unBookmarkLesson(lessonToUnbookmark);
                 updateLessonList();
+                logger.info("---Unbookmarked lesson:" + lessonToUnbookmark);
                 EventsCenter.getInstance().post(new RefreshPanelEvent());
                 EventsCenter.getInstance().post(new ViewedLessonEvent());
-                return new CommandResult(String.format(MESSAGE_UNBOOKMARK_LESSON_SUCCESS, lessonToCollect));
+                return new CommandResult(String.format(MESSAGE_UNBOOKMARK_LESSON_SUCCESS, lessonToUnbookmark));
 
             } catch (NotRemarkedLessonException e) {
+                logger.info("---The lesson to unbookmark is not in the marked list:" + lessonToUnbookmark);
                 throw new CommandException(e.getMessage());
             }
         } else {
