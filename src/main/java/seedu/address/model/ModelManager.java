@@ -424,12 +424,14 @@ public class ModelManager extends ComponentManager implements Model {
         BufferedImage bufferedImage;
 
         if (imageFile.exists()) {
-            addressBook.addProfilePic(person);
             try {
                 bufferedImage = ImageIO.read(imageFile);
-                ImageIO.write(bufferedImage, "jpg",
-                        new File(DEFAULT_INTERNAL_PROFILEPIC_FOLDER_PATH
-                                + imageName + JPG_EXTENSION));
+                String folderPathToSave = getClass().getResource(DEFAULT_INTERNAL_PROFILEPIC_FOLDER_PATH).getPath();
+                String fullFilePath = folderPathToSave + imageName + JPG_EXTENSION;
+                File file = new File("/out/AlexYeoh.jpg");
+                file.createNewFile();
+                ImageIO.write(bufferedImage, "jpg", file);
+                addressBook.addProfilePic(person);
             } catch (IOException e) {
                 e.printStackTrace();
             }

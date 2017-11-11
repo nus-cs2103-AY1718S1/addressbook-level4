@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -15,8 +16,8 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class DebtorProfilePicture extends UiPart<Region> {
     public static final String FXML = "DebtorProfilePicture.fxml";
-    public static final String DEFAULT_INTERNAL_PROFILEPIC_FOLDER_PATH = "src/main/resources/images/profilePics/";
-    public static final String DEFAULT_PROFILEPIC_PATH = "src/main/resources/images/profilePics/unknown.jpg";
+    public static final String DEFAULT_INTERNAL_PROFILEPIC_FOLDER_PATH = "/images/profilePics/";
+    public static final String DEFAULT_PROFILEPIC_PATH = "/images/profilePics/unknown.jpg";
     public static final String JPG_EXTENSION = ".jpg";
 
     @FXML
@@ -31,19 +32,11 @@ public class DebtorProfilePicture extends UiPart<Region> {
             imagePath =  DEFAULT_INTERNAL_PROFILEPIC_FOLDER_PATH + imageName + JPG_EXTENSION;
         }
 
-        File file = new File(imagePath);
-
-        Image image = null;
-
-        try {
-            image = new Image(file.toURI().toURL().toExternalForm());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        Image image = new Image(getClass().getResource(imagePath).toExternalForm());
 
         profilePic.setImage(image);
-        profilePic.setFitWidth(350);
-        profilePic.setFitHeight(350);
+        profilePic.setFitWidth(200);
+        profilePic.setFitHeight(200);
         registerAsAnEventHandler(this);
     }
 
