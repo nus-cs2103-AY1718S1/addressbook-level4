@@ -1,14 +1,5 @@
 package systemtests;
 //@@author chernghann
-
-import org.junit.Test;
-import seedu.address.logic.commands.AddEventCommand;
-import seedu.address.model.Model;
-import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.event.exceptions.DuplicateEventException;
-import seedu.address.testutil.AddEventUtil;
-import seedu.address.testutil.EventBuilder;
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.EVENT_ADDRESS_A_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.EVENT_ADDRESS_B_DESC;
@@ -16,6 +7,9 @@ import static seedu.address.logic.commands.CommandTestUtil.EVENT_DATE_A_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.EVENT_DATE_B_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.EVENT_NAME_A_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.EVENT_NAME_B_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_ADDRESS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_NAME;
@@ -23,6 +17,17 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_B_ADDRESS
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_B_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_B_NAME;
 import static seedu.address.testutil.TypicalEvents.EVENT_A;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.AddEventCommand;
+import seedu.address.model.Model;
+import seedu.address.model.event.Date;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.person.Address;
+import seedu.address.testutil.EventBuilder;
 
 public class AddEventCommandSystemTest extends AddressBookSystemTest {
 
@@ -74,38 +79,23 @@ public class AddEventCommandSystemTest extends AddressBookSystemTest {
         command = AddEventCommand.COMMAND_WORD + EVENT_NAME_A_DESC + EVENT_DATE_A_DESC;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
 
-//        /* Case: invalid name -> rejected */
-//        command = AddEventCommand.COMMAND_WORD + INVALID_NAME_DESC + VALID_EVENT_A_DATE + VALID_EVENT_A_ADDRESS;
-//        assertCommandFailure(command, EventName.MESSAGE_EVENT_NAME_CONSTRAINTS);
-//
-//        /* Case: invalid date -> rejected */
-//        command = AddEventCommand.COMMAND_WORD + VALID_EVENT_A_NAME + INVALID_DATE_DESC + VALID_EVENT_A_ADDRESS;
-//        assertCommandFailure(command, Date.MESSAGE_DATE_CONSTRAINTS);
-//
-//        /* Case: invalid date -> rejected */
-//        command = AddEventCommand.COMMAND_WORD + VALID_EVENT_A_NAME + VALID_EVENT_A_DATE + INVALID_ADDRESS_DESC;
-//        assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
-    }
+        /* Case: invalid name -> rejected */
+        command = AddEventCommand.COMMAND_WORD + INVALID_NAME_DESC + EVENT_DATE_A_DESC + EVENT_ADDRESS_A_DESC;
+        assertCommandFailure(command, EventName.MESSAGE_EVENT_NAME_CONSTRAINTS);
 
-    /**
-     * Executes the {@code AddEventCommand} that adds {@code toAdd} to the model and verifies that the command box displays
-     * an empty string, the result display box displays the success message of executing {@code AddEventCommand} with the
-     * details of {@code toAdd}, and the model related components equal to the current model added with {@code toAdd}.
-     * These verifications are done by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the command box has the default style class, the status bar's sync status changes,
-     * the browser url and selected card remains unchanged.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandSuccess(ReadOnlyEvent toAdd) {
-        assertCommandSuccess(AddEventUtil.getAddEventCommand(toAdd), toAdd);
+        /* Case: invalid date -> rejected */
+        command = AddEventCommand.COMMAND_WORD + EVENT_NAME_A_DESC + INVALID_DATE_DESC + EVENT_ADDRESS_A_DESC;
+        assertCommandFailure(command, Date.MESSAGE_DATE_CONSTRAINTS);
+
+        /* Case: invalid date -> rejected */
+        command = AddEventCommand.COMMAND_WORD + EVENT_NAME_A_DESC + EVENT_DATE_A_DESC + INVALID_ADDRESS_DESC;
+        assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
     }
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(ReadOnlyPerson)} except that the result
      * display box displays {@code expectedResultMessage} and the model related components equal to
      * {@code expectedModel}. Executes {@code command} instead.
-     * @see AddEventCommandSystemTest#assertCommandSuccess(ReadOnlyEvent)
      */
     private void assertCommandSuccess(String command, ReadOnlyEvent toAdd) {
         Model expectedModel = getModel();
