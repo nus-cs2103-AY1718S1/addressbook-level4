@@ -199,8 +199,7 @@ public class ModelManager extends ComponentManager implements Model {
 
             if (examinedNames.contains(currentName)) {
                 duplicateNames.add(currentName);
-            }
-            else {
+            } else {
                 examinedNames.add(currentName);
             }
         }

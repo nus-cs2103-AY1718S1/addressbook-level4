@@ -185,17 +185,17 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @param tag all persons containing this tag will be deleted
      */
     public void deletePersonsWithTag(Tag tag) throws PersonNotFoundException {
-        ArrayList<Person> toRemove = new ArrayList<>();
+        ArrayList<Person> personsToRemove = new ArrayList<>();
         for (Person person : persons) {
             if (person.hasTag(tag)) {
-                toRemove.add(person);
+                personsToRemove.add(person);
             }
         }
 
-        if (toRemove.isEmpty()) {
+        if (personsToRemove.isEmpty()) {
             throw new PersonNotFoundException();
         }
-        for (Person person : toRemove) {
+        for (Person person : personsToRemove) {
             removePerson(person);
             removeUnusedTags(person.getTags());
         }

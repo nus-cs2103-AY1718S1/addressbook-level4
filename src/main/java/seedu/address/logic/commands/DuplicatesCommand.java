@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 //@@author rushan-khor
 /**
- * Finds and lists persons in address book with possible duplicate entries (by name).
+ * Finds and lists persons in this {@code AddressBook} with possible duplicate entries (by name).
  * Keyword matching is case insensitive.
  */
 public class DuplicatesCommand extends Command {
@@ -18,7 +18,17 @@ public class DuplicatesCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateDuplicatePersonList();
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        String commandResultMessage = makeCommandResultMessage();
+        return new CommandResult(commandResultMessage);
+    }
+
+    /**
+     * Makes the command result message for this command.
+     * @return String The command result message.
+     */
+    public String makeCommandResultMessage() {
+        int filteredPersonListSize = model.getFilteredPersonList().size();
+        return getMessageForPersonListShownSummary(filteredPersonListSize);
     }
 
     @Override
