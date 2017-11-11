@@ -92,6 +92,34 @@ include::../DeveloperGuide.adoc[tag=reminder]
 
 ---
 
+=== Enhancement of existing feature: Deleting multiple persons
+
+==== External behavior (enhancement added in v1.1 update)
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deletemultiple]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+It is troublesome for the user to be only able to delete contacts 1 by 1. This enhancement allows the user to be able to input all unique indices from the displayed list and delete them all at once.
+
+==== Implementation: Deleting multiple persons
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deletemultiple]
+
+#End of Extract#
+
+---
+
 === Enhancement of existing feature: Adding a person with multiple emails
 
 ==== External behavior (enhancement added in v1.3 update)

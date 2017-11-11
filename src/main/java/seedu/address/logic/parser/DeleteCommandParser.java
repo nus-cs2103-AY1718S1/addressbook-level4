@@ -13,6 +13,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new DeleteCommand object
  */
 public class DeleteCommandParser implements Parser<DeleteCommand> {
+    private final int secondParsedIndex = 1;
 
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteCommand
@@ -31,7 +32,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
                 Index index = ParserUtil.parseIndex(indicesInString[i]);
 
                 // Check if there are repeated indices
-                if (i >= 1) {
+                if (i >= secondParsedIndex) {
                     for (Index indexInList: indices) {
                         if (indexInList.equals(index)) {
                             throw new ParseException(invalidCommandString);
