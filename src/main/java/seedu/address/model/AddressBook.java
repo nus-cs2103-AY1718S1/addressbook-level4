@@ -44,7 +44,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public AddressBook() {}
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}.
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -186,9 +186,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     //@@author
 
     //@@author marvinchin
-
     /**
-     * Indicates that a person in the address book has been accessed
+     * Indicates that a {@code Person} in the address book has been accessed.
      */
     public void indicatePersonAccessed(ReadOnlyPerson target) throws PersonNotFoundException {
         Person updatedPerson = new Person(target);
@@ -199,6 +198,8 @@ public class AddressBook implements ReadOnlyAddressBook {
             assert false : "Person should be unique";
         }
     }
+
+    //@@author
 
     //// tag-level operations
 

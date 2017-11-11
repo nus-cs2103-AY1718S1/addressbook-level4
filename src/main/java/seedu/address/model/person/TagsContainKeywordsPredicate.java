@@ -9,7 +9,7 @@ import seedu.address.model.tag.Tag;
 
 //@@author marvinchin
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the keywords given.
  */
 public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final Collection<String> keywords;
@@ -18,7 +18,7 @@ public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         this.keywords = keywords;
     }
 
-    private boolean personTagsMatchKeyword(ReadOnlyPerson person, String keyword) {
+    private boolean doesPersonTagsMatchKeyword(ReadOnlyPerson person, String keyword) {
         Set<Tag> tags = person.getTags();
         return tags.stream().anyMatch(tag -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword));
     }
@@ -26,7 +26,7 @@ public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream()
-                .anyMatch(keyword -> personTagsMatchKeyword(person, keyword));
+                .anyMatch(keyword -> doesPersonTagsMatchKeyword(person, keyword));
     }
 
     @Override

@@ -11,6 +11,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 //@@author marvinchin
+/**
+ * Contains unit tests for {@code LastAccessDate}.
+ */
 public class LastAccessDateTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

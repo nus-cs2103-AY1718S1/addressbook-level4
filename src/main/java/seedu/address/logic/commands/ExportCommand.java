@@ -19,7 +19,7 @@ import seedu.address.storage.Storage;
 
 //@@author marvinchin
 /**
- * Exports existing contacts to external XML file
+ * Exports existing {@code Person}s to an external XML file.
  */
 public class ExportCommand extends Command {
 
@@ -35,8 +35,6 @@ public class ExportCommand extends Command {
     private final Path exportFilePath;
 
     public ExportCommand(String filePath) {
-        // we store it as a Path rather than a String so that we can get the absolute file path
-        // this makes it clearer to the user where the file is saved
         exportFilePath = Paths.get(filePath);
     }
 
@@ -54,8 +52,8 @@ public class ExportCommand extends Command {
     }
 
     /**
-     * Generates an address book for exporting that is equivalent to the current address book, but with all display
-     * pictures removed
+     * Generates an address book for exporting that is equivalent to the input address book, but with all display
+     * pictures removed.
      */
     private ReadOnlyAddressBook generateExportAddressBook(ReadOnlyAddressBook currentAddressBook) {
         AddressBook exportAddressBook = new AddressBook(currentAddressBook);

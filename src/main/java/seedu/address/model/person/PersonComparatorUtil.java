@@ -3,12 +3,13 @@ package seedu.address.model.person;
 //@@author marvinchin
 
 /**
- * Utility class with useful methods for writing person comparators
+ * Utility class with useful methods for writing {@code Person} comparators.
  */
 public class PersonComparatorUtil {
 
     /**
-     * Compares two persons based on whether or not they are favorited. The favorited person will be ordered first.
+     * Compares two {@code Person} based on their {@code Favorite} status.
+     * The favorited person will be ordered first.
      * If both persons have the same favorite status (yes/no), they are considered equal.
      */
     public static int compareFavorite(ReadOnlyPerson thisPerson, ReadOnlyPerson otherPerson) {
@@ -24,7 +25,7 @@ public class PersonComparatorUtil {
     }
 
     /**
-     * Compares two persons based on their names
+     * Compares two {@code Person}s based on their {@code Name}.
      */
     public static int compareName(ReadOnlyPerson thisPerson, ReadOnlyPerson otherPerson) {
         String thisPersonName = thisPerson.getName().toString();
@@ -33,7 +34,7 @@ public class PersonComparatorUtil {
     }
 
     /**
-     * Compares two persons based on their phones
+     * Compares two {@code Person}s based on their {@code Phone}.
      */
     public static int comparePhone(ReadOnlyPerson thisPerson, ReadOnlyPerson otherPerson) {
         String thisPersonPhone = thisPerson.getPhone().toString();
@@ -42,7 +43,7 @@ public class PersonComparatorUtil {
     }
 
     /**
-     * Compares two persons based on their addresses
+     * Compares two {@code Person}s based on their {@code Address}.
      */
     public static int compareAddress(ReadOnlyPerson thisPerson, ReadOnlyPerson otherPerson) {
         String thisPersonAddress = thisPerson.getAddress().toString();
@@ -51,7 +52,7 @@ public class PersonComparatorUtil {
     }
 
     /**
-     * Compares two persons based on their emails
+     * Compares two {@code Person}s based on their {@code Email}.
      */
     public static int compareEmail(ReadOnlyPerson thisPerson, ReadOnlyPerson otherPerson) {
         String thisPersonEmail = thisPerson.getEmail().toString();
@@ -60,7 +61,8 @@ public class PersonComparatorUtil {
     }
 
     /**
-     * Compares two persons based on their last access date, with the most recently accessed person coming first
+     * Compares two {@code Person}s based on their {@code LastAccessDate}.
+     * The person which is most recently accessed person will be ordered first.
      */
     public static int compareLastAccessDate(ReadOnlyPerson thisPerson, ReadOnlyPerson otherPerson) {
         LastAccessDate thisPersonLastAccessDate = thisPerson.getLastAccessDate();

@@ -9,6 +9,10 @@ import org.junit.Test;
 import seedu.address.logic.commands.ImportCommand;
 
 //@@author marvinchin
+
+/**
+ * Contains unit tests for {@code ImportCommandParser}.
+ */
 public class ImportCommandParserTest {
 
     private ImportCommandParser parser = new ImportCommandParser();

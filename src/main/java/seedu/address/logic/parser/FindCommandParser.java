@@ -14,14 +14,14 @@ import seedu.address.model.person.TagsContainKeywordsPredicate;
 
 //@@author marvinchin
 /**
- * Parses input arguments and creates a new FindCommand object
+ * Parses input arguments and creates a new {@code FindCommand}.
  */
 public class FindCommandParser implements Parser<FindCommand> {
     public static final String INVALID_FIND_COMMAND_FORMAT_MESSAGE =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
     /**
-     * Utility function to check that the input arguments is not empty.
-     * Throws a parse exception if it is empty.
+     * Checks that the input {@String} is not empty.
+     * @throws ParseException if it is empty.
      */
     private void checkArgsNotEmpty(String args) throws ParseException {
         if (args == null || args.isEmpty()) {
@@ -32,7 +32,7 @@ public class FindCommandParser implements Parser<FindCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public FindCommand parse(String args) throws ParseException {
         // check that the raw args are not empty before processing
@@ -42,8 +42,8 @@ public class FindCommandParser implements Parser<FindCommand> {
         // check that the filtered args are not empty
         checkArgsNotEmpty(filteredArgs);
 
-        // args should have at most 1 option
         if (opArgs.getOptions().size() > 1) {
+            // args should have at most 1 option
             throw new ParseFindCommandException();
         }
 
@@ -63,7 +63,7 @@ public class FindCommandParser implements Parser<FindCommand> {
     }
 
     /**
-     * Represents a {@code ParseException} encountered when parsing arguments for a {@code FindCommand}
+     * Represents a {@code ParseException} encountered when parsing arguments for a {@code FindCommand}.
      */
     private class ParseFindCommandException extends ParseException {
         public ParseFindCommandException() {

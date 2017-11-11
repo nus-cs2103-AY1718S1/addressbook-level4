@@ -112,7 +112,7 @@ public class SampleDataUtil {
 
     //@@author marvinchin
     /**
-     * Returns a set containing the list of SocialInfo given
+     * Returns a {@code Set} containing the list of {@code SocialInfo}s given.
      */
     public static Set<SocialInfo> getSocialInfoSet(SocialInfo... socialInfos) {
         HashSet<SocialInfo> socialInfoSet = new HashSet<>();

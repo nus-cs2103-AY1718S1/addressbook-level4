@@ -49,7 +49,7 @@ public class ParserUtil {
 
     //@@author marvinchin
     /**
-     * Splits {@code args} by whitespace and returns it
+     * Returns the input {@code String} splitted by whitespace.
      */
     public static List<String> parseWhitespaceSeparatedStrings(String args) {
         requireNonNull(args);
@@ -195,8 +195,6 @@ public class ParserUtil {
     //@@author marvinchin
     /**
      * Parses {@code Collection<String> rawSocialInfos} into {@code Set<SocialInfo}.
-     * @param rawSocialInfos
-     * @return
      */
     public static Set<SocialInfo> parseSocialInfos(Collection<String> rawSocialInfos) throws IllegalValueException {
         requireNonNull(rawSocialInfos);

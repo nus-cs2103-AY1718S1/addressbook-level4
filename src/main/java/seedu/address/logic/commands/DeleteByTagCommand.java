@@ -10,7 +10,7 @@ import seedu.address.model.person.TagsContainKeywordsPredicate;
 
 //@@author marvinchin
 /**
- * Deletes persons from the list identified by their indexes in the last displayed list in the address book.
+ * Deletes {@code Person}s from the list whose {@code Tag}s match the input keywords.
  */
 public class DeleteByTagCommand extends DeleteCommand {
     public static final String COMMAND_OPTION = "tag";
@@ -22,17 +22,17 @@ public class DeleteByTagCommand extends DeleteCommand {
     }
 
     /**
-     * Returns the list of persons in the last shown list referenced by the collection of tags provided.
+     * Returns the list of {@code Person}s in the last shown list whose {@code Tag}s match the input keywords.
      */
-    private Collection<ReadOnlyPerson> mapPersonsToTags(Collection<String> tags) {
-        TagsContainKeywordsPredicate predicate = new TagsContainKeywordsPredicate(tags);
+    private Collection<ReadOnlyPerson> mapPersonsToTags(Collection<String> keywords) {
+        TagsContainKeywordsPredicate predicate = new TagsContainKeywordsPredicate(keywords);
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        List<ReadOnlyPerson> persons = lastShownList.stream().filter(predicate).collect(Collectors.toList());
-        return persons;
+        List<ReadOnlyPerson> matchedPersons = lastShownList.stream().filter(predicate).collect(Collectors.toList());
+        return matchedPersons;
     }
 
     @Override
-    public Collection<ReadOnlyPerson> getPersonsToDelete() {
+    protected Collection<ReadOnlyPerson> getPersonsToDelete() {
         return mapPersonsToTags(targetTags);
     }
 

@@ -39,7 +39,7 @@ public interface Model {
     void addPersons(Collection<ReadOnlyPerson> persons);
 
     //@@author marvinchin
-    /** Sorts the persons in the address book based on the input {@code comparator} */
+    /** Sorts the {@code Person}s in the address book based on the input {@code comparator}. */
     void sortPersons(Comparator<ReadOnlyPerson> comparator);
     //@@author
 
@@ -49,11 +49,11 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
 
     //@@author marvinchin
-    /** Selects the given person. Should update the last accessed time of the person. */
+    /** Selects the given {@code Person}. Should update the {@code LastAccessDate} of the person. */
     void selectPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /**
-     * Gets the index of the person {@code target} in the filtered person list.
+     * Gets the {@code Index} of the {@code target} in the filtered person list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
     Index getPersonIndex(ReadOnlyPerson target) throws PersonNotFoundException;
