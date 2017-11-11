@@ -37,6 +37,7 @@ import seedu.address.logic.commands.MapRouteCommand;
 import seedu.address.logic.commands.MapShowCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SwitchThemeCommand;
 import seedu.address.logic.commands.TagAddCommand;
 import seedu.address.logic.commands.TagAddCommand.TagAddDescriptor;
 import seedu.address.logic.commands.TagFindCommand;
@@ -140,7 +141,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommandTagAdd() throws Exception {
+    public void parseCommand_tagAdd() throws Exception {
         Person person = new PersonBuilder().build();
         ArrayList<Index> singlePersonIndexList = new ArrayList<>();
         singlePersonIndexList.add(INDEX_FIRST_PERSON);
@@ -155,7 +156,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommandLooseTagFind() throws Exception {
+    public void parseCommand_looseTagFind() throws Exception {
         boolean looseFind = true;
         TagMatchingKeywordPredicate predicate = new TagMatchingKeywordPredicate("friend", looseFind);
         TagFindCommand command = (TagFindCommand) parser.parseCommand(TagFindCommand.COMMAND_WORD
@@ -164,7 +165,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommandTagRemove() throws Exception {
+    public void parseCommand_tagRemove() throws Exception {
         Person person = new PersonBuilder().build();
         ArrayList<Index> singlePersonIndexList = new ArrayList<>();
         singlePersonIndexList.add(INDEX_FIRST_PERSON);
@@ -176,6 +177,17 @@ public class AddressBookParserTest {
         TagRemoveCommand command = (TagRemoveCommand) parser.parseCommand(TagRemoveCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " friend");
         assertEquals(new TagRemoveCommand(singlePersonIndexList, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_theme() throws Exception {
+        String themeChoice1 = "1";
+        String themeChoice2 = "Twilight";
+        SwitchThemeCommand command1 = new SwitchThemeCommand(themeChoice1);
+        assertEquals(new SwitchThemeCommand(themeChoice1), command1);
+
+        SwitchThemeCommand command2 = new SwitchThemeCommand(themeChoice2);
+        assertEquals(new SwitchThemeCommand(themeChoice2), command2);
     }
 
     @Test

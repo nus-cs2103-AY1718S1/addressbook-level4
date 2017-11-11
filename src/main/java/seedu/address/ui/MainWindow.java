@@ -21,6 +21,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeBrightThemeEvent;
 import seedu.address.commons.events.ui.ChangeDarkThemeEvent;
+import seedu.address.commons.events.ui.ChangeDefaultThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -311,7 +312,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleDefaultThemeEvent(ChangeBrightThemeEvent event) {
+    private void handleDefaultThemeEvent(ChangeDefaultThemeEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         changeToDefaultTheme();
     }

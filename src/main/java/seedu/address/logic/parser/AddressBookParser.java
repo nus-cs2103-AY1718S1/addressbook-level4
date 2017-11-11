@@ -30,6 +30,7 @@ import seedu.address.logic.commands.ScheduleAddCommand;
 import seedu.address.logic.commands.ScheduleRemoveCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.SwitchThemeCommand;
 import seedu.address.logic.commands.TagAddCommand;
 import seedu.address.logic.commands.TagFindCommand;
 import seedu.address.logic.commands.TagRemoveCommand;
@@ -62,6 +63,7 @@ public class AddressBookParser {
         commandNames.add(BirthdayAddCommand.COMMAND_WORD);
         commandNames.add(BirthdayRemoveCommand.COMMAND_WORD);
         commandNames.add(SelectCommand.COMMAND_WORD);
+        commandNames.add(SwitchThemeCommand.COMMAND_WORD);
         commandNames.add(MapShowCommand.COMMAND_WORD);
         commandNames.add(MapRouteCommand.COMMAND_WORD);
         commandNames.add(DeleteCommand.COMMAND_WORD);
@@ -136,6 +138,9 @@ public class AddressBookParser {
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_WORD_2:
             return new SelectCommandParser().parse(arguments);
+
+        case SwitchThemeCommand.COMMAND_WORD:
+            return new SwitchThemeCommandParser().parse(arguments);
 
         case MapShowCommand.COMMAND_WORD:
             return new MapShowCommandParser().parse(arguments);
