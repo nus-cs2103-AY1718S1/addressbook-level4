@@ -167,7 +167,7 @@ public class MainWindow extends UiPart<Region> {
      * change to home display page when the home command is parsed. @param valid
      */
     public void setScreenDisplay(boolean valid) {
-        HomePanel homePanel = new HomePanel();
+        HomePanel homePanel = new HomePanel(prefs);
         if (valid) {
             extendedScreenPlaceHolder.getChildren().removeAll();
             extendedScreenPlaceHolder.getChildren().setAll(homePanel.getRoot());

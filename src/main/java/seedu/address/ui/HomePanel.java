@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.UserPrefs;
 
 //@@author nahtanojmil
 /**
@@ -19,8 +20,7 @@ import seedu.address.commons.core.LogsCenter;
 public class HomePanel extends UiPart<Region> {
 
     private static final String FXML = "HomePanel.fxml";
-    private static final File dir = new File(
-            "C:\\Users\\Jon\\Documents\\GitHub\\AddressBook\\T16 -B2\\src\\main\\resources\\images\\Wallpaper");
+    private static final File dir = new File("src//main//resources//images//Wallpaper");
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
@@ -29,6 +29,7 @@ public class HomePanel extends UiPart<Region> {
     @FXML
     private Label quotesLabel;
 
+    private UserPrefs pref;
     private File[] files = dir.listFiles();
     private String[] quotes = {
         "What we want is to see the child in pursuit of knowledge, and not knowledge in pursuit of the child.",
@@ -45,8 +46,9 @@ public class HomePanel extends UiPart<Region> {
         "The best way to predict your future is to create it."
     };
 
-    public HomePanel() {
+    public HomePanel(UserPrefs preferences) {
         super(FXML);
+        this.pref = preferences;
     }
 
     public HomePanel getHomePanel() {
@@ -61,7 +63,7 @@ public class HomePanel extends UiPart<Region> {
         File image = files[random.nextInt(files.length)];
         Image wallpaper = new Image(image.toURI().toString());
         homePage.setImage(wallpaper);
-        homePage.setFitWidth(1650);
+        homePage.setFitWidth(pref.getGuiSettings().getWindowWidth());
         quotesLabel.setMinWidth(500);
         quotesLabel.setStyle("-fx-font: 30 system;");
         quotesLabel.setText(quotes[random.nextInt(quotes.length)]);
