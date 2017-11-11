@@ -1264,12 +1264,63 @@ the idea of allowing custom user-defined input, concurrent to a default country 
 
 ---
 //end::country_code[]
+//start::quick_start[]
+=== Quick-Start Help [Since v.1.5]
+
+At application launch, the result display box (directly beneath the command box where user inputs commands) shows a handy list
+of command names and keyboard hotkey shortcuts. This reminds users of valid command keywords at a glance, and should greatly
+reduce the learning curve for novice users, without affecting users who do not need it.
+
+Since this display used to launch completely empty, placing any useful information inside was essentially a zero-cost way to
+increase information displayed. As this box is a pre-emptive Help feature, it currently resides in HelpCommand despite being
+first called at launch, rather than by the user. However, in addition to this, a user enter `help command` to make this quick guide re-appear.
+
+[source,java]
+----
+// Directly raise a result to the result pane to make use of its space at application launch
+
+raise(new NewResultAvailableEvent(COMMAND_QUICK_HELP, false));
+
+----
+_Figure 4.12.1: From WelcomeScreen.java_
+
+Figure 4.12.2 shows the quick help list of shortcuts, commands and their aliases. Figure 4.12.3 shows this display re-appearing
+after the user enters `help command`.
+
+image::country_code demo 1.PNG[width="400"]
+_Figure 4.12.3 : Quick-start help on application launch_
+
+image::quick_help demo 1.PNG[width="400"]
+_Figure 4.12.3 : Quick-start help through entering help command_
+
+==== Design Considerations for `Quick-Start Help`
+
+As there is only about 3 lines' worth of space in the result display box, we needed to prioritize the most important
+information to the user. Since a Command Line Interface (CLI) may have a steeper learning curve stemming from users being
+unable to remember commands, this was our primary concern. However, there was insufficient space to include
+the parameter inputs for each command. As we did create specific 3-line quick help for all commands, there was no urgent need to
+include extra details within this quick summary of commands.
+
+This lack of space also forced us to make full use of the space by using 4 spaces between each command listed, rather than
+a new line for each command. This reasonably compact layout should also be more efficient for users to glance at, rather than
+in a long straight line in either direction.
+
+*Alternatives considered*
+
+We could instead have placed this information in a completely new display box in the app. Although this meant that the quick
+help would be available all the time, we already had significant space demands by the existing 3 other major feature panels
+on the app. As such, it was unfeasible to add even more panes to the window and risk complicating the interface too.
+
+---
+//end::quick_start[]
 //start::backup[]
 === Contact Backup [Since v1.5]
 
 
 
 
+
+---
 
 === Logging
 
