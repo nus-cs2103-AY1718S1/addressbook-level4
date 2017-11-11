@@ -469,11 +469,11 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-==== Enabling and disabling the welcome screen: `welcome` [Since v1.5]
+==== Enabling and disabling the welcome window: `welcome` [Since v1.5]
 
 => Alias: `w` <=
 
-Enables or disables the welcome screen.
+Enables or disables the welcome window.
 Format: `welcome ENABLING_KEYWORD`
 
 Examples:
@@ -483,10 +483,15 @@ Examples:
 * `welcome disable` +
 
 [NOTE]
-The welcome screen is disabled by default.
+The welcome window is disabled by default.
 
 [TIP]
-Try enabling the welcome screen, close and rerun ConTag. The welcome screen displays 1 out of the 15 default productivity quotes at random every time ConTag is run to keep you motivated throughout the day.
+Try enabling the welcome window, close and rerun ConTag.
+
+If the welcome window is successfully enabled, you should be able to see a the following window as shown in _Figure 3.5.5.1_ every time ConTag is run. The welcome window displays 1 out of the 15 default productivity quotes at random to keep you motivated throughout the day.
+
+image::WelcomeScreen.PNG[width="400"]
+_Figure 3.4.3.1: The welcome window_
 
 ==== Exiting the program : `exit`
 
@@ -539,7 +544,7 @@ To *transfer data* to another Computer, install the app in the other computer an
 
 |link:#undoing-previous-command-code-undo-code[Undo] |`u`| `undo` |
 
-|link:#enabling-and-disabling-the-welcome-screen-since-v1.5[Welcome] | `w` | `welcome ENABLING_KEYWORD` | `welcome enable`
+|link:#enabling-and-disabling-the-welcome-screen-code-welcome-code-since-v1-5[Welcome] | `w` | `welcome ENABLING_KEYWORD` | `welcome enable`
 
 |=======================================================================
 
