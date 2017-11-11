@@ -218,6 +218,10 @@ Deletes the 2nd person in the address book.
 Deletes the 1st person in the results of the `find` command.
 
 Another way to delete a contact in the list:
+
+image::contact_list.png[width="200"]
+_Figure 4.6.1 : Deleting a contact_
+
 ****
 1. Select a person in the list
 2. Click the delete button
@@ -229,13 +233,17 @@ Another way to delete a contact in the list:
 === Displaying a contact's location
 (added in v1.2)
 
-As a business user, you might want to identify the address of your clients in order to provide services such as delivery and technical support. The application is equipped with the ability to display your client's location using google map. So you can plan your trip and schedule while using the application. +
+As a business user, you might want to identify the addresses of your clients in order to provide services such as delivery and technical support. The application is equipped with the ability to display your client's location using Google Maps, allowing you to plan your trip while using the application. +
+
+image::google_maps.png[width="790"]
+_Figure 4.7.1 : viewing a contact on Google Maps_
+
 You can select a contact either using:
 
 * `select INDEX`
-* Click on a contact on the list
+* or by clicking on a contact on the list
 
-Their location will be displayed on the browser panel on the right.
+Their location will be displayed on the browser panel on the right, as shown in _Figure 4.7.1_.
 // end::googlemaps[]
 // tag::email[]
 
@@ -246,11 +254,21 @@ To make your work more efficient, we have implemented an email feature that allo
 
 Format: `email INDEX`
 
+image::email.png[width="790"]
+_Figure 4.8.1 : emailing a contact_
+
+Refering to Figure 4.8.1, the steps below describe how to email a client.
+
 ****
 1. Select a person in the list
 2. Click the "Email" Button
 3. Proceed to compose email on email client
 ****
+If you want to use the command line:
+
+You can email a contact using:
+
+* `email INDEX`
 
 Examples:
 
