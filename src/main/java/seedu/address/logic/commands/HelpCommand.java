@@ -175,6 +175,13 @@ public class HelpCommand extends Command {
             commandResult = COMMAND_QUICK_HELP;
             break;
 
+        case BackupCommand.COMMAND_ALIAS:
+            //fallthrough
+
+        case BackupCommand.COMMAND_WORD:
+            commandResult = BackupCommand.MESSAGE_USAGE;
+            break;
+
         //@@author CT15
         default:
             EventsCenter.getInstance().post(new ShowHelpRequestEvent());
