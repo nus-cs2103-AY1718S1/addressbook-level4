@@ -25,7 +25,7 @@ public class EmailCommand extends Command {
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "mail", "mailto", "m"));
     public static final String COMMAND_HOTKEY = "Ctrl+M";
-    public static final String FORMAT = "email INDEX";
+    public static final String FORMAT = "email INDEX [s/SUBJECT]";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Launch the mail composing window of the default mail client.\n"
