@@ -8,11 +8,11 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysEvent;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardEventsEquals;
 
-import guitests.guihandles.EventCardHandle;
-import guitests.guihandles.EventListPanelHandle;
 import org.junit.Before;
 import org.junit.Test;
 
+import guitests.guihandles.EventCardHandle;
+import guitests.guihandles.EventListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
