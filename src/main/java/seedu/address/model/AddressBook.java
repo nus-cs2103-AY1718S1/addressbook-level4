@@ -175,7 +175,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throws DuplicateInsuranceException, DuplicateInsuranceContractNameException {
         UUID id = UUID.randomUUID();
         LifeInsurance lifeInsurance = new LifeInsurance(i);
-        lifeInsuranceMap.put(id, lifeInsurance);
+        lifeInsuranceMap.put(lifeInsurance.getId(), lifeInsurance);
         syncWithUpdate();
     }
     //@@author
@@ -252,15 +252,15 @@ public class AddressBook implements ReadOnlyAddressBook {
             String insured = insurance.getInsured().getName();
             String beneficiary = insurance.getBeneficiary().getName();
             persons.forEach(person -> {
-                if (person.getName().fullName.equals(owner)) {
+                if (person.getName().toString().equals(owner)) {
                     insurance.setOwner(person);
                     person.addLifeInsuranceIds(id);
                 }
-                if (person.getName().fullName.equals(insured)) {
+                if (person.getName().toString().equals(insured)) {
                     insurance.setInsured(person);
                     person.addLifeInsuranceIds(id);
                 }
-                if (person.getName().fullName.equals(beneficiary)) {
+                if (person.getName().toString().equals(beneficiary)) {
                     insurance.setBeneficiary(person);
                     person.addLifeInsuranceIds(id);
                 }
