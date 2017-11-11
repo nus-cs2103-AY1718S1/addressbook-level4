@@ -126,7 +126,6 @@ public class UserProfileWindowHandle extends StageHandle {
      */
     public void clickOk() {
         Platform.runLater(() -> {
-            //okButton.arm();
             okButton.fire();
         });
     }

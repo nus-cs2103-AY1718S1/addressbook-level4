@@ -82,7 +82,7 @@ public class GuiTestAssert {
 
     public static void assertUserProfileWindowStatusLabelEquals(
             UserProfileWindowHandle userProfileWindowHandle, String text) {
-        assertEquals(userProfileWindowHandle.getStatusLabel().getText(), text);
+        assertEquals(text, userProfileWindowHandle.getStatusLabel().getText());
     }
     //@@author
 }

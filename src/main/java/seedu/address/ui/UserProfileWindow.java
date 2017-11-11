@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -91,24 +90,12 @@ public class UserProfileWindow extends UiPart<Region> {
 
     /**
      * Sets accelerators for the UserProfileWindow
-     * @param scene
+     * @param scene Current scene
      */
     private void setAccelerators(Scene scene) {
-        scene.getAccelerators().put(KeyCombination.valueOf("ESC"), ()-> handleCancel());
-        scene.getAccelerators().put(KeyCombination.valueOf("ENTER"), ()-> handleOk());
+        scene.getAccelerators().put(KeyCombination.valueOf("ESC"), this::handleCancel);
+        scene.getAccelerators().put(KeyCombination.valueOf("ENTER"), this::handleOk);
 
-    }
-
-    /**
-     * Binds the individual UI elements to observe their respective {@code Person} properties
-     * so that they will be notified of any changes.
-     */
-    private void bindListeners(UserPerson userPerson) {
-        nameTextField.textProperty().bind(Bindings.convert(userPerson.nameProperty()));
-        phoneTextField.textProperty().bind(Bindings.convert(userPerson.phoneProperty()));
-        addressTextField.textProperty().bind(Bindings.convert(userPerson.addressProperty()));
-        emailTextField.textProperty().bind(Bindings.convert(userPerson.emailProperty()));
-        webLinkTextField.textProperty().bind(Bindings.convert(userPerson.webLinkProperty()));
     }
 
     /**

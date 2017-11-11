@@ -17,7 +17,9 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.UserPerson;
+import seedu.address.model.util.SampleUserPersonUtil;
 import seedu.address.storage.UserPrefsStorage;
+import seedu.address.storage.UserProfileStorage;
 import seedu.address.storage.XmlSerializableAddressBook;
 import seedu.address.testutil.TestUtil;
 import systemtests.ModelHelper;
@@ -74,6 +76,19 @@ public class TestApp extends MainApp {
         userPrefs.setUserProfileFilePath(saveFileLocationUserProfile);
         userPrefs.setAddressBookName(ADDRESS_BOOK_NAME);
         return userPrefs;
+    }
+
+    @Override
+    protected UserPerson initUserPerson(UserProfileStorage storage) {
+        UserPerson userPerson = super.initUserPerson(storage);
+        userPerson.setName(SampleUserPersonUtil.getDefaultSamplePerson().getName());
+        userPerson.setPhone(SampleUserPersonUtil.getDefaultSamplePerson().getPhone());
+        userPerson.setEmail(SampleUserPersonUtil.getDefaultSamplePerson().getEmail());
+        userPerson.setAddress(SampleUserPersonUtil.getDefaultSamplePerson().getAddress());
+        userPerson.setWebLinks(SampleUserPersonUtil.getDefaultSamplePerson().getWebLinks());
+
+        return userPerson;
+
     }
 
     /**
