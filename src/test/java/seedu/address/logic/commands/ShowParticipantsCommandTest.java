@@ -63,7 +63,7 @@ public class ShowParticipantsCommandTest {
     }
 
     /**
-     * Parses {@code userInput} into a {@code ShowParticipantsCommand}.
+     * Parses {@code eventIndex} into a {@code ShowParticipantsCommand}.
      */
     private ShowParticipantsCommand prepareCommand(Index eventIndex) {
         ShowParticipantsCommand command = new ShowParticipantsCommand(eventIndex);
@@ -74,7 +74,7 @@ public class ShowParticipantsCommandTest {
     /**
      * Asserts that {@code command} is successfully executed, and<br>
      *     - the command feedback is equal to {@code message}<br>
-     *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
+     *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code list}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
     private void assertCommandSuccess(ShowParticipantsCommand command, String message, List<ReadOnlyPerson> list) {

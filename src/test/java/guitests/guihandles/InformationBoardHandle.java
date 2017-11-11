@@ -15,7 +15,7 @@ public class InformationBoardHandle extends NodeHandle<TextArea> {
     }
 
     /**
-     * Returns the text in the result display.
+     * Returns the text in the information board.
      */
     public String getText() {
         return getRootNode().getText();

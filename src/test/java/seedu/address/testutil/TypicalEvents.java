@@ -53,7 +53,7 @@ public class TypicalEvents {
 
     //@@author HouDenghao
     /**
-     * Returns an {@code EventList} with all the typical events.
+     * Returns an empty {@code EventList} with all the unsorted events.
      */
     public static EventList getUnsortedEventList() {
         EventList el = new EventList();
@@ -68,7 +68,7 @@ public class TypicalEvents {
     }
 
     /**
-     * Returns an {@code EventList} with all the typical events.
+     * Returns an empty {@code EventList}.
      */
     public static EventList getEmptyEventList() {
         EventList el = new EventList();

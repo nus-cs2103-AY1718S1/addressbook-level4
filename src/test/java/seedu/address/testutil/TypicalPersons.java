@@ -96,7 +96,7 @@ public class TypicalPersons {
     }
 
     /**
-     * Returns an {@code AddressBook} with all the unsorted persons.
+     * Returns an empty {@code AddressBook}.
      */
     public static AddressBook getEmptyAddressBook() {
         AddressBook ab = new AddressBook();

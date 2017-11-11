@@ -81,7 +81,7 @@ public class EventListPanelHandle extends NodeHandle<ListView<EventCard>> {
     }
 
     /**
-     * Returns the {@code EventCardHandle} of the specified {@code person} in the list.
+     * Returns the {@code EventCardHandle} of the specified {@code event} in the list.
      */
     public EventCardHandle getEventCardHandle(ReadOnlyEvent event) {
         Optional<EventCardHandle> handle = getRootNode().getItems().stream()

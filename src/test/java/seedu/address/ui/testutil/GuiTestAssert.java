@@ -30,7 +30,7 @@ public class GuiTestAssert {
 
     // @@author HouDenghao
     /**
-     * Asserts that {@code actualEventCard} displays the same values as {@code expectedCard}.
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
     public static void assertEventCardEquals(EventCardHandle expectedCard, EventCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());

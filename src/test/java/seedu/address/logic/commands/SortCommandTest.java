@@ -74,7 +74,7 @@ public class SortCommandTest {
     }
 
     /**
-     * Parses {@code userInput} into a {@code SortCommand}.
+     * Prepares for {@code SortCommand} .
      */
     private SortCommand prepareCommand(Model model) {
         SortCommand command = new SortCommand();
@@ -84,7 +84,7 @@ public class SortCommandTest {
 
     /**
      * Asserts that {@code c} is successfully executed, and<br>
-     *     - the command feedback is equal to {@code message}<br>
+     *     - the command feedback is equal to {@code msg}<br>
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code p}<br>
      *     - the {@code FilteredList<ReadOnlyEvent>} is equal to {@code e}<br>
      */
