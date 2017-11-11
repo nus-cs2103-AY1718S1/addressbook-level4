@@ -13,7 +13,6 @@ import java.util.Set;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.PopulateRequestEvent;
-import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.event.exceptions.DuplicateEventException;
