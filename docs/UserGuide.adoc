@@ -43,7 +43,7 @@ You are required to know how to use Java to run a Graphical User Interface (GUI)
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  You can download the latest `MedNus.jar` link:{repoURL}/releases[here].
+.  You can download the latest `MedNus.jar` link:https://github.com/CS2103AUG2017-T17-B2/main/releases[here].
 .  You should create a new folder to store the jar file.
 .  Copy the jar file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The graphical user interface (GUI) should appear in a few seconds.
@@ -672,6 +672,9 @@ You do not need to save data manually.
 
 |*Shift-Backspace* |Deletes a chunk of word/blank space |For Windows Users
 
-|*Right* |Add Command Shortcut to autofill Prefixes |"Add" or "A" must be present at the start of the line
+|*Right* (Add Command)|Add Command Shortcut to autofill Prefixes |"Add" or "A" must be present at the start of the line
+
+|*Right* (Edit Command)|Edit Command Shortcut to autofill Prefixes |"Edit INDEX" or "e INDEX" must be present at the start of the line
+
 |=======================================================================
 // end::shortcut[]
