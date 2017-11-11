@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
@@ -35,10 +36,17 @@ public class ResultDisplay extends UiPart<Region> {
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        ObservableList<String> styleClass = resultDisplay.getStyleClass();
+
         if (event.isError()) {
-            resultDisplay.setStyle("-fx-text-fill: red;");
+            if (!styleClass.contains("error")) {
+                styleClass.add("error");
+            }
         } else {
-            resultDisplay.setStyle("-fx-text-fill: white;");
+            if (styleClass.contains("error")) {
+                styleClass.remove("error");
+            }
         }
         Platform.runLater(() -> displayed.setValue(event.message));
     }

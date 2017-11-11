@@ -19,6 +19,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.UserPrefs;
 
 /**
  * A pop up Window for email sending
@@ -29,6 +30,7 @@ public class EmailSendWindow extends UiPart<Region> {
 
     private Stage primaryStage;
     private Logic logic;
+    private UserPrefs prefs;
 
     @FXML
     private Label recipientsLabel;
@@ -54,11 +56,18 @@ public class EmailSendWindow extends UiPart<Region> {
     @FXML
     private TextArea feedbackLabel;
 
-    public EmailSendWindow(Logic logic, Stage parentStage, String recipients, String feedback) {
+    public EmailSendWindow(Logic logic, Stage parentStage, String recipients, String feedback, UserPrefs prefs) {
         super(FXML);
 
         this.primaryStage = new Stage();
         Scene scene = new Scene(getRoot());
+
+        if (prefs.getCurrentUserTheme().equals("DarkTheme")) {
+            scene.getStylesheets().add("view/CSS/EmailSendWindowDark.css");
+        } else {
+            scene.getStylesheets().add("view/CSS/EmailSendWindowLight.css");
+        }
+
         this.primaryStage.setScene(scene);
         this.primaryStage.initOwner(parentStage);
         this.primaryStage.initModality(Modality.WINDOW_MODAL);

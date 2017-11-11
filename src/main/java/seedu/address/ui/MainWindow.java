@@ -136,7 +136,7 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
+        browserPanel = new BrowserPanel(prefs);
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
@@ -151,7 +151,7 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        FunctionButtons functionButtons = new FunctionButtons(logic, primaryStage, this);
+        FunctionButtons functionButtons = new FunctionButtons(logic, primaryStage, this, prefs);
         functionButtonsPanel.getChildren().add(functionButtons.getRoot());
 
         SearchBar searchBar = new SearchBar(logic);
