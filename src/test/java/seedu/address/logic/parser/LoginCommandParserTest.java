@@ -17,7 +17,7 @@ public class LoginCommandParserTest {
     private LoginCommandParser parser = new LoginCommandParser();
 
     @Test
-    public void parse_validArgs_returnsLoginCommand() {
+    public void parse_validArgs_returnsLoginCommand() throws Exception {
         String validUsername = "User_1234";
         String validPassword = "P@$$worD";
 

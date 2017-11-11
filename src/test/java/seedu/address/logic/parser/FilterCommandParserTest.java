@@ -16,13 +16,13 @@ public class FilterCommandParserTest {
     private FilterCommandParser parser = new FilterCommandParser();
 
     @Test
-    public void parse_emptyArg_throwsParseException() {
+    public void parse_emptyArg_throwsParseException() throws Exception {
         assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 FilterCommand.MESSAGE_USAGE));
     }
 
     @Test
-    public void parse_validArgs_returnsFilterCommand() {
+    public void parse_validArgs_returnsFilterCommand() throws Exception {
         // no leading and trailing whitespaces
         FilterCommand expectedFilterCommand = new FilterCommand(Arrays.asList("violent", "friendly"));
         assertParseSuccess(parser, "violent friendly", expectedFilterCommand);

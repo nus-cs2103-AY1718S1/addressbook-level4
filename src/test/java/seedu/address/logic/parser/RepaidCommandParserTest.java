@@ -7,6 +7,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
 
+import seedu.address.logic.CommandTest;
 import seedu.address.logic.commands.RepaidCommand;
 
 //@@author jaivigneshvenugopal
@@ -17,14 +18,19 @@ import seedu.address.logic.commands.RepaidCommand;
  * The path variation for those two cases occur inside the ParserUtil, and
  * therefore should be covered by the ParserUtilTest.
  */
-public class RepaidCommandParserTest {
+public class RepaidCommandParserTest extends CommandTest {
 
     private RepaidCommandParser parser = new RepaidCommandParser();
 
     @Test
-    public void parse_validArgs_returnsRepaidCommand() {
-        assertParseSuccess(parser, "", new RepaidCommand());
+    public void parse_validArgs_returnsRepaidCommand() throws Exception {
         assertParseSuccess(parser, "1", new RepaidCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_noIndex_returnsRepaidCommand() throws Exception {
+        selectFirstPerson();
+        assertParseSuccess(parser, "", new RepaidCommand(INDEX_FIRST_PERSON));
     }
 
     @Test

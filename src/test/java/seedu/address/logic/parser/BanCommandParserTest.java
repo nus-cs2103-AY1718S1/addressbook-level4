@@ -7,6 +7,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
 
+import seedu.address.logic.CommandTest;
 import seedu.address.logic.commands.BanCommand;
 
 //@@author jaivigneshvenugopal
@@ -17,13 +18,18 @@ import seedu.address.logic.commands.BanCommand;
  * The path variation for those two cases occur inside the ParserUtil, and
  * therefore should be covered by the ParserUtilTest.
  */
-public class BanCommandParserTest {
+public class BanCommandParserTest extends CommandTest {
     private BanCommandParser parser = new BanCommandParser();
 
     @Test
-    public void parse_validArgs_returnsBanCommand() {
-        assertParseSuccess(parser, "", new BanCommand());
+    public void parse_validArgs_returnsBanCommand() throws Exception {
         assertParseSuccess(parser, "1", new BanCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_noIndex_returnsBanCommand() throws Exception {
+        selectFirstPerson();
+        assertParseSuccess(parser, "", new BanCommand(INDEX_FIRST_PERSON));
     }
 
     @Test

@@ -19,8 +19,7 @@ public class NearbyCommandParserTest {
     private NearbyCommandParser parser = new NearbyCommandParser();
 
     @Test
-    public void parse_validArgs_returnsNearbyCommand() {
-        assertParseSuccess(parser, "", new NearbyCommand());
+    public void parse_validArgs_returnsNearbyCommand() throws Exception {
         assertParseSuccess(parser, "1", new NearbyCommand(INDEX_FIRST_PERSON));
     }
 
