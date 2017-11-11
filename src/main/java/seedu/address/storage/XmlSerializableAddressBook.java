@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -9,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -19,6 +21,8 @@ import seedu.address.model.tag.Tag;
  */
 @XmlRootElement(name = "addressbook")
 public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
+
+    private static final Logger logger = LogsCenter.getLogger(XmlSerializableAddressBook.class);
 
     @XmlElement
     private List<XmlAdaptedPerson> persons;
@@ -50,7 +54,9 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
             try {
                 return p.toModelType();
             } catch (IllegalValueException e) {
-                throw new RuntimeException("Data constraints violated in the adapted person: \n" + e);
+                logger.severe("Data constraints violated in the adapted person. Some of the data in the persons"
+                        + " list are in an invalid format. \n" + e);
+                return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(persons);
@@ -62,8 +68,9 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
             try {
                 return t.toModelType();
             } catch (IllegalValueException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Data constraints violated in the adapted person: \n" + e);
+                logger.severe("Data constraints violated in the adapted person. Some of the data in ther persons"
+                        + " list are in an invalid format. \n" + e);
+                return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(tags);
