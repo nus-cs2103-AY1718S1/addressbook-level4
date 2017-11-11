@@ -134,6 +134,18 @@ public class AutocompleterTest extends GuiUnitTest {
         // autocomplete first index after command
         assertAutocompleteSuccess(EDIT_COMMAND_WORD, "edit 1", EMPTY_STRING);
 
+        // autocomplete number out of range of index
+        assertAutocompleteSuccess("edit 999", "edit 2", EMPTY_STRING);
+
+        // autocomplete with letters instead and no index
+        assertAutocompleteSuccess("edit abc", "edit 1", EMPTY_STRING);
+
+        // autocomplete with prefix without
+        assertAutocompleteSuccess("edit #/", "edit 2", EMPTY_STRING);
+
+        // autocomplete with prefix and parameters without index
+        assertAutocompleteSuccess("edit #/RR123456789SG", "edit 1", EMPTY_STRING);
+
         // cycle to next index
         assertAutocompleteSuccess("edit 1", "edit 2", EMPTY_STRING);
 

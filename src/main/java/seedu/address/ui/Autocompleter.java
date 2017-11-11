@@ -23,6 +23,7 @@ public class Autocompleter {
     private static final String MULTIPLE_RESULT_MESSAGE = "Multiple matches found";
     private static final String EMPTY_STRING = "";
     private static final String SPACE = " ";
+    private static final String PREFIX_INDICATOR = "/";
 
     private int resultIndex;
     private int countingIndex;
@@ -65,7 +66,7 @@ public class Autocompleter {
             if (possibleAutocompleteResults.isEmpty()) {
                 return textInCommandBox;
             }
-            return textInCommandBox.trim() + " " + possibleAutocompleteResults.get(0);
+            return textInCommandBox.trim() + SPACE + possibleAutocompleteResults.get(0);
 
         case COMMAND_CYCLE_PREFIX:
             clearResultsWindow();
@@ -74,7 +75,7 @@ public class Autocompleter {
 
         case COMMAND_COMPLETE_PREFIX:
             clearResultsWindow();
-            return textInCommandBox + "/";
+            return textInCommandBox + PREFIX_INDICATOR;
 
         case INDEX:
             clearResultsWindow();
@@ -218,6 +219,8 @@ public class Autocompleter {
         Prefix[] prefixes = AutocompleteCommand.ALL_PREFIXES;
         if (lastTwoCharactersArePrefix(arguments)) {
             parameters = arguments + SPACE;
+        } else if (lastCharIsStartOfPrefix(arguments)) {
+            parameters = arguments + PREFIX_INDICATOR + SPACE;
         }
         ArgumentMultimap argMap = ArgumentTokenizer.tokenize(parameters, prefixes);
         String index = argMap.getPreamble();
