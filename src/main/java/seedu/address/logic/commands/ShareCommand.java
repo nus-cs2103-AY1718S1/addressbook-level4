@@ -69,7 +69,7 @@ public class ShareCommand extends Command {
 
                 } catch (IllegalValueException ive) {
                     //Text to Speech
-                    new TextToSpeech(MESSAGE_FAILURE);
+                    new TextToSpeech(MESSAGE_FAILURE).speak();;
                     return new CommandResult(MESSAGE_FAILURE);
                 }
             }
@@ -78,12 +78,12 @@ public class ShareCommand extends Command {
                 sendEmail.start();
             } else {
                 //Text to Speech
-                new TextToSpeech(MESSAGE_EMAIL_NOT_VALID);
+                new TextToSpeech(MESSAGE_EMAIL_NOT_VALID).speak();;
                 return new CommandResult(MESSAGE_EMAIL_NOT_VALID);
             }
         }
         //Text to Speech
-        new TextToSpeech(MESSAGE_SUCCESS);
+        new TextToSpeech(MESSAGE_SUCCESS).speak();;
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

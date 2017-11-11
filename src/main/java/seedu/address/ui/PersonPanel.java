@@ -62,7 +62,7 @@ public class PersonPanel extends UiPart<Region> {
         //@@author hanselblack
         remark.setText(person.getRemark().toString());
         //Text to Speech
-        new TextToSpeech(person.getName().fullName);
+        new TextToSpeech(person.getName().fullName).speak();;
         //@@author
     }
 

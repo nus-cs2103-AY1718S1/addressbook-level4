@@ -21,15 +21,14 @@ public class TextToSpeech {
 
     public TextToSpeech(String word) {
         this.word = word;
-        execute();
     }
 
     /**
      * Execute the Text to Speech Function
      * and returns void.
      */
-    public void execute() {
-        //Async, by creating a new thread to prevent freezing
+    public void speak() {
+        //Async, by creating a new thread to prevent freezing on UI (main) thread
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             VoiceManager vm = VoiceManager.getInstance();

@@ -49,7 +49,7 @@ public class AliasCommand extends UndoableCommand {
         aliases.addAlias(alias, command);
         //@@author hanselblack
         //Text to Speech
-        new TextToSpeech(String.format(MESSAGE_ADD_SUCCESS, alias, command));
+        new TextToSpeech(String.format(MESSAGE_ADD_SUCCESS, alias, command)).speak();;
         //@@author
         //@@author goweiwen
         return new CommandResult(String.format(MESSAGE_ADD_SUCCESS, alias, command));

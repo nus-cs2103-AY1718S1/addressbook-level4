@@ -54,9 +54,11 @@ public class Radio extends Thread {
                 radioStreamUrl = "http://19353.live.streamtheworld.com/977_HITS_SC";
                 break;
             }
+
             in = new BufferedInputStream(new URL(radioStreamUrl).openStream());
             player = new Player(in);
             player.play();
+            in.close();
         } catch (IOException e) {
             logger.info("Invalid IO for BufferedInputStream: " + radioStreamUrl);
         } catch (JavaLayerException e) {

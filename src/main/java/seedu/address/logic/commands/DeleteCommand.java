@@ -38,7 +38,7 @@ public class DeleteCommand extends UndoableCommand {
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             //@@author hanselblack
             //Text to Speech
-            new TextToSpeech("Index " + targetIndex.getOneBased() + " does not exist");
+            new TextToSpeech("Index " + targetIndex.getOneBased() + " does not exist").speak();;
             //@@author
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
@@ -52,7 +52,7 @@ public class DeleteCommand extends UndoableCommand {
         }
         //@@author hanselblack
         //Text to Speech
-        new TextToSpeech(personToDelete.getName().toString() + " has been deleted");
+        new TextToSpeech(personToDelete.getName().toString() + " has been deleted").speak();;
         //@@author
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
     }

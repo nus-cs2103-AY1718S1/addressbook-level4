@@ -20,7 +20,7 @@ public class HelpCommand extends Command {
     public CommandResult execute() {
         //@@author hanselblack
         //Text to Speech
-        new TextToSpeech("Showing help");
+        new TextToSpeech("Showing help").speak();;
         //@@author
         EventsCenter.getInstance().post(new ShowHelpRequestEvent());
         return new CommandResult(SHOWING_HELP_MESSAGE);

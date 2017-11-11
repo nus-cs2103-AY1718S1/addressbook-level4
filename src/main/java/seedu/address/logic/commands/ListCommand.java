@@ -19,7 +19,7 @@ public class ListCommand extends Command {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         //@@author hanselblack
         //Text to Speech
-        new TextToSpeech(MESSAGE_SUCCESS);
+        new TextToSpeech(MESSAGE_SUCCESS).speak();;
         //@@author
         return new CommandResult(MESSAGE_SUCCESS);
     }

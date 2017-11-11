@@ -91,7 +91,7 @@ public class EditCommand extends UndoableCommand {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         //@@author hanselblack
         //Text to Speech
-        new TextToSpeech(editedPerson.getName().toString() + " has been edited");
+        new TextToSpeech(editedPerson.getName().toString() + " has been edited").speak();;
         //@@author
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }

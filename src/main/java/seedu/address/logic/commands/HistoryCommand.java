@@ -30,7 +30,7 @@ public class HistoryCommand extends Command {
         Collections.reverse(previousCommands);
         //@@author hanselblack
         //Text to Speech
-        new TextToSpeech("Showing list of previous commands");
+        new TextToSpeech("Showing list of previous commands").speak();;
         //@@author
         return new CommandResult(String.format(MESSAGE_SUCCESS, String.join("\n", previousCommands)));
     }

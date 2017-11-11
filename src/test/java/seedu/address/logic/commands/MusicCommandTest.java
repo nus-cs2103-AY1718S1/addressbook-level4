@@ -7,32 +7,10 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.commands.MusicCommand.MESSAGE_NO_MUSIC_PLAYING;
 import static seedu.address.logic.commands.MusicCommand.MESSAGE_USAGE;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-
-import guitests.guihandles.MainWindowHandle;
-import seedu.address.TestApp;
-import systemtests.SystemTestSetupHelper;
 
 //@@author hanselblack
 public class MusicCommandTest {
-
-    private MainWindowHandle mainWindowHandle;
-    private TestApp testApp;
-    private SystemTestSetupHelper setupHelper;
-
-    @BeforeClass
-    public static void setupBeforeClass() {
-        SystemTestSetupHelper.initializeStage();
-    }
-
-    @Before
-    public void setUp() {
-        setupHelper = new SystemTestSetupHelper();
-        testApp = setupHelper.setupApplication();
-        mainWindowHandle = setupHelper.setupMainWindowHandle();
-    }
 
     @Test
     public void execute_music_wrongGenre() {
@@ -59,10 +37,23 @@ public class MusicCommandTest {
         MusicCommand musicCommand = new MusicCommand("stop");
         CommandResult commandResult = musicCommand.execute();
         assertEquals(MESSAGE_NO_MUSIC_PLAYING, commandResult.feedbackToUser);
+    }
 
-        musicCommand = new MusicCommand("pause");
+    @Test
+    public void execute_music_successCommand() {
+        String genre = "";
+        MusicCommand musicCommand = new MusicCommand("play");
+        CommandResult commandResult = musicCommand.execute();
+        assertEquals("POP Music 1 Playing", commandResult.feedbackToUser);
+        musicCommand = new MusicCommand("stop");
+        musicCommand.execute();
+
+        genre = "pop";
+        musicCommand = new MusicCommand("play", genre);
         commandResult = musicCommand.execute();
-        assertEquals(MESSAGE_NO_MUSIC_PLAYING, commandResult.feedbackToUser);
+        assertEquals("POP Music 2 Playing", commandResult.feedbackToUser);
+        musicCommand = new MusicCommand("stop");
+        musicCommand.execute();
     }
 
     @Test

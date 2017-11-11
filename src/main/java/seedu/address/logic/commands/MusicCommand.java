@@ -4,8 +4,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import java.util.Arrays;
 
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import seedu.address.logic.Music;
 import seedu.address.logic.TextToSpeech;
 
 //@@author hanselblack
@@ -24,15 +24,15 @@ public class MusicCommand extends Command {
             + "GENRE (must be either pop, dance or classic) \n"
             + "Example: " + COMMAND_WORD + " play classic ";
 
-    public static final String MESSAGE_NO_MUSIC_PLAYING = "There is no music currently playing.";
+    public static final String MESSAGE_NO_MUSIC_PLAYING = "There is no music currently playing";
     public static final String MESSAGE_STOP = "Music Stopped";
-    public static final String MESSAGE_PAUSE = "Music Paused";
     private static final int maxTrackNumber = 2;
 
     private static String messageSuccess = "Music Playing";
     private static MediaPlayer mediaPlayer;
     private static int trackNumber = 1;
     private static String previousGenre = "";
+    private static Music music;
 
     private String command;
     private String genre = "pop";
@@ -51,19 +51,19 @@ public class MusicCommand extends Command {
      * Returns boolean status whether music is currently playing.
      */
     public static boolean isMusicPlaying() {
-        if (mediaPlayer == null) {
+        if (music == null) {
             return false;
+        } else {
+            return true;
         }
-        return mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING
-                || mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED;
     }
 
     /**
-     * Stops music playing in the mediaPlayer
+     * Stops music playing in the player
      */
     public static void stopMusicPlayer() {
-        if (isMusicPlaying()) {
-            mediaPlayer.stop();
+        if (music != null) {
+            music.stop();
         }
     }
 
@@ -72,13 +72,11 @@ public class MusicCommand extends Command {
         boolean genreExist = Arrays.asList(genreList).contains(genre);
         switch (command) {
         case "play":
-            RadioCommand.stopRadioPlayer();
-            if (isMusicPlaying() && mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
-                mediaPlayer.play();
-                //Text to Speech
-                new TextToSpeech(messageSuccess);
-                return new CommandResult(messageSuccess);
-            } else if (genreExist) {
+            if (RadioCommand.isRadioPlaying()) {
+                RadioCommand.stopRadioPlayer();
+            }
+            stopMusicPlayer();
+            if (genreExist) {
                 //check if current genre same previous playing music genre
                 //if different reset track number
                 if (!genre.equals(previousGenre)) {
@@ -87,21 +85,17 @@ public class MusicCommand extends Command {
                 String musicFile = getClass().getClassLoader().getResource("audio/music/"
                         + genre + trackNumber + ".mp3").toString();
                 messageSuccess = genre.toUpperCase() + " Music " + trackNumber + " Playing";
+                music = new Music("audio/music/"
+                        + genre + trackNumber + ".mp3");
+                music.start();
+
                 if (trackNumber < maxTrackNumber) {
                     trackNumber++;
                 } else {
                     trackNumber = 1;
                 }
-                if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-                    mediaPlayer.stop();
-                }
-                Media sound = new Media(musicFile);
-                mediaPlayer = new MediaPlayer(sound);
-                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-                mediaPlayer.setVolume(90.0);
-                mediaPlayer.play();
                 //Text to Speech
-                new TextToSpeech(messageSuccess);
+                new TextToSpeech(messageSuccess).speak();
                 //set current playing genre as previousGenre
                 previousGenre = genre;
                 return new CommandResult(messageSuccess);
@@ -112,24 +106,13 @@ public class MusicCommand extends Command {
         case "stop":
             if (!isMusicPlaying()) {
                 //Text to Speech
-                new TextToSpeech(MESSAGE_NO_MUSIC_PLAYING);
+                new TextToSpeech(MESSAGE_NO_MUSIC_PLAYING).speak();
                 return new CommandResult(MESSAGE_NO_MUSIC_PLAYING);
             }
             stopMusicPlayer();
             //Text to Speech
-            new TextToSpeech(MESSAGE_STOP);
+            new TextToSpeech(MESSAGE_STOP).speak();
             return new CommandResult(MESSAGE_STOP);
-        //Pause current music that is playing
-        case "pause":
-            if (!isMusicPlaying()) {
-                //Text to Speech
-                new TextToSpeech(MESSAGE_NO_MUSIC_PLAYING);
-                return new CommandResult(MESSAGE_NO_MUSIC_PLAYING);
-            }
-            mediaPlayer.pause();
-            //Text to Speech
-            new TextToSpeech(MESSAGE_PAUSE);
-            return new CommandResult(MESSAGE_PAUSE);
 
         default:
             return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MusicCommand.MESSAGE_USAGE));

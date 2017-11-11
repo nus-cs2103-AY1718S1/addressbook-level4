@@ -22,18 +22,10 @@ public class RedoCommand extends Command {
         requireAllNonNull(model, undoRedoStack);
 
         if (!undoRedoStack.canRedo()) {
-            //@@author hanselblack
-            //Text to Speech
-            new TextToSpeech(MESSAGE_FAILURE);
-            //@@author
             throw new CommandException(MESSAGE_FAILURE);
         }
 
         undoRedoStack.popRedo().redo();
-        //@@author hanselblack
-        //Text to Speech
-        new TextToSpeech(MESSAGE_SUCCESS);
-        //@@author
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

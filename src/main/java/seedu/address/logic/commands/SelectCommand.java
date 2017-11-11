@@ -40,10 +40,6 @@ public class SelectCommand extends Command {
         }
 
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
-        //@@author hanselblack
-        //Text to Speech
-        new TextToSpeech("Index " + targetIndex.getOneBased() + " has been selected");
-        //@@author
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
 
     }

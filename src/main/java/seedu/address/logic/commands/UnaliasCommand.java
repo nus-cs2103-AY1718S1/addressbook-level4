@@ -37,7 +37,7 @@ public class UnaliasCommand extends UndoableCommand {
             throw new CommandException(String.format(MESSAGE_NO_SUCH_ALIAS, alias));
         }
         //Text to Speech
-        new TextToSpeech(String.format(MESSAGE_SUCCESS, alias));
+        new TextToSpeech(String.format(MESSAGE_SUCCESS, alias)).speak();;
         return new CommandResult(String.format(MESSAGE_SUCCESS, alias));
     }
 

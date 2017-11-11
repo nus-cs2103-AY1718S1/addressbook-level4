@@ -27,7 +27,7 @@ public class SendEmail extends Thread {
     private String recipientEmail;
     private ReadOnlyPerson person;
 
-    private final Logger logger = LogsCenter.getLogger(Radio.class);
+    private final Logger logger = LogsCenter.getLogger(SendEmail.class);
 
     public SendEmail(String recipientEmail, ReadOnlyPerson person) {
         this.recipientEmail = recipientEmail;

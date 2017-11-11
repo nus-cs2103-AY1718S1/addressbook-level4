@@ -2,14 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
-import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.Player;
+import seedu.address.logic.Audio;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -34,8 +27,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses user input.
  */
 public class AddressBookParser {
-
-    private Player player;
     /**
      * Parses user input into command for execution.
      *
@@ -50,7 +41,9 @@ public class AddressBookParser {
         String commandWord = command[0];
         String arguments = command[1];
 
-        playTypingSound();
+        //@@author hanselblack
+        //Plays typing Sound
+        new Audio("audio/typing.mp3").playSound();
 
         switch (commandWord) {
 
@@ -62,6 +55,7 @@ public class AddressBookParser {
 
         case ShareCommand.COMMAND_WORD:
             return new ShareCommandParser().parse(arguments);
+        //@@author
 
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
@@ -109,25 +103,4 @@ public class AddressBookParser {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
-
-    /**
-     * Plays typing audio sound
-     *
-     */
-    public void playTypingSound() {
-        URL url = this.getClass().getClassLoader().getResource("audio/typing.mp3");
-        Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            try {
-                BufferedInputStream in = new BufferedInputStream(url.openStream());
-                player = new Player(in);
-                player.play();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JavaLayerException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
 }

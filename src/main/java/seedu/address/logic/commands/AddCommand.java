@@ -59,12 +59,12 @@ public class AddCommand extends UndoableCommand {
             //@@author
             //@@author hanselblack
             //Text to Speech
-            new TextToSpeech(toAdd.getName().toString() + " has been added to the list of contacts");
+            new TextToSpeech(toAdd.getName().toString() + " has been added to the list of contacts").speak();
             //@@author
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicatePersonException e) {
             //Text to Speech
-            new TextToSpeech("Another " + toAdd.getName().toString() + " with the same details already exist");
+            new TextToSpeech("Another " + toAdd.getName().toString() + " with the same details already exist").speak();
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 

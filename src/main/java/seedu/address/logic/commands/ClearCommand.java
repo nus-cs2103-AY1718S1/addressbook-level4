@@ -19,7 +19,7 @@ public class ClearCommand extends UndoableCommand {
         model.resetData(new AddressBook());
         //@@author hanselblack
         //Text to Speech
-        new TextToSpeech(MESSAGE_SUCCESS);
+        new TextToSpeech(MESSAGE_SUCCESS).speak();;
         //@@author
         return new CommandResult(MESSAGE_SUCCESS);
     }
