@@ -6,6 +6,7 @@ import org.testfx.api.FxToolkit;
 
 import guitests.guihandles.MainWindowHandle;
 import seedu.address.TestApp;
+import seedu.address.testutil.TypicalEvents;
 import seedu.address.testutil.TypicalPersons;
 
 /**
@@ -21,6 +22,7 @@ public class SystemTestSetupHelper {
     public TestApp setupApplication() {
         try {
             FxToolkit.setupApplication(() -> testApp = new TestApp(TypicalPersons::getTypicalAddressBook,
+                    TypicalEvents::getTypicalAddressBook,
                     TestApp.SAVE_LOCATION_FOR_TESTING));
         } catch (TimeoutException te) {
             throw new AssertionError("Application takes too long to set up.");

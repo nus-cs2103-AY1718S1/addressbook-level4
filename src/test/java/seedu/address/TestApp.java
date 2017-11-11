@@ -35,6 +35,7 @@ public class TestApp extends MainApp {
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
     protected static final String ADDRESS_BOOK_NAME = "Test";
     protected Supplier<ReadOnlyAddressBook> initialDataSupplier = () -> null;
+    protected Supplier<ReadOnlyAddressBook> initialEventSupplier = () -> null;
     protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;
 
     public TestApp() {
@@ -43,6 +44,20 @@ public class TestApp extends MainApp {
     public TestApp(Supplier<ReadOnlyAddressBook> initialDataSupplier, String saveFileLocation) {
         super();
         this.initialDataSupplier = initialDataSupplier;
+        this.saveFileLocation = saveFileLocation;
+
+        // If some initial local data has been provided, write those to the file
+        if (initialDataSupplier.get() != null) {
+            createDataFileWithData(new XmlSerializableAddressBook(this.initialDataSupplier.get()),
+                    this.saveFileLocation);
+        }
+
+    }
+    public TestApp(Supplier<ReadOnlyAddressBook> initialDataSupplier,
+                   Supplier<ReadOnlyAddressBook> initialEventSupplier, String saveFileLocation) {
+        super();
+        this.initialDataSupplier = initialDataSupplier;
+        this.initialEventSupplier = initialEventSupplier;
         this.saveFileLocation = saveFileLocation;
 
         // If some initial local data has been provided, write those to the file
@@ -99,6 +114,7 @@ public class TestApp extends MainApp {
     public Model getModel() {
         Model copy = new ModelManager((model.getAddressBook()), new UserPrefs());
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
+        ModelHelper.setFilteredEventsList(copy, model.getFilteredEventList());
         return copy;
     }
 
