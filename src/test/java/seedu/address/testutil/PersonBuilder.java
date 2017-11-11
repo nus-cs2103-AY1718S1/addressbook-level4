@@ -116,7 +116,6 @@ public class PersonBuilder {
         return this;
     }
 
-
     /**
      * Sets the {@code Email} of the {@code Person} that we are building.
      */
