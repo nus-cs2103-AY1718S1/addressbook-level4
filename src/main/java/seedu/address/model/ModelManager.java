@@ -141,7 +141,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.sortPersons(filterType);
         ObservableList<ReadOnlyPerson> sortedList = this.addressBook.getPersonList();
         this.filteredPersons = new FilteredList<>(sortedList);
-        updateFilteredPersonList((Predicate<ReadOnlyPerson>) currPredicate);
+        filteredPersons.setPredicate(currPredicate);
         indicateAddressBookChanged();
     }
 
