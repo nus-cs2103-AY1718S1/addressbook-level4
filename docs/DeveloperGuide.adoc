@@ -624,7 +624,6 @@ and shown in the `PersonListPanel`.
 **Cons:** Difficult to implement and wastes memory space as sorting might be unnecessary and complex for general users
           since main goal is to keep address book organized. +
 
----
 //end::sort[]
 
 // tag::access[]
