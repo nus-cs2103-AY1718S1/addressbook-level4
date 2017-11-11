@@ -13,8 +13,8 @@ import javafx.beans.property.StringProperty;
  */
 public interface ReadOnlyInsurance {
 
-    String getInsuranceName();
-    StringProperty insuranceNameProperty();
+    InsuranceName getInsuranceName();
+    ObjectProperty<InsuranceName> insuranceNameProperty();
     ObjectProperty<UUID> idProperty();
     UUID getId();
     EnumMap getRoleToPersonNameMap();
@@ -27,10 +27,8 @@ public interface ReadOnlyInsurance {
     ObjectProperty<InsurancePerson> beneficiaryProperty();
     InsurancePerson getBeneficiary();
     String getBeneficiaryName();
-    DoubleProperty premiumProperty();
-    Double getPremium();
-    StringProperty premiumStringProperty();
-    String getPremiumString();
+    ObjectProperty<Premium> premiumProperty();
+    Premium getPremium();
     StringProperty contractNameProperty();
     String getContractName();
     StringProperty signingDateStringProperty();
@@ -67,7 +65,7 @@ public interface ReadOnlyInsurance {
                 .append("  Beneficiary: ")
                 .append(getBeneficiaryName())
                 .append(" \nPremium: ")
-                .append(getPremiumString())
+                .append(getPremium())
                 .append("  Contract File: ")
                 .append(getContractName())
                 .append("  Signing Date: ")

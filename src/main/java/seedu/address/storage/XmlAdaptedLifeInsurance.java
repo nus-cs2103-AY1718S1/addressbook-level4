@@ -1,9 +1,14 @@
 package seedu.address.storage;
 
+import java.util.UUID;
+
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.insurance.InsuranceName;
+import seedu.address.model.insurance.InsurancePerson;
 import seedu.address.model.insurance.LifeInsurance;
+import seedu.address.model.insurance.Premium;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 
 //@@author OscarWang114
@@ -22,7 +27,7 @@ public class XmlAdaptedLifeInsurance {
     @XmlElement(required = true)
     private String beneficiary;
     @XmlElement(required = true)
-    private Double premium;
+    private String premium;
     @XmlElement(required = true)
     private String contractName;
     @XmlElement(required = true)
@@ -44,11 +49,11 @@ public class XmlAdaptedLifeInsurance {
      */
     public XmlAdaptedLifeInsurance(ReadOnlyInsurance source) {
         id = source.getId().toString();
-        insuranceName = source.getInsuranceName();
+        insuranceName = source.getInsuranceName().toString();
         owner = source.getOwner().getName();
         insured = source.getInsured().getName();
         beneficiary = source.getBeneficiary().getName();
-        premium = source.getPremium();
+        premium = source.getPremium().toString();
         contractName = source.getContractName();
         signingDate = source.getSigningDateString();
         expiryDate = source.getExpiryDateString();
@@ -61,7 +66,13 @@ public class XmlAdaptedLifeInsurance {
      */
 
     public LifeInsurance toModelType() throws IllegalValueException {
-        return new LifeInsurance(this.id, this.insuranceName, this.owner, this.insured, this.beneficiary, this.premium,
+        final UUID id = UUID.fromString(this.id);
+        final InsuranceName insuranceName = new InsuranceName(this.insuranceName);
+        final InsurancePerson owner = new InsurancePerson(this.owner);
+        final InsurancePerson insured = new InsurancePerson(this.insured);
+        final InsurancePerson beneficiary = new InsurancePerson(this.beneficiary);
+        final Premium premium = new Premium(this.premium);
+        return new LifeInsurance(id, insuranceName, owner, insured, beneficiary, premium,
                 this.contractName, this.signingDate, this.expiryDate);
     }
 }

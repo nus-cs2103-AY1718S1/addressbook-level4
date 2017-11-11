@@ -79,7 +79,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         enableNameToProfileLink(insurance);
 
         bindListeners(insurance);
-        setPremiumLevel(insurance.getPremium());
+        setPremiumLevel(insurance.getPremium().toDouble());
     }
 
     public ReadOnlyInsurance getInsurance() {
@@ -161,7 +161,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         insured.textProperty().bind(Bindings.convert(insurance.getInsured().nameProperty()));
         beneficiary.textProperty().bind(Bindings.convert(insurance.getBeneficiary().nameProperty()));
         contractName.textProperty().bind(Bindings.convert(insurance.contractNameProperty()));
-        premium.textProperty().bind(Bindings.convert(insurance.premiumStringProperty()));
+        premium.textProperty().bind(Bindings.convert(insurance.premiumProperty()));
         signingDate.textProperty().bind(Bindings.convert(insurance.signingDateStringProperty()));
         expiryDate.textProperty().bind(Bindings.convert(insurance.expiryDateStringProperty()));
     }
@@ -185,7 +185,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         enableNameToProfileLink(event.getInsurance());
         initializeContractFile(event.getInsurance());
         bindListeners(event.getInsurance());
-        setPremiumLevel(event.getInsurance().getPremium());
+        setPremiumLevel(event.getInsurance().getPremium().toDouble());
         raise(new SwitchToInsurancePanelRequestEvent());
     }
     //@@author

@@ -58,7 +58,7 @@ public class InsuranceCard extends UiPart<Region> {
         enableNameToProfileLink(insurance);
 
         bindListeners(insurance);
-        setPremiumLevel(insurance.getPremium());
+        setPremiumLevel(insurance.getPremium().toDouble());
     }
 
     public ReadOnlyInsurance getInsurance() {
@@ -86,7 +86,7 @@ public class InsuranceCard extends UiPart<Region> {
         owner.textProperty().bind(Bindings.convert(insurance.getOwner().nameProperty()));
         insured.textProperty().bind(Bindings.convert(insurance.getInsured().nameProperty()));
         beneficiary.textProperty().bind(Bindings.convert(insurance.getBeneficiary().nameProperty()));
-        premium.textProperty().bind(Bindings.convert(insurance.premiumStringProperty()));
+        premium.textProperty().bind(Bindings.convert(insurance.premiumProperty()));
     }
 
     //@@author Juxarius

@@ -46,7 +46,7 @@ public class UniqueLifeInsuranceList implements Iterable<LifeInsurance> {
             if (insurance1.getPremium().equals(insurance2.getPremium())) {
                 return 0;
             } else {
-                return insurance1.getPremium() < insurance2.getPremium() ? 1 : -1;
+                return insurance1.getPremium().toDouble() < insurance2.getPremium().toDouble() ? 1 : -1;
             }
         });
     }

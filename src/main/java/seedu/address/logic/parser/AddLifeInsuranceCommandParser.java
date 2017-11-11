@@ -16,7 +16,10 @@ import java.util.stream.Stream;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddLifeInsuranceCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.insurance.InsuranceName;
+import seedu.address.model.insurance.InsurancePerson;
 import seedu.address.model.insurance.LifeInsurance;
+import seedu.address.model.insurance.Premium;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 
 //@@author OscarWang114
@@ -44,12 +47,13 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
         }
 
         try {
-            String insuranceName = ParserUtil.parseNameForInsurance(argMultimap.getValue(PREFIX_NAME)).get();
-            String owner = ParserUtil.parseNameForInsurance(argMultimap.getValue(PREFIX_OWNER)).get();
-            String insured = ParserUtil.parseNameForInsurance(argMultimap.getValue(PREFIX_INSURED)).get();
-            String beneficiary = ParserUtil.parseNameForInsurance(argMultimap.getValue(PREFIX_BENEFICIARY)).get();
-            Double premium = ParserUtil.parsePremium(argMultimap.getValue(PREFIX_PREMIUM)).get();
-            String contract = ParserUtil.parseContract(argMultimap.getValue(PREFIX_CONTRACT_NAME)).get();
+            final InsuranceName insuranceName = ParserUtil.parseInsuranceName(argMultimap.getValue(PREFIX_NAME)).get();
+            final InsurancePerson owner = ParserUtil.parseInsurancePerson(argMultimap.getValue(PREFIX_OWNER)).get();
+            final InsurancePerson insured = ParserUtil.parseInsurancePerson(argMultimap.getValue(PREFIX_INSURED)).get();
+            final InsurancePerson beneficiary =
+                    ParserUtil.parseInsurancePerson(argMultimap.getValue(PREFIX_BENEFICIARY)).get();
+            final Premium premium = ParserUtil.parsePremium(argMultimap.getValue(PREFIX_PREMIUM)).get();
+            String contractName = ParserUtil.parseContract(argMultimap.getValue(PREFIX_CONTRACT_NAME)).get();
             LocalDate signingDate = new DateParser().parse(
                     ParserUtil.parseContract(argMultimap.getValue(PREFIX_SIGNING_DATE)).get()
             );
@@ -58,7 +62,7 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
             );
 
             ReadOnlyInsurance lifeInsurance = new LifeInsurance(insuranceName, owner, insured, beneficiary, premium,
-                    contract, signingDate, expiryDate);
+                    contractName, signingDate, expiryDate);
 
             return new AddLifeInsuranceCommand(lifeInsurance);
         } catch (IllegalValueException ive) {
