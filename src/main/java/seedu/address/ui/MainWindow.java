@@ -281,6 +281,15 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchPlaceholderDisplay(event.mode);
     }
-    //@@author
 
+    //@@author qihao27
+    @Subscribe
+    private void handleSwitchButtonEvent(SwitchDisplayEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (event.mode == 1) {
+            handleTodoButton();
+        } else {
+            handleBrowserButton();
+        }
+    }
 }

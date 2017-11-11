@@ -301,21 +301,22 @@ There is no need to save manually.
 === Deleting a person by name: `del`
 
 Deletes the specified person from the address book using his/her name. +
-Format: `del NAME`
+Format: `del NAME [MORE_NAMES]`
 
 ****
-* Deletes the person with the first occurrence of the specified `NAME`.
+* Deletes the person with the specified `NAME`.
+* Shortlist all persons with specified `NAMES` before deletion.
 * The name refers to the name shown in the contact list (case insensitive).
-* The name *must be more than 3 characters*: john, James, William ...
+* The name *must be the entire first/last/full name*
 ****
 
 Examples:
 
 * `del Alex` +
-Deletes the first person named Alex in the address book contact list.
-* `find Betsy` +
-`del Betsy` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the person named Alex in the address book if it is unique in the contact list. +
+Otherwise, shows all persons with the name Alex for further operation.
+* `del Ben Alex John` +
+Shows all persons with the name Ben or Alex or John for further operation.
 // end::deletebyname[]
 
 // tag::sort[]
