@@ -41,7 +41,7 @@ image::derek.jpg[width="150", align="left"]
 {empty}[http://github.com/Procrastinatus[github]] [<<derek#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI + Storage
+Responsibilities: UI
 
 '''
 
