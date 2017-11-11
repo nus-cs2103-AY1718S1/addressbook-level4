@@ -20,8 +20,8 @@ public class FindCommandParser implements Parser<FindCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format.
-     * @throws ParseArgsException if the user input does not conform the expected format but can be suggested to.
+     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseArgsException if the user input does not conform the expected format, but is in a suggestible format
      */
     public FindCommand parse(String args) throws ParseException, ParseArgsException {
         String trimmedArgs = args.trim();
