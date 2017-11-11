@@ -28,7 +28,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
     private final ObservableList<Meeting> internalList = FXCollections.observableArrayList();
 
     /**
-     * Constructs empty TagList.
+     * Constructs empty MeetingList.
      */
     public UniqueMeetingList() {}
 

@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author alexanderleegs
 /**
- * Parses input arguments and creates a new AddTagCommand object
+ * Parses input arguments and creates a new AddMeetingCommand object
  */
 public class AddMeetingCommandParser implements Parser<AddMeetingCommand> {
     /**

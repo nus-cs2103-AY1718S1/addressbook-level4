@@ -60,7 +60,7 @@ public class NoteCommandTest {
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.updatePerson(personToNote, editedPerson);
-
+        showFirstPersonOnly(expectedModel);
         assertCommandSuccess(noteCommand, model, expectedMessage, expectedModel);
     }
 
