@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import seedu.address.logic.commands.SwitchThemeCommand;
+import seedu.address.logic.commands.ThemeListCommand;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -157,6 +159,19 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_birthdays() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_themesList() throws Exception {
+        assertTrue(parser.parseCommand(ThemeListCommand.COMMAND_WORD) instanceof ThemeListCommand);
+        assertTrue(parser.parseCommand(ThemeListCommand.COMMAND_WORD + " 3") instanceof ThemeListCommand);
+    }
+
+    @Test
+    public void parseCommand_switch() throws Exception {
+        SwitchThemeCommand command = (SwitchThemeCommand) parser.parseCommand(
+                SwitchThemeCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new SwitchThemeCommand(INDEX_FIRST_PERSON), command);
     }
 
     //@@author
