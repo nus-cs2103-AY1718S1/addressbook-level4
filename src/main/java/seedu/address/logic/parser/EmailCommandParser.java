@@ -2,6 +2,10 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
+import static seedu.address.logic.parser.ParserUtil.isParsableIndex;
+import static seedu.address.logic.parser.ParserUtil.parseFirstIndex;
+import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstIndex;
+import static seedu.address.model.ModelManager.getLastRolodexSize;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -30,6 +34,26 @@ public class EmailCommandParser implements Parser<EmailCommand> {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
         }
+    }
+
+    /**
+     * Returns a formatted argument string given unformatted
+     * {@code commandWord} and {@code rawArgs}
+     * or a {@code null} {@code String} if not formattable.
+     */
+    public static String parseArguments(String commandWord, String rawArgs) {
+        // Check if index (number) exists, removes Email prefix (if it exists) and re-adds it before returning.
+        if (isParsableIndex(rawArgs, getLastRolodexSize())) {
+            String indexString = Integer.toString(parseFirstIndex(rawArgs, getLastRolodexSize()));
+            String subject = parseRemoveFirstIndex(rawArgs, getLastRolodexSize())
+                    .trim().replace(PREFIX_SUBJECT.toString(), "");
+            return " " + indexString + " " + PREFIX_SUBJECT + subject;
+        } else if (isParsableIndex(commandWord, getLastRolodexSize())) {
+            String indexString = Integer.toString(parseFirstIndex(commandWord, getLastRolodexSize()));
+            String subject = rawArgs.trim().replace(PREFIX_SUBJECT.toString(), "");
+            return " " + indexString + " " + PREFIX_SUBJECT + subject;
+        }
+        return null;
     }
 
 }

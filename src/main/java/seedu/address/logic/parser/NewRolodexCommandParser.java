@@ -6,24 +6,24 @@ import static seedu.address.storage.util.RolodexStorageUtil.ROLODEX_FILE_EXTENSI
 import static seedu.address.storage.util.RolodexStorageUtil.isValidRolodexStorageExtension;
 import static seedu.address.storage.util.RolodexStorageUtil.isValidRolodexStorageFilepath;
 
-import seedu.address.logic.commands.NewCommand;
+import seedu.address.logic.commands.NewRolodexCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new NewCommand object
+ * Parses input arguments and creates a new NewRolodexCommand object
  */
-public class NewCommandParser implements Parser<NewCommand> {
+public class NewRolodexCommandParser implements Parser<NewRolodexCommand> {
     @Override
-    public NewCommand parse(String args) throws ParseException {
+    public NewRolodexCommand parse(String args) throws ParseException {
         String trimmedAndFormattedArgs = args.trim().replace("\\", "/");
         if (trimmedAndFormattedArgs.isEmpty()
                 || !isValidRolodexStorageFilepath(trimmedAndFormattedArgs)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, NewCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, NewRolodexCommand.MESSAGE_USAGE));
         }
         if (!isValidRolodexStorageExtension(trimmedAndFormattedArgs)) {
             throw new ParseException(String.format(MESSAGE_INVALID_EXTENSION_FORMAT, ROLODEX_FILE_EXTENSION));
         }
 
-        return new NewCommand(trimmedAndFormattedArgs);
+        return new NewRolodexCommand(trimmedAndFormattedArgs);
     }
 }

@@ -33,8 +33,8 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.NewCommand;
-import seedu.address.logic.commands.OpenCommand;
+import seedu.address.logic.commands.NewRolodexCommand;
+import seedu.address.logic.commands.OpenRolodexCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -156,17 +156,17 @@ public class RolodexParserTest {
     @Test
     public void parseCommandOpen() throws Exception {
         String validRolodexFile = "valid/filePath/valid.rldx";
-        OpenCommand command = (OpenCommand) parser.parseCommand(
-                OpenCommand.COMMAND_WORD + " " + validRolodexFile);
-        assertEquals(new OpenCommand(validRolodexFile), command);
+        OpenRolodexCommand command = (OpenRolodexCommand) parser.parseCommand(
+                OpenRolodexCommand.COMMAND_WORD + " " + validRolodexFile);
+        assertEquals(new OpenRolodexCommand(validRolodexFile), command);
     }
 
     @Test
     public void parseCommandNew() throws Exception {
         String validRolodexFile = "valid/filePath/valid.rldx";
-        NewCommand command = (NewCommand) parser.parseCommand(
-                NewCommand.COMMAND_WORD + " " + validRolodexFile);
-        assertEquals(new NewCommand(validRolodexFile), command);
+        NewRolodexCommand command = (NewRolodexCommand) parser.parseCommand(
+                NewRolodexCommand.COMMAND_WORD + " " + validRolodexFile);
+        assertEquals(new NewRolodexCommand(validRolodexFile), command);
     }
 
     @Test

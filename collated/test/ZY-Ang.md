@@ -560,12 +560,12 @@ public class NewCommandParserTest {
     public void parseFilePathAllowsSpacing() {
         // spacing should be allowed for directories
         String filePathWithSpacing = "directory with/some spacings/default.rldx";
-        NewCommand expectedOpenCommand = new NewCommand(filePathWithSpacing);
-        assertParseSuccess(parser, filePathWithSpacing, expectedOpenCommand);
+        NewCommand expectedOpenRolodexCommand = new NewCommand(filePathWithSpacing);
+        assertParseSuccess(parser, filePathWithSpacing, expectedOpenRolodexCommand);
 
         filePathWithSpacing = "56 75/22 3456g 45642345/y5/ bhh3 57y357/ 65467y5 - 0 o1/validExtension.rldx";
-        expectedOpenCommand = new NewCommand(filePathWithSpacing);
-        assertParseSuccess(parser, filePathWithSpacing, expectedOpenCommand);
+        expectedOpenRolodexCommand = new NewCommand(filePathWithSpacing);
+        assertParseSuccess(parser, filePathWithSpacing, expectedOpenRolodexCommand);
     }
 
     @Test
@@ -574,8 +574,8 @@ public class NewCommandParserTest {
         String filePathWithBackSlashes = "C:\\Users\\Rolodex\\Downloads\\default.rldx";
         String filePathWithForwardSlashes = "C:/Users/Rolodex/Downloads/default.rldx";
 
-        NewCommand expectedOpenCommand = new NewCommand(filePathWithForwardSlashes);
-        assertParseSuccess(parser, filePathWithBackSlashes, expectedOpenCommand);
+        NewCommand expectedOpenRolodexCommand = new NewCommand(filePathWithForwardSlashes);
+        assertParseSuccess(parser, filePathWithBackSlashes, expectedOpenRolodexCommand);
     }
 }
 ```
@@ -606,12 +606,12 @@ public class OpenCommandParserTest {
     public void parseFilePathAllowsSpacing() {
         // spacing should be allowed for directories
         String filePathWithSpacing = "directory with/some spacings/default.rldx";
-        OpenCommand expectedOpenCommand = new OpenCommand(filePathWithSpacing);
-        assertParseSuccess(parser, filePathWithSpacing, expectedOpenCommand);
+        OpenCommand expectedOpenRolodexCommand = new OpenCommand(filePathWithSpacing);
+        assertParseSuccess(parser, filePathWithSpacing, expectedOpenRolodexCommand);
 
         filePathWithSpacing = "56 75/22 3456g 45642345/y5/ bhh3 57y357/ 65467y5 - 0 o1";
-        expectedOpenCommand = new OpenCommand(filePathWithSpacing);
-        assertParseSuccess(parser, filePathWithSpacing, expectedOpenCommand);
+        expectedOpenRolodexCommand = new OpenCommand(filePathWithSpacing);
+        assertParseSuccess(parser, filePathWithSpacing, expectedOpenRolodexCommand);
     }
 
     @Test
@@ -620,8 +620,8 @@ public class OpenCommandParserTest {
         String filePathWithBackSlashes = "C:\\Users\\Rolodex\\Downloads\\default.rldx";
         String filePathWithForwardSlashes = "C:/Users/Rolodex/Downloads/default.rldx";
 
-        OpenCommand expectedOpenCommand = new OpenCommand(filePathWithForwardSlashes);
-        assertParseSuccess(parser, filePathWithBackSlashes, expectedOpenCommand);
+        OpenCommand expectedOpenRolodexCommand = new OpenCommand(filePathWithForwardSlashes);
+        assertParseSuccess(parser, filePathWithBackSlashes, expectedOpenRolodexCommand);
     }
 }
 ```

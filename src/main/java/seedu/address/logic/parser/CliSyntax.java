@@ -10,13 +10,14 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.NewCommand;
-import seedu.address.logic.commands.OpenCommand;
+import seedu.address.logic.commands.NewRolodexCommand;
+import seedu.address.logic.commands.OpenRolodexCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -110,13 +111,14 @@ public class CliSyntax {
         .addAll(ClearCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(DeleteCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(EditCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(EmailCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(ExitCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(FindCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(HelpCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(HistoryCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(ListCommand.COMMAND_WORD_ABBREVIATIONS)
-        .addAll(NewCommand.COMMAND_WORD_ABBREVIATIONS)
-        .addAll(OpenCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(NewRolodexCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(OpenRolodexCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(RedoCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(RemarkCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(SelectCommand.COMMAND_WORD_ABBREVIATIONS)
