@@ -26,7 +26,7 @@ You can download the latest `SampleData.xml` link:https://github.com/CS2103AUG20
 . Delete addressbook.xml in the 'data' file.
 . Move the SampleData.xml file into the 'data' file.
 . Rename the SampleData.xml file to addressbook.xml
-. Double-click the file to start the app.
+. Double-click the jar file to start the app.
 . The new data set should be uploaded and you can now start the manual testing.
 
 == General Commands
