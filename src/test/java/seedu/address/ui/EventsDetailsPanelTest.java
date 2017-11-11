@@ -24,7 +24,7 @@ public class EventsDetailsPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        selectionChangedEventStub = new EventPanelSelectionChangedEvent(new EventCard(ZOUKOUT,0));
+        selectionChangedEventStub = new EventPanelSelectionChangedEvent(new EventCard(ZOUKOUT, 0));
 
         guiRobot.interact(() -> eventsDetailsPanel = new EventsDetailsPanel());
         uiPartRule.setUiPart(eventsDetailsPanel);
