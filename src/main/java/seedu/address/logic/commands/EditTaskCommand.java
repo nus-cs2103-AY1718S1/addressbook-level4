@@ -15,6 +15,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.Tag;
@@ -55,6 +56,7 @@ public class EditTaskCommand extends UndoableCommand {
     public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited Task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the task book.";
+    public static final String MESSAGE_DATE_TIME_TASK = "This task edit has date time error: start <= end.";
 
     private final Index index;
     private final EditTaskDescriptor editTaskDescriptor;
@@ -80,7 +82,13 @@ public class EditTaskCommand extends UndoableCommand {
         }
 
         ReadOnlyTask taskToEdit = lastShownList.get(index.getZeroBased());
-        Task editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
+
+        Task editedTask = null;
+        try {
+            editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
+        } catch (IllegalValueException e) {
+            throw new CommandException(MESSAGE_DATE_TIME_TASK);
+        }
 
         try {
             model.updateTask(taskToEdit, editedTask);
@@ -98,13 +106,16 @@ public class EditTaskCommand extends UndoableCommand {
      * edited with {@code editTaskDescriptor}.
      */
     private static Task createEditedTask(ReadOnlyTask taskToEdit,
-                                             EditTaskDescriptor editTaskDescriptor) {
+                                             EditTaskDescriptor editTaskDescriptor) throws IllegalValueException {
         assert taskToEdit != null;
 
         Name updatedTaskName = editTaskDescriptor.getName().orElse(taskToEdit.getName());
         Description updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
         DateTime updatedStartDateTime = editTaskDescriptor.getStartDateTime().orElse(taskToEdit.getStartDateTime());
         DateTime updatedEndDateTime = editTaskDescriptor.getEndDateTime().orElse(taskToEdit.getEndDateTime());
+        if (updatedStartDateTime.compareTo(updatedEndDateTime) == -1) {
+            throw new IllegalValueException(MESSAGE_DATE_TIME_TASK);
+        }
         Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(taskToEdit.getTags());
         Boolean updateComplete = editTaskDescriptor.getComplete().orElse(taskToEdit.getComplete());
         //Remark updatedRemark = taskToEdit.getRemark(); // edit command does not allow editing remarks

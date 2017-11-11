@@ -58,14 +58,30 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
             if (parserDescription.isPresent()) {
                 editTaskDescriptor.setDescription(new Description(parserDescription.get()));
             }
+
             Optional<String> parserStart = ParserUtil.parseString(argMultimap.getValue(PREFIX_START_DATE_TIME));
+            DateTime startDateTime = null;
             if (parserStart.isPresent()) {
-                editTaskDescriptor.setStart(new DateTime(parserStart.get()));
+                //editTaskDescriptor.setStart(new DateTime(parserStart.get()));
+                startDateTime = new DateTime(parserStart.get());
             }
+
             Optional<String> parserEnd = ParserUtil.parseString(argMultimap.getValue(PREFIX_END_DATE_TIME));
+            DateTime endDateTime = null;
             if (parserEnd.isPresent()) {
-                editTaskDescriptor.setEnd(new DateTime(parserEnd.get()));
+                //editTaskDescriptor.setEnd(new DateTime(parserEnd.get()));
+                endDateTime = new DateTime(parserEnd.get());
             }
+
+            if (startDateTime != null && endDateTime != null) {
+                if (startDateTime.compareTo(endDateTime) == -1) {
+                    throw new ParseException(EditTaskCommand.MESSAGE_DATE_TIME_TASK);
+                } else {
+                    editTaskDescriptor.setEnd(new DateTime(parserEnd.get()));
+                    editTaskDescriptor.setStart(new DateTime(parserStart.get()));
+                }
+            }
+
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

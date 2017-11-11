@@ -52,6 +52,10 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
             DateTime endDateTime =
                     new DateTime(ParserUtil.parseString(argMultimap.getValue(PREFIX_END_DATE_TIME)).get());
 
+            if (startDateTime.compareTo(endDateTime) == -1) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
+            }
+
             Optional<Integer> priority = ParserUtil.parseInteger(argMultimap.getValue(PREFIX_PRIORITY));
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
