@@ -30,17 +30,20 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.model.task.Task;
+import seedu.address.testutil.TaskBuilder;
 
 public class AddTaskCommandParserTest {
     private AddTaskCommandParser parser = new AddTaskCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Task expectedTaskHotpot = new Task(VALID_NAME_HOTPOT, VALID_DESCRIPTION_HOTPOT, VALID_START_HOTPOT,
-                VALID_END_HOTPOT).withTags(VALID_TAG_HOTPOT);
+        Task expectedTaskHotpot = new TaskBuilder().withName(VALID_NAME_HOTPOT)
+                .withDescription(VALID_DESCRIPTION_HOTPOT).withStart(VALID_START_HOTPOT)
+                .withEnd(VALID_END_HOTPOT).withTags(VALID_TAG_HOTPOT).build();
 
-        Task expectedTaskDemo = new Task(VALID_NAME_DEMO, VALID_DESCRIPTION_DEMO, VALID_START_DEMO,
-                VALID_END_DEMO).withTags(VALID_TAG_DEMO);
+        Task expectedTaskDemo = new TaskBuilder().withName(VALID_NAME_DEMO)
+                .withDescription(VALID_DESCRIPTION_DEMO).withStart(VALID_START_DEMO)
+                .withEnd(VALID_END_DEMO).withTags(VALID_TAG_DEMO).build();
 
         assertParseSuccess(parser, AddTaskCommand.COMMAND_WORD + NAME_DESC_HOTPOT
                 + DESC_DESC_HOTPOT + START_DESC_HOTPOT
