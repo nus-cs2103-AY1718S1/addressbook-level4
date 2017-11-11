@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Jennifer Lawrence</name>
+        <phone>85355255</phone>
+        <email>alice@example.com</email>
+        <address>123, Jurong West Ave 6, #08-111</address>
+        <birthday>15/02/1992</birthday>
+        <remark></remark>
+        <website>https://www.twitter.com/</website>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bob Choo</name>
+        <phone>22222222</phone>
+        <email>bob@example.com</email>
+        <address>Block 123, Bobby Street 3</address>
+        <birthday>15/02/1993</birthday>
+        <remark></remark>
+        <website>http://www.yahoo.com/</website>
+        <tagged>friend</tagged>
+        <tagged>husband</tagged>
+    </persons>
+    <tags>friends</tags>
+    <tags>friend</tags>
+    <tags>husband</tags>
+</addressbook>
