@@ -83,9 +83,11 @@ public class DeleteByNameCommandTest {
         thrown.expectMessage(DeleteByNameCommand.MESSAGE_MULTIPLE_PERSON_FOUND);
 
         DeleteByNameCommand command = prepareCommand("Meier");
-        command.execute();
+        CommandResult commandResult = command.execute();
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-        assertCommandExecuteSuccess(command, DeleteByNameCommand.MESSAGE_MULTIPLE_PERSON_FOUND,
+        assertCommandSuccess(command, model, DeleteByNameCommand.MESSAGE_MULTIPLE_PERSON_FOUND, expectedModel);
+        assertCommandExecuteSuccess(commandResult, DeleteByNameCommand.MESSAGE_MULTIPLE_PERSON_FOUND,
             Arrays.asList(DANIEL, BENSON, HOON), Arrays.asList(DANIEL, BENSON, HOON));
     }
 
@@ -94,10 +96,12 @@ public class DeleteByNameCommandTest {
         thrown.expect(CommandException.class);
         thrown.expectMessage(DeleteByNameCommand.MESSAGE_PERSON_NAME_ABSENT);
 
-        DeleteByNameCommand command = prepareCommand("Carl");
-        command.execute();
+        DeleteByNameCommand command = prepareCommand("John");
+        CommandResult commandResult = command.execute();
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-        assertCommandExecuteSuccess(command, DeleteByNameCommand.MESSAGE_MULTIPLE_PERSON_FOUND,
+        assertCommandSuccess(command, model, DeleteByNameCommand.MESSAGE_PERSON_NAME_ABSENT, expectedModel);
+        assertCommandExecuteSuccess(commandResult, DeleteByNameCommand.MESSAGE_PERSON_NAME_ABSENT,
             Arrays.asList(DANIEL, BENSON, HOON), Arrays.asList());
     }
 
@@ -119,11 +123,9 @@ public class DeleteByNameCommandTest {
      * - the {@code AddressBook} in model remains the same
      * if the size of {@code ActualList<ReadOnlyPerson>} is more than 1
      */
-    private void assertCommandExecuteSuccess(DeleteByNameCommand command, String expectedMessage,
+    private void assertCommandExecuteSuccess(CommandResult commandResult, String expectedMessage,
                                       List<ReadOnlyPerson> oldList,
                                       List<ReadOnlyPerson> newList) throws CommandException {
-        CommandResult commandResult = command.execute();
-
         assertEquals(expectedMessage, commandResult.feedbackToUser);
         assertEquals(oldList, model.getFilteredPersonList());
         if (newList.size() > 1) {

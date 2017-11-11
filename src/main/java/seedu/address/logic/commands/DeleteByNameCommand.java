@@ -48,7 +48,7 @@ public class DeleteByNameCommand extends UndoableCommand {
             try {
                 model.deletePerson(personToDelete);
             } catch (PersonNotFoundException pnfe) {
-                assert false : MESSAGE_PERSON_NAME_ABSENT;
+                throw new CommandException(MESSAGE_PERSON_NAME_ABSENT);
             }
 
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);

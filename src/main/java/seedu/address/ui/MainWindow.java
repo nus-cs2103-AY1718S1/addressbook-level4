@@ -48,6 +48,8 @@ public class MainWindow extends UiPart<Region> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+    private Button todoButton;
+    private Button browserButton;
 
     @FXML
     private StackPane switchablePlaceholder;
@@ -66,12 +68,6 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
-
-    @FXML
-    private Button todoButton;
-
-    @FXML
-    private Button browserButton;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -280,16 +276,5 @@ public class MainWindow extends UiPart<Region> {
     private void handleSwitchDisplayEvent(SwitchDisplayEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchPlaceholderDisplay(event.mode);
-    }
-
-    //@@author qihao27
-    @Subscribe
-    private void handleSwitchButtonEvent(SwitchDisplayEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if (event.mode == 1) {
-            handleTodoButton();
-        } else {
-            handleBrowserButton();
-        }
     }
 }
