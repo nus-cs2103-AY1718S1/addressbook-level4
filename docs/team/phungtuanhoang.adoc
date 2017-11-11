@@ -15,7 +15,7 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=multiple]
+include::../UserGuide.adoc[tag=export]
 
 #End of Extract#
 
@@ -24,6 +24,103 @@ include::../UserGuide.adoc[tag=multiple]
 ==== Justification
 
 When users are on the move and do not have access to the software, it is essential to have a physical copy of all the contacts. Exporting them to a `.txt` file would faciliate the process of printing.
+
+=== Enhancement Added: Login with an email
+
+==== External behavior
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=emaillogin]
+
+#End of Extract#
+
+---
+
+=== Justification
+
+As the targeted users are tutors and businessmen, email functionality is required for information dissemination.
+
+=== Enhancement Added: Sending email with a logged in email
+
+==== External behavior
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=emailsend]
+
+#End of Extract#
+
+---
+
+=== Justification
+
+As the targeted users are tutors and businessmen, email functionality is required for information dissemination.
+
+=== Enhancement Added: Find person(s) without matching the whole keyword
+
+==== External behavior
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findcontain]
+
+#End of Extract#
+
+---
+
+=== Justification
+* The `find` command is an OR search, therefore if users want to filter out unwanted contacts by giving more information,
+an AND search (`find_contain`) will be required.
+* For the search bar UI enhancement, search without matching the whole keyword is more desirable (for example: typing `ale`
+will immediately show all `Alex`, thus saving time.
+
+=== Enhancement Added: User Interface overhaul
+
+* *Dark Theme*
+
+image::DarkTheme.png[width=450]
+
+* *Light Theme*
+
+image::LightTheme.png[width=450]
+
+=== New Feature Added: Search Bar
+
+==== External behavior
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=searchbar]
+
+#End of Extract#
+
+---
+
+=== Justification
+
+* Sometimes users need to quickly find a person and the search bar provides a quicker way than command line.
+
+* Users sometimes forget contacts' details: for example, users call a person "Dave" but do not remember whether he saved
+the contact as "David" or "Dave". Search Bar solves this problem by allowing users to just type "dav" in the name field
+rather than use the `find` command twice for "dave" and "david".
+
+=== New Feature Added: Email Login window and Email Send window / Enhancement Added: Checkboxes for Contact Panel to allow sending to multiple contacts
+
+==== External behavior
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=emailloginwindow]
+
+#End of Extract#
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=emailsendwindow]
+
+#End of Extract#
 
 == Other projects
 === To The Sky!
