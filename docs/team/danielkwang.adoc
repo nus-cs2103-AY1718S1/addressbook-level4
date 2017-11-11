@@ -11,7 +11,7 @@ the contact's number and automatically port it to your smartphone. It is written
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/main/danielweide.md] [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/test/danielweide.md] {give links to collated code files}
 
-=== Enhancement Added: LoggingCommand/ClearLog/QR Code For Calling/QR Code for Sms/QR Code for saving of contact
+=== Enhancement Added: LoggingCommand/ClearLog
 
 ==== External behavior
 
@@ -43,6 +43,89 @@ include::../DeveloperGuide.adoc[tag=loggingcom]
 include::../DeveloperGuide.adoc[tag=clearlog]
 include::../DeveloperGuide.adoc[tag=qrcall]
 include::../DeveloperGuide.adoc[tag=qrsms]
+include::../DeveloperGuide.adoc[tag=qrsave]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: QR(Quick Response) code generation for Calling
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=qrcall]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+"qrcall" feature was implemented to reduce chance of human error and time when the user wants to make call to specific contact. With the help of Quick Response Code (QR Code), the user just need to use their smartphone to scan the code which will instruct the phone on what to do. This helps save time and chance for error during the time when the user needs to make a call. +
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=qrcall]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: QR(Quick Response) code generation for SMS
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=qrsms]
+
+#End of Extract#
+
+---
+
+==== Justification
+"qrsms" feature was implemented to keep our user free from human error and help save time to compose a sms. It comes with function where there is greeting template message . The user simply need to scan the QR Code to compose their sms for the intended contact. +
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=qrsms]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Quick Response (QR) Code Generation for Saving Contact Number
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=qrsave]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+"qrsavecontact" feature was implemented to help Android users to save contact easily by simply scanning the QR Code to save contact they want from the addressbook application. This will help save a lot of time if the user needs to save multiple acount and reduce chances of human error with potential of wrong information keyed in during the process of manual saving of contact information.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=qrsave]
 
 #End of Extract#
