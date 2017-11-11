@@ -12,6 +12,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 
+//@@author Alim95
 /**
  * Panel containing the list of Alias.
  */

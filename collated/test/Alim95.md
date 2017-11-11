@@ -32,10 +32,6 @@ public class HelpOverlayTest extends AddressBookGuiTest {
         getPersonListPanel().click();
         getMainMenu().openHelpOverlayUsingAccelerator();
         assertHelpOverlayNotOpen();
-
-        getBrowserPanel().click();
-        getMainMenu().openHelpOverlayUsingAccelerator();
-        assertHelpOverlayNotOpen();
     }
 
 
@@ -583,6 +579,56 @@ public class UnpinCommandParserTest {
         assertEquals(searchBoxHandle.getStyle(), "");
     }
 }
+```
+###### \java\systemtests\AddressBookSystemTest.java
+``` java
+    /**
+     * Executes {@code command} in the application's {@code CommandBox}.
+     * Method returns after UI components have been updated.
+     */
+    protected void executeParentCommand() {
+        rememberStates();
+        // Injects a fixed clock before executing a command so that the time stamp shown in the status bar
+        // after each command is predictable and also different from the previous command.
+        clockRule.setInjectedClockToCurrentTime();
+
+        mainWindowHandle.getCommandBox().run("parent");
+    }
+```
+###### \java\systemtests\FindCommandSystemTest.java
+``` java
+        /* Case: find person in address book, keyword is substring of name -> 1 persons found */
+        command = FindCommand.COMMAND_WORD + " Mei";
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+```
+###### \java\systemtests\FindCommandSystemTest.java
+``` java
+        /* Case: find phone number of person in address book -> 1 persons found */
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find address of person in address book -> 1 persons found */
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find email of person in address book -> 1 persons found */
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find tags of person in address book -> 6 persons found */
+        List<Tag> tags = new ArrayList<>(DANIEL.getTags());
+        command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
+        ModelHelper.setFilteredList(expectedModel, ALICE, CARL, DANIEL, ELLE, FIONA, GEORGE);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
 ```
 ###### \java\systemtests\PinUnpinCommandSystemTest.java
 ``` java

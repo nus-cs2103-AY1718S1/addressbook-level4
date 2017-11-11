@@ -18,26 +18,29 @@ public class TutorialMessages {
             + "where you will see your list of contacts and tasks";
     public static final String INTRO_FIVE = "This is the sort menu, where you can select how to sort the list.";
     public static final String INTRO_SIX = "This is the search box, where "
-            + "you are able to search for the person you want.";
+            + "you are able to search for the person or tasks you want.";
     public static final String INTRO_SEVEN = "Features of Bluebird:\n"
             + "1. Add contacts/tasks\n"
             + "2. Delete contacts/tasks\n"
             + "3. Edit contacts/tasks\n"
             + "4. Find contacts/tasks\n"
-            + "5. Select a contact\n"
-            + "6. Pin a contact\n"
-            + "7. Unpin a contact\n"
-            + "8. Hide a contact\n"
-            + "9. Clear all contacts and tasks\n"
-            + "10. List all contacts and tasks\n"
-            + "11. List all pinned contacts\n"
-            + "12. Sort list of contacts\n"
-            + "13. Help window\n"
-            + "14. History of command inputs\n"
-            + "15. Undo a command\n"
-            + "16. Redo a command\n"
-            + "17. Toggle to person/task mode\n"
-            + "18. Toggle to parent/child mode\n";
+            + "5. Add remark to contacts\n"
+            + "6. Select a contact\n"
+            + "7. Pin/Unpin a contact\n"
+            + "8. Alias/Unalias\n"
+            + "9. List all alias\n"
+            + "10. Hide a contact\n"
+            + "11. Clear all contacts and tasks\n"
+            + "12. List all contacts and tasks\n"
+            + "13. List all pinned contacts\n"
+            + "14. Sort list of contacts\n"
+            + "15. Help window\n"
+            + "16. History of command inputs\n"
+            + "17. Undo a command\n"
+            + "18. Redo a command\n"
+            + "19. Toggle to person/task mode\n"
+            + "20. Toggle to parent/child mode\n"
+            + "21. Exit Bluebird";
 
     public static final String INTRO_END = "Bluebird is set to Child Mode by default every time Bluebird "
             + "is launched. To activate all commands, toggle to parent mode!\n"
@@ -54,7 +57,8 @@ public class TutorialMessages {
             + "10. redo\n"
             + "11. person\n"
             + "12. task\n"
-            + "13. parent";
+            + "13. parent\n"
+            + "14. exit\n";
 
     /* Command usage messages */
     public static final String USAGE_BEGIN = "Let's try out the different commands of Bluebird! Activate Parent Mode "
@@ -88,21 +92,6 @@ public class TutorialMessages {
  * Indicates that an invalid command is entered.
  */
 public class InvalidResultDisplayEvent extends BaseEvent {
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-
-}
-```
-###### \java\seedu\address\commons\events\ui\SwitchToBrowserEvent.java
-``` java
-
-/**
- * Indicates a request to switch to browser panel.
- */
-public class SwitchToBrowserEvent extends BaseEvent {
 
     @Override
     public String toString() {
@@ -330,6 +319,7 @@ public class FindPinnedCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
+        EventsCenter.getInstance().post(new ListSizeEvent(model.getFilteredPersonList().size()));
         EventsCenter.getInstance().post(new ToggleListPinStyleEvent());
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
@@ -916,6 +906,107 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     }
 
 ```
+###### \java\seedu\address\ui\AliasCard.java
+``` java
+/**
+ * An UI component that displays information of a {@code Alias}.
+ */
+public class AliasCard extends UiPart<Region> {
+
+    private static final String FXML = "AliasListCard.fxml";
+
+    public final ReadOnlyAliasToken alias;
+
+    @FXML
+    private HBox cardPane;
+    @FXML
+    private Label keyword;
+    @FXML
+    private Label id;
+    @FXML
+    private Label representation;
+
+    public AliasCard(ReadOnlyAliasToken alias, int displayedIndex) {
+        super(FXML);
+        this.alias = alias;
+        id.setText(displayedIndex + ". ");
+        bindListeners(alias);
+    }
+
+    /**
+     * Binds the individual UI elements to observe their respective {@code Alias} properties
+     * so that they will be notified of any changes.
+     */
+    private void bindListeners(ReadOnlyAliasToken alias) {
+        keyword.textProperty().bind(Bindings.convert(alias.keywordProperty()));
+        representation.textProperty().bind(Bindings.convert(alias.representationProperty()));
+    }
+
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof AliasCard)) {
+            return false;
+        }
+
+        // state check
+        AliasCard card = (AliasCard) other;
+        return id.getText().equals(card.id.getText())
+                && alias.equals(card.alias);
+    }
+}
+```
+###### \java\seedu\address\ui\AliasListPanel.java
+``` java
+/**
+ * Panel containing the list of Alias.
+ */
+public class AliasListPanel extends UiPart<Region> {
+    private static final String FXML = "AliasListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(AliasListPanel.class);
+
+    @FXML
+    private ListView<AliasCard> aliasListView;
+
+    public AliasListPanel(ObservableList<ReadOnlyAliasToken> aliasList) {
+        super(FXML);
+        setConnections(aliasList);
+        registerAsAnEventHandler(this);
+    }
+
+    private void setConnections(ObservableList<ReadOnlyAliasToken> aliasList) {
+        ObservableList<AliasCard> mappedList = EasyBind.map(
+                aliasList, (alias) -> new AliasCard(alias, aliasList.indexOf(alias) + 1));
+        aliasListView.setItems(mappedList);
+        aliasListView.setCellFactory(listView -> new AliasListViewCell());
+    }
+
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code AliasCard}.
+     */
+    class AliasListViewCell extends ListCell<AliasCard> {
+
+        @Override
+        protected void updateItem(AliasCard alias, boolean empty) {
+            super.updateItem(alias, empty);
+
+            if (empty || alias == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(alias.getRoot());
+            }
+        }
+    }
+
+}
+```
 ###### \java\seedu\address\ui\CommandBox.java
 ``` java
     public void highlight() {
@@ -952,9 +1043,9 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     @FXML
     private void handleListAllClicked() {
         try {
-            CommandResult result = logic.execute("list");
+            CommandResult result = logic.execute(ListCommand.COMMAND_WORD);
             raise(new NewResultAvailableEvent(result.feedbackToUser));
-            raise(new ValidResultDisplayEvent("list"));
+            raise(new ValidResultDisplayEvent(ListCommand.COMMAND_WORD));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to list all using label");
         }
@@ -966,9 +1057,9 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     @FXML
     private void handleListPinnedClicked() {
         try {
-            CommandResult result = logic.execute("listpin");
+            CommandResult result = logic.execute(ListPinCommand.COMMAND_WORD);
             raise(new NewResultAvailableEvent(result.feedbackToUser));
-            raise(new ValidResultDisplayEvent("listpin"));
+            raise(new ValidResultDisplayEvent(ListPinCommand.COMMAND_WORD));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to list pinned using label");
         }
@@ -980,9 +1071,9 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     @FXML
     private void handleTaskViewClicked() {
         try {
-            CommandResult result = logic.execute("task");
+            CommandResult result = logic.execute(EnableTaskCommand.COMMAND_WORD);
             raise(new NewResultAvailableEvent(result.feedbackToUser));
-            raise(new ValidResultDisplayEvent("task"));
+            raise(new ValidResultDisplayEvent(EnableTaskCommand.COMMAND_WORD));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to toggle to task view using label");
         }
@@ -994,9 +1085,9 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     @FXML
     private void handlePersonViewClicked() {
         try {
-            CommandResult result = logic.execute("person");
+            CommandResult result = logic.execute(EnablePersonCommand.COMMAND_WORD);
             raise(new NewResultAvailableEvent(result.feedbackToUser));
-            raise(new ValidResultDisplayEvent("person"));
+            raise(new ValidResultDisplayEvent(EnablePersonCommand.COMMAND_WORD));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to toggle to person view using label");
         }
@@ -1008,9 +1099,9 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     @FXML
     private void handleAliasViewClicked() {
         try {
-            CommandResult result = logic.execute("listalias");
+            CommandResult result = logic.execute(ListAliasCommand.COMMAND_WORD);
             raise(new NewResultAvailableEvent(result.feedbackToUser));
-            raise(new ValidResultDisplayEvent("listalias"));
+            raise(new ValidResultDisplayEvent(ListAliasCommand.COMMAND_WORD));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to toggle to alias view using label");
         }
@@ -1018,11 +1109,6 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
-    @Subscribe
-    private void handleSwitchToBrowserEvent(SwitchToBrowserEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        switchToBrowser();
-    }
 
     @Subscribe
     private void handleShowPinnedListEvent(ToggleListPinStyleEvent event) {
@@ -1072,7 +1158,7 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         if (listPinLabel.getStyle().equals(BRIGHT_LABEL)) {
             try {
-                logic.execute("listpin");
+                logic.execute(ListPinCommand.COMMAND_WORD);
             } catch (CommandException | ParseException e) {
                 logger.warning("Unable to list pin when unpinning");
             }
@@ -1140,11 +1226,6 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
         personListPanelPlaceholder.getChildren()
                 .removeAll(personListPanel.getRoot(), aliasListPanel.getRoot(), taskListPanel.getRoot());
         personListPanelPlaceholder.getChildren().add(toAdd);
-    }
-
-    private void switchToBrowser() {
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-        browserPlaceholder.setVisible(false);
     }
 
     /**
@@ -1247,6 +1328,7 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
             imageDisplay.setImage(new Image(EDIT_ICON));
             break;
         case "find":
+        case "findpinned":
             listSizeDisplay.setVisible(true);
             imageDisplay.setImage(new Image(FIND_ICON));
             break;
@@ -1299,11 +1381,6 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
 public class SortFindPanel extends UiPart<Region> {
 
     private static final String FXML = "SortFindPanel.fxml";
-    private static final String SORT_COMMAND_WORD = "sort";
-    private static final String FIND_COMMAND_WORD = "find";
-    private static final String FIND_PINNED_COMMAND_WORD = "findpinned";
-    private static final String LIST_COMMAND_WORD = "list";
-    private static final String LIST_PINNED_COMMAND_WORD = "listpin";
 
     private final Logger logger = LogsCenter.getLogger(SortFindPanel.class);
     private final Logic logic;
@@ -1338,17 +1415,19 @@ public class SortFindPanel extends UiPart<Region> {
     @FXML
     private void handleSearchFieldChanged() {
         try {
-            if (searchBox.getPromptText().contains("Person") ||  searchBox.getPromptText().contains("Task")) {
+            if (searchBox.getPromptText().contains("Person") || searchBox.getPromptText().contains("Task")) {
                 if (searchBox.getText().trim().isEmpty()) {
-                    logic.execute(LIST_COMMAND_WORD);
+                    logic.execute(ListCommand.COMMAND_WORD);
                 } else {
-                    logic.execute(FIND_COMMAND_WORD + " " + searchBox.getText());
+                    logic.execute(FindCommand.COMMAND_WORD + " " + searchBox.getText());
+                    raise(new ValidResultDisplayEvent(FindCommand.COMMAND_WORD));
                 }
             } else if (searchBox.getPromptText().contains("Pinned")) {
                 if (searchBox.getText().trim().isEmpty()) {
-                    logic.execute(LIST_PINNED_COMMAND_WORD);
+                    logic.execute(ListPinCommand.COMMAND_WORD);
                 } else {
-                    logic.execute(FIND_PINNED_COMMAND_WORD + " " + searchBox.getText());
+                    logic.execute(FindPinnedCommand.COMMAND_WORD + " " + searchBox.getText());
+                    raise(new ValidResultDisplayEvent(FindPinnedCommand.COMMAND_WORD));
                 }
             }
         } catch (CommandException | ParseException e1) {
@@ -1362,9 +1441,9 @@ public class SortFindPanel extends UiPart<Region> {
     @FXML
     private void handleNameItemPressed() {
         try {
-            CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + nameItem.getText());
+            CommandResult result = logic.execute(SortCommand.COMMAND_WORD + " " + nameItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
-            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
+            raise(new ValidResultDisplayEvent(SortCommand.COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort name using sort menu");
         }
@@ -1376,9 +1455,9 @@ public class SortFindPanel extends UiPart<Region> {
     @FXML
     private void handlePhoneItemPressed() {
         try {
-            CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + phoneItem.getText());
+            CommandResult result = logic.execute(SortCommand.COMMAND_WORD + " " + phoneItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
-            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
+            raise(new ValidResultDisplayEvent(SortCommand.COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort phone using sort menu");
         }
@@ -1390,9 +1469,9 @@ public class SortFindPanel extends UiPart<Region> {
     @FXML
     private void handleEmailItemPressed() {
         try {
-            CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + emailItem.getText());
+            CommandResult result = logic.execute(SortCommand.COMMAND_WORD + " " + emailItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
-            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
+            raise(new ValidResultDisplayEvent(SortCommand.COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort email using sort menu");
         }
@@ -1404,9 +1483,9 @@ public class SortFindPanel extends UiPart<Region> {
     @FXML
     private void handleAddressItemPressed() {
         try {
-            CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + addressItem.getText());
+            CommandResult result = logic.execute(SortCommand.COMMAND_WORD + " " + addressItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
-            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
+            raise(new ValidResultDisplayEvent(SortCommand.COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort address using sort menu");
         }
@@ -1697,7 +1776,6 @@ public class TutorialPanel extends UiPart<Region> {
     private void endTutorial() {
         mainWindow.unhighlightAll();
         browserPlaceHolder.getChildren().remove(this.getRoot());
-        raise(new SwitchToBrowserEvent());
     }
 }
 ```
@@ -1750,12 +1828,14 @@ public class TutorialPanel extends UiPart<Region> {
 ```
 ###### \resources\view\AliasListPanel.fxml
 ``` fxml
+
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+
 <VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane gridLinesVisible="true">
@@ -1764,11 +1844,11 @@ public class TutorialPanel extends UiPart<Region> {
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints prefHeight="30.0" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
-            <Label style="-fx-text-fill: white;" text="  Representation" GridPane.columnIndex="1" />
-            <Label style="-fx-text-fill: white;" text="  Keyword" />
+            <Label style="-fx-text-fill: white;" text="  Representation" />
+            <Label style="-fx-text-fill: white;" text="  Keyword" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <ListView fx:id="aliasListView" VBox.vgrow="ALWAYS" />
@@ -1836,17 +1916,12 @@ public class TutorialPanel extends UiPart<Region> {
             <Insets bottom="310.0" left="8.0" right="8.0" top="40.0" />
          </StackPane.margin>
          <content>
-            <GridPane alignment="TOP_CENTER" blendMode="SRC_ATOP" gridLinesVisible="true" minWidth="1144.0" style="-fx-background-color: white;">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="0.0" prefWidth="173.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1064.0" minWidth="10.0" prefWidth="546.0" />
-              </columnConstraints>
-              <rowConstraints>
-                  <RowConstraints maxHeight="40.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="40.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="58.0" minHeight="50.0" prefHeight="58.0" vgrow="SOMETIMES" />
-                <RowConstraints vgrow="SOMETIMES" />
-                <RowConstraints vgrow="SOMETIMES" />
+            <GridPane fx:id="overlayGrid" alignment="TOP_CENTER" blendMode="SRC_ATOP" maxWidth="1.7976931348623157E308" style="-fx-background-color: derive(#1d1d1d, 20%);">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="200.0" minWidth="200.0" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="1100.0" />
+               </columnConstraints>
+               <rowConstraints>
                   <RowConstraints vgrow="SOMETIMES" />
                   <RowConstraints vgrow="SOMETIMES" />
                   <RowConstraints vgrow="SOMETIMES" />
@@ -1867,199 +1942,269 @@ public class TutorialPanel extends UiPart<Region> {
                   <RowConstraints vgrow="SOMETIMES" />
                   <RowConstraints vgrow="SOMETIMES" />
                   <RowConstraints vgrow="SOMETIMES" />
-              </rowConstraints>
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+               </rowConstraints>
                <children>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Add" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="2">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Add contact" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label prefHeight="45.0" prefWidth="730.0" text="Clear" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="5">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label prefHeight="45.0" prefWidth="769.0" text="Delete" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="6">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label prefHeight="45.0" prefWidth="586.0" text="Command" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="1346.0" text="Example" textFill="#bdadff" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="730.0" text="Clear" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="3">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="769.0" text="Delete" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="4">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="586.0" text="Command" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="1">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="1346.0" text="Usage" textFill="#8b71f2" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <TextField alignment="CENTER" editable="false" text="add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [t/tag]" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="clear" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="clear" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="delete 2" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="delete INDEX [MORE_INDEX]" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </TextField>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Edit" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="5">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Rename Task" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="8">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Find" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="6">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Find" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="16">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="List" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="7">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="List" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="20">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="List pinned" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="8">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="List pinned" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="21">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Help" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="9">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Help" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="24">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG] …​" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="edit 1 p/91234567 e/johndoe@example.com" GridPane.columnIndex="1" GridPane.rowIndex="7">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="find KEYWORD [MORE_KEYWORDS]" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="find alice bob charlie" GridPane.columnIndex="1" GridPane.rowIndex="16">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="list" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="list" GridPane.columnIndex="1" GridPane.rowIndex="20">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="listpin" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="listpin" GridPane.columnIndex="1" GridPane.rowIndex="21">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="help" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="help" GridPane.columnIndex="1" GridPane.rowIndex="24">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="select INDEX" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="select 3" GridPane.columnIndex="1" GridPane.rowIndex="26">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="history" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="history" GridPane.columnIndex="1" GridPane.rowIndex="27">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Select" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="10">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Select" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="26">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="History" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="11">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="History" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="27">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Sort" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="12">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Sort" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="28">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="sort KEYWORD" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="sort phone" GridPane.columnIndex="1" GridPane.rowIndex="28">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="undo" GridPane.columnIndex="1" GridPane.rowIndex="13">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="undo" GridPane.columnIndex="1" GridPane.rowIndex="29">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="redo" GridPane.columnIndex="1" GridPane.rowIndex="14">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="redo" GridPane.columnIndex="1" GridPane.rowIndex="30">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="hide INDEX" GridPane.columnIndex="1" GridPane.rowIndex="15">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="hide 3" GridPane.columnIndex="1" GridPane.rowIndex="31">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Undo" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="13">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Undo" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="29">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Redo" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="14">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Redo" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="30">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Hide " textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="15">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Hide " textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="31">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="586.0" text="Alias" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="16">
+                  <Label prefHeight="45.0" prefWidth="586.0" text="Alias" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="18">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Unalias" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="17">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Unalias" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="19">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Pin" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="18">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Pin a contact" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="14">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Unpin" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="19">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Unpin a contact" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="15">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="alias k/KEYWORD s/REPRESENTATION" GridPane.columnIndex="1" GridPane.rowIndex="16">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="alias k/ph s/ Public Holiday" GridPane.columnIndex="1" GridPane.rowIndex="18">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="unalias k/KEYWORD" GridPane.columnIndex="1" GridPane.rowIndex="17">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="unalias k/ph" GridPane.columnIndex="1" GridPane.rowIndex="19">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="pin INDEX" GridPane.columnIndex="1" GridPane.rowIndex="18">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="pin 2" GridPane.columnIndex="1" GridPane.rowIndex="14">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="unpin INDEX" GridPane.columnIndex="1" GridPane.rowIndex="19">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="unpin 1" GridPane.columnIndex="1" GridPane.rowIndex="15">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label text="Press Esc to close">
+                  <Label text="Press Esc to close" textFill="#bdadff">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -2067,46 +2212,180 @@ public class TutorialPanel extends UiPart<Region> {
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Person View" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="20">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Person View" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="32">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="person" GridPane.columnIndex="1" GridPane.rowIndex="20">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="person" GridPane.columnIndex="1" GridPane.rowIndex="32">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Task View" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="21">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Task View" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="33">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="task" GridPane.columnIndex="1" GridPane.rowIndex="21">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="task" GridPane.columnIndex="1" GridPane.rowIndex="33">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Parent Mode" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="23">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Parent Mode" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="35">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="parent" GridPane.columnIndex="1" GridPane.rowIndex="23">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="parent" GridPane.columnIndex="1" GridPane.rowIndex="35">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField alignment="CENTER" editable="false" text="child" GridPane.columnIndex="1" GridPane.rowIndex="24">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="child" GridPane.columnIndex="1" GridPane.rowIndex="36">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="740.0" text="Child Mode" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="24">
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Child Mode" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="36">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </Label>
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Add a task" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/22/08/1993 t/friends t/owesMoney" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="add Go Fishing from 9am to 11am" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Edit a contact" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="7">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Reschedule Task" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="10">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="rename 2 Football training" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="reschedule 1 from 8am to 12pm" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <Label prefHeight="45.0" prefWidth="740.0" text="List Alias" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="22">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="listalias" GridPane.columnIndex="1" GridPane.rowIndex="22">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Mark Task" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="11">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Unmark Task" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="12">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="mark 1~3" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="unmark 1~3" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Find pinned" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="17">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="findpinned bala" GridPane.columnIndex="1" GridPane.rowIndex="17">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Exit" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="37">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="exit" GridPane.columnIndex="1" GridPane.rowIndex="37">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <Label prefHeight="45.0" prefWidth="740.0" text="Add remarks" textAlignment="CENTER" textFill="#bdadff" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="remark 1" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
                </children>
             </GridPane>
          </content>
