@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static seedu.address.testutil.TypicalEvents.EVENT1;
+import static seedu.address.testutil.TypicalEvents.EVENT2;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
@@ -23,6 +24,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 import seedu.address.model.property.PropertyManager;
+import seedu.address.model.reminder.Reminder;
 
 public class XmlAddressBookStorageTest {
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlAddressBookStorageTest/");
@@ -80,6 +82,7 @@ public class XmlAddressBookStorageTest {
         original.addPerson(new Person(HOON));
         original.removePerson(new Person(ALICE));
         original.addEvent(new Event(EVENT1));
+        original.getEventList().get(0).addReminder(new Reminder((Event)EVENT1, "You have an event!" ));
         original.removeEvent(new Event(EVENT1));
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
@@ -87,6 +90,8 @@ public class XmlAddressBookStorageTest {
 
         //Save and read without specifying file path
         original.addPerson(new Person(IDA));
+        original.addEvent(new Event(EVENT2));
+        original.getEventList().get(0).addReminder(new Reminder((Event)EVENT2, "You have an event!" ));
         xmlAddressBookStorage.saveAddressBook(original); //file path not specified
         readBack = xmlAddressBookStorage.readAddressBook().get(); //file path not specified
         assertEquals(original, new AddressBook(readBack));
