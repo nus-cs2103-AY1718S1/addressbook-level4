@@ -11,9 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -35,6 +32,9 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.storage.Storage;
 import seedu.address.testutil.GroupBuilder;
 import seedu.address.testutil.TypicalStorage;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 //@@author eldonng
 public class CreateGroupCommandTest {
