@@ -21,7 +21,7 @@ public class PrintCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_valid_filename_success () {
+    public void execute_print_success () {
         String fileName = "fileName";
         PrintCommand printCommand = prepareCommand(fileName);
 
