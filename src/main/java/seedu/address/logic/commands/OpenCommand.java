@@ -23,7 +23,7 @@ public class OpenCommand extends Command {
         + "Paremeters: LOCATION \n"
         + "Example: " + COMMAND_WORD + " C:\\Users\\crispy\\Downloads\\DeathNote.xml";
 
-    public static final String MESSAGE_OPEN_PERSON_SUCCESS = "Opened DeathNote: %1$s";
+    public static final String MESSAGE_OPEN_DEATHNOTE_SUCCESS = "Opened DeathNote: %1$s";
 
     private final File file;
 
@@ -38,7 +38,7 @@ public class OpenCommand extends Command {
         }
 
         EventsCenter.getInstance().post(new SwitchAddressBookRequestEvent(file, false));
-        return new CommandResult(String.format(MESSAGE_OPEN_PERSON_SUCCESS, file.getPath()));
+        return new CommandResult(String.format(MESSAGE_OPEN_DEATHNOTE_SUCCESS, file.getPath()));
     }
 
     @Override
