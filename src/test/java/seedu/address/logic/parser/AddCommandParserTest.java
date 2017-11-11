@@ -41,6 +41,7 @@ import seedu.address.model.module.Location;
 import seedu.address.model.module.TimeSlot;
 import seedu.address.testutil.LessonBuilder;
 
+//@@author cctdaniel
 public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();
 

@@ -16,7 +16,7 @@ public class RemarkTest {
         assertFalse(Remark.isValidRemark("")); // empty string
         assertFalse(Remark.isValidRemark(getLongString()));
 
-        // valid phone numbers
+        // valid remark
         assertTrue(Remark.isValidRemark("it is a valid remark")); // Must follow this format
     }
 

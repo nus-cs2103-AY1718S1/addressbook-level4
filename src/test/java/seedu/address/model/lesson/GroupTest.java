@@ -12,14 +12,14 @@ public class GroupTest {
 
     @Test
     public void isValidGroup() {
-        // invalid phone numbers
+        // invalid group numbers
         assertFalse(Group.isValidGroup("")); // empty string
         assertFalse(Group.isValidGroup(" ")); // spaces only
         assertFalse(Group.isValidGroup("phone")); // non-numeric
         assertFalse(Group.isValidGroup("9011p041")); // alphabets within digits
         assertFalse(Group.isValidGroup("9312 1534")); // spaces within digits
 
-        // valid phone numbers
+        // valid group numbers
         assertTrue(Group.isValidGroup("9")); // exactly 1 numbers
         assertTrue(Group.isValidGroup("93121534")); //more than 1 number
         assertTrue(Group.isValidGroup("124293842033123")); // long phone numbers

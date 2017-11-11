@@ -188,24 +188,30 @@ public class DeleteCommand extends UndoableCommand {
         List<ReadOnlyLesson> lastShownList = model.getFilteredLessonList();
         Location locationToDelete = lastShownList.get(targetIndex.getZeroBased()).getLocation();
         try {
-            model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
-            ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
-            for (int i = 0; i < lessonList.size(); i++) {
-                ReadOnlyLesson l = lessonList.get(i);
-                if (l.getLocation().equals(locationToDelete)) {
-                    model.unbookBookedSlot(new BookedSlot(l.getLocation(), l.getTimeSlot()));
-                    model.deleteLesson(l);
-                    i--;
-                }
-            }
-
+            deleteLessonsWithLocation(locationToDelete);
         } catch (LessonNotFoundException e) {
             assert false : "The target lesson cannot be missing";
         }
 
-        model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
         EventsCenter.getInstance().post(new ViewedLessonEvent());
         return new CommandResult(String.format(MESSAGE_DELETE_LESSON_WITH_LOCATION_SUCCESS, locationToDelete));
+    }
+
+    /**
+     * Deletes all lessons with the given location.
+     */
+    private void deleteLessonsWithLocation(Location locationToDelete) throws LessonNotFoundException {
+        model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+        ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
+        for (int i = 0; i < lessonList.size(); i++) {
+            ReadOnlyLesson l = lessonList.get(i);
+            if (l.getLocation().equals(locationToDelete)) {
+                model.unbookBookedSlot(new BookedSlot(l.getLocation(), l.getTimeSlot()));
+                model.deleteLesson(l);
+                i--;
+            }
+        }
+        model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
     }
 
     /**
@@ -421,29 +427,11 @@ public class EditCommand extends UndoableCommand {
     /**
      * Edit the location, all lessons with the edited location is updated with a new given location.
      */
-    private CommandResult executeEditLocation(Location addressToEdit) throws CommandException {
-        model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
-        ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
-        Location editedAddress = null;
-        BookedSlot bookedSlotToEdit;
-        BookedSlot editedBookedSlot;
-
+    private CommandResult executeEditLocation(Location locationToEdit) throws CommandException {
         try {
-            editedAddress = new Location(attributeValue);
-            for (ReadOnlyLesson p : lessonList) {
-
-                ReadOnlyLesson curEditedLesson;
-                if (p.getLocation().equals(addressToEdit)) {
-                    curEditedLesson = new Lesson(p.getClassType(), editedAddress, p.getGroup(),
-                            p.getTimeSlot(), p.getCode(), p.getLecturers());
-                    bookedSlotToEdit = new BookedSlot(p.getLocation(), p.getTimeSlot());
-                    editedBookedSlot = new BookedSlot(editedAddress, p.getTimeSlot());
-                    model.updateBookedSlot(bookedSlotToEdit, editedBookedSlot);
-                    model.updateLesson(p, curEditedLesson);
-                }
-            }
-            model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
-            return new CommandResult(String.format(MESSAGE_EDIT_LOCATION_SUCCESS, editedAddress));
+            Location editedLocation = new Location(attributeValue);
+            updateLocation(locationToEdit, editedLocation);
+            return new CommandResult(String.format(MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation));
         } catch (DuplicateBookedSlotException s) {
             throw new CommandException(MESSAGE_DUPLICATE_BOOKEDSLOT);
         } catch (IllegalValueException ive) {
@@ -454,26 +442,38 @@ public class EditCommand extends UndoableCommand {
         }
     }
 
+    /**
+     * Updates all lessons with location {@code locationToEdit} to {@code editedLocation}.
+     */
+    private void updateLocation(Location locationToEdit, Location editedLocation)
+            throws DuplicateBookedSlotException, LessonNotFoundException, DuplicateLessonException {
+
+        model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+        ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
+        BookedSlot bookedSlotToEdit;
+        BookedSlot editedBookedSlot;
+        for (ReadOnlyLesson p : lessonList) {
+            ReadOnlyLesson curEditedLesson;
+            if (p.getLocation().equals(locationToEdit)) {
+                curEditedLesson = new Lesson(p.getClassType(), editedLocation, p.getGroup(),
+                        p.getTimeSlot(), p.getCode(), p.getLecturers());
+                bookedSlotToEdit = new BookedSlot(p.getLocation(), p.getTimeSlot());
+                editedBookedSlot = new BookedSlot(editedLocation, p.getTimeSlot());
+                model.updateBookedSlot(bookedSlotToEdit, editedBookedSlot);
+                model.updateLesson(p, curEditedLesson);
+            }
+        }
+        model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
+    }
+
 
     /**
      * Edit the Module Code, all lessons with the edited code is updated with a new given code.
      */
     private CommandResult executeEditModule(Code codeToEdit) throws CommandException {
-        model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
-        ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
-        Code editedCode = null;
         try {
-            editedCode = new Code(attributeValue);
-            for (ReadOnlyLesson p : lessonList) {
-
-                ReadOnlyLesson curEditedLesson;
-                if (p.getCode().equals(codeToEdit)) {
-                    curEditedLesson = new Lesson(p.getClassType(), p.getLocation(), p.getGroup(),
-                            p.getTimeSlot(), editedCode, p.getLecturers());
-                    model.updateLesson(p, curEditedLesson);
-                }
-            }
-            model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
+            Code editedCode = new Code(attributeValue);
+            updateModuleCode(codeToEdit, editedCode);
             return new CommandResult(String.format(MESSAGE_EDIT_MODULE_SUCCESS, editedCode));
         } catch (IllegalValueException ive) {
             model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
@@ -482,6 +482,27 @@ public class EditCommand extends UndoableCommand {
             throw new AssertionError("The target lesson cannot be missing");
         }
 
+    }
+
+    /**
+     * Updates all lessons with module code {@code codeToEdit} to module code {@code editedCode}.
+     */
+    private void updateModuleCode(Code codeToEdit, Code editedCode)
+            throws LessonNotFoundException, DuplicateLessonException {
+        model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+        ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
+
+        for (ReadOnlyLesson p : lessonList) {
+
+            ReadOnlyLesson curEditedLesson;
+            if (p.getCode().equals(codeToEdit)) {
+                curEditedLesson = new Lesson(p.getClassType(), p.getLocation(), p.getGroup(),
+                        p.getTimeSlot(), editedCode, p.getLecturers());
+                model.updateLesson(p, curEditedLesson);
+            }
+        }
+
+        model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
     }
 
     /**
@@ -1097,6 +1118,9 @@ public class ViewCommand extends Command {
     public static final String MESSAGE_VIEW_LESSON_SUCCESS = "Viewing lesson: %1$s";
     public static final String MESSAGE_VIEW_LOCATION_SUCCESS = "lessons(s) founded with location %1$s";
     public static final String MESSAGE_VIEW_MODULE_SUCCESS = "lessons(s) founded with module code %1$s";
+    public static final String VIEWING_ATTRIBUTE_MODULE = "module";
+    public static final String VIEWING_ATTRIBUTE_DEFAULT = "default";
+    public static final String VIEWING_ATTRIBUTE_LOCATION = "location";
     private final Index targetIndex;
 
     public ViewCommand(Index targetIndex) {
@@ -1160,13 +1184,13 @@ public class ViewCommand extends Command {
     public void setViewingPanelAttribute() {
         switch (getCurrentListingUnit()) {
         case MODULE:
-            model.setViewingPanelAttribute("module");
+            model.setViewingPanelAttribute(VIEWING_ATTRIBUTE_MODULE);
             break;
         case LOCATION:
-            model.setViewingPanelAttribute("location");
+            model.setViewingPanelAttribute(VIEWING_ATTRIBUTE_LOCATION);
             break;
         default:
-            model.setViewingPanelAttribute("default");
+            model.setViewingPanelAttribute(VIEWING_ATTRIBUTE_DEFAULT);
             break;
         }
     }

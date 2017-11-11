@@ -30,10 +30,13 @@ import seedu.address.model.module.exceptions.DuplicateRemarkException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.exceptions.NotRemarkedLessonException;
 import seedu.address.model.module.exceptions.RemarkNotFoundException;
+import seedu.address.model.module.predicates.LessonContainsKeywordsPredicate;
+import seedu.address.model.module.predicates.LocationContainsKeywordsPredicate;
+import seedu.address.model.module.predicates.MarkedLessonContainsKeywordsPredicate;
+import seedu.address.model.module.predicates.ModuleContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
-//@@author caoliangnus
 /**
  * Represents the in-memory model of the address book data.
  * All changes to any model should be synchronized.
@@ -48,6 +51,7 @@ public class ModelManager extends ComponentManager implements Model {
     private ReadOnlyLesson currentViewingLesson;
     private String currentViewingAttribute;
 
+    //@@author caoliangnus
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -68,6 +72,7 @@ public class ModelManager extends ComponentManager implements Model {
         initializeBookedSlot();
         currentViewingAttribute = "default";
     }
+    //@@author
 
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
@@ -103,6 +108,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
+    //@@author caoliangnus
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
@@ -141,6 +147,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addLesson(lesson);
         indicateAddressBookChanged();
     }
+    //@@author
 
     //@@author junming403
     @Override
@@ -180,11 +187,9 @@ public class ModelManager extends ComponentManager implements Model {
         for (int i = 0; i < bookedList.size(); i++) {
             if (bookedList.get(i).equals(target)) {
                 throw new DuplicateBookedSlotException();
-            } else if (i == (bookedList.size() - 1)) {
-                bookedList.add(target);
-                break;
             }
         }
+        bookedList.add(target);
     }
 
     @Override
@@ -212,6 +217,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
+    //@@author caoliangnus
     @Override
     public void updateLesson(ReadOnlyLesson target, ReadOnlyLesson editedLesson)
             throws DuplicateLessonException, LessonNotFoundException {
@@ -219,6 +225,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updateLesson(target, editedLesson);
         indicateAddressBookChanged();
     }
+    //@@author
 
     //@@author angtianlannus
     @Override
@@ -250,6 +257,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Filtered Module List Accessors =============================================================
 
+    //@@author caoliangnus
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyModule} backed by the internal list of
      * {@code addressBook}
@@ -264,6 +272,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredLessons.setPredicate(predicate);
     }
+    //@@author
 
     //@@author junming403
     @Override
@@ -297,15 +306,61 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void updateLocationList() {
+        if (ListingUnit.getCurrentPredicate() instanceof LocationContainsKeywordsPredicate) {
+            updateFilteredLessonList(
+                    new LocationContainsKeywordsPredicate(((LocationContainsKeywordsPredicate)
+                            ListingUnit.getCurrentPredicate()).getKeywords()));
+        } else {
+            updateFilteredLessonList(new UniqueLocationPredicate(getUniqueLocationSet()));
+        }
+    }
+
+
+    @Override
+    public void updateModuleList() {
+        if (ListingUnit.getCurrentPredicate() instanceof ModuleContainsKeywordsPredicate) {
+            updateFilteredLessonList(
+                    new ModuleContainsKeywordsPredicate(((ModuleContainsKeywordsPredicate)
+                            ListingUnit.getCurrentPredicate()).getKeywords()));
+        } else {
+            updateFilteredLessonList(new UniqueModuleCodePredicate(getUniqueCodeSet()));
+        }
+    }
+
+    //@@author
+
+    @Override
     public void handleListingUnit() {
         ListingUnit unit = ListingUnit.getCurrentListingUnit();
 
         if (unit.equals(LOCATION)) {
-            UniqueLocationPredicate predicate = new UniqueLocationPredicate(getUniqueLocationSet());
-            updateFilteredLessonList(predicate);
+            if (ListingUnit.getCurrentPredicate() instanceof LocationContainsKeywordsPredicate) {
+                updateFilteredLessonList(
+                        new LocationContainsKeywordsPredicate(((LocationContainsKeywordsPredicate)
+                                ListingUnit.getCurrentPredicate()).getKeywords()));
+            } else {
+                UniqueLocationPredicate predicate = new UniqueLocationPredicate(getUniqueLocationSet());
+                updateFilteredLessonList(predicate);
+            }
         } else if (unit.equals(MODULE)) {
-            UniqueModuleCodePredicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
-            updateFilteredLessonList(predicate);
+            if (ListingUnit.getCurrentPredicate() instanceof ModuleContainsKeywordsPredicate) {
+                updateFilteredLessonList(
+                        new ModuleContainsKeywordsPredicate(((ModuleContainsKeywordsPredicate)
+                                ListingUnit.getCurrentPredicate()).getKeywords()));
+            } else {
+                UniqueModuleCodePredicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
+                updateFilteredLessonList(predicate);
+            }
+        } else if (ListingUnit.getCurrentPredicate() instanceof MarkedLessonContainsKeywordsPredicate) {
+            updateFilteredLessonList(
+                    new MarkedLessonContainsKeywordsPredicate(((MarkedLessonContainsKeywordsPredicate)
+                            ListingUnit.getCurrentPredicate()).getKeywords()));
+        } else if (ListingUnit.getCurrentPredicate() instanceof LessonContainsKeywordsPredicate) {
+            LessonContainsKeywordsPredicate predicate =
+                    (LessonContainsKeywordsPredicate) ListingUnit.getCurrentPredicate();
+            updateFilteredLessonList(new LessonContainsKeywordsPredicate(predicate.getKeywords(),
+                    predicate.getTargetLesson(), predicate.getAttribute()));
         } else {
             updateFilteredLessonList(ListingUnit.getCurrentPredicate());
 
@@ -318,7 +373,8 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
     }
-    //@@author
+
+
 
     @Override
     public boolean equals(Object obj) {

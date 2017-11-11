@@ -11,7 +11,7 @@ import seedu.address.model.module.TimeSlot;
 public class TimeSlotTest {
     @Test
     public void isValidTimeSlot() {
-        // invalid phone numbers
+        // invalid time slot
         assertFalse(TimeSlot.isValidTimeSLot("")); // empty string
         assertFalse(TimeSlot.isValidTimeSLot(" ")); // spaces only
         assertFalse(TimeSlot.isValidTimeSLot("FRI")); // no '['
@@ -20,7 +20,7 @@ public class TimeSlotTest {
         assertFalse(TimeSlot.isValidTimeSLot("FRI[10001200]")); // no '-'
         assertFalse(TimeSlot.isValidTimeSLot("FRI[1200-1000]")); // start time less than end time
 
-        // valid phone numbers
+        // valid time slot
         assertTrue(TimeSlot.isValidTimeSLot("FRI[1000-1200]")); // Must follow this format
     }
 }

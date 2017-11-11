@@ -22,7 +22,7 @@ Responsibilities: Storage component, adding SortCommand, enhance FindCommand, Bo
 
 === Cao Liang
 image::liang_profile_pic.jpeg[width="150", align="left"]
-{empty}[https://github.com/caoliangnus[github]] [<<Cao Liang#, portfolio>>]
+{empty}[https://github.com/caoliangnus[github]] [<<caoliang#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Data
@@ -31,16 +31,16 @@ Responsibilities: Data
 
 === Wang Junming
 image::WangJunming.jpg[width="150", align="left"]
-{empty}[https://github.com/junming403[github]] [<<Wang Junming#, portfolio>>]
+{empty}[https://github.com/junming403[github]] [<<wangjunming#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Full-stack
+Responsibilities: Logic component, editing list//edit/delete command, adding view, mark, unmark, remark command.
 
 '''
 
 === Chew Chaow Thong Daniel
 image::DanielChew.jpg[width="150", align="left"]
-{empty}[https://github.com/cctdaniel[github]] [<<Chew Chaow Thong Daniel#, portfolio>>]
+{empty}[https://github.com/cctdaniel[github]] [<<danielchew#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI component, changed overall theme, add CustomiseCommand, add SwitchThemeCommand and related tests.

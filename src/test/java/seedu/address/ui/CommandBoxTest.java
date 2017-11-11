@@ -10,9 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.CommandBoxHandle;
-
 import javafx.scene.input.KeyCode;
-
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.ListCommand;
@@ -30,13 +30,14 @@ public class CommandBoxTest extends GuiUnitTest {
 
 
     private CommandBoxHandle commandBoxHandle;
+    private CommandBox commandBox;
 
     @Before
     public void setUp() {
         Model model = new ModelManager();
         Logic logic = new LogicManager(model);
 
-        CommandBox commandBox = new CommandBox(logic);
+        commandBox = new CommandBox(logic);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
                 CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         uiPartRule.setUiPart(commandBox);
@@ -135,6 +136,52 @@ public class CommandBoxTest extends GuiUnitTest {
 
 
     //@@author caoliangnus
+
+    @Test
+    public void computeMarginTest() {
+        Text text = new Text("m/");
+
+        //XSmall Font size
+        Font font = new Font("Monospace regular", 12);
+        text.setFont(font);
+        double expectedMargin = commandBox.computeMargin(1, "m/");
+        assertEquals(text.getBoundsInLocal().getWidth(), expectedMargin, 0.001);
+
+        //Small Font size
+        font = new Font("Monospace regular", 17);
+        text.setFont(font);
+        expectedMargin = commandBox.computeMargin(2, "m/");
+        assertEquals(text.getBoundsInLocal().getWidth(), expectedMargin, 0.001);
+
+        //Default Font size
+        font = new Font("Monospace regular", 25);
+        text.setFont(font);
+        expectedMargin = commandBox.computeMargin(3, "m/");
+        assertEquals(text.getBoundsInLocal().getWidth(), expectedMargin, 0.001);
+
+        //Large Font size
+        font = new Font("Monospace regular", 32);
+        text.setFont(font);
+        expectedMargin = commandBox.computeMargin(4, "m/");
+        assertEquals(text.getBoundsInLocal().getWidth(), expectedMargin, 0.001);
+
+        //XLarge Font size
+        font = new Font("Monospace regular", 40);
+        text.setFont(font);
+        expectedMargin = commandBox.computeMargin(5, "m/");
+        assertEquals(text.getBoundsInLocal().getWidth(), expectedMargin, 0.001);
+
+    }
+
+    @Test
+    public void getTagIndexListTest() {
+        String textInput = "l/Victor l/Jack";
+        ArrayList<Integer> expectedList = new ArrayList<Integer>();
+        expectedList.add(0); // the first index for l/ is 0
+        expectedList.add(9); // the second index for l/ is 9
+        assertEquals(commandBox.getTagIndexList(textInput), expectedList);
+    }
+
     @Test
     public void configActiveKeywordTest() {
         String commandKeyword = "list";

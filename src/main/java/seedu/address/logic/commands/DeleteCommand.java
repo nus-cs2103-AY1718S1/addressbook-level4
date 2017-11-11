@@ -21,8 +21,6 @@ import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.Remark;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.exceptions.RemarkNotFoundException;
-import seedu.address.model.module.predicates.UniqueLocationPredicate;
-import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
 //@@author junming403
 /**
@@ -80,24 +78,30 @@ public class DeleteCommand extends UndoableCommand {
         List<ReadOnlyLesson> lastShownList = model.getFilteredLessonList();
         Location locationToDelete = lastShownList.get(targetIndex.getZeroBased()).getLocation();
         try {
-            model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
-            ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
-            for (int i = 0; i < lessonList.size(); i++) {
-                ReadOnlyLesson l = lessonList.get(i);
-                if (l.getLocation().equals(locationToDelete)) {
-                    model.unbookBookedSlot(new BookedSlot(l.getLocation(), l.getTimeSlot()));
-                    model.deleteLesson(l);
-                    i--;
-                }
-            }
-
+            deleteLessonsWithLocation(locationToDelete);
         } catch (LessonNotFoundException e) {
             assert false : "The target lesson cannot be missing";
         }
 
-        model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
         EventsCenter.getInstance().post(new ViewedLessonEvent());
         return new CommandResult(String.format(MESSAGE_DELETE_LESSON_WITH_LOCATION_SUCCESS, locationToDelete));
+    }
+
+    /**
+     * Deletes all lessons with the given location.
+     */
+    private void deleteLessonsWithLocation(Location locationToDelete) throws LessonNotFoundException {
+        model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+        ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
+        for (int i = 0; i < lessonList.size(); i++) {
+            ReadOnlyLesson l = lessonList.get(i);
+            if (l.getLocation().equals(locationToDelete)) {
+                model.unbookBookedSlot(new BookedSlot(l.getLocation(), l.getTimeSlot()));
+                model.deleteLesson(l);
+                i--;
+            }
+        }
+        model.updateLocationList();
     }
 
     /**
@@ -137,7 +141,7 @@ public class DeleteCommand extends UndoableCommand {
                 i--;
             }
         }
-        model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
+        model.updateModuleList();
     }
 
     /**

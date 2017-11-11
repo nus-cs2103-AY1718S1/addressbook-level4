@@ -2,7 +2,6 @@ package seedu.address.model.module.predicates;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 import seedu.address.model.module.ReadOnlyLesson;
 
@@ -10,7 +9,7 @@ import seedu.address.model.module.ReadOnlyLesson;
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone Number} matches any of the keywords given.
  */
-public class LocationContainsKeywordsPredicate implements Predicate<ReadOnlyLesson> {
+public class LocationContainsKeywordsPredicate implements ContainsKeywordsPredicate {
     private final List<String> keywords;
     private ArrayList<String> duplicateLocation = new ArrayList<String>();
 
@@ -44,6 +43,9 @@ public class LocationContainsKeywordsPredicate implements Predicate<ReadOnlyLess
         return other == this // short circuit if same object
                 || (other instanceof LocationContainsKeywordsPredicate // instanceof handles nulls
                 && this.keywords.equals(((LocationContainsKeywordsPredicate) other).keywords)); // state check
+    }
+    public List<String> getKeywords() {
+        return keywords;
     }
 
 }
