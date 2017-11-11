@@ -237,6 +237,9 @@ public class CommandTestUtil {
         }
     }
 
+    /**
+     * Let a specific person quit a specific event
+     */
     public static void quitEvent(Model model, Person person, Event event) {
         try {
             model.quitEvent(person, event);
