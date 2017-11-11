@@ -12,8 +12,10 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ToggleSearchBoxStyle;
+import seedu.address.commons.events.ui.ToggleToAliasViewEvent;
 import seedu.address.commons.events.ui.ToggleToAllPersonViewEvent;
 import seedu.address.commons.events.ui.ToggleToTaskViewEvent;
+import seedu.address.commons.events.ui.ValidResultDisplayEvent;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -91,6 +93,7 @@ public class SortFindPanel extends UiPart<Region> {
         try {
             CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + nameItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort name using sort menu");
         }
@@ -104,6 +107,7 @@ public class SortFindPanel extends UiPart<Region> {
         try {
             CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + phoneItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort phone using sort menu");
         }
@@ -117,6 +121,7 @@ public class SortFindPanel extends UiPart<Region> {
         try {
             CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + emailItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort email using sort menu");
         }
@@ -130,6 +135,7 @@ public class SortFindPanel extends UiPart<Region> {
         try {
             CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + addressItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort address using sort menu");
         }
@@ -154,6 +160,15 @@ public class SortFindPanel extends UiPart<Region> {
     }
 
     /**
+     * Handles switch to alias view event
+     */
+    @Subscribe
+    private void handleToggleToAliasViewEvent(ToggleToAliasViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switchToAliasView();
+    }
+
+    /**
      * Handles switch to pinned person view event
      */
     @Subscribe
@@ -172,6 +187,15 @@ public class SortFindPanel extends UiPart<Region> {
     private void switchToPersonView() {
         searchBox.setPromptText("Search Person...");
         sortMenu.setVisible(true);
+        searchBox.setVisible(true);
+    }
+
+    /**
+     * Switches style to alias view.
+     */
+    private void switchToAliasView() {
+        searchBox.setVisible(false);
+        sortMenu.setVisible(false);
     }
 
     /**
@@ -194,6 +218,7 @@ public class SortFindPanel extends UiPart<Region> {
     private void switchToTaskView() {
         searchBox.setPromptText("Search Task...");
         sortMenu.setVisible(false);
+        searchBox.setVisible(true);
     }
 
     public MenuButton getSortMenu() {

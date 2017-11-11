@@ -8,7 +8,7 @@ import seedu.address.logic.commands.UndoableCommand;
 //@@author Alim95
 
 /**
- * Lists all persons in the address book to the user.
+ * Sorts the address book based on given keyword.
  */
 public class SortCommand extends UndoableCommand {
 

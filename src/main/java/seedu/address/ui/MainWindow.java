@@ -23,17 +23,21 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.SwitchToBrowserEvent;
 import seedu.address.commons.events.ui.ToggleListAllStyleEvent;
 import seedu.address.commons.events.ui.ToggleListPinStyleEvent;
+import seedu.address.commons.events.ui.ToggleParentChildModeEvent;
 import seedu.address.commons.events.ui.ToggleSortByLabelEvent;
+import seedu.address.commons.events.ui.ToggleToAliasViewEvent;
 import seedu.address.commons.events.ui.ToggleToAllPersonViewEvent;
-import seedu.address.commons.events.ui.ToggleToParentModeEvent;
 import seedu.address.commons.events.ui.ToggleToTaskViewEvent;
 import seedu.address.commons.events.ui.UpdatePinnedPanelEvent;
+import seedu.address.commons.events.ui.ValidResultDisplayEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
@@ -63,7 +67,7 @@ public class MainWindow extends UiPart<Region> {
     private ResultDisplay resultDisplay;
     private CommandBox commandBox;
     private SortFindPanel sortFindPanel;
-
+    private AliasListPanel aliasListPanel;
     private TaskListPanel taskListPanel;
     private Config config;
     private UserPrefs prefs;
@@ -72,7 +76,7 @@ public class MainWindow extends UiPart<Region> {
     private StackPane browserPlaceholder;
 
     @FXML
-    private Label sortedByLabel;
+    private Label organizedByLabel;
 
     @FXML
     private Label organizerLabel;
@@ -84,10 +88,13 @@ public class MainWindow extends UiPart<Region> {
     private Label taskViewLabel;
 
     @FXML
-    private Label pinLabel;
+    private Label aliasViewLabel;
 
     @FXML
-    private Label allLabel;
+    private Label listPinLabel;
+
+    @FXML
+    private Label listAllLabel;
 
     @FXML
     private ScrollPane helpOverlay;
@@ -195,6 +202,7 @@ public class MainWindow extends UiPart<Region> {
 
         taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        aliasListPanel = new AliasListPanel(logic.getFilteredAliasTokenList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
@@ -306,7 +314,9 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handleListAllClicked() {
         try {
-            logic.execute("list");
+            CommandResult result = logic.execute("list");
+            raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent("list"));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to list all using label");
         }
@@ -318,7 +328,9 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handleListPinnedClicked() {
         try {
-            logic.execute("listpin");
+            CommandResult result = logic.execute("listpin");
+            raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent("listpin"));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to list pinned using label");
         }
@@ -330,7 +342,9 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handleTaskViewClicked() {
         try {
-            logic.execute("task");
+            CommandResult result = logic.execute("task");
+            raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent("task"));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to toggle to task view using label");
         }
@@ -342,9 +356,25 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handlePersonViewClicked() {
         try {
-            logic.execute("person");
+            CommandResult result = logic.execute("person");
+            raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent("person"));
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to toggle to person view using label");
+        }
+    }
+
+    /**
+     * Toggles to alias view.
+     */
+    @FXML
+    private void handleAliasViewClicked() {
+        try {
+            CommandResult result = logic.execute("listalias");
+            raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent("listalias"));
+        } catch (CommandException | ParseException e) {
+            logger.warning("Failed to toggle to alias view using label");
         }
     }
     //@@author
@@ -385,7 +415,14 @@ public class MainWindow extends UiPart<Region> {
     @Subscribe
     private void handleSortByLabelEvent(ToggleSortByLabelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        sortedByLabel.setText(event.toString());
+        organizedByLabel.setText(event.toString());
+    }
+
+    @Subscribe
+    private void handleToggleParentChildModeEvent(ToggleParentChildModeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        helpMenu.setVisible(event.isSetToParentMode);
+        aliasViewLabel.setVisible(event.isSetToParentMode);
     }
 
     @Subscribe
@@ -395,11 +432,10 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleToggleToParentModeEvent(ToggleToParentModeEvent event) {
+    private void handleToggleToAliasViewEvent(ToggleToAliasViewEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        helpMenu.setVisible(true);
+        switchToAliasView();
     }
-
 
     @Subscribe
     private void handleToggleToAllPersonViewEvent(ToggleToAllPersonViewEvent event) {
@@ -410,7 +446,7 @@ public class MainWindow extends UiPart<Region> {
     @Subscribe
     private void handleUpdatePinnedPanelEvent(UpdatePinnedPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if (pinLabel.getStyle().equals(BRIGHT_LABEL)) {
+        if (listPinLabel.getStyle().equals(BRIGHT_LABEL)) {
             try {
                 logic.execute("listpin");
             } catch (CommandException | ParseException e) {
@@ -423,29 +459,63 @@ public class MainWindow extends UiPart<Region> {
      * Switches style to person view.
      */
     private void switchToPersonView() {
-        personListPanelPlaceholder.getChildren().removeAll(taskListPanel.getRoot());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-        allLabel.setVisible(true);
-        pinLabel.setVisible(true);
-        organizerLabel.setText("Sorted By:");
+        addSelectedPanel(personListPanel.getRoot());
+        setListLabelsVisible(true);
+        dimAllViewLabels();
         personViewLabel.setStyle(BRIGHT_LABEL);
-        taskViewLabel.setStyle(DIM_LABEL);
-        sortedByLabel.setText(lastSorted);
+        organizerLabel.setText("Sorted By:");
+        organizedByLabel.setText(lastSorted);
+        lastSorted = organizedByLabel.getText();
+        setOrganizerLabelsVisible(true);
     }
 
     /**
      * Switches style to task view.
      */
     private void switchToTaskView() {
-        personListPanelPlaceholder.getChildren().removeAll(personListPanel.getRoot());
-        personListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
-        allLabel.setVisible(false);
-        pinLabel.setVisible(false);
-        organizerLabel.setText("Showing:");
-        personViewLabel.setStyle(DIM_LABEL);
+        addSelectedPanel(taskListPanel.getRoot());
+        setListLabelsVisible(false);
+        dimAllViewLabels();
         taskViewLabel.setStyle(BRIGHT_LABEL);
-        lastSorted = sortedByLabel.getText();
-        sortedByLabel.setText("All");
+        organizerLabel.setText("Showing:");
+        organizedByLabel.setText("All");
+        setOrganizerLabelsVisible(true);
+    }
+
+    /**
+     * Switches style to alias view.
+     */
+    private void switchToAliasView() {
+        addSelectedPanel(aliasListPanel.getRoot());
+        setListLabelsVisible(false);
+        dimAllViewLabels();
+        aliasViewLabel.setStyle(BRIGHT_LABEL);
+        setOrganizerLabelsVisible(false);
+    }
+
+    private void setOrganizerLabelsVisible(boolean isVisible) {
+        organizerLabel.setVisible(isVisible);
+        organizedByLabel.setVisible(isVisible);
+    }
+
+    private void setListLabelsVisible(boolean isVisible) {
+        listAllLabel.setVisible(isVisible);
+        listPinLabel.setVisible(isVisible);
+    }
+
+    private void dimAllViewLabels() {
+        personViewLabel.setStyle(DIM_LABEL);
+        aliasViewLabel.setStyle(DIM_LABEL);
+        taskViewLabel.setStyle(DIM_LABEL);
+    }
+
+    /**
+     * Removes current panel in personListPanelPlaceHolder and adds {@code toAdd} into it.
+     */
+    private void addSelectedPanel(Region toAdd) {
+        personListPanelPlaceholder.getChildren()
+                .removeAll(personListPanel.getRoot(), aliasListPanel.getRoot(), taskListPanel.getRoot());
+        personListPanelPlaceholder.getChildren().add(toAdd);
     }
 
     private void switchToBrowser() {
@@ -484,12 +554,12 @@ public class MainWindow extends UiPart<Region> {
     }
 
     private void listAllToggleStyle() {
-        pinLabel.setStyle(DIM_LABEL);
-        allLabel.setStyle(BRIGHT_LABEL);
+        listPinLabel.setStyle(DIM_LABEL);
+        listAllLabel.setStyle(BRIGHT_LABEL);
     }
 
     private void listPinToggleStyle() {
-        pinLabel.setStyle(BRIGHT_LABEL);
-        allLabel.setStyle(DIM_LABEL);
+        listPinLabel.setStyle(BRIGHT_LABEL);
+        listAllLabel.setStyle(DIM_LABEL);
     }
 }

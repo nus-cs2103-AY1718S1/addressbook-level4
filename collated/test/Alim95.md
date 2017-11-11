@@ -62,29 +62,29 @@ public class HelpOverlayTest extends AddressBookGuiTest {
 public class SearchBoxTest extends AddressBookGuiTest {
 
     @Test
-    public void useSearchField() {
+    public void useSearchBox() {
 
-        /* Case: find "alice" in search field -> 1 person found */
+        /* Case: find "alice" in search box -> 1 person found */
         getSearchField().click();
         getSearchField().run("alice");
         assertEquals(mainWindowHandle.getPersonListPanel().getListSize(), 1);
 
-        /* Case: find "AlIce" in search field -> 1 person found */
+        /* Case: find "AlIce" in search box -> 1 person found */
         getSearchField().click();
         getSearchField().run("AlIce");
         assertEquals(mainWindowHandle.getPersonListPanel().getListSize(), 1);
 
-        /* Case: find "a" in search field -> 5 person found */
+        /* Case: find "a" in search box -> 5 person found */
         getSearchField().click();
         getSearchField().run("a");
         assertEquals(mainWindowHandle.getPersonListPanel().getListSize(), 5);
 
-        /* Case: find no person in search field -> displays full list */
+        /* Case: find no person in search box -> displays full list */
         getSearchField().click();
         getSearchField().run("");
         assertEquals(mainWindowHandle.getPersonListPanel().getListSize(), 7);
 
-        /* Case: find "Meier" in search field -> 2 person found */
+        /* Case: find "Meier" in search box -> 2 person found */
         getSearchField().click();
         getSearchField().run("Meier");
         assertEquals(mainWindowHandle.getPersonListPanel().getListSize(), 2);
@@ -95,6 +95,14 @@ public class SearchBoxTest extends AddressBookGuiTest {
 ``` java
 
 public class SortMenuTest extends AddressBookGuiTest {
+
+    private static final String ALICE = "Alice Pauline";
+    private static final String BENSON = "Benson Meier";
+    private static final String CARL = "Carl Kurz";
+    private static final String DANIEL = "Daniel Meier";
+    private static final String ELLE = "Elle Meyer";
+    private static final String FIONA = "Fiona Kunz";
+    private static final String GEORGE = "George Best";
 
     @Test
     public void useSortMenu() {
@@ -130,13 +138,10 @@ public class SortMenuTest extends AddressBookGuiTest {
      */
     private void assertSortNameSuccess(String expectedMessage) {
         assertEquals(getResultDisplay().getText(), expectedMessage);
-        assertEquals(getPersonListPanel().getPersonCardHandle(0).getName(), "Alice Pauline");
-        assertEquals(getPersonListPanel().getPersonCardHandle(1).getName(), "Benson Meier");
-        assertEquals(getPersonListPanel().getPersonCardHandle(2).getName(), "Carl Kurz");
-        assertEquals(getPersonListPanel().getPersonCardHandle(3).getName(), "Daniel Meier");
-        assertEquals(getPersonListPanel().getPersonCardHandle(4).getName(), "Elle Meyer");
-        assertEquals(getPersonListPanel().getPersonCardHandle(5).getName(), "Fiona Kunz");
-        assertEquals(getPersonListPanel().getPersonCardHandle(6).getName(), "George Best");
+        List<String> personListSortedByName = getPersonListSortedByName();
+        for (int i = 0; i < 7; i++) {
+            assertEquals(getPersonListPanel().getPersonCardHandle(i).getName(), personListSortedByName.get(i));
+        }
     }
 
     /**
@@ -145,13 +150,10 @@ public class SortMenuTest extends AddressBookGuiTest {
      */
     private void assertSortPhoneSuccess(String expectedMessage) {
         assertEquals(getResultDisplay().getText(), expectedMessage);
-        assertEquals(getPersonListPanel().getPersonCardHandle(0).getName(), "Alice Pauline");
-        assertEquals(getPersonListPanel().getPersonCardHandle(1).getName(), "Daniel Meier");
-        assertEquals(getPersonListPanel().getPersonCardHandle(2).getName(), "Elle Meyer");
-        assertEquals(getPersonListPanel().getPersonCardHandle(3).getName(), "Fiona Kunz");
-        assertEquals(getPersonListPanel().getPersonCardHandle(4).getName(), "George Best");
-        assertEquals(getPersonListPanel().getPersonCardHandle(5).getName(), "Carl Kurz");
-        assertEquals(getPersonListPanel().getPersonCardHandle(6).getName(), "Benson Meier");
+        List<String> personListSortedByPhone = getPersonListSortedByPhone();
+        for (int i = 0; i < 7; i++) {
+            assertEquals(getPersonListPanel().getPersonCardHandle(i).getName(), personListSortedByPhone.get(i));
+        }
     }
 
     /**
@@ -160,13 +162,10 @@ public class SortMenuTest extends AddressBookGuiTest {
      */
     private void assertSortEmailSuccess(String expectedMessage) {
         assertEquals(getResultDisplay().getText(), expectedMessage);
-        assertEquals(getPersonListPanel().getPersonCardHandle(0).getName(), "Alice Pauline");
-        assertEquals(getPersonListPanel().getPersonCardHandle(1).getName(), "George Best");
-        assertEquals(getPersonListPanel().getPersonCardHandle(2).getName(), "Daniel Meier");
-        assertEquals(getPersonListPanel().getPersonCardHandle(3).getName(), "Carl Kurz");
-        assertEquals(getPersonListPanel().getPersonCardHandle(4).getName(), "Benson Meier");
-        assertEquals(getPersonListPanel().getPersonCardHandle(5).getName(), "Fiona Kunz");
-        assertEquals(getPersonListPanel().getPersonCardHandle(6).getName(), "Elle Meyer");
+        List<String> personListSortedByEmail = getPersonListSortedByEmail();
+        for (int i = 0; i < 7; i++) {
+            assertEquals(getPersonListPanel().getPersonCardHandle(i).getName(), personListSortedByEmail.get(i));
+        }
     }
 
     /**
@@ -175,13 +174,26 @@ public class SortMenuTest extends AddressBookGuiTest {
      */
     private void assertSortAddressSuccess(String expectedMessage) {
         assertEquals(getResultDisplay().getText(), expectedMessage);
-        assertEquals(getPersonListPanel().getPersonCardHandle(0).getName(), "Daniel Meier");
-        assertEquals(getPersonListPanel().getPersonCardHandle(1).getName(), "Alice Pauline");
-        assertEquals(getPersonListPanel().getPersonCardHandle(2).getName(), "Benson Meier");
-        assertEquals(getPersonListPanel().getPersonCardHandle(3).getName(), "George Best");
-        assertEquals(getPersonListPanel().getPersonCardHandle(4).getName(), "Fiona Kunz");
-        assertEquals(getPersonListPanel().getPersonCardHandle(5).getName(), "Elle Meyer");
-        assertEquals(getPersonListPanel().getPersonCardHandle(6).getName(), "Carl Kurz");
+        List<String> personListSortedByAddress = getPersonListSortedByAddress();
+        for (int i = 0; i < 7; i++) {
+            assertEquals(getPersonListPanel().getPersonCardHandle(i).getName(), personListSortedByAddress.get(i));
+        }
+    }
+
+    private List<String> getPersonListSortedByName() {
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    private List<String> getPersonListSortedByPhone() {
+        return new ArrayList<>(Arrays.asList(ALICE, DANIEL, ELLE, FIONA, GEORGE, CARL, BENSON));
+    }
+
+    private List<String> getPersonListSortedByEmail() {
+        return new ArrayList<>(Arrays.asList(ALICE, GEORGE, DANIEL, CARL, BENSON, FIONA, ELLE));
+    }
+
+    private List<String> getPersonListSortedByAddress() {
+        return new ArrayList<>(Arrays.asList(DANIEL, ALICE, BENSON, GEORGE, FIONA, ELLE, CARL));
     }
 }
 ```
@@ -390,48 +402,35 @@ public class SortCommandTest {
 
     @Test
     public void executeSortByNameSuccess() {
-        SortCommand sortCommand = prepareCommand(TO_SORT_NAME);
-
-        String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, TO_SORT_NAME);
-
-        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel.sortList(TO_SORT_NAME);
-
-        assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+        assertSortCommandSuccess(TO_SORT_NAME, model);
     }
 
     @Test
     public void executeSortByPhoneSuccess() {
-        SortCommand sortCommand = prepareCommand(TO_SORT_PHONE);
-
-        String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, TO_SORT_PHONE);
-
-        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel.sortList(TO_SORT_PHONE);
-
-        assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+        assertSortCommandSuccess(TO_SORT_PHONE, model);
     }
 
     @Test
     public void executeSortByEmailSuccess() {
-        SortCommand sortCommand = prepareCommand(TO_SORT_EMAIL);
-
-        String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, TO_SORT_EMAIL);
-
-        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel.sortList(TO_SORT_EMAIL);
-
-        assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+        assertSortCommandSuccess(TO_SORT_EMAIL, model);
     }
 
     @Test
     public void executeSortByAddressSuccess() {
-        SortCommand sortCommand = prepareCommand(TO_SORT_ADDRESS);
+        assertSortCommandSuccess(TO_SORT_ADDRESS, model);
+    }
 
-        String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, TO_SORT_ADDRESS);
+    /**
+     * Executes a {@code SortCommand} with the given {@code toSortBy}, and checks that expected message and model
+     * is correct.
+     */
+    private void assertSortCommandSuccess(String toSortBy, Model model) {
+        SortCommand sortCommand = prepareCommand(toSortBy);
+
+        String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, toSortBy);
 
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel.sortList(TO_SORT_ADDRESS);
+        expectedModel.sortList(toSortBy);
 
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
     }
