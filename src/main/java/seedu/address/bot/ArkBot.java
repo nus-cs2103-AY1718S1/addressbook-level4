@@ -58,7 +58,7 @@ public class ArkBot extends AbilityBot {
     public static final String BOT_MESSAGE_START = "Welcome to ArkBot, your friendly companion to ArkBot on Desktop.\n"
                                                  + "Over here, you can interface with your Desktop application with "
                                                  + "the following functions /add, /list, /delete, /undo, /redo, "
-                                                 + "/complete and /help.";
+                                                 + "/complete, /cancel and /help.";
     public static final String BOT_MESSAGE_COMPLETE_COMMAND = "Please upload QR code to complete delivery.\n"
                                                             + "Type \"/cancel\" to stop uploading process.";
     public static final String BOT_MESSAGE_CANCEL_COMMAND = "QR Code upload successfully cancelled!";
