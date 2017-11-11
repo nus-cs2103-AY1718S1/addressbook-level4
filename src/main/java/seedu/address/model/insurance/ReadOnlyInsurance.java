@@ -1,5 +1,6 @@
 package seedu.address.model.insurance;
 
+import java.time.LocalDate;
 import java.util.EnumMap;
 import java.util.UUID;
 
@@ -30,8 +31,10 @@ public interface ReadOnlyInsurance {
     Premium getPremium();
     ObjectProperty<ContractFileName> contractFileNameProperty();
     ContractFileName getContractFileName();
+    LocalDate getSigningDate();
     StringProperty signingDateStringProperty();
     String getSigningDateString();
+    LocalDate getExpiryDate();
     StringProperty expiryDateStringProperty();
     String getExpiryDateString();
 
@@ -42,12 +45,16 @@ public interface ReadOnlyInsurance {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getId().equals(this.getId()) // state checks here onwards
-                && other.getOwnerName().equals(this.getOwnerName())
-                && other.getInsuredName().equals(this.getInsuranceName())
+                && other.getInsuranceName().equals(this.getInsuranceName())
+                && other.getRoleToPersonNameMap().equals(this.getRoleToPersonNameMap())
+                && other.getOwner().equals(this.getOwner())
+                && other.getInsured().equals(this.getInsured())
                 && other.getBeneficiaryName().equals(this.getBeneficiaryName())
                 && other.getPremium().equals(this.getPremium())
+                && other.getSigningDate().equals(this.getSigningDate())
                 && other.getSigningDateString().equals(this.getSigningDateString())
-                && other.getExpiryDateString().equals(this.getExpiryDateString()))
+                && other.getExpiryDate().equals(this.getExpiryDate()))
+                && other.getExpiryDateString().equals(this.getExpiryDateString())
                 && other.getContractFileName().equals(this.getContractFileName());
     }
 

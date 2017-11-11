@@ -13,6 +13,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SIGNING_DATE;
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.insurance.InsurancePerson;
 import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.insurance.exceptions.DuplicateContractFileNameException;
@@ -49,7 +50,9 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
             + PREFIX_CONTRACT_FILE_NAME + "AlexYeoh-TermLife";
 
     public static final String MESSAGE_SUCCESS = "New insurance added: %1$s";
-    public static final String MESSAGE_DUPLICATE_INSURANCE_CONTRACT_FILE =
+    public static final String MESSAGE_DUPLICATE_INSURANCE = "AddressBooks should not have duplicate insurances";
+
+    public static final String MESSAGE_DUPLICATE_CONTRACT_FILE_NAME =
             "This insurance contract file already exists in LISA";
 
     private final LifeInsurance lifeInsurance;
@@ -73,13 +76,13 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
         for (ReadOnlyPerson person: list) {
             String lowerCaseName = person.getName().toString().toLowerCase();
             if (lowerCaseName.equals(ownerName)) {
-                lifeInsurance.setOwner(person);
+                lifeInsurance.setOwner(new InsurancePerson(person));
             }
             if (lowerCaseName.equals(insuredName)) {
-                lifeInsurance.setInsured(person);
+                lifeInsurance.setInsured(new InsurancePerson(person));
             }
             if (lowerCaseName.equals(beneficiaryName)) {
-                lifeInsurance.setBeneficiary(person);
+                lifeInsurance.setBeneficiary(new InsurancePerson(person));
             }
         }
     }
@@ -93,9 +96,9 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
             model.addLifeInsurance(lifeInsurance);
             return new CommandResult(String.format(MESSAGE_SUCCESS, lifeInsurance));
         } catch (DuplicateInsuranceException die) {
-            throw new AssertionError("AddressBooks should not have duplicate insurances");
+            throw new AssertionError(MESSAGE_DUPLICATE_INSURANCE);
         } catch (DuplicateContractFileNameException dicne) {
-            throw new CommandException(MESSAGE_DUPLICATE_INSURANCE_CONTRACT_FILE);
+            throw new CommandException(MESSAGE_DUPLICATE_CONTRACT_FILE_NAME);
         }
     }
 

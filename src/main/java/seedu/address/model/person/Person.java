@@ -103,19 +103,6 @@ public class Person implements ReadOnlyPerson {
         }
 
     }
-    //@@author
-
-    //@@author OscarWang114
-    public Person(ReadOnlyPerson source, LifeInsurance lifeInsurance) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getDateOfBirth(), source.getGender(), source.getTags());
-        if (source.getLifeInsuranceIds() != null) {
-            this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
-        }
-        addLifeInsurances(lifeInsurance);
-
-    }
-    //@@author
 
     public void setName(Name name) {
         this.name.set(requireNonNull(name));

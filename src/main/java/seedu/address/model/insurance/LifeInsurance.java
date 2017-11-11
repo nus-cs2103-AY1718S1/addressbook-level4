@@ -13,7 +13,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.DateParser;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Name;
 
 //@@author OscarWang114
 /**
@@ -97,31 +97,35 @@ public class LifeInsurance implements ReadOnlyInsurance {
     public LifeInsurance(ReadOnlyInsurance source) {
         this.id = new SimpleObjectProperty<>(source.idProperty().get());
         this.insuranceName = new SimpleObjectProperty<>(source.getInsuranceName());
-        this.roleToPersonNameMap = new EnumMap<>(Roles.class);
-        this.roleToPersonNameMap.put(Roles.OWNER, source.getOwner().getName());
-        this.roleToPersonNameMap.put(Roles.INSURED, source.getInsured().getName());
-        this.roleToPersonNameMap.put(Roles.BENEFICIARY, source.getBeneficiary().getName());
+        this.roleToPersonNameMap = source.getRoleToPersonNameMap();
         this.owner = new SimpleObjectProperty<>(source.getOwner());
         this.insured = new SimpleObjectProperty<>(source.getInsured());
         this.beneficiary = new SimpleObjectProperty<>(source.getBeneficiary());
         this.premium = new SimpleObjectProperty<>(source.getPremium());
         this.contractFileName = new SimpleObjectProperty<>(source.getContractFileName());
+        this.signingDate = source.getSigningDate();
+        this.expiryDate = source.getExpiryDate();
         this.signingDateString = new SimpleStringProperty(source.getSigningDateString());
         this.expiryDateString = new SimpleStringProperty(source.getExpiryDateString());
     }
 
     /**
      * Resets the value of the owner, insured, beneficiary of this insurance. Every new {@code InsurancePerson}
-     * object is constructed with the {@code name} field assigned and the {@code person} field unassigned.
+     * object is constructed with the {@code name} field assigned as {@code Name} and the {@code person} field
+     * assigned as {@code Optional.empty()}.
      */
-    public void resetAllInsurancePerson() {
-        String ownerName = this.roleToPersonNameMap.get(Roles.OWNER);
-        String insuredName = this.roleToPersonNameMap.get(Roles.INSURED);
-        String beneficiaryName = this.roleToPersonNameMap.get(Roles.BENEFICIARY);
+    public void resetAllInsurancePersons() {
+        final Name ownerName = this.owner.get().nameProperty().get();
+        final Name insuredName = this.insured.get().nameProperty().get();
+        final Name beneficiaryName = this.beneficiary.get().nameProperty().get();
         this.owner = new SimpleObjectProperty<>(new InsurancePerson(ownerName));
         this.insured = new SimpleObjectProperty<>(new InsurancePerson(insuredName));
         this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(beneficiaryName));
 
+    }
+
+    public void setId(UUID id) {
+        this.id = new SimpleObjectProperty<>(id);
     }
 
     @Override
@@ -132,6 +136,10 @@ public class LifeInsurance implements ReadOnlyInsurance {
     @Override
     public UUID getId() {
         return id.get();
+    }
+
+    public void setInsuranceName(InsuranceName insuranceName) {
+        this.insuranceName = new SimpleObjectProperty<>(insuranceName);
     }
 
     @Override
@@ -149,9 +157,9 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return roleToPersonNameMap;
     }
 
-    public void setOwner(ReadOnlyPerson owner) {
+    public void setOwner(InsurancePerson owner) {
         requireNonNull(owner);
-        this.owner.get().setPerson(owner);
+        this.owner = new SimpleObjectProperty<>(owner);
     }
 
     @Override
@@ -169,9 +177,9 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return owner.get().getName();
     }
 
-    public void setInsured(ReadOnlyPerson insured) {
+    public void setInsured(InsurancePerson insured) {
         requireNonNull(insured);
-        this.insured.get().setPerson(insured);
+        this.insured = new SimpleObjectProperty<>(insured);
     }
 
     @Override
@@ -189,9 +197,9 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return insured.get().getName();
     }
 
-    public void setBeneficiary(ReadOnlyPerson beneficiary) {
+    public void setBeneficiary(InsurancePerson beneficiary) {
         requireNonNull(beneficiary);
-        this.beneficiary.get().setPerson(beneficiary);
+        this.beneficiary = new SimpleObjectProperty<>(beneficiary);
     }
 
     @Override
@@ -223,7 +231,10 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return premium.get();
     }
 
-    //@@author OscarWang114
+    public void setContractFileName(ContractFileName contractFileName) {
+        this.contractFileName = new SimpleObjectProperty<>(contractFileName);
+    }
+
     @Override
     public ObjectProperty<ContractFileName> contractFileNameProperty() {
         return contractFileName;
@@ -234,9 +245,18 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return contractFileName.get();
     }
 
-    public void setSigningDateString(String signingDateString) throws IllegalValueException {
-        this.signingDate = new DateParser().parse(signingDateString);
-        this.signingDateString.set(requireNonNull(signingDateString));
+    public void setSigningDate(LocalDate signingDate) {
+        this.signingDate = signingDate;
+        setSigningDateString(signingDate.format(DateParser.DATE_FORMAT));
+    }
+
+    @Override
+    public LocalDate getSigningDate() {
+        return signingDate;
+    }
+
+    public void setSigningDateString(String signingDateString) {
+        this.signingDateString = new SimpleStringProperty(signingDateString);
     }
 
     @Override
@@ -249,9 +269,18 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return signingDateString.get();
     }
 
-    public void setExpiryDateString(String expiryDateString) throws IllegalValueException {
-        this.expiryDate = new DateParser().parse(expiryDateString);
-        this.expiryDateString.set(requireNonNull(expiryDateString));
+    public void setExpiryDate(LocalDate expiryDate) {
+        this.expiryDate = expiryDate;
+        setExpiryDateString(expiryDate.format(DateParser.DATE_FORMAT));
+    }
+
+    @Override
+    public LocalDate getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDateString(String expiryDateString) {
+        this.expiryDateString = new SimpleStringProperty(expiryDateString);
     }
 
     @Override
