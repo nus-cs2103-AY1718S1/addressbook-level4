@@ -411,9 +411,9 @@ _Constraints_ +
 
 // tag::find[]
 ==== Finding tasks by description or deadline: `find`
-Want to find a task? The find feature allows you to find task(s) using descriptions or deadline.
+Want to find a task? The find feature allows you to find task(s) by descriptions or deadlines.
 
-To find task(s) whose description contain any of the given keywords, use +
+To find task(s) whose descriptions contain any of the given keywords, use +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 To find task(s) by deadlines, use +
@@ -513,14 +513,14 @@ __Constraints:__
 // tag::list[]
 ==== Listing tasks : `list` +
 
-When you want to go back to the default list of tasks after a search, you can use the list command to return to the default list of tasks.
+You can use the list command to go back to the default list of tasks after a search.
 
 Format: `list`
 // end::list[]
 
 // tag::select[]
 ==== Selecting a task: `select`
-When you want to select a task, you can use the select command to select the task identified by the index number used in the last task listing.
+You can use the select command to select the task identified by the index number used in the last task listing.
 
 Format: `select INDEX`
 
