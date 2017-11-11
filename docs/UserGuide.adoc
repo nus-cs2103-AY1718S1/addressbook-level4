@@ -469,11 +469,11 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-==== Enabling and disabling the welcome window: `welcome` [Since v1.5]
+==== Enabling and disabling the welcome screen: `welcome` [Since v1.5]
 
 => Alias: `w` <=
 
-Enables or disables the welcome window.
+Enables or disables the welcome screen.
 Format: `welcome ENABLING_KEYWORD`
 
 Examples:
@@ -483,15 +483,15 @@ Examples:
 * `welcome disable` +
 
 [NOTE]
-The welcome window is disabled by default.
+The welcome screen is disabled by default.
 
 [TIP]
-Try enabling the welcome window, close and rerun ConTag.
+Try enabling the welcome screen, close and rerun ConTag.
 
-If the welcome window is successfully enabled, you should be able to see a the following window as shown in _Figure 3.5.5.1_ every time ConTag is run. The welcome window displays 1 out of the 15 default productivity quotes at random to keep you motivated throughout the day.
+If the welcome screen is successfully enabled, you should be able to see a the following screen as shown in _Figure 3.5.5.1_ every time ConTag is run. The welcome screen displays 1 out of the 15 default productivity quotes at random to keep you motivated throughout the day.
 
 image::WelcomeScreen.png[width="400"]
-_Figure 3.4.3.1: The welcome window_
+_Figure 3.4.3.1: The welcome screen_
 
 ==== Exiting the program : `exit`
 
