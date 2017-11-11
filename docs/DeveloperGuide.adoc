@@ -12,14 +12,13 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-W13-B3/main/tree/master
 
-By: `Team W13-B3`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W13-B3`  	Since: `Jun 2016`  	Licence: `MIT`
 
 Welcome to *ABC*!
 
-*ABC* is a desktop Business Contact Management application, which is primarily a CLI (Command Line Interface)
-application, but also uses a GUI (graphical user interface). It provides a convenient way for users
-to customize their contacts and keep track of appointments. This guide provides information that will
-help both experienced contributors and first-time users contribute to *ABC*.
+*ABC* is a desktop Business Contact Management application, which is primarily a Command Line Interface (CLI) application that also provides a Graphical User Interface (GUI). It provides a convenient way for users to customize their contacts and keep track of appointments. +
+
+This guide provides information that will help you contribute to *ABC*, whether you are an experienced contributor or a first-time user. This includes information on the necessary requirements of this project, an overview of the software architecture, and implementation of key features.
 
 == Setting up
 
@@ -28,7 +27,7 @@ help both experienced contributors and first-time users contribute to *ABC*.
 . *JDK `1.8.0_60`* or later
 +
 [NOTE]
-This app is not compatible with earlier versions of Java 8.
+This application is not compatible with earlier versions of Java 8.
 +
 
 . *IntelliJ* IDE
@@ -38,9 +37,9 @@ IntelliJ has Gradle and JavaFx plugins installed by default. +
 Do not disable them. If they are disabled, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
-=== Setting up the project in a local computer
+=== Setting up the project on a computer
 
-. Fork this repo, and clone the fork to the local computer.
+. Fork this repo, and clone the fork to your computer.
 . Open IntelliJ (if the welcome screen is not displayed, click `File` > `Close Project` to close the existing project dialog first).
 . Set up the correct JDK version for Gradle.
 .. Click `Configure` > `Project Defaults` > `Project Structure`.
@@ -83,11 +82,11 @@ Set up Travis to perform CI for the fork. See <<UsingTravis#, UsingTravis.adoc>>
 Optionally, set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
-Having both Travis and AppVeyor ensures that the App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+Having both Travis and AppVeyor ensures that the application works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
 
 ==== Getting started with coding
 
-Before starting to code, it is advisable to get a sense of the overall design by reading the link:#architecture[Architecture] section.
+Before starting to code, it is advisable to get a sense of the overall design by reading the link:#architecture[Architecture] section below.
 
 == Design
 
@@ -103,27 +102,27 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* At app launch: Initializing the components in the correct sequence, and connecting them up with each other.
-* At shut down: Shutting down the components and invoking cleanup method where necessary.
+* Initializing the components in the correct sequence at application launch, and connecting them up with each other.
+* Shutting down the components and invoking cleanup method where necessary.
 
 link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level:
 
-* `EventsCenter` (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` is used by many classes to write log messages to the App's log file.
+* `EventsCenter` (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of Event Driven design)
+* `LogsCenter` is used by many classes to write log messages to the application's log file.
 
-The rest of the App consists of four components:
+The rest of the application consists of four components:
 
 * link:#ui-component[*`UI`*] : Takes charge of the UI of the App.
 * link:#logic-component[*`Logic`*] : Executes commands.
-* link:#model-component[*`Model`*] : Holds the data of the App in-memory.
+* link:#model-component[*`Model`*] : Holds the data of the application in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
 
-Each of the four components
+Each of the four components:
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality via a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see Figure 2.1.2 for its class diagram) defines it's API in the `Logic.java` interface and exposes its functionality via the `LogicManager.java` class.
+For example, the `Logic` component (see Figure 2.1.2 for its class diagram) defines its API in the `Logic.java` interface and exposes its functionality via the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.1.2 : Class Diagram of the Logic Component_
@@ -134,20 +133,20 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_(Figure 2.1.3a) below shows how the components interact in a scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Sequence Diagram for `delete 1` command (part a)_
+_Figure 2.1.3a : Sequence Diagram for `delete 1` command (Part a)_
 
 [NOTE]
-`Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+`Model` simply raises a `AddressBookChangedEvent` when the Address Book data is changed, instead of asking `Storage` to save the updates to the hard disk.
 
-The diagram(Figure 2.1.3b) below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+The diagram(Figure 2.1.3b) below shows how `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Sequence Diagram for `delete 1` command (part b)_
+_Figure 2.1.3b : Sequence Diagram for `delete 1` command (Part b)_
 
 [NOTE]
-The event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+The event is propagated through `EventsCenter` to `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
-The sections below give more details of each component.
+The sections below give more details of the four main components.
 
 === UI component
 
@@ -160,11 +159,11 @@ As seen in _Figure 2.2.1_, the UI consists of a `MainWindow` that is made up of 
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in their corresponding `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
 
-The `UI` component,
+The `UI` component:
 
 * Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can be updated automatically when data in the `Model` change.
-* Responds to events raised from various parts of the App and updates the UI accordingly.
+* Binds itself to some data in `Model` so that the UI can be updated automatically when data in `Model` changes.
+* Responds to events raised from various parts of the application and updates the UI accordingly.
 
 === Logic component
 
@@ -177,12 +176,8 @@ _Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-As seen in _Figure 2.3.1_,
-
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+As seen in _Figure 2.3.1_, `Logic` uses the `AddressBookParser` class to parse the user command.
+This results in a `Command` object which is executed by `LogicManager`. The command execution can affect `Model` (e.g. adding a person) and/or raise events. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 _Figure 2.3.3_ below shows the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
@@ -196,11 +191,11 @@ _Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-As seen in _Figure2.4.1_, the `Model` component,
+As seen in _Figure 2.4.1_, the `Model` component:
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bounded to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 === Storage component
@@ -210,7 +205,7 @@ _Figure 2.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-As seen in _Figure 2.5.1_, the `Storage` component,
+As seen in _Figure 2.5.1_, the `Storage` component:
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
@@ -228,124 +223,132 @@ This section describes some noteworthy details on how certain features are imple
 
 ==== Mechanism
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modify the state of the application (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram, Figure 3.1.1, shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 3.1.1_
 
-As can be seen from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As seen from Figure 3.1.1, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as `DeleteCommand`. Note that extra tasks need to be done when executing a command that can be undone, such as saving the state of the application before execution. `UndoableCommand` contains the high-level algorithm for these extra tasks while the child classes implement the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
 ----
 public class ListCommand extends Command {
-    @Override
-    public CommandResult execute() {
-        // ... list logic ...
-    }
+   @Override
+   public CommandResult execute() {
+       // ... list logic ...
+   }
 }
 ----
 
-With the extra layer, the commands that are undoable are implemented this way:
+With the extra layer, the undoable commands are implemented as follows:
 [source,java]
 ----
 public abstract class UndoableCommand extends Command {
-    @Override
-    public CommandResult execute() {
-        // ... undo logic ...
+   @Override
+   public CommandResult execute() {
+       // ... undo logic ...
 
-        executeUndoableCommand();
-    }
+       executeUndoableCommand();
+   }
 }
 
 public class DeleteCommand extends UndoableCommand {
-    @Override
-    public CommandResult executeUndoableCommand() {
-        // ... delete logic ...
-    }
+   @Override
+   public CommandResult executeUndoableCommand() {
+       // ... delete logic ...
+   }
 }
 ----
 
-Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
+Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the start.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command). This is illustrated by Figure 3.1.2.
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 3.1.2_
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person. This is shown in Figure 3.1.3.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 3.1.3_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
-The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+The user now decides that adding the person was a mistake, and executes `undo` to undo his previous command.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+As can be seen from Figure 3.1.4, the most recent command is popped out of the `undoStack` and pushed back to the `redoStack`. The address book is then restored to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 3.1.4_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
-The following sequence diagram shows how the undo operation works:
+The following sequence diagram, Figure 3.1.5, shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 3.1.5_
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+The redo does the exact opposite (pops from `redoStack`, pushes to `undoStack`, and restores the address book to the state after the command is executed).
 
 [NOTE]
-If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
+If the `redoStack` is empty, there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
-The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
+The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. The `redoStack` is no longer empty. It will be purged as it no longer makes sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow). This is shown in Figure 3.1.6.
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 3.1.6_
 
-Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
+Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution, as shown in Figure 3.1.7.
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 3.1.7_
 
-The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
+The following activity diagram, Figure 3.1.8,  summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 3.1.8_
 
 ==== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
 **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
-**Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
-**Cons:** Hard for new developers to understand the template pattern. +
-**Alternative 2:** Just override `execute()` +
+**Pros:** No undone/redone functionality is lost as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exists. +
+**Cons:** Difficult for new developers to understand the template pattern. +
+**Alternative 2:** Override `execute()` +
 **Pros:** Does not involve the template pattern, easier for new developers to understand. +
 **Cons:** Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
 ---
 
 **Aspect:** How undo & redo executes +
-**Alternative 1 (current choice):** Saves the entire address book. +
+**Alternative 1 (current choice):** Save the entire address book +
 **Pros:** Easy to implement. +
 **Cons:** May have performance issues in terms of memory usage. +
-**Alternative 2:** Individual command knows how to undo/redo by itself. +
+**Alternative 2:** Individual command is able to undo/redo itself +
 **Pros:** Will use less memory (e.g. for `delete`, just save the person being deleted). +
-**Cons:** We must ensure that the implementation of each individual command are correct.
+**Cons:** Must ensure that the implementation of each individual command is correct.
 
 ---
 
 **Aspect:** Type of commands that can be undone/redone +
-**Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`). +
-**Pros:** We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost). +
-**Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`. +
-**Alternative 2:** Include all commands. +
-**Pros:** Might be more intuitive for the user. +
-**Cons:** User have no way of skipping such commands if he or she just want to reset the state of the address book and not the view. +
+**Alternative 1 (current choice):** Only include commands that modify the address book (`add`, `clear`, `edit`) +
+**Pros:** Only need to revert changes that are hard to change back (the view can easily be re-modified as no data is lost). +
+**Cons:** User might think that list modifying operations are also undoable (undoing filtering, for example), only to realize that it does not do that. +
+**Alternative 2:** Include all commands +
+**Pros:** More intuitive for the user. +
+**Cons:** User has no way of skipping such commands if he wants to reset the state of the address book and not the view. +
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 ---
 
 **Aspect:** Data structure to support the undo/redo commands +
 **Alternative 1 (current choice):** Use separate stack for undo and redo +
-**Pros:** Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project. +
+**Pros:** Easy to understand for new Computer Science student undergraduates, who are likely to be the new incoming developers of our project. +
 **Cons:** Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `UndoRedoStack`. +
 **Alternative 2:** Use `HistoryManager` for undo/redo +
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
@@ -353,36 +356,37 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // end::undoredo[]
 
 // tag::backupandrestore[]
-=== Backup / Restoring Backup
+=== Backup/Restoring Backup
 
 ==== Mechanism
 
 The backing up of ABC is done by `BackupCommand` and the restoring of data from a backup file is done by `RestoreBackupCommand`.
 `BackupCommand` inherits from `Command` as it does not support the undoing and redoing of user actions, whereas `RestoreBackupCommand` inherits from `UndoableCommand`.
-These commands require access to `Storage` from `Logic` and the way to accomplish this is to post an event to `EventsCenter`. `Subscribers` in `StorageManager` will handle these events and respond correspondingly.
-The following shows a sequence diagram of how the `BackupCommand` is carried out.
+These commands require access to `Storage` from `Logic` and this is accomplishing by posting an event to `EventsCenter`. `Subscribers` in `StorageManager` will handle these events and respond correspondingly.
+The following shows a sequence diagram, Figure 3.1.2, of how the `BackupCommand` is carried out.
 
 image::BackupCommandSequenceDiagram.png[width="800"]
+_Figure 3.2.1_
 
 [NOTE]
 `RestoreBackupCommand` shares a similar sequence diagram in terms of logic.
 
-The `BackupCommand` is executed when the commands `backup` or `b` is entered. The data that is in `model` or the active address book is first passed as a parameter to `BackupDataEvent`. The event will be handled by `StorageManager` and is saved into the default file path "data/addressbook-backup.xml".
+The `BackupCommand` is executed when the command `backup`  is entered. The data that is in `Model` or the active address book is first passed as a parameter to `BackupDataEvent`. The event will be handled by `StorageManager` and is saved into the default file path "data/addressbook-backup.xml".
 The following is the implementation of `BackupCommand`:
 [source, java]
 ----
 public class BackupCommand extends Command {
-    //... variables, constructor, other methods...
+   //... variables, constructor, other methods...
 
-    @Override
-    public CommandResult execute() throws CommandException {
-        // reading data from model
-        ReadOnlyAddressBook backupAddressBookData = model.getAddressBook();
+   @Override
+   public CommandResult execute() throws CommandException {
+       // reading data from model
+       ReadOnlyAddressBook backupAddressBookData = model.getAddressBook();
 
-        // posting event to backup data
-        EventsCenter.getInstance().post(new BackupDataEvent(backupAddressBookData));
-        return new CommandResult(String.format(MESSAGE_SUCCESS));
-    }
+       // posting event to backup data
+       EventsCenter.getInstance().post(new BackupDataEvent(backupAddressBookData));
+       return new CommandResult(String.format(MESSAGE_SUCCESS));
+   }
 }
 ----
 
@@ -392,30 +396,30 @@ The following is the implementation of `RestoreBackupCommand`:
 [source, java]
 ----
 public class RestoreBackupCommand extends Command {
-    //... variables, constructor, other methods...
+   //... variables, constructor, other methods...
 
-    @Override
-    public CommandResult execute() throws CommandException {
-        //... other codes and checks...
+   @Override
+   public CommandResult execute() throws CommandException {
+       //... other codes and checks...
 
-        RestoreBackupDataEvent event = new RestoreBackupDataEvent();
+       RestoreBackupDataEvent event = new RestoreBackupDataEvent();
 
-        // posting event to help with restoring backup data
-        EventsCenter.getInstance().post(event);
+       // posting event to help with restoring backup data
+       EventsCenter.getInstance().post(event);
 
-        // overwriting the data in active address book
-        ReadOnlyAddressBook backupAddressBookData = event.getAddressBookData();
-        model.resetData(backupAddressBookData);
-        return new CommandResult(String.format(MESSAGE_SUCCESS));
+       // overwriting the data in active address book
+       ReadOnlyAddressBook backupAddressBookData = event.getAddressBookData();
+       model.resetData(backupAddressBookData);
+       return new CommandResult(String.format(MESSAGE_SUCCESS));
 
-        //... other codes and checks...
-    }
+       //... other codes and checks...
+   }
 }
 ----
 
 If the backup file does not exist in the default file path, an error message will be shown to the user.
 This check is done before `RestoreBackupEvent` is posted. Once again, this requires `Logic` to access `Storage`.
-Therefore, a `BackupFilePresentEvent` will be posted and the `Subscriber` in `StorageManager` would handle this event to check if the backup file exist.
+Therefore, a `BackupFilePresentEvent` will be posted and the `Subscriber` in `StorageManager` would handle this event to check if the backup file exists.
 
 [NOTE]
 A backup of the data is automatically created when *ABC* is closed.
@@ -424,7 +428,7 @@ A backup of the data is automatically created when *ABC* is closed.
 
 **Aspect:** Accessing `Storage` from `Logic` +
 **Alternative 1 (current choice):** Make use of `EventBus` to post events and have `StorageManager` handle the backing up or retrieval of data +
-**Pros:** Follows the architecture closely without introducing dependencies between components. +
+**Pros:** Follow the architecture closely without introducing dependencies between components. +
 **Cons:** New `Event` classes have to be created every time a command requires access to data in the storage.  +
 **Alternative 2:** Allow `Logic` to access `Storage` and its functions +
 **Pros:** Easier implementation for current and future functions or commands related to `Storage`. +
@@ -442,35 +446,36 @@ These commands take in an integer and a string as arguments. The command is firs
 [source, java]
 ----
 public class AddTagCommandParser implements Parser<AddTagCommand> {
-    public AddTagCommand parse(String args) throws ParseException {
-        try {
-            // ... parse `Index` and `Tag` and pass it to `AddTagCommand` ...
-        } catch (IllegalValueException ive) {
-            // ... throw an exception ...
-        }
-    }
+   public AddTagCommand parse(String args) throws ParseException {
+       try {
+           // ... parse `Index` and `Tag` and pass it to `AddTagCommand` ...
+       } catch (IllegalValueException ive) {
+           // ... throw an exception ...
+       }
+   }
 }
 ----
 
-To update the `Tag` objects associated with a `Person`, the set of `Tag` objects of that `Person` is copied to a new set. The new data is then modified, then copied into a newly created `Person` instance. This is implemented as follows:
+To update the `Tag` objects associated with a `Person`, the set of `Tag` objects belonging to that `Person` is copied to a new set. The new data is then modified, then copied into a newly created `Person` instance. This is implemented as follows:
+
 [source, java]
 ----
 public class AddTagCommand extends UndoableCommand {
-    // ... variables, constructor, other methods ...
-    private final Tag newTag;
+   // ... variables, constructor, other methods ...
+   private final Tag newTag;
 
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        // ... fetch personToEdit ...
+   @Override
+   public CommandResult executeUndoableCommand() throws CommandException {
+       // ... fetch personToEdit ...
 
-        Set<Tag> oldTags = new HashSet<Tag>(personToEdit.getTags());
-        // ... check if tag is duplicated ...
-        Person editedPerson = new Person(personToEdit);
-        oldTags.add(newTag);
-        editedPerson.setTags(oldTags);
+       Set<Tag> oldTags = new HashSet<Tag>(personToEdit.getTags());
+       // ... check if tag is duplicated ...
+       Person editedPerson = new Person(personToEdit);
+       oldTags.add(newTag);
+       editedPerson.setTags(oldTags);
 
-        // ... try to replace personToEdit with editedPerson ...
-    }
+       // ... try to replace personToEdit with editedPerson ...
+   }
 }
 
 ----
@@ -484,7 +489,7 @@ _Figure 3.3.1 : Sequence Diagram for AddTag_
 ==== Design Considerations
 
 **Aspect:** Changing the `Tag` objects of the selected `Person` +
-**Alternative 1 (current choice):** Copy set of `Tag` objects to a newly created set. Modify the newly created set. Then create a copy of the selected `Person` instance and replace its set of `Tag` objects. +
+**Alternative 1 (current choice):** Copy set of `Tag` objects to a newly created set and modify the newly created set, then create a copy of the selected `Person` instance and replace its set of `Tag` objects +
 **Pros:** Ensures that the original value will be unchanged, which is important in the event that updating the `Person` instance fails in a later stage. +
 **Cons:** Additional memory required to create a new `Person` instance. +
 **Alternative 2:** Just edit the `Tag` set directly +
@@ -505,26 +510,24 @@ The relevant methods in the Model interface are as follows:
 ----
 public interface Model {
 
-    ...
+   ...
 
-    /** Returns the predicate of the current filtered person list */
-    Predicate<? super ReadOnlyPerson> getPersonListPredicate();
+   /** Returns the predicate of the current filtered person list */
+   Predicate<? super ReadOnlyPerson> getPersonListPredicate();
 
-    /** Updates the filter of the filtered person list to filter by the given {@code predicate}.*/
-    void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+   /** Updates the filter of the filtered person list to filter by the given {@code predicate}.*/
+   void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
 }
 ----
 
 
-When `updateFilteredPersonList(predicate)` is invoked, every `person` in the **AddressBook** is evaluated against the `predicate`. +
+When `updateFilteredPersonList(predicate)` is invoked, every `Person` in **ABC** is evaluated against the `predicate`. +
 A `person` is added to the displayed list if `predicate.test(person)` is evaluated to be TRUE. +
 All `person` instances that fulfill the conditions specified in `predicate` are filtered to be displayed.
 
 ==== Filtering on the existing list
-Note that all `person` instances in the existing list satisfy a Predicate `currentPredicate`. +
-Given a new Predicate `newPredicate`, filtering on the existing list is equivalent to selecting `person` instancesthat satisfy both `currentPredicate` and `newPredicate`. +
-From Figure 3.2.1, it can also be viewed as the intersection of two lists of `person` objects, each satisfying one of the two predicates respectively.
+Note that all `person` instances in the existing list satisfy a Predicate `currentPredicate`. Given a new Predicate `newPredicate`, filtering on the existing list is equivalent to selecting `person` instances that satisfy both `currentPredicate` and `newPredicate`. From Figure 3.4.1, it can also be viewed as the intersection of two lists of `person` objects, each satisfying one of the two predicates respectively.
 
 image::venn_diagram.png[height = 200, width = 250]
 _Figure 3.4.1 : Venn Diagram for Filtering_
@@ -542,7 +545,7 @@ image::FindCommandSequenceDiagram.png[]
 _Figure 3.4.2 : Sequence Diagram for Filter_
 
 ===== Design consideration
-The design for filtering on the existing list applies the [https://en.wikipedia.org/wiki/Open/closed_principle[Open/Close Principle]].
+The design for filtering the existing list applies the [https://en.wikipedia.org/wiki/Open/closed_principle[Open/Close Principle]].
 
 * By providing a new extension of `getPersonListPredicate()` in the `Model` interface, the new feature is enabled. +
 * By making use of the logical AND of two predicates, the list can be filtered without modification of the fundamental filtering mechanism. +
@@ -554,103 +557,103 @@ The design for filtering on the existing list applies the [https://en.wikipedia.
 ==== Mechanism
 Authentication and synchronisation of data with a user's Google Contacts is done via the `sync` command, which is a subclass of `Command`. This command works in conjunction with the Google Client and People API.
 
-Firstly, the command posts an `AuthorizationEvent` event to the EventCenter, which is then handled by a `OAuth` class, which is chiefly responsible for authorization and interaction with a user's Google Contacts. Hence, threading allows for the application to run in the background, while the user can perform other tasks. The user is redirected to login to Google via his default browser through the invoked `authorize` method. A callback is then done to create a `Credential` which is then used to instantiate a `PeopleService` instance. The `PeopleService` is then used to perform CRUD functions on the user's Google Contacts. The following diagram shows the entire sequence.
+Firstly, the command posts an `AuthorizationEvent` event to the EventCenter, which is then handled by a `OAuth` class, which is chiefly responsible for authorization and interaction with a user's Google Contacts. Hence, threading allows for the application to run in the background, while the user can perform other tasks. The user is redirected to login to Google via his default browser through the invoked `authorize` method. A callback is then done to create a `Credential` which is then used to instantiate a `PeopleService` instance. `PeopleService` is then used to perform create, read, update, and delete (CRUD) functions on the user's Google Contacts. The following diagram shows the entire sequence.
 
 image::SyncCommandSequenceDiagram.png[width="1000"]
 
 ==== Methods
 
 ===== SyncCommand
-Below is the implementation of `SyncCommand`, where the `AuthorizationEvent` is sent upon execution, and the command notifies the user that synchronisation has been initiated.
+Below is the implementation of SyncCommand. Upon execution, the AuthorizationEvent is sent and the command notifies the user that synchronisation has been initiated.
 
 [source,java]
 ----
 public class SyncCommand extends Command {
-    //...variables, constructor, other methods
+   //...variables, constructor, other methods
 
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+   @Override
+   public CommandResult executeUndoableCommand() throws CommandException {
 
-        try {
-            List<ReadOnlyPerson> personList = model.getFilteredPersonList();
-            AuthorizationEvent event = new AuthorizationEvent(personList);
-            EventsCenter.getInstance().post(event);
-            return new CommandResult(String.format(MESSAGE_SUCCESS));
-        } catch (Exception e) {
-            throw new CommandException(MESSAGE_FAILURE);
-        }
+       try {
+           List<ReadOnlyPerson> personList = model.getFilteredPersonList();
+           AuthorizationEvent event = new AuthorizationEvent(personList);
+           EventsCenter.getInstance().post(event);
+           return new CommandResult(String.format(MESSAGE_SUCCESS));
+       } catch (Exception e) {
+           throw new CommandException(MESSAGE_FAILURE);
+       }
 
-    }
+   }
 }
 ----
 
-===== AuthorizationEvent Handler
-The `OAuth` class handles the AuthorizationEvent. It first runs the `authorize` method to obtain a Credential, and uses that to create a `PeopleService`. The `exportContacts` method is then invoked to export all contacts to the AddressBook to Google Contacts. Below is the code for the handler.
+===== AuthorizationEvent handler
+The `OAuth` class handles the `AuthorizationEvent`. It first runs the `authorize` method to obtain a `Credential`, and uses that to create a `PeopleService`. The `exportContacts` method is then invoked to export all contacts from *ABC* to Google Contacts. Below is the code for the handler.
 
 [source,java]
 ----
 public class OAuth {
-    // variables, constructor and other methods
+   // variables, constructor and other methods
 
-    @Subscribe
-    public static void handleAuthorizationEvent(AuthorizationEvent event) throws Throwable {
-        new Thread (() -> {
-            try {
-                // initialize the transport
-                httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+   @Subscribe
+   public static void handleAuthorizationEvent(AuthorizationEvent event) throws Throwable {
+       new Thread (() -> {
+           try {
+               // initialize the transport
+               httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
-                // initialize the data store factory
-                dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
+               // initialize the data store factory
+               dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
 
-                // authorization
-                Credential credential = authorize();
-                // set up global People instance
-                client = new PeopleService.Builder(
-                        httpTransport, JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME).build();
+               // authorization
+               Credential credential = authorize();
+               // set up global People instance
+               client = new PeopleService.Builder(
+                       httpTransport, JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME).build();
 
-                exportContacts(event.getPersonList());
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
-        }).start();
+               exportContacts(event.getPersonList());
+           } catch (IOException e) {
+               System.err.println(e.getMessage());
+           } catch (Throwable t) {
+               t.printStackTrace();
+           }
+       }).start();
 
 
-    }
+   }
 ----
 
 ===== Authorize with Google servers
-Below is the `authorize` method implemented in `OAuth`, which uses the `People API` to get an authorization token, used to create a `PeopleService` to retrieve Google Contacts information. A `clients_secret.json` file is used to provide the required Client ID and Secret for the Google API. A `Credential` is returned from this method, which is then used to create a `PeopleService`.
+Below is the `authorize` method implemented in `OAuth`, which uses the `People API` to get an authorization token. This is used to create a `PeopleService` to retrieve Google Contacts information. A `clients_secret.json` file is used to provide the required Client ID and Secret for the Google API. A `Credential` is returned from this method, which is then used to create a `PeopleService`.
 
 [source,java]
 ----
 public class OAuth {
-    // variables, constructor and other methods
+   // variables, constructor and other methods
 
-    /** Authorizes the installed application to access user's protected data. */
-    private static Credential authorize() throws Exception {
-        // load client secrets
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
-                new InputStreamReader(OAuth.class.getResourceAsStream("/client_secrets.json")));
-        if (clientSecrets.getDetails().getClientId().startsWith("Enter")
-                || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
-            System.out.println(
-                    "Enter Client ID and Secret from https://code.google.com/apis/console/?api=people "
-                            + "into seedu/address/src/main/resources/client_secrets.json");
-            System.exit(1);
-        }
+   /** Authorizes the installed application to access user's protected data. */
+   private static Credential authorize() throws Exception {
+       // load client secrets
+       GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
+               new InputStreamReader(OAuth.class.getResourceAsStream("/client_secrets.json")));
+       if (clientSecrets.getDetails().getClientId().startsWith("Enter")
+               || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
+           System.out.println(
+                   "Enter Client ID and Secret from https://code.google.com/apis/console/?api=people "
+                           + "into seedu/address/src/main/resources/client_secrets.json");
+           System.exit(1);
+       }
 
-        // set up authorization code flow
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                httpTransport, JSON_FACTORY, clientSecrets,
-                Collections.singleton(PeopleServiceScopes.CONTACTS)).setDataStoreFactory(dataStoreFactory)
-                .build();
+       // set up authorization code flow
+       GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+               httpTransport, JSON_FACTORY, clientSecrets,
+               Collections.singleton(PeopleServiceScopes.CONTACTS)).setDataStoreFactory(dataStoreFactory)
+               .build();
 
-        // authorize
+       // authorize
 
-        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
-    }
+       return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+   }
 
 }
 ----
@@ -662,51 +665,51 @@ Lastly, AddressBook contacts are then exported to Google Contacts via the `expor
 ----
 public class OAuth {
 
-    /**Uploads AddressBook contacts to Google Contacts
-     * TODO: Prevent adding of duplicates
-     */
-    private static void exportContacts (List<ReadOnlyPerson> personList) throws IOException {
-        for (ReadOnlyPerson person : personList) {
-            Person contactToCreate = new Person();
-            List<Name> name = new ArrayList<Name>();
-            List<EmailAddress> email = new ArrayList<EmailAddress>();
-            List<Address> address = new ArrayList<Address>();
-            List<PhoneNumber> phone = new ArrayList<PhoneNumber>();
-            name.add(new Name().setGivenName(person.getName().fullName));
-            email.add(new EmailAddress().setValue(person.getEmail().value));
-            address.add(new Address().setFormattedValue(person.getAddress().value));
-            phone.add(new PhoneNumber().setValue(person.getPhone().value));
+   /**Uploads AddressBook contacts to Google Contacts
+    * TODO: Prevent adding of duplicates
+    */
+   private static void exportContacts (List<ReadOnlyPerson> personList) throws IOException {
+       for (ReadOnlyPerson person : personList) {
+           Person contactToCreate = new Person();
+           List<Name> name = new ArrayList<Name>();
+           List<EmailAddress> email = new ArrayList<EmailAddress>();
+           List<Address> address = new ArrayList<Address>();
+           List<PhoneNumber> phone = new ArrayList<PhoneNumber>();
+           name.add(new Name().setGivenName(person.getName().fullName));
+           email.add(new EmailAddress().setValue(person.getEmail().value));
+           address.add(new Address().setFormattedValue(person.getAddress().value));
+           phone.add(new PhoneNumber().setValue(person.getPhone().value));
 
-            contactToCreate.setNames(name)
-                            .setEmailAddresses(email)
-                            .setAddresses(address)
-                            .setPhoneNumbers(phone);
+           contactToCreate.setNames(name)
+                           .setEmailAddresses(email)
+                           .setAddresses(address)
+                           .setPhoneNumbers(phone);
 
-            Person createdContact = client.people().createContact(contactToCreate).execute();
-        }
-    }
+           Person createdContact = client.people().createContact(contactToCreate).execute();
+       }
+   }
 ----
 
 ==== Design Considerations
 **Aspect:** Google Authorization +
-**Alternative 1 (current choice):** A thread is used +
-**Pros:** Users can use the application and execute other commands asynchronously from the authorization +
-**Cons:** It is thus more difficult to show the progress of the syncCommand
+**Alternative 1 (current choice):** Use a thread +
+**Pros:** Users can use the application and execute other commands asynchronously from the authorization. +
+**Cons:** More difficult to show the progress of the syncCommand.
 
 **Alternative 2:** Block the application while waiting for authorization +
-**Pros:** Users will know the progress of the SyncCommand +
-**Cons:** The application will freeze if authorization is done, or done in a manner not coded for by the People API (e.g. exiting the window via the 'X' or 'Close' button
+**Pros:** Users will know the progress of the SyncCommand. +
+**Cons:** Application will freeze if authorization is done, or done in a manner not coded for by the People API (e.g. exiting the window via the 'X' or 'Close' button.
 
 ---
 
 **Aspect:** Accessing `OAuth` from `Logic` +
-**Alternative 1 (current choice):** An `Event` and a `Subscriber` is used to communicate between the two different components +
-**Pros:** Maintain low coupling and prevent unnecessary addition of dependencies +
-**Cons:** Handlers have to be created to handle `Events` when they occur +
+**Alternative 1 (current choice):** Use an `Event` and a `Subscriber` to communicate between the two different components +
+**Pros:** Maintains low coupling and prevents unnecessary addition of dependencies. +
+**Cons:** Handlers have to be created to handle `Events` when they occur. +
 
 **Alternative 2:** Create an `OAuth` object in `Logic` +
-**Pros:** No handlers are required to process `Events` +
-**Cons:** Introduce unnecessary dependencies
+**Pros:** No handlers are required to process `Events`. +
+**Cons:** Introduces unnecessary dependencies.
 // end::sync[]
 
 === Logging
@@ -726,7 +729,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 === Configuration
 
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+Certain properties of the application can be controlled (e.g application name, logging level) through the configuration file (default: `config.json`).
 
 == Documentation
 
@@ -735,16 +738,16 @@ We use asciidoc for writing documentation.
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
-=== Editing Documentation
+=== Editing documentation
 
 See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
-=== Publishing Documentation
+=== Publishing documentation
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting documentation to PDF format
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
@@ -760,7 +763,7 @@ _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
-=== Running Tests
+=== Running tests
 
 There are three ways to run tests.
 
@@ -790,7 +793,7 @@ To run tests in headless mode, open a console and run the command `gradlew clean
 We have two types of tests:
 
 .  *GUI Tests* - These are tests involving the GUI. They include,
-.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
+.. _System Tests_ that test the entire application by simulating user actions on the GUI. These are in the `systemtests` package.
 .. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
 .  *Non-GUI Tests* - These are tests not involving the GUI. They include,
 ..  _Unit tests_ targeting the lowest level methods/classes. +
@@ -801,7 +804,7 @@ e.g. `seedu.address.storage.StorageManagerTest`
 e.g. `seedu.address.logic.LogicManagerTest`
 
 
-=== Troubleshooting Testing
+=== Troubleshooting testing
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
@@ -809,7 +812,7 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 == Dev Ops
 
-=== Build Automation
+=== Build automation
 
 See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
 
@@ -817,7 +820,7 @@ See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build auto
 
 We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
-=== Making a Release
+=== Making a release
 
 Here are the steps to create a new release.
 
@@ -826,14 +829,14 @@ Here are the steps to create a new release.
 .  Tag the repo with the version number. e.g. `v0.1`
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
-=== Managing Dependencies
+=== Managing dependencies
 
 A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== User Stories
+== User stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
@@ -1257,3 +1260,4 @@ Cons:
 
 * ...
 * ...
+

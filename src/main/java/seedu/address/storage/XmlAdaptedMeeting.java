@@ -7,7 +7,7 @@ import seedu.address.model.meeting.Meeting;
 
 //@@author alexanderleegs
 /**
- * JAXB-friendly adapted version of the Tag.
+ * JAXB-friendly adapted version of the Meeting.
  */
 public class XmlAdaptedMeeting implements XmlAdaptedClass<Meeting> {
 
