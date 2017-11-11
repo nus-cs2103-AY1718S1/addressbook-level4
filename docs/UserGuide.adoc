@@ -448,7 +448,6 @@ Valid example:
 // end::colorKeyword[]
 
 
-
 // tag::remark[]
 === Remarking a module: `remark`
 
