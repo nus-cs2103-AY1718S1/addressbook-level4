@@ -582,7 +582,7 @@ The NameComparator compares two names and ignore their case.
 
 Only name and phone number are the required fields. +
 
-Program will handle and create default objects for all other fields that are not fulfilled bu user. +
+Program will handle and create default objects for all other fields that are not fulfilled by user. +
 
 The function below is the code to create default values for empty fields.
 
