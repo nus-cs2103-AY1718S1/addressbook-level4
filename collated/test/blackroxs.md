@@ -1,4 +1,76 @@
 # blackroxs
+###### \java\seedu\room\logic\commands\CommandTestUtil.java
+``` java
+    public static final String INVALID_TAG = "testing"; // 'testing' does not exist inside the room book
+    public static final String INVALID_FILE = "testing.xml"; // 'testing.xml' does not exist inside the temp folder
+
+```
+###### \java\seedu\room\logic\commands\ImportCommandTest.java
+``` java
+
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for ImportCommandTest.
+ */
+public class ImportCommandTest {
+    @Rule
+    public TemporaryFolder testFolder = new TemporaryFolder();
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
+    private StorageManager storageManager;
+
+    @Before
+    public void setUp() {
+        XmlResidentBookStorage residentBookStorage = new XmlResidentBookStorage(getTempFilePath("ab"));
+        JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
+        XmlEventBookStorage eventBookStorage = new XmlEventBookStorage(getTempFilePath("bc"));
+        storageManager = new StorageManager(residentBookStorage, eventBookStorage, userPrefsStorage);
+
+        try {
+            storageManager.backupResidentBook(getTypicalImportFile());
+        } catch (IOException e) {
+            throw new AssertionError("Execution of command should not fail.", e);
+        }
+    }
+
+    private String getTempFilePath(String fileName) {
+        return testFolder.getRoot().getPath() + fileName;
+    }
+
+    @Test
+    public void fileNotFound() {
+        ImportCommand command = prepareCommand(INVALID_FILE);
+        assertCommandFailure(command, model, ImportCommand.MESSAGE_ERROR);
+    }
+
+    @Test
+    public void validImport() {
+        ClassLoader classLoader = getClass().getClassLoader();
+        File backup = new File(classLoader.getResource("backup.xml").getFile());
+        assertNotNull(backup);
+
+        ImportCommand command = prepareCommand(backup.getAbsolutePath());
+        ResidentBook correctVersion = TypicalImportFile.getCombinedResult();
+
+        ModelManager expectedModel = new ModelManager(correctVersion, new UserPrefs());
+
+        assertCommandSuccess(command, model, TYPICAL_IMPORT_SUCCESS_MESSAGE, expectedModel);
+    }
+
+    /**
+     * Returns an {@code ImportCommand} with parameters {@code filePath}
+     */
+    private ImportCommand prepareCommand(String filePath) {
+        ImportCommand command = new ImportCommand(filePath);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+}
+```
 ###### \java\seedu\room\logic\commands\RemoveTagCommandTest.java
 ``` java
 /**
@@ -154,6 +226,68 @@ public class RemoveTagParserTest {
                 + File.separator + Picture.FOLDER_NAME + "_backup").exists());
     }
 
+
+}
+```
+###### \java\seedu\room\testutil\TypicalImportFile.java
+``` java
+
+/**
+ * A utility class containing a list of {@code Person} objects to be used in tests for import.
+ */
+public class TypicalImportFile {
+    public static final ReadOnlyPerson AMY = new PersonBuilder().withName("Amy Parker")
+            .withRoom("08-115").withEmail("amy_parker123@example.com")
+            .withPhone("84455255")
+            .withTags("level8").build();
+    public static final ReadOnlyPerson BERNARD = new PersonBuilder().withName("Bernard Maddison")
+            .withRoom("02-203")
+            .withEmail("bmad@example.com").withPhone("98885432")
+            .withTags("owesMoney", "professor").build();
+    public static final ReadOnlyPerson CARLO = new PersonBuilder().withName("Carlo Henn").withPhone("95222563")
+            .withEmail("carlo.h@example.com").withRoom("04-300C").build();
+    public static final ReadOnlyPerson DANIELLE = new PersonBuilder().withName("Danielle Chua").withPhone("82252533")
+            .withEmail("chua_jj_danielle@example.com").withRoom("06-120").build();
+
+    public static final String TYPICAL_IMPORT_SUCCESS_MESSAGE = ImportCommand.MESSAGE_SUCCESS + " Added: Amy Parker, Bernard Maddison, Carlo Henn, Danielle Chua";
+    private TypicalImportFile() {
+    } // prevents instantiation
+
+    /**
+     * @return an {@code ResidentBook} with typical person not found in original list.
+     */
+    public static ResidentBook getTypicalImportFile() {
+        ResidentBook importFile = new ResidentBook();
+        for (ReadOnlyPerson person : getTypicalPersons()) {
+            try {
+                importFile.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "not possible";
+            }
+        }
+        return importFile;
+    }
+
+    public static ResidentBook getCombinedResult() {
+        ResidentBook importFile = new ResidentBook();
+        for (ReadOnlyPerson person : getCombinedList()) {
+            try {
+                importFile.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "not possible";
+            }
+        }
+        return importFile;
+    }
+
+    public static List<ReadOnlyPerson> getTypicalPersons() {
+        return new ArrayList<>(Arrays.asList(AMY, BERNARD, CARLO, DANIELLE));
+    }
+
+    public static List<ReadOnlyPerson> getCombinedList() {
+        return new ArrayList<>(Arrays.asList(AMY, BERNARD, CARLO, DANIELLE, ALICE, BENSON,
+                CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
 
 }
 ```
