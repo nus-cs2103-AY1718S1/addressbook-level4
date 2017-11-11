@@ -14,7 +14,7 @@ public class ToggleCommandTest {
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     @Test
-    public void executeToggleSuccess() throws Exception{
+    public void executeToggleSuccess() throws Exception {
         CommandResult result = new ToggleCommand().execute();
         assertEquals(ToggleCommand.MESSAGE_TOGGLE_SUCCESS, result.feedbackToUser);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof TogglePanelEvent);
