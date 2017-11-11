@@ -1,0 +1,50 @@
+= BoNUS - Test Script
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: ../../../../docs/images
+:stylesDir: ../../../../docs/stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-T09-B3/main
+
+By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
+
+== Setting up
+
+This test script will guide you on how to test the various features of **BoNUS**.
+
+image::Ui.png[width="700"]
+_Figure 1 : User Interface Demo_
+
+=== Prerequisites
+
+. Have Java (JRE) version `1.8.0_60` or later installed in your Computer.
+. Download the latest release `[T09-B3][BoNUS].jar`, the sample data `[T09-B3][BoNUS]SampleData.xml` and test instructions
+`[T09-B3][BoNUS]TestScript.pdf` (this document itself).
+. A folder you want to use as home folder for testing **BoNUS** and copy the `.jar` you have downloaded there.
+
+=== Importing the Sample Data
+
+. Rename the downloaded `[T09-B3][BoNUS]SampleData.xml` to `addressbook.xml`.
+. Create a folder called `data` under the home folder used for testing **BoNUS**.
+. Move `addressbook.xml` into the `data` folder created just now.
+
+=== Troubleshooting
+
+If you have any doubt or need further clarification, you may want to visit our https://cs2103aug2017-t09-b3.github.io/main/[project website]
+for more information.
+
+== Testing
+
+=== Add/view/edit/delete contacts
+
+=== Add/view/edit/delete events
+
+=== Import/export data
+
+=== Miscellaneous

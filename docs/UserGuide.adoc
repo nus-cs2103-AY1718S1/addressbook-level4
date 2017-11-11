@@ -476,6 +476,12 @@ Format: `(avr)avatar INDEX IMAGE_URL`
 * The image will only be displayed correctly when you have Internet connection.
 ****
 
+[NOTE]
+====
+* The avatar will only be shown to you if you have stable Internet connection.
+* You may need to wait for a while as the application is downloading the image from the specified URL.
+====
+
 Examples:
 
 * `list` +
@@ -494,9 +500,8 @@ Examples:
 [NOTE]
 ====
 Theme will be saved upon exit.
-When **boNUS** is opened again, theme will be initialized to the theme that was saved previously.
+When **BoNUS** is opened again, theme will be initialized to the theme that was saved previously.
 ====
-
 
 As shown in Figure 5.15.1 and Figure 5.15.2, Figures depict the Bright Theme and Dark Theme respectively.
 
@@ -680,6 +685,12 @@ provided by NUSMods.
 Example:
 
 * `import --nusmods +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01+++`
+
+[NOTE]
+====
+* Make sure you have stable Internet connection when using this command.
+* You may need to wait for a while as the application is retrieving information from NUSMods.
+====
 
 // tag::exportXml[]
 === Exporting data : `(p)export`
