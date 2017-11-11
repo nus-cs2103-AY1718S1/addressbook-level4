@@ -3,15 +3,19 @@ package seedu.address.logic.commands;
 import static seedu.address.commons.core.Messages.MESSAGE_PROMPT_COMMAND;
 import static seedu.address.commons.util.StringUtil.levenshteinDistance;
 import static seedu.address.logic.parser.CliSyntax.POSSIBLE_COMMAND_WORDS;
+import static seedu.address.logic.parser.ParserUtil.isParsableFilePath;
+import static seedu.address.logic.parser.ParserUtil.isParsableIndex;
 import static seedu.address.logic.parser.ParserUtil.parseFirstFilePath;
-import static seedu.address.logic.parser.ParserUtil.parseFirstInt;
-import static seedu.address.logic.parser.ParserUtil.tryParseFilePath;
-import static seedu.address.logic.parser.ParserUtil.tryParseInt;
+import static seedu.address.logic.parser.ParserUtil.parseFirstIndex;
+import static seedu.address.model.ModelManager.getLastRolodexSize;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.logic.parser.AddCommandParser;
+import seedu.address.logic.parser.EditCommandParser;
+import seedu.address.logic.parser.EmailCommandParser;
 import seedu.address.logic.parser.FindCommandParser;
 import seedu.address.logic.parser.RemarkCommandParser;
 
@@ -22,7 +26,7 @@ public class Suggestion {
 
     public static final String COMMAND_WORD = "y";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
-            new HashSet<>(Arrays.asList(COMMAND_WORD, "yes", "ok", "yea", "yeah"));
+            new HashSet<>(Arrays.asList(COMMAND_WORD, "yes", "k", "ok", "yea", "yeah"));
 
     private static final int COMMAND_TYPO_TOLERANCE = 3;
 
@@ -67,13 +71,15 @@ public class Suggestion {
     public String getFormattedArgs(String closestCommand) {
         // Custom parser for AddCommand.
         if (AddCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            // TODO: v1.5 try to match arguments with ALL person models, otherwise return null
-            return null;
+            return AddCommandParser.parseArguments(arguments);
 
         // Custom parser for EditCommand.
         } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            // TODO: v1.5 try to match arguments with SOME person models, otherwise return null
-            return null;
+            return EditCommandParser.parseArguments(commandWord, arguments);
+
+        // Custom parser for EmailCommand.
+        } else if (EmailCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
+            return EmailCommandParser.parseArguments(commandWord, arguments);
 
         // Custom parser for RemarkCommand.
         } else if (RemarkCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
@@ -84,19 +90,19 @@ public class Suggestion {
             return FindCommandParser.parseArguments(arguments);
 
         // Commands with directory-type arguments.
-        } else if (OpenCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
-                || NewCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            if (tryParseFilePath(arguments)) {
+        } else if (OpenRolodexCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
+                || NewRolodexCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
+            if (isParsableFilePath(arguments)) {
                 return " " + parseFirstFilePath(arguments);
             }
 
         // Commands with simple index-type arguments.
         } else if (SelectCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
                 || DeleteCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            if (tryParseInt(arguments)) {
-                return " " + Integer.toString(parseFirstInt(arguments));
-            } else if (tryParseInt(commandWord)) {
-                return " " + Integer.toString(parseFirstInt(commandWord));
+            if (isParsableIndex(arguments, getLastRolodexSize())) {
+                return " " + Integer.toString(parseFirstIndex(arguments, getLastRolodexSize()));
+            } else if (isParsableIndex(commandWord, getLastRolodexSize())) {
+                return " " + Integer.toString(parseFirstIndex(commandWord, getLastRolodexSize()));
             }
 
         // Commands with no arguments.

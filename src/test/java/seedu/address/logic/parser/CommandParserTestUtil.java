@@ -19,8 +19,8 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.NewCommand;
-import seedu.address.logic.commands.OpenCommand;
+import seedu.address.logic.commands.NewRolodexCommand;
+import seedu.address.logic.commands.OpenRolodexCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.StarWarsCommand;
@@ -44,8 +44,8 @@ public class CommandParserTestUtil {
             HelpCommand.COMMAND_WORD_ABBREVIATIONS,
             HistoryCommand.COMMAND_WORD_ABBREVIATIONS,
             ListCommand.COMMAND_WORD_ABBREVIATIONS,
-            NewCommand.COMMAND_WORD_ABBREVIATIONS,
-            OpenCommand.COMMAND_WORD_ABBREVIATIONS,
+            NewRolodexCommand.COMMAND_WORD_ABBREVIATIONS,
+            OpenRolodexCommand.COMMAND_WORD_ABBREVIATIONS,
             RedoCommand.COMMAND_WORD_ABBREVIATIONS,
             SelectCommand.COMMAND_WORD_ABBREVIATIONS,
             UndoCommand.COMMAND_WORD_ABBREVIATIONS,

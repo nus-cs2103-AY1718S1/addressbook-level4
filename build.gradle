@@ -72,7 +72,6 @@ allprojects {
             exclude group: "junit", module: "junit"
         }
         compile "org.testfx:openjfx-monocle:$monocleVersion"
-        compile "org.languagetool:language-en:3.9"
 
         testCompile "junit:junit:$junitVersion"
         testCompile "org.testfx:testfx-core:$testFxVersion"

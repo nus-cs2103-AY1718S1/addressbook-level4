@@ -28,8 +28,8 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.NewCommand;
-import seedu.address.logic.commands.OpenCommand;
+import seedu.address.logic.commands.NewRolodexCommand;
+import seedu.address.logic.commands.OpenRolodexCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -103,10 +103,10 @@ public class KeyListener {
             executeCommand(ListCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_OPEN_FILE.match(keyEvent)) {
-            executeCommand(OpenCommand.COMMAND_WORD);
+            executeCommand(OpenRolodexCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_NEW_FILE.match(keyEvent)) {
-            executeCommand(NewCommand.COMMAND_WORD);
+            executeCommand(NewRolodexCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_ADD.match(keyEvent)) {
             displayCommandFormat(AddCommand.FORMAT);
@@ -132,7 +132,7 @@ public class KeyListener {
      * Handles execution of command
      */
     private void executeCommand(String command) {
-        if (command.equals(OpenCommand.COMMAND_WORD) || command.equals(NewCommand.COMMAND_WORD)) {
+        if (command.equals(OpenRolodexCommand.COMMAND_WORD) || command.equals(NewRolodexCommand.COMMAND_WORD)) {
             commandBox.replaceText(command + " ");
         } else {
             commandBox.replaceText(command);

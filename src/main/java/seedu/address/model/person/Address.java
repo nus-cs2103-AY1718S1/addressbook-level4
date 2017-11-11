@@ -18,6 +18,8 @@ public class Address {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
+    public static final String ADDRESS_BLOCK_WORD_MATCHING_REGEX = "Block |block |Blk |blk ";
+    public static final String ADDRESS_BLOCK_MATCHING_REGEX = "^\\d{1,5}[a-zA-Z, -]| \\d{1,5}[a-zA-Z, -]|a\\/\\d{1,5}";
 
     public final String value;
 
