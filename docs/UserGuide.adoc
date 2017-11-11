@@ -686,6 +686,12 @@ Example:
 
 * `import --nusmods +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01+++`
 
+[NOTE]
+====
+* Make sure you have stable Internet connection when using this command.
+* You may need to wait for a while as the application is retrieving information from NUSMods.
+====
+
 // tag::exportXml[]
 === Exporting data : `(p)export`
 
