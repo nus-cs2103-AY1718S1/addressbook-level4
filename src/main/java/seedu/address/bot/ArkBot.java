@@ -32,6 +32,7 @@ import javafx.collections.ObservableList;
 import seedu.address.bot.parcel.DisplayParcel;
 import seedu.address.bot.parcel.ParcelParser;
 import seedu.address.bot.qrcode.QRcodeAnalyser;
+import seedu.address.bot.qrcode.exceptions.QRreadException;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddCommand;
@@ -57,6 +58,8 @@ public class ArkBot extends AbilityBot {
                                                  + "Over here, you can interface with your Desktop application with "
                                                  + "the following functions /add, /list, /delete, /undo, /redo, "
                                                  + "/complete and /help.";
+    public static final String BOT_MESSAGE_COMPLETE_COMMAND = "Please upload QR code to complete delivery.\n"
+                                                            + "Type \"/cancel\" to stop uploading process.";
     private static final String BOT_SET_COMPLETED = " " + "s/Completed";
     private static final String BOT_DEMO_JOHN = "#/RR000000000SG n/John Doe p/98765432 e/johnd@example.com "
             + "a/John street, block 123, #01-01 S123121 d/01-01-2001 s/DELIVERING";
@@ -265,17 +268,21 @@ public class ArkBot extends AbilityBot {
                     try {
                         if (combineArguments(ctx.arguments()).trim().equals("")) {
                             this.waitingForImage = true;
-                            sender.send("Please upload QR code to complete delivery.\n"
-                                    + "Type \"/cancel\" to stop uploading process.", ctx.chatId());
+                            sender.send(BOT_MESSAGE_COMPLETE_COMMAND, ctx.chatId());
                         } else {
                             logic.execute(EditCommand.COMMAND_WORD + " "
                                     + combineArguments(ctx.arguments()) + BOT_SET_COMPLETED);
                             ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
-                            EditMessageText editedText =
-                                    new EditMessageText().setChatId(ctx.chatId())
-                                            .setMessageId(lastKnownMessage.get().getMessageId())
-                                            .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
-                            sender.editMessageText(editedText);
+                            if (lastKnownMessage.isPresent()) {
+                                EditMessageText editedText =
+                                        new EditMessageText().setChatId(ctx.chatId())
+                                                .setMessageId(lastKnownMessage.get().getMessageId())
+                                                .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
+                                sender.editMessageText(editedText);
+                            } else {
+                                sender.send(parseDisplayParcels(formatParcelsForBot(parcels)),
+                                        ctx.chatId());
+                            }
                         }
                     } catch (CommandException | ParseException e) {
                         sender.send(BOT_MESSAGE_FAILURE, ctx.chatId());
@@ -414,46 +421,76 @@ public class ArkBot extends AbilityBot {
                 .action((MessageContext ctx) -> Platform.runLater(() -> {
                     Update update = ctx.update();
                     if (update.hasMessage() && update.getMessage().hasPhoto()) {
-                        java.io.File picture = downloadPhotoByFilePath(getFilePath(getPhoto(update)));
-                        QRcodeAnalyser qrca = new QRcodeAnalyser(picture);
-                        ParcelParser pp = new ParcelParser();
+                        java.io.File picture = getPictureFileFromUpdate(update);
                         try {
-                            logger.info("The decoded text is: " + qrca.getDecodedText());
-                            ReadOnlyParcel retrievedParcel = pp.parse(qrca.getDecodedText());
+                            ReadOnlyParcel retrievedParcel = retrieveParcelFromPictureFile(picture);
                             logger.info("The retrieved parcel is: " + retrievedParcel);
                             if (retrievedParcel.equals(null)) {
                                 sender.send("Sorry, I didn't seem to understand your image. Please try again.",
                                         ctx.chatId());
                             } else if (this.waitingForImage) {
                                 int indexZeroBased = model.getUncompletedParcelList().indexOf(retrievedParcel);
-
                                 if (indexZeroBased < 0) {
                                     sender.send("The parcel cannot be found! Please try again.",
                                             ctx.chatId());
                                 } else {
-                                    logic.execute(EditCommand.COMMAND_WORD + " "
-                                            + (indexZeroBased + 1) + BOT_SET_COMPLETED);
-                                    ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
-                                    EditMessageText editedText =
-                                            new EditMessageText().setChatId(ctx.chatId())
-                                                    .setMessageId(lastKnownMessage.get().getMessageId())
-                                                    .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
-                                    sender.editMessageText(editedText);
-                                    sender.send("Here are the details of the parcel you just completed: \n"
-                                        + retrievedParcel.toString(), ctx.chatId());
-                                    this.waitingForImage = false;
+                                    performCompleteParcel(sender, logic, indexZeroBased + 1,
+                                            retrievedParcel, ctx.chatId());
                                 }
                             } else {
-                                sender.send("Here are the details of the parcel: \n" + retrievedParcel.toString(),
-                                        ctx.chatId());
+                                sender.send("Here are the details of the parcel: \n"
+                                                + retrievedParcel.toString(), ctx.chatId());
                             }
-                        } catch (ParseException | CommandException e) {
+                        } catch (ParseException | CommandException | QRreadException e) {
                             sender.send(BOT_MESSAGE_FAILURE, ctx.chatId());
                         } catch (TelegramApiException e) {
                             e.printStackTrace();
                         }
                     }
                 })).build();
+    }
+
+    /**
+     * Abstracted method that performs edits a parcel to completed.
+     */
+    private void performCompleteParcel(MessageSender sender, Logic logic, int indexOfParcel,
+                                       ReadOnlyParcel retrievedParcel, Long chatId)
+                                       throws CommandException, ParseException, TelegramApiException {
+        logic.execute(EditCommand.COMMAND_WORD + " "
+                + indexOfParcel + BOT_SET_COMPLETED);
+        ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
+        // if we have a last known list message, we update it to reduce spamming the user with messages.
+        if (this.lastKnownMessage.isPresent()) {
+            EditMessageText editedText =
+                    new EditMessageText().setChatId(chatId)
+                            .setMessageId(this.lastKnownMessage.get().getMessageId())
+                            .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
+            sender.editMessageText(editedText);
+            sender.send("Here are the details of the parcel you just completed: \n"
+                    + retrievedParcel.toString(), chatId);
+            this.waitingForImage = false;
+        } else { // There wasn't a last known message, so we send a new one.
+            this.lastKnownMessage = sender.send("Here are the details of the parcel you just completed: \n"
+                    + retrievedParcel.toString(), chatId);
+        }
+
+    }
+
+    /**
+     * Method to extract ReadOnlyParcel from picture file using zxing qr code analyser.
+     */
+    private ReadOnlyParcel retrieveParcelFromPictureFile(java.io.File picture) throws ParseException, QRreadException {
+        QRcodeAnalyser qrca = new QRcodeAnalyser(picture);
+        ParcelParser pp = new ParcelParser();
+        logger.info("The decoded text is: " + qrca.getDecodedText());
+        return pp.parse(qrca.getDecodedText());
+    }
+
+    /**
+     * Method to extract picture file from update.
+     */
+    private java.io.File getPictureFileFromUpdate(Update update) {
+        return downloadPhotoByFilePath(getFilePath(getPhoto(update)));
     }
 
     /* The following three methods are from https://github.com/rubenlagus/TelegramBots/wiki/FAQ#how_to_get_picture */

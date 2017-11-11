@@ -26,7 +26,7 @@ public class QRcodeAnalyser {
 
     private String decodedText;
 
-    public QRcodeAnalyser(File file) {
+    public QRcodeAnalyser(File file) throws QRreadException {
         try {
             String decodedText = decodeQRcode(file);
             if (decodedText == null) {
@@ -35,10 +35,9 @@ public class QRcodeAnalyser {
                 this.decodedText = decodedText;
                 logger.info("Decoded text = " + decodedText);
             }
-        } catch (IOException e) {
-            logger.info("Could not decode QR Code, IOException : " + e.getMessage());
-        } catch (QRreadException e) {
-            logger.info("Could not decode QR Code, QRreadException : " + e.getMessage());
+        } catch (QRreadException | IOException e) {
+            logger.info("Could not decode QR Code: " + e.getMessage());
+            throw new QRreadException();
         }
     }
 
