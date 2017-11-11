@@ -509,7 +509,7 @@ _Figure 4.2.5_ below shows the enhanced help command in action.
 image::HelpEnhancementScreenShot.PNG[width="800"]
 _Figure 4.2.2: Enhanced `HelpCommand` execution_
 
-==== Design Considerations for `HelpCommand`
+==== Design Considerations
 
 **Aspect:** Enhancement of `HelpCommand` +
 **Alternative 1 (current choice)**: Allowing the `HelpCommand` to take in an optional command identifier argument +
@@ -519,6 +519,24 @@ _Figure 4.2.2: Enhanced `HelpCommand` execution_
 **Pros:** It is simpler and more intuitive for new users. +
 **Cons:** Users have to go through the user guide every time they forget the format of a certain command.  +
 // end::help[]
+
+//tag::scheduleSingle[]
+=== Scheduling an Activity with a Single Person [Since v1.3]
+
+==== Design Considerations
+//end::scheduleSingle[]
+
+//tag::scheduleMultiple[]
+=== Scheduling an Activity with Multiple Persons [Since v1.4]
+
+==== Design Considerations
+//end::scheduleMultiple[]
+
+//tag::welcomeWindow[]
+=== Welcome Window [Since v1.5]
+
+==== Design Considerations
+//end::welcomeWindow[]
 
 //tag::locate[]
 === Locating a contact's address [Since v1.2]
