@@ -29,6 +29,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class AddressBookParser {
 
+    private static MediaPlayer mediaPlayer;
     /**
      * Parses user input into command for execution.
      *
@@ -36,6 +37,7 @@ public class AddressBookParser {
      * @return the command based on the user input
      * @throws ParseException if the user input does not conform the expected format
      */
+
     public Command parseCommand(String userInput) throws ParseException {
         String[] command = ParserUtil.parseCommandAndArguments(userInput);
 
@@ -102,9 +104,11 @@ public class AddressBookParser {
         }
     }
 
-    private static MediaPlayer mediaPlayer;
-
-    public void playTypingSound(){
+    /**
+     * Plays typing audio sound
+     *
+     */
+    public void playTypingSound() {
         String musicFile = getClass().getClassLoader().getResource("audio/typing.mp3").toString();
         Media sound = new Media(musicFile);
         mediaPlayer = new MediaPlayer(sound);

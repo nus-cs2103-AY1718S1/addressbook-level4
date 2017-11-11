@@ -20,7 +20,7 @@ public class RadioCommandTest {
     }
 
     @Test
-    public void execute_music_wrongCommand() {
+    public void execute_radio_wrongCommand() {
         RadioCommand radioCommand = new RadioCommand("wrongCommand", "nonExistedGenre");
         CommandResult commandResult = radioCommand.execute();
         assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
@@ -33,53 +33,53 @@ public class RadioCommandTest {
     }
 
     @Test
-    public void execute_music_successCommand() {
+    public void execute_radio_successCommand() {
         String genre = "";
         RadioCommand radioCommand = new RadioCommand("play");
         CommandResult commandResult = radioCommand.execute();
-        assertEquals("POP "+ RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+        assertEquals("POP " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
         radioCommand = new RadioCommand("stop");
         radioCommand.execute();
 
         genre = "pop";
         radioCommand = new RadioCommand("play", genre);
         commandResult = radioCommand.execute();
-        assertEquals(genre.toUpperCase() + " "+ RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+        assertEquals(genre.toUpperCase() + " " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
         radioCommand = new RadioCommand("stop");
         radioCommand.execute();
 
         genre = "chinese";
         radioCommand = new RadioCommand("play", genre);
         commandResult = radioCommand.execute();
-        assertEquals(genre.toUpperCase() + " "+ RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+        assertEquals(genre.toUpperCase() + " " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
         radioCommand = new RadioCommand("stop");
         radioCommand.execute();
 
         genre = "comedy";
         radioCommand = new RadioCommand("play", genre);
         commandResult = radioCommand.execute();
-        assertEquals(genre.toUpperCase() + " "+ RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+        assertEquals(genre.toUpperCase() + " " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
         radioCommand = new RadioCommand("stop");
         radioCommand.execute();
 
         genre = "country";
         radioCommand = new RadioCommand("play", genre);
         commandResult = radioCommand.execute();
-        assertEquals(genre.toUpperCase() + " "+ RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+        assertEquals(genre.toUpperCase() + " " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
         radioCommand = new RadioCommand("stop");
         radioCommand.execute();
 
         genre = "news";
         radioCommand = new RadioCommand("play", genre);
         commandResult = radioCommand.execute();
-        assertEquals(genre.toUpperCase() + " "+ RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+        assertEquals(genre.toUpperCase() + " " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
         radioCommand = new RadioCommand("stop");
         radioCommand.execute();
 
         genre = "classic";
         radioCommand = new RadioCommand("play", genre);
         commandResult = radioCommand.execute();
-        assertEquals(genre.toUpperCase() + " "+ RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+        assertEquals(genre.toUpperCase() + " " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
         radioCommand = new RadioCommand("stop");
         radioCommand.execute();
     }
