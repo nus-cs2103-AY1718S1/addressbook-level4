@@ -8,11 +8,6 @@
         <dob>27 Jul 1986</dob>
         <gender>MALE</gender>
         <tagged>friends</tagged>
-        <lifeInsuranceId>c77ca792-fbe9-44bc-b43b-f0423d0e1fc8</lifeInsuranceId>
-        <lifeInsuranceId>e21b7a14-8994-4fd5-9b00-fd64e41dcac1</lifeInsuranceId>
-        <lifeInsuranceId>ea91ce18-4a4f-415a-a688-62621c241108</lifeInsuranceId>
-        <lifeInsuranceId>067e6162-3b6f-4ae2-a171-2470b63dff00</lifeInsuranceId>
-        <lifeInsuranceId>d78e2780-112a-466b-abd2-400a5bf0f288</lifeInsuranceId>
     </persons>
     <persons>
         <name>Bernice Yu</name>
@@ -23,9 +18,6 @@
         <gender>MALE</gender>
         <tagged>colleagues</tagged>
         <tagged>friends</tagged>
-        <lifeInsuranceId>bb96325f-5e40-4056-85b1-ce5df6b273d6</lifeInsuranceId>
-        <lifeInsuranceId>ea91ce18-4a4f-415a-a688-62621c241108</lifeInsuranceId>
-        <lifeInsuranceId>067e6162-3b6f-4ae2-a171-2470b63dff00</lifeInsuranceId>
     </persons>
     <persons>
         <name>Charlotte Oliveiro</name>
@@ -44,8 +36,6 @@
         <dob>30 Jan 1997</dob>
         <gender>MALE</gender>
         <tagged>family</tagged>
-        <lifeInsuranceId>bb96325f-5e40-4056-85b1-ce5df6b273d6</lifeInsuranceId>
-        <lifeInsuranceId>a5d63bc4-a975-4994-bb19-d73f8dfc8f97</lifeInsuranceId>
     </persons>
     <persons>
         <name>Irfan Ibrahim</name>
@@ -71,10 +61,6 @@
         <address></address>
         <dob></dob>
         <gender>MALE</gender>
-        <lifeInsuranceId>c77ca792-fbe9-44bc-b43b-f0423d0e1fc8</lifeInsuranceId>
-        <lifeInsuranceId>ad4dc852-e6bb-44e9-800e-fa8a8964e7f1</lifeInsuranceId>
-        <lifeInsuranceId>a5d63bc4-a975-4994-bb19-d73f8dfc8f97</lifeInsuranceId>
-        <lifeInsuranceId>d78e2780-112a-466b-abd2-400a5bf0f288</lifeInsuranceId>
     </persons>
     <persons>
         <name>Pujitha Desiraju</name>
@@ -109,20 +95,6 @@
                 <beneficiary>Bernice Yu</beneficiary>
                 <premium>50.0</premium>
                 <contractName>AlexYeoh-Cheap.pdf</contractName>
-                <signingDate>01 Nov 2017</signingDate>
-                <expiryDate>01 Nov 2018</expiryDate>
-            </value>
-        </entry>
-        <entry>
-            <key>c2de267e-91e2-4cc5-a4b7-8fd02120cbea</key>
-            <value>
-                <id>c2de267e-91e2-4cc5-a4b7-8fd02120cbea</id>
-                <insuranceName>Term</insuranceName>
-                <owner>Alex Yeoh</owner>
-                <insured>Oscar</insured>
-                <beneficiary>Oscar</beneficiary>
-                <premium>500.0</premium>
-                <contractPath>pdf</contractPath>
                 <signingDate>01 Nov 2017</signingDate>
                 <expiryDate>01 Nov 2018</expiryDate>
             </value>
@@ -184,20 +156,6 @@
             </value>
         </entry>
         <entry>
-            <key>1edc1deb-96f3-4651-a881-87f5b0db372c</key>
-            <value>
-                <id>1edc1deb-96f3-4651-a881-87f5b0db372c</id>
-                <insuranceName>Term</insuranceName>
-                <owner>Alex Yeoh</owner>
-                <insured>Oscar</insured>
-                <beneficiary>Oscar</beneficiary>
-                <premium>500.0</premium>
-                <contractPath>pdf</contractPath>
-                <signingDate>01 Nov 2017</signingDate>
-                <expiryDate>01 Nov 2018</expiryDate>
-            </value>
-        </entry>
-        <entry>
             <key>e21b7a14-8994-4fd5-9b00-fd64e41dcac1</key>
             <value>
                 <id>e21b7a14-8994-4fd5-9b00-fd64e41dcac1</id>
@@ -212,20 +170,6 @@
             </value>
         </entry>
         <entry>
-            <key>38b2bc00-9dce-468e-8e01-2bec687bcd5e</key>
-            <value>
-                <id>38b2bc00-9dce-468e-8e01-2bec687bcd5e</id>
-                <insuranceName>Term</insuranceName>
-                <owner>Alex Yeoh</owner>
-                <insured>Oscar</insured>
-                <beneficiary>Oscar</beneficiary>
-                <premium>500.0</premium>
-                <contractPath>pdf</contractPath>
-                <signingDate>01 Nov 2017</signingDate>
-                <expiryDate>01 Nov 2018</expiryDate>
-            </value>
-        </entry>
-        <entry>
             <key>c77ca792-fbe9-44bc-b43b-f0423d0e1fc8</key>
             <value>
                 <id>c77ca792-fbe9-44bc-b43b-f0423d0e1fc8</id>
@@ -235,21 +179,6 @@
                 <beneficiary>Oscar</beneficiary>
                 <premium>1000.0</premium>
                 <contractName>AlexYeoh-Prudential.pdf</contractName>
-                <contractPath>contract.pdf</contractPath>
-                <signingDate>01 Nov 2017</signingDate>
-                <expiryDate>01 Nov 2018</expiryDate>
-            </value>
-        </entry>
-        <entry>
-            <key>0f6e4b41-e0f9-4015-a82c-e694e60ee1ad</key>
-            <value>
-                <id>0f6e4b41-e0f9-4015-a82c-e694e60ee1ad</id>
-                <insuranceName>Term</insuranceName>
-                <owner>Alex Yeoh</owner>
-                <insured>Oscar</insured>
-                <beneficiary>Oscar</beneficiary>
-                <premium>500.0</premium>
-                <contractPath>pdf</contractPath>
                 <signingDate>01 Nov 2017</signingDate>
                 <expiryDate>01 Nov 2018</expiryDate>
             </value>
