@@ -138,16 +138,38 @@ each property takes one line. You should see the value of the row `Hobby` is `Pr
 
 To change the color of an existing tag, we need to use the `config --set-tag-color` command.
 
+*Positive test cases*
+
 . First, let's list all the contacts to see what tags exist now +
 _Command:_ +
 `list` +
 _Result:_ +
-You should see all contacts stored in **BoNUS** are listed. Let's assume there is a tag called `friends`.
+You should see all contacts stored in *BoNUS* are listed. Let's assume there is a tag called `friends`.
 
 . Change the color of `friends` tag to a pre-defined color name +
 _Command:_ +
 `config --set-tag-color friends BurlyWood` +
 _Result:_ +
 You should notice the color of `friends` tag has been changed to BurlyWood.
+
+. Change the color of `friends` tag to a valid RGB value +
+_Command:_ +
+`config --set-tag-color friends #FF6347` +
+_Result:_ +
+You should notice the color of `friends` tag has been changed to a color similar to red (its legal name is tomato).
+
+*Negative test cases*
+
+. If the tag does not exist in *BoNUS* yet +
+_Command:_ +
+`config --set-tag-color somethingNotExists blue` +
+_Result:_ +
+`There is no such tag.`
+
+. If the provided color name is neither a valid color name defined in CSS standard nor a valid RGB value +
+_Command:_ +
+`config --set-tag-color friends someNonExistColor` +
+_Result:_ +
+The background color of `friends` tag becomes transparent. You may want to use a valid name to change it back.
 
 === Miscellaneous
