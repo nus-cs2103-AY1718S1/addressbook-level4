@@ -60,11 +60,8 @@ public class ArkBot extends AbilityBot {
                                                  + "/complete and /help.";
     public static final String BOT_MESSAGE_COMPLETE_COMMAND = "Please upload QR code to complete delivery.\n"
                                                             + "Type \"/cancel\" to stop uploading process.";
+    public static final String BOT_MESSAGE_CANCEL_COMMAND = "QR Code upload successfully cancelled!";
     private static final String BOT_SET_COMPLETED = " " + "s/Completed";
-    private static final String BOT_DEMO_JOHN = "#/RR000000000SG n/John Doe p/98765432 e/johnd@example.com "
-            + "a/John street, block 123, #01-01 S123121 d/01-01-2001 s/DELIVERING";
-    private static final String BOT_DEMO_BETSY = "add #/RR000000000SG n/Betsy Crowe t/frozen d/02-02-2002 "
-            + "e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567 t/fragile";
     private static final String DEFAULT_BOT_TOKEN = "339790464:AAGUN2BmhnU0I2B2ULenDdIudWyv1d4OTqY";
     private static final String DEFAULT_BOT_USERNAME = "ArkBot";
     private static final Privacy PRIVACY_SETTING = Privacy.PUBLIC;
@@ -163,7 +160,7 @@ public class ArkBot extends AbilityBot {
                         logic.execute(DeleteCommand.COMMAND_WORD + " "
                                 + combineArguments(ctx.arguments()));
                         ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
-                        if (lastKnownMessage.isPresent()) {
+                        if (!this.lastKnownMessage.equals(null) && lastKnownMessage.isPresent()) {
                             EditMessageText editedText =
                                     new EditMessageText().setChatId(ctx.chatId())
                                             .setMessageId(lastKnownMessage.get().getMessageId())
@@ -273,7 +270,7 @@ public class ArkBot extends AbilityBot {
                             logic.execute(EditCommand.COMMAND_WORD + " "
                                     + combineArguments(ctx.arguments()) + BOT_SET_COMPLETED);
                             ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
-                            if (lastKnownMessage.isPresent()) {
+                            if (!this.lastKnownMessage.equals(null) && lastKnownMessage.isPresent()) {
                                 EditMessageText editedText =
                                         new EditMessageText().setChatId(ctx.chatId())
                                                 .setMessageId(lastKnownMessage.get().getMessageId())
@@ -306,7 +303,7 @@ public class ArkBot extends AbilityBot {
                 .privacy(PRIVACY_SETTING)
                 .action(ctx -> Platform.runLater(() -> {
                     this.waitingForImage = false;
-                    sender.send("QR Code upload successfully cancelled!", ctx.chatId());
+                    sender.send(BOT_MESSAGE_CANCEL_COMMAND, ctx.chatId());
                 }))
                 .build();
     }
@@ -326,29 +323,6 @@ public class ArkBot extends AbilityBot {
                     sender.send(BOT_MESSAGE_HELP, ctx.chatId());
                 }))
                 .post(ctx -> sender.send("What would you like to do next?", ctx.chatId()))
-                .build();
-    }
-
-    /**
-     * Demo command, adds JOHN and BETSY
-     */
-    public Ability demoCommand() {
-        return Ability
-                .builder()
-                .name("demo")
-                .info("adds demo parcels to list")
-                .input(0)
-                .locality(Locality.ALL)
-                .privacy(PRIVACY_SETTING)
-                .action(ctx -> Platform.runLater(() -> {
-                    try {
-                        logic.execute(AddCommand.COMMAND_WORD + " " + BOT_DEMO_JOHN);
-                        logic.execute(AddCommand.COMMAND_WORD + " " + BOT_DEMO_BETSY);
-                        sender.send(String.format(BOT_MESSAGE_SUCCESS, "Demo"), ctx.chatId());
-                    } catch (CommandException | ParseException e) {
-                        sender.send(BOT_MESSAGE_FAILURE, ctx.chatId());
-                    }
-                }))
                 .build();
     }
 
@@ -420,9 +394,12 @@ public class ArkBot extends AbilityBot {
                 .privacy(PRIVACY_SETTING)
                 .action((MessageContext ctx) -> Platform.runLater(() -> {
                     Update update = ctx.update();
+                    System.out.println("Made it here!");
                     if (update.hasMessage() && update.getMessage().hasPhoto()) {
+                        System.out.println("But not here");
                         java.io.File picture = getPictureFileFromUpdate(update);
                         try {
+                            System.out.println("We got lucky");
                             ReadOnlyParcel retrievedParcel = retrieveParcelFromPictureFile(picture);
                             logger.info("The retrieved parcel is: " + retrievedParcel);
                             if (retrievedParcel.equals(null)) {
@@ -460,16 +437,20 @@ public class ArkBot extends AbilityBot {
                 + indexOfParcel + BOT_SET_COMPLETED);
         ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
         // if we have a last known list message, we update it to reduce spamming the user with messages.
-        if (this.lastKnownMessage.isPresent()) {
+        if (!this.lastKnownMessage.equals(null) && this.lastKnownMessage.isPresent()) {
             EditMessageText editedText =
                     new EditMessageText().setChatId(chatId)
                             .setMessageId(this.lastKnownMessage.get().getMessageId())
                             .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
             sender.editMessageText(editedText);
+            System.out.println("Here are the details of the parcel you just completed: \n"
+                    + retrievedParcel.toString());
             sender.send("Here are the details of the parcel you just completed: \n"
                     + retrievedParcel.toString(), chatId);
             this.waitingForImage = false;
         } else { // There wasn't a last known message, so we send a new one.
+            System.out.println("Here are the details of the parcel you just completed2: \n"
+                    + retrievedParcel.toString());
             this.lastKnownMessage = sender.send("Here are the details of the parcel you just completed: \n"
                     + retrievedParcel.toString(), chatId);
         }
@@ -573,5 +554,15 @@ public class ArkBot extends AbilityBot {
     @VisibleForTesting
     void setSender(MessageSender sender) {
         this.sender = sender;
+    }
+
+    @VisibleForTesting
+    boolean getWaitingForImageFlag() {
+        return this.waitingForImage;
+    }
+
+    @VisibleForTesting
+    void setWaitingForImageFlag(boolean toSet) {
+        this.waitingForImage = toSet;
     }
 }

@@ -1,7 +1,9 @@
 package seedu.address.bot;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
+import static seedu.address.bot.ArkBot.BOT_MESSAGE_CANCEL_COMMAND;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_COMPLETE_COMMAND;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_FAILURE;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_SUCCESS;
@@ -14,11 +16,13 @@ import java.util.Optional;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Logger;
 
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.telegram.abilitybots.api.db.DBContext;
 import org.telegram.abilitybots.api.db.MapDBContext;
@@ -27,9 +31,6 @@ import org.telegram.abilitybots.api.objects.MessageContext;
 import org.telegram.abilitybots.api.sender.MessageSender;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
-
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import seedu.address.TestApp;
 import seedu.address.bot.parcel.ParcelParser;
 import seedu.address.commons.core.LogsCenter;
@@ -53,6 +54,9 @@ public class ArkBotTest {
 
     private static final String BOT_DEMO_JOHN = "#/RR000000000SG n/John Doe p/98765432 e/johnd@example.com "
             + "a/John street, block 123, #01-01 S123121 d/01-01-2001 s/DELIVERING";
+    private static final String BOT_DEMO_BETSY = "add #/RR000000000SG n/Betsy Crowe t/frozen d/02-02-2002 "
+            + "e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567 t/fragile";
+    private static final String READABLE_FILE_PATH = "./src/test/data/qrcode/BETSY_CROWE_READABLE.jpg";
     private static final String SAMPLE_ADD_COMMAND = BOT_DEMO_JOHN;
     private static final Logger logger = LogsCenter.getLogger(ArkBotTest.class);
 
@@ -88,6 +92,8 @@ public class ArkBotTest {
         parcelParser = new ParcelParser();
 
     }
+
+    @Mock private UpdateStub mockedUpdated;
 
     @Test
     public void canSayHelloWorld() throws InterruptedException, ParseException, DuplicateParcelException,
@@ -253,7 +259,6 @@ public class ArkBotTest {
         /*============================== COMPLETE COMMAND FAILURE TEST (INVALID INPUT) ==============================*/
 
         mockedUpdate = mock(Update.class);
-        parcels = model.getUncompletedParcelList();
         context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID, "@#$");
         message = BOT_MESSAGE_FAILURE;
         bot.completeCommand().action().accept(context);
@@ -270,8 +275,23 @@ public class ArkBotTest {
         bot.completeCommand().action().accept(context);
         waitForRunLater();
 
+        assertEquals(bot.getWaitingForImageFlag(), true);
         // We verify that the sender was called only ONCE and sent complete command success and QR code prompt.
         Mockito.verify(sender, times(1)).send(message, CHAT_ID);
+
+        /*=============================== CANCEL COMMAND SUCCESS TEST (NO INPUT) ==================================*/
+
+        mockedUpdate = mock(Update.class);
+        context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID);
+        message = BOT_MESSAGE_CANCEL_COMMAND;
+        bot.cancelCommand().action().accept(context);
+        waitForRunLater();
+
+        assertEquals(bot.getWaitingForImageFlag(), false);
+        // We verify that the sender was called only ONCE and sent complete command success and QR code prompt.
+        Mockito.verify(sender, times(1)).send(message, CHAT_ID);
+
+
     }
 
     /**
@@ -289,3 +309,4 @@ public class ArkBotTest {
         db.clear();
     }
 }
+

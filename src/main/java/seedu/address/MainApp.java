@@ -5,15 +5,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.TelegramBotsApi;
-import org.telegram.telegrambots.exceptions.TelegramApiException;
-
 import com.google.common.eventbus.Subscribe;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import org.telegram.telegrambots.ApiContextInitializer;
+import org.telegram.telegrambots.TelegramBotsApi;
+import org.telegram.telegrambots.exceptions.TelegramApiException;
+import org.telegram.telegrambots.generics.BotSession;
 import seedu.address.bot.ArkBot;
 import seedu.address.bot.BotSettings;
 import seedu.address.commons.core.Config;
@@ -60,6 +59,7 @@ public class MainApp extends Application {
     protected UserPrefs userPrefs;
     protected BotSettings botSettings;
     protected ArkBot bot;
+    protected BotSession botSession;
 
 
 
@@ -95,7 +95,7 @@ public class MainApp extends Application {
             try {
                 bot = new ArkBot(logic, model,
                         botSettings.getBotToken(), botSettings.getBotUsername());
-                botsApi.registerBot(bot);
+                botSession = botsApi.registerBot(bot);
                 botStarted = true;
             } catch (TelegramApiException e) {
                 e.printStackTrace();
@@ -226,6 +226,10 @@ public class MainApp extends Application {
     public void stop() {
         logger.info("============================ [ Stopping Address Book ] =============================");
         ui.stop();
+        if (botStarted && !botSession.equals(null)) {
+            logger.info("Terminating ArkBot...");
+            botSession.stop();
+        }
         try {
             storage.saveUserPrefs(userPrefs);
         } catch (IOException e) {
