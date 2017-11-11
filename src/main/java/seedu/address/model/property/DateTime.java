@@ -18,19 +18,19 @@ import seedu.address.model.property.exceptions.PropertyNotFoundException;
 public class DateTime extends Property {
     private static final String PROPERTY_SHORT_NAME = "dt";
 
+    //@@author yunpengn
     // To check whether the raw input is in standard format.
     private static final String INPUT_STANDARD_FORMAT = "^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{4}"
             + "(\\s((0[1-9]|1[0-9]|2[0-3]):([0-5][0-9]))?$)";
     // The formatter corresponding to raw input from user.
     private static final SimpleDateFormat inputFormatter = new SimpleDateFormat("ddMMyyyy HH:mm");
     // The formatter corresponding to the format used in UI and storage.
-    private static final SimpleDateFormat outputFormatter = new SimpleDateFormat("ddMMMyyyy HH:mm", Locale.ENGLISH);
+    private static final SimpleDateFormat outputFormatter = new SimpleDateFormat("dd MMM, yyyy HH:mm", Locale.ENGLISH);
 
     public DateTime(String value) throws IllegalValueException, PropertyNotFoundException {
         super(PROPERTY_SHORT_NAME, prepareDateTimeValue(value));
     }
 
-    //@@author yunpengn
     public DateTime(Date value) throws IllegalValueException, PropertyNotFoundException {
         super(PROPERTY_SHORT_NAME, formatDateTime(value));
     }
@@ -52,7 +52,7 @@ public class DateTime extends Property {
      */
     public static String prepareDateTimeValue(String value) throws IllegalValueException, PropertyNotFoundException {
         // Returns the original value directly if it is already in standard format.
-        if (isInStandardFormat(value)) {
+        if (isInStandardInputFormat(value)) {
             try {
                 return formatDateTime(parseDateTime(value));
             } catch (ParseException e) {
@@ -71,7 +71,7 @@ public class DateTime extends Property {
     /**
      * Checks whether a string representation of datetime is in standard format.
      */
-    public static boolean isInStandardFormat(String value) {
+    public static boolean isInStandardInputFormat(String value) {
         return value.matches(INPUT_STANDARD_FORMAT);
     }
 
