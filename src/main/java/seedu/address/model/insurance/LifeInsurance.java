@@ -156,7 +156,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
     public void setInsuranceName(String insuranceName) {
         this.insuranceName.set(requireNonNull(insuranceName));
     }
-    
+
     @Override
     public InsurancePerson getOwner() {
         return owner.get();
