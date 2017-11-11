@@ -164,7 +164,7 @@
                 <insured>John Doe</insured>
                 <beneficiary>Mary Jane</beneficiary>
                 <premium>600.0</premium>
-                <contractPath>TermLife.pdf</contractPath>
+                <contractName>TermLife.pdf</contractName>
                 <signingDate>01 Nov 2017</signingDate>
                 <expiryDate>01 Nov 2037</expiryDate>
             </value>
@@ -179,7 +179,7 @@
                 <beneficiary>Oscar</beneficiary>
                 <premium>1000.0</premium>
                 <contractName>AlexYeoh-Prudential.pdf</contractName>
-                <contractPath>contract.pdf</contractPath>
+                <contractName>contract.pdf</contractName>
                 <signingDate>01 Nov 2017</signingDate>
                 <expiryDate>01 Nov 2018</expiryDate>
             </value>
