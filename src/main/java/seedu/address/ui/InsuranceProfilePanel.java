@@ -130,7 +130,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
                     if (isFileExists(openedFile)) {
                         try {
                             Files.copy(openedFile.toPath(), insuranceFile.toPath());
-                            if(isFileExists(insuranceFile)) {
+                            if (isFileExists(insuranceFile)) {
                                 activateLinkToInsuranceFile();
                             }
                         } catch (IOException ex) {
