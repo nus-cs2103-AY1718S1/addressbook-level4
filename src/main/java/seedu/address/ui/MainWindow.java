@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -176,9 +177,9 @@ public class MainWindow extends UiPart<Region> {
         commandBox.getCommandTextField().requestFocus();
 
         setBackground(topContainer,
-                System.getProperty("user.dir") + "/docs/images/bg_01.jpg",
-                "/images/bg_01.jpg",
-                1280, 1024);
+                System.getProperty("user.dir") + "/docs/images/background.jpg",
+                "/images/background.jpg",
+                1280, 800);
 
         /*
         ChangeListener for caret focus.

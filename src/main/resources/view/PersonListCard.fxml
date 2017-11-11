@@ -34,9 +34,9 @@
          <RowConstraints />
       </rowConstraints>
   </GridPane>
-  <HBox alignment="CENTER" prefHeight="120.0" prefWidth="120.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" >
+  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="60.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" >
     <children>
-      <ImageView fx:id="photoContainer" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="photoContainer" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
     </children>
   </HBox>
 </HBox>
