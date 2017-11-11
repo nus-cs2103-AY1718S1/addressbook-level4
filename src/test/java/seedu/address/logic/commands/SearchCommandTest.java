@@ -16,12 +16,10 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
@@ -30,7 +28,6 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.NamePhoneTagContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.ui.SearchBox;
 //@@author willxujun
 /**
  * Contains integration tests (interaction with the Model) for {@code SearchCommand}.
