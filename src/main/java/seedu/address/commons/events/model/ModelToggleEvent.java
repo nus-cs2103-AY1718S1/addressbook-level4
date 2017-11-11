@@ -15,7 +15,9 @@ public class ModelToggleEvent extends BaseEvent {
      */
     public enum Toggle {
         personEnabled,
-        taskEnabled
+        taskEnabled,
+        parentEnabled,
+        parentDisabled
     }
 
     private final Toggle toggle;

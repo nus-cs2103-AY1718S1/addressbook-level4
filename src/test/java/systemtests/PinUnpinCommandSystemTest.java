@@ -2,7 +2,7 @@ package systemtests;
 
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_PARENT_COMMAND;
 import static seedu.address.logic.commands.person.PinCommand.MESSAGE_PIN_PERSON_SUCCESS;
 import static seedu.address.logic.commands.person.UnpinCommand.MESSAGE_UNPIN_PERSON_SUCCESS;
 import static seedu.address.testutil.TestUtil.getLastIndex;
@@ -12,6 +12,7 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -21,6 +22,7 @@ import seedu.address.logic.commands.person.UnpinCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+
 //@@author Alim95
 public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
 
@@ -28,6 +30,11 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, PinCommand.MESSAGE_USAGE);
     private static final String MESSAGE_INVALID_UNPIN_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, UnpinCommand.MESSAGE_USAGE);
+
+    @Before
+    public void setParentMode() {
+        executeParentCommand();
+    }
 
     @Test
     public void pinUnpin() {
@@ -132,8 +139,8 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
         assertUnpinCommandFailure(UnpinCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_UNPIN_COMMAND_FORMAT);
 
         /* Case: mixed case command word -> rejected */
-        assertPinCommandFailure("PiN 1", MESSAGE_UNKNOWN_COMMAND);
-        assertPinCommandFailure("uNPiN 1", MESSAGE_UNKNOWN_COMMAND);
+        assertPinCommandFailure("PiN 1", MESSAGE_UNKNOWN_PARENT_COMMAND);
+        assertPinCommandFailure("uNPiN 1", MESSAGE_UNKNOWN_PARENT_COMMAND);
     }
 
     /**

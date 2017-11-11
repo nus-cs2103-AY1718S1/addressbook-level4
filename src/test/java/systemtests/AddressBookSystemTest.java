@@ -65,7 +65,6 @@ public abstract class AddressBookSystemTest {
         setupHelper = new SystemTestSetupHelper();
         testApp = setupHelper.setupApplication();
         mainWindowHandle = setupHelper.setupMainWindowHandle();
-
         waitUntilBrowserLoaded(getBrowserPanel());
         assertApplicationStartingStateIsCorrect();
     }
@@ -111,6 +110,21 @@ public abstract class AddressBookSystemTest {
         clockRule.setInjectedClockToCurrentTime();
 
         mainWindowHandle.getCommandBox().run(command);
+
+        waitUntilBrowserLoaded(getBrowserPanel());
+    }
+
+    /**
+     * Executes {@code command} in the application's {@code CommandBox}.
+     * Method returns after UI components have been updated.
+     */
+    protected void executeParentCommand() {
+        rememberStates();
+        // Injects a fixed clock before executing a command so that the time stamp shown in the status bar
+        // after each command is predictable and also different from the previous command.
+        clockRule.setInjectedClockToCurrentTime();
+
+        mainWindowHandle.getCommandBox().run("parent");
 
         waitUntilBrowserLoaded(getBrowserPanel());
     }

@@ -1256,6 +1256,11 @@ public class TypicalTasks {
 ``` java
 public class AliasCommandSystemTest extends AddressBookSystemTest {
 
+    @Before
+    public void setParentMode() {
+        executeParentCommand();
+    }
+
     @Test
     public void alias() throws Exception {
         Model model = getModel();

@@ -14,11 +14,11 @@ public class TutorialMessages {
     public static final String INTRO_TWO = "This is the command box, where you will enter your commands.";
     public static final String INTRO_THREE = "This is the result display, where "
             + "I will display the outcome of your commands.";
-    public static final String INTRO_FOUR = "This is the sort menu, where you can select how to sort the list.";
-    public static final String INTRO_FIVE = "This is the search box, where "
-            + "you are able to search for the person you want.";
-    public static final String INTRO_SIX = "This is the person and task list panel, "
+    public static final String INTRO_FOUR = "This is the person and task list panel, "
             + "where you will see your list of contacts and tasks";
+    public static final String INTRO_FIVE = "This is the sort menu, where you can select how to sort the list.";
+    public static final String INTRO_SIX = "This is the search box, where "
+            + "you are able to search for the person you want.";
     public static final String INTRO_END = "Features of Bluebird:\n"
             + "1. Add a contact and task\n"
             + "2. Delete a contact and task\n"
@@ -37,8 +37,8 @@ public class TutorialMessages {
             + "15. Redo a command\n";
 
     /* Command usage messages */
-    public static final String USAGE_BEGIN = "Let's try out the different commands of Bluebird! Press F2 to view "
-            + "the list of commands and enter the commands on the command box to execute it."
+    public static final String USAGE_BEGIN = "Let's try out the different commands of Bluebird! Click on command box "
+            + "and Press F2 to view the list of commands and enter the commands on the command box to execute it."
             + " A parameter in [ ] means it is optional.";
 
     /* Concluding message */
@@ -178,6 +178,21 @@ public class ToggleToAllPersonViewEvent extends BaseEvent {
 
 }
 ```
+###### \java\seedu\address\commons\events\ui\ToggleToParentModeEvent.java
+``` java
+
+/**
+ * An event requesting to toggle the to ParentMode.
+ */
+public class ToggleToParentModeEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
 ###### \java\seedu\address\commons\events\ui\ToggleToTaskViewEvent.java
 ``` java
 
@@ -216,11 +231,36 @@ public class UpdatePinnedPanelEvent extends BaseEvent {
  */
 public class ValidResultDisplayEvent extends BaseEvent {
 
+    public final String message;
+
+    public ValidResultDisplayEvent(String message) {
+        this.message = message;
+    }
+
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
 
+}
+```
+###### \java\seedu\address\logic\commands\ParentModeCommand.java
+``` java
+/**
+ * Enables all commands for the user
+ */
+public class ParentModeCommand extends Command {
+
+    public static final String COMMAND_WORD = "parent";
+
+    public static final String MESSAGE_SUCCESS = "All commands are enabled!";
+
+    @Override
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new ModelToggleEvent(ModelToggleEvent.Toggle.parentEnabled));
+        EventsCenter.getInstance().post(new ToggleToParentModeEvent());
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
 }
 ```
 ###### \java\seedu\address\logic\commands\person\FindPinnedCommand.java
@@ -821,7 +861,7 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
 ``` java
 
     /**
-     * Opens the help overlay
+     * Opens the help overlay for parent commands
      */
     @FXML
     private void handleOverlay() {
@@ -829,7 +869,7 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Closes the help overlay
+     * Closes the help overlay for parent commands
      */
     @FXML
     private void handleOverlayExit() {
@@ -916,6 +956,12 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
         switchToTaskView();
     }
 
+    @Subscribe
+    private void handleToggleToParentModeEvent(ToggleToParentModeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        helpMenu.setVisible(true);
+    }
+
 
     @Subscribe
     private void handleToggleToAllPersonViewEvent(ToggleToAllPersonViewEvent event) {
@@ -966,6 +1012,7 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
 
     private void switchToBrowser() {
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        browserPlaceholder.setVisible(false);
     }
 
     /**
@@ -1037,24 +1084,63 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
 ```
 ###### \java\seedu\address\ui\ResultDisplay.java
 ``` java
+    private static final String DELETE_ICON = "/images/DeleteBird.png";
+    private static final String EDIT_ICON = "/images/EditBird.png";
+    private static final String ERROR_ICON = "/images/ErrorBird.png";
+    private static final String FIND_ICON = "/images/FindBird.png";
+    private static final String HIDE_ICON = "/images/HideBird.png";
+    private static final String SUCCESS_ICON = "/images/SuccessBird.png";
+    private static final String TASK_ICON = "/images/TaskBird.png";
+    private static final String UNDO_ICON = "/images/UndoBird.png";
+```
+###### \java\seedu\address\ui\ResultDisplay.java
+``` java
     @Subscribe
     private void handleValidResultDisplayEvent(ValidResultDisplayEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        imageDisplay.setImage(new Image("/images/success.png"));
+        displayResultIcon(event);
+    }
+
+    /**
+     * Displays icon feedback for result.
+     */
+    private void displayResultIcon(ValidResultDisplayEvent event) {
+        switch (event.message.trim()) {
+        case "delete":
+            imageDisplay.setImage(new Image(DELETE_ICON));
+            break;
+        case "edit":
+            imageDisplay.setImage(new Image(EDIT_ICON));
+            break;
+        case "find":
+            imageDisplay.setImage(new Image(FIND_ICON));
+            break;
+        case "hide":
+            imageDisplay.setImage(new Image(HIDE_ICON));
+            break;
+        case "task":
+            imageDisplay.setImage(new Image(TASK_ICON));
+            break;
+        case "undo":
+            imageDisplay.setImage(new Image(UNDO_ICON));
+            break;
+        default:
+            imageDisplay.setImage(new Image(SUCCESS_ICON));
+        }
     }
 
     @Subscribe
     private void handleInvalidResultDisplayEvent(InvalidResultDisplayEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        imageDisplay.setImage(new Image("/images/error.png"));
+        imageDisplay.setImage(new Image(ERROR_ICON));
     }
 
     public void highlight() {
-        this.resultDisplay.setStyle("-fx-border-color: lightgreen; -fx-border-width: 2");
+        this.placeHolder.setStyle("-fx-border-color: lightgreen; -fx-border-width: 2");
     }
 
     public void unhighlight() {
-        this.resultDisplay.setStyle("");
+        this.placeHolder.setStyle("");
     }
 }
 ```
@@ -1106,7 +1192,7 @@ public class SortFindPanel extends UiPart<Region> {
     @FXML
     private void handleSearchFieldChanged() {
         try {
-            if (searchBox.getPromptText().contains("Person")) {
+            if (searchBox.getPromptText().contains("Person") ||  searchBox.getPromptText().contains("Task")) {
                 if (searchBox.getText().trim().isEmpty()) {
                     logic.execute(LIST_COMMAND_WORD);
                 } else {
@@ -1307,14 +1393,17 @@ public class Tutorial {
             mainWindow.highlightResultDisplay();
             break;
         case 2:
-            mainWindow.highlightSortMenu();
-            break;
-        case 3:
-            mainWindow.highlightSearchBox();
-            break;
-        case 4:
             mainWindow.highlightPersonListPanel();
             break;
+
+        case 3:
+            mainWindow.highlightSortMenu();
+            break;
+
+        case 4:
+            mainWindow.highlightSearchBox();
+            break;
+
         default:
             break;
         }
@@ -1445,59 +1534,60 @@ public class TutorialPanel extends UiPart<Region> {
 ```
 ###### \resources\view\MainWindow.fxml
 ``` fxml
-                        <GridPane minWidth="-Infinity" prefWidth="340.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="0.0" prefWidth="61.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="368.0" minWidth="0.0" prefWidth="141.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="312.0" minWidth="10.0" prefWidth="30.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="353.0" minWidth="10.0" prefWidth="157.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="353.0" minWidth="10.0" prefWidth="69.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="353.0" minWidth="10.0" prefWidth="71.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label fx:id="personViewLabel" onMouseReleased="#handlePersonViewClicked" style="-fx-text-fill: white;" text="Person">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label fx:id="taskViewLabel" onMouseReleased="#handleTaskViewClicked" text="Task" GridPane.columnIndex="1">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="10.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label fx:id="allLabel" onMouseReleased="#handleListAllClicked" style="-fx-text-fill: white;" text="All" GridPane.columnIndex="2">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="10.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label fx:id="pinLabel" onMouseReleased="#handleListPinnedClicked" text="Pinned" GridPane.columnIndex="3">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="10.0" />
-                                 </GridPane.margin></Label>
-                              <Label fx:id="organizerLabel" prefHeight="21.0" prefWidth="76.0" style="-fx-text-fill: white;" text="Sorted By:" GridPane.columnIndex="4">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label fx:id="sortedByLabel" prefHeight="21.0" prefWidth="74.0" style="-fx-text-fill: white;" text="Name" GridPane.columnIndex="5">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="2.0" />
-                                 </GridPane.margin>
-                              </Label>
-                           </children>
-                        </GridPane>
+                              <GridPane cacheShape="false" centerShape="false" minHeight="-Infinity" prefWidth="601.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="310.0" minWidth="0.0" prefWidth="84.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="614.0" minWidth="0.0" prefWidth="256.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="339.0" minWidth="0.0" prefWidth="36.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="583.0" minWidth="10.0" prefWidth="234.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="149.0" minWidth="0.0" prefWidth="86.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="49.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label fx:id="personViewLabel" onMouseReleased="#handlePersonViewClicked" style="-fx-text-fill: white;" text="Person">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" left="5.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label fx:id="taskViewLabel" onMouseReleased="#handleTaskViewClicked" text="Task" GridPane.columnIndex="1">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" left="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label fx:id="allLabel" onMouseReleased="#handleListAllClicked" style="-fx-text-fill: white;" text="All" GridPane.columnIndex="2">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" left="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label fx:id="pinLabel" onMouseReleased="#handleListPinnedClicked" text="Pinned" GridPane.columnIndex="3">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" left="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label fx:id="organizerLabel" prefHeight="21.0" prefWidth="76.0" style="-fx-text-fill: white;" text="Sorted By:" GridPane.columnIndex="4">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label fx:id="sortedByLabel" prefHeight="21.0" prefWidth="149.0" style="-fx-text-fill: white;" text="Name" GridPane.columnIndex="5">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" left="2.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                 </children>
+                              </GridPane>
 ```
 ###### \resources\view\MainWindow.fxml
 ``` fxml
-      <ScrollPane fx:id="helpOverlay" fitToHeight="true" fitToWidth="true" opacity="0.9" prefHeight="200.0" prefWidth="200.0" visible="false" StackPane.alignment="TOP_CENTER">
+      <ScrollPane fx:id="helpOverlay" fitToHeight="true" fitToWidth="true" opacity="0.9" pannable="true" visible="false" StackPane.alignment="TOP_CENTER">
          <content>
-            <GridPane alignment="TOP_CENTER" blendMode="SRC_ATOP" gridLinesVisible="true" minWidth="-Infinity" prefHeight="855.0" prefWidth="1249.0" style="-fx-background-color: white;">
+            <GridPane alignment="TOP_CENTER" blendMode="SRC_ATOP" gridLinesVisible="true" minWidth="1144.0" style="-fx-background-color: white;">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="0.0" prefWidth="178.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1064.0" minWidth="10.0" prefWidth="1051.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="0.0" prefWidth="173.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1064.0" minWidth="10.0" prefWidth="546.0" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints maxHeight="40.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
@@ -1724,7 +1814,7 @@ public class TutorialPanel extends UiPart<Region> {
             </GridPane>
          </content>
          <StackPane.margin>
-            <Insets bottom="8.0" left="10.0" right="10.0" top="165.0" />
+            <Insets bottom="310.0" left="8.0" right="8.0" top="40.0" />
          </StackPane.margin>
       </ScrollPane>
 ```
@@ -1766,6 +1856,7 @@ public class TutorialPanel extends UiPart<Region> {
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -1785,9 +1876,9 @@ public class TutorialPanel extends UiPart<Region> {
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ImageView fx:id="tutorialImage" fitHeight="167.0" fitWidth="173.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4">
+      <ImageView fx:id="tutorialImage" fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4">
          <image>
-            <Image url="@../images/blue_bird_tutorial.png" />
+            <Image url="@../images/TutorialBird.png" />
          </image>
       </ImageView>
       <ButtonBar minWidth="-Infinity" prefHeight="50.0" prefWidth="291.0" GridPane.columnIndex="1" GridPane.rowIndex="7">

@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextInputControl;
@@ -28,6 +29,7 @@ import seedu.address.commons.events.ui.ToggleListAllStyleEvent;
 import seedu.address.commons.events.ui.ToggleListPinStyleEvent;
 import seedu.address.commons.events.ui.ToggleSortByLabelEvent;
 import seedu.address.commons.events.ui.ToggleToAllPersonViewEvent;
+import seedu.address.commons.events.ui.ToggleToParentModeEvent;
 import seedu.address.commons.events.ui.ToggleToTaskViewEvent;
 import seedu.address.commons.events.ui.UpdatePinnedPanelEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -89,6 +91,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private ScrollPane helpOverlay;
+
+    @FXML
+    private Menu helpMenu;
 
     @FXML
     private MenuItem helpOverlayItem;
@@ -279,7 +284,7 @@ public class MainWindow extends UiPart<Region> {
     //@@author Alim95
 
     /**
-     * Opens the help overlay
+     * Opens the help overlay for parent commands
      */
     @FXML
     private void handleOverlay() {
@@ -287,7 +292,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
-     * Closes the help overlay
+     * Closes the help overlay for parent commands
      */
     @FXML
     private void handleOverlayExit() {
@@ -386,6 +391,12 @@ public class MainWindow extends UiPart<Region> {
     private void handleToggleToTaskViewEvent(ToggleToTaskViewEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchToTaskView();
+    }
+
+    @Subscribe
+    private void handleToggleToParentModeEvent(ToggleToParentModeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        helpMenu.setVisible(true);
     }
 
 

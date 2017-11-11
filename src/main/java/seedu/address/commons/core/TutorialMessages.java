@@ -39,8 +39,8 @@ public class TutorialMessages {
             + "15. Redo a command\n";
 
     /* Command usage messages */
-    public static final String USAGE_BEGIN = "Let's try out the different commands of Bluebird! Press F2 to view "
-            + "the list of commands and enter the commands on the command box to execute it."
+    public static final String USAGE_BEGIN = "Let's try out the different commands of Bluebird! Click on command box "
+            + "and Press F2 to view the list of commands and enter the commands on the command box to execute it."
             + " A parameter in [ ] means it is optional.";
 
     /* Concluding message */

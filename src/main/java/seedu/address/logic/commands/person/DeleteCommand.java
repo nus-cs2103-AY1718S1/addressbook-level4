@@ -3,8 +3,10 @@ package seedu.address.logic.commands.person;
 import java.util.ArrayList;
 import java.util.List;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.model.ListSizeEvent;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -60,9 +62,10 @@ public class DeleteCommand extends UndoableCommand {
             counter++;
         }
         StringBuilder builder = new StringBuilder();
-        for (ReadOnlyPerson toAppend: personsToDelete) {
+        for (ReadOnlyPerson toAppend : personsToDelete) {
             builder.append("\n" + toAppend.toString());
         }
+        EventsCenter.getInstance().post(new ListSizeEvent(personsToDelete.size()));
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, builder));
     }
 

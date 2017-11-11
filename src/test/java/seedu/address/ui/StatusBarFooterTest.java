@@ -54,6 +54,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
         statusBarFooterHandle = new StatusBarFooterHandle(statusBarFooter.getRoot());
     }
 
+    //@@author deep4k
     @Test
     public void display() {
         // initial state
@@ -67,6 +68,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()),
                 String.format(SYNC_NUMBER_STATUS, 0, 0));
     }
+    //@@author
 
     /**
      * Asserts that the save location matches that of {@code expectedSaveLocation}, and the

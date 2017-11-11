@@ -22,9 +22,7 @@ public class HelpOverlayTest extends AddressBookGuiTest {
 
         getSortMenu().click();
         getMainMenu().openHelpOverlayUsingAccelerator();
-        assertHelpOverlayOpen();
-        getCommandBox().click();
-        getMainMenu().closeHelpOverlayUsingAccelerator();
+        assertHelpOverlayNotOpen();
 
         getSearchField().click();
         getMainMenu().openHelpOverlayUsingAccelerator();

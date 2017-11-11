@@ -32,11 +32,11 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Help">
+                  <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help" visible="false">
                      <items>
-                        <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-                        <MenuItem fx:id="helpOverlayItem" mnemonicParsing="false" onAction="#handleOverlay" text="Overlay" visible="false" />
-                        <MenuItem fx:id="helpOverlayExit" mnemonicParsing="false" onAction="#handleOverlayExit" text="OverlayExit" visible="false" />
+                        <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="User Guide" />
+                        <MenuItem fx:id="helpOverlayItem" mnemonicParsing="false" onAction="#handleOverlay" text="Help Overlay" />
+                        <MenuItem fx:id="helpOverlayExit" mnemonicParsing="false" onAction="#handleOverlayExit" text="Exit Help Overlay" />
                      </items>
                   </Menu>
                </menus>
@@ -101,9 +101,9 @@
                               <StackPane fx:id="personListPanelPlaceholder" minWidth="300.0" VBox.vgrow="ALWAYS" />
                            </children>
                         </VBox>
-                        <StackPane fx:id="browserPlaceholder" maxWidth="-Infinity" minWidth="517.0" prefHeight="98.0" prefWidth="517.0" StackPane.alignment="CENTER_RIGHT">
+                        <StackPane fx:id="browserPlaceholder" maxWidth="-Infinity" minWidth="0.0" prefHeight="98.0" prefWidth="0.0" StackPane.alignment="CENTER_RIGHT">
                            <StackPane.margin>
-                              <Insets bottom="20.0" right="100.0" top="50.0" />
+                              <Insets bottom="20.0" right="350.0" top="50.0" />
                            </StackPane.margin>
                         </StackPane>
                      </children>

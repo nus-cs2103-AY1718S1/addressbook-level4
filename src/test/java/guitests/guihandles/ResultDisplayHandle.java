@@ -19,11 +19,4 @@ public class ResultDisplayHandle extends NodeHandle<TextArea> {
     public String getText() {
         return getRootNode().getText();
     }
-
-    /**
-     * Returns the style of the result display.
-     */
-    public String getStyle() {
-        return getRootNode().getStyle();
-    }
 }
