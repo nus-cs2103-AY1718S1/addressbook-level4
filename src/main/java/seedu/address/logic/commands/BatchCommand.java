@@ -23,8 +23,8 @@ public class BatchCommand extends UndoableCommand {
             + "Example 2: " + COMMAND_WORD + " colleagues";
 
     public static final String MESSAGE_BATCH_DELETE_SUCCESS = "Deleted Persons with Tags: %1$s";
-    public static final String MESSAGE_BATCH_DELETE_TAG_NOT_FOUND
-            = "One of the tags is not in use. Remove it and try again.";
+    public static final String MESSAGE_BATCH_DELETE_TAG_NOT_FOUND =
+            "One of the tags is not in use. Remove it and try again.";
     private final Set<Tag> tagsToDelete;
 
     public BatchCommand(Set<Tag> tagsToDelete) {
