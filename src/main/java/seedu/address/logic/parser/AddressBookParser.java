@@ -35,6 +35,7 @@ import seedu.address.logic.commands.person.ListPinCommand;
 import seedu.address.logic.commands.person.PinCommand;
 import seedu.address.logic.commands.person.RemarkCommand;
 import seedu.address.logic.commands.person.SelectCommand;
+import seedu.address.logic.commands.person.ShowBirthdaysCommand;
 import seedu.address.logic.commands.person.SortCommand;
 import seedu.address.logic.commands.person.UnpinCommand;
 import seedu.address.logic.commands.task.ListTaskCommand;
@@ -237,6 +238,9 @@ public class AddressBookParser {
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
+
+        case ShowBirthdaysCommand.COMMAND_WORD:
+            return new ShowBirthdaysCommand();
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
