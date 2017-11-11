@@ -79,7 +79,3 @@ include::../DeveloperGuide.adoc[tag=FindCommand]
 
 * Updated the GUI background image (Pull requests https://github.com/CS2103AUG2017-T10-B4/main/[#94])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
