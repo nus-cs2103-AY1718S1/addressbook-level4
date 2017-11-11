@@ -147,9 +147,11 @@ public class KeyListener {
     }
 
     /**
-     * display the full command format for commands that require multiple fields
+     * Displays the full command format for commands that require multiple fields
+     * Pressing the hotkey is the same as entering the command and press tab
      */
     private void displayCommandFormat(String command) {
+        //simulate entering the command word and press tab
         commandBox.replaceText(command);
         commandBox.pressTab();
     }

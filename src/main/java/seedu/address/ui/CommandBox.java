@@ -270,7 +270,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * process input as user is typing
+     * Processes input as user is typing
      */
     public void processInput() {
         setFocus();
@@ -286,7 +286,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * if the command is add, and the next field is selected from pressing tab key, update the field selection
+     * Updates the text selection in command box
      */
     public void updateSelection() {
         commandTextField.selectRange(anchorPosition, anchorPosition + selectedText.length());
@@ -319,7 +319,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * if the input matches the command format, automatically selects the first field that the user need to key in
+     * Automatically selects the first field that the user needs to key in
      */
     public void autoSelectFirstField() {
         switch (input) {
@@ -358,6 +358,9 @@ public class CommandBox extends UiPart<Region> {
         return input.startsWith("remark") && input.contains("r/");
     }
 
+    /**
+     * Selects the word following the current caret position
+     */
     private void changeSelectionToNextField() {
         commandTextField.selectNextWord();
         anchorPosition = commandTextField.getAnchor();
@@ -365,8 +368,8 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * if the current input is a valid command, auto complete the full format
-     * in the case of add command, if the user is trying to navigate to the next field, auto select the next field
+     * Displays the full format of the command
+     * In the case of add and remark command, if the user is trying to navigate to the next field, auto select the next field
      */
     private void autocomplete() {
         input = commandTextField.getText().trim().toLowerCase();
@@ -400,7 +403,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * pressing shift+tab changes the selection to the previous field
+     * Changes text selection to the previous field
      * only applies to add command
      * (remark command only has two fields, using tab to toggle between the two fields is enough)
      */
@@ -424,8 +427,8 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * check the current position is in between which two fields
-     * then navigate to the previous field
+     * Checks the current position is in between which two fields
+     * And navigates to the previous field
      * @param fieldsPositionArray array of field positions in the order of left to right
      */
     private void selectPreviousField(int currentPosition, int[] fieldsPositionArray) {
@@ -444,8 +447,8 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * check the current position is in between which two fields
-     * then navigate to the next field
+     * Checks the current position is in between which two fields
+     * And navigates to the next field
      * @param fieldsPositionArray array of field positions in the order of left to right
      *                            last element is the end position of text input
      */
@@ -465,8 +468,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * if the command input is a valid command that requires additional field(s), display the full
-     * format in the textfield
+     * Displays the full command format in command box
      * @param command input by the user
      */
     private void displayFullFormat(String command) {
