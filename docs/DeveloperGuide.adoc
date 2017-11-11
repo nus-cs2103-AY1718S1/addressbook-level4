@@ -564,6 +564,68 @@ image::MergeCommandSequenceDiagram.png[width="800"]
 
 // end::merge[]
 
+// tag::find[]
+
+==== Filter mechanism for find command
+
+The feature to filter contacts stored in the address book is facilitated by both Logic and Model component.
+The `FindCommand` class contains `PersonContainsKeywordsPredicate` as an attribute. `PersonContainsKeywordsPredicate`
+implements `Predicate<ReadOnlyPerson`, it has a `HashMap<String, List<String>>` with the person's attributes prefix (e.g. `n/`) as the key
+and the keywords entered by the user as the value.
+
+Depending on the user input, the `FindCommandParser` will parse accordingly to the prefix present in the arguments.
+
+Below is a snippet of how the keywords are parsed:
+[source,java]
+----
+private void parseMultiMap(ArgumentMultimap argsMap, HashMap<String, List<String>> mapKeywords, Prefix prefix)
+            throws ParseException {
+        String trimmedArgs;
+        try {
+            if (argsMap.getValue(prefix).isPresent()) {
+                trimmedArgs = ParserUtil.parseKeywords(argsMap.getValue(prefix)).get().trim();
+                if (trimmedArgs.isEmpty()) {
+                    throw new ParseException(...);
+                }
+               ...
+            }
+        } ...
+    }
+----
+
+After execution, `updateFilteredPersonList` will be called by the model and `PersonContainsKeywordsPredicate`
+will test if the user input keywords matches the respective attributes identified by the `HashMap` key.
+The filtered person list will be updated for display.
+
+Below is a snippet on name attribute test:
+[source,java]
+----
+private boolean checkPersonContainsNamePredicate(ReadOnlyPerson person) {
+        boolean result = false;
+        if (keywords.containsKey(PREFIX_NAME.toString()) && !keywords.get(PREFIX_NAME.toString()).isEmpty()) {
+            result = keywords.get(PREFIX_NAME.toString()).stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+        }
+        return result;
+    }
+----
+
+The following activity diagram summarize what happens when a user executes a find command:
+
+image::FindCommandActivityDiagram.png[width="500"]
+
+==== Design Considerations
+
+**Aspect:** Data structure of `FindCommand` +
+**Alternative 1 (current choice):** `PersonContainsKeywordsPredicate` which contains a `HashMap` as the underlying data structure +
+**Pros:** Easy to extend if new person attributes are needed to be filtered +
+**Cons:** Need users to enter the attribute prefix as the key  +
+**Alternative 2:** `PersonContainsKeywordsPredicate` which contains a multiple `ArrayList` as the underlying data structure +
+**Pros:** Do not need a key to store the keywords +
+**Cons:** Need to create as many `ArrayList` as the number of person's attributes is needed to be filtered.
+
+// end::find[]
+
 == Documentation
 
 We use asciidoc for writing documentation.
