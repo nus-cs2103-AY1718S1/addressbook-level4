@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.LoginCommand.isLoggedIn;
+
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -26,6 +28,7 @@ public class CommandBox extends UiPart<Region> {
 
     public static final char BLACK_CIRCLE = '\u25CF';
     public static final String ERROR_STYLE_CLASS = "error";
+    public static final String ALREADY_LOGGED_IN_MESSAGE = "Already logged in";
     private static final String FXML = "CommandBox.fxml";
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
@@ -203,13 +206,13 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandInputChanged() {
         String commandText = commandTextField.getText();
-        if (commandText.trim().equals(LoginCommand.COMMAND_WORD) && !LoginCommand.isLoggedIn()) {
+        if (commandText.trim().equals(LoginCommand.COMMAND_WORD) && !isLoggedIn()) {
             commandTextField.setText("");
             raise(new ChangeToLoginViewEvent());
         } else {
             try {
-                if (LoginCommand.isLoggedIn() && commandText.contains(LoginCommand.COMMAND_WORD)) {
-                    raise(new NewResultAvailableEvent("Already logged in.", true));
+                if (isLoggedIn() && commandText.contains(LoginCommand.COMMAND_WORD)) {
+                    raise(new NewResultAvailableEvent(ALREADY_LOGGED_IN_MESSAGE, true));
                 } else {
 
                     boolean isCommandExecutableBeforeLogin = commandText.contains(LoginCommand.COMMAND_WORD)
@@ -218,7 +221,7 @@ public class CommandBox extends UiPart<Region> {
                     // allows only help, exit and login commands to execute before login
                     // and all the other commands to execute after login
 
-                    if (isCommandExecutableBeforeLogin || LoginCommand.isLoggedIn()) {
+                    if (isCommandExecutableBeforeLogin || isLoggedIn()) {
                         String currCommandInput = commandTextField.getText();
                         CommandResult commandResult;
                         if (currCommandInput.contains(LoginCommand.COMMAND_WORD)) {

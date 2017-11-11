@@ -18,5 +18,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_INTEREST = new Prefix("int/");
     public static final Prefix PREFIX_DEADLINE = new Prefix("dl/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
+    public static final Prefix PREFIX_USERNAME = new Prefix("uname/");
+    public static final Prefix PREFIX_PASSWORD = new Prefix("pwd/");
 
 }
