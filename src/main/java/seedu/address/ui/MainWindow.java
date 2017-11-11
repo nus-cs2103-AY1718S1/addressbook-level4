@@ -88,6 +88,8 @@ public class MainWindow extends UiPart<Region> {
         scene.getStylesheets().add(
                 MainApp.class.getResource("/view/" + prefs.getCurrentUserTheme() + ".css").toExternalForm());
         primaryStage.setScene(scene);
+        primaryStage.setMinWidth(1018);
+        primaryStage.setMinHeight(729);
 
         setAccelerators();
         registerAsAnEventHandler(this);
