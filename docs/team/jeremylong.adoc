@@ -1,4 +1,7 @@
 = Jeremy Long - Project Portfolio
+:toc:
+:toc-placement: preamble
+:sectnums:
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
