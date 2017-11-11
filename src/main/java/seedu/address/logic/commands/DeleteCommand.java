@@ -19,10 +19,13 @@ public class DeleteCommand extends UndoableCommand {
     public static final String[] COMMAND_WORDS = {"delete", "del", "d", "-"};
     public static final String COMMAND_WORD = "delete";
 
+    //@@author Juxarius
     public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)
-            + ": Deletes the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + ": Deletes the person/insurance identified by the index number used in the last listing.\n"
+            + "An additional argument left/l/right/r/person/p/insurance/i can be added to indicate\n"
+            + "choice of left or right panel. Choice is person panel by default.\n"
+            + "Parameters: INDEX (must be a positive integer) [PANEL_CHOICE]\n"
+            + "Example: " + COMMAND_WORD + " 1 insurance";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
     public static final String MESSAGE_DELETE_INSURANCE_SUCCESS = "Deleted Insurance %1$s";
@@ -35,7 +38,7 @@ public class DeleteCommand extends UndoableCommand {
         this.panelChoice = PanelChoice.PERSON;
     }
 
-    //@@author Juxarius
+
     public DeleteCommand(Index targetIndex, PanelChoice panelChoice) {
         this.targetIndex = targetIndex;
         this.panelChoice = panelChoice;
