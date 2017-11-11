@@ -2,6 +2,8 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.util.Duration;
+import javafx.animation.PauseTransition;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -55,7 +57,7 @@ public class PopupOverdueParcelsWindow extends UiPart<Region> {
     }
 
     /**
-     * Shows the help window.
+     * Shows the parcelsOverduePopup window, and hides the window after 7 seconds.
      * @throws IllegalStateException
      * <ul>
      *     <li>
@@ -75,6 +77,9 @@ public class PopupOverdueParcelsWindow extends UiPart<Region> {
     public void show () {
         logger.fine("Showing popup window for overdue.");
         dialogStage.show();
+        PauseTransition pause = new PauseTransition(Duration.seconds(7));
+        pause.setOnFinished(e -> dialogStage.hide());
+        pause.play();
     }
     //@@author
 }
