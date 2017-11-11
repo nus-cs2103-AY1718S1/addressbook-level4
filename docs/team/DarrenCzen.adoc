@@ -164,6 +164,26 @@ The enhancement also helps to facilitate user-friendliness in using The Myth's B
 ==== Implementation
 
 ---
+The implementation of making fields optional for `AddCommand` allows users to add contacts with lesser
+information required as it only requires name,phone,email to add a contact and other fields can be
+optionally added together into the input of adding a contact. The implementation is mostly done in the`Model` and `Logic` component.
+
+Suppose a user would like to add a new contact with an address to The Myth's Book and executes the `AddCommand`
+by typing `add n/Adam Bait e/adambait@example.com p/98123414 a/18 Taiseng`.
+
+The execution of `AddCommand` is processed in this way:
+
+. User will input `add n/Adam Bait e/adambait@example.com p/98123414 a/18 Taiseng`.
+. Input of user will be handled by the `LogicManager` and parse as an argument through the `AddressBookParser` and `AddCommandParser`.
+. `AddCommandParser` will check for all the prefixes inputted and the existence of compulsory prefixes required.
+. As `Name`,`Phone`,`Email` fields are necessary fields, they are handled as per normal in the `parse` method of `AddCommandParser`
+after being checked that the user has inputted the correct prefixes and information for the 3 necessary fields.
+. For the `Address` field which are similar to other optional fields, it tests whether user has inputted
+the address field or not in `parse` method of `AddCommandParser` and `parseAddress` method of `ParserUtil.java`.
+. Based on whether the user has inputted the optional `Address` field, it is handled either by
+assigning it with the inputted and validated string of address or assigning it with a
+temporary string variable as seen from `Address` constructor of `Address.java`.
+. Once all information inputted is handled, user's inputted contact will be successfully added into The Myth's Book.
 
 Code of `parse` method inside `AddCommandParser.java`:
 [source,java]
@@ -204,6 +224,14 @@ public AddCommand parse(String args) throws ParseException {
 }
 ----
 
+Code of `parseAddress` method inside `ParserUtil.java`:
+[source,java]
+----
+public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
+    return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
+}
+----
+
 Code of `Address` constructor inside `Address.java`:
 [source,java]
 ----
@@ -222,10 +250,11 @@ public Address(String address) throws IllegalValueException {
 ---
 
 
-=== Enhancement: Website field for Person Class
+=== Enhancement Added: Website field for Person Class
 
-Code on GitHub: +
-Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/57[#57]
+This section includes the behaviour and justification of adding website Field for each contact in The Myth's Book.
+
+Code on GitHub: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/57[#57]
 
 ==== External behavior
 
