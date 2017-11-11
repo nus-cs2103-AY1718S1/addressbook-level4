@@ -60,26 +60,18 @@ The implementation of `findexactmeeting` allows users to narrow down their searc
 to when using the `findmeeting` command as the conditions for a meeting to match the search results
 are more strict.
 
-//==== Implementation
-//
-//---
-//#Start of Extract [from: Developer Guide]#
-//
-//include::../DeveloperGuide.adoc[tag=editmeeting]
-//
-//#End of Extract#
-//
-//---
+==== Implementation
 
-//=== Enhancement Proposed: Add command `remark`
-//
-//{Explain similar to the Undo/Redo feature above.}
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findexactmeeting]
+
+#End of Extract#
+
+---
 
 === Other contributions
 
 * Updated undo command to apply to commands related to Meetings (Pull request https://github.com/CS2103AUG2017-T09-B2/main/commit/4dc2249ca6c45d4c4f104cc649226f14673d7379[#63])
 * Modified delete command to delete Meetings with deleted person (Pull request https://github.com/CS2103AUG2017-T09-B2/main/commit/b9db535b31628dca385586b6d69454aeb5d805be[#109])
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
