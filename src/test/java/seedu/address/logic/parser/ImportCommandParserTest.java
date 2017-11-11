@@ -65,5 +65,9 @@ public class ImportCommandParserTest {
         //Valid xml file with data of getTypicalAddressBook.
         assertParseSuccess(parser, TEST_FILE_DIRECTORY + "ValidTypicalAddressBook.xml",
                 new ImportCommand(getTypicalAddressBook().getPersonList()));
+
+        //Valid vcf file with data of getTypicalAddressBook.
+        assertParseSuccess(parser, TEST_FILE_DIRECTORY + "ValidTypicalAddressBook.vcf",
+                new ImportCommand(getTypicalAddressBook().getPersonList()));
     }
 }
