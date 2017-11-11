@@ -119,7 +119,7 @@ To help you save time to remember all the commands in Mobilize, you can toggle b
 Format: `switch addressbook` or `switch taskmanager`
 
 [TIP]
-You can use `ab` for `addressbook` and `tm` for `taskmanager`
+You can use `ab` for `addressbook` and `tm` for `taskmanager` in the command.
 
 [NOTE]
 The default mode of Mobilize will be address book.
@@ -411,12 +411,12 @@ _Constraints_ +
 
 // tag::find[]
 ==== Finding tasks by description or deadline: `find`
-Want to find a task? The find feature allows you to find a task using descriptions or deadline.
+Want to find a task? The find feature allows you to find task(s) using descriptions or deadline.
 
-To find task whose description contain any of the given keywords, use +
+To find task(s) whose description contain any of the given keywords, use +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-To find task by deadlines, use +
+To find task(s) by deadlines, use +
 Format: `find DD-MM-YYYY`
 
 Examples:
@@ -513,20 +513,20 @@ __Constraints:__
 // tag::list[]
 ==== Listing tasks : `list` +
 
-Want to go back to the default list of task after a search? Simply use the list command:
+When you want to go back to the default list of tasks after a search, you can use the list command to return to the default list of tasks.
 
 Format: `list`
 // end::list[]
 
 // tag::select[]
 ==== Selecting a task: `select`
+When you want to select a task, you can use the select command to select the task identified by the index number used in the last task listing.
 
-To select the task identified by the index number used in the last task listing, use: +
 Format: `select INDEX`
 
 [NOTE]
 ====
-The selected task will show involved people in the address book. If there are no involved personnel, there will be no changes in the displayed list of contacts.
+All contacts involved in the selected task will be listed. There will be no changes in the displayed list of contacks if there are no involved personnel.
 ====
 
 Examples:
