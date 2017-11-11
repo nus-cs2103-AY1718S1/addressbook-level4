@@ -28,7 +28,6 @@ public class FindCommand extends Command {
             + "Example: " + COMMAND_WORD + " LT25";
     public static final String MESSAGE_SUCCESS = "find command executed";
 
-    private Predicate<ReadOnlyLesson> predicate;
     private List<String> keywords;
 
     public FindCommand(List<String> keywords) {
@@ -38,20 +37,21 @@ public class FindCommand extends Command {
     //@@author angtianlannus
     @Override
     public CommandResult execute() {
+        Predicate<ReadOnlyLesson> predicate;
 
         switch (ListingUnit.getCurrentListingUnit()) {
         case LOCATION:
-            this.predicate = new LocationContainsKeywordsPredicate(keywords);
+            predicate = new LocationContainsKeywordsPredicate(keywords);
             ListingUnit.setCurrentPredicate(new LocationContainsKeywordsPredicate(keywords));
             break;
         case LESSON:
             if (model.getCurrentViewingAttribute().equals("marked")) {
-                this.predicate = new MarkedLessonContainsKeywordsPredicate(keywords);
+                predicate = new MarkedLessonContainsKeywordsPredicate(keywords);
                 ListingUnit.setCurrentPredicate(new MarkedLessonContainsKeywordsPredicate(keywords));
                 EventsCenter.getInstance().post(new ViewedLessonEvent());
                 break;
             }
-            this.predicate = new LessonContainsKeywordsPredicate(keywords, model.getCurrentViewingLesson(),
+            predicate = new LessonContainsKeywordsPredicate(keywords, model.getCurrentViewingLesson(),
                     model.getCurrentViewingAttribute());
             ListingUnit.setCurrentPredicate(
                     new LessonContainsKeywordsPredicate(keywords, model.getCurrentViewingLesson(),
@@ -59,7 +59,7 @@ public class FindCommand extends Command {
             EventsCenter.getInstance().post(new ViewedLessonEvent());
             break;
         default:
-            this.predicate = new ModuleContainsKeywordsPredicate(keywords);
+            predicate = new ModuleContainsKeywordsPredicate(keywords);
             ListingUnit.setCurrentPredicate(new ModuleContainsKeywordsPredicate(keywords));
             break;
         }

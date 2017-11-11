@@ -21,12 +21,11 @@ import seedu.address.model.UserPrefs;
 //@@author junming403
 public class DeleteRemarkCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private RemarkCommand remarkCommand;
 
     @Before
     public void setUp() throws CommandException {
         ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
-        remarkCommand = new RemarkCommand(INDEX_FIRST_LESSON, "This is a sample remark");
+        RemarkCommand remarkCommand = new RemarkCommand(INDEX_FIRST_LESSON, "This is a sample remark");
         remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         remarkCommand.executeUndoableCommand();
     }
