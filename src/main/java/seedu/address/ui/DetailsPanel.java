@@ -7,12 +7,9 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-
-import javafx.scene.control.ListView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -23,8 +20,8 @@ import seedu.address.commons.core.LogsCenter;
 
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelUnselectEvent;
-
 import seedu.address.commons.events.ui.PersonSelectionChangedEvent;
+
 import seedu.address.logic.Logic;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -47,7 +44,6 @@ public class DetailsPanel extends UiPart<Region> {
 
     private Logic logic;
 
-    private ObservableList<ReadOnlyPerson> personList;
 
     @FXML
     private Pane pane;
@@ -83,8 +79,6 @@ public class DetailsPanel extends UiPart<Region> {
     private Label homePhone;
     @FXML
     private FlowPane tags;
-
-    private ListView<PersonCard> personListView;
 
     public DetailsPanel() {
         super(FXML);
@@ -219,6 +213,7 @@ public class DetailsPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonInfo(event.getNewSelection());
     }
+
 
 }
 
