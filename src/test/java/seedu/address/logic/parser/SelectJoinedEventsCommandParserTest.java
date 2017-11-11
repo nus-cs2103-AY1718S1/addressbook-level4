@@ -1,8 +1,5 @@
 package seedu.address.logic.parser;
 
-import org.junit.Test;
-import seedu.address.logic.commands.SelectJoinedEventsCommand;
-
 import java.util.Arrays;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -11,10 +8,13 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.getTypicalPersonIndexList;
 
+import org.junit.Test;
+
+import seedu.address.logic.commands.SelectJoinedEventsCommand;
+
 //@@author LeonChowWenHao
 /**
- * Test scope: similar to {@code DeleteCommandParserTest}.
- * @see DeleteCommandParserTest
+ * Tests for {@code SelectJoinedEventsCommandParser}.
  */
 public class SelectJoinedEventsCommandParserTest {
 
