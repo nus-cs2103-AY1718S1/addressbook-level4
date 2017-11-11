@@ -89,9 +89,10 @@ To facilitate quicker adding and making it possible to add when user do have all
 
 === Other contributions
 
-* Provide assistance to team members when needed.
+* Provide assistance to team members.
 * Assign repository labels and milestones.
 * Issuing the project version release.
+* Maintaining project documentations relevancy.
 
 
 
