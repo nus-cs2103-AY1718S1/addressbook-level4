@@ -9,7 +9,7 @@ The user can tag entries for more efficient search and can open up an email clie
 such as his/her address on Google Maps. The user interacts with it using a CLI, although there are additional GUI elements created in JavaFX such as a form to edit contacts, and a QR generator for you to scan
 the contact's number and automatically port it to your smartphone. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/main/danielweide.md] [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/test/danielweide.md] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/main/danielweide.md] [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/test/danielweide.md]
 
 === Enhancement Added: LoggingCommand/ClearLog
 
