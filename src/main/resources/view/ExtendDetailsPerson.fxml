@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
 <!-- @@author wishingmaid -->
 
@@ -13,57 +14,33 @@
    <children>
       <Circle fx:id="circle" fill="#bfcbd7" radius="46.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="60.0" translateY="20.0" />
       <Line endX="100.0" startX="-100.0" stroke="#176fb2" strokeWidth="2.0" translateY="32.0" />
-      <Label fx:id="name" translateX="25.0" translateY="35.0" wrapText="true">
+      <Label fx:id="name" translateX="45.0" translateY="35.0" wrapText="true">
+         <font>
+            <Font size="25.0" />
+         </font></Label>
+      <Label fx:id="phone" translateX="20.0" translateY="40.0">
          <graphic>
-            <ImageView fx:id="nameIcon" fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true" />
+            <Circle fx:id="circlePhone" fill="#ffffff40" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
          </graphic></Label>
-      <Label fx:id="phone" translateX="20.0" translateY="35.0">
+      <Label fx:id="address" prefWidth="240.0" translateX="20.0" translateY="40.0" wrapText="true">
          <graphic>
-            <ImageView fx:id="phoneIcon" fitHeight="16.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/Mobile-Phone-icon.png" />
-               </image>
-            </ImageView>
+            <Circle fx:id="circleAddress" fill="#ffffff40" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
          </graphic></Label>
-      <Label fx:id="address" prefWidth="240.0" translateX="20.0" translateY="35.0" wrapText="true">
+      <Label fx:id="email" prefWidth="240.0" translateX="20.0" translateY="40.0" wrapText="true">
          <graphic>
-            <ImageView fx:id="addressIcon" fitHeight="17.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/address.png" />
-               </image>
-            </ImageView>
+            <Circle fx:id="circleEmail" fill="#212cff3f" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
          </graphic></Label>
-      <Label fx:id="email" prefWidth="240.0" translateX="20.0" translateY="35.0" wrapText="true">
+      <Label fx:id="remark" prefWidth="240.0" translateX="20.0" translateY="40.0" wrapText="true">
          <graphic>
-            <ImageView fx:id="emailIcon" fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/email-icon.png" />
-               </image>
-            </ImageView>
+            <Circle fx:id="circleRemark" fill="#212cff3f" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
          </graphic></Label>
-      <Label fx:id="remark" prefWidth="240.0" translateX="20.0" translateY="35.0" wrapText="true">
+      <Label fx:id="birthday" prefWidth="240.0" translateX="20.0" translateY="40.0" wrapText="true">
          <graphic>
-            <ImageView fx:id="remarkIcon" fitHeight="15.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/RemarkIcon.png" />
-               </image>
-            </ImageView>
+            <Circle fx:id="circleBirthday" fill="#212cff3f" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
          </graphic></Label>
-      <Label fx:id="birthday" prefWidth="240.0" translateX="20.0" translateY="35.0" wrapText="true">
+      <Label fx:id="age" prefWidth="240.0" translateX="20.0" translateY="43.0">
          <graphic>
-            <ImageView fx:id="birthdayIcon" fitHeight="16.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/BirthdayIcon.png" />
-               </image>
-            </ImageView>
-         </graphic></Label>
-      <Label fx:id="age" prefWidth="240.0" translateX="20.0" translateY="40.0">
-         <graphic>
-            <ImageView fx:id="ageIcon" fitHeight="17.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/AgeIcon.png" />
-               </image>
-            </ImageView>
+            <Circle fx:id="circleAge" fill="#212cff40" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
          </graphic></Label>
       <ImageView fx:id="background" fitHeight="408.0" fitWidth="231.0" opacity="0.16" pickOnBounds="true" preserveRatio="true" rotate="18.4" scaleX="3.0" scaleY="5.0" translateY="-200.0">
          <image>
