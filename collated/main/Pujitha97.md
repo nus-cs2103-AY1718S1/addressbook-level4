@@ -78,54 +78,6 @@
 ```
 ###### \java\seedu\address\model\person\DateOfBirth.java
 ``` java
-package seedu.address.model.person;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
-
-import java.time.LocalDate;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.parser.DateParser;
-import seedu.address.logic.parser.exceptions.EmptyFieldException;
-
-/**
- * Represents a Person's date of birth in the address book.
- */
-public class DateOfBirth {
-    public static final String MESSAGE_DOB_CONSTRAINTS =
-            "Please enter in Day Month Year format where the month can be a number or the name"
-                    + " and the year can be input in 2-digit or 4-digit format.";
-```
-###### \java\seedu\address\model\person\DateOfBirth.java
-``` java
-    /**
-     * Validates given Date of Birth.
-     *
-     * @throws IllegalValueException if given date of birth string is invalid.
-     */
-    public DateOfBirth(String dob) throws IllegalValueException {
-        requireNonNull(dob);
-        if (dob.isEmpty()) {
-            throw new EmptyFieldException(PREFIX_DOB);
-        }
-        if (!isValidDateOfBirth(dob)) {
-            throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
-        }
-        this.dateOfBirth = new DateParser().parse(dob);
-        this.dateSet = true;
-    }
-
-    /**
-     * Returns true if a given string is a valid person date of birth.
-     */
-    public static boolean isValidDateOfBirth(String test) {
-        return test.matches(DOB_VALIDATION_REGEX);
-    }
-    @Override
-    public String toString() {
-        return dateSet ? dateOfBirth.format(DateParser.DATE_FORMAT) : "";
-    }
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

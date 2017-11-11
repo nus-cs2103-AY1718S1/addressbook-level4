@@ -64,7 +64,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         insuranceScrollPane.setFitToWidth(true);
         insuranceProfilePanel.prefWidthProperty().bind(insuranceScrollPane.widthProperty());
         insuranceProfilePanel.prefHeightProperty().bind(insuranceScrollPane.heightProperty());
-        enableNameToProfileLink(insurance);
+        setAllToNull();
         registerAsAnEventHandler(this);
     }
 
@@ -86,7 +86,6 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         return insurance;
     }
 
-
     /**
      * Listen for click event on person names to be displayed as profile
      * @param insurance
@@ -97,13 +96,21 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         beneficiary.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getBeneficiary())));
     }
 
+    private void setAllToNull() {
+        owner.setText(null);
+        insured.setText(null);
+        beneficiary.setText(null);
+        contractName.setText(null);
+        premium.setText(null);
+        signingDate.setText(null);
+        expiryDate.setText(null);
+    }
 
     /**
      * Checks if pdf file exist in project, if not add click event on contract field to add file with filechooser
      * Then add click event on contract field to open up the file
      * @param insurance
      */
-
     private void initializeContractFile(ReadOnlyInsurance insurance) {
         insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractFileName());
         if (isFileExists(insuranceFile)) {
@@ -119,18 +126,19 @@ public class InsuranceProfilePanel extends UiPart<Region> {
                     FileChooser chooser = new FileChooser();
                     chooser.getExtensionFilters().add(extFilter);
                     File openedFile = chooser.showOpenDialog(null);
-                    activateLinkToInsuranceFile();
 
                     if (isFileExists(openedFile)) {
                         try {
                             Files.copy(openedFile.toPath(), insuranceFile.toPath());
+                            if (isFileExists(insuranceFile)) {
+                                activateLinkToInsuranceFile();
+                            }
                         } catch (IOException ex) {
                             logger.info("Unable to open at path: " + openedFile.getAbsolutePath());
                         }
                     }
                 }
             });
-
         }
     }
 

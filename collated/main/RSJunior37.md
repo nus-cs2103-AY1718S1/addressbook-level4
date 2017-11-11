@@ -338,13 +338,13 @@ public class InsuranceIdLabel extends UiPart<Region> {
      * @param insurance
      */
     private void initializeContractFile(ReadOnlyInsurance insurance) {
-        insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractPath());
+        insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractName());
         if (isFileExists(insuranceFile)) {
             activateLinkToInsuranceFile();
         } else {
-            contractPath.getStyleClass().clear();
-            contractPath.getStyleClass().add("missing-file");
-            contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            contractName.getStyleClass().clear();
+            contractName.getStyleClass().add("missing-file");
+            contractName.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
                     FileChooser.ExtensionFilter extFilter =
@@ -352,11 +352,13 @@ public class InsuranceIdLabel extends UiPart<Region> {
                     FileChooser chooser = new FileChooser();
                     chooser.getExtensionFilters().add(extFilter);
                     File openedFile = chooser.showOpenDialog(null);
-                    activateLinkToInsuranceFile();
 
                     if (isFileExists(openedFile)) {
                         try {
                             Files.copy(openedFile.toPath(), insuranceFile.toPath());
+                            if (isFileExists(insuranceFile)) {
+                                activateLinkToInsuranceFile();
+                            }
                         } catch (IOException ex) {
                             logger.info("Unable to open at path: " + openedFile.getAbsolutePath());
                         }
@@ -371,13 +373,13 @@ public class InsuranceIdLabel extends UiPart<Region> {
      *  Enable the link to open contract pdf file and adjusting the text hover highlight
      */
     private void activateLinkToInsuranceFile() {
-        contractPath.getStyleClass().clear();
-        contractPath.getStyleClass().add("valid-file");
-        contractPath.setOnMouseClicked(event -> {
+        contractName.getStyleClass().clear();
+        contractName.getStyleClass().add("valid-file");
+        contractName.setOnMouseClicked(event -> {
             try {
                 Desktop.getDesktop().open(insuranceFile);
             } catch (IOException ee) {
-                logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
+                logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractName());
             }
         });
     }*/

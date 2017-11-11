@@ -11,6 +11,7 @@ import seedu.address.model.insurance.InsurancePerson;
 import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.Premium;
 import seedu.address.model.insurance.ReadOnlyInsurance;
+import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author OscarWang117
 /**
@@ -93,6 +94,14 @@ public class LifeInsuranceBuilder {
     }
 
     /**
+     * Sets the {@code InsurancePerson} owner of the {@code LifeInsurance} that we are building.
+     */
+    public LifeInsuranceBuilder withOwner(ReadOnlyPerson owner) {
+        this.lifeInsurance.setOwner(new InsurancePerson(owner));
+        return this;
+    }
+
+    /**
      * Sets the {@code InsurancePerson} insured of the {@code LifeInsurance} that we are building.
      */
     public LifeInsuranceBuilder withInsured(String insured) {
@@ -105,6 +114,14 @@ public class LifeInsuranceBuilder {
     }
 
     /**
+     * Sets the {@code InsurancePerson} insured of the {@code LifeInsurance} that we are building.
+     */
+    public LifeInsuranceBuilder withInsured(ReadOnlyPerson insured) {
+        this.lifeInsurance.setInsured(new InsurancePerson(insured));
+        return this;
+    }
+
+    /**
      * Sets the {@code InsurancePerson} beneficiary of the {@code LifeInsurance} that we are building.
      */
     public LifeInsuranceBuilder withBeneficiary(String beneficiary) {
@@ -113,6 +130,14 @@ public class LifeInsuranceBuilder {
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("beneficiary is expected to be unique.");
         }
+        return this;
+    }
+
+    /**
+     * Sets the {@code InsurancePerson} beneficiary of the {@code LifeInsurance} that we are building.
+     */
+    public LifeInsuranceBuilder withBeneficiary(ReadOnlyPerson beneficiary) {
+        this.lifeInsurance.setBeneficiary(new InsurancePerson(beneficiary));
         return this;
     }
 

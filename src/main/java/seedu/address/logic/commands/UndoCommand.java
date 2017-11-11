@@ -27,8 +27,9 @@ public class UndoCommand extends Command {
         }
         //@@author arnollim
         String commandString = undoRedoStack.peekUndo().toString();
-        String feedbackToUser = parseCommand(commandString);
+        String feedbackToUser = parseUndoCommand(commandString);
         undoRedoStack.popUndo().undo();
+
         return new CommandResult(feedbackToUser);
         //@@author
     }
@@ -37,7 +38,7 @@ public class UndoCommand extends Command {
     /**
      * Parses the output command to display the previously undone command
      */
-    public static String parseCommand(String commandString) {
+    public static String parseUndoCommand(String commandString) {
         String output = String.format(FULL_MESSAGE_SUCCESS, commandString);
         return output;
     }
