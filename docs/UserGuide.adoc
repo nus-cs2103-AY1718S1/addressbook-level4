@@ -16,16 +16,21 @@ By: `CS2103AUG2017-W13-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 == Introduction
 
-Many universities have timetable committee to deal with all matters concerning timetabling scheduling.
-One prevalent concern of such matters would be timetable clashes while scheduling. +
+Many universities have a timetable committee to deal with all matters concerning timetabling scheduling.
+One concern would be timetable clashes while scheduling. +
 
 Welcome to ModU, a timetable scheduling software for professors and administrators in tertiary institutions. +
 
 With ModU, you are able to easily identify timetable slots that are available for the module you are scheduling.
 Made a mistake while scheduling the timetable? Fret not, you can easily make any changes to the timetable. +
 
-ModU uses the command line interface (CLI) as the main input. The natural language input field will allow you to
-quickly search, add, delete and edit your timetable. Just type what you want and ModU will do the rest for you!
+The main input of ModU is through the use of command line interface (CLI).
+The natural language input field will allow you to quickly search, add, delete and edit your timetable.
+Just type what you want and ModU will do the rest for you! +
+
+This user guide will explain how the various commands in ModU can be carried out by giving valid examples.
+It also includes a scenario where it lists the different situations that you might encounter and how ModU is able to help you overcome them.
+The Frequently Asked Questions (FAQ) section that lists answers to commonly asked questions can be found at the end of the user guide, followed by a summary of the commands available in ModU.
 
 == Quick Start
 
@@ -37,22 +42,27 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your ModU.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The The graphical user interface (GUI) should appear in a few seconds.
 +
 image::mainUi.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+e.g. typing *`help`* and pressing kbd:[Enter] will open the help window. +
+    +
+    Some example commands you can try:
 
-* *`list`* *`module`* : lists all module
-* *`add`* *`m/MA1101R ct/LEC v/LT27 gp/1 ts/FRI[1400-1600] l/ Ma Siu Lun`* : adds a lesson with module code `MA1101R` to the ModU list.
-* *`sort`* : sort lesson shown in the current list
-* *`exit`* : exits the app
+* *`list`* *`module`* : lists all module. +
+* *`add`* *`m/MA1101R ct/LEC v/LT27 gp/1 ts/FRI[1400-1600] l/ Ma Siu Lun`* : adds a lesson with module code `MA1101R` to the ModU list. +
+* *`sort`* : sort lesson shown in the current list. +
+* *`exit`* : exits the app. +
 
-.  Refer to the link:#features[Features] section below for details of each command.
+Please refer to the link:#features[Features] section below for details of each command.
 
 == Features
+
+*We want your experience with ModU to be as positive as possible.
+Hence, please read the following information so that you will understand the command format.*
+
 
 ====
 *Command Format*
