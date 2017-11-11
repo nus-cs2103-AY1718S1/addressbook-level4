@@ -45,59 +45,82 @@ for more information.
 
 === Add/view/edit/delete events
 
-[NOTE]
-====
-* You should be having the view of contacts list
-====
-
-
 ==== Listing of events
 *Positive test case* +
-1) listE _(Listed all events)_
+_Command:_ +
+`listE`  +
+_Result:_ +
+`Listed all events`
+
+You should see that the application automatically switches from contact list to event list after
+the command listE.
+
 
 *Negative test case* +
-1) ListE _(commands are case sensitive)_ +
-2) lIsTE _(commands are case sensitive)_ +
-3) listEE _(incorrect command)_ +
+_Command:_ +
+`ListE` +
+_Result:_ +
+`Unknown command` +
+_Command:_ +
+`lIsTE` +
+_Result:_ +
+`Unknown command`
 
-[NOTE]
-====
-After listing events, you should having the view of event list
-====
+Commands are case sensitive.
+
 
 ==== Adding of events
-*Positive test cases* +
-1) addE n/CS3201 Project Meeting dt/17112017 15:30 a/School Of Computing, SR09, NUS +
-2) addE n/2101 dt/18112017 14:00 a/School of Computing, SR10, NUS +
-3) addE n/Lunch Date with John dt/19112017 12:00 a/Clementi Mall, Foodfare +
 
-*Negative test cases* +
-1) addE n/Meeting for $$ collection dt/20112017 16:30 a/School Of Computing, SR1, NUS _(invalid character in name)_ +
-2) addE n/Consultation with CS2101 Tutor dt/201117 16:30 a/CELC, NUS _(invalid date)_ +
-3) addE n/Consultation with CS2103 Tutor dt/20112017 16:30pm a/School Of Computing, SR08, NUS _(invalid time)_  +
-4) addE n/GEQ1000 Project Meeting dt/20112017 1600 a/The Frontier, Science, NUS _(invalid time)_ +
-5) addE Lunch Date dt/23112017 16:00 a/The Deck, FASS, NUS _(missing prefix for name)_ +
+To add an event, we need to use addE n/NAME dt/DATE_TIME a/ADDRESS of the event.
+
+1) Adds a new event with Name `CS3201 Project Meeting`, DateTime `17112017 1530`, Address `School of Computing, SR09, NUS`
+
+
+_Command:_ +
+`addE n/CS3201 Project Meeting dt/17112017 15:30 a/School Of Computing, SR09, NUS` +
+_Result:_ +
+`New event added:  Event: CS3201 Project Meeting |  Date/Time: 17 Nov, 2017 15:30 |  Address: School Of Computing, SR09, NUS`
+
+
+2) Adds a new event with Name `CS1231 Project Meeting`, DateTime `19112017 15:30`, Address `School of Computing, DR1, NUS` +
+_Command:_ +
+`addE n/CS1231 Project Meeting dt/19112017 15:30 a/School Of Computing, DR1, NUS` +
+_Result:_ +
+`New event added:  Event: CS1231 Project Meeting |  Date/Time: 19 Nov, 2017 15:30 |  Address: School of Computing, DR1, NUS`
+
 
 
 ==== Deleting of Events +
-*Positive test cases* +
-1) deleteE 8 +
-2) deleteE 9 +
 
-*Negative test cases* +
-1) deleteE 30 _(invalid index)_ +
-2) deleteE -1 _(invalid index)_ +
+1) Deletes an Event with index 8 on the Event List
+
+_Command:_ +
+`deleteE 8` +
+_Result:_ +
+`Deleted Event:  Event: Project Meeting for CS2101 |  Date/Time: 01 Dec, 2017 09:00 |  Address: SR09, School of Computing`
+
+2) Deletes an Event with index 11 on the Event List
+_Command:_ +
+`deleteE 11` +
+_Result:_ +
+`Deleted Event:  Event: Family Dinner |  Date/Time: 11 Dec, 2017 19:00 |  Address: Home Sweet Home`
+
+
 
 ==== Editing of Events
-*Positive test cases* +
-1) editE 4 n/CS2010 Project Meeting _(name changed)_ +
-2) editE 5 dt/18112017 15:00 _(time changed)_ +
-3) editE 6 a/Causeway Point, Ichiban Sushi _(venue changed)_ +
+1) Edits Event from index 7 of Event list with a edited name of Movie Date with Bro
+_Command:_ +
+editE 7 n/Movie Date with Bro +
+_Result:_ +
+`Edited Event:  Event: Movie Date with Bro |  Date/Time: 22 Nov, 2017 22:00 |  Address: Golden Village Yishun` +
+2) Edits Event from index 6 of Event list with an edited date/time of 18112017 15:00 +
+_Command:_ +
+editE 6 dt/18112017 15:00 +
+_Result:_ +
+`Edited Event:  Event: Family Lunch |  Date/Time: 18 Nov, 2017 15:00 |  Address: Sakae Sushi, Causeway Point`
 
-*Negative test cases* +
-1) editE n/CS1010 Project Meeting _(invalid index)_ +
-2) editE 2 CS3222 Consultation 19112017 15:00 School of Computing, SR10, NUS _(missing prefixes)_
-
+At this point in time, Movie Date with bro should be at index 7 while
+Family Lunch would be at index 5.
 
 === Import/export data
 
