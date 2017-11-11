@@ -30,7 +30,7 @@ public class KeyListenerUtil {
     public static final KeyCombination KEY_COMBINATION_FOCUS_PERSON_LIST_ALT = KeyCombination.valueOf("Ctrl+Left");
     public static final KeyCombination KEY_COMBINATION_FOCUS_COMMAND_BOX = KeyCombination.valueOf("Enter");
     public static final KeyCombination KEY_COMBINATION_FOCUS_RESULT_DISPLAY = KeyCombination.valueOf("Ctrl+Right");
-    public static final KeyCombination KEY_COMBINATION_DELETE_SELECTION = KeyCombination.valueOf("Ctrl+D");
+    public static final KeyCombination KEY_COMBINATION_DELETE_SELECTION = KeyCombination.valueOf("Ctrl+Shift+D");
 
     // Command events
     public static final KeyCombination KEY_COMBINATION_CLEAR = KeyCombination.valueOf(ClearCommand.COMMAND_HOTKEY);
@@ -47,6 +47,7 @@ public class KeyListenerUtil {
     public static final KeyCombination KEY_COMBINATION_FIND = KeyCombination.valueOf(FindCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_SELECT = KeyCombination.valueOf(SelectCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_DELETE = KeyCombination.valueOf(DeleteCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_DELETE_ALTERNATIVE = KeyCombination.valueOf(DeleteCommand.COMMAND_HOTKEY_ALTERNATIVE);
     public static final KeyCombination KEY_COMBINATION_REMARK = KeyCombination.valueOf(RemarkCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_EMAIL = KeyCombination.valueOf(EmailCommand.COMMAND_HOTKEY);
 
@@ -69,6 +70,7 @@ public class KeyListenerUtil {
                     KEY_COMBINATION_EMAIL,
                     KEY_COMBINATION_FIND,
                     KEY_COMBINATION_SELECT,
-                    KEY_COMBINATION_DELETE
+                    KEY_COMBINATION_DELETE,
+                    KEY_COMBINATION_DELETE_ALTERNATIVE
             ));
 }

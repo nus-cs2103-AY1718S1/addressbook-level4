@@ -3,6 +3,7 @@ package seedu.address.ui;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_ADD;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_CLEAR;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_DELETE;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_DELETE_ALTERNATIVE;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_DELETE_SELECTION;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_EDIT;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_EMAIL;
@@ -126,7 +127,7 @@ public class KeyListener {
         } else if (KEY_COMBINATION_SELECT.match(keyEvent)) {
             displayCommandFormat(SelectCommand.COMMAND_WORD);
 
-        } else if (KEY_COMBINATION_DELETE.match(keyEvent)) {
+        } else if (KEY_COMBINATION_DELETE.match(keyEvent) || KEY_COMBINATION_DELETE_ALTERNATIVE.match(keyEvent)) {
             displayCommandFormat(DeleteCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_REMARK.match(keyEvent)) {

@@ -146,7 +146,7 @@ public class KeyListenerTest extends RolodexGuiTest {
 
     @Test
     public void executeKeyEventForAddCommand() {
-        KeyCodeCombination addCommandKeyCode = new KeyCodeCombination(KeyCode.EQUALS, KeyCombination.CONTROL_DOWN);
+        KeyCodeCombination addCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+Equals");
 
         guiRobot.push(addCommandKeyCode);
         assertEquals(AddCommand.FORMAT, getCommandBox().getInput());
@@ -213,13 +213,21 @@ public class KeyListenerTest extends RolodexGuiTest {
 
     @Test
     public void executeKeyEventForDeleteCommand() {
-        KeyCodeCombination deleteCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+Shift+D");
+        KeyCodeCombination deleteCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+D");
 
         guiRobot.push(deleteCommandKeyCode);
         assertEquals(DeleteCommand.FORMAT, getCommandBox().getInput());
 
         guiRobot.push(KeyCode.A);
         assertEquals("delete a", getCommandBox().getInput());
+
+        deleteCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+Minus");
+        guiRobot.push(deleteCommandKeyCode);
+        assertEquals(DeleteCommand.FORMAT, getCommandBox().getInput());
+
+        guiRobot.push(KeyCode.A);
+        assertEquals("delete a", getCommandBox().getInput());
+
     }
 
     @Test
