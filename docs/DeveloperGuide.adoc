@@ -489,6 +489,8 @@ Alternative considered is to allow user input multiple details in each search. I
 
 From the two scenarios, we know that unless the user knows the exact details (i.e. full name, exact phone number, exact email and etc) otherwise `finds` command with multiple details input is practically not useful as no results will be returned.
 
+---
+
 **Aspect:** Finding person with other details. +
 **Alternative 1 (current choice):** Able to search with other details but only one type of detail for each search +
 **Pros:** Easier to be implemented when only one type of detail is used. +
@@ -530,6 +532,7 @@ It is implemented to check whether any contact in addressbook has `important` ta
 ----
 
 ==== Design Considerations
+
 **Aspect:** Perform insertion of persons with important tag to the top quickly. +
 **Alternative 1 (current choice):** Filter person with `important` tag to a list and those without to another list then merge the lists together. +
 **Pros:** Easy to implement and works well when there are not a lot of contacts. +
@@ -537,6 +540,8 @@ It is implemented to check whether any contact in addressbook has `important` ta
 **Alternative 2:** Create additional addressbook that stores only important contacts and execute merge only when a new person is added to the addressbook. +
 **Pros:** Able to achieve O(n) time complexity. +
 **Cons:** Additional addressbook is redundant and takes up memory space.
+
+---
 // end::important[]
 
 // tag::birthday[]
