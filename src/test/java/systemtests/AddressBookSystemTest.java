@@ -145,6 +145,15 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
+     * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
+     * {@code expectedResultMessage}
+     */
+    protected void assertEventDisplaysExpected(String expectedCommandInput, String expectedResultMessage) {
+        assertEquals(expectedCommandInput, getCommandBox().getInput());
+        assertEquals(expectedResultMessage, getResultDisplay().getText());
+    }
+
+    /**
      * Calls {@code InfoPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
      * their current state.
      */
