@@ -31,7 +31,7 @@ public class OpenCommandParserTest {
         assertParseFailure(parser, getFilePathInDataFolder(""), MESSAGE_INVALID_FORMAT);
 
         // path is not a DeathNote file
-        assertParseFailure(parser, getFilePathInDataFolder("serialize.json"), MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, getFilePathInDataFolder("random.file"), MESSAGE_INVALID_FORMAT);
     }
 
     @Test
