@@ -489,8 +489,6 @@ Alternative considered is to allow user input multiple details in each search. I
 
 From the two scenarios, we know that unless the user knows the exact details (i.e. full name, exact phone number, exact email and etc) otherwise `finds` command with multiple details input is practically not useful as no results will be returned.
 
----
-
 **Aspect:** Finding person with other details. +
 **Alternative 1 (current choice):** Able to search with other details but only one type of detail for each search +
 **Pros:** Easier to be implemented when only one type of detail is used. +
@@ -578,6 +576,44 @@ The NameComparator compares two names and ignore their case.
 
 ---
 // end::sort[]
+
+// tag::add[]
+=== Quicker add command
+
+Only name and phone number are the required fields. +
+
+Program will handle and create default objects for all other fields that are not fulfilled bu user. +
+
+The function below is the code to create default values for empty fields.
+
+[source, java]
+----
+ public static Optional <String> getDetails(Optional <String> value, Prefix prefix) throws ParseException {
+        if (!value.isPresent()) {
+            if (prefix.equals(PREFIX_BIRTHDAY)) {
+                return value.ofNullable("00/00/0000");
+            } else if (prefix.equals(PREFIX_EMAIL)) {
+                return value.ofNullable("default@default.email");
+            } else if (prefix.equals(PREFIX_ADDRESS)) {
+                return value.ofNullable("No address");
+            } else if (prefix.equals(PREFIX_REMARK)) {
+                return value.ofNullable("No remark");
+            }
+        }
+
+        return value;
+    }
+----
+
+==== Design Considerations
+
+**Aspect:** Allow empty fields for `add` command. +
+**Alternative 1 (current choice):** Create objects for empty fields with default values. +
+**Pros:** Allow user to add a person even without full details. +
+**Cons:** Nil.
+
+---
+// end::add[]
 
 // tag::birthday[]
 === Add person(s) Birthday
