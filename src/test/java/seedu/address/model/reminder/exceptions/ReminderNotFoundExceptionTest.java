@@ -5,8 +5,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
-
 //@@author yunpengn
 public class ReminderNotFoundExceptionTest {
     private ExpectedException thrown = ExpectedException.none();

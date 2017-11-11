@@ -3,6 +3,7 @@ package seedu.address.ui.event;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -21,7 +22,8 @@ import seedu.address.ui.UiPart;
  */
 public class EventCard extends UiPart<Region> {
     private static final String FXML = "event/EventListCard.fxml";
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM, yyyy HH:mm");
+    private static final DateTimeFormatter formatter =
+            DateTimeFormatter.ofPattern("dd MMM, yyyy HH:mm", Locale.ENGLISH);
 
     // The event that is displayed in this card.
     public final ReadOnlyEvent event;
