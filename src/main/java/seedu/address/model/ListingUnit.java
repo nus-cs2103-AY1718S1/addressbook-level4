@@ -1,10 +1,10 @@
 package seedu.address.model;
 
-import seedu.address.MainApp;
-import seedu.address.commons.core.LogsCenter;
-
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import seedu.address.MainApp;
+import seedu.address.commons.core.LogsCenter;
 
 //@@author junming403
 /**
