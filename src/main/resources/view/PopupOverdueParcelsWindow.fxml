@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.VBox?>
 
 <!-- @@author vicisapotato -->
-<!-- @@author -->
 
 <StackPane styleClass="pane-with-border" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -22,4 +21,4 @@
       </VBox>
    </children>
 </StackPane>
-        <!-- @@author -->
+<!-- @@author -->

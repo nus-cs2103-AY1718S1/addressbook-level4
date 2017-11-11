@@ -17,6 +17,8 @@ import seedu.address.model.parcel.Status;
 //@@author vicisapotato
 /**
  * New window telling users of overdue parcels
+ * Takes in uncompleted parcel list from logic to get number of overdue parcels
+ * This window is set to hide after 7 seconds
  */
 public class PopupOverdueParcelsWindow extends UiPart<Region> {
 
@@ -44,6 +46,10 @@ public class PopupOverdueParcelsWindow extends UiPart<Region> {
         contentPlaceholder.setText(CONTENT_TEXT + numOverdueParcels);
     }
 
+    /**
+     * Gets the number of parcels with the overdue status from logic uncompleted parcel list
+     * @return int numOverdueParcels
+     */
     private int getNumOverdueParcels (ObservableList<ReadOnlyParcel> uncompletedParcels) {
         int numOverdueParcels = 0;
 
