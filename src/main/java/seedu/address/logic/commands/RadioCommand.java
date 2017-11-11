@@ -24,6 +24,7 @@ public class RadioCommand extends Command {
             + "GENRE (must be either chinese, classic, news, pop) \n"
             + "Example: " + COMMAND_WORD + " play news ";
 
+    public static final String[] GENRE_LIST = {"chinese", "classic", "news", "pop"};
     public static final String MESSAGE_NO_RADIO_PLAYING = "No radio is currently playing";
     public static final String MESSAGE_STOP = "Radio Stopped";
     public static final String MESSAGE_SUCCESS = "Radio Playing";
@@ -67,7 +68,7 @@ public class RadioCommand extends Command {
     @Override
     public CommandResult execute() {
 
-        boolean genreExist = Arrays.asList(genreList).contains(genre);
+        boolean genreExist = Arrays.asList(GENRE_LIST).contains(genre);
         switch (command) {
         case "play":
             if (genreExist) {

@@ -69,7 +69,8 @@ public class StringUtil {
         }
     }
 
-    // Source: http://www.java2s.com/Tutorial/Java/0040__Data-Type/ComparestwoStringsandreturnstheportionwheretheydiffer.htm
+    // Source:
+    // http://www.java2s.com/Tutorial/Java/0040__Data-Type/ComparestwoStringsandreturnstheportionwheretheydiffer.htm
     //-----------------------------------------------------------------------
     /**
      * Compares two Strings, and returns the portion where they differ.

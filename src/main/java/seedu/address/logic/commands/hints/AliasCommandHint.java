@@ -1,5 +1,10 @@
 package seedu.address.logic.commands.hints;
 
+/**
+ * Generates hint and tab auto complete for alias command
+ * Assumes that {@code userInput} and {@code arguments} provided are from
+ * an incomplete/complete alias command.
+ */
 public class AliasCommandHint extends Hint {
 
     public AliasCommandHint(String userInput, String arguments) {
@@ -25,7 +30,8 @@ public class AliasCommandHint extends Hint {
 
         if ((delimiterPosition == -1 && userInput.endsWith(" ") && !arguments.isEmpty()) || delimiterPosition > 0) {
             int fakeDelimiterPosition = (arguments + " pad").trim().indexOf(' ');
-            description = " - set what " + (arguments + " pad").trim().substring(0, fakeDelimiterPosition).trim() + " represents";
+            description = " - set what "
+                    + (arguments + " pad").trim().substring(0, fakeDelimiterPosition).trim() + " represents";
             return;
         }
 

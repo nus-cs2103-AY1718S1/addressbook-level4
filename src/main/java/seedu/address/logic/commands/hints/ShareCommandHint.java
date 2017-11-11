@@ -7,9 +7,15 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SHARE_STRING;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
 import seedu.address.commons.util.HintUtil;
 import seedu.address.logic.parser.Prefix;
 
+/**
+ * Generates hint and tab auto complete for Share command
+ * Assumes that {@code userInput} and {@code arguments} provided are from
+ * an incomplete/complete Share command.
+ */
 public class ShareCommandHint extends ArgumentsHint {
 
     private static final List<Prefix> PREFIXES =

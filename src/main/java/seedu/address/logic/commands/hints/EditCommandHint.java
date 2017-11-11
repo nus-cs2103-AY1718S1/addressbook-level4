@@ -77,20 +77,20 @@ public class EditCommandHint extends ArgumentsHint {
     @Override
     protected String getDescription(Prefix prefix) {
         switch (prefix.toString()) {
-            case PREFIX_NAME_STRING:
-                return "name";
-            case PREFIX_PHONE_STRING:
-                return "phone";
-            case PREFIX_ADDRESS_STRING:
-                return "address";
-            case PREFIX_EMAIL_STRING:
-                return "email";
-            case PREFIX_REMARK_STRING:
-                return "remark";
-            case PREFIX_TAG_STRING:
-                return "tag";
-            default:
-                return "";
+        case PREFIX_NAME_STRING:
+            return "name";
+        case PREFIX_PHONE_STRING:
+            return "phone";
+        case PREFIX_ADDRESS_STRING:
+            return "address";
+        case PREFIX_EMAIL_STRING:
+            return "email";
+        case PREFIX_REMARK_STRING:
+            return "remark";
+        case PREFIX_TAG_STRING:
+            return "tag";
+        default:
+            return "";
         }
     }
 }

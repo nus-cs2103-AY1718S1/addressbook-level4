@@ -1,22 +1,5 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.parser.CliSyntax.LIST_OF_PREFIXES;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS_STRING;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_AVATAR;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL_STRING;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPTY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPTY_STRING;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME_STRING;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE_STRING;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK_STRING;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_STRING;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -148,15 +131,6 @@ public class HintParser {
         return hint.getArgumentHint() + hint.getDescription();
     }
 
-
-    private static Hint generateParsedHint(String userInput, String arguments, String commandWord) {
-        Hint generatedHint = generateHint(userInput, arguments, commandWord);
-        if (generatedHint != null) {
-            generatedHint.parse();
-        }
-        return generatedHint;
-    }
-
     /**
      * returns an appropriate hint based on commandWord and arguments
      * userInput and arguments are referenced to decide whether whitespace should be added to
@@ -201,5 +175,16 @@ public class HintParser {
         default:
             return new CommandHint(userInput, commandWord);
         }
+    }
+
+    /**
+     * returns a parsedHint if generated hint is non null, else return null
+     */
+    private static Hint generateParsedHint(String userInput, String arguments, String commandWord) {
+        Hint generatedHint = generateHint(userInput, arguments, commandWord);
+        if (generatedHint != null) {
+            generatedHint.parse();
+        }
+        return generatedHint;
     }
 }

@@ -25,9 +25,12 @@ public class MusicCommand extends Command {
             + "GENRE (must be either pop, dance or classic) \n"
             + "Example: " + COMMAND_WORD + " play classic ";
 
+    public static final String[] GENRE_LIST = {"pop", "dance", "classic"};
     public static final String MESSAGE_NO_MUSIC_PLAYING = "No music is currently playing";
     public static final String MESSAGE_STOP = "Music Stopped";
     private static final int maxTrackNumber = 2;
+
+    private static String messagePause = "Music Paused";
 
     private static String messageSuccess = "Music Playing";
     private static MediaPlayer mediaPlayer;
@@ -37,7 +40,6 @@ public class MusicCommand extends Command {
 
     private String command;
     private String genre = "pop";
-    public static String[] genreList = {"pop", "dance", "classic"};
 
     public MusicCommand(String command, String genre) {
         this.command = command;
@@ -71,7 +73,7 @@ public class MusicCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        boolean genreExist = Arrays.asList(genreList).contains(genre);
+        boolean genreExist = Arrays.asList(GENRE_LIST).contains(genre);
         switch (command) {
         case "play":
             if (RadioCommand.isRadioPlaying()) {

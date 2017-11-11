@@ -21,19 +21,24 @@ import seedu.address.logic.commands.ShareCommand;
 import seedu.address.logic.commands.UnaliasCommand;
 import seedu.address.logic.commands.UndoCommand;
 
+/**
+ * Generates hint and autocompletion for command words
+ */
 public class CommandHint extends Hint {
 
-    String commandWord;
+    protected String commandWord;
 
     public CommandHint(String userInput, String commandWord) {
         this.userInput = userInput;
         this.commandWord = commandWord;
     }
 
+    @Override
     public String autocomplete() {
         return userInput + argumentHint;
     }
 
+    @Override
     public void parse() {
         String autocompleted = autocompleteCommand(commandWord);
 

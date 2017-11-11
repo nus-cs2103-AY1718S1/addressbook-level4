@@ -1,18 +1,22 @@
 package seedu.address.logic.commands.hints;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.RadioCommand;
 import seedu.address.logic.parser.HintParser;
 
+/**
+ * Generates hint and tab auto complete for Radio command
+ * Assumes that {@code userInput} and {@code arguments} provided are from
+ * an incomplete/complete Radio command.
+ */
 public class RadioCommandHint extends FixedArgumentsHint {
+
+    private static final String[] ACTION = new String[] {"play", "stop"};
+    private static final String[] GENRE = RadioCommand.GENRE_LIST;
 
     public RadioCommandHint(String userInput, String arguments) {
         this.userInput = userInput;
         this.arguments = arguments;
     }
-    private final static String[] ACTION = new String[] {"play", "stop"};
-    private final  static String[] GENRE = RadioCommand.genreList;
-
 
     @Override
     public void parse() {
@@ -34,7 +38,8 @@ public class RadioCommandHint extends FixedArgumentsHint {
                 offerHint((RadioCommand.isRadioPlaying()) ? "stop" : "play", "radio " + autoCorrectHint);
                 return;
             } else {
-                handleCompletingArg(actionArgument, autoCompletedArg, "radio " + ((RadioCommand.isRadioPlaying()) ? "stop" : "play"));
+                handleCompletingArg(actionArgument, autoCompletedArg,
+                        "radio " + ((RadioCommand.isRadioPlaying()) ? "stop" : "play"));
                 return;
             }
         }
@@ -59,7 +64,9 @@ public class RadioCommandHint extends FixedArgumentsHint {
                 offerHint("pop", "radio play pop");
                 return;
             } else {
-                handleCompletingArg(genreArgument, autoCompletedArg, (RadioCommand.isRadioPlaying()) ? "radio stop" : "radio play " + autoCompletedArg);
+                String autoCompletedInput = (RadioCommand.isRadioPlaying()) ? "radio stop" : "radio play "
+                        + autoCompletedArg;
+                handleCompletingArg(genreArgument, autoCompletedArg, autoCompletedInput);
                 return;
             }
         }
