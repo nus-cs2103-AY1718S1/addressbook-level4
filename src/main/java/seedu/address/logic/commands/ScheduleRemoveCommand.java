@@ -101,6 +101,13 @@ public class ScheduleRemoveCommand extends UndoableCommand {
         }
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ScheduleRemoveCommand // instanceof handles nulls
+                && uniqueEventIndexes.equals(((ScheduleRemoveCommand) other).uniqueEventIndexes));
+    }
+
 
     /**
      * Stores the details of modified person with updated event list. Each non-empty field value will replace the
