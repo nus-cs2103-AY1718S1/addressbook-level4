@@ -71,31 +71,24 @@ include::../DeveloperGuide.adoc[tag=findtag]
 include::../UserGuide.adoc[tag=theme]
 
 ---
-
-==== Justification
-
-`history` function is needed for the user to look for any commands that he/she have entered earlier. When the user just added a new person into Rubrika, he/she can use the function to look for the name of the person that have just been added earlier.
-
----
-
-=== Enhancement Proposed: Add command `history`
-
-==== External behavior
-
----
-
-=== Listing entered commands: `history`
-
-Lists all the commands that you have entered in reverse chronological order. "+"
-Format: `history` + up and down arrows will display the previous and next input respectively in the command box.
-
----
-
 ==== Justification
 
 `theme` function is needed for the user to customize the GUI and personalize Rubrika according to the preference of the user.
 
 `theme` function allow user to choose from different themes depending on the user's current emotional status and improve their user experience.
+
+=== Enhancement Proposed: Add command `Event`
+
+==== External behavior
+
+`Event` allow user to create events that are similar to tags. User will be able to add different contacts under different events and a separate window will show all the events created.
+
+User will be able to see very clearly the details of the event(Date, Time, Location) and whoever is involved.
+
+
+==== Justification
+
+`Event` is needed for the user to use it as a add on to `Remarks`. With `Event` the user can organise the user's schedule and list down all events clearly.
 
 
 === Other contributions

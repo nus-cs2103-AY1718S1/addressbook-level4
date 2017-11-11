@@ -273,8 +273,8 @@ Sorts the people with `owesMoney` tag based on their emails in descending order.
 [NOTE]
 theme feature available since v1.4.
 
-Change the theme of Rubrika to the theme specified.
-Format: theme KEYWORD
+Change the theme of Rubrika to the theme specified. +
+Format: `theme` `KEYWORD`
 
 ****
 * The command is case sensitive. e.g `darktheme` is different from `DarkTheme`.
@@ -284,8 +284,10 @@ Format: theme KEYWORD
 Currently available themes are:
 
 ****
-* DarkTheme
-* RedTheme
+* DarkTheme +
+image::darktheme.png[width="700"]
+* RedTheme +
+image::redtheme.png[width="700"]
 ****
 Examples:
 
