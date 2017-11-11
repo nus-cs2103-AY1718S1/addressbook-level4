@@ -1123,30 +1123,22 @@ The `Labels` (texts) in the User Interface are set to their corresponding values
 
 
 ==== Design Considerations
-**Aspect:** +
-**Alternative 1 (current choice):**  +
-**Pros:**  +
-**Cons:**  +
-**Alternative 2:** +
-**Pros:**  +
-**Cons:**  +
+**Aspect:** How to update the `Statistics Panel` +
+**Alternative 1 (current choice):** Create a new `FilteredPersonListChangedEvent` with the responsibility to update the `Statistics Panel`. +
+**Pros:** Adherence to the Single Responsibility Principle (SRP) increases cohesion among the different `Events` and reduces coupling in the source code. +
+**Cons:** Reduces the number of classes in the source code, making it less complex. +
+**Alternative 2:** Modify `AddressBookChangedEvent` to also update the `Statistics Panel`. +
+**Pros:** Since `AddressBookChangedEvent` and updating the `Statistics Panel` are both triggered by a change in the model,
+only a few changes to `AddressBookChangedEvent` are needed for it to also update the `Statistics Panel`. +
+**Cons:** This violates the Single Responsibility Principle (SRP) by having giving `AddressBookChangedEvent` the additional responsibility of updating the `Statistics Panel`.  +
 
-**Aspect:** +
-**Alternative 1 (current choice):**  +
-**Pros:**  +
-**Cons:**  +
-**Alternative 2:** +
-**Pros:**  +
-**Cons:**  +
-
-**Aspect:** +
-**Alternative 1 (current choice):**  +
-**Pros:**  +
-**Cons:**  +
-**Alternative 2:** +
-**Pros:**  +
-**Cons:**  +
-
+**Aspect:** How to raise the `FilteredPersonListChangedEvent` in the `ModelManager` +
+**Alternative 1 (current choice):** Create a separate `updateStatisticsPanel()` method to raise the event to update the `Statistics Panel` +
+**Pros:** Reduces coupling and increases cohesion by giving a single responsibility to the `updateStatisticsPanel()` method. +
+**Cons:** Makes the application more complex to understand according to the More Is More Complex (MIMC) principle. +
+**Alternative 2:** Raise the `FilteredPersonListChangedEvent` together with the `AddressBookChangedEvent` +
+**Pros:** Reduces the number of similar methods in the source code, making it less complex and easier to understand +
+**Cons:** Increases coupling in the source code +
 // end::statisticspanel[]
 
 === Logging

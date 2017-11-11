@@ -5,9 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author lincredibleJC
-/**
- * Represents a Change in the current FilteredPersonList
- */
+/** Represents the FilteredPersonList in the model has changed */
 public class FilteredPersonListChangedEvent extends BaseEvent {
 
     private final ObservableList<ReadOnlyPerson> currentFilteredList;
