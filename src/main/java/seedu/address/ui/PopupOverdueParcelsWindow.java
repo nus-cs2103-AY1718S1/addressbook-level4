@@ -14,10 +14,10 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.Status;
 
+//@@author vicisapotato
 /**
  * New window telling users of overdue parcels
  */
-//@@author vicisapotato
 public class PopupOverdueParcelsWindow extends UiPart<Region> {
 
     private static final Logger logger = LogsCenter.getLogger(PopupOverdueParcelsWindow.class);
