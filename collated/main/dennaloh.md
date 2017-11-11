@@ -1,54 +1,4 @@
 # dennaloh
-###### \java\seedu\address\logic\commands\FbCommand.java
-``` java
-/**
- * Searches for your contact on Facebook
- */
-public class FbCommand extends Command {
-
-    public static final String COMMAND_WORD = "facebook";
-    public static final String COMMAND_ALIAS = "fb";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Searches for the person identified by the index "
-            + "number used in the last person listing on Facebook.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1 ";
-
-    public static final String MESSAGE_SUCCESS = "Opened Facebook to search for %1$s";
-
-    private final Index targetIndex;
-
-    /**
-     * @param targetIndex of the person in the filtered person list to search on Facebook for
-     */
-    public FbCommand (Index targetIndex) {
-        this.targetIndex = targetIndex;
-    }
-
-    @Override
-    public CommandResult execute() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        ReadOnlyPerson personToSearch = lastShownList.get(targetIndex.getZeroBased());
-
-        String fbUrl = model.getFbUrl(personToSearch);
-        model.openUrl(fbUrl);
-
-        return new CommandResult(String.format(MESSAGE_SUCCESS, personToSearch));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof FbCommand // instanceof handles nulls
-                && this.targetIndex.equals(((FbCommand) other).targetIndex)); // state check
-    }
-}
-```
 ###### \java\seedu\address\logic\commands\person\EmailCommand.java
 ``` java
 /**
@@ -105,6 +55,56 @@ public class EmailCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof EmailCommand // instanceof handles nulls
                 && this.targetIndex.equals(((EmailCommand) other).targetIndex)); // state check
+    }
+}
+```
+###### \java\seedu\address\logic\commands\person\FbCommand.java
+``` java
+/**
+ * Searches for your contact on Facebook
+ */
+public class FbCommand extends Command {
+
+    public static final String COMMAND_WORD = "facebook";
+    public static final String COMMAND_ALIAS = "fb";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Searches for the person identified by the index "
+            + "number used in the last person listing on Facebook.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1 ";
+
+    public static final String MESSAGE_SUCCESS = "Opened Facebook to search for %1$s";
+
+    private final Index targetIndex;
+
+    /**
+     * @param targetIndex of the person in the filtered person list to search on Facebook for
+     */
+    public FbCommand (Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToSearch = lastShownList.get(targetIndex.getZeroBased());
+
+        String fbUrl = model.getFbUrl(personToSearch);
+        model.openUrl(fbUrl);
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, personToSearch));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FbCommand // instanceof handles nulls
+                && this.targetIndex.equals(((FbCommand) other).targetIndex)); // state check
     }
 }
 ```
@@ -213,30 +213,6 @@ public class GMapCommand extends Command {
         case FbCommand.COMMAND_ALIAS:
             return new FbCommandParser().parse(arguments);
 ```
-###### \java\seedu\address\logic\parser\FbCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new FbCommand object
- */
-public class FbCommandParser implements Parser<FbCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the FbCommand
-     * and returns an FbCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public FbCommand parse(String args) throws ParseException {
-
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new FbCommand(index);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FbCommand.MESSAGE_USAGE));
-        }
-    }
-}
-```
 ###### \java\seedu\address\logic\parser\person\EmailCommandParser.java
 ``` java
 /**
@@ -256,6 +232,30 @@ public class EmailCommandParser implements Parser<EmailCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX));
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\parser\person\FbCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new FbCommand object
+ */
+public class FbCommandParser implements Parser<FbCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the FbCommand
+     * and returns an FbCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public FbCommand parse(String args) throws ParseException {
+
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new FbCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FbCommand.MESSAGE_USAGE));
         }
     }
 }

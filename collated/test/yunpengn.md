@@ -29,6 +29,50 @@ public class SwitchToEventsListEventTest {
     }
 }
 ```
+###### \java\seedu\address\commons\util\UrlUtilTest.java
+``` java
+public class UrlUtilTest {
+    private ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void parseUrlString_success_checkCorrectness() throws Exception {
+        URL url = UrlUtil.parseUrlString(VALID_URL);
+
+        assertEquals("https", url.getProtocol());
+        assertEquals("www.google.com.sg", url.getAuthority());
+        assertEquals("/contacts", url.getPath());
+        assertEquals("day=monday", url.getQuery());
+    }
+
+    @Test
+    public void parseUrlString_fail_expectException() throws Exception {
+        thrown.expect(MalformedURLException.class);
+        UrlUtil.parseUrlString(INVALID_URL_COMMA);
+    }
+
+    @Test
+    public void fetchUrlParameters_success_checkCorrectness() throws Exception {
+        Map<String, String> parameters = UrlUtil.fetchUrlParameters(new URL(VALID_URL));
+
+        assertEquals(1, parameters.size());
+        assertTrue(parameters.containsKey("day"));
+        assertTrue(parameters.containsValue("monday"));
+    }
+
+    @Test
+    public void fetchUrlParameterKeys_success_checkCorrectness() throws Exception {
+        Set<String> keys = UrlUtil.fetchUrlParameterKeys(new URL(VALID_URL));
+
+        assertEquals(1, keys.size());
+        assertTrue(keys.contains("day"));
+    }
+
+    @Test
+    public void urlDecode_success_checkCorrectness() throws Exception {
+        assertEquals(VALID_URL, UrlUtil.urlDecode(VALID_URL_ENCODED));
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\configs\AddPropertyCommandTest.java
 ``` java
 public class AddPropertyCommandTest {
@@ -181,6 +225,15 @@ public class ConfigCommandTest {
     @Test
     public void configTypes_checkCount() {
         assertEquals(ConfigCommand.ConfigType.values().length, ConfigCommand.TO_ENUM_CONFIG_TYPE.size());
+    }
+}
+```
+###### \java\seedu\address\logic\commands\imports\ImportCommandTest.java
+``` java
+public class ImportCommandTest {
+    @Test
+    public void configTypes_checkCount() {
+        assertEquals(ImportCommand.ImportType.values().length, ImportCommand.TO_ENUM_IMPORT_TYPE.size());
     }
 }
 ```
