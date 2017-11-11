@@ -5,8 +5,11 @@ import static seedu.address.model.ListingUnit.LOCATION;
 import static seedu.address.model.ListingUnit.MODULE;
 
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
+import seedu.address.MainApp;
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.RefreshPanelEvent;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.model.ListingUnit;
@@ -33,7 +36,10 @@ public class ListCommand extends Command {
     public static final String LOCATION_KEYWORD = "location";
     public static final String MARKED_LIST_KEYWORD = "marked";
 
+    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+
     private final String parameter;
+
 
     public ListCommand(String attributeName) {
         this.parameter = attributeName;
@@ -44,10 +50,13 @@ public class ListCommand extends Command {
 
         switch (parameter) {
         case MODULE_KEYWORD :
+            logger.info("---[List success]Switching Listing element to " + MODULE_KEYWORD);
             return executeListModule();
         case LOCATION_KEYWORD:
+            logger.info("---[List success]Switching Listing element to " + LOCATION_KEYWORD);
             return executeListLocation();
         case MARKED_LIST_KEYWORD:
+            logger.info("---[List success]Switching to marked lesson list");
             return executeListMarked();
         default:
             assert false : "There cannot be other parameters passed in";

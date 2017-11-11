@@ -420,6 +420,7 @@ public class CommandBox extends UiPart<Region> {
             break;
         default:
             tagLabel.getStyleClass().add("keyword-label-default");
+            break;
         }
 
         stackPane.getChildren().add(tagLabel);

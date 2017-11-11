@@ -12,9 +12,12 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import seedu.address.MainApp;
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
@@ -77,6 +80,9 @@ public class EditCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_LESSON = "This lesson already exists in the address book.";
     public static final String MESSAGE_DUPLICATE_BOOKEDSLOT = "This time slot have already "
             + "been booked in this location";
+
+    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+
 
     private final Index index;
     private final EditLessonDescriptor editLessonDescriptor;
@@ -150,11 +156,14 @@ public class EditCommand extends UndoableCommand {
                 editedLesson.setAsMarked();
             }
             model.updateLesson(lessonToEdit, editedLesson);
+            logger.info("---[Edit success]Edited Lesson: " + lessonToEdit + " ----> " + editedLesson);
         } catch (DuplicateLessonException dpe) {
+            logger.info("---[Edit failure]Editing will result in duplicate lesson.");
             throw new CommandException(MESSAGE_DUPLICATE_LESSON);
         } catch (LessonNotFoundException pnfe) {
             throw new AssertionError("The target lesson cannot be missing");
         } catch (DuplicateBookedSlotException s) {
+            logger.info("---[Edit failure]Editing will result in duplicate time slot.");
             throw new CommandException(MESSAGE_DUPLICATE_BOOKEDSLOT);
         }
         EventsCenter.getInstance().post(new ViewedLessonEvent());
@@ -169,10 +178,13 @@ public class EditCommand extends UndoableCommand {
         try {
             Location editedLocation = new Location(attributeValue);
             updateLocation(locationToEdit, editedLocation);
+            logger.info("---[Edit success]Edited location : " + locationToEdit + " ----> " + editedLocation);
             return new CommandResult(String.format(MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation));
         } catch (DuplicateBookedSlotException s) {
+            logger.info("---[Edit failure]Editing would results in duplicate time slot.");
             throw new CommandException(MESSAGE_DUPLICATE_BOOKEDSLOT);
         } catch (IllegalValueException ive) {
+            logger.info("---【Edit failure】Editing illegal value.");
             model.updateLocationList();
             throw new CommandException(ive.getMessage());
         } catch (LessonNotFoundException pnfe) {
@@ -212,8 +224,10 @@ public class EditCommand extends UndoableCommand {
         try {
             Code editedCode = new Code(attributeValue);
             updateModuleCode(codeToEdit, editedCode);
+            logger.info("---[Edit success]Edited module code : " + codeToEdit + " ----> " + editedCode);
             return new CommandResult(String.format(MESSAGE_EDIT_MODULE_SUCCESS, editedCode));
         } catch (IllegalValueException ive) {
+            logger.info("---【Edit failure】Editing illegal value.");
             model.updateModuleList();
             throw new CommandException(ive.getMessage());
         } catch (LessonNotFoundException pnfe) {

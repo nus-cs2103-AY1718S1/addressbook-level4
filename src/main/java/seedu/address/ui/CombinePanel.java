@@ -261,9 +261,9 @@ public class CombinePanel extends UiPart<Region> {
     }
 
 
-    private int getWeekDay(String text) {
-        text = text.toUpperCase();
-        switch (text) {
+    private int getWeekDay(String textInput) {
+        textInput = textInput.toUpperCase();
+        switch (textInput) {
         case "MON":
             return 0;
         case "TUE":

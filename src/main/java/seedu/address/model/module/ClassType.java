@@ -33,10 +33,7 @@ public class ClassType {
      * Returns true if a given string is a valid lesson class type.
      */
     public static boolean isValidClassType(String test) {
-        if (test.matches(CLASSTYPE_VALIDATION_REGEX) && containKeyword(test)) {
-            return true;
-        }
-        return false;
+        return test.matches(CLASSTYPE_VALIDATION_REGEX) && containKeyword(test);
     }
 
     private static boolean containKeyword(String test) {
