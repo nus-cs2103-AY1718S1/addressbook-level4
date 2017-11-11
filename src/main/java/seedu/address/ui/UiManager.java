@@ -62,15 +62,13 @@ public class UiManager extends ComponentManager implements Ui {
         //@@author CT15
         try {
             welcomeScreen = new WelcomeScreen(primaryStage, config, prefs, logic, model);
+
             if (prefs.getWelcomeScreenEnabledInfo()) {
                 welcomeScreen.show(); //This should be called before creating other UI parts
                 welcomeScreen.fillInnerParts();
             } else {
                 welcomeScreen.loadMainWindow();
             }
-            //@@author icehawker
-            raise(new NewResultAvailableEvent(COMMAND_QUICK_HELP, false));
-            //@@author
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);

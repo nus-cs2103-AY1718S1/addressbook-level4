@@ -20,7 +20,7 @@ public class Phone {
             + "Only valid codes belonging to current states will be accepted. \n"
             + "Please note that current version does not yet support codes with prefix '1-' or '44-', "
             + "support expected in version 2.0. Thank you for your understanding.";
-
+    //@@author icehawker
     // without prefix
     public static final String CODE_VALIDATION_REGEX = "\\d{1,5}";
     private static final String PHONE_VALIDATION_REGEX = "\\d{4,16}";
@@ -31,7 +31,7 @@ public class Phone {
                 + "6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\\s\\d{4,16}$";
     public final String value;
     private String countryCode;
-
+    //@@author
     /**
      * Validates given phone number.
      *
@@ -46,11 +46,13 @@ public class Phone {
         this.value = trimmedPhone;
         this.countryCode = trimCode(trimmedPhone);
     }
-
+    //@@author icehawker
     /**
      * Extracts country code from a valid phone number, otherwise returns a default code.
+     * Note that any unacceptable input has already been rejected upstream by {@link #isValidPhone(String)}.
      */
     public static String trimCode(String trimmedPhone) {
+        // only attempt to extract country code if regex is ALT
         if (trimmedPhone.matches(PHONE_VALIDATION_REGEX_ALT)) {
             // take pattern: end with whitespace (expected for ALT regex)
             String[] split = trimmedPhone.split("\\s+");
@@ -61,16 +63,20 @@ public class Phone {
     }
 
     /**
-     * Returns true if a given string is a valid person country code.
+     * Returns true if a given string is a valid person country code. Only for JUnit tests.
      */
     public static boolean isValidCode(String test) {
         return test.matches(CODE_VALIDATION_REGEX);
     }
 
+    /**
+     * Returns requested country code String.
+     * Note that any unacceptable input has already been rejected upstream by {@link #isValidPhone(String)}.
+     */
     public String getCountryCode() {
         return countryCode;
     }
-
+    //@@author
     /**
      * Returns true if a given string is a valid person phone number.
      */
