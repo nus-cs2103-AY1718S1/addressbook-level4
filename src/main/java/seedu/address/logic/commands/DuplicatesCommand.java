@@ -23,8 +23,8 @@ public class DuplicatesCommand extends Command {
     }
 
     public String makeCommandResultMessage() {
-        int numPersons = model.getFilteredPersonList().size();
-        return getMessageForPersonListShownSummary(numPersons);
+        int filteredPersonListSize = model.getFilteredPersonList().size();
+        return getMessageForPersonListShownSummary(filteredPersonListSize);
     }
 
     @Override
