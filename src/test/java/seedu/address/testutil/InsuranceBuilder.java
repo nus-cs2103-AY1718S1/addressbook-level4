@@ -43,12 +43,17 @@ public class InsuranceBuilder {
     /**
      * Sets the {@code Name} of the {@code LifeInsurance} that we are building.
      */
+    public InsuranceBuilder withInsuranceName(String insuranceName) {
+        this.insurance.setInsuranceName(insuranceName);
+        return this;
+    }
+
     public InsuranceBuilder withOwner(Person owner) {
         this.insurance.setOwner(owner);
         return this;
     }
 
-    public InsuranceBuilder WithBeneficiary(Person beneficiary) {
+    public InsuranceBuilder withBeneficiary(Person beneficiary) {
         this.insurance.setBeneficiary(beneficiary);
         return this;
     }
@@ -83,11 +88,6 @@ public class InsuranceBuilder {
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("Invalid expiry date");
         }
-        return this;
-    }
-
-    public InsuranceBuilder withExpiryDate(Person insured) {
-        this.insurance.setInsured(insured);
         return this;
     }
 

@@ -13,7 +13,6 @@ public class MainWindowHandle extends StageHandle {
     private final StatusBarFooterHandle statusBarFooter;
     private final MainMenuHandle mainMenu;
     private final InsuranceListPanelHandle insuranceListPanelHandle;
-    private final InsuranceProfilePanelHandle insuranceProfilePanelHandle;
     private final ProfilePanelHandle profilePanelHandle;
 
     public MainWindowHandle(Stage stage) {
@@ -27,8 +26,6 @@ public class MainWindowHandle extends StageHandle {
         profilePanelHandle = new ProfilePanelHandle(getChildNode(ProfilePanelHandle.PROFILE_ID));
         insuranceListPanelHandle = new InsuranceListPanelHandle(
                 getChildNode(InsuranceListPanelHandle.INSURANCE_LIST_VIEW_ID));
-        insuranceProfilePanelHandle = new InsuranceProfilePanelHandle(getChildNode(
-                InsuranceProfilePanelHandle.INSURNACE_PROFILE_PANEL_ID));
     }
 
     public PersonListPanelHandle getPersonListPanel() {
@@ -54,10 +51,6 @@ public class MainWindowHandle extends StageHandle {
     //@@author RSJunior37
     public ProfilePanelHandle getProfilePanelHandle() {
         return profilePanelHandle;
-    }
-
-    public InsuranceProfilePanelHandle getInsuranceProfilePanelHandle() {
-        return insuranceProfilePanelHandle;
     }
 
     public InsuranceListPanelHandle getInsuranceListPanelHandle() {

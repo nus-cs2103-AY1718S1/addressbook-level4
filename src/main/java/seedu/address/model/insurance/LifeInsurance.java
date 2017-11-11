@@ -140,6 +140,10 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return roleToPersonNameMap;
     }
 
+    public void setInsuranceName(String insuranceName) {
+        this.insuranceName.set(requireNonNull(insuranceName));
+    }
+
     public void setOwner(Person owner) {
         requireNonNull(owner);
         this.owner.get().setPerson(owner);
@@ -187,6 +191,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
 
     public void setPremium(Double premium) {
         this.premium.set(requireNonNull(premium));
+        this.premiumString.set(getPremiumString());
     }
 
     @Override
