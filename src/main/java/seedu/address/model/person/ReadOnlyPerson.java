@@ -87,4 +87,11 @@ public interface ReadOnlyPerson {
         return builder.toString();
     }
 
+    /**
+     * Checks if person is favourited.
+     */
+    default Boolean isFavourite() {
+        return getFavourite();
+    }
+
 }

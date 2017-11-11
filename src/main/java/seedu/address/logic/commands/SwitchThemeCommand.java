@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-// @@author itsdickson
+//@@author itsdickson
 
 import java.util.ArrayList;
 
@@ -23,7 +23,8 @@ public class SwitchThemeCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SWITCH_THEME_SUCCESS = "Switched Theme: %1$s";
+    public static final String MESSAGE_DARK_THEME_SUCCESS = "Switched Theme: Dark Theme";
+    public static final String MESSAGE_LIGHT_THEME_SUCCESS = "Switched Theme: Light Theme";
 
     public static final String VIEW_PATH = "/view/";
 
@@ -52,7 +53,11 @@ public class SwitchThemeCommand extends Command {
 
         EventsCenter.getInstance().post(new ChangeThemeRequestEvent(themeToChange));
 
-        return new CommandResult(String.format(MESSAGE_SWITCH_THEME_SUCCESS, themeToChange));
+        if (themeToChange.equals("DarkTheme.css")) {
+            return new CommandResult(MESSAGE_DARK_THEME_SUCCESS);
+        } else {
+            return new CommandResult(MESSAGE_LIGHT_THEME_SUCCESS);
+        }
     }
 
     @Override
@@ -62,4 +67,4 @@ public class SwitchThemeCommand extends Command {
                 && this.targetIndex.equals(((SwitchThemeCommand) other).targetIndex)); // state check
     }
 }
-// @@author
+//@@author

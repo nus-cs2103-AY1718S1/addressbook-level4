@@ -6,6 +6,7 @@ import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -45,12 +46,15 @@ public class PersonCard extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView favouriteImage;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
         initTags(person);
+        initFavourite(person);
         bindListeners(person);
     }
 
@@ -66,8 +70,12 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             initTags(person);
         });
+        person.favouriteProperty().addListener((observable, oldValue, newValue) -> {
+            initFavourite(person);
+        });
     }
 
+    //@@author itsdickson
     /**
      * Initialises the tags with a randomised color.
      *
@@ -94,6 +102,20 @@ public class PersonCard extends UiPart<Region> {
 
         return tagColors.get(tag);
     }
+
+    /**
+     * Initialises the person with a favourite image if he/she is favourited.
+     *
+     * @param person
+     */
+    private void initFavourite(ReadOnlyPerson person) {
+        if (person.isFavourite()) {
+            favouriteImage.setVisible(true);
+        } else {
+            favouriteImage.setVisible(false);
+        }
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

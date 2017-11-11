@@ -21,19 +21,15 @@ public class Birthday {
     public static final String BIRTHDAY_TEMPORARY = "NIL";
     public final String value;
 
-    //@@author archthegit
-
     /**
      * Validates given birthday.
      *
      * @throws IllegalValueException if given birthday string is invalid.
      */
     public Birthday(String birthday) throws IllegalValueException {
-        //@@author DarrenCzen
         if (birthday == null) {
             this.value = BIRTHDAY_TEMPORARY;
         } else {
-            //@@author archthegit
             String trimmedBirthday = birthday.trim();
             if (!isValidBirthday(trimmedBirthday)) {
                 throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
