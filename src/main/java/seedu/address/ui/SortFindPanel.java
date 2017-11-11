@@ -19,6 +19,11 @@ import seedu.address.commons.events.ui.ValidResultDisplayEvent;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.person.FindCommand;
+import seedu.address.logic.commands.person.FindPinnedCommand;
+import seedu.address.logic.commands.person.ListCommand;
+import seedu.address.logic.commands.person.ListPinCommand;
+import seedu.address.logic.commands.person.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 //@@author Alim95
 
@@ -28,11 +33,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class SortFindPanel extends UiPart<Region> {
 
     private static final String FXML = "SortFindPanel.fxml";
-    private static final String SORT_COMMAND_WORD = "sort";
-    private static final String FIND_COMMAND_WORD = "find";
-    private static final String FIND_PINNED_COMMAND_WORD = "findpinned";
-    private static final String LIST_COMMAND_WORD = "list";
-    private static final String LIST_PINNED_COMMAND_WORD = "listpin";
 
     private final Logger logger = LogsCenter.getLogger(SortFindPanel.class);
     private final Logic logic;
@@ -67,17 +67,19 @@ public class SortFindPanel extends UiPart<Region> {
     @FXML
     private void handleSearchFieldChanged() {
         try {
-            if (searchBox.getPromptText().contains("Person") ||  searchBox.getPromptText().contains("Task")) {
+            if (searchBox.getPromptText().contains("Person") || searchBox.getPromptText().contains("Task")) {
                 if (searchBox.getText().trim().isEmpty()) {
-                    logic.execute(LIST_COMMAND_WORD);
+                    logic.execute(ListCommand.COMMAND_WORD);
                 } else {
-                    logic.execute(FIND_COMMAND_WORD + " " + searchBox.getText());
+                    logic.execute(FindCommand.COMMAND_WORD + " " + searchBox.getText());
+                    raise(new ValidResultDisplayEvent(FindCommand.COMMAND_WORD));
                 }
             } else if (searchBox.getPromptText().contains("Pinned")) {
                 if (searchBox.getText().trim().isEmpty()) {
-                    logic.execute(LIST_PINNED_COMMAND_WORD);
+                    logic.execute(ListPinCommand.COMMAND_WORD);
                 } else {
-                    logic.execute(FIND_PINNED_COMMAND_WORD + " " + searchBox.getText());
+                    logic.execute(FindPinnedCommand.COMMAND_WORD + " " + searchBox.getText());
+                    raise(new ValidResultDisplayEvent(FindPinnedCommand.COMMAND_WORD));
                 }
             }
         } catch (CommandException | ParseException e1) {
@@ -91,9 +93,9 @@ public class SortFindPanel extends UiPart<Region> {
     @FXML
     private void handleNameItemPressed() {
         try {
-            CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + nameItem.getText());
+            CommandResult result = logic.execute(SortCommand.COMMAND_WORD + " " + nameItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
-            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
+            raise(new ValidResultDisplayEvent(SortCommand.COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort name using sort menu");
         }
@@ -105,9 +107,9 @@ public class SortFindPanel extends UiPart<Region> {
     @FXML
     private void handlePhoneItemPressed() {
         try {
-            CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + phoneItem.getText());
+            CommandResult result = logic.execute(SortCommand.COMMAND_WORD + " " + phoneItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
-            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
+            raise(new ValidResultDisplayEvent(SortCommand.COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort phone using sort menu");
         }
@@ -119,9 +121,9 @@ public class SortFindPanel extends UiPart<Region> {
     @FXML
     private void handleEmailItemPressed() {
         try {
-            CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + emailItem.getText());
+            CommandResult result = logic.execute(SortCommand.COMMAND_WORD + " " + emailItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
-            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
+            raise(new ValidResultDisplayEvent(SortCommand.COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort email using sort menu");
         }
@@ -133,9 +135,9 @@ public class SortFindPanel extends UiPart<Region> {
     @FXML
     private void handleAddressItemPressed() {
         try {
-            CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + addressItem.getText());
+            CommandResult result = logic.execute(SortCommand.COMMAND_WORD + " " + addressItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
-            raise(new ValidResultDisplayEvent(SORT_COMMAND_WORD));
+            raise(new ValidResultDisplayEvent(SortCommand.COMMAND_WORD));
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort address using sort menu");
         }

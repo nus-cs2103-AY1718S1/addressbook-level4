@@ -95,6 +95,7 @@ public class ResultDisplay extends UiPart<Region> {
             imageDisplay.setImage(new Image(EDIT_ICON));
             break;
         case "find":
+        case "findpinned":
             listSizeDisplay.setVisible(true);
             imageDisplay.setImage(new Image(FIND_ICON));
             break;

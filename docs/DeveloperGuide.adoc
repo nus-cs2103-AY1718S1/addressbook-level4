@@ -614,9 +614,9 @@ variable change to `true`. Similarly, the variable can be changed from `true` to
 // tag::tutorial[]
 === First time tutorial
 The first time tutorial will be launched when users start the Bluebird app for the very first time. To
-detect that Bluebird is launched for the first time, a boolean variable `firstTimeOpen` in `MainApp` is used.
+detect that Bluebird is launched for the first time, a boolean variable `isFirstTimeOpen` in `MainApp` is used.
 It is set to `false` by default and will only be set to `true` when Bluebird detects that `addressbook.xml` is not found.
-When `firstTimeOpen` is detected as `true` by the `MainWindow`, `TutorialPanel` will be added into the tutorial place holder.
+When `isFirstTimeOpen` is detected as `true` by the `MainWindow`, `TutorialPanel` will be added into the tutorial place holder.
  `TutorialPanel` will be removed at the end of the tutorial. Figure 4.10.1 shows the sequence of events that happens.
 
 image::FinalTutSD.png[width="800"]
@@ -640,7 +640,7 @@ public class MainWindow extends UiPart<Region> {
         ...
         if (MainApp.isFirstTimeOpen()) {
             TutorialPanel tutorialPanel = new TutorialPanel(this, browserPlaceholder);
-             tutorialPlaceholder.getChildren().add(tutorialPanel.getRoot());
+            tutorialPlaceholder.getChildren().add(tutorialPanel.getRoot());
         }
         ...
 }
@@ -655,7 +655,7 @@ public class TutorialPanel extends UiPart<Region> {
     ...
     private void endTutorial() {
         mainWindow.unhighlightAll();
-        browserPlaceHolder.getChildren().remove(this.getRoot());
+        tutorialPlaceholder.getChildren().remove(this.getRoot());
     }
     ...
 }

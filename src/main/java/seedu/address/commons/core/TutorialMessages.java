@@ -60,7 +60,7 @@ public class TutorialMessages {
             + "11. person\n"
             + "12. task\n"
             + "13. parent\n"
-            + "14. ecit\n";
+            + "14. exit\n";
 
     /* Command usage messages */
     public static final String USAGE_BEGIN = "Let's try out the different commands of Bluebird! Activate Parent Mode "
