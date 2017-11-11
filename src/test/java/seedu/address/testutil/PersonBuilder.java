@@ -129,11 +129,7 @@ public class PersonBuilder {
      * Sets the {@code SocialMedia} of the {@code Person} that we are building.
      */
     public PersonBuilder withSocialMedia(String facebook, String twitter, String instagram) {
-        try {
-            this.person.setSocialMedia(new SocialMedia(facebook, twitter, instagram));
-        } catch (IllegalValueException e) {
-            throw new IllegalArgumentException("usernames is expected to be unique.");
-        }
+        this.person.setSocialMedia(new SocialMedia(facebook, twitter, instagram));
         return this;
     }
     //@@author

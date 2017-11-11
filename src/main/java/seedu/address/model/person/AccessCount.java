@@ -17,7 +17,7 @@ public class AccessCount {
 
     @Override
     public String toString() {
-        return "Accesses: " + Integer.toString(value);
+        return Integer.toString(value);
     }
 
     @Override

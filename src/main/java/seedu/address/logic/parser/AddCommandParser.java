@@ -57,7 +57,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Date createdAt = new Date();
             AccessCount accessCount = new AccessCount(0);
             SocialMedia socialMedia = ParserUtil.parseSocialMedia(argMultimap.getValue(PREFIX_FACEBOOK),
-                    argMultimap.getValue(PREFIX_TWITTER), argMultimap.getValue(PREFIX_INSTAGRAM));
+                    argMultimap.getValue(PREFIX_TWITTER), argMultimap.getValue(PREFIX_INSTAGRAM), true);
             ReadOnlyPerson person = new Person(name, phone, email,
                     address, remark, tagList, createdAt, socialMedia, accessCount);
             return new AddCommand(person);

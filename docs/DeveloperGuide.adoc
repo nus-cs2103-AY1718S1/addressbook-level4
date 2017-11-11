@@ -150,7 +150,7 @@ _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
 _Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
@@ -167,7 +167,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `PeopleCount`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -367,6 +367,20 @@ image::UndoRedoActivityDiagram.png[width="200"]
 ** **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
+// tag::sort[]
+=== Sorted List (Since v1.1)
+
+When getting the person list from `ModelManager`, simply sort it first before returning the ObservableList. ObservableList has its own inbuilt sort that returns the list in natural ordering.
+
+[source, java]
+----
+public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+    return FXCollections.unmodifiableObservableList(filteredPersons.sorted());
+}
+----
+// end::sort[]
+
+// tag::remark[]
 === Remark Command
 
 The `remark` command allows the user to edit the remark field of a contact. The field is initially empty when a new
@@ -387,7 +401,47 @@ column are undoable.
 `Edit Remark Command`)
 ** **Pros:** The user can manage multiple remarks without overriding any one of them.
 ** **Cons:** The user might be confused with so many commands to manage a contact's remarks.
+// end::remark[]
 
+
+// tag::access[]
+=== AccessCount (Since v1.3)
+
+The number of accesses to each entry is kept track of. Here, each access is defined to be any command that edits an entry, be it `edit`, `addtags`/`removetags` or `remark`. Clicks on the side panel, or selections through the `select` command are also included.
+
+AccessCount is implemented as an additional property of the `person` class. It is updated whenever an `edit`, `addtags`/`removetags` or `remark` directly as part of the execution of those commands. In the case of selections, it is implemented with the code block below:
+
+[source, java]
+----
+    private void updateAccessCount(PersonCard oldValue,PersonCard newValue) {
+        if (oldValue == null || oldValue.person.getName() != newValue.person.getName()) {
+            newValue.person.incrementAccess();
+        }
+    }
+----
+
+There is a need for such an unusual condition since edit commands themselves will also change the selected person card.
+
+=== Design Considerations
+
+**Aspect:** Implementation of `AccessCount`
+
+Originally, the access counts were implemented as part of the `PersonPanelSelectionChangedEvent` event. However, the way this event is raised is rather buggy, and there are frequently many copies of this event being raised, leading to numerous bugs in the access count being incremented too much.
+
+Success was found when the access count was implemented separately for editing commands as well as for selection commands, while taking careful note of situations where both may happen.
+
+// end::access[]
+
+// tag::accessdisplay[]
+=== AccessDisplay (Since v1.4)
+
+Users may not want the number of accesses to each entry to be displayed at all time, since it might be embarassing if it is seen that they have frequently accessed a particular entry. Such users may use the `accessdisplay off` command to hide the number of accesses.
+
+Access display is implemented with two personcard javafx files, `PersonCardList.fxml` and `PersonCardListNoAccess.fxml`. Both cards are loaded when PIMP is started, and constantly updated in the background. When the user desires to switch from one to the other, this allows for a smooth transition, without any load times.
+
+// end::accessdisplay[]
+
+// tag::statistics[]
 === Statistics Command
 
 The `statistics` command allows the user to view information about the system. The `statistics` command does not take
@@ -397,7 +451,16 @@ The `MainWindow` class controls the UI
 interface to swap out the `BrowserPanel` for the `StatisticsPanel` class. When other commands require the `BrowserPanel`,
 `MainWindow` will do the corresponding swap in the UI.
 
-The `StatisticsPanel` extends the `UiPart<Region>` and utilises the [] to filter data.
+The `StatisticsPanel` extends the `UiPart<Region>` and utilises the `Statistics` class to collect data.
+
+image::StatisticsPanelSequenceDiagram.png[width="800"]
+_Figure 4.3.1 : Triggering the ToggleStatisticsPanelEvent to display statistics_
+
+When a `ToggleStatisticsPanelEvent` event is posted, the `MainWindow` instance will initialise a new
+`StatisticsPanel` which will then initialise the `Statistics` class for information to be calculated.
+
+Similarly, when a `ToggleBrowserPanelEvent` is posted, the `MainWindow` instance will initialise a new
+`BrowserPanel`.
 
 Here are the information calculated:
 
@@ -405,15 +468,43 @@ Here are the information calculated:
 
 2. Number of Persons with Facebook, Twitter and Instagram accounts recorded in system
 
-Here is an implementation of 1.
+Here is an implementation snippet of 1. from the Statistics class. The `getNewPersonsAddByMonth()` function
+extracts all the creation dates of each Person instance stored, and parses it accordingly into
+an `ArrayList<Integer>` data structure that will be displayed by the `BarChart` class.
 
-[Implementation]
+[source,java]
+----
+public ArrayList<Integer> getNewPersonsAddByMonth(int displayYears) {
+
+        ArrayList<Integer> countByMonth = new ArrayList<>(Collections.nCopies(displayYears * 12 + 1, 0));
+
+        personList.forEach((p) -> {
+            Date givenDate = p.getCreatedAt();
+            ZonedDateTime given = givenDate.toInstant().atZone(ZoneId.of("UTC"));
+
+            int personAddedYear = Integer.parseInt(Year.from(given).toString());
+            int personAddedMonth = Month.from(given).getValue();
+
+            int indOffset = calculateCountByMonthOffset(personAddedMonth, personAddedYear);
+            if (indOffset >= 0 && indOffset <= displayYears * 12) {
+                countByMonth.set(indOffset, countByMonth.get(indOffset) + 1);
+            }
+        });
+
+        return countByMonth;
+    }
+----
 
 ==== Design Considerations
 
 **Aspect:** Implementation of `StatisticsPanel` as a `UiPart`
 
-* **Alternative 1 (current choice):** Utilise the browser class to display the statistics
+* **Alternative 1 (current choice):** Create an new UI part that will be
+** **Pros:** Developer can utilise the charting library provided by JavaFX to render charts easily.
+** **Cons:** Developer has to ensure that the BrowserPanel and the StatisticsPanel is
+shown appropriately (based on the command that is given).
+
+* **Alternative 2:** Utilise the browser class to display the statistics
 ** **Pros:** Developer does not have to manage the swapping UI parts.
 ** **Cons:** Information has to be passed from the Java system into a format that can be rendered
 by the browser engine. It is tricker to test and more likely to break.
@@ -429,7 +520,9 @@ by the browser engine. It is tricker to test and more likely to break.
 ** **Pros:** User will be able to tell quickly the portion of Persons added in the year as compared to the past years.
 ** **Cons:** A breakdown by year might not allow the user to answer a more important question easily: how has the number
 of people added changed in a more manageable timeframe (such as a month)?
+// end::statistics[]
 
+// tag::findregex[]
 === Searching by Regex
 Searching contacts using regex is implemented with the `FindRegexCommand` class. It is very similar to the normal find command, which is `FindCommand`; the main difference is that, instead of a predicate which is an instance of `NameContainsKeywordPredicate`, the newly created predicate `NameMatchesRegexPredicate` is used.
 
@@ -440,7 +533,9 @@ We felt that this makes more sense; for example, if someone wants to find the co
 Also, in the `FindRegexCommandParser` which parses the command passed in, we originally decided to not trim the string passed. However, this meant that the space separating the command keyword and the arguments are also included in the regex. This is probably not the user wanted; for example, the command `findregex John` will not match `John` since the regex formed is `␣John` (here ␣ is a space).
 
 We also originally thought of only trimming the first space. We eventually decided to trim every whitespace though, since we believe that any extra whitespace would be unintentional. For example, it does not make much sense for users to search with a regex that starts with two spaces, say `␣␣John`, as it is very rare for contacts to have two consecutive spaces in their name. Those cases are very likely to be a typo instead.
+// end::findregex[]
 
+// tag::findtag[]
 === Searching by Tag (Since v1.2)
 
 Searching by tag is implemented by the `FindTagCommand` class. This command allows the user to search through the list of all contacts and output all that are tagged with a certain tag.
@@ -451,6 +546,8 @@ Since this search function involves iterating searching through all tags of all 
 
 However, since these other commands are more commonly used, we decided not to slow down these commands for the performance of the `FingTagCommand` function. Instead, we simply allowed the `FindTagCommand` to search through all possibilities each time it is called.
 
+// end::findtag[]
+// tag::addremovetags[]
 === Add/Remove Tags Command (Since v1.2)
 
 The `EditCommand` currently allows the user to edit all the fields of a contact, including tags. However, the tags entered with this command will completely override all the tags existing in that contact.
@@ -508,7 +605,9 @@ After parsing, the TYPE, INDEX, and set of tags is passed to the `AddRemoveTagsC
 * **Alternative 2:** Have separate command for adding and removing tags.
 ** **Pros:** Easier to implement because each command will only handle 1 thing.
 ** **Cons:** Boilerplate codes.
+// end::addremovetags[]
 
+// tag::socialmedia[]
 === Social Media Page Command (Since v1.4)
 
 Since v1.3, users can add social media account details to their contacts. They are mainly Facebook, Twitter, and Instagram.
@@ -545,7 +644,43 @@ EventsCenter.getInstance().post(new ChangeBrowserPanelUrlEvent(url));
 * **Alternative 2:** Have separate command to show Facebook, Twitter, and Instagram.
 ** **Pros:** Easier to implement because each command will only handle 1 thing.
 ** **Cons:** Repeated codes for each social media.
+// end::socialmedia[]
 
+// tag::quickhelp[]
+=== Quickhelp Command (Since v1.5)
+
+This command leverages on the `CommandResult` message to display the list of valid command words.
+
+// end::quickhelp[]
+
+// tag::size[]
+=== Changing Font Size
+The size of the font size change is stored in the model. When there is a change in the font size, the model posts the
+`FontSizeChangeRequestEvent` event, which is listened by some UI components. These UI components will update its font
+sizes accordingly. It will also set the `fontSizeChange` static variable in these UI classes, so that new instances
+of the UI component can have its font size updated accordingly.
+
+The upper bound and the lower bound of the font size changes is set in the model. Hence, when the font size change
+gets out of bounds, it can be caught in the model level and a `FontSizeOutOfBoundsException` is thrown.
+
+==== Design considerations
+*Aspect:* Commands to change font size
+
+* **Alternative 1 (current choice):** Font size change is stored in the model as well as UI
+** **Pros:** Cleaner implementation, no extra coupling between UI and Logic is introduced
+** **Cons:** This implementation will only allow one model to exist at one time, since if more models exist, there
+might be conflicting font size changes
+
+* **Alternative 2:** Font size change is stored in the UI
+** **Pros:** Model is not involved, less coupling
+** **Cons:** Tighter coupling between logic and UI, since now logic needs to listen for events from UI (if font change
+is out of bounds)
+
+* **Alternative 3:** Font size change is stored in the model
+** **Pros:** Font size change is not duplicated across components
+** **Cons:** UI needs to query model every time UI instantiates a new object
+
+// end::size[]
 
 === Logging
 

@@ -11,7 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.FontSizeChangeRequestEvent;
+import seedu.address.commons.events.ui.FontSizeRefreshRequestEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
@@ -32,8 +32,6 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
-
-    private int fontSizeChange = 0;
 
     @FXML
     private TextField commandTextField;
@@ -160,9 +158,8 @@ public class CommandBox extends UiPart<Region> {
 
     // @@author donjar
     @Subscribe
-    private void handleFontSizeChangeEvent(FontSizeChangeRequestEvent event) {
+    private void handleFontSizeChangeEvent(FontSizeRefreshRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        fontSizeChange = event.sizeChange;
         refreshFontSizes();
     }
 
@@ -170,7 +167,7 @@ public class CommandBox extends UiPart<Region> {
      * Updates the font size of this card.
      */
     private void refreshFontSizes() {
-        commandTextField.setStyle("-fx-font-size: " + (DEFAULT_FONT_SIZE + fontSizeChange));
+        commandTextField.setStyle("-fx-font-size: " + (DEFAULT_FONT_SIZE + logic.getFontSizeChange()));
     }
     // @@author
 }

@@ -39,20 +39,9 @@ public class AddRemoveTagsCommandParser implements Parser<AddRemoveTagsCommand> 
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));
         }
 
-        List<String> argsList = Arrays.asList(args.substring(ARGUMENT_START_INDEX).split(" "));
+        List<String> argsList = parseParametersIntoList(args);
 
-        if (argsList.size() < TAG_ARGUMENT_INDEX + 1 || argsList.contains("")) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));
-        }
-
-        boolean isAdd;
-        if (argsList.get(TYPE_ARGUMENT_INDEX).equals(TYPE_ADD)) {
-            isAdd = true;
-        } else if (argsList.get(TYPE_ARGUMENT_INDEX).equals(TYPE_REMOVE)) {
-            isAdd = false;
-        } else {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));
-        }
+        boolean isAdd = checkAddOrRemove(argsList);
 
         Index index;
         try {
@@ -61,6 +50,15 @@ public class AddRemoveTagsCommandParser implements Parser<AddRemoveTagsCommand> 
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));
         }
 
+        Set<Tag> tagsSet = extractTagsIntoSet(argsList);
+
+        return new AddRemoveTagsCommand(isAdd, index, tagsSet);
+    }
+
+    /**
+     * With a given {@code argsList}, convert it to a set of tags.
+     */
+    private Set<Tag> extractTagsIntoSet(List<String> argsList) throws ParseException {
         List<String> tagsList = argsList.subList(TAG_ARGUMENT_INDEX, argsList.size());
         Set<Tag> tagsSet;
         try {
@@ -68,6 +66,33 @@ public class AddRemoveTagsCommandParser implements Parser<AddRemoveTagsCommand> 
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
-        return new AddRemoveTagsCommand(isAdd, index, tagsSet);
+        return tagsSet;
+    }
+
+    /**
+     * Parse the type to determine if it is add or remove.
+     */
+    private boolean checkAddOrRemove(List<String> argsList) throws ParseException {
+        boolean isAdd;
+        if (argsList.get(TYPE_ARGUMENT_INDEX).equals(TYPE_ADD)) {
+            isAdd = true;
+        } else if (argsList.get(TYPE_ARGUMENT_INDEX).equals(TYPE_REMOVE)) {
+            isAdd = false;
+        } else {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));
+        }
+        return isAdd;
+    }
+
+    /**
+     * Parse a string {@code args} into a list of individual argument.
+     */
+    private List<String> parseParametersIntoList(String args) throws ParseException {
+        List<String> argsList = Arrays.asList(args.substring(ARGUMENT_START_INDEX).split(" "));
+
+        if (argsList.size() < TAG_ARGUMENT_INDEX + 1 || argsList.contains("")) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));
+        }
+        return argsList;
     }
 }

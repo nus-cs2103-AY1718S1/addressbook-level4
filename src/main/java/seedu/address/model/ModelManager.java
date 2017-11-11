@@ -12,7 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.commons.events.ui.FontSizeChangeRequestEvent;
+import seedu.address.commons.events.ui.FontSizeRefreshRequestEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -113,6 +113,11 @@ public class ModelManager extends ComponentManager implements Model {
 
     // @@author donjar
     @Override
+    public int getFontSizeChange() {
+        return fontSizeChange;
+    }
+
+    @Override
     public void resetFontSize() {
         fontSizeChange = 0;
         indicateFontSizeChanged();
@@ -136,7 +141,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Raises an event to indicate the font size has changed.
      */
     private void indicateFontSizeChanged() {
-        raise(new FontSizeChangeRequestEvent(fontSizeChange));
+        raise(new FontSizeRefreshRequestEvent());
     }
     // @@author
 

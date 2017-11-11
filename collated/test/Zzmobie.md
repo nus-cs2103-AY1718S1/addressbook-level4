@@ -1,5 +1,5 @@
 # Zzmobie
-###### \java\seedu\address\logic\commands\FindTagCommandTest.java
+###### /java/seedu/address/logic/commands/FindTagCommandTest.java
 ``` java
     @Test
     public void execute_singleKeywords_singlePersonsFound() {
@@ -16,12 +16,12 @@
     }
 
 ```
-###### \java\seedu\address\logic\commands\ToggleAccessDisplayCommandTest.java
+###### /java/seedu/address/logic/commands/ToggleAccessDisplayCommandTest.java
 ``` java
     @Test
-    public void execute_toggle_off_nonEmptyAddressBook_success() {
+    public void execute_toggleOffNonEmptyAddressBook_success() {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        assertCommandSuccess(prepareCommand(model,false), model,
+        assertCommandSuccess(prepareCommand(model, false), model,
                 ToggleAccessDisplayCommand.MESSAGE_SUCCESS + "off. ", model);
     }
 ```

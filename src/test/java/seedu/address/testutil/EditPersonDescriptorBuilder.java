@@ -102,12 +102,8 @@ public class EditPersonDescriptorBuilder {
      * Sets the {@code SocialMedia} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withSocialMedia(String facebook, String twitter, String instagram) {
-        try {
-            descriptor.setSocialMedia(ParserUtil.parseSocialMedia(
-                    Optional.of(facebook), Optional.of(twitter), Optional.of(instagram)));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("social media usernames is expected to be unique.");
-        }
+        descriptor.setSocialMedia(ParserUtil.parseSocialMedia(
+                Optional.of(facebook), Optional.of(twitter), Optional.of(instagram), true));
         return this;
     }
     //@@author

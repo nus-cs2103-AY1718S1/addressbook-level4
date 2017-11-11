@@ -117,12 +117,18 @@ public class ParserUtil {
      * Parses three {@code String facebook, twitter, instagram} into an {@code SocialMedia}.
      */
     public static SocialMedia parseSocialMedia(Optional<String> facebook,
-            Optional<String> twitter, Optional<String> instagram) throws IllegalValueException {
+            Optional<String> twitter, Optional<String> instagram, boolean isAdding) {
         requireAllNonNull(facebook, twitter, instagram);
 
-        String fb = facebook.isPresent() ? facebook.get() : "";
-        String tw = twitter.isPresent() ? twitter.get() : "";
-        String in = instagram.isPresent() ? instagram.get() : "";
+        String defaultValue;
+        if (isAdding) {
+            defaultValue = "";
+        } else {
+            defaultValue = null;
+        }
+        String fb = facebook.isPresent() ? facebook.get() : defaultValue;
+        String tw = twitter.isPresent() ? twitter.get() : defaultValue;
+        String in = instagram.isPresent() ? instagram.get() : defaultValue;
 
         return new SocialMedia(fb, tw, in);
     }

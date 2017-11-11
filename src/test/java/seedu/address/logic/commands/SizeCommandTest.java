@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import seedu.address.commons.events.ui.FontSizeChangeRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -42,9 +41,8 @@ public class SizeCommandTest {
 
             assertEquals(SizeCommand.MESSAGE_RESET_FONT_SUCCESS, commandResult.feedbackToUser);
 
-            FontSizeChangeRequestEvent lastEvent =
-                    (FontSizeChangeRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
-            assertEquals(0, lastEvent.sizeChange);
+            assertEquals("FontSizeRefreshRequestEvent",
+                    eventsCollectorRule.eventsCollector.getMostRecent().toString());
         } catch (CommandException e) {
             fail("This exception should not be thrown.");
         }
@@ -112,7 +110,7 @@ public class SizeCommandTest {
     }
 
     /**
-     * Executes a {@code SizeCommand} with the given {@code change}, and checks that {@code FontSizeChangeRequestEvent}
+     * Executes a {@code SizeCommand} with the given {@code change}, and checks that {@code FontSizeRefreshRequestEvent}
      * is raised with the correct size change.
      */
     private void assertExecutionSuccess(int change, String message) {
@@ -122,9 +120,8 @@ public class SizeCommandTest {
 
             assertEquals(message, commandResult.feedbackToUser);
 
-            FontSizeChangeRequestEvent lastEvent =
-                    (FontSizeChangeRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
-            assertEquals(change, lastEvent.sizeChange);
+            assertEquals("FontSizeRefreshRequestEvent",
+                    eventsCollectorRule.eventsCollector.getMostRecent().toString());
         } catch (CommandException e) {
             fail("This exception should not be thrown.");
         }

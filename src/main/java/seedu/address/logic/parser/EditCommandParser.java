@@ -59,7 +59,7 @@ public class EditCommandParser implements Parser<EditCommand> {
                     || argMultimap.getValue(PREFIX_TWITTER).isPresent()
                     || argMultimap.getValue(PREFIX_INSTAGRAM).isPresent()) {
                 editPersonDescriptor.setSocialMedia(ParserUtil.parseSocialMedia(argMultimap.getValue(PREFIX_FACEBOOK),
-                        argMultimap.getValue(PREFIX_TWITTER), argMultimap.getValue(PREFIX_INSTAGRAM)));
+                        argMultimap.getValue(PREFIX_TWITTER), argMultimap.getValue(PREFIX_INSTAGRAM), false));
             }
 
         } catch (IllegalValueException ive) {

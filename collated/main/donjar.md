@@ -47,8 +47,11 @@
         name.setStyle("-fx-font-size: " + (DEFAULT_BIG_FONT_SIZE + fontSizeChange));
         id.setStyle("-fx-font-size: " + (DEFAULT_BIG_FONT_SIZE + fontSizeChange));
 
-        for (Label l : new Label[] { phone, address, email, socialMedia, remark, accesses }) {
+        for (Label l : new Label[] { phone, address, email, socialMedia, remark }) {
             l.setStyle("-fx-font-size: " + (DEFAULT_SMALL_FONT_SIZE + fontSizeChange));
+        }
+        if (isAccessDisplayed) {
+            accesses.setStyle("-fx-font-size: " + (DEFAULT_SMALL_FONT_SIZE + fontSizeChange));
         }
 
         for (Node tag : tags.getChildren()) {
@@ -185,6 +188,29 @@ public class FontSizeOutOfBoundsException extends IllegalValueException {
         raise(new FontSizeChangeRequestEvent(fontSizeChange));
     }
 ```
+###### /java/seedu/address/logic/commands/HistoryCommand.java
+``` java
+
+    /**
+     * Returns the text displayed when executing the `history` command.
+     * @param previousCommands a list containing the previous commands
+     * @return the text displayed when executing the `history` command
+     */
+    public static String getHistoryText(List<String> previousCommands) {
+        StringBuilder historyText = new StringBuilder();
+
+        int idx = 1;
+        for (String command : previousCommands) {
+            historyText.append(String.format("(%1$s) %2$s", idx, command));
+            if (idx != previousCommands.size()) {
+                historyText.append("\n");
+            }
+            idx++;
+        }
+
+        return historyText.toString();
+    }
+```
 ###### /java/seedu/address/logic/commands/UndoCommand.java
 ``` java
     private final int amount;
@@ -265,24 +291,39 @@ public class SizeCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         if (isReset) {
-            model.resetFontSize();
-            return new CommandResult(MESSAGE_RESET_FONT_SUCCESS);
+            return executeSizeResetCommand();
         } else {
             try {
-                int newChange = model.updateFontSize(sizeChange);
-
-                if (sizeChange >= 0) {
-                    return new CommandResult(String.format(MESSAGE_CHANGE_FONT_SUCCESS, "increased",
-                                                           sizeChange, newChange));
-                } else {
-                    return new CommandResult(String.format(MESSAGE_CHANGE_FONT_SUCCESS, "decreased",
-                                                           -1 * sizeChange, newChange));
-                }
+                return executeSizeChangeCommand();
             } catch (FontSizeOutOfBoundsException e) {
                 throw new CommandException(String.format(MESSAGE_FAILURE, e.previousFontSize, e.newFontSize));
             }
         }
+    }
 
+    /**
+     * Executes the command that resets the font size.
+     * @return the command result produced.
+     */
+    private CommandResult executeSizeResetCommand() {
+        model.resetFontSize();
+        return new CommandResult(MESSAGE_RESET_FONT_SUCCESS);
+    }
+
+    /**
+     * Executes the command that changes the font size by the given size change.
+     * @return the command result produced.
+     */
+    private CommandResult executeSizeChangeCommand() throws FontSizeOutOfBoundsException {
+        int newChange = model.updateFontSize(sizeChange);
+
+        if (sizeChange >= 0) {
+            return new CommandResult(String.format(MESSAGE_CHANGE_FONT_SUCCESS, "increased",
+                    sizeChange, newChange));
+        } else {
+            return new CommandResult(String.format(MESSAGE_CHANGE_FONT_SUCCESS, "decreased",
+                    -1 * sizeChange, newChange));
+        }
     }
 
     @Override
@@ -537,7 +578,7 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * Indicates a request to jump to the list of persons
+ * Indicates a request to change the font size.
  */
 public class FontSizeChangeRequestEvent extends BaseEvent {
 

@@ -56,6 +56,11 @@ public interface Model {
 
     // @@author donjar
     /**
+     * Gets the current font size change of the model
+     */
+    int getFontSizeChange();
+
+    /**
      * Resets the font size of the model to its defaults.
      */
     void resetFontSize();

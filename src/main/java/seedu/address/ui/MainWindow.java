@@ -72,7 +72,7 @@ public class MainWindow extends UiPart<Region> {
     private StackPane resultDisplayPlaceholder;
 
     @FXML
-    private StackPane statusbarPlaceholder;
+    private StackPane peopleCountPlaceholder;
 
     @FXML
     private MenuBar menuBar;
@@ -143,14 +143,14 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerParts() {
         switchToBrowserPanel();
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanel = new PersonListPanel(logic);
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        ResultDisplay resultDisplay = new ResultDisplay();
+        ResultDisplay resultDisplay = new ResultDisplay(logic);
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getFilteredPersonList().size());
-        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
+        PeopleCount peopleCount = new PeopleCount(logic.getFilteredPersonList().size());
+        peopleCountPlaceholder.getChildren().add(peopleCount.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());

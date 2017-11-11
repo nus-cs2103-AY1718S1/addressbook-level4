@@ -1,146 +1,118 @@
 # kenpaxtonlim
-###### \java\seedu\address\commons\events\ui\ChangeBrowserPanelUrlEvent.java
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    @Subscribe
+    private void handleChangeBrowserPanelUrlEvent(ChangeBrowserPanelUrlEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPage(event.url);
+    }
+```
+###### /java/seedu/address/model/person/Person.java
+``` java
+    @Override
+    public ObjectProperty<SocialMedia> socialMediaProperty() {
+        return socialMedia;
+    }
+
+    @Override
+    public SocialMedia getSocialMedia() {
+        return socialMedia.get();
+    }
+
+    public void setSocialMedia(SocialMedia socialMedia) {
+        this.socialMedia.set(requireNonNull(socialMedia));
+    }
+```
+###### /java/seedu/address/model/person/SocialMedia.java
 ``` java
 /**
- * Indicates a request to change the url on the browser panel.
+ * Represents a Person's social media usernames in the address book.
  */
-public class ChangeBrowserPanelUrlEvent extends BaseEvent {
+public class SocialMedia {
 
-    public final String url;
+    public static final String MESSAGE_USERNAME_CONSTRAINTS =
+            "Social media username should be alphanumeric without spaces";
+    public static final String USERNAME_VALIDATION_REGEX = "[^\\s]+|[\\s*]";
 
-    public ChangeBrowserPanelUrlEvent(String url) {
-        this.url = url;
+    public final String facebook;
+    public final String twitter;
+    public final String instagram;
+
+    /**
+     * All usernames are empty.
+     */
+    public SocialMedia() {
+        facebook = "";
+        twitter = "";
+        instagram = "";
+    }
+
+    /**
+     * Validates given usernames.
+     *
+     * @throws IllegalValueException if either of given username string is invalid.
+     */
+    public SocialMedia(String facebook, String twitter, String instagram) throws IllegalValueException {
+        if (facebook == null) {
+            facebook = "";
+        }
+
+        if (twitter == null) {
+            twitter = "";
+        }
+
+        if (instagram == null) {
+            instagram = "";
+        }
+
+        this.facebook = facebook;
+        this.twitter = twitter;
+        this.instagram = instagram;
+    }
+
+    public SocialMedia(SocialMedia oldData, SocialMedia newData) {
+        facebook = newData.facebook.equals("") ? oldData.facebook : newData.facebook;
+        twitter = newData.twitter.equals("") ? oldData.twitter : newData.twitter;
+        instagram = newData.instagram.equals("") ? oldData.instagram : newData.instagram;
+    }
+
+    /**
+     * Returns true if a given string is a valid person name.
+     */
+    public static boolean isValidName(String test) {
+        return test.matches(USERNAME_VALIDATION_REGEX);
     }
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName();
-    }
-}
-```
-###### \java\seedu\address\logic\commands\AddRemoveTagsCommand.java
-``` java
-/**
- * Adds tags to an existing person in the address book.
- */
-public class AddRemoveTagsCommand extends UndoableCommand {
+        String toString = "";
 
-    public static final String COMMAND_WORD = "tags";
-    public static final String COMMAND_ALIAS = "t";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add or remove tags to the person identified "
-            + "by the index number used in the last person listing. \n"
-            + "Parameters: TYPE (either add or remove) INDEX (must be a positive integer) "
-            + "TAG [TAG] (can add 1 or more tags)... \n"
-            + "Example: " + COMMAND_WORD + " add 1 "
-            + "NUS CS2103 classmate";
-
-    public static final String MESSAGE_ADD_TAGS_SUCCESS = "Added Tag/s to Person: %1$s";
-    public static final String MESSAGE_REMOVE_TAGS_SUCCESS = "Removed Tag/s to Person: %1$s";
-    public static final String MESSAGE_NO_TAG = "One or more tags must be entered.";
-
-    private final boolean isAdd;
-    private final Index index;
-    private final Set<Tag> tags;
-
-    public AddRemoveTagsCommand(boolean isAdd, Index index, Set<Tag> tags) {
-        requireNonNull(isAdd);
-        requireNonNull(index);
-        requireNonNull(tags);
-
-        this.isAdd = isAdd;
-        this.index = index;
-        this.tags = tags;
-    }
-
-    @Override
-    protected CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        if (!facebook.equals("")) {
+            toString += "FB: " + facebook + " ";
         }
-
-        if (tags.isEmpty()) {
-            throw new CommandException(MESSAGE_NO_TAG);
+        if (!twitter.equals("")) {
+            toString += "TW: " + twitter + " ";
         }
-
-        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson;
-
-        if (isAdd) {
-            editedPerson = addTagsToPerson(personToEdit, tags);
-        } else {
-            editedPerson = removeTagsFromPerson(personToEdit, tags);
+        if (!instagram.equals("")) {
+            toString += "IG: " + instagram;
         }
-
-
-        try {
-            model.updatePerson(personToEdit, editedPerson);
-        } catch (DuplicatePersonException dpe) {
-            throw new AssertionError("The target person should not be duplicated");
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+        if (toString.equals("")) {
+            toString = "-No Social Media Accounts-";
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return isAdd ? new CommandResult(String.format(MESSAGE_ADD_TAGS_SUCCESS, editedPerson))
-                : new CommandResult(String.format(MESSAGE_REMOVE_TAGS_SUCCESS, editedPerson));
-    }
-
-    /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with the {@code tags} to be added.
-     */
-    private static Person addTagsToPerson(ReadOnlyPerson personToEdit, Set<Tag> tags) {
-        assert personToEdit != null;
-
-        Set<Tag> personTags = personToEdit.getTags();
-        HashSet<Tag> newTags = new HashSet<Tag>(personTags);
-        newTags.addAll(tags);
-
-        AccessCount accessCount = new AccessCount((personToEdit.getAccessCount().numAccess() + 1));
-
-        return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), personToEdit.getRemark(), newTags,
-                personToEdit.getCreatedAt(), personToEdit.getSocialMedia(), accessCount);
-
-    }
-
-    /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with the {@code tags} to be removed.
-     */
-    private static Person removeTagsFromPerson(ReadOnlyPerson personToEdit, Set<Tag> tags)  {
-        assert personToEdit != null;
-
-        Set<Tag> personTags = personToEdit.getTags();
-        HashSet<Tag> newTags = new HashSet<Tag>(personTags);
-        newTags.removeAll(tags);
-
-        AccessCount accessCount = new AccessCount(personToEdit.getAccessCount().numAccess() + 1);
-
-        return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), personToEdit.getRemark(), newTags, personToEdit.getCreatedAt(),
-                personToEdit.getSocialMedia(), accessCount);
+        return toString;
     }
 
     @Override
     public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof AddRemoveTagsCommand)) {
-            return false;
-        }
-
-        AddRemoveTagsCommand e = (AddRemoveTagsCommand) other;
-        return isAdd == e.isAdd && index.equals(e.index) && tags.equals(e.tags);
+        return other == this // short circuit if same object
+                || (other instanceof SocialMedia // instanceof handles nulls
+                && this.facebook.equals(((SocialMedia) other).facebook)
+                && this.twitter.equals(((SocialMedia) other).twitter)
+                && this.instagram.equals(((SocialMedia) other).instagram)); // state check
     }
 }
 ```
-###### \java\seedu\address\logic\commands\SocialMediaCommand.java
+###### /java/seedu/address/logic/commands/SocialMediaCommand.java
 ``` java
 /**
  * Display social media page of the person identified using it's last displayed index from the address book.
@@ -236,7 +208,188 @@ public class SocialMediaCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddRemoveTagsCommandParser.java
+###### /java/seedu/address/logic/commands/QuickHelpCommand.java
+``` java
+/**
+ * Show a list of valid command words.
+ */
+public class QuickHelpCommand extends Command {
+
+    public static final String COMMAND_WORD = "quickhelp";
+    public static final String COMMAND_ALIAS = "qh";
+
+    public static final String MESSAGE = "Valid Command Words:\n"
+            + SelectCommand.COMMAND_WORD + " "
+            + ListCommand.COMMAND_WORD + " "
+            + AddCommand.COMMAND_WORD + " "
+            + DeleteCommand.COMMAND_WORD + " "
+            + EditCommand.COMMAND_WORD + " "
+            + ClearCommand.COMMAND_WORD + " "
+            + RemarkCommand.COMMAND_WORD + " "
+            + AddRemoveTagsCommand.COMMAND_WORD + " "
+            + FindCommand.COMMAND_WORD + " "
+            + FindRegexCommand.COMMAND_WORD + " "
+            + FindTagCommand.COMMAND_WORD + " "
+            + SocialMediaCommand.COMMAND_WORD + " "
+            + StatisticsCommand.COMMAND_WORD + " "
+            + SizeCommand.COMMAND_WORD + " "
+            + ToggleAccessDisplayCommand.COMMAND_WORD + " "
+            + UndoCommand.COMMAND_WORD + " "
+            + RedoCommand.COMMAND_WORD + " "
+            + HistoryCommand.COMMAND_WORD + " "
+            + HelpCommand.COMMAND_WORD + " "
+            + ExitCommand.COMMAND_WORD;
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        return new CommandResult(MESSAGE);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof QuickHelpCommand); // instanceof handles nulls
+    }
+}
+```
+###### /java/seedu/address/logic/commands/AddRemoveTagsCommand.java
+``` java
+/**
+ * Adds tags to an existing person in the address book.
+ */
+public class AddRemoveTagsCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "tags";
+    public static final String COMMAND_ALIAS = "t";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add or remove tags to the person identified "
+            + "by the index number used in the last person listing. \n"
+            + "Parameters: TYPE (either add or remove) INDEX (must be a positive integer) "
+            + "TAG [TAG] (can add 1 or more tags)... \n"
+            + "Example: " + COMMAND_WORD + " add 1 "
+            + "NUS CS2103 classmate";
+
+    public static final String MESSAGE_ADD_TAGS_SUCCESS = "Added Tag/s to Person: %1$s";
+    public static final String MESSAGE_REMOVE_TAGS_SUCCESS = "Removed Tag/s to Person: %1$s";
+    public static final String MESSAGE_NO_TAG = "One or more tags must be entered.";
+
+    private final boolean isAdd;
+    private final Index index;
+    private final Set<Tag> tags;
+
+    public AddRemoveTagsCommand(boolean isAdd, Index index, Set<Tag> tags) {
+        requireNonNull(isAdd);
+        requireNonNull(index);
+        requireNonNull(tags);
+
+        this.isAdd = isAdd;
+        this.index = index;
+        this.tags = tags;
+    }
+
+    @Override
+    protected CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        checkParameterValidity(lastShownList);
+
+        Person editedPerson;
+        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        editedPerson = prepareEditedPerson(personToEdit);
+
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("The target person should not be duplicated");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        return isAdd ? new CommandResult(String.format(MESSAGE_ADD_TAGS_SUCCESS, editedPerson))
+                : new CommandResult(String.format(MESSAGE_REMOVE_TAGS_SUCCESS, editedPerson));
+    }
+
+    /**
+     * Returns the edited Person based on whether is it an add or remove action.
+     */
+    private Person prepareEditedPerson(ReadOnlyPerson personToEdit) {
+        Person editedPerson;
+        if (isAdd) {
+            editedPerson = addTagsToPerson(personToEdit, tags);
+        } else {
+            editedPerson = removeTagsFromPerson(personToEdit, tags);
+        }
+        return editedPerson;
+    }
+
+    /**
+     * Checks that the index is valid and tags are present.
+     */
+    private void checkParameterValidity(List<ReadOnlyPerson> lastShownList) throws CommandException {
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        if (tags.isEmpty()) {
+            throw new CommandException(MESSAGE_NO_TAG);
+        }
+    }
+
+    /**
+     * Creates and returns a {@code Person} with the details of {@code personToEdit}
+     * edited with the {@code tags} to be added.
+     */
+    private static Person addTagsToPerson(ReadOnlyPerson personToEdit, Set<Tag> tags) {
+        assert personToEdit != null;
+
+        Set<Tag> personTags = personToEdit.getTags();
+        HashSet<Tag> newTags = new HashSet<Tag>(personTags);
+        newTags.addAll(tags);
+
+        AccessCount accessCount = new AccessCount((personToEdit.getAccessCount().numAccess() + 1));
+
+        return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                personToEdit.getAddress(), personToEdit.getRemark(), newTags,
+                personToEdit.getCreatedAt(), personToEdit.getSocialMedia(), accessCount);
+
+    }
+
+    /**
+     * Creates and returns a {@code Person} with the details of {@code personToEdit}
+     * edited with the {@code tags} to be removed.
+     */
+    private static Person removeTagsFromPerson(ReadOnlyPerson personToEdit, Set<Tag> tags)  {
+        assert personToEdit != null;
+
+        Set<Tag> personTags = personToEdit.getTags();
+        HashSet<Tag> newTags = new HashSet<Tag>(personTags);
+        newTags.removeAll(tags);
+
+        AccessCount accessCount = new AccessCount(personToEdit.getAccessCount().numAccess() + 1);
+
+        return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                personToEdit.getAddress(), personToEdit.getRemark(), newTags, personToEdit.getCreatedAt(),
+                personToEdit.getSocialMedia(), accessCount);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof AddRemoveTagsCommand)) {
+            return false;
+        }
+
+        AddRemoveTagsCommand e = (AddRemoveTagsCommand) other;
+        return isAdd == e.isAdd && index.equals(e.index) && tags.equals(e.tags);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/AddRemoveTagsCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddRemoveTagsCommand object
@@ -263,20 +416,9 @@ public class AddRemoveTagsCommandParser implements Parser<AddRemoveTagsCommand> 
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));
         }
 
-        List<String> argsList = Arrays.asList(args.substring(ARGUMENT_START_INDEX).split(" "));
+        List<String> argsList = parseParametersIntoList(args);
 
-        if (argsList.size() < TAG_ARGUMENT_INDEX + 1 || argsList.contains("")) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));
-        }
-
-        boolean isAdd;
-        if (argsList.get(TYPE_ARGUMENT_INDEX).equals(TYPE_ADD)) {
-            isAdd = true;
-        } else if (argsList.get(TYPE_ARGUMENT_INDEX).equals(TYPE_REMOVE)) {
-            isAdd = false;
-        } else {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));
-        }
+        boolean isAdd = checkAddOrRemove(argsList);
 
         Index index;
         try {
@@ -285,6 +427,15 @@ public class AddRemoveTagsCommandParser implements Parser<AddRemoveTagsCommand> 
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));
         }
 
+        Set<Tag> tagsSet = extractTagsIntoSet(argsList);
+
+        return new AddRemoveTagsCommand(isAdd, index, tagsSet);
+    }
+
+    /**
+     * With a given {@code argsList}, convert it to a set of tags.
+     */
+    private Set<Tag> extractTagsIntoSet(List<String> argsList) throws ParseException {
         List<String> tagsList = argsList.subList(TAG_ARGUMENT_INDEX, argsList.size());
         Set<Tag> tagsSet;
         try {
@@ -292,11 +443,38 @@ public class AddRemoveTagsCommandParser implements Parser<AddRemoveTagsCommand> 
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
-        return new AddRemoveTagsCommand(isAdd, index, tagsSet);
+        return tagsSet;
+    }
+
+    /**
+     * Parse the type to determine if it is add or remove.
+     */
+    private boolean checkAddOrRemove(List<String> argsList) throws ParseException {
+        boolean isAdd;
+        if (argsList.get(TYPE_ARGUMENT_INDEX).equals(TYPE_ADD)) {
+            isAdd = true;
+        } else if (argsList.get(TYPE_ARGUMENT_INDEX).equals(TYPE_REMOVE)) {
+            isAdd = false;
+        } else {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));
+        }
+        return isAdd;
+    }
+
+    /**
+     * Parse a string {@code args} into a list of individual argument.
+     */
+    private List<String> parseParametersIntoList(String args) throws ParseException {
+        List<String> argsList = Arrays.asList(args.substring(ARGUMENT_START_INDEX).split(" "));
+
+        if (argsList.size() < TAG_ARGUMENT_INDEX + 1 || argsList.contains("")) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));
+        }
+        return argsList;
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses three {@code String facebook, twitter, instagram} into an {@code SocialMedia}.
@@ -312,7 +490,7 @@ public class AddRemoveTagsCommandParser implements Parser<AddRemoveTagsCommand> 
         return new SocialMedia(fb, tw, in);
     }
 ```
-###### \java\seedu\address\logic\parser\SocialMediaCommandParser.java
+###### /java/seedu/address/logic/parser/SocialMediaCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new SocialMediaCommand object
@@ -355,120 +533,22 @@ public class SocialMediaCommandParser implements Parser<SocialMediaCommand> {
     }
 }
 ```
-###### \java\seedu\address\model\person\Person.java
-``` java
-    @Override
-    public ObjectProperty<SocialMedia> socialMediaProperty() {
-        return socialMedia;
-    }
-
-    @Override
-    public SocialMedia getSocialMedia() {
-        return socialMedia.get();
-    }
-
-    public void setSocialMedia(SocialMedia socialMedia) {
-        this.socialMedia.set(requireNonNull(socialMedia));
-    }
-```
-###### \java\seedu\address\model\person\SocialMedia.java
+###### /java/seedu/address/commons/events/ui/ChangeBrowserPanelUrlEvent.java
 ``` java
 /**
- * Represents a Person's social media usernames in the address book.
+ * Indicates a request to change the url on the browser panel.
  */
-public class SocialMedia {
+public class ChangeBrowserPanelUrlEvent extends BaseEvent {
 
-    public static final String MESSAGE_USERNAME_CONSTRAINTS =
-            "Social media username should be alphanumeric without spaces";
-    public static final String USERNAME_VALIDATION_REGEX = "[^\\s]+|[\\s*]";
+    public final String url;
 
-    public final String facebook;
-    public final String twitter;
-    public final String instagram;
-
-    /**
-     * All usernames are empty.
-     */
-    public SocialMedia() {
-        facebook = "";
-        twitter = "";
-        instagram = "";
-    }
-
-    /**
-     * Validates given usernames.
-     *
-     * @throws IllegalValueException if either of given username string is invalid.
-     */
-    public SocialMedia(String facebook, String twitter, String instagram) throws IllegalValueException {
-        if (facebook == null) {
-            facebook = "";
-        }
-
-        if (twitter == null) {
-            twitter = "";
-        }
-
-        if (instagram == null) {
-            instagram = "";
-        }
-
-        /*if(!isValidName(facebook) || !isValidName(twitter) || !isValidName(instagram)) {
-            throw new IllegalValueException(MESSAGE_USERNAME_CONSTRAINTS);
-        }*/
-
-        this.facebook = facebook;
-        this.twitter = twitter;
-        this.instagram = instagram;
-    }
-
-    public SocialMedia(SocialMedia oldData, SocialMedia newData) {
-        facebook = newData.facebook.equals("") ? oldData.facebook : newData.facebook;
-        twitter = newData.twitter.equals("") ? oldData.twitter : newData.twitter;
-        instagram = newData.instagram.equals("") ? oldData.instagram : newData.instagram;
-    }
-
-    /**
-     * Returns true if a given string is a valid person name.
-     */
-    public static boolean isValidName(String test) {
-        return test.matches(USERNAME_VALIDATION_REGEX);
+    public ChangeBrowserPanelUrlEvent(String url) {
+        this.url = url;
     }
 
     @Override
     public String toString() {
-        String toString = "";
-
-        if (!facebook.equals("")) {
-            toString += "FB: " + facebook + " ";
-        }
-        if (!twitter.equals("")) {
-            toString += "TW: " + twitter + " ";
-        }
-        if (!instagram.equals("")) {
-            toString += "IG: " + instagram;
-        }
-        if (toString.equals("")) {
-            toString = "-No Social Media Accounts-";
-        }
-        return toString;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof SocialMedia // instanceof handles nulls
-                && this.facebook.equals(((SocialMedia) other).facebook)
-                && this.twitter.equals(((SocialMedia) other).twitter)
-                && this.instagram.equals(((SocialMedia) other).instagram)); // state check
+        return this.getClass().getSimpleName();
     }
 }
-```
-###### \java\seedu\address\ui\BrowserPanel.java
-``` java
-    @Subscribe
-    private void handleChangeBrowserPanelUrlEvent(ChangeBrowserPanelUrlEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPage(event.url);
-    }
 ```
