@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_PROMPT_COMMAND;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_NAME_DESCENDING;
@@ -41,6 +42,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.StarWarsCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.exceptions.SuggestibleParseException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonDataContainsKeywordsPredicate;
 import seedu.address.model.person.Remark;
@@ -211,9 +213,9 @@ public class RolodexParserTest {
     }
 
     @Test
-    public void parseCommandListInvalidArgumentThrowsParseException() throws Exception {
-        thrown.expect(ParseException.class);
-        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
+    public void parseCommandListInvalidArgumentThrowsSuggestibleParseException() throws Exception {
+        thrown.expect(SuggestibleParseException.class);
+        thrown.expectMessage(String.format(MESSAGE_PROMPT_COMMAND, ListCommand.COMMAND_WORD));
         parser.parseCommand(ListCommand.COMMAND_WORD + " 3");
         parser.parseCommand(ListCommand.COMMAND_WORD + " Bazinga");
     }
