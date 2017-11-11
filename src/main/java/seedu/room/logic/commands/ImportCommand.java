@@ -52,11 +52,11 @@ public class ImportCommand extends UndoableCommand {
 
             return new CommandResult(String.format(MESSAGE_SUCCESS + " Added: " + namesFeedback));
         } catch (NullPointerException e) {
-            throw new CommandException(MESSAGE_ERROR + " NULL ");
+            throw new CommandException(MESSAGE_ERROR);
         } catch (DataConversionException e) {
-            throw new CommandException(MESSAGE_ERROR + " DATA ");
+            throw new CommandException(MESSAGE_ERROR);
         } catch (IOException e) {
-            throw new CommandException(MESSAGE_ERROR + " IO ");
+            throw new CommandException(MESSAGE_ERROR);
         } catch (NoUniqueImport noUniqueImport) {
             throw new CommandException(MESSAGE_FILE_NOT_UNIQUE);
         }
