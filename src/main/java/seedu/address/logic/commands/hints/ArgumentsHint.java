@@ -8,7 +8,7 @@ import seedu.address.logic.parser.Prefix;
 /**
  * Template class for hints that have arguments in their command format
  * These arguments include prefixes and indices.
- * Specifies autocomplete to return {@code onTab}
+ * Specifies autocomplete to return {@code autoCorrectInput}
  */
 public abstract class ArgumentsHint extends Hint {
 
@@ -22,7 +22,7 @@ public abstract class ArgumentsHint extends Hint {
      * Should be used when prefix is half completed
      * {@code prefixCompletion} which is auto completed portion of the prefix (ie "/")
      * {@code possbilePrefixesToComplete} required to parse for prefix to get description TODO: rethink this
-     * updates {@code onTab} to return {@code userInput} auto completed with {@code prefixCompletion}
+     * updates {@code autoCorrectInput} to return {@code userInput} auto completed with {@code prefixCompletion}
      */
     protected void handlePrefixCompletion(String prefixCompletion, List<Prefix> possiblePrefixesToComplete) {
         argumentHint = prefixCompletion;
@@ -37,7 +37,7 @@ public abstract class ArgumentsHint extends Hint {
      * Should be used when prefix is completed and caret is next to prefix (ie: n/|)
      * {@code currentPrefix} that is completed
      * {@code possbilePrefixesToComplete, prefixList} to generate the next prefix option on pressing tab
-     * updates {@code onTab} to return {@code userInput} auto completed with the next prefix option
+     * updates {@code autoCorrectInput} to return {@code userInput} auto completed with the next prefix option
      */
     protected void handlePrefixTabbing(Prefix currentPrefix,
                                        List<Prefix> prefixList,
@@ -70,7 +70,7 @@ public abstract class ArgumentsHint extends Hint {
     /**
      * Should be used when you want the addressbook to offer the next argument (ie n/nicholas |)
      * {@code prefixList} to generate the next prefix hint
-     * updates {@code onTab} to return {@code userInput} auto completed with the next prefix hint
+     * updates {@code autoCorrectInput} to return {@code userInput} auto completed with the next prefix hint
      */
     protected void handleOfferHint(List<Prefix> prefixList) {
         String whitespace = userInput.endsWith(" ") ? "" : " ";
@@ -84,7 +84,7 @@ public abstract class ArgumentsHint extends Hint {
 
     /**
      * Should be used when you want the addressbook to offer an index hint (ie delete|)
-     * updates {@code onTab} to return {@code userInput} auto completed with a default index of 1
+     * updates {@code autoCorrectInput} to return {@code userInput} auto completed with a default index of 1
      * TODO: default index based on current model
      */
     protected void handleOfferIndex(String userInput) {
@@ -98,7 +98,7 @@ public abstract class ArgumentsHint extends Hint {
 
     /**
      * Should be used when index is written and caret is directly next to index (ie edit 12|)
-     * updates {@code onTab} to return {@code userInput} with an increment to the index
+     * updates {@code autoCorrectInput} to return {@code userInput} with an increment to the index
      * TODO: index update based on current model
      */
     protected void handleIndexTabbing(int currentIndex) {

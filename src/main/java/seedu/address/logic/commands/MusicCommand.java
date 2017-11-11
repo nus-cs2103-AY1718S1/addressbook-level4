@@ -37,7 +37,7 @@ public class MusicCommand extends Command {
 
     private String command;
     private String genre = "pop";
-    private String[] genreList = {"pop", "dance", "classic"};
+    public static String[] genreList = {"pop", "dance", "classic"};
 
     public MusicCommand(String command, String genre) {
         this.command = command;

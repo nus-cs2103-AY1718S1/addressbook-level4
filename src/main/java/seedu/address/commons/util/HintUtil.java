@@ -116,7 +116,6 @@ public class HintUtil {
     public static boolean hasPreambleIndex(String arguments) {
 
         String trimmed = arguments.trim();
-
         boolean hasDigit = false;
 
         for (int i = 0; i < trimmed.length(); i++) {

@@ -27,9 +27,12 @@ public abstract class Hint {
 
         if ((argumentHint == null)
                 || (description == null)
-                || (userInput == null)) {
+                || (userInput == null)
+                || (autocomplete() != null)) {
             assert false;
         }
+
+
     }
 
     public String getArgumentHint() {

@@ -63,7 +63,7 @@ public class ShareCommandHint extends ArgumentsHint {
         Prefix offeredPrefix = HintUtil.offerHint(arguments, prefixList);
         argumentHint = whitespace + offeredPrefix.toString();
 
-        if (offeredPrefix.equals(PREFIX_EMPTY) && whitespace.equals("")) {
+        if (offeredPrefix.equals(PREFIX_EMPTY)) {
             onTab = userInput + whitespace;
             description = "next email or index";
         } else {

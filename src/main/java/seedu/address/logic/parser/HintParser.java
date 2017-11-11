@@ -32,6 +32,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.MusicCommand;
+import seedu.address.logic.commands.RadioCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.ShareCommand;
@@ -46,6 +47,8 @@ import seedu.address.logic.commands.hints.HelpCommandHint;
 import seedu.address.logic.commands.hints.Hint;
 import seedu.address.logic.commands.hints.HistoryCommandHint;
 import seedu.address.logic.commands.hints.ListCommandHint;
+import seedu.address.logic.commands.hints.MusicCommandHint;
+import seedu.address.logic.commands.hints.RadioCommandHint;
 import seedu.address.logic.commands.hints.RedoCommandHint;
 import seedu.address.logic.commands.hints.ShareCommandHint;
 import seedu.address.logic.commands.hints.UndoCommandHint;
@@ -58,14 +61,10 @@ import seedu.address.model.UserPrefs;
  */
 public class HintParser {
 
-    private static String commandWord;
-    private static String arguments;
-    private static String userInput;
-
     //@@author goweiwen
     private static final ArrayList<String> COMMAND_LIST = new ArrayList<>(Arrays.asList(
         "add", "alias", "clear", "delete", "edit", "exit", "find", "help", "history", "list",
-        "music", "redo", "remark", "select", "unalias", "undo"
+        "music", "redo", "remark", "select", "unalias", "undo", "radio", "share"
     ));
 
     /**
@@ -80,51 +79,18 @@ public class HintParser {
             return "";
         }
 
-        userInput = input;
-        commandWord = command[0];
-        arguments = command[1];
+        String userInput = input;
+        String commandWord = command[0];
+        String arguments = command[1];
 
-        String hint;
-
-        switch (commandWord) {
-
-        case AddCommand.COMMAND_WORD:
-            AddCommandHint addCommandHint = new AddCommandHint(userInput, arguments);
-            addCommandHint.parse();
-            return addCommandHint.autocomplete();
-
-        case EditCommand.COMMAND_WORD:
-            EditCommandHint editCommandHint = new EditCommandHint(userInput, arguments);
-            editCommandHint.parse();
-            return editCommandHint.autocomplete();
-
-        case FindCommand.COMMAND_WORD:
-            FindCommandHint findCommandHint = new FindCommandHint(userInput, arguments);
-            findCommandHint.parse();
-            return findCommandHint.autocomplete();
-
-        case DeleteCommand.COMMAND_WORD:
-        case SelectCommand.COMMAND_WORD:
-            DeleteCommandHint deleteCommandHint = new DeleteCommandHint(userInput, arguments);
-            deleteCommandHint.parse();
-            return deleteCommandHint.autocomplete();
-
-            case ShareCommand.COMMAND_WORD:
-                ShareCommandHint shareCommandHint = new ShareCommandHint(userInput, arguments);
-                shareCommandHint.parse();
-                return shareCommandHint.autocomplete();
-
-        case MusicCommand.COMMAND_WORD:
-            if (arguments.isEmpty()) {
-                return commandWord + " " + (MusicCommand.isMusicPlaying() ? "pause" : "play");
-            }
-            hint = autocompleteFromList(arguments.trim(), new String[] {"play", "pause", "stop"});
-            return commandWord + (hint != null ? " " + hint : arguments);
-
-        default:
-            hint = autocompleteCommand(commandWord);
-            return hint != null ? hint + " " : input;
+        Hint hint = generateParsedHint(userInput, arguments, commandWord);
+        String autoCompletedHint;
+        if (hint == null) {
+            autoCompletedHint = autocompleteCommand(commandWord);
+        } else {
+            autoCompletedHint = hint.autocomplete();
         }
+        return autoCompletedHint != null ? autoCompletedHint : input;
     }
 
     /**
@@ -145,6 +111,7 @@ public class HintParser {
      * or null if nothing matches.
      */
     public static String autocompleteFromList(String input, String[] strings) {
+
         for (String string : strings) {
             if (string.startsWith(input)) {
                 return string;
@@ -170,6 +137,9 @@ public class HintParser {
         String commandWord = command[0];
         String arguments = command[1];
         Hint hint = generateParsedHint(userInput, arguments, commandWord);
+        if (hint == null) {
+            return " type help for user guide";
+        }
 
         return hint.getArgumentHint() + hint.getDescription();
     }
@@ -177,7 +147,9 @@ public class HintParser {
 
     private static Hint generateParsedHint(String userInput, String arguments, String commandWord) {
         Hint generatedHint = generateHint(userInput, arguments, commandWord);
-        generatedHint.parse();
+        if (generatedHint != null) {
+            generatedHint.parse();
+        }
         return generatedHint;
     }
 
@@ -213,8 +185,13 @@ public class HintParser {
         case RedoCommand.COMMAND_WORD:
             return new RedoCommandHint(userInput);
         case HelpCommand.COMMAND_WORD:
+            return new HelpCommandHint(userInput);
+        case MusicCommand.COMMAND_WORD:
+            return new MusicCommandHint(userInput, arguments);
+        case RadioCommand.COMMAND_WORD:
+            return new RadioCommandHint(userInput, arguments);
         default:
-            return new ExitCommandHint(userInput);
+            return null;
         }
     }
 }
