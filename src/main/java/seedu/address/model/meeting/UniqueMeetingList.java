@@ -172,7 +172,6 @@ public class UniqueMeetingList implements Iterable<Meeting> {
             }
         });
     }
-
     //@@author nelsonqyj
     /**
      * Removes the equivalent meeting from the list.
