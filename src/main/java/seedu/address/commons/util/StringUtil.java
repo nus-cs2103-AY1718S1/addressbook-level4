@@ -68,7 +68,8 @@ public class StringUtil {
         preppedWord = preppedWord.trim();
 
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
-        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+        checkArgument(preppedWord.split("\\s+").length == 1,
+                "Word parameter should be a single word");
 
         String preppedSentence = sentence;
         preppedSentence = preppedSentence.replaceAll("[^a-zA-Z0-9\\s]", "");
@@ -108,11 +109,14 @@ public class StringUtil {
 
         ArrayList<String> extractedDates = new ArrayList<>();
         String preppedSentence = sentence.trim();
+
         if (!preppedSentence.isEmpty()) {
             Pattern pattern = Pattern.compile("(\\d{2}\\/\\d{2}\\/\\d{4})");
             Matcher matcher = pattern.matcher(preppedSentence);
+
             while (matcher.find()) {
                 String validDateRegex = "^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)\\d\\d$";
+
                 if (matcher.group(1).matches(validDateRegex)) {
                     extractedDates.add(matcher.group(1));
                 }
@@ -145,11 +149,14 @@ public class StringUtil {
 
         ArrayList<String> extractedTimes = new ArrayList<>();
         String preppedSentence = sentence.trim();
+
         if (!preppedSentence.isEmpty()) {
             Pattern pattern = Pattern.compile("(\\d{2}\\:\\d{2})");
             Matcher matcher = pattern.matcher(preppedSentence);
+
             while (matcher.find()) {
                 String validTimeRegex = "^(0[0-9]|[1][0-9]|[2][0-3])[:](0[0-9]|[1-5][0-9])$";
+
                 if (matcher.group(1).matches(validTimeRegex)) {
                     extractedTimes.add(matcher.group(1));
                 }

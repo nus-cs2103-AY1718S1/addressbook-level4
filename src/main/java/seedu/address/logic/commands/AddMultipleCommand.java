@@ -18,7 +18,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author KhorSL
 /**
- * Adds a person to the address book.
+ * Adds multiple persons to the address book.
  */
 public class AddMultipleCommand extends UndoableCommand {
 
@@ -69,9 +69,11 @@ public class AddMultipleCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+
         int numberOfPersonsAdded = 0;
         StringBuilder successMessage = new StringBuilder();
-        requireNonNull(model);
+
         try {
             for (Person personToAdd : toAdd) {
                 model.addPerson(personToAdd);
@@ -86,9 +88,8 @@ public class AddMultipleCommand extends UndoableCommand {
                     model.deletePerson(readOnlyPeople.get(i));
                 }
             } catch (PersonNotFoundException pnfe) {
-                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+                assert false : "Unexpected exception " + pnfe.getMessage();
             }
-
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
