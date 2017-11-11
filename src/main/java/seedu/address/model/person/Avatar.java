@@ -19,9 +19,9 @@ import seedu.address.ui.person.PersonDetailsPanel;
  * done by separate methods rather than a single regular expression (the complexity is not at the same level).
  */
 public class Avatar {
-    private static final String INVALID_PATH_MESSAGE = "The provided image path is invalid.";
-    private static final String IMAGE_NOT_EXISTS = "The provided image path does not exist.";
-    private static final String FILE_NOT_IMAGE = "The provided file exists, but it is not an image.";
+    public static final String INVALID_PATH_MESSAGE = "The provided image path is invalid.";
+    public static final String IMAGE_NOT_EXISTS = "The provided image path does not exist.";
+    public static final String FILE_NOT_IMAGE = "The provided file exists, but it is not an image.";
 
     private String path;
 
