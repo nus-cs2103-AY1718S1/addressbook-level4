@@ -140,16 +140,15 @@ public class AddTaskCommandTest {
         }
 
         @Override
-        public void deleteTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
-                DuplicatePersonException, TagNotFoundException {
-            fail("This method must not be called.");
+        public void updatePersonTags(ReadOnlyPerson target, Set<Tag> newTags)
+                throws PersonNotFoundException, DuplicatePersonException {
+            fail("This method should not be called.");
         }
 
         @Override
-        /** Add tag of given person */
-        public void attachTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
-                DuplicatePersonException, UniqueTagList.DuplicateTagException {
-            fail("This method should not be called.");
+        public void deleteTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
+                DuplicatePersonException, TagNotFoundException {
+            fail("This method must not be called.");
         }
 
         @Override
@@ -180,6 +179,12 @@ public class AddTaskCommandTest {
         }
 
         @Override
+        public void updateTaskTags(ReadOnlyTask target, Set<Tag> allTags)
+                throws DuplicateTaskException, TaskNotFoundException {
+            fail("This method should not be called");
+        }
+
+        @Override
         public ObservableList<ReadOnlyTask> getFilteredTaskList() {
             fail("This method should not be called");
             return null;
@@ -196,7 +201,7 @@ public class AddTaskCommandTest {
         }
 
         @Override
-        public String getCommandMode() {
+        public CommandMode getCommandMode() {
             fail("This method should not be called ");
             return null;
         }
@@ -414,6 +419,149 @@ public class EditTaskDescriptorTest {
         // different tags -> returns false
         editedInternship = new EditTaskDescriptorBuilder(DESC_INTERNSHIP).withTags(VALID_TAG_NOT_URGENT).build();
         assertFalse(DESC_INTERNSHIP.equals(editedInternship));
+    }
+}
+```
+###### /java/seedu/address/logic/commands/TagCommandTest.java
+``` java
+public class TagCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Index[] indices;
+    private Set<Tag> tags;
+
+    @Test
+    public void execute_unfilteredList_success() throws Exception {
+        indices = new Index[]{INDEX_FIRST_PERSON, INDEX_SECOND_PERSON};
+        tags = SampleDataUtil.getTagSet(VALID_TAG_FRIEND);
+        TagCommand tagCommand = prepareCommand(indices, tags);
+
+        //testing for change in person tags in first index
+        ReadOnlyPerson personInUnfilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        tags = combineTags(personInUnfilteredList, VALID_TAG_FRIEND);
+        Person editedPerson = new PersonBuilder(personInUnfilteredList).build();
+        model.updatePersonTags(editedPerson, tags);
+
+        String expectedMessage = String.format(TagCommand.MESSAGE_TAG_PERSONS_SUCCESS, editedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+
+        assertCommandSuccess(tagCommand, model, expectedMessage, expectedModel);
+
+        //testing for change in person tags in second index
+        ReadOnlyPerson personInUnfilteredListTwo = model.getFilteredPersonList()
+                .get(INDEX_SECOND_PERSON.getZeroBased());
+        tags = combineTags(personInUnfilteredListTwo, VALID_TAG_FRIEND);
+        Person editedPersonTwo = new PersonBuilder(personInUnfilteredListTwo).build();
+        model.updatePersonTags(editedPersonTwo, tags);
+
+        Model expectedModelTwo = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModelTwo.updatePerson(model.getFilteredPersonList().get(1), editedPersonTwo);
+
+        assertCommandSuccess(tagCommand, model, expectedMessage, expectedModelTwo);
+    }
+
+    @Test
+    public void execute_filteredList_success() throws Exception {
+        showFirstPersonOnly(model);
+
+        indices = new Index[]{INDEX_FIRST_PERSON};
+        tags = SampleDataUtil.getTagSet(VALID_TAG_FRIEND);
+        TagCommand tagCommand = prepareCommand(indices, tags);
+
+        ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        tags = combineTags(personInFilteredList, VALID_TAG_FRIEND);
+        Person editedPerson = new PersonBuilder(personInFilteredList).build();
+        model.updatePersonTags(editedPerson, tags);
+
+        String expectedMessage = String.format(TagCommand.MESSAGE_TAG_PERSONS_SUCCESS, editedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+
+        assertCommandSuccess(tagCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        indices = new Index[]{outOfBoundIndex};
+        tags = SampleDataUtil.getTagSet(VALID_TAG_FRIEND);
+        TagCommand tagCommand = prepareCommand(indices, tags);
+
+        assertCommandFailure(tagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    /**
+     * Edit filtered list where index is larger than size of filtered list,
+     * but smaller than size of address book
+     */
+    @Test
+    public void execute_invalidPersonIndexFilteredList_failure() throws Exception {
+        showFirstPersonOnly(model);
+        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        indices = new Index[]{outOfBoundIndex};
+        tags = SampleDataUtil.getTagSet(VALID_TAG_FRIEND);
+        TagCommand tagCommand = prepareCommand(indices, tags);
+
+        assertCommandFailure(tagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() throws Exception {
+        indices = new Index[]{INDEX_FIRST_PERSON, INDEX_SECOND_PERSON};
+        tags = SampleDataUtil.getTagSet(VALID_TAG_FRIEND);
+        final TagCommand standardCommand = new TagCommand(indices, tags);
+
+        //same values -> returns true
+        Index[] copyIndices = new Index[]{INDEX_FIRST_PERSON, INDEX_SECOND_PERSON};
+        Set<Tag> copyTags = SampleDataUtil.getTagSet(VALID_TAG_FRIEND);
+        TagCommand commandWithSameValue = new TagCommand(copyIndices, copyTags);
+        assertTrue(standardCommand.equals(commandWithSameValue));
+
+        //same object -> returns true
+        assertTrue(standardCommand.equals(standardCommand));
+
+        //null -> returns false
+        assertFalse(standardCommand.equals(null));
+
+        //differed types -> returns false
+        assertFalse(standardCommand.equals(new ClearCommand()));
+
+        //different index -> returns false
+        Index[] differentIndex = new Index[]{INDEX_FIRST_PERSON, INDEX_THIRD_PERSON};
+        TagCommand commandWithDifferentIndex = new TagCommand(differentIndex, tags);
+        assertFalse(standardCommand.equals(commandWithDifferentIndex));
+
+        //different tag -> returns false
+        Set<Tag> differentTag = SampleDataUtil.getTagSet(VALID_TAG_HUSBAND);
+        TagCommand commandWithDifferentTag = new TagCommand(indices, differentTag);
+        assertFalse(standardCommand.equals(commandWithDifferentTag));
+    }
+
+    /**
+     * Returns an {@code TagCommand} with parameters {@code indices} and {@code tagList}
+     */
+    private TagCommand prepareCommand(Index[] indices, Set<Tag> tagList) {
+        TagCommand tagCommand = new TagCommand(indices, tagList);
+        tagCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return tagCommand;
+    }
+
+    /**
+     * Returns a combined set of tags from old tags of a {@code person} and {@code newTags}
+     */
+    private Set<Tag> combineTags(ReadOnlyPerson person, String... newTags) throws Exception {
+        Set<Tag> allTags = new HashSet<>();
+        for (String tag : newTags) {
+            allTags = SampleDataUtil.getTagSet(tag);
+        }
+        allTags.addAll(person.getTags());
+        return allTags;
     }
 }
 ```
@@ -869,7 +1017,7 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
         /* Case: change the current command mode to task manager -> success */
         Model expectedModel = getModel();
         String commandMode = ChangeModeCommand.COMMAND_WORD + " tm";
-        String expectedResultMessage = String.format(MESSAGE_CHANGE_MODE_SUCCESS, "taskmanager");
+        String expectedResultMessage = String.format(MESSAGE_CHANGE_MODE_SUCCESS, "TaskManager");
         assertCommandSuccess(commandMode, expectedModel, expectedResultMessage);
 
         Model model = getModel();
@@ -976,7 +1124,7 @@ public class EditTaskCommandSystemTest extends AddressBookSystemTest {
     public void edit() throws Exception {
         Model expectedModel = getModel();
         String commandMode = ChangeModeCommand.COMMAND_WORD + " tm";
-        String expectedResultMessage = String.format(MESSAGE_CHANGE_MODE_SUCCESS, "taskmanager");
+        String expectedResultMessage = String.format(MESSAGE_CHANGE_MODE_SUCCESS, "TaskManager");
         assertCommandSuccess(commandMode, expectedModel, expectedResultMessage);
 
         /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
