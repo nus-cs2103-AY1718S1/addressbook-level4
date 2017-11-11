@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.File;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -19,10 +21,12 @@ import seedu.address.ui.person.PersonDetailsPanel;
 public class Avatar {
     private static final String INVALID_PATH_MESSAGE = "The provided image path is invalid.";
     private static final String IMAGE_NOT_EXISTS = "The provided image path does not exist.";
+    private static final String FILE_NOT_IMAGE = "The provided file exists, but it is not an image.";
 
     private String path;
 
     public Avatar(String path) throws IllegalValueException {
+        requireNonNull(path);
         if (!isValidAvatarPath(path)) {
             throw new IllegalValueException(INVALID_PATH_MESSAGE);
         }
@@ -30,6 +34,9 @@ public class Avatar {
         File file = new File(path);
         if (!FileUtil.isFileExists(file)) {
             throw new IllegalValueException(IMAGE_NOT_EXISTS);
+        }
+        if (!FileUtil.isImage(file)) {
+            throw new IllegalValueException(FILE_NOT_IMAGE);
         }
 
         this.path = file.toURI().toString();
