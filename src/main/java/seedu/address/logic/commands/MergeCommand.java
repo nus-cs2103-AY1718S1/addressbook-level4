@@ -42,6 +42,7 @@ public class MergeCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         XmlSerializableAddressBook newFileData;
+
         try {
             newFileData = XmlFileStorage.loadDataFromSaveFile(new File(newFilePath));
         } catch (FileNotFoundException fne) {
@@ -52,6 +53,7 @@ public class MergeCommand extends UndoableCommand {
 
         ObservableList<ReadOnlyPerson> newFilePersonList = newFileData.getPersonList();
         model.mergeAddressBook(newFilePersonList);
+
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
