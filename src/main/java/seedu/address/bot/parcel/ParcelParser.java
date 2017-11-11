@@ -49,7 +49,7 @@ public class ParcelParser {
                         PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_DELIVERY_DATE, PREFIX_STATUS, PREFIX_TAG);
         if (!arePrefixesPresent(argMultimap, PREFIX_TRACKING_NUMBER, PREFIX_NAME, PREFIX_ADDRESS,
                 PREFIX_DELIVERY_DATE)) {
-            throw new seedu.address.logic.parser.exceptions.ParseException(PARCEL_PARSER_ERROR);
+            throw new ParseException(PARCEL_PARSER_ERROR);
         }
 
         try {
@@ -90,7 +90,7 @@ public class ParcelParser {
 
             return parcel;
         } catch (IllegalValueException ive) {
-            throw new seedu.address.logic.parser.exceptions.ParseException(ive.getMessage(), ive);
+            throw new ParseException(ive.getMessage(), ive);
         }
     }
 

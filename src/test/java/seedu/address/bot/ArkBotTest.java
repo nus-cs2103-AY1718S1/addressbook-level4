@@ -6,35 +6,33 @@ import static org.mockito.Mockito.times;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_CANCEL_COMMAND;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_COMPLETE_COMMAND;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_FAILURE;
+import static seedu.address.bot.ArkBot.BOT_MESSAGE_HELP;
 import static seedu.address.bot.ArkBot.BOT_MESSAGE_SUCCESS;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.testutil.TypicalParcels.BENSON;
 import static seedu.address.testutil.TypicalParcels.DANIEL;
 import static seedu.address.testutil.TypicalParcels.HOON;
 
-import java.util.Optional;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Logger;
 
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.telegram.abilitybots.api.db.DBContext;
 import org.telegram.abilitybots.api.db.MapDBContext;
 import org.telegram.abilitybots.api.objects.EndUser;
 import org.telegram.abilitybots.api.objects.MessageContext;
 import org.telegram.abilitybots.api.sender.MessageSender;
-import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
+
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import seedu.address.TestApp;
 import seedu.address.bot.parcel.ParcelParser;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -54,9 +52,6 @@ public class ArkBotTest {
 
     private static final String BOT_DEMO_JOHN = "#/RR000000000SG n/John Doe p/98765432 e/johnd@example.com "
             + "a/John street, block 123, #01-01 S123121 d/01-01-2001 s/DELIVERING";
-    private static final String BOT_DEMO_BETSY = "add #/RR000000000SG n/Betsy Crowe t/frozen d/02-02-2002 "
-            + "e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567 t/fragile";
-    private static final String READABLE_FILE_PATH = "./src/test/data/qrcode/BETSY_CROWE_READABLE.jpg";
     private static final String SAMPLE_ADD_COMMAND = BOT_DEMO_JOHN;
     private static final Logger logger = LogsCenter.getLogger(ArkBotTest.class);
 
@@ -65,11 +60,7 @@ public class ArkBotTest {
     private MessageSender sender;
     private EndUser endUser;
     private Model model;
-    private Logic logic;
-    private TestApp testApp;
-    private SystemTestSetupHelper setupHelper;
     private ParcelParser parcelParser;
-    private Optional<Message> lastKnownMessage;
     private int numberOfFailures = 0;
 
     @BeforeClass
@@ -81,19 +72,15 @@ public class ArkBotTest {
     public void setUp() {
         // Offline instance will get deleted at JVM shutdown
         db = MapDBContext.offlineInstance("test");
-        setupHelper = new SystemTestSetupHelper();
-        testApp = setupHelper.setupApplication();
-        logic = testApp.getLogic();
+        SystemTestSetupHelper setupHelper = new SystemTestSetupHelper();
+        TestApp testApp = setupHelper.setupApplication();
         model = testApp.getModel();
         bot = testApp.getBot();
         sender = mock(MessageSender.class);
         endUser = EndUser.endUser(USER_ID, "Abbas", "Abou Daya", "addo37");
         bot.setSender(sender);
         parcelParser = new ParcelParser();
-
     }
-
-    @Mock private UpdateStub mockedUpdated;
 
     @Test
     public void canSayHelloWorld() throws InterruptedException, ParseException, DuplicateParcelException,
@@ -167,7 +154,7 @@ public class ArkBotTest {
         waitForRunLater();
 
         // We verify that the sender was called only ONCE and listed parcels
-        lastKnownMessage = Mockito.verify(sender, times(1)).send(message, CHAT_ID);
+        Mockito.verify(sender, times(1)).send(message, CHAT_ID);
 
         /*================================== DELETE COMMAND SUCCESS TEST ====================================*/
 
@@ -291,6 +278,16 @@ public class ArkBotTest {
         // We verify that the sender was called only ONCE and sent complete command success and QR code prompt.
         Mockito.verify(sender, times(1)).send(message, CHAT_ID);
 
+        /*===================================== HELP COMMAND SUCCESS TEST =========================================*/
+
+        mockedUpdate = mock(Update.class);
+        context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID);
+        message = BOT_MESSAGE_HELP;
+        bot.helpCommand().action().accept(context);
+        waitForRunLater();
+
+        // We verify that the sender was called only ONCE and sent help message.
+        Mockito.verify(sender, times(1)).send(message, CHAT_ID);
 
     }
 

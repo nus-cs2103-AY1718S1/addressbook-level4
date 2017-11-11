@@ -114,7 +114,6 @@ public class ArkBot extends AbilityBot {
                                 ctx.chatId());
                     }
                 }))
-                .post(ctx -> sender.send("What would you like to do next?", ctx.chatId()))
                 .build();
     }
 
@@ -322,7 +321,6 @@ public class ArkBot extends AbilityBot {
                 .action(ctx -> Platform.runLater(() -> {
                     sender.send(BOT_MESSAGE_HELP, ctx.chatId());
                 }))
-                .post(ctx -> sender.send("What would you like to do next?", ctx.chatId()))
                 .build();
     }
 
@@ -394,12 +392,9 @@ public class ArkBot extends AbilityBot {
                 .privacy(PRIVACY_SETTING)
                 .action((MessageContext ctx) -> Platform.runLater(() -> {
                     Update update = ctx.update();
-                    System.out.println("Made it here!");
                     if (update.hasMessage() && update.getMessage().hasPhoto()) {
-                        System.out.println("But not here");
                         java.io.File picture = getPictureFileFromUpdate(update);
                         try {
-                            System.out.println("We got lucky");
                             ReadOnlyParcel retrievedParcel = retrieveParcelFromPictureFile(picture);
                             logger.info("The retrieved parcel is: " + retrievedParcel);
                             if (retrievedParcel.equals(null)) {
