@@ -41,7 +41,7 @@ public class AddTagCommand extends UndoableCommand {
     /**
      *
      * @param tag to be added to address book
-     * @param index of the person in the filtered list to remove tag
+     * @param index of the person in the filtered list to add tag
      */
     public AddTagCommand(Set<Tag> tag, Set<Index> index, String indexDisplay)  {
         this.tag = tag;
@@ -90,7 +90,8 @@ public class AddTagCommand extends UndoableCommand {
 
         boolean check1 = checkEqual(tag, e.tag);
         boolean check2 = checkEqual(index, e.index);
-        return check1 && check2;
+        boolean check3 = indexDisplay.equals(e.indexDisplay);
+        return check1 && check2 && check3;
     }
 
     /**
