@@ -4,6 +4,8 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.insurance.ReadOnlyInsurance;
+import seedu.address.model.insurance.exceptions.DuplicateInsuranceContractNameException;
+import seedu.address.model.insurance.exceptions.DuplicateInsuranceException;
 import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -42,7 +44,8 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
 
     /** Adds the given insurance */
-    void addLifeInsurance(ReadOnlyInsurance insurance);
+    void addLifeInsurance(ReadOnlyInsurance insurance)
+            throws DuplicateInsuranceException, DuplicateInsuranceContractNameException;
 
     /**
      * Replaces the given life insurance {@code target} with {@code editedLifeInsurance}.

@@ -13,6 +13,8 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
+import seedu.address.model.insurance.exceptions.DuplicateInsuranceContractNameException;
+import seedu.address.model.insurance.exceptions.DuplicateInsuranceException;
 import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -86,7 +88,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@author OscarWang114
     @Override
-    public synchronized void addLifeInsurance(ReadOnlyInsurance insurance) {
+    public synchronized void addLifeInsurance(ReadOnlyInsurance insurance)
+            throws DuplicateInsuranceException, DuplicateInsuranceContractNameException {
         addressBook.addInsurance(insurance);
         updateFilteredInsuranceList(PREDICATE_SHOW_ALL_INSURANCES);
         indicateAddressBookChanged();

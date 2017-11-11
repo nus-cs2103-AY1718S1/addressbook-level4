@@ -15,13 +15,13 @@ import seedu.address.commons.events.ui.PersonNameClickedEvent;
 import seedu.address.commons.events.ui.SwitchToInsurancePanelRequestEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 
-
+//@@author OscarWang114
 /**
  * An UI component that displays information of a {@code LifeInsurance}.
  */
 public class InsuranceCard extends UiPart<Region> {
 
-    //@@author OscarWang114
+
     private static final String FXML = "InsuranceCard.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
