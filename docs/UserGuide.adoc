@@ -684,7 +684,7 @@ In version v1.3, you are be able to:
 
 * View your students' details from the `Student Details Panel`
 * View graphs and charts detailing your students' academic progress from the `GraphPanel`
-* Omit optional fields(email, address, postal code and tags) when adding students
+* Omit optional fields(student phone number, email, address, postal code and tags) when adding students
 
 === Features added in v1.2
 In version v1.2, you are be able to:
