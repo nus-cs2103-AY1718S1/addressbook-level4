@@ -1,22 +1,24 @@
 package seedu.address.storage;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static seedu.address.testutil.TypicalEvents.EIGHTH;
+import static seedu.address.testutil.TypicalEvents.FIRST;
+import static seedu.address.testutil.TypicalEvents.SEVENTH;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventList;
+
+import java.io.IOException;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
+
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.EventList;
 import seedu.address.model.ReadOnlyEventList;
 import seedu.address.model.event.Event;
-import java.io.IOException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static seedu.address.testutil.TypicalEvents.FIRST;
-import static seedu.address.testutil.TypicalEvents.SEVENTH;
-import static seedu.address.testutil.TypicalEvents.EIGHTH;
-import static seedu.address.testutil.TypicalEvents.getTypicalEventList;
 
 //@@author LeonChowWenHao
 
@@ -123,6 +125,4 @@ public class XmlEventStorageTest {
         thrown.expect(NullPointerException.class);
         saveEventStorage(new EventList(), null);
     }
-
-
 }
