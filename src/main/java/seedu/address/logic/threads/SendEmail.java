@@ -39,7 +39,7 @@ public class SendEmail extends Thread {
      */
     public void run() {
         // Sender's email ID needs to be mentioned
-        String from = "unifycs2103@gmail.com";
+        String senderEmail = "unifycs2103@gmail.com";
         // For Gmail host
         String host = "smtp.gmail.com";
         // Get system properties
@@ -53,7 +53,7 @@ public class SendEmail extends Thread {
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(from, "CS2103CS2103");
+                        return new PasswordAuthentication(senderEmail, "CS2103CS2103");
                     }
                 }
         );
@@ -71,13 +71,13 @@ public class SendEmail extends Thread {
             MimeMessage message = new MimeMessage(session);
 
             // Set From: header field of the header.
-            message.setFrom(new InternetAddress(from));
+            message.setFrom(new InternetAddress(senderEmail));
 
             // Set To: header field of the header.
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipientEmail));
 
             // Set Subject: header field
-            message.setSubject("Unify: Address Book: " + name + "Exported Data");
+            message.setSubject("Unify: Address Book: " + name + " Exported Data");
 
             MimeBodyPart messageBodyPart = new MimeBodyPart();
 
@@ -111,7 +111,7 @@ public class SendEmail extends Thread {
 
             Transport.send(message);
         } catch (MessagingException msg) {
-            msg.printStackTrace();
+            logger.info(msg.toString());
         }
     }
 }

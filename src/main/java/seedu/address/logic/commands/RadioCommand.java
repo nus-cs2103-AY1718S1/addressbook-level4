@@ -70,12 +70,12 @@ public class RadioCommand extends Command {
         boolean genreExist = Arrays.asList(genreList).contains(genre);
         switch (command) {
         case "play":
-            if (InternetConnectionCheck.isConnectedToInternet()) {
-                if (MusicCommand.isMusicPlaying()) {
-                    MusicCommand.stopMusicPlayer();
-                }
-                stopRadioPlayer();
-                if (genreExist) {
+            if (genreExist) {
+                if (InternetConnectionCheck.isConnectedToInternet()) {
+                    if (MusicCommand.isMusicPlaying()) {
+                        MusicCommand.stopMusicPlayer();
+                    }
+                    stopRadioPlayer();
                     radio = new Radio(genre);
                     radio.start();
 
@@ -83,10 +83,11 @@ public class RadioCommand extends Command {
                     //Text to Speech
                     new TextToSpeech(printedSuccessMessage).speak();
                     return new CommandResult(printedSuccessMessage);
+                } else {
+                    return new CommandResult(MESSAGE_NO_INTERNET);
                 }
-                return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RadioCommand.MESSAGE_USAGE));
             } else {
-                return new CommandResult(MESSAGE_NO_INTERNET);
+                return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RadioCommand.MESSAGE_USAGE));
             }
         case "stop":
             if (isRadioPlaying()) {

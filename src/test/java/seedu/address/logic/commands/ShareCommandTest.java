@@ -13,6 +13,7 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.InternetConnectionCheck;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -36,12 +37,58 @@ public class ShareCommandTest {
     }
 
     @Test
-    public void execute_share_success() {
-        ShareCommand shareCommand = prepareCommand(INDEX_FIRST_PERSON, shareEmailArray);
+    public void execute_invalidIndexRecipient() throws Exception {
 
+        shareEmailArray = new String[]{"unifycs2103@gmail.com", "-1"};
+        ShareCommand shareCommand = prepareCommand(INDEX_FIRST_PERSON, shareEmailArray);
         try {
             CommandResult commandResult = shareCommand.execute();
-            assertEquals(shareCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+            if (InternetConnectionCheck.isConnectedToInternet()) {
+                assertEquals(ShareCommand.MESSAGE_FAILURE, commandResult.feedbackToUser);
+            } else {
+                assertEquals(ShareCommand.MESSAGE_NO_INTERNET, commandResult.feedbackToUser);
+            }
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+    }
+
+    @Test
+    public void execute_share_success() {
+
+        ShareCommand shareCommand = prepareCommand(INDEX_FIRST_PERSON, shareEmailArray);
+        try {
+            CommandResult commandResult = shareCommand.execute();
+            if (InternetConnectionCheck.isConnectedToInternet()) {
+                assertEquals(ShareCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+            } else {
+                assertEquals(ShareCommand.MESSAGE_NO_INTERNET, commandResult.feedbackToUser);
+            }
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+
+        shareCommand = prepareCommand(INDEX_SECOND_PERSON, shareEmailArray);
+        try {
+            CommandResult commandResult = shareCommand.execute();
+            if (InternetConnectionCheck.isConnectedToInternet()) {
+                assertEquals(ShareCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+            } else {
+                assertEquals(ShareCommand.MESSAGE_NO_INTERNET, commandResult.feedbackToUser);
+            }
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+
+        shareEmailArray = new String[]{"unifycs2103@gmail.com", "1"};
+        shareCommand = prepareCommand(INDEX_FIRST_PERSON, shareEmailArray);
+        try {
+            CommandResult commandResult = shareCommand.execute();
+            if (InternetConnectionCheck.isConnectedToInternet()) {
+                assertEquals(ShareCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+            } else {
+                assertEquals(ShareCommand.MESSAGE_NO_INTERNET, commandResult.feedbackToUser);
+            }
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
@@ -49,12 +96,31 @@ public class ShareCommandTest {
 
     @Test
     public void execute_share_invalidEmail() {
+
         shareEmailArray = new String[]{"wrongemailformat"};
         ShareCommand shareCommand = prepareCommand(INDEX_FIRST_PERSON, shareEmailArray);
 
         try {
             CommandResult commandResult = shareCommand.execute();
-            assertEquals(shareCommand.MESSAGE_EMAIL_NOT_VALID, commandResult.feedbackToUser);
+            if (InternetConnectionCheck.isConnectedToInternet()) {
+                assertEquals(ShareCommand.MESSAGE_EMAIL_NOT_VALID, commandResult.feedbackToUser);
+            } else {
+                assertEquals(ShareCommand.MESSAGE_NO_INTERNET, commandResult.feedbackToUser);
+            }
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+
+        shareEmailArray = new String[]{"unifycs2103@gmail.com", "wrongemailformat"};
+        shareCommand = prepareCommand(INDEX_FIRST_PERSON, shareEmailArray);
+
+        try {
+            CommandResult commandResult = shareCommand.execute();
+            if (InternetConnectionCheck.isConnectedToInternet()) {
+                assertEquals(ShareCommand.MESSAGE_EMAIL_NOT_VALID, commandResult.feedbackToUser);
+            } else {
+                assertEquals(ShareCommand.MESSAGE_NO_INTERNET, commandResult.feedbackToUser);
+            }
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }

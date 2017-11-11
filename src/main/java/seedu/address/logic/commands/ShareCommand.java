@@ -1,5 +1,8 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SHARE;
+
 import java.util.List;
 
 import javax.mail.internet.AddressException;
@@ -15,6 +18,8 @@ import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.threads.SendEmail;
 import seedu.address.model.person.ReadOnlyPerson;
 
+
+
 //@@author hanselblack
 /**
  * Emails the list of contact details to the input email address
@@ -26,7 +31,8 @@ public class ShareCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Emails the person's contact details identified by the index number used in the listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_SHARE + "EMAIL ADDRESS";
 
     public static final String MESSAGE_SUCCESS = "Email Sent!";
     public static final String MESSAGE_EMAIL_NOT_VALID = "Email address is not valid!";
@@ -46,9 +52,10 @@ public class ShareCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+        requireNonNull(model);
+        requireNonNull(targetIndex);
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
@@ -61,11 +68,11 @@ public class ShareCommand extends Command {
                 to = shareEmailArray[index];
                 if (isNumeric(to)) {
                     try {
-                        Index recepientIndex = ParserUtil.parseIndex(to);
-                        if (recepientIndex.getZeroBased() >= lastShownList.size()) {
+                        Index recipientIndex = ParserUtil.parseIndex(to);
+                        if (recipientIndex.getZeroBased() >= lastShownList.size()) {
                             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
                         }
-                        ReadOnlyPerson personRecipient = lastShownList.get(recepientIndex.getZeroBased());
+                        ReadOnlyPerson personRecipient = lastShownList.get(recipientIndex.getZeroBased());
                         to = personRecipient.getEmail().toString();
 
                     } catch (IllegalValueException ive) {

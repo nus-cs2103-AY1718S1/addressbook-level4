@@ -29,6 +29,9 @@ public class ShareCommandParser implements Parser<ShareCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShareCommand.MESSAGE_USAGE));
         }
         String share = argMultimap.getValue(PREFIX_SHARE).orElse("");
+        if (share.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShareCommand.MESSAGE_USAGE));
+        }
         String[] shareEmailArray = share.trim().split("\\s+");
         return new ShareCommand(index, shareEmailArray);
     }

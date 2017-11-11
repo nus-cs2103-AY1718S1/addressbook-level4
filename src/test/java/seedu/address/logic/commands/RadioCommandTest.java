@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.RadioCommand.MESSAGE_NO_RADIO_PLAYING
 
 import org.junit.Test;
 
+import seedu.address.logic.InternetConnectionCheck;
 
 //@@author hanselblack
 public class RadioCommandTest {
@@ -54,37 +55,57 @@ public class RadioCommandTest {
         String genre = "";
         RadioCommand radioCommand = new RadioCommand("play");
         CommandResult commandResult = radioCommand.execute();
-        assertEquals("POP " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
-        radioCommand = new RadioCommand("stop");
-        radioCommand.execute();
+        if (InternetConnectionCheck.isConnectedToInternet()) {
+            assertEquals("POP " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+            radioCommand = new RadioCommand("stop");
+            radioCommand.execute();
+        } else {
+            assertEquals(RadioCommand.MESSAGE_NO_INTERNET, commandResult.feedbackToUser);
+        }
 
         genre = "pop";
         radioCommand = new RadioCommand("play", genre);
         commandResult = radioCommand.execute();
-        assertEquals(genre.toUpperCase() + " " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
-        radioCommand = new RadioCommand("stop");
-        radioCommand.execute();
+        if (InternetConnectionCheck.isConnectedToInternet()) {
+            assertEquals(genre.toUpperCase() + " " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+            radioCommand = new RadioCommand("stop");
+            radioCommand.execute();
+        } else {
+            assertEquals(RadioCommand.MESSAGE_NO_INTERNET, commandResult.feedbackToUser);
+        }
 
         genre = "chinese";
         radioCommand = new RadioCommand("play", genre);
         commandResult = radioCommand.execute();
-        assertEquals(genre.toUpperCase() + " " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
-        radioCommand = new RadioCommand("stop");
-        radioCommand.execute();
+        if (InternetConnectionCheck.isConnectedToInternet()) {
+            assertEquals(genre.toUpperCase() + " " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+            radioCommand = new RadioCommand("stop");
+            radioCommand.execute();
+        } else {
+            assertEquals(RadioCommand.MESSAGE_NO_INTERNET, commandResult.feedbackToUser);
+        }
 
         genre = "news";
         radioCommand = new RadioCommand("play", genre);
         commandResult = radioCommand.execute();
-        assertEquals(genre.toUpperCase() + " " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
-        radioCommand = new RadioCommand("stop");
-        radioCommand.execute();
+        if (InternetConnectionCheck.isConnectedToInternet()) {
+            assertEquals(genre.toUpperCase() + " " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+            radioCommand = new RadioCommand("stop");
+            radioCommand.execute();
+        } else {
+            assertEquals(RadioCommand.MESSAGE_NO_INTERNET, commandResult.feedbackToUser);
+        }
 
         genre = "classic";
         radioCommand = new RadioCommand("play", genre);
         commandResult = radioCommand.execute();
-        assertEquals(genre.toUpperCase() + " " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
-        radioCommand = new RadioCommand("stop");
-        radioCommand.execute();
+        if (InternetConnectionCheck.isConnectedToInternet()) {
+            assertEquals(genre.toUpperCase() + " " + RadioCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+            radioCommand = new RadioCommand("stop");
+            radioCommand.execute();
+        } else {
+            assertEquals(RadioCommand.MESSAGE_NO_INTERNET, commandResult.feedbackToUser);
+        }
     }
 
     @Test

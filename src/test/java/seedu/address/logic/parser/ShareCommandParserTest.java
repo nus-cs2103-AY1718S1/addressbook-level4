@@ -26,5 +26,11 @@ public class ShareCommandParserTest {
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "any argument",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShareCommand.MESSAGE_USAGE));
+
+        assertParseFailure(parser, "",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShareCommand.MESSAGE_USAGE));
+
+        assertParseFailure(parser, "    ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShareCommand.MESSAGE_USAGE));
     }
 }
