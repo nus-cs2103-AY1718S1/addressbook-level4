@@ -12,7 +12,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.parcel.Email;
+import seedu.address.ui.autocompleter.Autocompleter;
 
 //@@author Kowalski985
 public class AutocompleterTest extends GuiUnitTest {
@@ -46,7 +46,7 @@ public class AutocompleterTest extends GuiUnitTest {
 
     @Test
     public void autocomplete_forNoIndexesOrPrefixes() throws Exception {
-        autocompleter.updateState("li");
+        autocompleter.updateAutocompleter("li");
         String autocompleteResult = autocompleter.autocomplete();
         assertEquals("list", autocompleteResult);
         guiRobot.pauseForEvent();
@@ -76,11 +76,11 @@ public class AutocompleterTest extends GuiUnitTest {
         assertAutocompleteSuccess("e", EDIT_COMMAND_WORD, MULTIPLE_RESULTS_MESSAGE);
 
         // uppercase autocomplete with multiple autocomplete options
-        autocompleter.updateState("");
+        autocompleter.updateAutocompleter("");
         assertAutocompleteSuccess("E", EDIT_COMMAND_WORD, MULTIPLE_RESULTS_MESSAGE);
 
         // lowercase autocomplete with multiple options and cycling
-        autocompleter.updateState("");
+        autocompleter.updateAutocompleter("");
         assertAutocompleteSuccess("E", EDIT_COMMAND_WORD, MULTIPLE_RESULTS_MESSAGE);
         assertAutocompleteSuccess(EDIT_COMMAND_WORD, EXIT_COMMAND_WORD, MULTIPLE_RESULTS_MESSAGE);
 
@@ -162,7 +162,7 @@ public class AutocompleterTest extends GuiUnitTest {
 
 
     private void assertAutocompleteSuccess(String commandBoxText, String expectedResult, String expectedMessage) {
-        autocompleter.updateState(commandBoxText);
+        autocompleter.updateAutocompleter(commandBoxText);
         String autocompleteResult = autocompleter.autocomplete();
         assertEquals(expectedResult, autocompleteResult);
         guiRobot.pauseForEvent();
