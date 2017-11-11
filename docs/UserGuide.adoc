@@ -328,8 +328,9 @@ Sorts the list in alphabetical order.
 // end::sort[]
 
 // tag::remark[]
-=== Overwriting a person's remark : `remark` `Since v1.2`
-Overwrites a remark from the specified person in cherBook +
+=== Adding/Deleting a remark to a person : `remark` `Since v1.2`
+//TODO: Simlify and make the UG for remark operations more consise
+Adds or removes a remark from the specified person in cherBook +
 Format: `remark Index [rm/REMARK]` +
 Shorthand: `rm Index [rm/REMARK]`
 
@@ -341,20 +342,20 @@ Shorthand: `rm Index [rm/REMARK]`
 
 [TIP]
 Addition of remarks on a person already with remarks will be overwritten. +
-Person with empty remarks will display `(add a new remark)`. +
+Person with no remarks will display `(add a new remark)`. +
 Can only be changed through the use of the `remark` command.
 
 Examples:
 
 * `list` +
 `remark 2 rm/This is a remark` +
-Overwrites the 1st person's remark.
+Overwrites/adds the 1st person remark.
 * `find betsy` +
 `remark 1 rm/Betsy is a female` +
-Overwrites the 1st person's remark in the results of `find` command.
+Overwrites/adds the 1st person in the results of `find` command.
 * `list` +
 `remark 2 rm/` +
-Overwrites `remark` from the 2nd person's in the address book and displays it as `(add a new remark)`.
+removes `remark` from the 2nd person in the address book.
 
 // end::remark[]
 
@@ -561,19 +562,6 @@ Example:
 * `tab 2` +
 Remains at tab 2 if tab 2 is selected else switches to tab 2.
 // end::tab[]
-
-// tag::home[]
-=== listing entered commands : `home` `Since v1.5`
-
-toggles between student details panel, statistic panel and graph panel with a home screen.
-Format: `home`
-
-
-[NOTE]
-selecting a person by clicking while the display page is up will not cause the screen to change back. +
-Only typing the `select` command would cause it to toggle.
-
-// end::home[]
 
 === Saving the data `Since v1.0`
 
