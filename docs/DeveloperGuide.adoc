@@ -970,13 +970,13 @@ Figure 5.8.2 What the user sees
 //end::birthday[]
 
 // tag::modeswitch[]
-=== Mode Switching Mechanism
+=== Mode Switching mechanism
 
 There are `two` modes in The Myth's Book which is firstly, `Persons Mode` which is activated by typing `list`,
 and secondly, `Events Mode` which is activated by typing `events`. The mode switching mechanism allows users to type in different specific commands based on the mode
 that is being used in the software.
 
-The commands are categorised into mainly three groups:
+The commands are categorised into three groups:
 
 * `Person Commands` such as the `AddCommand` or `EditCommand`.
 * `Event Commands` such as the `AddEventCommand` or `DeleteEventCommand`.
