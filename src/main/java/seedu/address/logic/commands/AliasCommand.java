@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import seedu.address.logic.TextToSpeech;
 import seedu.address.model.Aliases;
 import seedu.address.model.UserPrefs;
 
@@ -46,6 +47,11 @@ public class AliasCommand extends UndoableCommand {
         }
 
         aliases.addAlias(alias, command);
+        //@@author hanselblack
+        //Text to Speech
+        new TextToSpeech(String.format(MESSAGE_ADD_SUCCESS, alias, command));
+        //@@author
+        //@@author goweiwen
         return new CommandResult(String.format(MESSAGE_ADD_SUCCESS, alias, command));
     }
 

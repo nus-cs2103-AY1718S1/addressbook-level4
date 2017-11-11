@@ -1,24 +1,26 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import java.util.Arrays;
 
 import seedu.address.logic.Radio;
+import seedu.address.logic.TextToSpeech;
 
 //@@author hanselblack
 /**
- * Plays Music with music play command
- * Pause Music with music pause command
- * Stop Music with music stop command
+ * Plays Radio with radio play command
+ * Stop Radio with radio stop command
  */
 public class RadioCommand extends Command {
 
     public static final String COMMAND_WORD = "radio";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": play/pause/stop music "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": play/stop radio "
             + "of your selected genre.\n"
             + "Parameters: ACTION (must be either play, pause or stop) "
-            + "GENRE (must be either pop, dance or classic) \n"
-            + "Example: " + COMMAND_WORD + " play classic ";
+            + "GENRE (must be either chinese, classic, comedy, country, news, pop) \n"
+            + "Example: " + COMMAND_WORD + " play news ";
 
     private static final String MESSAGE_STOP = "Radio Stopped";
 
@@ -63,14 +65,18 @@ public class RadioCommand extends Command {
                 music.start();
 
                 messageSuccess = genre.toUpperCase() + " Radio Playing";
+                //Text to Speech
+                new TextToSpeech(messageSuccess);
                 return new CommandResult(messageSuccess);
             }
             return new CommandResult(MESSAGE_USAGE);
         case "stop":
             music.stop();
+            //Text to Speech
+            new TextToSpeech(MESSAGE_STOP);
             return new CommandResult(MESSAGE_STOP);
         default:
-            return new CommandResult(MESSAGE_USAGE);
+            return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RadioCommand.MESSAGE_USAGE));
         }
     }
 

@@ -9,6 +9,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.SendEmail;
+import seedu.address.logic.TextToSpeech;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -22,7 +23,7 @@ public class ShareCommand extends Command {
     public static final String COMMAND_WORD = "share";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Emails the person's contact details identified by the index number used in the last person listing.\n"
+            + ": Emails the person's contact details identified by the index number used in the listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
@@ -67,6 +68,8 @@ public class ShareCommand extends Command {
                     to = personRecipient.getEmail().toString();
 
                 } catch (IllegalValueException ive) {
+                    //Text to Speech
+                    new TextToSpeech(MESSAGE_FAILURE);
                     return new CommandResult(MESSAGE_FAILURE);
                 }
             }
@@ -74,12 +77,20 @@ public class ShareCommand extends Command {
                 sendEmail = new SendEmail(to, person);
                 sendEmail.start();
             } else {
+                //Text to Speech
+                new TextToSpeech(MESSAGE_EMAIL_NOT_VALID);
                 return new CommandResult(MESSAGE_EMAIL_NOT_VALID);
             }
         }
+        //Text to Speech
+        new TextToSpeech(MESSAGE_SUCCESS);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
+    /**
+     * Returns true if string is numeric number. This method is to identify which are
+     * index or email address in the s/ parameter.
+     */
     public boolean isNumeric(String s) {
         return s != null && s.matches("[-+]?\\d*\\.?\\d+");
     }

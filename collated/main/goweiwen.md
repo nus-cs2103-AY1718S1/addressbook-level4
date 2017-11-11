@@ -12,7 +12,8 @@ public class AliasCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates an alias for other commands."
             + "Parameters: [ALIAS COMMAND]\n"
-            + "Example: " + COMMAND_WORD + " create add\n";
+            + "Example: " + COMMAND_WORD + " create add\n"
+            + "Example: " + COMMAND_WORD + " friends find t/friends\n";
 
     private final String alias;
     private final String command;
@@ -42,6 +43,9 @@ public class AliasCommand extends UndoableCommand {
         }
 
         aliases.addAlias(alias, command);
+```
+###### \java\seedu\address\logic\commands\AliasCommand.java
+``` java
         return new CommandResult(String.format(MESSAGE_ADD_SUCCESS, alias, command));
     }
 
@@ -85,7 +89,8 @@ public class UnaliasCommand extends UndoableCommand {
         } catch (NoSuchElementException e) {
             throw new CommandException(String.format(MESSAGE_NO_SUCH_ALIAS, alias));
         }
-
+        //Text to Speech
+        new TextToSpeech(String.format(MESSAGE_SUCCESS, alias));
         return new CommandResult(String.format(MESSAGE_SUCCESS, alias));
     }
 
@@ -112,22 +117,21 @@ public class AliasCommandParser implements Parser<AliasCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AliasCommand parse(String arguments) throws ParseException {
-        String[] args = arguments.trim().split("\\s+");
 
-        if (args.length == 1 && args[0].equals("")) {
+        if (arguments.length() == 0) {
             return new AliasCommand();
         }
 
-        if (args.length == 2) {
-            String alias = args[0];
-            String command = ParserUtil.parseCommand(args[1]);
+        int delimiterPosition = arguments.trim().indexOf(' ');
 
-            if (command != null) {
-                return new AliasCommand(alias, command);
-            }
+        if (delimiterPosition == -1) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
         }
 
-        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
+        final String alias = arguments.trim().substring(0, delimiterPosition).trim();
+        final String command = arguments.trim().substring(delimiterPosition + 1).trim();
+        return new AliasCommand(alias, command);
+
     }
 
 }
@@ -160,42 +164,29 @@ public class AliasCommandParser implements Parser<AliasCommand> {
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
-            hint = generateAddHint().trim();
-            // We only want to autocomplete prefixes (e.g. "n/", "a/", etc)
-            if (hint.startsWith("/")) {
-                return input.trim() + "/";
-            }
-            if (hint.startsWith("/", 1)) {
-                return input.trim() + " " + hint.substring(0, 2);
-            }
-            return input;
+            AddCommandHint addCommandHint = new AddCommandHint(userInput, arguments);
+            addCommandHint.parse();
+            return addCommandHint.autocomplete();
 
         case EditCommand.COMMAND_WORD:
-            if (arguments.length() == 0) {
-                return commandWord + " ";
-            }
-            hint = generateEditHint().trim();
-            if (hint.startsWith("/")) {
-                return input.trim() + "/";
-            }
-            if (hint.startsWith("/", 1)) {
-                return input.trim() + " " + hint.substring(0, 2);
-            }
-            return input;
+            EditCommandHint editCommandHint = new EditCommandHint(userInput, arguments);
+            editCommandHint.parse();
+            return editCommandHint.autocomplete();
 
         case FindCommand.COMMAND_WORD:
-            hint = generateFindHint().trim();
-            if (hint.startsWith("/")) {
-                return input.trim() + "/";
-            }
-            if (hint.startsWith("/", 1)) {
-                return input.trim() + " " + hint.substring(0, 2);
-            }
-            return input;
+            FindCommandHint findCommandHint = new FindCommandHint(userInput, arguments);
+            findCommandHint.parse();
+            return findCommandHint.autocomplete();
+
+        case DeleteCommand.COMMAND_WORD:
+        case SelectCommand.COMMAND_WORD:
+            DeleteCommandHint deleteCommandHint = new DeleteCommandHint(userInput, arguments);
+            deleteCommandHint.parse();
+            return deleteCommandHint.autocomplete();
 
         case MusicCommand.COMMAND_WORD:
             if (arguments.isEmpty()) {
-                return commandWord + " " + (MusicCommand.isPlaying() ? "pause" : "play");
+                return commandWord + " " + (MusicCommand.isMusicPlaying() ? "pause" : "play");
             }
             hint = autocompleteFromList(arguments.trim(), new String[] {"play", "pause", "stop"});
             return commandWord + (hint != null ? " " + hint : arguments);
@@ -302,12 +293,18 @@ public class AliasCommandParser implements Parser<AliasCommand> {
         }
 
         String commandWord = matcher.group("commandWord");
-        final String arguments = matcher.group("arguments");
+        String arguments = matcher.group("arguments");
 
         Aliases aliases = UserPrefs.getInstance().getAliases();
         String aliasedCommand = aliases.getCommand(commandWord);
         if (aliasedCommand != null) {
-            commandWord = aliasedCommand;
+            final Matcher aliasMatcher = BASIC_COMMAND_FORMAT.matcher(aliasedCommand.trim());
+            if (!aliasMatcher.matches()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+            }
+
+            commandWord = aliasMatcher.group("commandWord");
+            arguments = aliasMatcher.group("arguments") + " " + arguments;
         }
 
         return new String[] {commandWord, arguments};
@@ -449,6 +446,42 @@ public class Aliases {
             aliases = new Aliases();
         }
         return aliases;
+    }
+```
+###### \java\seedu\address\ui\CommandBox.java
+``` java
+        case TAB:
+            keyEvent.consume();
+            autocomplete();
+            break;
+```
+###### \java\seedu\address\ui\CommandBox.java
+``` java
+    /**
+     * Automatically completes user's input and replaces it in the command box.
+     */
+    private void autocomplete() {
+        String input = commandTextField.getText();
+        String autocompletion = HintParser.autocomplete(input);
+        commandTextField.textProperty().set(autocompletion);
+        commandTextField.positionCaret(autocompletion.length());
+    }
+
+    /**
+     * Sets the command box style to match validity of the input. (valid -> default, invalid -> failed)
+     */
+    private void setStyleByValidityOfInput(String input) {
+        if (input.equals("")) {
+            return;
+        }
+
+        try {
+            logic.parse(input);
+        } catch (ParseException e) {
+            setStyleToIndicateCommandFailure();
+            return;
+        }
+        setStyleToDefault();
     }
 ```
 ###### \java\seedu\address\ui\CommandBoxIcon.java

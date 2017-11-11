@@ -13,6 +13,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.TextToSpeech;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.storage.ImageStorage;
 
@@ -56,11 +57,16 @@ public class PersonPanel extends UiPart<Region> {
         phone.setText(person.getPhone().toString());
         address.setText(person.getAddress().toString());
         email.setText(person.getEmail().toString());
-        remark.setText(person.getRemark().toString());
         tags.getChildren().clear();
         person.getTags().forEach(tag -> tags.getChildren().add(new Tag(tag.tagName).getRoot()));
+        //@@author hanselblack
+        remark.setText(person.getRemark().toString());
+        //Text to Speech
+        new TextToSpeech(person.getName().fullName);
+        //@@author
     }
 
+    //@@author nicholaschuayunzhi
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
 

@@ -2,6 +2,9 @@ package seedu.address.logic.commands;
 
 import java.util.function.Predicate;
 
+import seedu.address.logic.TextToSpeech;
+
+//@@author nicholaschuayunzhi
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
@@ -24,6 +27,11 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
+        //@@author hanselblack
+        //Text to Speech
+        new TextToSpeech("Heres what I have found");
+        //@@author
+        //@@author nicholaschuayunzhi
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 

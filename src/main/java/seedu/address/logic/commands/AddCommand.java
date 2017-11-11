@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import seedu.address.logic.TextToSpeech;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -56,8 +57,14 @@ public class AddCommand extends UndoableCommand {
             //@@author nicholaschuayunzhi
             toAdd.saveAvatar();
             //@@author
+            //@@author hanselblack
+            //Text to Speech
+            new TextToSpeech(toAdd.getName().toString() + " has been added to the list of contacts");
+            //@@author
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicatePersonException e) {
+            //Text to Speech
+            new TextToSpeech("Another " + toAdd.getName().toString() + " with the same details already exist");
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 

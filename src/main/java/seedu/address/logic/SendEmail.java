@@ -26,7 +26,6 @@ public class SendEmail extends Thread {
 
     private String recipientEmail;
     private ReadOnlyPerson person;
-    private String radioStreamUrl;
 
     private final Logger logger = LogsCenter.getLogger(Radio.class);
 

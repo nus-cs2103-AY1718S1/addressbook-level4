@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.logic.TextToSpeech;
 import seedu.address.model.AddressBook;
 
 /**
@@ -16,6 +17,10 @@ public class ClearCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
         model.resetData(new AddressBook());
+        //@@author hanselblack
+        //Text to Speech
+        new TextToSpeech(MESSAGE_SUCCESS);
+        //@@author
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

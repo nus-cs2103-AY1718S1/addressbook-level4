@@ -1,9 +1,12 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import java.util.Arrays;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import seedu.address.logic.TextToSpeech;
 
 //@@author hanselblack
 /**
@@ -22,16 +25,14 @@ public class MusicCommand extends Command {
             + "Example: " + COMMAND_WORD + " play classic ";
 
     public static final String MESSAGE_NO_MUSIC_PLAYING = "There is no music currently playing.";
-
-    private static final String MESSAGE_STOP = "Music Stopped";
-
-    private static String messagePause = "Music Paused";
+    public static final String MESSAGE_STOP = "Music Stopped";
+    public static final String MESSAGE_PAUSE = "Music Paused";
+    private static final int maxTrackNumber = 2;
 
     private static String messageSuccess = "Music Playing";
-
     private static MediaPlayer mediaPlayer;
-
     private static int trackNumber = 1;
+    private static String previousGenre = "";
 
     private String command;
     private String genre = "pop";
@@ -47,13 +48,14 @@ public class MusicCommand extends Command {
     }
 
     /**
-     * Returns whether music is currently playing.
+     * Returns boolean status whether music is currently playing.
      */
     public static boolean isMusicPlaying() {
         if (mediaPlayer == null) {
             return false;
         }
-        return mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING;
+        return mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING
+                || mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED;
     }
 
     /**
@@ -73,12 +75,19 @@ public class MusicCommand extends Command {
             RadioCommand.stopRadioPlayer();
             if (isMusicPlaying() && mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
                 mediaPlayer.play();
+                //Text to Speech
+                new TextToSpeech(messageSuccess);
                 return new CommandResult(messageSuccess);
             } else if (genreExist) {
-                String musicFile = getClass().getResource("/audio/music/"
-                        + genre + trackNumber + ".mp3").toExternalForm();
-                messageSuccess = genre.toUpperCase() + " Music Playing";
-                if (trackNumber < 2) {
+                //check if current genre same previous playing music genre
+                //if different reset track number
+                if (!genre.equals(previousGenre)) {
+                    trackNumber = 1;
+                }
+                String musicFile = getClass().getClassLoader().getResource("audio/music/"
+                        + genre + trackNumber + ".mp3").toString();
+                messageSuccess = genre.toUpperCase() + " Music " + trackNumber + " Playing";
+                if (trackNumber < maxTrackNumber) {
                     trackNumber++;
                 } else {
                     trackNumber = 1;
@@ -89,30 +98,41 @@ public class MusicCommand extends Command {
                 Media sound = new Media(musicFile);
                 mediaPlayer = new MediaPlayer(sound);
                 mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-                mediaPlayer.setVolume(5.0);
+                mediaPlayer.setVolume(90.0);
                 mediaPlayer.play();
                 //Text to Speech
-                TextToSpeech tts = new TextToSpeech("Hello");
+                new TextToSpeech(messageSuccess);
+                //set current playing genre as previousGenre
+                previousGenre = genre;
                 return new CommandResult(messageSuccess);
             } else {
                 return new CommandResult(MESSAGE_USAGE);
             }
+        //Stop the music that is currently playing
         case "stop":
             if (!isMusicPlaying()) {
+                //Text to Speech
+                new TextToSpeech(MESSAGE_NO_MUSIC_PLAYING);
                 return new CommandResult(MESSAGE_NO_MUSIC_PLAYING);
             }
             stopMusicPlayer();
+            //Text to Speech
+            new TextToSpeech(MESSAGE_STOP);
             return new CommandResult(MESSAGE_STOP);
+        //Pause current music that is playing
         case "pause":
             if (!isMusicPlaying()) {
+                //Text to Speech
+                new TextToSpeech(MESSAGE_NO_MUSIC_PLAYING);
                 return new CommandResult(MESSAGE_NO_MUSIC_PLAYING);
             }
             mediaPlayer.pause();
-            messagePause = genre.toUpperCase() + " Music Paused";
-            return new CommandResult(messagePause);
+            //Text to Speech
+            new TextToSpeech(MESSAGE_PAUSE);
+            return new CommandResult(MESSAGE_PAUSE);
 
         default:
-            return new CommandResult(MESSAGE_USAGE);
+            return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MusicCommand.MESSAGE_USAGE));
         }
     }
 

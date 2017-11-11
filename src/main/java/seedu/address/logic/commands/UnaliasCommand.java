@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import java.util.NoSuchElementException;
 
+import seedu.address.logic.TextToSpeech;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Aliases;
 import seedu.address.model.UserPrefs;
@@ -35,7 +36,8 @@ public class UnaliasCommand extends UndoableCommand {
         } catch (NoSuchElementException e) {
             throw new CommandException(String.format(MESSAGE_NO_SUCH_ALIAS, alias));
         }
-
+        //Text to Speech
+        new TextToSpeech(String.format(MESSAGE_SUCCESS, alias));
         return new CommandResult(String.format(MESSAGE_SUCCESS, alias));
     }
 
