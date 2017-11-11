@@ -11,10 +11,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PREMIUM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SIGNING_DATE;
 
 import java.time.LocalDate;
-import java.util.stream.Stream;
+import java.util.Arrays;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddLifeInsuranceCommand;
+import seedu.address.logic.parser.exceptions.MissingPrefixException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
@@ -37,9 +38,9 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
                 args, PREFIX_NAME, PREFIX_OWNER, PREFIX_INSURED, PREFIX_BENEFICIARY, PREFIX_PREMIUM,
                 PREFIX_CONTRACT_NAME, PREFIX_SIGNING_DATE, PREFIX_EXPIRY_DATE);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_OWNER, PREFIX_INSURED, PREFIX_BENEFICIARY,
+        if (!arePrefixesPresentAndFilled(argMultimap, PREFIX_NAME, PREFIX_OWNER, PREFIX_INSURED, PREFIX_BENEFICIARY,
                 PREFIX_PREMIUM, PREFIX_CONTRACT_NAME, PREFIX_SIGNING_DATE, PREFIX_EXPIRY_DATE)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+            throw new MissingPrefixException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddLifeInsuranceCommand.MESSAGE_USAGE));
         }
 
@@ -70,7 +71,13 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
      * Returns true if the name prefixes does not contain empty {@code Optional} values in the given
      * {@code ArgumentMultimap}.
      */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    private static boolean arePrefixesPresentAndFilled(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Arrays.stream(prefixes).allMatch(prefix -> {
+            if (argumentMultimap.getValue(prefix).isPresent() && !argumentMultimap.getValue(prefix).get().isEmpty()) {
+                return true;
+            } else {
+                return false;
+            }
+        });
     }
 }

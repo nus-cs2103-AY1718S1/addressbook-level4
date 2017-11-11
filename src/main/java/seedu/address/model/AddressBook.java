@@ -88,7 +88,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throws InsuranceNotFoundException {
         UUID id = target.getId();
         LifeInsurance lifeInsurance = new LifeInsurance(editedReadOnlyInsurance);
-        this.lifeInsuranceMap.replace(id, editedReadOnlyInsurance);
+        this.lifeInsuranceMap.replace(id, lifeInsurance);
     }
     //@@author
 

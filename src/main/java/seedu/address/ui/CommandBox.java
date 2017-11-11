@@ -14,6 +14,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.EmptyFieldException;
+import seedu.address.logic.parser.exceptions.MissingPrefixException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -118,6 +119,14 @@ public class CommandBox extends UiPart<Region> {
             commandTextField.positionCaret(commandTextField.getText().length());
             raise(new NewResultAvailableEvent("Autofilled!", false));
 
+        } catch (MissingPrefixException mpe) {
+            initHistory();
+            logger.info("Autofilling Prefixes!");
+            historySnapshot.next();
+            String filledCommand = historySnapshot.previous();
+            int unfilledPrefixPosition = filledCommand.indexOf("/ ") + 1;
+            commandTextField.setText(filledCommand.trim());
+            commandTextField.positionCaret(unfilledPrefixPosition);
         } catch (CommandException | ParseException e) {
             initHistory();
             // handle command failure
