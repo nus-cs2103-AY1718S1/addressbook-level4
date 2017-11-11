@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -15,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -35,15 +38,18 @@ public class BirthdayAlarmWindow extends UiPart<Region> implements Initializable
 
     private final Stage dialogStage;
 
-    public BirthdayAlarmWindow(ObservableList<ReadOnlyPerson> personList) {
+    public BirthdayAlarmWindow(ReadOnlyAddressBook ab) {
         super(FXML);
         ObservableList<ReadOnlyPerson> pl;
         Scene scene = new Scene(getRoot());
         //Null passed as the parent stage to make it non-modal.
         dialogStage = createDialogStage(TITLE, null, scene);
         dialogStage.setResizable(true);
-        pl = personList;
-        BirthdayTable.setItems(pl);
+        pl = ab.getPersonList();
+        FilteredList<ReadOnlyPerson> fd = new FilteredList(pl);
+        SortedList<ReadOnlyPerson> sl = new SortedList<>(fd);
+        BirthdayTable.setItems(sl);
+        sl.comparatorProperty().bind(BirthdayTable.comparatorProperty());
 
     }
 

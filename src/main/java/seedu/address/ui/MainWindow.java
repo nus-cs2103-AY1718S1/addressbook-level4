@@ -235,7 +235,7 @@ public class MainWindow extends UiPart<Region> {
     //@@author chilipadiboy
     @FXML
     private void handlebirthdayalarms() {
-        BirthdayAlarmWindow birthdayAlarmWindow = new BirthdayAlarmWindow(logic.getFilteredPersonList());
+        BirthdayAlarmWindow birthdayAlarmWindow = new BirthdayAlarmWindow(logic.getReadOnlyAddressBook());
         birthdayAlarmWindow.show();
     }
     //@@author
