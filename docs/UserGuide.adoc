@@ -171,11 +171,11 @@ If you want to find a person named `John Watson`:
 .  Type in +
 `>> find n/john` +
 (See Figure 4.4.1) +
-image:to be updated[a] +
+image:find1.png[find1, 600] +
 _Figure 4.4.1_
 .  Press kbd:[Enter] and you should see a list of persons having the name `john` +
 (See Figure 4.4.2) +
-image:to be updated[a] +
+image:find2.png[find2, 600] +
 _Figure 4.4.2_
 
 Here are some other ways you can use `find`:
@@ -718,11 +718,11 @@ If you want to view the list of commands entered: +
 .  Type in +
 `>> history` +
 (See Figure 4.20.1) +
-image:history1.png[history, 600] +
+image:history1.png[history1, 600] +
 _Figure 4.20.1_
 .  Press kbd:[Enter] and the list of commands that you entered before would show up +
 (See Figure 4.20.2) +
-image:history2.png[history, 600] +
+image:history2.png[history2, 600] +
 _Figure 4.20.2_
 
 // tag::undoredo[]
