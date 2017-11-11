@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -73,6 +72,7 @@ public class CommandBox extends UiPart<Region> {
     private String input;
     private FxRobot robot;
     private Set<String> setOfAutoCompleteCommands = new HashSet<>();
+    private boolean needToNavigateToNextField;
 
 
 
@@ -93,7 +93,9 @@ public class CommandBox extends UiPart<Region> {
         TextFields.bindAutoCompletion(commandTextField, sr -> {
             Set<String> suggestedCommands = new HashSet<>();
             for (String command: LIST_OF_ALL_COMMANDS) {
-                if (command.startsWith(sr.getUserText())) {
+                if (command.equals(sr.getUserText())) {
+                    //do not need to display drop down list if user input is already a valid command
+                } else if (command.startsWith(sr.getUserText())) {
                     suggestedCommands.add(command);
                 }
             }
@@ -101,10 +103,14 @@ public class CommandBox extends UiPart<Region> {
         });
 
         setOfAutoCompleteCommands.addAll(AddCommand.COMMAND_WORD_ABBREVIATIONS);
-        setOfAutoCompleteCommands.addAll(EditCommand.COMMAND_WORD_ABBREVIATIONS);
         setOfAutoCompleteCommands.addAll(DeleteCommand.COMMAND_WORD_ABBREVIATIONS);
-        setOfAutoCompleteCommands.addAll(SelectCommand.COMMAND_WORD_ABBREVIATIONS);
+        setOfAutoCompleteCommands.addAll(EditCommand.COMMAND_WORD_ABBREVIATIONS);
+        setOfAutoCompleteCommands.addAll(EmailCommand.COMMAND_WORD_ABBREVIATIONS);
         setOfAutoCompleteCommands.addAll(FindCommand.COMMAND_WORD_ABBREVIATIONS);
+        setOfAutoCompleteCommands.addAll(NewRolodexCommand.COMMAND_WORD_ABBREVIATIONS);
+        setOfAutoCompleteCommands.addAll(OpenRolodexCommand.COMMAND_WORD_ABBREVIATIONS);
+        setOfAutoCompleteCommands.addAll(RemarkCommand.COMMAND_WORD_ABBREVIATIONS);
+        setOfAutoCompleteCommands.addAll(SelectCommand.COMMAND_WORD_ABBREVIATIONS);
 
         // calls #processInput() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> processInput());
@@ -252,7 +258,7 @@ public class CommandBox extends UiPart<Region> {
         updateKeyboardIcon();
         setStyleToDefault();
         autoSelectFirstField();
-        if (Arrays.asList(AddCommand.LIST_OF_FIELDS).contains(selectedText)) {
+        if (needToNavigateToNextField) {
             updateSelection();
         }
     }
@@ -263,6 +269,7 @@ public class CommandBox extends UiPart<Region> {
     private void updateSelection() {
         commandTextField.selectRange(anchorPosition, anchorPosition + selectedText.length());
         selectedText = "";
+        needToNavigateToNextField = false;
     }
 
     /**
@@ -332,12 +339,17 @@ public class CommandBox extends UiPart<Region> {
         input = commandTextField.getText().trim().toLowerCase();
         if (isAutoCompleteCommand(input)) {
             displayFullFormat(input);
+            needToNavigateToNextField = false;
         } else if (isAddCommandFormat(input)) {
+            needToNavigateToNextField = true;
+
             int positionOfNameField = input.indexOf("n/");
             int positionOfPhoneField = input.indexOf("p/");
             int positionOfEmailField = input.indexOf("e/");
             int positionOfAddressField = input.indexOf("a/");
+
             int currentPosition = commandTextField.getCaretPosition();
+
             if (currentPosition > positionOfNameField && currentPosition < positionOfPhoneField) {
                 commandTextField.positionCaret(positionOfPhoneField + 2);
                 changeSelectionToNextField();
@@ -346,6 +358,9 @@ public class CommandBox extends UiPart<Region> {
                 changeSelectionToNextField();
             } else if (currentPosition > positionOfEmailField && currentPosition < positionOfAddressField) {
                 commandTextField.positionCaret(positionOfAddressField + 2);
+                changeSelectionToNextField();
+            } else {
+                commandTextField.positionCaret(positionOfNameField + 2);
                 changeSelectionToNextField();
             }
         }
@@ -357,29 +372,24 @@ public class CommandBox extends UiPart<Region> {
      * @param command input by the user
      */
     private void displayFullFormat(String command) {
-        switch (command) {
-        case "add":
-        case "a":
+        if (AddCommand.COMMAND_WORD_ABBREVIATIONS.contains(command)) {
             replaceText(AddCommand.FORMAT);
-            break;
-        case "edit":
-        case "e":
+        } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(command)) {
             replaceText(EditCommand.FORMAT);
-            break;
-        case "find":
-        case "f":
-        case "search":
+        } else if (EmailCommand.COMMAND_WORD_ABBREVIATIONS.contains(command)) {
+            replaceText(EmailCommand.FORMAT);
+        } else if (FindCommand.COMMAND_WORD_ABBREVIATIONS.contains(command)) {
             replaceText(FindCommand.FORMAT);
-            break;
-        case "select":
-        case "s":
+        } else if (NewRolodexCommand.COMMAND_WORD_ABBREVIATIONS.contains(command)) {
+            replaceText(NewRolodexCommand.FORMAT);
+        } else if (OpenRolodexCommand.COMMAND_WORD_ABBREVIATIONS.contains(command)) {
+            replaceText(OpenRolodexCommand.FORMAT);
+        } else if (RemarkCommand.COMMAND_WORD_ABBREVIATIONS.contains(command)) {
+            replaceText(RemarkCommand.FORMAT);
+        } else if (SelectCommand.COMMAND_WORD_ABBREVIATIONS.contains(command)) {
             replaceText(SelectCommand.FORMAT);
-            break;
-        case "delete":
-        case "d":
+        } else if (DeleteCommand.COMMAND_WORD_ABBREVIATIONS.contains(command)) {
             replaceText(DeleteCommand.FORMAT);
-            break;
-        default:
         }
     }
 
