@@ -95,7 +95,7 @@ public class PrintCommand extends Command {
                 //of insuranceHeader to make the txt file more organised.
                 String insuranceEnd = "";
                 int headerLength = insuranceHeader.length();
-                for( int i = 1; i<= headerLength; i++) {
+                for (int i = 1; i <= headerLength; i++) {
                     insuranceEnd = insuranceEnd + "=";
                 }
                 lines.add(insuranceEnd);
