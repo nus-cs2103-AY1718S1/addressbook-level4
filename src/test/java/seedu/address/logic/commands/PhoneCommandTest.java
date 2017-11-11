@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -50,7 +49,8 @@ public class PhoneCommandTest {
 
         PhoneCommand phoneCommand = prepareCommand(INDEX_FIRST_PERSON, "remove", new Phone("25555"));
 
-        String expectedMessage = "Phone number 25555 has been removed, the updated phone list now has 2 phone numbers, and the primary phone number is 85355255";
+        String expectedMessage = "Phone number 25555 has been removed, the updated phone list now has 2 phone numbers,"
+                + " and the primary phone number is 85355255";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), updatedPerson);
@@ -95,10 +95,10 @@ public class PhoneCommandTest {
 
         PhoneCommand phoneCommand = prepareCommand(INDEX_FIRST_PERSON, "showAllPhones", new Phone("000"));
 
-        String expectedMessage = "The primary number is 85355255\n" +
-                "The additional phone number(s) are/is \n" +
-                "1/ 24444\n" +
-                "2/ 2333\n";
+        String expectedMessage = "The primary number is 85355255\n"
+                + "The additional phone number(s) are/is \n"
+                + "1/ 24444\n"
+                + "2/ 2333\n";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), updatedPerson);
@@ -107,7 +107,7 @@ public class PhoneCommandTest {
     }
 
     @Test
-    public void execute_personAcceptedByModel_InvalidCommandSuccessful() throws Exception {
+    public void execute_personAcceptedByModel_invalidCommandSuccessful() throws Exception {
         Person updatedPerson = new PersonBuilder(model.getFilteredPersonList()
                 .get(INDEX_FIRST_PERSON.getZeroBased())).build();
 
@@ -124,9 +124,9 @@ public class PhoneCommandTest {
 
 
 
-        /**
-         * Returns a {@code CustomCommand} with the parameters {@code index + CustomFieldName + CustomFieldValue}.
-         */
+    /**
+     * Returns a {@code CustomCommand} with the parameters {@code index + CustomFieldName + CustomFieldValue}.
+     */
     private PhoneCommand prepareCommand(Index index, String action, Phone phone) {
         PhoneCommand command = new PhoneCommand(index, action, phone);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
