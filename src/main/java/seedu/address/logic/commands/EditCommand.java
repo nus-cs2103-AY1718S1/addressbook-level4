@@ -155,7 +155,8 @@ public class EditCommand extends UndoableCommand {
     //@@author arnollim
     @Override
     public String toString() {
-        return COMMAND_WORD + " " + index.getOneBased();
+        String feedbackToUser = COMMAND_WORD + " " + index.getOneBased();
+        return feedbackToUser;
     }
     //@@author
 

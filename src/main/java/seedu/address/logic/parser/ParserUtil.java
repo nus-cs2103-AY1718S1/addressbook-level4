@@ -1,7 +1,9 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.nio.file.InvalidPathException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -35,9 +37,16 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    //@@arnollim
+    public static final String ILLEGAL_FILENAME_CHARACTERS = "^\\\\/:*?\"<>|";
+    public static final String MESSAGE_INVALID_FILEPATH = "Filepath cannot contain illegal characters: "
+                                                + ILLEGAL_FILENAME_CHARACTERS;
 
     public static final Pattern PRINT_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
-            Pattern.compile("(?<filename>[^/]+)"); //name of .txt file to be saved as
+            Pattern.compile("(?<filename>[^/]+)"); //filename: name of .txt file to be saved as
+    public static final Pattern PRINT_ARGS_ILLEGAL =
+            Pattern.compile("(?<filename>[^\\\\/:*?\"<>|]+)"); //Filepath cannot include illegal characters
+    //@@author
     public static final String[] SELECT_ARGS_PERSON = {"p", "person", "l", "left"};
     public static final String[] SELECT_ARGS_INSURANCE = {"i", "insurance", "in", "r", "right"};
 
@@ -60,16 +69,19 @@ public class ParserUtil {
      * Leading and trailing whitespaces will be trimmed.
      * @return "filename" for example.
      * @throws IllegalValueException if there is no specified filepath.
+     * @throws InvalidPathException if filepath is illegal
      */
-
-    public static String parseFilePath(String args) throws IllegalValueException {
+    public static String parseFilePath(String args) throws IllegalValueException, InvalidPathException {
         final Matcher matcher = PRINT_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
-            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+            throw new IllegalValueException(MESSAGE_INVALID_COMMAND_FORMAT);
+        }
+        final Matcher matcherFilePath = PRINT_ARGS_ILLEGAL.matcher(args.trim());
+        if (!matcherFilePath.matches()) {
+            throw new InvalidPathException(args, MESSAGE_INVALID_FILEPATH);
         }
         return matcher.group("filename");
     }
-
     //author
 
     /**
