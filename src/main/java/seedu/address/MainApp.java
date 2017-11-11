@@ -224,7 +224,7 @@ public class MainApp extends Application {
      */
     private void restart() {
         logger.info("============================ [ Restarting Address Book ] =============================");
-
+        ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);
             init();
