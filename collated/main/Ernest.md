@@ -216,6 +216,15 @@ public class RelationshipCommandParser implements Parser<RelationshipCommand> {
         requireNonNull(bloodType);
         return bloodType.isPresent() ? Optional.of(new Bloodtype(bloodType.get())) : Optional.empty();
     }
+
+    /**
+     * Parses a {@code Optional<String> relation} into an {@code Optional<Relationship>} if {@code relation} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Relationship> parseRelationship(Optional<String> relation) throws IllegalValueException {
+        requireNonNull(relation);
+        return relation.isPresent() ? Optional.of(new Relationship(relation.get())) : Optional.empty();
+    }
 ```
 ###### \java\seedu\address\model\person\Bloodtype.java
 ``` java
@@ -321,6 +330,20 @@ public class BloodtypeContainsKeywordPredicate implements Predicate<ReadOnlyPers
     @Override
     public Bloodtype getBloodType() {
         return bloodType.get();
+    }
+
+    public void setRelationship(Relationship relation) {
+        this.relation.set(requireNonNull(relation));
+    }
+
+    @Override
+    public ObjectProperty<Relationship> relationshipProperty() {
+        return relation;
+    }
+
+    @Override
+    public Relationship getRelationship() {
+        return relation.get();
     }
 ```
 ###### \java\seedu\address\model\person\Relationship.java
