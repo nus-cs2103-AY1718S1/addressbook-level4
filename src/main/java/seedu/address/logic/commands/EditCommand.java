@@ -8,9 +8,16 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -32,6 +39,7 @@ import seedu.address.model.tag.Tag;
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
+    public static final String COMMAND_ALIAS = "e";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
@@ -54,7 +62,7 @@ public class EditCommand extends UndoableCommand {
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param index                of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
@@ -75,9 +83,17 @@ public class EditCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        if (editPersonDescriptor.isEmailFieldEdited()) {
+            String oldEmail = personToEdit.getEmail().toString();
+            String newEmail = editedPerson.getEmail().toString();
+            addPhoto(oldEmail, newEmail);
+        }
 
         try {
             model.updatePerson(personToEdit, editedPerson);
+            LoggingCommand loggingCommand = new LoggingCommand();
+            loggingCommand.keepLog(personToEdit.toString(), "Before Edit");
+            loggingCommand.keepLog(editedPerson.toString(), "After Edit");
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
@@ -133,7 +149,8 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private Set<Tag> tags;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
@@ -149,6 +166,16 @@ public class EditCommand extends UndoableCommand {
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
         }
+
+        //@@author JasmineSee
+
+        /**
+         * Returns true if email field is edited.
+         */
+        public boolean isEmailFieldEdited() {
+            return CollectionUtil.isAnyNonNull(this.email);
+        }
+        //@@author
 
         public void setName(Name name) {
             this.name = name;
@@ -212,4 +239,29 @@ public class EditCommand extends UndoableCommand {
                     && getTags().equals(e.getTags());
         }
     }
+
+    //@@author JasmineSee
+
+    /**
+     * Adds image file of person to new email if image of person exists.
+     */
+    private void addPhoto(String oldEmail, String newEmail) {
+        File oldFile = new File("photos/" + oldEmail + ".png");
+        File newFile = new File("photos/" + newEmail + ".png");
+        if (oldFile.exists()) {
+
+            try {
+                newFile.mkdirs();
+                newFile.createNewFile();
+                BufferedImage image;
+                image = ImageIO.read(oldFile);
+                ImageIO.write(image, "png", newFile);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Logger.getLogger(UploadPhotoCommand.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+    }
+    //@@author
 }

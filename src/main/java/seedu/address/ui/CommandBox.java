@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -99,7 +100,7 @@ public class CommandBox extends UiPart<Region> {
      * Handles the Enter button pressed event.
      */
     @FXML
-    private void handleCommandInputChanged() {
+    private void handleCommandInputChanged() throws IOException {
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
             initHistory();

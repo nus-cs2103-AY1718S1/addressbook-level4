@@ -156,6 +156,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author limshunyong
+    /**
+     *  Sorts the address book
+     */
+    public void sort() {
+        persons.sort();
+    }
+
+    //@@author
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {

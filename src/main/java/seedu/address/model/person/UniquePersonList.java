@@ -15,7 +15,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- *
+ * <p>
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
@@ -35,6 +35,20 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.contains(toCheck);
     }
 
+    //@@author JasmineSee
+    /**
+     * Returns true if the list contains a person with identical email in the given argument.
+     */
+    public boolean containsSameEmail(ReadOnlyPerson toCheck) {
+        requireNonNull(toCheck);
+        for (ReadOnlyPerson person : internalList) {
+            if (person.getEmail().toString().equals(toCheck.getEmail().toString())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Adds a person to the list.
      *
@@ -42,17 +56,17 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public void add(ReadOnlyPerson toAdd) throws DuplicatePersonException {
         requireNonNull(toAdd);
-        if (contains(toAdd)) {
+        if (contains(toAdd) || containsSameEmail(toAdd)) {
             throw new DuplicatePersonException();
         }
         internalList.add(new Person(toAdd));
     }
-
+    //@@author
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      */
     public void setPerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -103,6 +117,17 @@ public class UniquePersonList implements Iterable<Person> {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
+    //@@author limshunyong
+    /**
+     * Sorts the list
+     */
+    public void sort() {
+        internalList.sort((person1, person2) -> (
+                person1.getName().fullName
+                        .compareToIgnoreCase(person2.getName().fullName)));
+    }
+    //@@author
+
     @Override
     public Iterator<Person> iterator() {
         return internalList.iterator();
@@ -112,11 +137,12 @@ public class UniquePersonList implements Iterable<Person> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UniquePersonList // instanceof handles nulls
-                        && this.internalList.equals(((UniquePersonList) other).internalList));
+                && this.internalList.equals(((UniquePersonList) other).internalList));
     }
 
     @Override
     public int hashCode() {
         return internalList.hashCode();
     }
+
 }
