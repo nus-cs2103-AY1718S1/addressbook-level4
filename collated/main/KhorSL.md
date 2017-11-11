@@ -239,6 +239,7 @@ public class AddMultipleCommand extends UndoableCommand {
      * Creates an AddMultipleCommand to add the specified {@code ReadOnlyPerson}
      */
     public AddMultipleCommand(ArrayList<ReadOnlyPerson> personsList) {
+        assert personsList.size() != 0 : "personsList should have more than zero person";
         readOnlyPeople = personsList;
         toAdd = new ArrayList<>();
         for (ReadOnlyPerson person : personsList) {
