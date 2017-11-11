@@ -13,7 +13,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author Pengyuz
 /**
- * Restore the person in bin to address book;
+ * Restore a person identified using it's last displayed index or name from the recycle bin.
  */
 public class BinrestoreCommand extends UndoableCommand {
 
@@ -22,8 +22,8 @@ public class BinrestoreCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "Resotred";
     public static final String MESSAGE_USAGE = COMMAND_WORD + "Restore the person in bin to address book";
     private ArrayList<Index> targets;
-    private boolean allvalid = true;
-    private boolean exist  = false;
+    private boolean isVaild = true;
+    private boolean isEmpty = false;
 
     public BinrestoreCommand(ArrayList<Index> targets) {
         this.targets = targets;
@@ -37,14 +37,14 @@ public class BinrestoreCommand extends UndoableCommand {
 
         for (Index s: targets) {
             if (s.getZeroBased() >= lastshownlist.size()) {
-                allvalid = false;
+                isVaild = false;
             } else {
                 personstodelete.add(lastshownlist.get(s.getZeroBased()));
-                exist = true;
+                isEmpty = true;
             }
         }
 
-        if (allvalid && exist) {
+        if (isVaild && isEmpty) {
             try {
                 model.restorePerson(personstodelete);
             } catch (PersonNotFoundException pnfe) {
