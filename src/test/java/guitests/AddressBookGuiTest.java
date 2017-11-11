@@ -85,10 +85,6 @@ public abstract class AddressBookGuiTest {
     protected ProfilePanelHandle getProfilePanel() {
         return mainWindowHandle.getProfilePanelHandle();
     }
-
-    protected InsuranceProfilePanelHandle getInsuranceProfilePanel() {
-        return mainWindowHandle.getInsuranceProfilePanelHandle();
-    }
     //@@author
 
     protected InsuranceListPanelHandle getInsuranceListPanelHandle() {

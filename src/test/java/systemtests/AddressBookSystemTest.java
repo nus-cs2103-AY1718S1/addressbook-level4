@@ -91,10 +91,6 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getProfilePanelHandle();
     }
 
-    public InsuranceProfilePanelHandle getInsuranceProfilePanelHandle() {
-        return mainWindowHandle.getInsuranceProfilePanelHandle();
-    }
-
     public StatusBarFooterHandle getStatusBarFooter() {
         return mainWindowHandle.getStatusBarFooter();
     }
