@@ -5,6 +5,9 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.BinclearCommand;
+import seedu.address.logic.commands.BindeleteCommand;
+import seedu.address.logic.commands.BinrestoreCommand;
 import seedu.address.logic.commands.BirthdayAddCommand;
 import seedu.address.logic.commands.BirthdayRemoveCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -98,6 +101,12 @@ public class HelpCommandParserTest {
         assertParseSuccess(parser, ScheduleAddCommand.COMMAND_WORD, new HelpCommand("scheduleadd"));
 
         assertParseSuccess(parser, ScheduleRemoveCommand.COMMAND_WORD, new HelpCommand("scheduleremove"));
+
+        assertParseSuccess(parser, BinclearCommand.COMMAND_WORD, new HelpCommand("bin-clear"));
+
+        assertParseSuccess(parser, BindeleteCommand.COMMAND_WORD, new HelpCommand("bin-delete"));
+
+        assertParseSuccess(parser, BinrestoreCommand.COMMAND_WORD, new HelpCommand("bin-restore"));
 
         assertParseSuccess(parser, ExportCommand.COMMAND_WORD, new HelpCommand("export"));
 

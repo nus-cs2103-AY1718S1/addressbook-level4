@@ -1,6 +1,9 @@
 package seedu.address.logic.parser;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.BinclearCommand;
+import seedu.address.logic.commands.BindeleteCommand;
+import seedu.address.logic.commands.BinrestoreCommand;
 import seedu.address.logic.commands.BirthdayAddCommand;
 import seedu.address.logic.commands.BirthdayRemoveCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -84,6 +87,12 @@ public class HelpCommandParser implements Parser<HelpCommand> {
             return new HelpCommand("scheduleadd");
         } else if (input.equals(ScheduleRemoveCommand.COMMAND_WORD)) {
             return new HelpCommand("scheduleremove");
+        } else if (input.equals(BinclearCommand.COMMAND_WORD)) {
+            return new HelpCommand("bin-clear");
+        } else if (input.equals(BindeleteCommand.COMMAND_WORD)) {
+            return new HelpCommand("bin-delete");
+        } else if (input.equals(BinrestoreCommand.COMMAND_WORD)) {
+            return new HelpCommand("bin-restore");
         } else if (input.equals(ExportCommand.COMMAND_WORD)) {
             return new HelpCommand("export");
         } else if (input.equals(UndoCommand.COMMAND_WORD)) {
