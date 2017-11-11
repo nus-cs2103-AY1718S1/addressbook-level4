@@ -1,0 +1,83 @@
+=Test Script
+==Set up
+.    Change the name of `SampleData.xml` into `addressbook.xml`
+.    Move the `addressbook.xml` file into `~/data/`, where `~` is the directory you have the jar file located at.
+
+
+[width="100%",cols="33%, 33%, 34%",options="header",]
+|=======================================================================
+|Index |Command |Expected Output
+| |help |Opens the User Guide
+| |sync  |`CommandException` “Please login first” should be thrown
+| |login | Browser window opens for Google login
+| |sync | Contacts are synchronised
+| |logout and sync| `CommandException` “Please login first” should be thrown
+| |logout | `CommandException` “Failure logging out. Are you sure you are logged in?” thrown
+| |add n/John Moe | a new person named John Moe is added to the contact list
+| |add n/John Moe |
+| |add n/Bob Rob t/friend p/91234567| a new person named Bob Rob with phone number 91234567 and tag friend is added to the contact list
+| |add p/98765432 |
+| |a n/Charlie Brown e/charlieb@example.com p/91191191 a/123 address road t/friend t/neighbour |
+| |add n/Bob! |
+| |add n/Amy p/invalid |
+| |add n/Eve e/invalid
+| |add m/anything
+| |a n/Luke t/multiple words
+| |undo
+| |redo
+| |find t/friends family p/88887777
+| |f e/*@example.com
+| |find n/steph?n
+| |find Bob
+| |find n/John m/123
+| |sort name
+| |sort phone
+| |sort tag
+| |sort email
+| |sort tag
+| |sort invalid
+| |undo
+| |redo
+| |delete 1
+| |find n/John
+| |d 1
+| |undo
+| |delete 3
+| |list
+| |d -1
+| |d 100
+| |edit 1 n/Ash
+| |undo
+| |edit 100 p/120
+| |edit n/Hi
+| |edit 5 p/12345678
+| |e 3 a/
+| |restore | error message
+| |backup
+| |clear
+| |rb
+| |undo
+| |redo
+| |addtag 1 uncle|
+| |addtag 1 uncle|
+| |deletetag 1 uncle|
+| |deletetag 1 uncle|
+| |deletetag all friends|
+| |undo|
+| |addmeeting 1 Dinner/2017-12-30 19:00|
+| |addmeeting 1 Dinner/2018-02-29 19:00|
+| |addmeeting 2 Dinner/2017-12-30 19:00|
+| |undo|
+| |redo|
+| |deletemeeting 1|
+| |deletemeeting -1|
+| |select 1|
+| |dm 1|
+| |click to select second contact|
+
+
+
+
+|=======================================================================
+
+

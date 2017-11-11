@@ -73,7 +73,7 @@ public class MainApp extends Application {
 
         oauth = OAuth.getInstance();
 
-        executor = Executors.newSingleThreadExecutor();
+        executor = Executors.newFixedThreadPool(10);
 
         model = initModelManager(storage, userPrefs);
         oauth.setModel(model);
