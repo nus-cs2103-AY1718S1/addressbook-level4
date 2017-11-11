@@ -45,21 +45,23 @@ public class FindCommand extends Command {
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
         int numberOfPersonsShown = model.getFilteredPersonList().size();
+        boolean isPersonsNotFoundForGivenKeyword = numberOfPersonsShown == 0 && !predicate.getKeywords().isEmpty();
 
-        if (numberOfPersonsShown == 0 && !predicate.getKeywords().isEmpty()) {
+        if (isPersonsNotFoundForGivenKeyword) {
             String targets = model.getClosestMatchingName(predicate);
             List<String> targetsAsList = Arrays.asList(targets.split("\\s+"));
+
             if (targetsAsList.equals(predicate.getKeywords())) {
                 model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
                 return new CommandResult(String.format(Messages.MESSAGE_NO_MATCHING_NAME_FOUND, predicate));
             }
-            model.updateFilteredPersonList(new NameContainsKeywordsPredicate(targetsAsList));
 
+            model.updateFilteredPersonList(new NameContainsKeywordsPredicate(targetsAsList));
             return new CommandResult(String.format(Messages.MESSAGE_NO_PERSON_FOUND, predicate,
                     String.join(", ", targetsAsList)));
         }
 
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        return new CommandResult(getMessageForPersonListShownSummary(numberOfPersonsShown));
     }
 
     //@@author

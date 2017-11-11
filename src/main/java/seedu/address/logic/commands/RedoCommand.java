@@ -24,8 +24,8 @@ public class RedoCommand extends Command {
             + COMMAND_WORDVAR_2
             + " OR "
             + COMMAND_WORDVAR_3
-            + ": Redo the number of commands identified by the given number. If no number is given, redo previous"
-            + " command only. \n"
+            + ": Redo the number of commands identified by the given number. If no number is given, only previous"
+            + " command will be redone. \n"
             + "Parameters: NUMBER (must be a positive integer) \n"
             + "Example 1: " + COMMAND_WORDVAR_1 + " \n"
             + "Example 2: " + COMMAND_WORDVAR_3 + " 3";
