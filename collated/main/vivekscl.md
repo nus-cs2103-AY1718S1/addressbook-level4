@@ -88,6 +88,10 @@
         }
     }
 
+    /**
+     *  Returns a new person after checking if the  given tag is to be added or removed
+     *  and setting the new tag for the person.
+     */
     private Person setTagsForNewPerson(ReadOnlyPerson oldPerson, Tag tagToAddOrRemove, boolean isAdd) {
         Person newPerson = new Person(oldPerson);
         Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
@@ -105,20 +109,23 @@
 ```
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
+    /**
+     * Returns the closest matching name(s) for given predicate. If no such name can be found,
+     * the keyword itself is returned.
+     */
     @Override
     public String getClosestMatchingName(NameContainsKeywordsPredicate predicate) {
 
         requireNonNull(predicate);
         ArrayList<String> allNames = getListOfAllFirstAndLastNames(predicate);
         List<String> keywords = predicate.getKeywords();
-        return keywords.size() == 1 ? getClosestMatchingNameForOneKeyword(keywords, allNames, initialToleranceValue)
+        return keywords.size() == 1
+                ? getClosestMatchingNameForOneKeyword(keywords.get(0), allNames, initialToleranceValue)
                 : getClosestMatchingNameForMultipleKeywords(keywords, allNames, initialToleranceValue);
     }
 
     /**
-     * This helper method gets a list of all the names, separates them and returns a list of first and last names.
-     * The default value for the result is the first keyword given. Since no such name can be found for the given
-     * input, the keyword itself is returned.
+     * Returns a list of first and last names.
      */
     private ArrayList<String> getListOfAllFirstAndLastNames(NameContainsKeywordsPredicate predicate) {
 
@@ -132,43 +139,33 @@
     }
 
     /**
-     * If there is only one keyword given, this helper method gets the closest matching name from that keyword.
+     * Returns the closest matching name from one keyword.
      */
-    private String getClosestMatchingNameForOneKeyword(List<String> keywords,
+    private String getClosestMatchingNameForOneKeyword(String keyword,
                                                        ArrayList<String> allNames, double maxDistance) {
 
         JaroWinklerDistance currentJaroWinklerDistance = new JaroWinklerDistance();
-        String target = keywords.get(0);
-        String result = keywords.get(0);
+        String closestMatchingName = keyword;
         for (String s : allNames) {
-            if (maxDistance < currentJaroWinklerDistance.apply(target, s)) {
-                maxDistance = currentJaroWinklerDistance.apply(target, s);
-                result = s;
+            if (maxDistance < currentJaroWinklerDistance.apply(keyword, s)) {
+                maxDistance = currentJaroWinklerDistance.apply(keyword, s);
+                closestMatchingName = s;
             }
         }
-        return result;
+        return closestMatchingName;
     }
 
     /**
-     * If there are multiple keywords given, this helper method gets the closest matching list of names from the
-     * keywords and converts them into a readable string.
+     * Returns the closest matching list of names as a readable string from multiple keywords.
      */
     private String getClosestMatchingNameForMultipleKeywords(List<String> keywords,
                                                              ArrayList<String> allNames, double maxDistance) {
 
-        JaroWinklerDistance currentJaroWinklerDistance = new JaroWinklerDistance();
-        ArrayList<String> result = new ArrayList<String>();
-        for (String target : keywords) {
-            for (String s : allNames) {
-                if (maxDistance < currentJaroWinklerDistance.apply(target, s)) {
-                    maxDistance = currentJaroWinklerDistance.apply(target, s);
-                    if (!result.contains(s)) {
-                        result.add(s);
-                    }
-                }
-            }
-        }
-        return result.isEmpty() ? keywords.get(0) : String.join(" ", result);
+        ArrayList<String> listOfClosestMatchingNames = keywords.stream()
+                .map(keyword -> getClosestMatchingNameForOneKeyword(keyword, allNames, maxDistance))
+                .distinct().collect(Collectors.toCollection(ArrayList::new));
+        return listOfClosestMatchingNames.isEmpty() ? keywords.get(0)
+                : String.join(" ", listOfClosestMatchingNames);
     }
 
 ```
@@ -200,7 +197,7 @@ public final class WindowSize {
 
     private WindowSize() {}
 
-    /*
+    /**
      * Returns the appropriate width according to the given windowSize.
      */
     public static double getUserDefinedWindowWidth(String windowSize) {
@@ -224,7 +221,7 @@ public final class WindowSize {
         return width;
     }
 
-    /*
+    /**
      * Returns the appropriate height according to the given windowSize.
      */
     public static double getUserDefinedWindowHeight(String windowSize) {
@@ -311,26 +308,7 @@ public final class WindowSize {
 ``` java
     @Override
     public String toString() {
-        Iterator<Person> personIterator = persons.iterator();
-        Iterator<Tag> tagIterator = tags.iterator();
-        String allPersonsString = "Persons: ";
-        String allTagsString = "Tags: ";
-
-        if (personIterator.hasNext()) {
-            allPersonsString += "\n" + personIterator.next() + "\n";
-        }
-        if (tagIterator.hasNext()) {
-            allTagsString += "\n" + tagIterator.next();
-        }
-
-        while (personIterator.hasNext()) {
-            allPersonsString = allPersonsString.concat(personIterator.next() + "\n");
-        }
-        while (tagIterator.hasNext()) {
-            allTagsString = allTagsString.concat(", " + tagIterator.next());
-        }
-
-        return allPersonsString + allTagsString;
+        return "Persons: " + getPersonList() + "\nTags: " + getTagList();
     }
 
 ```
@@ -886,7 +864,9 @@ public class RedoCommandParser implements Parser<RedoCommand> {
             try {
                 return p.toModelType();
             } catch (IllegalValueException e) {
-                throw new RuntimeException("Data constraints violated in the adapted person: \n" + e);
+                logger.severe("Data constraints violated in the adapted person. Some of the data in the persons"
+                        + " list are in an invalid format. \n" + e);
+                return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(persons);
@@ -898,8 +878,9 @@ public class RedoCommandParser implements Parser<RedoCommand> {
             try {
                 return t.toModelType();
             } catch (IllegalValueException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Data constraints violated in the adapted person: \n" + e);
+                logger.severe("Data constraints violated in the adapted person. Some of the data in ther persons"
+                        + " list are in an invalid format. \n" + e);
+                return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(tags);
@@ -938,7 +919,7 @@ public class ChangeWindowSizeRequestEvent extends BaseEvent {
 ```
 ###### /java/seedu/address/ui/MainWindow.java
 ``` java
-    /*
+    /**
      * Sets the window size to the user defined size.
      */
     private void setWindowUserDefinedSize(double newWidth, double newHeight) {
@@ -996,27 +977,6 @@ public class ChangeWindowSizeRequestEvent extends BaseEvent {
         </items>
       </Menu>
   </MenuBar>
-
-  <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
-    <padding>
-      <Insets bottom="5" left="10" right="10" top="5" />
-    </padding>
-  </StackPane>
-
-  <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
-    <padding>
-      <Insets bottom="5" left="10" right="10" top="5" />
-    </padding>
-  </StackPane>
-
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" minWidth="250" maxWidth="300" prefWidth="250" SplitPane.resizableWithParent="false">
-      <padding>
-        <Insets bottom="10" left="10" right="10" top="10" />
-      </padding>
-      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
-    </VBox>
-
 ```
 ###### /resources/view/DarkTheme.css
 ``` css

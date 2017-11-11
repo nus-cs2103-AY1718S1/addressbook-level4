@@ -42,14 +42,14 @@ public class WindowSizeTest {
     @Test
     public void getUserDefinedWindowWidth_invalidWidth_invalidResult() {
         thrown.expect(AssertionError.class);
-        double result = (WindowSize.getUserDefinedWindowWidth(""));
+        double width = (WindowSize.getUserDefinedWindowWidth(""));
 
     }
 
     @Test
     public void getUserDefinedWindowHeight_invalidHeight_invalidResult() {
         thrown.expect(AssertionError.class);
-        double result = (WindowSize.getUserDefinedWindowHeight(""));
+        double height = (WindowSize.getUserDefinedWindowHeight(""));
     }
 }
 ```
@@ -143,12 +143,12 @@ public class WindowSizeTest {
     public void execute_multipleKeywords_noPersonFound() {
         String keywordsAsString = "kun ell car";
         FindCommand command = prepareCommand(keywordsAsString);
-        String targets = model.getClosestMatchingName(
+        String closestMatchingNames = model.getClosestMatchingName(
                 new NameContainsKeywordsPredicate(Arrays.asList(keywordsAsString.split("\\s+"))));
-        List<String> targetsAsList = Arrays.asList(targets.split("\\s+"));
+        List<String> targetsAsList = Arrays.asList(closestMatchingNames.split("\\s+"));
         String expectedMessage = String.format(MESSAGE_NO_PERSON_FOUND, keywordsAsString,
                 String.join(", ", targetsAsList));
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, FIONA));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE,FIONA));
     }
 
 ```
