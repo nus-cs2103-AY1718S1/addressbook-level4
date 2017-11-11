@@ -12,14 +12,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.CommandTest;
 import seedu.address.logic.Password;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.Username;
@@ -35,10 +34,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
-public class AddCommandTest {
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+public class AddCommandTest extends CommandTest {
 
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
@@ -47,14 +43,18 @@ public class AddCommandTest {
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_personAcceptedByModel_addSuccessful() {
+        try {
+            ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+            Person validPerson = new PersonBuilder().build();
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
-        String expectedMessage = String.format(AddCommand.MESSAGE_SUCCESS, validPerson.getName());
-        assertEquals(expectedMessage, commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+            CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
+            String expectedMessage = String.format(AddCommand.MESSAGE_SUCCESS, validPerson.getName());
+            assertEquals(expectedMessage, commandResult.feedbackToUser);
+            assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        } catch (CommandException ce) {
+            ce.printStackTrace();
+        }
     }
 
     @Test
@@ -276,8 +276,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException {
+        public ReadOnlyPerson addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException {
             fail("This method should not be called.");
+            return null;
         }
 
         @Override

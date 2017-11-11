@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import seedu.address.commons.events.ui.LogoutAppRequestEvent;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.CommandTest;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -17,7 +18,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author jelneo
-public class LogoutCommandTest {
+public class LogoutCommandTest extends CommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
