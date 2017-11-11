@@ -1,19 +1,15 @@
 package seedu.address.logic.commands;
 
-import org.junit.Test;
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.group.Group;
-import seedu.address.model.group.GroupName;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.testutil.GroupBuilder;
-import seedu.address.testutil.PersonBuilder;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.group.GroupName;
 
 //@@author eldonng
 public class CreateGroupCommandTest {

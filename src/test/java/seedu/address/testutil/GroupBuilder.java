@@ -17,7 +17,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class GroupBuilder {
     public static final String DEFAULT_GROUP_NAME = "Sample Group 1";
-    private static List<ReadOnlyPerson> DEFAULT_MEMBER_LIST = new ArrayList<>(Arrays.asList(ALICE));
+    private static final List<ReadOnlyPerson> DEFAULT_MEMBER_LIST = new ArrayList<>(Arrays.asList(ALICE));
 
     private Group group;
 

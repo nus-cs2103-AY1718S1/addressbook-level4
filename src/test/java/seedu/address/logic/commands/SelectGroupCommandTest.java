@@ -113,7 +113,8 @@ public class SelectGroupCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        JumpToGroupListRequestEvent lastEvent = (JumpToGroupListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        JumpToGroupListRequestEvent lastEvent =
+                (JumpToGroupListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
         assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
     }
 

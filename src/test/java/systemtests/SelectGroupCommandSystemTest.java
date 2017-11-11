@@ -4,8 +4,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectGroupCommand.MESSAGE_SELECT_GROUP_SUCCESS;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_GROUP;
 import static seedu.address.testutil.TypicalGroups.getTypicalGroups;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_GROUP;
 
 import org.junit.Test;
 
@@ -48,7 +48,8 @@ public class SelectGroupCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid index (size + 1) -> rejected */
         int invalidIndex = getModel().getGroupList().size() + 1;
-        assertCommandFailure(SelectGroupCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
+        assertCommandFailure(SelectGroupCommand.COMMAND_WORD + " " + invalidIndex,
+                MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
 
         /* Case: select the current selected card -> selected */
         assertCommandSuccess(command, middleIndex);

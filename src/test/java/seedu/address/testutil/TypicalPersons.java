@@ -82,6 +82,10 @@ public class TypicalPersons {
         return ab;
     }
 
+    /**
+     * Adds all persons to the sample address book
+     * @param ab
+     */
     private static void addPersonsToAddressBook(AddressBook ab) {
         for (ReadOnlyPerson person : getTypicalPersons()) {
             try {

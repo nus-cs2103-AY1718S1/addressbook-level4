@@ -31,6 +31,10 @@ public class TypicalGroups {
     public static final ReadOnlyGroup SAMPLE_GROUP_3 = new GroupBuilder().withGroupName("Sample Group 3")
             .withGroupMembers(new ArrayList<>(Arrays.asList(ALICE, GEORGE))).build();
 
+    /**
+     * Adds all the groups to the sample address book
+     * @param ab
+     */
     public static void addGroupsToAddressBook(AddressBook ab) {
         for (ReadOnlyGroup group : TypicalGroups.getTypicalGroups()) {
             try {
