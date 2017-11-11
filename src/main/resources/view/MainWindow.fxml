@@ -45,7 +45,7 @@
   </StackPane>
 
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" minWidth="250" maxWidth="300" prefWidth="250" SplitPane.resizableWithParent="false">
+    <VBox fx:id="personList" maxWidth="300" minWidth="250" prefWidth="250" SplitPane.resizableWithParent="false">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
@@ -53,15 +53,16 @@
     </VBox>
 
     <!--@@author jacoblipech-->
-      <SplitPane orientation="VERTICAL" prefHeight="200.0" prefWidth="80.0">
+    <SplitPane dividerPositions="0.12" orientation="VERTICAL" prefHeight="200.0" prefWidth="80.0">
         <items>
-            <StackPane fx:id="extendedPersonDisplayPlaceholder" prefHeight="150.0" prefWidth="50.0">
-              <padding>
+            <StackPane fx:id="extendedPersonDisplayPlaceholder" prefHeight="15.0" prefWidth="59.0">
+            <padding>
                 <Insets bottom="10" left="0" right="0" top="10" />
               </padding>
             </StackPane>
+            <StackPane fx:id="calendarDisplayPlaceholder" prefHeight="150.0" prefWidth="200.0" />
         </items>
-      </SplitPane>
+    </SplitPane>
 
     <!--@@author -->
     <StackPane fx:id="browserPlaceholder" prefWidth="340">

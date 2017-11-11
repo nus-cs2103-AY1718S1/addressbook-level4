@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.time.YearMonth;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -46,6 +47,7 @@ public class MainWindow extends UiPart<Region> {
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private ExtendedPersonDisplay extendedPersonDisplay;
+    private CalendarView calendarView;
     private Config config;
     private UserPrefs prefs;
 
@@ -64,6 +66,9 @@ public class MainWindow extends UiPart<Region> {
     //author @JacobLipech
     @FXML
     private StackPane extendedPersonDisplayPlaceholder;
+
+    @FXML
+    private StackPane calendarDisplayPlaceholder;
     //author
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -140,9 +145,18 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        //@@author jacoblipech
         extendedPersonDisplay = new ExtendedPersonDisplay();
         extendedPersonDisplayPlaceholder.getChildren().add(extendedPersonDisplay.getRoot());
 
+        calendarView = new CalendarView(YearMonth.now());
+        calendarDisplayPlaceholder.getChildren().add(calendarView.getView());
+
+        //CalendarViewPane calendarViewPane = new CalendarViewPane(logic);
+        //logic.setCalendarView
+        //calendarDisplayPlaceholder.getChildren().add(calendarViewPane.getCalendarPane().getView());
+
+        //@@author
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
