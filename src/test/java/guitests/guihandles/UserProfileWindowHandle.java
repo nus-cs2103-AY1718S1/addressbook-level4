@@ -24,7 +24,6 @@ public class UserProfileWindowHandle extends StageHandle {
     private static final String cancelButton_ID = "#cancelButton";
     private static final String statusLabel_ID = "#statusLabel";
 
-
     private final TextField nameTextField;
     private final TextField phoneTextField;
     private final TextField addressTextField;
@@ -66,7 +65,9 @@ public class UserProfileWindowHandle extends StageHandle {
      * Closes the {@code UserProfileWindow} by pressing the shortcut key associated
      * with the ok button in {@code UserProfileWindow}.
      */
-    public void closeUserProfileWindowUsingOkAccelerator() { guiRobot.push(KeyCode.ENTER); }
+    public void closeUserProfileWindowUsingOkAccelerator() {
+        guiRobot.push(KeyCode.ENTER);
+    }
 
     public String getName() {
         return nameTextField.getText();
@@ -116,7 +117,9 @@ public class UserProfileWindowHandle extends StageHandle {
         return cancelButton;
     }
 
-    public Label getStatusLabel() { return statusLabel; }
+    public Label getStatusLabel() {
+        return statusLabel;
+    }
 
     /**
      * Click the ok button

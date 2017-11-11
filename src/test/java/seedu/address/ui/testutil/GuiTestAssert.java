@@ -11,7 +11,6 @@ import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.UserProfileWindowHandle;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UserPerson;
-import seedu.address.ui.UserProfileWindow;
 
 /**
  * A set of assertion methods useful for writing GUI tests.

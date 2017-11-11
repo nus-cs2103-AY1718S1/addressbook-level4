@@ -152,6 +152,11 @@ public class SortCommandTest {
         }
     }
 
+    /**
+     * Sorts the unsortedAddressBook by indicated filter type and matches it with the expected list order
+     * @param filterType A filtertype
+     * @param sortedList A sorted list of {@code ReadOnlyPerson}
+     */
     private void sortUnsortedAddressBookByFilterType(String filterType, List<ReadOnlyPerson> sortedList) {
         model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
         expectedModel = createExpectedModel(sortedList);
