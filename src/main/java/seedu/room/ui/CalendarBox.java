@@ -39,8 +39,8 @@ public class CalendarBox {
     private Logic logic;
     private HashMap<LocalDate, ArrayList<ReadOnlyEvent>> hashEvents;
     private Text[] dayNames = new Text[]{ new Text("Sunday"), new Text("Monday"), new Text("Tuesday"),
-            new Text("Wednesday"), new Text("Thursday"), new Text("Friday"),
-            new Text("Saturday") };
+        new Text("Wednesday"), new Text("Thursday"), new Text("Friday"),
+        new Text("Saturday") };
 
 
     /**
@@ -72,20 +72,12 @@ public class CalendarBox {
         hashEvents = new HashMap<LocalDate, ArrayList<ReadOnlyEvent>>();
         hashEvents = eventsHashMap(eventList);
 
-        // Get the date we want to start with on the calendar
-        LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
-
-        // Dial back the day until it is SUNDAY (unless the month starts on a sunday)
-        while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY")) {
-            calendarDate = calendarDate.minusDays(1);
-        }
-
+        LocalDate calendarDate = dateForCalendarPage(yearMonth);
         populateDays(calendarDate);
-        // Change the title of the calendar
-        calendarTitle.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
+        changeCalenderTitle(yearMonth);
     }
 
-//////////////////////////////////// Methods to create the calendar //////////////////////////////////////////////////
+    //////////////////////////////////// Methods to create the calendar ///////////////////////////////////////////////
 
     /**
      * Create the title of the calendar and set style
@@ -95,6 +87,12 @@ public class CalendarBox {
         calendarTitle.setFill(yellow);
         calendarTitle.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
     }
+
+    //Change the title of the calendar according to the month of the calendar
+    public void changeCalenderTitle(YearMonth yearMonth) {
+        calendarTitle.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
+    }
+
 
     /**
      * Make the buttons for users to press to go previous month or next month
@@ -187,7 +185,7 @@ public class CalendarBox {
         }
     }
 
-///////////////////////////// Methods to populate events on the calendar /////////////////////////////////////////////
+    ///////////////////////////// Methods related to populating events on the calendar //////////////////////////////
 
     /**
      * Add the event's name on the calendar grid
@@ -220,6 +218,27 @@ public class CalendarBox {
         return hashEvents;
     }
 
+
+    /**
+     * Method to calculate the date of first day in a page of calendar
+     * @param yearMonth the YearMonth for this calendar page
+     * @return the LocalDate for this month/page of the calendar
+     */
+    private LocalDate dateForCalendarPage(YearMonth yearMonth) {
+        // Get the date we want to start with on the calendar
+        LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
+
+        // Dial back the day until it is SUNDAY (unless the month starts on a sunday)
+        while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY")) {
+            calendarDate = calendarDate.minusDays(1);
+        }
+        return calendarDate;
+    }
+
+    /**
+     * Set up the AnchorPaneNode to prepare for date and event population
+     * @param node individual AnchorPaneNode
+     */
     public void setupAnchorPaneNode(AnchorPaneNode node) {
         node.setId("calendarCell");
         if (node.getChildren().size() != 0) {
@@ -228,6 +247,11 @@ public class CalendarBox {
         node.getChildren().clear();
     }
 
+    /**
+     * Light up today's grid
+     * @param node
+     * @param calendarDate
+     */
     public void setupToday(AnchorPaneNode node, LocalDate calendarDate) {
         if (calendarDate.equals(LocalDate.now())) {
             node.lightUpToday();
@@ -247,6 +271,11 @@ public class CalendarBox {
         ap.getChildren().add(txt);
     }
 
+    /**
+     * Create a String that represents the events in a day to fit into a grid in the calendar
+     * @param eventInADay ArrayList of events in a day
+     * @return String that represents all events in a day
+     */
     public String populateDayEvents(ArrayList<ReadOnlyEvent> eventInADay) {
         int numEvents = 0;
         String eventTitles = "";
@@ -267,6 +296,10 @@ public class CalendarBox {
         return eventTitles;
     }
 
+    /**
+     * Populate the days and it's corresponding event(if any) in the calendar
+     * @param calendarDate the LocalDate referenced to populate this calendar
+     */
     public void populateDays(LocalDate calendarDate) {
         for (AnchorPaneNode ap : allCalendarDays) {
             setupAnchorPaneNode(ap);
@@ -277,14 +310,13 @@ public class CalendarBox {
                 ArrayList<ReadOnlyEvent> eventInADay = hashEvents.get(calendarDate);
                 Text eventText = new Text(populateDayEvents(eventInADay));
                 addEventName(ap, eventText);
-
             }
             calendarDate = calendarDate.plusDays(1);
 
         }
     }
 
-/////////////////////////////////////// Other methods ////////////////////////////////////////////////
+    /////////////////////////////////////// Other methods ////////////////////////////////////////////////
 
     /**
      * Move the month back by one. Repopulate the calendar with the correct dates.
