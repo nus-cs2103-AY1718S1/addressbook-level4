@@ -1,4 +1,4 @@
-package systemtests;
+package systemtests.util;
 
 import java.util.concurrent.TimeoutException;
 
