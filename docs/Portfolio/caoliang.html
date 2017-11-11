@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.3">
+<title>Cao Liang - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Cao Liang - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-modu"><a class="link" href="#project-modu">Project: ModU</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>ModU is a software designed to assist teachers and lecturers to plan their weekly teaching schedule.</p>
+</div>
+<div class="paragraph">
+<p>There are many ways to improve and extend the functionality of this software and this guide provides essential information to help you get started. This developer guide contains information of the architecture design of this software, implementation of the existing commands that are accessible for the users and other useful information.</p>
+</div>
+<div class="paragraph">
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/main/caoliangnus.md">Functional code</a>] [<a href="https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/test/caoliangnus.md">Test code</a>]</p>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-highlighting-keywords"><a class="link" href="#enhancement-added-highlighting-keywords">Enhancement Added: Highlighting Keywords</a></h3>
+<div class="sect3">
+<h4 id="external-behavior"><a class="link" href="#external-behavior">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="highlighting-keywords-code-color-code"><a class="link" href="#highlighting-keywords-code-color-code">Highlighting keywords : <code>color</code></a></h3>
+<div class="paragraph">
+<p>The <code>color</code> command will highlight the command keywords. The valid attributes are <em>enable</em> and <em>disable</em>.<br></p>
+</div>
+<div class="paragraph">
+<p>Command format in command box: <code>color ATTRIBUTE</code><br></p>
+</div>
+<div class="paragraph">
+<p>Valid example:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In <strong>module list mode</strong>, type <code>color enable</code> to enable highlighting of valid command keywords.<br></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification"><a class="link" href="#justification">Justification</a></h4>
+<div class="paragraph">
+<p>Our software is targeting on professors. Sometimes, especially in add command, we believed that professors may find it hard to distinguish command keyword and other lesson information. Therefore, the highlighting feature is necessary in helping to improve on the readability of the command box.
+Besides that, this feature also indicates to the professor whether the command entered in the command box is valid or invalid. This ensures that the command can be executed correctly.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="color-keyword-mechanism"><a class="link" href="#color-keyword-mechanism">Color Keyword mechanism</a></h3>
+<div class="paragraph">
+<p>The color keyword mechanism is facilitated by <strong>EventBus</strong>. Whenever color keyword command is executed, it will raise a <strong>ColorKeywordEvent</strong> via <strong>EventCenter</strong>. A listener in <strong>CommandBox</strong> will then enable or disable the highlighting of command keyword feature according to the parameter which was passed in by the user.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The default setting for this feature is set as disable.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following <em><a href="#sequence-diagram">Sequence diagram</a> (Figure 31)</em> shows how the color keyword command operation works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ColorKeywordCommandSeqDiagram.png" alt="ColorKeywordCommandSeqDiagram" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 31: Sequence Diagram for ColorKeywordCommand</em></p>
+</div>
+<div class="paragraph">
+<p>The following <em>Activity Diagram (Figure 32)</em> summarizes what happens when a user executes color keyword command.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ColorKeywordActivityDiagram.png" alt="ColorKeywordActivityDiagram" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 32: Activity Diagram for ColorKeywordCommand</em></p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect</strong>: Implementation of <strong>ColorKeywordCommand</strong><br>
+<strong>Alternative 1 (current choice)</strong>: Update boolean variable "isEnable" in the command box by calling event to set the status of this variable.<br>
+<strong>Pros</strong>: Since only command box will be updated, using <strong>EventCenter</strong> will maintain good data encapsulation.<br>
+<strong>Cons</strong>: It would be difficult for new developers to understand the <strong>EventCenter</strong> mechanism.<br>
+<strong>Alternative 2</strong>: Declare a global boolean variable.<br>
+<strong>Pros</strong>: It would be easier for new developer to design.<br>
+<strong>Cons</strong>: This method breaks encapsulation and fails to follow the standard java coding style.</p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-timetable"><a class="link" href="#enhancement-added-timetable">Enhancement Added: Timetable</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-2"><a class="link" href="#external-behavior-2">External behavior</a></h4>
+<div class="paragraph">
+<p>The timetable feature is used to display a timetable of all the lessons listed in a module.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/Ui.png" alt="Ui" width="900">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="justification-2"><a class="link" href="#justification-2">Justification</a></h4>
+<div class="paragraph">
+<p>Our software is used for professors to build timetable. We believed that displaying lessons in a timetable format is easier for professors to visualize.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-2"><a class="link" href="#implementation-2">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="timetable-mechanism"><a class="link" href="#timetable-mechanism">Timetable mechanism</a></h3>
+<div class="paragraph">
+<p><strong>Timetable</strong> is an enhancement of <a href="#ui">UI</a>. The role of the timetable view is to display a timetable of all the lessons listed in the display panel.</p>
+</div>
+<div class="paragraph">
+<p><strong>Timetable</strong> mechanism is facilitated by the <strong>GridPane</strong> properties in <a href="#javaFX">JavaFx</a>.</p>
+</div>
+<div class="paragraph">
+<p>The first row of <strong>timetableView</strong> is the header for time slot. In our software, the range for available time slots are from 0800 to 2000.</p>
+</div>
+<div class="paragraph">
+<p>The generation of timetable column header is implemented this way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"> <span class="directive">public</span> <span class="type">void</span> generateTimeslotHeader() {
+        <span class="comment">// ... generate column header for time slots ...//</span>
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The first column of <strong>timetableView</strong> is the header for weekday. In our software, the range is from Monday to Friday.</p>
+</div>
+<div class="paragraph">
+<p>The generation of timetable row header is implemented this way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> <span class="type">void</span> generateWeekDay() {
+       <span class="comment">// ... generate row header for weekday ...//</span>
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When the view command is executed, a number of lessons will be displayed on the display panel.
+In the <strong>CombinePanel</strong>, the <strong>handleViewedLessonEvent()</strong> will call <strong>generateTimeTableGrid()</strong> to set up the <strong>timetableView</strong>. The <strong>generateTimeTableGrid()</strong> will then obtain the grid data from <strong>generateTimeTableData()</strong>.After that, it will display the data onto the <strong>timetableView</strong>.</p>
+</div>
+<div class="paragraph">
+<p>The generation of timetable data is implemented this way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> generateTimeTableData() {
+        <span class="comment">// ... initGridData() ...//</span>
+        <span class="comment">// ... generate grid data for grid view ...//</span>
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The generation of timetable view is implemented this way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> generateTimeTableGrid() {
+
+        <span class="comment">// ... generateTimeTableData(); ...//</span>
+        <span class="comment">// ... generateTimeslotHeader(); ...//</span>
+       <span class="comment">// ... generateWeekDay();  ...//</span>
+       <span class="comment">// ... generate timetable view  ...//</span>
+    }</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect</strong>: Implementation of <strong>Timetable</strong>.<br>
+<strong>Alternative 1 (current choice)</strong>: Use java code to create the timetable view instead of SceneBuilder.<br>
+<strong>Pros</strong>: It is more flexible to change the style or the text of the label.<br>
+<strong>Cons</strong>: Since everything is written in code, you cannot visualise the layout until you run the code.<br>
+<strong>Alternative 2</strong>: Use SceneBuilder to create the timetable view.<br>
+<strong>Pros</strong>: It is easier to visualise the layout.<br>
+<strong>Cons</strong>: There are many limitations such as unable to add time slot to span 2 columns.</p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-stickynotes"><a class="link" href="#enhancement-added-stickynotes">Enhancement Added: StickyNotes</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-3"><a class="link" href="#external-behavior-3">External behavior</a></h4>
+<div class="paragraph">
+<p>The sticky notes feature is used to display additional information about a module.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/stickynotes.png" alt="stickynotes" width="900">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="justification-3"><a class="link" href="#justification-3">Justification</a></h4>
+<div class="paragraph">
+<p>Our software can also be used by students. We believed that the information displayed is not sufficient for student to understand a module.<br>
+Therefore, the stick notes feature allows professors to add additional information to help students to know the module better.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-3"><a class="link" href="#implementation-3">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="stickynotes-mechanism"><a class="link" href="#stickynotes-mechanism">StickyNotes mechanism</a></h3>
+<div class="paragraph">
+<p><strong>StickyNotes</strong> is an enhancement of <a href="#ui">UI</a>. The role of the stickynotes view is to display information about a module.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The maximum number of notes for a module is 9.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>StickyNotes</strong> mechanism is facilitated by the <strong>GridPane</strong> properties in <a href="#javaFX">JavaFx</a>.</p>
+</div>
+<div class="paragraph">
+<p>When the remark command is executed, a new note will be created and linked to a module. The <strong>handleRemarkChangedEvent()</strong> will call <strong>stickyNotesInit()</strong> to set up the <strong>stickyNotesView</strong>. The <strong>stickyNotesInit()</strong> will then obtain the grid data from <strong>noteDataInit()</strong>. After that, it will display the data onto the <strong>stickyNotesView</strong>.</p>
+</div>
+<div class="paragraph">
+<p>The generation of stickynotes data is implemented this way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> noteDataInit() {
+        <span class="comment">// ... generate note data for stickynotes view ...//</span>
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The generation of stickynotes view is implemented this way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> stickyNotesInit() {
+
+        <span class="comment">// ... noteDataInit(); ...//</span>
+       <span class="comment">// ... generate stickynotes view  ...//</span>
+    }</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect</strong>: Implementation of <strong>StickyNotes</strong>.<br>
+<strong>Alternative 1 (current choice)</strong>: Use java code to create the stickynotes view instead of SceneBuilder.<br>
+<strong>Pros</strong>: The color of stickynotes can be changed easily.<br>
+<strong>Cons</strong>: It might be difficult to implement for new developers.<br>
+<strong>Alternative 2</strong>: Use Scene Builder to create the stickynotes view.<br>
+<strong>Pros</strong>: It is easier to visualise the layout and set the properties needed.<br>
+<strong>Cons</strong>: There are many limitations such as unable to show only a selected few TextArea objects.</p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-proposed-add-command-code-import-code"><a class="link" href="#enhancement-proposed-add-command-code-import-code">Enhancement Proposed: Add command <code>import</code></a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Currently, our software does not support the importing data. With this feature, professors can prepare the lesson information using Excel or Word. Then our software will generate the timetable for them based on the imported data.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-proposed-add-code-login-code-feature"><a class="link" href="#enhancement-proposed-add-code-login-code-feature">Enhancement Proposed: Add  <code>login</code> feature</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Currently, our software can be accessed by anyone. Since our software only allows the professors to add and edit lesson information. The students should not be allowed to make any changes to the lessons. Hence, it is necessary to improve on the security level and grant different access to professors and students.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Change the model base from the Addressbook level 4 to ModU (Pull requests <a href="https://github.com/CS2103AUG2017-W13-B4/main/pull/50">#50</a>,
+<a href="https://github.com/CS2103AUG2017-W13-B4/main/pull/47">#47</a>, <a href="https://github.com/CS2103AUG2017-W13-B4/main/pull/51">#51</a>,
+<a href="https://github.com/CS2103AUG2017-W13-B4/main/pull/53/">#53</a>, <a href="https://github.com/CS2103AUG2017-W13-B4/main/pull/57/">#57</a>,
+<a href="https://github.com/CS2103AUG2017-W13-B4/main/pull/58/">#58</a>, <a href="https://github.com/CS2103AUG2017-W13-B4/main/pull/63/">#63</a>,)</p>
+</li>
+<li>
+<p>Wrote tutorial for User Guide (Pull requests <a href="https://github.com/CS2103AUG2017-W13-B4/main/pull/99">#99</a>,
+<a href="https://github.com/CS2103AUG2017-W13-B4/main/pull/139">#139</a>, <a href="https://github.com/CS2103AUG2017-W13-B4/main/pull/144">#144</a>,)</p>
+</li>
+<li>
+<p>Designed a logo for ModU (Pull requests <a href="https://github.com/CS2103AUG2017-W13-B4/main/pull/118/">#118</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-11-08 09:18:46 +08:00
+</div>
+</div>
+</body>
+</html>

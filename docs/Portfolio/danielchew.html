@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.3">
+<title>Daniel Chew - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Daniel Chew - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-modu"><a class="link" href="#project-modu">Project: ModU</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>ModU is a software designed to assist teachers and lecturers to plan their weekly teaching schedule.</p>
+</div>
+<div class="paragraph">
+<p>There are many ways to improve and extend the functionality of this software and this guide provides essential information to help you get started. This developer guide contains information of the architecture design of this software, implementation of the existing commands that are accessible for the users and other useful information.</p>
+</div>
+<div class="paragraph">
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/main/cctdaniel.md">Functional code</a>] [<a href="https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/test/cctdaniel.md">Test code</a>]</p>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-customise-command"><a class="link" href="#enhancement-added-customise-command">Enhancement Added: Customise Command</a></h3>
+<div class="paragraph">
+<p>Customise the font size of the application.</p>
+</div>
+<div class="sect3">
+<h4 id="external-behavior"><a class="link" href="#external-behavior">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="customising-the-font-size-code-customise-code"><a class="link" href="#customising-the-font-size-code-customise-code">Customising the font size : <code>customise</code></a></h3>
+<div class="paragraph">
+<p>The <code>customise</code> command will adjust the font size of the application.
+There are five font sizes for you to choose from, namely: <em>xsmall</em>, <em>small</em>, <em>normal</em>, <em>large</em>, <em>xlarge</em>.<br></p>
+</div>
+<div class="paragraph">
+<p>Command format in command box: <code>customise fs/FONT-SIZE</code><br></p>
+</div>
+<div class="paragraph">
+<p>Valid example:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In <strong>module list mode</strong>, type <code>customise fx/large</code> to increase the font size from the current size to large.<br></p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification"><a class="link" href="#justification">Justification</a></h4>
+<div class="paragraph">
+<p>Global variable that records current fontSizeUnit so that every time a new result is displayed, it is able to obtain the current font size from the variable and set accordingly.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="customise-mechanism"><a class="link" href="#customise-mechanism">Customise mechanism</a></h3>
+<div class="paragraph">
+<p>The customise mechanism is facilitated by both the <strong>EventBus</strong> and an enumeration class <strong>FontSizeUnit</strong>. Currently, <strong>CustomiseCommand</strong> only supports changing the font size of the application. Each time <strong>CustomiseCommand</strong> is executed, it will raise a <strong>ChangedFontSizeEvent</strong> via <strong>EventCenter</strong> according to the user specified parameter as well as update the <strong>currentFontSizeUnit</strong>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <strong>FontSizeUnit</strong> enumeration is to set a global static variable <strong>currentFontSizeUnit</strong> so that <strong>PersonCard</strong> is able to obtain the current font size whenever it is called.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following <em><a href="#sequence-diagram">Sequence diagram</a> (Figure 34)</em> shows how the customise command operation works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/CustomiseCommandSeqDiagram.png" alt="CustomiseCommandSeqDiagram" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 34: Sequence Diagram for CustomiseCommand</em></p>
+</div>
+<div class="paragraph">
+<p>The following <em>Activity Diagram (Figure 35)</em> summarizes what happens when a user executes customise command.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/CustomiseCommandActivityDiagram.png" alt="CustomiseCommandActivityDiagram" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 35: Activity Diagram for CustomiseCommand</em></p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect</strong>: Implementation of <strong>CustomiseCommand</strong><br>
+<strong>Alternative 1 (current choice)</strong>: Update static variable <strong>currentFontSizeUnit</strong> to the corresponding <strong>fontSizeUnit</strong> and use <strong>EventBus</strong> to inform <a href="#ui">UI</a> of the change to <strong>fontSizeUnit</strong>.<br>
+<strong>Pros</strong>: It only requires one global variable to records current <strong>fontSizeUnit</strong>.<br>
+<strong>Cons</strong>: It would be difficult for new developers to understand the <strong>EventCenter</strong> mechanism.<br>
+<strong>Alternative 2</strong>: Use a variable in model manager to keep a record of <strong>currentFontSizeUnit</strong>.<br>
+<strong>Pros</strong>: It do not require additional enumeration class and easier for new developers to design.<br>
+<strong>Cons</strong>: In order to obtain the variable from other components, the variable must be declared static. However, we cannot define static abstract method in an interface. It also does not follow Java’s standard coding style.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-theme-command"><a class="link" href="#enhancement-added-theme-command">Enhancement Added: Theme Command</a></h3>
+<div class="paragraph">
+<p>Change the theme of the application.</p>
+</div>
+<div class="sect3">
+<h4 id="external-behavior-2"><a class="link" href="#external-behavior-2">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="change-theme-code-theme-code"><a class="link" href="#change-theme-code-theme-code">Change theme : <code>theme</code></a></h3>
+<div class="paragraph">
+<p>Change between light (default) and dark theme<br>
+Format: <code>theme</code></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Toggle between light and dark theme. If the current theme is light, executing <code>theme</code> will change the theme to be dark theme.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>theme dark</code></p>
+</li>
+<li>
+<p><code>theme light</code></p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification-2"><a class="link" href="#justification-2">Justification</a></h4>
+<div class="paragraph">
+<p>Global variable that records current themeUnit so that every time a new result is displayed, it is able to obtain the current theme from the variable and set accordingly.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-2"><a class="link" href="#implementation-2">Implementation</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="switch-theme-mechanism"><a class="link" href="#switch-theme-mechanism">Switch theme mechanism</a></h3>
+<div class="paragraph">
+<p>The switch theme mechanism is facilitated by both the <strong>EventBus</strong> and an enumeration class <strong>ThemeUnit</strong>. Currently, <strong>ThemeCommand</strong> only supports changing between light (default) and dark theme. Each time <strong>ThemeCommand</strong> is executed, it will raise a <strong>SwitchThemeRequestEvent</strong> via <strong>EventCenter</strong> and update the <strong>currentThemeUnit</strong>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <strong>ThemeUnit</strong> enumeration is to set a global static variable <strong>currentThemeUnit</strong> so that <strong>MainWindow</strong> is able to obtain the current theme whenever it is called.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following <em><a href="#sequence-diagram">Sequence diagram</a> (Figure 36)</em> shows how the switch theme command operation works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/SwitchThemeSequenceDiagram.png" alt="SwitchThemeSequenceDiagram" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 36: Sequence Diagram for ThemeCommand</em></p>
+</div>
+<div class="paragraph">
+<p>The following <em>Activity Diagram (Figure 37)</em> summarize what happens when a user executes theme command.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/SwitchThemeActivityDiagram.png" alt="SwitchThemeActivityDiagram" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 37: Activity Diagram for ThemeCommand</em></p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect</strong>: Implementation of <strong>ThemeCommand</strong><br>
+<strong>Alternative 1 (current choice)</strong>: Update static variable <strong>currentThemeUnit</strong> to the corresponding <strong>ThemeUnit</strong> and use <strong>EventBus</strong> to inform <a href="#ui">UI</a> the change of <strong>ThemeUnit</strong>.<br>
+<strong>Pros</strong>: One global variable that records current <strong>ThemeUnit</strong>.<br>
+<strong>Cons</strong>: Hard for new developers to understand the event center mechanism.<br>
+<strong>Alternative 2</strong>:Use a variable in model manager to keep record of <strong>currentThemeUnit</strong><br>
+<strong>Pros</strong>: There is no need for an extra enumeration class and it is also easier for new developers to design.<br>
+<strong>Cons</strong>: In order to get the variable in other components, it must be declared static. However, we cannot define static abstract method in interface. It also does not follow Java’s standard coding style.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-proposed-implement-a-login-page"><a class="link" href="#enhancement-proposed-implement-a-login-page">Enhancement Proposed: Implement a login page</a></h3>
+<div class="paragraph">
+<p>Implement a login page to improve security of the application.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-proposed-import-export-external-timetable"><a class="link" href="#enhancement-proposed-import-export-external-timetable">Enhancement Proposed: Import/Export external timetable</a></h3>
+<div class="paragraph">
+<p>Feature to import/export external timetable and integrate with ModU.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-proposed-support-network-database"><a class="link" href="#enhancement-proposed-support-network-database">Enhancement Proposed: Support network database</a></h3>
+<div class="paragraph">
+<p>Currently the data is stored at the user&#8217;s computer but we have to support network database in order to release to public.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Proofread and edit the whole User Guide and Developer Guide, changed sentence structure, correct grammar mistakes and language.</p>
+</li>
+<li>
+<p>Updated the GUI theme (Pull request <a href="https://github.com/CS2103AUG2017-W13-B4/main/pull/129" class="bare">https://github.com/CS2103AUG2017-W13-B4/main/pull/129</a>)</p>
+</li>
+<li>
+<p>Change Model Module UI test cases (Pull request <a href="https://github.com/CS2103AUG2017-W13-B4/main/pull/105" class="bare">https://github.com/CS2103AUG2017-W13-B4/main/pull/105</a>)</p>
+</li>
+<li>
+<p>Did acceptance testing for group W09-B4 (Issue <a href="https://github.com/CS2103AUG2017-W09-B4/main/issues/78" class="bare">https://github.com/CS2103AUG2017-W09-B4/main/issues/78</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-11-08 09:18:46 +08:00
+</div>
+</div>
+</body>
+</html>
