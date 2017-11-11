@@ -69,11 +69,11 @@ public class RedoDisjoinCommandTest {
     public void executeWithAssertionError() throws Exception {
         ModelStub modelStubOne = new ModelStubThrowExceptionOne();
         ModelStub modelStubTwo = new ModelStubThrowExceptionTwo();
-        RedoCommand redoCommandOne = prepareRedoCommand(modelStubOne, disjoinCommandOne, disjoinCommandTwo);
-        RedoCommand redoCommandTwo = prepareRedoCommand(modelStubTwo, disjoinCommandOne, disjoinCommandTwo);
         String expectedMessage = Messages.MESSAGE_REDO_ASSERTION_ERROR;
-
+        RedoCommand redoCommandOne = prepareRedoCommand(modelStubOne, disjoinCommandOne, disjoinCommandTwo);
         assertCommandAssertionError(redoCommandOne, expectedMessage);
+
+        RedoCommand redoCommandTwo = prepareRedoCommand(modelStubTwo, disjoinCommandOne, disjoinCommandTwo);
         assertCommandAssertionError(redoCommandTwo, expectedMessage);
     }
 

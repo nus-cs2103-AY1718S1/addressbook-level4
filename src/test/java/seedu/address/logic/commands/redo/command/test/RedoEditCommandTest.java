@@ -55,11 +55,11 @@ public class RedoEditCommandTest {
     public void executeWithAssertionError() throws Exception {
         ModelStub modelStubOne = new RedoEditCommandTest.ModelStubThrowExceptionOne();
         ModelStub modelStubTwo = new RedoEditCommandTest.ModelStubThrowExceptionTwo();
-        RedoCommand redoCommandOne = prepareRedoCommand(modelStubOne, editCommandOne, editCommandTwo);
-        RedoCommand redoCommandTwo = prepareRedoCommand(modelStubTwo, editCommandOne, editCommandTwo);
         String expectedMessage = Messages.MESSAGE_REDO_ASSERTION_ERROR;
-
+        RedoCommand redoCommandOne = prepareRedoCommand(modelStubOne, editCommandOne, editCommandTwo);
         assertCommandAssertionError(redoCommandOne, expectedMessage);
+
+        RedoCommand redoCommandTwo = prepareRedoCommand(modelStubTwo, editCommandOne, editCommandTwo);
         assertCommandAssertionError(redoCommandTwo, expectedMessage);
     }
 

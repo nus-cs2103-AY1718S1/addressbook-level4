@@ -59,11 +59,11 @@ public class RedoDeleteCommandTest {
     public void executeWithAssertionError() throws Exception {
         ModelStub modelStubOne = new ModelStubThrowExceptionOne();
         ModelStub modelStubTwo = new ModelStubThrowExceptionTwo();
-        RedoCommand redoCommandOne = prepareRedoCommand(modelStubOne, deleteCommandOne, deleteCommandTwo);
-        RedoCommand redoCommandTwo = prepareRedoCommand(modelStubTwo, deleteCommandOne, deleteCommandTwo);
         String expectedMessage = Messages.MESSAGE_REDO_ASSERTION_ERROR;
-
+        RedoCommand redoCommandOne = prepareRedoCommand(modelStubOne, deleteCommandOne, deleteCommandTwo);
         assertCommandAssertionError(redoCommandOne, expectedMessage);
+
+        RedoCommand redoCommandTwo = prepareRedoCommand(modelStubTwo, deleteCommandOne, deleteCommandTwo);
         assertCommandAssertionError(redoCommandTwo, expectedMessage);
     }
 

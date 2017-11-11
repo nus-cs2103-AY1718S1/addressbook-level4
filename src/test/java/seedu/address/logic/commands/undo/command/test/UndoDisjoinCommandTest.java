@@ -65,11 +65,11 @@ public class UndoDisjoinCommandTest {
     public void executeWithAssertionError() throws Exception {
         ModelStub modelStubOne = new ModelStubThrowExceptionOne();
         ModelStub modelStubTwo = new ModelStubThrowExceptionTwo();
-        UndoCommand undoCommandOne = prepareUndoCommand(modelStubOne, disjoinCommandOne, disjoinCommandTwo);
-        UndoCommand undoCommandTwo = prepareUndoCommand(modelStubTwo, disjoinCommandOne, disjoinCommandTwo);
         String expectedMessage = Messages.MESSAGE_UNDO_ASSERTION_ERROR;
-
+        UndoCommand undoCommandOne = prepareUndoCommand(modelStubOne, disjoinCommandOne, disjoinCommandTwo);
         assertCommandAssertionError(undoCommandOne, expectedMessage);
+
+        UndoCommand undoCommandTwo = prepareUndoCommand(modelStubTwo, disjoinCommandOne, disjoinCommandTwo);
         assertCommandAssertionError(undoCommandTwo, expectedMessage);
     }
 

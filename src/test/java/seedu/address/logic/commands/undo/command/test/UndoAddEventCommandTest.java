@@ -56,11 +56,11 @@ public class UndoAddEventCommandTest {
     public void executeWithAssertionError() throws Exception {
         ModelStub modelStubOne = new ModelStubThrowExceptionOne();
         ModelStub modelStubTwo = new ModelStubThrowExceptionTwo();
-        UndoCommand undoCommandOne = prepareUndoCommand(modelStubOne, addCommandOne, addCommandTwo);
-        UndoCommand undoCommandTwo = prepareUndoCommand(modelStubTwo, addCommandOne, addCommandTwo);
         String expectedMessage = Messages.MESSAGE_UNDO_ASSERTION_ERROR;
-
+        UndoCommand undoCommandOne = prepareUndoCommand(modelStubOne, addCommandOne, addCommandTwo);
         assertCommandAssertionError(undoCommandOne, expectedMessage);
+
+        UndoCommand undoCommandTwo = prepareUndoCommand(modelStubTwo, addCommandOne, addCommandTwo);
         assertCommandAssertionError(undoCommandTwo, expectedMessage);
     }
 
