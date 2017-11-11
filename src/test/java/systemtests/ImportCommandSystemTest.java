@@ -147,7 +147,7 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
         updateStorageAndAddressBook(CARL, ALICE);
         parcelsAdded = addressBook.getParcelList();
         assertCommandSuccess(command, parcelsAdded, parcelsAdded, duplicateParcels);
-        assert !getParcelListPanel().isAnyCardSelected(): "Selection should be gone";
+        assert !getParcelListPanel().isAnyCardSelected() : "Selection should be gone";
 
         /* Case: file is empty -> rejected */
         updateStorageAndAddressBook();
