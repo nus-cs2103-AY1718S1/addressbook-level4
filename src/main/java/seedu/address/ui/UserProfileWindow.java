@@ -169,14 +169,22 @@ public class UserProfileWindow extends UiPart<Region> {
         }
 
         try {
-            userPerson.setPhone(new Phone(phoneTextField.getText()));
+            if (phoneTextField.getText().equals("")) {
+                userPerson.setPhone(new Phone(null));
+            } else {
+                userPerson.setPhone(new Phone(phoneTextField.getText()));
+            }
         } catch (IllegalValueException e) {
             statusLabel.setText(MESSAGE_PHONE_CONSTRAINTS);
             throw new Exception();
         }
 
         try {
-            userPerson.setAddress(new Address(addressTextField.getText()));
+            if (phoneTextField.getText().equals("")) {
+                userPerson.setAddress(new Address(null));
+            } else {
+                userPerson.setAddress(new Address(addressTextField.getText()));
+            }
         } catch (IllegalValueException e) {
             statusLabel.setText(MESSAGE_ADDRESS_CONSTRAINTS);
             throw new Exception();

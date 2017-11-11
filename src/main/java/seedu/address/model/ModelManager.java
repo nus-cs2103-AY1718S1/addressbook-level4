@@ -134,14 +134,14 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author bladerail
     @Override
     public void sortFilteredPersonList(String filterType) {
-        Predicate currPredicate = filteredPersons.getPredicate();
+        Predicate<? super ReadOnlyPerson> currPredicate = filteredPersons.getPredicate();
         if (currPredicate == null) {
             currPredicate = PREDICATE_SHOW_ALL_PERSONS;
         }
         addressBook.sortPersons(filterType);
         ObservableList<ReadOnlyPerson> sortedList = this.addressBook.getPersonList();
         this.filteredPersons = new FilteredList<>(sortedList);
-        updateFilteredPersonList(currPredicate);
+        updateFilteredPersonList((Predicate<ReadOnlyPerson>) currPredicate);
         indicateAddressBookChanged();
     }
 
@@ -161,7 +161,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /** Raises an event to indicate the model has changed */
-    public void indicateUserPersonChanged() {
+    private void indicateUserPersonChanged() {
         raise(new UserPersonChangedEvent(userPerson));
         logger.info("Updated User Person: " + userPerson);
     }

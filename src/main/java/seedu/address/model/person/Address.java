@@ -26,7 +26,7 @@ public class Address {
      * @throws IllegalValueException if given address string is invalid.
      */
     public Address(String address) throws IllegalValueException {
-        if (address == null || address.equals("")) {
+        if (address == null) {
             this.value = ADDRESS_EMPTY;
         } else {
             if (!isValidAddress(address)) {
