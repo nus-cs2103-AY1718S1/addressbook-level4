@@ -36,8 +36,10 @@ import seedu.address.logic.commands.RadioCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.ShareCommand;
+import seedu.address.logic.commands.UnaliasCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.hints.AddCommandHint;
+import seedu.address.logic.commands.hints.AliasCommandHint;
 import seedu.address.logic.commands.hints.ClearCommandHint;
 import seedu.address.logic.commands.hints.DeleteCommandHint;
 import seedu.address.logic.commands.hints.EditCommandHint;
@@ -51,6 +53,7 @@ import seedu.address.logic.commands.hints.MusicCommandHint;
 import seedu.address.logic.commands.hints.RadioCommandHint;
 import seedu.address.logic.commands.hints.RedoCommandHint;
 import seedu.address.logic.commands.hints.ShareCommandHint;
+import seedu.address.logic.commands.hints.UnaliasCommandHint;
 import seedu.address.logic.commands.hints.UndoCommandHint;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
@@ -190,6 +193,10 @@ public class HintParser {
             return new MusicCommandHint(userInput, arguments);
         case RadioCommand.COMMAND_WORD:
             return new RadioCommandHint(userInput, arguments);
+        case AliasCommand.COMMAND_WORD:
+            return new AliasCommandHint(userInput, arguments);
+        case UnaliasCommand.COMMAND_WORD:
+            return new UnaliasCommandHint(userInput, arguments);
         default:
             return null;
         }

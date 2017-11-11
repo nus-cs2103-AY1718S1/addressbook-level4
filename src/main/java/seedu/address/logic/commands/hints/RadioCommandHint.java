@@ -40,11 +40,11 @@ public class RadioCommandHint extends FixedArgumentsHint {
         }
 
         if (args.length == 1) {
-            //music play|
+            //radio play|
             if (actionArgument.equals("play")) {
                 offerHint("pop", "radio play pop");
             } else {
-                //pause and stop don't need any more args
+                //stop doesn't need any more args
                 handleFinishedArgs(actionArgument);
             }
             return;

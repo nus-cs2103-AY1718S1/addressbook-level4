@@ -63,5 +63,4 @@ public abstract class FixedArgumentsHint extends Hint {
         autoCorrectInput = userInput;
     }
 
-
 }
