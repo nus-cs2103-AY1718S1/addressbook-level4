@@ -28,71 +28,39 @@ import seedu.room.model.event.ReadOnlyEvent;
  */
 public class CalendarBox {
 
-    private ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(35);
+    private ArrayList<AnchorPaneNode> allCalendarDays;
     private VBox view;
     private Text calendarTitle;
+    private GridPane calendar;
+    private GridPane dayLabels;
+    private HBox titleBar;
     private YearMonth currentYearMonth;
     private final Color yellow = Color.web("#CA9733");
     private Logic logic;
+    private Text[] dayNames = new Text[]{ new Text("Sunday"), new Text("Monday"), new Text("Tuesday"),
+            new Text("Wednesday"), new Text("Thursday"), new Text("Friday"),
+            new Text("Saturday") };
 
 
     /**
-     * Create a calendar view
-     * @param yearMonth year month to create the calendar of
+     * Create a month-based calendar filled with dates and events
+     * @param yearMonth the month of the calendar to create the calendar
+     * @param logic containing the events to populate
      */
     public CalendarBox(YearMonth yearMonth, Logic logic) {
         this.logic = logic;
         currentYearMonth = yearMonth;
-        // Create the calendar grid pane
-        GridPane calendar = new GridPane();
-        calendar.setPrefSize(500, 450);
-        calendar.setGridLinesVisible(true);
-        // Create rows and columns with anchor panes for the calendar
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 7; j++) {
-                AnchorPaneNode ap = new AnchorPaneNode();
-                ap.setPrefSize(200, 90);
-                calendar.add(ap, j, i);
-                allCalendarDays.add(ap);
-            }
-        }
-        // Days of the week labels
-        Text[] dayNames = new Text[]{ new Text("Sunday"), new Text("Monday"), new Text("Tuesday"),
-            new Text("Wednesday"), new Text("Thursday"), new Text("Friday"),
-            new Text("Saturday") };
-        GridPane dayLabels = new GridPane();
-        dayLabels.setPrefWidth(600);
-        Integer col = 0;
-        for (Text txt : dayNames) {
-            txt.setFill(Color.WHITE);
-            AnchorPane ap = new AnchorPane();
-            ap.setId("calendarDaysPane");
-            ap.setPrefSize(200, 10);
-            ap.setBottomAnchor(txt, 5.0);
-            ap.getChildren().add(txt);
-            txt.setTextAlignment(TextAlignment.CENTER);
-            ap.setStyle("-fx-text-align: center;");
-            dayLabels.add(ap, col++, 0);
-        }
-        // Create calendarTitle and buttons to change current month
-        calendarTitle = new Text();
-        calendarTitle.setFill(yellow);
-        calendarTitle.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
+        allCalendarDays = new ArrayList<>(35);
 
-        Button previousMonth = new Button(" PREV ");
-        previousMonth.setOnAction(e -> previousMonth());
+        //create the skeleton of the calendar, i.e. grids and days
+        makeCalendarSkeleton();
 
-        Button nextMonth = new Button(" NEXT ");
-        nextMonth.setOnAction(e -> nextMonth());
+        // Create the navigation tool of the calendar, i.e. title, previous/next month buttons
+        makeCalendarNavigationTool();
 
-        HBox titleBar = new HBox(previousMonth, calendarTitle, nextMonth);
-        HBox.setMargin(previousMonth, new Insets(0, 13, 0, 13));
-        HBox.setMargin(nextMonth, new Insets(0, 13, 0, 13));
-
-        titleBar.setAlignment(Pos.BASELINE_CENTER);
         // Populate calendar with the appropriate day numbers
-        logic.getFilteredEventList();
         populateCalendar(yearMonth, logic.getFilteredEventList());
+
         // Create the calendar view
         view = new VBox(titleBar, dayLabels, calendar);
         VBox.setMargin(titleBar, new Insets(0, 0, 10, 0));
@@ -180,6 +148,81 @@ public class CalendarBox {
         }
 
         return hashEvents;
+    }
+
+    public void makeCalenderTitle() {
+        this.calendarTitle = new Text();
+        calendarTitle.setFill(yellow);
+        calendarTitle.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
+    }
+
+    public void makeButtons(Button previousMonth, Button nextMonth) {
+        previousMonth.setOnAction(e -> previousMonth());
+        nextMonth.setOnAction(e -> nextMonth());
+
+    }
+
+    public void makeCalendarTitleBar(HBox titleBar, Button previousMonth, Button nextMonth) {
+        HBox.setMargin(previousMonth, new Insets(0, 13, 0, 13));
+        HBox.setMargin(nextMonth, new Insets(0, 13, 0, 13));
+        titleBar.setAlignment(Pos.BASELINE_CENTER);
+    }
+
+    public void makeCalendarNavigationTool() {
+        makeCalenderTitle();
+
+        Button previousMonth = new Button(" PREV ");
+        Button nextMonth = new Button(" NEXT ");
+
+        makeButtons(previousMonth, nextMonth);
+
+        this.titleBar = new HBox(previousMonth, calendarTitle, nextMonth);
+        makeCalendarTitleBar(titleBar, previousMonth, nextMonth);
+    }
+
+    public void makeCalendarSkeleton() {
+        // Create the calendar grid pane
+        this.calendar = new GridPane();
+        createGrid(calendar);
+
+        // Create the days of the weeks from Sunday to Saturday
+        this.dayLabels = new GridPane();
+        makeDays(dayNames, dayLabels);
+    }
+
+    public void makeDays(Text[] dayNames, GridPane gridPane) {
+        gridPane.setPrefWidth(600);
+        int col = 0;
+        for (Text txt : dayNames) {
+            txt.setFill(Color.WHITE);
+            AnchorPane ap = new AnchorPane();
+            ap.setId("calendarDaysPane");
+            ap.setPrefSize(200, 10);
+            ap.setBottomAnchor(txt, 5.0);
+            ap.getChildren().add(txt);
+            txt.setTextAlignment(TextAlignment.CENTER);
+            ap.setStyle("-fx-text-align: center;");
+            gridPane.add(ap, col++, 0);
+        }
+    }
+
+    /**
+     * Create 5 by 7 grids for calendar
+     * @param calendar
+     */
+    public void createGrid(GridPane calendar) {
+
+        calendar.setPrefSize(500, 450);
+        calendar.setGridLinesVisible(true);
+        // Create rows and columns with anchor panes for the calendar
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 7; j++) {
+                AnchorPaneNode ap = new AnchorPaneNode();
+                ap.setPrefSize(200, 90);
+                calendar.add(ap, j, i);
+                allCalendarDays.add(ap);
+            }
+        }
     }
 
     /**
