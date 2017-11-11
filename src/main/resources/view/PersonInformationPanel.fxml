@@ -9,7 +9,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <SplitPane dividerPositions="0.5" prefHeight="800.0" prefWidth="1600.0" style="-fx-background-color: transparent;">
+      <SplitPane dividerPositions="0.5" prefHeight="500.0" prefWidth="1600.0" style="-fx-background-color: transparent;">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
@@ -19,8 +19,16 @@
                         <Label fx:id="name" styleClass="name" />
                         <HBox>
                            <children>
-                              <VBox minHeight="30" />
-                              <Label fx:id="customFields" styleClass="label-bright" />
+                               <VBox prefHeight="200.0" prefWidth="100.0">
+                                   <children>
+                                       <VBox fx:id="customFieldNameList" prefHeight="0.0" prefWidth="400.0" styleClass="label-bright" />
+                                   </children>
+                               </VBox>
+                               <VBox prefHeight="0.0" prefWidth="400.0">
+                                   <children>
+                                       <VBox fx:id="customFieldValueList" prefHeight="0.0" prefWidth="400.0" styleClass="label-bright" />
+                                   </children>
+                               </VBox>
                            </children>
                         </HBox>
                      </children>
