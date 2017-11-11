@@ -13,6 +13,9 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
+import seedu.address.model.insurance.exceptions.DuplicateInsuranceContractNameException;
+import seedu.address.model.insurance.exceptions.DuplicateInsuranceException;
+import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -83,14 +86,30 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@author OscarWang114
     @Override
-    public synchronized void addInsurance(ReadOnlyInsurance insurance) {
+    public synchronized void addLifeInsurance(ReadOnlyInsurance insurance)
+            throws DuplicateInsuranceException, DuplicateInsuranceContractNameException {
         addressBook.addInsurance(insurance);
         updateFilteredInsuranceList(PREDICATE_SHOW_ALL_INSURANCES);
         indicateAddressBookChanged();
     }
+
+    @Override
+    public synchronized void deleteInsurance(ReadOnlyInsurance target) throws InsuranceNotFoundException {
+        addressBook.deleteInsurance(target);
+        updateFilteredInsuranceList(PREDICATE_SHOW_ALL_INSURANCES);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateLifeInsurance(ReadOnlyInsurance target, ReadOnlyInsurance editedInsurance)
+        throws InsuranceNotFoundException {
+        requireAllNonNull(target, editedInsurance);
+        addressBook.updateLifeInsurance(target, editedInsurance);
+        indicateAddressBookChanged();
+    }
     //=========== Insurance List Accessors ==================================================================
-    //@author OscarWang114
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
      * {@code addressBook}

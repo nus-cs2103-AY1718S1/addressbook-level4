@@ -15,7 +15,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.DateParser;
-import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author OscarWang114
 /**
@@ -35,7 +35,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
     private ObjectProperty<InsurancePerson> beneficiary;
     private DoubleProperty premium;
     private StringProperty premiumString;
-    private StringProperty contractPath;
+    private StringProperty contractName;
     private StringProperty signingDateString;
     private StringProperty expiryDateString;
 
@@ -49,9 +49,10 @@ public class LifeInsurance implements ReadOnlyInsurance {
     /**
      * Constructor for {@code XmlAdaptedLifeInsurance.toModelType()}
      */
-    public LifeInsurance(String insuranceName, String owner, String insured, String beneficiary, Double premium,
-                         String contractPath, String signingDateInput, String expiryDateInput)
+    public LifeInsurance(String id, String insuranceName, String owner, String insured, String beneficiary,
+                         Double premium, String contractName, String signingDateInput, String expiryDateInput)
             throws IllegalValueException {
+        this.id = new SimpleObjectProperty<>(UUID.fromString(id));
         this.insuranceName = new SimpleStringProperty(insuranceName);
         this.roleToPersonNameMap = new EnumMap<>(Roles.class);
         this.roleToPersonNameMap.put(Roles.OWNER, owner);
@@ -61,7 +62,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
         this.insured = new SimpleObjectProperty<>(new InsurancePerson(insured));
         this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(beneficiary));
         this.premium = new SimpleDoubleProperty(premium);
-        this.contractPath = new SimpleStringProperty(contractPath);
+        this.contractName = new SimpleStringProperty(contractName);
         this.signingDate = new DateParser().parse(signingDateInput);
         this.signingDateString = new SimpleStringProperty(this.signingDate.format(DateParser.DATE_FORMAT));
         this.expiryDate = new DateParser().parse(expiryDateInput);
@@ -73,8 +74,9 @@ public class LifeInsurance implements ReadOnlyInsurance {
      * Constructor for {@code AddLifeInsuranceCommand}
      */
     public LifeInsurance(String insuranceName, String owner, String insured, String beneficiary, Double premium,
-                         String contractPath, LocalDate signingDate, LocalDate expiryDate) {
-        requireAllNonNull(owner, insured, beneficiary, premium, contractPath);
+                         String contractName, LocalDate signingDate, LocalDate expiryDate) {
+        requireAllNonNull(owner, insured, beneficiary, premium, contractName);
+        this.id = new SimpleObjectProperty<>(UUID.randomUUID());
         this.insuranceName = new SimpleStringProperty(insuranceName);
         this.roleToPersonNameMap = new EnumMap<>(Roles.class);
         this.roleToPersonNameMap.put(Roles.OWNER, owner);
@@ -84,7 +86,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
         this.insured = new SimpleObjectProperty<>(new InsurancePerson(insured));
         this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(beneficiary));
         this.premium = new SimpleDoubleProperty(premium);
-        this.contractPath = new SimpleStringProperty(contractPath);
+        this.contractName = new SimpleStringProperty(contractName);
         this.signingDate = signingDate;
         this.signingDateString = new SimpleStringProperty(this.signingDate.format(DateParser.DATE_FORMAT));
         this.expiryDate = expiryDate;
@@ -96,6 +98,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
      * Creates a copy of the given ReadOnlyInsurance.
      */
     public LifeInsurance(ReadOnlyInsurance source) {
+        this.id = new SimpleObjectProperty<>(source.idProperty().get());
         this.insuranceName = new SimpleStringProperty(source.getInsuranceName());
         this.roleToPersonNameMap = new EnumMap<>(Roles.class);
         this.roleToPersonNameMap.put(Roles.OWNER, source.getOwner().getName());
@@ -106,7 +109,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
         this.beneficiary = new SimpleObjectProperty<>(source.getBeneficiary());
         this.premium = new SimpleDoubleProperty(source.getPremium());
         this.premiumString = new SimpleStringProperty(this.getPremiumString());
-        this.contractPath = new SimpleStringProperty(source.getContractPath());
+        this.contractName = new SimpleStringProperty(source.getContractName());
         this.signingDateString = new SimpleStringProperty(source.getSigningDateString());
         this.expiryDateString = new SimpleStringProperty(source.getExpiryDateString());
     }
@@ -131,8 +134,8 @@ public class LifeInsurance implements ReadOnlyInsurance {
     }
 
     @Override
-    public String getId() {
-        return id.toString();
+    public UUID getId() {
+        return id.get();
     }
 
     @Override
@@ -140,11 +143,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return roleToPersonNameMap;
     }
 
-    public void setInsuranceName(String insuranceName) {
-        this.insuranceName.set(requireNonNull(insuranceName));
-    }
-
-    public void setOwner(Person owner) {
+    public void setOwner(ReadOnlyPerson owner) {
         requireNonNull(owner);
         this.owner.get().setPerson(owner);
     }
@@ -159,7 +158,12 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return owner.get();
     }
 
-    public void setInsured(Person insured) {
+    @Override
+    public String getOwnerName() {
+        return owner.get().getName();
+    }
+
+    public void setInsured(ReadOnlyPerson insured) {
         requireNonNull(insured);
         this.insured.get().setPerson(insured);
     }
@@ -174,7 +178,12 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return insured.get();
     }
 
-    public void setBeneficiary(Person beneficiary) {
+    @Override
+    public String getInsuredName() {
+        return insured.get().getName();
+    }
+
+    public void setBeneficiary(ReadOnlyPerson beneficiary) {
         requireNonNull(beneficiary);
         this.beneficiary.get().setPerson(beneficiary);
     }
@@ -187,6 +196,11 @@ public class LifeInsurance implements ReadOnlyInsurance {
     @Override
     public InsurancePerson getBeneficiary() {
         return beneficiary.get();
+    }
+
+    @Override
+    public String getBeneficiaryName() {
+        return beneficiary.get().getName();
     }
 
     public void setPremium(Double premium) {
@@ -226,19 +240,15 @@ public class LifeInsurance implements ReadOnlyInsurance {
     }
     //@author
 
-    //@author OscarWang114
-    public void setContractPath(String contractPath) {
-        this.contractPath.set(requireNonNull(contractPath));
+    //@@author OscarWang114
+    @Override
+    public StringProperty contractNameProperty() {
+        return contractName;
     }
 
     @Override
-    public StringProperty contractPathProperty() {
-        return contractPath;
-    }
-
-    @Override
-    public String getContractPath() {
-        return contractPath.get();
+    public String getContractName() {
+        return contractName.get();
     }
 
     public void setSigningDateString(String signingDateString) throws IllegalValueException {
@@ -273,13 +283,14 @@ public class LifeInsurance implements ReadOnlyInsurance {
 
     @Override
     public boolean equals(Object other) {
-        //TODO: Increase the validity of equals
         return other == this // short circuit if same object
                 || (other instanceof LifeInsurance // instanceof handles nulls
-                && ((LifeInsurance) other).getInsuranceName().equals(this.insuranceName)
-                && ((LifeInsurance) other).premiumString.equals(this.premiumString)
-                && ((LifeInsurance) other).signingDate.equals(this.signingDate)
-                && ((LifeInsurance) other).expiryDate.equals(this.expiryDate)); // state check
+                && this.isSameStateAs((ReadOnlyInsurance) other));
+    }
+
+    @Override
+    public String toString() {
+        return getAsText();
     }
 }
 

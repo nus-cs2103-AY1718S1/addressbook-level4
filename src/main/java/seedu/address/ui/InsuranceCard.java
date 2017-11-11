@@ -15,14 +15,14 @@ import seedu.address.commons.events.ui.PersonNameClickedEvent;
 import seedu.address.commons.events.ui.SwitchToInsurancePanelRequestEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 
-
+//@@author OscarWang114
 /**
- * The Profile Panel of the App.
+ * An UI component that displays information of a {@code LifeInsurance}.
  */
-public class InsuranceProfile extends UiPart<Region> {
+public class InsuranceCard extends UiPart<Region> {
 
-    //@@author OscarWang114
-    private static final String FXML = "InsuranceProfile.fxml";
+
+    private static final String FXML = "InsuranceCard.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private File insuranceFile;
@@ -41,7 +41,7 @@ public class InsuranceProfile extends UiPart<Region> {
     @FXML
     private Label insuranceName;
 
-    public InsuranceProfile() {
+    public InsuranceCard() {
         super(FXML);
         enableNameToProfileLink(insurance);
         registerAsAnEventHandler(this);
@@ -51,7 +51,7 @@ public class InsuranceProfile extends UiPart<Region> {
 
     //@@author RSJunior37
 
-    public InsuranceProfile(ReadOnlyInsurance insurance, int displayIndex) {
+    public InsuranceCard(ReadOnlyInsurance insurance, int displayIndex) {
         super(FXML);
         this.insurance = insurance;
         index.setText(displayIndex + ".");
@@ -112,7 +112,6 @@ public class InsuranceProfile extends UiPart<Region> {
         insurance = event.getInsurance();
         enableNameToProfileLink(insurance);
         bindListeners(insurance);
-        index.setText(null);
         raise(new SwitchToInsurancePanelRequestEvent());
     }
     //@@author

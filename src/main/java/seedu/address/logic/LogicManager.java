@@ -78,14 +78,14 @@ public class LogicManager extends ComponentManager implements Logic {
                 commandText = commandText.replaceFirst(prefixInConcern, replacementText);
             }
         }
-        if (commandText.contains(PREFIX_TAG.getPrefix())) {
+        if (commandText.contains(" " + PREFIX_TAG.getPrefix())) {
             String formattedTags = PREFIX_TAG.getPrefix()
-                    + person.getDetailByPrefix(PREFIX_TAG).replaceAll(" ", " t/") + " ";
+                    + person.getDetailByPrefix(PREFIX_TAG).replaceAll(" ", " " + PREFIX_TAG) + " ";
             commandText = commandText.replaceFirst(PREFIX_TAG.getPrefix(), formattedTags);
         }
         if (commandText.contains(PREFIX_DELTAG.getPrefix())) {
             String formattedTags = PREFIX_DELTAG.getPrefix()
-                    + person.getDetailByPrefix(PREFIX_DELTAG).replaceAll(" ", " t/") + " ";
+                    + person.getDetailByPrefix(PREFIX_DELTAG).replaceAll(" ", " " + PREFIX_DELTAG) + " ";
             commandText = commandText.replaceFirst(PREFIX_DELTAG.getPrefix(), formattedTags);
         }
         return commandText.trim();
