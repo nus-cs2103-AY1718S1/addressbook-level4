@@ -114,6 +114,7 @@ public abstract class AddressBookSystemTest {
         waitUntilBrowserLoaded(getBrowserPanel());
     }
 
+    //@@author Alim95
     /**
      * Executes {@code command} in the application's {@code CommandBox}.
      * Method returns after UI components have been updated.
@@ -128,6 +129,7 @@ public abstract class AddressBookSystemTest {
 
         waitUntilBrowserLoaded(getBrowserPanel());
     }
+    //@@author
 
     /**
      * Displays all persons in the address book.
