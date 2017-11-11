@@ -80,14 +80,14 @@ public class UserProfileWindowTest extends GuiUnitTest {
 
         // Invalid name
         userProfileWindowHandle.clickOk();
-        guiRobot.pauseForHuman();
+        guiRobot.sleep(250);
         assertUserProfileWindowStatusLabelEquals(userProfileWindowHandle,
                 MESSAGE_NAME_CONSTRAINTS);
 
         // Invalid Email
         setNameTextField(william.getName().toString());
         userProfileWindowHandle.clickOk();
-        guiRobot.pauseForHuman();
+        guiRobot.sleep(250);
         assertUserProfileWindowStatusLabelEquals(userProfileWindowHandle,
                 MESSAGE_EMAIL_CONSTRAINTS);
 
@@ -95,14 +95,14 @@ public class UserProfileWindowTest extends GuiUnitTest {
         setEmailTextField(william.getEmailAsText());
         setPhoneTextField("TTT");
         userProfileWindowHandle.clickOk();
-        guiRobot.pauseForHuman();
+        guiRobot.sleep(250);
         assertEquals(MESSAGE_PHONE_CONSTRAINTS,
                 userProfileWindowHandle.getStatusLabel().getText());
 
         // Invalid Email again
         setEmailTextField("abc");
         userProfileWindowHandle.clickOk();
-        guiRobot.pauseForHuman();
+        guiRobot.sleep(250);
         assertUserProfileWindowStatusLabelEquals(userProfileWindowHandle,
                 MESSAGE_EMAIL_CONSTRAINTS);
 
@@ -111,7 +111,7 @@ public class UserProfileWindowTest extends GuiUnitTest {
         setAddressTextField(william.getAddress().toString());
         userProfileWindowHandle.clickOk();
 
-        guiRobot.pauseForHuman();
+        guiRobot.sleep(250);
         assertUserProfileWindowStatusLabelEquals(userProfileWindowHandle,
                 MESSAGE_PHONE_CONSTRAINTS);
 
@@ -119,7 +119,7 @@ public class UserProfileWindowTest extends GuiUnitTest {
         setPhoneTextField(william.getPhone().toString());
         setWebLinkTextField(william.getWebLinksAsText());
         userProfileWindowHandle.clickOk();
-        guiRobot.pauseForHuman();
+        guiRobot.sleep(250);
 
         try {
             setUp();
