@@ -677,7 +677,7 @@ Student's phone number, email, address and postal code are optional inputs/field
 The following sequence diagram shows you how the `optional inputs/fields` operation works:
 
 image::OptionalInputsSequenceDiagram.png[width="800"]
-_Figure 4.5.1 : Sequence Diagram of Optional Inputs/Fields Operation_
+_Figure 4.6.1 : Sequence Diagram of Optional Inputs/Fields Operation_
 
 The optionalInput method will append messages indicating that those optional fields are not recorded if the user chooses not to include those fields.
 The method can be seen in the code section below.
@@ -700,7 +700,7 @@ The method can be seen in the code section below.
 The output of the method is illustrated in the following picture.
 
 image::OptionalInputMessage.png[width="300"]
-_Figure 4.5.2 : Messages shown when the user does not enter the optional fields_
+_Figure 4.6.2 : Messages shown when the user does not enter the optional fields_
 
 Prefixes of the optional fields - `PREFIX_PHONE`, `PREFIX_EMAIL`, `PREFIX_ADDRESS` and `PREFIX_POSTALCODE` are removed from
 the code segment below. The ensures that the `ParseException` will not be thrown if the user chooses not to include the
@@ -736,7 +736,7 @@ The color generated to be assigned to tags is random and all tags with the same 
 The following sequence diagram shows how the `unique color tag` operation works:
 
 image::UniqueTagColorSequenceDiagram.png[width="800"]
-_Figure 4.6.1 : Sequence Diagram of Unique Color Tag Operation_
+_Figure 4.7.1 : Sequence Diagram of Unique Color Tag Operation_
 
 The method receives `String tagName` (description of the tag) and returns the `String assignedColor`
 associated to the tagName. It is shown in the code segment below.
@@ -773,7 +773,7 @@ The section below explains how various parts of the above code segment works.
 A color is determined by three factors, `hue`, `saturation` and `luminance`.
 
 image::HueSaturationLuminance.png[width="550"]
-_Figure 4.6.2 : Color Range of Hue, Saturation and Luminance_
+_Figure 4.7.2 : Color Range of Hue, Saturation and Luminance_
 
 The code segment shown below randomises the value of each of the three factors,
 and a random `color` is obtained.
@@ -793,7 +793,7 @@ Random range of `saturation` and `luminance` are tweaked to ensure that the rand
 the tag description.
 
 image::tagColorPic.png[width="400"]
-_Figure 4.6.3 : Compatibility of tag color background with white font of tag description_
+_Figure 4.7.3 : Compatibility of tag color background with white font of tag description_
 
 Next, in the code segment below, the `red`, `green` and `blue` components are extracted from the `color`. It is then formatted into a `hexadecimal
 representation` of the color, before being converted to a `String` data type and assigned to `assignedColor`.
@@ -837,20 +837,20 @@ Cons: The range of colors will be more limited. +
 // end::uniquetagcolor[]
 
 // tag::remark[]
-=== Add/Remove a remark mechanism
-The `remark` mechanism is facilitated by making changes to the `Remark` class in the `Model` component. It enables the user to add or remove a single `remark` of the student.
+===  remark mechanism
+The `remark` mechanism is facilitated by making changes to the `Remark` class in the `Model` component. It enables the user to overwrite a single `remark` of the student.
 
 To avoid confusion and an overly complicated `UI`, only one `remark` per person is stored.
 
 The following sequence diagram shows how the `remark` operation works:
 
 image::RemarkSequenceDiagramForLogic.PNG[width="800"]
-_Figure 4.7.1 : Sequence Diagram of `Remark` Operation_
+_Figure 4.8.1 : Sequence Diagram of `Remark` Operation_
 
 `Remark` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 4.7.2 : Inheritance Diagram for Commands_
+_Figure 4.8.2 : Inheritance Diagram for Commands_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -954,7 +954,7 @@ for (ReadOnlyPerson people : people) {
 `Tabs` mechanism is implemented using TabsCommand.
 It swaps tab panel between lineChart and barChart based on the index input by the user.
 
-When user types `tab [INDEX]`, it creates raises new `event` named `JumpToTabRequestEvent`, which prompts the subscribed
+When the user types `tab [INDEX]`, it creates raises new `event` named `JumpToTabRequestEvent`, which prompts the subscribed
 method in `GraphPanel` to change the tab page based on[INDEX].
 
 [NOTE]
@@ -962,7 +962,7 @@ The number of valid index is based on the number of tabs created, in this case i
 A invalid index would be displayed if the index provided is out of bounds.
 
 image::TabSequenceDiagram.png[width="800"]
-_Figure 4.9.1 : Sequence Diagram of `Tab` Operation_
+_Figure 4.10.1 : Sequence Diagram of `Tab` Operation_
 
 ==== Design Considerations
 **Aspect:**  To display different chart types to help visual aid. +
@@ -975,6 +975,33 @@ _Figure 4.9.1 : Sequence Diagram of `Tab` Operation_
 
 ---
 //end::tab[]
+
+//tag::home[]
+=== Home mechanism
+`Home` mechanism is implemented using HomeCommand.
+It displays the home page when the user enter the command and each time a randomly selected wallpaper and quote would be displayed.
+
+When the home page is displayed, the extendedPersonCard, StatsPanel and GraphPanel would be switched out. Only when the user
+select a new person would the three panes swap back.
+
+[NOTE]
+As we would be focusing on CLI implementations, we did not enable a way to select a person through clicking when the home page
+is displayed.
+
+image::HomeSequenceDiagram.png[width="800"]
+_Figure 4.11.1 : Sequence Diagram of `home` Operation_
+
+==== Design Considerations
+**Aspect:**  To have a soft security feature. +
+**Alternative 1 (current choice):** Disable easy access to data, only users who knows the command are able to view. +
+**Pros:** Easy to implement. +
+**Cons:** Easier to be break through  +
+**Alternative 2:** Have a login page before displaying the main window. +
+**Pros:** The application as a whole would be more secure. +
+**Cons:** Takes a longer time to implement. +
+---
+
+//end::home[]
 
 // tag::commandshortcuts[]
 === Command Alias mechanism
@@ -1040,7 +1067,7 @@ and thus supports AND search.
 The following sequence diagram shows how the FindTags operation works:
 
 image::FindTagsSequenceDiagramForLogic.png[width="800"]
-_Figure 4.10.1 : Sequence Diagram of `FindTags` Operation_
+_Figure 4.13.1 : Sequence Diagram of `FindTags` Operation_
 
 As can seen from above, when a `FindTags` command is called, E.g. `findtags NUS friends`.
 An instance of `TagsContainKeywordsPredicate` is created.
