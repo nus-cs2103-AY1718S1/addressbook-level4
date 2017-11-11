@@ -369,7 +369,8 @@ public class CommandBox extends UiPart<Region> {
 
     /**
      * Displays the full format of the command
-     * In the case of add and remark command, if the user is trying to navigate to the next field, auto select the next field
+     * In the case of add or remark command, if the user is trying to navigate to the next field,
+     * auto select the next field
      */
     private void autocomplete() {
         input = commandTextField.getText().trim().toLowerCase();
