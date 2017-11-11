@@ -28,10 +28,10 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddTagCommand parse(String args) throws ParseException {
-        final int INDEX_LOWER_LIMIT = 0;
-        final int INDEX_UPPER_LIMIT = 1;
-        final int IS_TAG = 2;
-        final int IS_RANGE = 3;
+        final int Index_Lower_Limit = 0;
+        final int Index_Upper_Limit = 1;
+        final int Is_Tag = 2;
+        final int Is_Range = 3;
         Set<Tag> toAddSet = new HashSet<>();
         Set<Index> index = new HashSet<>();
         String indexInput;
@@ -51,10 +51,10 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
 
         boolean firstTag;
         boolean isRange;
-        String lowerLimit = firstItemArray.get(INDEX_LOWER_LIMIT);
-        String upperLimit = firstItemArray.get(INDEX_UPPER_LIMIT);
-        String checkFirstTag = firstItemArray.get(IS_TAG);
-        String checkIsRange = firstItemArray.get(IS_RANGE);
+        String lowerLimit = firstItemArray.get(Index_Lower_Limit);
+        String upperLimit = firstItemArray.get(Index_Upper_Limit);
+        String checkFirstTag = firstItemArray.get(Is_Tag);
+        String checkIsRange = firstItemArray.get(Is_Range);
 
         if (checkIsRange.equals("true")) {
             isRange = true;
@@ -124,10 +124,10 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
 
             boolean isTag;
             boolean isRangeAgain;
-            String lowerLimit2 = firstItemArray.get(INDEX_LOWER_LIMIT);
-            String upperLimit2 = firstItemArray.get(INDEX_UPPER_LIMIT);
-            String checkIsTag = firstItemArray.get(IS_TAG);
-            String checkIsRangeAgain = firstItemArray.get(IS_RANGE);
+            String lowerLimit2 = firstItemArray.get(Index_Lower_Limit);
+            String upperLimit2 = firstItemArray.get(Index_Upper_Limit);
+            String checkIsTag = firstItemArray.get(Is_Tag);
+            String checkIsRangeAgain = firstItemArray.get(Is_Range);
 
             if (checkIsRangeAgain.equals("true")) {
                 isRangeAgain = true;
@@ -211,8 +211,8 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
 
         }
         if (toAddSet.isEmpty()) {
-            throw new ParseException("Please provide an input for tag\n" +
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
+            throw new ParseException("Please provide an input for tag\n"
+                    + String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
         }
         Collections.sort(indexSet);
         indexInput = indexSet.stream().collect(Collectors.joining(", "));
