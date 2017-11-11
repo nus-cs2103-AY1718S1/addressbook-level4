@@ -191,7 +191,8 @@ The `view` command will display all lessons in a module or a location. +
 Command format in command box: `view INDEX` +
 
 [TIP]
-This is the only command that allows you to switch to *lesson list mode*. +
+This command allows you to switch to lesson list mode*. +
+Another command that allows you to switch to lesson list mode is list marked.+
 
 Valid examples:
 
@@ -213,7 +214,7 @@ Command format in command box: `edit INDEX [m/MODULE_CODE] [ct/CLASS_TYPE] [v/VE
 [TIP]
 At least one of the optional fields must be provided. +
 Existing values will be updated to the input values. +
-The prefix can be omitted in both *module list mode* and *location list mode*. +
+The prefix is omitted in both *module list mode* and *location list mode*. +
 
 Valid examples:
 
