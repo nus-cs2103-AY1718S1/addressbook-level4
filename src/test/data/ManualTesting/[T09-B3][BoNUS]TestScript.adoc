@@ -104,6 +104,41 @@ After listing events, you should having the view of event list
 
 === Import/export data
 
+==== Import data from `.xml` format
+
+To import data from a `.xml` file, we need to use the `import` command
+
+==== Import timetable from NUSMods website
+
+To import timetable from NUSMods website, we need to use the `import --nusmods` command.
+
+*Positive test cases*
+
+. Open your browser, and copy-paste your NUSMods timetable URL +
+_Result:_ +
+It should look like +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01+++.
+
+. Let's display the event listing first +
+_Command:_ +
+`listE`
+_Result:_ +
+You should see the event listing interface.
+
+. Use the import command +
+_Command:_ +
+`import --nusmods +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01+++` +
+_Result:_ +
+You should see `CS2103T examination` has been added as an event into *BoNUS*.
+
+*Negative test case*
+
+Try to import the same NUSMods timetable into *BoNUS* again +
+_Command:_ +
+`import --nusmods +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01+++` +
+_Result:_ +
+`0 examinations have been added as events.` +
+`However, some examination were not added since they already exist in the application.`
+
 === Advance setting
 
 ==== Add a new property
