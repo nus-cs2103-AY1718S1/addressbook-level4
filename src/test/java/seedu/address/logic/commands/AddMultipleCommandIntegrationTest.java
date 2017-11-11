@@ -84,21 +84,24 @@ public class AddMultipleCommandIntegrationTest extends GuiUnitTest {
         Person firstPersonInList = new Person(model.getAddressBook().getPersonList().get(0));
         ArrayList<ReadOnlyPerson> personArrayList = new ArrayList<>();
         personArrayList.add(firstPersonInList);
-        assertCommandFailure(prepareCommand(personArrayList, model), model, AddMultipleCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(prepareCommand(personArrayList, model), model,
+                AddMultipleCommand.MESSAGE_DUPLICATE_PERSON);
 
         // more than 1 duplicate person
         Person secondPersonInList = new Person(model.getAddressBook().getPersonList().get(1));
         personArrayList = new ArrayList<>();
         personArrayList.add(firstPersonInList);
         personArrayList.add(secondPersonInList);
-        assertCommandFailure(prepareCommand(personArrayList, model), model, AddMultipleCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(prepareCommand(personArrayList, model), model,
+                AddMultipleCommand.MESSAGE_DUPLICATE_PERSON);
 
         // first person not duplicate, second person is duplicate
         Person validPerson = new PersonBuilder().withName("Alice").build();
         personArrayList = new ArrayList<>();
         personArrayList.add(validPerson);
         personArrayList.add(firstPersonInList);
-        assertCommandFailure(prepareCommand(personArrayList, model), model, AddMultipleCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(prepareCommand(personArrayList, model), model,
+                AddMultipleCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
     @Test
