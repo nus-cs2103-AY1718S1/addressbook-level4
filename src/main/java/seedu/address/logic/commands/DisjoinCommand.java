@@ -35,7 +35,7 @@ public class DisjoinCommand extends UndoableCommand {
             + PREFIX_EVENT + "2";
 
     public static final String MESSAGE_DISJOIN_SUCCESS = "Person \"%1$s\" does not participate Event \"%2$s\"";
-    public static final String MESSAGE_PERSON_NOT_PARTICIPATE = "This person already does not participate this event";
+    public static final String MESSAGE_PERSON_NOT_PARTICIPATE = "This person does not participate this event";
 
     private final Index personIndex;
     private final Index eventIndex;
@@ -66,9 +66,9 @@ public class DisjoinCommand extends UndoableCommand {
             return new CommandResult(String.format(MESSAGE_DISJOIN_SUCCESS, personToRemove.getName(),
                     eventToRemove.getEventName()));
         } catch (PersonNotParticipateException pnpe) {
-            return new CommandResult(MESSAGE_PERSON_NOT_PARTICIPATE);
+            throw  new CommandException(MESSAGE_PERSON_NOT_PARTICIPATE);
         } catch (NotParticipateEventException npee) {
-            return new CommandResult(MESSAGE_PERSON_NOT_PARTICIPATE);
+            throw  new CommandException(MESSAGE_PERSON_NOT_PARTICIPATE);
         }
     }
 
