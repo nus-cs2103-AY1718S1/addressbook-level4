@@ -81,7 +81,7 @@ Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingA
 
 [NOTE]
 Having both link:#travis[Travis] and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms. +
-Travis is Unix-based and AppVeyor is Windows-based.
+link:#travis[Travis] is Unix-based and AppVeyor is Windows-based.
 
 ==== Getting started with coding
 
@@ -118,7 +118,7 @@ The rest of the application consists of four components:
 
 Each of the four components
 
-* Defines its API in an interface with the same name as the Component.
+* Defines its link:#api[API] in an interface with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
 For example, the Logic component (see the _link:#class-diagram[Class Diagram] (Figure 2)_ given below) defines its link:#api[API] in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
@@ -132,18 +132,18 @@ _Figure 2 : link:#class-diagram[Class Diagram] of the Logic Component_
 The _link:#sequence-diagram[Sequence Diagram](Figure 3)_ below shows how the components interact for the scenario where the user executes the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 3 : link:#sequence-diagram[Sequence Diagram] for delete 1 command (part 1)_
+_Figure 3 : Sequence Diagram for delete 1 command (part 1)_
 
 [NOTE]
 Note how the Model simply raises a **AddressBookChangedEvent** when ModU data are changed, instead of asking the Storage to save the updates to the hard disk.
 
-The _Sequence Diagram below (Figure 4)_ shows how the **EventsCenter** reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+The _link:#sequence-diagram[Sequence diagram] below (Figure 4)_ shows how the **EventsCenter** reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
 _Figure 4 : Sequence Diagram for delete 1 command (part 2)_
 
 [NOTE]
-Note how the event is propagated through the **EventsCenter** to the Storage and UI without Model having to be coupled to either of them. This is an example of how this event driven approach helps us reduce direct coupling between components.
+Note how the event is propagated through the **EventsCenter** to the Storage and link:#ui[UI] without Model having to be coupled to either of them. This is an example of how this event driven approach helps us reduce direct coupling between components.
 
 The sections below give more details of each component.
 
@@ -154,15 +154,15 @@ _Figure 5 : Class Diagram of the UI Component_
 
 *link:#api[API]* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-As shown in the _Class Diagram above (Figure 5)_, the UI consists of a **MainWindow** that is made up of subcomponents e.g. **CommandBox**, **ResultDisplay**, **PersonListPanel**, and etc. All of them inherit from the abstract **UiPart** class.
+As shown in the _link:#class-diagram[Class diagram] above (Figure 5)_, the link:#ui[UI] consists of a **MainWindow** that is made up of subcomponents e.g. **CommandBox**, **ResultDisplay**, **PersonListPanel**, and etc. All of them inherit from the abstract **UiPart** class.
 
-The UI component uses JavaFX UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view folder`. For example, the layout of the **MainWindow** is specified in `MainWindow.java`.
+The link:#ui[UI] component uses link:#javaFX[JavaFx] link:#ui[UI] framework. The layout of these link:#ui[UI] parts are defined in matching `.fxml` files that are in the `src/main/resources/view folder`. For example, the layout of the **MainWindow** is specified in `MainWindow.java`.
 
 The `link:#ui[UI]` component,
 
 * executes user commands using the Logic component.
-* binds itself to some data in the Model so that the UI component can auto-update when the data in the Model component changes.
-* responds to events raised from various parts of the application and updates the UI accordingly.
+* binds itself to some data in the Model so that the link:#ui[UI] component can auto-update when the data in the Model component changes.
+* responds to events raised from various parts of the application and updates the link:#ui[UI] accordingly.
 
 === Logic component
 
@@ -180,9 +180,9 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 .  The Logic component uses the **AddressBookParser** class to parse the user command.
 .  This results in a Command object which is executed by the **LogicManager**.
 .  The command execution can affect the Model component (e.g. adding a lesson) and/or raise events.
-.  The result of the command execution is encapsulated as a **CommandResult** object which is passed back to the UI component.
+.  The result of the command execution is encapsulated as a **CommandResult** object which is passed back to the link:#ui[UI] component.
 
-Given below is the _Sequence Diagram (Figure 8)_ for interactions within the Logic component for the execution of  `("delete 1")` API call.
+Given below is the _link:#sequence-diagram[Sequence diagram] (Figure 8)_ for interactions within the Logic component for the execution of  `("delete 1")` link:#api[API] call.
 
 image::DeletePersonSdForLogic.png[width="800"]
 _Figure 8: Sequence Diagram for the delete 1 Command_
@@ -198,7 +198,7 @@ _The Model component (Figure 9)_,
 
 * stores a **UserPref** object that represents the user’s preferences.
 * stores all the data of ModU.
-* exposes an unmodifiable **ObservableList<ReadOnlyLesson>** that can be 'observed' e.g. the UI component can be bound to this list so that it automatically updates when the data in the list has changed.
+* exposes an unmodifiable **ObservableList<ReadOnlyLesson>** that can be 'observed' e.g. the link:#ui[UI] component can be bound to this list so that it automatically updates when the data in the list has changed.
 * does not depend on any of the other three components.
 
 === Storage component
@@ -293,10 +293,10 @@ _Figure 14: undoStack Diagram 3_
 [NOTE]
 If the **undoStack** is empty, then there are no other commands left to be undone, and an exception will be thrown when trying to pop from the undoStack.
 
-The following _sequence diagram (Figure 15)_ shows how the undo operation works:
+The following _link:#sequence-diagram[Sequence diagram] (Figure 15)_ shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
-_Figure 15: Sequence Diagram_
+_Figure 15: Sequence Diagram for undo operation_
 
 The redo command does the exact opposite (pops from **redoStack**, push to **undoStack**, and restores ModU to the state after the command is executed).
 
@@ -405,9 +405,9 @@ The list and view mechanisms are similar and both are facilitated by **ListingUn
 [NOTE]
 The default listing unit is **MODULE**. When listing by attribute, for example, list location, the **currentListingUnit** will be set to **LOCATION** and shows a list of all locations.
 
-For different listing type, we always use the same **lessonList** but set different predicate to it. **UniqueModuleCodePredicate** and **UniqueLocationPredicate** are used to facilitate the implementation of list. For example, when the user types in list module, a **UniqueModulePredicate** will be used to filter the **lessonList**. UI will hide all other irrelevant information of the lesson such as location and time slot and shows a list of all modules.
+For different listing type, we always use the same **lessonList** but set different predicate to it. **UniqueModuleCodePredicate** and **UniqueLocationPredicate** are used to facilitate the implementation of list. For example, when the user types in list module, a **UniqueModulePredicate** will be used to filter the **lessonList**. link:#ui[UI] will hide all other irrelevant information of the lesson such as location and time slot and shows a list of all modules.
 
-The following _Sequence Diagram (Figure 20)_ shows how the list command works:
+The following _link:#sequence-diagram[Sequence diagram] (Figure 20)_ shows how the list command works:
 
 image::ListCommandSequenceDiagram.jpg[width="900"]
 _Figure 20: Sequence Diagram for ListCommand_
@@ -419,7 +419,7 @@ _Figure 10: Activity Diagram for ListCommand_
 
 **FixedCodePredicate** and **FixedLocationPredicate** are used to facilitate the implementation of **ViewCommand**. According to the current listing type, which we can obtain from **ListingUnit**, we can create either a **FixedCodePredicate** or a **FixedLocationPredicate** to filter the lesson list and set **currentListingUnit** to be **LESSON**.
 
-The following _Sequence Diagram (Figure 22)_ shows how the view command works:
+The following _link:#sequence-diagram[Sequence diagram] (Figure 22)_ shows how the view command works:
 
 image::ViewCommandSequenceDiagram.jpg[width="900"]
 _Figure 22 Sequence Diagram for ViewCommand_
@@ -448,7 +448,7 @@ The mark mechanism is facilitated by an extra attribute **isMarked** of Lesson c
 
 When the user mark a lesson, the specified lesson’s **isMarked** attribute will be set to true. When the user unmark a lesson, the specified lesson’s **isMarked** attribute will be set to false.
 
-By default, when a new lesson is added, it is not in the marked list and thus the **isMarked** attribute will be set to false. The following _Sequence Diagram (Figure 24)_ shows how the mark command works:
+By default, when a new lesson is added, it is not in the marked list and thus the **isMarked** attribute will be set to false. The following _link:#sequence-diagram[Sequence diagram] (Figure 24)_ shows how the mark command works:
 
 image::MarkCommandSequenceDiagram.jpg[width="900"]
 _Figure 24: Sequence Diagram for MarkCommand_
@@ -486,7 +486,7 @@ The **ModuleContainsKeywordPredicate** will be used when the current **ListingUn
 The **MarkedLessonContainsKeywordPredicate** will be used when the current **ListingUnit** is **LESSON** and **currentViewingPredicate** is marked. +
 The **LessonContainsKeywordPredicate** will be used when the current **ListingUnit** is **LESSON**.
 
-The following _Sequence Diagram (Figure 25)_ shows how the find operation works:
+The following _link:#sequence-diagram[Sequence diagram] (Figure 25)_ shows how the find operation works:
 
 image::FindCommandSeqDiagram.png[width="900"]
 _Figure 25:  Sequence Diagram for FindCommand_
@@ -516,7 +516,7 @@ The remark mechanism is facilitated by **UniqueRemarkList**. Each time we add or
 [NOTE]
 Only module can be remarked, therefore user can use remark if and only if the current listing element is **MODULE**.
 
-The following _Sequence Diagram (Figure 27)_ shows how the remark operation works:
+The following _link:#sequence-diagram[Sequence diagram] (Figure 27)_ shows how the remark operation works:
 
 image::RemarkCommandSequenceDiagram.jpg[width="900"]
 _Figure 27: Sequence Diagram for RemarkCommand_
@@ -543,7 +543,7 @@ The sort mechanism is executed by sorting the internalList in **UniqueLessonList
 [NOTE]
 If the previous attribute type of list command is module, the list will be sorted by the lesson’s module code alphabetically for alphabets and in ascending order for number. Such sorting will also be applied for the location and lesson attributes. If there is no attribute in the execution of previous list command, the list will be sorted by the lesson’s module code by default.
 
-The following _Sequence Diagram (Figure 29)_ shows how the sort operation works:
+The following _link:#sequence-diagram[Sequence diagram] (Figure 29)_ shows how the sort operation works:
 
 image::SortCommandSeqDiagram.png[width="900"]
 _Figure 29: Sequence Diagram for SortCommand_
@@ -583,7 +583,7 @@ The color keyword mechanism is facilitated by **EventBus**. Whenever color keywo
 [NOTE]
 The default setting for this feature is set as disable.
 
-The following _Sequence Diagram (Figure 31)_ shows how the color keyword command operation works:
+The following _link:#sequence-diagram[Sequence diagram] (Figure 31)_ shows how the color keyword command operation works:
 
 image::ColorKeywordCommandSeqDiagram.png[width="900"]
 _Figure 31: Sequence Diagram for ColorKeywordCommand_
@@ -613,7 +613,7 @@ The customise mechanism is facilitated by both the **EventBus** and an enumerati
 [NOTE]
 The **FontSizeUnit** enumeration is to set a global static variable **currentFontSizeUnit** so that **PersonCard** is able to obtain the current font size whenever it is called.
 
-The following _Sequence Diagram (Figure 34)_ shows how the customise command operation works:
+The following _link:#sequence-diagram[Sequence diagram] (Figure 34)_ shows how the customise command operation works:
 
 image::CustomiseCommandSeqDiagram.png[width="900"]
 _Figure 34: Sequence Diagram for CustomiseCommand_
@@ -626,7 +626,7 @@ _Figure 35: Activity Diagram for CustomiseCommand_
 ==== Design Considerations
 
 **Aspect**: Implementation of **CustomiseCommand** +
-**Alternative 1 (current choice)**: Update static variable **currentFontSizeUnit** to the corresponding **fontSizeUnit** and use **EventBus** to inform UI of the change to **fontSizeUnit**. +
+**Alternative 1 (current choice)**: Update static variable **currentFontSizeUnit** to the corresponding **fontSizeUnit** and use **EventBus** to inform link:#ui[UI] of the change to **fontSizeUnit**. +
 **Pros**: It only requires one global variable to records current **fontSizeUnit**. +
 **Cons**: It would be difficult for new developers to understand the **EventCenter** mechanism. +
 **Alternative 2**: Use a variable in model manager to keep a record of **currentFontSizeUnit**. +
@@ -643,7 +643,7 @@ The switch theme mechanism is facilitated by both the **EventBus** and an enumer
 [NOTE]
 The **ThemeUnit** enumeration is to set a global static variable **currentThemeUnit** so that **MainWindow** is able to obtain the current theme whenever it is called.
 
-The following _Sequence Diagram (Figure 36)_ shows how the switch theme command operation works:
+The following _link:#sequence-diagram[Sequence diagram] (Figure 36)_ shows how the switch theme command operation works:
 
 image::SwitchThemeSequenceDiagram.png[width="900"]
 _Figure 36: Sequence Diagram for ThemeCommand_
@@ -656,7 +656,7 @@ _Figure 37: Activity Diagram for ThemeCommand_
 ==== Design Considerations
 
 **Aspect**: Implementation of **ThemeCommand** +
-**Alternative 1 (current choice)**: Update static variable **currentThemeUnit** to the corresponding **ThemeUnit** and use **EventBus** to inform UI the change of **ThemeUnit**. +
+**Alternative 1 (current choice)**: Update static variable **currentThemeUnit** to the corresponding **ThemeUnit** and use **EventBus** to inform link:#ui[UI] the change of **ThemeUnit**. +
 **Pros**: One global variable that records current **ThemeUnit**. +
 **Cons**: Hard for new developers to understand the event center mechanism. +
 **Alternative 2**:Use a variable in model manager to keep record of **currentThemeUnit** +
@@ -669,9 +669,9 @@ _Figure 37: Activity Diagram for ThemeCommand_
 // tag::timetable[]
 === Timetable mechanism
 
-**Timetable** is an enhancement of UI. The role of the timetable view is to display a timetable of all the lessons listed in the display panel.
+**Timetable** is an enhancement of link:#ui[UI]. The role of the timetable view is to display a timetable of all the lessons listed in the display panel.
 
-**Timetable** mechanism is facilitated by the **GridPane** properties in JavaFx.
+**Timetable** mechanism is facilitated by the **GridPane** properties in link:#javaFX[JavaFx].
 
 The first row of **timetableView** is the header for time slot. In our software, the range for available time slots are from 0800 to 2000.
 
@@ -734,12 +734,12 @@ public void generateTimeTableGrid() {
 // tag::stickyNote[]
 === StickyNotes mechanism
 
-**StickyNotes** is an enhancement of UI. The role of the stickynotes view is to display information about a module.
+**StickyNotes** is an enhancement of link:#ui[UI]. The role of the stickynotes view is to display information about a module.
 
 [NOTE]
 The maximum number of notes for a module is 9.
 
-**StickyNotes** mechanism is facilitated by the **GridPane** properties in JavaFx.
+**StickyNotes** mechanism is facilitated by the **GridPane** properties in link:#javaFX[JavaFx].
 
 When the remark command is executed, a new note will be created and linked to a module. The **handleRemarkChangedEvent()** will call **stickyNotesInit()** to set up the **stickyNotesView**. The **stickyNotesInit()** will then obtain the grid data from **noteDataInit()**. After that, it will display the data onto the **stickyNotesView**.
 
@@ -829,7 +829,7 @@ _Figure 38: Saving documentation as PDF files in Chrome_
 There are three ways to run tests.
 
 [TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+The most reliable way to run tests is the 3rd one. The first two methods might fail some link:#gui[GUI] tests due to platform/resolution-specific idiosyncrasies.
 
 *Method 1: Using IntelliJ JUnit test runner*
 
@@ -845,7 +845,7 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using l
 
 *Method 3: Using link:#gradle[Gradle] (headless)*
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our link:#gui[GUI] tests can be run in the headless mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
+Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our link:#gui[GUI] tests can be run in the headless mode. In the headless mode, link:#gui[GUI] tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
 To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
 
@@ -892,7 +892,7 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, ModU depends on the   Jackson library for XML parsing. Managing these dependencies can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, ModU depends on the   Jackson library for XML parsing. Managing these dependencies can be automated using link:#gradle[Gradle]. For example, link:#gradle[Gradle] can download the dependencies automatically, which is better than these alternatives. +
 
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
