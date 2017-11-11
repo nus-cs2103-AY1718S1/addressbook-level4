@@ -10,6 +10,7 @@ import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -48,6 +49,7 @@ public class BrowserPanelTest extends GuiUnitTest {
                 + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
 
         waitUntilBrowserLoaded(browserPanelHandle);
+        TimeUnit.SECONDS.sleep(1);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
     }
 }
