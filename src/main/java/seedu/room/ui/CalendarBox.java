@@ -52,13 +52,8 @@ public class CalendarBox {
         currentYearMonth = yearMonth;
         allCalendarDays = new ArrayList<>(35);
 
-        //create the skeleton of the calendar, i.e. grids and days
         makeCalendarSkeleton();
-
-        // Create the navigation tool of the calendar, i.e. title, previous/next month buttons
         makeCalendarNavigationTool();
-
-        // Populate calendar with the appropriate day numbers
         populateCalendar(yearMonth, logic.getFilteredEventList());
 
         // Create the calendar view
@@ -130,44 +125,43 @@ public class CalendarBox {
         calendarTitle.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
     }
 
+//////////////////////////////////// Methods to create the calendar //////////////////////////////////////////////////
+
     /**
-     * Create a HashMap of LocalDate and Arraylist of ReadOnlyEvent to use for populating events on calendar
-     * @param eventList
-     * @return HashMap of LocalDate and Arraylist of ReadOnlyEvent
+     * Create the title of the calendar and set style
      */
-    public HashMap<LocalDate, ArrayList<ReadOnlyEvent>> eventsHashMap(ObservableList<ReadOnlyEvent> eventList) {
-        HashMap<LocalDate, ArrayList<ReadOnlyEvent>> hashEvents = new HashMap<LocalDate, ArrayList<ReadOnlyEvent>>();
-        for (ReadOnlyEvent event: eventList) {
-            if (hashEvents.containsKey(event.getDatetime().getLocalDateTime().toLocalDate())) {
-                hashEvents.get(event.getDatetime().getLocalDateTime().toLocalDate()).add(event);
-            } else {
-                ArrayList<ReadOnlyEvent> newEventList = new ArrayList<ReadOnlyEvent>();
-                newEventList.add(event);
-                hashEvents.put(event.getDatetime().getLocalDateTime().toLocalDate(), newEventList);
-            }
-        }
-
-        return hashEvents;
-    }
-
     public void makeCalenderTitle() {
         this.calendarTitle = new Text();
         calendarTitle.setFill(yellow);
         calendarTitle.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
     }
 
+    /**
+     * Make the buttons for users to press to go previous month or next month
+     * @param previousMonth Button to go to previous month
+     * @param nextMonth Button to go to next month
+     */
     public void makeButtons(Button previousMonth, Button nextMonth) {
         previousMonth.setOnAction(e -> previousMonth());
         nextMonth.setOnAction(e -> nextMonth());
 
     }
 
+    /**
+     * Create the title bar for the calendar above the calendar grids
+     * @param titleBar
+     * @param previousMonth
+     * @param nextMonth
+     */
     public void makeCalendarTitleBar(HBox titleBar, Button previousMonth, Button nextMonth) {
         HBox.setMargin(previousMonth, new Insets(0, 13, 0, 13));
         HBox.setMargin(nextMonth, new Insets(0, 13, 0, 13));
         titleBar.setAlignment(Pos.BASELINE_CENTER);
     }
 
+    /**
+     * Create the entire navigation tool for the calender, i.e. title, previous-month button, next-month button
+     */
     public void makeCalendarNavigationTool() {
         makeCalenderTitle();
 
@@ -180,6 +174,9 @@ public class CalendarBox {
         makeCalendarTitleBar(titleBar, previousMonth, nextMonth);
     }
 
+    /**
+     * Make the skeleton for the calendar, i.e. grids for one month, and label the days
+     */
     public void makeCalendarSkeleton() {
         // Create the calendar grid pane
         this.calendar = new GridPane();
@@ -190,6 +187,11 @@ public class CalendarBox {
         makeDays(dayNames, dayLabels);
     }
 
+    /**
+     * Make the days in a week on the calendar
+     * @param dayNames a Text array containing all the days in a week
+     * @param gridPane
+     */
     public void makeDays(Text[] dayNames, GridPane gridPane) {
         gridPane.setPrefWidth(600);
         int col = 0;
@@ -225,6 +227,8 @@ public class CalendarBox {
         }
     }
 
+///////////////////////////// Methods to populate events on the calendar /////////////////////////////////////////////
+
     /**
      * Add the event's name on the calendar grid
      * @param ap AnchorPaneNode that we are adding the event to
@@ -247,6 +251,27 @@ public class CalendarBox {
         ap.getChildren().add(txt);
     }
 
+    /**
+     * Create a HashMap of LocalDate and Arraylist of ReadOnlyEvent to use for populating events on calendar
+     * @param eventList
+     * @return HashMap of LocalDate and Arraylist of ReadOnlyEvent
+     */
+    public HashMap<LocalDate, ArrayList<ReadOnlyEvent>> eventsHashMap(ObservableList<ReadOnlyEvent> eventList) {
+        HashMap<LocalDate, ArrayList<ReadOnlyEvent>> hashEvents = new HashMap<LocalDate, ArrayList<ReadOnlyEvent>>();
+        for (ReadOnlyEvent event: eventList) {
+            if (hashEvents.containsKey(event.getDatetime().getLocalDateTime().toLocalDate())) {
+                hashEvents.get(event.getDatetime().getLocalDateTime().toLocalDate()).add(event);
+            } else {
+                ArrayList<ReadOnlyEvent> newEventList = new ArrayList<ReadOnlyEvent>();
+                newEventList.add(event);
+                hashEvents.put(event.getDatetime().getLocalDateTime().toLocalDate(), newEventList);
+            }
+        }
+
+        return hashEvents;
+    }
+
+/////////////////////////////////////// Other methods ////////////////////////////////////////////////
 
     /**
      * Move the month back by one. Repopulate the calendar with the correct dates.
