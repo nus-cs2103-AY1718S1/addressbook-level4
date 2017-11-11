@@ -1,4 +1,86 @@
 # dennaloh
+###### /java/seedu/address/logic/commands/FbCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) for {@code FbCommand}.
+ */
+public class FbCommandTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    private Model model;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    }
+
+    @Test
+    public void execute_invalidIndexUnfilteredList_failure() {
+        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_invalidIndexFilteredList_failure() {
+        showFirstPersonOnly(model);
+
+        Index outOfBoundsIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+        FbCommand fbFirstCommand = new FbCommand(INDEX_FIRST_PERSON);
+        FbCommand fbSecondCommand = new FbCommand(INDEX_SECOND_PERSON);
+
+        // same object -> returns true
+        assertTrue(fbFirstCommand.equals(fbFirstCommand));
+
+        // same values -> returns true
+        FbCommand fbFirstCommandCopy = new FbCommand(INDEX_FIRST_PERSON);
+        assertTrue(fbFirstCommand.equals(fbFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(fbFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(fbFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(fbFirstCommand.equals(fbSecondCommand));
+    }
+
+    /**
+     * Executes a {@code FbCommand} with the given {@code index}, and checks that a {@code CommandException}
+     * is thrown with the {@code expectedMessage}.
+     */
+    private void assertExecutionFailure(Index index, String expectedMessage) {
+        FbCommand fbCommand = prepareCommand(index);
+
+        try {
+            fbCommand.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException ce) {
+            assertEquals(expectedMessage, ce.getMessage());
+            assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
+        }
+    }
+
+    /**
+     * Returns a {@code FbCommand} with parameters {@code index}.
+     */
+    private FbCommand prepareCommand(Index index) {
+        FbCommand fbCommand = new FbCommand(index);
+        fbCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return fbCommand;
+    }
+}
+```
 ###### /java/seedu/address/logic/commands/person/EmailCommandTest.java
 ``` java
 /**
@@ -49,61 +131,54 @@ public class EmailCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/person/FindCommandTest.java
+###### /java/seedu/address/logic/commands/person/FindTagCommandTest.java
 ``` java
 /**
- * Contains integration tests (interaction with the Model) for {@code FindCommand}.
+ * Contains integration tests (interaction with the Model) for {@code FindTagCommand}.
  */
-public class FindCommandTest {
+public class FindTagCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void equals() {
-        NameContainsKeywordsPredicate firstPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("first"));
-        NameContainsKeywordsPredicate secondPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("second"));
+        TagContainsKeywordsPredicate firstPredicate =
+                new TagContainsKeywordsPredicate(Collections.singletonList("first"));
+        TagContainsKeywordsPredicate secondPredicate =
+                new TagContainsKeywordsPredicate(Collections.singletonList("second"));
 
-        FindCommand findFirstCommand = new FindCommand(firstPredicate);
-        FindCommand findSecondCommand = new FindCommand(secondPredicate);
+        FindTagCommand findtagFirstCommand = new FindTagCommand(firstPredicate);
+        FindTagCommand findtagSecondCommand = new FindTagCommand(secondPredicate);
 
         // same object -> returns true
-        assertTrue(findFirstCommand.equals(findFirstCommand));
+        assertTrue(findtagFirstCommand.equals(findtagFirstCommand));
 
         // same values -> returns true
-        FindCommand findFirstCommandCopy = new FindCommand(firstPredicate);
-        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+        FindTagCommand findFirstCommandCopy = new FindTagCommand(firstPredicate);
+        assertTrue(findtagFirstCommand.equals(findFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(findFirstCommand.equals(1));
+        assertFalse(findtagFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(findFirstCommand.equals(null));
+        assertFalse(findtagFirstCommand.equals(null));
 
         // different person -> returns false
-        assertFalse(findFirstCommand.equals(findSecondCommand));
+        assertFalse(findtagFirstCommand.equals(findtagSecondCommand));
     }
 
     @Test
     public void execute_zeroKeywords_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        FindCommand command = prepareCommand(" ");
+        FindTagCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
-    @Test
-    public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
-        FindCommand command = prepareCommand("Kurz Elle Kunz");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
-    }
-
     /**
-     * Parses {@code userInput} into a {@code FindCommand}.
+     * Parses {@code userInput} into a {@code FindTagCommand}.
      */
-    private FindCommand prepareCommand(String userInput) {
-        FindCommand command =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+    private FindTagCommand prepareCommand(String userInput) {
+        FindTagCommand command =
+                new FindTagCommand(new TagContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -114,7 +189,8 @@ public class FindCommandTest {
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(FindCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
+    private void assertCommandSuccess(FindTagCommand command, String expectedMessage,
+                                      List<ReadOnlyPerson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 
@@ -127,16 +203,41 @@ public class FindCommandTest {
 ###### /java/seedu/address/logic/commands/person/GMapCommandTest.java
 ``` java
 /**
- * Contains integration tests (interaction with the Model) and unit tests for {@code GMapCommand}.
+ * Contains integration tests (interaction with the Model) for {@code GMapCommand}.
  */
 public class GMapCommandTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    }
+
+    @Test
+    public void execute_invalidIndexUnfilteredList_failure() {
+        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_invalidIndexFilteredList_failure() {
+        showFirstPersonOnly(model);
+
+        Index outOfBoundsIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
 
     @Test
     public void equals() {
         GMapCommand gMapFirstCommand = new GMapCommand(INDEX_FIRST_PERSON);
-        GMapCommand gMapSecondCommand = new GMapCommand(INDEX_SECOND_PERSON);
+        GMapCommand gmapSecondCommand = new GMapCommand(INDEX_SECOND_PERSON);
 
         // same object -> returns true
         assertTrue(gMapFirstCommand.equals(gMapFirstCommand));
@@ -152,7 +253,32 @@ public class GMapCommandTest {
         assertFalse(gMapFirstCommand.equals(null));
 
         // different person -> returns false
-        assertFalse(gMapFirstCommand.equals(gMapSecondCommand));
+        assertFalse(gMapFirstCommand.equals(gmapSecondCommand));
+    }
+
+    /**
+     * Executes a {@code GMapCommand} with the given {@code index}, and checks that a {@code CommandException}
+     * is thrown with the {@code expectedMessage}.
+     */
+    private void assertExecutionFailure(Index index, String expectedMessage) {
+        GMapCommand gMapCommand = prepareCommand(index);
+
+        try {
+            gMapCommand.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException ce) {
+            assertEquals(expectedMessage, ce.getMessage());
+            assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
+        }
+    }
+
+    /**
+     * Returns a {@code GMapCommand} with parameters {@code index}.
+     */
+    private GMapCommand prepareCommand(Index index) {
+        GMapCommand gMapCommand = new GMapCommand(index);
+        gMapCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return gMapCommand;
     }
 }
 ```
@@ -173,5 +299,36 @@ public class GMapCommandTest {
     @Override
     public void openUrl (String url) {
         fail("This method should not be called.");
+    }
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_fb() throws Exception {
+        FbCommand command = (FbCommand) parser.parseCommand(
+                FbCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new FbCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_gMap() throws Exception {
+        GMapCommand command = (GMapCommand) parser.parseCommand(
+                GMapCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new GMapCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_findTag() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        FindTagCommand command = (FindTagCommand) parser.parseCommand(
+                FindTagCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindTagCommand(new TagContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommand_email() throws Exception {
+        EmailCommand command = (EmailCommand) parser.parseCommand(
+                EmailCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new EmailCommand(INDEX_FIRST_PERSON), command);
     }
 ```
