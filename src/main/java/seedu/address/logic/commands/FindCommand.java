@@ -100,7 +100,7 @@ public class FindCommand extends Command {
     /**
      * Get a list of names whose contact details contain all the address keywords provided by user.
      * @param addressKeywords a list of address keywords to search for
-     * @return a list of names found by searching the corresponding address keywords
+     * Returns a list of names found by searching the corresponding address keywords
      */
     private ArrayList<String> getNamesFromAddressKeywords(ArrayList<String> addressKeywords) {
         ArrayList<String> matchedNames = new ArrayList<>();
@@ -128,7 +128,7 @@ public class FindCommand extends Command {
     /**
      * Get a list of names whose contact details contain at least one of the email keywords provided by user.
      * @param emailKeywords a list of email keywords to search for
-     * @return a list of names found by searching the corresponding email keywords
+     * Returns a list of names found by searching the corresponding email keywords
      */
     private ArrayList<String> getNamesFromEmailKeywords(ArrayList<String> emailKeywords) {
         ArrayList<String> matchedNames = new ArrayList<>();
@@ -153,7 +153,7 @@ public class FindCommand extends Command {
     /**
      * Get a list of names whose contact details contain at least one of the phone keywords provided by user.
      * @param phoneKeywords a list of phone keywords to search for
-     * @return a list of names found by searching the corresponding phone keywords
+     * Returns a list of names found by searching the corresponding phone keywords
      */
     private ArrayList<String> getNamesFromPhoneKeywords(ArrayList<String> phoneKeywords) {
         ArrayList<String> matchedNames = new ArrayList<>();
@@ -178,7 +178,7 @@ public class FindCommand extends Command {
     /**
      * Get a list of names whose contact details contain at least one of the name keywords provided by user.
      * @param nameKeywords a list of name keywords to search for
-     * @return a list of names found by searching the corresponding name keywords
+     * Returns a list of names found by searching the corresponding name keywords
      */
     private ArrayList<String> getNamesFromNameKeywords(ArrayList<String> nameKeywords) {
         ArrayList<String> matchedNames = new ArrayList<>();
