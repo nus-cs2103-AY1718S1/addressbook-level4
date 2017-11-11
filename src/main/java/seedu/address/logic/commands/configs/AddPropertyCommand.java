@@ -16,6 +16,7 @@ public class AddPropertyCommand extends ConfigCommand {
     public static final String MESSAGE_USAGE = "Example: " + COMMAND_WORD + " --add-property "
             + "s/b f/birthday m/Birthday needs to be a valid date format "
             + "r/^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{4}";
+    public static final String MESSAGE_SUCCESS = "Added a new property: %1$s";
 
     static final String MESSAGE_DUPLICATE_PROPERTY =
             "Another property with the same short name already exists in the application.";

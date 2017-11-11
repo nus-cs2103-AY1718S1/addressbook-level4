@@ -186,8 +186,10 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 [TIP]
-In a similar format, you can also add customize properties when adding a new person, just use `config
---add-property` command before to define that property.
+In a similar format, you can also add customize properties when adding a new person, just use `config --add-property`
+command before to define that property. +
+Notice all pre-defined properties (name, phone, email, address) are compulsory when adding a new person, while customize
+properties are optional.
 
 Example:
 
@@ -794,6 +796,8 @@ all persons/events.
 * The short name `s/` and full name `f/` of the new property are compulsory, while the constraint message `m/` and regular
 expression for validation `r/` are optional. However, `m/` and `r/` must come together, i.e. a regular expression must be
 accompanied by a constraint message, which will be shown when the validation fails.
+* If constraint message and regular expression are not specified, the default would be `[^\s].*`, which mean the value of
+this property cannot be blank.
 * Short name is the identity (primary key) of all properties. Thus, the short name must be unique. The command will fail
 if there is an existing property with the same short name.
 * The given regular expression must use legal syntax. It will be checked by the
