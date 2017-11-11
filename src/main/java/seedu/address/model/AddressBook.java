@@ -205,8 +205,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     //@@author chernghann
     public void addEvent(ReadOnlyEvent p) throws DuplicateEventException {
-        Event newEvent = new Event(p);
-        events.add(newEvent);
+        events.add(p);
         EventsCenter.getInstance().post(new PopulateRequestEvent(events));
     }
     //@@author
@@ -219,6 +218,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
         if (events.remove(event)) {
+            EventsCenter.getInstance().post(new PopulateRequestEvent(events));
             return true;
         } else {
             throw new EventNotFoundException();
