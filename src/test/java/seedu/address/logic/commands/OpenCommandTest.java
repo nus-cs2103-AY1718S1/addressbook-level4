@@ -26,7 +26,8 @@ public class OpenCommandTest {
 
     @Test
     public void execute_fileNotExist_failure() {
-        assertExecutionFailure(getAbsoluteFilePathInSandboxFolder("nonExistentFile.xml"), Messages.MESSAGE_INVALID_FILE_PATH);
+        assertExecutionFailure(
+            getAbsoluteFilePathInSandboxFolder("nonExistentFile.xml"), Messages.MESSAGE_INVALID_FILE_PATH);
     }
 
     @Test
