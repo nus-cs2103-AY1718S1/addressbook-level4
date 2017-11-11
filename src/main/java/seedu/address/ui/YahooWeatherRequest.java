@@ -13,7 +13,7 @@ import com.github.fedy2.weather.data.unit.DegreeUnit;
  */
 //@@author eeching
 public class YahooWeatherRequest {
-    private final String WHERE_ON_EARTH_IDENTIFIER = "1062617";//this is Yahoo's woeid for Singapore
+    private static final String WHERE_ON_EARTH_IDENTIFIER = "1062617"; //this is Yahoo's woeid for Singapore
 
     public String getYahooWeatherConditionSg() throws JAXBException, IOException {
 

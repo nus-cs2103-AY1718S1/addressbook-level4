@@ -59,9 +59,9 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress());
-                if (getTags().size()>0) {
-                    builder.append(" Tags: ");
-                }
+        if (getTags().size() > 0) {
+            builder.append(" Tags: ");
+        }
         getTags().forEach(builder::append);
         getCustomFields().forEach(builder::append);
         return builder.toString();
