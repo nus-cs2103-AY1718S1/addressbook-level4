@@ -31,7 +31,6 @@ public class ResultDisplay extends UiPart<Region> {
     private static final String CASE_INSENSITIVE_AND_WORD_START_REGEX = "(?i)^";
     private static final String OPTIONAL_ALPHANUMERIC_CHARACTERS_REGEX = "\\w*";
 
-
     private final StringProperty displayed = new SimpleStringProperty("");
 
     private String lastFoundCommand = "";
