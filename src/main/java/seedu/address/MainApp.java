@@ -49,6 +49,7 @@ public class MainApp extends Application {
     public static final Version VERSION = new Version(0, 6, 0, true);
 
     protected static boolean botStarted = false;
+    protected static ArkBot bot;
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -58,7 +59,7 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
-    protected ArkBot bot;
+//    protected ArkBot bot;
     protected BotSession botSession;
 
 
@@ -261,5 +262,12 @@ public class MainApp extends Application {
      */
     public ArkBot getBot() {
         return this.bot;
+    }
+
+    /**
+     * Method to return instance of bot for testing.
+     */
+    public boolean getBotHasStarted() {
+        return botStarted;
     }
 }
