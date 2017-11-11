@@ -49,6 +49,7 @@ public class CommandTestUtil {
     public static final String VALID_DATE_EVENT2 = "25022018 08:45";
     public static final String VALID_NATURAL_DATE_EVENT1 = "25 Dec 2017 08:30";
     public static final String VALID_NATURAL_DATE_EVENT2 = "Feb 25th 2018 08:45am";
+    public static final String VALID_DISPLAY_DATE_EVENT1 = "25 Dec, 2017 08:30";
     public static final String VALID_VENUE_EVENT1 = "Mels crib";
     public static final String VALID_VENUE_EVENT2 = "Bobs crib";
 

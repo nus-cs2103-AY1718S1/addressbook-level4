@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_EVENT1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_EVENT2;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DISPLAY_DATE_EVENT1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NATURAL_DATE_EVENT1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NATURAL_DATE_EVENT2;
 
@@ -33,13 +34,13 @@ public class DateTimeTest {
         assertTrue(DateTime.isValidTime("09121924 23:30"));
     }
 
+    //@@author yunpengn
     @Test
     public void create_viaString_checkCorrectness() throws Exception {
         DateTime dateTime = new DateTime(VALID_DATE_EVENT1);
-        assertEquals(VALID_DATE_EVENT1, dateTime.getValue());
+        assertEquals(VALID_DISPLAY_DATE_EVENT1, dateTime.getValue());
     }
 
-    //@@author yunpengn
     @Test
     public void create_viaDateObject_checkCorrectness() throws Exception {
         SimpleDateFormat dateFormatter = new SimpleDateFormat("ddMMyyyy HH:mm");
@@ -47,7 +48,7 @@ public class DateTimeTest {
 
         // Create a Datetime property via alternative constructor.
         DateTime dateTime = new DateTime(date);
-        assertEquals(VALID_DATE_EVENT1, dateTime.getValue());
+        assertEquals(VALID_DISPLAY_DATE_EVENT1, dateTime.getValue());
     }
 
     @Test

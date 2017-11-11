@@ -1,6 +1,7 @@
 package seedu.address.model.reminder;
+
 import javafx.beans.property.ObjectProperty;
-import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
 
 /**
  * A read-only immutable interface for a Reminder in the addressBook.
@@ -9,9 +10,8 @@ import seedu.address.model.event.Event;
 public interface ReadOnlyReminder {
     ObjectProperty<String> messageProperty();
     String getMessage();
-    ObjectProperty<Event> eventProperty();
-    Event getEvent();
-
+    ObjectProperty<ReadOnlyEvent> eventProperty();
+    ReadOnlyEvent getEvent();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
