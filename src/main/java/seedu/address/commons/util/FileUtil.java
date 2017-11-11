@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import org.apache.commons.io.FilenameUtils;
-
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
