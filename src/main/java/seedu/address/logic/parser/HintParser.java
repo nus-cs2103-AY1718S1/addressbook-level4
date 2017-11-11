@@ -41,6 +41,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.hints.AddCommandHint;
 import seedu.address.logic.commands.hints.AliasCommandHint;
 import seedu.address.logic.commands.hints.ClearCommandHint;
+import seedu.address.logic.commands.hints.CommandHint;
 import seedu.address.logic.commands.hints.DeleteCommandHint;
 import seedu.address.logic.commands.hints.EditCommandHint;
 import seedu.address.logic.commands.hints.ExitCommandHint;
@@ -198,7 +199,7 @@ public class HintParser {
         case UnaliasCommand.COMMAND_WORD:
             return new UnaliasCommandHint(userInput, arguments);
         default:
-            return null;
+            return new CommandHint(userInput, commandWord);
         }
     }
 }

@@ -1,7 +1,5 @@
 package seedu.address.logic.commands.hints;
 
-import seedu.address.logic.commands.UnaliasCommand;
-
 public class UnaliasCommandHint extends Hint {
 
     public UnaliasCommandHint(String userInput, String arguments) {
