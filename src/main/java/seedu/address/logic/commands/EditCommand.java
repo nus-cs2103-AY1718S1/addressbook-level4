@@ -1,13 +1,14 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_REDO_ASSERTION_ERROR;
+import static seedu.address.commons.core.Messages.MESSAGE_UNDO_ASSERTION_ERROR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 import java.util.Optional;
@@ -106,7 +107,6 @@ public class EditCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
 
@@ -138,13 +138,10 @@ public class EditCommand extends UndoableCommand {
             model.updatePerson(editedPerson, personToEdit);
             model.removeTags(newTags);
         } catch (DuplicatePersonException dpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
@@ -152,13 +149,10 @@ public class EditCommand extends UndoableCommand {
         try {
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
     //@@author
 

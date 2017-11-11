@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_REDO_ASSERTION_ERROR;
+import static seedu.address.commons.core.Messages.MESSAGE_UNDO_ASSERTION_ERROR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TIME;
@@ -63,11 +65,9 @@ public class AddEventCommand extends UndoableCommand {
         try {
             model.deleteEvent(toAdd);
         } catch (EventNotFoundException enfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         } catch (DeleteOnCascadeException doce) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
     }
 
@@ -77,8 +77,7 @@ public class AddEventCommand extends UndoableCommand {
         try {
             model.addEvent(toAdd);
         } catch (DuplicateEventException dee) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
     }
 }

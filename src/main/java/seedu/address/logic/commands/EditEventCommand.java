@@ -1,10 +1,11 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_REDO_ASSERTION_ERROR;
+import static seedu.address.commons.core.Messages.MESSAGE_UNDO_ASSERTION_ERROR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TIME;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
 import java.util.List;
 import java.util.Optional;
@@ -81,7 +82,6 @@ public class EditEventCommand extends UndoableCommand {
         } catch (EventNotFoundException pnfe) {
             throw new AssertionError("The target event cannot be missing");
         }
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedEvent));
     }
 
@@ -90,13 +90,10 @@ public class EditEventCommand extends UndoableCommand {
         try {
             model.updateEvent(editedEvent, eventToEdit);
         } catch (DuplicateEventException dpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         } catch (EventNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 
     @Override
@@ -104,13 +101,10 @@ public class EditEventCommand extends UndoableCommand {
         try {
             model.updateEvent(eventToEdit, editedEvent);
         } catch (DuplicateEventException dpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         } catch (EventNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 
     /**

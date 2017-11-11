@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_REDO_ASSERTION_ERROR;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 
@@ -70,7 +70,6 @@ public class DeleteCommand extends UndoableCommand {
     protected void undo() {
         requireAllNonNull(model, personToDelete);
         model.addPerson(targetIndex.getZeroBased(), personToDelete);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
@@ -79,11 +78,9 @@ public class DeleteCommand extends UndoableCommand {
         try {
             model.deletePerson(personToDelete);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         } catch (DeleteOnCascadeException doce) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
     }
 
@@ -92,7 +89,7 @@ public class DeleteCommand extends UndoableCommand {
      * Can only be used for JUnit test
      * @param p the person used to test
      */
-    public void assignPerson(ReadOnlyPerson p) {
+    public void assignPersonForTest(ReadOnlyPerson p) {
         personToDelete = p;
     }
 }

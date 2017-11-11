@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_REDO_ASSERTION_ERROR;
+import static seedu.address.commons.core.Messages.MESSAGE_UNDO_ASSERTION_ERROR;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
@@ -82,11 +84,9 @@ public class JoinCommand extends UndoableCommand {
         try {
             model.quitEvent(personToJoin, eventToJoin);
         } catch (PersonNotParticipateException pnpe) {
-            throw new AssertionError("Undo is to revert a stage; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         } catch (NotParticipateEventException npee) {
-            throw new AssertionError("Undo is to revert a stage; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
     }
 
@@ -95,11 +95,9 @@ public class JoinCommand extends UndoableCommand {
         try {
             model.joinEvent(personToJoin, eventToJoin);
         } catch (PersonHaveParticipateException phpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         } catch (HaveParticipateEventException hpee) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
     }
 }

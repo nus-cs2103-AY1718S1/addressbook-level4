@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_REDO_ASSERTION_ERROR;
+import static seedu.address.commons.core.Messages.MESSAGE_UNDO_ASSERTION_ERROR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PORTRAIT;
 
 import java.util.List;
@@ -77,9 +79,9 @@ public class PortraitCommand extends UndoableCommand {
         try {
             model.updatePerson(editedPerson, personToEdit);
         } catch (DuplicatePersonException dpe) {
-            throw new AssertionError("The person cannot cause duplicate");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
     }
 
@@ -88,11 +90,9 @@ public class PortraitCommand extends UndoableCommand {
         try {
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
     }
 
