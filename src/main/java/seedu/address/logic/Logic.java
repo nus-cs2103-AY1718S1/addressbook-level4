@@ -31,6 +31,7 @@ public interface Logic {
      */
     ListElementPointer getHistorySnapshot();
 
+    //@@author chilipadiboy
     /**
      *Returns an unmodifiable AddressBook
      */

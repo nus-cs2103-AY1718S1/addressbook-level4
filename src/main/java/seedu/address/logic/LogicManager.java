@@ -56,6 +56,8 @@ public class LogicManager extends ComponentManager implements Logic {
         return new ListElementPointer(history.getHistory());
     }
 
+    //@@author chilipadiboy
     @Override
-    public ReadOnlyAddressBook getReadOnlyAddressBook(){ return model.getAddressBook(); }
+    public ReadOnlyAddressBook getReadOnlyAddressBook() {
+        return model.getAddressBook(); }
 }
