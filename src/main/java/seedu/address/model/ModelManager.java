@@ -134,10 +134,11 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author bladerail
     @Override
     public void sortFilteredPersonList(String filterType) {
+        Predicate currPredicate = filteredPersons.getPredicate();
         addressBook.sortPersons(filterType);
         ObservableList<ReadOnlyPerson> sortedList = this.addressBook.getPersonList();
         this.filteredPersons = new FilteredList<>(sortedList);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredPersonList(currPredicate);
         indicateAddressBookChanged();
     }
 
