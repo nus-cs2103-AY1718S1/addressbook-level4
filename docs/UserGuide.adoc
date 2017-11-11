@@ -412,7 +412,7 @@ If you want to add a meeting to a contact in your *ABC*: +
 
 .  Locate the contact you want to add a meeting to and take note of its index +
 .  Type in the index of the contact, the name of the meeting and the time of the meeting you wish to add +
-`>> addmeeting 1 class lunch/2017-12-20 12:00` +
+`>> addmeeting 1 class lunch/2017-11-20 12:00` +
 (See Figure 4.10.1) +
 image:addmeeting_1.png[addmeeting1, 600] +
 _Figure 4.10.1_
