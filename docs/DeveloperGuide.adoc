@@ -614,7 +614,6 @@ Figure 5.2.3 SortCommand Model Sequence Diagram
 **Cons:** Difficult to implement and wastes memory space as sorting might be unnecessary and complex for general users
           since main goal is to keep address book organized. +
 
----
 //end::sort[]
 
 // tag::access[]

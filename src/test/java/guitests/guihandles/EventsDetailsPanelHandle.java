@@ -70,8 +70,8 @@ public class EventsDetailsPanelHandle extends NodeHandle<Node> {
     }
 
     /**
-     * Returns true if the selected {@code Person} is different from the value remembered by the most recent
-     * {@code rememberSelectedPersonDetails()} call.
+     * Returns true if the selected {@code Event} is different from the value remembered by the most recent
+     * {@code rememberSelectedEventDetails()} call.
      */
     public boolean isSelectedEventChanged() {
         return !getName().equals(latestName)
