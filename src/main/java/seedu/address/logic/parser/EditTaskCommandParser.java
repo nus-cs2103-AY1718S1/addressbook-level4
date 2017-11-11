@@ -20,6 +20,8 @@ import seedu.address.logic.commands.EditTaskCommand;
 import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.Name;
 
 /**
  * Parses input arguments and creates a new EditTaskCommand object
@@ -47,9 +49,14 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
 
         EditTaskDescriptor editTaskDescriptor = new EditTaskDescriptor();
         try {
-            ParserUtil.parseString(argMultimap.getValue(PREFIX_NAME)).ifPresent(editTaskDescriptor::setName);
-            ParserUtil.parseString(argMultimap.getValue(PREFIX_DESCRIPTION))
-                    .ifPresent(editTaskDescriptor::setDescription);
+            Optional<String> parserName = ParserUtil.parseString(argMultimap.getValue(PREFIX_NAME));
+            if (parserName.isPresent()) {
+                editTaskDescriptor.setName(new Name(parserName.get()));
+            }
+            Optional<String> parserDescription = ParserUtil.parseString(argMultimap.getValue(PREFIX_DESCRIPTION));
+            if (parserDescription.isPresent()) {
+                editTaskDescriptor.setDescription(new Description(parserDescription.get()));
+            }
             ParserUtil.parseString(argMultimap.getValue(PREFIX_START_DATE_TIME))
                     .ifPresent(editTaskDescriptor::setStart);
             ParserUtil.parseString(argMultimap.getValue(PREFIX_END_DATE_TIME)).ifPresent(editTaskDescriptor::setEnd);

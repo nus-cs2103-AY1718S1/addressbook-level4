@@ -18,6 +18,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.Name;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
@@ -98,8 +100,8 @@ public class EditTaskCommand extends UndoableCommand {
                                              EditTaskDescriptor editTaskDescriptor) {
         assert taskToEdit != null;
 
-        String updatedTaskName = editTaskDescriptor.getName().orElse(taskToEdit.getName());
-        String updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
+        Name updatedTaskName = editTaskDescriptor.getName().orElse(taskToEdit.getName());
+        Description updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
         String updatedStartDateTime = editTaskDescriptor.getStartDateTime().orElse(taskToEdit.getStartDateTime());
         String updatedEndDateTime = editTaskDescriptor.getEndDateTime().orElse(taskToEdit.getEndDateTime());
         Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(taskToEdit.getTags());
@@ -135,8 +137,8 @@ public class EditTaskCommand extends UndoableCommand {
      * corresponding field value of the task.
      */
     public static class EditTaskDescriptor {
-        private String taskName;
-        private String description;
+        private Name taskName;
+        private Description description;
         private String start;
         private String end;
         private Set<Tag> tags;
@@ -161,19 +163,19 @@ public class EditTaskCommand extends UndoableCommand {
                     this.tags, this.complete);
         }
 
-        public void setName(String taskName) {
+        public void setName(Name taskName) {
             this.taskName = taskName;
         }
 
-        public Optional<String> getName() {
+        public Optional<Name> getName() {
             return Optional.ofNullable(taskName);
         }
 
-        public void setDescription(String description) {
+        public void setDescription(Description description) {
             this.description = description;
         }
 
-        public Optional<String> getDescription() {
+        public Optional<Description> getDescription() {
             return Optional.ofNullable(description);
         }
 
