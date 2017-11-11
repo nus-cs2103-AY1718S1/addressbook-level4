@@ -73,7 +73,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
     public LifeInsurance(InsuranceName insuranceName, InsurancePerson owner, InsurancePerson insured,
                          InsurancePerson beneficiary, Premium premium, ContractFileName contractFileName,
                          LocalDate signingDate, LocalDate expiryDate) {
-        requireAllNonNull(owner, insured, beneficiary, premium, this.contractFileName);
+        requireAllNonNull(owner, insured, beneficiary, premium, contractFileName, signingDate, expiryDate);
         this.id = new SimpleObjectProperty<>(UUID.randomUUID());
         this.insuranceName = new SimpleObjectProperty<>(insuranceName);
         this.roleToPersonNameMap = new EnumMap<>(Roles.class);

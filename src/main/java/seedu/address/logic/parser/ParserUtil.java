@@ -13,8 +13,8 @@ import java.util.regex.Pattern;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.AppUtil.PanelChoice;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.logic.commands.SelectCommand.PanelChoice;
 import seedu.address.model.insurance.ContractFileName;
 import seedu.address.model.insurance.InsuranceName;
 import seedu.address.model.insurance.InsurancePerson;

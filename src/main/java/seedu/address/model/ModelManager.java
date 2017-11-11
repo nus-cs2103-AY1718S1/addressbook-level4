@@ -96,6 +96,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void deleteInsurance(ReadOnlyInsurance target) throws InsuranceNotFoundException {
+        addressBook.deleteInsurance(target);
+        updateFilteredInsuranceList(PREDICATE_SHOW_ALL_INSURANCES);
+    }
+
+    @Override
     public void updateLifeInsurance(ReadOnlyInsurance target, ReadOnlyInsurance editedInsurance)
         throws InsuranceNotFoundException {
         requireAllNonNull(target, editedInsurance);

@@ -23,6 +23,7 @@ import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.insurance.exceptions.DuplicateContractFileNameException;
 import seedu.address.model.insurance.exceptions.DuplicateInsuranceException;
+import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -167,7 +168,13 @@ public class AddLifeInsuranceCommandTest {
             fail("This method should not be called.");
         }
 
+        @Override
         public void updateFilteredInsuranceList(Predicate<ReadOnlyInsurance> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteInsurance(ReadOnlyInsurance target) throws InsuranceNotFoundException {
             fail("This method should not be called.");
         }
     }
