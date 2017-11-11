@@ -9,8 +9,7 @@ import seedu.address.model.person.NameContainsFavouritePredicate;
  */
 public class FavouriteListCommand extends Command {
 
-    public static final String COMMAND_WORD = "favouritelist";
-    public static final String COMMAND_ALIAS = "favlist";
+    public static final String COMMAND_WORD = "favourites";
 
     public static final String MESSAGE_SUCCESS = "Listed all favourited persons";
 
