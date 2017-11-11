@@ -115,6 +115,11 @@ Here’s how you can use them:
 View cherBook's User Guide in the help window. +
 Format: `help`
 
+Example:
+
+image::HelpImage.png[width="800"]
+_Figure 4.2 : There are two ways you can use 'help'_
+
 === Adding a person: `add` `Since v1.0`
 
 [NOTE]
@@ -141,6 +146,12 @@ Examples:
 * `a n/Jane Doe pp/97979791 e/janed@example.com a/Jane street, block 456, #01-01 f/6C g/98`
 * `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/97272231 pp/97979997 f/12A2 g/66 t/criminal`
 
+
+Example:
+
+image::AddImage.png[width="800"]
+_Figure 4.3 : Adding a person into cherBook_
+
 // tag::optionalinputtagstwo[]
 
 === Optional fields for adding a person `Since v1.3`
@@ -163,6 +174,11 @@ a message will be generated to inform you that the particular field is not recor
 | Tag | t/ + | add n/John p/97602611 pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 +
 |=======================================================================
 
+Example:
+
+image::OptionalInputsImage.png[width="800"]
+_Figure 4.4 : Adding a person into your cherBook with optional inputs_
+
 // end::optionalinputtagstwo[]
 
 === Listing all persons : `list` `Since v1.0`
@@ -170,6 +186,11 @@ a message will be generated to inform you that the particular field is not recor
 Shows you a list of all persons in cherBook. +
 Format: `list` +
 Shorthand: `l`
+
+Example:
+
+image::ListImage.png[width="800"]
+_Figure 4.5 : Lists all contacts in your cherBook_
 
 === Editing a person : `edit` `Since v1.0`
 
@@ -200,6 +221,12 @@ Edits the student and parent phone number, and email address of the 1st person t
 * `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+
+Example:
+
+image::EditImage.png[width="800"]
+_Figure 4.6 : Edits a contact in your cherBook_
+
 === Locating persons by name: `find` `Since v1.0`
 
 Finds persons whose names contain any of the given keywords. +
@@ -224,6 +251,11 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 Returns `john` and `John Doe`
 * `f Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+Example:
+
+image::FindImage.png[width="800"]
+_Figure 4.7 : Finds contacts in your cherBook with the specified names_
 
 // tag::findtags[]
 === Locating persons by tags: `findtags` `Since v1.1`
@@ -254,6 +286,11 @@ Returns any person having both `friends` and `owesMoney` tags
 Returns any person having the tag `friends`
 * `ft Betsy Tim John` +
 Returns any person having both `friends` and `owesMoney` tags
+
+Example:
+
+image::FindTagsImage.png[width="800"]
+_Figure 4.8 : Finds contacts in your cherBook with the specified tags_
 // end::findtags[]
 
 === Deleting a person : `delete` `Since v1.0`
@@ -280,6 +317,11 @@ Deletes the 1st person in the results of the `find` command.
 `d 3` (`delete 3` command) +
 Deletes the 3rd person in cherBook.
 
+Example:
+
+image::DeleteImage.png[width="800"]
+_Figure 4.9 : Deletes the contact in your cherBook with the specified index_
+
 === Selecting a person : `select` `Since v1.0`
 
 Selects an existing person in cherBook. +
@@ -304,6 +346,11 @@ Selects the 1st person in the results of the `find` command.
 `s 3` (`select 3` command) +
 Selects the 3rd person in cherBook.
 
+Example:
+
+image::SelectImage.png[width="800"]
+_Figure 4.10 : Selects the contact in your cherBook with the specified index_
+
 // tag::sort[]
 === Sorting all persons : `sort` `Since v1.2`
 
@@ -325,6 +372,11 @@ Sorts the list in alphabetical order.
 * `find Betsy` +
 `st` +
 Sorts the list in alphabetical order.
+
+Example:
+
+image::SortImage.png[width="800"]
+_Figure 4.11 : Sorts all contacts in your cherBook_
 // end::sort[]
 
 // tag::remark[]
@@ -357,6 +409,11 @@ Overwrites/adds the 1st person in the results of `find` command.
 `remark 2 rm/` +
 removes `remark` from the 2nd person in the address book.
 
+Example:
+
+image::RemarkImage.png[width="800"]
+_Figure 4.12 : Add a remark to your contacts in cherBook_
+
 // end::remark[]
 
 // tag::schedule[]
@@ -380,6 +437,11 @@ Schedules the 2nd person in cherBook for tomorrow at 7pm and adds the schedule t
 * `find Betsy` +
 `sch 1 s/25 december 2017 3pm` +
 Schedules the 1st person in cherBook on 25 December at 3pm and adds the schedule to the schedule list in the results of the `find` command.
+
+Example:
+
+image::AddScheduleImage.png[width="800"]
+_Figure 4.13 : Adds a schedule to your cherBook_
 // end::schedule[]
 
 // tag::viewschedule[]
@@ -401,6 +463,11 @@ Displays all your schedules in the command box.
 * `find Betsy` +
 `viewsch` +
 Displays all your schedules in the command box.
+
+Example:
+
+image::ViewScheduleImage.png[width="800"]
+_Figure 4.14 : Views all your schedules in cherBook_
 // end::viewschedule[]
 
 === Deleting a schedule : `deleteschedule` `Since v1.5`
@@ -424,6 +491,11 @@ Deletes the 2nd schedule in the results of the `viewschedule` command which retu
 `dsch 1` +
 Deletes the 1st schedule in the results of the `viewsch` command which returns a list of schedules.
 
+Example:
+
+image::DeleteScheduleImage.png[width="800"]
+_Figure 4.15 : Deletes your schedules in cherBook with the specified index_
+
 === Listing entered commands : `history` `Since v1.0`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -434,6 +506,11 @@ Shorthand: `h`
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+Example:
+
+image::ListImage.png[width="800"]
+_Figure 4.16 : Lists all your contacts in cherBook_
 
 // tag::undoredo[]
 === Undoing previous command : `undo` `Since v1.0`
@@ -467,6 +544,11 @@ The `undo` command fails as there are no undoable commands executed previously.
 `l` (`list` comand) +
 `u` ( `undo` command reverses the `delete 1` command) +
 
+Example:
+
+image::UndoImage.png[width="800"]
+_Figure 4.17 : Undo your previous action on cherBook_
+
 === Redoing the previously undone command : `redo` `Since v1.0`
 
 Reverses the most recent `undo` command. +
@@ -493,6 +575,11 @@ The `redo` command fails as there are no `undo` commands executed previously.
 * `d 1` (`delete 1` command) +
 `u` (`undo` command reverses the `delete 1` command) +
 `r` (reapplies the `delete 1` command) +
+
+Example:
+
+image::RedoImage.png[width="800"]
+_Figure 4.18 : Redo your previous action on cherBook_
 // end::undoredo[]
 
 === Clearing all entries : `clear` `Since v1.0`
@@ -504,6 +591,11 @@ Format: `clear`
 
 Exits the program. +
 Format: `exit`
+
+Example:
+
+image::ExitImage.png[width="800"]
+_Figure 4.19 : Exits your cherBook_
 
 // tag::randomisedUniqueTagColors[]
 === Randomised Unique Tag Colors: `Since v1.4`
