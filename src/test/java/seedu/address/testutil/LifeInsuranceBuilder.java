@@ -11,15 +11,6 @@ import seedu.address.model.insurance.InsurancePerson;
 import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.Premium;
 import seedu.address.model.insurance.ReadOnlyInsurance;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.DateOfBirth;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Gender;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.util.SampleDataUtil;
 
 //@@author OscarWang117
 /**
@@ -29,7 +20,7 @@ public class LifeInsuranceBuilder {
 
     public static final String DEFAULT_UUID = "6e5a4761-f578-4311-8ccc-d3f258c9e461";
     public static final String DEFAULT_NAME = "Term Life";
-    public static final String DEFAULT_OWNER= "Alex Yeoh";
+    public static final String DEFAULT_OWNER = "Alex Yeoh";
     public static final String DEFAULT_INSURED = "Bernice Yu";
     public static final String DEFAULT_BENEFICIARY = "John Doe";
     public static final String DEFAULT_PREMIUM = "600";

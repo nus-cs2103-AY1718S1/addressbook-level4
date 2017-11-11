@@ -3,7 +3,6 @@ package seedu.address.commons.events.ui;
 import java.util.Optional;
 
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.StringProperty;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.insurance.InsurancePerson;
 import seedu.address.model.person.Name;

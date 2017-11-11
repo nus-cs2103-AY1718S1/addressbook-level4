@@ -151,8 +151,8 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(new InsuranceName(name.get())) : Optional.empty();
     }
     /**
-     * Parses a {@code Optional<String> insurancePerson} into an {@code Optional<InsurancePerson>} if {@code premium} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
+     * Parses a {@code Optional<String> insurancePerson} into an {@code Optional<InsurancePerson>} if {@code premium}
+     * is present. See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<InsurancePerson> parseInsurancePerson(Optional<String> person) throws IllegalValueException {
         requireNonNull(person);
@@ -167,10 +167,11 @@ public class ParserUtil {
         return premium.isPresent() ? Optional.of(new Premium(premium.get())) : Optional.empty();
     }
     /**
-     * Parses a {@code Optional<String> contract} into an {@code Optional<ContractFileName>} if {@code contract} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
+     * Parses a {@code Optional<String> contract} into an {@code Optional<ContractFileName>} if {@code contract}
+     * is present. See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<ContractFileName> parseContractFileName(Optional<String> contract) throws IllegalValueException {
+    public static Optional<ContractFileName> parseContractFileName(Optional<String> contract)
+            throws IllegalValueException {
         requireNonNull(contract);
         return contract.isPresent() ? Optional.of(new ContractFileName(contract.get())) : Optional.empty();
     }

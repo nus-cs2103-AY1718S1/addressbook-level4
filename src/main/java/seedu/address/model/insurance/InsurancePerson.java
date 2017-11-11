@@ -4,8 +4,6 @@ import java.util.Optional;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -19,7 +17,7 @@ public class InsurancePerson {
     private ObjectProperty<Name> name;
     private Optional<ReadOnlyPerson> person;
 
-    public InsurancePerson(String nameString) throws IllegalValueException{
+    public InsurancePerson(String nameString) throws IllegalValueException {
         final Name name = new Name(nameString);
         this.name = new SimpleObjectProperty(name);
         this.person = Optional.empty();

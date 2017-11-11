@@ -24,7 +24,6 @@ import java.util.UUID;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.logic.parser.Prefix;
-import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.insurance.UniqueLifeInsuranceList;
 import seedu.address.model.tag.Tag;

@@ -24,13 +24,11 @@ import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.insurance.exceptions.DuplicateContractFileNameException;
 import seedu.address.model.insurance.exceptions.DuplicateInsuranceException;
 import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.LifeInsuranceBuilder;
-import seedu.address.testutil.PersonBuilder;
 
 public class AddLifeInsuranceCommandTest {
 
@@ -50,7 +48,9 @@ public class AddLifeInsuranceCommandTest {
         CommandResult commandResult = getAddLifeInsuranceCommandForPerson(validLifeInsurance, modelStub).execute();
         ArrayList<LifeInsurance> arrayList = new ArrayList<>();
         arrayList.add(validLifeInsurance);
-        assertEquals(String.format(AddLifeInsuranceCommand.MESSAGE_SUCCESS, validLifeInsurance), commandResult.feedbackToUser);
+        assertEquals(String.format(AddLifeInsuranceCommand.MESSAGE_SUCCESS, validLifeInsurance),
+                commandResult.feedbackToUser
+        );
         assertEquals(arrayList, modelStub.insurancesAdded);
     }
 
@@ -78,26 +78,26 @@ public class AddLifeInsuranceCommandTest {
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+        LifeInsurance termLife = new LifeInsuranceBuilder().withInsuranceName("TermLife").build();
+        LifeInsurance wholeLife = new LifeInsuranceBuilder().withInsuranceName("WholeLife").build();
+        AddLifeInsuranceCommand addTermLifeInsuranceCommand = new AddLifeInsuranceCommand(termLife);
+        AddLifeInsuranceCommand addWholeLifeInsuranceCommand = new AddLifeInsuranceCommand(wholeLife);
 
         // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
+        assertTrue(addTermLifeInsuranceCommand.equals(addTermLifeInsuranceCommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
+        AddLifeInsuranceCommand addTermLifeInsuranceCommandCopy = new AddLifeInsuranceCommand(termLife);
+        assertTrue(addTermLifeInsuranceCommand.equals(addTermLifeInsuranceCommandCopy));
 
         // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
+        assertFalse(addTermLifeInsuranceCommand.equals(1));
 
         // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
+        assertFalse(addTermLifeInsuranceCommand.equals(null));
 
         // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        assertFalse(addTermLifeInsuranceCommand.equals(addWholeLifeInsuranceCommand));
     }
 
     /**

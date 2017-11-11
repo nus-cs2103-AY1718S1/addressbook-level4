@@ -55,13 +55,13 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_CONTRACT_FILE_NAME =
             "This insurance contract file already exists in LISA";
 
-    private final LifeInsurance lifeInsurance;
+    private final LifeInsurance toAdd;
 
     /**
      * Creates an {@code AddLifeInsuranceCommand} to add the specified {@code LifeInsurance}
      */
     public AddLifeInsuranceCommand(ReadOnlyInsurance toAdd) {
-        lifeInsurance = new LifeInsurance(toAdd);
+        this.toAdd = new LifeInsurance(toAdd);
     }
 
     /**
@@ -91,10 +91,10 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         List<ReadOnlyPerson> personList = model.getFilteredPersonList();
-        isAnyPersonInList(personList, lifeInsurance);
+        isAnyPersonInList(personList, toAdd);
         try {
-            model.addLifeInsurance(lifeInsurance);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, lifeInsurance));
+            model.addLifeInsurance(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateInsuranceException die) {
             throw new AssertionError(MESSAGE_DUPLICATE_INSURANCE);
         } catch (DuplicateContractFileNameException dicne) {
@@ -105,9 +105,8 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddLifeInsuranceCommand); // instanceof handles nulls
-                //&& toAdd.equals(((AddLifeInsuranceCommand) other).toAdd));
-        //TODO: need to compare every nonstatic class member.
+                || (other instanceof AddLifeInsuranceCommand // instanceof handles nulls
+                && toAdd.equals(((AddLifeInsuranceCommand) other).toAdd));
     }
 
     //@@author arnollim
