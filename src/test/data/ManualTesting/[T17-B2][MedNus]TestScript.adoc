@@ -17,9 +17,17 @@ This test script gives you a comprehensive guide on:
 
 . Make sure you have the latest version of MedNus. +
 You can download the latest `MedNus.jar` link:https://github.com/CS2103AUG2017-T17-B2/main/releases[here].
+. Make sure you have the latest version of SampleData.xml +
+You can download the latest `SampleData.xml` link:https://github.com/CS2103AUG2017-T17-B2/main/releases[here].
 . Copy the jar file to the folder you want to use as the home folder for your Address Book.
 . Double-click the file to start the app. The graphical user interface (GUI) should appear in a few seconds.
-.
+. Add a person to the AddressBook (e.g. add n/Test). A file 'data' will be created.
+. Close the application and open the newly created 'data' file.
+. Delete addressbook.xml in the 'data' file.
+. Move the SampleData.xml file into the 'data' file.
+. Rename the SampleData.xml file to addressbook.xml
+. Double-click the file to start the app.
+. The new data set should be uploaded and you can now start the manual testing.
 
 == General Commands
 
