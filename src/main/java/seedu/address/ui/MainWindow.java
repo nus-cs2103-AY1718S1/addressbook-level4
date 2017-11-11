@@ -175,26 +175,8 @@ public class MainWindow extends UiPart<Region> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
         commandBox.getCommandTextField().requestFocus();
 
-        /*
-        Sets background
-         */
-        /*
-        setBackground(personInformationPanelPlaceholder,
-                System.getProperty("user.dir") + "/docs/images/backgroundRight.jpg",
-                "/images/backgroundRight.jpg",
-                920, 600);
-        setBackground(personListPanelPlaceholder,
-                System.getProperty("user.dir") + "/docs/images/backgroundLeft.jpg",
-                "/images/backgroundLeft.jpg",
-                330, 600);
-        setBackground(resultDisplayPlaceholder,
-                System.getProperty("user.dir") + "/docs/images/backgroundUp.jpg",
-                "/images/backgroundUp.jpg",
-                1250, 105);
-        */
-
         setBackground(topContainer,
-                "",
+                System.getProperty("user.dir") + "/docs/images/bg_01.jpg",
                 "/images/bg_01.jpg",
                 1280, 1024);
 
