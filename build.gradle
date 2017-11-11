@@ -30,6 +30,9 @@ allprojects {
         mavenCentral()
         maven { url "https://repo.eclipse.org/content/repositories/egit-releases/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
     }
 
     // This part is similar to global variables
@@ -69,6 +72,8 @@ allprojects {
         compile 'org.kordamp.ikonli:ikonli-feather-pack:2.0.0'
         compile 'javax.mail:mail:1.4.7'
         compile group: 'com.googlecode.soundlibs', name: 'jlayer', version: '1.0.1-1'
+        compile group: 'org.jvoicexml', name: 'cmu_us_kal', version: '1.2.3-SNAPSHOT'
+        compile group: 'org.jvoicexml', name: 'cmu_time_awb', version: '1.2.3-SNAPSHOT'
         compile fileTree(dir: 'externalLib', include: ['*.jar'])
 
         testCompile "junit:junit:$junitVersion"

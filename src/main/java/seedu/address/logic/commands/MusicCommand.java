@@ -74,7 +74,7 @@ public class MusicCommand extends Command {
             if (isMusicPlaying() && mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
                 mediaPlayer.play();
                 return new CommandResult(messageSuccess);
-            } else if (!isMusicPlaying() && genreExist) {
+            } else if (genreExist) {
                 String musicFile = getClass().getResource("/audio/music/"
                         + genre + trackNumber + ".mp3").toExternalForm();
                 messageSuccess = genre.toUpperCase() + " Music Playing";
@@ -91,6 +91,8 @@ public class MusicCommand extends Command {
                 mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
                 mediaPlayer.setVolume(5.0);
                 mediaPlayer.play();
+                //Text to Speech
+                TextToSpeech tts = new TextToSpeech("Hello");
                 return new CommandResult(messageSuccess);
             } else {
                 return new CommandResult(MESSAGE_USAGE);

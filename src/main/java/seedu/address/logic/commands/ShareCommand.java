@@ -1,10 +1,7 @@
 package seedu.address.logic.commands;
 
 import java.util.List;
-import java.util.Properties;
 
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
@@ -15,7 +12,6 @@ import seedu.address.logic.SendEmail;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.tag.Tag;
 
 //@@author hanselblack
 /**
@@ -32,7 +28,7 @@ public class ShareCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Email Sent!";
 
-    public static final String MESSAGE_EMAILNOTVALID = "Email address is not valid!";
+    public static final String MESSAGE_EMAIL_NOT_VALID = "Email address is not valid!";
 
     private static final String MESSAGE_FAILURE = "Email was not sent!";
 
@@ -57,36 +53,7 @@ public class ShareCommand extends Command {
 
         ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
 
-        String name = person.getName().fullName;
-        String phone = person.getPhone().toString();
-        String address = person.getAddress().toString();
-        String email = person.getEmail().toString();
-        String remark  = person.getRemark().toString();
-        String tags = "";
-        for (Tag tag :  person.getTags()) {
-            tags += tag.tagName + " ";
-        }
-
         String to;
-        // Sender's email ID needs to be mentioned
-        String from = "unifycs2103@gmail.com";
-        // For Gmail host
-        String host = "smtp.gmail.com";
-        // Get system properties
-        Properties props = System.getProperties();
-
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", host);
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.auth", "true");
-
-        Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
-                    protected  PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(from, "CS2103CS2103");
-                    }
-                }
-        );
 
         for (int index = 0; index < shareEmailArray.length; index++) {
             to = shareEmailArray[index];
@@ -107,7 +74,7 @@ public class ShareCommand extends Command {
                 sendEmail = new SendEmail(to, person);
                 sendEmail.start();
             } else {
-                return new CommandResult(MESSAGE_EMAILNOTVALID);
+                return new CommandResult(MESSAGE_EMAIL_NOT_VALID);
             }
         }
         return new CommandResult(MESSAGE_SUCCESS);
