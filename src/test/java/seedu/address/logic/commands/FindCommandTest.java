@@ -87,7 +87,7 @@ public class FindCommandTest {
         List<String> targetsAsList = Arrays.asList(closestMatchingNames.split("\\s+"));
         String expectedMessage = String.format(MESSAGE_NO_PERSON_FOUND, keywordsAsString,
                 String.join(", ", targetsAsList));
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE,FIONA));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
     //@@author
