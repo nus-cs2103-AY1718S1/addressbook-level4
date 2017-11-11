@@ -12,6 +12,9 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T09-B3/main
 
+// Workaround for asciidoctor-pdf compatibility issues.
+:keyboard-icon: &#9000;
+
 By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
 
 == Setting up
@@ -107,6 +110,8 @@ After listing events, you should having the view of event list
 
 To add a new property, we need to use the `config --add-property` command.
 
+*Positive test cases*
+
 . Add a new property with the short name of `h` and full name of `hobby` +
 _Command:_ +
 `config --add-property s/h f/hobby` +
@@ -133,6 +138,20 @@ _Command:_ +
 _Result:_ +
 Linda's personal details are shown on the right-hand side of the interface. Properties are ordered by their full names and
 each property takes one line. You should see the value of the row `Hobby` is `Programming`.
+
+*Negative test cases*
+
+. If there already exists a property with the same short name +
+_Command:_ +
+`config --add-property s/a f/attitude` +
+_Result:_ +
+`Another property with the same short name already exists in the application.`
+
+. If the regular expression provided is invalid +
+_Command:_ +
+`config --add-property s/w f/weight m/Weight must be a positive integer. r/*asf`
+_Result:_ +
+`The regular expression you provided is invalid.`
 
 ==== Change the color of an existing tag
 
@@ -173,3 +192,33 @@ _Result:_ +
 The background color of `friends` tag becomes transparent. You may want to use a valid name to change it back.
 
 === Miscellaneous
+
+==== View the help window
+
+. Via command-line input +
+_Command:_ +
+`help` +
+_Result:_ +
+The help window should appear and display user guide to you.
+
+. Via F1 +
+_Command:_ +
+{keyboard-icon} Press the `F1` key on your keyboard.
+_Result:_ +
+The help window should appear and display user guide to you.
+
+. Via mouse +
+_Command:_ +
+Click `Help` -> `Help` on the menu bar at the top of the interface. +
+_Result:_ +
+The help window should appear and display user guide to you.
+
+==== View the command input history
+
+Use the history command to view the history of all input commands +
+_Command:_ +
+`history` +
+_Result:_ +
+`Entered commands (from most recent to earliest):` +
+`...` +
+_(All commands will be listed below.)_

@@ -509,11 +509,8 @@ As shown in Figure 5.15.1 and Figure 5.15.2, Figures depict the Bright Theme and
 image::BrightTheme.png[width="400"]
 _Figure 5.15.1 : Bright Theme_
 
-
-
 image::DarkTheme.png[width="400"]
 _Figure 5.15.2 : Dark Theme_
-
 
 === Listing entered commands : `(his)history`
 
@@ -848,7 +845,7 @@ again to set it to a legal color.
 // tag::bookingNUS[]
 === Booking of NUS facilities
 
-_(Exclusive feature for NUS students)_
+_(Exclusive feature for NUS students)_ +
 _(Coming in v2.0)_
 
 The **BoNUS** team understands that booking of facilities in NUS may be troublesome. Therefore, we have decided to integrate
