@@ -1,9 +1,8 @@
 package seedu.address.logic.commands;
 
 //@@author rushan-khor
-
 /**
- * Finds and lists persons in address book with possible duplicate entries (by name).
+ * Finds and lists persons in this {@code AddressBook} with possible duplicate entries (by name).
  * Keyword matching is case insensitive.
  */
 public class DuplicatesCommand extends Command {
