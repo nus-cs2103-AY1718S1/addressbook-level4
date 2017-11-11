@@ -27,6 +27,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
@@ -46,8 +47,11 @@ import seedu.address.model.module.predicates.SelectedStickyNotePredicate;
  */
 public class CombinePanel extends UiPart<Region> {
 
+
     public static final String DEFAULT_PAGE = "default.html";
     public static final String NUS_MAP_SEARCH_URL_PREFIX = "http://map.nus.edu.sg/#page=search&type=by&qword=";
+
+    private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 5.1; rv:7.0.1) Gecko/20100101 Firefox/7.0.1";
 
     private static final String FXML = "CombinePanel.fxml";
     private static final String LESSON_NODE_ID = "lessonNode";
@@ -110,7 +114,7 @@ public class CombinePanel extends UiPart<Region> {
             noteBox.setVisible(false);
         } else if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.LOCATION)) {
             timeBox.setVisible(false);
-            browser.setVisible(true);
+            browser.setVisible(false);
             noteBox.setVisible(false);
         } else {
             timeBox.setVisible(false);
@@ -287,8 +291,15 @@ public class CombinePanel extends UiPart<Region> {
         loadPage(NUS_MAP_SEARCH_URL_PREFIX + lesson.getLocation().toString());
     }
 
+
+    /**
+     * Load page for given url
+     * @param url
+     */
     public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
+        WebEngine engine = browser.getEngine();
+        engine.setUserAgent(USER_AGENT);
+        Platform.runLater(() -> engine.load(url));
     }
 
     /**
