@@ -583,12 +583,12 @@ command. Further enhancements are needed to catch more invalid cases. +
 
 image::UpBirthday.png[width="800]
 
-The `upcomingbirthdayCommand` inherits from `Command` and does not supports undoing and redoing. When the user inputs the birthday
+The `upcomingbirthdayCommand` inherits from `Command` and does not supports undoing and redoing. When the user inputs the upcomingbirthday
 , the `UI` calls the `execute()` method in the `LogicManager` Class. The `Logic` will then call for the `parseCommand()`
 in `AddressBookParser` Class and an instance of `upcomingbirthdayCommand` will be created. It is then returned and the command
 will be executed. The list will then be checked if it is empty. If it is, it will throw an empty list exception. Else it will be sorted
-according to the chronological order of birthdays in the format DD-MM from the local date in the clock.
-generate a success message. The following sequence diagram summarises what happens when the `upcomingbirthdayCommand` is implemented:
+according to the chronological order of birthdays in the format DD-MM from the local date in the clock and generate a success message.
+The following sequence diagram summarises what happens when the `upcomingbirthdayCommand` is implemented:
 
 image::UpBirthday2.png[width="800"]
 
