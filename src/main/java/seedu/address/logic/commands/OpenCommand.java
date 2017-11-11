@@ -34,7 +34,7 @@ public class OpenCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         if (!isFileExists(file)) {
-            throw new CommandException(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
+            throw new CommandException(Messages.MESSAGE_INVALID_FILE_PATH);
         }
 
         EventsCenter.getInstance().post(new SwitchAddressBookRequestEvent(file, false));

@@ -1,18 +1,34 @@
 package seedu.address.logic.commands;
 
 import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static seedu.address.testutil.TestUtil.getAbsoluteFilePathInSandboxFolder;
 
 import java.io.File;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.Messages;
+import seedu.address.logic.commands.exceptions.CommandException;
+
 //@@author chrisboo
 /**
  * Contains integration tests (interaction with the Model) for {@code OpenCommand}.
  */
 public class OpenCommandTest {
+
+    @Test
+    public void execute_fileExists_success() {
+        assertExecutionSuccess(getAbsoluteFilePathInSandboxFolder("sampleData2.xml"));
+    }
+
+    @Test
+    public void execute_fileNotExist_failure() {
+        assertExecutionFailure(getAbsoluteFilePathInSandboxFolder("nonExistentFile.xml"), Messages.MESSAGE_INVALID_FILE_PATH);
+    }
+
     @Test
     public void equals() {
         File firstFile = new File(getAbsoluteFilePathInSandboxFolder("sampleData.xml"));
@@ -36,6 +52,37 @@ public class OpenCommandTest {
 
         // different person -> returns false
         assertFalse(openFirstCommand.equals(openSecondCommand));
+    }
+
+    /**
+     * Executes a {@code OpenCommand} with the given {@code filePath}.
+     */
+    private void assertExecutionSuccess(String filePath) {
+        OpenCommand openCommand = new OpenCommand(new File(filePath));
+
+        try {
+            CommandResult commandResult = openCommand.execute();
+            assertEquals(String.format(OpenCommand.MESSAGE_OPEN_DEATHNOTE_SUCCESS, filePath),
+                commandResult.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+    }
+
+    /**
+     *
+     * Executes a {@code OpenCommand} with the given {@code filePath}, and checks that {@code CommandException} is
+     * thrown with {@code expectedMessage}.
+     */
+    private void assertExecutionFailure(String filePath, String expectedMessage) {
+        OpenCommand openCommand = new OpenCommand(new File(filePath));
+
+        try {
+            openCommand.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException ce) {
+            assertEquals(ce.getMessage(), expectedMessage);
+        }
     }
 }
 //@@author
