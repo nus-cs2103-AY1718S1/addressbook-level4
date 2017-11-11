@@ -1,5 +1,3 @@
-
-//@@author aali195
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -7,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.util.CompressUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author aali195
 /**
  * This command is used to export a compressed version of the working addressbook and the images saved
  */
@@ -82,6 +81,5 @@ public class ExportCommand extends Command {
         return path.equals(e.path);
     }
 }
-
 //@@author
 

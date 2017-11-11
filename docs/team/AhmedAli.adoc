@@ -1,0 +1,101 @@
+= Ahmed Ali - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: TouristBook
+TouristBook is a desktop addressbook application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+The addressbook was adapted to be used by a tour guide and features were added to it to further increase its usability for the scenario.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T12-B4/main/blob/master/collated/main/aali195.md[Functional code]] [https://github.com/CS2103AUG2017-T12-B4/main/blob/master/collated/main/aali195-reused.md[Reused code]] [https://github.com[Test code is WIP]]
+
+=== Enhancement Added: Person Image
+
+Issues: https://github.com/CS2103AUG2017-T12-B4/main/issues/18[#18], https://github.com/CS2103AUG2017-T12-B4/main/issues/55[#55] +
+Pull requests: https://github.com/CS2103AUG2017-T12-B4/main/pull/38[#38], https://github.com/CS2103AUG2017-T12-B4/main/pull/44[#44], https://github.com/CS2103AUG2017-T12-B4/main/pull/64[#64]
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=image]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The feature is in place to help users quickly identify persons in the addressbook by looking at the image assigned to them. The current design assigns a default image to each added user by default and allows the user to change it to their liking.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=image]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: export
+
+Issues: https://github.com/CS2103AUG2017-T12-B4/main/issues/22[#22], https://github.com/CS2103AUG2017-T12-B4/main/issues/55[#55] +
+Pull requests: https://github.com/CS2103AUG2017-T12-B4/main/pull/51[#51], https://github.com/CS2103AUG2017-T12-B4/main/pull/64[#64]
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature allows the database of the addressbook more redundancy if the user wishes so. The user can create multiple versioned backups and store them anywhere they want. The addressbook database becomes much more portable providing more resilience to the application once it is deployed and running. The resulting addressbook database is in a compressed zip format, which is open and available out of the box on most operating systems.
+
+A more advanced user can also manually extract the database files from the resulting file and use them in their addressbook if they want.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `import`
+
+An extension to the `export` command in that the user should be able to load up a backed up version of the addressbook and all the images saved by typing the command name and pointing to the filepath of the exported addressbook zip. The addressbook would then load up the addressbook and replace the working version with the imported version.
+
+Something that would need to be kept in mind when implementing this feature is the validation of the imported database file as importing a corrupt database would mean the loss of any working version if the user did not have other backups.
+
+=== Enhancement Proposed: Add a condensed help screen
+
+To help newer users pick up on shortcuts and commands available in the application, I had the idea of using the web browser space that defaults to a Google search as a viewer for a condensed help screen. The help screen would include a list of the commands and shortcuts to those commands as well as an annotated screenshot of the UI of the program to explain what each section is for. +
+The option for the condensed help screen would be on by default but the user would be able to default back to the web search if they want using an option from the drop down menu. +
+
+A feature very similar to this this was implemented by someone else and released in version 1.4.
+
+=== Enhancement Proposed: Admin permissions
+
+An idea that I initially had was to include a login feature that would allow multiple users with different levels of permissions to use the addressbook. This idea was later scrapped when the focus of the addressbook was narrowed down and the vision of catering to a small business/one person was thought up.
+
+The idea was later transformed into an administrator mode that the user would be able to access to use higher risk commands such as import and clear to avoid tampering and mistakes that may lead to a corrupt database. The idea now is to have those features locked behind a mode that is accessed using a command word and then a password.
+
+=== Other contributions
+
+* Most of the work on the group documentation and keeping them up to date (e.g. pull requests https://github.com/CS2103AUG2017-T12-B4/main/pull/65[#65], https://github.com/CS2103AUG2017-T12-B4/main/pull/44[#44], https://github.com/CS2103AUG2017-T12-B4/main/pull/8[#8] and various closed issues)
+* Setting up of tools such as Google Docs in the early stages to collaborate during the planning stages.
+* Helping out with the testing of other members's features (e.g. issue https://github.com/CS2103AUG2017-T12-B4/main/issues/61[#61])
+

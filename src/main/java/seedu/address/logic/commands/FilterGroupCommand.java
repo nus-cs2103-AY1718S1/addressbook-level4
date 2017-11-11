@@ -18,6 +18,8 @@ public class FilterGroupCommand extends UndoableCommand {
 
     public static final String MESSAGE_GROUP_DOESNT_EXIST = "This group doesn't exist. Filter failed.";
 
+    public static final String MESSAGE_GROUP_IS_EMPTY = "There is no one assigned to this group.";
+
     private GroupContainsKeywordsPredicate predicate;
     private String filterName;
 
@@ -34,7 +36,12 @@ public class FilterGroupCommand extends UndoableCommand {
 
         if (model.groupExists(new Group(filterName))) {
             model.updateFilteredPersonList(predicate);
-            return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+            if (model.getFilteredPersonList().size() == 0) {
+                model.updateFilteredListToShowAll();
+                return new CommandResult(MESSAGE_GROUP_IS_EMPTY);
+            } else {
+                return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+            }
         } else {
             return new CommandResult(MESSAGE_GROUP_DOESNT_EXIST);
         }

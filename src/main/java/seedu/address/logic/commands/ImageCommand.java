@@ -1,4 +1,3 @@
-//@@author aali195-reused
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -21,7 +20,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 
 public class ImageCommand extends UndoableCommand {
-
+    //@@author aali195
     public static final String COMMAND_WORD = "image";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds/updates the image of the person identified "
@@ -49,11 +48,13 @@ public class ImageCommand extends UndoableCommand {
         this.image = image;
         this.index = index;
     }
+    //@@author
 
+    //@@author aali195-reused
     /**
      * Executes the command
      * @return a success message with the updated user's name
-     * @throws CommandException
+     * @throws CommandException if an error is encountered
      */
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
@@ -106,7 +107,9 @@ public class ImageCommand extends UndoableCommand {
 
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
+    //@@author
 
+    //@@author aali195
     /**
      * Generates success messages
      * @param personToEdit
@@ -145,6 +148,5 @@ public class ImageCommand extends UndoableCommand {
         return index.equals(e.index)
                 && image.equals(e.image);
     }
+    //@@author
 }
-//@@author
-

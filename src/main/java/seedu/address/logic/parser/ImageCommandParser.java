@@ -1,4 +1,3 @@
-//@@author aali195
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
@@ -10,6 +9,7 @@ import seedu.address.logic.commands.ImageCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Image;
 
+//@@author aali195
 /**
  * Parser for the image command
  */

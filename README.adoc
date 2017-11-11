@@ -1,4 +1,4 @@
-= Address Book (Level 4)
+= TouristBook
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
@@ -14,15 +14,19 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+== Scenario
 
-* The above UI design is a very early prototype of version 2.0
+We have been asked create an address book that can be used by a tour guide to record the details of their customers. We have been given a generic address book program written in Java using OOP principles to build on with features that we would think will improve their experience.
+
+The vision of this project is to create an address book that can be used safely, comfortably and navigated quickly by a tour guide with average computing experience.
+
+
+Main features:
+
+* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+* It is intended to be used by a tour guide to keep track of their contacts
+
+More features listed in the UserGuide.
 
 == Site Map
 

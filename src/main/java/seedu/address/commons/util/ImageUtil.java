@@ -1,4 +1,3 @@
-//@@author aali195
 package seedu.address.commons.util;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_IMAGE;
@@ -15,6 +14,7 @@ import javax.imageio.ImageIO;
 import seedu.address.commons.exceptions.ImageException;
 import seedu.address.logic.commands.ImageCommand;
 
+//@@author aali195
 /**
  * Handles the IO for editing persons images
  */
