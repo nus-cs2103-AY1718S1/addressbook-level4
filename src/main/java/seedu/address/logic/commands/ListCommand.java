@@ -34,7 +34,7 @@ public class ListCommand extends Command {
     /** Sort the contacts in alphabetical order before listing. */
     public void listInOrder() throws PersonNotFoundException, DuplicatePersonException {
         this.model.sortAllPersons();
-        this.model.sortImportantTag();
+        this.model.filterImportantTag();
     }
     //@@author
 }
