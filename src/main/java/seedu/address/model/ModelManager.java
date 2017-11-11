@@ -96,6 +96,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deleteInsurance(ReadOnlyInsurance target) throws InsuranceNotFoundException {
         addressBook.deleteInsurance(target);
         updateFilteredInsuranceList(PREDICATE_SHOW_ALL_INSURANCES);
+        indicateAddressBookChanged();
     }
 
     @Override
