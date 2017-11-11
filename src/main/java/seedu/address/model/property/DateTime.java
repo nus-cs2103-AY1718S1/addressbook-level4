@@ -50,9 +50,9 @@ public class DateTime extends Property {
     /**
      * Prepares the value by checking whether the input can be interpreted by the natural language parser.
      */
-    public static String prepareDateTimeValue(String value) throws IllegalValueException, PropertyNotFoundException {
+    private static String prepareDateTimeValue(String value) throws IllegalValueException, PropertyNotFoundException {
         // Returns the original value directly if it is already in standard format.
-        if (isInStandardInputFormat(value)) {
+        if (value.matches(INPUT_STANDARD_FORMAT)) {
             try {
                 return formatDateTime(parseDateTime(value));
             } catch (ParseException e) {
@@ -68,13 +68,6 @@ public class DateTime extends Property {
         }
     }
 
-    /**
-     * Checks whether a string representation of datetime is in standard format.
-     */
-    public static boolean isInStandardInputFormat(String value) {
-        return value.matches(INPUT_STANDARD_FORMAT);
-    }
-
     public static Date parseDateTime(String date) throws ParseException {
         return inputFormatter.parse(date);
     }
@@ -82,7 +75,7 @@ public class DateTime extends Property {
     /**
      * Converts the given {@link Date} object into the format used in UI and storage.
      */
-    public static String formatDateTime(Date date) {
+    private static String formatDateTime(Date date) {
         return outputFormatter.format(date);
     }
 }
