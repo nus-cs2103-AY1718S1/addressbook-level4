@@ -468,26 +468,28 @@ The name of the 2nd person in the address book will be searched on Facebook.
 === Adding avatar to a person : `(avr)avatar`
 
 Adds avatar to a person (identified by the index number used in the last listing). +
-Format: `(avr)avatar INDEX IMAGE_URL`
+Format: `(avr)avatar INDEX IMAGE_PATH`
 
 ****
-* The given URL must be pointed to a valid image in `png`, `jp(e)g` and `svg` format.
+* The given path must be pointed to a valid image in `png`, `jp(e)g` and `svg` format.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* like `1, 2, 3, ...`
-* The image will only be displayed correctly when you have Internet connection.
+* The path should not be empty, nor should it contain any prohibited characters `?!%*+:|"<>`.
+* The application will infer the path as from a location relative to the *BoNUS* home folder if the given path
+is not complete (or an absolute path).
 ****
-
-[NOTE]
-====
-* The avatar will only be shown to you if you have stable Internet connection.
-* You may need to wait for a while as the application is downloading the image from the specified URL.
-====
 
 Examples:
 
 * `list` +
-`avatar 2 https://avatars0.githubusercontent.com/u/1342004` +
+`avatar 2 linda.jpg` +
 Adds avatar to the 2nd person in the address book.
+
+[NOTE]
+====
+* Do not move, rename or delete the image you use as an avatar; otherwise, it will not be shown in *BoNUS*.
+* You are suggested to move the image into the home folder where you use *BoNUS*.
+====
 
 === Switching themes : `(t)theme`
 
