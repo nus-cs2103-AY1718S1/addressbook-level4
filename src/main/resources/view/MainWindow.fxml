@@ -52,7 +52,6 @@
                <items>
                     <SplitPane fx:id="detailsStatsPlaceHolder" dividerPositions="0.5" orientation="VERTICAL">
                         <items>
-            
                                   <StackPane fx:id="extendedPersonCardPlaceholder">
                                 <padding>
                                     <Insets bottom="10" left="10" right="10" top="10" />
@@ -61,7 +60,6 @@
                             <StackPane fx:id="statisticsPanelPlaceholder" />
                         </items>
                     </SplitPane>
-            
                                 <StackPane fx:id="graphPanelPlaceholder">
                         <padding>
                             <Insets bottom="10" left="10" right="10" top="10" />
