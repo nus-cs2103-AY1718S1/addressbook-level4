@@ -6,9 +6,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: AddressBook - Level 4
 AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/phungtuanhoang1996/main/blob/master/collated/main/Hoang.md[Functional code]] [https://github.com/phungtuanhoang1996/main/blob/master/collated/test/Hoang.md[Test code]]
 
-=== Enhancement Added: Export all contacts to a `.txt` file
+
+== Enhancement Added: Export all contacts to a `.txt` file
 
 ==== External behavior
 
@@ -25,7 +26,7 @@ include::../UserGuide.adoc[tag=export]
 
 When users are on the move and do not have access to the software, it is essential to have a physical copy of all the contacts. Exporting them to a `.txt` file would faciliate the process of printing.
 
-=== Enhancement Added: Login with an email
+== Enhancement Added: Login with an email
 
 ==== External behavior
 ---
@@ -41,7 +42,7 @@ include::../UserGuide.adoc[tag=emaillogin]
 
 As the targeted users are tutors and businessmen, email functionality is required for information dissemination.
 
-=== Enhancement Added: Sending email with a logged in email
+== Enhancement Added: Sending email with a logged in email
 
 ==== External behavior
 ---
@@ -57,7 +58,7 @@ include::../UserGuide.adoc[tag=emailsend]
 
 As the targeted users are tutors and businessmen, email functionality is required for information dissemination.
 
-=== Enhancement Added: Find person(s) without matching the whole keyword
+== Enhancement Added: Find person(s) without matching the whole keyword
 
 ==== External behavior
 ---
@@ -75,7 +76,7 @@ an AND search (`find_contain`) will be required.
 * For the search bar UI enhancement, search without matching the whole keyword is more desirable (for example: typing `ale`
 will immediately show all `Alex`, thus saving time.
 
-=== Enhancement Added: User Interface overhaul
+== Enhancement Added: User Interface overhaul
 
 * *Dark Theme*
 
@@ -85,13 +86,22 @@ image::DarkTheme.png[width=450]
 
 image::LightTheme.png[width=450]
 
-=== New Feature Added: Search Bar
+== New Feature Added: Search Bar
 
 ==== External behavior
 ---
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=searchbar]
+
+#End of Extract#
+
+==== Developer Guide
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=searchbar]
 
 #End of Extract#
 
@@ -105,7 +115,7 @@ include::../UserGuide.adoc[tag=searchbar]
 the contact as "David" or "Dave". Search Bar solves this problem by allowing users to just type "dav" in the name field
 rather than use the `find` command twice for "dave" and "david".
 
-=== New Feature Added: Email Login window and Email Send window / Enhancement Added: Checkboxes for Contact Panel to allow sending to multiple contacts
+== New Feature Added: Email Login window and Email Send window / Enhancement Added: Checkboxes for Contact Panel to allow sending to multiple contacts
 
 ==== External behavior
 ---
@@ -119,6 +129,20 @@ include::../UserGuide.adoc[tag=emailloginwindow]
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=emailsendwindow]
+
+#End of Extract#
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=emailcomponent]
+
+#End of Extract#
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=checkbox]
 
 #End of Extract#
 
