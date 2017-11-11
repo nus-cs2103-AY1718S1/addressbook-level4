@@ -107,7 +107,7 @@
                               <StackPane fx:id="personListPanelPlaceholder" minWidth="300.0" VBox.vgrow="ALWAYS" />
                            </children>
                         </VBox>
-                        <StackPane fx:id="browserPlaceholder" maxWidth="-Infinity" minWidth="0.0" prefHeight="98.0" prefWidth="0.0" StackPane.alignment="CENTER_RIGHT">
+                        <StackPane fx:id="tutorialPlaceholder" maxWidth="-Infinity" minHeight="-Infinity" minWidth="0.0" prefHeight="0.0" prefWidth="0.0" StackPane.alignment="CENTER_RIGHT">
                            <StackPane.margin>
                               <Insets bottom="20.0" right="350.0" top="50.0" />
                            </StackPane.margin>
