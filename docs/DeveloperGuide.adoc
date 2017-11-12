@@ -1466,7 +1466,7 @@ image::EditBobbySuggestion.png[width="800"]
 
 Using the decision flow modeled above, we can see that the argument suggestions were parsed in the following order:
 
-1. The index, `1` is incorrectly placed within the command word. `911` is attempted but since 911 is greater 1, no index can be found in the arguments.
+1. The index, `1` is incorrectly placed within the command word. `911` is attempted but since 911 is greater than the Rolodex's size, no index can be found in the arguments.
 2. The index, `1` is matched in the command word and extracted.
 3. No phone is matched. `911` is detected as a short number and is skipped. The prefix `p/` is removed.
 4. No email is matched.
