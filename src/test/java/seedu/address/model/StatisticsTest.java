@@ -19,6 +19,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.AddressBookBuilder;
 
+//@@author 500poundbear
 /**
  * Tests for Statistics model
  */
@@ -45,7 +46,6 @@ public class StatisticsTest {
 
     private Statistics statistics;
 
-    //@@author 500poundbear
     @Test
     public void getTotalNumberOfPeopleTest() {
 
@@ -56,30 +56,6 @@ public class StatisticsTest {
         assertEquals(statistics.getTotalNumberOfPeople().intValue(), 4);
     }
 
-    //@@author 500poundbear
-    @Test
-    public void calculateCountByMonthOffsetTest() {
-
-        Statistics statistics = new Statistics(allPersonsList1, 12, 2015);
-        assertEquals(statistics.calculateCountByMonthOffset(12, 2015), 0);
-
-        statistics = new Statistics(allPersonsList1, 12, 2016);
-        assertEquals(statistics.calculateCountByMonthOffset(12, 2015), 12);
-
-        statistics = new Statistics(allPersonsList1, 12, 2017);
-        assertEquals(statistics.calculateCountByMonthOffset(1, 2015), 35);
-
-        statistics = new Statistics(allPersonsList1, 1, 2016);
-        assertEquals(statistics.calculateCountByMonthOffset(12, 2015), 1);
-
-        statistics = new Statistics(allPersonsList1, 12, 2018);
-        assertEquals(statistics.calculateCountByMonthOffset(12, 2015), 36);
-
-        statistics = new Statistics(allPersonsList1, 3, 2017);
-        assertEquals(statistics.calculateCountByMonthOffset(5, 2016), 10);
-    }
-
-    //@@author 500poundbear
     @Test
     public void getTotalNumberOfNoFacebookRecordsTest() {
 
@@ -90,7 +66,6 @@ public class StatisticsTest {
         assertEquals(statistics.getHasNoFacebook().intValue(), 2);
     }
 
-    //@@author 500poundbear
     @Test
     public void getTotalNumberOfNoTwitterRecordsTest() {
 
@@ -102,7 +77,6 @@ public class StatisticsTest {
 
     }
 
-    //@@author 500poundbear
     @Test
     public void getTotalNumberOfNoInstagramRecordsTest() {
 
@@ -114,7 +88,6 @@ public class StatisticsTest {
 
     }
 
-    //@@author 500poundbear
     @Test
     public void getNewPersonsAddByMonthTest() {
 
