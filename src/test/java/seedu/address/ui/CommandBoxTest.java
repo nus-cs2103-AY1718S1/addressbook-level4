@@ -138,8 +138,8 @@ public class CommandBoxTest extends GuiUnitTest {
 
     //@@author goweiwen
     /**
-     * Types a command that is invalid, then verifies that <br>
-     *      - the command box's style is the same as {@code errorStyleOfCommandBox}.
+     * Types a command that is invalid, then verifies that the command box's style is the same as
+     * {@code errorStyleOfCommandBox}.
      */
     private void assertBehaviorForInvalidCommand() {
         commandBoxHandle.type(COMMAND_THAT_FAILS);
@@ -147,8 +147,8 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     /**
-     * Types a command that is valid, then verifies that <br>
-     *      - the command box's style is the same as {@code defaultStyleOfCommandBox}.
+     * Types a command that is valid, then verifies that the command box's style is the same as
+     * {@code defaultStyleOfCommandBox}.
      */
     private void assertBehaviorForValidCommand() {
         commandBoxHandle.type(COMMAND_THAT_SUCCEEDS);

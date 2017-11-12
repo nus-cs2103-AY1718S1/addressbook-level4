@@ -72,10 +72,12 @@ public class CommandBox extends UiPart<Region> {
         commandBoxItems.getChildren().add(commandBoxHints.getRoot());
         commandTextField.prefColumnCountProperty().bind(commandTextField.textProperty().length());
 
+        //@@author goweiwen
         // changes command box style to match validity of the input whenever there is a change
         // to the text of the command box.
         commandTextField.textProperty().addListener((observable, oldInput, newInput) ->
                 setStyleByValidityOfInput(newInput));
+        //@@author nicholaschuayunzhi
 
         // posts a CommandInputChangedEvent whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((observable, oldInput, newInput) ->

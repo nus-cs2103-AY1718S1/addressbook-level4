@@ -18,6 +18,9 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ListCommand;
 
 //@@author goweiwen
+/**
+ * Contains unit tests for {@code Aliases}.
+ */
 public class AliasesTest {
     private static final String LIST_COMMAND_ALIAS = "everyone";
     private static final String ADD_COMMAND_ALIAS = "someone";

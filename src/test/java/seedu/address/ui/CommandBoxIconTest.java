@@ -12,6 +12,9 @@ import guitests.guihandles.CommandBoxIconHandle;
 import seedu.address.commons.events.ui.CommandInputChangedEvent;
 
 //@@author goweiwen
+/**
+ * Contains unit tests for {@code CommandBoxIcon}.
+ */
 public class CommandBoxIconTest extends GuiUnitTest {
 
     private static final CommandInputChangedEvent COMMAND_INPUT_PARTIAL_ADD = new CommandInputChangedEvent("ad");
