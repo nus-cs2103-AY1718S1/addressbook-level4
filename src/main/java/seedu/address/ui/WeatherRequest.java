@@ -12,10 +12,10 @@ import com.github.fedy2.weather.data.unit.DegreeUnit;
  * The class that retrieve weather information and format the string according to its unique pattern.
  */
 //@@author eeching
-public class YahooWeatherRequest {
+public class WeatherRequest {
     private static final String WHERE_ON_EARTH_IDENTIFIER = "1062617"; //this is Yahoo's woeid for Singapore
 
-    public String getYahooWeatherConditionSg() throws JAXBException, IOException {
+    public String getSgWeather() throws JAXBException, IOException {
 
         YahooWeatherService service = new YahooWeatherService();
         Channel channel = service.getForecast(WHERE_ON_EARTH_IDENTIFIER, DegreeUnit.CELSIUS);

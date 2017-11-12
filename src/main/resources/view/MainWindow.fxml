@@ -26,7 +26,6 @@
     <MenuBar fx:id="menuBar" styleClass="menu-bar" VBox.vgrow="NEVER">
         <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#handleExit" styleClass="menu-bar-item" text="Exit" />
-            <MenuItem fx:id="weatherForecast" mnemonicParsing="false" onAction="#handleWeather" text="Weather Forecast" />
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" styleClass="menu-bar-item" text="Help" />
