@@ -18,7 +18,7 @@ public class SwitchThemeTest {
 
     @Test
     public void execute_switch_success() {
-        CommandResult result = new SwitchThemeCommand().executeUndoableCommand();
+        CommandResult result = new SwitchThemeCommand().execute();
         assertEquals(MESSAGE_SUCCESS, result.feedbackToUser);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof SwitchThemeEvent);
         assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
