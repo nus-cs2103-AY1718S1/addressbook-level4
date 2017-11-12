@@ -1,7 +1,6 @@
 package seedu.room.ui;
 
 import java.io.File;
-import java.time.YearMonth;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -277,9 +276,10 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author Haozhe321
     @Subscribe
     public void handleCalenderBoxPanelChange(EventBookChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        calandarBoxPanel.getCalendarBox().populateCalendar(YearMonth.now(), this.logic.getFilteredEventList());
+        calandarBoxPanel.getCalendarBox().refreshCalendar(this.logic);
     }
 }

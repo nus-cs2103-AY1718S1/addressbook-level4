@@ -451,6 +451,23 @@ Clicking on a person now displays additional information in the side pane
 Calendar has been introduced to allow the hostel administrator to view events.
 Events can be seen on calendar interface for clearer view since v1.5
 
+image::Calendar_UI.png[width="790"]
+
+* Event names are truncated on the calendar to allow uniform calendar grid size +
+
+* Calendar is dynamically updated when events are added or deleted
+
+* Calendar will bring you to current month when events are added or deleted
+
+[TIP]
+When there are three of more events on the same day, calendar only shows two of those events
+and let you know that they are more events happening on the same day.
+
+Example:
+
+image::Day_Events.png[width="300"]
+
+
 === Events (Since v1.4)
 
 Events can be managed through the Resident book. It supports add, remove and edit functions.
