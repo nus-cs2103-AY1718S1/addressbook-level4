@@ -90,6 +90,88 @@ link:https://github.com/CS2103AUG2017-T17-B1/main/blob/master/docs/UserGuide.ado
 ==== Deletion
 . `delete 22`
 ** Better Crowe should be deleted from the address book.
-. `select 21` +
+. `select 21`
+** Selected John Doe.
 . `d`
 ** John Doe should be deleted from the address book.
+
+==== Editing
+. `edit`
+** Should show invalid command format message in result display.
+. `edit 1 n/Alice Pauline`
+** Bernice Yu’s `name` should be changed to “Alice Pauline”
+. `select 4`
+** Selected Charlotte Oliveiro.
+. `edit pc/418132`
+** Charlotte Oliveiro’s `postal code` and `general location` should be changed to “418132” and “Geylang, Eunos” respectively.
+. `edit 2 td/0`
+** Should show “Total debt cannot be set to zero” in result display.
+. `edit 2 td/1`
+** Should show “Total debt cannot be less than current debt” in result display.
+
+==== Undoing
+. `undo`
+** Charlotte Oliveiro’s `postal code` and `general location` should be restored to “560011” and “Bishan, Ang Mo Kio” respectively.
+. `undo`
+** Alice Pauline should be renamed to Bernice Yu.
+. `undo`
+** John Doe should be in the address book.
+
+==== Redoing
+. `redo`
+** John Doe should be removed from the address book.
+
+==== Sorting
+. `sort email`
+** Should show invalid command format message in result display.
+. `sort debt`
+** Contacts should be sorted in descending debt order.
+. `sort name`
+** Contacts should be sorted in ascending lexicographical order.
+. `sort deadline`
+** Contacts with existing debts should be sorted in increasing deadline order. Contacts that have cleared their debts should be at the bottom of the list.
+. `sort cluster`
+** Contacts should be sorted in their postal districts (select the contacts in order to verify).
+. `sort`
+** Contacts should be sorted in ascending lexicographical order.
+
+====  Finding
+. `find 1`
+** Person list panel should be empty.
+. `find li yu`
+** Person list panel should show Bernice and David.
+
+
+==== Displaying different lists
+. `list`
+** Should display full masterlist in person list panel.
+. `blacklist`
+** Should show Farhan, Herbert, Kanyee and Nigel in person list panel.
+. `whitelist`
+** Should show Gisela, Queenie, Sam and Timmy in person list panel.
+. `overduelist`
+** Should show David, Irfan, Monica and Ah Seng in person list panel.
+. `ls`
+** Should display full masterlist in person list panel.
+
+==== Selecting contacts from “all contacts in this area” list panel
+. `select 1`
+** Alex should be selected.
+. `nearby 2`
+** Roy should be selected.
+
+==== Updating contacts that have repaid their debts
+. `repaid 1`
+** Alex’s debt should show $0/$10000, and if selected, should show the date repaid to the day this command is entered.
+. `select 2`
+** Selected Bernice.
+. `repaid`
+** Bernice’s debt should show $0/$500, and her date repaid should be the day this command is entered.
+. `whitelist`
+** Alex and Bernice should be in the person list panel.
+. `undo`
+** Bernice should be removed from the person list panel.
+. `borrow 1 1`
+** Alex should be removed from the person list panel.
+. `repaid 1`
+** Should show “Gisela Tan has already repaid debt!” in result display.
