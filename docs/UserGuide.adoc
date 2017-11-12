@@ -689,7 +689,7 @@ e.g. `find James Jake`
 * *Select* : `select [INDEX]` +
 e.g.`select 2`
 * *History* : `history`
-* *Nearby* : `nearby [INDEX]` +
+* *Nearby* : `nearby INDEX` +
 e.g. `nearby 2`
 * *Sort* : `sort [ORDERING]` +
 e.g. `sort debt`
