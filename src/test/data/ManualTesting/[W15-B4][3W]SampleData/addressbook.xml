@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <remark></remark>
+        <id>-1664171611</id>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <remark>Likes to swim.</remark>
+        <id>-1105598994</id>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <remark></remark>
+        <id>-268446947</id>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <remark>As quick as a leopard.</remark>
+        <id>-1195329751</id>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <remark></remark>
+        <id>590586619</id>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark></remark>
+        <id>174333795</id>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Shaocong Dong</name>
+        <phone>93734523</phone>
+        <email>shaocong@example.com</email>
+        <address>311, Clementi Ave 2, #02-24</address>
+        <remark></remark>
+        <id>1029802022</id>
+        <tagged>teammates</tagged>
+    </persons>
+    <persons>
+        <name>Jia Zhixin</name>
+        <phone>12344321</phone>
+        <email>zhixin@example.com</email>
+        <address>311, Clementi Ave 2, #02-23</address>
+        <remark></remark>
+        <id>-911963703</id>
+        <tagged>teammates</tagged>
+    </persons>
+    <persons>
+        <name>Qi Kongjia</name>
+        <phone>23432312</phone>
+        <email>kongjia@example.com</email>
+        <address>311, Clementi Ave 2, #02-23</address>
+        <remark></remark>
+        <id>816767307</id>
+        <tagged>teammates</tagged>
+    </persons>
+    <persons>
+        <name>Cui Xiaohan</name>
+        <phone>23432312</phone>
+        <email>xiaohan@example.com</email>
+        <address>311, Clementi Ave 2, #02-22</address>
+        <remark></remark>
+        <id>1342596296</id>
+        <tagged>teammates</tagged>
+    </persons>
+    <persons>
+        <name>Tony Tan</name>
+        <phone>12343542</phone>
+        <email>tonyTan@example.com</email>
+        <address>311, Clementi Ave 2, #02-22</address>
+        <remark></remark>
+        <id>1360091462</id>
+        <tagged>investor</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Tom Wang</name>
+        <phone>12343556</phone>
+        <email>tomWang@example.com</email>
+        <address>311, Clementi Ave 2, #02-21</address>
+        <remark></remark>
+        <id>1703840866</id>
+        <tagged>employee</tagged>
+    </persons>
+    <persons>
+        <name>Xinyi He</name>
+        <phone>93847532</phone>
+        <email>xinyiHe@example.com</email>
+        <address>311, Clementi Ave 2, #02-20</address>
+        <remark>She is my best friend!</remark>
+        <id>-1556384723</id>
+        <tagged>bestFriend</tagged>
+    </persons>
+    <persons>
+        <name>Adney</name>
+        <phone>93847532</phone>
+        <email>adney@example.com</email>
+        <address>311, Clementi Ave 2, #02-13</address>
+        <remark></remark>
+        <id>-210879341</id>
+        <tagged>handsome</tagged>
+    </persons>
+    <persons>
+        <name>Aiken</name>
+        <phone>12343212</phone>
+        <email>aiken@example.com</email>
+        <address>311, Clementi Ave 2, #02-10</address>
+        <remark></remark>
+        <id>269065095</id>
+        <tagged>tall</tagged>
+    </persons>
+    <persons>
+        <name>Barden</name>
+        <phone>12343212</phone>
+        <email>barden@example.com</email>
+        <address>311, Clementi Ave 2, #02-10</address>
+        <remark></remark>
+        <id>-51706712</id>
+        <tagged>interesting</tagged>
+        <tagged>gamer</tagged>
+    </persons>
+    <persons>
+        <name>Alice</name>
+        <phone>12343212</phone>
+        <email>alice@example.com</email>
+        <address>311, Clementi Ave 2, #02-10</address>
+        <remark></remark>
+        <id>-287023723</id>
+        <tagged>beautiful</tagged>
+    </persons>
+    <persons>
+        <name>Cadman</name>
+        <phone>12343212</phone>
+        <email>cadman@example.com</email>
+        <address>311, Clementi Ave 2, #02-02</address>
+        <remark></remark>
+        <id>-1929681589</id>
+        <tagged>warrior</tagged>
+    </persons>
+    <persons>
+        <name>daisy</name>
+        <phone>12345567</phone>
+        <email>daisy@example.com</email>
+        <address>311, Clementi Ave 2, #02-52</address>
+        <remark></remark>
+        <id>-1775607155</id>
+        <tagged>cute</tagged>
+    </persons>
+    <persons>
+        <name>James Cheng</name>
+        <phone>68754322</phone>
+        <email>jamesCheng@example.com</email>
+        <address>311, Clementi Ave 2, #01-52</address>
+        <remark></remark>
+        <id>-1519446580</id>
+        <tagged>rich</tagged>
+    </persons>
+    <tags>bestFriend</tags>
+    <tags>handsome</tags>
+    <tags>warrior</tags>
+    <tags>interesting</tags>
+    <tags>rich</tags>
+    <tags>neighbours</tags>
+    <tags>employee</tags>
+    <tags>cute</tags>
+    <tags>friends</tags>
+    <tags>beautiful</tags>
+    <tags>teammates</tags>
+    <tags>investor</tags>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>gamer</tags>
+    <tags>tall</tags>
+    <tags>family</tags>
+</addressbook>

@@ -4,7 +4,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: 3W
-3W is a desktop address book application used for learning Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. 
+3W is a desktop address book and task book application designed for University students, business people and all those who have a busy daily schedule. The user interacts with it using a CLI, and it has a GUI created with JavaFX. 
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W15-B4/main/blob/master/collated/main/ShaocongDong.md[functional code]][https://github.com/CS2103AUG2017-W15-B4/main/blob/master/collated/test/ShaocongDong.md[test code]]
 
@@ -14,9 +14,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 . https://github.com/CS2103AUG2017-W15-B4/main/pull/14[Add TaskBook to our app including storage, model, and logic]
 . https://github.com/CS2103AUG2017-W15-B4/main/pull/15[Add Task Command]
 . https://github.com/CS2103AUG2017-W15-B4/main/pull/19[Delete Task Command]
-. https://github.com/CS2103AUG2017-W15-B4/main/pull/27[Edit Task Command]
+. https://github.com/CS2103AUG2017-W15-B4/main/pull/27[Edit Task Command Enhancement]
 . https://github.com/CS2103AUG2017-W15-B4/main/pull/34[Select Task Command]
 . https://github.com/CS2103AUG2017-W15-B4/main/pull/46[Task Priority Functionalities]
+. https://github.com/CS2103AUG2017-W15-B4/main/pull/84[Task DateTime Object Modelling]
 
 
 ==== External behavior
@@ -24,15 +25,20 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=shaocong1]
+include::../UserGuide.adoc[tag=shaocong2]
+include::../UserGuide.adoc[tag=shaocong3]
+include::../UserGuide.adoc[tag=shaocong4]
 
 #End of Extract#
 
 ---
 
 ==== Justification
+. In this application, 3W, we have taskbook as a separate entity besides addressbook so that they will not affect each other. The taskbook will thus be able to directly built besides the original addressbook without the need to modify the modelling and storage logic of the addressbook.
+. Because of time constraints, the current design of the DateTime of the tasks have rigid input format. They are powerful in checking start must be earlier than end, and the validity of the start and end dates and time. Currently, we focus on the validity and security. In the future, this implementation will be extended with powerful natrual language processing unit to ensure the flexibility of input as well.
+. Following the addressbook functionality, the edit task function will also be able to accept various fields (at least one filed must be present). However, the priority of the task will be updated or modified through setPriority command. This modelling will ensure the user make frequent changes to the task priority easily. The task priority currently has 5 degrees with 1 being the most important. We feel 5 degrees is the most suitable one for satisfying different business people's needs.
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
 
 ==== Implementation
 
@@ -40,17 +46,22 @@ include::../UserGuide.adoc[tag=undoredo]
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=taskbook]
+include::../DeveloperGuide.adoc[tag=shaocong1]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add task Book (in parallel with address book)
+=== Enhancement Proposed: 
+. Add task Book (in parallel with address book)
+. Task book basic Functionalities
+. DateTime of Task better checking logic
 
-
+---
 
 === Other contributions
     . Generate JAR file for weekly milestones.
+    . Prepare sample data and manual test script.[https://github.com/ShaocongDong/addressbook-level4/commit/beed824f7340ac812ae7c92e9831212da3f9492c[commit]]
     . Update task model for UI integration[https://github.com/CS2103AUG2017-W15-B4/main/pull/14/commits/a129504f10ea2716ab38b4620cabf35eefd71347[commit]]
     . Design the fxml and css file for TaskBook panel and task card for our UI.
     . Make link response message more friendly[https://github.com/CS2103AUG2017-W15-B4/main/pull/70[pull request]]
@@ -59,3 +70,4 @@ include::../DeveloperGuide.adoc[tag=taskbook]
     . Make the taskBook commands undoable and redoable.[https://github.com/CS2103AUG2017-W15-B4/main/commit/701e15ecf9b15a3d4cff0b6b0f1f6858ad3e1f85[commit]]
     . Apply Dependency Inversion Principle For Task Model[https://github.com/CS2103AUG2017-W15-B4/main/pull/14/commits/20a33d4d60cfb51e0129b5ce82b9c320414c0950[commit]]
     . Apply Defensive Programming[https://github.com/CS2103AUG2017-W15-B4/main/pull/46/commits/aa3b5bd407ac32c9d0489b14223d465564218f20[commit]]
+    . Apply Abstraction design pattern[https://github.com/ShaocongDong/addressbook-level4/commit/96ff63452bd2b203cea9307f75c6c528cd041c93[commit]]
