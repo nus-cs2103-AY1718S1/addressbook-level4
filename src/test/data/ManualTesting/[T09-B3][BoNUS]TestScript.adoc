@@ -317,9 +317,15 @@ To export data to a `.xml` file, we need to use the `export` command
 
 === Email a contact on your contact list
 
-To email anyone on your contact list, you can use the email (index) command.
+To email anyone on your contact list, you can use the `email` command.
 
 *Positive test case*
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
 
 . Emailing Alex Yeoh +
 _Command:_ +
@@ -343,6 +349,41 @@ _Command:_ +
 `email 300000` +
 _Result:_ +
 `The person index provided is invalid`.
+
+=== Searching up a contact on Google Maps
+
+To search up a person's address on Google Maps, you can use the `gmap` command
+
+*Positive test case*
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Next, let's try to search up a person's address on Google Maps! +
+_Command:_ +
+`gmap 1`  +
+_Result:_ +
+`Opened Google Maps to get to Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Tags: [friends]`
+
+At this point in time, you should see a browser opening Google Maps with `Alex Yeoh` 's address.
+
+*Negative test cases*
+
+. Invalid command and invalid index +
+_Command:_ +
+`gmap -1` +
+_Result:_ +
+`gmap: Opens Google Maps in default browser with the address of the person identified by the index number used in the last person listing being the Destination.
+Parameters: INDEX (must be a positive integer)`
+
+. Invalid index
+_Command:_ +
+`gmap 300000` +
+_Result:_ +
+`The person index provided is invalid`
 
 === Switch themes
 
