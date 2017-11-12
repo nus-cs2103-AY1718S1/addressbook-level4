@@ -24,8 +24,6 @@ public class ListObserver {
 
     private static Model model;
 
-    private ListObserver() {}
-
     public static void init(Model newModel) {
         model = newModel;
     }
