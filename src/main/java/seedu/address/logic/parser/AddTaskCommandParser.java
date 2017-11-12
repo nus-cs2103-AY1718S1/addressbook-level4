@@ -93,7 +93,7 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
             prefixCounter++;
         }
         if (argumentMultimap.getValue(PREFIX_DEADLINE_ON).isPresent()) {
-            prefixCounter ++;
+            prefixCounter++;
         }
         if (argumentMultimap.getValue(PREFIX_DEADLINE_FROM).isPresent()) {
             prefixCounter++;
