@@ -183,26 +183,24 @@ class MonthDateBuilder {
     private Integer firstDayOfMonth;
     private Integer maxDayOfMonth;
     private String nameOfMonth;
+    private int MAX_NUMBER_DAYS = 42;
 
     public MonthDateBuilder() {
         calendar = Calendar.getInstance();
         firstDayOfMonth = 1; // random inits, can delete
         maxDayOfMonth = 5; //random inits, can delete for testing purposes
 
-
-        monthDateArray = new String[42]; // FOR STORING THE VALUES FOR THE DATE YOU SEE
+        monthDateArray = new String[MAX_NUMBER_DAYS]; // FOR STORING THE VALUES FOR THE DATE YOU SEE
         monthYearArray = new Integer[2]; // FOR USE IN CALENDAR IF YOU WANT TO IN THE FUTURE USE CUSTOM MONTHS MONTH/YR
         monthYearArray[0] = calendar.get(Calendar.MONTH); //RETURNS YOU CURRENT MONTH
         monthYearArray[1] = calendar.get(Calendar.YEAR); //RETURNS YOU CURRENT YEAR
         setNameOfMonth();
 
-
         calendar.set(Calendar.MONTH, monthYearArray[0]); //SETS YOUR CALENDAR OBJECT AS WHATEVER MONTH YOU WANT
         calendar.set(Calendar.YEAR, monthYearArray[1]); //SETS YOUR CALENDAR OBJECT YEAR VALUES AS WTV YOU WANT
 
-
         setMonthAchors(); // THIS IS TO SET THE MONTH ANCHORS, BEING THE FIRST DAY NUMBER AND THE MAx days
-        setMonthArrays(); //THIS IS TO BUILD THE ARRAY OF 42, FOR BUILDING THE VIEW OF THE MONTH
+        setMonthArrays(); //THIS IS TO BUILD THE ARRAY OF MAX_NUMBER_DAYS, FOR BUILDING THE VIEW OF THE MONTH
     }
 
     private void setMonthAchors() {
@@ -237,8 +235,6 @@ class MonthDateBuilder {
             firstDayOfMonth = 6;
             break;
         }
-
-
     }
 
     public void setMonthArrays() {
@@ -253,14 +249,11 @@ class MonthDateBuilder {
             monthDateArray[j] = String.valueOf(j - firstDayOfMonth + 1);
             j++;
         }
-        while (a < 42) {
+        while (a < MAX_NUMBER_DAYS) {
             monthDateArray[a] = " ";
             a++;
         }
-
-
     }
-
 
     public String[] getMonthDateArray() {
         return monthDateArray;
@@ -268,6 +261,8 @@ class MonthDateBuilder {
 
     public void setNameOfMonth() {
         switch(monthYearArray[0]) {
+        default:
+            nameOfMonth = "January";
         case Calendar.JANUARY: nameOfMonth = "January";
                 break;
         case Calendar.FEBRUARY: nameOfMonth = "February";
@@ -292,8 +287,6 @@ class MonthDateBuilder {
                 break;
         case Calendar.DECEMBER: nameOfMonth = "December";
                 break;
-        default:
-            nameOfMonth = null;
         }
     }
 
