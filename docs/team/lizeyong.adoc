@@ -86,7 +86,7 @@ Suggestions are also generated based on the context of what the user has keyed i
 Auto-Completion allows users to type less. Moreover, since all suggestions are generated from the stored data, it can reduce the chance of mistyping. For example, if the user wants to find a contact by a very long name, the name would show up as a suggestion when the user type in the first few letters. On the other hand, if the user needs to type the name out in full, there is a higher chance for him to make mistakes.
 
 
-=== Enhancement Added: Resize Command
+=== Enhancement Added: `resize` Command
 
 ==== External behavior
 
@@ -106,14 +106,17 @@ The resize command allows the user to enlarge/shrink the size of the main window
 
 ---
 
-=== Enhancement Proposed: Add `filter` command
+=== Enhancement Proposed: A More Powerful `find` Command
 
-A `filter` command to filter away unwanted contacts in the list shown.
-For instance, if the user want to see all contacts who are not his friends, he can filter away all contacts tagged with `friends`.
+* The user can choose to search from all contacts instead of the displayed ones using an argument `-a` which stands for `all`.
+For example, `find -a t/friends` would search for *ALL* contacts that are tagged with `friends`.
+* The user can choose to search for contacts that satisfy all conditions using an argument `-s` which stands for `strict`.
+For example, `find -s n/John t/friends` would search for contacts that match *BOTH* the name `John` the tag `friends`.
+* The user can choose to filter away unwanted contacts from the displayed list using an argument `-u` which stands for `unwanted`.
+For instance, `find -u t/friends` would filter *AWAY* contacts tagged with `friends`.
 
-=== Enhancement Proposed: Rank Auto-Completion Suggestions by their occurance
-If a certain keyword is frequently used, it should show up first in the suggestion menu.
-
+=== Enhancement Proposed: Rank Auto-Completion Suggestions by Occurrence
+If a certain keyword is frequently used, it would show up first in the suggestion menu.
 
 
 === Other contributions
