@@ -478,21 +478,22 @@ Removes the `friends` tag from the second to fifth person in the contact list.
 // end::addremove[]
 
 // tag::remarkchecklist[]
-==== Add/remove a remark note to contact: `addremark`, `removeremark`
+==== Add a remark note to contact: `addremark`, `removeremark`
 
-*Description:* Adds/Removes the specified remarks(s).
+*Description:* Adds the specified remark(s).
 
-Format to add remark: `addremark INDEX r/REMARK...` +
-Format to remove remark: `removeremark INDEX REMARKINDEX...`
+Format: `addremark INDEX r/REMARK...` +
+
+image::addremarkc.png[width="850"]
 
 ****
-* Add/Remove multiple remarks from multiple indexes as specified.
+* Add multiple remarks from multiple indexes as specified.
 * `INDEX` refers to the index number shown in the last person listing.
-** Only one `INDEX` can be selected at a time, although multiple `REMARKINDEX` can be selected
-* The `INDEX` and `REMARKINDEX` must be a *positive integer* ( `1, 2, 3, ...`).
+** Only one `INDEX` can be selected at a time
+* The `INDEX` must be a *positive integer* ( `1, 2, 3, ...`).
 ****
 [TIP]
-A person can have any number of remarks (including 0) +
+You can add any number of remarks +
 Remarks can be anything (including a blank) +
 GUI will display a list of person with pending remarks on the right.
 
@@ -502,10 +503,34 @@ Examples:
 
 * `addremark 1 r/Have a beer with him on Sunday`
 * `addremark 3 r/Finish project with him by tomorrow r/Eat supper with him at 10`
+
+*Suggestion for use:* If you want to add a remark pertaining to a person to take note of a task you want to do with him/her.
+
+==== Remove a remark note to contact: `addremark`, `removeremark`
+
+*Description:* Removes the specified remark(s).
+
+Format: `removeremark INDEX REMARKINDEX...`
+
+image::removeremarkc.png[width="850"]
+
+****
+* Remove multiple remarks from multiple indexes as specified.
+* `INDEX` refers to the index number shown in the last person listing.
+** Only one `INDEX` can be selected at a time, although multiple `REMARKINDEX` can be selected
+* The `INDEX` and `REMARKINDEX` must be a *positive integer* ( `1, 2, 3, ...`).
+****
+[TIP]
+You can remove any number of remarks up to the amount available for the specified person +
+If you do not specify any `REMARKINDEX`, all remarks will be removed from the specified person
+
+Examples:
+
 * `removeremark 1 1 3`
 * `removeremark 2 1`
+* `remove remark 1`
 
-*Suggestion for use:* If you want to add/remove a remark pertaining to a person to take note of a task you want to do with him/her.
+*Suggestion for use:* If you want to remove a remark pertaining to a person to take note of a task you want to do with him/her.
 // end::remarkchecklist[]
 
 // tag::link[]
