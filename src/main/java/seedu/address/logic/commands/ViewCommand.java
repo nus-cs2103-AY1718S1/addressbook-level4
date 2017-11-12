@@ -33,8 +33,8 @@ public class ViewCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_VIEW_LOCATION_SUCCESS = "lessons(s) founded with location %1$s";
-    public static final String MESSAGE_VIEW_MODULE_SUCCESS = "lessons(s) founded with module code %1$s";
+    public static final String MESSAGE_VIEW_LOCATION_SUCCESS = "Lesson(s) founded with location %1$s.";
+    public static final String MESSAGE_VIEW_MODULE_SUCCESS = "Lesson(s) founded with module code %1$s.";
     public static final String MESSAGE_VIEW_LESSON_FAILURE = "You can only view module or location.";
     public static final String VIEWING_ATTRIBUTE_MODULE = "module";
     public static final String VIEWING_ATTRIBUTE_DEFAULT = "default";

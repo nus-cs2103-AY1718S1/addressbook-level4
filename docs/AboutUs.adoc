@@ -26,7 +26,7 @@ image::liang_profile_pic.jpeg[width="150", align="left"]
 
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Model component, add ColorKeywordCommand, add Timetable Panel, add StickyNotes Panel.
 
 '''
 
