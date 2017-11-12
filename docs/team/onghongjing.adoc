@@ -10,7 +10,7 @@ The user interacts with it using a CLI, and it is written in Java with a GUI cre
 
 This portfolio page aims to document the enhancements I have added to The Classroom and provide details on how the user
 interacts with these enhancements and the underlying implementation behind them. Justification for various design considerations
-and decisions will also b provided.
+and decisions will also be provided.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/main/Houjisan.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/test/Houjisan.md[Test code]]
 
