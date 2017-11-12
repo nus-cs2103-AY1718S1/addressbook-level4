@@ -540,8 +540,6 @@ There is no need to save manually.
 
 === Database to check for UniCity users
 
-=== Facebook command to search for contacts on Facebook
-
 === Automatic pop-up of help window for new users
 
 === Event reminders for the user
@@ -580,26 +578,34 @@ It is safe to enter anything in UniCity.
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *AddTag* : `addtag INDEX [MORE_INDEXES] [t/TAG]` +
+e.g. `addtag 1 4 t/friends`
+* *Birthday* : `birthday INDEX [b/BIRTHDAY]` +
+e.g. `birthday 2 b/24/05/96`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Exit* : `exit`
+* *Facebook* : `facebook INDEX` +
+e.g.`facebook 2`
+* *Favourite* : `favourite INDEX` +
+e.g.`favourite 2`
 * *Filter* : `filter KEYWORD [MORE_KEYWORDS]` +
 e.g. `filter friend hallmate`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
+* *Locate* : `locate INDEX` +
+e.g.`locate 2`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *ShowFavourite* : `showFavourite`
 * *Sort* : `sort`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Birthday* : `birthday INDEX [b/BIRTHDAY]` +
-e.g. `birthday 2 b/24/05/96`
-* *AddTag* : `addtag INDEX [MORE_INDEXES] [t/TAG]` +
-e.g. `addtag 1 4 t/friends`
 * *RemoveTag* : `removetag INDEX [MORE_INDEXES] [t/TAG]` +
 e.g. `removetag 3 7 t/lecturer`
