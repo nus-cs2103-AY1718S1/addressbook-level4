@@ -107,14 +107,15 @@ Read more about parcel tags in the link:#tag[Tags section] below.
 
 == Parcel Fields
 
+[#name]
 === Name Field: Name of Parcel Recipient
 
 The Name field represents the name of the parcel's recipient. It can contain the name of the organisation or the person
- that you are delivering to the parcel to.
+ that you are delivering to the parcel to. +
 
 [[Note]]
 The Name field will only allow alphanumeric characters separated by whitespace. e.g. `John Doe`;
-`8 Noodles at Shangri-La's Rasa Sentosa Resort & Spa`
+`8 Noodles at Shangri-La's Rasa Sentosa Resort & Spa` +
 Non-alphanumeric entries will be rejected by Ark. e.g. `John Doe!`
 
 //tag::trackingNumber[]
@@ -141,6 +142,7 @@ The team is working on adding support for more types of tracking numbers such as
  link:https://www.ups.com/tracking/tracking.html[UPS] and link:https://www.fedex.com/sg/[FedEx] in the future. +
 //end::trackingNumber[]
 
+[#phone]
 === Phone Field: Phone of Parcel Recipient
 
 The Phone field represents the phone number of the parcel's recipient. It can contain the phone number of the
@@ -154,6 +156,7 @@ The Phone field will only allow you to add phone numbers with 3 or more digits. 
 This is to allow you to add overseas numbers per the request of the parcel's recipient. +
 Phone numbers shorter than 3 digits will be rejected. e.g. `4`, `12`; +
 
+[#address]
 === Address Field: Destination Address of Parcel Delivery
 
 The Address field represents the destination address of your parcel. This field contains the address that you should
@@ -189,6 +192,7 @@ code exists even though it might meet the criteria above. The team is working on
  into Ark and ensure that the postal code inputs are valid.
 //end::postalCode[]
 
+[#email]
 === Email Field: Email of Parcel Recipient
 
 The Email field represents the email contact of the parcel's recipient. It can contain the email of the organisation
@@ -198,6 +202,7 @@ or the person that you are delivering to the parcel to.
 The Email field will only allow alphanumeric or periods characters separated by an `@`character. e.g. `John@example.com`
 
 //tag::deliveryDate[]
+[#delivery-date]
 === Due Date Field: Due Date for Parcel Delivery
 
 Ark can store the scheduled delivery date of parcels. It only accepts valid dates,
