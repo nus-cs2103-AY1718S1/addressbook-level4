@@ -1249,6 +1249,19 @@ If no more integers can be found, the method throws a `NumberFormatException` to
 Sometimes users may include the index in the command word, without a whitespace separation. To handle such a case,
 we first look for the index within the arguments, as usual. If no valid indices are found, we search the command word instead.
 
+For example, the invalid command string `s3lect`,
+
+image::SuggestionSelectInvalid.png[width="800"]
+
+1. `RolodexParser` determines that the closest command word to `s3lect` is `select` and use parse logic for single index typed arguments.
+2. The parser would attempt to search for an index in the empty arguments and fail.
+3. The parser then attempts to search for an index in the command word and finds `3`.
+4. The parser builds the arguments into the formatted command string, `select 3` and prompts the user:
+
+image::SuggestionSelectPrompt.png[width="800"]
+
+Should the user choose to execute the prompted command, the person _Alpha Charlie_ would be selected.
+
 ==== Commands with Directory Type Arguments
 
 The commands that hold a single file path argument are
