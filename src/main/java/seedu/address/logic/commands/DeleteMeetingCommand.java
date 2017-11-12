@@ -59,7 +59,7 @@ public class DeleteMeetingCommand extends UndoableCommand {
             throw new AssertionError("Not creating a new person");
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
-        };
+        }
 
         model.deleteMeeting(meetingToDelete);
 
