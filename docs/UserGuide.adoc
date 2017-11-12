@@ -77,14 +77,23 @@ delivered parcels, click on the `Completed Parcels` tab.
 7. *Parcel List Panel* - The list of parcels in your inventory is showed here.
 7. *Status Bar Footer* - You can view a summary of the parcels in your inventory here.
 
-=== More About Browser Panel
+//tag::browser[]
+=== Google Maps Browser
+
+Ark has an in-built Google Maps browser section in the main window and can be used to show you the locations
+of the delivery addresses of each parcel. This feature will be automatically used whenever you type `select`
+into the command box, and will display a Google Maps search of the postal code of the parcel's address in the
+browser section of the main window.
+//end::browser[]
+
+==== More About Browser Panel
 
 image::Ark_Browser.png[width="890"]
 _Figure 4.1.1 : Selecting a parcel_
 
 Selecting a parcel activates the Browser Panel. In the diagram above, when the 4th parcel belonging to Cornelia
 Meier, at index 4, is selected, the Browser Panel is activated and displays the destination address of the parcel.
-In this case, Cornelia wants her parcel to be delivered to 10th Street Singapore 123114. +
+In this case, Cornelia wants her parcel to be delivered to 10th Street Singapore 123114.
 
 === More About Parcel List Card
 
@@ -92,21 +101,126 @@ image::Ark_Parcel_Card_Numbered.png[width="890"]
 _Figure 4.2.1 : Labelled Parcel Card_
 
 1. *Parcel Index* - This is the index number of the parcel in the displayed list.
-2. *Name* - This is the name of the recipient of the parcel. You can read more in the link:#name[Name section].
+2. *Name* - This is the name of the recipient of the parcel. You can read more in the link:#name[Name] section.
 3. *Tracking Number* - This is the tracking number of the parcel. You can read more about it Ark's parcel tracking
-   numbers in the #tracking-number[Tracking Numbers section] below.
+   numbers in the link:#tracking-number[Tracking Numbers] section below.
 4. *Phone* - This is the phone number of the recipient of the parcel.
-You can read more in the link:#phone[Phone section].
+You can read more in the link:#phone[Phone] section.
 5. *Address* - This is the address to deliver the parcel to. The address must end with the postal code of the address.
- You can read more about postal codes in Ark in the #postal-code[Postal Code section] below.
+ You can read more about postal codes in Ark in the #postal-code[Postal Code] section below.
 6. *Email* - This is the email address of the recipient of the parcel.
-You can read more in the link:#email[Email section].
+You can read more in the link:#email[Email] section.
 7. *Delivery Date* - This is the delivery date of the parcel. The parcel should be delivered on dates prior to or on
-this date. You can read more in the link:#delivery-date[Due Date section].
+this date. You can read more in the link:#delivery-date[Due Date] section.
 8. *Status* - This is the status of the parcel in the delivery workflow. Read more about parcel delivery status
- in the link:#status[Status section].
+ in the link:#status[Status] section.
 9. *Tags* - These are the tags of the parcel. They are used to provide more information about a parcel's contents.
-Read more about parcel tags in the link:#tag[Tags section].
+Read more about parcel tags in the link:#tag[Tags] section.
+
+
+=== Parcel List Card Fields
+
+//tag::postalCode[]
+
+[#postal-code]
+==== Postal Code
+
+Ark can store the postal address of locations in Singapore. It only accepts values of `s` or `S` followed by 6 digits.
+The postal code of a parcel is used to query Google Maps when the `select` command is executed or when a parcel in the
+Parcel List Panel is clicked.
+
+*Postal codes must be appended to the end of the address text.* i.e. Suppose you are adding a new parcel into Ark and
+entered `add ...(Some info)... a/NUS School of Computing, COM1, 13 Computing Drive, S117417 ...(More info required
+in the add command)...`. In this case, `S11417` is the postal code of the above address and is appended to its
+respective address, separated by a space.
+
+[WARNING]
+If you did not append the postal code of the address at the end of your address, Ark will not recognize your address
+input as a valid input and would give you an invalid input message.
+
+[NOTE]
+Presently, the `PostalCode` field still does a very relaxed validation and does not completely ensure that the postal
+code exists even though it might meet the criteria above. The team is working on producing a database of postal codes
+ in Singapore. In the meantime, we encourage users to take additional precautions when entering the postal codes
+ into Ark and ensure that the postal code inputs are valid.
+
+//end::postalCode[]
+
+//tag::trackingNumber[]
+
+[#tracking-number]
+==== Tracking Number
+
+Parcels have tracking numbers for delivery vendors to keep track of the parcels that they send out on a daily basis.
+This feature is important because a single person can have many parcels belonging to him. Tracking numbers are used
+to differentiate between the different parcels that will be be delivered to the same person. Tracking numbers also
+serve as a better way of narrowing down and pinpointing parcels of interest since these numbers are likely to be more
+unique than names.
+
+Ark only supports tracking numbers for registered articles managed by SingPost at this instance. These
+numbers include two `R`s followed by nine digits and ending with `SG`. i.e. `RR123456789SG` +
+You can read more about SingPost Registered Article tracking number
+ link:http://www.singpost.com/send-receive/sending-within-singapore/registered-article-local[here]. +
+
+[NOTE]
+The team is working on adding support for more types of tracking numbers such as those of
+ link::https://www.ups.com/tracking/tracking.html[UPS] and link::https://www.fedex.com/sg/[FedEx] in the future.
+
+//end::trackingNumber[]
+
+//tag::status[]
+
+[#status]
+==== Status field
+
+`Status` is used to indicate the current delivery status of a parcel. A parcel can have 4 possible delivery status and
+listed below is a description of these `Status` values.
+
+* `PENDING` - This means that the parcel has not been delivered and has not passed the date it is supposed to be
+delivered by. +
+* `DELIVERING` - This means that the parcel is currently working being delivered to its destination address.
+* `COMPLETED` - This indicates that the parcel has been successfully delivered to its destination.
+* `OVERDUE` - This state indicates that the parcel has not been delivered and has passed its due date.
+
+//end::status[]
+
+//tag::tags[]
+
+[#tags]
+==== Tags field
+
+`Tag`s are used to indicate how the parcel should be handled. Tags can contain one or more of the following `Tag`s:
+
+* `FROZEN` - This means the parcel should be refrigerated as its contents are temperature sensitive.
+* `FLAMMABLE` - This means that the parcels' contents are highly flammable and should be kept away from heat.
+* `HEAVY` - This indicates that the parcel is heavy and may require additional manpower to deliver.
+* `FRAGILE` - This state indicates that the parcels' contents can be broken easily and
+requires additional care when handling.
+
+[NOTE]
+If your use of Ark requires more tags to be made available, please contact our team and we will see to your request.
+
+//end::tags[]
+
+//tag::tooltip[]
+
+[#tool-tip]
+==== Parcel Tooltip
+
+Ark comes with a tooltip feature that allows you to view parcel details that are too long. Suppose you have entered
+a parcel with really long details into Ark. As seen below, John's parcel has a delivery address that is too long,
+and a part of it has been replaced by ellipsis i.e. `...`.
+
+image::ParcelWithLongInput.PNG[width="1000"]
+_Figure 5.22.1 : Parcel with a long address_
+
+To view the full delivery address, we simply mouseover his address and the full details of his
+address will appear as a tooltip. This can be seen in the diagram below.
+
+image::mouse-over-address.png[width="1000"]
+_Figure 5.22.2 : Tooltip to show more of John's address_
+
+//end::tooltip[]
 
 == Features
 
@@ -406,97 +520,6 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
-//tag::postalCode[]
-
-[#postal-code]
-=== Postal Code
-
-Ark can store the postal address of locations in Singapore. It only accepts values of `s` or `S` followed by 6 digits.
-The postal code of a parcel is used to query Google Maps when the `select` command is executed or when a parcel in the
-Parcel List Panel is clicked.
-
-*Postal codes must be appended to the end of the address text.* i.e. Suppose you are adding a new parcel into Ark and
-entered `add ...(Some info)... a/NUS School of Computing, COM1, 13 Computing Drive, S117417 ...(More info required
-in the add command)...`. In this case, `S11417` is the postal code of the above address and is appended to its
-respective address, separated by a space.
-
-[WARNING]
-If you did not append the postal code of the address at the end of your address, Ark will not recognize your address
-input as a valid input and would give you an invalid input message.
-
-[NOTE]
-Presently, the `PostalCode` field still does a very relaxed validation and does not completely ensure that the postal
-code exists even though it might meet the criteria above. The team is working on producing a database of postal codes
- in Singapore. In the meantime, we encourage users to take additional precautions when entering the postal codes
- into Ark and ensure that the postal code inputs are valid.
-
-//end::postalCode[]
-
-//tag::trackingNumber[]
-
-[#tracking-number]
-=== Tracking Number
-
-Parcels have tracking numbers for delivery vendors to keep track of the parcels that they send out on a daily basis.
-This feature is important because a single person can have many parcels belonging to him. Tracking numbers are used
-to differentiate between the different parcels that will be be delivered to the same person. Tracking numbers also
-serve as a better way of narrowing down and pinpointing parcels of interest since these numbers are likely to be more
-unique than names.
-
-Ark only supports tracking numbers for registered articles managed by SingPost at this instance. These
-numbers include two `R`s followed by nine digits and ending with `SG`. i.e. `RR123456789SG` +
-You can read more about SingPost Registered Article tracking number
- link:http://www.singpost.com/send-receive/sending-within-singapore/registered-article-local[here]. +
-
-[NOTE]
-The team is working on adding support for more types of tracking numbers such as those of
- link::https://www.ups.com/tracking/tracking.html[UPS] and link::https://www.fedex.com/sg/[FedEx] in the future.
-
-//end::trackingNumber[]
-
-//tag::status[]
-
-[#status]
-=== Status field
-
-`Status` is used to indicate the current delivery status of a parcel. A parcel can have 4 possible delivery status and
-listed below is a description of these `Status` values.
-
-* `PENDING` - This means that the parcel has not been delivered and has not passed the date it is supposed to be
-delivered by. +
-* `DELIVERING` - This means that the parcel is currently working being delivered to its destination address.
-* `COMPLETED` - This indicates that the parcel has been successfully delivered to its destination.
-* `OVERDUE` - This state indicates that the parcel has not been delivered and has passed its due date.
-
-//end::status[]
-
-//tag::tags[]
-
-[#tags]
-=== Tags field
-
-`Tag`s are used to indicate how the parcel should be handled. Tags can contain one or more of the following `Tag`s:
-
-* `FROZEN` - This means the parcel should be refrigerated as its contents are temperature sensitive.
-* `FLAMMABLE` - This means that the parcels' contents are highly flammable and should be kept away from heat.
-* `HEAVY` - This indicates that the parcel is heavy and may require additional manpower to deliver.
-* `FRAGILE` - This state indicates that the parcels' contents can be broken easily and
-requires additional care when handling.
-
-[NOTE]
-If your use of Ark requires more tags to be made available, please contact our team and we will see to your request.
-
-//end::tags[]
-
-//tag::browser[]
-=== Google Maps Browser
-
-Ark has an in-built Google Maps browser section in the main window and can be used to show you the locations
-of the delivery addresses of each parcel. This feature will be automatically used whenever you type `select`
-into the command box, and will display a Google Maps search of the postal code of the parcel's address in the
-browser section of the main window.
-//end::browser[]
-
 //tag::autocomplete[]
 === Autocomplete
 
@@ -518,25 +541,7 @@ Examples:
 * `a` + kbd:[Tab] (auto-completes with `add` in the command line input)
 //end::autocomplete[]
 
-//tag::tooltip[]
 
-[#tool-tip]
-=== Parcel Tooltip
-
-Ark comes with a tooltip feature that allows you to view parcel details that are too long. Suppose you have entered
-a parcel with really long details into Ark. As seen below, John's parcel has a delivery address that is too long,
-and a part of it has been replaced by ellipsis i.e. `...`.
-
-image::ParcelWithLongInput.PNG[width="1000"]
-_Figure 5.22.1 : Parcel with a long address_
-
-To view the full delivery address, we simply mouseover his address and the full details of his
-address will appear as a tooltip. This can be seen in the diagram below.
-
-image::mouse-over-address.png[width="1000"]
-_Figure 5.22.2 : Tooltip to show more of John's address_
-
-//end::tooltip[]
 
 //tag::gui-tab[]
 
