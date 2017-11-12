@@ -502,9 +502,44 @@ Figure 4.4.3: Sequence diagram for SortCommand executeUndoableCommand()
 //  tag::find[]
 === Enhanced find
 
-The enhanced find feature is implemented by comparing every `Person` 's `Name`, `Phone`, `Email`,
-`Address`, and `Tag` with the keyword provided by the user. The user need not have to type the keywords
-in full and partial keywords will still be able to find the person (e.g find jos will return Josephine).
+The old find feature is only capable of finding the target `Person` using his/her name. Furthermore,
+you have to type out the full name in order to be able to find the `Person`. +
+
+The enhanced find feature allows you to find the `Person` you want using their name, phone, email, address or tag. Keywords need not be typed in full and partial keywords will still be able to find the `Person`
+(e.g find jos will return Josephine).
+
+This is implemented by further refining the `PersonHasKeywordsPredicate` that was originally used.
+`PersonHasKeywordsPredicate` is used to compare the `Person` 's details with the keyword provided. If
+there is a match, the `Person` will be shown on Bluebird as found.
+The code snippet below shows how the refinement was made.
+
+[source,java]
+----
+public class PersonHasKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    ...
+    private boolean isPersonMatch(ReadOnlyPerson person, String[] nameParts, ArrayList<String> tagParts) {
+        for (String tag : tagParts) {
+            if (keywords.stream().anyMatch(keyword -> tag.startsWith(keyword.toLowerCase()))) {
+                return !isFindPinned || person.isPinned();
+            }
+        }
+        for (String name : nameParts) {
+            if (keywords.stream().anyMatch(keyword -> name.toLowerCase().startsWith(keyword.toLowerCase()))) {
+                return !isFindPinned || person.isPinned();
+            }
+        }
+        if (keywords.size() != 0 && person.getAddress().toString().toLowerCase().contains(fullWord)) {
+            return !isFindPinned || person.isPinned();
+        }
+        if (keywords.stream().anyMatch(keyword -> person.getEmail().toString().toLowerCase()
+                .startsWith(keyword.toLowerCase()))) {
+            return !isFindPinned || person.isPinned();
+        }
+        return keywords.stream().anyMatch(keyword -> person.getPhone()
+                .toString().startsWith(keyword.toLowerCase())) && (!isFindPinned || person.isPinned());
+    }
+}
+----
 
 ==== Design Considerations
 
@@ -740,8 +775,34 @@ public static Optional<Name> parseName(Optional<String> name, String command) th
 
 // tag::parentmode[]
 === Parent Mode
-When Bluebird is launched, Parent Mode will be off by default and the number of commands
+When Bluebird is launched, the boolean variable `isParentEnabled` in `AddressBookParser` is set to `false`
+by default. This means that Parent Mode will be off by default and the number of commands
 available will be limited. The `ParentModeCommand` will enable all commands for the parent to use.
+
+The code snippet below shows how `AddressBookParser` prevents certain commands such as `DeleteCommand` from
+executing when `isParentEnabled` is `false`. A `ParseException` will be thrown which will display
+"Unknown Command" to the user.
+
+[source, java]
+----
+public class AddressBookParser {
+    ...
+    public AddressBookParser() {
+        ...
+        this.isParentEnabled = false;
+    }
+    ...
+    public Command parseCommand(String userInput) throws ParseException {
+    ...
+        case DeleteCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
+    ...
+    }
+
+}
+----
 
 ==== Design Considerations
 

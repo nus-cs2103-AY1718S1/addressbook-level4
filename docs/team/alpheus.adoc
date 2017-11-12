@@ -85,7 +85,8 @@ include::../UserGuide.adoc[tag=find]
 ---
 
 ==== Justification
-
+The old find feature is only capable of finding the target `Person` using his/her name. Furthermore,
+users have to type out the full name in order to be able to find the `Person`.
 Users may want to search for the contact not just by their names, but also by their phone number, email
 , address and tags as well. This enhancement gives users the choice to decide how they would want
 to search for the contact they want.
