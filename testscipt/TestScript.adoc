@@ -200,6 +200,7 @@ Examples:
 ```
 2 persons listed!
 ```
+
 ---
 `find r/2017 T12`
 ```
@@ -215,7 +216,7 @@ Examples:
 ---
 `find n/david alex ap/15:50 c/funny r/friends`
 ```
-5 persons listed!
+6 persons listed!
 ```
 
 === Add multiple persons with a .txt file
