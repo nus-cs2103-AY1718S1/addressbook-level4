@@ -657,9 +657,10 @@ Function: Synchronises your contacts with Google Contacts after authentication +
 Format: `sync`
 [NOTE]
 A browser is necessary for logging in to Google
-
 [NOTE]
 You have to run the `login` command before you can run `sync`
+[NOTE]
+Synchronisation currently does not support Google Contacts with multiple email addresses, phone numbers, and/or addresses.
 ====
 
 You can easily synchronise your *ABC* contacts with Google Contacts through the following steps:
