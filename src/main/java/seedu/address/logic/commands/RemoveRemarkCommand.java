@@ -27,12 +27,11 @@ public class RemoveRemarkCommand extends UndoableCommand {
             + ": Removes a remark from the person identified by the index number used in the last person listing."
             + "Index of remark to be removed also needs to be identified in the listing.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "REMARKINDEX\n"
+            + "REMARKINDEX...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + "2";
 
-    public static final String MESSAGE_REMOVE_REMARK_SUCCESS = "Removed remark from Person: %1$s";
-    public static final String MESSAGE_REMOVE_REMARK_FAILURE = "Failed to remove remark to Person: %1$s";
+    public static final String MESSAGE_REMOVE_REMARK_SUCCESS = "Removed remark from Person. %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
@@ -96,7 +95,7 @@ public class RemoveRemarkCommand extends UndoableCommand {
      * @return String that shows whether remove was successfully done
      */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
-        return String.format(MESSAGE_REMOVE_REMARK_SUCCESS, personToEdit);
+        return String.format(MESSAGE_REMOVE_REMARK_SUCCESS, "\nRemarks left: " + personToEdit.getRemark());
     }
 
     @Override

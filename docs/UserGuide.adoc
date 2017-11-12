@@ -159,6 +159,9 @@ Favourites/Unfavourites the 1st person from the results of the `find` command.
 
 // end::favourite[]
 
+
+// tag::find[]
+
 ==== Finding persons : `find`
 
 *Description:* Finds persons whose specified _field_ contain any of the given keywords.
@@ -200,6 +203,8 @@ Returns any person having names containing `Betsy`, `Tim`, or `John`
 Returns any person having tags `friends`, `colleagues`, or both.
 
 *Suggestion for use:* If you can only remember a contact's address and wants to find the contact in the contact list.
+
+// end::find[]
 
 ==== Deleting a person : `delete`
 
@@ -355,6 +360,8 @@ The second `redo` command reverses the first `undo` command and re-execute the `
 
 // end::undoredo[]
 
+// tag::addremove[]
+// tag::addtag[]
 ==== Adding tag(s) : `addtag`
 
 *Description:* Adds the specified tag(s).
@@ -393,6 +400,7 @@ Adds the `friends` tag to the person from the second to fifth index in the conta
 
 // end::addtag[]
 
+// tag::removetag[]
 ==== Removing tag(s) : `removetag`
 
 *Description:* Removes the specified tag(s).
@@ -438,18 +446,20 @@ Removes the `friends` tag from the second to fifth person in the contact list.
 *Suggestion for use:* If you want to mass delete a tag that is no longer in use.
 
 // end::removetag[]
+// end::addremove[]
 
 // tag::remarkchecklist[]
 ==== Add/remove a remark note to contact: `addremark`, `removeremark`
 
 *Description:* Adds/Removes the specified remarks(s).
 
-Format to add remark: `addremark INDEX r/REMARK` +
-Format to remove remark: `removeremark INDEX REMARKINDEX`
+Format to add remark: `addremark INDEX r/REMARK...` +
+Format to remove remark: `removeremark INDEX REMARKINDEX...`
 
 ****
 * Add/Remove multiple remarks from multiple indexes as specified.
 * `INDEX` refers to the index number shown in the last person listing.
+** Only one `INDEX` can be selected at a time, although multiple `REMARKINDEX` can be selected
 * The `INDEX` and `REMARKINDEX` must be a *positive integer* ( `1, 2, 3, ...`).
 ****
 [TIP]

@@ -34,12 +34,15 @@ public class AddRemarkCommandTest {
 
     @Test
     public void execute_addRemark_success() throws Exception {
+        //"" added in front of "Some remark" because empty remarks are also saved in the remark arraylist
+        // and default sample data tested has "" remark
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                .withRemark("Some remark").build();
+                .withRemark("", "Some remark").build();
 
         AddRemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, "Some remark");
 
-        String expectedMessage = String.format(AddRemarkCommand.MESSAGE_ADD_REMARK_SUCCESS, editedPerson);
+        String expectedMessage = String.format(AddRemarkCommand.MESSAGE_ADD_REMARK_SUCCESS, "\nRemarks: "
+                + editedPerson.getRemark());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
@@ -52,10 +55,11 @@ public class AddRemarkCommandTest {
 
         ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(personInFilteredList)
-                .withRemark("Some remark").build();
+                .withRemark("", "Some remark").build();
         AddRemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, "Some remark");
 
-        String expectedMessage = String.format(AddRemarkCommand.MESSAGE_ADD_REMARK_SUCCESS, editedPerson);
+        String expectedMessage = String.format(AddRemarkCommand.MESSAGE_ADD_REMARK_SUCCESS, "\nRemarks: "
+                + editedPerson.getRemark());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);

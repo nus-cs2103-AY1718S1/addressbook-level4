@@ -27,12 +27,11 @@ public class AddRemarkCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds a remark to the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_REMARK + "REMARK\n"
+            + PREFIX_REMARK + "REMARK...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_REMARK + "Get charger back from him";
 
-    public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to Person: %1$s";
-    public static final String MESSAGE_ADD_REMARK_FAILURE = "Failed to add remark to Person: %1$s";
+    public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to Person. %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
@@ -86,7 +85,7 @@ public class AddRemarkCommand extends UndoableCommand {
      * @return String that shows whether add was successfully done
      */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
-        return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
+        return String.format(MESSAGE_ADD_REMARK_SUCCESS, "\nRemarks: " + personToEdit.getRemark());
     }
 
     @Override

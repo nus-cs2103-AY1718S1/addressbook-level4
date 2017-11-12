@@ -38,7 +38,7 @@ public class RemoveTagCommand extends UndoableCommand {
 
     private final Set<Tag> tag;
     private final Set<Index> index;
-    private final List<String> indexDisplay;
+    private final List<String> indexList;
 
     /**
      *
@@ -48,7 +48,7 @@ public class RemoveTagCommand extends UndoableCommand {
     public RemoveTagCommand(Set<Tag> tag, Set<Index> index, List<String> indexDisplay)  {
         this.tag = tag;
         this.index = index;
-        this.indexDisplay = indexDisplay;
+        this.indexList = indexDisplay;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class RemoveTagCommand extends UndoableCommand {
         String successMessage;
         String notFound;
 
-        String indexInput = indexDisplay.stream().collect(Collectors.joining(", "));
+        String indexDisplay = indexList.stream().collect(Collectors.joining(", "));
 
         if (!index.isEmpty()) {
 
@@ -66,8 +66,8 @@ public class RemoveTagCommand extends UndoableCommand {
                     throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
                 }
             }
-            successMessage = String.format(MESSAGE_REMOVE_SUCCESS + " from index " + indexInput + ".", tag);
-            notFound = String.format(MESSAGE_TAG_NOT_FOUND + " index: " + indexInput + ".", tag);
+            successMessage = String.format(MESSAGE_REMOVE_SUCCESS + " from index " + indexDisplay + ".", tag);
+            notFound = String.format(MESSAGE_TAG_NOT_FOUND + " index: " + indexDisplay + ".", tag);
         } else {
             successMessage = String.format(MESSAGE_REMOVE_SUCCESS + " from address book.", tag);
             notFound = String.format(MESSAGE_TAG_NOT_FOUND + " the address book.", tag);
@@ -75,7 +75,7 @@ public class RemoveTagCommand extends UndoableCommand {
 
 
         try {
-            model.removeTag(tag, indexDisplay);
+            model.removeTag(tag, indexList);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(
                     String.format
@@ -105,7 +105,8 @@ public class RemoveTagCommand extends UndoableCommand {
 
         boolean check1 = checkEqual(tag, e.tag);
         boolean check2 = checkEqual(index, e.index);
-        return check1 && check2;
+        boolean check3 = indexList.equals(e.indexList);
+        return check1 && check2 && check3;
     }
 
     /**

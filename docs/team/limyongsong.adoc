@@ -82,8 +82,9 @@ Having an account would allow us to save any application information to be used 
 
 === Other contributions
 
-Updated the GUI color scheme (Pull requests https://github.com/CS2103AUG2017-T09-B4/main/pull/104[#104]) +
-Add colours to tags (https://github.com/CS2103AUG2017-T09-B4/main/pull/6[#6]) +
-Added continuous integration tools using Appveyor, Travis CI.
+Updated the GUI color scheme (Pull request https://github.com/CS2103AUG2017-T09-B4/main/pull/104[#104]) +
+Add colours to tags (Pull request https://github.com/CS2103AUG2017-T09-B4/main/pull/6[#6]) +
+Added continuous integration tools using Appveyor, Travis CI. +
+Bug testing for other team (Issue https://github.com/CS2103AUG2017-F09-B2/main/issues/68[#68])
 
 
