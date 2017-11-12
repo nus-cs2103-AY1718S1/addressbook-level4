@@ -63,11 +63,11 @@ public class DeleteCommand extends UndoableCommand {
             personDeleteMessage[i] = MESSAGE_DELETE_PERSON_SUCCESS + personToDelete;
         }
 
-         try {
+        try {
             model.deletePerson(personsToDelete);
-         } catch (PersonNotFoundException pnfe) {
+        } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
-         }
+        }
 
         for (String message : personDeleteMessage) {
             deleteMessage.append(message);
