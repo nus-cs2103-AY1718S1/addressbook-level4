@@ -13,6 +13,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AddressBookAccessChangedEvent;
 import seedu.address.commons.events.ui.AccessCountDisplayToggleEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
@@ -72,7 +73,7 @@ public class PersonListPanel extends UiPart<Region> {
      */
     private void updateAccessCount(PersonCard oldValue, PersonCard newValue) {
         if (oldValue == null || oldValue.person.getName() != newValue.person.getName()) {
-            newValue.person.incrementAccess();
+            raise(new AddressBookAccessChangedEvent(newValue.person));
         }
     }
     //@@author

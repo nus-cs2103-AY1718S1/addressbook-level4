@@ -34,7 +34,7 @@
               <Image url="@../images/heart.png" />
             </image>
           </ImageView>
-            <Label fx:id="accesses" prefHeight="18.0" prefWidth="40.0" styleClass="cell_big_label" text="\$accesses" />
+            <Label fx:id="accesses" prefHeight="18.0" prefWidth="70.0" styleClass="cell_big_label" text="\$accesses" />
       </HBox>
       <FlowPane fx:id="tags" />
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
