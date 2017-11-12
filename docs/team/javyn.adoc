@@ -23,7 +23,7 @@ include::../UserGuide.adoc[tag=remark]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+As admin staffs in companies usually deal with large group of personals, it would be convenient if they could add personal remarks for each of the contacts. For example, they could put remarks such as "owe project progress report" as a reminder for themselves.
 
 ==== Implementation
 
@@ -51,7 +51,7 @@ include::../UserGuide.adoc[tag=sort]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+For admin staff especially in the human resource department, there would usually be a large number of contacts being added at once. Thus, after the large group of contacts is being added with the add multiple contacts feature, the user is then able to properly sort the address book in alphabetical order.
 
 ==== Implementation
 
