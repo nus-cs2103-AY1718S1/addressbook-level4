@@ -3,7 +3,14 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
+== Purpose
+
+This project portfolio showcases my contributions to The Myth's Book, a software engineering product made by
+my team and I during our study in National University of Singapore. The portfolio provides an outline of our project and
+showcases my contributions and justifications made to The Myth's Book.
+
 == Project: The Myth's Book
+
 The Myth's Book is an address book dedicated for university students to store useful information such
 as websites, phone numbers and emails of the people around them for personal usage. The application helps students
 to keep track of birthday dates and upcoming events through a calendar and facilitate convenient access to their friend's website
@@ -16,6 +23,25 @@ The Myth's Book is a software application that is coded in `Java` programming la
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/main/chernghann.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/test/chernghann.md[Test code]]
 
+=== Enhancement Added: School Email and Home Number Field
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As university students, most of us would have school emails and personal emails. An extra field for the user to store an extra set of
+emails is definitely useful such that can contact the particular contact at a different email.
+Same idea applies to having an additional Home Number Field to be implemented for adding of a person into The Myth's Book.
+
 === Enhancement Added: Add Events
 
 ==== External behavior
@@ -25,8 +51,6 @@ The Myth's Book is a software application that is coded in `Java` programming la
 
 include::../UserGuide.adoc[tag=addevent]
 
-include::../UserGuide.adoc[tag=calendar]
-
 #End of Extract#
 
 ---
@@ -35,9 +59,9 @@ include::../UserGuide.adoc[tag=calendar]
 
 As an address book targeted at University students in Singapore age between 18-24.
 On average, an university students have to juggle between many commitments in school and out of school. Many of these young adults are actively involved in many events internally and externally.
-Thus, the add event feature allos the users to be able to store and keep track of what events that are coming up and be able to plan and organise their schedule.
+Thus, the add event feature allows the users to be able to store and keep track of what events that are coming up and be able to plan and organise their schedule.
 
-==== Implementation
+== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
@@ -63,10 +87,11 @@ include::../UserGuide.adoc[tag=calendar]
 
 ==== Justification
 
-A Calendar User Interface will enhance the user's experience in using and organising their upcoming events. With a simple click on the calendar,
-the user will be able to get to add the events and be shown to them on the calendar with it being populating with a different shade of colour.
+A Calendar User Interface will enhance the user's experience in using and organising their upcoming events. The calendar will be populated by the
+events added by the `AddEvent` Command. Also, a simple click on the calendar, the user will be able to get to add the events and be shown to them
+on the calendar with it being populating with a shade of colour.
 
-==== Implementation
+=== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
@@ -77,44 +102,33 @@ include::../DeveloperGuide.adoc[tag=calendar]
 
 ---
 
-=== Enhancement Added: School Email and Home Number Field
+=== Enhancement Proposed 1: School Timetable
 
-==== External behavior
+Nusmods is commonly used by students in National University of Singapore to plan for their school modules and organising their timetable.
+I am proposing an in-app timetable that caters to the all the different universities in Singapore. Similar to Nusmods, the students
+will be able to key in their module code and plan out their timetable in The Myth's Book. Thankfully for the Nusmods api, I believe that
+this enhancement could be achieve in a few month's time and be implemented in the next version of The Myth's Book.
 
----
-#Start of Extract [from: User Guide]#
+=== Enhancement Proposed 2: Name Card Recognition
 
-include::../UserGuide.adoc
-
-#End of Extract#
-
----
-
-==== Justification
-
-
-
-==== Implementation
-
----
-#Start of Extract [from: Developer Guide]#
-
-include::../DeveloperGuide.adoc
-
-#End of Extract#
-
----
-
-=== Enhancement Proposed: Sending of Text Messages
-
-
-
+As we attempt to allow The Myth's Book to reach out to the target audience, I feel that the working adults could also use this application
+at work. Thus, this enhancement that I propose is for the working adults who tend to have name cards or business cards. User of
+the application can then simply use their laptop's web camera feature to scan the name card and store the details of the contact.
 
 === Other contributions
 * Acceptance Testing
-- Provide suggestions for improvement (Pull request https://github.com/CS2103AUG2017-W09-B1/main/issues/121#event-1330982844[#121])
+- Provide suggestions for improvement (Pull request https://github.com/CS2103AUG2017-W09-B1/main/issues/121#event-1330982844[#121] , https://github.com/CS2103AUG2017-W09-B1/main/issues/115[#115])
 - Found a bug in implementation (Pull request https://github.com/CS2103AUG2017-W09-B1/main/issues/113[#113])
 
+* Documentation
+- Included a `Back to Top` button for both User Guide and Developer Guide that improves user friendliness.
+(Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/42[#42])
 
-== Project: Ping!
 
+Software Contributions
+
+* Storage
+- Included ability to readBackUpAddressBook (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/48[#45])
+
+* Test coverages
+- Increase test coverages (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/151[#151], https://github.com/CS2103AUG2017-T15-B3/main/pull/158[#158])

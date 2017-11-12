@@ -50,7 +50,6 @@ public class AddEventCommand extends UndoableCommand {
         } catch (DuplicateEventException e) {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         }
-
     }
 
     @Override
