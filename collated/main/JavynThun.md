@@ -1,5 +1,5 @@
 # JavynThun
-###### /java/seedu/address/logic/commands/RemarkCommand.java
+###### \java\seedu\address\logic\commands\RemarkCommand.java
 ``` java
 /**
  *  Changes the remark of an existing person in the address book
@@ -95,7 +95,7 @@ public class RemarkCommand extends UndoableCommand {
 
 }
 ```
-###### /java/seedu/address/logic/commands/SortCommand.java
+###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
 /**
  * Sorts all persons in the address book by name to the user.
@@ -113,7 +113,6 @@ public class SortCommand extends Command {
         personList = new ArrayList<>();
     }
 
-
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -126,16 +125,16 @@ public class SortCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/CliSyntax.java
+###### \java\seedu\address\logic\parser\CliSyntax.java
 ``` java
     public static final Prefix PREFIX_OCCUPATION = new Prefix("o/");
 ```
-###### /java/seedu/address/logic/parser/CliSyntax.java
+###### \java\seedu\address\logic\parser\CliSyntax.java
 ``` java
     public static final Prefix PREFIX_REMARK = new Prefix("r/");
     public static final Prefix PREFIX_WEBSITE = new Prefix("w/");
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> occupation} into an {@code Optional<Occupation>} if {@code occupation} is
@@ -147,7 +146,7 @@ public class SortCommand extends Command {
         return occupation.isPresent() ? Optional.of(new Occupation(occupation.get())) : Optional.empty();
     }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
@@ -167,7 +166,7 @@ public class SortCommand extends Command {
         return website.isPresent() ? Optional.of(new Website(website.get())) : Optional.empty();
     }
 ```
-###### /java/seedu/address/logic/parser/RemarkCommandParser.java
+###### \java\seedu\address\logic\parser\RemarkCommandParser.java
 ``` java
 /**
  * Parser for RemarkCommand
@@ -196,13 +195,13 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     Boolean sortPersonList(ArrayList<ReadOnlyPerson> personlist);
 
 }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public Boolean sortPersonList(ArrayList<ReadOnlyPerson> personlist) {
@@ -220,7 +219,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
         return true;
     }
 ```
-###### /java/seedu/address/model/person/Occupation.java
+###### \java\seedu\address\model\person\Occupation.java
 ``` java
 /**
  * Represents a Person's occupation in the address book.
@@ -279,7 +278,7 @@ public class Occupation {
 
 }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     public void setOccupation(Occupation occupation) {
         this.occupation.set(requireNonNull(occupation));
@@ -295,7 +294,8 @@ public class Occupation {
         return occupation.get();
     }
 ```
-###### /java/seedu/address/model/person/Person.java
+
+###### \java\seedu\address\model\person\Person.java
 ``` java
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
@@ -325,7 +325,8 @@ public class Occupation {
         return website.get();
     }
 ```
-###### /java/seedu/address/model/person/Remark.java
+###### \java\seedu\address\model\person\Remark.java
+
 ``` java
 /**
  *  Represents a Person's remark in the address book.
@@ -360,7 +361,7 @@ public class Remark {
     }
 }
 ```
-###### /java/seedu/address/model/person/Website.java
+###### \java\seedu\address\model\person\Website.java
 ``` java
 /**
  * Represents a Person's website in the address book.

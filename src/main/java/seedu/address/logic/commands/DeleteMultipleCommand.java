@@ -80,7 +80,7 @@ public class DeleteMultipleCommand extends UndoableCommand {
     //@@author vmlimshimin
     @Override
     public void setData(Model model, CommandHistory commandHistory,
-                        UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {
+                        UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue, String theme) {
         this.model = model;
         this.queue = queue;
     }

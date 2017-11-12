@@ -352,17 +352,18 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::addMultiple[]
 === Add multiple contacts
 
-Adding multiple contacts is used so as to allow the user to add multiple contacts with the user of a single command, saving time and without the need to manually enter each entry.
-`AddMultipleByTsvCommand` extends `UndoableCommand` so it can be undone using `undo` function. By keying the path to the file containing the contacts, the command can parse values of each contact at every line and add them to the address book.
+`AddMultipleContactsCommand` allows the user to add multiple contacts with the use of a single command, saving the time and effort of entering each contact one by one.
+`AddMultipleByTsvCommand` extends `UndoableCommand`, so it can be undone using `undo` function. By typing in the destination of the contacts, the command can parse values of the entry at each line and add them to TheYellowPage.
 
 A valid file must satisfy the following conditions:
 
-* Must be a tsv, or in tab separated value form, that is each attribute of a contact (`name`, `phone`,...) is separated by a tab
-* The first line must contains the following values, *in this specific order*, corresponding to contact attributes, separated by tab: `name` `occupation `phone` `email` `address` `website `tag`
+* The specified file must be a tsv, or in tab separated value form. Each contact field (`name`, `phone`,...) is separated by a tab
+* The first line must contain the following values, *in this specific order*, corresponding to contact fields, separated by tab: `name` `occupation` `phone` `email` `address` `website` `tag`
 
-A valid format can be as follow. It is highly advisable that user enter the data in Excel and export as `Text (Tab delimited)`:
+It is highly advisable that the user enter the data in Excel and export as `Text (Tab delimited)`. The following is a file recognized by the command:
 
 
 |===
@@ -385,43 +386,167 @@ A valid format can be as follow. It is highly advisable that user enter the data
 |friend, criminal
 |===
 
-`AddMultipleByTsvCommand` can throw the following exception:
 
- * `NoSuchElementException`: Just as `AddCommand`, this happens when `name`, `occupation, `phone`, `email`, `address` or `website` is missing, and that specific entry will not be added.
+`AddMultipleByTsvCommand` can throw the following exceptions:
+
+ * `NoSuchElementException`: This happens when `name`, `occupation`, `phone`, `email`, `address` or `website` is missing, and that specific entry will not be added.
  * `IOException`: This happens when the system cannot find the file specified by users, and no entry will be added.
- * `DuplicatePersonException`: This happens when any entry has already been added, and that specific entry will not be added.
+ * `DuplicatePersonException`: This happens when an entry has already been added, and it will not be added again.
 
 The following sequence diagram shows how the `AddMultipleByTsvCommand` works
 
 image::AddMultipleByTsvSequenceDiagram.PNG[width="800"]
+_Figure 4.2 : Sequence diagram for `AddMultipleByTsvCommand`
 
-Users specify the path to their list of contact as the only argument of the command. `AddressBookParser` parses this argument and create a new instance of `AddMultipleByTsvCommandParser` with the given argument as `contactTsvFilePath`. `AddMultipleByTsvCommandParser` then creates a new instance of `ContactTsvReader` with the given `contactTsvFilePath` and calls `readContactFromFile()` to start parsing.
+The user specifies the path to his list of contacts as the only argument of the command. `AddressBookParser` parses this argument and creates a new instance of `AddMultipleByTsvCommandParser` with the given argument as `contactTsvFilePath`. `AddMultipleByTsvCommandParser` then creates a new instance of `ContactTsvReader` with the given `contactTsvFilePath` and calls `readContactFromFile()` to start parsing.
 [NOTE]
-`readContactFromFile` throws `NoSuchElementException` and `IOException`. Refer to the above for details.
+`readContactFromFile` throws `NoSuchElementException` and `IOException`.
 
-After `readContactFromFile` is finished, `AddMultipleByTsvCommandParser` calls `getToAddPeople()` for `toAddPeople` (a list of people to add) and `getFailedEntries` for failedEntries (a list of integer of entries that were failed to add due to errors). `AddMultipleByTsvCommandParser` creates a new instance of `addMultipleByTsvCommand` given `toAddPeople` and `failedEntries`. Within this instance, `addPerson` will be called for each person in `toAddPeople`. After this, `addMultipleByTsvCommand` creates a new instance of `CommandResult` and sends the `result` back to `LogicManager`.
+After `readContactFromFile` is finished, `AddMultipleByTsvCommandParser` calls `getToAddPeople()` for `toAddPeople` (a list of people to add) and `getFailedEntries` for failedEntries (a list of entries that TheYellowPage failed to add). `AddMultipleByTsvCommandParser` creates a new instance of `addMultipleByTsvCommand` given `toAddPeople` and `failedEntries`. Within this instance, `addPerson` will be called for each person in `toAddPeople`. After this, `addMultipleByTsvCommand` creates a new instance of `CommandResult` and sends the `result` back to `LogicManager`.
+// end::addMultiple[]
+
+// tag::FindCommand[]
+=== Find contact by multiple parameters
+
+Finding contacts using different parameters is used so as to allow the user to find their contacts without having to rely on just one contact detail.
+
+image::FindCommandSequenceDiagram.png[width="800"]
+_Figure 4.3 : Sequence diagram for `FindCommand`_
+
+Find command extends from commands, and it cannot be undone using the undo function. By keying in the command word `find`, along with the required parameters, the command word will be detected in the `AddressBookParser` class where the arguments will be passed over to the `FindCommandParser` class, as seen from figure 4.3 above.
+
+The find command is implemented this way:
+----
+public class FindCommand extends Command {
+    @Override
+    public CommandResult executeCommand() {
+        // ... find logic ...
+    }
+}
+----
+
+A parse exception is thrown by the FindCommandParser if the user does not input any arguments. Suppose the User inputs `find betsy software engineer`. After the arguments have been detected in the parser classes, the FindCommandPredicate will check through the list to find the contacts whose name, address, email, number, occupation, website or remark contains any of the keywords given. A boolean function is used to check for the type of parameter the user has inputted.
+
+A noteworthy part to mention is that the find function in TheYellowPage is designed to check for every keyword, as such, keying in ambiguous keywords such as `block 42` for address is likely to return many contacts.
+
+==== Design considerations
+
+**Aspect:** Address check of  `FindCommand` +
+**Alternative 1 (current choice):** Search by checking all keywords +
+**Pros:** By checking each keyword individually, users will be able to retrieve all the contacts whose address is in a particular region (eg: Searching `Serangoon` will return all contacts with address `Serangoon`. +
+**Cons:** Common keywords like `blk` or `street` may return a lot of contact results. +
+**Alternative 2:** Find by checking entire address parameter as a whole +
+**Pros:** By checking the address as a whole, users will be able to find the exact contact that they want without getting a ton of redundant results. +
+**Cons:** It is possible to have multiple contacts with the same address in an office setting which makes checking address as a whole parameter less effective.
+
+// end::FindCommand[]
+
+// tag::deleteMultipleCommand[]
 
 === Delete multiple contacts
 
 Deleting multiple contacts is used so as to allow the user to delete multiple contacts with the use of a single command, saving time and without the need to clear the entire list.
 
-image::DeleteMultipleCommandSequenceDiagram.PNG[width="800"]
-_Figure 4.3 : Sequence diagram for deleteMultipleCommand_
+image::DeleteMultipleCommandSequenceDiagram.png[width="800"]
+_Figure 4.4 : Sequence diagram for `deleteMultipleCommand`_
 
-Delete multiple contacts extends from undoable commands, and it can be undone using the undo function. By keying in the command word `deleteMul` along with `indexes`, the command word will be detected in the `AddressBookParser` class where the arguments (indexes in this case) will be passed over to the `DeleteMultipleCommandParser` class, as seen from figure 4.3 above.
+Delete multiple contacts extends from undoable commands, and it can be undone using the undo function. By keying in the command word `deleteMul` along with `indexes`, the command word will be detected in the `AddressBookParser` class where the arguments (indexes in this case) will be passed over to the `DeleteMultipleCommandParser` class, as seen from figure 4.4 above.
 
-As our indexes are intended to take in multiple index values, we will use a `String[] listOfIndex = trimmedArgs.split("\\s+");` to split the arguments into individual indexes and store them into the String array for use. We will use a `Collections.reverse(list);` to ensure that the user will be able to delete the correct indexes. The `ArrayList<String> list = new ArrayList<String>(Arrays.asList(listOfIndex));` is used to convert the list of index into an arrayList for use by the collections utility.
+The deleteMultipleCommand is implemented this way:
+----
+public class DeleteMultipleCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... delete multiple logic ...
+    }
+}
+----
 
-We will now create a `ArrayList<Index> arrayOfIndex = new ArrayList<Index>();` to store the indexes that we will need for the feature. We will store the indexes into the arraylist using a for loop. However, as the arguments in the `listOfIndex` arraylist is in a string format, we will need to convert them into an integer format before storing it into the `ArrayList<Index> arrayOfIndex`. This arrayList will be returned to the `DeleteMultipleCommand` class for use.
+As our indexes are intended to take in multiple index values, a `String[] listOfIndex = trimmedArgs.split("\\s+");` is used to split the arguments into individual indexes and store them into the String array. A `Collections.reverse(list);` is used to ensure that the user will be able to delete the correct indexes. The `ArrayList<String> list = new ArrayList<String>(Arrays.asList(listOfIndex));` is used to convert the list of index into an arrayList for use by the collections utility.
 
 In the `DeleteMultipleCommand` class, the commandResult method is used which compares the index with the `lastShownList` in the model, similar to the method used in the `deleteCommand`. However, as `DeleteMultipleCommand` is designed to take in multiple indexes, a for-loop is used to loop the commandResult method so as to check for every index within the arrayList. The names that are deleted will be stored inside a `String listOfDeletedContacts` which will be used to display the results on the UI.
 
+==== Design Considerations
+
+**Aspect:** Parameter of `DeleteMultipleCommand` +
+**Alternative 1 (current choice):** Keep the original delete by index +
+**Pros:** Keying in the delete multiple command and the required parameters is simple when using indexes as compared to other parameters such as name or address, which makes it simpler for the user to use. +
+**Cons:** Different logic flow as compared to the original delete command, which may make it slightly more difficult for new developers to get started on enhancing the feature. +
+**Alternative 2:** Delete multiple contacts by name +
+**Pros:** Deleting a contact by name might be better for some users as they may be able to remember their contact's name more easily compared to the other parameters. +
+**Cons:** Target users are HR professionals who have a lot of contacts to work with, thus deleting by name may not be the most efficient deletion method.
+
+---
+
+// end::deleteMultipleCommand[]
+
+// tag::recentlydeleted[]
 === Recently Deleted List
 
 Recently deleted command is used to allow the user to have a list of the past 30 recently deleted contacts and their details.
-By keying in the command word `recentlyDel`, the command word will be detected in the `AddressBookParser` class where the arguments (indexes in this case) will be passed over to the `RecentlyDeletedCommand` class.
+By keying in the command word `recentlyDel`, the command word will be detected in the `AddressBookParser` class and then the `RecentlyDeletedCommand` class would be executed.
 We will now create a `LinkedList<Person> RecentlyDeletedQueue = new LinkedList<>();` to store the recently deleted contacts for up to the past 30 contacts.
 In the `RecentlyDeletedCommand` class, the `commandResult` method is used which will show the deleted contacts.
+// end::recentlydeleted[]
+
+// tag::changePicture[]
+=== Change Profile Picture
+
+`ChangeProfilePictureCommand` allows the user to change his contacts' profile pictures.
+The following sequence diagram shows how the `ChangeProfilePictureCommand` works
+
+image::ChangeProfilePictureSequenceDiagram.PNG[width="800"]
+_Figure 4.4 : Sequence diagram for `ChangeProfilePictureCommand`_
+
+When the user keys in the command word `changePicture` along with `INDEX` and `PICTURE_PATH`, `AddressBookParser` will detect the command word and parse the arguments to a new instance of `ChangeProfilePictureCommandParser`. `ChangeProfilePictureCommandParser` then creates a new instance of `ChangeProfilePictureCommand` with the given `INDEX` and `PICTURE_PATH`. This instance finds the `person` of the given `INDEX` in the most recent listing, then calls the static function `saveImageToStorage` with the `person` and `file` at `PICTURE_PATH`. `saveImageToStorage` creates a copy of the `file` and stores it under `data/`
+`ChangeProfilePictureCommand` can throw the following exceptions:
+
+ * `IOException`: This happens when the system cannot find the file specified by users, and no picture will be changed.
+ * `IllegalArgumentException`: This happens when the parsed arguments are not valid.
+// end::changePicture[]
+
+// tag::remark[]
+=== Remark Command
+
+Remark command lets the user enter an additional field of text to a specific contact in the Address Book. Remark command extends undo to allow user to undo the changes made to the remark.
+
+NOTE: Remark command can only be used for contacts already in the Address Book.
+
+A placeholder is then added to PersonCard which displays the remark for each person.
+
+When the user inputs a string of text into the command box, the string of text is then passed on to the AddressbookParser which calls RemarkCommandParser. This will create a new instance of RemarkCommand.
+
+The input string is converted to a remark command object using the following method:
+
+[source, java]
+----
+public class RemarkCommandParser implements Parser<RemarkCommand> {
+    public RemarkCommand parse(String args) throws ParseException {
+        // ... parse logic ...
+    }
+}
+----
+// end::remark[]
+
+// tag::sort[]
+=== Sorting mechanism
+
+The sort mechanism is done first by comparing the names of every contact in the address book in lower case.
+
+Sort extends command which makes it an undoable command.
+
+Sort command can only be executed only if the person list is not empty.
+
+It uses the sort method from the collection class to sort the array list of persons in the address book.
+// end::sort[]
+
+// tag::theme[]
+=== Changing of theme
+
+The `ThemeCommand` is used so as to allow the user to change the colour theme of TheYellowPage with the use of a single command. This provides the user with options to choose their preferred theme of TheYellowPage.
+There are 2 themes to alternate from: `DarkTheme.css` and `LightTheme.css`. By keying in the command word `theme`, the command word will be detected by the `AddressBookParser` class and then the `ThemeCommand` class would be executed.
+By keying the command word `theme`, the theme of TheYellowPage will switch from `DarkTheme.css` to `LightTheme.css` and vice versa.
+// end::theme[]
 
 === Logging
 

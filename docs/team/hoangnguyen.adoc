@@ -1,0 +1,99 @@
+= Nguyen Van Hoang - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: TheYellowPage
+
+TheYellowPage is a desktop address book application developed in the module CS2103T: Software Engineering. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T10-B4/main/blob/master/collated/main/nguyenvanhoang7398.md] [https://github.com/CS2103AUG2017-T10-B4/main/blob/master/collated/test/nguyenvanhoang7398.md]
+
+=== Enhancement Added: Add multiple contacts
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addMultiple]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+`AddMultipleContactsCommand` saves the user from tediously entering each command one by one. The supported file format, tab-separated (tsv), can be easily exported from any Excel table.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addMultiple]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Change Profile Picture
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=changePicture]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+`ChangeProfilePictureCommand` adds photo to a contact profile and helps remind the user of his contacts
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=changePicture]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `searchPicture`
+
+==== External behavior
+
+---
+
+=== Search By Profile Picture : `searchPicture`
+
+Search contacts in TheYellowPage by specifying the path to the picture of any contact. +
+Format: `searchPicture PICTURE_PATH`
+
+****
+* This command return a list of contacts whose profile picture is similar to the one specified by the user.
+* PICTURE_PATH refers to the path to the picture of the desired contact.
+* The specified picture must be in either .png or . jpg format.
+****
+
+Example:
+
+* `searchPicture D:/myPicture.png +
+Return a list of contacts whose profile picture is most similar with the picture at D:/myPicture.png
+
+---
+
+==== Justification
+
+`SearchByProfilePictureCommand` allows the user to find his contacts given their profile pictures.
+
+=== Other contributions
+
+* Add additional Profile Panel to Main Window to view contact details (Pull requests https://github.com/CS2103AUG2017-T10-B4/main/pull/85[#85])
+* Wrote additional tests to increase coverage (Pull requests https://github.com/CS2103AUG2017-T10-B4/main/pull/112[#112], https://github.com/CS2103AUG2017-T10-B4/main/pull/62[#62])

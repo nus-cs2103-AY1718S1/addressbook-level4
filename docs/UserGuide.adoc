@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= TheYellowPage - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -101,9 +101,11 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::FindCommand[]
+
 === Locating persons: `find`
 
-Finds persons whose name, email, address or phone contains any of the given keywords. +
+Finds persons whose name, email, address, phone, website, occupation or remark contains any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -124,6 +126,8 @@ Returns `john` and `John Doe`
 Returns any person having names `Betsy`, `Tim`, or `John`
 * `find Betsy 85355255 Heinz@example.com 10th street` +
 Returns Betsy, Alice, Carl and Daniel.
+
+// end::FindCommand[]
 
 === Locating person by number: `findnum`
 
@@ -248,10 +252,47 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Add multiple contacts at once : `Add range` (Coming in v1.5)
+// tag::addMultiple[]
+=== Add multiple contacts at once : `addMul`
 
-Add multiple contacts to addressBook at once. +
-Format: `Add [numberOfContacts] [Details]`
+Add multiple contacts to TheYellowPage at once, given the list of contacts in a tab-separated file. +
+Format: `addMul TSV_PATH`
+
+****
+* This command adds multiple contacts stored in a file to the YellowPage.
+* TSV_PATH refers to the path to the file containing the contacts to add.
+* Note that the specified file must be in tab-separated format.
+****
+
+Example:
+
+The following is a valid tab-separated file at D:/contact.txt:
+
+|===
+|name  |occupation |phone |email |address |website |tag
+
+|John Doe
+|Google, CEO
+|98765432
+|johnd@example.com
+|John street, block 123, #01-01
+|https://github.com/JohnDoe
+|friend, neighbor
+
+|Betsy Crowe
+|Microsoft, Software Engineer
+|1234567
+|betsycrowe@example.com
+|Newgate Prison
+|https://github.com/BetsyCrowe
+|friend, criminal
+|===
+
+* `addM D:/contacts.txt` +
+Add the list of contacts in contacts.txt into TheYellowPage
+// end::addMultiple[]
+
+// tag::deleteMultipleCommand[]
 
 === Delete multiple contacts at once: `deleteMul` (Since v1.2)
 
@@ -275,22 +316,87 @@ deletes the contacts with the 2nd, 4th, 7th and 8th indexes in the address book.
 
 ****
 
+// end::deleteMultipleCommand[]
+
+
+// tag::changePicture[]
+=== Change Profile Picture : `changePicture`
+
+Add photos to contact profile in addressBook. +
+Format: `changePicture INDEX PICTURE_PATH`
+
+****
+* This command changes the profile picture of the cotact at the specified `index`.
+* INDEX refers to the index number shown in the most recent listing.
+* PICTURE_PATH refers to the path to the picture to change to.
+* The specified picture must be in either .png or . jpg format.
+****
+
+// end::changePicture[]
+
+// tag::remark[]
+=== Add remark to a person
+
+Adds a remark to an existing person in the address book.
+Format: remark INDEX r/REMARK
+
+****
+* Adds REMARK to the person at the specified INDEX. The index refers to the index number shown in the last person listing.
+* The index must be a positive integer 1, 2, 3,...
+* A remark can take any values, can even blank.
+****
+
+Examples:
+
+* `remark 1 r/owes money` +
+adds the remark "owes money" to person of index 1 in the address book.
+
+* `remark 4 r/' +
+removes any remark from the person of index 4 in the address book.
+// end::remark[]
+
+// tag::sort[]
+=== Sort
+
+Sorts the contacts in the address book in alphabetical order
+Format: sort
+// end::sort[]
+
 === Add photos : (Coming in v1.5)
 
-Add photos to contact details in addressBook. +
 
-=== Delete Tag : (Coming in v1.5)
+* `changePicture 1 D:/myPicture.png +
+Change the profile picture of the first contact shown in the most recent listing to the picture specified at D:/myPicture.png
+// end::changePicture[]
+
+=== Delete tag : (Coming in v1.5)
 
 Delete specific tag from all contacts. +
 
-=== Clear Tag : (Coming in v1.5)
+=== Clear tag : (Coming in v1.5)
 
 Clear all tags from specific contact. +
 
-=== Recently Deleted : `recentlyDel` (Since v1.2)
+// tag::recentlydeleted[]
+=== Recently deleted : `recentlyDel` (Since v1.2)
 
 Shows recently deleted list of contacts for past 30 contacts. +
 Format: `recentlyDel`
+// end::recentlydeleted[]
+
+// tag::theme[]
+=== Changing theme : `theme` (Since v1.5)
+
+Changes the colour theme of TheYellowPage from `DarkTheme.css` to `LightTheme.css` and vice versa. +
+
+image::DarkTheme.png[width="790"]
+_Figure 4.19.1 : Screenshot of TheYellowPage in DarkTheme.css_ +
+
+image::LightTheme.png[width="790"]
+_Figure 4.19.2 : Screenshot of TheYellowPage in LightTheme.css_ +
+
+Format: `theme`
+// end::theme[]
 
 === Moving contacts : `move` (Coming in v2.0)
 
@@ -335,3 +441,6 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Remark* : `remark`
+e.g. `remark INDEX r/REMARK
+* *Sort* : `sort`
