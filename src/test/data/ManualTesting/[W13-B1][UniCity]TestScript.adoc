@@ -1,0 +1,16 @@
+= UniCity - Test Script
+:sectnums:
+
+
+
+== Introduction
+This document explains how to perform manual testing on UniCity. It shows the command to type and the expected result.
+Deatils on how to load the sample data is included as well.
+
+[NOTE]
+This is by no means an exhaustive list of tests.
+
+== Loading the Sample Data
+
+
+== Commands
