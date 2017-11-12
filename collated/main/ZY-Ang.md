@@ -599,6 +599,88 @@ public class Suggestion {
         return model.getLatestPersonList();
     }
 ```
+###### \java\seedu\address\logic\parser\AddCommandParser.java
+``` java
+    /**
+     * Returns a formatted argument string given unformatted {@code rawArgs}
+     * or a {@code null} {@code String} if not formattable.
+     * Uses a simple flow by checking the {@code Model}'s data in the following order:
+     * 1. {@code Phone} (mandatory)
+     * 2. {@code Email} (mandatory)
+     * 3. Existing {@code Tags} (optional)
+     * 4. {@code Tags} prefixes (optional)
+     * 5. {@code Remark} prefixes (optional)
+     * 6. {@code Address} (mandatory)
+     * 7. {@code Name} (remaining)
+     */
+    public static String parseArguments(String rawArgs) {
+        String remaining = rawArgs;
+
+        // Check for Mandatory Phone
+        String phone;
+        Optional<Pair<String, String>> mandatoryPhone = parseMandatoryPhone(remaining);
+        if (mandatoryPhone.isPresent()) {
+            phone = mandatoryPhone.get().getKey();
+            remaining = mandatoryPhone.get().getValue();
+        } else {
+            return null;
+        }
+
+        // Check for Mandatory Email
+        String email;
+        Optional<Pair<String, String>> mandatoryEmail = parseMandatoryEmail(remaining);
+        if (mandatoryEmail.isPresent()) {
+            email = mandatoryEmail.get().getKey();
+            remaining = mandatoryEmail.get().getValue();
+        } else {
+            return null;
+        }
+
+        // Check for possible existing Tags without prefixes
+        StringBuilder tags = new StringBuilder();
+        Optional<Pair<String, String>> optionalPossibleTags = parsePossibleTagWords(remaining);
+        if (optionalPossibleTags.isPresent()) {
+            tags.append(optionalPossibleTags.get().getKey());
+            remaining = optionalPossibleTags.get().getValue();
+        }
+
+        // Check for existing tag prefix using tokenizer
+        Optional<Pair<String, String>> optionalExistingTags = parseExistingTagPrefixes(remaining);
+        if (optionalExistingTags.isPresent()) {
+            tags.append(optionalExistingTags.get().getKey());
+            remaining = optionalExistingTags.get().getValue();
+        }
+
+        // Check for existing remark prefix using tokenizer
+        String remark = "";
+        Optional<Pair<String, String>> optionalExistingRemarks = parseExistingRemarkPrefixes(remaining);
+        if (optionalExistingRemarks.isPresent()) {
+            remark = optionalExistingRemarks.get().getKey();
+            remaining = optionalExistingRemarks.get().getValue();
+        }
+
+        // Check for Address till end of remainder string
+        String address;
+        Optional<Pair<String, String>> mandatoryAddress = parseMandatoryAddress(remaining);
+        if (mandatoryAddress.isPresent()) {
+            address = mandatoryAddress.get().getKey();
+            remaining = mandatoryAddress.get().getValue();
+        } else {
+            return null;
+        }
+
+        // Check for alphanumeric Name in remainder string
+        String name;
+        Optional<String> mandatoryName = parseMandatoryName(remaining);
+        if (mandatoryName.isPresent()) {
+            name = mandatoryName.get();
+        } else {
+            return null;
+        }
+
+        return buildParsedArguments(name, phone, email, remark, address, tags.toString());
+    }
+```
 ###### \java\seedu\address\logic\parser\CliSyntax.java
 ``` java
     /* Prefix set */
@@ -688,6 +770,126 @@ public class Suggestion {
         .addAll(SelectCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(UndoCommand.COMMAND_WORD_ABBREVIATIONS)
         .build();
+```
+###### \java\seedu\address\logic\parser\EditCommandParser.java
+``` java
+    /**
+     * Returns a formatted argument string given unformatted {@code rawArgs}
+     * or a {@code null} {@code String} if not formattable.
+     * Uses a simple flow by checking the {@code Model}'s data in the following order:
+     * 1. Index of person (mandatory)
+     * 2. {@code Phone} (optional)
+     * 3. {@code Email} (optional)
+     * 4. Existing {@code Tags} (optional)
+     * 5. {@code Tags} prefixes (optional)
+     * 6. {@code Remark} prefixes (optional)
+     * 7. {@code Address} (optional)
+     * 8. {@code Name} (remaining)
+     */
+    public static String parseArguments(String commandWord, String rawArgs) {
+        String remaining = rawArgs;
+
+        // Check for Mandatory Index
+        String index = "";
+        Optional<Pair<String, String>> mandatoryIndexArgs = parseMandatoryIndex(remaining, getLastRolodexSize());
+        Optional<Pair<String, String>> mandatoryIndexCommand = parseMandatoryIndex(commandWord, getLastRolodexSize());
+        if (mandatoryIndexArgs.isPresent()) {
+            index = mandatoryIndexArgs.get().getKey();
+            remaining = mandatoryIndexArgs.get().getValue();
+        } else if (mandatoryIndexCommand.isPresent()) {
+            index = mandatoryIndexCommand.get().getKey();
+        } else {
+            return null;
+        }
+
+        // Check for Optional Phone
+        String phone = "";
+        Optional<Pair<String, String>> mandatoryPhone = parseMandatoryPhone(remaining);
+        if (mandatoryPhone.isPresent()) {
+            phone = mandatoryPhone.get().getKey();
+            remaining = mandatoryPhone.get().getValue();
+        } else {
+            remaining = remaining.replaceAll(PREFIX_PHONE.toString(), "");
+        }
+
+        // Check for Optional Email
+        String email = "";
+        Optional<Pair<String, String>> mandatoryEmail = parseMandatoryEmail(remaining);
+        if (mandatoryEmail.isPresent()) {
+            email = mandatoryEmail.get().getKey();
+            remaining = mandatoryEmail.get().getValue();
+        } else {
+            remaining = remaining.replaceAll(PREFIX_EMAIL.toString(), "");
+        }
+
+        // Check for possible existing Tags without prefixes
+        StringBuilder tags = new StringBuilder();
+        Optional<Pair<String, String>> optionalPossibleTags = parsePossibleTagWords(remaining);
+        if (optionalPossibleTags.isPresent()) {
+            tags.append(optionalPossibleTags.get().getKey());
+            remaining = optionalPossibleTags.get().getValue();
+        }
+
+        // Check for existing tag prefix using tokenizer
+        Optional<Pair<String, String>> optionalExistingTags = parseExistingTagPrefixes(remaining);
+        if (optionalExistingTags.isPresent()) {
+            tags.append(optionalExistingTags.get().getKey());
+            remaining = optionalExistingTags.get().getValue();
+        } else {
+            remaining = remaining.replaceAll(PREFIX_TAG.toString(), "");
+        }
+
+        // Check for existing remark prefix using tokenizer
+        String remark = "";
+        Optional<Pair<String, String>> optionalExistingRemarks = parseExistingRemarkPrefixes(remaining);
+        if (optionalExistingRemarks.isPresent()) {
+            remark = optionalExistingRemarks.get().getKey();
+            remaining = optionalExistingRemarks.get().getValue();
+        } else {
+            remaining = remaining.replaceAll(PREFIX_REMARK.toString(), "");
+        }
+
+        // Check for Optional Address till end of remainder string
+        String address = "";
+        Optional<Pair<String, String>> mandatoryAddress = parseMandatoryAddress(remaining);
+        if (mandatoryAddress.isPresent()) {
+            address = mandatoryAddress.get().getKey();
+            remaining = mandatoryAddress.get().getValue();
+        } else {
+            remaining = remaining.replaceAll(PREFIX_ADDRESS.toString(), "");
+        }
+
+        // Check for alphanumeric Name in remainder string
+        String name = "";
+        Optional<String> mandatoryName = parseMandatoryName(remaining);
+        if (mandatoryName.isPresent()) {
+            name = mandatoryName.get();
+        }
+
+        return buildParsedArguments(index, name, phone, email, remark, address, tags.toString());
+    }
+```
+###### \java\seedu\address\logic\parser\EmailCommandParser.java
+``` java
+    /**
+     * Returns a formatted argument string given unformatted
+     * {@code commandWord} and {@code rawArgs}
+     * or a {@code null} {@code String} if not formattable.
+     */
+    public static String parseArguments(String commandWord, String rawArgs) {
+        // Check if index (number) exists, removes Email prefix (if it exists) and re-adds it before returning.
+        if (isParsableIndex(rawArgs, getLastRolodexSize())) {
+            String indexString = Integer.toString(parseFirstIndex(rawArgs, getLastRolodexSize()));
+            String subject = parseRemoveFirstIndex(rawArgs, getLastRolodexSize())
+                    .trim().replace(PREFIX_SUBJECT.toString(), "");
+            return " " + indexString + " " + PREFIX_SUBJECT + subject;
+        } else if (isParsableIndex(commandWord, getLastRolodexSize())) {
+            String indexString = Integer.toString(parseFirstIndex(commandWord, getLastRolodexSize()));
+            String subject = rawArgs.trim().replace(PREFIX_SUBJECT.toString(), "");
+            return " " + indexString + " " + PREFIX_SUBJECT + subject;
+        }
+        return null;
+    }
 ```
 ###### \java\seedu\address\logic\parser\exceptions\ParseArgsException.java
 ``` java
@@ -794,6 +996,164 @@ public class ListCommandParser implements Parser<ListCommand> {
         return new ListCommand(sortArgumentList);
     }
 
+}
+```
+###### \java\seedu\address\logic\parser\ModelParserUtil.java
+``` java
+/**
+ * Utility methods for parsing unformatted model data for command execution.
+ */
+public class ModelParserUtil {
+
+    /**
+     * Returns an optional index string after parsing a mandatory index.
+     */
+    public static Optional<Pair<String, String>> parseMandatoryIndex(String indexString, int size) {
+        if (isParsableIndex(indexString, size)) {
+            String index = Integer.toString(parseFirstIndex(indexString, size));
+            return Optional.of(new Pair<>(index, parseRemoveFirstIndex(indexString, size).trim()));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Returns an optional pair of phone string and the remaining string after parsing a mandatory phone.
+     */
+    public static Optional<Pair<String, String>> parseMandatoryPhone(String remaining) {
+        if (isParsablePhone(remaining)) {
+            return Optional.of(new Pair<>(parseFirstPhone(remaining),
+                    parseRemoveFirstPhone(remaining).trim().replaceAll(PREFIX_PHONE.toString(), "")));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Returns an optional pair of email string and the remaining string after parsing a mandatory email.
+     */
+    public static Optional<Pair<String, String>> parseMandatoryEmail(String remaining) {
+        if (isParsableEmail(remaining)) {
+            return Optional.of(new Pair<>(parseFirstEmail(remaining),
+                    parseRemoveFirstEmail(remaining).trim().replaceAll(PREFIX_EMAIL.toString(), "")));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Returns an optional pair of a string that could contain tags and the remaining string after parsing the possible.
+     */
+    public static Optional<Pair<String, String>> parsePossibleTagWords(String remaining) {
+        StringBuilder tagBuilder = new StringBuilder();
+        String[] words = remaining.split(" ");
+        if (hasAnyExistingTags(words)) {
+            List<String> tagsAdded = new ArrayList<>();
+            Arrays.stream(words).forEach(word -> {
+                if (isKnownTag(word) && !tagsAdded.contains(word)) {
+                    tagBuilder.append(" " + PREFIX_TAG + word.trim());
+                    tagsAdded.add(word);
+                }
+            });
+            return Optional.of(new Pair<>(tagBuilder.toString(), parseRemoveTags(remaining, tagsAdded)));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Returns an optional pair of a string that contains tag prefixes and
+     * the remaining string after parsing the remaining.
+     */
+    public static Optional<Pair<String, String>> parseExistingTagPrefixes(String remaining) {
+        StringBuilder tagBuilder = new StringBuilder();
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
+                remaining, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK, PREFIX_TAG);
+        if (arePrefixesPresent(argMultimap, PREFIX_TAG) && argMultimap.getValue(PREFIX_TAG).isPresent()) {
+            List<String> tagsAdded = new ArrayList<>();
+            argMultimap.getAllValues(PREFIX_TAG).stream().forEach(rawTag -> {
+                String parsedTag = rawTag.replaceAll(TAG_REPLACEMENT_REGEX, "");
+                tagBuilder.append(" " + PREFIX_TAG + parsedTag);
+                tagsAdded.add(PREFIX_TAG + rawTag);
+            });
+            return Optional.of(new Pair<>(tagBuilder.toString(), parseRemoveTags(remaining, tagsAdded)));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Returns an optional pair of a string that contains remark prefixes and
+     * the remaining string after parsing the remaining.
+     */
+    public static Optional<Pair<String, String>> parseExistingRemarkPrefixes(String remaining) {
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
+                remaining, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK, PREFIX_TAG);
+        if (arePrefixesPresent(argMultimap, PREFIX_REMARK) && argMultimap.getValue(PREFIX_REMARK).isPresent()) {
+            String remark = argMultimap.getValue(PREFIX_REMARK).get();
+            return Optional.of(new Pair<>(remark,
+                    remaining.replace(PREFIX_REMARK.toString().concat(remark), "").trim()));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Returns an optional pair of address string and the remaining string after parsing a mandatory address.
+     */
+    public static Optional<Pair<String, String>> parseMandatoryAddress(String remaining) {
+        if (isParsableAddressTillEnd(remaining)) {
+            return Optional.of(new Pair<>(parseAddressTillEnd(remaining),
+                    parseRemoveAddressTillEnd(remaining).trim().replaceAll(PREFIX_ADDRESS.toString(), "")));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Returns an optional name string after parsing a mandatory name.
+     */
+    public static Optional<String> parseMandatoryName(String remaining) {
+        if (isParsableName(remaining)) {
+            return Optional.of(parseRemainingName(remaining));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Returns a parsed argument string containing pre-parsed arguments.
+     */
+    public static String buildParsedArguments(String name, String phone, String email,
+                                              String remark, String address, String tags) {
+        return buildParsedArguments("", name, phone, email, remark, address, tags);
+    }
+
+    /**
+     * Returns a parsed argument string containing pre-parsed arguments or null if there are no supplied values.
+     */
+    public static String buildParsedArguments(String index, String name, String phone, String email,
+                                               String remark, String address, String tags) {
+        if (name.trim().isEmpty() && phone.trim().isEmpty() && email.trim().isEmpty()
+                && remark.trim().isEmpty() && address.trim().isEmpty() && tags.trim().isEmpty()) {
+            return null;
+        }
+        StringBuilder parsedArgs = new StringBuilder();
+        if (!index.trim().isEmpty()) {
+            parsedArgs.append(" ".concat(index));
+        }
+        if (!name.trim().isEmpty()) {
+            parsedArgs.append(" ".concat(PREFIX_NAME.toString()).concat(name));
+        }
+        if (!phone.trim().isEmpty()) {
+            parsedArgs.append(" ".concat(PREFIX_PHONE.toString()).concat(phone));
+        }
+        if (!email.trim().isEmpty()) {
+            parsedArgs.append(" ".concat(PREFIX_EMAIL.toString()).concat(email));
+        }
+        if (!remark.trim().isEmpty()) {
+            parsedArgs.append(" ".concat(PREFIX_REMARK.toString()).concat(remark));
+        }
+        if (!address.isEmpty()) {
+            parsedArgs.append(" ".concat(PREFIX_ADDRESS.toString()).concat(address));
+        }
+        if (!tags.trim().isEmpty()) {
+            parsedArgs.append(tags);
+        }
+        return parsedArgs.toString();
+    }
 }
 ```
 ###### \java\seedu\address\logic\parser\NewRolodexCommandParser.java
