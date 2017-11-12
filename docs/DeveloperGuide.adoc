@@ -14,8 +14,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `CS2103AUG2017 T17-B1`      Since: `Sep 2017`      Licence: `MIT`
 
-*Introduction*
-
+== Introduction
 Codii is an address book application specifically designed for debt collectors to manage debts and debtors efficiently. It provides the necessary tools to keep track of interests, debts and important dates such as repayment deadlines.
 This developer guide provides detailed information for future contributors to improve on the current code base, testing and documentation.
 
@@ -86,7 +85,7 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+When you are ready to start coding:
 
 1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
@@ -95,56 +94,56 @@ When you are ready to start coding,
 
 === Architecture
 
-image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture diagram_
+Figure 3.1.1 below explains the high-level design of the App. Given below is a quick overview of each component.
 
-Figure 2.1.1 above explains the high-level design of the App. Given below is a quick overview of each component.
+image::Architecture.png[width="600"]
+_Figure 3.1.1 : Architecture diagram_
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
 * At shut down: Shuts down the components and invokes cleanup method where necessary.
 
-link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level:
 
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components.
+The rest of the App consists of four components:
 
 * link:#ui-component[*`UI`*] : The UI of the App.
 * link:#logic-component[*`Logic`*] : The command executor.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
 
-Each of the four components
+Each of the four components:
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see Figure 2.1.2 below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see Figure 3.1.2 below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class diagram of the `Logic` component_
+_Figure 3.1.2 : Class diagram of the `Logic` component_
 
 [discrete]
 ==== Events-Driven nature of the design
 
-Figure 2.1.3a below shows how the components interact for the scenario where the user issues the command `delete 1`.
+Figure 3.1.3a below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-Figure 2.1.3b below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+Figure 3.1.3b below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -153,16 +152,16 @@ The sections below give more details of each component.
 
 === UI component
 
+As shown in Figure 3.2.1 below, the `UI` consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the `UI` component_
+_Figure 3.2.1 : Structure of the `UI` component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-As shown in Figure 2.2.1, the `UI` consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
-
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
-The `UI` component,
+The `UI` component:
 
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
@@ -170,13 +169,13 @@ The `UI` component,
 
 === Logic component
 
+Figure 3.3.1 shows the structure of the `Logic` component, while Figure 3.3.2 shows finer  details concerning `XYZCommand` and `Command` in Figure 3.3.1.
+
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the `Logic` component_
+_Figure 3.3.1 : Structure of the `Logic` component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of commands in the `Logic` component_
-
-Figure 2.3.1 shows the structure of the `Logic` component, while Figure 2.3.2 shows finer  details concerning `XYZCommand` and `Command` in Figure 2.3.1.
+_Figure 3.3.2 : Structure of commands in the `Logic` component_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -186,21 +185,21 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Figure 2.3.3 below shows the interactions within the `Logic` component for the `execute("delete 1")` API call.
+Figure 3.3.3 below shows the interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.3 : Sequence diagram for interactions inside the `Logic` component for the `delete 1` command_
+_Figure 3.3.3 : Sequence diagram for interactions inside the `Logic` component for the `delete 1` command_
 
 === Model component
 
-image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the `Model` component_
+Figure 3.4.1 below shows the structure of the `Model` component.
 
-Figure 2.4.1 shows the structure of the `Model` component.
+image::ModelClassDiagram.png[width="800"]
+_Figure 3.4.1 : Structure of the `Model` component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`,
+The `Model`:
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
@@ -210,13 +209,13 @@ The `Model`,
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the `Storage` component_
+_Figure 3.5.1 : Structure of the `Storage` component_
 
-Figure 2.5.1 shows the structure of the `Storage` component.
+Figure 3.5.1 shows the structure of the `Storage` component.
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The `Storage` component,
+The `Storage` component:
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
@@ -237,9 +236,9 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead.
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 3.1.1: Inheritance diagram for commands_
+_Figure 4.1.1: Inheritance diagram for commands_
 
-As you can see from Figure 3.1.1, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from Figure 4.1.1, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -274,53 +273,53 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command). This is shown in Figure 3.1.2a.
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command). This is shown in Figure 4.1.2a.
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
-_Figure 3.1.2a: Adding a new `UndoableCommand` to an `UndoRedoStack` that is empty_
+_Figure 4.1.2a: Adding a new `UndoableCommand` to an `UndoRedoStack` that is empty_
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person. This is shown in Figure 3.1.2b.
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person. This is shown in Figure 4.1.2b.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
-_Figure 3.1.2b: Adding another `UndoableCommand` to `UndoRedoStack` that is not empty_
+_Figure 4.1.2b: Adding another `UndoableCommand` to `UndoRedoStack` that is not empty_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed. This is shown in Figure 3.1.2c.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed. This is shown in Figure 4.1.2c.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
-_Figure 3.1.2c: Undoing a command_
+_Figure 4.1.2c: Undoing a command_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
-Figure 3.1.2d shows how the undo operation works:
+Figure 4.1.2d shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
-_Figure 3.1.2d: Sequence diagram for `Undo` command_
+_Figure 4.1.2d: Sequence diagram for `Undo` command_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
-The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command. This is shown in Figure 3.1.2e.
+The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command. This is shown in Figure 4.1.2e.
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
-_Figure 3.1.2e: Adding a new command when `redoStack` is not empty_
+_Figure 4.1.2e: Adding a new command when `redoStack` is not empty_
 
-Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution. This is shown in Figure 3.1.2f.
+Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution. This is shown in Figure 4.1.2f.
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
-_Figure 3.1.2f: Executing a non-undoable command_
+_Figure 4.1.2f: Executing a non-undoable command_
 
-Figure 3.1.2g below summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
+Figure 4.1.2g below summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
-_Figure 3.1.2g: `UndoRedoStack` activity diagram_
+_Figure 4.1.2g: `UndoRedoStack` activity diagram_
 
 ==== Design Considerations
 
@@ -370,7 +369,7 @@ _Figure 3.1.2g: `UndoRedoStack` activity diagram_
 The `borrow` command allows users to increase the debt of a person should he/she borrow more money. On the other hand, when a debtor repays a specified amount, the `payback` command is used to deduct that amount from his/her current debt. The `BorrowCommand` and `PaybackCommand` classes, which handle the updating of the `Debt` field in a `Person` object, extends `UndoableCommand` so that these commands can be undone or redone if necessary.
 
 These two commands require one compulsory argument which is the amount that is borrowed/paid back. Indicating the index (as listed in the person list panel on the left side of the application window) of the person who borrowed or paid back money is optional. If no index is specified, the command will be executed for the person that is currently selected in the person list.
-The arguments (index and amount borrowed/paid back) are separated by a whitespace instead of special prefixes (e.g. prefix `p/` used for phone number). Hence, the `String#split` method is used to tokenize the input using a single whitespace as the delimiter. As seen in Figure 3.2.1, the tokenized inputs (index and amount borrowed) are then converted to their appropriate `Object` types and supplied as arguments to the `BorrowCommand` constructor. Input for the `payback` command is tokenized in the same manner.
+The arguments (index and amount borrowed/paid back) are separated by a whitespace instead of special prefixes (e.g. prefix `p/` used for phone number). Hence, the `String#split` method is used to tokenize the input using a single whitespace as the delimiter. As seen in Figure 4.2.1, the tokenized inputs (index and amount borrowed) are then converted to their appropriate `Object` types and supplied as arguments to the `BorrowCommand` constructor. Input for the `payback` command is tokenized in the same manner.
 
 The `BorrowCommand` and `PaybackCommand` are executed in `LogicManager`.
 `BorrowCommand` updates the `debt` and `totalDebt` attributes in the target `Person` object in the `AddressBook` class (which is in the `Model` component). A new `Person` object is created with the updated `debt` and `totalDebt` amount. The target `Person` object is then replaced with this new `Person` object.
@@ -379,10 +378,10 @@ The `BorrowCommand` and `PaybackCommand` are executed in `LogicManager`.
 [NOTE]
 `DateBorrow` field in the new `Person` object needs to be updated to match the `DateBorrow` field in the target `Person` object. This is because the date when the `Person` object was created is set as the date for the `DateBorrow` field.
 
-The following sequence diagram, Figure 3.2.1, shows further details of the interaction between the `Logic` and `Model` component when the `borrow` command is executed:
+The following sequence diagram, Figure 4.2.1, shows further details of the interaction between the `Logic` and `Model` component when the `borrow` command is executed:
 
 image::BorrowCommandSequenceDiagram.png[width="800"]
-_Figure 3.2.1 : Sequence diagram of how the `Borrow` command works_
+_Figure 4.2.1 : Sequence diagram of how the `Borrow` command works_
 
 The `payback` command works in a similar way to the `borrow` command.
 
@@ -418,12 +417,13 @@ Outcome: prefix `" "` will be mapped to `1 500` in `argMultimap`. Index and amou
 // tag::backup[]
 === Backup storage mechanism
 
-The backup storage mechanism is facilitated by the `StorageManager`. It backs up the address book data automatically each time the application starts up, if there is existing data available. The backup file is saved in the same location as the main file as `addressbook.xml-backup.xml`.
+The backup storage mechanism is facilitated by the `StorageManager`. It backs up the address book data automatically each time the application starts up, if there is existing data available. The sequence diagram for this is shown below in Figure 4.3.
+
 
 image::BackupAddressBookSequenceDiagram.png[width="800"]
-_Figure 3.3.1: Sequence diagram for backing up address book data_
+_Figure 4.3.1: Sequence diagram for backing up address book data_
 
-The `backupAddressBook` method is called in `MainApp#init()` which is called each time the application starts. The sequence diagram for this method is shown above in Figure 3.3.1. No backup is made if there is no existing data.
+The `backupAddressBook` method is called in `MainApp#init()` which is called each time the application starts. No backup is made if there is no existing data.
 
 ==== Design Considerations
 
@@ -504,17 +504,17 @@ Having multiple lists is useful for debt collectors to view debtors of different
 
 These lists could be viewed with the respective commands that will update the panel that is currently displayed. The commands to display these lists are named after the lists themselves. For example, to view the `blacklist`, the command typed is "blacklist" or "bl".
 
-The following sequence diagram, Figure 3.5.1, shows further details of the interaction between the user and various application components as a whole, when the blacklist command is executed:
+The following sequence diagram, Figure 4.5.1, shows further details of the interaction between the user and various application components as a whole, when the blacklist command is executed:
 
 image::BlacklistCommandSequenceDiagram1.PNG[width="800"]
-_Figure 3.5.1 : Sequence diagram of how the `blacklist` command works_
+_Figure 4.5.1 : Sequence diagram of how the `blacklist` command works_
 
-The following sequence diagram, Figure 3.5.2, shows further details of the interaction between `ModelManager` and 'ReadOnlyAddressBook` to obtain the blacklist:
+The following sequence diagram, Figure 4.5.2, shows further details of the interaction between `ModelManager` and 'ReadOnlyAddressBook` to obtain the blacklist:
 
 image::BlacklistCommandSequenceDiagram2.png[width="800"]
-_Figure 3.5.2 : Sequence diagram of how `ModelManager` interacts with `ReadOnlyAddressBook` To generate blacklist From all persons_
+_Figure 4.5.2 : Sequence diagram of how `ModelManager` interacts with `ReadOnlyAddressBook` To generate blacklist From all persons_
 
-The List mechanism is facilitated by commands which use `Logic` interface to obtain the copy of the list that is required. As seen from Figure 3.5.1 and Figure 3.5.2 above, to obtain the current blacklist of the addressbook, "blacklist" `String` is first captured by the `CommandBox` class. The `CommandBox` class then passes this `String` to the `Logic` interface for execution.
+The List mechanism is facilitated by commands which use `Logic` interface to obtain the copy of the list that is required. As seen from Figure 4.5.1 and Figure 4.5.2 above, to obtain the current blacklist of the addressbook, "blacklist" `String` is first captured by the `CommandBox` class. The `CommandBox` class then passes this `String` to the `Logic` interface for execution.
 
 `Logic` interface uses `LogicManager` class to validate the written command and package it as a `Command` object. The respective command is then executed in `LogicManager` class. These are the instructions that are executed for this command:
 
@@ -1002,7 +1002,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
 * Currently log messages are output through: `Console` and to a `.log` file.
 
-*Logging Levels*
+*Logging Levels:*
 
 * `SEVERE` : Critical problem detected which may possibly cause the termination of the application
 * `WARNING` : Can continue, but with caution
@@ -1033,15 +1033,15 @@ See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to dep
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
-Here are the steps to convert the project documentation files to PDF format.
+Here are the steps to convert the project documentation files to PDF format:
 
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
 .  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
 .  Within Chrome, click on the `Print` option in Chrome's menu.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in Figure 4.3.1 below.
+.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in Figure 5.3.1 below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 4.3.1: Saving documentation as PDF files in Chrome_
+_Figure 5.3.1: Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -1055,19 +1055,19 @@ it is advisable that developers do not test at midnight where the date might cha
 [TIP]
 The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
-*Method 1: Using IntelliJ JUnit test runner*
+*Method 1: Using IntelliJ JUnit test runner:*
 
 * To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
 * To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
 
-*Method 2: Using Gradle*
+*Method 2: Using Gradle:*
 
 * Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
 
 [NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
 
-*Method 3: Using Gradle (headless)*
+*Method 3: Using Gradle (headless):*
 
 Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
@@ -1090,7 +1090,7 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 
 === Troubleshooting Testing
-**Problem: `HelpWindowTest` fails with a `NullPointerException`.**
+**Problem: `HelpWindowTest` fails with a `NullPointerException`:**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
@@ -1107,7 +1107,7 @@ We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor]
 
 === Making a Release
 
-Here are the steps to create a new release.
+Here are the steps to create a new release:
 
 .  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
@@ -1116,7 +1116,7 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives: +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
@@ -1620,69 +1620,39 @@ Use case ends.
 
 [appendix]
 == Glossary
+[cols="20%, 80%"]
+|===
+|Term |Definition
 
-[[mainstream-os]]
-Mainstream OS
+|[[two-FA]]2FA
+|An extra layer of security that is known as "multi factor authentication" that requires not only a password and username but also a token
 
-....
-Windows, Linux, Unix, OS-X
-....
+|[[ban]]Ban
+|A period of prohibition in which the person is not allowed to loan money
 
-[[private-contact-detail]]
-Private contact detail
+|[[blacklist]]Blacklist
+|A list of people who are banned from borrowing
 
-....
-A contact detail that is not meant to be shared with others
-....
+|[[cluster]]Cluster
+|General location based on postal districts
 
-[[cluster]]
-Cluster
+|[[log]]Log
+|An official record of events
 
-....
-General location based on postal districts
-....
+|[[mainstream-os]]Mainstream OS
+|Windows, Linux, Unix, OS-X
 
-[[whitelist]]
-Whitelist
+|[[private-contact-detail]]Private contact detail
+|A contact detail that is not meant to be shared with others
 
-....
-A list of people who have cleared their debts
-....
+|[[progress-bar]]Progress Bar
+|A visual representation that shows a user how far along he/she is in a process
 
-[[blacklist]]
-Blacklist
+|[[whitelist]]Whitelist
+|A list of people who have cleared their debts
 
-....
-A list of people who are banned from borrowing
-....
+|===
 
-[[ban]]
-Ban
-
-....
-A period of prohibition in which the person is not allowed to loan money
-....
-
-[[progress-bar]]
-Progress Bar
-
-....
-A visual representation that shows a user how far along he/she is in a process
-....
-
-[[two-FA]]
-2FA
-
-....
-An extra layer of security that is known as "multi factor authentication" that requires not only a password and username but also a token
-....
-
-[[log]]
-Log
-
-....
-An official record of events
-....
 [appendix]
 == Product Survey
 
