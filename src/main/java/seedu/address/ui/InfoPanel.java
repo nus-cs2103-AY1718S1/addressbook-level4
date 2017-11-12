@@ -299,7 +299,7 @@ public class InfoPanel extends UiPart<Region> {
 
     @Subscribe
     private void handleDeselectionEvent(DeselectionEvent event) {
-        unregisterAsAnEventHandler(this);
+        loadDefaultPage();
     }
 
 }
