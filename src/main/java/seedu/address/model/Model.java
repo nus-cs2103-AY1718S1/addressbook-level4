@@ -29,7 +29,6 @@ public interface Model {
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_NOT_HIDDEN = person -> !person.isPrivate();
 
     Predicate<ReadOnlyTask> PREDICATE_SHOW_ALL_TASKS = unused -> true;
-    
 
     /**
      * Clears existing backing model and replaces with the provided new data.
@@ -75,7 +74,7 @@ public interface Model {
      * Deselects the given person.
      */
     void deselectPerson(ReadOnlyPerson target) throws PersonNotFoundException;
-    
+
     /**
      * Adds the given person
      */

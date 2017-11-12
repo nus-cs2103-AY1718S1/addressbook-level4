@@ -101,12 +101,16 @@ public class Person implements ReadOnlyPerson {
         return true;
     }
     //@@author
-    
+
     @Override
-    public ObjectProperty<Boolean> selectProperty(){ return isSelected; }
-    
-    public boolean isSelected(){ return isSelected.get(); }
-    
+    public ObjectProperty<Boolean> selectProperty() {
+        return isSelected;
+    }
+
+    public boolean isSelected() {
+        return isSelected.get();
+    }
+
     public boolean setSelected(boolean isSelected) {
         this.isSelected.set(isSelected);
         return true;

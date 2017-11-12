@@ -123,9 +123,10 @@ public class PersonCard extends UiPart<Region> {
     }
 
     //@@author deep4k
-
     /**
      * Sets the additional info needed for their respective {@code person } properties
+     * and adds it inside Hbox details. Hbox details will be added to PersonCard parent
+     * node if {@code person} is selected
      */
     private void initDetails(ReadOnlyPerson person) {
 
@@ -183,7 +184,6 @@ public class PersonCard extends UiPart<Region> {
         details.setAlignment(Pos.CENTER_LEFT);
 
     }
-
     //@@author
 
     /**

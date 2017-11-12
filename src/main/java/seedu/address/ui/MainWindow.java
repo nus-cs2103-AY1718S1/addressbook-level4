@@ -386,7 +386,7 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
-    
+
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -398,7 +398,6 @@ public class MainWindow extends UiPart<Region> {
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to select person card based on clicks");
         }
-        
     }
 
     //@@author Alim95
@@ -439,7 +438,7 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchToAliasView();
     }
-    
+
     @Subscribe
     private void handleToggleToAllPersonViewEvent(ToggleToAllPersonViewEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

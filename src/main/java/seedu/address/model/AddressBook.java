@@ -259,7 +259,6 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new PersonNotFoundException();
         }
     }
-    
 
     // ================ Tag-level operations ==============================
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {

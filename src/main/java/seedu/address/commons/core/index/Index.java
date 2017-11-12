@@ -23,7 +23,7 @@ public class Index {
 
         this.zeroBasedIndex = zeroBasedIndex;
     }
-    
+
     public int getZeroBased() {
         return zeroBasedIndex;
     }
