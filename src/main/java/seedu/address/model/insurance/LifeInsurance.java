@@ -246,7 +246,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return signingDate;
     }
 
-    public void setSigningDateString(String signingDateString) {
+    private void setSigningDateString(String signingDateString) {
         this.signingDateString = new SimpleStringProperty(signingDateString);
     }
 
@@ -270,7 +270,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return expiryDate;
     }
 
-    public void setExpiryDateString(String expiryDateString) {
+    private void setExpiryDateString(String expiryDateString) {
         this.expiryDateString = new SimpleStringProperty(expiryDateString);
     }
 
