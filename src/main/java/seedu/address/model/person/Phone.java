@@ -12,7 +12,8 @@ public class Phone {
 
 
     public static final String MESSAGE_PHONE_CONSTRAINTS =
-            "Phone numbers can only contain numbers, and should be at least 3 digits long";
+            "Phone numbers can only contain numbers, and should be at least 3 digits long. " +
+                    "Phone number can be empty, an empty phone field will be represented by \"---\"";
     public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
     public final String value;
 
@@ -34,7 +35,7 @@ public class Phone {
      * Returns true if a given string is a valid person phone number.
      */
     public static boolean isValidPhone(String test) {
-        return test.matches(PHONE_VALIDATION_REGEX);
+        return test.equals("---") || test.matches(PHONE_VALIDATION_REGEX);
     }
 
     @Override
