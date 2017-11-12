@@ -26,13 +26,30 @@
                         <Region fx:constant="USE_PREF_SIZE" />
                     </minWidth>
                 </Label>
+                <Label fx:id="picture" />
                 <Label fx:id="grpName" styleClass="cell_big_label" text="\$grpName" />
             </HBox>
             <FlowPane prefHeight="30.0" />
-            <Label fx:id="firstPerson" styleClass="cell_small_label" text="\$firstPerson" />
-            <Label fx:id="secondPerson" styleClass="cell_small_label" text="\$secondPerson" />
-            <Label fx:id="thirdPerson" styleClass="cell_small_label" text="\$thirdPerson" />
-            <Label fx:id="ellipsis" styleClass="cell_small_label" text="\$ellipsis" />
+            <Label fx:id="firstPerson" styleClass="cell_small_label" text="\$firstPerson">
+                <VBox.margin>
+                    <Insets left="15.0" />
+                </VBox.margin>
+            </Label>
+            <Label fx:id="secondPerson" styleClass="cell_small_label" text="\$secondPerson">
+                <VBox.margin>
+                    <Insets left="15.0" />
+                </VBox.margin>
+            </Label>
+            <Label fx:id="thirdPerson" styleClass="cell_small_label" text="\$thirdPerson">
+                <VBox.margin>
+                    <Insets left="15.0" />
+                </VBox.margin>
+            </Label>
+            <Label fx:id="ellipsis" styleClass="cell_small_label" text="\$ellipsis">
+                <VBox.margin>
+                    <Insets left="15.0" />
+                </VBox.margin>
+            </Label>
         </VBox>
         <rowConstraints>
             <RowConstraints />

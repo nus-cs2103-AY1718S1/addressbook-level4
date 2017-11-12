@@ -29,22 +29,15 @@
           </minWidth>
         </Label>
         <Label fx:id="picture" />
-        <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
-        <Label fx:id="favorite" />
-          <Label fx:id="facebookPage" onMouseClicked="#openFacebookPage">
-               <contextMenu>
-                  <ContextMenu fx:id="facebookMenu">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Unspecified Action" />
-                    </items>
-                  </ContextMenu>
-               </contextMenu></Label>
+        <Label fx:id="name" styleClass="cell_big_label" text="\$first" onMouseClicked="#searchName"/>
+        <Label fx:id="favorite" onMouseClicked="#toggleFavorite"/>
+        <Label fx:id="facebookPage" onMouseClicked="#openFacebookPage"/>
       </HBox>
       <FlowPane fx:id="tags" prefHeight="30.0">
             <VBox.margin>
                <Insets left="23.0" />
             </VBox.margin></FlowPane>
-        <Label fx:id="major" styleClass="cell_small_label" text="\$major">
+        <Label fx:id="major" styleClass="cell_small_label" text="\$major" onMouseClicked="#searchMajor">
             <VBox.margin>
                 <Insets left="23.0" />
             </VBox.margin></Label>

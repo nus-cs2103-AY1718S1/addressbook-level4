@@ -509,14 +509,16 @@ public void favorite(ReadOnlyPerson toFavorite)
 }
 ----
 
-And for UI, a simple label is created and `setVisible` to `true` for any index that is
-favorited. The labels are `setGraphic` to followed image:
-
+And for UI, a simple `Label` is created to displaying `favorite`, a filled shape heart if the person is favorite and a heart outline otherwise
 image::heart.png[width="40"]
 
 In the contact+ pro, it looks like:
 
 image::nameWithHeart.png[width="120"]
+
+and
+
+image::heartOutline.png[width="30"]
 
 ==== Sorting
 

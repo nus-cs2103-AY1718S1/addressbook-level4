@@ -41,6 +41,7 @@ public class GroupListPanel extends UiPart<Region> {
                 groupList, (group) -> new GroupCard(group, groupList.indexOf(group) + 1));
         groupListView.setItems(mappedList);
         groupListView.setCellFactory(listView -> new GroupListViewCell());
+        groupListView.setStyle("-fx-background-color: white;");
         setEventHandlerForSelectionChangeEvent();
     }
 

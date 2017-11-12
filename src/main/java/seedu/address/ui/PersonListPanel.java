@@ -39,6 +39,7 @@ public class PersonListPanel extends UiPart<Region> {
                 personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
         personListView.setItems(mappedList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
+        personListView.setStyle("-fx-background-color: white;");
         setEventHandlerForSelectionChangeEvent();
     }
 

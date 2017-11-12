@@ -13,6 +13,8 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BrowserPanelLocateEvent;
 import seedu.address.commons.events.ui.PersonFacebookOpenEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.SearchMajorEvent;
+import seedu.address.commons.events.ui.SearchNameEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -21,6 +23,8 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class BrowserPanel extends UiPart<Region> {
 
+    public static final String GOOGLE_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
+    public static final String GOOGLE_URL_SUFFIX = "&cad=h";
 
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h&dg=dbrw&newdg=1";
     public static final String GOOGLE_MAP_URL_PREFIX = "https://www.google.com/maps/search/?api=1&query=";
@@ -65,12 +69,16 @@ public class BrowserPanel extends UiPart<Region> {
                 + GOOGLE_MAP_URL_END);
     }
     //@@author
-    private void loadFacebookPage(ReadOnlyPerson person) {
-        loadPage(FACEBOOK_PREFIX + person.getFacebook().value);
-    }
+
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
+    }
+
+    //@@author heiseish
+
+    private void loadFacebookPage(ReadOnlyPerson person) {
+        loadPage(FACEBOOK_PREFIX + person.getFacebook().value);
     }
 
     /**
@@ -80,6 +88,10 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(DEFAULT_PAGE);
     }
 
+    public void googleSearch(String url) {
+        loadPage(GOOGLE_URL_PREFIX + url + GOOGLE_URL_SUFFIX);
+    }
+    //@@author
     /**
      * Frees resources allocated to the browser.
      */
@@ -99,11 +111,24 @@ public class BrowserPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadLocatePage(event.getStartAddress(), event.getEndAddress());
     }
-    //@@author
+    //@@author heiseish
     @Subscribe
     private void handlePersonFacebookOpenEvent(PersonFacebookOpenEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadFacebookPage(event.getNewSelection());
     }
+
+    @Subscribe
+    private void handleSearchNameEvent(SearchNameEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        googleSearch(event.getName());
+    }
+
+    @Subscribe
+    private void handleSearchMajorEvent(SearchMajorEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        googleSearch("NUS " + event.getMajor());
+    }
+    //@@author
 
 }

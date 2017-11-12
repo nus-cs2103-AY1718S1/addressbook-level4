@@ -105,6 +105,10 @@
     -fx-padding: 0 0 0 0;
 }
 
+.list-cell:empty {
+    -fx-background-color: white;
+}
+
 .list-cell:filled:even {
     -fx-background-color: #c3ced3;
 }
@@ -130,12 +134,14 @@
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 16px;
     -fx-text-fill: #010504;
+    -fx-font-weight: bold;
 }
 
 .cell_small_label {
     -fx-font-family: "Segoe UI";
     -fx-font-size: 13px;
     -fx-text-fill: #010504;
+    -fx-font-style: italic;
 }
 
 .anchor-pane {

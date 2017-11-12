@@ -3,9 +3,13 @@ package seedu.address.logic;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.ToggleFavoritePersonEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -72,4 +76,14 @@ public class LogicManager extends ComponentManager implements Logic {
         model.updateFilteredPersonList(predicate);
     }
     //@@author
+
+    @Subscribe
+    private void handleToggleFavoritePersonEvent(ToggleFavoritePersonEvent event)
+            throws CommandException, ParseException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        String commandText = "favorite " + event.getId();
+        CommandResult commandResult = execute(commandText);
+        logger.info("Result: " + commandResult.feedbackToUser);
+        raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+    }
 }

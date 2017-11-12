@@ -14,6 +14,9 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import seedu.address.commons.events.ui.PersonFacebookOpenEvent;
+import seedu.address.commons.events.ui.SearchMajorEvent;
+import seedu.address.commons.events.ui.SearchNameEvent;
+import seedu.address.commons.events.ui.ToggleFavoritePersonEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 
@@ -24,6 +27,7 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
     private static final String ICON = "/images/heart.png";
+    private static final String ICON_OUTLINE = "/images/heartOutline.png";
     private static final String DEFAULT = "/images/default.png";
     private static final String FACEBOOK = "/images/facebook.png";
 
@@ -118,7 +122,13 @@ public class PersonCard extends UiPart<Region> {
             Label label = new Label(tag.tagName);
             String color = getColor(tag.tagName);
             label.setPrefHeight(23);
-            label.setStyle("-fx-background-color: " + color + "; "
+            label.setStyle("-fx-background-color: transparent; "
+                    + "-fx-font-size: 10px;"
+                    + "-fx-font-family: Segoe UI;"
+                    + "-fx-text-fill: #010504;"
+                    + "-fx-border-color: " + color + "; "
+                    + "-fx-border-width: 2;"
+                    + "-fx-padding: 3 5 3 5;"
                     + "-fx-border-radius: 15 15 15 15; "
                     + "-fx-background-radius: 15 15 15 15;");
             tags.getChildren().add(label);
@@ -129,11 +139,17 @@ public class PersonCard extends UiPart<Region> {
      * Instantiate favorite label
      */
     private void initFavorite(ReadOnlyPerson person) {
-        ImageView image = new ImageView(new Image(getClass().getResourceAsStream(ICON)));
-        image.setFitHeight(25);
-        image.setFitWidth(25);
+        ImageView image;
+        if (person.getFavorite().favorite) {
+            image = new ImageView(new Image(getClass().getResourceAsStream(ICON)));
+            image.setFitHeight(25);
+            image.setFitWidth(25);
+        } else {
+            image = new ImageView(new Image(getClass().getResourceAsStream(ICON_OUTLINE)));
+            image.setFitHeight(20);
+            image.setFitWidth(20);
+        }
         favorite.setGraphic(image);
-        favorite.setVisible(person.getFavorite().favorite);
     }
 
     /**
@@ -186,6 +202,31 @@ public class PersonCard extends UiPart<Region> {
     }
 
 
+    /**
+     * Handles toggling the favorite attribute of a person
+     */
+    @FXML
+    private void toggleFavorite() {
+        raise(new ToggleFavoritePersonEvent(id.getText().substring(0, 1)));
+    }
+
+    /**
+     * Handles google searching for person's name
+     */
+    @FXML
+    private void searchName() {
+        raise(new SearchNameEvent(name.getText()));
+    }
+
+    /**
+     * Handles google searching for person's major
+     */
+    @FXML
+    private void searchMajor() {
+        raise(new SearchMajorEvent(major.getText()));
+    }
+
+
     //@@author
 
     @Override
@@ -205,4 +246,5 @@ public class PersonCard extends UiPart<Region> {
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
     }
+
 }
