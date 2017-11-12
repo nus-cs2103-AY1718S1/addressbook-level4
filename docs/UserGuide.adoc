@@ -203,7 +203,7 @@ You can delete a group of people from the address book.
 
 Format: `delete I/INDEX INDEX ...` (or) `delete n/NAME`
 
-image::multiDeleteCommand.png[width="790"]
+image::multiDeleteCommand.png[width="500"]
 
 ****
 * Deletes person with given name or at these given specified `INDEX`.
