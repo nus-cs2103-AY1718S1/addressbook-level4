@@ -31,9 +31,8 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
                 || keywords.toString().toLowerCase().contains("or");
         if (containsAndOr) {
             return predicateWithAndOr(person);
-        } else {
-            return predicateWithoutAndOr(person);
         }
+        return predicateWithoutAndOr(person);
     }
 
     @Override

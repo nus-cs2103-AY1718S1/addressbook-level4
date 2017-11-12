@@ -107,10 +107,9 @@ public class CommandBox extends UiPart<Region> {
             boolean isCaretWithin = commandTextField.getCaretPosition() < commandTextField.getText().length();
             if (isCaretWithin) {
                 break;
-            } else {
-                addsNextPrefix();
-                break;
             }
+            addsNextPrefix();
+            break;
         default:
         }
     }
@@ -177,9 +176,8 @@ public class CommandBox extends UiPart<Region> {
     private int farRightDeleteChunk(int newCaretPosition) {
         if (isEmptyBefore(newCaretPosition)) {
             return shiftLeftIgnoringSpaces(newCaretPosition);
-        } else {
-            return shiftLeftIgnoringWords(newCaretPosition);
         }
+        return shiftLeftIgnoringWords(newCaretPosition);
     }
 
     /**
@@ -487,15 +485,14 @@ public class CommandBox extends UiPart<Region> {
         String stringToEvaluate = commandTextField.getText().trim();
         if (stringToEvaluate.length() < 3 || !stringToEvaluate.contains(" ")) {
             return false;
-        } else {
-            String[] splittedString = stringToEvaluate.split(" ");
-            boolean containsEditWord = splittedString[0].equalsIgnoreCase("edit");
-            boolean containsEditShorthand = splittedString[0].equalsIgnoreCase("e");
-            boolean containsEditCommand = containsEditShorthand || containsEditWord;
-            String regex = "[0-9]+";
-            boolean containsOnlyNumbers = splittedString[1].matches(regex);
-            return containsEditCommand && containsOnlyNumbers;
         }
+        String[] splittedString = stringToEvaluate.split(" ");
+        boolean containsEditWord = splittedString[0].equalsIgnoreCase("edit");
+        boolean containsEditShorthand = splittedString[0].equalsIgnoreCase("e");
+        boolean containsEditCommand = containsEditShorthand || containsEditWord;
+        String regex = "[0-9]+";
+        boolean containsOnlyNumbers = splittedString[1].matches(regex);
+        return containsEditCommand && containsOnlyNumbers;
     }
 
     /**

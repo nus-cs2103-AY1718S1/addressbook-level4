@@ -110,9 +110,8 @@ public class RemarkCommand extends UndoableCommand {
     private String outputCorrectTypeOfSuccessMessage(ReadOnlyPerson editedPerson) {
         if (editedPerson.getRemark().toString().isEmpty()) {
             return String.format(MESSAGE_REMOVE_REMARK_SUCCESS, editedPerson);
-        } else {
-            return String.format(MESSAGE_REMARK_PERSON_SUCCESS, editedPerson);
         }
+        return String.format(MESSAGE_REMARK_PERSON_SUCCESS, editedPerson);
     }
 
 }
