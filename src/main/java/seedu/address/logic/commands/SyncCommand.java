@@ -48,6 +48,8 @@ public class SyncCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Synchronised";
     public static final String MESSAGE_FAILURE = "Please login first";
+    public static final String MESSAGE_FAILURE_INTERNET =
+            "Unable to connect to the Internet. Please check your internet and firewall settings";
 
     private static PeopleService client;
 
@@ -75,37 +77,48 @@ public class SyncCommand extends Command {
             syncedIDs =  (loadStatus() == null) ? new HashSet<String>() : (HashSet) loadStatus();
 
             try {
-                client = clientFuture.get();
-                ListConnectionsResponse response = client.people().connections().list("people/me")
-                        .setPersonFields("metadata,names,emailAddresses,addresses,phoneNumbers")
-                        .execute();
-                connections = response.getConnections();
                 List<ReadOnlyPerson> personList = model.getFilteredPersonList();
-                hashId = constructHashId(personList);
-                hashName = constructHashName(personList);
 
-                if (connections != null) {
-                    hashGoogleId = constructGoogleHashId();
-                    hashGoogleName = constructGoogleHashName();
-                } else {
-                    hashGoogleId = new HashMap<String, Person>();
-                    hashGoogleName = new HashMap<String, Person>();
-                }
+                initialise();
 
                 checkContacts();
                 updateContacts();
                 exportContacts(personList);
-
                 if (connections != null) {
                     importContacts();
                 }
 
                 saveStatus(syncedIDs);
+            } catch (java.net.UnknownHostException e) {
+                throw new CommandException(MESSAGE_FAILURE_INTERNET);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS));
+    }
+
+    /** Preprocessing for future methods (Initialises hashmaps for faster future access)
+     *
+     * @throws Exception
+     */
+    private void initialise() throws Exception {
+        client = clientFuture.get();
+        ListConnectionsResponse response = client.people().connections().list("people/me")
+                .setPersonFields("metadata,names,emailAddresses,addresses,phoneNumbers")
+                .execute();
+        connections = response.getConnections();
+        List<ReadOnlyPerson> personList = model.getFilteredPersonList();
+        hashId = constructHashId(personList);
+        hashName = constructHashName(personList);
+
+        if (connections != null) {
+            hashGoogleId = constructGoogleHashId();
+            hashGoogleName = constructGoogleHashName();
+        } else {
+            hashGoogleId = new HashMap<String, Person>();
+            hashGoogleName = new HashMap<String, Person>();
+        }
     }
 
     /** Ensures that all Google Contacts have not been removed, and unlinks them if they are
@@ -133,32 +146,19 @@ public class SyncCommand extends Command {
      * @throws IOException
      */
 
-    public void exportContacts (List<ReadOnlyPerson> personList) throws Exception {
+    private void exportContacts (List<ReadOnlyPerson> personList) throws Exception {
         for (ReadOnlyPerson person : personList) {
-            if (person.getId().getValue().equals("") && !hashGoogleName.containsKey(person.getName().fullName)) {
-                Person contactToCreate = convertAPerson(person);
-                Person createdContact = client.people().createContact(contactToCreate).execute();
-
-                String id = createdContact.getResourceName();
-
-                seedu.address.model.person.Person updatedPerson = setId(person, id);
-                updatedPerson.setLastUpdated(new LastUpdated(getLastUpdated(createdContact)));
-
-                updatePerson(person, updatedPerson);
-                syncedIDs.add(id);
-            } else if (hashGoogleName.containsKey(person.getName().fullName)) {
-                // We check if the person is identical, and link them if they are
-                Person gPerson = hashGoogleName.get(person.getName().fullName);
-                if (equalPerson(person, gPerson)) {
-                    seedu.address.model.person.Person updatedPerson =
-                            new seedu.address.model.person.Person(person);
-                    updatedPerson.setId(new Id(gPerson.getResourceName()));
-
-                    // We now set last update time to the Google one
-                    String updateTime = gPerson.getMetadata().getSources().get(0).getUpdateTime();
-                    updatedPerson.setLastUpdated(new LastUpdated(updateTime));
-                    updatePerson(person, updatedPerson);
-
+            if (person.getId().getValue().equals("")) {
+                if (hashGoogleName.containsKey(person.getName().fullName)) {
+                    addGoogleContact(person);
+                } else if (hashGoogleName.containsKey(person.getName().fullName)) {
+                    // We check if the person is identical, and link them if they are
+                    Person gPerson = hashGoogleName.get(person.getName().fullName);
+                    if (equalPerson(person, gPerson)) {
+                        linkContacts(person, gPerson);
+                    } else {
+                        addGoogleContact(person);
+                    }
                 }
             }
         }
@@ -171,23 +171,19 @@ public class SyncCommand extends Command {
 
         for (Person person : connections) {
             try {
-                seedu.address.model.person.Person convertedaPerson = convertGooglePerson(person);
+
                 String id = person.getResourceName();
                 String gName = retrieveFullGName(person);
-                if (!syncedIDs.contains(id) && !hashName.containsKey(gName)) {
-                    model.addPerson(convertedaPerson);
-                    syncedIDs.add(id);
-                } else if (hashName.containsKey((gName))) {
-                    seedu.address.model.person.ReadOnlyPerson aPerson = hashName.get(gName);
-                    if (equalPerson(aPerson, person)) {
-                        seedu.address.model.person.Person updatedPerson =
-                                new seedu.address.model.person.Person(aPerson);
-                        updatedPerson.setId(new Id(person.getResourceName()));
-
-                        // We now set last update time to the Google one
-                        String updateTime = person.getMetadata().getSources().get(0).getUpdateTime();
-                        updatedPerson.setLastUpdated(new LastUpdated(updateTime));
-                        updatePerson(aPerson, updatedPerson);
+                if (!syncedIDs.contains(id)) {
+                    if (!hashName.containsKey(gName)) {
+                        addAContact(person);
+                    } else if (hashName.containsKey((gName))) {
+                        seedu.address.model.person.ReadOnlyPerson aPerson = hashName.get(gName);
+                        if (equalPerson(aPerson, person)) {
+                            linkContacts(aPerson, person);
+                        } else {
+                            addAContact(person);
+                        }
                     }
                 }
             } catch (DuplicatePersonException e) {
@@ -261,6 +257,54 @@ public class SyncCommand extends Command {
         }
         syncedIDs.removeAll(toRemove);
 
+    }
+
+    /** Links a ABC and Google contact
+     *
+     * @param aPerson
+     * @param gPerson
+     * @throws Exception
+     */
+    private void linkContacts(ReadOnlyPerson aPerson, Person gPerson) throws Exception {
+        seedu.address.model.person.Person updatedPerson =
+                new seedu.address.model.person.Person(aPerson);
+        updatedPerson.setId(new Id(gPerson.getResourceName()));
+
+        // We now set last update time to the Google one
+        String updateTime = gPerson.getMetadata().getSources().get(0).getUpdateTime();
+        updatedPerson.setLastUpdated(new LastUpdated(updateTime));
+        updatePerson(aPerson, updatedPerson);
+
+    }
+
+    /** Adds a Google contact from the specified ABC contact
+     *
+     * @param person
+     * @throws Exception
+     */
+    private void addGoogleContact (ReadOnlyPerson person) throws Exception {
+        Person contactToCreate = convertAPerson(person);
+        Person createdContact = client.people().createContact(contactToCreate).execute();
+
+        String id = createdContact.getResourceName();
+
+        seedu.address.model.person.Person updatedPerson = setId(person, id);
+        updatedPerson.setLastUpdated(new LastUpdated(getLastUpdated(createdContact)));
+
+        updatePerson(person, updatedPerson);
+        syncedIDs.add(id);
+    }
+
+    /** Adds a ABC contact from the specified Google contact
+     *
+     * @param person
+     * @throws Exception
+     */
+    private void addAContact (Person person) throws Exception {
+        String id = person.getResourceName();
+        seedu.address.model.person.Person convertedAPerson = convertGooglePerson(person);
+        model.addPerson(convertedAPerson);
+        syncedIDs.add(id);
     }
 
     /**Ensures that we do not override a Google Contact with null fields when updating
@@ -366,7 +410,7 @@ public class SyncCommand extends Command {
      * @param person
      * @param updatedPerson
      */
-    public void updatePerson (ReadOnlyPerson person, seedu.address.model.person.Person updatedPerson) {
+    private void updatePerson (ReadOnlyPerson person, seedu.address.model.person.Person updatedPerson) {
         try {
             model.updatePerson(person, updatedPerson);
         } catch (Exception e) {
