@@ -26,6 +26,10 @@ public abstract class Command {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
     }
 
+    public static String getMessageForShowBirthdaysSummary(int displaySize) {
+        return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
+    }
+
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of tasks.
      *
