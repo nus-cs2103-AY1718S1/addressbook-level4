@@ -279,7 +279,7 @@ public class UntagCommandTest {
     public void execute_invalidPersonIndexesUnfilteredList_failure() throws Exception {
         Index outOfBound = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         UntagCommand command = prepareCommand(false, Arrays.asList(INDEX_FIRST_PERSON, outOfBound),
-                Arrays.asList(new Tag("tagOne"), new Tag("tagTwo")));
+                Arrays.asList(new Tag("friends"), new Tag("retrieveTester")));
 
         assertCommandFailure(command, model, MESSAGE_INVALID_INDEXES);
     }
@@ -293,7 +293,7 @@ public class UntagCommandTest {
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
         UntagCommand command = prepareCommand(false, Arrays.asList(INDEX_FIRST_PERSON, outOfBoundIndex),
-                Arrays.asList(new Tag("tagOne"), new Tag("tagTwo")));
+                Arrays.asList(new Tag("friends"), new Tag("retrieveTester")));
 
         assertCommandFailure(command, model, MESSAGE_INVALID_INDEXES);
     }
