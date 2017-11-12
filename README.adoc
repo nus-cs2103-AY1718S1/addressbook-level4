@@ -20,7 +20,7 @@ endif::[]
 This application strives to be the integrated platform where you can view all of Singapore's attractions and Michelin
 starred restaurants without the need to juggle multiple tabs on your web browser.
 
-[.underline]#What seperates us from just using a web browser?#
+[.underline]#What separates Tourist-Book from just using a web browser?#
 
 * Optimized as a command-line interface (CLI)
 **  Take advantage of various shortcut keys and commands so you type less.
@@ -41,7 +41,7 @@ starred restaurants without the need to juggle multiple tabs on your web browser
 * Helps you even when you're offline
 **  `export` gives you a printable list to take with you.
 
-*Many more features to come in V2.0, so what are you waiting for? Download the app and type `help` to get started!*
+*Many more features to come in V2.0, so what are you waiting for? Download Tourist-Book and type `help` to get started!*
 
 
 ifdef::env-github[]
