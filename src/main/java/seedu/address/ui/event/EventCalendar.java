@@ -72,7 +72,7 @@ public class EventCalendar extends UiPart<Region> {
     public EventCalendar() {
         super(FXML);
         monthDateBuilder = new MonthDateBuilder();
-        inits(); // to put all text views into array to facilitate looping through
+        inits();
         setDates(monthDateBuilder.getMonthDateArray());
         monthName.setText(monthDateBuilder.getNameOfMonth());
     }
@@ -124,7 +124,7 @@ public class EventCalendar extends UiPart<Region> {
     }
 
     /**
-     * comment TODO: change this
+     * To put all text views into array to facilitate looping through
      */
     public void inits() {
         dateArray = new Text[42];
