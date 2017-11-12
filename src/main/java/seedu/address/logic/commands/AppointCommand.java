@@ -88,7 +88,9 @@ public class AppointCommand extends UndoableCommand {
                 isLate = current.before(appointCal);
             } catch (ParseException e) {
             }
-            if (!isLate) throw new CommandException(INPUT_DATE_INVALID);
+            if (!isLate) {
+                throw new CommandException(INPUT_DATE_INVALID);
+            }
         }
 
         model.updateFilteredListToShowAll();
