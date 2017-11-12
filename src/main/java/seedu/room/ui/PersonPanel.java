@@ -16,7 +16,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -134,17 +133,15 @@ public class PersonPanel extends UiPart<Region> {
     private void initImage() {
         try {
             initProjectImage();
-            picture.setFitHeight(person.getPicture().PIC_HEIGHT);
-            picture.setFitWidth(person.getPicture().PIC_WIDTH);
-            informationPane.getChildren().add(picture);
         } catch (Exception pfnfe) {
-            System.out.println("here");
             try {
                 initJarImage();
-            } catch (Exception jfnfe){
-                System.out.println("Image not found");
+            } catch (Exception jfnfe) {
+                ;
             }
         }
+        picture.setFitHeight(person.getPicture().PIC_HEIGHT);
+        picture.setFitWidth(person.getPicture().PIC_WIDTH);
     }
 
     /**
@@ -200,6 +197,7 @@ public class PersonPanel extends UiPart<Region> {
         FileInputStream fileStream = new FileInputStream(picFile);
         Image personPicture = new Image(fileStream);
         picture.setImage(personPicture);
+        informationPane.getChildren().add(picture);
     }
 
     /**
@@ -210,6 +208,7 @@ public class PersonPanel extends UiPart<Region> {
         Image personPicture = new Image(in);
         picture.setImage(personPicture);
         person.getPicture().setJarResourcePath();
+        informationPane.getChildren().add(picture);
     }
 
 
