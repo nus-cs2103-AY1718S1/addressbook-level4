@@ -1,33 +1,47 @@
 # taojiashu
-###### /java/seedu/address/model/person/FavouriteTest.java
+###### \java\seedu\address\logic\commands\ExitCommandTest.java
 ``` java
-public class FavouriteTest {
+    private ExitCommand exitCommand;
+    private CommandHistory history;
+
+```
+###### \java\seedu\address\logic\commands\ExitCommandTest.java
+``` java
+    @Before
+    public void setUp() {
+        Model model = new ModelManager();
+        history = new CommandHistory();
+        exitCommand = new ExitCommand();
+        exitCommand.setData(model, history, new UndoRedoStack());
+    }
+
+```
+###### \java\seedu\address\logic\commands\ExitCommandTest.java
+``` java
+    @Test
+    public void execute_exit_stalled() {
+        assertCommandResult(exitCommand, MESSAGE_CONFIRMATION);
+
+        String otherCommand = "clear";
+        history.add(otherCommand);
+        assertCommandResult(exitCommand, MESSAGE_CONFIRMATION);
+    }
+
 
     @Test
-    public void equals() {
-        Favourite favourite = new Favourite();
-
-        // same object -> returns true
-        assertTrue(favourite.equals(favourite));
-
-        // same values -> returns true
-        Favourite favouriteCopy = new Favourite();
-        assertTrue(favourite.equals(favouriteCopy));
-
-        // different types -> returns false
-        assertFalse(favourite.equals(1));
-
-        // null -> returns false
-        assertFalse(favourite.equals(null));
-
-        // different values -> returns false
-        Favourite differentFavourite = new Favourite();
-        differentFavourite.toggleFavourite();
-        assertFalse(favourite.equals(differentFavourite));
-    }
-}
+    public void execute_exit_success() {
 ```
-###### /java/seedu/address/logic/commands/FavouriteCommandTest.java
+###### \java\seedu\address\logic\commands\ExitCommandTest.java
+``` java
+        history.add("exit");
+
+        assertCommandResult(exitCommand, MESSAGE_EXIT_ACKNOWLEDGEMENT);
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ExitAppRequestEvent);
+        assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
+    }
+
+```
+###### \java\seedu\address\logic\commands\FavouriteCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for FavouriteCommand.
@@ -80,49 +94,7 @@ public class FavouriteCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ExitCommandTest.java
-``` java
-    private ExitCommand exitCommand;
-    private CommandHistory history;
-
-```
-###### /java/seedu/address/logic/commands/ExitCommandTest.java
-``` java
-    @Before
-    public void setUp() {
-        Model model = new ModelManager();
-        history = new CommandHistory();
-        exitCommand = new ExitCommand();
-        exitCommand.setData(model, history, new UndoRedoStack());
-    }
-
-```
-###### /java/seedu/address/logic/commands/ExitCommandTest.java
-``` java
-    @Test
-    public void execute_exit_stalled() {
-        assertCommandResult(exitCommand, MESSAGE_CONFIRMATION);
-
-        String otherCommand = "clear";
-        history.add(otherCommand);
-        assertCommandResult(exitCommand, MESSAGE_CONFIRMATION);
-    }
-
-
-    @Test
-    public void execute_exit_success() {
-```
-###### /java/seedu/address/logic/commands/ExitCommandTest.java
-``` java
-        history.add("exit");
-
-        assertCommandResult(exitCommand, MESSAGE_EXIT_ACKNOWLEDGEMENT);
-        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ExitAppRequestEvent);
-        assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
-    }
-
-```
-###### /java/seedu/address/logic/commands/LocateCommandTest.java
+###### \java\seedu\address\logic\commands\LocateCommandTest.java
 ``` java
 /**
  * Contains integration tests
@@ -243,7 +215,7 @@ public class LocateCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ShowFavouriteCommandTest.java
+###### \java\seedu\address\logic\commands\ShowFavouriteCommandTest.java
 ``` java
 /**
  * JUnit tests of ShowFavouriteCommand
@@ -273,7 +245,48 @@ public class ShowFavouriteCommandTest {
     }
 
 ```
-###### /java/seedu/address/logic/parser/LocateCommandParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_favourite() throws Exception {
+        FavouriteCommand command = (FavouriteCommand) parser.parseCommand(FavouriteCommand.COMMAND_WORD_1 + " "
+                + INDEX_FIRST_PERSON.getOneBased());
+        FavouriteCommand abbreviatedCommand =
+                (FavouriteCommand) parser.parseCommand(FavouriteCommand.COMMAND_WORD_2 + " "
+                + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new FavouriteCommand(INDEX_FIRST_PERSON), command);
+    }
+```
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_showFavourite() throws Exception {
+        assertTrue(parser.parseCommand(ShowFavouriteCommand.COMMAND_WORD_1) instanceof ShowFavouriteCommand);
+        assertTrue(parser.parseCommand(ShowFavouriteCommand.COMMAND_WORD_2 + " 3") instanceof ShowFavouriteCommand);
+    }
+
+    @Test
+    public void parseCommand_locateCommand() throws Exception {
+        assertTrue(parser.parseCommand(LocateCommand.COMMAND_WORDVAR + " 1") instanceof LocateCommand);
+    }
+```
+###### \java\seedu\address\logic\parser\FavouriteCommandParserTest.java
+``` java
+public class FavouriteCommandParserTest {
+    private FavouriteCommandParser parser = new FavouriteCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsFavouriteCommand() {
+        assertParseSuccess(parser, "1", new FavouriteCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FavouriteCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\LocateCommandParserTest.java
 ``` java
 /**
  * Test scope: similar to {@code DeleteCommandParserTest}.
@@ -294,48 +307,35 @@ public class LocateCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/FavouriteCommandParserTest.java
+###### \java\seedu\address\model\person\FavouriteTest.java
 ``` java
-public class FavouriteCommandParserTest {
-    private FavouriteCommandParser parser = new FavouriteCommandParser();
+public class FavouriteTest {
 
     @Test
-    public void parse_validArgs_returnsFavouriteCommand() {
-        assertParseSuccess(parser, "1", new FavouriteCommand(INDEX_FIRST_PERSON));
-    }
+    public void equals() {
+        Favourite favourite = new Favourite();
 
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FavouriteCommand.MESSAGE_USAGE));
+        // same object -> returns true
+        assertTrue(favourite.equals(favourite));
+
+        // same values -> returns true
+        Favourite favouriteCopy = new Favourite();
+        assertTrue(favourite.equals(favouriteCopy));
+
+        // different types -> returns false
+        assertFalse(favourite.equals(1));
+
+        // null -> returns false
+        assertFalse(favourite.equals(null));
+
+        // different values -> returns false
+        Favourite differentFavourite = new Favourite();
+        differentFavourite.toggleFavourite();
+        assertFalse(favourite.equals(differentFavourite));
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_favourite() throws Exception {
-        FavouriteCommand command = (FavouriteCommand) parser.parseCommand(FavouriteCommand.COMMAND_WORD_1 + " "
-                + INDEX_FIRST_PERSON.getOneBased());
-        FavouriteCommand abbreviatedCommand =
-                (FavouriteCommand) parser.parseCommand(FavouriteCommand.COMMAND_WORD_2 + " "
-                + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new FavouriteCommand(INDEX_FIRST_PERSON), command);
-    }
-```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_showFavourite() throws Exception {
-        assertTrue(parser.parseCommand(ShowFavouriteCommand.COMMAND_WORD_1) instanceof ShowFavouriteCommand);
-        assertTrue(parser.parseCommand(ShowFavouriteCommand.COMMAND_WORD_2 + " 3") instanceof ShowFavouriteCommand);
-    }
-
-    @Test
-    public void parseCommand_locateCommand() throws Exception {
-        assertTrue(parser.parseCommand(LocateCommand.COMMAND_WORDVAR + " 1") instanceof LocateCommand);
-    }
-```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Favourite} of the {@code Person} that we are building
