@@ -79,7 +79,12 @@ public class XmlAdaptedPerson {
         final Person person = new Person(properties, tags);
 
         if (avatar != null) {
-            person.setAvatar(new Avatar(avatar));
+            try {
+                person.setAvatar(new Avatar(avatar));
+            } catch (IllegalValueException ive) {
+                // TODO: Better error handling
+                ive.printStackTrace();
+            }
         }
 
         return person;
