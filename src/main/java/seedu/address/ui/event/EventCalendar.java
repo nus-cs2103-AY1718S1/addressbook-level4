@@ -14,54 +14,95 @@ import seedu.address.ui.UiPart;
  */
 public class EventCalendar extends UiPart<Region> {
     private static final String FXML = "event/EventCalendar.fxml";
+    private static final int MAX_NUMBER_DAYS = 42;
 
     @FXML
     private Text date1;
+    @FXML
     private Text date2;
+    @FXML
     private Text date3;
+    @FXML
     private Text date4;
+    @FXML
     private Text date5;
+    @FXML
     private Text date6;
+    @FXML
     private Text date7;
+    @FXML
     private Text date8;
+    @FXML
     private Text date9;
+    @FXML
     private Text date10;
+    @FXML
     private Text date11;
+    @FXML
     private Text date12;
+    @FXML
     private Text date13;
+    @FXML
     private Text date14;
+    @FXML
     private Text date15;
+    @FXML
     private Text date16;
+    @FXML
     private Text date17;
+    @FXML
     private Text date18;
+    @FXML
     private Text date19;
+    @FXML
     private Text date20;
+    @FXML
     private Text date21;
+    @FXML
     private Text date22;
+    @FXML
     private Text date23;
+    @FXML
     private Text date24;
+    @FXML
     private Text date25;
+    @FXML
     private Text date26;
+    @FXML
     private Text date27;
+    @FXML
     private Text date28;
+    @FXML
     private Text date29;
+    @FXML
     private Text date30;
+    @FXML
     private Text date31;
+    @FXML
     private Text date32;
+    @FXML
     private Text date33;
+    @FXML
     private Text date34;
+    @FXML
     private Text date35;
+    @FXML
     private Text date36;
+    @FXML
     private Text date37;
+    @FXML
     private Text date38;
+    @FXML
     private Text date39;
+    @FXML
     private Text date40;
+    @FXML
     private Text date41;
+    @FXML
     private Text date42;
 
     @FXML
     private Label monthName;
-
 
     private Text[] dateArray;
 
@@ -77,56 +118,16 @@ public class EventCalendar extends UiPart<Region> {
     }
 
     public void setDates(String[] monthDateArray) {
-        dateArray[0].setText(monthDateArray[0]);
-        dateArray[1].setText(monthDateArray[1]);
-        dateArray[2].setText(monthDateArray[2]);
-        dateArray[3].setText(monthDateArray[3]);
-        dateArray[4].setText(monthDateArray[4]);
-        dateArray[5].setText(monthDateArray[5]);
-        dateArray[6].setText(monthDateArray[6]);
-        dateArray[7].setText(monthDateArray[7]);
-        dateArray[8].setText(monthDateArray[8]);
-        dateArray[9].setText(monthDateArray[9]);
-        dateArray[10].setText(monthDateArray[10]);
-        dateArray[11].setText(monthDateArray[11]);
-        dateArray[12].setText(monthDateArray[12]);
-        dateArray[13].setText(monthDateArray[13]);
-        dateArray[14].setText(monthDateArray[14]);
-        dateArray[15].setText(monthDateArray[15]);
-        dateArray[16].setText(monthDateArray[16]);
-        dateArray[17].setText(monthDateArray[17]);
-        dateArray[18].setText(monthDateArray[18]);
-        dateArray[19].setText(monthDateArray[19]);
-        dateArray[20].setText(monthDateArray[20]);
-        dateArray[21].setText(monthDateArray[21]);
-        dateArray[22].setText(monthDateArray[22]);
-        dateArray[23].setText(monthDateArray[23]);
-        dateArray[24].setText(monthDateArray[24]);
-        dateArray[25].setText(monthDateArray[25]);
-        dateArray[26].setText(monthDateArray[26]);
-        dateArray[27].setText(monthDateArray[27]);
-        dateArray[28].setText(monthDateArray[28]);
-        dateArray[29].setText(monthDateArray[29]);
-        dateArray[30].setText(monthDateArray[30]);
-        dateArray[31].setText(monthDateArray[31]);
-        dateArray[32].setText(monthDateArray[32]);
-        dateArray[33].setText(monthDateArray[33]);
-        dateArray[34].setText(monthDateArray[34]);
-        dateArray[35].setText(monthDateArray[35]);
-        dateArray[36].setText(monthDateArray[36]);
-        dateArray[37].setText(monthDateArray[37]);
-        dateArray[38].setText(monthDateArray[38]);
-        dateArray[39].setText(monthDateArray[39]);
-        dateArray[40].setText(monthDateArray[40]);
-        dateArray[41].setText(monthDateArray[41]);
-
+        for (int i=0; i<MAX_NUMBER_DAYS; i++) {
+            dateArray[i].setText(monthDateArray[i]);
+        }
     }
 
     /**
      * To put all text views into array to facilitate looping through
      */
     public void inits() {
-        dateArray = new Text[42];
+        dateArray = new Text[MAX_NUMBER_DAYS];
         dateArray[0] = date1;
         dateArray[1] = date2;
         dateArray[2] = date3;
