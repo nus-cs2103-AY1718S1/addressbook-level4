@@ -22,7 +22,7 @@ public class UserPrefs {
     private String passwordSaltInString = "KeAnoJrBdpqc0AnhiZDSPw==";
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0);
+        setGuiSettings(1700, 980, 0, 0);
     }
 
     public GuiSettings getGuiSettings() {

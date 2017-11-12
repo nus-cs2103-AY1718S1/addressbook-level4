@@ -8,12 +8,12 @@ package seedu.address.model.person;
  */
 public class DateRepaid {
 
-    public static final String DATE_REPAID_PLACEHOLDER = "NOT REPAID";
+    public static final String NO_DATE_REPAID = "NOT REPAID";
 
     public final String value;
 
     public DateRepaid() {
-        value = DATE_REPAID_PLACEHOLDER;
+        value = NO_DATE_REPAID;
     }
 
     /**

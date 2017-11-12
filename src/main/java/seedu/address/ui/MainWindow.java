@@ -221,8 +221,24 @@ public class MainWindow extends UiPart<Region> {
         infoPanelPlaceholder.getChildren().clear();
         infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
     }
-    //@@author
 
+    //@@author khooroko
+    /**
+     * Changes the current theme.
+     */
+    private void changeTheme() {
+        for (String stylesheet : getRoot().getStylesheets()) {
+            if (stylesheet.endsWith("DarkTheme.css")) {
+                getRoot().getStylesheets().remove(stylesheet);
+                getRoot().getStylesheets().add("/view/BrightTheme.css");
+            } else if (stylesheet.endsWith("BrightTheme.css")) {
+                getRoot().getStylesheets().remove(stylesheet);
+                getRoot().getStylesheets().add("/view/DarkTheme.css");
+            }
+        }
+    }
+
+    //@@author
     void hide() {
         primaryStage.hide();
     }
@@ -317,18 +333,11 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
-     * Changes theme.
+     * Handles a request to change theme.
      */
     @Subscribe
     private void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) {
-        for (String stylesheet : getRoot().getStylesheets()) {
-            if (stylesheet.endsWith("DarkTheme.css")) {
-                getRoot().getStylesheets().remove(stylesheet);
-                getRoot().getStylesheets().add("/view/BrightTheme.css");
-            } else if (stylesheet.endsWith("BrightTheme.css")) {
-                getRoot().getStylesheets().remove(stylesheet);
-                getRoot().getStylesheets().add("/view/DarkTheme.css");
-            }
-        }
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        changeTheme();
     }
 }
