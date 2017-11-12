@@ -34,21 +34,28 @@ public class ArgumentMultimap {
     /**
      * Returns the last value of {@code prefix}.
      */
-    public Optional<String> getValue(Prefix prefix) {
-        List<String> values = getAllValues(prefix);
-        return values.isEmpty() ? Optional.empty() : Optional.of(values.get(values.size() - 1));
+    public Optional<String> getValue(Prefix... prefixes) {
+        for (Prefix prefix : prefixes) {
+            List<String> values = getAllValues(prefix);
+            if (!values.isEmpty()) {
+                return Optional.of(values.get(values.size() - 1));
+            }
+        }
+        return Optional.empty();
     }
 
     /**
-     * Returns all values of {@code prefix}.
+     * Returns all values of the first prefix in a list of {@code prefixes}.
      * If the prefix does not exist or has no values, this will return an empty list.
      * Modifying the returned list will not affect the underlying data structure of the ArgumentMultimap.
      */
-    public List<String> getAllValues(Prefix prefix) {
-        if (!argMultimap.containsKey(prefix)) {
-            return new ArrayList<>();
+    public List<String> getAllValues(Prefix... prefixes) {
+        for (Prefix prefix : prefixes) {
+            if (argMultimap.containsKey(prefix)) {
+                return new ArrayList<>(argMultimap.get(prefix));
+            }
         }
-        return new ArrayList<>(argMultimap.get(prefix));
+        return new ArrayList<>();
     }
 
     /**
@@ -57,4 +64,5 @@ public class ArgumentMultimap {
     public String getPreamble() {
         return getValue(new Prefix("")).orElse("");
     }
+
 }

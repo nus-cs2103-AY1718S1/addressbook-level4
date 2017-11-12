@@ -49,7 +49,7 @@ public class UniqueTagList implements Iterable<Tag> {
     }
 
     /**
-     * Replaces the Tags in this list with those in the argument tag list.
+     * Replaces the tags in this list with those in the argument tag list.
      */
     public void setTags(Set<Tag> tags) {
         requireAllNonNull(tags);

@@ -6,25 +6,41 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.address.logic.commands.AddCommand;
+import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.ChangeModeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.persons.AddCommand;
+import seedu.address.logic.commands.persons.DeleteCommand;
+import seedu.address.logic.commands.persons.EditCommand;
+import seedu.address.logic.commands.persons.FindCommand;
+import seedu.address.logic.commands.persons.ListCommand;
+import seedu.address.logic.commands.persons.SelectCommand;
+import seedu.address.logic.commands.persons.TagCommand;
+import seedu.address.logic.commands.tags.DetagCommand;
+import seedu.address.logic.commands.tasks.AddTaskCommand;
+import seedu.address.logic.commands.tasks.DeleteTaskCommand;
+import seedu.address.logic.commands.tasks.EditTaskCommand;
+import seedu.address.logic.commands.tasks.FindTaskCommand;
+import seedu.address.logic.commands.tasks.ListTasksCommand;
+import seedu.address.logic.commands.tasks.SelectTaskCommand;
+import seedu.address.logic.commands.tasks.TagTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author tby1994
 /**
  * Parses user input.
  */
 public class AddressBookParser {
+
+
+    private static final String MODE_ADDRESS_BOOK = "addressbook";
+    private static final String MODE_TASK_MANAGER = "taskmanager";
 
     /**
      * Used for initial separation of command word and args.
@@ -38,36 +54,81 @@ public class AddressBookParser {
      * @return the command based on the user input
      * @throws ParseException if the user input does not conform the expected format
      */
-    public Command parseCommand(String userInput) throws ParseException {
+    public Command parseCommand(String userInput, String commandMode) throws ParseException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        final String commandWord = matcher.group("commandWord");
+        final String commandWord = matcher.group("commandWord").toLowerCase();
         final String arguments = matcher.group("arguments");
+
+        if (StringUtil.containsWordIgnoreCase(MODE_ADDRESS_BOOK, commandMode)) {
+            switch (commandWord) {
+
+            case AddCommand.COMMAND_WORD:
+                return new AddCommandParser().parse(arguments);
+
+            case ChangeModeCommand.COMMAND_WORD:
+                return new ChangeModeCommandParser().parse(arguments);
+
+            case EditCommand.COMMAND_WORD:
+                return new EditCommandParser().parse(arguments);
+
+            case DeleteCommand.COMMAND_WORD:
+                return new DeleteCommandParser().parse(arguments);
+
+            case FindCommand.COMMAND_WORD:
+                return new FindCommandParser().parse(arguments);
+
+            case SelectCommand.COMMAND_WORD:
+                return new SelectCommandParser().parse(arguments);
+
+            case ListCommand.COMMAND_WORD:
+                return new ListCommand();
+
+            case DetagCommand.COMMAND_WORD:
+                return new DetagCommandParser().parse(arguments);
+
+            case TagCommand.COMMAND_WORD:
+                return new TagCommandParser().parse(arguments);
+
+            default:
+            }
+        } else if (StringUtil.containsWordIgnoreCase(MODE_TASK_MANAGER, commandMode)) {
+            switch (commandWord) {
+
+            case ChangeModeCommand.COMMAND_WORD:
+                return new ChangeModeCommandParser().parse(arguments);
+
+            case AddTaskCommand.COMMAND_WORD:
+                return new AddTaskCommandParser().parse(arguments);
+
+            case SelectTaskCommand.COMMAND_WORD:
+                return new SelectTaskCommandParser().parse(arguments);
+
+            case DeleteTaskCommand.COMMAND_WORD:
+                return new DeleteTaskCommandParser().parse(arguments);
+
+            case FindTaskCommand.COMMAND_WORD:
+                return new FindTaskCommandParser().parse(arguments);
+
+            case ListTasksCommand.COMMAND_WORD:
+                return new ListTasksCommand();
+
+            case TagTaskCommand.COMMAND_WORD:
+                return new TagTaskCommandParser().parse(arguments);
+
+            default:
+            }
+        }
         switch (commandWord) {
-
-        case AddCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
-
-        case EditCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
-
-        case SelectCommand.COMMAND_WORD:
-            return new SelectCommandParser().parse(arguments);
-
-        case DeleteCommand.COMMAND_WORD:
-            return new DeleteCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
-        case FindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
-
-        case ListCommand.COMMAND_WORD:
-            return new ListCommand();
+        case EditTaskCommand.COMMAND_WORD:
+            return new EditTaskCommandParser().parse(arguments);
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
@@ -88,5 +149,4 @@ public class AddressBookParser {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
-
 }

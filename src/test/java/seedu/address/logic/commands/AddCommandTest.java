@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -14,16 +15,23 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.persons.AddCommand;
 import seedu.address.model.AddressBook;
+import seedu.address.model.CommandMode;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -123,6 +131,24 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author tpq95
+        @Override
+        public void deleteTag(ReadOnlyPerson person, Tag oldTag)
+            throws PersonNotFoundException, DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+        //@@author
+
+        public void updatePersonTags(ReadOnlyPerson person, Set<Tag> tagSet)
+                throws PersonNotFoundException, DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        public void updateTaskTags(ReadOnlyTask task, Set<Tag> tagSet)
+                throws TaskNotFoundException, DuplicateTaskException {
+            fail("This method should not be called.");
+        }
+
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
             fail("This method should not be called.");
@@ -133,6 +159,45 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void addTask(ReadOnlyTask task) throws DuplicateTaskException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask)
+                throws DuplicateTaskException, TaskNotFoundException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyTask> getFilteredTaskList() {
+            fail("This method should not be called");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
+            fail("This method should not be called");
+        }
+        //@@author tby1994
+        @Override
+        public void changeCommandMode(String mode) throws IllegalValueException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public CommandMode getCommandMode() {
+            fail("This method should not be called ");
+            return null;
+        }
+        //@@author
     }
 
     /**

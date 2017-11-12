@@ -54,6 +54,14 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return addressLabel.getText();
     }
 
+    public String getSteetName() {
+        int index = getAddress().indexOf("#");
+        if (index < 0) {
+            return getAddress();
+        }
+        return getAddress().substring(0, index);
+    }
+
     public String getPhone() {
         return phoneLabel.getText();
     }
