@@ -11,7 +11,7 @@ import seedu.room.logic.parser.exceptions.ParseException;
 
 //@@author sushinoya
 /**
- * Parses input arguments and creates a new AddCommand object
+ * Parses input arguments and creates a new SortCommand object
  */
 public class SortCommandParser implements Parser<SortCommand> {
 

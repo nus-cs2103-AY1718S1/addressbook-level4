@@ -2,14 +2,12 @@ package seedu.room.model.person;
 
 //@@author shitian007
 /**
- * Represents the url of the picture of the person in the resident book.
+ * Represents the picture object of the resident {@code Person} in the resident book.
  */
 public class Picture {
 
     public static final int PIC_WIDTH = 100;
     public static final int PIC_HEIGHT = 100;
-
-    public static final String IMAGE_URL_VALIDATION_REGEX = "[^ ]+";
 
     public static final String FOLDER_NAME = "contact_images";
 
@@ -34,21 +32,21 @@ public class Picture {
     }
 
     /**
-     * @return pictureUrl
+     * @return image resource {@code pictureUrl} for development
      */
     public String getPictureUrl() {
         return pictureUrl;
     }
 
     /**
-     * Handles resource path for jar
+     * @return image resource {@code jarPictureUrl} for production (jar)
      */
     public String getJarPictureUrl() {
         return jarPictureUrl;
     }
 
     /**
-     * Sets jar resource path to true
+     * Sets jar {@code jarResourcePath} path to true
      */
     public void setJarResourcePath() {
         this.jarResourcePath = true;
@@ -63,6 +61,7 @@ public class Picture {
 
     /**
      * Sets name of image which will be appended to contact_images directory
+     * @param pictureUrl set as resource path for both dev and production
      */
     public void setPictureUrl(String pictureUrl) {
         if (pictureUrl.contains("/")) {
@@ -77,18 +76,11 @@ public class Picture {
     }
 
     /**
-     * Resets picture of person to original placeholder
+     * Resets {@code pictureUrl} and {@code jarPictureUrl} of {@code Person} to original placeholder url
      */
     public void resetPictureUrl() {
         this.pictureUrl = PLACEHOLDER_IMAGE;
         this.jarPictureUrl = PLACEHOLDER_JAR_URL;
-    }
-
-    /**
-     * Checks validity of picture url
-     */
-    public static boolean isValidImageUrl(String imageUrl) {
-        return imageUrl.matches(IMAGE_URL_VALIDATION_REGEX) && !imageUrl.contains("//");
     }
 
 }

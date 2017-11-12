@@ -25,14 +25,14 @@ import seedu.room.model.tag.Tag;
 
 //@@author shitian007
 /**
- * Allows the addition of an image to a resident currently in the resident book
+ * Command handling the addition of an image to a resident currently in the resident book
  */
 public class AddImageCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "addImage";
     public static final String COMMAND_ALIAS = "ai";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an image to the person identified "
-            + "by the index number used in the last person listing. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an image to the resident identified "
+            + "by the index number used in the last resident listing. "
             + "Existing Image will be replaced by the new image.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "url/[ Image Url ]\n"
@@ -40,15 +40,14 @@ public class AddImageCommand extends UndoableCommand {
             + "url//Users/username/Downloads/person-placeholder.jpg";
     public static final String MESSAGE_VALID_IMAGE_FORMATS = "Allowed formats: JPG/JPEG/PNG/BMP";
 
-    public static final String MESSAGE_ADD_IMAGE_SUCCESS = "Successfully changed image for Person: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the resident book.";
+    public static final String MESSAGE_ADD_IMAGE_SUCCESS = "Successfully changed image for Resident: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This resident already exists in the resident book.";
 
     private final Index index;
     private final String newImageUrl;
 
     /**
-     *
-     * @param index of the person in the list whose image is to be updated
+     * @param index of the resident {@code Person} in the current displayed list whose image is to be updated
      * @param newImageUrl url to the new replacing image
      */
     public AddImageCommand(Index index, String newImageUrl) {
@@ -70,16 +69,16 @@ public class AddImageCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_IMAGE_URL);
         }
 
-        ReadOnlyPerson person = lastShownList.get(index.getZeroBased());
-        Person editedPerson = editPersonImage(person);
-        createPersonImage(editedPerson);
+        ReadOnlyPerson resident = lastShownList.get(index.getZeroBased());
+        Person editedPerson = editResidentImage(resident);
+        createResidentImage(editedPerson);
 
         try {
-            model.updatePerson(person, editedPerson);
+            model.updatePerson(resident, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target resident cannot be missing");
         }
         model.updateFilteredPersonListPicture(PREDICATE_SHOW_ALL_PERSONS, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -87,19 +86,20 @@ public class AddImageCommand extends UndoableCommand {
     }
 
     /**
-     * @param person Person to edit
-     * @return Person with updated Picture url
+     * Updates the image url for the specified resident
+     * @param resident to whose {@code Picture} is to be edited
+     * @return {@code Person} with updated {@code Picture}
      */
-    public Person editPersonImage(ReadOnlyPerson person) {
-        Name name = person.getName();
-        Phone phone = person.getPhone();
-        Email email = person.getEmail();
-        Room room = person.getRoom();
-        Timestamp timestamp = person.getTimestamp();
-        Set<Tag> tags = person.getTags();
+    public Person editResidentImage(ReadOnlyPerson resident) {
+        Name name = resident.getName();
+        Phone phone = resident.getPhone();
+        Email email = resident.getEmail();
+        Room room = resident.getRoom();
+        Timestamp timestamp = resident.getTimestamp();
+        Set<Tag> tags = resident.getTags();
 
         Person editedPerson =  new Person(name, phone, email, room, timestamp, tags);
-        if (checkJarResourcePath(person)) {
+        if (checkJarResourcePath(resident)) {
             editedPerson.getPicture().setJarResourcePath();
         }
 
@@ -108,24 +108,24 @@ public class AddImageCommand extends UndoableCommand {
     }
 
     /**
-     * @param person whose image is to be checked
+     * @param resident whose image is to be checked
      * @return true if in production mode (jar file)
      */
-    public boolean checkJarResourcePath(ReadOnlyPerson person) {
-        File picture = new File(person.getPicture().getPictureUrl());
+    public boolean checkJarResourcePath(ReadOnlyPerson resident) {
+        File picture = new File(resident.getPicture().getPictureUrl());
         return (picture.exists()) ? false : true;
     }
 
     /**
-     * @param person whose attributes would be used to generate image file
+     * @param resident whose attributes would be used to generate image file
      */
-    public void createPersonImage(ReadOnlyPerson person) {
+    public void createResidentImage(ReadOnlyPerson resident) {
         File picFile = new File(newImageUrl);
         try {
-            if (person.getPicture().checkJarResourcePath()) {
-                ImageIO.write(ImageIO.read(picFile), "jpg", new File(person.getPicture().getJarPictureUrl()));
+            if (resident.getPicture().checkJarResourcePath()) {
+                ImageIO.write(ImageIO.read(picFile), "jpg", new File(resident.getPicture().getJarPictureUrl()));
             } else {
-                ImageIO.write(ImageIO.read(picFile), "jpg", new File(person.getPicture().getPictureUrl()));
+                ImageIO.write(ImageIO.read(picFile), "jpg", new File(resident.getPicture().getPictureUrl()));
             }
         } catch (Exception e) {
             System.out.println("Cannot create Person Image");

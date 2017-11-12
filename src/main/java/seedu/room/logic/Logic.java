@@ -29,12 +29,20 @@ public interface Logic {
 
     //@@author shitian007
     /**
-     * Updates Picture of person list within model
+     * Updates Picture of resident {@code Person} within model
+     * @param resident whose picture is to be updated
      */
-    void updatePersonListPicture(Person p);
+    void updatePersonListPicture(Person resident);
 
-    /** Updates and gets list of Auto-complete Strings */
+    /**
+     * Updates autocomplete list within {@code Logic}
+     * @param userInput
+     */
     void updateAutoCompleteList(String userInput);
+
+    /**
+     * @return the latest array of suggestions from {@code Logic}
+     */
     String[] getAutoCompleteList();
     //@@author
 

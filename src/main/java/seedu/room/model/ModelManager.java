@@ -205,7 +205,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Swapping Residents' Rooms =============================================================
 
-    //@@author sushinoya
     /**
      * Swaps the rooms between two residents.
      *

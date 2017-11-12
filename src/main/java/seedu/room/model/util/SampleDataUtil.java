@@ -210,6 +210,7 @@ public class SampleDataUtil {
             throw new AssertionError("sample data cannot contain duplicate events", e);
         }
     }
+
     /**
      * Returns a tag set containing the list of strings given.
      */

@@ -12,7 +12,7 @@ import seedu.room.model.person.exceptions.PersonNotFoundException;
 
 //@@author sushinoya
 /**
- * Swaps two residents identified using their last displayed indexes from the resident book.
+ * Swaps two residents identified using indexes from the last displayed residents list.
  */
 public class SwaproomCommand extends UndoableCommand {
 
@@ -41,6 +41,7 @@ public class SwaproomCommand extends UndoableCommand {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
+        //The index is larger than the last shown list.
         if (targetIndex1.getZeroBased() >= lastShownList.size()
                 || targetIndex2.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -49,7 +50,7 @@ public class SwaproomCommand extends UndoableCommand {
         ReadOnlyPerson person1 = lastShownList.get(targetIndex1.getZeroBased());
         ReadOnlyPerson person2 = lastShownList.get(targetIndex2.getZeroBased());
 
-
+        //If both of the residents have not been allocated rooms, disallow swap.
         if (person1.getRoom().toString().equals(ROOM_NOT_SET_DEFAULT)
                 && person2.getRoom().toString().equals(ROOM_NOT_SET_DEFAULT)) {
             throw new CommandException(String.format(ROOMS_NOT_SET_ERROR, person1.getName(), person2.getName()));
@@ -65,7 +66,7 @@ public class SwaproomCommand extends UndoableCommand {
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(Object other) { // swaproom A B is equal to swaproom B A
         return other == this // short circuit if same object
                 || (other instanceof SwaproomCommand // instanceof handles nulls
                 && this.targetIndex1.equals(((SwaproomCommand) other).targetIndex1)

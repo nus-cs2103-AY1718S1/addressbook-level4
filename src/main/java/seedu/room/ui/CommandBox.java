@@ -70,7 +70,7 @@ public class CommandBox extends UiPart<Region> {
 
     //@@author shitian007
     /**
-     * Initializes suggestions and binds it to TextFields
+     * Initializes suggestions and binds it to {@code commandTextField}
      */
     public void initAutoComplete() {
         suggestions = SuggestionProvider.create((Arrays.asList(logic.getAutoCompleteList())));
@@ -78,7 +78,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Updates AutoCompleteList according to current TextField input
+     * Updates AutoCompleteList according to current {@code commandTextField} input
      */
     public void updateAutoCompleteList() {
         logic.updateAutoCompleteList(commandTextField.getText());

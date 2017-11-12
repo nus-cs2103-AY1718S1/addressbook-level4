@@ -10,7 +10,7 @@ import seedu.room.model.event.exceptions.EventNotFoundException;
 
 //@@author sushinoya
 /**
- * Deletes a event identified using it's last displayed index from the resident book.
+ * Deletes a event identified using it's last displayed index from the event book.
  */
 public class DeleteEventCommand extends UndoableCommand {
 
