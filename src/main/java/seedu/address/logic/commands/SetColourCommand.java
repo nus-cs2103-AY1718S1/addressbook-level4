@@ -25,8 +25,8 @@ public class SetColourCommand extends Command {
     private static final String[] colours = {"blue", "red", "brown", "green", "black", "purple", "indigo", "grey",
         "chocolate", "orange", "aquamarine"};
 
-    public String tag;
-    public String newColour;
+    private String tag;
+    private String newColour;
 
     public SetColourCommand(String tag, String colour) {
         this.tag = tag;
@@ -34,7 +34,7 @@ public class SetColourCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException{
+    public CommandResult execute() throws CommandException {
         try {
             if (isColourValid()) {
                 model.setTagColour(tag, newColour);
@@ -65,6 +65,6 @@ public class SetColourCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof SetColourCommand // instanceof handles nulls
                 && this.tag.equals(((SetColourCommand) other).tag)
-                && this.newColour.equals(((SetColourCommand) other).newColour));// state check
+                && this.newColour.equals(((SetColourCommand) other).newColour)); // state check
     }
 }
