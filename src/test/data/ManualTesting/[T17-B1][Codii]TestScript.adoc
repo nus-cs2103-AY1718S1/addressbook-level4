@@ -15,6 +15,6 @@ asdfsdf +
 . Log into Codii. Details on logging in, including a working sample username and password, can be found link:https://github.com/CS2103AUG2017-T17-B1/main/blob/master/docs/UserGuide.adoc#logging-into-the-address-book-application-using-command-line-interface-cli-code-login-code[here]. +
 . You have to make a change to the address book to generate a `data folder`. Simply key in `delete 1` to delete the dummy contact inside.
 . Exit the application by keying in `exit` into the command box.
-. Within the `main` folder, there is a new `data` that has been generated. Replace the `addressbook.xml` file with the `sample data` file. Ensure that there is only one `.xml` file in the `data`folder.
+. Within the `main` folder, there is a new `data` folder that has been generated.
+. Within the `data` folder, replace the `addressbook.xml` file with the `sample data` file. Ensure that there is only one `.xml` file in the `data` folder.
 . Rename the file to `addressbook.xml`.
-
