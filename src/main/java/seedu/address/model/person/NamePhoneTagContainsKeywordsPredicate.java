@@ -29,7 +29,8 @@ public class NamePhoneTagContainsKeywordsPredicate implements Predicate<ReadOnly
                     .anyMatch(keyword -> person.getPhones().stream()
                             .anyMatch(phone -> StringUtil.containsWordIgnoreCase(phone.value, keyword)))
                 || keywords.stream()
-                    .anyMatch(keyword -> person.getTags().stream().anyMatch(tag -> tag.tagName.equals(keyword)));
+                    .anyMatch(keyword -> person.getTags().stream()
+                            .anyMatch(tag -> tag.tagName.equalsIgnoreCase(keyword)));
     }
 
     @Override
