@@ -45,7 +45,8 @@ public class NearbySelectionIntegrationTest extends AddressBookGuiTest {
         postNow(jumpToListRequestEventStub); // Benson is selected
         postNow(nearbyPersonPanelSelectionChangedEventStub); // Carl should be selected
         mainWindowHandle.updateChangeInList();
-        // TODO: Assert personListPanel selects the correct person.
+        assertCardEquals(mainWindowHandle.getPersonListPanel().getPersonCardHandle(CARL),
+                mainWindowHandle.getPersonListPanel().getHandleToSelectedCard());
         assertInfoDisplaysPerson(nearbyPersonPanelSelectionChangedEventStub.getNewSelection().person,
                 mainWindowHandle.getInfoPanel());
     }
