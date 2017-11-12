@@ -931,23 +931,23 @@ image::UG_mainheader_commandsummary.png[width="900"]
 
 [cols="3*^"]
 |===
-| COMMAND | FORMAT | EXAMPLE
-| Add | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS r/REMARK [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 r/Loves Tea t/friend t/colleague`
-| Alias | `alias [ALIAS COMMAND]` | `alias unfriend delete 1`
-| Clear | `clear` | `clear`
-| Delete | `delete INDEX` | `delete 3`
-| Edit | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...`| `edit 2 n/James Lee r/Loves Cake`
-| Find | `find PREFIX/KEYWORD [MORE_PREFIX/KEYWORDS]...` | *E.g.* `find James Jake`
-| List | `list`| `list`
-| Help | `help`| `help`
-| Select | `select INDEX`| `select 2`
-| History | `history`| `history`
-.2+| Music| `music play [GENRE]`
+| *COMMAND* | *FORMAT* | *EXAMPLE*
+| *Add* | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS r/REMARK [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 r/Loves Tea t/friend t/colleague`
+| *Alias* | `alias [ALIAS COMMAND]` | `alias unfriend delete 1`
+| *Clear* | `clear` | `clear`
+| *Delete* | `delete INDEX` | `delete 3`
+| *Edit* | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...`| `edit 2 n/James Lee r/Loves Cake`
+| *Find* | `find PREFIX/KEYWORD [MORE_PREFIX/KEYWORDS]...` | `find James Jake`
+| *List* | `list`| `list`
+| *Hel* | `help`| `help`
+| *Select* | `select INDEX`| `select 2`
+| *History* | `history`| `history`
+.2+| *Music*| `music play [GENRE]`
 | `music play pop` | `music stop` | `music stop`
-.2+| Radio| `radio play [GENRE]`
+.2+| *Radio*| `radio play [GENRE]`
 | `radio play pop` | `radio stop` | `radio stop`
-| Redo | `redo` | `redo`
-| Undo | `undo` | `undo`
-| Unalias | `unalias ALIAS` | `unalias unfriend`
+| *Redo* | `redo` | `redo`
+| *Undo* | `undo` | `undo`
+| *Unalias* | `unalias ALIAS` | `unalias unfriend`
 |===
 
