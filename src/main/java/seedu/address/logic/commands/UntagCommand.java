@@ -44,10 +44,11 @@ public class UntagCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "%d person(s) successfully untagged from %s:";
     public static final String MESSAGE_SUCCESS_ALL_TAGS = "%d person(s) sucessfully untagged:";
-    public static final String MESSAGE_SUCCESS_MULTIPLE_TAGS_IN_LIST = "%s tag(s) successfully removed.";
-    public static final String MESSAGE_SUCCESS_ALL_TAGS_IN_LIST = "All tags in the list successfully removed.";
+    public static final String MESSAGE_SUCCESS_MULTIPLE_TAGS_IN_LIST = "%s tag(s) successfully" + " "
+            + "removed from person list.";
+    public static final String MESSAGE_SUCCESS_ALL_TAGS_IN_LIST = "All tags in person list successfully removed.";
 
-    public static final String MESSAGE_TAG_NOT_FOUND = "Tag not found.";
+    public static final String MESSAGE_TAG_NOT_FOUND = "Tag not found in person list.";
     public static final String MESSAGE_PERSONS_DO_NOT_HAVE_TAGS = "%d person(s) do not have any of the specified tags:";
     public static final String MESSAGE_EMPTY_INDEX_LIST = "Please provide one or more indexes! \n%1$s";
     public static final String MESSAGE_INVALID_INDEXES = "One or more person indexes provided are invalid.";
