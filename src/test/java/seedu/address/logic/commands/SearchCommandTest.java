@@ -100,7 +100,8 @@ public class SearchCommandTest {
      * the FilteredList is equal to expectedList
      * the AddressBook in model remains the same after executing the Search command
      */
-    private void assertCommandSuccess(SearchCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
+    private void assertCommandSuccess(SearchCommand command, String expectedMessage,
+                                      List<ReadOnlyPerson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = null;
         try {
