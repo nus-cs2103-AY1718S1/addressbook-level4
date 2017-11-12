@@ -64,7 +64,7 @@ public class StorageManagerTest {
 
         // test for log message.
         String capturedLog = testLogger.getTestCapturedLog();
-        String expectedLogMessage = "WARNING - AddressBook not present, backup not possible.\n";
+        String expectedLogMessage = "WARNING - Storage file not present, backup not possible.\n";
         assertEquals(capturedLog, expectedLogMessage);
 
         // testing if backup exists
@@ -86,14 +86,14 @@ public class StorageManagerTest {
         StorageManager backupStorageManager = new StorageManager(addressBookStorage, userPrefsStorage);
 
         String capturedLog = testLogger.getTestCapturedLog();
-        String expectedLog = "INFO - AddressBook present, back up success!\n";
+        String expectedLog = "INFO - Storage file present, back up success!\n";
         assertEquals(capturedLog, expectedLog);
 
         // checks that the backup properly backups the new file.
-        Optional<ReadOnlyAddressBook> backupAddressBookOptional = backupStorageManager
+        Optional<ReadOnlyAddressBook> addressBookBackupOptional = backupStorageManager
                 .readAddressBook(backupStorageManager.getBackupStorageFilePath());
-        AddressBook backupAddressBook = new AddressBook(backupAddressBookOptional.get());
-        assertEquals(backupAddressBook, original);
+        AddressBook addressBookBackup = new AddressBook(addressBookBackupOptional.get());
+        assertEquals(original, addressBookBackup);
 
         // checks that the file does not backup on every save
         AddressBook editedBook = new AddressBook();
@@ -102,14 +102,14 @@ public class StorageManagerTest {
                 .readAddressBook(backupStorageManager.getAddressBookFilePath());
 
         AddressBook mainAddressBook = new AddressBook(mainAddressBookOptional.get());
-        assertFalse(mainAddressBook.equals(backupAddressBook));
+        assertFalse(mainAddressBook.equals(addressBookBackup));
 
         // checks that the backup only saves on the initialization of another storage manager.
         StorageManager anotherStorageManager = new StorageManager(addressBookStorage, userPrefsStorage);
-        backupAddressBookOptional = anotherStorageManager
+        addressBookBackupOptional = anotherStorageManager
                 .readAddressBook(backupStorageManager.getBackupStorageFilePath());
-        backupAddressBook = new AddressBook(backupAddressBookOptional.get());
-        assertEquals(editedBook, backupAddressBook);
+        addressBookBackup = new AddressBook(addressBookBackupOptional.get());
+        assertEquals(editedBook, addressBookBackup);
     }
 
     @Test
@@ -122,7 +122,7 @@ public class StorageManagerTest {
     @Test
     public void backUpCommandTest() throws IOException, DataConversionException {
         AddressBook original = getTypicalAddressBook();
-        storageManager.backupAddressBook(original);
+        storageManager.backup(original);
         Optional<ReadOnlyAddressBook> backupAddressBookOptional = storageManager
                 .readAddressBook(storageManager.getBackupStorageFilePath());
         AddressBook backupAddressBook = new AddressBook(backupAddressBookOptional.get());
