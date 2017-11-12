@@ -29,9 +29,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.RelationshipNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.relationship.ConfidenceEstimate;
 import seedu.address.model.relationship.RelationshipDirection;
+import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.StorageStub;
 
@@ -129,6 +131,14 @@ public class AddCommandTest {
         public void deleteRelationship(Index indexFromPerson, Index indexToPerson) {
             fail("This method should not be called.");
         }
+
+        //@@author joanneong
+        @Override
+        public void editRelationship(Index indexFromPerson, Index indexToPerson, Name name,
+                              ConfidenceEstimate confidenceEstimate)
+                throws IllegalValueException, RelationshipNotFoundException, DuplicateRelationshipException {
+            fail("This method should not be called.");
+        };
 
         @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
