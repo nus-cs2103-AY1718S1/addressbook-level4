@@ -9,10 +9,14 @@ public class AddRelationshipCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "addre";
 
     public static final String COMMAND_PARAMETERS = "FROM_INDEX, TO_INDEX (must be positive integers), "
-        + "DIRECTION (either \"directed\" or \"undirected\". "
+        + "DIRECTION (either \"directed\" or \"undirected\"), "
+        + "(Optional) " + PREFIX_CONFIDENCE_ESTIMATE + "CONFIDENCE_ESTIMATE, "
+        + "(Optional) " + PREFIX_NAME + "NAME. "
         + "[INDEXOFFROMPERSON] "
         + "[INDEXOFTOPERSON] "
-        + "[DIRECTION]";
+        + "[DIRECTION] "
+        + PREFIX_CONFIDENCE_ESTIMATE + "[CONFIDENCE_ESTIMATE} "
+        + PREFIX_NAME + "[NAME]";
 
     public static final String SHORT_MESSAGE_USAGE = COMMAND_WORD + " " + COMMAND_PARAMETERS;
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -30,22 +34,28 @@ public class AddRelationshipCommand extends UndoableCommand {
     private final Index indexToPerson;
     private final RelationshipDirection direction;
 
+    private final Name name;
+    private final ConfidenceEstimate confidenceEstimate;
+
     /**
      * @param indexFrom of the person from whom the relationship starts in the filtered person list
      * @param indexTo of the person to whom the relationship is directed in the filtered person list
      * @param direction of the relationship
      */
-    public AddRelationshipCommand(Index indexFrom, Index indexTo, RelationshipDirection direction) {
-        requireAllNonNull(indexFrom, indexTo, direction);
+    public AddRelationshipCommand(Index indexFrom, Index indexTo, RelationshipDirection direction,
+                                  Name name, ConfidenceEstimate confidenceEstimate) {
+        requireAllNonNull(indexFrom, indexTo, direction, name, confidenceEstimate);
         this.indexFromPerson = indexFrom;
         this.indexToPerson = indexTo;
         this.direction = direction;
+        this.name = name;
+        this.confidenceEstimate = confidenceEstimate;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
-            model.addRelationship(indexFromPerson, indexToPerson, direction);
+            model.addRelationship(indexFromPerson, indexToPerson, direction, name, confidenceEstimate);
         } catch (IllegalValueException ive) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         } catch (DuplicateRelationshipException dre) {
@@ -74,6 +84,70 @@ public class AddRelationshipCommand extends UndoableCommand {
                 && direction.equals(addre.direction);
     }
 
+}
+```
+###### \java\seedu\address\logic\commands\DeleteRelationshipCommand.java
+``` java
+/**
+ * This class is to specify a command for deleting relationship between two persons
+ */
+public class DeleteRelationshipCommand extends UndoableCommand {
+    public static final String COMMAND_WORD = "deleteRelationship";
+    public static final String COMMAND_ALIAS = "delre";
+
+    public static final String COMMAND_PARAMETERS = "FROM_INDEX, TO_INDEX (must be positive integers), "
+            + "[INDEXOFFROMPERSON] "
+            + "[INDEXOFTOPERSON] ";
+
+    public static final String SHORT_MESSAGE_USAGE = COMMAND_WORD + " " + COMMAND_PARAMETERS;
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes a relationship between the two persons specified. "
+            + "by the index numbers used in the last person listing. "
+            + "Parameters: " + COMMAND_PARAMETERS + "\n"
+            + "Example: " + COMMAND_WORD + " 1 2";
+
+    public static final String MESSAGE_DELETE_RELATIONSHIP_SUCCESS =  "Deleted the relationship "
+            + "between : %1$s and %2$s";
+
+    private final Index fromPersonIndex;
+    private final Index toPersonIndex;
+
+    public DeleteRelationshipCommand(Index fromPersonIndex, Index toPersonIndex) {
+        this.fromPersonIndex = fromPersonIndex;
+        this.toPersonIndex = toPersonIndex;
+    }
+
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+
+        try {
+            model.deleteRelationship(fromPersonIndex, toPersonIndex);
+        } catch (IllegalValueException ive) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        return new CommandResult(String.format(MESSAGE_DELETE_RELATIONSHIP_SUCCESS,
+                fromPersonIndex.toString(), toPersonIndex.toString()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof DeleteRelationshipCommand)) {
+            return false;
+        }
+
+        // state check
+        DeleteRelationshipCommand delre = (DeleteRelationshipCommand) other;
+        return fromPersonIndex.equals(delre.fromPersonIndex)
+                && toPersonIndex.equals(delre.toPersonIndex);
+    }
 }
 ```
 ###### \java\seedu\address\logic\commands\RemoveTagCommand.java
@@ -127,8 +201,129 @@ public class RemoveTagCommand extends UndoableCommand {
 ###### \java\seedu\address\logic\LogicManager.java
 ``` java
     private final GraphWrapper graphWrapper;
-    private final Viewer graphViewer;
 
+```
+###### \java\seedu\address\logic\parser\AddRelationshipCommandParser.java
+``` java
+/**
+ * This is a argument parser for AddRelationshipCommand
+ */
+public class AddRelationshipCommandParser implements Parser<AddRelationshipCommand> {
+
+    @Override
+    public AddRelationshipCommand parse(String userInput) throws ParseException {
+        String trimmedArgs = userInput.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRelationshipCommand.MESSAGE_USAGE));
+        }
+
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(userInput, PREFIX_NAME, PREFIX_CONFIDENCE_ESTIMATE);
+
+        List<String> listOfArgs = Arrays.asList(trimmedArgs.split(" "));
+        String firstIndexString = listOfArgs.get(0);
+        String secondIndexString = listOfArgs.get(1);
+
+
+        if (firstIndexString.equals(secondIndexString)) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRelationshipCommand.MESSAGE_USAGE));
+        }
+
+        if (firstIndexString.equals("0") || secondIndexString.equals("0")) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, AddRelationshipCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            Index firstIndex = ParserUtil.parseIndex(listOfArgs.get(0));
+            Index secondIndex = ParserUtil.parseIndex(listOfArgs.get(1));
+            RelationshipDirection direction = ParserUtil.parseDirection(listOfArgs.get(2));
+
+            Name name = ParserUtil.parseRelationshipName(argMultimap.getValue(PREFIX_NAME)).get();
+            ConfidenceEstimate confidenceEstimate =
+                    ParserUtil.parseConfidenceEstimate(argMultimap.getValue(PREFIX_CONFIDENCE_ESTIMATE)).get();
+            return new AddRelationshipCommand(firstIndex, secondIndex, direction, name, confidenceEstimate);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRelationshipCommand.MESSAGE_USAGE));
+        }
+    }
+
+
+}
+```
+###### \java\seedu\address\logic\parser\DeleteRelationshipCommandParser.java
+``` java
+/**
+ * This is a argument parser for DeleteRelationshipCommand
+ */
+public class DeleteRelationshipCommandParser implements Parser<DeleteRelationshipCommand> {
+    @Override
+    public DeleteRelationshipCommand parse(String userInput) throws ParseException {
+        String trimmedArgs = userInput.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteRelationshipCommand.MESSAGE_USAGE));
+        }
+
+        List<String> listOfArgs = Arrays.asList(trimmedArgs.split(" "));
+
+        if (listOfArgs.size() != 2) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteRelationshipCommand.MESSAGE_USAGE));
+        }
+
+        String firstIndexString = listOfArgs.get(0);
+        String secondIndexString = listOfArgs.get(1);
+
+        if (firstIndexString.equals(secondIndexString)) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteRelationshipCommand.MESSAGE_USAGE));
+        }
+
+        if (firstIndexString.equals("0") || secondIndexString.equals("0")) {
+            throw new ParseException(
+                    String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX,
+                            DeleteRelationshipCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            Index firstIndex = ParserUtil.parseIndex(listOfArgs.get(0));
+            Index secondIndex = ParserUtil.parseIndex(listOfArgs.get(1));
+            return new DeleteRelationshipCommand(firstIndex, secondIndex);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteRelationshipCommand.MESSAGE_USAGE));
+        }
+    }
+
+
+}
+```
+###### \java\seedu\address\logic\parser\RemoveTagCommandParser.java
+``` java
+/**
+ * Parses input argument and creates a new RemoveTagCommand object.
+ */
+public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the RemoveTagCommand
+     * and returns a RemoveTagCommand object for execution.
+     * @throws ParseException if the user input does not conform to the expected format
+     */
+    public RemoveTagCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (Tag.isValidTagName(trimmedArgs)) {
+            System.out.println(Tag.isValidTagName(trimmedArgs));
+            return new RemoveTagCommand(trimmedArgs);
+        } else {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
@@ -156,24 +351,51 @@ public class RemoveTagCommand extends UndoableCommand {
 ```
 ###### \java\seedu\address\model\graph\GraphWrapper.java
 ``` java
-/**
- * This class is a wrapper class of SingleGraph class in GraphStream
- * It is used when creating a new SingleGraph when changes happen in the lastShownList
- */
-public class GraphWrapper {
-
-    public static final String MESSAGE_PERSON_DOES_NOT_EXIST = "The person does not exist in this address book.";
-    private static final String graphId = "ImARandomGraphID";
-
-    private SingleGraph graph;
-    private Model model;
-    private ObservableList<ReadOnlyPerson> filteredPersons;
-
-    private final String nodeAttributeNodeLabel = "ui.label";
-    private final String nodeAttributePerson = "Person";
-
-    public GraphWrapper() {
+    private GraphWrapper() {
         this.graph = new SingleGraph(graphId);
+        initialiseRenderer();
+        initialiseViewer();
+    }
+
+    /**
+     * Produce a graph based on model given
+     */
+    public SingleGraph buildGraph(Model model) {
+        requireNonNull(model);
+        if (rebuildNext) {
+            this.clear();
+            this.setData(model);
+            this.initiateGraphNodes();
+            this.initiateGraphEdges();
+        } else {
+            rebuildNext = true;
+        }
+
+        graph.setAttribute("ui.stylesheet", GraphDisplay.getGraphDisplayStylesheet());
+
+        return graph;
+    }
+
+```
+###### \java\seedu\address\model\graph\GraphWrapper.java
+``` java
+    /**
+     * add an edge between two persons with direction specified
+     */
+    public Edge addEdge(ReadOnlyPerson firstPerson, ReadOnlyPerson secondPerson, RelationshipDirection direction) {
+        requireAllNonNull(firstPerson, secondPerson, direction);
+        if (direction.isDirected()) {
+            return addDirectedEdge(firstPerson, secondPerson);
+        } else {
+            return addUndirectedEdge(firstPerson, secondPerson);
+        }
+    }
+
+```
+###### \java\seedu\address\model\graph\GraphWrapper.java
+``` java
+    public static GraphWrapper getInstance() {
+        return instance;
     }
 
     private void setData(Model model) {
@@ -184,6 +406,8 @@ public class GraphWrapper {
     /**
      * Add all the persons in the last displayed list into graph
      * the ID of the node formed for a person is the person's index in the last displayed list
+     *
+     * Note that the graph only displays first name so that the layout is more aesthetically pleasing.
      * @return graph
      */
     private SingleGraph initiateGraphNodes() {
@@ -191,9 +415,9 @@ public class GraphWrapper {
             for (ReadOnlyPerson person : filteredPersons) {
                 String personIndexInFilteredPersons = getNodeIdFromPerson(person);
                 SingleNode node = graph.addNode(personIndexInFilteredPersons);
-                String personLabel = (Integer.parseInt(personIndexInFilteredPersons) + 1) + ". "
-                        + person.getName().toString();
-                node.addAttribute(nodeAttributeNodeLabel, personLabel);
+                String shortenedPersonLabel = (Integer.parseInt(personIndexInFilteredPersons) + 1) + ". "
+                        + person.getName().toString().split(" ")[0];
+                styleGraphNode(node, shortenedPersonLabel);
             }
         } catch (IllegalValueException ive) {
             assert false : "it should not happen.";
@@ -202,6 +426,30 @@ public class GraphWrapper {
         return graph;
     }
 
+```
+###### \java\seedu\address\model\graph\GraphWrapper.java
+``` java
+    /**
+     * Read all the edges from model and store into graph
+     * @return
+     */
+    private SingleGraph initiateGraphEdges() {
+        for (ReadOnlyPerson person: filteredPersons) {
+            Set<Relationship> relationshipSet = person.getRelationships();
+            for (Relationship relationship: relationshipSet) {
+                Edge edge = addEdge(relationship.getFromPerson(), relationship.getToPerson(),
+                        relationship.getDirection());
+                edge.addAttribute(nodeAttributeCe, relationship.getConfidenceEstimate().value);
+                labelGraphEdge(relationship, edge);
+            }
+        }
+
+        return graph;
+    }
+
+```
+###### \java\seedu\address\model\graph\GraphWrapper.java
+``` java
     private String getNodeIdFromPerson(ReadOnlyPerson person) throws IllegalValueException {
         requireNonNull(person);
         int indexOfThePerson = filteredPersons.indexOf(person);
@@ -213,45 +461,11 @@ public class GraphWrapper {
     }
 
     /**
-     * standardize the format of edge ID
+     * Standardize the format of edge ID
      */
     private String computeEdgeId(ReadOnlyPerson person1, ReadOnlyPerson person2) {
         return  Integer.toString(filteredPersons.indexOf(person1)) + "_"
                 + Integer.toString(filteredPersons.indexOf(person2));
-    }
-
-    /**
-     * removes the previous edge (if exists) with a different RelationshipDirection from
-     * the edge to be added.
-     * @param fromPerson
-     * @param toPerson
-     * @param intendedDirectionOfRedundantEdge
-     * @return String
-     */
-    private String checkForRedundantEdgeAndRemove(ReadOnlyPerson fromPerson, ReadOnlyPerson toPerson,
-                                                RelationshipDirection intendedDirectionOfRedundantEdge) {
-        requireAllNonNull(fromPerson, toPerson, intendedDirectionOfRedundantEdge);
-        String redundantEdgeId1 = computeEdgeId(fromPerson, toPerson);
-        String redundantEdgeId2 = computeEdgeId(toPerson, fromPerson);
-        Edge redundantEdge1 = graph.getEdge(redundantEdgeId1);
-        Edge redundantEdge2 = graph.getEdge(redundantEdgeId2);
-
-        if (intendedDirectionOfRedundantEdge.isDirected()) {
-            if (redundantEdge1 != null) {
-                graph.removeEdge(redundantEdge1);
-            }
-            if (redundantEdge2 != null && !redundantEdge2.isDirected()) {
-                graph.removeEdge(redundantEdge2);
-            }
-        } else {
-            if (redundantEdge1 != null) {
-                graph.removeEdge(redundantEdge1);
-            }
-            if (redundantEdge2 != null) {
-                graph.removeEdge(redundantEdge2);
-            }
-        }
-        return redundantEdgeId1;
     }
 
     /**
@@ -295,15 +509,37 @@ public class GraphWrapper {
     }
 
     /**
-     * add an edge between two persons with direction specified
+     * Remove the previous edge (if exists) with a different RelationshipDirection from
+     * the edge to be added.
+     * @param fromPerson
+     * @param toPerson
+     * @param intendedDirectionOfRedundantEdge
+     * @return String
      */
-    public Edge addEdge(ReadOnlyPerson firstPerson, ReadOnlyPerson secondPerson, RelationshipDirection direction) {
-        requireAllNonNull(firstPerson, secondPerson, direction);
-        if (direction.isDirected()) {
-            return addDirectedEdge(firstPerson, secondPerson);
+    private String checkForRedundantEdgeAndRemove(ReadOnlyPerson fromPerson, ReadOnlyPerson toPerson,
+                                                  RelationshipDirection intendedDirectionOfRedundantEdge) {
+        requireAllNonNull(fromPerson, toPerson, intendedDirectionOfRedundantEdge);
+        String redundantEdgeId1 = computeEdgeId(fromPerson, toPerson);
+        String redundantEdgeId2 = computeEdgeId(toPerson, fromPerson);
+        Edge redundantEdge1 = graph.getEdge(redundantEdgeId1);
+        Edge redundantEdge2 = graph.getEdge(redundantEdgeId2);
+
+        if (intendedDirectionOfRedundantEdge.isDirected()) {
+            if (redundantEdge1 != null) {
+                graph.removeEdge(redundantEdge1);
+            }
+            if (redundantEdge2 != null && !redundantEdge2.isDirected()) {
+                graph.removeEdge(redundantEdge2);
+            }
         } else {
-            return addUndirectedEdge(firstPerson, secondPerson);
+            if (redundantEdge1 != null) {
+                graph.removeEdge(redundantEdge1);
+            }
+            if (redundantEdge2 != null) {
+                graph.removeEdge(redundantEdge2);
+            }
         }
+        return redundantEdgeId1;
     }
 
     private void clear() {
@@ -312,43 +548,14 @@ public class GraphWrapper {
         this.filteredPersons = null;
     }
 
-    /**
-     * Read all the edges from model and store into graph
-     * @return
-     */
-    private SingleGraph initiateGraphEdges() {
-        for (ReadOnlyPerson person: filteredPersons) {
-            Set<Relationship> relationshipSet = person.getRelationships();
-            for (Relationship relationship: relationshipSet) {
-                addEdge(relationship.getFromPerson(), relationship.getToPerson(), relationship.getDirection());
-            }
-        }
-
-        return graph;
-    }
-
-    /**
-     * Produce a graph based on model given
-     */
-    public SingleGraph buildGraph(Model model) {
-        requireNonNull(model);
-        this.clear();
-        this.setData(model);
-        this.initiateGraphNodes();
-        this.initiateGraphEdges();
-
-        return graph;
-    }
-
-    public Viewer display() {
-        return this.graph.display();
-    }
-}
 ```
 ###### \java\seedu\address\model\Model.java
 ``` java
-    void addRelationship(Index indexFromPerson, Index indexToPerson, RelationshipDirection direction)
+    void addRelationship(Index indexFromPerson, Index indexToPerson, RelationshipDirection direction,
+                         Name name, ConfidenceEstimate confidenceEstimate)
         throws IllegalValueException, DuplicateRelationshipException;
+
+    void deleteRelationship(Index indexFromPerson, Index indexToPerson) throws IllegalValueException;
 
 ```
 ###### \java\seedu\address\model\Model.java
@@ -375,12 +582,15 @@ public class GraphWrapper {
     }
 
     @Override
-    public void addRelationship(Index indexFromPerson, Index indexToPerson, RelationshipDirection direction)
+    public void addRelationship(Index indexFromPerson, Index indexToPerson, RelationshipDirection direction,
+                                Name name, ConfidenceEstimate confidenceEstimate)
             throws IllegalValueException, DuplicateRelationshipException {
         List<ReadOnlyPerson> lastShownList = getFilteredPersonList();
 
         if (indexFromPerson.getZeroBased() >= lastShownList.size()
-                || indexToPerson.getZeroBased() >= lastShownList.size()) {
+                || indexToPerson.getZeroBased() >= lastShownList.size()
+                || indexFromPerson.getZeroBased() < 0
+                || indexToPerson.getZeroBased() < 0) {
             throw new IllegalValueException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
@@ -388,10 +598,12 @@ public class GraphWrapper {
         ReadOnlyPerson toPerson = lastShownList.get(indexToPerson.getZeroBased());
         ReadOnlyPerson fromPersonCopy = fromPerson.copy();
         ReadOnlyPerson toPersonCopy = toPerson.copy();
-        Relationship relationshipForFromPerson = new Relationship(fromPersonCopy, toPersonCopy, direction);
+        Relationship relationshipForFromPerson = new Relationship(fromPersonCopy, toPersonCopy, direction,
+                name, confidenceEstimate);
         Relationship relationshipForToPerson = relationshipForFromPerson;
         if (!direction.isDirected()) {
-            relationshipForToPerson = new Relationship(toPersonCopy, fromPersonCopy, direction);
+            relationshipForToPerson = new Relationship(toPersonCopy, fromPersonCopy, direction,
+                    name, confidenceEstimate);
         }
 
 
@@ -416,42 +628,34 @@ public class GraphWrapper {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
+    @Override
+    public void deleteRelationship(Index indexFromPerson, Index indexToPerson) throws IllegalValueException {
+        List<ReadOnlyPerson> lastShownList = getFilteredPersonList();
+
+        if (indexFromPerson.getZeroBased() >= lastShownList.size()
+                || indexToPerson.getZeroBased() >= lastShownList.size()) {
+            throw new IllegalValueException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson fromPerson = lastShownList.get(indexFromPerson.getZeroBased());
+        ReadOnlyPerson toPerson = lastShownList.get(indexToPerson.getZeroBased());
+
+        Relationship relationshipToDelete1 = new Relationship(fromPerson, toPerson, RelationshipDirection.UNDIRECTED);
+        Relationship relationshipToDelete2 = new Relationship(fromPerson, toPerson, RelationshipDirection.DIRECTED);
+
+        Person fromPersonCasting = (Person) fromPerson;
+        Person toPersonCasting = (Person) toPerson;
+        fromPersonCasting.removeRelationship(relationshipToDelete1);
+        toPersonCasting.removeRelationship(relationshipToDelete1);
+
+        fromPersonCasting.removeRelationship(relationshipToDelete2);
+        toPersonCasting.removeRelationship(relationshipToDelete2);
+
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
-    /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
-     * {@code addressBook}
-     */
-    @Override
-    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
-    }
-
-    @Override
-    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-        requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        // short circuit if same object
-        if (obj == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(obj instanceof ModelManager)) {
-            return false;
-        }
-
-        // state check
-        ModelManager other = (ModelManager) obj;
-        return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
-    }
-
-}
 ```
 ###### \java\seedu\address\model\person\exceptions\RelationshipNotFoundException.java
 ``` java
@@ -492,6 +696,77 @@ public class TagNotFoundException extends Exception {
     }
 
 ```
+###### \java\seedu\address\model\relationship\ConfidenceEstimate.java
+``` java
+/**
+ * This is a value of how confident the user is towards the information recorded.
+ */
+public class ConfidenceEstimate {
+    public static final ConfidenceEstimate UNSPECIFIED = new ConfidenceEstimate();
+    public static final String MESSAGE_CONFIDENCE_ESTIMATE_CONSTRAINTS =
+            "Confidence estimates should be a single number between 0 and 100 without spaces";
+
+    public final double value;
+
+    /**
+     * The default ConfidenceEstimate constructor when confidence estimate is not specified by the user
+     */
+    private ConfidenceEstimate() {
+        value = 0;
+    }
+
+    /**
+     * Validates a given confidence estimate.
+     *
+     * @throws IllegalValueException if the given confidence estimate string is invalid.
+     */
+    public ConfidenceEstimate(String estimate) throws IllegalValueException {
+        requireNonNull(estimate);
+        String trimmedEstimate = estimate.trim();
+        if (!isValidConfidenceEstimate(trimmedEstimate)) {
+            throw new IllegalValueException(MESSAGE_CONFIDENCE_ESTIMATE_CONSTRAINTS);
+        }
+        this.value = Double.parseDouble(trimmedEstimate);
+    }
+
+    public ConfidenceEstimate(double estimate) {
+        value = estimate;
+    }
+
+    /**
+     * Returns true if a given string is a valid confidence estimate.
+     */
+    public static boolean isValidConfidenceEstimate(String test) {
+        double d;
+        try {
+            d = Double.parseDouble(test);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+
+        return d >= 0 && d <= 100;
+    }
+
+
+    @Override
+    public String toString() {
+        return Double.toString(value);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ConfidenceEstimate // instanceof handles nulls
+                && this.value == (((ConfidenceEstimate) other).value)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        long temp = Double.doubleToLongBits(value);
+        return (int) (temp ^ (temp >>> 32));
+    }
+}
+```
 ###### \java\seedu\address\model\relationship\exceptions\DuplicateRelationshipException.java
 ``` java
 /**
@@ -514,11 +789,23 @@ public class Relationship {
     private ReadOnlyPerson toPerson;
     private RelationshipDirection direction;
 
+    private Name name;
+    private ConfidenceEstimate confidenceEstimate;
+
     public Relationship(ReadOnlyPerson fromPerson, ReadOnlyPerson toPerson, RelationshipDirection direction) {
         requireAllNonNull(fromPerson, toPerson, direction);
         this.fromPerson = fromPerson;
         this.toPerson = toPerson;
         this.direction = direction;
+        this.name = Name.UNSPECIFIED;
+        this.confidenceEstimate = ConfidenceEstimate.UNSPECIFIED;
+    }
+
+    public Relationship(ReadOnlyPerson fromPerson, ReadOnlyPerson toPerson, RelationshipDirection direction,
+                        Name name, ConfidenceEstimate confidenceEstimate) {
+        this(fromPerson, toPerson, direction);
+        this.setConfidenceEstimate(confidenceEstimate);
+        this.setName(name);
     }
 
     public ReadOnlyPerson getFromPerson() {
@@ -531,6 +818,27 @@ public class Relationship {
 
     public RelationshipDirection getDirection() {
         return direction;
+    }
+
+    /**
+     * This is to make the relationship's person entries always point to the existing persons in the address book
+     * used when a person is updated
+     */
+    public Relationship replacePerson(ReadOnlyPerson previousPerson, ReadOnlyPerson currentPerson) {
+        if (this.fromPerson.equals(previousPerson)) {
+            this.fromPerson = currentPerson;
+        } else if (this.toPerson.equals(previousPerson)) {
+            this.toPerson = currentPerson;
+        }
+        return this;
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    public ConfidenceEstimate getConfidenceEstimate() {
+        return confidenceEstimate;
     }
 
     public boolean isUndirected() {
@@ -557,6 +865,28 @@ public class Relationship {
         }
 
         return oppoRelationships;
+    }
+
+    public void setName(Name name) {
+        requireNonNull(name);
+        this.name = name;
+    }
+
+    public void setConfidenceEstimate(ConfidenceEstimate confidenceEstimate) {
+        requireNonNull(confidenceEstimate);
+        this.confidenceEstimate = confidenceEstimate;
+    }
+
+    /**
+     * A toString method for Relationship
+     */
+    public String toString() {
+        String nameAndConfidenceEstimate = this.name.toString() + " " + this.confidenceEstimate.toString();
+        if (isUndirected()) {
+            return fromPerson.toString() + " <-> " + toPerson.toString() + " " + nameAndConfidenceEstimate;
+        } else {
+            return fromPerson.toString() + " -> " + toPerson.toString() + " " + nameAndConfidenceEstimate;
+        }
     }
 
 

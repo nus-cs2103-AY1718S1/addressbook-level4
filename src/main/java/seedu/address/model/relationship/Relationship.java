@@ -37,6 +37,14 @@ public class Relationship {
         this.setName(name);
     }
 
+    public Relationship(Relationship re) {
+        this.fromPerson = re.getFromPerson();
+        this.toPerson = re.getToPerson();
+        this.direction = re.getDirection();
+        this.name = re.getName();
+        this.confidenceEstimate = re.getConfidenceEstimate();
+    }
+
     public ReadOnlyPerson getFromPerson() {
         return fromPerson;
     }
@@ -94,6 +102,20 @@ public class Relationship {
         }
 
         return oppoRelationships;
+    }
+
+    /**
+     * Look for the counterpart of @param person in this relationship.
+     */
+    public ReadOnlyPerson counterpartOf(ReadOnlyPerson person) {
+        requireNonNull(person);
+        if (person.equals(this.fromPerson)) {
+            return this.toPerson;
+        } else if (person.equals(this.toPerson)) {
+            return this.fromPerson;
+        } else {
+            return null;
+        }
     }
 
     public void setName(Name name) {
