@@ -714,12 +714,12 @@ mechanism uses the `sort` method which resides inside `List` interface to sort t
 // tag::emailMech[]
 === Emailing mechanism
 
-The automatic opening of email on the user's desktop is facilitated mainly by the `Desktop` class which allows a Java application
-to launch the default mail application registered inside the user's native desktop to handle the email `URI`.
+The automatic opening of email on the user's desktop is facilitated mainly by the `Desktop` class which allows the Java
+application to launch the default mail application registered inside the user's native desktop to handle the email `URI`.
 // end::emailMech[]
 
 // tag::calendarMech[]
-=== Calendar
+=== Calendar mechanism
 
 An in-built calendar is added to the panel beside the list of events. This calendar shows a monthly view of the
 current month.
@@ -735,11 +735,11 @@ convenient way for students to have access to a calendar without having to open 
 1. Create a `EventCalendar` class that contains the month that will be shown, containing all the necessary information
 required for a monthly calender (i.e. dates, name of month).
 
-2. Create `monthDateBuilder` class that will be used to set the current month and year of the calendar. It will also be
+2. Create a `monthDateBuilder` class that will be used to set the current month and year of the calendar. It will also be
 arranging the dates in a way that will correspond to which day of the week it belongs to.
 
-3. Use `Calendar` class in `monthDateBuilder` to set the current year and month and store in an array (i.e.
-`monthYearArray`. Also, use `Calender` class to set the number of days in the current month and the day that the first
+3. Use `Calendar` class to set the current year and month and store in an array (i.e.`monthYearArray`) in
+`monthDateBuilder`. Also, use `Calender` class to set the number of days in the current month and the day that the first
 date of the month falls on (i.e. set using `setMonthAnchors` method). These details are required to build the monthly
 view.
 
@@ -748,10 +748,10 @@ store the position of the dates in. Use an algorithm to store all the dates befo
 blank, fill up the subsequent dates using the value of the first day of the month and their "space", and the leftover
 dates will continue to be blanks until the 42nd "space".
 
-image::EventCalendarClassDiagram.png[width="800"]
+image::EventCalendarClassDiagram.png[width="300"]
 _Figure 4.9.1.1 : Class Diagram for `EventCalendar`_
 
-image::MonthDateBuilderClassDiagram.png[width="800"]
+image::MonthDateBuilderClassDiagram.png[width="300"]
 _Figure 4.9.1.2 : Class Diagram for `MonthDateBuilder`_
 // end::calendarMech[]
 
