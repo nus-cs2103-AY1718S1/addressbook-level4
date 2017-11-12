@@ -7,6 +7,7 @@ import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.ModelManager;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.UniqueParcelList;
 
@@ -43,10 +44,12 @@ public class ImportCommand extends UndoableCommand {
 
     /**
      * Adds all unique parcels in {@code parcels} to the {@link UniqueParcelList} of the {@link AddressBook}. Ignores
-     * parcels that will create duplicates in the {@link UniqueParcelList}
+     * parcels that will create duplicates in the {@link UniqueParcelList}. To see the internal logic, see
+     * {@link ModelManager#addAllParcels(List, List, List)} for more information
      *
      * @return {@link CommandResult} created by {@link ImportCommand#executeUndoableCommand()}
      * @throws CommandException if {@code parcels} contain only duplicate parcels.
+     * @see ModelManager#addAllParcels(List, List, List)
      */
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
@@ -75,7 +78,7 @@ public class ImportCommand extends UndoableCommand {
     }
 
     /**
-     * @return formatted list of parcels added/not added for ImportCommand execution result.
+     * Returns formatted list of parcels added/not added for ImportCommand execution result.
      */
     public static String getImportFormattedParcelListString(List<ReadOnlyParcel> parcels) {
         if (parcels.size() == 0) {
