@@ -30,7 +30,7 @@ public class BrowserPanel extends UiPart<Region> {
     //@@author
 
     //@@author taojiashu
-    public static final String FACEBOOK_SEARCH_URL = "https://www.facebook.com/search/people/?q=";
+    public static final String FACEBOOK_SEARCH_URL = "https://m.facebook.com/search/people/?q=";
 
     public static final String MAPS_SEARCH_URL = "https://www.google.com.sg/maps/search/";
     //@@author
