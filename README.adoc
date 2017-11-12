@@ -15,13 +15,18 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI that allows user to interact with it to perform operations included in the address book.
-* It is a Java application intended for students in National University of Singapore, which means features of this address book are tailored to the needs of the students.
+* This is a desktop Contact Book application. It has a GUI that allows user to interact with it to perform operations included in the Contact Book.
+* It is a Java application intended for students in National University of Singapore, which means features of this Contact Book are tailored to the needs of the students.
 * It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and a panel with details of the selected person.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+* What's different from https://github.com/nus-cs2103-AY1718S1/addressbook-level4:
+** A more sophisticated GUI that includes personal information panel.
+** More test cases.
+** A dynamic search bar for searching a person according to NAME, PHONE and TAG.
+** More functions added:
+*** DeteleByName Command which allows deleting a person from the Contact Book via his/her NAME.
+*** Custom Command which allows updating of custom fields of a particular person from the Contact Book.
+*** Update Phone Command which allows updating of additional phones of a particular person from the Contact Book.
+*** Upload Photo Command which allows updating of the icon photo of a particular person from the Contact Book.
 
 == Site Map
 
