@@ -91,17 +91,12 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void setContactImage(ReadOnlyPerson person) throws MalformedURLException {
-        Image img;
+        Image img = null;
         if ("maleIcon.png".equals(person.getProfPic().getPath())) {
             img = new Image("images/maleIcon.png");
         } else {
             try {
-                File tmp = new File("images/" + person.getProfPic().getPath());
-                if (tmp.exists()){
-                    img = new Image(new File("images/" + person.getProfPic().getPath()).toURI().toURL().toString());
-                } else { // Failsafe to set contact's image to default if set image is missing
-                    img = new Image("images/maleIcon.png");
-                }
+                img = new Image(new File("images/" + person.getProfPic().getPath()).toURI().toURL().toString());
             } catch (MalformedURLException e) {
                 throw new MalformedURLException("URL is malformed in setContactImage()");
             }
