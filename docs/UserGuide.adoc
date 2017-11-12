@@ -323,7 +323,7 @@ Examples:
 
 === Adding an event to a person's schedule : `eadd` (Since V1.5)
 Adds an event to a person's schedule. +
-Format: `eadd p/PERSON INDEX n/EVENT NAME s/EVENT START DATE e/EVENT END DATE [d/EVENT DETAILS]`
+Format: `eadd p/PERSON INDEX n/EVENT NAME s/EVENT START DATE e/EVENT END DATE [d/EVENT DETAILS]` +
 Alias: `ea`
 
 ****
@@ -340,7 +340,7 @@ Examples:
 
 === Removing event(s) from a person's schedule : `edelete` (Since V1.5)
 Removes event(s) from a person's schedule. +
-Format: `edelete p/PERSON INDEX e/EVENT INDEX [EVENT INDEX...]`
+Format: `edelete p/PERSON INDEX e/EVENT INDEX [EVENT INDEX...]` +
 Alias: `ed`
 
 ****
