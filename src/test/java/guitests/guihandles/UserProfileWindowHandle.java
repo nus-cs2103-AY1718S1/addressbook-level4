@@ -3,6 +3,7 @@ package guitests.guihandles;
 import guitests.GuiRobot;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
@@ -21,7 +22,7 @@ public class UserProfileWindowHandle extends StageHandle {
     private static final String WEBLINK_FIELD_ID = "#webLinkTextField";
     private static final String okButton_ID = "#okButton";
     private static final String cancelButton_ID = "#cancelButton";
-
+    private static final String statusLabel_ID = "#statusLabel";
 
     private final TextField nameTextField;
     private final TextField phoneTextField;
@@ -30,6 +31,7 @@ public class UserProfileWindowHandle extends StageHandle {
     private final TextField webLinkTextField;
     private final Button okButton;
     private final Button cancelButton;
+    private final Label statusLabel;
 
     public UserProfileWindowHandle(Stage userProfileWindowStage) {
         super(userProfileWindowStage);
@@ -41,6 +43,7 @@ public class UserProfileWindowHandle extends StageHandle {
         this.webLinkTextField = getChildNode(WEBLINK_FIELD_ID);
         this.okButton = getChildNode(okButton_ID);
         this.cancelButton = getChildNode(cancelButton_ID);
+        this.statusLabel = getChildNode(statusLabel_ID);
     }
 
     /**
@@ -51,10 +54,18 @@ public class UserProfileWindowHandle extends StageHandle {
     }
 
     /**
-     * Opens the {@code UserProfileWindow} by pressing the shortcut key associated
-     * with the menu bar in {@code UserProfileWindow}.
+     * Closes the {@code UserProfileWindow} by pressing the shortcut key associated
+     * with the cancel button in {@code UserProfileWindow}.
      */
-    public void closeUserProfileWindowUsingAccelerator() {
+    public void closeUserProfileWindowUsingCancelAccelerator() {
+        guiRobot.push(KeyCode.ESCAPE);
+    }
+
+    /**
+     * Closes the {@code UserProfileWindow} by pressing the shortcut key associated
+     * with the ok button in {@code UserProfileWindow}.
+     */
+    public void closeUserProfileWindowUsingOkAccelerator() {
         guiRobot.push(KeyCode.ENTER);
     }
 
@@ -106,12 +117,15 @@ public class UserProfileWindowHandle extends StageHandle {
         return cancelButton;
     }
 
+    public Label getStatusLabel() {
+        return statusLabel;
+    }
+
     /**
      * Click the ok button
      */
     public void clickOk() {
         Platform.runLater(() -> {
-            //okButton.arm();
             okButton.fire();
         });
     }

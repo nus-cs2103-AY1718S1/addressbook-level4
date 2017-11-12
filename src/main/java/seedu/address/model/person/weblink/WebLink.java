@@ -18,7 +18,7 @@ import seedu.address.commons.util.WebLinkUtil;
  */
 public class WebLink {
 
-    private static final String MESSAGE_WEB_LINK_CONSTRAINTS = "No spaces should be allowed in the weblink inputted.";
+    private static final String MESSAGE_WEB_LINK_CONSTRAINTS = "No spaces should be allowed in the weblink input.";
     private static final String DEFAULT_TAG = "others";
 
     private  String webLinkInput;

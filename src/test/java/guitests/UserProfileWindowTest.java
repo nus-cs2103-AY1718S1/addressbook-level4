@@ -106,7 +106,7 @@ public class UserProfileWindowTest extends AddressBookGuiTest {
 
         new UserProfileWindowHandle(
                 guiRobot.getStage(UserProfileWindowHandle.USERPROFILE_WINDOW_TITLE)
-        ).closeUserProfileWindowUsingAccelerator();
+        ).closeUserProfileWindowUsingCancelAccelerator();
         mainWindowHandle.focus();
     }
 

@@ -79,5 +79,10 @@ public class GuiTestAssert {
         assertEquals(userProfileWindowHandle.getEmail(), userPerson.getEmailAsText());
         assertEquals(userProfileWindowHandle.getWebLink(), userPerson.getWebLinksAsText());
     }
+
+    public static void assertUserProfileWindowStatusLabelEquals(
+            UserProfileWindowHandle userProfileWindowHandle, String text) {
+        assertEquals(text, userProfileWindowHandle.getStatusLabel().getText());
+    }
     //@@author
 }

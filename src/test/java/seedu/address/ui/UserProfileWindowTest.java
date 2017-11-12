@@ -1,9 +1,13 @@
 package seedu.address.ui;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static seedu.address.model.person.Email.MESSAGE_EMAIL_CONSTRAINTS;
+import static seedu.address.model.person.Name.MESSAGE_NAME_CONSTRAINTS;
+import static seedu.address.model.person.Phone.MESSAGE_PHONE_CONSTRAINTS;
 import static seedu.address.testutil.TypicalUserPerson.WILLIAM;
 import static seedu.address.testutil.TypicalUserPerson.getTypicalUserPerson;
 import static seedu.address.ui.testutil.GuiTestAssert.assertUserProfileWindowEquals;
+import static seedu.address.ui.testutil.GuiTestAssert.assertUserProfileWindowStatusLabelEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,10 +24,10 @@ public class UserProfileWindowTest extends GuiUnitTest {
 
     private Model model = new ModelManager();
 
-    private UserProfileWindow userProfileWindow;
-    private UserProfileWindowHandle userProfileWindowHandle;
 
     private UserPerson userPerson = model.getUserPerson();
+    private UserProfileWindow userProfileWindow;
+    private UserProfileWindowHandle userProfileWindowHandle;
 
     @Before
     public void setUp() throws Exception {
@@ -52,11 +56,11 @@ public class UserProfileWindowTest extends GuiUnitTest {
     public void updateUserPersonSuccess() throws Exception {
         userPerson = new UserPerson();
         UserPerson james = getTypicalUserPerson();
-        userProfileWindowHandle.getNameTextField().setText(james.getName().toString());
-        userProfileWindowHandle.getAddressTextField().setText(james.getAddress().toString());
-        userProfileWindowHandle.getPhoneTextField().setText(james.getPhone().toString());
-        userProfileWindowHandle.getEmailTextField().setText(james.getEmailAsText());
-        userProfileWindowHandle.getWebLinkTextField().setText(james.getWebLinksAsText());
+        setNameTextField(james.getName().toString());
+        setAddressTextField(james.getAddress().toString());
+        setPhoneTextField(james.getPhone().toString());
+        setEmailTextField(james.getEmailAsText());
+        setWebLinkTextField(james.getWebLinksAsText());
 
         userProfileWindowHandle.clickOk();
         setUp();
@@ -65,14 +69,77 @@ public class UserProfileWindowTest extends GuiUnitTest {
     }
 
     @Test
+    public void updateUserPersonInvalidField() {
+        userPerson = new UserPerson();
+        UserPerson william = new UserPerson(WILLIAM);
+        setNameTextField("");
+        setAddressTextField("");
+        setPhoneTextField("");
+        setEmailTextField("");
+        setWebLinkTextField("");
+
+        // Invalid name
+        userProfileWindowHandle.clickOk();
+        guiRobot.sleep(250);
+        assertUserProfileWindowStatusLabelEquals(userProfileWindowHandle,
+                MESSAGE_NAME_CONSTRAINTS);
+
+        // Invalid Email
+        setNameTextField(william.getName().toString());
+        userProfileWindowHandle.clickOk();
+        guiRobot.sleep(250);
+        assertUserProfileWindowStatusLabelEquals(userProfileWindowHandle,
+                MESSAGE_EMAIL_CONSTRAINTS);
+
+        // Invalid Phone
+        setEmailTextField(william.getEmailAsText());
+        setPhoneTextField("TTT");
+        userProfileWindowHandle.clickOk();
+        guiRobot.sleep(250);
+        assertEquals(MESSAGE_PHONE_CONSTRAINTS,
+                userProfileWindowHandle.getStatusLabel().getText());
+
+        // Invalid Email again
+        setEmailTextField("abc");
+        userProfileWindowHandle.clickOk();
+        guiRobot.sleep(250);
+        assertUserProfileWindowStatusLabelEquals(userProfileWindowHandle,
+                MESSAGE_EMAIL_CONSTRAINTS);
+
+        // Address is always valid
+        setEmailTextField(william.getEmailAsText());
+        setAddressTextField(william.getAddress().toString());
+        userProfileWindowHandle.clickOk();
+
+        guiRobot.sleep(250);
+        assertUserProfileWindowStatusLabelEquals(userProfileWindowHandle,
+                MESSAGE_PHONE_CONSTRAINTS);
+
+        // All values are now correct
+        setPhoneTextField(william.getPhone().toString());
+        setWebLinkTextField(william.getWebLinksAsText());
+        userProfileWindowHandle.clickOk();
+        guiRobot.sleep(250);
+
+        try {
+            setUp();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Verify profile is now correctly saved
+        assertUserProfileWindowEquals(userProfileWindowHandle, william);
+    }
+
+    @Test
     public void cancelButtonDoesNotUpdate() throws Exception {
         userPerson = new UserPerson();
         UserPerson william = new UserPerson(WILLIAM);
-        userProfileWindowHandle.getNameTextField().setText(william.getName().toString());
-        userProfileWindowHandle.getAddressTextField().setText(william.getAddress().toString());
-        userProfileWindowHandle.getPhoneTextField().setText(william.getPhone().toString());
-        userProfileWindowHandle.getEmailTextField().setText(william.getEmailAsText());
-        userProfileWindowHandle.getWebLinkTextField().setText(william.getWebLinksAsText());
+        setNameTextField(william.getName().toString());
+        setAddressTextField(william.getAddress().toString());
+        setPhoneTextField(william.getPhone().toString());
+        setEmailTextField(william.getEmailAsText());
+        setWebLinkTextField(william.getWebLinksAsText());
 
         userProfileWindowHandle.clickCancel();
         setUp();
@@ -81,12 +148,42 @@ public class UserProfileWindowTest extends GuiUnitTest {
     }
 
     /**
-     * Asserts that the UserProfile window isn't open.
+     * Sets Name Text Field in UserProfileHandle
+     * @param text
      */
-    private void assertUserProfileWindowNotOpen() {
-        assertFalse("Window still open", userProfileWindowHandle.isWindowPresent());
+    private void setNameTextField(String text) {
+        userProfileWindowHandle.getNameTextField().setText(text);
     }
 
+    /**
+     * Sets Address Text Field in UserProfileHandle
+     * @param text
+     */
+    private void setAddressTextField(String text) {
+        userProfileWindowHandle.getAddressTextField().setText(text);
+    }
 
+    /**
+     * Sets Phone Text Field in UserProfileHandle
+     * @param text
+     */
+    private void setPhoneTextField(String text) {
+        userProfileWindowHandle.getPhoneTextField().setText(text);
+    }
 
+    /**
+     * Sets Email Text Field in UserProfileHandle
+     * @param text
+     */
+    private void setEmailTextField(String text) {
+        userProfileWindowHandle.getEmailTextField().setText(text);
+    }
+
+    /**
+     * Sets WebLink Text Field in UserProfileHandle
+     * @param text
+     */
+    private void setWebLinkTextField(String text) {
+        userProfileWindowHandle.getWebLinkTextField().setText(text);
+    }
 }

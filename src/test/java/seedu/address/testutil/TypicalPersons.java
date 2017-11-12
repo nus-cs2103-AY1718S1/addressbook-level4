@@ -55,7 +55,7 @@ public class TypicalPersons {
             .withEmail("lydia@example.com").withAddress("little tokyo")
             .withWebLinks("https://www.facebook.com/fiona, https://www.instagram.com/fiona/")
             .build();
-    public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
+    public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("94824423")
             .withEmail("anna@example.com").withAddress("4th street").withRemark("Likes to swim")
             .withWebLinks("https://www.facebook.com/george, https://www.instagram.com/george/")
             .build();

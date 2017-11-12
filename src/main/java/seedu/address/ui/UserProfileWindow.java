@@ -1,5 +1,10 @@
 package seedu.address.ui;
 
+import static seedu.address.model.person.Address.MESSAGE_ADDRESS_CONSTRAINTS;
+import static seedu.address.model.person.Email.MESSAGE_EMAIL_CONSTRAINTS;
+import static seedu.address.model.person.Name.MESSAGE_NAME_CONSTRAINTS;
+import static seedu.address.model.person.Phone.MESSAGE_PHONE_CONSTRAINTS;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Set;
@@ -8,7 +13,6 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -86,22 +90,12 @@ public class UserProfileWindow extends UiPart<Region> {
 
     /**
      * Sets accelerators for the UserProfileWindow
-     * @param scene
+     * @param scene Current scene
      */
     private void setAccelerators(Scene scene) {
-        scene.getAccelerators().put(KeyCombination.valueOf("ENTER"), ()-> handleCancel());
-    }
+        scene.getAccelerators().put(KeyCombination.valueOf("ESC"), this::handleCancel);
+        scene.getAccelerators().put(KeyCombination.valueOf("ENTER"), this::handleOk);
 
-    /**
-     * Binds the individual UI elements to observe their respective {@code Person} properties
-     * so that they will be notified of any changes.
-     */
-    private void bindListeners(UserPerson userPerson) {
-        nameTextField.textProperty().bind(Bindings.convert(userPerson.nameProperty()));
-        phoneTextField.textProperty().bind(Bindings.convert(userPerson.phoneProperty()));
-        addressTextField.textProperty().bind(Bindings.convert(userPerson.addressProperty()));
-        emailTextField.textProperty().bind(Bindings.convert(userPerson.emailProperty()));
-        webLinkTextField.textProperty().bind(Bindings.convert(userPerson.webLinkProperty()));
     }
 
     /**
@@ -125,7 +119,7 @@ public class UserProfileWindow extends UiPart<Region> {
         try {
             updateUserPerson();
             raise(new UserPersonChangedEvent(userPerson));
-            logger.info("UserPerson updated via UserProfileWindow, saving");
+            logger.fine("UserPerson updated via UserProfileWindow, saving");
             stage.close();
         } catch (Exception e) {
             logger.fine("Invalid UserPerson modification");
@@ -134,24 +128,17 @@ public class UserProfileWindow extends UiPart<Region> {
 
     @Subscribe
     private void handleUserPersonChangedEvent(UserPersonChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        logger.fine(LogsCenter.getEventHandlingLogMessage(event));
     }
 
     /**
      * Updates the user person
      */
-    void updateUserPerson() throws Exception {
+    private void updateUserPerson() throws Exception {
         try {
             userPerson.setName(new Name(nameTextField.getText()));
         } catch (IllegalValueException e) {
-            statusLabel.setText("Illegal Name value, only alphanumeric values accepted");
-            throw new Exception();
-        }
-
-        try {
-            userPerson.setPhone(new Phone(phoneTextField.getText()));
-        } catch (IllegalValueException e) {
-            statusLabel.setText("Illegal Phone number, only numeric values accepted");
+            statusLabel.setText(MESSAGE_NAME_CONSTRAINTS);
             throw new Exception();
         }
 
@@ -164,14 +151,29 @@ public class UserProfileWindow extends UiPart<Region> {
             userPerson.setEmail(emailList);
 
         } catch (IllegalValueException e) {
-            statusLabel.setText("Email(s) must be in x@x format");
+            statusLabel.setText(MESSAGE_EMAIL_CONSTRAINTS);
             throw new Exception();
         }
 
         try {
-            userPerson.setAddress(new Address(addressTextField.getText()));
+            if (phoneTextField.getText().equals("")) {
+                userPerson.setPhone(new Phone(null));
+            } else {
+                userPerson.setPhone(new Phone(phoneTextField.getText()));
+            }
         } catch (IllegalValueException e) {
-            statusLabel.setText("Please input a valid address value");
+            statusLabel.setText(MESSAGE_PHONE_CONSTRAINTS);
+            throw new Exception();
+        }
+
+        try {
+            if (phoneTextField.getText().equals("")) {
+                userPerson.setAddress(new Address(null));
+            } else {
+                userPerson.setAddress(new Address(addressTextField.getText()));
+            }
+        } catch (IllegalValueException e) {
+            statusLabel.setText(MESSAGE_ADDRESS_CONSTRAINTS);
             throw new Exception();
         }
 

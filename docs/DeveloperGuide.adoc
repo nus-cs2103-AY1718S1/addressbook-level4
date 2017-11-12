@@ -446,9 +446,10 @@ by the `filterType` indicated, which has to be one of the following: Name, Email
 + The command parameters are 'sort FILTERTYPE'. Simply entering 'sort' will set FILTERTYPE to default. Aliases are available
 for each of the sorting methods for convenience. The aliases are simply the first letter in each filter.
 
-The Sort Command will call the method sortFilteredList in the model's `AddressBook`, modify the `PersonList` via the sort method in `UniquePersonList`,
-then indicate that the AddressBook has been changed, which then calls a method that saves the data locally. Thus, the list is permanently
-modified and overwritten. The original list is lost permanently, unless it is one of the other sorted lists, whereby the Sort Command
+The Sort Command will first remember the current filteredList's predicate, call the method sortFilteredList in the model's `AddressBook`,
+modify the `PersonList` via the sort method in `UniquePersonList`, then indicate that the AddressBook has been changed,
+which then calls a method that saves the data locally. The old predicate is reapplied to the new filteredList. Thus, the list is permanently modified and overwritten.
+The original list is lost permanently, unless it is one of the other sorted lists, whereby the Sort Command
 can be used to obtain the required list again by passing in the relevant filter as a parameter.
 
 The sort method implementation is displayed below. A switch case excerpt is used to determine the type of comparison that the
