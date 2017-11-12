@@ -413,7 +413,8 @@ public class KeyListener {
         } else if (KEY_COMBINATION_SELECT.match(keyEvent)) {
             displayCommandFormat(SelectCommand.COMMAND_WORD);
 
-        } else if (KEY_COMBINATION_DELETE.match(keyEvent) || KEY_COMBINATION_DELETE_ALTERNATIVE.match(keyEvent)) {
+        } else if (KEY_COMBINATION_DELETE.match(keyEvent)
+                || KEY_COMBINATION_DELETE_ALTERNATIVE.match(keyEvent)) {
             displayCommandFormat(DeleteCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_REMARK.match(keyEvent)) {
