@@ -27,7 +27,6 @@ import org.telegram.abilitybots.api.objects.EndUser;
 import org.telegram.abilitybots.api.objects.MessageContext;
 import org.telegram.abilitybots.api.sender.MessageSender;
 import org.telegram.telegrambots.api.objects.Update;
-import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -85,7 +84,7 @@ public class ArkBotTest {
 
     @Test
     public void arkBotAllTests() throws InterruptedException, ParseException, DuplicateParcelException,
-            ParcelNotFoundException, TelegramApiException {
+            ParcelNotFoundException {
         Update mockedUpdate = mock(Update.class);
         MessageContext context = MessageContext.newContext(mockedUpdate, endUser, CHAT_ID);
 

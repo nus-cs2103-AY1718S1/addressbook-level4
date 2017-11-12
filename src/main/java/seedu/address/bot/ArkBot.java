@@ -444,7 +444,6 @@ public class ArkBot extends AbilityBot {
                                        throws CommandException, ParseException, TelegramApiException {
         logic.execute(EditCommand.COMMAND_WORD + " "
                 + indexOfParcel + BOT_SET_COMPLETED);
-        ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
         sender.send("Here are the details of the parcel you just completed: \n"
                     + retrievedParcel.toString(), chatId);
 
