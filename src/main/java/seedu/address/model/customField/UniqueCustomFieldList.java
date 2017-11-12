@@ -40,6 +40,13 @@ public class UniqueCustomFieldList implements Iterable<CustomField> {
     }
 
     /**
+     *  Gets the size of the Custom Field List
+     */
+    public int getSize() {
+        return internalList.size();
+    }
+
+    /**
      * Returns all customFields in this list as a Set.
      * This set is mutable and change-insulated against the internal list.
      */

@@ -118,7 +118,7 @@ public class UniquePhoneListTest {
             logger.warning("phone number not found");
         }
         isEqual = list1.equals(list2);
-        assertTrue("The size of the phoneList after removing numbers is correct", isEqual);
+        assertTrue("The two lists are equal", isEqual);
     }
 
 }
