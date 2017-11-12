@@ -1,0 +1,113 @@
+= Pan Haozhe - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ResidentBook
+ResidentBook is a newly conceptualised administrative tool catered for staffs handling hostel and college operations. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in OOP style in Java.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B1/main/blob/master/collated/main/Haozhe321.md[Functional code]] [https://github.com/CS2103AUG2017-F09-B1/main/blob/master/collated/test/Haozhe321.md[Test code]]
+
+=== Enhancement Added: Temporary residents
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=temporaryperson]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Hostel managers often welcome visitors or guests that may not stay for the entire duration of the semester. Making a resident
+ temporary would automatically allow ResidentBook to delete the resident's details after the preset time. This not only saves space
+ in the ResidentBook, but also saves the hassle of looking through a long list of residents to find the guest to delete.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=temporaryperson]
+
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add command deletebytag
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deletebytag]
+
+#End of Extract#
+
+---
+
+==== Justification
+Tags are useful when they are assigned to a person or a group of people for identification purpose.
+When we want to remove all people who have been assigned a certain tag, this command comes in handy.
+
+For example, at the start of the year, the hostel administrator added Y4 students and gave them the tag "graduating".
+Now at the end of the year after they have graduated, the hostel administrator wants to remove all of them from the
+ResidentBook. This command serves this purpose, and many more similar scenarios.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deletebytag]
+
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add Calendar Interface
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=Calendar]
+
+#End of Extract#
+
+---
+
+==== Justification
+Since events management is a great feature of ResidentBook, it would be natural to add a calendar
+to view the events. Furthermore with more events being added, viewing events in a list makes it hard to see the relative
+dates that the events are taking place. This feature aims to solve that problem.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=Calendar]
+
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Notify other groups of their bugs (Issues https://github.com/CS2103AUG2017-T14-B3/main/issues/97[#97], https://github.com/CS2103AUG2017-W11-B4/main/issues/91[#91])
+* Provide suggestion to other group (Issues https://github.com/CS2103AUG2017-W11-B4/main/issues/90[#90])
+* Wrote Use Case and Non Functional Requirement for DeveloperGuide (Pull Request https://github.com/CS2103AUG2017-F09-B1/main/pull/5/files[#5])
+* Wrote User Stories for project brainstorming (https://github.com/CS2103AUG2017-F09-B1/main/projects/1[project brainstorm])
+* Set up Codacy for repo (https://github.com/CS2103AUG2017-F09-B1/main/commit/82f2c2dcaaec280cdb7182d71513b93e1aa77685[Codacy])
+* Create releases(https://github.com/CS2103AUG2017-F09-B1/main/releases[releases])
+

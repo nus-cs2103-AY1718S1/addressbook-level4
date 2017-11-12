@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-F09-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F09-B1`      Since: `AUG 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -525,38 +525,87 @@ The highlight command also allows removal of highlighting through input of "-" a
 // end::highlight[]
 
 // tag::temporaryperson[]
-=== Temporary Contact mechanism
+=== Temporary person mechanism
 
-Temporary contacts is implemented using the java LocalDateTime class to keep track of the time that the temporary contact
- is created, and more importantly, when this temporary contact will expire.
+The implementation of temporary persons has two parts: +
 
-The level of precision chosen is to the nearest Hour. Originally, LocalDateTime is used to the nearest nanoseconds, but
+. Creating a timestamp for temporary persons
+. Deleting temporary persons
+
+==== Timestamp
+A Timestamp class has been implemented to record the time a person in the ResidentBook is created; more importantly, it
+records the time that a person will expire. A non-temporary person will never expire and has an expiry date of "null". On the other
+ hand, a temporary person has an expiry time represented by the LocalDateTime class.
+
+[source, java]
+public Timestamp(long day) throws IllegalValueException {
+    this.creationTime = LocalDateTime.now().withNano(0).withSecond(0).withMinute(0);
+    if (!isValidTimestamp(day)) {
+        throw new IllegalValueException(MESSAGE_TIMESTAMP_CONSTRAINTS);
+    }
+    if (day > 0) {
+        this.expiryTime = this.creationTime.plusDays(day).withNano(0).withSecond(0).withMinute(0);
+    }
+    this.daysToLive = day;
+}
+
+
+The level of precision chosen is to the nearest Hour. Originally, a LocalDateTime object's precision is to the nearest nanoseconds, but
  this high level of precision is unnecessary to the users, and also cumbersome for developers to do tests due to the small
- room for difference in system time.
+ room for difference in system time. As we can see from the code block above, the time that this person will expire is to the nearest hour,
+ done by ignoring nanosecond, second, and minute.
 
-When creating a temporary contact, users should input temp/ followed by the number of days they want this contact to remain
+When creating a temporary person, users should input temp/ followed by the number of days they want this person to remain
  i.e. "temp/2", without the quotation marks. The use of this temp/ prefix is optional. When temp/ is not used, a normal
- contact which does not expire is created.
+ person which does not expire is created.
 
-Earlier implementation: A temporary contact that expires when the application boots up the next time. This implementation
- does not give much flexibility to the users in terms of how long they want the temporary contact to remain.
+[NOTE]
+Due to the nature of this implementation, testing becomes tricky. One way to test is to add a temporary person, then forward system time
+by the more than the number of days that this person will expire. The temporary person should not appear in the ResidentBook now. Remember to
+switch back your system time after testing.
 
-The temporary contact is implemented using the Timestamp class in this way:
-[source,java]
-----
-        public Timestamp(long day) throws IllegalValueException {
-            creationTime = LocalDateTime.now().withNano(0).withSecond(0).withMinute(0);
-            if (!isValidTimestamp(day)) {
-                throw new IllegalValueException(MESSAGE_TIMESTAMP_CONSTRAINTS);
+==== Deleting temporary persons
+
+Deletion of temporary persons is done when the ResidentBook starts up. When the ResidentBook object is intialised at the ModelManager,
+it deletes all(and any) temporary persons.
+
+[source, java]
+public ResidentBook(ReadOnlyResidentBook toBeCopied) {
+    this();
+    resetData(toBeCopied);
+    deleteTemporary();
+}
+
+
+A iterator iterates through the UniquePersonList and looks at the expiry time of every person. If the current time has past that
+of the expiry time, this person will be removed from the UniquePersonList.
+[source, java]
+public void deleteTemporary() {
+    UniquePersonList personsList = this.getUniquePersonList();
+    Iterator<Person> itr = personsList.iterator();
+    while (itr.hasNext()) {
+        Person person = itr.next();
+        LocalDateTime personExpiry = person.getTimestamp().getExpiryTime();
+        LocalDateTime current = LocalDateTime.now();
+        if (personExpiry != null) {
+            if (current.compareTo(personExpiry) == 1) {
+                itr.remove();
             }
-            if (day > 0) {
-                expiryTime = creationTime.plusDays(day).withNano(0).withSecond(0).withMinute(0);
-            }
-            daysToLive = day;
         }
-----
-As we can see, the time that this contact will expire is to the nearest hour, done by ignoring nanosecond, second, and
-minute
+    }
+}
+
+==== Design Considerations
+
+**Aspect:** Implementation of temporary persons +
+**Alternative 1 (current choice):** Use a LocalDateTime class to represent timestamp  +
+**Pros:** Flexible level of precision according to the developer i.e. to the nearest minute, or hour, etc. +
+**Cons:** A unintended change in system time may cause persons who are not due to expire to be deleted from the ResidentBook +
+**Alternative 2:** The previous implementation of temporary person only allows it to stay for one session i.e. all temporary persons will
+ be deleted the next time the application starts up +
+**Pros:** This implementation circumvents the problem of change in system time +
+**Cons:** This implementation is inflexible because users cannot choose how long they want a temporary person in the ResidentBook to stay.
+
 
 // end::temporaryperson[]
 === Import mechanism
@@ -649,20 +698,17 @@ public RemoveTagCommand(String tagName) {
 [NOTE]
 If the tagName is invalid, there will be no exception raised or handled as a removal of invalid tagName essentially does not change the address book.
 
-=== Delete persons by tag
+// tag::deletebytag[]
+=== Deletebytag Command
 
-This command is implemented to enable the deletion of persons who have a particular tag.
+The deletebybtag command allows users to delete residents in the addressbook that has a certain tag supplied. This command is implemented to enable the deletion of persons who have a particular tag.
 The motivation for implementing such a command is so that hostel/hotel administrators can mass delete a certain
 group of residents without going through the trouble of deleting them one by one.
 
 Only one argument is supplied with this command, a String `tag`.
 
-Deletion of persons by multiple tag remains a viable enhancement to this command, but it is not implemented due to the
-following consideration:
-
-* To enable a clean workflow, hostel/hotel administrators might prefer deleting one group of people at a time. +
-* Ambiguity is introduced into this command. The user may not know if by supplying multiple tags, the application will
-delete persons who have all the tags supplied, or delete all persons who has any of the tags supplied.
+[NOTE]
+Deletebytag command and Removetag command may sound similar, but they serve totally different purpose.
 
 
 The function to actually delete the persons who have the `TAG` supplied is done in the UniquePersonList class.
@@ -671,17 +717,112 @@ The condition `if (p.getTags().contains(tag)` checks if each person has the `TAG
 If it does, we remove the person from the list.
 
 [source, java]
----
-public void removeByTag(Tag tag) {
+public void removeByTag(Tag tag) throws CommandException {
     Iterator<Person> itr = this.iterator();
+    int numRemoved = 0;
     while (itr.hasNext()) {
         Person p = itr.next();
         if (p.getTags().contains(tag)) {
             itr.remove();
+            numRemoved++;
         }
     }
+    if (numRemoved == 0) {
+        throw new CommandException(Messages.MESSAGE_INVALID_TAG_FOUND);
+    }
 }
----
+
+If by the end of method execution, number of people removed, `numRemoved` is 0, we conclude that it is because nobody has that tag supplied.
+Hence, a `INVALID_TAG_FOUND` message will be displayed to the user.
+
+// end::deletebytag[]
+
+==== Design Considerations
+Deletion of persons by multiple tag remains a viable enhancement to this command, but it is not implemented due to the
+following considerations:
+
+* To enable a clean workflow, hostel/hotel administrators might prefer deleting one group of people at a time. +
+* Ambiguity will be introduced into this command. The user may not know if by supplying multiple tags, the application will
+delete persons who have all the tags supplied, or delete all persons who has any of the tags supplied.
+
+
+// tag::Calendar[]
+=== Calendar Interface
+
+The calendar interface is implemented with a JavaFX Pane Class that contains 5 by 7 AnchorPaneNodes as individual dates. +
+
+During application start up, the MainWindow will create a Pane and adds a CalendarBoxPanel object inside. CalendarBoxPanel
+initialises the calendar in through the following construction.
+
+[source, java]
+public CalendarBoxPanel(Logic logic) {
+    super(FXML);
+    calendarBox = new CalendarBox(YearMonth.now(), logic);
+    calendarPane.getChildren().add(calendarBox.getView());
+}
+
+A CalendarBox object is created inside the CalendarBoxPanel which takes in the current date and an instance of the LogicManager that contains the list of events.
+
+The initialisation of the CalendarBox object is provided below.
+
+[source, java]
+public CalendarBox(YearMonth yearMonth, Logic logic) {
+    this.logic = logic;
+    currentYearMonth = yearMonth;
+    allCalendarDays = new ArrayList<>(35);
+    makeCalendarSkeleton();
+    makeCalendarNavigationTool();
+    populateCalendar(yearMonth, logic.getFilteredEventList());
+    // Create the calendar view
+    view = new VBox(titleBar, dayLabels, calendar);
+    VBox.setMargin(titleBar, new Insets(0, 0, 10, 0));
+}
+
+The calendar is made in broadly 3 steps.
+
+. `makeCalendarSkeleton()` makes the skeleton for the calendar, i.e. grids for one month, and label for days of the week.
+. `makeCalendarNavigationTool()` creates the entire navigation tool for the calender, i.e. title, previous-month button, next-month button
+. `populateCalendar(yearMonth, logic.getFilteredEventList())` set the days of the calendar to correspond to the appropriate date, with events populated at their corresponding dates
+
+When a new event is added or an existing event is removed, the calendar updates the change dynamically by repopulating the calendar with the updated list of events.
+This is done through the help of the EventBus shown below, which will call the method `handleCalenderBoxPanelChange(EventBookChangedEvent event)` whenever an instance of EventBookChangedEvent is raised.
+
+[source, java]
+@Subscribe
+public void handleCalenderBoxPanelChange(EventBookChangedEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    calandarBoxPanel.getCalendarBox().refreshCalendar(this.logic);
+}
+
+
+For navigation to the previous or next month in the calendar, a click on the "PREV" or "NEXT" button will trigger a method to repopulate the calendar with dates
+ and events of the appropriate month.
+
+[source, java]
+private void makeButtons(Button previousMonth, Button nextMonth) {
+    previousMonth.setOnAction(e -> previousMonth());
+    nextMonth.setOnAction(e -> nextMonth());
+}
+
+The inner working of `previousMonth()` is illustrated here. `nextMonth()` works in a similar way.
+[source, java]
+private void previousMonth() {
+    currentYearMonth = currentYearMonth.minusMonths(1);
+    populateCalendar(currentYearMonth, logic.getFilteredEventList());
+}
+
+==== Design Considerations
+
+**Aspect:** Implementation of Calendar +
+**Alternative 1 (current choice):** Repopulating a new calendar when there is a change in the EventBook +
+**Pros:** Simple to implement, and easy to understand. Simply make use of existing methods that we have written for populating the calendar for the first time. +
+**Cons:** Takes a little longer(not notably) for the calendar to be populated +
+**Alternative 2:** Use Google Calendar +
+**Pros:** Many functionalities are already created for us. +
+**Cons:** Security concerns because the ResidentBook would require User Authentication to login to Google. ResidentBook would also need to store
+the username and password.
+
+// end::Calendar[]
 
 == Documentation
 
