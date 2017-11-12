@@ -64,6 +64,17 @@ public interface Model {
     void unpinPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     //@@author
+
+    /**
+     * Selects the given person.
+     */
+    void selectPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    /**
+     * Deselects the given person.
+     */
+    void deselectPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
     /**
      * Adds the given person
      */

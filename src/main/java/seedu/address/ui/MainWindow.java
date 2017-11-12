@@ -24,6 +24,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ToggleListAllStyleEvent;
 import seedu.address.commons.events.ui.ToggleListPinStyleEvent;
@@ -43,6 +44,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.person.ListAliasCommand;
 import seedu.address.logic.commands.person.ListCommand;
 import seedu.address.logic.commands.person.ListPinCommand;
+import seedu.address.logic.commands.person.SelectCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 
@@ -145,7 +147,6 @@ public class MainWindow extends UiPart<Region> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setIcon(ICON);
-        setWindowMinSize();
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
@@ -384,6 +385,19 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        try {
+            CommandResult result = logic.execute(SelectCommand.COMMAND_WORD
+                    + " " + event.getSelectedIndex());
+            raise(new NewResultAvailableEvent(result.feedbackToUser));
+            raise(new ValidResultDisplayEvent(SelectCommand.COMMAND_WORD));
+        } catch (CommandException | ParseException e) {
+            logger.warning("Failed to select person card based on clicks");
+        }
     }
 
     //@@author Alim95
