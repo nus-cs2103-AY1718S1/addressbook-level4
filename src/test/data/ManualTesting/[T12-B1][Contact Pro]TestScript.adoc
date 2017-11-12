@@ -1,0 +1,32 @@
+= Test Script
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Loading the sample data
+
+== Test cases
+
+=== Grouping
+
+==== add to a group
+
+* command
+* expected behavior
+
+==== try to remove from a group to which the person does not belong
+
+* command
+* expected behavior
+
+==== remove from a group
+
+=== Property - always sorted
+
+==== add a person
+
+=== Remove tag
+
+==== try to remove a tag that does not exist
+
+=== Profile Picture
