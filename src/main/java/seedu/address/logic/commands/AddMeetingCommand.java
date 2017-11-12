@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-//@@author Sri-vatsa
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
@@ -9,6 +7,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.text.ParseException;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -17,19 +18,23 @@ import seedu.address.model.Meeting;
 
 import seedu.address.model.ReadOnlyMeeting;
 
+import seedu.address.storage.AsanaStorage.AsanaCredentials;
 import seedu.address.model.asana.PostTask;
 
 import seedu.address.model.exceptions.DuplicateMeetingException;
 
 import seedu.address.model.exceptions.IllegalIdException;
 
+//@@author Sri-vatsa
 /**
  * Adds a new meeting to the address book.
  */
-public class AddMeetingCommand extends UndoableCommand {
+public class AddMeetingCommand extends Command {
 
     public static final String COMMAND_WORD = "addMeeting";
     public static final String COMMAND_ALIAS = "am";
+
+    public static final String GOOGLE_ADDRESS = "www.google.com";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a meeting to the address book. "
             + "Parameters: "
@@ -48,7 +53,13 @@ public class AddMeetingCommand extends UndoableCommand {
             + PREFIX_PERSON + "1";
 
 
-    public static final String MESSAGE_SUCCESS = "New meeting added!";
+    public static final String MESSAGE_SUCCESS_BOTH = "New meeting added locally and to Asana!";
+    public static final String MESSAGE_SUCCESS_NO_INET = "New meeting added locally!\n "
+            + "Connect to the internet to post the meeting on Asana.";
+    public static final String MESSAGE_SUCCESS_ASANA_NO_CONFIG = "New meeting added locally!\n"
+            + "Setup Asana to post the meeting on Asana.";
+    public static final String MESSAGE_SUCCESS_LOCAL = "New meeting added locally!\n"
+            + "Connect to the internet and setup Asana to post a meeting on Asana.";
     public static final String MESSAGE_DUPLICATE_MEETING = "This meeting already exists in the address book";
     public static final String MESSAGE_INVALID_ID = "Please input a valid person id!";
     public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " "
@@ -67,28 +78,58 @@ public class AddMeetingCommand extends UndoableCommand {
 
 
     @Override
-    protected CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
-        try {
-            model.addMeeting(toAdd);
-            //TODO handle exception for asana & multiple Ids exceeding num of entries in AB
-            //add meeting on Asana
-            PostTask newAsanaTask = null;
+        AsanaCredentials asanaCredentials = new AsanaCredentials();
+
+        //if there is internet connection && asana is configured
+        if (isThereInternetConnection() && asanaCredentials.getIsAsanaConfigured()) {
+
             try {
-                newAsanaTask = new PostTask(toAdd.getNotes(), toAdd.getDate());
-            } catch (ParseException e) {
-                e.printStackTrace();
+
+                //add meeting on Asana
+                PostTask newAsanaTask = null;
+                try {
+                    newAsanaTask = new PostTask(toAdd.getNotes(), toAdd.getDate());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                newAsanaTask.execute();
+
+                //add meeting locally
+                model.addMeeting(toAdd);
+
+            } catch (DuplicateMeetingException e) {
+                throw new CommandException(MESSAGE_DUPLICATE_MEETING);
+            } catch (IllegalIdException ive) {
+                throw new CommandException(MESSAGE_INVALID_ID);
             }
-            newAsanaTask.execute();
 
-        } catch (DuplicateMeetingException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_MEETING);
-        } catch (IllegalIdException ive) {
-            throw new CommandException(MESSAGE_INVALID_ID);
+            return new CommandResult(String.format(MESSAGE_SUCCESS_BOTH, toAdd));
         }
+        //only add meeting locally, not on Asana
+        else {
+            try {
+                model.addMeeting(toAdd);
+            } catch (DuplicateMeetingException e) {
+                throw new CommandException(MESSAGE_DUPLICATE_MEETING);
+            } catch (IllegalIdException ive) {
+                throw new CommandException(MESSAGE_INVALID_ID);
+            }
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-
+            //there is a stable internet connection but Asana is not configured
+            if (isThereInternetConnection() && !asanaCredentials.getIsAsanaConfigured()) {
+                return new CommandResult(MESSAGE_SUCCESS_ASANA_NO_CONFIG);
+            }
+            //No internet connection but Asana is configured
+            else if (!isThereInternetConnection() && asanaCredentials.getIsAsanaConfigured()) {
+                return new CommandResult(MESSAGE_SUCCESS_NO_INET);
+            }
+            //There is no internet connection and Asana is not configured
+            else {
+                return new CommandResult(MESSAGE_SUCCESS_LOCAL);
+            }
+        }
     }
 
     @Override
@@ -96,5 +137,19 @@ public class AddMeetingCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof AddMeetingCommand // instanceof handles nulls
                 && toAdd.equals(((AddMeetingCommand) other).toAdd));
+    }
+
+    private boolean isThereInternetConnection() {
+        Socket sock = new Socket();
+        InetSocketAddress addr = new InetSocketAddress(GOOGLE_ADDRESS,80);
+        try {
+            sock.connect(addr, 300);
+            return true;
+        } catch (IOException e) {
+            return false;
+        } finally {
+            try {sock.close();}
+            catch (IOException e) {}
+        }
     }
 }
