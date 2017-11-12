@@ -3,11 +3,11 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-+ifdef::env-github[]
- +https://cs2103aug2017-w11-b2.github.io/main/team/Mingrui.html[Please click here to view portfolio.]
- +endif::[]
- +
- +ifndef::env-github[]
+ifdef::env-github[]
+https://cs2103aug2017-w11-b2.github.io/main/team/Mingrui.html[Please click here to view portfolio.]
+endif::[]
+
+ifndef::env-github[]
 == Project: Rolodex
 include::../../README.adoc[tag=applicationDescription]
 
@@ -37,16 +37,16 @@ include::../DeveloperGuide.adoc[leveloffset=2,tag=auto-completion]
 
 ==== External behavior
 
----
-
 include::../UserGuide.adoc[leveloffset=2,tag=email]
-
----
 
 ==== Justification
 
 This feature makes emailing a contact much easier. The user no longer has to go through the tedious process of copying the contact's email address, opening the email application
 or website and pasting the email address there. All these can be done with a short and simple command within two seconds.
+
+==== Implementation
+
+include::../DeveloperGuide.adoc[leveloffset=2,tag=email]
 
 === Enhancement Proposed: Integration of social media
 

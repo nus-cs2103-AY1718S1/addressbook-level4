@@ -1147,6 +1147,7 @@ private void clearHighlights(WebEngine engine) {
 ----
 // end::helpWindowHighlight[]
 
+// tag::email[]
 === Composing Emails
 This functionality is implemented through the `EmailCommand` class under `logic` component.
 
@@ -1217,6 +1218,7 @@ String subject = ParserUtil.parseSubject(argMultimap.getValue(PREFIX_SUBJECT)).o
 subject = subject.replaceAll(" ", "%20");
 Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
 ----
+// end::email[]
 
 // tag::suggestion[]
 == Suggestions Mechanism
