@@ -23,7 +23,6 @@ public class ListCommand extends Command {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         EventsCenter.getInstance().post(new TogglePanelEvent(COMMAND_WORD));
         EventsCenter.getInstance().post(new EventPanelUnselectEvent());
-        EventsCenter.getInstance().post(new AccessWebsiteRequestEvent("https://www.google.com/"));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
