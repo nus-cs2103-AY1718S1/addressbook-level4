@@ -92,4 +92,28 @@ public class ImportCommandTest {
 
     }
 
+    @Test
+    public void execute_importNoEmailSuccess() throws Exception {
+
+        AddressBook expected = new AddressBook();
+
+        Name name = new Name("Brendan Richard");
+        Phone phone = new Phone("91234566");
+        Email email = new Email("BrendanRichard@example.com");
+        Address address = new Address("Some Address");
+        Set<Tag> tags = new HashSet<>();
+        tags.add(new Tag("containsDummyemail"));
+
+        ReadOnlyPerson p = new Person(name, phone, email, address, tags);
+
+        expected.addPerson(p);
+
+        CommandResult r = logic.execute("import noEmail.vcf");
+        assertEquals(ImportCommand.MESSAGE_SUCCESS, r.feedbackToUser);
+
+        assertEquals(expected, model.getAddressBook());
+
+    }
+
+
 }
