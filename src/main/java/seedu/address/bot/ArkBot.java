@@ -93,19 +93,6 @@ public class ArkBot extends AbilityBot {
         logger.info("ArkBot successfully booted up.");
     }
 
-    public ArkBot(Logic logic, Model model) {
-        super(DEFAULT_BOT_TOKEN, DEFAULT_BOT_USERNAME);
-        this.logic = logic;
-        this.model = model;
-        this.waitingForImage = false;
-        logger.info("Default ArkBot successfully booted up.");
-    }
-
-    @Override
-    public int creatorId() {
-        return 164502603;
-    }
-
     /**
      * Replicates the effects of AddCommand on ArkBot.
      */
@@ -389,6 +376,11 @@ public class ArkBot extends AbilityBot {
     }
 
     @Override
+    public int creatorId() {
+        return 0;
+    }
+
+    @Override
     public boolean checkGlobalFlags(Update update) {
         return true;
     }
@@ -546,8 +538,4 @@ public class ArkBot extends AbilityBot {
         return this.waitingForImage;
     }
 
-    @VisibleForTesting
-    void setWaitingForImageFlag(boolean toSet) {
-        this.waitingForImage = toSet;
-    }
 }
