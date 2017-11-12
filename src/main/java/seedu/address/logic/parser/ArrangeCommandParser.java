@@ -22,7 +22,7 @@ public class ArrangeCommandParser implements Parser<ArrangeCommand> {
 
         try {
             String[] listOfPerson = args.trim().split("\\s+");
-            // Correct Format: changepw username old_password new_password
+
             int[] listOfIndex = new int[listOfPerson.length];
             for (int i = 0; i < listOfPerson.length; i++) {
                 try {
