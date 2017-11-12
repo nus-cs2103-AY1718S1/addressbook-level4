@@ -7,6 +7,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ABC Business Contacts (ABC) is a desktop Business Contact Management application. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/main/LimYangSheng.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/test/LimYangSheng.md[Test code]]
+ [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/unused/LimYangSheng-unused.md[Unused code]]
 
 === Enhancement Added: Backup/RestoreBackup
 
