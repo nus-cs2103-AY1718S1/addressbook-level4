@@ -19,8 +19,7 @@ public class AnchorPaneNode extends AnchorPane {
 
     public final Color yellow = Color.web("#CA9733");
     public final Color green = Color.web("#336D1C");
-    // Date associated with this pane
-    private LocalDate date;
+    private LocalDate date; // Date associated with this pane
     private final Background focusBackground = new Background(new BackgroundFill(
             green, CornerRadii.EMPTY, Insets.EMPTY));
     private final Background todayBackground = new Background(new BackgroundFill(
@@ -35,10 +34,7 @@ public class AnchorPaneNode extends AnchorPane {
      */
     public AnchorPaneNode(Node... children) {
         super(children);
-        // Add action handler for mouse clicked
-        this.setBackgroundUnfocused();
-        this.setStyle("-fx-border-width: 2;");
-        this.setStyle("-fx-border-color: white;");
+        this.setupPane();
 
         this.setOnMouseClicked((e) -> {
             if (this.getBackground() == focusBackground) {
@@ -58,6 +54,14 @@ public class AnchorPaneNode extends AnchorPane {
         this.date = date;
     }
 
+    /**
+     * set up this AnchorPane with predefined style and set the background to be unfocused
+     */
+    public void setupPane() {
+        this.setBackgroundUnfocused();
+        this.setStyle("-fx-border-width: 2;");
+        this.setStyle("-fx-border-color: white;");
+    }
 
     /**
      *Focus on the Grid when the mouse clicks on it
