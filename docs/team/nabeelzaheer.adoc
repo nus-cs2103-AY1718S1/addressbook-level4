@@ -5,10 +5,7 @@
 
 == Project: The Classroom
 The Classroom is a desktop address book application designed to specifically cater to students to manage their contacts.
-The user interacts with it using a CLI, and it has a GUI created with JavaFX.
-
-It is written in Java and is built up from the [https://github.com/se-edu/addressbook-level4[AddressBook - Level 4]]. (An address book application used for teaching Software Engineering principles) +
-(written by limyongsong)
+The user interacts with it using a CLI, has a GUI created with JavaFX and is wriitten in Java.
 
 The Classroom is equipped with features and functionalities aimed to facilitate in effectively managing contacts'
 details as well as tasks that they may share with them which is represented  in the application in the form of remarks.
