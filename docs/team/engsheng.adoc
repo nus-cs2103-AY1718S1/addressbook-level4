@@ -123,6 +123,12 @@ When a command is executed successfully Unify will announced that it is executed
 
 This Text-To-Speech feature was part of the initiative together with the (not yet implemented) Speech-To-Text feature to bring in users who has vision disabilities into using Unify as well. Potentially increasing our user base.
 
+==== image:engsheng_header_implementation.png[width="900"]
+
+include::../DeveloperGuide.adoc[tag=audiblefeedback]
+
+{sp}
+
 image::divider.png[width="900"]
 
 {sp}
