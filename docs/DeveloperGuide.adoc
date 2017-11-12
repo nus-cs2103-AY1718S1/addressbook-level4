@@ -1209,15 +1209,15 @@ existing countries' codes if the plus sign is detected._
 
 [source,java]
 ----
-public static String trimCode(String trimmedPhone) {
-    // only attempt to extract country code if regex is ALT
-    if (trimmedPhone.matches(PHONE_VALIDATION_REGEX_ALT)) {
-        // take pattern: end with whitespace (expected for ALT regex)
-        String[] split = trimmedPhone.split("\\s+");
-        return (split[0].trim()).substring(1);
-    } else {
-        return DEFAULT_COUNTRY_CODE.trim();
-    }
+    public static String trimCode(String trimmedPhone) {
+        // only attempt to extract country code if regex is ALT
+        if (trimmedPhone.matches(PHONE_VALIDATION_REGEX_ALT)) {
+            // take pattern: end with whitespace (expected for ALT regex)
+            String[] split = trimmedPhone.split("\\s+");
+            return (split[0].trim()).substring(1);
+        } else {
+            return DEFAULT_COUNTRY_CODE.trim();
+        }
 
 ----
 _Figure 4.11.2: From Phone.java; extracts the digits starting after plus sign and before white space._
@@ -1227,10 +1227,10 @@ is used without a country code prefix. When its phone number field is edited in 
 name field automatically changes to `Singapore` upon returning the command.
 
 image::country_code demo 1.PNG[width="400"]
-_Figure 4.11.3 : Copy from a single contact_
+_Figure 4.11.3 : Country code shows unavailable status when no code is entered._
 
 image::country_code demo 2.PNG[width="400"]
-_Figure 4.11.4 : Copy from multiple contacts_
+_Figure 4.11.4 : Country name updated once a matching country code is added to phone number._
 
 Note that as shown in Figure 4.11.5, country codes that do not belong to any valid country or state will be
 rejected. The current list of acceptable codes can be listed with the command `help codes`.
@@ -1316,12 +1316,86 @@ on the app. As such, it was unfeasible to add even more panes to the window and 
 //start::backup[]
 === Contact Backup [Since v1.5]
 
+Contact information is valuable, and users may want to back up their data. By providing a user-friendly backup method,
+users will not have to dig around in the application directory and risk copying or deleting the wrong file.
 
+The method is triggered with keyword `backup`, and takes in one parameter--the destination address of the backup.
+As the file to back up is always `addressbook.xml`, the method can detect either a directory without the file name, or
+including the file name, and perform the operation accordingly.
+
+E.g. `backup F:\Backups` and `backup F:\Backups\addressbook.xml` perform the same operation.
+
+[source,java]
+----
+    public static String parseBackup(String address) throws IllegalValueException {
+        requireNonNull(address);
+        if (!address.contains(BACKUP_DIR_SUFFIX)) {
+            // if input ends with '\' character, concat without '\' symbol
+            if (address.contains("/(?:\\)$/")) {
+                return address.trim().concat(BACKUP_DIR_SUFFIX);
+            } else {
+                return address.trim().concat(BACKUP_DIR_SUFFIX_ALT);
+            }
+        }
+        return address.trim();
+    }
+----
+_Figure 4.13.1: From ParserUtil.java; Detects whether the file name exists in the input, and failing which, whether
+the input ends with a back slash._
+
+The result will be shown to the user as either a successful backup, or a failed one. This feature is fulfilled by the
+code below, in Figure 4.13.2.
+
+[source, java]
+----
+    @Override
+    public CommandResult execute() throws CommandException {
+        // source expected to stay in default directory
+        Path source = Paths.get("data/addressbook.xml");
+        // user defined target directory
+        Path target = Paths.get(address);
+        try {
+            // clone addressbook into target
+            Files.copy(source, target);
+        } catch (IOException e1) {
+            return new CommandResult(String.format(BACKUP_FAILURE_MESSAGE, address));
+        }
+
+        return new CommandResult(String.format(BACKUP_SUCCESS_MESSAGE, address));
+    }
+----
+_Figure 4.13.2: From BackupCommand.java; Determines whether backup was successful._
+
+==== Design considerations for `Backup`
+
+The Backup function makes it easier for the user to secure their valuable information, with no room for error.
+As such, the implementation forbids overwriting another addressbook.xml file when writing a new one. Users must
+rename or remove existing `addressbook.xml` files in the same location to avoid accidentally losing information that
+they still need.
+
+In addition, Backup should allow users to type a path without typing file name `addressbook.xml` (which is required for
+the code to write to the new file copy). This is because the file name is always constant, and those who do not know
+the file name or are familiar with the app can choose not to include it in the path provided, thus saving time and
+preventing confusion.
+
+*Alternatives considered*
+
+Cloud saving and back up was attempted in early stages. We tried to use CloudRail to integrate to cloud services such
+as OneDrive and Dropbox so that users can login and directly back up their address books in online storage. However,
+three challenges surfaced:
+
+. Not all users can be expected to have accounts in these cloud storage providers.
+. The implementation would further complicate and clutter both user and developer ends, and cause the app to be
+less responsive and possibly less user oriented.
+. CloudRail did not officially support our application's use of Gradle, and integration may not be completely stable
+across all devices.
+
+As such, this idea was postponed. If these challenges are addressed, it remains a highly viable and useful feature.
 
 
 
 ---
-
+//end::backup[]
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

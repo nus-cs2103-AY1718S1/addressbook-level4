@@ -18,7 +18,8 @@ public class BackupCommand extends Command {
     public static final String COMMAND_ALIAS = "b";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
-            + ": Backs up your address book to the directory of your choice.\n"
+            + ": Backs up your address book to the directory of your choice. Note that existing backups in the same "
+            + "location must be removed or renamed as file overwriting is OFF. \n"
             + "Parameters: "
             + "Location of target directory.";
 
