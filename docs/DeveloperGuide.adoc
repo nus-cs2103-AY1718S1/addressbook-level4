@@ -830,9 +830,10 @@ The list is sorted whenever a parcel is added, edited. This is
 because these commands are the ones that might possibly cause the new parcel to be placed
 in the wrong position. +
 
-Trouble arises with different tabs. Now the `add` and `edit` command changes the state of the parcels
-and they are to be selected upon execution. With tab switches, and active lists, it is crucial that
-we manipulate the various witches. +
+Ark has two tabs, one for uncompleted parcels, the other for completed parcels. Whenever `add` and `edit` commands
+are executed, the newly added or edited parcel gets selected. If the status of the newly added or edited parcel is
+not on the current active list, a tab switch needs to happen. This is taken care off by the selection mechanism within
+the Model Manager class.
 
 ==== Design Considerations
 
