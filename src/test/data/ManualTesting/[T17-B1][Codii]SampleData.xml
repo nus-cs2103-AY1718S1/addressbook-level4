@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Amy Bee</name>
+        <handphone>91111111</handphone>
+        <homePhone>61111111</homePhone>
+        <officePhone>60000001</officePhone>
+        <email>amy@example.com</email>
+        <address>Block 312, Amy Street 1</address>
+        <postalCode>101312</postalCode>
+        <debt>100002.00</debt>
+        <totalDebt>100002.00</totalDebt>
+        <interest>2</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>11-11-2020</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>false</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>friend</tagged>
+    </persons>
+    <persons>
+        <name>Bob Choo</name>
+        <handphone>98765432</handphone>
+        <homePhone>62020022</homePhone>
+        <officePhone>60002000</officePhone>
+        <email>johnd@example.com</email>
+        <address>311, Clementi Ave 2, #02-25</address>
+        <postalCode>123311</postalCode>
+        <debt>12345.00</debt>
+        <totalDebt>12345.00</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>false</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>friendly</tagged>
+        <tagged>tricky</tagged>
+    </persons>
+    <persons>
+        <name>Carl Kurz</name>
+        <handphone>95352563</handphone>
+        <homePhone>62333233</homePhone>
+        <officePhone>60030003</officePhone>
+        <email>heinz@example.com</email>
+        <address>wall street</address>
+        <postalCode>111111</postalCode>
+        <debt>123456.00</debt>
+        <totalDebt>123456.00</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>false</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Daniel Meier</name>
+        <handphone>87652533</handphone>
+        <homePhone>64044444</homePhone>
+        <officePhone>60044004</officePhone>
+        <email>cornelia@example.com</email>
+        <address>10th street</address>
+        <postalCode>101010</postalCode>
+        <debt>1234567.00</debt>
+        <totalDebt>1234567.00</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>false</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>violent</tagged>
+        <tagged>tricky</tagged>
+    </persons>
+    <persons>
+        <name>Elle Meyer</name>
+        <handphone>94872224</handphone>
+        <homePhone>65055005</homePhone>
+        <officePhone>60050505</officePhone>
+        <email>werner@example.com</email>
+        <address>michegan ave</address>
+        <postalCode>673673</postalCode>
+        <debt>100000.00</debt>
+        <totalDebt>100000.00</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>false</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>violent</tagged>
+    </persons>
+    <persons>
+        <name>Fiona Kunz</name>
+        <handphone>94824227</handphone>
+        <homePhone>66066606</homePhone>
+        <officePhone>Not available</officePhone>
+        <email>lydia@example.com</email>
+        <address>little tokyo</address>
+        <postalCode>676111</postalCode>
+        <debt>12.00</debt>
+        <totalDebt>12.00</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>false</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>friendly</tagged>
+        <tagged>tricky</tagged>
+    </persons>
+    <persons>
+        <name>George Best</name>
+        <handphone>94821442</handphone>
+        <homePhone>67273787</homePhone>
+        <officePhone>Not available</officePhone>
+        <email>anna@example.com</email>
+        <address>4th street</address>
+        <postalCode>040004</postalCode>
+        <debt>45.00</debt>
+        <totalDebt>45.00</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>false</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Jelena Neo</name>
+        <handphone>85355255</handphone>
+        <homePhone>61234123</homePhone>
+        <officePhone>Not available</officePhone>
+        <email>alice@example.com</email>
+        <address>123, Jurong West Ave 6, #08-111</address>
+        <postalCode>683123</postalCode>
+        <debt>1234567.00</debt>
+        <totalDebt>1234567.00</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>true</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Khoo Wei Ping</name>
+        <handphone>98765432</handphone>
+        <homePhone>65600222</homePhone>
+        <officePhone>Not available</officePhone>
+        <email>johnd@example.com</email>
+        <address>311, Clementi Ave 2, #02-25</address>
+        <postalCode>111111</postalCode>
+        <debt>1234567.00</debt>
+        <totalDebt>1234567.00</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>true</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Jaivignesh Venugopal</name>
+        <handphone>95352563</handphone>
+        <homePhone>63433233</homePhone>
+        <officePhone>Not available</officePhone>
+        <email>heinz@example.com</email>
+        <address>wall street</address>
+        <postalCode>111111</postalCode>
+        <debt>1234567.00</debt>
+        <totalDebt>1234567.00</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>true</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Lawrence Koh</name>
+        <handphone>87652533</handphone>
+        <homePhone>64748494</homePhone>
+        <officePhone>Not available</officePhone>
+        <email>cornelia@example.com</email>
+        <address>10th street</address>
+        <postalCode>111111</postalCode>
+        <debt>1234567.00</debt>
+        <totalDebt>1234567.00</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>true</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Archana Pradeep</name>
+        <handphone>94812224</handphone>
+        <homePhone>61111101</homePhone>
+        <officePhone>60000010</officePhone>
+        <email>werner@example.com</email>
+        <address>michegan ave</address>
+        <postalCode>111111</postalCode>
+        <debt>0.00</debt>
+        <totalDebt>123456.00</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>false</isBlacklisted>
+        <isWhitelisted>true</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Lakshmi Sirisha</name>
+        <handphone>94822427</handphone>
+        <homePhone>62222202</homePhone>
+        <officePhone>60000020</officePhone>
+        <email>lydia@example.com</email>
+        <address>little tokyo</address>
+        <postalCode>111111</postalCode>
+        <debt>0.00</debt>
+        <totalDebt>123456.00</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>false</isBlacklisted>
+        <isWhitelisted>true</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Khor Ru Shan</name>
+        <handphone>94823442</handphone>
+        <homePhone>63333303</homePhone>
+        <officePhone>60000030</officePhone>
+        <email>anna@example.com</email>
+        <address>4th street</address>
+        <postalCode>111111</postalCode>
+        <debt>0.00</debt>
+        <totalDebt>123456.00</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>false</isBlacklisted>
+        <isWhitelisted>true</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Kennard</name>
+        <handphone>94823442</handphone>
+        <homePhone>63333303</homePhone>
+        <officePhone>60000030</officePhone>
+        <email>anna@example.com</email>
+        <address>5th street</address>
+        <postalCode>111112</postalCode>
+        <debt>4.00</debt>
+        <totalDebt>123456789.00</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Tue, 11 Nov, Year 2014</dateBorrow>
+        <deadline>11-11-2015</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>false</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>true</hasOverdueDebt>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bob Choo</name>
+        <handphone>92222222</handphone>
+        <homePhone>62222222</homePhone>
+        <officePhone>60000002</officePhone>
+        <email>bob@example.com</email>
+        <address>Block 123, Bobby Street 3</address>
+        <postalCode>102123</postalCode>
+        <debt>100001.00</debt>
+        <totalDebt>100001.00</totalDebt>
+        <interest>3</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>11-12-2021</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>false</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>friend</tagged>
+        <tagged>husband</tagged>
+    </persons>
+    <persons>
+        <name>Jonathan Lim</name>
+        <handphone>98765432</handphone>
+        <homePhone>69875432</homePhone>
+        <officePhone>Not available</officePhone>
+        <email>jon@example.com</email>
+        <address>Block 123, Ang Mo Kio</address>
+        <postalCode>102123</postalCode>
+        <debt>800</debt>
+        <totalDebt>800</totalDebt>
+        <interest>1</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>false</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>friend</tagged>
+        <tagged>violent</tagged>
+    </persons>
+    <persons>
+        <name>Steave Rogger</name>
+        <handphone>92345678</handphone>
+        <homePhone>62345678</homePhone>
+        <officePhone>Not available</officePhone>
+        <email>steve@example.com</email>
+        <address>Block 456, Bishan</address>
+        <postalCode>102123</postalCode>
+        <debt>9000</debt>
+        <totalDebt>9000</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>false</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>friendly</tagged>
+        <tagged></tagged>
+    </persons>
+    <persons>
+        <name>Toni Star</name>
+        <handphone>98888888</handphone>
+        <homePhone>68888888</homePhone>
+        <officePhone>Not available</officePhone>
+        <email>iron@example.com</email>
+        <address>Block 457, Bishan</address>
+        <postalCode>102123</postalCode>
+        <debt>7000</debt>
+        <totalDebt>7000</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>false</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>tricky</tagged>
+        <tagged></tagged>
+    </persons>
+    <persons>
+        <name>Timothy Chu</name>
+        <handphone>97777777</handphone>
+        <homePhone>67777777</homePhone>
+        <officePhone>Not available</officePhone>
+        <email>kyle@example.com</email>
+        <address>Block 458, Bishan</address>
+        <postalCode>102123</postalCode>
+        <debt>600</debt>
+        <totalDebt>600</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>false</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>friendly</tagged>
+        <tagged></tagged>
+    </persons>
+    <persons>
+        <name>Donny Yuan</name>
+        <handphone>94444444</handphone>
+        <homePhone>64444444</homePhone>
+        <officePhone>Not available</officePhone>
+        <email>zhuilong@example.com</email>
+        <address>Block 459, Bishan</address>
+        <postalCode>102123</postalCode>
+        <debt>1200</debt>
+        <totalDebt>1200</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>false</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>friendly</tagged>
+        <tagged></tagged>
+    </persons>
+    <tags>violent</tags>
+    <tags>friendly</tags>
+    <tags>friends</tags>
+    <tags>tricky</tags>
+    <tags>husband</tags>
+    <tags>friend</tags>
+</addressbook>
