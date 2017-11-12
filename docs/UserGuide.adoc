@@ -243,6 +243,7 @@ Example: `appoint 1 ap/12/12/2020 15:12 60` +
 ****
 * If the person already have an appointment, the new appointment will override the old one
 * If ap/ is left blank, the old appointment will be deleted.
+* The user will be reminded 60 minutes before an appointment, ONLY WHEN the appointment was added from another session.
 ****
 
 // end::appoint[]
@@ -286,7 +287,6 @@ Adds the 2nd person to the group CS2103 in the address book.
 Adds the 1st person from the results of the `find` command to the group Family.
 
 === Removing from groups : `ungroup`
-
 
 Used to remove from a group person identified by the index used in the last person listing. +
 Format: `ungroup INDEX gn/GROUP_NAME` +
@@ -339,7 +339,7 @@ Examples:
 === Sending my contact detail to someone: `sharecontact`
 
 [NOTE]
-TBI in v2.0
+TBI in v2.0: command `sharecontact`
 
 Share my contact details to someone in the address book, indicated by INDEX.
 Format: `sharecontact INDEX`
@@ -451,7 +451,9 @@ Commands and parameters will be suggested as you type, where applicable.
 === Autocomplete commands
 
 After you type first few characters, user can press TAB to autocomplete to the if there is a unique command starting +
-with those characters.
+with those characters. Note that for some commands, this doesn't really work well due to the similarities of the +
+commands (e.g. `filter` and `filterall`).`Filter` can't be autocompleted (but can be aliased) and `filterall` can +
+only be autocompleted when typed `filtera`.
 
 
 // end::searching[]

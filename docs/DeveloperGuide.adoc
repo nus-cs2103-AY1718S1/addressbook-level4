@@ -450,8 +450,11 @@ will be shown as the user type commands. This has not been implemented but will 
 // tag::appoint[]
 
 === Appointment
-Appointment is stored in a `UniqueAppointmentList`, which makes sure that the appointment is unique and does not clash with other +
+Appointment is stored in a `UniqueAppointmentList`, which makes sure that the appointment is unique and does not clash with other
 appointments.
+
+image::AppointmentSequenceDiagram.png[width="800"]
+
 
 ==== Design Considerations
 **Aspect:** Storing appointments +
@@ -471,6 +474,25 @@ appointments.
 **Pro:** Catered to users with multiple appointments per contact. +
 **Cons:** Would be hard to view on address book person card, hard to manage.
 
+
+---
+**Aspect:** Appointment reminder +
+**Alternative 1 (current choice):** Only reminds if appointment is added from another session. +
+**Pro:** Does not spam user with appointments which he just added. +
+**Cons:** The user might add a lot of appointments in one session which he might forget. +
+**Alternative 2:** Reminds regardless of when appointment is added. +
+**Pro:** Helps forgetful users. +
+**Cons:** Most people will not need this.
+
+
+---
+**Aspect:** Appointment removal +
+**Alternative 1 (current choice):** Appointments need to be manually removed after expiry. +
+**Pro:** User has full control and will not miss out any appointments in the past. +
+**Cons:** Appointment reminder still work until manually removed. +
+**Alternative 2:** Appointments automatically removed after expiry. +
+**Pro:** No more reminders for expired appointments. +
+**Cons:** Users might forget to attend appointment, so reminder even after expiry can help.
 // end::appoint[]
 
 // tag::findtag[]
@@ -808,6 +830,9 @@ Use case ends.
 [discrete]
 === Use case: Import persons
 
+[NOTE]
+TBI in v2.0
+
 *MSS*
 
 1. User import persons from an external csv file.
@@ -845,7 +870,6 @@ Use case resumes at step 2.
 *MSS*
 
 1. User adds an appointment to a contact through specifying the index.
-2. AddressBook sends an email to that contact.
 +
 Use case ends.
 
@@ -865,15 +889,11 @@ Use case ends.
 +
 Use case ends.
 
-* 2a. The email address is not correct and the email can't be delivered.
-+
-[none]
-** 2a1. AddressBook notifies the user.
-+
-Use case ends.
-
 [discrete]
 === Use case: Gradebook
+
+[NOTE]
+TBI in v2.0
 
 *MSS*
 
@@ -901,6 +921,8 @@ Use case resumes at step 2.
 
 [discrete]
 === Use case: Exam List
+[NOTE]
+TBI in v2.0
 
 *MSS*
 
@@ -927,6 +949,8 @@ Use case resumes at step 2.
 
 [discrete]
 === Use case: Weekly Schedule
+[NOTE]
+TBI in v2.0
 
 *MSS*
 
