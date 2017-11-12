@@ -37,11 +37,10 @@ include::../DeveloperGuide.adoc[tag=backupandrestore]
 
 ---
 
-=== Enhancement Proposed: Person and Meeting hashmap data structure
+=== Enhancement Proposed: Multiple backup files with specified path
 
-Every time a person object is updated, the corresponding meeting object has to be updated as well.
-This is because the meeting object contains a person object.
-With a hashmap data structure, updating a person will be much faster as compared to looping through a list.
+User should be able to save different copies of backup data files as they may want to restore data from different sessions.
+They should be given the choice to specify the file path to save to and the file path to restore data from.
 
 === Other contributions
 
@@ -50,3 +49,5 @@ Pull requests https://github.com/CS2103AUG2017-W13-B3/main/pull/122[#122])
 * Updated various commands to work with new meeting list (Pull requests https://github.com/CS2103AUG2017-W13-B3/main/pull/116[#116],
 Pull requests https://github.com/CS2103AUG2017-W13-B3/main/pull/127[#127],
 Pull requests https://github.com/CS2103AUG2017-W13-B3/main/pull/132[#132],)
+* Discovered bugs during acceptance testing (Issues https://github.com/CS2103AUG2017-W15-B2/main/issues/59[#59], https://github.com/CS2103AUG2017-W15-B2/main/issues/60[#60])
+

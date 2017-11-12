@@ -369,7 +369,7 @@ image::BackupCommandSequenceDiagram.png[width="800"]
 _Figure 3.2.1 : Backup Command Sequence Diagram_
 
 [NOTE]
-`RestoreBackupCommand` shares a similar sequence diagram in terms of logic.
+`RestoreBackupCommand` shares a similar flow for its sequence diagram.
 
 The `BackupCommand` is executed when the command `backup` is entered. The data that is in `Model` or the active address book is first passed as a parameter to `BackupDataEvent`. The event will be handled by `StorageManager` and is saved into the default file path "data/addressbook-backup.xml".
 The following is the implementation of `BackupCommand`:
