@@ -1,3 +1,4 @@
+/*@@author NgSuli*/
 .background {
     -fx-background-color: derive(white, 20%);
     background-color: white; /* Used in the default.html file */
@@ -161,7 +162,7 @@
 }
 
 .result-display .label {
-    -fx-text-fill: black; !important;
+    -fx-text-fill: black !important;
 }
 
 .status-bar .label {
@@ -222,7 +223,7 @@
     -fx-border-color: #e2e2e2;
     -fx-border-width: 2;
     -fx-background-radius: 0;
-    -fx-background-color: #white;
+    -fx-background-color: white;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
     -fx-text-fill: #d8d8d8;
@@ -355,3 +356,5 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+/*@@author*/
