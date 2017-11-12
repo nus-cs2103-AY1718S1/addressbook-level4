@@ -396,12 +396,22 @@ _Figure 4.1.7 : Undo Redo Activity Diagram_
 **Alternative 2:** Use `HistoryManager` for undo/redo +
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
-// end::undoredo[]
+//end::undoredo[]
 
-=== Open new AddressBook mechanism
+//tag::opennew[]
+
+=== `open` and `new` command mechanism
+
+image::OpenCommandSequenceDiagram.PNG[width="800"]
+_Figure 4.2.1 : Open Existing Address Book Sequence Diagram_
+
+image::NewCommandSequenceDiagram.PNG[width="800"]
+_Figure 4.2.2 : Create New Address Book Sequence Diagram_
+
+From the sequence diagram, we can see that the workflow is very similar. One thing to note is that even though the
+preprocessing is different, in the end they will post the same `SwitchAddressBookRequestEvent` to the `EventsCenter`.
 
 image::OpenAddressBookEvent.png[width="800"]
-_Figure 4.2.1 : Open New Address Book Sequence Diagram_
 
 As you can see from the diagram, when the `Open` button is clicked in the Application, it raises an event and triggers `MainApp` to update new Application metadata and restart the UI.
 
@@ -409,16 +419,33 @@ This loads the selected XML file which opens a new address book with contacts fr
 
 ==== Design considerations
 
-**Aspect:** Architectural Design +
-**Alternative 1 (current choice):** Event-Driven Architectural Style +
-**Alternative 2:** N-Tier Architectural Design +
+**Aspect:** Similarity of implementation for Open and New command.
 
-=== Add new person with optional fields
+**Alternative 1 (current choice):** Separate the two commands until the final `post` event. +
+**Pros:** Middle ground between Alternative 2 and Alternative 3. Merge similar actions together while separating classes
+ that are doing different operations. In this case, the similar part is to finally open a new DeathNote (reset, initialize, restart...).
+ Therefore, we use the same RequestEvent for both commands. The preprocessing is different, since one check for existing file and one
+ check for the other way round, we separate both of them. +
+**Cons:** Slightly harder for developers to get understand how `SwitchAddressBookRequestEvent` works. +
+**Alternative 2:** Separate the two commands totally. +
+**Pros:** Easier for new developers to understand the underlying mechanism because they can treat them as different operations. +
+**Cons:** Hard to maintain. Since two commands are very similar. If a bug is found in one of them, the other one is
+likely to be affected as well. Hence twice amount of work for the same outcome. +
+**Alternative 3:** Combine the two commands totally. +
+**Pros:** Easier to maintain because everything is within the same class. +
+**Cons:** Confusing to understand. NewCommand checks that `Path` is not an existing file but OpenCommand checks that `Path`
+ is an existing file. The implementation is likely to have many conditional statements. Changing one class affects both commands. +
 
-Adding new person in the application requires only name. All other fields are optional. This is done by allowing the creation of
-`Phone`, `Email`, etc. objects with `null` parameter.
+//end::opennew[]
 
-Problems arise when these field classes can created with a `null` parameter. Necessary changes are mostly about additional
+//tag::add[]
+
+=== Making parameters optional
+
+Adding a new person into DeathNote requires only `Name`. All other fields are optional. This is
+achieved by allowing field objects to be instantiated with `null` parameter.
+
+Problems arise when field objects are instantiated with a `null` parameter. Necessary changes are mostly about additional
 checks of `null` in its respective class:
 
 ----
@@ -455,16 +482,20 @@ checks of `null` in its respective class:
 
 ==== Design considerations
 
-**Aspect:** Nature of field object when dealing with `null` +
+**Aspect:** Which component is responsible for `null`. +
 
-**Alternative 1 (current choice):** Each `Person` must have all field objects being non-null, but the respective objects
-can have `null` in their `value` field. +
-**Pros:** Only each field class needs to be modified. No other components are affected. +
-**Cons:** All existing tests will fail, since it wasn't meant to be allowed. +
+**Alternative 1 (current choice):** Parameters can be instantiated with `null` parameter, but the object itself cannot be `null`.
+**Pros:** Only parameter classes that are within `Model` component need to be modified. Other components are still functioning
+correctly. This improves coherent within `Model` component. +
+**Cons:** Potentially confusing for new developers. This design is equivalent to "having a phone with `null` number" rather
+than the more intuitive "doesn't have a phone".
 
-**Alternative 2:** Each `Person` can have field objects being `null`. +
-**Pros:** Only little modification needed to make in `Model` component. +
-**Cons:** Since many components rely on each field object being non-null, this design will fail the other components. +
+**Alternative 2:** Parameter objects can be `null`. +
+**Pros:** More intuitive for a new developer. Easier modification on `Model` component.
+**Cons:** Many components rely on the assumption that parameter objects are non-null. Hence, this design will fail the other components.
+More verification is needed outside the `Model` component when interacting with these parameter objects. This increases coupling. +
+
+//end::add[]
 
 //tag::parameter[]
 
@@ -534,6 +565,18 @@ https://github.com/CS2103AUG2017-W10-B3/main/pull/8/files[Adding birthday parame
 **Cons:** It is not consistent with the variables in `Person` +
 
 //end::parameter[]
+
+//tag::find[]
+
+=== Find Command
+
+
+
+==== Design considerations
+
+
+
+//end::find[]
 
 //tag::website[]
 
