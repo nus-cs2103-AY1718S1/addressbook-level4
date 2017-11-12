@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
-import static seedu.address.logic.commands.ImportCommand.MESSAGE_FAILURE_DUPLICATE_PARCELS;
+import static seedu.address.logic.commands.ImportCommand.MESSAGE_INVALID_DUPLICATE_PARCELS;
 import static seedu.address.logic.commands.ImportCommand.MESSAGE_SUCCESS;
 import static seedu.address.testutil.TypicalParcels.ALICE;
 import static seedu.address.testutil.TypicalParcels.AMY;
@@ -59,7 +59,7 @@ public class ImportCommandTest {
 
         ImportCommand importCommand = getImportCommandForParcel(parcels, modelManager);
         thrown.expect(CommandException.class);
-        thrown.expectMessage(MESSAGE_FAILURE_DUPLICATE_PARCELS);
+        thrown.expectMessage(MESSAGE_INVALID_DUPLICATE_PARCELS);
         importCommand.execute();
     }
 

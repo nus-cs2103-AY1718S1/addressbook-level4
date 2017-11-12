@@ -36,7 +36,6 @@ public abstract class UndoableCommand extends Command {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
         model.updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
-        model.setActiveList(!previousActiveListIsAll);
         if (previousActiveListIsAll) {
             model.uiJumpToTabAll();
         } else {

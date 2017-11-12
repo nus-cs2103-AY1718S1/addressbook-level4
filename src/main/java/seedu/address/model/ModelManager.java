@@ -12,6 +12,8 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -73,9 +75,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author kennard123661
-    @Override
-    public void setActiveList(boolean isCompleted) {
+    @Subscribe @Override
+    public void setActiveList(JumpToTabRequestEvent event) {
+        boolean isCompleted = event.targetIndex == INDEX_SECOND_TAB.getZeroBased();
         activeParcels = isCompleted ? completedParcels : uncompletedParcels;
+        logger.info("Active list now set to "
+                + (isCompleted ? "completed parcels list." : "uncompleted parcels list."));
     }
     //@@author
 
@@ -144,6 +149,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> uniqueParcels,
                                            List<ReadOnlyParcel> duplicateParcels) {
+
         assert parcels != null : "parcels should not be null";
         assert uniqueParcels != null : "uniqueParcels should not be null";
         assert duplicateParcels != null : "duplicateParcels should not be null";
@@ -152,7 +158,9 @@ public class ModelManager extends ComponentManager implements Model {
             ReadOnlyParcel parcelToAdd = new Parcel(parcel);
 
             try {
-                addressBook.addParcel(parcelToAdd); // throws duplicate parcel exception if parcel is non-unique
+                // throws duplicate parcel exception if parcel is non-unique
+                addressBook.addParcel(parcelToAdd);
+
                 uniqueParcels.add(parcelToAdd);
             } catch (DuplicateParcelException ive) {
                 duplicateParcels.add(parcelToAdd);
@@ -274,17 +282,14 @@ public class ModelManager extends ComponentManager implements Model {
      * Method to internally change the active list to the correct tab according to the changed parcel.
      * @param targetParcel
      */
-
     private void handleTabChange(ReadOnlyParcel targetParcel) {
         try {
             if (targetParcel.getStatus().equals(Status.getInstance("COMPLETED"))) {
                 if (this.getTabIndex().equals(TAB_ALL_PARCELS)) {
-                    this.setActiveList(true);
                     uiJumpToTabCompleted();
                 }
             } else {
                 if (this.getTabIndex().equals(TAB_COMPLETED_PARCELS)) {
-                    this.setActiveList(false);
                     uiJumpToTabAll();
                 }
             }

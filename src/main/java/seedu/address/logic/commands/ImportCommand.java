@@ -7,6 +7,7 @@ import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.ModelManager;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.UniqueParcelList;
 
@@ -20,7 +21,7 @@ public class ImportCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds the data of a storage file stored in "
             + "data/import/ directory into Ark.\n"
-            + "Parameters: FILE (Must be a valid addressbook file stored in xml format) i.e.\n"
+            + "Parameters: FILE (Must be a valid Ark storage file stored in xml format) i.e.\n"
             + "Example: " + COMMAND_WORD + " ark_storage";
 
     public static final String MESSAGE_SUCCESS_SUMMARY = "Summary: %1$d parcels added and %2$d duplicate "
@@ -28,7 +29,7 @@ public class ImportCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS_BODY = "Parcels added: %3$s\nDuplicate Parcels: %4$s";
     public static final String MESSAGE_SUCCESS = MESSAGE_SUCCESS_SUMMARY + MESSAGE_SUCCESS_BODY;
 
-    public static final String MESSAGE_FAILURE_DUPLICATE_PARCELS = "All parcels in the imported save file will create "
+    public static final String MESSAGE_INVALID_DUPLICATE_PARCELS = "All parcels in the imported save file will create "
             + "duplicate parcels";
     public static final String MESSAGE_INVALID_FILE_EMPTY = "File to import is empty";
 
@@ -43,10 +44,12 @@ public class ImportCommand extends UndoableCommand {
 
     /**
      * Adds all unique parcels in {@code parcels} to the {@link UniqueParcelList} of the {@link AddressBook}. Ignores
-     * parcels that will create duplicates in the {@link UniqueParcelList}
+     * parcels that will create duplicates in the {@link UniqueParcelList}. To see the internal logic, see
+     * {@link ModelManager#addAllParcels(List, List, List)} for more information
      *
      * @return {@link CommandResult} created by {@link ImportCommand#executeUndoableCommand()}
      * @throws CommandException if {@code parcels} contain only duplicate parcels.
+     * @see ModelManager#addAllParcels(List, List, List)
      */
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
@@ -62,7 +65,7 @@ public class ImportCommand extends UndoableCommand {
 
         // check if all parcels are duplicates
         if (storedParcels.containsAll(parcels)) {
-            throw new CommandException(MESSAGE_FAILURE_DUPLICATE_PARCELS);
+            throw new CommandException(MESSAGE_INVALID_DUPLICATE_PARCELS);
         }
 
         model.addAllParcels(parcels, uniqueParcels, duplicateParcels);
@@ -75,7 +78,7 @@ public class ImportCommand extends UndoableCommand {
     }
 
     /**
-     * @return formatted list of parcels added/not added for ImportCommand execution result.
+     * Returns formatted list of parcels added/not added for ImportCommand execution result.
      */
     public static String getImportFormattedParcelListString(List<ReadOnlyParcel> parcels) {
         if (parcels.size() == 0) {

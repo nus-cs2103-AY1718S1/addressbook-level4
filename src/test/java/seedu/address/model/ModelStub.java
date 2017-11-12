@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToTabRequestEvent;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
@@ -30,7 +31,7 @@ public class ModelStub implements Model {
 
     //@@author kennard123661
     @Override
-    public void setActiveList(boolean isCompleted) {
+    public void setActiveList(JumpToTabRequestEvent event) {
         fail("This method should not be called.");
     }
     //@@author

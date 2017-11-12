@@ -87,11 +87,8 @@ public class EditCommandTest {
 
         expectedModel.updateParcel(lastParcel, editedParcel);
         expectedModel.maintainSorted();
-        expectedModel.setActiveList(true);
-        expectedModel.forceSelectParcel(editedParcel);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-
     }
 
     @Test

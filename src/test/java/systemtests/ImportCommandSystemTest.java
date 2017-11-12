@@ -77,13 +77,13 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: add a duplicate parcel -> rejected */
         command = ImportCommand.COMMAND_WORD + " " + STORAGE_FILE;
-        assertCommandFailure(command, ImportCommand.MESSAGE_FAILURE_DUPLICATE_PARCELS);
+        assertCommandFailure(command, ImportCommand.MESSAGE_INVALID_DUPLICATE_PARCELS);
 
         /* Case: import an addressbook xml file containing duplicate parcels except with different tags -> rejected */
         updateStorageAndAddressBook(new ParcelBuilder(AMY).withTags(Tag.HEAVY.toString()).build(),
                 new ParcelBuilder(BOB).withTags(Tag.FRAGILE.toString()).build());
         command = ImportCommand.COMMAND_WORD + " " + STORAGE_FILE;
-        assertCommandFailure(command, ImportCommand.MESSAGE_FAILURE_DUPLICATE_PARCELS);
+        assertCommandFailure(command, ImportCommand.MESSAGE_INVALID_DUPLICATE_PARCELS);
 
         /* Case: imports parcels with all fields same as other parcels in the address book except name -> imported */
         updateStorageAndAddressBook(new ParcelBuilder(AMY).withName("Kyle").build(),

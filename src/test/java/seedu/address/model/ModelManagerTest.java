@@ -60,11 +60,12 @@ public class ModelManagerTest {
         assertEquals(8, modelManager.getAddressBook().getParcelList().size());
         assertEquals(2, modelManager.getCompletedParcelList().size());
         assertEquals(6, modelManager.getUncompletedParcelList().size());
-
-        assertEquals(modelManager.getActiveList(), modelManager.getUncompletedParcelList());
-        modelManager.setActiveList(true);
-        assertEquals(modelManager.getActiveList(), modelManager.getCompletedParcelList());
     }
+
+
+
+    //@@author
+
 
     @Test
     public void equals() {
@@ -102,5 +103,4 @@ public class ModelManagerTest {
         differentUserPrefs.setAddressBookName("differentName");
         assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
     }
-
 }
