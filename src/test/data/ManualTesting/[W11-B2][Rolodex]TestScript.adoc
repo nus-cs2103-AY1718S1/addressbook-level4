@@ -1204,7 +1204,7 @@ Remark Command
 
 [[basic-functionality8]]
 Basic Functionality
-^^^^
+^^^^^^^^^^^^^^^^^^
 
 1.  Type `remark 1 r/Loves to talk.`
 2.  Press `Enter`
