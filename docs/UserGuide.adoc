@@ -113,7 +113,7 @@ Read more about parcel tags in the link:#tag[Tags section] below.
 The Name field represents the name of the parcel's recipient. It can contain the name of the organisation or the person
  that you are delivering to the parcel to. +
 
-[[Note]]
+[Note]
 The Name field will only allow alphanumeric characters separated by whitespace. e.g. `John Doe`;
 `8 Noodles at Shangri-La's Rasa Sentosa Resort & Spa` +
 Non-alphanumeric entries will be rejected by Ark. e.g. `John Doe!`
@@ -198,7 +198,7 @@ code exists even though it might meet the criteria above. The team is working on
 The Email field represents the email contact of the parcel's recipient. It can contain the email of the organisation
 or the person that you are delivering to the parcel to.
 
-[[Note]]
+[NOTE]
 The Email field will only allow alphanumeric or periods characters separated by an `@`character. e.g. `John@example.com`
 
 //tag::deliveryDate[]
