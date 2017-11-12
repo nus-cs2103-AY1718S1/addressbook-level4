@@ -20,8 +20,8 @@ import seedu.address.commons.core.LogsCenter;
 
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelUnselectEvent;
-
 import seedu.address.commons.events.ui.PersonSelectionChangedEvent;
+
 import seedu.address.logic.Logic;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -213,6 +213,7 @@ public class DetailsPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonInfo(event.getNewSelection());
     }
+
 
 }
 

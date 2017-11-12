@@ -18,7 +18,7 @@ public class EventName {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String EVENT_NAME_VALIDATION_REGEX = "[A-Za-z ']*";
+    public static final String EVENT_NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum}'!, ]*";
 
     public final String fullName;
 
@@ -29,7 +29,7 @@ public class EventName {
      */
     public EventName(String name) throws IllegalValueException {
         requireNonNull(name);
-        String trimmedName = toCapitalized(name.trim());
+        String trimmedName = name.trim();
         if (!isValidName(trimmedName)) {
             throw new IllegalValueException(MESSAGE_EVENT_NAME_CONSTRAINTS);
         }
@@ -60,25 +60,4 @@ public class EventName {
     public int hashCode() {
         return fullName.hashCode();
     }
-
-    //@@author DarrenCzen
-    /**
-     * This method converts a name to become capitalized fully.
-     * e.g. from "dArrEn cHiN" to "Darren Chin"
-     */
-    public static String toCapitalized(String s) {
-
-        final String delimiters = " ";
-        StringBuilder newString = new StringBuilder();
-        boolean isCapital = true;
-
-        for (char c : s.toCharArray()) {
-            c = (isCapital) ? Character.toUpperCase(c) : Character.toLowerCase(c);
-            newString.append(c);
-
-            isCapital = (delimiters.indexOf((int) c) >= 0);
-        }
-        return newString.toString();
-    }
-    //@@author
 }
