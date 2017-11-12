@@ -818,7 +818,7 @@ use different tag names to refer to the same tag.
 
 //tag::sortedList[]
 
-=== Maintain sorted mechanism
+=== Maintain sorted and selection mechanism
 image::AddParcelSdForLogic.png[width="890"]
 _Figure 4.14.1 : Adding Alice to Ark, maintainSorted is actually called and returns void._
 
@@ -826,15 +826,13 @@ The list of parcels in Ark is maintained to be always in sorted order according 
 with the earliest being on the top. This is so that the user will be able to look at the more
 pertinent deliveries. +
 
-The list is sorted whenever a parcel is added, edited or if a redo command is made. This is
+The list is sorted whenever a parcel is added, edited. This is
 because these commands are the ones that might possibly cause the new parcel to be placed
 in the wrong position. +
 
-To maintain the selected element despite sorting however, we require a way to track which parcel
-is selected. Static variables to track which card has been selected has been added to the Model
-class. The Model class now has the following methods: `select`, `unselect`, `getPrevIndex`,
-`hasSelected` and `forceSelect`. Whenever we select an item, we will use `select` to indicate that
-we have selected a parcel card and we will then re-select that particular card after we have sorted. +
+Trouble arises with different tabs. Now the `add` and `edit` command changes the state of the parcels
+and they are to be selected upon execution. With tab switches, and active lists, it is crucial that
+we manipulate the various witches. + 
 
 ==== Design Considerations
 
@@ -853,9 +851,6 @@ just using the built in sorting methods. +
 //tag::ArkBot[]
 
 === ArkBot: A Telegram Bot Interface for Ark
-image::AddParcelSdForLogic.png[width="890"]
-_Figure 4.13.1 : Adding Alice to Ark, maintainSorted is actually called and returns void._
-
 ArkBot is written using https://github.com/rubenlagus/TelegramBots[TelegramBots], a Java library written by
 https://github.com/rubenlagus[rubenlagus] to create bots using https://core.telegram.org/bots/api[Telegram Bots API].
 
@@ -869,19 +864,22 @@ command, I would send `/help` to ArkBot.
 
 If we enter the `complete` command into ArkBot without any parameters, we enter `listen` mode.
 
-In `listen` mode, ArkBot is waiting for a QR
+In `listen` mode, ArkBot is waiting for a QR to be sent to be analysed. The image is then downloaded and using the
+https://github.com/zxing/zxing[zxing] barcode scanning library for Java, the information is unwrapped and parsed into
+the edit command to change the status of the parcel to `COMPLETED`.
+
+To exit `listen` mode, type `/cancel`.
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `maintainSorted` +
-**Alternative 1 (current choice):** Constant sort the list of parcels whenever there is a change that
-potentially could disrupt the order of the list. +
-**Pros:** Intuitive and guarantees that list is sorted in the right order +
-**Cons:** Many commands have to be changed +
-**Alternative 2:** Insert the new / edited parcel to fit into the sorted list. +
-**Pros:** Use less computation as the list of parcels is already sorted. +
-**Cons:** More difficult to implement as we'll need to implement our own sorting algorithm as opposed to
-just using the built in sorting methods. +
+**Aspect:** Implementation of `ArkBot` +
+**Alternative 1 (current choice):** Parse the arguments from the user into various commands as needed. If there any
+errors that surface, reply user with default error message. +
+**Pros:** Functions of commands on Ark remain the same, reusing current implementation +
+**Cons:** Error catching is difficult, it is difficult to test and slower as information is handle by many parties. +
+**Alternative 2:** Program each command from the Bot to directly interface with Model and Logic Managers on Ark +
+**Pros:** Quicker and more director way of communication. Less reliant on Ark commands. +
+**Cons:** More difficult to implement as we'll need to implement our own version of all the command on Ark. +
 
 //end::ArkBot[]
 

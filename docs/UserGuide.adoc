@@ -788,7 +788,8 @@ of the list so that the user does not have to manually do so.
 
 //tag::ArkBot[]
 
-=== ArkBot: A Telegram Bot Interface for Ark
+=== ArkBot: Telegram Bot Interface for Ark
+==== An Overview
 As a desktop application, isn't it rather cumbersome for a delivery man to check and update information on the go,
 when he is making his deliveries? We thought so to. As such we developed a Telegram Bot Interface for Ark so that the
 delivery man would be able to conveniently see which deliveries he has remaining and their addresses. Furthermore,
@@ -797,6 +798,7 @@ he will be able to mark the deliveries as complete easily from the convenience o
 Like all Telegram Bots, each command must be prefixed with a `/` character. So if I were to want to trigger the help
 command, I would send `/help` to ArkBot. The command formats are identical to that of Ark to make things easy to recall.
 
+==== ArkBot Commands
 Here the commands that are available in ArkBot.
 
 [width="100%",cols="60%,<40%",options="header",]
@@ -814,6 +816,28 @@ Here the commands that are available in ArkBot.
 |/cancel | Cancels listen mode.
 |/help | Brings up help dialogue with information on commands.
 |=======================================================================
+
+==== ArkBot Listen Mode
+If `/complete` is entered without a parcel index, ArkBot will enter `listen mode`. In `listen mode`, ArkBot will wait
+for an image QR code to be sent. The QR code must contain details of the parcel and the parcel must be present in the
+Ark's list of parcels.
+
+image::QR_Sample_Interaction.png[width="400"]
+_Figure 6.21.3.1: Sample interaction of sending QR code to ArkBot_
+
+As shown in Figure 6.21.3.1, upon typing `/complete`, ArkBot will prompt the user for an image. If ArkBot is able to
+recognise the parcel, it will reply with the parcel's previous details as shown and mark it as completed on Ark.
+
+If ArkBot is not in `listen mode` and a QR code with parcel details are sent, ArkBot assumes that the user is trying to
+read the information on the QR code and displays it.
+
+==== Configuring ArkBot
+Telegram Bots require an Authorization Token which make them unique. To make the ArkBot respond only
+to your Ark software, head https://core.telegram.org/bots#generating-an-authorization-token[here] to learn
+how to retrieve an Authorization Token from Telegram. After which, enter the authorization token into
+the config.json file that is created in the same folder you placed the Ark software executable file. This token
+is especially important as anyone with access to it will be able to access the information that is sent and received
+by the bot.
 
 //end::ArkBot[]
 
