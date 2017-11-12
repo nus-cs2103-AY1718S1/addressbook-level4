@@ -523,6 +523,20 @@ PHRASE: john tan
 ----
 
 If none of the meetings contains the `PHRASE`, the results would show "No meetings found".
+
+==== Design Considerations
+
+**Aspect:** How to narrow down search results +
+**Alternative 1:** reducing the number of search results when more keywords are added +
+**Pros:** Allows more flexibility when searching for a specific meeting +
+**Cons** Might not be able to sufficiently narrow down search results when there is a large amount of meetings stored
+
+**Current Choice :** Searching based on the entire name of a person +
+**Pros:** Able to significantly reduce the amount of meetings listed +
+**Cons** Restricts user to only search using one field
+
+
+---
 // end::findexactmeeting[]
 
 // tag::editmeeting[]
@@ -622,9 +636,14 @@ the same as one of the preexisting Meetings in the addressbook.
 ==== Design Considerations
 
 **Aspect:** how `EditMeetingCommand` executes +
-**Alternative 1 :** Comparing the different parameters individually without the creation
+**Alternative 1:** Comparing the different parameters individually without the creation
  of a new instance of a `Meeting` +
 **Pros:** More direct and faster way of editing the different parameters of the `Meeting` object +
+**Cons:** Unable to check for invalid fields of later inputs
+
+**Current Choice:** Creating a new edited meeting object before modifying the one in the database. +
+**Pros:** Able to check if edited fields are valid +
+**Cons:** Involves the creation of new objects, possibly longer run time
 
 // tag::meetingCard[]
 === Meeting Card

@@ -1,12 +1,18 @@
-= John Doe - Project Portfolio
+= Ng Kheng Yi - Project Portfolio
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
 == Project: Schedubook
-Schedubook is a desktop address book application
+Schedubook is a desktop address book application which acts as both an address book and also acts as an aide for
+the scheduling of meetings, catering mainly to students. In addition to storing contacts and the information of
+meetings, Schedubook is also able to remind its users of upcoming meetings through the use of a popup and colours to
+indicate the urgency of certain meetings. The user interacts with it using a CLI, and it has a GUI created with JavaFX.
 
-*Code contributed*: [link:../../collated/kyngyi.md[Main code]] [https://github.com[Test code]] {give links to collated code files}
+The purpose of this portfolio is to showcase the contributions that I have made towards the building of this
+application and also to justify the addition of the features or enhancements that I have made to the application.
+
+//*Code contributed*: [link:../../collated/kyngyi.md[Main code]] [https://github.com[Test code]]
 
 
 === Enhancement Added: Edit Meeting
@@ -58,7 +64,8 @@ include::../UserGuide.adoc[tag=findexactmeeting]
 
 The implementation of `findexactmeeting` allows users to narrow down their search results as compared
 to when using the `findmeeting` command as the conditions for a meeting to match the search results
-are more strict.
+are more strict. This command is useful when dealing with a large amount of meetings in the meeting list with people
+of similar names. _e.g, Clara Tan and Clara Soh_
 
 ==== Implementation
 
@@ -70,6 +77,10 @@ include::../DeveloperGuide.adoc[tag=findexactmeeting]
 #End of Extract#
 
 ---
+
+=== Enhancement Proposed
+* Integration of Google Calendar(Allowing import and export of meetings)
+* Notifcation of meetings even when application is closed
 
 === Other contributions
 
