@@ -13,6 +13,6 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 e.g. `import C:\users\user\Desktop\SampleData.xml`
 3. The sample data will overwrite the existing contacts list.
 
-== Adding a contact (Optional Fields)
-
-input `add n/Test User`
+[width="100%",cols="20%,30%,50%",options="header"]
+|=========================================================
+|Command|Syntax|Expected Output
