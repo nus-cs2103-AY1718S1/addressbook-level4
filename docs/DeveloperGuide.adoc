@@ -1850,7 +1850,8 @@ View the full code at https://github.com/CS2103AUG2017-T15-B3/main/blob/master/s
 https://github.com/CS2103AUG2017-T15-B3/main/blob/master/src/main/java/seedu/address/ui/AnchorPaneNode.java[AnchorPaneNode]
 
 The updating of different months and population of event nodes are done by the two separate methods that will post events to
-`EventsCenter` to update the calendar based on the `UniqueEventList`.
+`EventsCenter` to update the calendar based on the `currentYearMonth`. The listener `handlePopulateMonthEvent` method
+will then populate the Calendar in `MainWindow` with `EventList`.
 
 ----
     public void previousMonth() {
@@ -1860,6 +1861,14 @@ The updating of different months and population of event nodes are done by the t
     public void nextMonth() {
         currentYearMonth = currentYearMonth.plusMonths(1);
         EventsCenter.getInstance().post(new PopulateMonthEvent(currentYearMonth));
+    }
+----
+
+----
+    @Subscribe
+    private void handlePopulateMonthEvent(PopulateMonthEvent request) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(request));
+        calendar.populateCalendar(request.yearMonth, logic.getFilteredEventList());
     }
 ----
 
