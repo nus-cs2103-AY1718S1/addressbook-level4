@@ -32,7 +32,7 @@ public class UniqueAccountList implements Iterable<Account> {
 
         for (Account account : internalList) {
 
-            if (account.getUsername().fullName.equals(toCheck.getUsername().fullName)) {
+            if (account.getUsername().fullName.equals(toCheck.getUsername().fullName) && account.getPassword().value.equals(toCheck.getPassword().value)) {
                 return true;
             }
 

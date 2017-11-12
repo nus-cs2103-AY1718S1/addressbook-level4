@@ -68,8 +68,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 Format: `help`
 
 This will open the help windows as shown below, solving any problems you may have.
-+
-image::helpwindow.jpeg[width="790"]
+
+
+image::helpwindow.jpg[width="790"]
 _Figure 3.1.1 : Help Window._
 
 
@@ -82,8 +83,8 @@ Adds a person to the Gentleman's Guide +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 The Lady will be instantly added to the Gentleman's Guide, for the you to call another day.
-+
-image::addperson.jpeg[width="790"]
+
+image::addperson.jpg[width="790"]
 _Figure 3.2.1 : John Doe added to Gentleman's Guide._
 
 [TIP]
@@ -101,8 +102,8 @@ Thus, as a Gentleman, you add a reminder to the Gentleman's Guide.*
 
 Adds a reminder to the Gentleman's Guide +
 Format `addReminder z/TASK p/PRIORITY d/DATE and TIME m/MESSAGE [t/TAG]...`
-+
-image::addreminder.jpeg[width="790"]
+
+image::addreminder.jpg[width="790"]
 _Figure 3.3.1 : Reminder added to Gentleman's Guide._
 
 [TIP]
@@ -363,10 +364,12 @@ Deletes the 2nd reminder in the Gentleman's Guide.
 *While sending The Lady home, you select her contact to open Google Maps to direct you to her house.*
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Format: `select INDEX` +
+Or +
+Format: Clicking the person on the GUI.
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the Google Maps of the person address at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -380,6 +383,30 @@ Selects the 2nd person in the Gentleman's Guide.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Selecting a Reminder : `selectReminder`
+
+*As a Gentleman, you take detailed notes of your Reminders.
+Thus you select your Reminder in the Gentleman's Guide for easy viewing.*
+
+Selects the Reminder identified by the index number used in the last reminder listing. +
+Format: `selectReminder INDEX` +
+Or +
+Formal: Clicking the reminder on the Gui.
+
+****
+* Selects the Reminder and loads the Google search page the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd person in the Gentleman's Guide.
+* `find Betsy` +
+`select 1` +
+Selects the 1st person in the results of the `find` command.
 // tag::sort[]
 === Sorting all entries by name: `sort`
 
@@ -582,6 +609,7 @@ Thus you clear your entire Gentleman's Guide.*
 Clears all entries from the Gentleman's Guide. +
 Format: `clear`
 
+// tag::create[]
 
 === Creating a private database : `Create`
 
@@ -593,12 +621,20 @@ Format: `create u/USERNAME p/PASSWORD`
 
 e.g. `create u/JamesBond p/ShakenNotStirred`
 
+// end::create[]
+
+// tag::login[]
+
 === Logging in to private database : `login`
 
 Login into a Private Database +
 Format: `login u/USERNAME p/PASSWORD`
 
 e.g. `login u/JamesBond p/ShakenNotStirred`
+
+// end::login[]
+
+// tag::logout[]
 
 === Logging out of private database : `logout`
 
@@ -607,6 +643,8 @@ Thus, you logout of the private database on the Gentleman's Guide*
 
 Logout of a Private Database +
 Format: `logout`
+
+// end::logout[]
 
 === Exiting the program : `exit`
 
