@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.ScrollPane?>
 <AnchorPane minWidth="1000.0" prefHeight="650.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <SplitPane dividerPositions="0.5" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -18,11 +18,22 @@
                      <children>
                         <Label fx:id="id" styleClass="label-header" />
                         <Label fx:id="name" styleClass="name" />
-                        <HBox>
-                           <children>
-                               <ListView fx:id="customFieldList" layoutX="14.0" layoutY="21.0" prefHeight="120.0" prefWidth="300.0" />
-                           </children>
-                        </HBox>
+                        <ScrollPane style="-fx-background-color: transparent;" prefHeight="320" prefWidth="400">
+                             <HBox>
+                               <children>
+                                   <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                           <VBox fx:id="customFieldNameList" prefHeight="0.0" prefWidth="400.0" styleClass="label-bright" />
+                                       </children>
+                                   </VBox>
+                                   <VBox prefHeight="0.0" prefWidth="400.0">
+                                       <children>
+                                           <VBox fx:id="customFieldValueList" prefHeight="0.0" prefWidth="400.0" styleClass="label-bright" />
+                                       </children>
+                                   </VBox>
+                               </children>
+                            </HBox>
+                        </ScrollPane>
                      </children>
                   </VBox>
                </children>

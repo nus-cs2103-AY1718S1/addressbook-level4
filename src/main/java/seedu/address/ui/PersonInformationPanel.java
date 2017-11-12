@@ -1,25 +1,19 @@
 //@@author ngzuyao
 package seedu.address.ui;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.util.Pair;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -36,9 +30,6 @@ public class PersonInformationPanel extends UiPart<Region> {
     private static final int MIN_HEIGHT = 40;
     private static final int MIN_WIDTH = 160;
 
-    protected List<Pair<String, String>> customFieldDisplayList = new ArrayList<Pair<String, String>>();
-    protected ListProperty<Pair<String, String>> listProperty = new SimpleListProperty<>();
-
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private ReadOnlyPerson person;
@@ -51,8 +42,6 @@ public class PersonInformationPanel extends UiPart<Region> {
     private VBox customFieldNameList;
     @FXML
     private VBox customFieldValueList;
-    @FXML
-    private ListView customFieldList;
     @FXML
     private FlowPane tags;
     @FXML
@@ -157,16 +146,16 @@ public class PersonInformationPanel extends UiPart<Region> {
      */
     //@@author LuLechuan
     public void initCustomField(ReadOnlyPerson person) {
-        customFieldDisplayList.clear();
+        customFieldNameList.getChildren().clear();
+        customFieldValueList.getChildren().clear();
         person.getCustomFields().forEach(customField -> {
-            String customFieldName = new String(customField.customFieldName + ": ");
-            String customFieldValue = new String(customField.getCustomFieldValue());
-            customFieldDisplayList.add(new Pair(customFieldName, customFieldValue));
+            Label customFieldName = new Label(customField.customFieldName + ":");
+            setIndentation(customFieldName);
+            customFieldNameList.getChildren().add(customFieldName);
+            Label customFieldValue = new Label(customField.getCustomFieldValue());
+            setIndentation(customFieldValue);
+            customFieldValueList.getChildren().add(customFieldValue);
         });
-
-        customFieldList.itemsProperty().bind(listProperty);
-
-        listProperty.set(FXCollections.observableArrayList(customFieldDisplayList));
     }
     //@@author
 
