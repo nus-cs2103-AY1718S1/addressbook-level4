@@ -1,4 +1,83 @@
 # raisa2010
+###### /java/seedu/address/logic/commands/persons/TagCommand.java
+``` java
+public class TagCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "tag";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Tags multiple people using the same tag(s) "
+            + "by the index number used in the last person listing. "
+            + "Existing values will be overwritten by the input values.\n"
+            + "Parameters: INDICES (must be positive integers and may be one or more) "
+            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "Example: " + COMMAND_WORD + " 1, 2, 3 "
+            + PREFIX_TAG + "friend";
+
+    public static final String MESSAGE_TAG_PERSONS_SUCCESS = "New tag added.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+
+    private final Index[] indices;
+    private final Set<Tag> newTags;
+
+    /**
+     * @param indices of the people in the filtered person list to tag
+     * @param tagList list of tags to tag the people with
+     */
+    public TagCommand(Index[] indices, Set<Tag> tagList) {
+        requireNonNull(indices);
+        requireNonNull(tagList);
+
+        this.indices = indices;
+        newTags = tagList;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        Index[] validIndices = CommandUtil.filterValidIndices(lastShownList.size(), indices);
+
+        if (validIndices.length == 0) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        for (Index currentIndex : validIndices) {
+            ReadOnlyPerson personToEdit = lastShownList.get(currentIndex.getZeroBased());
+
+            try {
+                model.updatePersonTags(personToEdit, newTags);
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing");
+            }
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return new CommandResult(MESSAGE_TAG_PERSONS_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof TagCommand)) {
+            return false;
+        }
+
+        //state check
+        for (int i = 0; i < indices.length; i++) {
+            if (!indices[i].equals(((TagCommand) other).indices[i])) {
+                return false;
+            }
+        }
+        return newTags.toString().equals(((TagCommand) other).newTags.toString());
+    }
+}
+```
 ###### /java/seedu/address/logic/commands/tasks/AddTaskCommand.java
 ``` java
 /**
@@ -43,6 +122,85 @@ public class AddTaskCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof AddTaskCommand // instanceof handles nulls
                 && toAdd.equals(((AddTaskCommand) other).toAdd));
+    }
+}
+```
+###### /java/seedu/address/logic/commands/tasks/TagTaskCommand.java
+``` java
+public class TagTaskCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "tag";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Tags multiple tasks using the same tag(s) "
+            + "by the index number used in the last task listing. "
+            + "Existing values will be overwritten by the input values.\n"
+            + "Parameters: INDICES (must be positive integers and may be one or more) "
+            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "Example: " + COMMAND_WORD + " 1, 2, 3 "
+            + PREFIX_TAG + "urgent";
+
+    public static final String MESSAGE_TAG_TASKS_SUCCESS = "New tag added.";
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the address book.";
+
+    private final Index[] indices;
+    private final Set<Tag> newTags;
+
+    /**
+     * @param indices of the tasks in the filtered task list to tag
+     * @param tagList list of tags to tag the task with
+     */
+    public TagTaskCommand(Index[] indices, Set<Tag> tagList) {
+        requireNonNull(indices);
+        requireNonNull(tagList);
+
+        this.indices = indices;
+        newTags = tagList;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
+
+        Index[] validIndices = CommandUtil.filterValidIndices(lastShownList.size(), indices);
+
+        if (validIndices.length == 0) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        for (Index currentIndex : validIndices) {
+            ReadOnlyTask taskToEdit = lastShownList.get(currentIndex.getZeroBased());
+
+            try {
+                model.updateTaskTags(taskToEdit, newTags);
+            } catch (DuplicateTaskException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_TASK);
+            } catch (TaskNotFoundException pnfe) {
+                throw new AssertionError("The target task cannot be missing");
+            }
+        }
+        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        return new CommandResult(MESSAGE_TAG_TASKS_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof TagTaskCommand)) {
+            return false;
+        }
+
+        //state check
+        for (int i = 0; i < indices.length; i++) {
+            if (!indices[i].equals(((TagTaskCommand) other).indices[i])) {
+                return false;
+            }
+        }
+        return newTags.toString().equals(((TagTaskCommand) other).newTags.toString());
     }
 }
 ```
@@ -162,7 +320,7 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
                     .ifPresent(editTaskDescriptor::setStartDate);
             parseDeadlineForEdit(argMultimap.getAllValues(PREFIX_DEADLINE_BY, PREFIX_DEADLINE_ON))
                     .ifPresent(editTaskDescriptor::setDeadline);
-            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
+            ParserUtil.parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
 
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
@@ -179,9 +337,6 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
         return new EditTaskCommand(index, editTaskDescriptor);
     }
 
-```
-###### /java/seedu/address/logic/parser/EditTaskCommandParser.java
-``` java
     /**
      * Parses {@code List<String> dates} into a {@code Optional<StartDate>} containing the last date in the list,
      * if {@code dates} is non-empty.
@@ -362,38 +517,62 @@ public class Suffix {
     }
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### /java/seedu/address/logic/parser/TagCommandParser.java
 ``` java
+/**
+ * Parses input arguments and creates a new TagCommand object
+ */
+public class TagCommandParser implements Parser<TagCommand> {
     /**
-     * Adds a task to the address book.
-     *
-     * @throws DuplicateTaskException if an equivalent task already exists.
+     * Parses the given {@code String} of arguments in the context of the TagCommand
+     * and returns a TagCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
      */
-    public void addTask(ReadOnlyTask t) throws DuplicateTaskException {
-        Task newTask = new Task(t);
-        syncMasterTagListWith(newTask);
-        tasks.add(newTask);
+    public TagCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TAG);
+
+        Index[] parsedIndices;
+        Set<Tag> tagList;
+
+        try {
+            parsedIndices = ParserUtil.parseIndices(argMultimap.getPreamble().split(","));
+            tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
+        }
+        return new TagCommand(parsedIndices, tagList);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/TagTaskCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new TagCommand object
+ */
+public class TagTaskCommandParser implements Parser<TagTaskCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the TagTaskCommand
+     * and returns a TagTaskCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public TagTaskCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TAG);
+
+        Index[] parsedIndices;
+        Set<Tag> tagList;
+
+        try {
+            parsedIndices =  ParserUtil.parseIndices(argMultimap.getPreamble().split(","));
+            tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
+        }
+        return new TagTaskCommand(parsedIndices, tagList);
     }
 
-    /**
-     * Replaces the given task {@code target} in the list with {@code editedReadOnlyTask}.
-     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyTask}.
-     *
-     * @throws DuplicateTaskException if updating the task's details causes the task to be equivalent to
-     *      another existing task in the list.
-     * @throws TaskNotFoundException if {@code target} could not be found in the list.
-     *
-     * @see #syncMasterTagListWith(Task)
-     */
-    public void updateTask(ReadOnlyTask target, ReadOnlyTask editedReadOnlyTask)
-            throws DuplicateTaskException, TaskNotFoundException {
-        requireNonNull(editedReadOnlyTask);
-
-        Task editedTask = new Task(editedReadOnlyTask);
-        syncMasterTagListWith(editedTask);
-        tasks.setTask(target, editedTask);
-    }
-
+}
 ```
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
@@ -410,6 +589,15 @@ public class Suffix {
         requireAllNonNull(target, editedTask);
 
         addressBook.updateTask(target, editedTask);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateTaskTags(ReadOnlyTask task, Set<Tag> newTags)
+            throws TaskNotFoundException, DuplicateTaskException {
+        requireAllNonNull(newTags);
+
+        addressBook.updateTaskTags(task, newTags);
         indicateAddressBookChanged();
     }
 

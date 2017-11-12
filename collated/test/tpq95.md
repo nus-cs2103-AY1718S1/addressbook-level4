@@ -6,12 +6,6 @@
             throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
-
-        @Override
-        public void attachTag(ReadOnlyPerson person, Tag tag)
-                throws PersonNotFoundException, DuplicatePersonException {
-            fail("This method should not be called.");
-        }
 ```
 ###### /java/seedu/address/logic/commands/DetagCommandTest.java
 ``` java

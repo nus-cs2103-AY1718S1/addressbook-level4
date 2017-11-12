@@ -26,7 +26,14 @@
 public class DetagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "detag";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Remove tags from multiple people.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Remove tags from multiple people. "
+            + "Parameter: "
+            + "INDEX, [INDEX]... "
+            + PREFIX_TAG + "TAG\n"
+            + "Example: " + COMMAND_WORD + " "
+            + "1, 2 "
+            + PREFIX_TAG + "friends";
+
     public static final String MESSAGE_DETAG_PERSONS_SUCCESS = "Removed tag: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_MISSING_TAG = "One or more person(s) don't has this tag";
@@ -49,6 +56,7 @@ public class DetagCommand extends UndoableCommand {
     protected CommandResult executeUndoableCommand() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyPerson> indexToRemove = new ArrayList();
 
         for (Index targetIndex: indices) {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -57,8 +65,18 @@ public class DetagCommand extends UndoableCommand {
 
             ReadOnlyPerson personToEdit = lastShownList.get(targetIndex.getZeroBased());
 
+            // Check whether person contains tag
+            if (!personToEdit.getTags().contains(tag)) {
+                throw new CommandException(MESSAGE_MISSING_TAG);
+            }
+
+            // Save the valid persons to list
+            indexToRemove.add(personToEdit);
+        }
+
+        for (ReadOnlyPerson targetPerson: indexToRemove) {
             try {
-                model.deleteTag(personToEdit, tag);
+                model.deleteTag(targetPerson, tag);
             } catch (TagNotFoundException dsd) {
                 throw new CommandException(MESSAGE_MISSING_TAG);
             } catch (DuplicatePersonException dpe) {
@@ -67,6 +85,7 @@ public class DetagCommand extends UndoableCommand {
                 throw new AssertionError("The target person cannot be missing");
             }
         }
+
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_DETAG_PERSONS_SUCCESS, tag.toString()));
     }
@@ -146,34 +165,12 @@ public class DetagCommandParser implements Parser<DetagCommand> {
 
         updatePerson(oldPerson, newPerson);
     }
-
-    /**
-     * Attach {@code newTag} to list of person stated by {@code indices}
-     * from the {@code AddressBook}
-     * @param oldPerson
-     * @param newTag
-     * @throws DuplicatePersonException
-     * @throws PersonNotFoundException
-     */
-    public void attachTag(ReadOnlyPerson oldPerson, Tag newTag)
-            throws DuplicatePersonException, PersonNotFoundException, UniqueTagList.DuplicateTagException {
-        Person newPerson = new Person(oldPerson);
-        Set<Tag> newTags = new HashSet<>(newPerson.getTags());
-        newTags.add(newTag);
-        newPerson.setTags(newTags);
-
-        updatePerson(oldPerson, newPerson);
-    }
 ```
 ###### /java/seedu/address/model/Model.java
 ``` java
     /** Delete tag of given person */
     void deleteTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
             DuplicatePersonException, TagNotFoundException;
-
-    /** Add tag of given person */
-    void attachTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
-            DuplicatePersonException, UniqueTagList.DuplicateTagException;
 ```
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
@@ -181,14 +178,6 @@ public class DetagCommandParser implements Parser<DetagCommand> {
     public synchronized void deleteTag(ReadOnlyPerson person, Tag oldTag) throws PersonNotFoundException,
             DuplicatePersonException, TagNotFoundException {
         addressBook.deleteTag(person, oldTag);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public synchronized void attachTag(ReadOnlyPerson person, Tag newTag) throws PersonNotFoundException,
-            DuplicatePersonException, UniqueTagList.DuplicateTagException {
-        addressBook.attachTag(person, newTag);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
@@ -296,10 +285,13 @@ public class CalendarPanel extends UiPart<Region> {
     private final Logic logic;
     private final Model model;
 
-    private DatePicker datePicker;
+    //private DatePicker datePicker;
 
     @FXML
     private StackPane calendarPane;
+
+    @FXML
+    private DatePicker datePicker;
 
     public CalendarPanel(Logic logic, Model model) {
         super(FXML);
@@ -341,44 +333,76 @@ public class CalendarPanel extends UiPart<Region> {
     private void findDateForSelection() {
         // Make datePicker editable (i.e. i think can select and update value)
         datePicker.setEditable(true);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         // TODO: 26/10/17 Able to not execute findCommand when cell is not colour
         datePicker.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                LocalDate date = datePicker.getValue();
-                String dateString = date.format(formatter);
-                String birthdayString = dateString.substring(0, 5);
-                logger.info("Date selected: " + dateString);
-                try {
-                    String command = FindTaskCommand.COMMAND_WORD;
-                    List<String> mode = new ArrayList<>();
-                    List<String> dateMode = new ArrayList<>();
-                    int order = 0;
+                String currentMode = model.getCommandMode().toString();
+                String date = convertDateFromPicker();
 
-                    // load value to be selected base on current mode
-                    mode.add("ab");
-                    mode.add("tm");
-                    dateMode.add(birthdayString);
-                    dateMode.add(dateString);
-
-                    if (model.getCommandMode().equals(mode.get(1))) {
-                        order = 1;
-                    }
-                    int changedOrder = ((order - 1) == 0) ? 0 : 1;
-
-                    logic.execute(command + " " + dateMode.get(order));
-                    logic.execute(ChangeModeCommand.COMMAND_WORD + " " + mode.get(changedOrder));
-                    logic.execute(command + " " + dateMode.get(changedOrder));
-                    logic.execute(ChangeModeCommand.COMMAND_WORD + " " + mode.get(order));
-                } catch (CommandException e) {
-                    e.printStackTrace();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                findPersonsWithBirthday(date);
+                findTasksWithDeadline(date);
+                changeToOriginalMode(currentMode);
             }
         });
+    }
+
+    /**
+     * Perform a switch back to the original mode of Mobilize
+     * @param currentMode
+     */
+    private void changeToOriginalMode(String currentMode) {
+        try {
+            logic.execute(ChangeModeCommand.COMMAND_WORD + " " + currentMode);
+        } catch (CommandException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String convertDateFromPicker() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return datePicker.getValue().format(formatter);
+    }
+
+    /**
+     * Execute FindCommand to find tasks with deadline that match selected date
+     * @param dateString
+     */
+    private void findTasksWithDeadline(String dateString) {
+        try {
+            // Change to TaskManager mode
+            logic.execute(ChangeModeCommand.COMMAND_WORD + " tm");
+            // Execute FindCommand for dateString
+            logic.execute(FindTaskCommand.COMMAND_WORD + " " + dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (CommandException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Edit the given date string to contain only dd-MM
+     * Execute FindCommand to find persons with birthday that match selected date
+     * @param dateString
+     */
+    private void findPersonsWithBirthday(String dateString) {
+        String birthdayString = dateString.substring(0, 5);
+        logger.info("Date selected: " + dateString);
+        try {
+            // Change to AddressBook mode
+            logic.execute(ChangeModeCommand.COMMAND_WORD + " ab");
+            // Execute FindCommand for dateString
+            logic.execute(FindTaskCommand.COMMAND_WORD + " " + birthdayString);
+        } catch (CommandException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -484,31 +508,6 @@ public class CalendarPanel extends UiPart<Region> {
         return dayCellFactory;
     }
 
-    /**
-     * Select the date on calendar
-     * @param date
-     */
-    /*private void selectDate(DatePickerContent content, String date) {
-        ObservableList<Node> dateCellList = content.getChildren();
-        LocalDate localDate = LocalDate.parse(date, formatter);
-
-        logger.info("day of month: " + localDate.getDayOfMonth());
-        for (Node cell: dateCellList) {
-            logger.info("cell id: " + cell.getId());
-            if (cell.getId().equals(localDate.getDayOfMonth())) {
-                datePicker.setValue(localDate);
-                logger.info("date picked: " + localDate);
-                break;
-            }
-        }
-    }
-
-    // TODO: 26/10/17 implement event in the calendar, such that binding of dates is possible
-    /*
-    @Subscribe
-    private void handleShowHelpEvent(ShowHelpRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-    } */
 }
 ```
 ###### /java/seedu/address/ui/PersonCard.java
@@ -524,8 +523,8 @@ public class CalendarPanel extends UiPart<Region> {
 ###### /java/seedu/address/ui/PersonCard.java
 ``` java
     /**
-     * Set the colour of label for the same tag
-     * @param person
+     * Initializes the tags attached to each person sets the colour of label for the same tag.
+     * @param person the person whose tags are being initialized.
      */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
@@ -556,17 +555,17 @@ public class CalendarPanel extends UiPart<Region> {
             LocalDate deaddate = LocalDate.parse(taskDate, formatter);
             int range = deaddate.getDayOfYear() - date.getDayOfYear();
             if (range >= GREEN_RANGE) {
-                bkgndColour = "#00c300";
+                bkgndColour = "#6A8A82";
             } else if (range >= YELLOW_RANGE) {
-                bkgndColour = "#d1d14f";
+                bkgndColour = "#A37C27";
             } else if (range >= RED_RANGE) {
-                bkgndColour = "#ff444d";
+                bkgndColour = "#A7414A";
             } else {
                 bkgndColour = "#878787";
             }
         } else {
             // for task with no deadline
-            bkgndColour = "#ffd0d0";
+            bkgndColour = "#563838";
         }
         gridPane.setStyle("-fx-background-color: " + bkgndColour + ";"
                 + "-fx-border-style: solid inside;"
@@ -577,7 +576,13 @@ public class CalendarPanel extends UiPart<Region> {
 ```
 ###### /resources/view/CalendarPanel.fxml
 ``` fxml
-<StackPane fx:id="calendarPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" />
+
+
+<StackPane fx:id="calendarPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <DatePicker fx:id="datePicker" visible="false" />
+   </children>
+</StackPane>
 ```
 ###### /resources/view/MainWindow.fxml
 ``` fxml

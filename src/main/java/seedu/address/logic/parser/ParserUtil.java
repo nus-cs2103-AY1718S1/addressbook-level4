@@ -8,7 +8,9 @@ import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_YEARLY;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -57,6 +59,22 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Parses multiple indices from {@code oneBasedIndices} into an array of {@code Index} containing indices which are
+     * non zero unsigned integers.
+     * @throws IllegalValueException if all indices given are invalid.
+     */
+    public static Index[] parseIndices(String... oneBasedIndices) throws IllegalValueException {
+        Index[] parsedIndices = Arrays.stream(oneBasedIndices)
+                .filter(index -> StringUtil.isNonZeroUnsignedInteger(index.trim()))
+                .map(validIndex -> Index.fromOneBased(Integer.parseInt(validIndex.trim())))
+                .toArray(Index[]::new);
+        if (parsedIndices.length == 0) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+        }
+        return parsedIndices;
     }
 
     /**
@@ -115,6 +133,21 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
+     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<Tag>} containing zero tags.
+     */
+    public static Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws IllegalValueException {
+        assert tags != null;
+
+        if (tags.isEmpty()) {
+            return Optional.empty();
+        }
+        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
+        return Optional.of(ParserUtil.parseTags(tagSet));
     }
 
     //@@author raisa2010
